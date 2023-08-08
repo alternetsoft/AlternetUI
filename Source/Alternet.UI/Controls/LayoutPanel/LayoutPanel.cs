@@ -164,15 +164,15 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc />
-        protected override void OnChildInserted(int childIndex, Control childControl)
+        protected override void OnChildInserted(Control childControl)
         {
-            base.OnChildInserted(childIndex, childControl);
+            base.OnChildInserted(childControl);
         }
 
         /// <inheritdoc />
-        protected override void OnChildRemoved(int childIndex, Control childControl)
+        protected override void OnChildRemoved(Control childControl)
         {
-            base.OnChildRemoved(childIndex, childControl);
+            base.OnChildRemoved(childControl);
         }
 
         /// <inheritdoc />

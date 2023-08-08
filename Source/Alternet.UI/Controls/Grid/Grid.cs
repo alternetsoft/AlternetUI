@@ -394,18 +394,18 @@ namespace Alternet.UI
         /// <summary>
         /// <inheritdoc />
         /// </summary>
-        protected override void OnChildInserted(int childIndex, Control childControl)
+        protected override void OnChildInserted(Control childControl)
         {
-            base.OnChildInserted(childIndex, childControl);
+            base.OnChildInserted(childControl);
             OnChildrenChanged();
         }
 
         /// <summary>
         /// <inheritdoc />
         /// </summary>
-        protected override void OnChildRemoved(int childIndex, Control childControl)
+        protected override void OnChildRemoved(Control childControl)
         {
-            base.OnChildRemoved(childIndex, childControl);
+            base.OnChildRemoved(childControl);
             OnChildrenChanged();
         }
 

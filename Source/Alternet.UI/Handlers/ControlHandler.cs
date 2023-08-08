@@ -21,14 +21,13 @@ namespace Alternet.UI
 
         private Native.Control? nativeControl;
         private bool isVisualChild;
+        Collection<Control>? visualChildren;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Control"/> class.
         /// </summary>
         public ControlHandler()
         {
-            VisualChildren.ItemInserted += VisualChildren_ItemInserted;
-            VisualChildren.ItemRemoved += VisualChildren_ItemRemoved;
         }
 
         /// <summary>
@@ -177,15 +176,47 @@ namespace Alternet.UI
         /// Gets the collection of visual child controls contained within
         /// the control.
         /// </summary>
-        public virtual Collection<Control> VisualChildren { get; } =
-            new Collection<Control>();
+        public virtual Collection<Control> VisualChildren
+        {
+            get
+            {
+                if (visualChildren == null)
+                {
+                    visualChildren = new Collection<Control>();
+                    visualChildren.ItemInserted += VisualChildren_ItemInserted;
+                    visualChildren.ItemRemoved += VisualChildren_ItemRemoved;
+                }
+
+                return visualChildren;
+            }
+        }
+
+        /// <summary>
+        /// Gets whether there are any items in the <see cref="VisualChildren"/> list.
+        /// </summary>
+        public virtual bool HasVisualChildren =>
+            visualChildren != null && VisualChildren.Count > 0;
 
         /// <summary>
         /// Gets the collection of all elements of <see cref="Control.Children"/>
         /// and <see cref="VisualChildren"/> collections.
         /// </summary>
         public virtual IEnumerable<Control> AllChildren
-            => VisualChildren.Concat(Control.Children);
+        {
+            get
+            {
+                if (Control.HasChildren)
+                {
+                    if (HasVisualChildren)
+                        return VisualChildren.Concat(Control.Children);
+                    return Control.Children;
+                }
+
+                if (HasVisualChildren)
+                    return VisualChildren;
+                return Array.Empty<Control>();
+            }
+        }
 
         /// <summary>
         /// Gets the collection of all elements of <see cref="AllChildren"/>
@@ -216,13 +247,16 @@ namespace Alternet.UI
         internal bool NativeControlCreated => nativeControl != null;
 
         /// <summary>
-        /// This property may be overridden by control handlers to indicate that the handler needs
-        /// <see cref="OnPaint(DrawingContext)"/> to be called. Default value is <c>false</c>.
+        /// This property may be overridden by control handlers to indicate that
+        /// the handler needs
+        /// <see cref="OnPaint(DrawingContext)"/> to be called. Default value
+        /// is <c>false</c>.
         /// </summary>
         protected virtual bool NeedsPaint => false;
 
         /// <summary>
-        /// This property may be overridden by control handlers to indicate that the native control creation is required
+        /// This property may be overridden by control handlers to indicate that
+        /// the native control creation is required
         /// even if the control is a visual child. Default value is <c>false</c>.
         /// </summary>
         protected virtual bool VisualChildNeedsNativeControl => false;
@@ -232,7 +266,8 @@ namespace Alternet.UI
         /// <summary>
         /// Attaches this handler to the specified <see cref="Control"/>.
         /// </summary>
-        /// <param name="control">The <see cref="Control"/> to attach this handler to.</param>
+        /// <param name="control">The <see cref="Control"/> to attach this
+        /// handler to.</param>
         public void Attach(Control control)
         {
             this.control = control;
@@ -266,7 +301,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Invalidates the control and causes a paint message to be sent to the control.
+        /// Invalidates the control and causes a paint message to be sent to
+        /// the control.
         /// </summary>
         public void Invalidate()
         {
@@ -281,7 +317,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Forces the control to invalidate itself and immediately redraw itself and any child controls.
+        /// Forces the control to invalidate itself and immediately redraw itself
+        /// and any child controls.
         /// </summary>
         public void Refresh()
         {
@@ -290,19 +327,23 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// This property may be overridden by control handlers to paint the control visual representation.
+        /// This property may be overridden by control handlers to paint the
+        /// control visual representation.
         /// </summary>
         /// <remarks>
-        /// <see cref="NeedsPaint"/> for this handler should return <c>true</c> in order for <see cref="OnPaint(DrawingContext)"/>
+        /// <see cref="NeedsPaint"/> for this handler should return <c>true</c> in
+        /// order for <see cref="OnPaint(DrawingContext)"/>
         /// to be called.
         /// </remarks>
-        /// <param name="drawingContext">The <see cref="DrawingContext"/> to paint on.</param>
+        /// <param name="drawingContext">The <see cref="DrawingContext"/> to paint
+        /// on.</param>
         public virtual void OnPaint(DrawingContext drawingContext)
         {
         }
 
         /// <summary>
-        /// Called when the handler should reposition the child controls of the control it is attached to.
+        /// Called when the handler should reposition the child controls of the
+        /// control it is attached to.
         /// </summary>
         public virtual void OnLayout()
         {
@@ -311,8 +352,16 @@ namespace Alternet.UI
             {
                 var preferredSize = control.GetPreferredSize(childrenLayoutBounds.Size);
 
-                var horizontalPosition = AlignedLayout.AlignHorizontal(childrenLayoutBounds, control, preferredSize);
-                var verticalPosition = AlignedLayout.AlignVertical(childrenLayoutBounds, control, preferredSize);
+                var horizontalPosition =
+                    AlignedLayout.AlignHorizontal(
+                        childrenLayoutBounds,
+                        control,
+                        preferredSize);
+                var verticalPosition =
+                    AlignedLayout.AlignVertical(
+                        childrenLayoutBounds,
+                        control,
+                        preferredSize);
 
                 control.Handler.Bounds = new Rect(
                     horizontalPosition.Origin,
@@ -334,20 +383,18 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Retrieves the size of a rectangular area into which the control can be fitted, in device-independent units (1/96th inch per unit).
+        /// Retrieves the size of a rectangular area into which the control can
+        /// be fitted, in device-independent units (1/96th inch per unit).
         /// </summary>
-        /// <param name="availableSize">The available space that a parent element can allocate a child control.</param>
-        /// <returns>A <see cref="Size"/> representing the width and height of a rectangle, in device-independent units (1/96th inch per unit).</returns>
+        /// <param name="availableSize">The available space that a parent element
+        /// can allocate a child control.</param>
+        /// <returns>A <see cref="Size"/> representing the width and height of
+        /// a rectangle, in device-independent units (1/96th inch per unit).</returns>
         public virtual Size GetPreferredSize(Size availableSize)
         {
-            if (Control.Children.Count == 0 && VisualChildren.Count == 0)
-            {
-                return GetNativeControlSize(availableSize);
-            }
-            else
-            {
+            if (Control.HasChildren || HasVisualChildren)
                 return GetSpecifiedOrChildrenPreferredSize(availableSize);
-            }
+            return GetNativeControlSize(availableSize);
         }
 
         private protected Size GetNativeControlSize(Size availableSize)
@@ -372,7 +419,8 @@ namespace Alternet.UI
         /// <summary>
         /// Resumes the usual layout logic.
         /// </summary>
-        /// <param name="performLayout"><c>true</c> to execute pending layout requests; otherwise, <c>false</c>.</param>
+        /// <param name="performLayout"><c>true</c> to execute pending layout
+        /// requests; otherwise, <c>false</c>.</param>
         public void ResumeLayout(bool performLayout = true)
         {
             layoutSuspendCount--;
@@ -387,7 +435,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Maintains performance while performing slow operations on a control by preventing the control from
+        /// Maintains performance while performing slow operations on a control
+        /// by preventing the control from
         /// drawing until the <see cref="EndUpdate"/> method is called.
         /// </summary>
         public void BeginUpdate()
@@ -396,7 +445,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Resumes painting the control after painting is suspended by the <see cref="BeginUpdate"/> method.
+        /// Resumes painting the control after painting is suspended by the
+        /// <see cref="BeginUpdate"/> method.
         /// </summary>
         public void EndUpdate()
         {
@@ -469,7 +519,8 @@ namespace Alternet.UI
             var nativeControl = NativeControl;
             if (nativeControl == null)
             {
-                nativeControl = TryFindClosestParentWithNativeControl()?.Handler.NativeControl;
+                nativeControl =
+                    TryFindClosestParentWithNativeControl()?.Handler.NativeControl;
 
                 // todo: visual offset for handleless controls
                 if (nativeControl == null)
@@ -492,7 +543,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets a value indicating whether the control needs a native control to be created.
+        /// Gets a value indicating whether the control needs a native control
+        /// to be created.
         /// </summary>
         protected virtual bool NeedsNativeControl()
         {
@@ -503,7 +555,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets the size of the control specified in its <see cref="Control.Width"/> and <see cref="Control.Height"/>
+        /// Gets the size of the control specified in its
+        /// <see cref="Control.Width"/> and <see cref="Control.Height"/>
         /// properties or calculates preferred size from its children.
         /// </summary>
         protected Size GetSpecifiedOrChildrenPreferredSize(Size availableSize)
@@ -532,7 +585,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Returns the size of the area which can fit all the children of this control, with an added padding.
+        /// Returns the size of the area which can fit all the children of this
+        /// control, with an added padding.
         /// </summary>
         protected Size GetPaddedPreferredSize(Size preferredSize)
         {
@@ -556,7 +610,8 @@ namespace Alternet.UI
 
             foreach (var control in AllChildrenIncludedInLayout)
             {
-                var preferredSize = control.GetPreferredSize(availableSize) + control.Margin.Size;
+                var preferredSize =
+                    control.GetPreferredSize(availableSize) + control.Margin.Size;
                 maxWidth = Math.Max(preferredSize.Width, maxWidth);
                 maxHeight = Math.Max(preferredSize.Height, maxHeight);
             }
@@ -572,7 +627,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Initiates invocation of <see cref="OnLayoutChanged"/> for this and all parent controls.
+        /// Initiates invocation of <see cref="OnLayoutChanged"/> for this and
+        /// all parent controls.
         /// </summary>
         public void RaiseLayoutChanged()
         {
@@ -680,7 +736,7 @@ namespace Alternet.UI
             var parent = Control.Parent;
             if (parent != null)
             {
-                parent.Handler.TryInsertNativeControl(parent.Children.IndexOf(Control), Control); // todo: sort out indexof in case of visual children.
+                parent.Handler.TryInsertNativeControl(Control);
                 parent.PerformLayout();
             }
 
@@ -707,11 +763,14 @@ namespace Alternet.UI
             Control.RaiseEvent(new RoutedEventArgs(UIElement.LostFocusEvent));
         }
 
-        private void RaiseDragAndDropEvent(Native.NativeEventArgs<Native.DragEventData> e, Action<DragEventArgs> raiseAction)
+        private void RaiseDragAndDropEvent(
+            Native.NativeEventArgs<Native.DragEventData> e,
+            Action<DragEventArgs> raiseAction)
         {
             var data = e.Data;
             var ea = new DragEventArgs(
-                new UnmanagedDataObjectAdapter(new Native.UnmanagedDataObject(data.data)),
+                new UnmanagedDataObjectAdapter(
+                    new Native.UnmanagedDataObject(data.data)),
                 new Point(data.mouseClientLocationX, data.mouseClientLocationY),
                 (DragDropEffects)data.effect);
 
@@ -720,16 +779,23 @@ namespace Alternet.UI
             e.Result = new IntPtr((int)ea.Effect);
         }
 
-        private void NativeControl_DragOver(object? sender, Native.NativeEventArgs<Native.DragEventData> e) =>
+        private void NativeControl_DragOver(
+            object? sender,
+            Native.NativeEventArgs<Native.DragEventData> e) =>
             RaiseDragAndDropEvent(e, ea => Control.RaiseDragOver(ea));
 
-        private void NativeControl_DragEnter(object? sender, Native.NativeEventArgs<Native.DragEventData> e) =>
+        private void NativeControl_DragEnter(
+            object? sender,
+            Native.NativeEventArgs<Native.DragEventData> e) =>
             RaiseDragAndDropEvent(e, ea => Control.RaiseDragEnter(ea));
 
-        private void NativeControl_DragDrop(object? sender, Native.NativeEventArgs<Native.DragEventData> e) =>
+        private void NativeControl_DragDrop(
+            object? sender,
+            Native.NativeEventArgs<Native.DragEventData> e) =>
             RaiseDragAndDropEvent(e, ea => Control.RaiseDragDrop(ea));
 
-        private void NativeControl_DragLeave(object? sender, EventArgs e) => Control.RaiseDragLeave(e);
+        private void NativeControl_DragLeave(object? sender, EventArgs e) =>
+            Control.RaiseDragLeave(e);
 
         private void NativeControl_MouseCaptureLost(object? sender, EventArgs e)
         {
@@ -737,9 +803,11 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// The ScreenToClient function converts the screen coordinates of a specified point on the screen to client-area coordinates.
+        /// The ScreenToClient function converts the screen coordinates of a
+        /// specified point on the screen to client-area coordinates.
         /// </summary>
-        /// <param name="point">A <see cref="Point"/> that specifies the screen coordinates to be converted.</param>
+        /// <param name="point">A <see cref="Point"/> that specifies the
+        /// screen coordinates to be converted.</param>
         /// <returns>The converted cooridnates.</returns>
         public Point ScreenToClient(Point point)
         {
@@ -750,9 +818,11 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Converts the client-area coordinates of a specified point to screen coordinates.
+        /// Converts the client-area coordinates of a specified point to
+        /// screen coordinates.
         /// </summary>
-        /// <param name="point">A <see cref="Point"/> that contains the client coordinates to be converted.</param>
+        /// <param name="point">A <see cref="Point"/> that contains the
+        /// client coordinates to be converted.</param>
         /// <returns>The converted cooridnates.</returns>
         public Point ClientToScreen(Point point)
         {
@@ -763,9 +833,12 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Converts the screen coordinates of a specified point in device-independent units (1/96th inch per unit) to device (pixel) coordinates.
+        /// Converts the screen coordinates of a specified point in
+        /// device-independent units (1/96th inch per unit) to device
+        /// (pixel) coordinates.
         /// </summary>
-        /// <param name="point">A <see cref="Point"/> that specifies the screen device-independent coordinates to be converted.</param>
+        /// <param name="point">A <see cref="Point"/> that specifies the
+        /// screen device-independent coordinates to be converted.</param>
         /// <returns>The converted cooridnates.</returns>
         public Int32Point ScreenToDevice(Point point)
         {
@@ -776,9 +849,12 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Converts the device (pixel) coordinates of a specified point to coordinates in device-independent units (1/96th inch per unit).
+        /// Converts the device (pixel) coordinates of a specified point to
+        /// coordinates in device-independent units (1/96th inch per unit).
         /// </summary>
-        /// <param name="point">A <see cref="Point"/> that contains the coordinates in device-independent units (1/96th inch per unit) to be converted.</param>
+        /// <param name="point">A <see cref="Point"/> that contains the
+        /// coordinates in device-independent units (1/96th inch per unit)
+        /// to be converted.</param>
         /// <returns>The converted cooridnates.</returns>
         public Point DeviceToScreen(Int32Point point)
         {
@@ -810,7 +886,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Called when the mouse left button is released while the mouse pointer is over
+        /// Called when the mouse left button is released while the mouse pointer
+        /// is over
         /// the control or when the control has captured the mouse.
         /// </summary>
         protected virtual void OnMouseLeftButtonUp()
@@ -818,43 +895,42 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Called when the mouse left button is pressed while the mouse pointer is over
+        /// Called when the mouse left button is pressed while the mouse pointer
+        /// is over
         /// the control or when the control has captured the mouse.
         /// </summary>
         protected virtual void OnMouseLeftButtonDown()
         {
         }
 
-        private void RaiseChildInserted(int childIndex, Control childControl)
+        private void RaiseChildInserted(Control childControl)
         {
-            // todo: the childIndex passed to this method is wrong as should take VisualChildren into account.
-            Control.RaiseChildInserted(childIndex, childControl);
-            OnChildInserted(childIndex, childControl);
+            Control.RaiseChildInserted(childControl);
+            OnChildInserted(childControl);
         }
 
-        private void RaiseChildRemoved(int childIndex, Control childControl)
+        private void RaiseChildRemoved(Control childControl)
         {
-            // todo: the childIndex passed to this method is wrong as should take VisualChildren into account.
-            Control.RaiseChildRemoved(childIndex, childControl);
-            OnChildRemoved(childIndex, childControl);
-        }
-
-        /// <summary>
-        /// Called when a <see cref="Control"/> is inserted into the <see cref="Control.Children"/> or <see cref="VisualChildren"/> collection.
-        /// </summary>
-        protected virtual void OnChildInserted(int childIndex, Control childControl)
-        {
-            // todo: the childIndex passed to this method is wrong as should take VisualChildren into account.
-            TryInsertNativeControl(childIndex, childControl);
+            Control.RaiseChildRemoved(childControl);
+            OnChildRemoved(childControl);
         }
 
         /// <summary>
-        /// Called when a <see cref="Control"/> is removed from the <see cref="Control.Children"/> or <see cref="VisualChildren"/> collections.
+        /// Called when a <see cref="Control"/> is inserted into the
+        /// <see cref="Control.Children"/> or <see cref="VisualChildren"/> collection.
         /// </summary>
-        protected virtual void OnChildRemoved(int childIndex, Control childControl)
+        protected virtual void OnChildInserted(Control childControl)
         {
-            // todo: the childIndex passed to this method is wrong as should take VisualChildren into account.
-            TryRemoveNativeControl(childIndex, childControl);
+            TryInsertNativeControl(childControl);
+        }
+
+        /// <summary>
+        /// Called when a <see cref="Control"/> is removed from the
+        /// <see cref="Control.Children"/> or <see cref="VisualChildren"/> collections.
+        /// </summary>
+        protected virtual void OnChildRemoved(Control childControl)
+        {
+            TryRemoveNativeControl(childControl);
         }
 
         private void Control_VerticalAlignmentChanged(object? sender, EventArgs e)
@@ -871,25 +947,31 @@ namespace Alternet.UI
 
         private void ApplyChildren()
         {
+            if (!Control.HasChildren)
+                return;
             for (var i = 0; i < Control.Children.Count; i++)
-                RaiseChildInserted(i, Control.Children[i]);
+                RaiseChildInserted(Control.Children[i]);
         }
 
-        private void VisualChildren_ItemInserted(object? sender, CollectionChangeEventArgs<Control> e)
+        private void VisualChildren_ItemInserted(
+            object? sender,
+            CollectionChangeEventArgs<Control> e)
         {
             e.Item.Parent = Control;
             e.Item.Handler.IsVisualChild = true;
 
-            RaiseChildInserted(e.Index, e.Item);
+            RaiseChildInserted(e.Item);
             PerformLayout();
         }
 
-        private void VisualChildren_ItemRemoved(object? sender, CollectionChangeEventArgs<Control> e)
+        private void VisualChildren_ItemRemoved(
+            object? sender,
+            CollectionChangeEventArgs<Control> e)
         {
             e.Item.Parent = null;
             e.Item.Handler.IsVisualChild = false;
 
-            RaiseChildRemoved(e.Index, e.Item);
+            RaiseChildRemoved(e.Item);
             PerformLayout();
         }
 
@@ -1058,7 +1140,7 @@ namespace Alternet.UI
             Invalidate();
         }
 
-        private void TryInsertNativeControl(int childIndex, Control childControl)
+        private void TryInsertNativeControl(Control childControl)
         {
             // todo: use index
             var childNativeControl = childControl.Handler.NativeControl;
@@ -1069,12 +1151,13 @@ namespace Alternet.UI
                 return;
 
             var parentNativeControl = NativeControl;
-            parentNativeControl ??= TryFindClosestParentWithNativeControl()?.Handler.NativeControl;
+            parentNativeControl ??=
+                TryFindClosestParentWithNativeControl()?.Handler.NativeControl;
 
             parentNativeControl?.AddChild(childNativeControl);
         }
 
-        private void TryRemoveNativeControl(int childIndex, Control childControl)
+        private void TryRemoveNativeControl(Control childControl)
         {
             if (nativeControl != null && childControl.Handler.nativeControl != null)
                 nativeControl?.RemoveChild(childControl.Handler.nativeControl);
@@ -1218,16 +1301,18 @@ namespace Alternet.UI
             PerformLayout();
         }
 
-        private void Children_ItemInserted(object? sender, CollectionChangeEventArgs<Control> e)
+        private void Children_ItemInserted(
+            object? sender, CollectionChangeEventArgs<Control> e)
         {
-            RaiseChildInserted(e.Index, e.Item);
+            RaiseChildInserted(e.Item);
             RaiseLayoutChanged();
             PerformLayout();
         }
 
-        private void Children_ItemRemoved(object? sender, CollectionChangeEventArgs<Control> e)
+        private void Children_ItemRemoved(
+            object? sender, CollectionChangeEventArgs<Control> e)
         {
-            RaiseChildRemoved(e.Index, e.Item);
+            RaiseChildRemoved(e.Item);
             RaiseLayoutChanged();
             PerformLayout();
         }
@@ -1235,32 +1320,22 @@ namespace Alternet.UI
         private void NativeControl_Paint(object? sender, System.EventArgs? e)
         {
             if (NativeControl == null)
-                throw new InvalidOperationException();
+                return;
 
-            bool hasVisualChildren = VisualChildren.Count > 0;
+            bool hasVisualChildren = HasVisualChildren;
 
-            // using (var dc = new DrawingContext(NativeControl.OpenPaintDrawingContext()))
-            // {
-            //    if (Control.UserPaint)
-            //    {
-            //        Control.RaisePaint(new PaintEventArgs(dc, ClientRectangle));
-            //    }
-            //    else if (NeedsPaint || hasVisualChildren)
-            //    {
-            //        PaintSelfAndVisualChildren(dc);
-            //    }
-            // }
+            bool paint = hasVisualChildren || Control.UserPaint || NeedsPaint;
+            if (!paint)
+                return;
+
+            using var dc =
+                new DrawingContext(NativeControl.OpenPaintDrawingContext());
+
             if (Control.UserPaint)
-            {
-                using (var dc = new DrawingContext(NativeControl.OpenPaintDrawingContext()))
-                    Control.RaisePaint(new PaintEventArgs(dc, ClientRectangle));
-            }
+                Control.RaisePaint(new PaintEventArgs(dc, ClientRectangle));
 
             if (NeedsPaint || hasVisualChildren)
-            {
-                using (var dc = new DrawingContext(NativeControl.OpenPaintDrawingContext()))
-                    PaintSelfAndVisualChildren(dc);
-            }
+                PaintSelfAndVisualChildren(dc);
         }
 
         private void PaintSelfAndVisualChildren(DrawingContext dc)
@@ -1268,10 +1343,14 @@ namespace Alternet.UI
             if (NeedsPaint)
                 OnPaint(dc);
 
+            if (!HasVisualChildren)
+                return;
             foreach (var visualChild in VisualChildren)
             {
                 var location = visualChild.Handler.Bounds.Location;
-                dc.PushTransform(TransformMatrix.CreateTranslation(location.X, location.Y));
+                dc.PushTransform(TransformMatrix.CreateTranslation(
+                    location.X,
+                    location.Y));
                 visualChild.Handler.PaintSelfAndVisualChildren(dc);
                 dc.Pop();
             }

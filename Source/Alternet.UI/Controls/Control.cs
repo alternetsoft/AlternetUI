@@ -1272,9 +1272,11 @@ namespace Alternet.UI
             MouseLeave?.Invoke(this, EventArgs.Empty);
         }
 
-        internal void RaiseChildInserted(int childIndex, Control childControl) => OnChildInserted(childIndex, childControl);
+        internal void RaiseChildInserted(Control childControl) =>
+            OnChildInserted(childControl);
 
-        internal void RaiseChildRemoved(int childIndex, Control childControl) => OnChildInserted(childIndex, childControl);
+        internal void RaiseChildRemoved(Control childControl) =>
+            OnChildInserted(childControl);
 
         internal void InvokeOnLayout()
         {
@@ -1326,13 +1328,16 @@ namespace Alternet.UI
         /// Raises the <see cref="SizeChanged"/> event.
         /// </summary>
         /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
-        protected virtual void OnSizeChanged(EventArgs e) => SizeChanged?.Invoke(this, e);
+        protected virtual void OnSizeChanged(EventArgs e) =>
+            SizeChanged?.Invoke(this, e);
 
         /// <summary>
         /// Raises the <see cref="LocationChanged"/> event.
         /// </summary>
-        /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
-        protected virtual void OnLocationChanged(EventArgs e) => LocationChanged?.Invoke(this, e);
+        /// <param name="e">An <see cref="EventArgs"/> that contains the
+        /// event data.</param>
+        protected virtual void OnLocationChanged(EventArgs e) =>
+            LocationChanged?.Invoke(this, e);
 
         /// <summary>
         /// Called when the control should reposition the child controls of the control.
@@ -1344,23 +1349,28 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Called when a <see cref="Control"/> is inserted into the <see cref="Control.Children"/> or <see cref="ControlHandler.VisualChildren"/> collection.
+        /// Called when a <see cref="Control"/> is inserted into
+        /// the <see cref="Control.Children"/> or
+        /// <see cref="ControlHandler.VisualChildren"/> collection.
         /// </summary>
-        protected virtual void OnChildInserted(int childIndex, Control childControl)
+        protected virtual void OnChildInserted(Control childControl)
         {
         }
 
         /// <summary>
-        /// Called when a <see cref="Control"/> is removed from the <see cref="Control.Children"/> or <see cref="ControlHandler.VisualChildren"/> collections.
+        /// Called when a <see cref="Control"/> is removed from the
+        /// <see cref="Control.Children"/> or
+        /// <see cref="ControlHandler.VisualChildren"/> collections.
         /// </summary>
-        protected virtual void OnChildRemoved(int childIndex, Control childControl)
+        protected virtual void OnChildRemoved(Control childControl)
         {
         }
 
         /// <summary>
         /// Called when the control is clicked.
         /// </summary>
-        /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
+        /// <param name="e">An <see cref="EventArgs"/> that contains the event
+        /// data.</param>
         protected virtual void OnClick(EventArgs e)
         {
         }
@@ -1368,7 +1378,8 @@ namespace Alternet.UI
         /// <summary>
         /// Called when the value of the <see cref="Visible"/> property changes.
         /// </summary>
-        /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
+        /// <param name="e">An <see cref="EventArgs"/> that contains the event
+        /// data.</param>
         protected virtual void OnVisibleChanged(EventArgs e)
         {
         }
