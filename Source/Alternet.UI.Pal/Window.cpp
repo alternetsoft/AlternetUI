@@ -9,7 +9,9 @@ namespace Alternet::UI
 {
 #define UseDebugPaintColors false
 
-    Frame::Frame(Window* window, long style) : wxFrame(NULL, wxID_ANY, "", wxDefaultPosition, wxDefaultSize, style), _window(window)
+    Frame::Frame(Window* window, long style) :
+        wxFrame(NULL, wxID_ANY, "", wxDefaultPosition, wxDefaultSize, style),
+            _window(window)
     {
         _allFrames.push_back(this);
     }
@@ -84,13 +86,20 @@ namespace Alternet::UI
             {
                 //{DelayedWindowFlags::ShowInTaskbar, std::make_tuple(&Window::RetrieveShowInTaskbar, &Window::ApplyShowInTaskbar)},
             }),
-        _title(*this, u"", &Control::IsWxWindowCreated, &Window::RetrieveTitle, &Window::ApplyTitle),
-        _state(*this, WindowState::Normal, &Control::IsWxWindowCreated, &Window::RetrieveState, &Window::ApplyState),
-        _minimumSize(*this, Size(), &Control::IsWxWindowCreated, &Window::RetrieveMinimumSize, &Window::ApplyMinimumSize),
-        _maximumSize(*this, Size(), &Control::IsWxWindowCreated, &Window::RetrieveMaximumSize, &Window::ApplyMaximumSize),
-        _menu(*this, nullptr, &Control::IsWxWindowCreated, &Window::RetrieveMenu, &Window::ApplyMenu),
-        _toolbar(*this, nullptr, &Control::IsWxWindowCreated, &Window::RetrieveToolbar, &Window::ApplyToolbar),
-        _statusBar(*this, nullptr, &Control::IsWxWindowCreated, &Window::RetrieveStatusBar, &Window::ApplyStatusBar)
+        _title(*this, u"", &Control::IsWxWindowCreated, &Window::RetrieveTitle, 
+            &Window::ApplyTitle),
+        _state(*this, WindowState::Normal, &Control::IsWxWindowCreated, 
+            &Window::RetrieveState, &Window::ApplyState),
+        _minimumSize(*this, Size(), &Control::IsWxWindowCreated, 
+            &Window::RetrieveMinimumSize, &Window::ApplyMinimumSize),
+        _maximumSize(*this, Size(), &Control::IsWxWindowCreated, 
+            &Window::RetrieveMaximumSize, &Window::ApplyMaximumSize),
+        _menu(*this, nullptr, &Control::IsWxWindowCreated, &Window::RetrieveMenu,   
+            &Window::ApplyMenu),
+        _toolbar(*this, nullptr, &Control::IsWxWindowCreated, &Window::RetrieveToolbar, 
+            &Window::ApplyToolbar),
+        _statusBar(*this, nullptr, &Control::IsWxWindowCreated, 
+            &Window::RetrieveStatusBar, &Window::ApplyStatusBar)
     {
         GetDelayedValues().Add(&_title);
         GetDelayedValues().Add(&_state);
@@ -108,13 +117,16 @@ namespace Alternet::UI
             _icon->Release();
     }
 
-    void Window::AddInputBinding(const string& managedCommandId, Key key, ModifierKeys modifiers)
+    void Window::AddInputBinding(const string& managedCommandId, Key key,
+        ModifierKeys modifiers)
     {
         if (managedCommandId.empty())
             throwExInvalidArg(managedCommandId, u"Command ID must not be empty.");
 
-        if (_acceleratorsByCommandIds.find(managedCommandId) != _acceleratorsByCommandIds.end())
-            throwExInvalidArg(managedCommandId, u"Input binding with this command ID was already added to this window.");
+        if (_acceleratorsByCommandIds.find(managedCommandId) != 
+            _acceleratorsByCommandIds.end())
+            throwExInvalidArg(managedCommandId,
+                u"Input binding with this command ID was already added to this window.");
 
         auto keyboard = Application::GetCurrent()->GetKeyboardInternal();
         auto wxKey = keyboard->KeyToWxKey(key);
@@ -132,7 +144,8 @@ namespace Alternet::UI
 
         auto it = _acceleratorsByCommandIds.find(managedCommandId);
         if (it == _acceleratorsByCommandIds.end())
-            throwExInvalidArg(managedCommandId, u"Input binding with this command ID was not found in this window.");
+            throwExInvalidArg(managedCommandId,
+                u"Input binding with this command ID was not found in this window.");
 
         IdManager::FreeId(it->second.GetCommand());
 
@@ -357,7 +370,8 @@ namespace Alternet::UI
         auto wxWindow = GetWxWindow();
         wxRect rect(fromDip(value, wxWindow));
 
-        if (_startLocation == WindowStartLocation::Manual || _flags.IsSet(WindowFlags::ShownOnce))
+        if (_startLocation == WindowStartLocation::Manual ||
+            _flags.IsSet(WindowFlags::ShownOnce))
         {
             wxWindow->SetSize(rect);
         }
@@ -541,7 +555,8 @@ namespace Alternet::UI
             wxDefaultSize,
             wxTAB_TRAVERSAL | wxNO_BORDER | wxFULL_REPAINT_ON_RESIZE);*/
 
-        auto panelColor = wxSystemSettings::GetColour(wxSystemColour::wxSYS_COLOUR_BTNFACE);
+        auto panelColor =
+            wxSystemSettings::GetColour(wxSystemColour::wxSYS_COLOUR_BTNFACE);
 
         if(UseDebugPaintColors)
             panelColor = wxTheColourDatabase->Find("RED");
@@ -854,6 +869,13 @@ namespace Alternet::UI
         else
         {
             event.Skip();
+
+            auto parent = GetParent();
+
+            if (parent != nullptr) 
+            {
+                parent->RemoveChild(this);
+            }
 
             for (auto window : GetOwnedWindows())
             {
