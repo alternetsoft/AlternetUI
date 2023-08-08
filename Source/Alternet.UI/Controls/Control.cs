@@ -36,15 +36,15 @@ namespace Alternet.UI
         /// </summary>
         public static readonly DependencyProperty EnabledProperty =
             DependencyProperty.Register(
-                    "Enabled", // Property name
-                    typeof(bool), // Property type
-                    typeof(Control), // Property owner
-                    new FrameworkPropertyMetadata( // Property metadata
-                            true, // default enabled
-                            FrameworkPropertyMetadataOptions.AffectsPaint, // Flags
+                    "Enabled",
+                    typeof(bool),
+                    typeof(Control),
+                    new FrameworkPropertyMetadata(
+                            true,
+                            FrameworkPropertyMetadataOptions.AffectsPaint,
                             new PropertyChangedCallback(OnEnabledPropertyChanged),
-                            null, // coerce callback
-                            true, // IsAnimationProhibited
+                            null,
+                            isAnimationProhibited: true,
                             UpdateSourceTrigger.PropertyChanged));
 
         private static readonly object?[] EmptyArray = new object?[0];
@@ -71,8 +71,6 @@ namespace Alternet.UI
         /// </summary>
         public Control()
         {
-            Children.ItemInserted += Children_ItemInserted;
-            Children.ItemRemoved += Children_ItemRemoved;
         }
 
         /// <summary>
@@ -409,7 +407,13 @@ namespace Alternet.UI
         {
             get
             {
-                children ??= new Collection<Control>();
+                if(children == null)
+                {
+                    children = new Collection<Control>();
+                    children.ItemInserted += Children_ItemInserted;
+                    children.ItemRemoved += Children_ItemRemoved;
+                }
+
                 return children;
             }
         }
@@ -700,8 +704,8 @@ namespace Alternet.UI
         /// <summary>
         /// <inheritdoc />
         /// </summary>
-        protected override IEnumerable<FrameworkElement> LogicalChildrenCollection =>
-            Children;
+        protected override IEnumerable<FrameworkElement> LogicalChildrenCollection
+            => HasChildren ? Children : Array.Empty<FrameworkElement>();
 
         /// <summary>
         /// Gets the subset of <see cref="Children"/> collection with
@@ -857,6 +861,8 @@ namespace Alternet.UI
         /// <see cref="Children"/> list.</returns>
         public Control? GetChildOrNull(int index = 0)
         {
+            if (!HasChildren)
+                return null;
             if (index >= Children.Count || index < 0)
                 return null;
             return Children[index];
@@ -868,7 +874,9 @@ namespace Alternet.UI
         /// <seealso cref="GetVisibleChildOrNull"/>
         public IEnumerable<Control> GetVisibleChildren()
         {
-            return Children.Where(x => x.Visible);
+            if(HasChildren)
+                return Children.Where(x => x.Visible);
+            return Array.Empty<Control>();
         }
 
         /// <summary>
@@ -894,19 +902,6 @@ namespace Alternet.UI
 
             return null;
         }
-
-        /*
-        public virtual IEnumerable<Control> AllChildren
-                    => VisualChildren.Concat(Control.Children);
-
-                /// <summary>
-                /// Gets the collection of all elements of <see cref="AllChildren"/>
-                /// collection included in layout (i.e. visible).
-                /// </summary>
-                public virtual IEnumerable<Control> AllChildrenIncludedInLayout
-                    => AllChildren.Where(x => x.Visible);
-
-         */
 
         /// <summary>
         /// Conceals the control from the user.
@@ -1446,8 +1441,10 @@ namespace Alternet.UI
                     /*var children = Handler.AllChildren.ToArray();*/
 
                     SuspendLayout();
-                    Children.Clear();
-                    Handler.VisualChildren.Clear();
+                    if(HasChildren) 
+                        Children.Clear();
+                    if(Handler.HasVisualChildren)
+                        Handler.VisualChildren.Clear();
                     ResumeLayout(performLayout: false);
 
                     // TODO
@@ -1516,13 +1513,16 @@ namespace Alternet.UI
         /// <summary>
         /// Raises the <see cref="DragEnter"/> event.
         /// </summary>
-        /// <param name="e">The <see cref="DragEventArgs"/> that contains the event data.</param>
-        protected virtual void OnDragEnter(DragEventArgs e) => DragEnter?.Invoke(this, e);
+        /// <param name="e">The <see cref="DragEventArgs"/>
+        /// that contains the event data.</param>
+        protected virtual void OnDragEnter(DragEventArgs e) =>
+            DragEnter?.Invoke(this, e);
 
         /// <summary>
         /// Raises the <see cref="DragLeave"/> event.
         /// </summary>
-        /// <param name="e">The <see cref="EventArgs"/> that contains the event data.</param>
+        /// <param name="e">The <see cref="EventArgs"/> that
+        /// contains the event data.</param>
         protected virtual void OnDragLeave(EventArgs e) => DragLeave?.Invoke(this, e);
 
         private protected void SetVisibleValue(bool value) => visible = value;
@@ -1534,18 +1534,23 @@ namespace Alternet.UI
             OnHandlerAttached(EventArgs.Empty);
         }
 
-        private void Children_ItemInserted(object? sender, CollectionChangeEventArgs<Control> e)
+        private void Children_ItemInserted(
+            object? sender,
+            CollectionChangeEventArgs<Control> e)
         {
             e.Item.Parent = this;
         }
 
-        private void Children_ItemRemoved(object? sender, CollectionChangeEventArgs<Control> e)
+        private void Children_ItemRemoved(
+            object? sender,
+            CollectionChangeEventArgs<Control> e)
         {
             e.Item.Parent = null;
         }
 
         /// <summary>
-        /// Gets or sets the tool-tip object that is displayed for this element in the user interface.
+        /// Gets or sets the tool-tip object that is displayed for this element
+        /// in the user interface.
         /// </summary>
         [DefaultValue(null)]
         [Localizability(LocalizationCategory.ToolTip)]
@@ -1576,7 +1581,8 @@ namespace Alternet.UI
         /// <summary>
         /// Called when the enabled of the <see cref="Enabled"/> property changes.
         /// </summary>
-        /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
+        /// <param name="e">An <see cref="EventArgs"/> that contains the
+        /// event data.</param>
         protected virtual void OnEnabledChanged(EventArgs e)
         {
         }
@@ -1584,7 +1590,9 @@ namespace Alternet.UI
         /// <summary>
         /// Callback for changes to the Enabled property
         /// </summary>
-        private static void OnEnabledPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private static void OnEnabledPropertyChanged(
+            DependencyObject d,
+            DependencyPropertyChangedEventArgs e)
         {
             Control control = (Control)d;
             control.OnEnabledPropertyChanged((bool)e.OldValue, (bool)e.NewValue);
