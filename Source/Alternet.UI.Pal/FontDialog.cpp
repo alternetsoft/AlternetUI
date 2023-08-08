@@ -71,7 +71,7 @@ namespace Alternet::UI
     void FontDialog::SetRange(int minRange, int maxRange)
     {
         _minRange = minRange;
-        _maxRange = _maxRange;
+        _maxRange = maxRange;
     }
 
     Color FontDialog::GetColor()
