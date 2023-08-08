@@ -34,7 +34,7 @@ namespace ControlsSample
 
         private void AddDefaultItems()
         {
-            string folder1 = GetAppFolder()+@"../../../../";
+            string folder1 = PathUtils.GetAppFolder()+@"../../../../";
             string folder2 = folder1+ @"../";
             folder1 = Path.GetFullPath(folder1);
             folder2 = Path.GetFullPath(folder2);
@@ -98,8 +98,8 @@ namespace ControlsSample
             site?.LogEvent("Run sample: " + path);
 
             string runext = Application.IsWindowsOS ? "bat" : "sh";
-            string runutil = GetAppFolder() + "runsample." + runext;
-            path = Path.GetDirectoryName(path);
+            string runutil = PathUtils.GetAppFolder() + "runsample." + runext;
+            path = Path.GetDirectoryName(path)!;
 
             RunSample(runutil,$"\"{path}\"");
 
