@@ -6,7 +6,7 @@ namespace Alternet::UI
         _value(*this, DateTime(), &Control::IsWxWindowCreated,
             &DateTimePicker::RetrieveValue, &DateTimePicker::ApplyValue)
     {
-        GetDelayedValues().Add({ &_value });
+        GetDelayedValues().Add( &_value);
     }
 
     bool DateTimePicker::GetHasBorder()
