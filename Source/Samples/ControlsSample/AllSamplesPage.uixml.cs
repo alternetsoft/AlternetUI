@@ -58,7 +58,8 @@ namespace ControlsSample
 
             for (int i = csproj.Count-1; i >=0 ; i--)
             {
-                if (csproj[i].EndsWith("ControlsSample.csproj"))
+                if (csproj[i].EndsWith("/ControlsSample.csproj") ||
+                    csproj[i].EndsWith(@"\ControlsSample.csproj"))
                 {
                     csproj.RemoveAt(i);
                     continue;
