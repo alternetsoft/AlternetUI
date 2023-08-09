@@ -263,8 +263,7 @@ namespace WindowPropertiesSample
 
         private void ActivateButton_Click(object sender, EventArgs e)
         {
-            if (testWindow != null)
-                testWindow.Activate();
+            testWindow?.Activate();
         }
 
         private void Window_Activated(object sender, EventArgs e)
@@ -282,8 +281,10 @@ namespace WindowPropertiesSample
             if (testWindow == null)
                 return;
 
-            var ownedWindow = new OwnedWindow();
-            ownedWindow.Owner = testWindow;
+            var ownedWindow = new OwnedWindow
+            {
+                Owner = testWindow
+            };
 
             ownedWindow.SetLabel("Owned Window #" + testWindow.OwnedWindows.Length);
             ownedWindow.Show();
@@ -348,8 +349,8 @@ namespace WindowPropertiesSample
 
         private void SetSizeToContentButton_Click(object sender, System.EventArgs e)
         {
-            if (testWindow != null)
-                testWindow.SetSizeToContent((WindowSizeToContentMode)sizeToContentModeComboBox.SelectedItem!);
+            testWindow?.SetSizeToContent(
+                (WindowSizeToContentMode)sizeToContentModeComboBox.SelectedItem!);
         }
     }
 }
