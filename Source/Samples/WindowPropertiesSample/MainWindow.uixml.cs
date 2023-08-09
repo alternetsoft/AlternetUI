@@ -47,7 +47,7 @@ namespace WindowPropertiesSample
 
             testWindow.ShowModal();
 
-            MessageBox.Show("ModalResult: " + testWindow.ModalResult);
+            LogEvent("ModalResult: " + testWindow.ModalResult);
             testWindow.Dispose();
             OnWindowClosed();
         }
