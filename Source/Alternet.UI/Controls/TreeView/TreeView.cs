@@ -114,12 +114,14 @@ namespace Alternet.UI
         /// <summary>
         /// Occurs after the tree item is collapsed.
         /// </summary>
-        public event EventHandler<TreeViewItemExpandedChangedEventArgs>? AfterCollapse;
+        public event
+            EventHandler<TreeViewItemExpandedChangedEventArgs>? AfterCollapse;
 
         /// <summary>
         /// Occurs before the tree item is expanded. This event can be canceled.
         /// </summary>
-        public event EventHandler<TreeViewItemExpandedChangingEventArgs>? BeforeExpand;
+        public event
+            EventHandler<TreeViewItemExpandedChangingEventArgs>? BeforeExpand;
 
         /// <summary>
         /// Occurs before the tree item is collapsed. This event can be canceled.
@@ -535,7 +537,8 @@ namespace Alternet.UI
         /// The zero-based index of the image in the <see cref="ImageList"/> that
         /// is displayed for the items in this <see cref="TreeView"/> by default.
         /// The default is <c>null</c>.
-        /// The <c>null</c> value means no image is displayed for the items by default.
+        /// The <c>null</c> value means no image is displayed for the items
+        /// by default.
         /// </value>
         /// <remarks>
         /// The effect of setting this property depends on the value of the
@@ -543,7 +546,8 @@ namespace Alternet.UI
         /// You can specify which images from the list are displayed for items
         /// by default by setting the <see cref="ImageIndex"/> property.
         /// Individual <see cref="TreeViewItem"/> objects can specify which image
-        /// is displayed by setting the <see cref="TreeViewItem.ImageIndex"/> property.
+        /// is displayed by setting the
+        /// <see cref="TreeViewItem.ImageIndex"/> property.
         /// These individual <see cref="TreeViewItem"/> settings will override
         /// the settings in the corresponding <see cref="TreeView"/> properties.
         /// </remarks>

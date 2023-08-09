@@ -128,7 +128,7 @@ namespace Alternet.UI
         /// <inheritdoc cref="TreeView.ShowRootLines"/>
         public override bool ShowRootLines
         {
-            get => NativeControl.ShowRootLines; 
+            get => NativeControl.ShowRootLines;
             set => NativeControl.ShowRootLines = value;
         }
 
@@ -189,8 +189,13 @@ namespace Alternet.UI
             }
         }
 
-        public override bool IsItemSelected(TreeViewItem item) =>
-            NativeControl.IsItemSelected(GetHandleFromItem(item));
+        public override bool IsItemSelected(TreeViewItem item)
+        {
+            var p = GetHandleFromItem(item);
+            if (p == IntPtr.Zero)
+                return false;
+            return NativeControl.IsItemSelected(p);
+        }
 
         public override void BeginLabelEdit(TreeViewItem item)
         {
@@ -200,40 +205,87 @@ namespace Alternet.UI
                     "Label editing is not allowed.");
             }
 
-            NativeControl.BeginLabelEdit(GetHandleFromItem(item));
+            var p = GetHandleFromItem(item);
+            if (p == IntPtr.Zero)
+                return;
+            NativeControl.BeginLabelEdit(p);
         }
 
-        public override void EndLabelEdit(TreeViewItem item, bool cancel) =>
-            NativeControl.EndLabelEdit(GetHandleFromItem(item), cancel);
+        public override void EndLabelEdit(TreeViewItem item, bool cancel)
+        {
+            var p = GetHandleFromItem(item);
+            if (p == IntPtr.Zero)
+                return;
+            NativeControl.EndLabelEdit(p, cancel);
+        }
 
-        public override void ExpandAllChildren(TreeViewItem item) =>
-            NativeControl.ExpandAllChildren(GetHandleFromItem(item));
+        public override void ExpandAllChildren(TreeViewItem item)
+        {
+            var p = GetHandleFromItem(item);
+            if (p == IntPtr.Zero)
+                return;
+            NativeControl.ExpandAllChildren(p);
+        }
 
-        public override void CollapseAllChildren(TreeViewItem item) =>
-            NativeControl.CollapseAllChildren(GetHandleFromItem(item));
+        public override void CollapseAllChildren(TreeViewItem item)
+        {
+            var p = GetHandleFromItem(item);
+            if (p == IntPtr.Zero)
+                return;
+            NativeControl.CollapseAllChildren(p);
+        }
 
-        public override void EnsureVisible(TreeViewItem item) =>
-            NativeControl.EnsureVisible(GetHandleFromItem(item));
+        public override void EnsureVisible(TreeViewItem item)
+        {
+            var p = GetHandleFromItem(item);
+            if (p == IntPtr.Zero)
+                return;
+            NativeControl.EnsureVisible(p);
+        }
 
-        public override void ScrollIntoView(TreeViewItem item) =>
-            NativeControl.ScrollIntoView(GetHandleFromItem(item));
+        public override void ScrollIntoView(TreeViewItem item)
+        {
+            var p = GetHandleFromItem(item);
+            if (p == IntPtr.Zero)
+                return;
+            NativeControl.ScrollIntoView(p);
+        }
 
-        public override void SetFocused(TreeViewItem item, bool value) =>
-            NativeControl.SetFocused(GetHandleFromItem(item), value);
+        public override void SetFocused(TreeViewItem item, bool value)
+        {
+            var p = GetHandleFromItem(item);
+            if (p == IntPtr.Zero)
+                return;
+            NativeControl.SetFocused(p, value);
+        }
 
-        public override bool IsItemFocused(TreeViewItem item) =>
-            NativeControl.IsItemFocused(GetHandleFromItem(item));
+        public override bool IsItemFocused(TreeViewItem item)
+        {
+            var p = GetHandleFromItem(item);
+            if (p == IntPtr.Zero)
+                return false;
+            return NativeControl.IsItemFocused(p);
+        }
 
         public override void SetItemText(TreeViewItem item, string text)
         {
             if (skipSetItemText)
                 return;
-
-            NativeControl.SetItemText(GetHandleFromItem(item), text);
+            var p = GetHandleFromItem(item);
+            if (p == IntPtr.Zero)
+                return;
+            NativeControl.SetItemText(p, text);
         }
 
-        public override void SetItemImageIndex(TreeViewItem item, int? imageIndex) =>
-            NativeControl.SetItemImageIndex(GetHandleFromItem(item), imageIndex ?? -1);
+        public override void SetItemImageIndex(
+            TreeViewItem item,
+            int? imageIndex)
+        {
+            var p = GetHandleFromItem(item);
+            if (p == IntPtr.Zero)
+                return;
+            NativeControl.SetItemImageIndex(p, imageIndex ?? -1);
+        }
 
         internal override Native.Control CreateNativeControl()
         {
@@ -290,6 +342,8 @@ namespace Alternet.UI
             Native.NativeEventArgs<Native.TreeViewItemEventData> e)
         {
             var item = GetItemFromHandle(e.Data.item);
+            if (item == null)
+                return;
             var ea = new TreeViewItemExpandedChangingEventArgs(item);
             Control.RaiseBeforeCollapse(ea);
             e.Result = ea.Cancel ? (IntPtr)1 : IntPtr.Zero;
@@ -300,6 +354,8 @@ namespace Alternet.UI
             Native.NativeEventArgs<Native.TreeViewItemEventData> e)
         {
             var item = GetItemFromHandle(e.Data.item);
+            if (item == null)
+                return;
             var ea = new TreeViewItemExpandedChangingEventArgs(item);
             Control.RaiseBeforeExpand(ea);
             e.Result = ea.Cancel ? (IntPtr)1 : IntPtr.Zero;
@@ -309,8 +365,11 @@ namespace Alternet.UI
             object? sender,
             Native.NativeEventArgs<Native.TreeViewItemLabelEditEventData> e)
         {
+            var item = GetItemFromHandle(e.Data.item);
+            if (item == null)
+                return;
             var ea = new TreeViewItemLabelEditEventArgs(
-                GetItemFromHandle(e.Data.item),
+                item,
                 e.Data.editCancelled ? null : e.Data.label);
 
             Control.RaiseAfterLabelEdit(ea);
@@ -326,11 +385,15 @@ namespace Alternet.UI
         }
 
         private void NativeControl_BeforeItemLabelEdit(
-            object? sender, 
+            object? sender,
             Native.NativeEventArgs<Native.TreeViewItemLabelEditEventData> e)
         {
+            var item = GetItemFromHandle(e.Data.item);
+            if (item == null)
+                return;
+
             var ea = new TreeViewItemLabelEditEventArgs(
-                GetItemFromHandle(e.Data.item),
+                item,
                 e.Data.editCancelled ? null : e.Data.label);
             Control.RaiseBeforeLabelEdit(ea);
             e.Result = ea.Cancel ? (IntPtr)1 : IntPtr.Zero;
@@ -341,6 +404,8 @@ namespace Alternet.UI
             Native.NativeEventArgs<Native.TreeViewItemEventData> e)
         {
             var item = GetItemFromHandle(e.Data.item);
+            if (item == null)
+                return;
             var ea = new TreeViewItemExpandedChangedEventArgs(item);
             Control.RaiseAfterCollapse(ea);
             Control.RaiseExpandedChanged(ea);
@@ -351,6 +416,8 @@ namespace Alternet.UI
             Native.NativeEventArgs<Native.TreeViewItemEventData> e)
         {
             var item = GetItemFromHandle(e.Data.item);
+            if (item == null)
+                return;
             var ea = new TreeViewItemExpandedChangedEventArgs(item);
             Control.RaiseAfterExpand(ea);
             Control.RaiseExpandedChanged(ea);
@@ -398,12 +465,16 @@ namespace Alternet.UI
 
         private IntPtr GetHandleFromItem(TreeViewItem item)
         {
-            return handlesByItems[item];
+            if (handlesByItems.TryGetValue(item, out IntPtr result))
+                return result;
+            return IntPtr.Zero;
         }
 
         private TreeViewItem GetItemFromHandle(IntPtr handle)
         {
-            return itemsByHandles[handle];
+            if (itemsByHandles.TryGetValue(handle, out TreeViewItem? result))
+                return result;
+            return null!;
         }
 
         private void ApplySelection()
@@ -419,7 +490,11 @@ namespace Alternet.UI
                 var handles = control.SelectedItems.Select(GetHandleFromItem);
 
                 foreach (var handle in handles)
+                {
+                    if (handle == IntPtr.Zero)
+                        continue;
                     NativeControl.SetSelected(handle, true);
+                }
             }
             finally
             {
@@ -482,6 +557,7 @@ namespace Alternet.UI
         private void InsertItemAndChildren(TreeViewItem item)
         {
             InsertItem(item);
+
             void Apply(IEnumerable<TreeViewItem> items)
             {
                 foreach (var item in items)
@@ -490,7 +566,9 @@ namespace Alternet.UI
                     Apply(item.Items);
                 }
             }
-            Apply(item.Items);
+
+            if(item.HasItems)
+                Apply(item.Items);
         }
 
         private void Control_ItemAdded(
@@ -506,15 +584,20 @@ namespace Alternet.UI
         {
             var item = e.Item;
 
-            NativeControl.RemoveItem(GetHandleFromItem(item));
+            var p = GetHandleFromItem(item);
+            if(p != IntPtr.Zero)
+                NativeControl.RemoveItem(p);
             RemoveItemAndChildrenFromDictionaries(item);
 
             void RemoveItemAndChildrenFromDictionaries(TreeViewItem parentItem)
             {
-                foreach (var childItem in parentItem.Items)
-                    RemoveItemAndChildrenFromDictionaries(childItem);
+                if (parentItem.HasItems)
+                {
+                    foreach (var childItem in parentItem.Items)
+                        RemoveItemAndChildrenFromDictionaries(childItem);
+                }
 
-                var handle = handlesByItems[parentItem];
+                var handle = GetHandleFromItem(parentItem);
                 handlesByItems.Remove(parentItem);
                 itemsByHandles.Remove(handle);
             }
