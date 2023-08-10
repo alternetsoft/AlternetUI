@@ -19,6 +19,12 @@ namespace Alternet.UI
     [StructLayout(LayoutKind.Sequential)]
     public struct Thickness : IEquatable<Thickness>
     {
+        /// <summary>
+        /// Gets an empty <see cref="Thickness"/> object with
+        /// Left, Top, Right, Bottom properties equal to zero.
+        /// </summary>
+        public static readonly Thickness Empty = new();
+
         private double left;
 
         private double top;
@@ -294,6 +300,23 @@ namespace Alternet.UI
         public override readonly string ToString()
         {
             return $"({left}, {top}, {right}, {bottom})";
+        }
+
+        /// <summary>
+        /// Apply minimal limits to all the fields of the
+        /// <see cref="Thickness"/> instance.
+        /// </summary>
+        /// <param name="min">Minimal possible thickness.</param>
+        public void ApplyMin(Thickness min)
+        {
+            if (left < min.left)
+                left = min.left;
+            if (top < min.top)
+                top = min.top;
+            if (right < min.right)
+                right = min.right;
+            if (bottom < min.bottom)
+                bottom = min.bottom;
         }
 
         /// <summary>
