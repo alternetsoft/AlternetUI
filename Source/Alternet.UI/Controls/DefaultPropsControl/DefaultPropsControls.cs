@@ -51,12 +51,12 @@ namespace Alternet.UI
         public DefaultPropsControl Grid => GetProps(AllControls.Grid);
 
         /// <summary>
-        /// Contains default property values for the <see cref="Label"/>.
+        /// Contains default property values for the <see cref="GroupBox"/>.
         /// </summary>
         public DefaultPropsControl GroupBox => GetProps(AllControls.GroupBox);
 
         /// <summary>
-        /// Contains default property values for the <see cref=""/>.
+        /// Contains default property values for the <see cref="Label"/>.
         /// </summary>
         public DefaultPropsControl Label => GetProps(AllControls.Label);
 

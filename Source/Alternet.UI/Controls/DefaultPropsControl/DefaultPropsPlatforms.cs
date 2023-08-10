@@ -3,7 +3,7 @@ using System;
 namespace Alternet.UI
 {
     /// <summary>
-    /// 
+    /// Contains platform related default property values.
     /// </summary>
     public static class DefaultPropsPlatforms
     {

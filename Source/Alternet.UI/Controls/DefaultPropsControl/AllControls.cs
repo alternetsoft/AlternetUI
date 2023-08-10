@@ -2,8 +2,12 @@ using System;
 
 namespace Alternet.UI
 {
+    /// <summary>
+    /// Enumerates all controls in the library.
+    /// </summary>
     public enum AllControls
     {
+#pragma warning disable CS1591
         Control,
         Button,
         CheckBox,

@@ -11,6 +11,9 @@ namespace Alternet.UI
         {
         }
 
+        /// <summary>
+        /// Returns default property values for all controls in the library.
+        /// </summary>
         public DefaultPropsControls Controls { get; } = new();
     }
 }
