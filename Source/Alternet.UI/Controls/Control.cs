@@ -61,6 +61,8 @@ namespace Alternet.UI
         private VerticalAlignment verticalAlignment = VerticalAlignment.Stretch;
         private HorizontalAlignment horizontalAlignment = HorizontalAlignment.Stretch;
         private ControlExtendedProps? extendedProps = null;
+        private Thickness? minMargin;
+        private Thickness? minPadding;
 
         private bool visible = true;
         private Control? parent;
@@ -70,6 +72,8 @@ namespace Alternet.UI
         /// </summary>
         public Control()
         {
+            margin.ApplyMin(MinMargin);
+            padding.ApplyMin(MinPadding);
         }
 
         /// <summary>
@@ -303,6 +307,34 @@ namespace Alternet.UI
                 if (bounds.Top == value)
                     return;
                 Bounds = new Rect(bounds.Left, value, bounds.Width, bounds.Height);
+            }
+        }
+
+        internal Thickness MinMargin
+        {
+            get
+            {
+                if(minMargin == null)
+                {
+                    minMargin = DefaultPropsPlatforms.
+                        GetAsThickness(ControlKind, AllControlProps.MinMargin);
+                }
+
+                return minMargin.Value;
+            }
+        }
+
+        internal Thickness MinPadding
+        {
+            get
+            {
+                if (minPadding == null)
+                {
+                    minPadding = DefaultPropsPlatforms.
+                        GetAsThickness(ControlKind, AllControlProps.MinPadding);
+                }
+
+                return minPadding.Value;
             }
         }
 
@@ -565,7 +597,7 @@ namespace Alternet.UI
         /// <value>If <c>true</c>, the control paints itself rather than the
         /// operating system doing so.
         /// If <c>false</c>, the <see cref="Paint"/> event is not raised.</value>
-        public bool UserPaint
+        public virtual bool UserPaint
         {
             get => Handler.UserPaint;
             set => Handler.UserPaint = value;
@@ -584,11 +616,12 @@ namespace Alternet.UI
         /// type conversion so that you can specify an asymmetric <see cref="Margin"/>
         /// in UIXML attribute syntax also.
         /// </remarks>
-        public Thickness Margin
+        public virtual Thickness Margin
         {
             get => margin;
             set
             {
+                value.ApplyMin(MinMargin);
                 if (margin == value)
                     return;
 
@@ -613,11 +646,12 @@ namespace Alternet.UI
         /// type conversion so that you can specify an asymmetric <see cref="Padding"/>
         /// in UIXML attribute syntax also.
         /// </remarks>
-        public Thickness Padding
+        public virtual Thickness Padding
         {
             get => padding;
             set
             {
+                value.ApplyMin(MinPadding);
                 if (padding == value)
                     return;
 
@@ -748,6 +782,11 @@ namespace Alternet.UI
         /// Gets a value indicating whether the control has input focus.
         /// </summary>
         public bool IsFocused => Handler.IsFocused;
+
+        /// <summary>
+        /// Returns control identifier.
+        /// </summary>
+        public virtual AllControls ControlKind => AllControls.Control;
 
         internal static int ScreenShotCounter { get; set; } = 0;
 
