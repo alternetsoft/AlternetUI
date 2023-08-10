@@ -1,4 +1,4 @@
-# 0.9.300 (2023 August ??)
+# 0.9.300 (2023 August 9)
 
 - Added LinkLabel, SplitterPanel, LayoutPanel controls.
 - Added FontDialog.
