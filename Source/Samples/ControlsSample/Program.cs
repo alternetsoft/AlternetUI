@@ -11,14 +11,6 @@ namespace ControlsSample
         public static void Main(string[] args)
         {
             var application = new Application();
-           /*
-            var minCheckBoxMargin = new Thickness(3);
-
-            DefaultPropsPlatforms.PlatformAny.Controls.RadioButton.
-                MinMargin = minCheckBoxMargin;
-            DefaultPropsPlatforms.PlatformAny.Controls.CheckBox.
-                MinMargin = minCheckBoxMargin;
-            */
             var window = new MainWindow();
 
             application.Run(window);

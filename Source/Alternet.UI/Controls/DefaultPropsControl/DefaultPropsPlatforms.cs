@@ -11,8 +11,8 @@ namespace Alternet.UI
         {
             var minCheckBoxMargin = new Thickness(3);
 
-            //PlatformLinux.Controls.RadioButton.MinMargin = minCheckBoxMargin;
-            //PlatformLinux.Controls.CheckBox.MinMargin = minCheckBoxMargin;
+            PlatformLinux.Controls.RadioButton.MinMargin = minCheckBoxMargin;
+            PlatformLinux.Controls.CheckBox.MinMargin = minCheckBoxMargin;
         }
 
         /// <summary>
