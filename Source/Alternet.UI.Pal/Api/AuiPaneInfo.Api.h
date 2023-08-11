@@ -15,3 +15,535 @@ ALTERNET_UI_API AuiPaneInfo* AuiPaneInfo_Create_()
         });
 }
 
+ALTERNET_UI_API void AuiPaneInfo_Delete_(void* handle)
+{
+    MarshalExceptions<void>([&](){
+            AuiPaneInfo::Delete(handle);
+        });
+}
+
+ALTERNET_UI_API void* AuiPaneInfo_CreateAuiPaneInfo_()
+{
+    return MarshalExceptions<void*>([&](){
+            return AuiPaneInfo::CreateAuiPaneInfo();
+        });
+}
+
+ALTERNET_UI_API void AuiPaneInfo_SafeSet_(void* handle, void* source)
+{
+    MarshalExceptions<void>([&](){
+            AuiPaneInfo::SafeSet(handle, source);
+        });
+}
+
+ALTERNET_UI_API c_bool AuiPaneInfo_IsOk_(void* handle)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return AuiPaneInfo::IsOk(handle);
+        });
+}
+
+ALTERNET_UI_API c_bool AuiPaneInfo_IsFixed_(void* handle)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return AuiPaneInfo::IsFixed(handle);
+        });
+}
+
+ALTERNET_UI_API c_bool AuiPaneInfo_IsResizable_(void* handle)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return AuiPaneInfo::IsResizable(handle);
+        });
+}
+
+ALTERNET_UI_API c_bool AuiPaneInfo_IsShown_(void* handle)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return AuiPaneInfo::IsShown(handle);
+        });
+}
+
+ALTERNET_UI_API c_bool AuiPaneInfo_IsFloating_(void* handle)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return AuiPaneInfo::IsFloating(handle);
+        });
+}
+
+ALTERNET_UI_API c_bool AuiPaneInfo_IsDocked_(void* handle)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return AuiPaneInfo::IsDocked(handle);
+        });
+}
+
+ALTERNET_UI_API c_bool AuiPaneInfo_IsToolbar_(void* handle)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return AuiPaneInfo::IsToolbar(handle);
+        });
+}
+
+ALTERNET_UI_API c_bool AuiPaneInfo_IsTopDockable_(void* handle)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return AuiPaneInfo::IsTopDockable(handle);
+        });
+}
+
+ALTERNET_UI_API c_bool AuiPaneInfo_IsBottomDockable_(void* handle)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return AuiPaneInfo::IsBottomDockable(handle);
+        });
+}
+
+ALTERNET_UI_API c_bool AuiPaneInfo_IsLeftDockable_(void* handle)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return AuiPaneInfo::IsLeftDockable(handle);
+        });
+}
+
+ALTERNET_UI_API c_bool AuiPaneInfo_IsRightDockable_(void* handle)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return AuiPaneInfo::IsRightDockable(handle);
+        });
+}
+
+ALTERNET_UI_API c_bool AuiPaneInfo_IsDockable_(void* handle)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return AuiPaneInfo::IsDockable(handle);
+        });
+}
+
+ALTERNET_UI_API c_bool AuiPaneInfo_IsFloatable_(void* handle)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return AuiPaneInfo::IsFloatable(handle);
+        });
+}
+
+ALTERNET_UI_API c_bool AuiPaneInfo_IsMovable_(void* handle)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return AuiPaneInfo::IsMovable(handle);
+        });
+}
+
+ALTERNET_UI_API c_bool AuiPaneInfo_IsDestroyOnClose_(void* handle)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return AuiPaneInfo::IsDestroyOnClose(handle);
+        });
+}
+
+ALTERNET_UI_API c_bool AuiPaneInfo_IsMaximized_(void* handle)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return AuiPaneInfo::IsMaximized(handle);
+        });
+}
+
+ALTERNET_UI_API c_bool AuiPaneInfo_HasCaption_(void* handle)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return AuiPaneInfo::HasCaption(handle);
+        });
+}
+
+ALTERNET_UI_API c_bool AuiPaneInfo_HasGripper_(void* handle)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return AuiPaneInfo::HasGripper(handle);
+        });
+}
+
+ALTERNET_UI_API c_bool AuiPaneInfo_HasBorder_(void* handle)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return AuiPaneInfo::HasBorder(handle);
+        });
+}
+
+ALTERNET_UI_API c_bool AuiPaneInfo_HasCloseButton_(void* handle)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return AuiPaneInfo::HasCloseButton(handle);
+        });
+}
+
+ALTERNET_UI_API c_bool AuiPaneInfo_HasMaximizeButton_(void* handle)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return AuiPaneInfo::HasMaximizeButton(handle);
+        });
+}
+
+ALTERNET_UI_API c_bool AuiPaneInfo_HasMinimizeButton_(void* handle)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return AuiPaneInfo::HasMinimizeButton(handle);
+        });
+}
+
+ALTERNET_UI_API c_bool AuiPaneInfo_HasPinButton_(void* handle)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return AuiPaneInfo::HasPinButton(handle);
+        });
+}
+
+ALTERNET_UI_API c_bool AuiPaneInfo_HasGripperTop_(void* handle)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return AuiPaneInfo::HasGripperTop(handle);
+        });
+}
+
+ALTERNET_UI_API void AuiPaneInfo_Window_(void* handle, void* window)
+{
+    MarshalExceptions<void>([&](){
+            AuiPaneInfo::Window(handle, window);
+        });
+}
+
+ALTERNET_UI_API void AuiPaneInfo_Name_(void* handle, const char16_t* value)
+{
+    MarshalExceptions<void>([&](){
+            AuiPaneInfo::Name(handle, value);
+        });
+}
+
+ALTERNET_UI_API void AuiPaneInfo_Caption_(void* handle, const char16_t* value)
+{
+    MarshalExceptions<void>([&](){
+            AuiPaneInfo::Caption(handle, value);
+        });
+}
+
+ALTERNET_UI_API void AuiPaneInfo_Icon_(void* handle, void* bitmapBundle)
+{
+    MarshalExceptions<void>([&](){
+            AuiPaneInfo::Icon(handle, bitmapBundle);
+        });
+}
+
+ALTERNET_UI_API void AuiPaneInfo_Left_(void* handle)
+{
+    MarshalExceptions<void>([&](){
+            AuiPaneInfo::Left(handle);
+        });
+}
+
+ALTERNET_UI_API void AuiPaneInfo_Right_(void* handle)
+{
+    MarshalExceptions<void>([&](){
+            AuiPaneInfo::Right(handle);
+        });
+}
+
+ALTERNET_UI_API void AuiPaneInfo_Top_(void* handle)
+{
+    MarshalExceptions<void>([&](){
+            AuiPaneInfo::Top(handle);
+        });
+}
+
+ALTERNET_UI_API void AuiPaneInfo_Bottom_(void* handle)
+{
+    MarshalExceptions<void>([&](){
+            AuiPaneInfo::Bottom(handle);
+        });
+}
+
+ALTERNET_UI_API void AuiPaneInfo_Center_(void* handle)
+{
+    MarshalExceptions<void>([&](){
+            AuiPaneInfo::Center(handle);
+        });
+}
+
+ALTERNET_UI_API void AuiPaneInfo_Direction_(void* handle, int direction)
+{
+    MarshalExceptions<void>([&](){
+            AuiPaneInfo::Direction(handle, direction);
+        });
+}
+
+ALTERNET_UI_API void AuiPaneInfo_Layer_(void* handle, int layer)
+{
+    MarshalExceptions<void>([&](){
+            AuiPaneInfo::Layer(handle, layer);
+        });
+}
+
+ALTERNET_UI_API void AuiPaneInfo_Row_(void* handle, int row)
+{
+    MarshalExceptions<void>([&](){
+            AuiPaneInfo::Row(handle, row);
+        });
+}
+
+ALTERNET_UI_API void AuiPaneInfo_Position_(void* handle, int pos)
+{
+    MarshalExceptions<void>([&](){
+            AuiPaneInfo::Position(handle, pos);
+        });
+}
+
+ALTERNET_UI_API void AuiPaneInfo_BestSize_(void* handle, int x, int y)
+{
+    MarshalExceptions<void>([&](){
+            AuiPaneInfo::BestSize(handle, x, y);
+        });
+}
+
+ALTERNET_UI_API void AuiPaneInfo_MinSize_(void* handle, int x, int y)
+{
+    MarshalExceptions<void>([&](){
+            AuiPaneInfo::MinSize(handle, x, y);
+        });
+}
+
+ALTERNET_UI_API void AuiPaneInfo_MaxSize_(void* handle, int x, int y)
+{
+    MarshalExceptions<void>([&](){
+            AuiPaneInfo::MaxSize(handle, x, y);
+        });
+}
+
+ALTERNET_UI_API void AuiPaneInfo_FloatingPosition_(void* handle, int x, int y)
+{
+    MarshalExceptions<void>([&](){
+            AuiPaneInfo::FloatingPosition(handle, x, y);
+        });
+}
+
+ALTERNET_UI_API void AuiPaneInfo_FloatingSize_(void* handle, int x, int y)
+{
+    MarshalExceptions<void>([&](){
+            AuiPaneInfo::FloatingSize(handle, x, y);
+        });
+}
+
+ALTERNET_UI_API void AuiPaneInfo_Fixed_(void* handle)
+{
+    MarshalExceptions<void>([&](){
+            AuiPaneInfo::Fixed(handle);
+        });
+}
+
+ALTERNET_UI_API void AuiPaneInfo_Resizable_(void* handle, c_bool resizable)
+{
+    MarshalExceptions<void>([&](){
+            AuiPaneInfo::Resizable(handle, resizable);
+        });
+}
+
+ALTERNET_UI_API void AuiPaneInfo_Dock_(void* handle)
+{
+    MarshalExceptions<void>([&](){
+            AuiPaneInfo::Dock(handle);
+        });
+}
+
+ALTERNET_UI_API void AuiPaneInfo_Float_(void* handle)
+{
+    MarshalExceptions<void>([&](){
+            AuiPaneInfo::Float(handle);
+        });
+}
+
+ALTERNET_UI_API void AuiPaneInfo_Hide_(void* handle)
+{
+    MarshalExceptions<void>([&](){
+            AuiPaneInfo::Hide(handle);
+        });
+}
+
+ALTERNET_UI_API void AuiPaneInfo_Show_(void* handle, c_bool show)
+{
+    MarshalExceptions<void>([&](){
+            AuiPaneInfo::Show(handle, show);
+        });
+}
+
+ALTERNET_UI_API void AuiPaneInfo_CaptionVisible_(void* handle, c_bool visible)
+{
+    MarshalExceptions<void>([&](){
+            AuiPaneInfo::CaptionVisible(handle, visible);
+        });
+}
+
+ALTERNET_UI_API void AuiPaneInfo_Maximize_(void* handle)
+{
+    MarshalExceptions<void>([&](){
+            AuiPaneInfo::Maximize(handle);
+        });
+}
+
+ALTERNET_UI_API void AuiPaneInfo_Restore_(void* handle)
+{
+    MarshalExceptions<void>([&](){
+            AuiPaneInfo::Restore(handle);
+        });
+}
+
+ALTERNET_UI_API void AuiPaneInfo_PaneBorder_(void* handle, c_bool visible)
+{
+    MarshalExceptions<void>([&](){
+            AuiPaneInfo::PaneBorder(handle, visible);
+        });
+}
+
+ALTERNET_UI_API void AuiPaneInfo_Gripper_(void* handle, c_bool visible)
+{
+    MarshalExceptions<void>([&](){
+            AuiPaneInfo::Gripper(handle, visible);
+        });
+}
+
+ALTERNET_UI_API void AuiPaneInfo_GripperTop_(void* handle, c_bool attop)
+{
+    MarshalExceptions<void>([&](){
+            AuiPaneInfo::GripperTop(handle, attop);
+        });
+}
+
+ALTERNET_UI_API void AuiPaneInfo_CloseButton_(void* handle, c_bool visible)
+{
+    MarshalExceptions<void>([&](){
+            AuiPaneInfo::CloseButton(handle, visible);
+        });
+}
+
+ALTERNET_UI_API void AuiPaneInfo_MaximizeButton_(void* handle, c_bool visible)
+{
+    MarshalExceptions<void>([&](){
+            AuiPaneInfo::MaximizeButton(handle, visible);
+        });
+}
+
+ALTERNET_UI_API void AuiPaneInfo_MinimizeButton_(void* handle, c_bool visible)
+{
+    MarshalExceptions<void>([&](){
+            AuiPaneInfo::MinimizeButton(handle, visible);
+        });
+}
+
+ALTERNET_UI_API void AuiPaneInfo_PinButton_(void* handle, c_bool visible)
+{
+    MarshalExceptions<void>([&](){
+            AuiPaneInfo::PinButton(handle, visible);
+        });
+}
+
+ALTERNET_UI_API void AuiPaneInfo_DestroyOnClose_(void* handle, c_bool b)
+{
+    MarshalExceptions<void>([&](){
+            AuiPaneInfo::DestroyOnClose(handle, b);
+        });
+}
+
+ALTERNET_UI_API void AuiPaneInfo_TopDockable_(void* handle, c_bool b)
+{
+    MarshalExceptions<void>([&](){
+            AuiPaneInfo::TopDockable(handle, b);
+        });
+}
+
+ALTERNET_UI_API void AuiPaneInfo_BottomDockable_(void* handle, c_bool b)
+{
+    MarshalExceptions<void>([&](){
+            AuiPaneInfo::BottomDockable(handle, b);
+        });
+}
+
+ALTERNET_UI_API void AuiPaneInfo_LeftDockable_(void* handle, c_bool b)
+{
+    MarshalExceptions<void>([&](){
+            AuiPaneInfo::LeftDockable(handle, b);
+        });
+}
+
+ALTERNET_UI_API void AuiPaneInfo_RightDockable_(void* handle, c_bool b)
+{
+    MarshalExceptions<void>([&](){
+            AuiPaneInfo::RightDockable(handle, b);
+        });
+}
+
+ALTERNET_UI_API void AuiPaneInfo_Floatable_(void* handle, c_bool b)
+{
+    MarshalExceptions<void>([&](){
+            AuiPaneInfo::Floatable(handle, b);
+        });
+}
+
+ALTERNET_UI_API void AuiPaneInfo_Movable_(void* handle, c_bool b)
+{
+    MarshalExceptions<void>([&](){
+            AuiPaneInfo::Movable(handle, b);
+        });
+}
+
+ALTERNET_UI_API void AuiPaneInfo_DockFixed_(void* handle, c_bool b)
+{
+    MarshalExceptions<void>([&](){
+            AuiPaneInfo::DockFixed(handle, b);
+        });
+}
+
+ALTERNET_UI_API void AuiPaneInfo_Dockable_(void* handle, c_bool b)
+{
+    MarshalExceptions<void>([&](){
+            AuiPaneInfo::Dockable(handle, b);
+        });
+}
+
+ALTERNET_UI_API c_bool AuiPaneInfo_IsValid_(void* handle)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return AuiPaneInfo::IsValid(handle);
+        });
+}
+
+ALTERNET_UI_API void AuiPaneInfo_DefaultPane_(void* handle)
+{
+    MarshalExceptions<void>([&](){
+            AuiPaneInfo::DefaultPane(handle);
+        });
+}
+
+ALTERNET_UI_API void AuiPaneInfo_CenterPane_(void* handle)
+{
+    MarshalExceptions<void>([&](){
+            AuiPaneInfo::CenterPane(handle);
+        });
+}
+
+ALTERNET_UI_API void AuiPaneInfo_ToolbarPane_(void* handle)
+{
+    MarshalExceptions<void>([&](){
+            AuiPaneInfo::ToolbarPane(handle);
+        });
+}
+
+ALTERNET_UI_API void AuiPaneInfo_SetFlag_(void* handle, int flag, c_bool option_state)
+{
+    MarshalExceptions<void>([&](){
+            AuiPaneInfo::SetFlag(handle, flag, option_state);
+        });
+}
+
+ALTERNET_UI_API c_bool AuiPaneInfo_HasFlag_(void* handle, int flag)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return AuiPaneInfo::HasFlag(handle, flag);
+        });
+}
+

@@ -2,7 +2,8 @@
 #include "Common.h"
 #include "ApiTypes.h"
 #include "Object.h"
-#include <wx/aui/aui.h>
+#include "wx/aui/aui.h"
+#include "AuiPaneInfo.h"
 
 namespace Alternet::UI
 {
@@ -10,8 +11,10 @@ namespace Alternet::UI
     {
 #include "Api/AuiManager.inc"
     public:
-        wxAuiManager* Manager(void* handle);
+        static inline wxAuiManager* Manager(void* handle);
 
+        static wxAuiPaneInfo& PaneInfo(void* paneInfo);
+        static void* FromPaneInfo(wxAuiPaneInfo& paneInfo);
     private:
     
     };

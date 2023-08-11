@@ -10,7 +10,10 @@ namespace Alternet::UI
     {
 #include "Api/AuiPaneInfo.inc"
     public:
-    
+        wxAuiPaneInfo _paneInfoV = wxAuiPaneInfo();
+        wxAuiPaneInfo& _paneInfo = _paneInfoV;
+        
+        static wxAuiPaneInfo& PaneInfo(void* paneInfo);
     private:
     
     };

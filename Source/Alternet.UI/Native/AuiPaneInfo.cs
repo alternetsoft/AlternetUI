@@ -23,6 +23,440 @@ namespace Alternet.UI.Native
         {
         }
         
+        public static void Delete(System.IntPtr handle)
+        {
+            NativeApi.AuiPaneInfo_Delete_(handle);
+        }
+        
+        public static System.IntPtr CreateAuiPaneInfo()
+        {
+            var n = NativeApi.AuiPaneInfo_CreateAuiPaneInfo_();
+            var m = n;
+            return m;
+        }
+        
+        public static void SafeSet(System.IntPtr handle, System.IntPtr source)
+        {
+            NativeApi.AuiPaneInfo_SafeSet_(handle, source);
+        }
+        
+        public static bool IsOk(System.IntPtr handle)
+        {
+            var n = NativeApi.AuiPaneInfo_IsOk_(handle);
+            var m = n;
+            return m;
+        }
+        
+        public static bool IsFixed(System.IntPtr handle)
+        {
+            var n = NativeApi.AuiPaneInfo_IsFixed_(handle);
+            var m = n;
+            return m;
+        }
+        
+        public static bool IsResizable(System.IntPtr handle)
+        {
+            var n = NativeApi.AuiPaneInfo_IsResizable_(handle);
+            var m = n;
+            return m;
+        }
+        
+        public static bool IsShown(System.IntPtr handle)
+        {
+            var n = NativeApi.AuiPaneInfo_IsShown_(handle);
+            var m = n;
+            return m;
+        }
+        
+        public static bool IsFloating(System.IntPtr handle)
+        {
+            var n = NativeApi.AuiPaneInfo_IsFloating_(handle);
+            var m = n;
+            return m;
+        }
+        
+        public static bool IsDocked(System.IntPtr handle)
+        {
+            var n = NativeApi.AuiPaneInfo_IsDocked_(handle);
+            var m = n;
+            return m;
+        }
+        
+        public static bool IsToolbar(System.IntPtr handle)
+        {
+            var n = NativeApi.AuiPaneInfo_IsToolbar_(handle);
+            var m = n;
+            return m;
+        }
+        
+        public static bool IsTopDockable(System.IntPtr handle)
+        {
+            var n = NativeApi.AuiPaneInfo_IsTopDockable_(handle);
+            var m = n;
+            return m;
+        }
+        
+        public static bool IsBottomDockable(System.IntPtr handle)
+        {
+            var n = NativeApi.AuiPaneInfo_IsBottomDockable_(handle);
+            var m = n;
+            return m;
+        }
+        
+        public static bool IsLeftDockable(System.IntPtr handle)
+        {
+            var n = NativeApi.AuiPaneInfo_IsLeftDockable_(handle);
+            var m = n;
+            return m;
+        }
+        
+        public static bool IsRightDockable(System.IntPtr handle)
+        {
+            var n = NativeApi.AuiPaneInfo_IsRightDockable_(handle);
+            var m = n;
+            return m;
+        }
+        
+        public static bool IsDockable(System.IntPtr handle)
+        {
+            var n = NativeApi.AuiPaneInfo_IsDockable_(handle);
+            var m = n;
+            return m;
+        }
+        
+        public static bool IsFloatable(System.IntPtr handle)
+        {
+            var n = NativeApi.AuiPaneInfo_IsFloatable_(handle);
+            var m = n;
+            return m;
+        }
+        
+        public static bool IsMovable(System.IntPtr handle)
+        {
+            var n = NativeApi.AuiPaneInfo_IsMovable_(handle);
+            var m = n;
+            return m;
+        }
+        
+        public static bool IsDestroyOnClose(System.IntPtr handle)
+        {
+            var n = NativeApi.AuiPaneInfo_IsDestroyOnClose_(handle);
+            var m = n;
+            return m;
+        }
+        
+        public static bool IsMaximized(System.IntPtr handle)
+        {
+            var n = NativeApi.AuiPaneInfo_IsMaximized_(handle);
+            var m = n;
+            return m;
+        }
+        
+        public static bool HasCaption(System.IntPtr handle)
+        {
+            var n = NativeApi.AuiPaneInfo_HasCaption_(handle);
+            var m = n;
+            return m;
+        }
+        
+        public static bool HasGripper(System.IntPtr handle)
+        {
+            var n = NativeApi.AuiPaneInfo_HasGripper_(handle);
+            var m = n;
+            return m;
+        }
+        
+        public static bool HasBorder(System.IntPtr handle)
+        {
+            var n = NativeApi.AuiPaneInfo_HasBorder_(handle);
+            var m = n;
+            return m;
+        }
+        
+        public static bool HasCloseButton(System.IntPtr handle)
+        {
+            var n = NativeApi.AuiPaneInfo_HasCloseButton_(handle);
+            var m = n;
+            return m;
+        }
+        
+        public static bool HasMaximizeButton(System.IntPtr handle)
+        {
+            var n = NativeApi.AuiPaneInfo_HasMaximizeButton_(handle);
+            var m = n;
+            return m;
+        }
+        
+        public static bool HasMinimizeButton(System.IntPtr handle)
+        {
+            var n = NativeApi.AuiPaneInfo_HasMinimizeButton_(handle);
+            var m = n;
+            return m;
+        }
+        
+        public static bool HasPinButton(System.IntPtr handle)
+        {
+            var n = NativeApi.AuiPaneInfo_HasPinButton_(handle);
+            var m = n;
+            return m;
+        }
+        
+        public static bool HasGripperTop(System.IntPtr handle)
+        {
+            var n = NativeApi.AuiPaneInfo_HasGripperTop_(handle);
+            var m = n;
+            return m;
+        }
+        
+        public static void Window(System.IntPtr handle, System.IntPtr window)
+        {
+            NativeApi.AuiPaneInfo_Window_(handle, window);
+        }
+        
+        public static void Name(System.IntPtr handle, string value)
+        {
+            NativeApi.AuiPaneInfo_Name_(handle, value);
+        }
+        
+        public static void Caption(System.IntPtr handle, string value)
+        {
+            NativeApi.AuiPaneInfo_Caption_(handle, value);
+        }
+        
+        public static void Icon(System.IntPtr handle, System.IntPtr bitmapBundle)
+        {
+            NativeApi.AuiPaneInfo_Icon_(handle, bitmapBundle);
+        }
+        
+        public static void Left(System.IntPtr handle)
+        {
+            NativeApi.AuiPaneInfo_Left_(handle);
+        }
+        
+        public static void Right(System.IntPtr handle)
+        {
+            NativeApi.AuiPaneInfo_Right_(handle);
+        }
+        
+        public static void Top(System.IntPtr handle)
+        {
+            NativeApi.AuiPaneInfo_Top_(handle);
+        }
+        
+        public static void Bottom(System.IntPtr handle)
+        {
+            NativeApi.AuiPaneInfo_Bottom_(handle);
+        }
+        
+        public static void Center(System.IntPtr handle)
+        {
+            NativeApi.AuiPaneInfo_Center_(handle);
+        }
+        
+        public static void Direction(System.IntPtr handle, int direction)
+        {
+            NativeApi.AuiPaneInfo_Direction_(handle, direction);
+        }
+        
+        public static void Layer(System.IntPtr handle, int layer)
+        {
+            NativeApi.AuiPaneInfo_Layer_(handle, layer);
+        }
+        
+        public static void Row(System.IntPtr handle, int row)
+        {
+            NativeApi.AuiPaneInfo_Row_(handle, row);
+        }
+        
+        public static void Position(System.IntPtr handle, int pos)
+        {
+            NativeApi.AuiPaneInfo_Position_(handle, pos);
+        }
+        
+        public static void BestSize(System.IntPtr handle, int x, int y)
+        {
+            NativeApi.AuiPaneInfo_BestSize_(handle, x, y);
+        }
+        
+        public static void MinSize(System.IntPtr handle, int x, int y)
+        {
+            NativeApi.AuiPaneInfo_MinSize_(handle, x, y);
+        }
+        
+        public static void MaxSize(System.IntPtr handle, int x, int y)
+        {
+            NativeApi.AuiPaneInfo_MaxSize_(handle, x, y);
+        }
+        
+        public static void FloatingPosition(System.IntPtr handle, int x, int y)
+        {
+            NativeApi.AuiPaneInfo_FloatingPosition_(handle, x, y);
+        }
+        
+        public static void FloatingSize(System.IntPtr handle, int x, int y)
+        {
+            NativeApi.AuiPaneInfo_FloatingSize_(handle, x, y);
+        }
+        
+        public static void Fixed(System.IntPtr handle)
+        {
+            NativeApi.AuiPaneInfo_Fixed_(handle);
+        }
+        
+        public static void Resizable(System.IntPtr handle, bool resizable)
+        {
+            NativeApi.AuiPaneInfo_Resizable_(handle, resizable);
+        }
+        
+        public static void Dock(System.IntPtr handle)
+        {
+            NativeApi.AuiPaneInfo_Dock_(handle);
+        }
+        
+        public static void Float(System.IntPtr handle)
+        {
+            NativeApi.AuiPaneInfo_Float_(handle);
+        }
+        
+        public static void Hide(System.IntPtr handle)
+        {
+            NativeApi.AuiPaneInfo_Hide_(handle);
+        }
+        
+        public static void Show(System.IntPtr handle, bool show)
+        {
+            NativeApi.AuiPaneInfo_Show_(handle, show);
+        }
+        
+        public static void CaptionVisible(System.IntPtr handle, bool visible)
+        {
+            NativeApi.AuiPaneInfo_CaptionVisible_(handle, visible);
+        }
+        
+        public static void Maximize(System.IntPtr handle)
+        {
+            NativeApi.AuiPaneInfo_Maximize_(handle);
+        }
+        
+        public static void Restore(System.IntPtr handle)
+        {
+            NativeApi.AuiPaneInfo_Restore_(handle);
+        }
+        
+        public static void PaneBorder(System.IntPtr handle, bool visible)
+        {
+            NativeApi.AuiPaneInfo_PaneBorder_(handle, visible);
+        }
+        
+        public static void Gripper(System.IntPtr handle, bool visible)
+        {
+            NativeApi.AuiPaneInfo_Gripper_(handle, visible);
+        }
+        
+        public static void GripperTop(System.IntPtr handle, bool attop)
+        {
+            NativeApi.AuiPaneInfo_GripperTop_(handle, attop);
+        }
+        
+        public static void CloseButton(System.IntPtr handle, bool visible)
+        {
+            NativeApi.AuiPaneInfo_CloseButton_(handle, visible);
+        }
+        
+        public static void MaximizeButton(System.IntPtr handle, bool visible)
+        {
+            NativeApi.AuiPaneInfo_MaximizeButton_(handle, visible);
+        }
+        
+        public static void MinimizeButton(System.IntPtr handle, bool visible)
+        {
+            NativeApi.AuiPaneInfo_MinimizeButton_(handle, visible);
+        }
+        
+        public static void PinButton(System.IntPtr handle, bool visible)
+        {
+            NativeApi.AuiPaneInfo_PinButton_(handle, visible);
+        }
+        
+        public static void DestroyOnClose(System.IntPtr handle, bool b)
+        {
+            NativeApi.AuiPaneInfo_DestroyOnClose_(handle, b);
+        }
+        
+        public static void TopDockable(System.IntPtr handle, bool b)
+        {
+            NativeApi.AuiPaneInfo_TopDockable_(handle, b);
+        }
+        
+        public static void BottomDockable(System.IntPtr handle, bool b)
+        {
+            NativeApi.AuiPaneInfo_BottomDockable_(handle, b);
+        }
+        
+        public static void LeftDockable(System.IntPtr handle, bool b)
+        {
+            NativeApi.AuiPaneInfo_LeftDockable_(handle, b);
+        }
+        
+        public static void RightDockable(System.IntPtr handle, bool b)
+        {
+            NativeApi.AuiPaneInfo_RightDockable_(handle, b);
+        }
+        
+        public static void Floatable(System.IntPtr handle, bool b)
+        {
+            NativeApi.AuiPaneInfo_Floatable_(handle, b);
+        }
+        
+        public static void Movable(System.IntPtr handle, bool b)
+        {
+            NativeApi.AuiPaneInfo_Movable_(handle, b);
+        }
+        
+        public static void DockFixed(System.IntPtr handle, bool b)
+        {
+            NativeApi.AuiPaneInfo_DockFixed_(handle, b);
+        }
+        
+        public static void Dockable(System.IntPtr handle, bool b)
+        {
+            NativeApi.AuiPaneInfo_Dockable_(handle, b);
+        }
+        
+        public static bool IsValid(System.IntPtr handle)
+        {
+            var n = NativeApi.AuiPaneInfo_IsValid_(handle);
+            var m = n;
+            return m;
+        }
+        
+        public static void DefaultPane(System.IntPtr handle)
+        {
+            NativeApi.AuiPaneInfo_DefaultPane_(handle);
+        }
+        
+        public static void CenterPane(System.IntPtr handle)
+        {
+            NativeApi.AuiPaneInfo_CenterPane_(handle);
+        }
+        
+        public static void ToolbarPane(System.IntPtr handle)
+        {
+            NativeApi.AuiPaneInfo_ToolbarPane_(handle);
+        }
+        
+        public static void SetFlag(System.IntPtr handle, int flag, bool option_state)
+        {
+            NativeApi.AuiPaneInfo_SetFlag_(handle, flag, option_state);
+        }
+        
+        public static bool HasFlag(System.IntPtr handle, int flag)
+        {
+            var n = NativeApi.AuiPaneInfo_HasFlag_(handle, flag);
+            var m = n;
+            return m;
+        }
+        
         
         [SuppressUnmanagedCodeSecurity]
         public class NativeApi : NativeApiProvider
@@ -31,6 +465,234 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern IntPtr AuiPaneInfo_Create_();
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void AuiPaneInfo_Delete_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr AuiPaneInfo_CreateAuiPaneInfo_();
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void AuiPaneInfo_SafeSet_(System.IntPtr handle, System.IntPtr source);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool AuiPaneInfo_IsOk_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool AuiPaneInfo_IsFixed_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool AuiPaneInfo_IsResizable_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool AuiPaneInfo_IsShown_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool AuiPaneInfo_IsFloating_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool AuiPaneInfo_IsDocked_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool AuiPaneInfo_IsToolbar_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool AuiPaneInfo_IsTopDockable_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool AuiPaneInfo_IsBottomDockable_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool AuiPaneInfo_IsLeftDockable_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool AuiPaneInfo_IsRightDockable_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool AuiPaneInfo_IsDockable_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool AuiPaneInfo_IsFloatable_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool AuiPaneInfo_IsMovable_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool AuiPaneInfo_IsDestroyOnClose_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool AuiPaneInfo_IsMaximized_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool AuiPaneInfo_HasCaption_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool AuiPaneInfo_HasGripper_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool AuiPaneInfo_HasBorder_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool AuiPaneInfo_HasCloseButton_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool AuiPaneInfo_HasMaximizeButton_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool AuiPaneInfo_HasMinimizeButton_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool AuiPaneInfo_HasPinButton_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool AuiPaneInfo_HasGripperTop_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void AuiPaneInfo_Window_(System.IntPtr handle, System.IntPtr window);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void AuiPaneInfo_Name_(System.IntPtr handle, string value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void AuiPaneInfo_Caption_(System.IntPtr handle, string value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void AuiPaneInfo_Icon_(System.IntPtr handle, System.IntPtr bitmapBundle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void AuiPaneInfo_Left_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void AuiPaneInfo_Right_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void AuiPaneInfo_Top_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void AuiPaneInfo_Bottom_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void AuiPaneInfo_Center_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void AuiPaneInfo_Direction_(System.IntPtr handle, int direction);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void AuiPaneInfo_Layer_(System.IntPtr handle, int layer);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void AuiPaneInfo_Row_(System.IntPtr handle, int row);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void AuiPaneInfo_Position_(System.IntPtr handle, int pos);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void AuiPaneInfo_BestSize_(System.IntPtr handle, int x, int y);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void AuiPaneInfo_MinSize_(System.IntPtr handle, int x, int y);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void AuiPaneInfo_MaxSize_(System.IntPtr handle, int x, int y);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void AuiPaneInfo_FloatingPosition_(System.IntPtr handle, int x, int y);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void AuiPaneInfo_FloatingSize_(System.IntPtr handle, int x, int y);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void AuiPaneInfo_Fixed_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void AuiPaneInfo_Resizable_(System.IntPtr handle, bool resizable);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void AuiPaneInfo_Dock_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void AuiPaneInfo_Float_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void AuiPaneInfo_Hide_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void AuiPaneInfo_Show_(System.IntPtr handle, bool show);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void AuiPaneInfo_CaptionVisible_(System.IntPtr handle, bool visible);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void AuiPaneInfo_Maximize_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void AuiPaneInfo_Restore_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void AuiPaneInfo_PaneBorder_(System.IntPtr handle, bool visible);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void AuiPaneInfo_Gripper_(System.IntPtr handle, bool visible);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void AuiPaneInfo_GripperTop_(System.IntPtr handle, bool attop);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void AuiPaneInfo_CloseButton_(System.IntPtr handle, bool visible);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void AuiPaneInfo_MaximizeButton_(System.IntPtr handle, bool visible);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void AuiPaneInfo_MinimizeButton_(System.IntPtr handle, bool visible);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void AuiPaneInfo_PinButton_(System.IntPtr handle, bool visible);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void AuiPaneInfo_DestroyOnClose_(System.IntPtr handle, bool b);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void AuiPaneInfo_TopDockable_(System.IntPtr handle, bool b);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void AuiPaneInfo_BottomDockable_(System.IntPtr handle, bool b);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void AuiPaneInfo_LeftDockable_(System.IntPtr handle, bool b);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void AuiPaneInfo_RightDockable_(System.IntPtr handle, bool b);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void AuiPaneInfo_Floatable_(System.IntPtr handle, bool b);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void AuiPaneInfo_Movable_(System.IntPtr handle, bool b);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void AuiPaneInfo_DockFixed_(System.IntPtr handle, bool b);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void AuiPaneInfo_Dockable_(System.IntPtr handle, bool b);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool AuiPaneInfo_IsValid_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void AuiPaneInfo_DefaultPane_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void AuiPaneInfo_CenterPane_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void AuiPaneInfo_ToolbarPane_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void AuiPaneInfo_SetFlag_(System.IntPtr handle, int flag, bool option_state);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool AuiPaneInfo_HasFlag_(System.IntPtr handle, int flag);
             
         }
     }
