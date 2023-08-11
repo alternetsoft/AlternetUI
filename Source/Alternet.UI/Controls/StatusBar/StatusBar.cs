@@ -23,6 +23,9 @@ namespace Alternet.UI
         [Content]
         public Collection<StatusBarPanel> Panels { get; } = new ();
 
+        /// <inheritdoc/>
+        public override ControlId ControlKind => ControlId.StatusBar;
+
         /// <summary>
         /// Gets a <see cref="StatusBarHandler"/> associated with this class.
         /// </summary>

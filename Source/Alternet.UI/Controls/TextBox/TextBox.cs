@@ -115,6 +115,9 @@ namespace Alternet.UI
             set { SetValue(TextProperty, value); }
         }
 
+        /// <inheritdoc/>
+        public override ControlId ControlKind => ControlId.TextBox;
+
         /// <summary>
         /// Gets or sets a value indicating whether text control is in rich edit mode
         /// </summary>

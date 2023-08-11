@@ -106,6 +106,9 @@ namespace Alternet.UI
         /// </summary>
         public bool ColumnHeaderVisible { get => Handler.ColumnHeaderVisible; set => Handler.ColumnHeaderVisible = value; }
 
+        /// <inheritdoc/>
+        public override ControlId ControlKind => ControlId.ListView;
+
         /// <summary>
         /// Gets a <see cref="ListViewHandler"/> associated with this class.
         /// </summary>

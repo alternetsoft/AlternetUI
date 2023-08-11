@@ -115,6 +115,9 @@ namespace Alternet.UI
         /// </summary>
         public event EventHandler? RoleChanged;
 
+        /// <inheritdoc/>
+        public override ControlId ControlKind => ControlId.MenuItem;
+
         /// <summary>
         /// Gets or sets a value indicating the caption of the menu item.
         /// </summary>

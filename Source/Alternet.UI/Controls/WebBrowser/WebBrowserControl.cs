@@ -99,6 +99,10 @@ namespace Alternet.UI
             }
         }
 
+        /// <inheritdoc/>
+        public override ControlId ControlKind => ControlId.WebBrowser;
+
+
         /// <include file="Interfaces/IWebBrowser.xml" path='doc/HasSelection/*'/>
         public virtual bool HasSelection
         {

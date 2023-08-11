@@ -27,6 +27,9 @@ namespace Alternet.UI
             Text = text;
         }
 
+        /// <inheritdoc/>
+        public override ControlId ControlKind => ControlId.StatusBarPanel;
+
         /// <summary>
         /// Gets a <see cref="StatusBarPanelHandler"/> associated with this class.
         /// </summary>

@@ -38,6 +38,9 @@ namespace Alternet.UI
         /// </summary>
         public Collection<InputBinding> InputBindings { get; } = new Collection<InputBinding>();
 
+        /// <inheritdoc/>
+        public override ControlId ControlKind => ControlId.Window;
+
         internal static Window? GetParentWindow(DependencyObject dp)
         {
             // For use instead of PresentationSource.CriticalFromVisual(focusScope).

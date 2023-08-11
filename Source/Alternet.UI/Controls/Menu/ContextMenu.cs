@@ -26,6 +26,9 @@ namespace Alternet.UI
         {
         }
 
+        /// <inheritdoc/>
+        public override ControlId ControlKind => ControlId.ContextMenu;
+
         /// <summary>
         /// Displays the shortcut menu at the specified position.
         /// </summary>

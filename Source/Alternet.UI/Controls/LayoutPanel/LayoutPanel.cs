@@ -101,6 +101,9 @@ namespace Alternet.UI
             return control.ExtendedProps.MinimumSize;
         }
 
+        /// <inheritdoc/>
+        public override ControlId ControlKind => ControlId.LayoutPanel;
+
         internal static void SetAnchor(Control control, AnchorStyles value)
         {
             if (control == null)

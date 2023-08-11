@@ -48,7 +48,7 @@ namespace Alternet.UI
         /// </summary>
         /// <value>One of the <see cref="TabAlignment"/> values. The default is <see cref="TabAlignment.Top"/>.</value>
         public TabAlignment TabAlignment
-        { 
+        {
             get => Handler.TabAlignment;
             set
             {
@@ -56,8 +56,11 @@ namespace Alternet.UI
                 if (value == TabAlignment.Left || value == TabAlignment.Right)
                     return;
                 Handler.TabAlignment = value;
-            } 
+            }
         }
+
+        /// <inheritdoc/>
+        public override ControlId ControlKind => ControlId.TabControl;
 
         /// <summary>
         /// Gets the collection of tab pages in this tab control.

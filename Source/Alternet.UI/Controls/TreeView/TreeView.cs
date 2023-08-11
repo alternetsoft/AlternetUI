@@ -193,6 +193,9 @@ namespace Alternet.UI
             }
         }
 
+        /// <inheritdoc/>
+        public override ControlId ControlKind => ControlId.TreeView;
+
         /// <summary>
         /// Gets or sets a value indicating whether the control has a border.
         /// </summary>

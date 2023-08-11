@@ -70,6 +70,9 @@ namespace Alternet.UI
             }
         }
 
+        /// <inheritdoc/>
+        public override ControlId ControlKind => ControlId.Border;
+
         /// <summary>
         /// Gets or sets the border color for the <see cref="Border"/> control.
         /// </summary>

@@ -26,6 +26,9 @@ namespace Alternet.UI
         /// </summary>
         public event EventHandler? OwnerChanged;
 
+        /// <inheritdoc/>
+        public override ControlId ControlKind => ControlId.Popup;
+
         /// <summary>
         /// Gets or sets the window that owns this popup.
         /// </summary>

@@ -3,7 +3,7 @@ using System;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Enumerates platform related default properties.
+    /// Defines ids for platform related default properties.
     /// </summary>
     public enum ControlDefaultsId
     {

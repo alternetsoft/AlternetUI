@@ -105,6 +105,9 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        public override ControlId ControlKind => ControlId.ToolbarItem;
+
+        /// <inheritdoc/>
         public override IReadOnlyList<FrameworkElement> ContentElements
         {
             get

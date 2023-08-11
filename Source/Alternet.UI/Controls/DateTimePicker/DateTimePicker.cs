@@ -95,6 +95,9 @@ namespace Alternet.UI
             }
         }
 
+        /// <inheritdoc/>
+        public override ControlId ControlKind => ControlId.DateTimePicker;
+
         /// <summary>
         /// Gets or sets the value assigned to the <see cref="DateTimePicker"/>
         /// as a selected <see cref="DateTime"/>.

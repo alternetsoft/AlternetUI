@@ -37,6 +37,9 @@ namespace Alternet.UI
         public Collection<MenuItem> Items { get; } = new Collection<MenuItem>();
 
         /// <inheritdoc/>
+        public override ControlId ControlKind => ControlId.Menu;
+
+        /// <inheritdoc/>
         public override IReadOnlyList<FrameworkElement> ContentElements => Items;
 
         /// <inheritdoc />

@@ -22,7 +22,9 @@ namespace Alternet.UI
     /// </remarks>
     public class Slider : Control
     {
-        /// <inheritdoc/>
+        /// <summary>
+        /// Gets a <see cref="SliderHandler"/> associated with this class.
+        /// </summary>
         public new SliderHandler Handler
         {
             get
@@ -31,6 +33,9 @@ namespace Alternet.UI
                 return (SliderHandler)base.Handler;
             }
         }
+
+        /// <inheritdoc/>
+        public override ControlId ControlKind => ControlId.Slider;
 
         /// <summary>
         /// Gets or sets a value indicating the horizontal or vertical orientation of the slider.

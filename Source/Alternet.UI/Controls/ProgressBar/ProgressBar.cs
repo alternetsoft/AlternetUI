@@ -38,6 +38,11 @@ namespace Alternet.UI
         public ProgressBarOrientation Orientation { get => Handler.Orientation; set => Handler.Orientation = value; }
 
         /// <inheritdoc/>
+        public override ControlId ControlKind => ControlId.ProgressBar;
+
+        /// <summary>
+        /// Gets a <see cref="ProgressBarHandler"/> associated with this class.
+        /// </summary>
         public new ProgressBarHandler Handler
         {
             get

@@ -116,6 +116,10 @@ namespace Alternet.UI
             }
         }
 
+        /// <inheritdoc/>
+        public override ControlId ControlKind => ControlId.Toolbar;
+
+
         /// <summary>
         /// Gets or sets a value indicating whether to align the toolbar at
         /// the right side of parent window.

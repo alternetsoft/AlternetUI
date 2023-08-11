@@ -3,13 +3,17 @@ using System;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Enumerates all controls in the library.
+    /// Defines ids for all controls in the library.
     /// </summary>
     public enum ControlId
     {
 #pragma warning disable CS1591
         Control,
         Button,
+        Border,
+        ContextMenu,
+        MainMenu,
+        MenuItem,
         CheckBox,
         RadioButton,
         ColorPicker,
