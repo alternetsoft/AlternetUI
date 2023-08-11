@@ -5,9 +5,9 @@ namespace Alternet.UI
     /// <summary>
     /// Contains platform related default property values.
     /// </summary>
-    public static class DefaultPropsPlatforms
+    public static class AllPlatformDefaults
     {
-        static DefaultPropsPlatforms()
+        static AllPlatformDefaults()
         {
             var minCheckBoxMargin = new Thickness(3);
 
@@ -20,22 +20,22 @@ namespace Alternet.UI
         /// is used if default property value for the current platform
         /// is not specified.
         /// </summary>
-        public static DefaultPropsPlatform PlatformAny { get; } = new();
+        public static PlatformDefaults PlatformAny { get; } = new();
 
         /// <summary>
         /// Defines default control property values for Windows platfrom.
         /// </summary>
-        public static DefaultPropsPlatform PlatformWindows { get; } = new();
+        public static PlatformDefaults PlatformWindows { get; } = new();
 
         /// <summary>
         /// Defines default control property values for Linux platfrom.
         /// </summary>
-        public static DefaultPropsPlatform PlatformLinux { get; } = new();
+        public static PlatformDefaults PlatformLinux { get; } = new();
 
         /// <summary>
         /// Defines default control property values for macOs platfrom.
         /// </summary>
-        public static DefaultPropsPlatform PlatformMacOs { get; } = new();
+        public static PlatformDefaults PlatformMacOs { get; } = new();
 
         /// <summary>
         /// Defines default control property values for the current platfrom.
@@ -45,7 +45,7 @@ namespace Alternet.UI
         /// <see cref="PlatformLinux"/> or <see cref="PlatformMacOs"/> depending
         /// from the operating system on which application is executed.
         /// </remarks>
-        public static DefaultPropsPlatform PlatformCurrent { get; } =
+        public static PlatformDefaults PlatformCurrent { get; } =
             GetPlatformCurrent();
 
         /// <summary>
@@ -56,7 +56,7 @@ namespace Alternet.UI
         /// is returned.</param>
         /// <param name="prop">Property identifier.</param>
         /// <returns></returns>
-        public static object? GetPropValue(AllControls control, AllControlProps prop)
+        public static object? GetPropValue(ControlId control, ControlDefaultsId prop)
         {
             object? result = GetPropValue(PlatformCurrent, control, prop);
             result ??= GetPropValue(PlatformAny, control, prop);
@@ -64,27 +64,27 @@ namespace Alternet.UI
         }
 
         internal static object? GetPropValue(
-            DefaultPropsPlatform platform,
-            AllControls control,
-            AllControlProps prop)
+            PlatformDefaults platform,
+            ControlId control,
+            ControlDefaultsId prop)
         {
             object? result = platform.Controls.GetPropValue(control, prop);
             return result;
         }
 
         internal static Thickness GetAsThickness(
-            AllControls control,
-            AllControlProps prop)
+            ControlId control,
+            ControlDefaultsId prop)
         {
             Thickness? result =
-                (Thickness?)DefaultPropsPlatforms.GetPropValue(control, prop);
+                (Thickness?)AllPlatformDefaults.GetPropValue(control, prop);
             if (result == null)
                 return Thickness.Empty;
             else
                 return result.Value;
         }
 
-        private static DefaultPropsPlatform GetPlatformCurrent()
+        private static PlatformDefaults GetPlatformCurrent()
         {
             if (Application.IsWindowsOS)
                 return PlatformWindows;

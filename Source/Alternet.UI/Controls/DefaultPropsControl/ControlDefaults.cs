@@ -5,11 +5,12 @@ namespace Alternet.UI
     /// <summary>
     /// Contains default property values for the control.
     /// </summary>
-    public class DefaultPropsControl
+    public class ControlDefaults
     {
-        private readonly object?[] props = new object[(int)AllControlProps.MaxValue + 1];
+        private readonly object?[] props =
+            new object[(int)ControlDefaultsId.MaxValue + 1];
 
-        static DefaultPropsControl()
+        static ControlDefaults()
         {
         }
 
@@ -18,8 +19,8 @@ namespace Alternet.UI
         /// </summary>
         public Thickness? MinMargin
         {
-            get => (Thickness?)GetProp(AllControlProps.MinMargin);
-            set => SetProp(AllControlProps.MinMargin, value);
+            get => (Thickness?)GetProp(ControlDefaultsId.MinMargin);
+            set => SetProp(ControlDefaultsId.MinMargin, value);
         }
 
         /// <summary>
@@ -27,8 +28,8 @@ namespace Alternet.UI
         /// </summary>
         public Thickness? MinPadding
         {
-            get => (Thickness?)GetProp(AllControlProps.MinPadding);
-            set => SetProp(AllControlProps.MinPadding, value);
+            get => (Thickness?)GetProp(ControlDefaultsId.MinPadding);
+            set => SetProp(ControlDefaultsId.MinPadding, value);
         }
 
         /// <summary>
@@ -36,7 +37,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="prop">Property identifier.</param>
         /// <returns></returns>
-        public object? GetProp(AllControlProps prop)
+        public object? GetProp(ControlDefaultsId prop)
         {
             return props[(int)prop];
         }
@@ -46,7 +47,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="prop">Property identifier.</param>
         /// <param name="value">New property value.</param>
-        public void SetProp(AllControlProps prop, object? value)
+        public void SetProp(ControlDefaultsId prop, object? value)
         {
             props[(int)prop] = value;
         }

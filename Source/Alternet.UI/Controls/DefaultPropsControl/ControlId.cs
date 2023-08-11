@@ -5,7 +5,7 @@ namespace Alternet.UI
     /// <summary>
     /// Enumerates all controls in the library.
     /// </summary>
-    public enum AllControls
+    public enum ControlId
     {
 #pragma warning disable CS1591
         Control,

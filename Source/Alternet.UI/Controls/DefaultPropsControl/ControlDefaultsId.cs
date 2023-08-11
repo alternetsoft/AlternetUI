@@ -5,7 +5,7 @@ namespace Alternet.UI
     /// <summary>
     /// Enumerates platform related default properties.
     /// </summary>
-    public enum AllControlProps
+    public enum ControlDefaultsId
     {
         /// <summary>
         /// Margin property minimal value.

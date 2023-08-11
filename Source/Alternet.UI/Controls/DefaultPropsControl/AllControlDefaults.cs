@@ -5,195 +5,195 @@ namespace Alternet.UI
     /// <summary>
     /// Contains default property values for all the controls in the library.
     /// </summary>
-    public class DefaultPropsControls
+    public class AllControlDefaults
     {
-        private readonly DefaultPropsControl[] controlProps =
-            new DefaultPropsControl[(int)AllControls.MaxValue + 1];
+        private readonly ControlDefaults[] controlProps =
+            new ControlDefaults[(int)ControlId.MaxValue + 1];
 
-        static DefaultPropsControls()
+        static AllControlDefaults()
         {
         }
 
         /// <summary>
         /// Contains default property values for the <see cref="Control"/>.
         /// </summary>
-        public DefaultPropsControl Control => GetProps(AllControls.Control);
+        public ControlDefaults Control => GetProps(ControlId.Control);
 
         /// <summary>
         /// Contains default property values for the <see cref="Button"/>.
         /// </summary>
-        public DefaultPropsControl Button => GetProps(AllControls.Button);
+        public ControlDefaults Button => GetProps(ControlId.Button);
 
         /// <summary>
         /// Contains default property values for the <see cref="CheckBox"/>.
         /// </summary>
-        public DefaultPropsControl CheckBox => GetProps(AllControls.CheckBox);
+        public ControlDefaults CheckBox => GetProps(ControlId.CheckBox);
 
         /// <summary>
         /// Contains default property values for the <see cref="RadioButton"/>.
         /// </summary>
-        public DefaultPropsControl RadioButton => GetProps(AllControls.RadioButton);
+        public ControlDefaults RadioButton => GetProps(ControlId.RadioButton);
 
         /// <summary>
         /// Contains default property values for the <see cref="ColorPicker"/>.
         /// </summary>
-        public DefaultPropsControl ColorPicker => GetProps(AllControls.ColorPicker);
+        public ControlDefaults ColorPicker => GetProps(ControlId.ColorPicker);
 
         /// <summary>
         /// Contains default property values for the <see cref="DateTimePicker"/>.
         /// </summary>
-        public DefaultPropsControl DateTimePicker =>
-            GetProps(AllControls.DateTimePicker);
+        public ControlDefaults DateTimePicker =>
+            GetProps(ControlId.DateTimePicker);
 
         /// <summary>
         /// Contains default property values for the <see cref="Grid"/>.
         /// </summary>
-        public DefaultPropsControl Grid => GetProps(AllControls.Grid);
+        public ControlDefaults Grid => GetProps(ControlId.Grid);
 
         /// <summary>
         /// Contains default property values for the <see cref="GroupBox"/>.
         /// </summary>
-        public DefaultPropsControl GroupBox => GetProps(AllControls.GroupBox);
+        public ControlDefaults GroupBox => GetProps(ControlId.GroupBox);
 
         /// <summary>
         /// Contains default property values for the <see cref="Label"/>.
         /// </summary>
-        public DefaultPropsControl Label => GetProps(AllControls.Label);
+        public ControlDefaults Label => GetProps(ControlId.Label);
 
         /// <summary>
         /// Contains default property values for the <see cref="LayoutPanel"/>.
         /// </summary>
-        public DefaultPropsControl LayoutPanel => GetProps(AllControls.LayoutPanel);
+        public ControlDefaults LayoutPanel => GetProps(ControlId.LayoutPanel);
 
         /// <summary>
         /// Contains default property values for the <see cref="ComboBox"/>.
         /// </summary>
-        public DefaultPropsControl ComboBox => GetProps(AllControls.ComboBox);
+        public ControlDefaults ComboBox => GetProps(ControlId.ComboBox);
 
         /// <summary>
         /// Contains default property values for the <see cref="ListBox"/>.
         /// </summary>
-        public DefaultPropsControl ListBox => GetProps(AllControls.ListBox);
+        public ControlDefaults ListBox => GetProps(ControlId.ListBox);
 
         /// <summary>
         /// Contains default property values for the <see cref="CheckListBox"/>.
         /// </summary>
-        public DefaultPropsControl CheckListBox => GetProps(AllControls.CheckListBox);
+        public ControlDefaults CheckListBox => GetProps(ControlId.CheckListBox);
 
         /// <summary>
         /// Contains default property values for the <see cref="ListView"/>.
         /// </summary>
-        public DefaultPropsControl ListView => GetProps(AllControls.ListView);
+        public ControlDefaults ListView => GetProps(ControlId.ListView);
 
         /// <summary>
         /// Contains default property values for the <see cref="Menu"/>.
         /// </summary>
-        public DefaultPropsControl Menu => GetProps(AllControls.Menu);
+        public ControlDefaults Menu => GetProps(ControlId.Menu);
 
         /// <summary>
         /// Contains default property values for the <see cref="NumericUpDown"/>.
         /// </summary>
-        public DefaultPropsControl NumericUpDown => GetProps(AllControls.NumericUpDown);
+        public ControlDefaults NumericUpDown => GetProps(ControlId.NumericUpDown);
 
         /// <summary>
         /// Contains default property values for the <see cref="PictureBox"/>.
         /// </summary>
-        public DefaultPropsControl PictureBox => GetProps(AllControls.PictureBox);
+        public ControlDefaults PictureBox => GetProps(ControlId.PictureBox);
 
         /// <summary>
         /// Contains default property values for the <see cref="Popup"/>.
         /// </summary>
-        public DefaultPropsControl Popup => GetProps(AllControls.Popup);
+        public ControlDefaults Popup => GetProps(ControlId.Popup);
 
         /// <summary>
         /// Contains default property values for the <see cref="ProgressBar"/>.
         /// </summary>
-        public DefaultPropsControl ProgressBar => GetProps(AllControls.ProgressBar);
+        public ControlDefaults ProgressBar => GetProps(ControlId.ProgressBar);
 
         /// <summary>
         /// Contains default property values for the <see cref="ScrollViewer"/>.
         /// </summary>
-        public DefaultPropsControl ScrollViewer => GetProps(AllControls.ScrollViewer);
+        public ControlDefaults ScrollViewer => GetProps(ControlId.ScrollViewer);
 
         /// <summary>
         /// Contains default property values for the <see cref="Slider"/>.
         /// </summary>
-        public DefaultPropsControl Slider => GetProps(AllControls.Slider);
+        public ControlDefaults Slider => GetProps(ControlId.Slider);
 
         /// <summary>
         /// Contains default property values for the <see cref="SplitterPanel"/>.
         /// </summary>
-        public DefaultPropsControl SplitterPanel => GetProps(AllControls.SplitterPanel);
+        public ControlDefaults SplitterPanel => GetProps(ControlId.SplitterPanel);
 
         /// <summary>
         /// Contains default property values for the <see cref="StackPanel"/>.
         /// </summary>
-        public DefaultPropsControl StackPanel => GetProps(AllControls.StackPanel);
+        public ControlDefaults StackPanel => GetProps(ControlId.StackPanel);
 
         /// <summary>
         /// Contains default property values for the <see cref="StatusBar"/>.
         /// </summary>
-        public DefaultPropsControl StatusBar => GetProps(AllControls.StatusBar);
+        public ControlDefaults StatusBar => GetProps(ControlId.StatusBar);
 
         /// <summary>
         /// Contains default property values for the <see cref="StatusBarPanel"/>.
         /// </summary>
-        public DefaultPropsControl StatusBarPanel =>
-            GetProps(AllControls.StatusBarPanel);
+        public ControlDefaults StatusBarPanel =>
+            GetProps(ControlId.StatusBarPanel);
 
         /// <summary>
         /// Contains default property values for the <see cref="TabControl"/>.
         /// </summary>
-        public DefaultPropsControl TabControl => GetProps(AllControls.TabControl);
+        public ControlDefaults TabControl => GetProps(ControlId.TabControl);
 
         /// <summary>
         /// Contains default property values for the <see cref="TabPage"/>.
         /// </summary>
-        public DefaultPropsControl TabPage => GetProps(AllControls.TabPage);
+        public ControlDefaults TabPage => GetProps(ControlId.TabPage);
 
         /// <summary>
         /// Contains default property values for the <see cref="TextBox"/>.
         /// </summary>
-        public DefaultPropsControl TextBox => GetProps(AllControls.TextBox);
+        public ControlDefaults TextBox => GetProps(ControlId.TextBox);
 
         /// <summary>
         /// Contains default property values for the <see cref="Toolbar"/>.
         /// </summary>
-        public DefaultPropsControl Toolbar => GetProps(AllControls.Toolbar);
+        public ControlDefaults Toolbar => GetProps(ControlId.Toolbar);
 
         /// <summary>
         /// Contains default property values for the <see cref="ToolbarItem"/>.
         /// </summary>
-        public DefaultPropsControl ToolbarItem => GetProps(AllControls.ToolbarItem);
+        public ControlDefaults ToolbarItem => GetProps(ControlId.ToolbarItem);
 
         /// <summary>
         /// Contains default property values for the <see cref="TreeView"/>.
         /// </summary>
-        public DefaultPropsControl TreeView => GetProps(AllControls.TreeView);
+        public ControlDefaults TreeView => GetProps(ControlId.TreeView);
 
         /// <summary>
         /// Contains default property values for the <see cref="UserPaintControl"/>.
         /// </summary>
-        public DefaultPropsControl UserPaintControl =>
-            GetProps(AllControls.UserPaintControl);
+        public ControlDefaults UserPaintControl =>
+            GetProps(ControlId.UserPaintControl);
 
         /// <summary>
         /// Contains default property values for the <see cref="WebBrowser"/>.
         /// </summary>
-        public DefaultPropsControl WebBrowser => GetProps(AllControls.WebBrowser);
+        public ControlDefaults WebBrowser => GetProps(ControlId.WebBrowser);
 
         /// <summary>
         /// Contains default property values for the <see cref="Window"/>.
         /// </summary>
-        public DefaultPropsControl Window => GetProps(AllControls.Window);
+        public ControlDefaults Window => GetProps(ControlId.Window);
 
         /// <summary>
         /// Returns default property values for some control.
         /// </summary>
         /// <param name="control">Control identifier.</param>
-        public DefaultPropsControl GetProps(AllControls control)
+        public ControlDefaults GetProps(ControlId control)
         {
-            DefaultPropsControl result = controlProps[(int)control];
+            ControlDefaults result = controlProps[(int)control];
             if(result == null)
             {
                 result = new();
@@ -209,13 +209,13 @@ namespace Alternet.UI
         /// <param name="control">Control identifier.</param>
         /// <param name="prop">Property identifier.</param>
         /// <returns></returns>
-        public object? GetPropValue(AllControls control, AllControlProps prop)
+        public object? GetPropValue(ControlId control, ControlDefaultsId prop)
         {
-            DefaultPropsControl props = GetProps(control);
+            ControlDefaults props = GetProps(control);
             object? result = props.GetProp(prop);
-            if (result != null || control == AllControls.Control)
+            if (result != null || control == ControlId.Control)
                 return result;
-            props = GetProps(AllControls.Control);
+            props = GetProps(ControlId.Control);
             result = props.GetProp(prop);
             return result;
         }

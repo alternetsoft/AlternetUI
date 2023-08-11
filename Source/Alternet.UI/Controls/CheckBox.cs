@@ -57,7 +57,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override AllControls ControlKind => AllControls.CheckBox;
+        public override ControlId ControlKind => ControlId.CheckBox;
 
         /// <summary>
         /// Called when the value of the <see cref="IsChecked"/> property changes.

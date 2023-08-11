@@ -54,7 +54,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override AllControls ControlKind => AllControls.RadioButton;
+        public override ControlId ControlKind => ControlId.RadioButton;
 
         /// <inheritdoc/>
         protected override ControlHandler CreateHandler()

@@ -5,15 +5,15 @@ namespace Alternet.UI
     /// <summary>
     /// Contains platform specific settings.
     /// </summary>
-    public class DefaultPropsPlatform
+    public class PlatformDefaults
     {
-        static DefaultPropsPlatform()
+        static PlatformDefaults()
         {
         }
 
         /// <summary>
         /// Returns default property values for all controls in the library.
         /// </summary>
-        public DefaultPropsControls Controls { get; } = new();
+        public AllControlDefaults Controls { get; } = new();
     }
 }

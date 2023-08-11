@@ -316,8 +316,8 @@ namespace Alternet.UI
             {
                 if(minMargin == null)
                 {
-                    minMargin = DefaultPropsPlatforms.
-                        GetAsThickness(ControlKind, AllControlProps.MinMargin);
+                    minMargin = AllPlatformDefaults.
+                        GetAsThickness(ControlKind, ControlDefaultsId.MinMargin);
                 }
 
                 return minMargin.Value;
@@ -330,8 +330,8 @@ namespace Alternet.UI
             {
                 if (minPadding == null)
                 {
-                    minPadding = DefaultPropsPlatforms.
-                        GetAsThickness(ControlKind, AllControlProps.MinPadding);
+                    minPadding = AllPlatformDefaults.
+                        GetAsThickness(ControlKind, ControlDefaultsId.MinPadding);
                 }
 
                 return minPadding.Value;
@@ -786,7 +786,7 @@ namespace Alternet.UI
         /// <summary>
         /// Returns control identifier.
         /// </summary>
-        public virtual AllControls ControlKind => AllControls.Control;
+        public virtual ControlId ControlKind => ControlId.Control;
 
         internal static int ScreenShotCounter { get; set; } = 0;
 
