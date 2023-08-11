@@ -2,6 +2,7 @@ using System;
 
 namespace Alternet.UI
 {
+    [Flags]
     public enum AuiToolBarStyle
     {
         Text = 1 << 0,
