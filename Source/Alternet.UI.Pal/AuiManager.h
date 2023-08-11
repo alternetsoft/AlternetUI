@@ -10,7 +10,8 @@ namespace Alternet::UI
     {
 #include "Api/AuiManager.inc"
     public:
-    
+        wxAuiManager* Manager(void* handle);
+
     private:
     
     };
