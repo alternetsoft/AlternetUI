@@ -47,6 +47,7 @@ namespace Alternet.UI
         TreeView,
         UserPaintControl,
         WebBrowser,
+        Other,
         Window,
 
         MaxValue = Window,
