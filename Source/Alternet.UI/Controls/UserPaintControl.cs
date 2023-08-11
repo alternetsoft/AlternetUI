@@ -22,6 +22,9 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        public override ControlId ControlKind => ControlId.UserPaintControl;
+
+        /// <inheritdoc/>
         protected override void OnPaint(PaintEventArgs e)
         {
         }

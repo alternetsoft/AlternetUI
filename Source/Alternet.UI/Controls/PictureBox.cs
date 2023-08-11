@@ -16,39 +16,48 @@ namespace Alternet.UI
         /// </summary>
         public static readonly DependencyProperty ImageProperty =
             DependencyProperty.Register(
-                    "Image", // Property name
-                    typeof(Image), // Property type
-                    typeof(PictureBox), // Property owner
-                    new FrameworkPropertyMetadata( // Property metadata
-                            null, // default value
+                    "Image",
+                    typeof(Image),
+                    typeof(PictureBox),
+                    new FrameworkPropertyMetadata(
+                            null,
                             FrameworkPropertyMetadataOptions.AffectsPaint | FrameworkPropertyMetadataOptions.AffectsLayout,
                             new PropertyChangedCallback(OnImagePropertyChanged),
                             new CoerceValueCallback(CoerceImage),
-                            true, // IsAnimationProhibited
+                            isAnimationProhibited: true,
                             UpdateSourceTrigger.PropertyChanged
                             ));
 
-        private static object CoerceImage(DependencyObject d, object value)
-        {
-            var o = (PictureBox)d;
-            return value;
-        }
-
-        private static void OnImagePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            PictureBox control = (PictureBox)d;
-            control.OnValuePropertyChanged((Image)e.OldValue, (Image)e.NewValue);
-        }
-
-        private void OnValuePropertyChanged(Image oldValue, Image newValue)
-        {
-            RaiseImageChanged(EventArgs.Empty);
-        }
+        /// <summary>
+        /// Occurs when the <see cref="Image"/> property changes.
+        /// </summary>
+        public event EventHandler? ImageChanged;
 
         /// <summary>
-        /// Raises the <see cref="ImageChanged"/> event and calls <see cref="OnImageChanged(EventArgs)"/>.
+        /// Gets or sets the image that is displayed by <see cref="PictureBox"/>.
         /// </summary>
-        /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
+        public Image? Image
+        {
+            get
+            {
+                return (Image?)GetValue(ImageProperty);
+            }
+
+            set
+            {
+                SetValue(ImageProperty, value);
+            }
+        }
+
+        /// <inheritdoc/>
+        public override ControlId ControlKind => ControlId.PictureBox;
+
+        /// <summary>
+        /// Raises the <see cref="ImageChanged"/> event and calls
+        /// <see cref="OnImageChanged(EventArgs)"/>.
+        /// </summary>
+        /// <param name="e">An <see cref="EventArgs"/> that contains the event
+        /// data.</param>
         public void RaiseImageChanged(EventArgs e)
         {
             if (e == null)
@@ -61,23 +70,10 @@ namespace Alternet.UI
         /// <summary>
         /// Called when the value of the <see cref="Image"/> property changes.
         /// </summary>
-        /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
+        /// <param name="e">An <see cref="EventArgs"/> that contains the event
+        /// data.</param>
         protected virtual void OnImageChanged(EventArgs e)
         {
-        }
-
-        /// <summary>
-        /// Occurs when the <see cref="Image"/> property changes.
-        /// </summary>
-        public event EventHandler? ImageChanged;
-
-        /// <summary>
-        /// Gets or sets the image that is displayed by <see cref="PictureBox"/>.
-        /// </summary>
-        public Image? Image
-        {
-            get { return (Image?)GetValue(ImageProperty); }
-            set { SetValue(ImageProperty, value); }
         }
 
         /// <inheritdoc/>
@@ -86,5 +82,25 @@ namespace Alternet.UI
             return GetEffectiveControlHandlerHactory().CreatePictureBoxHandler(this);
         }
 
+        private static object CoerceImage(DependencyObject d, object value)
+        {
+            // var o = (PictureBox)d;
+            return value;
+        }
+
+        private static void OnImagePropertyChanged(
+            DependencyObject d,
+            DependencyPropertyChangedEventArgs e)
+        {
+            PictureBox control = (PictureBox)d;
+            control.OnValuePropertyChanged((Image)e.OldValue, (Image)e.NewValue);
+        }
+
+#pragma warning disable IDE0060 // Remove unused parameter
+        private void OnValuePropertyChanged(Image oldValue, Image newValue)
+#pragma warning restore IDE0060 // Remove unused parameter
+        {
+            RaiseImageChanged(EventArgs.Empty);
+        }
     }
 }

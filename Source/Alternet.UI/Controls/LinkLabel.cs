@@ -73,6 +73,9 @@ namespace Alternet.UI
             set { SetValue(TextProperty, value); }
         }
 
+        /// <inheritdoc/>
+        public override ControlId ControlKind => ControlId.LinkLabel;
+
         /// <summary>
         /// Gets or sets the URL associated with the hyperlink.
         /// </summary>

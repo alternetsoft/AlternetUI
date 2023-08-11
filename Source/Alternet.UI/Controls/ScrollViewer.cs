@@ -8,6 +8,9 @@ namespace Alternet.UI
     public class ScrollViewer : Control
     {
         /// <inheritdoc/>
+        public override ControlId ControlKind => ControlId.ScrollViewer;
+
+        /// <inheritdoc/>
         protected override ControlHandler CreateHandler()
         {
             return GetEffectiveControlHandlerHactory().

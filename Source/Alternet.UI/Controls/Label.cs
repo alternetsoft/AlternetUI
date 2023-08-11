@@ -7,43 +7,48 @@ namespace Alternet.UI
     /// Represents a text label control.
     /// </summary>
     /// <remarks>
-    /// <see cref="Label" /> controls are typically used to provide descriptive text for a control.
-    /// For example, you can use a <see cref="Label" /> to add descriptive text for a <see cref="TextBox"/> control to inform the
-    /// user about the type of data expected in the control. <see cref="Label" /> controls can also be used
-    /// to add descriptive text to a <see cref="Window"/> to provide the user with helpful information.
-    /// For example, you can add a <see cref="Label" /> to the top of a <see cref="Window"/> that provides instructions
-    /// to the user on how to input data in the controls on the form. <see cref="Label" /> controls can be
-    /// also used to display run time information on the status of an application. For example,
-    /// you can add a <see cref="Label" /> control to a form to display the status of each file as a list of files is processed.
+    /// <see cref="Label" /> controls are typically used to provide descriptive text
+    /// for a control.
+    /// For example, you can use a <see cref="Label" /> to add descriptive text for
+    /// a <see cref="TextBox"/> control to inform the
+    /// user about the type of data expected in the control.
+    /// <see cref="Label" /> controls can also be used
+    /// to add descriptive text to a <see cref="Window"/> to provide the user
+    /// with helpful information.
+    /// For example, you can add a <see cref="Label" /> to the top of a
+    /// <see cref="Window"/> that provides instructions
+    /// to the user on how to input data in the controls on the form.
+    /// <see cref="Label" /> controls can be
+    /// also used to display run time information on the status of an application.
+    /// For example,
+    /// you can add a <see cref="Label" /> control to a form to display the status
+    /// of each file as a list of files is processed.
     /// </remarks>
     public class Label : Control
     {
         /// <summary>
-        /// Gets or sets the text displayed on this label.
+        /// Routed event declaration for <see cref="TextChanged"/> event.
         /// </summary>
-        [DefaultValue("")]
-        [Localizability(LocalizationCategory.Text)]
-        public string Text
-        {
-            get
-            {
-                return (string)GetValue(TextProperty);
-            }
-
-            set
-            {
-                SetValue(TextProperty, value);
-            }
-        }
+        public static readonly RoutedEvent TextChangedEvent =
+            EventManager.RegisterRoutedEvent(
+                "TextChanged",
+                RoutingStrategy.Bubble,
+                typeof(TextChangedEventHandler),
+                typeof(Label));
 
         /// <summary>
-        /// Event for "Text has changed"
+        /// Identifies the <see cref="Text"/> dependency property.
         /// </summary>
-        public static readonly RoutedEvent TextChangedEvent = EventManager.RegisterRoutedEvent(
-            "TextChanged", // Event name
-            RoutingStrategy.Bubble, //
-            typeof(TextChangedEventHandler), //
-            typeof(Label)); //
+        public static readonly DependencyProperty TextProperty =
+        DependencyProperty.Register(
+                "Text",
+                typeof(string),
+                typeof(Label),
+                new FrameworkPropertyMetadata(
+                        string.Empty,
+                        FrameworkPropertyMetadataOptions.AffectsLayout | FrameworkPropertyMetadataOptions.AffectsPaint,
+                        new PropertyChangedCallback(OnTextPropertyChanged),
+                        new CoerceValueCallback(CoerceText)));
 
         /// <summary>
         /// Occurs when the value of the <see cref="Text"/> property changes.
@@ -62,32 +67,38 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Identifies the <see cref="Text"/> dependency property.
+        /// Gets or sets the text displayed on this label.
         /// </summary>
-        public static readonly DependencyProperty TextProperty =
-        DependencyProperty.Register(
-                "Text", // Property name
-                typeof(string), // Property type
-                typeof(Label), // Property owner
-                new FrameworkPropertyMetadata( // Property metadata
-                        string.Empty, // default value
-                        FrameworkPropertyMetadataOptions.AffectsLayout | FrameworkPropertyMetadataOptions.AffectsPaint,// Flags
-                        new PropertyChangedCallback(OnTextPropertyChanged),    // property changed callback
-                        new CoerceValueCallback(CoerceText)
-                        ));
-
-        /// <summary>
-        /// Callback for changes to the Text property
-        /// </summary>
-        private static void OnTextPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        [DefaultValue("")]
+        [Localizability(LocalizationCategory.Text)]
+        public string Text
         {
-            Label label = (Label)d;
-            label.OnTextPropertyChanged((string)e.OldValue, (string)e.NewValue);
+            get
+            {
+                return (string)GetValue(TextProperty);
+            }
+
+            set
+            {
+                SetValue(TextProperty, value);
+            }
         }
 
-        private void OnTextPropertyChanged(string oldText, string newText)
+        /// <inheritdoc/>
+        public override ControlId ControlKind => ControlId.Label;
+
+        /// <summary>
+        /// Raises the <see cref="TextChanged"/> event and calls
+        /// <see cref="OnTextChanged(TextChangedEventArgs)"/>.
+        /// </summary>
+        /// <param name="e">An <see cref="EventArgs"/> that contains the event
+        /// data.</param>
+        public void RaiseTextChanged(TextChangedEventArgs e)
         {
-            OnTextChanged(new TextChangedEventArgs(TextChangedEvent));
+            if (e == null)
+                throw new ArgumentNullException(nameof(e));
+
+            OnTextChanged(e);
         }
 
         /// <summary>
@@ -100,25 +111,30 @@ namespace Alternet.UI
             RaiseEvent(e);
         }
 
-        /// <summary>
-        /// Raises the <see cref="TextChanged"/> event and calls <see cref="OnTextChanged(TextChangedEventArgs)"/>.
-        /// </summary>
-        /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
-        public void RaiseTextChanged(TextChangedEventArgs e)
-        {
-            if (e == null)
-                throw new ArgumentNullException(nameof(e));
-
-            OnTextChanged(e);
-        }
-
-        private static object CoerceText(DependencyObject d, object value) 
-            => value ?? string.Empty;
-
         /// <inheritdoc/>
         protected override ControlHandler CreateHandler()
         {
             return GetEffectiveControlHandlerHactory().CreateLabelHandler(this);
+        }
+
+        private static object CoerceText(DependencyObject d, object value)
+            => value ?? string.Empty;
+
+        /// <summary>
+        /// Callback for changes to the Text property
+        /// </summary>
+        private static void OnTextPropertyChanged(
+            DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            Label label = (Label)d;
+            label.OnTextPropertyChanged((string)e.OldValue, (string)e.NewValue);
+        }
+
+#pragma warning disable IDE0060 // Remove unused parameter
+        private void OnTextPropertyChanged(string oldText, string newText)
+#pragma warning restore IDE0060 // Remove unused parameter
+        {
+            OnTextChanged(new TextChangedEventArgs(TextChangedEvent));
         }
     }
 }
