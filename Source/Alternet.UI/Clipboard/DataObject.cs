@@ -11,7 +11,7 @@ namespace Alternet.UI
     /// </summary>
     public class DataObject : IDataObject
     {
-        private readonly Dictionary<string, object> data = new Dictionary<string, object>(StringComparer.Ordinal);
+        private readonly Dictionary<string, object> data = new(StringComparer.Ordinal);
 
         /// <summary>
         /// Initializes a new instance of <see cref="DataObject"/> class.
@@ -27,7 +27,8 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="format">
         /// A string that specifies what format to store the data in.
-        /// See the <see cref="DataFormats"/> class for a set of pre-defined data formats.
+        /// See the <see cref="DataFormats"/> class for a set of pre-defined
+        /// data formats.
         /// </param>
         /// <param name="data">
         /// The data to store in this data object.
@@ -44,7 +45,8 @@ namespace Alternet.UI
 
         /// <summary>
         /// Initializes a new instance of <see cref="DataObject"/> class with
-        /// the specified data in this data object, automatically converting the data format from the source object type.
+        /// the specified data in this data object, automatically converting the
+        /// data format from the source object type.
         /// </summary>
         /// <param name="data">
         /// The data to store in this data object.
@@ -58,17 +60,20 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets a value indicating whether the data object contains data in the <see cref="DataFormats.Files"/> format.
+        /// Gets a value indicating whether the data object contains data in the
+        /// <see cref="DataFormats.Files"/> format.
         /// </summary>
         public virtual bool ContainsFiles => GetDataPresent(DataFormats.Files);
 
         /// <summary>
-        /// Gets a value indicating whether the data object contains data in the <see cref="DataFormats.Bitmap"/> format.
+        /// Gets a value indicating whether the data object contains data in the
+        /// <see cref="DataFormats.Bitmap"/> format.
         /// </summary>
         public virtual bool ContainsBitmap => GetDataPresent(DataFormats.Bitmap);
 
         /// <summary>
-        /// Gets a value indicating whether the data object contains data in the <see cref="DataFormats.Text"/> format.
+        /// Gets a value indicating whether the data object contains data in the
+        /// <see cref="DataFormats.Text"/> format.
         /// </summary>
         public virtual bool ContainsText => GetDataPresent(DataFormats.Text);
 
@@ -119,32 +124,40 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Retrieves an array of file names from the data object in the <see cref="DataFormats.Files"/> format.
+        /// Retrieves an array of file names from the data object in the
+        /// <see cref="DataFormats.Files"/> format.
         /// </summary>
         public virtual string[]? GetFiles() => GetData(DataFormats.Files) as string[];
 
         /// <summary>
-        /// Retrieves bitmap data from the data object in the <see cref="DataFormats.Bitmap"/> format.
+        /// Retrieves bitmap data from the data object in the
+        /// <see cref="DataFormats.Bitmap"/> format.
         /// </summary>
         public virtual Bitmap? GetBitmap() => GetData(DataFormats.Bitmap) as Bitmap;
 
         /// <summary>
-        /// Retrieves text data from the data object in the <see cref="DataFormats.Text"/> format.
+        /// Retrieves text data from the data object in the
+        /// <see cref="DataFormats.Text"/> format.
         /// </summary>
         public virtual string? GetText() => GetData(DataFormats.Text) as string;
 
         /// <summary>
-        /// Adds an array of file names to the data object in the <see cref="DataFormats.Files"/> format.
+        /// Adds an array of file names to the data object in the
+        /// <see cref="DataFormats.Files"/> format.
         /// </summary>
-        public virtual void SetFiles(string[] value) => SetData(DataFormats.Files, value);
+        public virtual void SetFiles(string[] value) =>
+            SetData(DataFormats.Files, value);
 
         /// <summary>
-        /// Adds a bitmap to the data object in the <see cref="DataFormats.Bitmap"/> format.
+        /// Adds a bitmap to the data object in the
+        /// <see cref="DataFormats.Bitmap"/> format.
         /// </summary>
-        public virtual void SetBitmap(Bitmap value) => SetData(DataFormats.Bitmap, value);
+        public virtual void SetBitmap(Bitmap value) =>
+            SetData(DataFormats.Bitmap, value);
 
         /// <summary>
-        /// Adds a text string to the data object in the <see cref="DataFormats.Text"/> format.
+        /// Adds a text string to the data object in the
+        /// <see cref="DataFormats.Text"/> format.
         /// </summary>
         public virtual void SetText(string value) => SetData(DataFormats.Text, value);
     }

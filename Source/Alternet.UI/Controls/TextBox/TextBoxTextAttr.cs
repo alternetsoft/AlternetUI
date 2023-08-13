@@ -416,8 +416,9 @@ namespace Alternet.UI
 
         public TextBoxTextAttrUnderlineType GetUnderlineType()
         {
-            return (TextBoxTextAttrUnderlineType)
-                Native.TextBoxTextAttr.GetUnderlineType(handle);
+            return
+                (TextBoxTextAttrUnderlineType)Native.TextBoxTextAttr.
+                    GetUnderlineType(handle);
         }
 
         public void SetFontWeight(FontWeight fontWeight)

@@ -16,7 +16,8 @@ namespace Alternet.UI.Native
             SetNativePointer(nativePointer);
         }
 
-        private static readonly Dictionary<IntPtr, NativeObject> instancesByNativePointers = new Dictionary<IntPtr, NativeObject>();
+        private static readonly Dictionary<IntPtr, NativeObject>
+            instancesByNativePointers = new ();
 
         ~NativeObject()
         {
@@ -31,7 +32,10 @@ namespace Alternet.UI.Native
 
         public IntPtr NativePointer { get; private set; }
 
-        public static T? GetFromNativePointer<T>(IntPtr pointer, Func<IntPtr, T>? fromPointerFactory) where T : NativeObject
+        public static T? GetFromNativePointer<T>(
+            IntPtr pointer,
+            Func<IntPtr, T>? fromPointerFactory)
+            where T : NativeObject
         {
             if (pointer == IntPtr.Zero)
                 return null;
@@ -55,6 +59,18 @@ namespace Alternet.UI.Native
         {
             Dispose(disposing: true);
             GC.SuppressFinalize(this);
+        }
+
+        protected static void AddRefNativeObjectPointer(IntPtr value)
+        {
+            if (value != IntPtr.Zero)
+                NativeApi.Object_AddRef(value);
+        }
+
+        protected static void ReleaseNativeObjectPointer(IntPtr value)
+        {
+            if (value != IntPtr.Zero)
+                NativeApi.Object_Release(value);
         }
 
         protected void SetNativePointer(IntPtr value)
@@ -92,20 +108,8 @@ namespace Alternet.UI.Native
                 throw new ObjectDisposedException(null);
         }
 
-        protected static void AddRefNativeObjectPointer(IntPtr value)
-        {
-            if (value != IntPtr.Zero)
-                NativeApi.Object_AddRef(value);
-        }
-
-        protected static void ReleaseNativeObjectPointer(IntPtr value)
-        {
-            if (value != IntPtr.Zero)
-                NativeApi.Object_Release(value);
-        }
-
         [SuppressUnmanagedCodeSecurity]
-        class NativeApi : NativeApiProvider
+        public class NativeApi : NativeApiProvider
         {
             static NativeApi() => Initialize();
 

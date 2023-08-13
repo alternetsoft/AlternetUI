@@ -225,6 +225,45 @@ namespace Alternet.UI
         public virtual IEnumerable<Control> AllChildrenIncludedInLayout
             => AllChildren.Where(x => x.Visible);
 
+        /// <summary>
+        /// Gets a value indicating whether the mouse is captured to this control.
+        /// </summary>
+        public bool IsMouseCaptured
+        {
+            get
+            {
+                if (NativeControl == null)
+                    throw new InvalidOperationException();
+
+                return NativeControl.IsMouseCaptured;
+            }
+        }
+
+        /// <summary>
+        /// Gets or set a value indicating whether the control paints itself rather
+        /// than the operating system doing so.
+        /// </summary>
+        /// <value>If <c>true</c>, the control paints itself rather than the
+        /// operating system doing so.
+        /// If <c>false</c>, the <see cref="Control.Paint"/> event is not raised.</value>
+        public bool UserPaint
+        {
+            get => NativeControl!.UserPaint;
+            set => NativeControl!.UserPaint = value;
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the control can accept data that
+        /// the user drags onto it.
+        /// </summary>
+        /// <value><c>true</c> if drag-and-drop operations are allowed in the
+        /// control; otherwise, <c>false</c>. The default is <c>false</c>.</value>
+        public bool AllowDrop
+        {
+            get => NativeControl!.AllowDrop;
+            set => NativeControl!.AllowDrop = value;
+        }
+
         internal Native.Control? NativeControl
         {
             get
@@ -234,7 +273,7 @@ namespace Alternet.UI
                     if (NeedsNativeControl())
                     {
                         nativeControl = CreateNativeControl();
-                        //handlersByNativeControls.Add(nativeControl, this);
+                        // handlersByNativeControls.Add(nativeControl, this);
                         nativeControl.handler = this;
                         OnNativeControlCreated();
                     }
@@ -245,6 +284,9 @@ namespace Alternet.UI
         }
 
         internal bool NativeControlCreated => nativeControl != null;
+
+        private protected virtual bool NeedRelayoutParentOnVisibleChanged =>
+            Control.Parent is not TabControl; // todo
 
         /// <summary>
         /// This property may be overridden by control handlers to indicate that
@@ -262,6 +304,35 @@ namespace Alternet.UI
         protected virtual bool VisualChildNeedsNativeControl => false;
 
         private bool IsLayoutSuspended => layoutSuspendCount != 0;
+
+        /// <summary>
+        /// Returns the currently focused control, or <see langword="null"/> if
+        /// no control is focused.
+        /// </summary>
+        public static Control? GetFocusedControl()
+        {
+            var focusedNativeControl = Native.Control.GetFocusedControl();
+            if (focusedNativeControl == null)
+                return null;
+
+            var handler = NativeControlToHandler(focusedNativeControl);
+            if (handler == null)
+                return null;
+
+            return handler.Control;
+        }
+
+        /// <inheritdoc cref="Control.BeginIgnoreRecreate"/>
+        public void BeginIgnoreRecreate()
+        {
+            NativeControl?.BeginIgnoreRecreate();
+        }
+
+        /// <inheritdoc cref="Control.EndIgnoreRecreate"/>
+        public void EndIgnoreRecreate()
+        {
+            NativeControl?.EndIgnoreRecreate();
+        }
 
         /// <summary>
         /// Attaches this handler to the specified <see cref="Control"/>.
@@ -397,17 +468,6 @@ namespace Alternet.UI
             return GetNativeControlSize(availableSize);
         }
 
-        private protected Size GetNativeControlSize(Size availableSize)
-        {
-            if (Control.IsDummy)
-                return Size.Empty;
-            var s = NativeControl?.GetPreferredSize(availableSize) ?? Size.Empty;
-            s += Control.Padding.Size;
-            return new Size(
-                double.IsNaN(Control.Width) ? s.Width : Control.Width,
-                double.IsNaN(Control.Height) ? s.Height : Control.Height);
-        }
-
         /// <summary>
         /// Temporarily suspends the layout logic for the control.
         /// </summary>
@@ -490,6 +550,104 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// The ScreenToClient function converts the screen coordinates of a
+        /// specified point on the screen to client-area coordinates.
+        /// </summary>
+        /// <param name="point">A <see cref="Point"/> that specifies the
+        /// screen coordinates to be converted.</param>
+        /// <returns>The converted cooridnates.</returns>
+        public Point ScreenToClient(Point point)
+        {
+            if (NativeControl == null)
+                throw new InvalidOperationException();
+
+            return NativeControl.ScreenToClient(point);
+        }
+
+        /// <summary>
+        /// Converts the client-area coordinates of a specified point to
+        /// screen coordinates.
+        /// </summary>
+        /// <param name="point">A <see cref="Point"/> that contains the
+        /// client coordinates to be converted.</param>
+        /// <returns>The converted cooridnates.</returns>
+        public Point ClientToScreen(Point point)
+        {
+            if (NativeControl == null)
+                throw new InvalidOperationException();
+
+            return NativeControl.ClientToScreen(point);
+        }
+
+        /// <summary>
+        /// Converts the screen coordinates of a specified point in
+        /// device-independent units (1/96th inch per unit) to device
+        /// (pixel) coordinates.
+        /// </summary>
+        /// <param name="point">A <see cref="Point"/> that specifies the
+        /// screen device-independent coordinates to be converted.</param>
+        /// <returns>The converted cooridnates.</returns>
+        public Int32Point ScreenToDevice(Point point)
+        {
+            if (NativeControl == null)
+                throw new InvalidOperationException();
+
+            return NativeControl.ScreenToDevice(point);
+        }
+
+        /// <summary>
+        /// Begins a drag-and-drop operation.
+        /// </summary>
+        /// <remarks>
+        /// Begins a drag operation. The <paramref name="allowedEffects"/>
+        /// determine which drag operations can occur.
+        /// </remarks>
+        /// <param name="data">The data to drag.</param>
+        /// <param name="allowedEffects">One of the
+        /// <see cref="DragDropEffects"/> values.</param>
+        /// <returns>
+        /// A value from the <see cref="DragDropEffects"/>
+        /// enumeration that represents the final effect that was
+        /// performed during the drag-and-drop operation.
+        /// </returns>
+        public DragDropEffects DoDragDrop(object data, DragDropEffects allowedEffects)
+        {
+            return (DragDropEffects)NativeControl!.DoDragDrop(
+                UnmanagedDataObjectService.GetUnmanagedDataObject(data),
+                (Native.DragDropEffects)allowedEffects);
+        }
+
+        /// <summary>
+        /// Converts the device (pixel) coordinates of a specified point to
+        /// coordinates in device-independent units (1/96th inch per unit).
+        /// </summary>
+        /// <param name="point">A <see cref="Point"/> that contains the
+        /// coordinates in device-independent units (1/96th inch per unit)
+        /// to be converted.</param>
+        /// <returns>The converted cooridnates.</returns>
+        public Point DeviceToScreen(Int32Point point)
+        {
+            if (NativeControl == null)
+                throw new InvalidOperationException();
+
+            return NativeControl.DeviceToScreen(point);
+        }
+
+        /// <summary>
+        /// Initiates invocation of <see cref="OnLayoutChanged"/> for this and
+        /// all parent controls.
+        /// </summary>
+        public void RaiseLayoutChanged()
+        {
+            var control = Control;
+            while (control != null)
+            {
+                control.Handler.OnLayoutChanged();
+                control = control.Parent;
+            }
+        }
+
+        /// <summary>
         /// Releases the mouse capture, if the control held the capture.
         /// </summary>
         public void ReleaseMouseCapture()
@@ -500,17 +658,19 @@ namespace Alternet.UI
             NativeControl.SetMouseCapture(false);
         }
 
-        /// <summary>
-        /// Gets a value indicating whether the mouse is captured to this control.
-        /// </summary>
-        public bool IsMouseCaptured
+        internal void SaveScreenshot(string fileName)
         {
-            get
+            Control.ScreenShotCounter++;
+            try
             {
                 if (NativeControl == null)
                     throw new InvalidOperationException();
 
-                return NativeControl.IsMouseCaptured;
+                NativeControl.SaveScreenshot(fileName);
+            }
+            finally
+            {
+                Control.ScreenShotCounter--;
             }
         }
 
@@ -532,6 +692,22 @@ namespace Alternet.UI
 
         internal virtual Native.Control CreateNativeControl() =>
             new Native.Panel();
+
+        /// <summary>
+        /// Starts the initialization process for this control.
+        /// </summary>
+        protected internal virtual void BeginInit()
+        {
+            NativeControl?.BeginInit();
+        }
+
+        /// <summary>
+        /// Ends the initialization process for this control.
+        /// </summary>
+        protected internal virtual void EndInit()
+        {
+            NativeControl?.EndInit();
+        }
 
         /// <summary>
         /// Called when the value of the <see cref="IsVisualChild"/> property changes.
@@ -620,6 +796,45 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Called when the mouse cursor enters the boundary of the control.
+        /// </summary>
+        protected virtual void OnMouseEnter()
+        {
+        }
+
+        /// <summary>
+        /// Called when the mouse cursor moves.
+        /// </summary>
+        protected virtual void OnMouseMove()
+        {
+        }
+
+        /// <summary>
+        /// Called when the mouse cursor leaves the boundary of the control.
+        /// </summary>
+        protected virtual void OnMouseLeave()
+        {
+        }
+
+        /// <summary>
+        /// Called when the mouse left button is released while the mouse pointer
+        /// is over
+        /// the control or when the control has captured the mouse.
+        /// </summary>
+        protected virtual void OnMouseLeftButtonUp()
+        {
+        }
+
+        /// <summary>
+        /// Called when the mouse left button is pressed while the mouse pointer
+        /// is over
+        /// the control or when the control has captured the mouse.
+        /// </summary>
+        protected virtual void OnMouseLeftButtonDown()
+        {
+        }
+
+        /// <summary>
         /// This methods is called when the layout of the control changes.
         /// </summary>
         protected virtual void OnLayoutChanged()
@@ -627,66 +842,21 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Initiates invocation of <see cref="OnLayoutChanged"/> for this and
-        /// all parent controls.
+        /// Called when a <see cref="Control"/> is inserted into the
+        /// <see cref="Control.Children"/> or <see cref="VisualChildren"/> collection.
         /// </summary>
-        public void RaiseLayoutChanged()
+        protected virtual void OnChildInserted(Control childControl)
         {
-            var control = Control;
-            while (control != null)
-            {
-                control.Handler.OnLayoutChanged();
-                control = control.Parent;
-            }
+            TryInsertNativeControl(childControl);
         }
 
         /// <summary>
-        /// Called after this handler has been attached to a <see cref="Control"/>.
+        /// Called when a <see cref="Control"/> is removed from the
+        /// <see cref="Control.Children"/> or <see cref="VisualChildren"/> collections.
         /// </summary>
-        protected virtual void OnAttach()
+        protected virtual void OnChildRemoved(Control childControl)
         {
-            ApplyVisible();
-            ApplyEnabled();
-            ApplyBorderColor();
-            ApplyBackgroundColor();
-            ApplyForegroundColor();
-            ApplyFont();
-            ApplyToolTip();
-            ApplyChildren();
-
-            Control.MarginChanged += Control_MarginChanged;
-            Control.PaddingChanged += Control_PaddingChanged;
-            Control.BackgroundChanged += Control_BackgroundChanged;
-            Control.ForegroundChanged += Control_ForegroundChanged;
-            Control.FontChanged += Control_FontChanged;
-            Control.BorderBrushChanged += Control_BorderBrushChanged;
-            Control.VisibleChanged += Control_VisibleChanged;
-            Control.EnabledChanged += Control_EnabledChanged;
-            Control.VerticalAlignmentChanged += Control_VerticalAlignmentChanged;
-            Control.HorizontalAlignmentChanged += Control_HorizontalAlignmentChanged;
-            Control.ToolTipChanged += Control_ToolTipChanged;
-
-            Control.Children.ItemInserted += Children_ItemInserted;
-            VisualChildren.ItemInserted += Children_ItemInserted;
-
-            Control.Children.ItemRemoved += Children_ItemRemoved;
-            VisualChildren.ItemRemoved += Children_ItemRemoved;
-        }
-
-        private void Control_ToolTipChanged(object? sender, EventArgs e)
-        {
-            ApplyToolTip();
-        }
-
-        private void ApplyToolTip()
-        {
-            if (NativeControl != null)
-                NativeControl.ToolTip = Control.ToolTip;
-        }
-
-        private void Control_FontChanged(object? sender, EventArgs e)
-        {
-            ApplyFont();
+            TryRemoveNativeControl(childControl);
         }
 
         /// <summary>
@@ -728,6 +898,50 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Called after this handler has been attached to a <see cref="Control"/>.
+        /// </summary>
+        protected virtual void OnAttach()
+        {
+            ApplyVisible();
+            ApplyEnabled();
+            ApplyBorderColor();
+            ApplyBackgroundColor();
+            ApplyForegroundColor();
+            ApplyFont();
+            ApplyToolTip();
+            ApplyChildren();
+
+            Control.MarginChanged += Control_MarginChanged;
+            Control.PaddingChanged += Control_PaddingChanged;
+            Control.BackgroundChanged += Control_BackgroundChanged;
+            Control.ForegroundChanged += Control_ForegroundChanged;
+            Control.FontChanged += Control_FontChanged;
+            Control.BorderBrushChanged += Control_BorderBrushChanged;
+            Control.VisibleChanged += Control_VisibleChanged;
+            Control.EnabledChanged += Control_EnabledChanged;
+            Control.VerticalAlignmentChanged += Control_VerticalAlignmentChanged;
+            Control.HorizontalAlignmentChanged += Control_HorizontalAlignmentChanged;
+            Control.ToolTipChanged += Control_ToolTipChanged;
+
+            Control.Children.ItemInserted += Children_ItemInserted;
+            VisualChildren.ItemInserted += Children_ItemInserted;
+
+            Control.Children.ItemRemoved += Children_ItemRemoved;
+            VisualChildren.ItemRemoved += Children_ItemRemoved;
+        }
+
+        private protected Size GetNativeControlSize(Size availableSize)
+        {
+            if (Control.IsDummy)
+                return Size.Empty;
+            var s = NativeControl?.GetPreferredSize(availableSize) ?? Size.Empty;
+            s += Control.Padding.Size;
+            return new Size(
+                double.IsNaN(Control.Width) ? s.Width : Control.Width,
+                double.IsNaN(Control.Height) ? s.Height : Control.Height);
+        }
+
         private protected virtual void OnNativeControlCreated()
         {
             if (NativeControl == null)
@@ -751,6 +965,29 @@ namespace Alternet.UI
             NativeControl.DragDrop += NativeControl_DragDrop;
             NativeControl.GotFocus += NativeControl_GotFocus;
             NativeControl.LostFocus += NativeControl_LostFocus;
+        }
+
+        private static void DisposeNativeControlCore(Native.Control nativeControl)
+        {
+            // handlersByNativeControls.Remove(nativeControl);
+            nativeControl.handler = null;
+            nativeControl.Dispose();
+        }
+
+        private void Control_ToolTipChanged(object? sender, EventArgs e)
+        {
+            ApplyToolTip();
+        }
+
+        private void ApplyToolTip()
+        {
+            if (NativeControl != null)
+                NativeControl.ToolTip = Control.ToolTip;
+        }
+
+        private void Control_FontChanged(object? sender, EventArgs e)
+        {
+            ApplyFont();
         }
 
         private void NativeControl_GotFocus(object? sender, EventArgs e)
@@ -802,107 +1039,6 @@ namespace Alternet.UI
             Control.RaiseMouseCaptureLost();
         }
 
-        /// <summary>
-        /// The ScreenToClient function converts the screen coordinates of a
-        /// specified point on the screen to client-area coordinates.
-        /// </summary>
-        /// <param name="point">A <see cref="Point"/> that specifies the
-        /// screen coordinates to be converted.</param>
-        /// <returns>The converted cooridnates.</returns>
-        public Point ScreenToClient(Point point)
-        {
-            if (NativeControl == null)
-                throw new InvalidOperationException();
-
-            return NativeControl.ScreenToClient(point);
-        }
-
-        /// <summary>
-        /// Converts the client-area coordinates of a specified point to
-        /// screen coordinates.
-        /// </summary>
-        /// <param name="point">A <see cref="Point"/> that contains the
-        /// client coordinates to be converted.</param>
-        /// <returns>The converted cooridnates.</returns>
-        public Point ClientToScreen(Point point)
-        {
-            if (NativeControl == null)
-                throw new InvalidOperationException();
-
-            return NativeControl.ClientToScreen(point);
-        }
-
-        /// <summary>
-        /// Converts the screen coordinates of a specified point in
-        /// device-independent units (1/96th inch per unit) to device
-        /// (pixel) coordinates.
-        /// </summary>
-        /// <param name="point">A <see cref="Point"/> that specifies the
-        /// screen device-independent coordinates to be converted.</param>
-        /// <returns>The converted cooridnates.</returns>
-        public Int32Point ScreenToDevice(Point point)
-        {
-            if (NativeControl == null)
-                throw new InvalidOperationException();
-
-            return NativeControl.ScreenToDevice(point);
-        }
-
-        /// <summary>
-        /// Converts the device (pixel) coordinates of a specified point to
-        /// coordinates in device-independent units (1/96th inch per unit).
-        /// </summary>
-        /// <param name="point">A <see cref="Point"/> that contains the
-        /// coordinates in device-independent units (1/96th inch per unit)
-        /// to be converted.</param>
-        /// <returns>The converted cooridnates.</returns>
-        public Point DeviceToScreen(Int32Point point)
-        {
-            if (NativeControl == null)
-                throw new InvalidOperationException();
-
-            return NativeControl.DeviceToScreen(point);
-        }
-
-        /// <summary>
-        /// Called when the mouse cursor enters the boundary of the control.
-        /// </summary>
-        protected virtual void OnMouseEnter()
-        {
-        }
-
-        /// <summary>
-        /// Called when the mouse cursor moves.
-        /// </summary>
-        protected virtual void OnMouseMove()
-        {
-        }
-
-        /// <summary>
-        /// Called when the mouse cursor leaves the boundary of the control.
-        /// </summary>
-        protected virtual void OnMouseLeave()
-        {
-        }
-
-        /// <summary>
-        /// Called when the mouse left button is released while the mouse pointer
-        /// is over
-        /// the control or when the control has captured the mouse.
-        /// </summary>
-        protected virtual void OnMouseLeftButtonUp()
-        {
-        }
-
-        /// <summary>
-        /// Called when the mouse left button is pressed while the mouse pointer
-        /// is over
-        /// the control or when the control has captured the mouse.
-        /// </summary>
-        protected virtual void OnMouseLeftButtonDown()
-        {
-        }
-
         private void RaiseChildInserted(Control childControl)
         {
             Control.RaiseChildInserted(childControl);
@@ -913,24 +1049,6 @@ namespace Alternet.UI
         {
             Control.RaiseChildRemoved(childControl);
             OnChildRemoved(childControl);
-        }
-
-        /// <summary>
-        /// Called when a <see cref="Control"/> is inserted into the
-        /// <see cref="Control.Children"/> or <see cref="VisualChildren"/> collection.
-        /// </summary>
-        protected virtual void OnChildInserted(Control childControl)
-        {
-            TryInsertNativeControl(childControl);
-        }
-
-        /// <summary>
-        /// Called when a <see cref="Control"/> is removed from the
-        /// <see cref="Control.Children"/> or <see cref="VisualChildren"/> collections.
-        /// </summary>
-        protected virtual void OnChildRemoved(Control childControl)
-        {
-            TryRemoveNativeControl(childControl);
         }
 
         private void Control_VerticalAlignmentChanged(object? sender, EventArgs e)
@@ -998,13 +1116,6 @@ namespace Alternet.UI
             DisposeNativeControlCore(nativeControl);
         }
 
-        private static void DisposeNativeControlCore(Native.Control nativeControl)
-        {
-            //handlersByNativeControls.Remove(nativeControl);
-            nativeControl.handler = null;
-            nativeControl.Dispose();
-        }
-
         private void Control_BorderBrushChanged(object? sender, EventArgs? e)
         {
             ApplyBorderColor();
@@ -1030,48 +1141,6 @@ namespace Alternet.UI
         private void Control_EnabledChanged(object? sender, EventArgs e)
         {
             ApplyEnabled();
-        }
-
-        private protected virtual bool NeedRelayoutParentOnVisibleChanged => !(Control.Parent is TabControl); // todo
-
-        /// <summary>
-        /// Gets or set a value indicating whether the control paints itself rather than the operating system doing so.
-        /// </summary>
-        /// <value>If <c>true</c>, the control paints itself rather than the operating system doing so.
-        /// If <c>false</c>, the <see cref="Control.Paint"/> event is not raised.</value>
-        public bool UserPaint
-        {
-            get => NativeControl!.UserPaint;
-            set => NativeControl!.UserPaint = value;
-        }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether the control can accept data that the user drags onto it.
-        /// </summary>
-        /// <value><c>true</c> if drag-and-drop operations are allowed in the control; otherwise, <c>false</c>. The default is <c>false</c>.</value>
-        public bool AllowDrop
-        {
-            get => NativeControl!.AllowDrop;
-            set => NativeControl!.AllowDrop = value;
-        }
-
-        /// <summary>
-        /// Begins a drag-and-drop operation.
-        /// </summary>
-        /// <remarks>
-        /// Begins a drag operation. The <paramref name="allowedEffects"/> determine which drag operations can occur.
-        /// </remarks>
-        /// <param name="data">The data to drag.</param>
-        /// <param name="allowedEffects">One of the <see cref="DragDropEffects"/> values.</param>
-        /// <returns>
-        /// A value from the <see cref="DragDropEffects"/> enumeration that represents the final effect that was
-        /// performed during the drag-and-drop operation.
-        /// </returns>
-        public DragDropEffects DoDragDrop(object data, DragDropEffects allowedEffects)
-        {
-            return (DragDropEffects)NativeControl!.DoDragDrop(
-                UnmanagedDataObjectService.GetUnmanagedDataObject(data),
-                (Native.DragDropEffects)allowedEffects);
         }
 
         private Color GetBrushColor(Brush? brush)
@@ -1115,22 +1184,6 @@ namespace Alternet.UI
                 NativeControl.Font = Control.Font?.NativeFont;
 
             Invalidate();
-        }
-
-        /// <summary>
-        /// Starts the initialization process for this control.
-        /// </summary>
-        protected internal virtual void BeginInit()
-        {
-            NativeControl?.BeginInit();
-        }
-
-        /// <summary>
-        /// Ends the initialization process for this control.
-        /// </summary>
-        protected internal virtual void EndInit()
-        {
-            NativeControl?.EndInit();
         }
 
         private void ApplyBorderColor()
@@ -1354,50 +1407,6 @@ namespace Alternet.UI
                 visualChild.Handler.PaintSelfAndVisualChildren(dc);
                 dc.Pop();
             }
-        }
-
-        internal void SaveScreenshot(string fileName)
-        {
-            Control.ScreenShotCounter++;
-            try
-            {
-                if (NativeControl == null)
-                    throw new InvalidOperationException();
-
-                NativeControl.SaveScreenshot(fileName);
-            }
-            finally
-            {
-                Control.ScreenShotCounter--;
-            }
-        }
-
-        /// <summary>
-        /// Returns the currently focused control, or <see langword="null"/> if no control is focused.
-        /// </summary>
-        public static Control? GetFocusedControl()
-        {
-            var focusedNativeControl = Native.Control.GetFocusedControl();
-            if (focusedNativeControl == null)
-                return null;
-
-            var handler = NativeControlToHandler(focusedNativeControl);
-            if (handler == null)
-                return null;
-
-            return handler.Control;
-        }
-
-        /// <inheritdoc cref="Control.BeginIgnoreRecreate"/>
-        public void BeginIgnoreRecreate()
-        {
-            NativeControl?.BeginIgnoreRecreate();
-        }
-
-        /// <inheritdoc cref="Control.EndIgnoreRecreate"/>
-        public void EndIgnoreRecreate()
-        {
-            NativeControl?.EndIgnoreRecreate();
         }
     }
 }
