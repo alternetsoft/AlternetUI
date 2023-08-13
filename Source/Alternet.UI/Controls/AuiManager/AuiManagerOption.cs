@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Alternet.UI
 {
+    [Flags]
     public enum AuiManagerOption
     {
         AllowFloating = 1 << 0,
