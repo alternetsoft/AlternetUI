@@ -7,6 +7,8 @@ using Alternet.Drawing;
 
 namespace Alternet.UI
 {
+    // https://learn.microsoft.com/ru-ru/dotnet/api/system.idisposable?view=net-7.0
+
     /// <summary>
     /// The central class of the advanced docking and floating toolbars and
     /// panes framework.
@@ -206,17 +208,22 @@ namespace Alternet.UI
             return Native.AuiManager.CanDockPanel(handle, ToHandle(paneInfo));
         }
 
-        private IAuiPaneInfo ToPaneInfo(IntPtr handle)
+        public IAuiPaneInfo CreateAuiPaneInfo()
         {
-            return null;
+            return new AuiPaneInfo();
         }
 
-        private IntPtr ToHandle(IAuiPaneInfo paneInfo)
+        internal static IAuiPaneInfo ToPaneInfo(IntPtr handle)
         {
-            return IntPtr.Zero;
+            return new AuiPaneInfo(handle);
         }
 
-        private IntPtr ToHandle(Control window)
+        internal static IntPtr ToHandle(IAuiPaneInfo paneInfo)
+        {
+            return paneInfo.Handle;
+        }
+
+        internal static IntPtr ToHandle(Control window)
         {
             return window.Handler.NativeControl!.WxWidget;
         }
