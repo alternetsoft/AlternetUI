@@ -310,34 +310,6 @@ namespace Alternet.UI
             }
         }
 
-        internal Thickness MinMargin
-        {
-            get
-            {
-                if(minMargin == null)
-                {
-                    minMargin = AllPlatformDefaults.
-                        GetAsThickness(ControlKind, ControlDefaultsId.MinMargin);
-                }
-
-                return minMargin.Value;
-            }
-        }
-
-        internal Thickness MinPadding
-        {
-            get
-            {
-                if (minPadding == null)
-                {
-                    minPadding = AllPlatformDefaults.
-                        GetAsThickness(ControlKind, ControlDefaultsId.MinPadding);
-                }
-
-                return minPadding.Value;
-            }
-        }
-
         /// <summary>
         /// Gets or sets the location of upper-left corner of the control, in
         /// device-independent units (1/96th inch per unit).
@@ -791,6 +763,34 @@ namespace Alternet.UI
         internal static int ScreenShotCounter { get; set; } = 0;
 
         internal virtual bool IsDummy => false;
+
+        internal Thickness MinMargin
+        {
+            get
+            {
+                if (minMargin == null)
+                {
+                    minMargin = AllPlatformDefaults.
+                        GetAsThickness(ControlKind, ControlDefaultsId.MinMargin);
+                }
+
+                return minMargin.Value;
+            }
+        }
+
+        internal Thickness MinPadding
+        {
+            get
+            {
+                if (minPadding == null)
+                {
+                    minPadding = AllPlatformDefaults.
+                        GetAsThickness(ControlKind, ControlDefaultsId.MinPadding);
+                }
+
+                return minPadding.Value;
+            }
+        }
 
         internal virtual Rect DrawClientRectangle
         {
