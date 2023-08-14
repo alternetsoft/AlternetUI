@@ -8,7 +8,7 @@ using System.ComponentModel;
 using System.Security;
 namespace Alternet.UI.Native
 {
-    internal class AuiNotebook : NativeObject
+    internal class AuiNotebook : Control
     {
         static AuiNotebook()
         {

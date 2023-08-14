@@ -6,8 +6,8 @@ using System.Text;
 
 namespace NativeApi.Api
 {
-	//
-	public class AuiNotebook
+    // https://docs.wxwidgets.org/3.2/classwx_aui_notebook.html
+    public class AuiNotebook : Control
 	{
 
 	}

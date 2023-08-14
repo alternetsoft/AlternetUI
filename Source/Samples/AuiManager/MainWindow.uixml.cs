@@ -60,17 +60,19 @@ namespace AuiManagerSample
             listBox3.Add("LeftDockable(false)");
             listBox3.Add("RightDockable(false)");
             manager.AddPane(listBox3, pane3);
-            /*
+
             var pane4 = manager.CreatePaneInfo();
-            pane4.Name("pane4").Caption("Pane 4").CenterPane();
-            var listBox4 = CreateListBox("Pane 4");
-            manager.AddPane(listBox4, pane4);
+            pane4.Name("pane4").Caption("Pane 4").Top().ToolbarPane().Resizable();
+            var toolbar4 = new AuiToolbar();
+            toolbar4.SetBounds(0, 0, 200, 30, BoundsSpecified.Size);
+            panel.Children.Add(toolbar4);
+            manager.AddPane(toolbar4, pane4);
 
             var pane5 = manager.CreatePaneInfo();
             pane5.Name("pane5").Caption("Pane 5").CenterPane();
-            var listBox5 = CreateListBox("Pane 5");
-            manager.AddPane(listBox5, pane5);
-            */
+            var notebook5 = new AuiNotebook();
+            panel.Children.Add(notebook5);
+            manager.AddPane(notebook5, pane5);
 
 
             manager.Update();

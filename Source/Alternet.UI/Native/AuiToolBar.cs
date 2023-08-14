@@ -8,7 +8,7 @@ using System.ComponentModel;
 using System.Security;
 namespace Alternet.UI.Native
 {
-    internal class AuiToolBar : NativeObject
+    internal class AuiToolBar : Control
     {
         static AuiToolBar()
         {
