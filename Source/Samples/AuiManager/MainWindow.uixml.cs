@@ -7,17 +7,16 @@ namespace AuiManagerSample
 {
     public partial class MainWindow : Window
     {
-        AuiManager manager = new AuiManager();
-        LayoutPanel panel = new();
+        private readonly AuiManager manager = new();
+        private readonly LayoutPanel panel = new();
 
-        private ListBox CreateListBox(string prefix)
+        private ListBox CreateListBox(string paneName)
         {
-            prefix += " ";
-            var listBox = new ListBox();
-            listBox.HasBorder = false;
-            listBox.Add(prefix + "Item 1");
-            listBox.Add(prefix + "Item 2");
-            listBox.Add(prefix + "Item 3");
+            ListBox listBox = new()
+            {
+                HasBorder = false
+            };
+            listBox.Add(paneName);
             panel.Children.Add(listBox);
             listBox.SetBounds(0, 0, 200, 100, BoundsSpecified.Size);
             return listBox;
@@ -37,19 +36,37 @@ namespace AuiManagerSample
             pane1.Name("pane1").Caption("Pane 1").Left()
                 .TopDockable(false).BottomDockable(false);
             var listBox1 = CreateListBox("Pane 1");
+            listBox1.Add("TopDockable(false)");
+            listBox1.Add("BottomDockable(false)");
             manager.AddPane(listBox1, pane1);
 
             var pane2 = manager.CreatePaneInfo();
             pane2.Name("pane2").Caption("Pane 2").Right()
                 .TopDockable(false).BottomDockable(false);
             var listBox2 = CreateListBox("Pane 2");
+            listBox2.Add("TopDockable(false)");
+            listBox2.Add("BottomDockable(false)");
             manager.AddPane(listBox2, pane2);
            
             var pane3 = manager.CreatePaneInfo();
-            pane3.Name("pane3").Caption("Pane 3").Bottom();
+            pane3.Name("pane3").Caption("Pane 3").Bottom()
+                .LeftDockable(false).RightDockable(false);
             var listBox3 = CreateListBox("Pane 3");
+            listBox3.Add("LeftDockable(false)");
+            listBox3.Add("RightDockable(false)");
             manager.AddPane(listBox3, pane3);
-           
+            /*
+            var pane4 = manager.CreatePaneInfo();
+            pane4.Name("pane4").Caption("Pane 4").CenterPane();
+            var listBox4 = CreateListBox("Pane 4");
+            manager.AddPane(listBox4, pane4);
+
+            var pane5 = manager.CreatePaneInfo();
+            pane5.Name("pane5").Caption("Pane 5").CenterPane();
+            var listBox5 = CreateListBox("Pane 5");
+            manager.AddPane(listBox5, pane5);
+            */
+
 
             manager.Update();
         }
