@@ -1,0 +1,7 @@
+<Window x:Class="AuiManagerSample.MainWindow"
+        xmlns="http://schemas.alternetsoft.com/ui/2021"
+        xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
+        xmlns:local="clr-namespace:AuiManagerSample;assembly=AuiManagerSample"
+        Title="Alternet UI AuiManager Sample"
+        Width="900" Height="700" StartLocation="CenterScreen">      
+</Window>

@@ -61,11 +61,25 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Dissociate the managed window from the manager.
+        /// </summary>
+        /// <remarks>
+        /// This function may be called before the managed frame or window is
+        /// destroyed, but it's unnecessary to call it explicitly, as it will
+        /// be called automatically when this window is destroyed,
+        /// as well as when the manager itself is.
+        /// </remarks>
         public void UnInit()
         {
             Native.AuiManager.UnInit(handle);
         }
 
+        /// <summary>
+        /// This method is used to specify option flags.
+        /// </summary>
+        /// <param name="flags">Specifies options which allow the frame
+        /// management behaviour to be modified.</param>
         public void SetFlags(AuiManagerOption flags)
         {
             Native.AuiManager.SetFlags(handle, (uint)flags);
@@ -93,57 +107,108 @@ namespace Alternet.UI
             return Native.AuiManager.AlwaysUsesLiveResize();
         }
 
-
-        /*
-        Returns true if windows are resized live.
-
-        This function combines the check for AlwaysUsesLiveResize() and, for the platforms where live resizing is optional, the check for wxAUI_MGR_LIVE_RESIZE flag.
-
-        Using this accessor allows to verify whether live resizing is being actually used.  
-         */
+        /// <summary>
+        /// Returns true if windows are resized live.
+        /// </summary>
+        /// <remarks>
+        /// This function combines the check for <see cref="AlwaysUsesLiveResize"/>
+        /// and, for the platforms where live resizing is optional,
+        /// the check LiveResize flag.
+        /// </remarks>
+        /// <remarks>
+        /// Using this property allows to verify whether live
+        /// resizing is being actually used.
+        /// </remarks>
+        /// <returns><c>true</c> if live resizing is being actually used,
+        /// <c>false</c> otherwise.</returns>
         public bool HasLiveResize()
         {
             return Native.AuiManager.HasLiveResize(handle);
         }
 
-        /*
-This method is called after any number of changes are made to any of the managed panes.
-
-Update() must be invoked after AddPane() or InsertPane() are called in order to "realize" or "commit" the changes. In addition, any number of changes may be made to wxAuiPaneInfo structures (retrieved with wxAuiManager::GetPane), but to realize the changes, Update() must be called. This construction allows pane flicker to be avoided by updating the whole layout at one time.
-         
-         */
+        /// <summary>
+        /// Called after any number of changes are made to any of the managed panes.
+        /// </summary>
+        /// <remarks>
+        /// Must be invoked after <see cref="AddPane(Control, IAuiPaneInfo)"/>
+        /// or <see cref="InsertPane"/>
+        /// are called in order to "realize" or "commit" the changes.
+        /// </remarks>
+        /// <remarks>
+        /// In addition, any number of changes may be made to
+        /// <see cref="IAuiPaneInfo"/> structures (retrieved with
+        /// <see cref="GetPane(Control)"/>, but to realize the changes,
+        /// <see cref="Update"/> must be called. This construction allows pane
+        /// flicker to be avoided by updating the whole layout at one time.
+        /// </remarks>
         public void Update()
         {
             Native.AuiManager.Update(handle);
         }
 
+        /// <summary>
+        /// Saves the entire user interface layout into an encoded string,
+        /// which can then be stored by the application.
+        /// </summary>
+        /// <returns><see cref="string"/> with the entire user interface
+        /// layout.</returns>
         public string SavePerspective()
         {
             return Native.AuiManager.SavePerspective(handle);
         }
 
-        /*
-         Loads a saved perspective.
-
-        A perspective is the layout state of an AUI managed window.
-
-        All currently existing panes that have an object in "perspective" with the same name ("equivalent") will receive the layout parameters of the object in "perspective". Existing panes that do not have an equivalent in "perspective" remain unchanged, objects in "perspective" having no equivalent in the manager are ignored.
-
-        Parameters
-        perspective	Serialized layout information of a perspective (excl. pointers to UI elements).
-        update	If update is true, wxAuiManager::Update() is automatically invoked, thus realizing the specified perspective on screen.
-        * 
-         */
+        /// <summary>
+        /// Loads a saved perspective. A perspective is the layout state
+        /// of an <see cref="AuiManager"/> managed window.
+        /// </summary>
+        /// <param name="perspective">Serialized layout information of a
+        /// perspective (excl. references to UI elements).</param>
+        /// <param name="update">If update is true, <see cref="Update"/> is
+        /// automatically invoked, thus realizing the specified perspective
+        /// on screen.</param>
+        /// <remarks>
+        /// All currently existing panes that have an object in "perspective"
+        /// with the same name ("equivalent") will receive the layout
+        /// parameters of the object in "perspective". Existing panes that
+        /// do not have an equivalent in "perspective" remain unchanged,
+        /// objects in "perspective" having no equivalent in the manager are ignored.
+        /// </remarks>
+        /// <returns><c>true</c> if perspective was loaded successfully, 
+        /// <c>false</c> otherwise.</returns>
         public bool LoadPerspective(string perspective, bool update = true)
         {
             return Native.AuiManager.LoadPerspective(handle, perspective, update);
         }
 
+        /// <summary>
+        /// Adjusts limits of any new dock size.
+        /// </summary>
+        /// <remarks>
+        /// When a user creates a new dock by dragging a window into a
+        /// docked position, often times the large size of the window
+        /// will create a dock that is unwieldy large.
+        /// </remarks>
+        /// <remarks>
+        /// <see cref="AuiManager"/> by default limits the size of any new dock
+        /// to 1/3 of the window size. For horizontal docks, this would be
+        /// 1/3 of the window height. For vertical docks, 1/3 of the width.
+        /// </remarks>
+        /// <remarks>
+        /// Calling this function will adjust this constraint value. The numbers
+        /// must be between 0.0 and 1.0. For instance, calling this function
+        /// with 0.5, 0.5 will cause new docks to be limited to half of
+        /// the size of the entire managed window.
+        /// </remarks>
+        /// <param name="widthPct">New width limit.</param>
+        /// <param name="heightPct">New height limit.</param>
         public void SetDockSizeConstraint(double widthPct, double heightPct)
         {
             Native.AuiManager.SetDockSizeConstraint(handle, widthPct, heightPct);
         }
 
+        /// <summary>
+        /// Restore the previously maximized pane.
+        /// </summary>
         public void RestoreMaximizedPane()
         {
             Native.AuiManager.RestoreMaximizedPane(handle);
@@ -186,7 +251,13 @@ Update() must be invoked after AddPane() or InsertPane() are called in order to 
             return ToPaneInfo(Native.AuiManager.GetPaneByName(handle, name));
         }
 
-        public void SetManagedWindow(Window managedWnd)
+        /// <summary>
+        /// Called to specify the frame or window which is to be managed by
+        /// <see cref="AuiManager"/>. Frame management is not restricted to
+        /// just frames. Child windows or custom controls are also allowed.
+        /// </summary>
+        /// <param name="managedWnd">Managed window or control.</param>
+        public void SetManagedWindow(Control managedWnd)
         {
             Native.AuiManager.SetManagedWindow(handle, ToHandle(managedWnd));
         }
@@ -226,7 +297,8 @@ Update() must be invoked after AddPane() or InsertPane() are called in order to 
         /// <param name="paneInfo">Pane information with settings.</param>
         /// <param name="dropPos">Allows a drop position to be specified,
         /// which will determine where the pane will be added.</param>
-        /// <returns><c>true</c> if new pane was added successfully.</returns>
+        /// <returns><c>true</c> if new pane was added successfully,
+        /// <c>false</c> otherwise.</returns>
         public bool AddPane(
             Control control,
             IAuiPaneInfo paneInfo,
@@ -256,40 +328,63 @@ Update() must be invoked after AddPane() or InsertPane() are called in order to 
                 caption);
         }
 
-        /*
-         This method is used to insert either a previously unmanaged pane window into the frame manager, or to insert a currently managed pane somewhere else.
-
-        InsertPane() will push all panes, rows, or docks aside and insert the window into the position specified by insert_location.
-
-        Because insert_location can specify either a pane, dock row, or dock layer, the insert_level parameter is used to disambiguate this. The parameter insert_level can take a value of wxAUI_INSERT_PANE, wxAUI_INSERT_ROW or wxAUI_INSERT_DOCK.
-        * 
-         */
+        /// <summary>
+        /// Used to insert either a previously unmanaged pane window into
+        /// the frame manager, or to insert a currently managed pane somewhere else.
+        /// </summary>
+        /// <param name="control">Pane control.</param>
+        /// <param name="insertLoc">Position where to insert.</param>
+        /// <param name="insertLevel">Сlarification of the insert position.</param>
+        /// <remarks>
+        /// This function will push all panes, rows, or docks aside and insert
+        /// the window into the position specified by <paramref name="insertLoc"/>.
+        /// </remarks>
+        /// <remarks>
+        /// Because <paramref name="insertLoc"/> can specify either a pane, dock row,
+        /// or dock layer, the <paramref name="insertLevel"/> parameter is used
+        /// to disambiguate this.
+        /// </remarks>
+        /// <returns><c>true</c> if pane was inserted successfully,
+        /// <c>false</c> otherwise.</returns>
         public bool InsertPane(
-            Control window,
-            IAuiPaneInfo insertLocPaneInfo,
+            Control control,
+            IAuiPaneInfo insertLoc,
             AuiPaneInsertLevel insertLevel)
         {
             return Native.AuiManager.InsertPane(
                 handle,
-                ToHandle(window),
-                ToHandle(insertLocPaneInfo),
+                ToHandle(control),
+                ToHandle(insertLoc),
                 (int)insertLevel);
         }
 
+        /// <summary>
+        /// Saves information about a single pane, similar to
+        /// <see cref="SavePerspective"/>.
+        /// </summary>
+        /// <param name="paneInfo">Pane whose layout parameters should
+        /// be serialized.</param>
+        /// <returns>The serialized layout parameters of the pane are returned
+        /// within the <see cref="string"/>. Information about the references
+        /// to UI elements stored in the pane are not serialized.</returns>
         public string SavePaneInfo(IAuiPaneInfo paneInfo)
         {
             return Native.AuiManager.SavePaneInfo(handle, ToHandle(paneInfo));
         }
 
-        /*
-        LoadPaneInfo() is similar to LoadPerspective, with the exception that it only loads information about a single pane.
-
-        This method writes the serialized data into the passed pane. Pointers to UI elements are not modified.
-
-        Note
-        This operation also changes the name in the pane information!
-
-         */
+        /// <summary>
+        /// Similar to <see cref="LoadPerspective"/>, with the exception that
+        /// it only loads information about a single pane.
+        /// </summary>
+        /// <remarks>
+        /// This method writes the serialized data into the passed pane.
+        /// References to UI elements are not modified.
+        /// </remarks>
+        /// <remarks>
+        /// This operation also changes the name in the pane information.
+        /// </remarks>
+        /// <param name="panePart">Serialized pane data.</param>
+        /// <param name="paneInfo">Pane information.</param>
         public void LoadPaneInfo(string panePart, IAuiPaneInfo paneInfo)
         {
             Native.AuiManager.LoadPaneInfo(handle, panePart, ToHandle(paneInfo));
@@ -321,6 +416,10 @@ Update() must be invoked after AddPane() or InsertPane() are called in order to 
             Native.AuiManager.MaximizePane(handle, ToHandle(paneInfo));
         }
 
+        /// <summary>
+        /// Restore the last state of the given pane.
+        /// </summary>
+        /// <param name="paneInfo">Pane information.</param>
         public void RestorePane(IAuiPaneInfo paneInfo)
         {
             Native.AuiManager.RestorePane(handle, ToHandle(paneInfo));
@@ -331,7 +430,8 @@ Update() must be invoked after AddPane() or InsertPane() are called in order to 
         /// dragging the frame to not dock the window.
         /// </summary>
         /// <param name="paneInfo">Panel information.</param>
-        /// <returns></returns>
+        /// <returns><c>true</c> if panel can be docked, <c>false</c>
+        /// otherwise.</returns>
         public bool CanDockPanel(IAuiPaneInfo paneInfo)
         {
             return Native.AuiManager.CanDockPanel(handle, ToHandle(paneInfo));
@@ -341,7 +441,7 @@ Update() must be invoked after AddPane() or InsertPane() are called in order to 
         /// Creates new pane for use with <see cref="AuiManager"/>.
         /// </summary>
         /// <returns><see cref="IAuiPaneInfo"/> instance with empty settings.</returns>
-        public IAuiPaneInfo CreateAuiPaneInfo()
+        public IAuiPaneInfo CreatePaneInfo()
         {
             return new AuiPaneInfo();
         }
@@ -366,58 +466,10 @@ Update() must be invoked after AddPane() or InsertPane() are called in order to 
 /*
 ===========
 
-RestoreMaximizedPane()
-Restore the previously maximized pane.
-
-
-RestorePane()
-Restore the last state of the given pane.
-
-
-SavePaneInfo()
-SavePaneInfo() is similar to SavePerspective, with the exception that it only saves information about a single pane.
-pane	Pane whose layout parameters should be serialized.
-Returns
-The serialized layout parameters of the pane are returned within the string. Information about the pointers to UI elements stored in the pane are not serialized.
-
-wxString wxAuiManager::SavePerspective
-Saves the entire user interface layout into an encoded wxString, which can then be stored by the application (probably using wxConfig).
-
-void wxAuiManager::SetDockSizeConstraint
-When a user creates a new dock by dragging a window into a docked position, often times the large size of the window will create a dock that is unwieldy large.
-
-wxAuiManager by default limits the size of any new dock to 1/3 of the window size. For horizontal docks, this would be 1/3 of the window height. For vertical docks, 1/3 of the width.
-
-Calling this function will adjust this constraint value. The numbers must be between 0.0 and 1.0. For instance, calling SetDockSizeContraint with 0.5, 0.5 will cause new docks to be limited to half of the size of the entire managed window.
-
-
-SetFlags()
-This method is used to specify wxAuiManagerOption's flags.
-flags specifies options which allow the frame management behaviour to be modified.
-
-
-SetManagedWindow()
-Called to specify the frame or window which is to be managed by wxAuiManager.
-Frame management is not restricted to just frames. Child windows or custom controls are also allowed.
-
-
-ShowHint()
-virtual void wxAuiManager::ShowHint	(	const wxRect & 	rect	)	
-virtual
-This function is used by controls to explicitly show a hint window at the specified rectangle.
-
-It is rarely called, and is mostly used by controls implementing custom pane drag/drop behaviour. The specified rectangle should be in screen coordinates.
-
-UnInit()
-Dissociate the managed window from the manager.
-This function may be called before the managed frame or window is destroyed, but, since wxWidgets 3.1.4, it's unnecessary to call it explicitly, as it will be called automatically when this window is destroyed, as well as when the manager itself is.
-
-
 public void SetArtProvider(IntPtr artProvider) { }
 public IntPtr GetArtProvider(){};
 
 //public IntPtr[] GetAllPanes(){};
-
 
 public IntPtr CreateFloatingFrame(,
     IntPtr parentWindow, IAuiPaneInfo paneInfo){};

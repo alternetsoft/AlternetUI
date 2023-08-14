@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "AuiManagerSample": {
+      "commandName": "Project",
+      "nativeDebugging": true
+    }
+  }
+}
