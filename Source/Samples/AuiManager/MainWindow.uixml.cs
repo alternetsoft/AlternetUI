@@ -10,6 +10,11 @@ namespace AuiManagerSample
         private readonly AuiManager manager = new();
         private readonly LayoutPanel panel = new();
 
+        static MainWindow()
+        {
+            WebBrowser.CrtSetDbgFlag(0);
+        }
+
         private ListBox CreateListBox(string paneName)
         {
             ListBox listBox = new()

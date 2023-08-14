@@ -173,7 +173,7 @@ namespace Alternet.UI
         /// do not have an equivalent in "perspective" remain unchanged,
         /// objects in "perspective" having no equivalent in the manager are ignored.
         /// </remarks>
-        /// <returns><c>true</c> if perspective was loaded successfully, 
+        /// <returns><c>true</c> if perspective was loaded successfully,
         /// <c>false</c> otherwise.</returns>
         public bool LoadPerspective(string perspective, bool update = true)
         {
@@ -257,7 +257,7 @@ namespace Alternet.UI
         /// just frames. Child windows or custom controls are also allowed.
         /// </summary>
         /// <param name="managedWnd">Managed window or control.</param>
-        public void SetManagedWindow(Control managedWnd)
+        public void SetManagedWindow(LayoutPanel managedWnd)
         {
             Native.AuiManager.SetManagedWindow(handle, ToHandle(managedWnd));
         }

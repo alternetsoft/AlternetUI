@@ -210,7 +210,7 @@ namespace Alternet.UI
             return this;
         }
 
-        public IAuiPaneInfo Direction(GenericDirection direction)
+        public IAuiPaneInfo Direction(AuiManagerDock direction)
         {
             Native.AuiPaneInfo.Direction(handle, (int)direction);
             return this;
