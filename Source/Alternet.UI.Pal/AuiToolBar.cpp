@@ -3,7 +3,7 @@
 namespace Alternet::UI
 {
 
-    class wxAuiToolBar2 : public wxAuiToolBar
+    class wxAuiToolBar2 : public wxAuiToolBar, public wxWidgetExtender
     {
     public:
         wxAuiToolBar2(wxWindow* parent,
@@ -21,9 +21,36 @@ namespace Alternet::UI
 
 	}
 
+    wxWindow* AuiToolBar::CreateWxWindowCore(wxWindow* parent)
+    {
+        long style = wxAUI_TB_DEFAULT_STYLE;
+
+        auto toolbar = new wxAuiToolBar2(parent,
+            wxID_ANY,
+            wxDefaultPosition,
+            wxDefaultSize,
+            style);
+
+        //toolbar->Bind(wxEVT_BUTTON, &Button::OnButtonClick, this);
+        return toolbar;
+    }
+
+    wxAuiToolBar* AuiToolBar::GetToolbar()
+    {
+        return dynamic_cast<wxAuiToolBar2*>(GetWxWindow());
+    }
+
 	AuiToolBar::~AuiToolBar()
 	{
-	}
+        if (IsWxWindowCreated())
+        {
+            auto window = GetWxWindow();
+            if (window != nullptr)
+            {
+                //window->Unbind(wxEVT_BUTTON, &Button::OnButtonClick, this);
+            }
+        }
+    }
 
     void AuiToolBar::SetArtProvider(void* art)
     {

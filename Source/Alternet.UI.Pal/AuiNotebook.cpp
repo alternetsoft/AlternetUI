@@ -2,7 +2,7 @@
 
 namespace Alternet::UI
 {
-    class wxAuiNotebook2 : public wxAuiNotebook
+    class wxAuiNotebook2 : public wxAuiNotebook, public wxWidgetExtender
     {
     public:
         wxAuiNotebook2(wxWindow* parent,
@@ -22,5 +22,33 @@ namespace Alternet::UI
 
 	AuiNotebook::~AuiNotebook()
 	{
-	}
+        if (IsWxWindowCreated())
+        {
+            auto window = GetWxWindow();
+            if (window != nullptr)
+            {
+                //window->Unbind(wxEVT_BUTTON, &Button::OnButtonClick, this);
+            }
+        }
+    }
+
+    wxWindow* AuiNotebook::CreateWxWindowCore(wxWindow* parent)
+    {
+        long style = wxAUI_NB_DEFAULT_STYLE;
+
+        auto toolbar = new wxAuiNotebook2(parent,
+            wxID_ANY,
+            wxDefaultPosition,
+            wxDefaultSize,
+            style);
+
+        //toolbar->Bind(wxEVT_BUTTON, &Button::OnButtonClick, this);
+        return toolbar;
+    }
+
+    wxAuiNotebook* AuiNotebook::GetNotebook()
+    {
+        return dynamic_cast<wxAuiNotebook*>(GetWxWindow());
+    }
+
 }
