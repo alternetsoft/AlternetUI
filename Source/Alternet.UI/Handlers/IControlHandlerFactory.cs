@@ -139,6 +139,12 @@ namespace Alternet.UI
 
         /// <summary>
         /// Creates a <see cref="ControlHandler"/> for
+        /// <see cref="AuiToolbar"/> control.
+        /// </summary>
+        ControlHandler CreateAuiToolbarHandler(Control control);
+
+        /// <summary>
+        /// Creates a <see cref="ControlHandler"/> for
         /// <see cref="ToolbarItem"/> control.
         /// </summary>
         ControlHandler CreateToolbarItemHandler(Control control);

@@ -5,7 +5,7 @@ namespace Alternet.UI
 {
     internal class NativeToolbarHandler : ToolbarHandler
     {
-        bool mainToolbar = false;
+        private readonly bool mainToolbar = false;
 
         public NativeToolbarHandler(bool mainToolbar = true)
             : base()

@@ -43,6 +43,8 @@ namespace Alternet.UI
         TabPage,
         TextBox,
         Toolbar,
+        AuiToolbar,
+        AuiNotebook,
         ToolbarItem,
         TreeView,
         UserPaintControl,

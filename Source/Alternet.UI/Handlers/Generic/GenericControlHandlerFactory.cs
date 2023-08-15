@@ -38,6 +38,10 @@ namespace Alternet.UI
             StockControlHandlerFactories.Native.CreateRadioButtonHandler(control);
 
         /// <inheritdoc/>
+        public ControlHandler CreateAuiToolbarHandler(Control control) =>
+            StockControlHandlerFactories.Native.CreateAuiToolbarHandler(control);
+
+        /// <inheritdoc/>
         public ControlHandler CreateTabControlHandler(Control control) =>
             StockControlHandlerFactories.Native.CreateTabControlHandler(control);
 
