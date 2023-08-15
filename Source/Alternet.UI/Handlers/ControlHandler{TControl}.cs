@@ -4,7 +4,8 @@ namespace Alternet.UI
     /// Provides base functionality for implementing the behavior and appearance
     /// for a <see cref="Control"/> of a type specified by <c>TControl</c>.
     /// </summary>
-    /// <typeparam name="TControl"></typeparam>
+    /// <typeparam name="TControl">Type of the <see cref="Control"/>
+    /// descendant</typeparam>
     public abstract class ControlHandler<TControl> : ControlHandler
         where TControl : Control
     {

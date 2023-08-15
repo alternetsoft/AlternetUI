@@ -119,7 +119,6 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override ControlId ControlKind => ControlId.Toolbar;
 
-
         /// <summary>
         /// Gets or sets a value indicating whether to align the toolbar at
         /// the right side of parent window.
@@ -180,7 +179,7 @@ namespace Alternet.UI
         /// <see langword="true"/> if toolbar is aligned vertically; otherwise,
         /// <see langword="false"/>. The default is <see langword="false"/>.
         /// </value>
-        /// <remarks>Vertical toolbars are aligned at the left or right side of 
+        /// <remarks>Vertical toolbars are aligned at the left or right side of
         /// parent window.</remarks>
         public bool IsVertical
         {
@@ -215,32 +214,6 @@ namespace Alternet.UI
             set => Handler.ItemImagesVisible = value;
         }
 
-        internal new ToolbarHandler Handler
-        {
-            get
-            {
-                CheckDisposed();
-                return (ToolbarHandler)base.Handler;
-            }
-        }
-
-        private void Items_ItemInserted(
-            object? sender,
-            CollectionChangeEventArgs<ToolbarItem> e)
-        {
-            // This is required for data binding inheritance. ???
-            // This commented out as added additional dummy toolbar items
-            // Children.Add(e.Item);
-        }
-
-        private void Items_ItemRemoved(
-            object? sender,
-            CollectionChangeEventArgs<ToolbarItem> e)
-        {
-            // Commented out as Children.Add(e.Item) was commented
-            // Children.Remove(e.Item);
-        }
-
         /// <summary>
         /// Gets a collection of <see cref="MenuItem"/> objects associated
         /// with the menu.
@@ -251,11 +224,38 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override IReadOnlyList<FrameworkElement> ContentElements => Items;
 
+        internal new ToolbarHandler Handler
+        {
+            get
+            {
+                CheckDisposed();
+                return (ToolbarHandler)base.Handler;
+            }
+        }
+
         internal override bool IsDummy => true;
 
         /// <inheritdoc />
         protected override
             IEnumerable<FrameworkElement> LogicalChildrenCollection => Items;
+
+        /// <summary>
+        /// Returns suggested toolbar image size depending on the given DPI value.
+        /// </summary>
+        /// <param name="deviceDpi">DPI for which default image size is
+        /// returned.</param>
+        public static int GetDefaultImageSize(double deviceDpi)
+        {
+            decimal deviceDpiRatio = (decimal)deviceDpi / 96m;
+
+            if (deviceDpi <= 96 || deviceDpiRatio < 1.5m)
+                return DefaultImageSize96dpi;
+            if (deviceDpiRatio < 2m)
+                return DefaultImageSize144dpi;
+            if (deviceDpiRatio < 3m)
+                return DefaultImageSize192dpi;
+            return DefaultImageSize288dpi;
+        }
 
         /// <summary>
         /// Returns suggested toolbar image size depending on the current DPI.
@@ -276,28 +276,27 @@ namespace Alternet.UI
             Handler.Realize();
         }
 
-        /// <summary>
-        /// Returns suggested toolbar image size depending on the given DPI value.
-        /// </summary>
-        /// <param name="deviceDpi">DPI for which default image size is
-        /// returned.</param>
-        public static int GetDefaultImageSize(double deviceDpi)
-        {
-            decimal deviceDpiRatio = (decimal)deviceDpi / 96m;
-
-            if (deviceDpi <= 96 || deviceDpiRatio < 1.5m)
-                return DefaultImageSize96dpi;
-            if (deviceDpiRatio < 2m)
-                return DefaultImageSize144dpi;
-            if (deviceDpiRatio < 3m)
-                return DefaultImageSize192dpi;
-            return DefaultImageSize288dpi;
-        }
-
         /// <inheritdoc/>
         protected override ControlHandler CreateHandler()
         {
             return GetEffectiveControlHandlerHactory().CreateToolbarHandler(this);
+        }
+
+        private void Items_ItemInserted(
+            object? sender,
+            CollectionChangeEventArgs<ToolbarItem> e)
+        {
+            // This is required for data binding inheritance. ???
+            // This commented out as added additional dummy toolbar items
+            // Children.Add(e.Item);
+        }
+
+        private void Items_ItemRemoved(
+            object? sender,
+            CollectionChangeEventArgs<ToolbarItem> e)
+        {
+            // Commented out as Children.Add(e.Item) was commented
+            // Children.Remove(e.Item);
         }
     }
 }
