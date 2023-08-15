@@ -23,6 +23,440 @@ namespace Alternet.UI.Native
         {
         }
         
+        public void SetArtProvider(System.IntPtr art)
+        {
+            CheckDisposed();
+            NativeApi.AuiToolBar_SetArtProvider_(NativePointer, art);
+        }
+        
+        public System.IntPtr GetArtProvider()
+        {
+            CheckDisposed();
+            var n = NativeApi.AuiToolBar_GetArtProvider_(NativePointer);
+            var m = n;
+            return m;
+        }
+        
+        public System.IntPtr AddTool(int toolId, string label, System.IntPtr bitmapBundle, string shortHelpString, int itemKind)
+        {
+            CheckDisposed();
+            var n = NativeApi.AuiToolBar_AddTool_(NativePointer, toolId, label, bitmapBundle, shortHelpString, itemKind);
+            var m = n;
+            return m;
+        }
+        
+        public System.IntPtr AddTool2(int toolId, string label, System.IntPtr bitmapBundle, System.IntPtr disabledBitmapBundle, int itemKind, string shortHelpString, string longHelpString, System.IntPtr clientData)
+        {
+            CheckDisposed();
+            var n = NativeApi.AuiToolBar_AddTool2_(NativePointer, toolId, label, bitmapBundle, disabledBitmapBundle, itemKind, shortHelpString, longHelpString, clientData);
+            var m = n;
+            return m;
+        }
+        
+        public System.IntPtr AddTool3(int toolId, System.IntPtr bitmapBundle, System.IntPtr disabledBitmapBundle, bool toggle, System.IntPtr clientData, string shortHelpString, string longHelpString)
+        {
+            CheckDisposed();
+            var n = NativeApi.AuiToolBar_AddTool3_(NativePointer, toolId, bitmapBundle, disabledBitmapBundle, toggle, clientData, shortHelpString, longHelpString);
+            var m = n;
+            return m;
+        }
+        
+        public System.IntPtr AddLabel(int toolId, string label, int width)
+        {
+            CheckDisposed();
+            var n = NativeApi.AuiToolBar_AddLabel_(NativePointer, toolId, label, width);
+            var m = n;
+            return m;
+        }
+        
+        public System.IntPtr AddControl(System.IntPtr control, string label)
+        {
+            CheckDisposed();
+            var n = NativeApi.AuiToolBar_AddControl_(NativePointer, control, label);
+            var m = n;
+            return m;
+        }
+        
+        public System.IntPtr AddSeparator()
+        {
+            CheckDisposed();
+            var n = NativeApi.AuiToolBar_AddSeparator_(NativePointer);
+            var m = n;
+            return m;
+        }
+        
+        public System.IntPtr AddSpacer(int pixels)
+        {
+            CheckDisposed();
+            var n = NativeApi.AuiToolBar_AddSpacer_(NativePointer, pixels);
+            var m = n;
+            return m;
+        }
+        
+        public System.IntPtr AddStretchSpacer(int proportion)
+        {
+            CheckDisposed();
+            var n = NativeApi.AuiToolBar_AddStretchSpacer_(NativePointer, proportion);
+            var m = n;
+            return m;
+        }
+        
+        public bool Realize()
+        {
+            CheckDisposed();
+            var n = NativeApi.AuiToolBar_Realize_(NativePointer);
+            var m = n;
+            return m;
+        }
+        
+        public System.IntPtr FindControl(int windowId)
+        {
+            CheckDisposed();
+            var n = NativeApi.AuiToolBar_FindControl_(NativePointer, windowId);
+            var m = n;
+            return m;
+        }
+        
+        public System.IntPtr FindToolByPosition(int x, int y)
+        {
+            CheckDisposed();
+            var n = NativeApi.AuiToolBar_FindToolByPosition_(NativePointer, x, y);
+            var m = n;
+            return m;
+        }
+        
+        public System.IntPtr FindToolByIndex(int idx)
+        {
+            CheckDisposed();
+            var n = NativeApi.AuiToolBar_FindToolByIndex_(NativePointer, idx);
+            var m = n;
+            return m;
+        }
+        
+        public System.IntPtr FindTool(int toolId)
+        {
+            CheckDisposed();
+            var n = NativeApi.AuiToolBar_FindTool_(NativePointer, toolId);
+            var m = n;
+            return m;
+        }
+        
+        public void Clear()
+        {
+            CheckDisposed();
+            NativeApi.AuiToolBar_Clear_(NativePointer);
+        }
+        
+        public bool DestroyTool(int toolId)
+        {
+            CheckDisposed();
+            var n = NativeApi.AuiToolBar_DestroyTool_(NativePointer, toolId);
+            var m = n;
+            return m;
+        }
+        
+        public bool DestroyToolByIndex(int idx)
+        {
+            CheckDisposed();
+            var n = NativeApi.AuiToolBar_DestroyToolByIndex_(NativePointer, idx);
+            var m = n;
+            return m;
+        }
+        
+        public bool DeleteTool(int toolId)
+        {
+            CheckDisposed();
+            var n = NativeApi.AuiToolBar_DeleteTool_(NativePointer, toolId);
+            var m = n;
+            return m;
+        }
+        
+        public bool DeleteByIndex(int toolId)
+        {
+            CheckDisposed();
+            var n = NativeApi.AuiToolBar_DeleteByIndex_(NativePointer, toolId);
+            var m = n;
+            return m;
+        }
+        
+        public int GetToolIndex(int toolId)
+        {
+            CheckDisposed();
+            var n = NativeApi.AuiToolBar_GetToolIndex_(NativePointer, toolId);
+            var m = n;
+            return m;
+        }
+        
+        public bool GetToolFits(int toolId)
+        {
+            CheckDisposed();
+            var n = NativeApi.AuiToolBar_GetToolFits_(NativePointer, toolId);
+            var m = n;
+            return m;
+        }
+        
+        public Alternet.Drawing.Rect GetToolRect(int toolId)
+        {
+            CheckDisposed();
+            var n = NativeApi.AuiToolBar_GetToolRect_(NativePointer, toolId);
+            var m = n;
+            return m;
+        }
+        
+        public bool GetToolFitsByIndex(int toolId)
+        {
+            CheckDisposed();
+            var n = NativeApi.AuiToolBar_GetToolFitsByIndex_(NativePointer, toolId);
+            var m = n;
+            return m;
+        }
+        
+        public bool GetToolBarFits()
+        {
+            CheckDisposed();
+            var n = NativeApi.AuiToolBar_GetToolBarFits_(NativePointer);
+            var m = n;
+            return m;
+        }
+        
+        public void SetToolBitmapSize(Alternet.Drawing.Size size)
+        {
+            CheckDisposed();
+            NativeApi.AuiToolBar_SetToolBitmapSize_(NativePointer, size);
+        }
+        
+        public Alternet.Drawing.Size GetToolBitmapSize()
+        {
+            CheckDisposed();
+            var n = NativeApi.AuiToolBar_GetToolBitmapSize_(NativePointer);
+            var m = n;
+            return m;
+        }
+        
+        public bool GetOverflowVisible()
+        {
+            CheckDisposed();
+            var n = NativeApi.AuiToolBar_GetOverflowVisible_(NativePointer);
+            var m = n;
+            return m;
+        }
+        
+        public void SetOverflowVisible(bool visible)
+        {
+            CheckDisposed();
+            NativeApi.AuiToolBar_SetOverflowVisible_(NativePointer, visible);
+        }
+        
+        public bool GetGripperVisible()
+        {
+            CheckDisposed();
+            var n = NativeApi.AuiToolBar_GetGripperVisible_(NativePointer);
+            var m = n;
+            return m;
+        }
+        
+        public void SetGripperVisible(bool visible)
+        {
+            CheckDisposed();
+            NativeApi.AuiToolBar_SetGripperVisible_(NativePointer, visible);
+        }
+        
+        public void ToggleTool(int toolId, bool state)
+        {
+            CheckDisposed();
+            NativeApi.AuiToolBar_ToggleTool_(NativePointer, toolId, state);
+        }
+        
+        public bool GetToolToggled(int toolId)
+        {
+            CheckDisposed();
+            var n = NativeApi.AuiToolBar_GetToolToggled_(NativePointer, toolId);
+            var m = n;
+            return m;
+        }
+        
+        public void SetMargins(int left, int right, int top, int bottom)
+        {
+            CheckDisposed();
+            NativeApi.AuiToolBar_SetMargins_(NativePointer, left, right, top, bottom);
+        }
+        
+        public void EnableTool(int toolId, bool state)
+        {
+            CheckDisposed();
+            NativeApi.AuiToolBar_EnableTool_(NativePointer, toolId, state);
+        }
+        
+        public bool GetToolEnabled(int toolId)
+        {
+            CheckDisposed();
+            var n = NativeApi.AuiToolBar_GetToolEnabled_(NativePointer, toolId);
+            var m = n;
+            return m;
+        }
+        
+        public void SetToolDropDown(int toolId, bool dropdown)
+        {
+            CheckDisposed();
+            NativeApi.AuiToolBar_SetToolDropDown_(NativePointer, toolId, dropdown);
+        }
+        
+        public bool GetToolDropDown(int toolId)
+        {
+            CheckDisposed();
+            var n = NativeApi.AuiToolBar_GetToolDropDown_(NativePointer, toolId);
+            var m = n;
+            return m;
+        }
+        
+        public void SetToolBorderPadding(int padding)
+        {
+            CheckDisposed();
+            NativeApi.AuiToolBar_SetToolBorderPadding_(NativePointer, padding);
+        }
+        
+        public int GetToolBorderPadding()
+        {
+            CheckDisposed();
+            var n = NativeApi.AuiToolBar_GetToolBorderPadding_(NativePointer);
+            var m = n;
+            return m;
+        }
+        
+        public void SetToolTextOrientation(int orientation)
+        {
+            CheckDisposed();
+            NativeApi.AuiToolBar_SetToolTextOrientation_(NativePointer, orientation);
+        }
+        
+        public int GetToolTextOrientation()
+        {
+            CheckDisposed();
+            var n = NativeApi.AuiToolBar_GetToolTextOrientation_(NativePointer);
+            var m = n;
+            return m;
+        }
+        
+        public void SetToolPacking(int packing)
+        {
+            CheckDisposed();
+            NativeApi.AuiToolBar_SetToolPacking_(NativePointer, packing);
+        }
+        
+        public int GetToolPacking()
+        {
+            CheckDisposed();
+            var n = NativeApi.AuiToolBar_GetToolPacking_(NativePointer);
+            var m = n;
+            return m;
+        }
+        
+        public void SetToolProportion(int toolId, int proportion)
+        {
+            CheckDisposed();
+            NativeApi.AuiToolBar_SetToolProportion_(NativePointer, toolId, proportion);
+        }
+        
+        public int GetToolProportion(int toolId)
+        {
+            CheckDisposed();
+            var n = NativeApi.AuiToolBar_GetToolProportion_(NativePointer, toolId);
+            var m = n;
+            return m;
+        }
+        
+        public void SetToolSeparation(int separation)
+        {
+            CheckDisposed();
+            NativeApi.AuiToolBar_SetToolSeparation_(NativePointer, separation);
+        }
+        
+        public int GetToolSeparation()
+        {
+            CheckDisposed();
+            var n = NativeApi.AuiToolBar_GetToolSeparation_(NativePointer);
+            var m = n;
+            return m;
+        }
+        
+        public void SetToolSticky(int toolId, bool sticky)
+        {
+            CheckDisposed();
+            NativeApi.AuiToolBar_SetToolSticky_(NativePointer, toolId, sticky);
+        }
+        
+        public bool GetToolSticky(int toolId)
+        {
+            CheckDisposed();
+            var n = NativeApi.AuiToolBar_GetToolSticky_(NativePointer, toolId);
+            var m = n;
+            return m;
+        }
+        
+        public string GetToolLabel(int toolId)
+        {
+            CheckDisposed();
+            var n = NativeApi.AuiToolBar_GetToolLabel_(NativePointer, toolId);
+            var m = n;
+            return m;
+        }
+        
+        public void SetToolLabel(int toolId, string label)
+        {
+            CheckDisposed();
+            NativeApi.AuiToolBar_SetToolLabel_(NativePointer, toolId, label);
+        }
+        
+        public System.IntPtr GetToolBitmap(int toolId)
+        {
+            CheckDisposed();
+            var n = NativeApi.AuiToolBar_GetToolBitmap_(NativePointer, toolId);
+            var m = n;
+            return m;
+        }
+        
+        public void SetToolBitmap(int toolId, System.IntPtr bitmapBundle)
+        {
+            CheckDisposed();
+            NativeApi.AuiToolBar_SetToolBitmap_(NativePointer, toolId, bitmapBundle);
+        }
+        
+        public string GetToolShortHelp(int toolId)
+        {
+            CheckDisposed();
+            var n = NativeApi.AuiToolBar_GetToolShortHelp_(NativePointer, toolId);
+            var m = n;
+            return m;
+        }
+        
+        public void SetToolShortHelp(int toolId, string helpString)
+        {
+            CheckDisposed();
+            NativeApi.AuiToolBar_SetToolShortHelp_(NativePointer, toolId, helpString);
+        }
+        
+        public string GetToolLongHelp(int toolId)
+        {
+            CheckDisposed();
+            var n = NativeApi.AuiToolBar_GetToolLongHelp_(NativePointer, toolId);
+            var m = n;
+            return m;
+        }
+        
+        public void SetToolLongHelp(int toolId, string helpString)
+        {
+            CheckDisposed();
+            NativeApi.AuiToolBar_SetToolLongHelp_(NativePointer, toolId, helpString);
+        }
+        
+        public ulong GetToolCount()
+        {
+            CheckDisposed();
+            var n = NativeApi.AuiToolBar_GetToolCount_(NativePointer);
+            var m = n;
+            return m;
+        }
+        
         
         [SuppressUnmanagedCodeSecurity]
         public class NativeApi : NativeApiProvider
@@ -31,6 +465,183 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern IntPtr AuiToolBar_Create_();
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void AuiToolBar_SetArtProvider_(IntPtr obj, System.IntPtr art);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr AuiToolBar_GetArtProvider_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr AuiToolBar_AddTool_(IntPtr obj, int toolId, string label, System.IntPtr bitmapBundle, string shortHelpString, int itemKind);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr AuiToolBar_AddTool2_(IntPtr obj, int toolId, string label, System.IntPtr bitmapBundle, System.IntPtr disabledBitmapBundle, int itemKind, string shortHelpString, string longHelpString, System.IntPtr clientData);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr AuiToolBar_AddTool3_(IntPtr obj, int toolId, System.IntPtr bitmapBundle, System.IntPtr disabledBitmapBundle, bool toggle, System.IntPtr clientData, string shortHelpString, string longHelpString);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr AuiToolBar_AddLabel_(IntPtr obj, int toolId, string label, int width);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr AuiToolBar_AddControl_(IntPtr obj, System.IntPtr control, string label);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr AuiToolBar_AddSeparator_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr AuiToolBar_AddSpacer_(IntPtr obj, int pixels);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr AuiToolBar_AddStretchSpacer_(IntPtr obj, int proportion);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool AuiToolBar_Realize_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr AuiToolBar_FindControl_(IntPtr obj, int windowId);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr AuiToolBar_FindToolByPosition_(IntPtr obj, int x, int y);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr AuiToolBar_FindToolByIndex_(IntPtr obj, int idx);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr AuiToolBar_FindTool_(IntPtr obj, int toolId);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void AuiToolBar_Clear_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool AuiToolBar_DestroyTool_(IntPtr obj, int toolId);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool AuiToolBar_DestroyToolByIndex_(IntPtr obj, int idx);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool AuiToolBar_DeleteTool_(IntPtr obj, int toolId);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool AuiToolBar_DeleteByIndex_(IntPtr obj, int toolId);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int AuiToolBar_GetToolIndex_(IntPtr obj, int toolId);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool AuiToolBar_GetToolFits_(IntPtr obj, int toolId);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern Alternet.Drawing.Rect AuiToolBar_GetToolRect_(IntPtr obj, int toolId);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool AuiToolBar_GetToolFitsByIndex_(IntPtr obj, int toolId);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool AuiToolBar_GetToolBarFits_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void AuiToolBar_SetToolBitmapSize_(IntPtr obj, Alternet.Drawing.Size size);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern Alternet.Drawing.Size AuiToolBar_GetToolBitmapSize_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool AuiToolBar_GetOverflowVisible_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void AuiToolBar_SetOverflowVisible_(IntPtr obj, bool visible);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool AuiToolBar_GetGripperVisible_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void AuiToolBar_SetGripperVisible_(IntPtr obj, bool visible);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void AuiToolBar_ToggleTool_(IntPtr obj, int toolId, bool state);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool AuiToolBar_GetToolToggled_(IntPtr obj, int toolId);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void AuiToolBar_SetMargins_(IntPtr obj, int left, int right, int top, int bottom);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void AuiToolBar_EnableTool_(IntPtr obj, int toolId, bool state);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool AuiToolBar_GetToolEnabled_(IntPtr obj, int toolId);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void AuiToolBar_SetToolDropDown_(IntPtr obj, int toolId, bool dropdown);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool AuiToolBar_GetToolDropDown_(IntPtr obj, int toolId);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void AuiToolBar_SetToolBorderPadding_(IntPtr obj, int padding);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int AuiToolBar_GetToolBorderPadding_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void AuiToolBar_SetToolTextOrientation_(IntPtr obj, int orientation);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int AuiToolBar_GetToolTextOrientation_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void AuiToolBar_SetToolPacking_(IntPtr obj, int packing);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int AuiToolBar_GetToolPacking_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void AuiToolBar_SetToolProportion_(IntPtr obj, int toolId, int proportion);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int AuiToolBar_GetToolProportion_(IntPtr obj, int toolId);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void AuiToolBar_SetToolSeparation_(IntPtr obj, int separation);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int AuiToolBar_GetToolSeparation_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void AuiToolBar_SetToolSticky_(IntPtr obj, int toolId, bool sticky);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool AuiToolBar_GetToolSticky_(IntPtr obj, int toolId);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern string AuiToolBar_GetToolLabel_(IntPtr obj, int toolId);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void AuiToolBar_SetToolLabel_(IntPtr obj, int toolId, string label);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr AuiToolBar_GetToolBitmap_(IntPtr obj, int toolId);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void AuiToolBar_SetToolBitmap_(IntPtr obj, int toolId, System.IntPtr bitmapBundle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern string AuiToolBar_GetToolShortHelp_(IntPtr obj, int toolId);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void AuiToolBar_SetToolShortHelp_(IntPtr obj, int toolId, string helpString);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern string AuiToolBar_GetToolLongHelp_(IntPtr obj, int toolId);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void AuiToolBar_SetToolLongHelp_(IntPtr obj, int toolId, string helpString);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern ulong AuiToolBar_GetToolCount_(IntPtr obj);
             
         }
     }

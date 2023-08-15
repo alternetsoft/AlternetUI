@@ -3,147 +3,128 @@ using ApiCommon;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Alternet.Drawing;
 
 namespace NativeApi.Api
 {
 	//https://docs.wxwidgets.org/3.2/classwx_aui_tool_bar.html
 	public class AuiToolBar	: Control
 	{
+        public void SetArtProvider(IntPtr art) {}
+        public IntPtr GetArtProvider() => throw new Exception();
 
-	}
-}
+        public IntPtr AddTool(int toolId,
+                     string label,
+                     IntPtr bitmapBundle,
+                     string shortHelpString,
+                     int itemKind) => throw new Exception();
 
-/*
-    void SetArtProvider(wxAuiToolBarArt* art);
-    wxAuiToolBarArt* GetArtProvider() const;
+        public IntPtr AddTool2(int toolId,
+                     string label,
+                     IntPtr bitmapBundle,
+                     IntPtr disabledBitmapBundle,
+                     int itemKind,
+                     string shortHelpString,
+                     string longHelpString,
+                     IntPtr clientData) => throw new Exception();
 
-    bool SetFont(const wxFont& font) wxOVERRIDE;
+        public IntPtr AddTool3(int toolId,
+                     IntPtr bitmapBundle,
+                     IntPtr disabledBitmapBundle,
+                     bool toggle,
+                     IntPtr clientData,
+                     string shortHelpString,
+                     string longHelpString) => throw new Exception();
 
+        public IntPtr AddLabel(int toolId, string label, int width = -1) =>
+            throw new Exception();
 
-    wxAuiToolBarItem* AddTool(int toolId,
-                 const wxString& label,
-                 const wxBitmapBundle& bitmap,
-                 const wxString& shortHelpString = wxEmptyString,
-                 wxItemKind kind = wxITEM_NORMAL);
+        public IntPtr AddControl(IntPtr control, string label) => throw new Exception();
 
-    wxAuiToolBarItem* AddTool(int toolId,
-                 const wxString& label,
-                 const wxBitmapBundle& bitmap,
-                 const wxBitmapBundle& disabledBitmap,
-                 wxItemKind kind,
-                 const wxString& shortHelpString,
-                 const wxString& longHelpString,
-                 wxObject* clientData);
+        public IntPtr AddSeparator() => throw new Exception();
 
-    wxAuiToolBarItem* AddTool(int toolId,
-                 const wxBitmapBundle& bitmap,
-                 const wxBitmapBundle& disabledBitmap,
-                 bool toggle = false,
-                 wxObject* clientData = NULL,
-                 const wxString& shortHelpString = wxEmptyString,
-                 const wxString& longHelpString = wxEmptyString)
-    {
-        return AddTool(toolId,
-                wxEmptyString,
-                bitmap,
-                disabledBitmap,
-                toggle ? wxITEM_CHECK : wxITEM_NORMAL,
-                shortHelpString,
-                longHelpString,
-                clientData);
+        public IntPtr AddSpacer(int pixels) => throw new Exception();
+
+        public IntPtr AddStretchSpacer(int proportion = 1) => throw new Exception();
+
+        public bool Realize() => throw new Exception();
+
+        public IntPtr FindControl(int windowId) => throw new Exception();
+        public IntPtr FindToolByPosition(int x, int y) => throw new Exception();
+        public IntPtr FindToolByIndex(int idx) => throw new Exception();
+        public IntPtr FindTool(int toolId) => throw new Exception();
+
+        public void Clear() => throw new Exception();
+
+        public bool DestroyTool(int toolId) => throw new Exception();
+        public bool DestroyToolByIndex(int idx) => throw new Exception();
+
+        // Note that these methods do _not_ delete the associated control, if any.
+        // Use DestroyTool() or DestroyToolByIndex() if this is wanted.
+        public bool DeleteTool(int toolId) => throw new Exception();
+
+        public bool DeleteByIndex(int toolId) => throw new Exception();
+
+        public int GetToolIndex(int toolId) => throw new Exception();
+        public bool GetToolFits(int toolId) => throw new Exception();
+        public Rect GetToolRect(int toolId) => throw new Exception();
+
+        public bool GetToolFitsByIndex(int toolId) => throw new Exception();
+        public bool GetToolBarFits() => throw new Exception();
+
+        public void SetToolBitmapSize(Size size) => throw new Exception();
+        public Size GetToolBitmapSize() => throw new Exception();
+
+        public bool GetOverflowVisible() => throw new Exception();
+        public void SetOverflowVisible(bool visible) => throw new Exception();
+
+        public bool GetGripperVisible() => throw new Exception();
+        public void SetGripperVisible(bool visible) => throw new Exception();
+
+        public void ToggleTool(int toolId, bool state) => throw new Exception();
+        public bool GetToolToggled(int toolId) => throw new Exception();
+
+        public void SetMargins(int left, int right, int top, int bottom)
+            => throw new Exception();
+
+        public void EnableTool(int toolId, bool state) => throw new Exception();
+        public bool GetToolEnabled(int toolId) => throw new Exception();
+
+        public void SetToolDropDown(int toolId, bool dropdown) => throw new Exception();
+        public bool GetToolDropDown(int toolId) => throw new Exception();
+
+        public void SetToolBorderPadding(int padding) => throw new Exception();
+        public int GetToolBorderPadding() => throw new Exception();
+
+        public void SetToolTextOrientation(int orientation) => throw new Exception();
+        public int GetToolTextOrientation() => throw new Exception();
+
+        public void SetToolPacking(int packing) => throw new Exception();
+        public int GetToolPacking() => throw new Exception();
+
+        public void SetToolProportion(int toolId, int proportion) =>
+            throw new Exception();
+        public int GetToolProportion(int toolId) => throw new Exception();
+
+        public void SetToolSeparation(int separation) => throw new Exception();
+        public int GetToolSeparation() => throw new Exception();
+
+        public void SetToolSticky(int toolId, bool sticky) => throw new Exception();
+        public bool GetToolSticky(int toolId) => throw new Exception();
+        public string GetToolLabel(int toolId) => throw new Exception();
+        public void SetToolLabel(int toolId, string label) => throw new Exception();
+
+        public IntPtr GetToolBitmap(int toolId) => throw new Exception();
+        public void SetToolBitmap(int toolId, IntPtr bitmapBundle) =>
+            throw new Exception();
+
+        public string GetToolShortHelp(int toolId) => throw new Exception();
+        public void SetToolShortHelp(int toolId, string helpString) =>
+            throw new Exception();
+
+        public string GetToolLongHelp(int toolId) => throw new Exception();
+        public void SetToolLongHelp(int toolId, string helpString) =>
+            throw new Exception();
+        public ulong GetToolCount() => throw new Exception();
     }
-
-    wxAuiToolBarItem* AddLabel(int toolId,
-                  const wxString& label = wxEmptyString,
-                  const int width = -1);
-    wxAuiToolBarItem* AddControl(wxControl* control,
-                    const wxString& label = wxEmptyString);
-    wxAuiToolBarItem* AddSeparator();
-    wxAuiToolBarItem* AddSpacer(int pixels);
-    wxAuiToolBarItem* AddStretchSpacer(int proportion = 1);
-
-    bool Realize();
-
-    wxControl* FindControl(int windowId);
-    wxAuiToolBarItem* FindToolByPosition(wxCoord x, wxCoord y) const;
-    wxAuiToolBarItem* FindToolByIndex(int idx) const;
-    wxAuiToolBarItem* FindTool(int toolId) const;
-
-    void ClearTools() { Clear() ; }
-    void Clear();
-
-    bool DestroyTool(int toolId);
-    bool DestroyToolByIndex(int idx);
-
-    // Note that these methods do _not_ delete the associated control, if any.
-    // Use DestroyTool() or DestroyToolByIndex() if this is wanted.
-    bool DeleteTool(int toolId);
-    bool DeleteByIndex(int toolId);
-
-    size_t GetToolCount() const;
-    int GetToolPos(int toolId) const { return GetToolIndex(toolId); }
-    int GetToolIndex(int toolId) const;
-    bool GetToolFits(int toolId) const;
-    wxRect GetToolRect(int toolId) const;
-    bool GetToolFitsByIndex(int toolId) const;
-    bool GetToolBarFits() const;
-
-    void SetMargins(const wxSize& size) { SetMargins(size.x, size.x, size.y, size.y); }
-    void SetMargins(int x, int y) { SetMargins(x, x, y, y); }
-    void SetMargins(int left, int right, int top, int bottom);
-
-    void SetToolBitmapSize(const wxSize& size);
-    wxSize GetToolBitmapSize() const;
-
-    bool GetOverflowVisible() const;
-    void SetOverflowVisible(bool visible);
-
-    bool GetGripperVisible() const;
-    void SetGripperVisible(bool visible);
-
-    void ToggleTool(int toolId, bool state);
-    bool GetToolToggled(int toolId) const;
-
-    void EnableTool(int toolId, bool state);
-    bool GetToolEnabled(int toolId) const;
-
-    void SetToolDropDown(int toolId, bool dropdown);
-    bool GetToolDropDown(int toolId) const;
-
-    void SetToolBorderPadding(int padding);
-    int  GetToolBorderPadding() const;
-
-    void SetToolTextOrientation(int orientation);
-    int  GetToolTextOrientation() const;
-
-    void SetToolPacking(int packing);
-    int  GetToolPacking() const;
-
-    void SetToolProportion(int toolId, int proportion);
-    int  GetToolProportion(int toolId) const;
-
-    void SetToolSeparation(int separation);
-    int GetToolSeparation() const;
-
-    void SetToolSticky(int toolId, bool sticky);
-    bool GetToolSticky(int toolId) const;
-
-    wxString GetToolLabel(int toolId) const;
-    void SetToolLabel(int toolId, const wxString& label);
-
-    wxBitmap GetToolBitmap(int toolId) const;
-    void SetToolBitmap(int toolId, const wxBitmapBundle& bitmap);
-
-    wxString GetToolShortHelp(int toolId) const;
-    void SetToolShortHelp(int toolId, const wxString& helpString);
-
-    wxString GetToolLongHelp(int toolId) const;
-    void SetToolLongHelp(int toolId, const wxString& helpString);
-
-    void SetCustomOverflowItems(const wxAuiToolBarItemArray& prepend,
-                                const wxAuiToolBarItemArray& append);
-
-    // get size of hint rectangle for a particular dock location
-    wxSize GetHintSize(int dockDirection) const;
-    bool IsPaneValid(const wxAuiPaneInfo& pane) const;
- */
+}
