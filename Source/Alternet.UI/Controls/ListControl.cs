@@ -51,6 +51,19 @@ namespace Alternet.UI
         public int Count => Items.Count;
 
         /// <summary>
+        /// Gets last item in the control or <c>null</c> if there are no items.
+        /// </summary>
+        public object? LastItem
+        {
+            get
+            {
+                if (Count > 0)
+                    return Items[Count - 1];
+                return null;
+            }
+        }
+
+        /// <summary>
         /// Gets or sets the <see cref="Items"/> element at the specified index.
         /// </summary>
         /// <param name="index">The zero-based index of the <see cref="Items"/> element
@@ -82,6 +95,15 @@ namespace Alternet.UI
         public void Add(object item)
         {
             Items.Add(item);
+        }
+
+        /// <summary>
+        /// Selects last item in the control.
+        /// </summary>
+        public void SelectLastItem()
+        {
+            if(Count > 0)
+                SelectedIndex = Count - 1;
         }
 
         /// <summary>
