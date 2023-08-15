@@ -2,6 +2,10 @@
 
 namespace Alternet::UI
 {
+    wxBitmapBundle BitmapBundle(ImageSet* bimtapBundle)
+    {
+        return bimtapBundle->GetBitmapBundle();
+    }
 
     class wxAuiToolBar2 : public wxAuiToolBar, public wxWidgetExtender
     {
@@ -94,282 +98,304 @@ namespace Alternet::UI
 
     void AuiToolBar::SetArtProvider(void* art)
     {
+        GetToolbar()->SetArtProvider((wxAuiToolBarArt*)art);
     }
 
     void* AuiToolBar::GetArtProvider()
     {
-        return nullptr;
+        return GetToolbar()->GetArtProvider();
     }
 
-    void* AuiToolBar::AddTool(int toolId, const string& label, void* bitmapBundle,
+    void* AuiToolBar::AddTool(int toolId, const string& label, ImageSet* bitmapBundle,
         const string& shortHelpString, int itemKind)
     {
-        return nullptr;
+        return GetToolbar()->AddTool(toolId, wxStr(label), BitmapBundle(bitmapBundle),
+            wxStr(shortHelpString), (wxItemKind)itemKind);
     }
 
-    void* AuiToolBar::AddTool2(int toolId, const string& label, void* bitmapBundle,
-        void* disabledBitmapBundle, int itemKind, const string& shortHelpString,
+    void* AuiToolBar::AddTool2(int toolId, const string& label, ImageSet* bitmapBundle,
+        ImageSet* disabledBitmapBundle, int itemKind, const string& shortHelpString,
         const string& longHelpString, void* clientData)
     {
-        return nullptr;
+        return GetToolbar()->AddTool(toolId, wxStr(label), BitmapBundle(bitmapBundle),
+            BitmapBundle(disabledBitmapBundle), (wxItemKind)itemKind, 
+            wxStr(shortHelpString),
+            wxStr(longHelpString), (wxObject*) clientData);
     }
 
-    void* AuiToolBar::AddTool3(int toolId, void* bitmapBundle,
-        void* disabledBitmapBundle, bool toggle, void* clientData,
+    void* AuiToolBar::AddTool3(int toolId, ImageSet* bitmapBundle,
+        ImageSet* disabledBitmapBundle, bool toggle, void* clientData,
         const string& shortHelpString, const string& longHelpString)
     {
-        return nullptr;
+        return GetToolbar()->AddTool(toolId, BitmapBundle(bitmapBundle),
+            BitmapBundle(disabledBitmapBundle), toggle, (wxObject*) clientData,
+            wxStr(shortHelpString), wxStr(longHelpString));
     }
 
     void* AuiToolBar::AddLabel(int toolId, const string& label, int width)
     {
-        return nullptr;
+        return GetToolbar()->AddLabel(toolId, wxStr(label), width);
     }
 
     void* AuiToolBar::AddControl(void* control, const string& label)
     {
-        return nullptr;
+        return GetToolbar()->AddControl((wxControl*) control, wxStr(label));
     }
 
     void* AuiToolBar::AddSeparator()
     {
-        return nullptr;
+        return GetToolbar()->AddSeparator();
     }
 
     void* AuiToolBar::AddSpacer(int pixels)
     {
-        return nullptr;
+        return GetToolbar()->AddSpacer(pixels);
     }
 
     void* AuiToolBar::AddStretchSpacer(int proportion)
     {
-        return nullptr;
+        return GetToolbar()->AddStretchSpacer(proportion);
     }
 
     bool AuiToolBar::Realize()
     {
-        return false;
+        return GetToolbar()->Realize();
     }
 
     void* AuiToolBar::FindControl(int windowId)
     {
-        return nullptr;
+        return GetToolbar()->FindControl(windowId);
     }
 
     void* AuiToolBar::FindToolByPosition(int x, int y)
     {
-        return nullptr;
+        return GetToolbar()->FindToolByPosition(x, y);
     }
 
     void* AuiToolBar::FindToolByIndex(int idx)
     {
-        return nullptr;
+        return GetToolbar()->FindToolByIndex(idx);
     }
 
     void* AuiToolBar::FindTool(int toolId)
     {
-        return nullptr;
+        return GetToolbar()->FindTool(toolId);
     }
 
     void AuiToolBar::Clear()
     {
+        GetToolbar()->Clear();
     }
 
     bool AuiToolBar::DestroyTool(int toolId)
     {
-        return false;
+        return GetToolbar()->DestroyTool(toolId);
     }
 
     bool AuiToolBar::DestroyToolByIndex(int idx)
     {
-        return false;
+        return GetToolbar()->DestroyToolByIndex(idx);
     }
 
     bool AuiToolBar::DeleteTool(int toolId)
     {
-        return false;
+        return GetToolbar()->DeleteTool(toolId);
     }
 
     bool AuiToolBar::DeleteByIndex(int toolId)
     {
-        return false;
+        return GetToolbar()->DeleteByIndex(toolId);
     }
 
     int AuiToolBar::GetToolIndex(int toolId)
     {
-        return 0;
+        return GetToolbar()->GetToolIndex(toolId);
     }
 
     bool AuiToolBar::GetToolFits(int toolId)
     {
-        return false;
+        return GetToolbar()->GetToolFits(toolId);
     }
 
     Rect AuiToolBar::GetToolRect(int toolId)
     {
-        return Rect();
+        auto rect = GetToolbar()->GetToolRect(toolId);
+        return Rect(rect);
     }
 
     bool AuiToolBar::GetToolFitsByIndex(int toolId)
     {
-        return false;
+        return GetToolbar()->GetToolFitsByIndex(toolId);
     }
 
     bool AuiToolBar::GetToolBarFits()
     {
-        return false;
+        return GetToolbar()->GetToolBarFits();
     }
 
     void AuiToolBar::SetToolBitmapSize(const Size& size)
     {
+        GetToolbar()->SetToolBitmapSize(wxSize(size.Width,size.Height));
     }
 
     Size AuiToolBar::GetToolBitmapSize()
     {
-        return Size();
+        auto size = GetToolbar()->GetToolBitmapSize();
+        return Size(size);
     }
 
     bool AuiToolBar::GetOverflowVisible()
     {
-        return false;
+        return GetToolbar()->GetOverflowVisible();
     }
 
     void AuiToolBar::SetOverflowVisible(bool visible)
     {
+        GetToolbar()->SetOverflowVisible(visible);
     }
 
     bool AuiToolBar::GetGripperVisible()
     {
-        return false;
+        return GetToolbar()->GetGripperVisible();
     }
 
     void AuiToolBar::SetGripperVisible(bool visible)
     {
+        GetToolbar()->SetGripperVisible(visible);
     }
 
     void AuiToolBar::ToggleTool(int toolId, bool state)
     {
+        GetToolbar()->ToggleTool(toolId, state);
     }
 
     bool AuiToolBar::GetToolToggled(int toolId)
     {
-        return false;
+        return GetToolbar()->GetToolToggled(toolId);
     }
 
     void AuiToolBar::SetMargins(int left, int right, int top, int bottom)
     {
+        GetToolbar()->SetMargins(left, right, top, bottom);
     }
 
     void AuiToolBar::EnableTool(int toolId, bool state)
     {
+        GetToolbar()->EnableTool(toolId, state);
     }
 
     bool AuiToolBar::GetToolEnabled(int toolId)
     {
-        return false;
+        return GetToolbar()->GetToolEnabled(toolId);
     }
 
     void AuiToolBar::SetToolDropDown(int toolId, bool dropdown)
     {
+        GetToolbar()->SetToolDropDown(toolId, dropdown);
     }
 
     bool AuiToolBar::GetToolDropDown(int toolId)
     {
-        return false;
+        return GetToolbar()->GetToolDropDown(toolId);
     }
 
     void AuiToolBar::SetToolBorderPadding(int padding)
     {
+        GetToolbar()->SetToolBorderPadding(padding);
     }
 
     int AuiToolBar::GetToolBorderPadding()
     {
-        return 0;
+        return GetToolbar()->GetToolBorderPadding();
     }
 
     void AuiToolBar::SetToolTextOrientation(int orientation)
     {
+        GetToolbar()->SetToolTextOrientation(orientation);
     }
 
     int AuiToolBar::GetToolTextOrientation()
     {
-        return 0;
+        return GetToolbar()->GetToolTextOrientation();
     }
 
     void AuiToolBar::SetToolPacking(int packing)
     {
+        GetToolbar()->SetToolPacking(packing);
     }
 
     int AuiToolBar::GetToolPacking()
     {
-        return 0;
+        return GetToolbar()->GetToolPacking();
     }
 
     void AuiToolBar::SetToolProportion(int toolId, int proportion)
     {
+        GetToolbar()->SetToolProportion(toolId, proportion);
     }
 
     int AuiToolBar::GetToolProportion(int toolId)
     {
-        return 0;
+        return GetToolbar()->GetToolProportion(toolId);
     }
 
     void AuiToolBar::SetToolSeparation(int separation)
     {
+        GetToolbar()->SetToolSeparation(separation);
     }
 
     int AuiToolBar::GetToolSeparation()
     {
-        return 0;
+        return GetToolbar()->GetToolSeparation();
     }
 
     void AuiToolBar::SetToolSticky(int toolId, bool sticky)
     {
+        GetToolbar()->SetToolSticky(toolId, sticky);
     }
 
     bool AuiToolBar::GetToolSticky(int toolId)
     {
-        return false;
+        return GetToolbar()->GetToolSticky(toolId);
     }
 
     string AuiToolBar::GetToolLabel(int toolId)
     {
-        return wxStr(wxEmptyString);
+        return wxStr(GetToolbar()->GetToolLabel(toolId));
     }
 
     void AuiToolBar::SetToolLabel(int toolId, const string& label)
     {
-    }
-
-    void* AuiToolBar::GetToolBitmap(int toolId)
-    {
-        return nullptr;
-    }
-
-    void AuiToolBar::SetToolBitmap(int toolId, void* bitmapBundle)
-    {
+        GetToolbar()->SetToolLabel(toolId, wxStr(label));
     }
 
     string AuiToolBar::GetToolShortHelp(int toolId)
     {
-        return wxStr(wxEmptyString);
+        return wxStr(GetToolbar()->GetToolShortHelp(toolId));
     }
 
     void AuiToolBar::SetToolShortHelp(int toolId, const string& helpString)
     {
+        GetToolbar()->SetToolShortHelp(toolId, wxStr(helpString));
     }
 
     string AuiToolBar::GetToolLongHelp(int toolId)
     {
-        return wxStr(wxEmptyString);
+        return wxStr(GetToolbar()->GetToolLongHelp(toolId));
     }
 
     void AuiToolBar::SetToolLongHelp(int toolId, const string& helpString)
     {
+        GetToolbar()->SetToolLongHelp(toolId, wxStr(helpString));
     }
 
     uint64_t AuiToolBar::GetToolCount()
     {
-        return 0;
+        return GetToolbar()->GetToolCount();
+    }
+
+    void AuiToolBar::SetToolBitmap(int toolId, ImageSet* bitmapBundle)
+    {
+        GetToolbar()->SetToolBitmap(toolId, BitmapBundle(bitmapBundle));
     }
 }

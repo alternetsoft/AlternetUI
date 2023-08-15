@@ -15,22 +15,22 @@ namespace NativeApi.Api
 
         public IntPtr AddTool(int toolId,
                      string label,
-                     IntPtr bitmapBundle,
+                     ImageSet? bitmapBundle,
                      string shortHelpString,
                      int itemKind) => throw new Exception();
 
         public IntPtr AddTool2(int toolId,
                      string label,
-                     IntPtr bitmapBundle,
-                     IntPtr disabledBitmapBundle,
+                     ImageSet? bitmapBundle,
+                     ImageSet? disabledBitmapBundle,
                      int itemKind,
                      string shortHelpString,
                      string longHelpString,
                      IntPtr clientData) => throw new Exception();
 
         public IntPtr AddTool3(int toolId,
-                     IntPtr bitmapBundle,
-                     IntPtr disabledBitmapBundle,
+                     ImageSet? bitmapBundle,
+                     ImageSet? disabledBitmapBundle,
                      bool toggle,
                      IntPtr clientData,
                      string shortHelpString,
@@ -114,8 +114,8 @@ namespace NativeApi.Api
         public string GetToolLabel(int toolId) => throw new Exception();
         public void SetToolLabel(int toolId, string label) => throw new Exception();
 
-        public IntPtr GetToolBitmap(int toolId) => throw new Exception();
-        public void SetToolBitmap(int toolId, IntPtr bitmapBundle) =>
+        //public IntPtr GetToolBitmap(int toolId) => throw new Exception();
+        public void SetToolBitmap(int toolId, ImageSet? bitmapBundle) =>
             throw new Exception();
 
         public string GetToolShortHelp(int toolId) => throw new Exception();

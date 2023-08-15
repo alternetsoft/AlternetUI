@@ -2,9 +2,9 @@
 public:
 void SetArtProvider(void* art);
 void* GetArtProvider();
-void* AddTool(int toolId, const string& label, void* bitmapBundle, const string& shortHelpString, int itemKind);
-void* AddTool2(int toolId, const string& label, void* bitmapBundle, void* disabledBitmapBundle, int itemKind, const string& shortHelpString, const string& longHelpString, void* clientData);
-void* AddTool3(int toolId, void* bitmapBundle, void* disabledBitmapBundle, bool toggle, void* clientData, const string& shortHelpString, const string& longHelpString);
+void* AddTool(int toolId, const string& label, ImageSet* bitmapBundle, const string& shortHelpString, int itemKind);
+void* AddTool2(int toolId, const string& label, ImageSet* bitmapBundle, ImageSet* disabledBitmapBundle, int itemKind, const string& shortHelpString, const string& longHelpString, void* clientData);
+void* AddTool3(int toolId, ImageSet* bitmapBundle, ImageSet* disabledBitmapBundle, bool toggle, void* clientData, const string& shortHelpString, const string& longHelpString);
 void* AddLabel(int toolId, const string& label, int width);
 void* AddControl(void* control, const string& label);
 void* AddSeparator();
@@ -52,8 +52,7 @@ void SetToolSticky(int toolId, bool sticky);
 bool GetToolSticky(int toolId);
 string GetToolLabel(int toolId);
 void SetToolLabel(int toolId, const string& label);
-void* GetToolBitmap(int toolId);
-void SetToolBitmap(int toolId, void* bitmapBundle);
+void SetToolBitmap(int toolId, ImageSet* bitmapBundle);
 string GetToolShortHelp(int toolId);
 void SetToolShortHelp(int toolId, const string& helpString);
 string GetToolLongHelp(int toolId);

@@ -80,6 +80,8 @@ namespace Alternet::UI
 
         Size(double width, double height) : Width(width), Height(height) {}
 
+        Size(wxSize size) : Width(size.x), Height(size.y) {}
+
         inline Size operator+(const Size& rhs) const { return Size(Width + rhs.Width, Height + rhs.Height); }
         inline Size& operator+=(const Size& rhs) 
         {
@@ -150,18 +152,27 @@ namespace Alternet::UI
 
         Rect() {}
 
-        Rect(double x, double y, double width, double height) : X(x), Y(y), Width(width), Height(height) {}
+        Rect(double x, double y, double width, double height)
+            : X(x), Y(y), Width(width), Height(height) {}
 
-        Rect(const Point& location, const Size& size) : Rect(location.X, location.Y, size.Width, size.Height) {}
+        Rect(wxRect rect)
+            : X(rect.x), Y(rect.y), Width(rect.width), Height(rect.height) {}
+
+
+        Rect(const Point& location, const Size& size)
+            : Rect(location.X, location.Y, size.Width, size.Height) {}
 
         inline Point GetLocation() const { return Point(X, Y); };
         inline Size GetSize() const { return Size(Width, Height); };
 
-        inline Rect Offset(const Size& value) const { return Rect(X + value.Width, Y + value.Height, Width, Height); }
+        inline Rect Offset(const Size& value) const
+        { return Rect(X + value.Width, Y + value.Height, Width, Height); }
 
         operator Rect_C() { return Rect_C{ X, Y, Width, Height }; }
 
-        bool operator==(const Rect& rhs) { return X == rhs.X && Y == rhs.Y && Width == rhs.Width && Height == rhs.Height; }
+        bool operator==(const Rect& rhs)
+        { return X == rhs.X && Y == rhs.Y && Width == rhs.Width && Height == rhs.Height; }
+        
         bool operator!=(const Rect& rhs) { return !(*this == rhs); }
     };
 

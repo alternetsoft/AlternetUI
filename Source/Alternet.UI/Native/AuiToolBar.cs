@@ -37,26 +37,26 @@ namespace Alternet.UI.Native
             return m;
         }
         
-        public System.IntPtr AddTool(int toolId, string label, System.IntPtr bitmapBundle, string shortHelpString, int itemKind)
+        public System.IntPtr AddTool(int toolId, string label, ImageSet? bitmapBundle, string shortHelpString, int itemKind)
         {
             CheckDisposed();
-            var n = NativeApi.AuiToolBar_AddTool_(NativePointer, toolId, label, bitmapBundle, shortHelpString, itemKind);
+            var n = NativeApi.AuiToolBar_AddTool_(NativePointer, toolId, label, bitmapBundle?.NativePointer ?? IntPtr.Zero, shortHelpString, itemKind);
             var m = n;
             return m;
         }
         
-        public System.IntPtr AddTool2(int toolId, string label, System.IntPtr bitmapBundle, System.IntPtr disabledBitmapBundle, int itemKind, string shortHelpString, string longHelpString, System.IntPtr clientData)
+        public System.IntPtr AddTool2(int toolId, string label, ImageSet? bitmapBundle, ImageSet? disabledBitmapBundle, int itemKind, string shortHelpString, string longHelpString, System.IntPtr clientData)
         {
             CheckDisposed();
-            var n = NativeApi.AuiToolBar_AddTool2_(NativePointer, toolId, label, bitmapBundle, disabledBitmapBundle, itemKind, shortHelpString, longHelpString, clientData);
+            var n = NativeApi.AuiToolBar_AddTool2_(NativePointer, toolId, label, bitmapBundle?.NativePointer ?? IntPtr.Zero, disabledBitmapBundle?.NativePointer ?? IntPtr.Zero, itemKind, shortHelpString, longHelpString, clientData);
             var m = n;
             return m;
         }
         
-        public System.IntPtr AddTool3(int toolId, System.IntPtr bitmapBundle, System.IntPtr disabledBitmapBundle, bool toggle, System.IntPtr clientData, string shortHelpString, string longHelpString)
+        public System.IntPtr AddTool3(int toolId, ImageSet? bitmapBundle, ImageSet? disabledBitmapBundle, bool toggle, System.IntPtr clientData, string shortHelpString, string longHelpString)
         {
             CheckDisposed();
-            var n = NativeApi.AuiToolBar_AddTool3_(NativePointer, toolId, bitmapBundle, disabledBitmapBundle, toggle, clientData, shortHelpString, longHelpString);
+            var n = NativeApi.AuiToolBar_AddTool3_(NativePointer, toolId, bitmapBundle?.NativePointer ?? IntPtr.Zero, disabledBitmapBundle?.NativePointer ?? IntPtr.Zero, toggle, clientData, shortHelpString, longHelpString);
             var m = n;
             return m;
         }
@@ -407,18 +407,10 @@ namespace Alternet.UI.Native
             NativeApi.AuiToolBar_SetToolLabel_(NativePointer, toolId, label);
         }
         
-        public System.IntPtr GetToolBitmap(int toolId)
+        public void SetToolBitmap(int toolId, ImageSet? bitmapBundle)
         {
             CheckDisposed();
-            var n = NativeApi.AuiToolBar_GetToolBitmap_(NativePointer, toolId);
-            var m = n;
-            return m;
-        }
-        
-        public void SetToolBitmap(int toolId, System.IntPtr bitmapBundle)
-        {
-            CheckDisposed();
-            NativeApi.AuiToolBar_SetToolBitmap_(NativePointer, toolId, bitmapBundle);
+            NativeApi.AuiToolBar_SetToolBitmap_(NativePointer, toolId, bitmapBundle?.NativePointer ?? IntPtr.Zero);
         }
         
         public string GetToolShortHelp(int toolId)
@@ -473,13 +465,13 @@ namespace Alternet.UI.Native
             public static extern System.IntPtr AuiToolBar_GetArtProvider_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr AuiToolBar_AddTool_(IntPtr obj, int toolId, string label, System.IntPtr bitmapBundle, string shortHelpString, int itemKind);
+            public static extern System.IntPtr AuiToolBar_AddTool_(IntPtr obj, int toolId, string label, IntPtr bitmapBundle, string shortHelpString, int itemKind);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr AuiToolBar_AddTool2_(IntPtr obj, int toolId, string label, System.IntPtr bitmapBundle, System.IntPtr disabledBitmapBundle, int itemKind, string shortHelpString, string longHelpString, System.IntPtr clientData);
+            public static extern System.IntPtr AuiToolBar_AddTool2_(IntPtr obj, int toolId, string label, IntPtr bitmapBundle, IntPtr disabledBitmapBundle, int itemKind, string shortHelpString, string longHelpString, System.IntPtr clientData);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr AuiToolBar_AddTool3_(IntPtr obj, int toolId, System.IntPtr bitmapBundle, System.IntPtr disabledBitmapBundle, bool toggle, System.IntPtr clientData, string shortHelpString, string longHelpString);
+            public static extern System.IntPtr AuiToolBar_AddTool3_(IntPtr obj, int toolId, IntPtr bitmapBundle, IntPtr disabledBitmapBundle, bool toggle, System.IntPtr clientData, string shortHelpString, string longHelpString);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern System.IntPtr AuiToolBar_AddLabel_(IntPtr obj, int toolId, string label, int width);
@@ -623,10 +615,7 @@ namespace Alternet.UI.Native
             public static extern void AuiToolBar_SetToolLabel_(IntPtr obj, int toolId, string label);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr AuiToolBar_GetToolBitmap_(IntPtr obj, int toolId);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void AuiToolBar_SetToolBitmap_(IntPtr obj, int toolId, System.IntPtr bitmapBundle);
+            public static extern void AuiToolBar_SetToolBitmap_(IntPtr obj, int toolId, IntPtr bitmapBundle);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern string AuiToolBar_GetToolShortHelp_(IntPtr obj, int toolId);

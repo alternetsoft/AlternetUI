@@ -3,6 +3,7 @@
 #pragma once
 
 #include "AuiToolBar.h"
+#include "ImageSet.h"
 #include "ApiUtils.h"
 #include "Exceptions.h"
 
@@ -29,21 +30,21 @@ ALTERNET_UI_API void* AuiToolBar_GetArtProvider_(AuiToolBar* obj)
         });
 }
 
-ALTERNET_UI_API void* AuiToolBar_AddTool_(AuiToolBar* obj, int toolId, const char16_t* label, void* bitmapBundle, const char16_t* shortHelpString, int itemKind)
+ALTERNET_UI_API void* AuiToolBar_AddTool_(AuiToolBar* obj, int toolId, const char16_t* label, ImageSet* bitmapBundle, const char16_t* shortHelpString, int itemKind)
 {
     return MarshalExceptions<void*>([&](){
             return obj->AddTool(toolId, label, bitmapBundle, shortHelpString, itemKind);
         });
 }
 
-ALTERNET_UI_API void* AuiToolBar_AddTool2_(AuiToolBar* obj, int toolId, const char16_t* label, void* bitmapBundle, void* disabledBitmapBundle, int itemKind, const char16_t* shortHelpString, const char16_t* longHelpString, void* clientData)
+ALTERNET_UI_API void* AuiToolBar_AddTool2_(AuiToolBar* obj, int toolId, const char16_t* label, ImageSet* bitmapBundle, ImageSet* disabledBitmapBundle, int itemKind, const char16_t* shortHelpString, const char16_t* longHelpString, void* clientData)
 {
     return MarshalExceptions<void*>([&](){
             return obj->AddTool2(toolId, label, bitmapBundle, disabledBitmapBundle, itemKind, shortHelpString, longHelpString, clientData);
         });
 }
 
-ALTERNET_UI_API void* AuiToolBar_AddTool3_(AuiToolBar* obj, int toolId, void* bitmapBundle, void* disabledBitmapBundle, c_bool toggle, void* clientData, const char16_t* shortHelpString, const char16_t* longHelpString)
+ALTERNET_UI_API void* AuiToolBar_AddTool3_(AuiToolBar* obj, int toolId, ImageSet* bitmapBundle, ImageSet* disabledBitmapBundle, c_bool toggle, void* clientData, const char16_t* shortHelpString, const char16_t* longHelpString)
 {
     return MarshalExceptions<void*>([&](){
             return obj->AddTool3(toolId, bitmapBundle, disabledBitmapBundle, toggle, clientData, shortHelpString, longHelpString);
@@ -379,14 +380,7 @@ ALTERNET_UI_API void AuiToolBar_SetToolLabel_(AuiToolBar* obj, int toolId, const
         });
 }
 
-ALTERNET_UI_API void* AuiToolBar_GetToolBitmap_(AuiToolBar* obj, int toolId)
-{
-    return MarshalExceptions<void*>([&](){
-            return obj->GetToolBitmap(toolId);
-        });
-}
-
-ALTERNET_UI_API void AuiToolBar_SetToolBitmap_(AuiToolBar* obj, int toolId, void* bitmapBundle)
+ALTERNET_UI_API void AuiToolBar_SetToolBitmap_(AuiToolBar* obj, int toolId, ImageSet* bitmapBundle)
 {
     MarshalExceptions<void>([&](){
             obj->SetToolBitmap(toolId, bitmapBundle);
