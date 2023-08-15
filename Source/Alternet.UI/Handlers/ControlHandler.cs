@@ -70,11 +70,18 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets size of the <see cref="Control"/>'s client area, in device-independent units (1/96th inch per unit).
+        /// Gets or sets size of the <see cref="Control"/>'s client area, in
+        /// device-independent units (1/96th inch per unit).
         /// </summary>
         public Size ClientSize
         {
-            get => NativeControl != null ? NativeControl.ClientSize : bounds.Size;
+            get
+            {
+                if (Control.IsDummy)
+                    return Size.Empty;
+                return NativeControl != null ? NativeControl.ClientSize : bounds.Size;
+            }
+
             set
             {
                 if (NativeControl != null)
