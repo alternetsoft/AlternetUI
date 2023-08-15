@@ -7,6 +7,17 @@ namespace AuiManagerSample
 {
     public partial class MainWindow : Window
     {
+        private const string ResPrefix = 
+            "embres:AuiManagerSample.Resources.Icons.Small.";
+        private const string ResPrefixCalendar = $"{ResPrefix}Calendar16.png";
+        private const string ResPrefixPhoto = $"{ResPrefix}Photo16.png";
+        private const string ResPrefixPencil = $"{ResPrefix}Pencil16.png";
+        private const string ResPrefixGraph = $"{ResPrefix}LineGraph16.png";
+
+        private readonly ImageSet ImageCalendar = ImageSet.FromUrl(ResPrefixCalendar);
+        private readonly ImageSet ImagePhoto = ImageSet.FromUrl(ResPrefixPhoto);
+        private readonly ImageSet ImagePencil = ImageSet.FromUrl(ResPrefixPencil);
+        private readonly ImageSet ImageGraph = ImageSet.FromUrl(ResPrefixGraph);
         private readonly AuiManager manager = new();
         private readonly LayoutPanel panel = new();
 
@@ -62,10 +73,37 @@ namespace AuiManagerSample
             manager.AddPane(listBox3, pane3);
 
             var pane4 = manager.CreatePaneInfo();
-            pane4.Name("pane4").Caption("Pane 4").Top().ToolbarPane().Resizable();
+            pane4.Name("pane4").Caption("Pane 4").Top().ToolbarPane();
             var toolbar4 = new AuiToolbar();
-            toolbar4.SetBounds(0, 0, 200, 30, BoundsSpecified.Size);
-            panel.Children.Add(toolbar4);
+
+            var calendarToolId = toolbar4.AddTool(
+                "Calendar", 
+                ImageCalendar, 
+                "Calendar Hint");
+
+            var photoToolId = toolbar4.AddTool(
+                "Photo",
+                ImagePhoto,
+                "Photo Hint");
+
+            toolbar4.AddSeparator();
+
+            var pencilToolId = toolbar4.AddTool(
+                "Pencil",
+                ImagePencil,
+                "Pencil Hint");
+
+            var graphToolId = toolbar4.AddTool(
+                "Graph",
+                ImageGraph,
+                "Graph Hint");
+
+            toolbar4.AddLabel("Text1");
+
+            toolbar4.Realize();
+
+        //toolbar4.SetBounds(0, 0, 200, 30, BoundsSpecified.Size);
+        panel.Children.Add(toolbar4);
             manager.AddPane(toolbar4, pane4);
 
             var pane5 = manager.CreatePaneInfo();

@@ -21,6 +21,28 @@
     </ItemGroup>
 
     <ItemGroup>
+      <None Remove="Resources\Icons\Large\Calendar32.png" />
+      <None Remove="Resources\Icons\Large\LineGraph32.png" />
+      <None Remove="Resources\Icons\Large\Pencil32.png" />
+      <None Remove="Resources\Icons\Large\Photo32.png" />
+      <None Remove="Resources\Icons\Small\Calendar16.png" />
+      <None Remove="Resources\Icons\Small\LineGraph16.png" />
+      <None Remove="Resources\Icons\Small\Pencil16.png" />
+      <None Remove="Resources\Icons\Small\Photo16.png" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Include="Resources\Icons\Large\Calendar32.png" />
+      <EmbeddedResource Include="Resources\Icons\Large\LineGraph32.png" />
+      <EmbeddedResource Include="Resources\Icons\Large\Pencil32.png" />
+      <EmbeddedResource Include="Resources\Icons\Large\Photo32.png" />
+      <EmbeddedResource Include="Resources\Icons\Small\Calendar16.png" />
+      <EmbeddedResource Include="Resources\Icons\Small\LineGraph16.png" />
+      <EmbeddedResource Include="Resources\Icons\Small\Pencil16.png" />
+      <EmbeddedResource Include="Resources\Icons\Small\Photo16.png" />
+    </ItemGroup>
+
+    <ItemGroup>
         <ProjectReference Include="..\..\Alternet.UI\Alternet.UI.csproj" />
     </ItemGroup>
 </Project>

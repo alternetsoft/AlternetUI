@@ -4,6 +4,8 @@ namespace Alternet::UI
 {
     wxBitmapBundle BitmapBundle(ImageSet* bimtapBundle)
     {
+        if (bimtapBundle == nullptr)
+            return wxBitmapBundle();
         return bimtapBundle->GetBitmapBundle();
     }
 
