@@ -14,14 +14,14 @@ namespace Alternet::UI
     public:
         wxAuiToolBar* GetToolbar();
         wxWindow* CreateWxWindowCore(wxWindow* parent) override;
+        int _eventToolId = 0;
 
     private:
+        void FromEventData(wxAuiToolBarEvent& event);
         void OnToolDropDown(wxAuiToolBarEvent& event);
         void OnBeginDrag(wxAuiToolBarEvent& event);
         void OnMiddleClick(wxAuiToolBarEvent& event);
         void OnOverflowClick(wxAuiToolBarEvent& event);
         void OnRightClick(wxAuiToolBarEvent& event);
-        void OnToolbarCommand(wxCommandEvent& event);
-
     };
 }

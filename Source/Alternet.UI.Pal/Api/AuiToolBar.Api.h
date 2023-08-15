@@ -16,6 +16,13 @@ ALTERNET_UI_API AuiToolBar* AuiToolBar_Create_()
         });
 }
 
+ALTERNET_UI_API int AuiToolBar_GetEventToolId_(AuiToolBar* obj)
+{
+    return MarshalExceptions<int>([&](){
+            return obj->GetEventToolId();
+        });
+}
+
 ALTERNET_UI_API void AuiToolBar_SetArtProvider_(AuiToolBar* obj, void* art)
 {
     MarshalExceptions<void>([&](){
@@ -27,6 +34,13 @@ ALTERNET_UI_API void* AuiToolBar_GetArtProvider_(AuiToolBar* obj)
 {
     return MarshalExceptions<void*>([&](){
             return obj->GetArtProvider();
+        });
+}
+
+ALTERNET_UI_API int AuiToolBar_GetToolKind_(AuiToolBar* obj, int toolId)
+{
+    return MarshalExceptions<int>([&](){
+            return obj->GetToolKind(toolId);
         });
 }
 
@@ -420,5 +434,10 @@ ALTERNET_UI_API uint64_t AuiToolBar_GetToolCount_(AuiToolBar* obj)
     return MarshalExceptions<uint64_t>([&](){
             return obj->GetToolCount();
         });
+}
+
+ALTERNET_UI_API void AuiToolBar_SetEventCallback_(AuiToolBar::AuiToolBarEventCallbackType callback)
+{
+    AuiToolBar::SetEventCallback(callback);
 }
 

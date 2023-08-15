@@ -42,34 +42,53 @@ namespace Alternet::UI
         toolbar->Bind(wxEVT_AUITOOLBAR_RIGHT_CLICK, &AuiToolBar::OnRightClick, this);
         toolbar->Bind(wxEVT_AUITOOLBAR_MIDDLE_CLICK, &AuiToolBar::OnMiddleClick, this);
         toolbar->Bind(wxEVT_AUITOOLBAR_BEGIN_DRAG, &AuiToolBar::OnBeginDrag, this);
-        toolbar->Bind(wxEVT_TOOL, &AuiToolBar::OnToolbarCommand, this);
         return toolbar;
+    }
+
+    int AuiToolBar::GetEventToolId() 
+    {
+        return _eventToolId;
+    }
+
+    void AuiToolBar::FromEventData(wxAuiToolBarEvent& event)
+    {
+        _eventToolId = event.GetToolId();
     }
 
     void AuiToolBar::OnToolDropDown(wxAuiToolBarEvent& event)
     {
+        FromEventData(event);
+        RaiseEvent(AuiToolBarEvent::ToolDropDown);
+        event.Skip();
     }
 
     void AuiToolBar::OnBeginDrag(wxAuiToolBarEvent& event)
     {
+        FromEventData(event);
+        RaiseEvent(AuiToolBarEvent::BeginDrag);
+        event.Skip();
     }
 
     void AuiToolBar::OnMiddleClick(wxAuiToolBarEvent& event)
     {
+        FromEventData(event);
+        RaiseEvent(AuiToolBarEvent::ToolMiddleClick);
+        event.Skip();
     }
 
     void AuiToolBar::OnOverflowClick(wxAuiToolBarEvent& event)
     {
+        FromEventData(event);
+        RaiseEvent(AuiToolBarEvent::OverflowClick);
+        event.Skip();
     }
 
     void AuiToolBar::OnRightClick(wxAuiToolBarEvent& event)
     {
+        FromEventData(event);
+        RaiseEvent(AuiToolBarEvent::ToolRightClick);
+        event.Skip();
     }
-
-    void AuiToolBar::OnToolbarCommand(wxCommandEvent& event)
-    {
-    }
-
 
     wxAuiToolBar* AuiToolBar::GetToolbar()
     {
@@ -93,7 +112,6 @@ namespace Alternet::UI
                     &AuiToolBar::OnMiddleClick, this);
                 window->Unbind(wxEVT_AUITOOLBAR_BEGIN_DRAG,
                     &AuiToolBar::OnBeginDrag, this);
-                window->Unbind(wxEVT_TOOL, &AuiToolBar::OnToolbarCommand, this);
             }
         }
     }
@@ -207,6 +225,12 @@ namespace Alternet::UI
     bool AuiToolBar::DeleteByIndex(int toolId)
     {
         return GetToolbar()->DeleteByIndex(toolId);
+    }
+
+    int AuiToolBar::GetToolKind(int toolId) 
+    {
+        auto tool = GetToolbar()->FindTool(toolId);
+        return tool->GetKind();
     }
 
     int AuiToolBar::GetToolIndex(int toolId)

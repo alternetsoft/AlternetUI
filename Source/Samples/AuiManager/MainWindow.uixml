@@ -3,5 +3,29 @@
         xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
         xmlns:local="clr-namespace:AuiManagerSample;assembly=AuiManagerSample"
         Title="Alternet UI AuiManager Sample"
-        Width="900" Height="700" StartLocation="CenterScreen">      
+        Width="900" Height="700" StartLocation="CenterScreen">
+  <Window.Menu>
+    <MainMenu>
+      <MenuItem Text="_File">
+        <MenuItem Text="_Open..." Name="openMenuItem"
+                  Shortcut="Ctrl+O" Enabled="false"/>
+        <MenuItem Text="_Save..." Name="saveMenuItem"
+                  Shortcut="Ctrl+S" Enabled="false"/>
+        <MenuItem Text="E_xit" Name="exitMenuItem" Enabled="false"/>
+      </MenuItem>
+      <MenuItem Text="_Tools">
+        <MenuItem Text="_Options..." Name="optionsMenuItem"
+                  Enabled="false"/>
+      </MenuItem>
+      <MenuItem Text="_Help">
+        <MenuItem Text="Index" Enabled="false" />
+        <MenuItem Text="_About" Enabled="false" Name="aboutMenuItem"/>
+      </MenuItem>
+    </MainMenu>
+  </Window.Menu>
+  <Window.StatusBar>
+    <StatusBar Name="statusBar">
+      <StatusBarPanel Text="Ready" />
+    </StatusBar>
+  </Window.StatusBar>
 </Window>

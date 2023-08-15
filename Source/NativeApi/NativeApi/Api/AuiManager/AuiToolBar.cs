@@ -10,8 +10,17 @@ namespace NativeApi.Api
 	//https://docs.wxwidgets.org/3.2/classwx_aui_tool_bar.html
 	public class AuiToolBar	: Control
 	{
+        public event EventHandler? ToolDropDown;
+        public event EventHandler? BeginDrag;
+        public event EventHandler? ToolMiddleClick;
+        public event EventHandler? OverflowClick;
+        public event EventHandler? ToolRightClick;
+
+        public int EventToolId { get; }
         public void SetArtProvider(IntPtr art) {}
         public IntPtr GetArtProvider() => throw new Exception();
+
+        public int GetToolKind(int toolId) => throw new Exception();
 
         public IntPtr AddTool(int toolId,
                      string label,

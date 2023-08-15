@@ -11,6 +11,34 @@ namespace Alternet.UI
     {
         private int idCounter = 0;
 
+        public event EventHandler? ToolDropDown;
+
+        public event EventHandler? BeginDrag;
+
+        public event EventHandler? ToolMiddleClick;
+
+        public event EventHandler? OverflowClick;
+
+        public event EventHandler? ToolRightClick;
+
+        public int EventToolId
+        {
+            get
+            {
+                return NativeControl.EventToolId;
+            }
+        }
+
+        protected virtual void OnToolDropDown(EventArgs e)
+        {
+        }
+
+        internal void RaiseToolDropDown(EventArgs e)
+        {
+            OnToolDropDown(e);
+            ToolDropDown?.Invoke(this, e);
+        }
+
         /// <inheritdoc/>
         public override ControlId ControlKind => ControlId.AuiToolbar;
 
@@ -82,6 +110,13 @@ namespace Alternet.UI
                 longHelpString!);
             return toolId;
         }
+
+        public AuiToolbarItemKind GetToolKind(int toolId)
+        {
+            var result = NativeControl.GetToolKind(toolId);
+            return (AuiToolbarItemKind)result;
+        }
+
 
         public int AddLabel(string label, int width = -1)
         {
@@ -376,3 +411,58 @@ namespace Alternet.UI
         }
     }
 }
+
+/*
+DeleteByIndex()
+bool wxAuiToolBar::DeleteByIndex	(	int 	idx	)	
+Removes the tool at the given position from the toolbar.
+
+Note that if this tool was added by AddControl(), the associated control is not deleted and must either be reused (e.g. by reparenting it under a different window) or destroyed by caller. If this behaviour is unwanted, prefer using DestroyToolByIndex() instead.
+
+Parameters
+idx	The index, or position, of a previously added tool.
+Returns
+true if the tool was removed or false otherwise, e.g. if the provided index is out of range.
+DeleteTool()
+bool wxAuiToolBar::DeleteTool	(	int 	toolId	)	
+Removes the tool with the given ID from the toolbar.
+
+Note that if this tool was added by AddControl(), the associated control is not deleted and must either be reused (e.g. by reparenting it under a different window) or destroyed by caller. If this behaviour is unwanted, prefer using DestroyTool() instead.
+
+Parameters
+toolId	ID of a previously added tool.
+Returns
+true if the tool was removed or false otherwise, e.g. if the tool with the given ID was not found.
+DestroyTool()
+bool wxAuiToolBar::DestroyTool	(	int 	toolId	)	
+Destroys the tool with the given ID and its associated window, if any.
+
+Parameters
+toolId	ID of a previously added tool.
+Returns
+true if the tool was destroyed or false otherwise, e.g. if the tool with the given ID was not found.
+Since
+3.1.4
+DestroyToolByIndex()
+bool wxAuiToolBar::DestroyToolByIndex	(	int 	idx	)	
+Destroys the tool at the given position and its associated window, if any.
+
+Parameters
+idx	The index, or position, of a previously added tool.
+Returns
+true if the tool was destroyed or false otherwise, e.g. if the provided index is out of range.
+
+GetToolDropDown()
+bool wxAuiToolBar::GetToolDropDown	(	int 	toolId	)	const
+Returns whether the specified toolbar item has an associated drop down button.
+
+
+void wxAuiToolBar::SetToolDropDown	(	int 	toolId,
+bool 	dropdown 
+)		
+Set whether the specified toolbar item has a drop down button.
+
+This is only valid for wxITEM_NORMAL tools.
+
+
+ */

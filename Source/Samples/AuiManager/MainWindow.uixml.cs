@@ -20,6 +20,13 @@ namespace AuiManagerSample
         private readonly ImageSet ImageGraph = ImageSet.FromUrl(ResPrefixGraph);
         private readonly AuiManager manager = new();
         private readonly LayoutPanel panel = new();
+        private ListBox listBox3;
+        private AuiToolbar toolbar4 = new();
+
+        int calendarToolId;
+        int photoToolId;
+        int pencilToolId;
+        int graphToolId;
 
         static MainWindow()
         {
@@ -67,40 +74,48 @@ namespace AuiManagerSample
             var pane3 = manager.CreatePaneInfo();
             pane3.Name("pane3").Caption("Pane 3").Bottom()
                 .LeftDockable(false).RightDockable(false);
-            var listBox3 = CreateListBox("Pane 3");
+            listBox3 = CreateListBox("Pane 3");
             listBox3.Add("LeftDockable(false)");
             listBox3.Add("RightDockable(false)");
             manager.AddPane(listBox3, pane3);
 
             var pane4 = manager.CreatePaneInfo();
             pane4.Name("pane4").Caption("Pane 4").Top().ToolbarPane();
-            var toolbar4 = new AuiToolbar();
 
-            var calendarToolId = toolbar4.AddTool(
+            calendarToolId = toolbar4.AddTool(
                 "Calendar", 
                 ImageCalendar, 
                 "Calendar Hint");
 
-            var photoToolId = toolbar4.AddTool(
+            toolbar4.SetToolSticky(calendarToolId, false);
+
+            photoToolId = toolbar4.AddTool(
                 "Photo",
                 ImagePhoto,
                 "Photo Hint");
 
             toolbar4.AddSeparator();
 
-            var pencilToolId = toolbar4.AddTool(
+            pencilToolId = toolbar4.AddTool(
                 "Pencil",
                 ImagePencil,
                 "Pencil Hint");
 
-            var graphToolId = toolbar4.AddTool(
+            graphToolId = toolbar4.AddTool(
                 "Graph",
                 ImageGraph,
                 "Graph Hint");
+            toolbar4.SetToolDropDown(graphToolId, true);
 
+
+            toolbar4.AddStretchSpacer();
             toolbar4.AddLabel("Text1");
 
             toolbar4.Realize();
+
+            toolbar4.ToolDropDown += ToolButton_Click;
+
+            AuiToolbarItemKind kind = toolbar4.GetToolKind(pencilToolId);
 
         //toolbar4.SetBounds(0, 0, 200, 30, BoundsSpecified.Size);
         panel.Children.Add(toolbar4);
@@ -116,8 +131,39 @@ namespace AuiManagerSample
             manager.Update();
         }
 
-        private void HelloButton_Click(object? sender, EventArgs e)
+        private void Log(string s)
         {
+            listBox3.Add(s);
+            listBox3.SelectLastItem();
+        }
+
+        private void ToolButton_Click(object? sender, EventArgs e)
+        {
+            var id = toolbar4.EventToolId;
+
+            if(id == calendarToolId)
+            {
+                Log("Calendar clicked");
+                return;
+            }
+            
+            if (id == photoToolId) 
+            {
+                Log("Photo clicked");
+                return;
+            }
+            
+            if (id == pencilToolId) 
+            {
+                Log("Pencil clicked");
+                return;
+            }
+
+            if (id == graphToolId) 
+            {
+                Log("Graph clicked");
+                return;
+            }
         }
     }
 }

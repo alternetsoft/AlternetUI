@@ -12,6 +12,7 @@ namespace Alternet.UI.Native
     {
         static AuiToolBar()
         {
+            SetEventCallback();
         }
         
         public AuiToolBar()
@@ -21,6 +22,18 @@ namespace Alternet.UI.Native
         
         public AuiToolBar(IntPtr nativePointer) : base(nativePointer)
         {
+        }
+        
+        public int EventToolId
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.AuiToolBar_GetEventToolId_(NativePointer);
+                var m = n;
+                return m;
+            }
+            
         }
         
         public void SetArtProvider(System.IntPtr art)
@@ -33,6 +46,14 @@ namespace Alternet.UI.Native
         {
             CheckDisposed();
             var n = NativeApi.AuiToolBar_GetArtProvider_(NativePointer);
+            var m = n;
+            return m;
+        }
+        
+        public int GetToolKind(int toolId)
+        {
+            CheckDisposed();
+            var n = NativeApi.AuiToolBar_GetToolKind_(NativePointer, toolId);
             var m = n;
             return m;
         }
@@ -449,20 +470,93 @@ namespace Alternet.UI.Native
             return m;
         }
         
+        static GCHandle eventCallbackGCHandle;
+        
+        static void SetEventCallback()
+        {
+            if (!eventCallbackGCHandle.IsAllocated)
+            {
+                var sink = new NativeApi.AuiToolBarEventCallbackType((obj, e, parameter) =>
+                UI.Application.HandleThreadExceptions(() =>
+                {
+                    var w = NativeObject.GetFromNativePointer<AuiToolBar>(obj, p => new AuiToolBar(p));
+                    if (w == null) return IntPtr.Zero;
+                    return w.OnEvent(e, parameter);
+                }
+                ));
+                eventCallbackGCHandle = GCHandle.Alloc(sink);
+                NativeApi.AuiToolBar_SetEventCallback_(sink);
+            }
+        }
+        
+        IntPtr OnEvent(NativeApi.AuiToolBarEvent e, IntPtr parameter)
+        {
+            switch (e)
+            {
+                case NativeApi.AuiToolBarEvent.ToolDropDown:
+                {
+                    ToolDropDown?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                }
+                case NativeApi.AuiToolBarEvent.BeginDrag:
+                {
+                    BeginDrag?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                }
+                case NativeApi.AuiToolBarEvent.ToolMiddleClick:
+                {
+                    ToolMiddleClick?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                }
+                case NativeApi.AuiToolBarEvent.OverflowClick:
+                {
+                    OverflowClick?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                }
+                case NativeApi.AuiToolBarEvent.ToolRightClick:
+                {
+                    ToolRightClick?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                }
+                default: throw new Exception("Unexpected AuiToolBarEvent value: " + e);
+            }
+        }
+        
+        public event EventHandler? ToolDropDown;
+        public event EventHandler? BeginDrag;
+        public event EventHandler? ToolMiddleClick;
+        public event EventHandler? OverflowClick;
+        public event EventHandler? ToolRightClick;
         
         [SuppressUnmanagedCodeSecurity]
         public class NativeApi : NativeApiProvider
         {
             static NativeApi() => Initialize();
             
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            public delegate IntPtr AuiToolBarEventCallbackType(IntPtr obj, AuiToolBarEvent e, IntPtr param);
+            
+            public enum AuiToolBarEvent
+            {
+                ToolDropDown,
+                BeginDrag,
+                ToolMiddleClick,
+                OverflowClick,
+                ToolRightClick,
+            }
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void AuiToolBar_SetEventCallback_(AuiToolBarEventCallbackType callback);
+            
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern IntPtr AuiToolBar_Create_();
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int AuiToolBar_GetEventToolId_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void AuiToolBar_SetArtProvider_(IntPtr obj, System.IntPtr art);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern System.IntPtr AuiToolBar_GetArtProvider_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int AuiToolBar_GetToolKind_(IntPtr obj, int toolId);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern System.IntPtr AuiToolBar_AddTool_(IntPtr obj, int toolId, string label, IntPtr bitmapBundle, string shortHelpString, int itemKind);
