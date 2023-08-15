@@ -31,9 +31,39 @@ namespace Alternet::UI
             wxDefaultSize,
             style);
 
-        //toolbar->Bind(wxEVT_BUTTON, &Button::OnButtonClick, this);
+        toolbar->Bind(wxEVT_AUITOOLBAR_TOOL_DROPDOWN, &AuiToolBar::OnToolDropDown, this);
+        toolbar->Bind(wxEVT_AUITOOLBAR_OVERFLOW_CLICK, &AuiToolBar::OnOverflowClick, this);
+        toolbar->Bind(wxEVT_AUITOOLBAR_RIGHT_CLICK, &AuiToolBar::OnRightClick, this);
+        toolbar->Bind(wxEVT_AUITOOLBAR_MIDDLE_CLICK, &AuiToolBar::OnMiddleClick, this);
+        toolbar->Bind(wxEVT_AUITOOLBAR_BEGIN_DRAG, &AuiToolBar::OnBeginDrag, this);
+        toolbar->Bind(wxEVT_TOOL, &AuiToolBar::OnToolbarCommand, this);
         return toolbar;
     }
+
+    void AuiToolBar::OnToolDropDown(wxAuiToolBarEvent& event)
+    {
+    }
+
+    void AuiToolBar::OnBeginDrag(wxAuiToolBarEvent& event)
+    {
+    }
+
+    void AuiToolBar::OnMiddleClick(wxAuiToolBarEvent& event)
+    {
+    }
+
+    void AuiToolBar::OnOverflowClick(wxAuiToolBarEvent& event)
+    {
+    }
+
+    void AuiToolBar::OnRightClick(wxAuiToolBarEvent& event)
+    {
+    }
+
+    void AuiToolBar::OnToolbarCommand(wxCommandEvent& event)
+    {
+    }
+
 
     wxAuiToolBar* AuiToolBar::GetToolbar()
     {
@@ -47,7 +77,17 @@ namespace Alternet::UI
             auto window = GetWxWindow();
             if (window != nullptr)
             {
-                //window->Unbind(wxEVT_BUTTON, &Button::OnButtonClick, this);
+                window->Unbind(wxEVT_AUITOOLBAR_TOOL_DROPDOWN,
+                    &AuiToolBar::OnToolDropDown, this);
+                window->Unbind(wxEVT_AUITOOLBAR_OVERFLOW_CLICK,
+                    &AuiToolBar::OnOverflowClick, this);
+                window->Unbind(wxEVT_AUITOOLBAR_RIGHT_CLICK,
+                    &AuiToolBar::OnRightClick, this);
+                window->Unbind(wxEVT_AUITOOLBAR_MIDDLE_CLICK,
+                    &AuiToolBar::OnMiddleClick, this);
+                window->Unbind(wxEVT_AUITOOLBAR_BEGIN_DRAG,
+                    &AuiToolBar::OnBeginDrag, this);
+                window->Unbind(wxEVT_TOOL, &AuiToolBar::OnToolbarCommand, this);
             }
         }
     }

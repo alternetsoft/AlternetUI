@@ -15,6 +15,12 @@ namespace Alternet::UI
         wxWindow* CreateWxWindowCore(wxWindow* parent) override;
 
     private:
-    
+        void OnToolDropDown(wxAuiToolBarEvent& event);
+        void OnBeginDrag(wxAuiToolBarEvent& event);
+        void OnMiddleClick(wxAuiToolBarEvent& event);
+        void OnOverflowClick(wxAuiToolBarEvent& event);
+        void OnRightClick(wxAuiToolBarEvent& event);
+        void OnToolbarCommand(wxCommandEvent& event);
+
     };
 }
