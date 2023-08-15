@@ -20,8 +20,8 @@ namespace AuiManagerSample
         private readonly ImageSet ImageGraph = ImageSet.FromUrl(ResPrefixGraph);
         private readonly AuiManager manager = new();
         private readonly LayoutPanel panel = new();
-        private ListBox listBox3;
-        private AuiToolbar toolbar4 = new();
+        private readonly ListBox listBox3;
+        private readonly AuiToolbar toolbar4 = new();
 
         int calendarToolId;
         int photoToolId;
