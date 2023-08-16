@@ -23,6 +23,182 @@ namespace Alternet.UI.Native
         {
         }
         
+        public void SetArtProvider(System.IntPtr art)
+        {
+            CheckDisposed();
+            NativeApi.AuiNotebook_SetArtProvider_(NativePointer, art);
+        }
+        
+        public System.IntPtr GetArtProvider()
+        {
+            CheckDisposed();
+            var n = NativeApi.AuiNotebook_GetArtProvider_(NativePointer);
+            var m = n;
+            return m;
+        }
+        
+        public void SetUniformBitmapSize(int width, int height)
+        {
+            CheckDisposed();
+            NativeApi.AuiNotebook_SetUniformBitmapSize_(NativePointer, width, height);
+        }
+        
+        public void SetTabCtrlHeight(int height)
+        {
+            CheckDisposed();
+            NativeApi.AuiNotebook_SetTabCtrlHeight_(NativePointer, height);
+        }
+        
+        public bool AddPage(System.IntPtr page, string caption, bool select, ImageSet? bitmap)
+        {
+            CheckDisposed();
+            var n = NativeApi.AuiNotebook_AddPage_(NativePointer, page, caption, select, bitmap?.NativePointer ?? IntPtr.Zero);
+            var m = n;
+            return m;
+        }
+        
+        public bool InsertPage(ulong pageIdx, System.IntPtr page, string caption, bool select, ImageSet? bitmap)
+        {
+            CheckDisposed();
+            var n = NativeApi.AuiNotebook_InsertPage_(NativePointer, pageIdx, page, caption, select, bitmap?.NativePointer ?? IntPtr.Zero);
+            var m = n;
+            return m;
+        }
+        
+        public bool DeletePage(ulong page)
+        {
+            CheckDisposed();
+            var n = NativeApi.AuiNotebook_DeletePage_(NativePointer, page);
+            var m = n;
+            return m;
+        }
+        
+        public bool RemovePage(ulong page)
+        {
+            CheckDisposed();
+            var n = NativeApi.AuiNotebook_RemovePage_(NativePointer, page);
+            var m = n;
+            return m;
+        }
+        
+        public ulong GetPageCount()
+        {
+            CheckDisposed();
+            var n = NativeApi.AuiNotebook_GetPageCount_(NativePointer);
+            var m = n;
+            return m;
+        }
+        
+        public System.IntPtr GetPage(ulong pageIdx)
+        {
+            CheckDisposed();
+            var n = NativeApi.AuiNotebook_GetPage_(NativePointer, pageIdx);
+            var m = n;
+            return m;
+        }
+        
+        public int FindPage(System.IntPtr page)
+        {
+            CheckDisposed();
+            var n = NativeApi.AuiNotebook_FindPage_(NativePointer, page);
+            var m = n;
+            return m;
+        }
+        
+        public bool SetPageText(ulong page, string text)
+        {
+            CheckDisposed();
+            var n = NativeApi.AuiNotebook_SetPageText_(NativePointer, page, text);
+            var m = n;
+            return m;
+        }
+        
+        public string GetPageText(ulong pageIdx)
+        {
+            CheckDisposed();
+            var n = NativeApi.AuiNotebook_GetPageText_(NativePointer, pageIdx);
+            var m = n;
+            return m;
+        }
+        
+        public bool SetPageToolTip(ulong page, string text)
+        {
+            CheckDisposed();
+            var n = NativeApi.AuiNotebook_SetPageToolTip_(NativePointer, page, text);
+            var m = n;
+            return m;
+        }
+        
+        public string GetPageToolTip(ulong pageIdx)
+        {
+            CheckDisposed();
+            var n = NativeApi.AuiNotebook_GetPageToolTip_(NativePointer, pageIdx);
+            var m = n;
+            return m;
+        }
+        
+        public bool SetPageBitmap(ulong page, ImageSet? bitmap)
+        {
+            CheckDisposed();
+            var n = NativeApi.AuiNotebook_SetPageBitmap_(NativePointer, page, bitmap?.NativePointer ?? IntPtr.Zero);
+            var m = n;
+            return m;
+        }
+        
+        public int SetSelection(ulong newPage)
+        {
+            CheckDisposed();
+            var n = NativeApi.AuiNotebook_SetSelection_(NativePointer, newPage);
+            var m = n;
+            return m;
+        }
+        
+        public int GetSelection()
+        {
+            CheckDisposed();
+            var n = NativeApi.AuiNotebook_GetSelection_(NativePointer);
+            var m = n;
+            return m;
+        }
+        
+        public void Split(ulong page, int direction)
+        {
+            CheckDisposed();
+            NativeApi.AuiNotebook_Split_(NativePointer, page, direction);
+        }
+        
+        public int GetTabCtrlHeight()
+        {
+            CheckDisposed();
+            var n = NativeApi.AuiNotebook_GetTabCtrlHeight_(NativePointer);
+            var m = n;
+            return m;
+        }
+        
+        public int GetHeightForPageHeight(int pageHeight)
+        {
+            CheckDisposed();
+            var n = NativeApi.AuiNotebook_GetHeightForPageHeight_(NativePointer, pageHeight);
+            var m = n;
+            return m;
+        }
+        
+        public bool ShowWindowMenu()
+        {
+            CheckDisposed();
+            var n = NativeApi.AuiNotebook_ShowWindowMenu_(NativePointer);
+            var m = n;
+            return m;
+        }
+        
+        public bool DeleteAllPages()
+        {
+            CheckDisposed();
+            var n = NativeApi.AuiNotebook_DeleteAllPages_(NativePointer);
+            var m = n;
+            return m;
+        }
+        
         
         [SuppressUnmanagedCodeSecurity]
         public class NativeApi : NativeApiProvider
@@ -31,6 +207,75 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern IntPtr AuiNotebook_Create_();
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void AuiNotebook_SetArtProvider_(IntPtr obj, System.IntPtr art);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr AuiNotebook_GetArtProvider_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void AuiNotebook_SetUniformBitmapSize_(IntPtr obj, int width, int height);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void AuiNotebook_SetTabCtrlHeight_(IntPtr obj, int height);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool AuiNotebook_AddPage_(IntPtr obj, System.IntPtr page, string caption, bool select, IntPtr bitmap);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool AuiNotebook_InsertPage_(IntPtr obj, ulong pageIdx, System.IntPtr page, string caption, bool select, IntPtr bitmap);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool AuiNotebook_DeletePage_(IntPtr obj, ulong page);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool AuiNotebook_RemovePage_(IntPtr obj, ulong page);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern ulong AuiNotebook_GetPageCount_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr AuiNotebook_GetPage_(IntPtr obj, ulong pageIdx);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int AuiNotebook_FindPage_(IntPtr obj, System.IntPtr page);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool AuiNotebook_SetPageText_(IntPtr obj, ulong page, string text);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern string AuiNotebook_GetPageText_(IntPtr obj, ulong pageIdx);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool AuiNotebook_SetPageToolTip_(IntPtr obj, ulong page, string text);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern string AuiNotebook_GetPageToolTip_(IntPtr obj, ulong pageIdx);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool AuiNotebook_SetPageBitmap_(IntPtr obj, ulong page, IntPtr bitmap);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int AuiNotebook_SetSelection_(IntPtr obj, ulong newPage);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int AuiNotebook_GetSelection_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void AuiNotebook_Split_(IntPtr obj, ulong page, int direction);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int AuiNotebook_GetTabCtrlHeight_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int AuiNotebook_GetHeightForPageHeight_(IntPtr obj, int pageHeight);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool AuiNotebook_ShowWindowMenu_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool AuiNotebook_DeleteAllPages_(IntPtr obj);
             
         }
     }
