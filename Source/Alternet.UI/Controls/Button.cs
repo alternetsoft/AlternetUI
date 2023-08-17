@@ -140,7 +140,6 @@ namespace Alternet.UI
             set => Handler.TextAlign = value;
         }
 
-
         /// <summary>
         /// Gets or sets value indicating whether this control accepts
         /// input or not (i.e. behaves like a static text) and so doesn't need focus.

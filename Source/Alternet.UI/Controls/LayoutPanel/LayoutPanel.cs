@@ -16,6 +16,9 @@ namespace Alternet.UI
     /// </remarks>
     public class LayoutPanel : Control
     {
+        /// <inheritdoc/>
+        public override ControlId ControlKind => ControlId.LayoutPanel;
+
         internal new NativeLayoutPanelHandler Handler =>
             (NativeLayoutPanelHandler)base.Handler;
 
@@ -100,9 +103,6 @@ namespace Alternet.UI
                 return Size.Empty;
             return control.ExtendedProps.MinimumSize;
         }
-
-        /// <inheritdoc/>
-        public override ControlId ControlKind => ControlId.LayoutPanel;
 
         internal static void SetAnchor(Control control, AnchorStyles value)
         {
