@@ -24,6 +24,32 @@ int GetHeightForPageHeight(int pageHeight);
 bool ShowWindowMenu();
 bool DeleteAllPages();
 public:
+enum class AuiNotebookEvent
+{
+    PageClose,
+    PageClosed,
+    PageChanged,
+    PageChanging,
+    WindowListButton,
+    BeginDrag,
+    EndDrag,
+    DragMotion,
+    AllowTabDrop,
+    DragDone,
+    TabMiddleMouseDown,
+    TabMiddleMouseUp,
+    TabRightMouseDown,
+    TabRightMouseUp,
+    BgDclickMouse,
+};
+typedef void* (*AuiNotebookEventCallbackType)(AuiNotebook* obj, AuiNotebookEvent event, void* param);
+static void SetEventCallback(AuiNotebookEventCallbackType value) { eventCallback = value; }
+protected:
+bool RaiseEvent(AuiNotebookEvent event, void* parameter = nullptr) { if (EventsSuspended()) return false; if (eventCallback != nullptr) return eventCallback(this, event, parameter) != nullptr; else return false; }
+void* RaiseEventWithPointerResult(AuiNotebookEvent event, void* parameter = nullptr) { if (EventsSuspended()) return nullptr; if (eventCallback != nullptr) return eventCallback(this, event, parameter); else return nullptr; }
+private:
+inline static AuiNotebookEventCallbackType eventCallback = nullptr;
+public:
 AuiNotebook();
 protected:
 virtual ~AuiNotebook();

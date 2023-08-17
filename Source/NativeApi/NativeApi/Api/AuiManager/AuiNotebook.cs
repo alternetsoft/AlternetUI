@@ -57,5 +57,22 @@ namespace NativeApi.Api
         public bool ShowWindowMenu() => throw new Exception();
 
         public bool DeleteAllPages() => throw new Exception();
+
+        public event EventHandler? PageClose;
+        public event EventHandler? PageClosed;
+        public event EventHandler? PageChanged;
+        public event EventHandler? PageChanging;
+        public event EventHandler? WindowListButton;
+        public event EventHandler? BeginDrag;
+        public event EventHandler? EndDrag;
+        public event EventHandler? DragMotion;
+        public event EventHandler? AllowTabDrop;
+        public event EventHandler? DragDone;
+        public event EventHandler? TabMiddleMouseDown;
+        public event EventHandler? TabMiddleMouseUp;
+        public event EventHandler? TabRightMouseDown;
+        public event EventHandler? TabRightMouseUp;
+        public event EventHandler? BgDclickMouse;
     }
 }
+

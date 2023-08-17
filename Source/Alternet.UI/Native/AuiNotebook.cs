@@ -12,6 +12,7 @@ namespace Alternet.UI.Native
     {
         static AuiNotebook()
         {
+            SetEventCallback();
         }
         
         public AuiNotebook()
@@ -199,11 +200,138 @@ namespace Alternet.UI.Native
             return m;
         }
         
+        static GCHandle eventCallbackGCHandle;
+        
+        static void SetEventCallback()
+        {
+            if (!eventCallbackGCHandle.IsAllocated)
+            {
+                var sink = new NativeApi.AuiNotebookEventCallbackType((obj, e, parameter) =>
+                UI.Application.HandleThreadExceptions(() =>
+                {
+                    var w = NativeObject.GetFromNativePointer<AuiNotebook>(obj, p => new AuiNotebook(p));
+                    if (w == null) return IntPtr.Zero;
+                    return w.OnEvent(e, parameter);
+                }
+                ));
+                eventCallbackGCHandle = GCHandle.Alloc(sink);
+                NativeApi.AuiNotebook_SetEventCallback_(sink);
+            }
+        }
+        
+        IntPtr OnEvent(NativeApi.AuiNotebookEvent e, IntPtr parameter)
+        {
+            switch (e)
+            {
+                case NativeApi.AuiNotebookEvent.PageClose:
+                {
+                    PageClose?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                }
+                case NativeApi.AuiNotebookEvent.PageClosed:
+                {
+                    PageClosed?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                }
+                case NativeApi.AuiNotebookEvent.PageChanged:
+                {
+                    PageChanged?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                }
+                case NativeApi.AuiNotebookEvent.PageChanging:
+                {
+                    PageChanging?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                }
+                case NativeApi.AuiNotebookEvent.WindowListButton:
+                {
+                    WindowListButton?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                }
+                case NativeApi.AuiNotebookEvent.BeginDrag:
+                {
+                    BeginDrag?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                }
+                case NativeApi.AuiNotebookEvent.EndDrag:
+                {
+                    EndDrag?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                }
+                case NativeApi.AuiNotebookEvent.DragMotion:
+                {
+                    DragMotion?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                }
+                case NativeApi.AuiNotebookEvent.AllowTabDrop:
+                {
+                    AllowTabDrop?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                }
+                case NativeApi.AuiNotebookEvent.DragDone:
+                {
+                    DragDone?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                }
+                case NativeApi.AuiNotebookEvent.TabMiddleMouseDown:
+                {
+                    TabMiddleMouseDown?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                }
+                case NativeApi.AuiNotebookEvent.TabMiddleMouseUp:
+                {
+                    TabMiddleMouseUp?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                }
+                case NativeApi.AuiNotebookEvent.TabRightMouseDown:
+                {
+                    TabRightMouseDown?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                }
+                case NativeApi.AuiNotebookEvent.TabRightMouseUp:
+                {
+                    TabRightMouseUp?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                }
+                case NativeApi.AuiNotebookEvent.BgDclickMouse:
+                {
+                    BgDclickMouse?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                }
+                default: throw new Exception("Unexpected AuiNotebookEvent value: " + e);
+            }
+        }
+        
+        public event EventHandler? PageClose;
+        public event EventHandler? PageClosed;
+        public event EventHandler? PageChanged;
+        public event EventHandler? PageChanging;
+        public event EventHandler? WindowListButton;
+        public event EventHandler? BeginDrag;
+        public event EventHandler? EndDrag;
+        public event EventHandler? DragMotion;
+        public event EventHandler? AllowTabDrop;
+        public event EventHandler? DragDone;
+        public event EventHandler? TabMiddleMouseDown;
+        public event EventHandler? TabMiddleMouseUp;
+        public event EventHandler? TabRightMouseDown;
+        public event EventHandler? TabRightMouseUp;
+        public event EventHandler? BgDclickMouse;
         
         [SuppressUnmanagedCodeSecurity]
         public class NativeApi : NativeApiProvider
         {
             static NativeApi() => Initialize();
+            
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            public delegate IntPtr AuiNotebookEventCallbackType(IntPtr obj, AuiNotebookEvent e, IntPtr param);
+            
+            public enum AuiNotebookEvent
+            {
+                PageClose,
+                PageClosed,
+                PageChanged,
+                PageChanging,
+                WindowListButton,
+                BeginDrag,
+                EndDrag,
+                DragMotion,
+                AllowTabDrop,
+                DragDone,
+                TabMiddleMouseDown,
+                TabMiddleMouseUp,
+                TabRightMouseDown,
+                TabRightMouseUp,
+                BgDclickMouse,
+            }
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void AuiNotebook_SetEventCallback_(AuiNotebookEventCallbackType callback);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern IntPtr AuiNotebook_Create_();

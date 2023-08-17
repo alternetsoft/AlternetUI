@@ -27,23 +27,192 @@ namespace Alternet::UI
             auto window = GetWxWindow();
             if (window != nullptr)
             {
-                //window->Unbind(wxEVT_BUTTON, &Button::OnButtonClick, this);
+                window->Unbind(wxEVT_AUINOTEBOOK_PAGE_CLOSE,
+                    &AuiNotebook::OnPageClose, this);
+                window->Unbind(wxEVT_AUINOTEBOOK_PAGE_CLOSED,
+                    &AuiNotebook::OnPageClosed, this);
+                window->Unbind(wxEVT_AUINOTEBOOK_PAGE_CHANGED,
+                    &AuiNotebook::OnPageChanged, this);
+                window->Unbind(wxEVT_AUINOTEBOOK_PAGE_CHANGING,
+                    &AuiNotebook::OnPageChanging, this);
+                window->Unbind(wxEVT_AUINOTEBOOK_BUTTON,
+                    &AuiNotebook::OnWindowListButton, this);
+                window->Unbind(wxEVT_AUINOTEBOOK_BEGIN_DRAG,
+                    &AuiNotebook::OnBeginDrag, this);
+                window->Unbind(wxEVT_AUINOTEBOOK_END_DRAG,
+                    &AuiNotebook::OnEndDrag, this);
+                window->Unbind(wxEVT_AUINOTEBOOK_DRAG_MOTION,
+                    &AuiNotebook::OnDragMotion, this);
+                window->Unbind(wxEVT_AUINOTEBOOK_ALLOW_DND,
+                    &AuiNotebook::OnAllowTabDrop, this);
+                window->Unbind(wxEVT_AUINOTEBOOK_DRAG_DONE,
+                    &AuiNotebook::OnDragDone, this);
+                window->Unbind(wxEVT_AUINOTEBOOK_TAB_MIDDLE_DOWN,
+                    &AuiNotebook::OnTabMiddleMouseDown, this);
+                window->Unbind(wxEVT_AUINOTEBOOK_TAB_MIDDLE_UP,
+                    &AuiNotebook::OnTabMiddleMouseUp, this);
+                window->Unbind(wxEVT_AUINOTEBOOK_TAB_RIGHT_DOWN,
+                    &AuiNotebook::OnTabRightMouseDown, this);
+                window->Unbind(wxEVT_AUINOTEBOOK_TAB_RIGHT_UP,
+                    &AuiNotebook::OnTabRightMouseUp, this);
+                window->Unbind(wxEVT_AUINOTEBOOK_BG_DCLICK,
+                    &AuiNotebook::OnBgDclickMouse, this);
             }
         }
+    }
+
+    void AuiNotebook::FromEventData(wxAuiNotebookEvent& event)
+    {
+        int _eventSelection = event.GetSelection();
+        int _eventOldSelection = event.GetOldSelection();
+    }
+
+    void AuiNotebook::OnPageClose(wxAuiNotebookEvent& event)
+    {
+        FromEventData(event);
+        RaiseEvent(AuiNotebookEvent::PageClose);
+        event.Skip();
+    }
+
+    void AuiNotebook::OnPageClosed(wxAuiNotebookEvent& event)
+    {
+        FromEventData(event);
+        RaiseEvent(AuiNotebookEvent::PageClosed);
+        event.Skip();
+    }
+
+    void AuiNotebook::OnPageChanged(wxAuiNotebookEvent& event)
+    {
+        FromEventData(event);
+        RaiseEvent(AuiNotebookEvent::PageChanged);
+        event.Skip();
+    }
+
+    void AuiNotebook::OnPageChanging(wxAuiNotebookEvent& event)
+    {
+        FromEventData(event);
+        RaiseEvent(AuiNotebookEvent::PageChanging);
+        event.Skip();
+    }
+
+    void AuiNotebook::OnWindowListButton(wxAuiNotebookEvent& event)
+    {
+        FromEventData(event);
+        RaiseEvent(AuiNotebookEvent::WindowListButton);
+        event.Skip();
+    }
+
+    void AuiNotebook::OnBeginDrag(wxAuiNotebookEvent& event)
+    {
+        FromEventData(event);
+        RaiseEvent(AuiNotebookEvent::BeginDrag);
+        event.Skip();
+    }
+
+    void AuiNotebook::OnEndDrag(wxAuiNotebookEvent& event)
+    {
+        FromEventData(event);
+        RaiseEvent(AuiNotebookEvent::EndDrag);
+        event.Skip();
+    }
+        
+    void AuiNotebook::OnDragMotion(wxAuiNotebookEvent& event)
+    {
+        FromEventData(event);
+        RaiseEvent(AuiNotebookEvent::DragMotion);
+        event.Skip();
+    }
+
+    void AuiNotebook::OnAllowTabDrop(wxAuiNotebookEvent& event)
+    {
+        FromEventData(event);
+        RaiseEvent(AuiNotebookEvent::AllowTabDrop);
+        event.Skip();
+    }
+
+    void AuiNotebook::OnDragDone(wxAuiNotebookEvent& event)
+    {
+        FromEventData(event);
+        RaiseEvent(AuiNotebookEvent::DragDone);
+        event.Skip();
+    }
+    
+    void AuiNotebook::OnTabMiddleMouseDown(wxAuiNotebookEvent& event)
+    {
+        FromEventData(event);
+        RaiseEvent(AuiNotebookEvent::TabMiddleMouseDown);
+        event.Skip();
+    }
+        
+    void AuiNotebook::OnTabMiddleMouseUp(wxAuiNotebookEvent& event)
+    {
+        FromEventData(event);
+        RaiseEvent(AuiNotebookEvent::TabMiddleMouseUp);
+        event.Skip();
+    }
+
+    void AuiNotebook::OnTabRightMouseDown(wxAuiNotebookEvent& event)
+    {
+        FromEventData(event);
+        RaiseEvent(AuiNotebookEvent::TabRightMouseDown);
+        event.Skip();
+    }
+
+    void AuiNotebook::OnTabRightMouseUp(wxAuiNotebookEvent& event)
+    {
+        FromEventData(event);
+        RaiseEvent(AuiNotebookEvent::TabRightMouseUp);
+        event.Skip();
+    }
+    
+    void AuiNotebook::OnBgDclickMouse(wxAuiNotebookEvent& event)
+    {
+        FromEventData(event);
+        RaiseEvent(AuiNotebookEvent::BgDclickMouse);
+        event.Skip();
     }
 
     wxWindow* AuiNotebook::CreateWxWindowCore(wxWindow* parent)
     {
         long style = wxAUI_NB_DEFAULT_STYLE;
 
-        auto toolbar = new wxAuiNotebook2(parent,
+        auto window = new wxAuiNotebook2(parent,
             wxID_ANY,
             wxDefaultPosition,
             wxDefaultSize,
             style);
 
-        //toolbar->Bind(wxEVT_BUTTON, &Button::OnButtonClick, this);
-        return toolbar;
+        window->Bind(wxEVT_AUINOTEBOOK_PAGE_CLOSE,
+            &AuiNotebook::OnPageClose, this);
+        window->Bind(wxEVT_AUINOTEBOOK_PAGE_CLOSED,
+            &AuiNotebook::OnPageClosed, this);
+        window->Bind(wxEVT_AUINOTEBOOK_PAGE_CHANGED,
+            &AuiNotebook::OnPageChanged, this);
+        window->Bind(wxEVT_AUINOTEBOOK_PAGE_CHANGING,
+            &AuiNotebook::OnPageChanging, this);
+        window->Bind(wxEVT_AUINOTEBOOK_BUTTON,
+            &AuiNotebook::OnWindowListButton, this);
+        window->Bind(wxEVT_AUINOTEBOOK_BEGIN_DRAG,
+            &AuiNotebook::OnBeginDrag, this);
+        window->Bind(wxEVT_AUINOTEBOOK_END_DRAG,
+            &AuiNotebook::OnEndDrag, this);
+        window->Bind(wxEVT_AUINOTEBOOK_DRAG_MOTION,
+            &AuiNotebook::OnDragMotion, this);
+        window->Bind(wxEVT_AUINOTEBOOK_ALLOW_DND,
+            &AuiNotebook::OnAllowTabDrop, this);
+        window->Bind(wxEVT_AUINOTEBOOK_DRAG_DONE,
+            &AuiNotebook::OnDragDone, this);
+        window->Bind(wxEVT_AUINOTEBOOK_TAB_MIDDLE_DOWN,
+            &AuiNotebook::OnTabMiddleMouseDown, this);
+        window->Bind(wxEVT_AUINOTEBOOK_TAB_MIDDLE_UP,
+            &AuiNotebook::OnTabMiddleMouseUp, this);
+        window->Bind(wxEVT_AUINOTEBOOK_TAB_RIGHT_DOWN,
+            &AuiNotebook::OnTabRightMouseDown, this);
+        window->Bind(wxEVT_AUINOTEBOOK_TAB_RIGHT_UP,
+            &AuiNotebook::OnTabRightMouseUp, this);
+        window->Bind(wxEVT_AUINOTEBOOK_BG_DCLICK,
+            &AuiNotebook::OnBgDclickMouse, this);
+        return window;
     }
 
     wxAuiNotebook* AuiNotebook::GetNotebook()

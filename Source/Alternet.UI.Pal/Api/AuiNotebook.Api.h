@@ -177,3 +177,8 @@ ALTERNET_UI_API c_bool AuiNotebook_DeleteAllPages_(AuiNotebook* obj)
         });
 }
 
+ALTERNET_UI_API void AuiNotebook_SetEventCallback_(AuiNotebook::AuiNotebookEventCallbackType callback)
+{
+    AuiNotebook::SetEventCallback(callback);
+}
+
