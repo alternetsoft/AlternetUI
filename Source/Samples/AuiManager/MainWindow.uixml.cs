@@ -90,8 +90,6 @@ namespace AuiManagerSample
                 ImageCalendar, 
                 "Calendar Hint");
 
-            toolbar4.SetToolSticky(calendarToolId, true);
-
             toolbar4.AddSeparator();
 
             pencilToolId = toolbar4.AddTool(

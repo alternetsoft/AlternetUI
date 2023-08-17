@@ -118,6 +118,18 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets the default separator size.
+        /// </summary>
+        /// <remarks>
+        /// The default value is 5.
+        /// </remarks>
+        public int ToolSeparation
+        {
+            get => NativeControl.GetToolSeparation();
+            set => NativeControl.SetToolSeparation(value);
+        }
+
+        /// <summary>
         /// Gets or sets whether toolbar overflow button is visible.
         /// </summary>
         public bool OverflowVisible
@@ -480,172 +492,150 @@ namespace Alternet.UI
             return NativeControl.GetToolDropDown(toolId);
         }
 
-        /*
-   Sets the default separator size.
-   The default value is 5.
-   Parameters
-   separation	The separator size.
-            */
-        internal void SetToolSeparation(int separation)
-        {
-            NativeControl.SetToolSeparation(separation);
-        }
-
-        /*
-Returns the default separator size.         
-         */
-        internal int GetToolSeparation()
-        {
-            return NativeControl.GetToolSeparation();
-        }
-        /*
-
-         */
+        /// <summary>
+        /// Sets the specified toolbar item proportion.
+        /// </summary>
+        /// <param name="toolId">ID of a previously added tool.</param>
+        /// <param name="proportion">new toolbar item proportion</param>
         public void SetToolProportion(int toolId, int proportion)
         {
             NativeControl.SetToolProportion(toolId, proportion);
         }
 
-        /*
-
-         */
+        /// <summary>
+        /// Gets the specified toolbar item proportion.
+        /// </summary>
+        /// <param name="toolId">ID of a previously added tool.</param>
+        /// <returns>Toolbar item proportion value.</returns>
         public int GetToolProportion(int toolId)
         {
             return NativeControl.GetToolProportion(toolId);
-        }   
+        }
 
-        /*
-         
-         */
+        /// <summary>
+        /// Sets the specified toolbar item Sticky property value.
+        /// </summary>
+        /// <param name="toolId">ID of a previously added tool.</param>
+        /// <param name="sticky">new Sticky property value.</param>
         public void SetToolSticky(int toolId, bool sticky)
         {
             NativeControl.SetToolSticky(toolId, sticky);
         }
 
-        /*
-         
-         */
+        /// <summary>
+        /// Gets the specified toolbar item Sticky property value.
+        /// </summary>
+        /// <param name="toolId">ID of a previously added tool.</param>
+        /// <returns>Toolbar item Sticky property value.</returns>
         public bool GetToolSticky(int toolId)
         {
             return NativeControl.GetToolSticky(toolId);
         }
 
-        /*
-         
-         */
+        /// <summary>
+        /// Gets the specified toolbar item label text.
+        /// </summary>
+        /// <param name="toolId">ID of a previously added tool.</param>
         public string GetToolLabel(int toolId)
         {
             return NativeControl.GetToolLabel(toolId);
         }
 
-        /*
-         
-         */
+        /// <summary>
+        /// Sets the specified toolbar item label text.
+        /// </summary>
+        /// <param name="toolId">ID of a previously added tool.</param>
+        /// <param name="label">New toolbar item label text.</param>
         public void SetToolLabel(int toolId, string label)
         {
             NativeControl.SetToolLabel(toolId, label);
         }
 
-        /*
-         
-         */
-        public void SetToolBitmap(int toolId, ImageSet? bitmapBundle)
+        /// <summary>
+        /// Sets the specified toolbar item image.
+        /// </summary>
+        /// <param name="toolId">ID of a previously added tool.</param>
+        /// <param name="bitmap">New toolbar item image.</param>
+        public void SetToolBitmap(int toolId, ImageSet? bitmap)
         {
-            NativeControl.SetToolBitmap(toolId, bitmapBundle?.NativeImageSet);
+            NativeControl.SetToolBitmap(toolId, bitmap?.NativeImageSet);
         }
 
-        /*
-Returns the short help for the given tool.
-Parameters
-toolId	ID of the tool in question, as passed to AddTool().
-         
-         */
+        /// <summary>
+        /// Returns the short help for the given tool.
+        /// </summary>
+        /// <param name="toolId">ID of a previously added tool.</param>
+        /// <remarks>Usually short help is shown as a hint when mouse is
+        /// over tool item.</remarks>
         public string GetToolShortHelp(int toolId)
         {
             return NativeControl.GetToolShortHelp(toolId);
         }
 
-        /*
-Sets the short help for the given tool.
-Parameters
-toolId	ID of the tool in question, as passed to AddTool().
-helpString	The string for the short help.
-Remarks
-An application might use short help for identifying the tool purpose in a tooltip.
-         
-         */
+        /// <summary>
+        /// Sets the short help for the given tool.
+        /// </summary>
+        /// <param name="toolId">ID of a previously added tool.</param>
+        /// <param name="helpString">The string for the short help.</param>
+        /// <remarks>
+        /// An application might use short help for identifying the
+        /// tool purpose in a tooltip.
+        /// </remarks>
         public void SetToolShortHelp(int toolId, string helpString)
         {
             NativeControl.SetToolShortHelp(toolId, helpString);
         }
 
-        /*
-Returns the long help for the given tool.
-toolId	ID of the tool in question, as passed to AddTool().
-         */
+        /// <summary>
+        /// Returns the long help for the given tool.
+        /// </summary>
+        /// <param name="toolId">ID of a previously added tool.</param>
+        /// <remarks>
+        /// You might use the long help for displaying the tool
+        /// purpose on the status line.
+        /// </remarks>
         public string GetToolLongHelp(int toolId)
         {
             return NativeControl.GetToolLongHelp(toolId);
         }
 
-        /*
-Sets the long help for the given tool.
-Parameters
-toolId	ID of the tool in question, as passed to AddTool().
-helpString	A string for the long help.
-Remarks
-You might use the long help for displaying the tool purpose on the status line.
-        
-         */
+        /// <summary>
+        /// Sets the long help for the given tool.
+        /// </summary>
+        /// <param name="toolId">ID of a previously added tool.</param>
+        /// <param name="helpString">A string for the long help.</param>
+        /// <remarks>
+        /// You might use the long help for displaying the tool
+        /// purpose on the status line.
+        /// </remarks>
         public void SetToolLongHelp(int toolId, string helpString)
         {
             NativeControl.SetToolLongHelp(toolId, helpString);
         }
 
-        /*
-Returns the number of tools in the toolbar.
-         */
+        /// <summary>
+        /// Returns the number of tools in the toolbar.
+        /// </summary>
         public ulong GetToolCount()
         {
             return NativeControl.GetToolCount();
         }
 
-        /*
-         
-         */
         internal IntPtr FindControl(int windowId)
         {
             return NativeControl.FindControl(windowId);
         }
 
-        /*
-virtual wxToolBarToolBase* wxToolBar::FindToolForPosition	(	wxCoord 	x,
-Finds a tool for the given mouse position.
-x	X position.
-y	Y position.
-Returns
-A pointer to a tool if a tool is found, or NULL otherwise.
-Remarks
-Currently not implemented in wxGTK (always returns NULL there).
-         
-         */
         internal IntPtr FindToolByPosition(int x, int y)
         {
             return NativeControl.FindToolByPosition(x, y);
         }
 
-        /*
-         
-         */
         internal IntPtr FindToolByIndex(int idx)
         {
             return NativeControl.FindToolByIndex(idx);
         }
 
-        /*
-Returns a pointer to the tool identified by id or NULL if no corresponding tool is found.
-         
-         */
         internal IntPtr FindTool(int toolId)
         {
             return NativeControl.FindTool(toolId);
@@ -675,9 +665,6 @@ Returns a pointer to the tool identified by id or NULL if no corresponding tool 
             return NativeControl.DestroyToolByIndex(idx);
         }
 
-        /*
-         
-         */
         internal void SetArtProvider(IntPtr art)
         {
             NativeControl.SetArtProvider(art);
@@ -713,14 +700,10 @@ Returns a pointer to the tool identified by id or NULL if no corresponding tool 
             BeginDrag?.Invoke(this, e);
         }
 
-        /*
-         
-         */
         internal IntPtr GetArtProvider()
         {
             return NativeControl.GetArtProvider();
         }
-
 
         /// <summary>
         /// Called when the tool is clicked.
@@ -781,75 +764,3 @@ Returns a pointer to the tool identified by id or NULL if no corresponding tool 
         }
     }
 }
-
-/*
-==
-virtual wxControl* wxToolBar::FindControl	(	int 	id	)	
-virtual
-Returns a pointer to the control identified by id or NULL if no corresponding control is found.
-==
-wxSize wxToolBar::GetMargins	(		)	const
-Returns the left/right and top/bottom margins, which are also used for inter-toolspacing.
-==
-
-
-==
-const wxToolBarToolBase* wxToolBar::GetToolByPos	(	int 	pos	)	const
-Returns a pointer to the tool at ordinal position pos.
-Don't confuse this with FindToolForPosition().
-==
-virtual wxObject* wxToolBar::GetToolClientData	(	int 	toolId	)	const
-virtual
-Get any client data associated with the tool.
-
-Parameters
-toolId	ID of the tool in question, as passed to AddTool().
-Returns
-Client data, or NULL if there is none.
-==
-virtual int wxToolBar::GetToolPos	(	int 	toolId	)	const
-virtual
-Returns the tool position in the toolbar, or wxNOT_FOUND if the tool is not found.
-
-Parameters
-toolId	ID of the tool in question, as passed to AddTool().
-==
-virtual wxSize wxToolBar::GetToolSize	(		)	const
-virtual
-Returns the size of a whole button, which is usually larger than a tool bitmap because of added 3D effects.
-==
-virtual bool wxToolBar::GetToolState	(	int 	toolId	)	const
-virtual
-Gets the on/off state of a toggle tool.
-
-Parameters
-toolId	ID of the tool in question, as passed to AddTool().
-Returns
-true if the tool is toggled on, false otherwise.
-==
-virtual wxToolBarToolBase* wxToolBar::RemoveTool	(	int 	id	)	
-Removes the given tool from the toolbar but doesn't delete it.
-This allows inserting/adding this tool back to this (or another) toolbar later.
-Note
-It is unnecessary to call Realize() for the change to take place, it will happen immediately.
-===
-bool wxToolBar::SetDropdownMenu	(	int 	id,
-wxMenu * 	menu 
-)		
-Sets the dropdown menu for the tool given by its id.
-
-The tool itself will delete the menu when it's no longer needed. Only supported under GTK+ und MSW.
-
-If you define a EVT_TOOL_DROPDOWN() handler in your program, you must call wxEvent::Skip() from it or the menu won't be displayed.
-==
-virtual void wxToolBar::SetToolClientData	(	int 	id,
-wxObject * 	clientData 
-)		
-virtual
-Sets the client data associated with the tool.
-
-Parameters
-id	ID of the tool in question, as passed to AddTool().
-clientData	The client data to use.
-
- */
