@@ -50,18 +50,22 @@ namespace Alternet.UI
 
         private void NativeControl_ToolRightClick(object sender, EventArgs e)
         {
+            Control.RaiseToolRightClick(e);
         }
 
         private void NativeControl_OverflowClick(object sender, EventArgs e)
         {
+            Control.RaiseOverflowClick(e);
         }
 
         private void NativeControl_ToolMiddleClick(object sender, EventArgs e)
         {
+            Control.RaiseToolMiddleClick(e);
         }
 
         private void NativeControl_BeginDrag(object sender, EventArgs e)
         {
+            Control.RaiseBeginDrag(e);
         }
 
         private void NativeControl_ToolDropDown(object sender, EventArgs e)

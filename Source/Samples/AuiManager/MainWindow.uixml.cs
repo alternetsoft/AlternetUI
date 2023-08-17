@@ -90,12 +90,7 @@ namespace AuiManagerSample
                 ImageCalendar, 
                 "Calendar Hint");
 
-            toolbar4.SetToolSticky(calendarToolId, false);
-
-            photoToolId = toolbar4.AddTool(
-                "Photo",
-                ImagePhoto,
-                "Photo Hint");
+            toolbar4.SetToolSticky(calendarToolId, true);
 
             toolbar4.AddSeparator();
 
@@ -104,15 +99,37 @@ namespace AuiManagerSample
                 ImagePencil,
                 "Pencil Hint");
 
+            toolbar4.AddLabel("Text1");
+
+            var control4 = new ComboBox
+            {
+                IsEditable = false
+            };
+            control4.Add("Item 1");
+            control4.Add("Item 2");
+            control4.Add("Item 3");
+            toolbar4.Children.Add(control4);
+            toolbar4.AddControl(control4);
+
+            photoToolId = toolbar4.AddTool(
+                "Photo",
+                ImagePhoto,
+                "Photo Hint");
+
+            var textBox4 = new TextBox
+            {
+                Text = "value"
+            };
+            toolbar4.Children.Add(textBox4);
+            toolbar4.AddControl(textBox4);
+
+            toolbar4.AddStretchSpacer();
+
             graphToolId = toolbar4.AddTool(
                 "Graph",
                 ImageGraph,
                 "Graph Hint");
             toolbar4.SetToolDropDown(graphToolId, true);
-
-
-            toolbar4.AddStretchSpacer();
-            toolbar4.AddLabel("Text1");
 
             toolbar4.Realize();
 
