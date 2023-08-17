@@ -665,6 +665,10 @@ namespace Alternet.UI
             return NativeControl.DestroyToolByIndex(idx);
         }
 
+        /// <summary>
+        /// Sets the art provider to be used by the toolbar.
+        /// </summary>
+        /// <param name="art">New art provider.</param>
         internal void SetArtProvider(IntPtr art)
         {
             NativeControl.SetArtProvider(art);
@@ -700,6 +704,9 @@ namespace Alternet.UI
             BeginDrag?.Invoke(this, e);
         }
 
+        /// <summary>
+        /// Returns the associated art provider.
+        /// </summary>
         internal IntPtr GetArtProvider()
         {
             return NativeControl.GetArtProvider();

@@ -9,37 +9,86 @@ namespace Alternet.UI
 {
     /// <summary>
     /// Notebook control, managing multiple windows with associated tabs.
+    /// Used with <see cref="AuiManager"/>.
     /// </summary>
     public class AuiNotebook : Control
     {
+        /// <summary>
+        /// Occurs when a page is about to be closed.
+        /// </summary>
         public event EventHandler? PageClose;
 
+        /// <summary>
+        /// Occurs when a page has been closed.
+        /// </summary>
         public event EventHandler? PageClosed;
 
+        /// <summary>
+        /// Occurs when the page selection was changed.
+        /// </summary>
         public event EventHandler? PageChanged;
 
+        /// <summary>
+        /// Occurs when the page selection is about to be changed.
+        /// This event can be vetoed.
+        /// </summary>
         public event EventHandler? PageChanging;
 
+        /// <summary>
+        /// Occurs when the window list button has been pressed.
+        /// </summary>
         public event EventHandler? WindowListButton;
 
+        /// <summary>
+        /// Occurs when dragging is about to begin.
+        /// </summary>
         public event EventHandler? BeginDrag;
 
+        /// <summary>
+        /// Occurs when dragging has ended.
+        /// </summary>
         public event EventHandler? EndDrag;
 
+        /// <summary>
+        /// Occurs during a drag and drop operation.
+        /// </summary>
         public event EventHandler? DragMotion;
 
+        /// <summary>
+        /// Occurs when application needs to query whether to allow a tab
+        /// to be dropped. This event must be specially allowed.
+        /// </summary>
         public event EventHandler? AllowTabDrop;
 
+        /// <summary>
+        /// Occurs to notify that the tab has been dragged.
+        /// </summary>
         public event EventHandler? DragDone;
 
+        /// <summary>
+        /// Occurs when the middle mouse button is pressed on a tab.
+        /// </summary>
         public event EventHandler? TabMiddleMouseDown;
 
+        /// <summary>
+        /// Occurs when the middle mouse button is released on a tab.
+        /// </summary>
         public event EventHandler? TabMiddleMouseUp;
 
+        /// <summary>
+        /// Occurs when the right mouse button is pressed on a tab.
+        /// </summary>
         public event EventHandler? TabRightMouseDown;
 
+        /// <summary>
+        /// Occurs when the right mouse button is released on a tab.
+        /// </summary>
         public event EventHandler? TabRightMouseUp;
 
+        /// <summary>
+        /// Occurs when the mouse button is double clicked on the tabs
+        /// background area.
+        /// </summary>
         public event EventHandler? BgDclickMouse;
 
         /// <inheritdoc/>
@@ -56,71 +105,57 @@ namespace Alternet.UI
 
         internal Native.AuiNotebook NativeControl => Handler.NativeControl;
 
-        /// <inheritdoc/>
-        protected override ControlHandler CreateHandler()
-        {
-            return GetEffectiveControlHandlerHactory().CreateAuiNotebookHandler(this);
-        }
-
-        /*
-Sets the art provider to be used by the notebook.         
-         */
-        internal void SetArtProvider(IntPtr art)
-        {
-            NativeControl.SetArtProvider(art);
-        }
-
-        /*
-Returns the associated art provider.         
-         */
-        internal IntPtr GetArtProvider()
-        {
-            return NativeControl.GetArtProvider();
-        }
-
-        /*
-Ensure that all tabs have the same height, even if some of them don't have bitmaps.
-Passing wxDefaultSize as size undoes the effect of a previous call to this function and instructs the control to use dynamic tab height.         
-         */
+        /// <summary>
+        /// Ensures that all tabs have the same height, even if some of them
+        /// don't have bitmaps.
+        /// </summary>
+        /// <param name="width">Bitmap width for tabs without images.</param>
+        /// <param name="height">Bitmap height for tabs without images.</param>
+        /// <remarks>
+        /// Passing (-1,-1) as size undoes the effect of a previous call to this
+        /// function and instructs the control to use dynamic tab height.
+        /// </remarks>
         public void SetUniformBitmapSize(int width, int height)
         {
             NativeControl.SetUniformBitmapSize(width, height);
         }
 
-        /*
-Sets the tab height.
-
-By default, the tab control height is calculated by measuring the text height and bitmap sizes on the tab captions. Calling this method will override that calculation and set the tab control to the specified height parameter. A call to this method will override any call to SetUniformBitmapSize().
-
-Specifying -1 as the height will return the control to its default auto-sizing behaviour.
-         
-         */
+        /// <summary>
+        /// Sets the tab height.
+        /// </summary>
+        /// <param name="height">New tab height value.</param>
+        /// <remarks>
+        /// By default, the tab control height is calculated by measuring the
+        /// text height and bitmap sizes on the tab captions. Calling this
+        /// method will override that calculation and set the tab control
+        /// to the specified height parameter. A call to this method will
+        /// override any call to <see cref="SetUniformBitmapSize"/>.
+        /// </remarks>
+        /// <remarks>
+        /// Specifying -1 as the height will return the control to its
+        /// default auto-sizing behaviour.
+        /// </remarks>
         public void SetTabCtrlHeight(int height)
         {
             NativeControl.SetTabCtrlHeight(height);
         }
 
-        /*
-Adds a page.
-
-If the select parameter is true, calling this will generate a page change event.
-Adds a new page.
-
-The page must have the book control itself as the parent and must not have been added to this control previously.
-
-The call to this function may generate the page changing events.
-
-Parameters
-page	Specifies the new page.
-text	Specifies the text for the new page.
-select	Specifies whether the page should be selected.
-imageId	Specifies the optional image index for the new page.
-Returns
-true if successful, false otherwise.
-Remarks
-Do not delete the page, it will be deleted by the book control.
-         
-         */
+        /// <summary>
+        /// Adds a new page.
+        /// </summary>
+        /// <param name="page">Controls for the new page.</param>
+        /// <param name="caption">Text for the new page.</param>
+        /// <param name="select">Specifies whether the page should be selected.</param>
+        /// <param name="bitmap">image for the new page. Optional.</param>
+        /// <returns><c>true</c> if successful, <c>false</c> otherwise.</returns>
+        /// <remarks>
+        /// If the <paramref name="select"/> parameter is true, calling
+        /// this will generate a page change event.
+        /// </remarks>
+        /// <remarks>
+        /// <see cref="InsertPage"/> is similar to <see cref="AddPage"/>, but allows
+        /// the ability to specify the insert location.
+        /// </remarks>
         public bool AddPage(
             Control page,
             string caption,
@@ -134,23 +169,23 @@ Do not delete the page, it will be deleted by the book control.
                 bitmap?.NativeImageSet);
         }
 
-        /*
-Inserts a new page at the specified position.
-
-Parameters
-index	Specifies the position for the new page.
-page	Specifies the new page.
-text	Specifies the text for the new page.
-select	Specifies whether the page should be selected.
-imageId	Specifies the optional image index for the new page.
-Returns
-true if successful, false otherwise.
-Remarks
-Do not delete the page, it will be deleted by the book control.
-InsertPage() is similar to AddPage, but allows the ability to specify the insert location.
-If the select parameter is true, calling this will generate a page change event.
-        
-         */
+        /// <summary>
+        /// Inserts a new page at the specified position.
+        /// </summary>
+        /// <param name="pageIdx">Position for the new page.</param>
+        /// <param name="page">Controls for the new page.</param>
+        /// <param name="caption">Text for the new page.</param>
+        /// <param name="select">Specifies whether the page should be selected.</param>
+        /// <param name="bitmap">image for the new page. Optional.</param>
+        /// <returns><c>true</c> if successful, <c>false</c> otherwise.</returns>
+        /// <remarks>
+        /// If the <paramref name="select"/> parameter is true, calling
+        /// this will generate a page change event.
+        /// </remarks>
+        /// <remarks>
+        /// <see cref="InsertPage"/> is similar to <see cref="AddPage"/>, but allows
+        /// the ability to specify the insert location.
+        /// </remarks>
         public bool InsertPage(
             ulong pageIdx,
             Control page,
@@ -166,118 +201,135 @@ If the select parameter is true, calling this will generate a page change event.
                 bitmap?.NativeImageSet);
         }
 
-        /*
-Deletes a page at the given index.
-Calling this method will generate a page change event.
-         
-         */
+        /// <summary>
+        /// Deletes a page at the given index.
+        /// </summary>
+        /// <param name="page">Page index.</param>
+        /// <returns><c>true</c> if operation was successfull,
+        /// <c>false</c> otherwise.</returns>
+        /// <remarks>
+        /// Calling this method will generate a page change event.
+        /// </remarks>
         public bool DeletePage(ulong page)
         {
             return NativeControl.DeletePage(page);
         }
 
-        /*
-Removes a page, without deleting the window pointer.         
-         */
+        /// <summary>
+        /// Removes a page, without deleting the attached control.
+        /// </summary>
+        /// <param name="page">Page index</param>
+        /// <returns><c>true</c> if operation was successfull,
+        /// <c>false</c> otherwise.</returns>
         public bool RemovePage(ulong page)
         {
             return NativeControl.RemovePage(page);
         }
 
-        /*
-Returns the number of pages in the notebook.         
-         */
+        /// <summary>
+        /// Returns the number of pages in the notebook.
+        /// </summary>
         public ulong GetPageCount()
         {
             return NativeControl.GetPageCount();
         }
 
-        /*
-Returns the page specified by the given index.         
-         */
-        internal IntPtr GetPage(ulong pageIdx)
-        {
-            return NativeControl.GetPage(pageIdx);
-        }
-
-        /*
-Returns the page index for the specified window.
-If the window is not found in the notebook, wxNOT_FOUND is returned.
-         */
+        /// <summary>
+        /// Returns the page index for the specified control.
+        /// </summary>
+        /// <param name="page">Page index.</param>
+        /// <remarks>
+        /// If the window is not found in the notebook, -1 is returned.
+        /// </remarks>
         public int FindPage(Control page)
         {
             return NativeControl.FindPage(page.WxWidget);
         }
 
-        /*
-Sets the tab label for the page.         
-         */
+        /// <summary>
+        /// Sets the tab label for the page.
+        /// </summary>
+        /// <param name="page">Page index.</param>
+        /// <param name="text">New tab label.</param>
+        /// <returns></returns>
         public bool SetPageText(ulong page, string text)
         {
             return NativeControl.SetPageText(page, text);
         }
 
-        /*
-Returns the tab label for the page.         
-         */
+        /// <summary>
+        /// Returns the tab label for the page.
+        /// </summary>
+        /// <param name="pageIdx">Page index.</param>
         public string GetPageText(ulong pageIdx)
         {
             return NativeControl.GetPageText(pageIdx);
         }
 
-        /*
-Sets the tooltip displayed when hovering over the tab label of the page.
-
-true if tooltip was updated, false if it failed, e.g. because the page index is invalid.
-         
-         */
+        /// <summary>
+        /// Sets the tooltip displayed when hovering over the tab label of the page.
+        /// </summary>
+        /// <param name="page">Page index.</param>
+        /// <param name="text">New tooltip value.</param>
+        /// <returns><c>true</c> if tooltip was updated, <c>false</c> if it failed,
+        /// e.g. because the page index is invalid.</returns>
         public bool SetPageToolTip(ulong page, string text)
         {
             return NativeControl.SetPageToolTip(page, text);
         }
 
-        /*
-Returns the tooltip for the tab label of the page.
-        
-         */
+        /// <summary>
+        /// Returns the tooltip for the tab label of the page.
+        /// </summary>
+        /// <param name="pageIdx">Page index.</param>
         public string GetPageToolTip(ulong pageIdx)
         {
             return NativeControl.GetPageToolTip(pageIdx);
         }
 
-        /*
-Sets the bitmap for the page.
-To remove a bitmap from the tab caption, pass an empty wxBitmapBundle.
-         */
+        /// <summary>
+        /// Sets the bitmap for the page.
+        /// </summary>
+        /// <param name="page">Page index.</param>
+        /// <param name="bitmap">Bitmap for the page.</param>
+        /// <remarks>
+        /// To remove a bitmap from the tab caption, pass <c>null</c>.
+        /// </remarks>
         public bool SetPageBitmap(ulong page, ImageSet? bitmap)
         {
             return NativeControl.SetPageBitmap(page, bitmap?.NativeImageSet);
         }
 
-        /*
-Sets the page selection.
-Calling this method will generate a page change event.
-         
-         */
+        /// <summary>
+        /// Sets the page selection.
+        /// </summary>
+        /// <param name="newPage">New selected page index.</param>
+        /// <remarks>
+        /// Calling this method will generate a page change event.
+        /// </remarks>
         public long SetSelection(ulong newPage)
         {
             return NativeControl.SetSelection(newPage);
         }
 
-        /*
-Returns the currently selected page.
-        
-         */
+        /// <summary>
+        /// Returns the currently selected page index.
+        /// </summary>
+        /// <returns></returns>
         public long GetSelection()
         {
             return NativeControl.GetSelection();
         }
 
-        /*
-Split performs a split operation programmatically.
-The argument page indicates the page that will be split off. This page will also become the active page after the split.
-The direction argument specifies where the pane should go, it should be one of the following: wxTOP, wxBOTTOM, wxLEFT, or wxRIGHT.         
-         */
+        /// <summary>
+        /// Performs a split operation programmatically.
+        /// </summary>
+        /// <param name="page">Indicates the page that will be split off.
+        /// This page will also become the active page after the split.</param>
+        /// <param name="direction">Specifies where the pane should go, it should
+        /// be one of the following: Top, Bottom, Left, or Right.</param>
+        /// <exception cref="ArgumentException"><paramref name="direction"/>
+        /// is incorrect.</exception>
         public void Split(ulong page, GenericDirection direction)
         {
             if (direction == GenericDirection.Top || direction == GenericDirection.Bottom
@@ -288,54 +340,65 @@ The direction argument specifies where the pane should go, it should be one of t
                 throw new ArgumentException(nameof(direction));
         }
 
-        // Gets the tab control height
-        /*
-Returns the height of the tab control.         
-         */
+        /// <summary>
+        /// Returns the height of the tab control.
+        /// </summary>
         public int GetTabCtrlHeight()
         {
             return NativeControl.GetTabCtrlHeight();
         }
 
-        // Gets the height of the notebook for a given page height
-        /*
-Returns the desired height of the notebook for the given page height.
-Use this to fit the notebook to a given page size.
-         
-         */
+        /// <summary>
+        /// Gets the height of the notebook for a given page height.
+        /// </summary>
+        /// <param name="pageHeight">Page height.</param>
+        /// <returns>The desired height of the notebook for the given
+        /// page height.</returns>
+        /// <remarks>
+        /// Use this to fit the notebook to a given page size.
+        /// </remarks>
         public int GetHeightForPageHeight(int pageHeight)
         {
             return NativeControl.GetHeightForPageHeight(pageHeight);
         }
 
-        /*
-Shows the window menu for the active tab control associated with this notebook, and returns true if a selection was made.
-         
-         */
+        /// <summary>
+        /// Shows the window menu for the active tab control associated with
+        /// this notebook, and returns true if a selection was made.
+        /// </summary>
+        /// <returns></returns>
         public bool ShowWindowMenu()
         {
             return NativeControl.ShowWindowMenu();
         }
 
-        /*
-Deletes all pages.         
-         */
-        public bool DeleteAllPages()
+        /// <summary>
+        /// Deletes all pages.
+        /// </summary>
+        /// <returns><c>true</c> if operation was performed successfully.</returns>
+        public bool Clear()
         {
             return NativeControl.DeleteAllPages();
         }
 
-        /*
-         Changes the selection for the given page, returning the previous selection.
-
-This function behaves as SetSelection() but does not generate the page changing events.
- 
-         */
+        /// <summary>
+        /// Changes the selection for the given page, returning the previous selection.
+        /// </summary>
+        /// <param name="newPage">New selected page index.</param>
+        /// <remarks>
+        /// This function behaves as <see cref="SetSelection"/> but does not
+        /// generate the page changing events.
+        /// </remarks>
         public long ChangeSelection(ulong newPage)
         {
             return NativeControl.ChangeSelection(newPage);
         }
 
+        /// <summary>
+        /// Selects next or previous page.
+        /// </summary>
+        /// <param name="forward">If <c>true</c> selects next page, if
+        /// <c>false</c> selects previous page.</param>
         public void AdvanceSelection(bool forward = true)
         {
             NativeControl.AdvanceSelection(forward);
@@ -372,6 +435,38 @@ This function behaves as SetSelection() but does not generate the page changing 
             if (font == null)
                 font = Font.Default;
             NativeControl.SetSelectedFont(font.NativeFont);
+        }
+
+        /// <summary>
+        /// Returns the page specified by the given index.
+        /// </summary>
+        /// <param name="pageIdx">Page index.</param>
+        internal IntPtr GetPage(ulong pageIdx)
+        {
+            return NativeControl.GetPage(pageIdx);
+        }
+
+        /// <summary>
+        /// Sets the art provider to be used by the notebook.
+        /// </summary>
+        /// <param name="art">New art provider.</param>
+        internal void SetArtProvider(IntPtr art)
+        {
+            NativeControl.SetArtProvider(art);
+        }
+
+        /// <summary>
+        /// Returns the associated art provider.
+        /// </summary>
+        internal IntPtr GetArtProvider()
+        {
+            return NativeControl.GetArtProvider();
+        }
+
+        /// <inheritdoc/>
+        protected override ControlHandler CreateHandler()
+        {
+            return GetEffectiveControlHandlerHactory().CreateAuiNotebookHandler(this);
         }
     }
 }
