@@ -3,6 +3,7 @@
 #include "Common.h"
 #include "DrawingContext.h"
 #include "Object.h"
+#include "ImageSet.h"
 #include "UnmanagedDataObject.h"
 #include "DropTarget.h"
 
@@ -75,6 +76,12 @@ namespace Alternet::UI
 
         Window* GetParentWindow();
 
+        wxBitmapBundle BitmapBundle(ImageSet* bimtapBundle)
+        {
+            if (bimtapBundle == nullptr)
+                return wxBitmapBundle();
+            return bimtapBundle->GetBitmapBundle();
+        }
     protected:
         int64_t createStyles = 0;
         bool bindScrollEvents = true;

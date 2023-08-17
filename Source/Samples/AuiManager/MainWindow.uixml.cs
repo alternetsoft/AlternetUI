@@ -33,14 +33,16 @@ namespace AuiManagerSample
             WebBrowser.CrtSetDbgFlag(0);
         }
 
-        private ListBox CreateListBox(string paneName)
+        private ListBox CreateListBox(string paneName, Control? parent = null)
         {
             ListBox listBox = new()
             {
                 HasBorder = false
             };
             listBox.Add(paneName);
-            panel.Children.Add(listBox);
+            if (parent == null)
+                parent = panel;
+            parent.Children.Add(listBox);
             listBox.SetBounds(0, 0, 200, 100, BoundsSpecified.Size);
             return listBox;
         }
@@ -78,7 +80,8 @@ namespace AuiManagerSample
             listBox3.Add("LeftDockable(false)");
             listBox3.Add("RightDockable(false)");
             manager.AddPane(listBox3, pane3);
-
+            
+            // Toolbar pane
             var pane4 = manager.CreatePaneInfo();
             pane4.Name("pane4").Caption("Pane 4").Top().ToolbarPane();
 
@@ -117,13 +120,19 @@ namespace AuiManagerSample
 
             AuiToolbarItemKind kind = toolbar4.GetToolKind(pencilToolId);
 
-        //toolbar4.SetBounds(0, 0, 200, 30, BoundsSpecified.Size);
-        panel.Children.Add(toolbar4);
+            panel.Children.Add(toolbar4);
             manager.AddPane(toolbar4, pane4);
 
+            // Notenook pane
             var pane5 = manager.CreatePaneInfo();
-            pane5.Name("pane5").Caption("Pane 5").CenterPane();
+            pane5.Name("pane5").CenterPane().PaneBorder(false);
             var notebook5 = new AuiNotebook();
+            var listBox5 = CreateListBox("ListBox 5");
+            var listBox6 = CreateListBox("ListBox 6");
+
+            notebook5.AddPage(listBox5, "ListBox 5");
+            notebook5.AddPage(listBox6, "ListBox 6");
+
             panel.Children.Add(notebook5);
             manager.AddPane(notebook5, pane5);
 
@@ -167,70 +176,3 @@ namespace AuiManagerSample
         }
     }
 }
-
-/*
-    m_mgr.AddPane(wnd10, wxAuiPaneInfo().
-                  Name("test10").Caption("Text Pane with Hide Prompt").
-                  Bottom().Layer(1).Position(1).
-                  Icon(wxArtProvider::GetBitmapBundle(wxART_WARNING,
-                                                      wxART_OTHER,
-                                                      wxSize(iconSize, iconSize))));
-
-    m_mgr.AddPane(CreateSizeReportCtrl(), wxAuiPaneInfo().
-                  Name("test11").Caption("Fixed Pane").
-                  Bottom().Layer(1).Position(2).Fixed());
-
-
-    m_mgr.AddPane(new SettingsPanel(this,this), wxAuiPaneInfo().
-                  Name("settings").Caption("Dock Manager Settings").
-                  Dockable(false).Float().Hide());
-
-    // create some center panes
-
-    m_mgr.AddPane(CreateGrid(), wxAuiPaneInfo().Name("grid_content").
-                  CenterPane().Hide());
-
-    m_mgr.AddPane(CreateTreeCtrl(), wxAuiPaneInfo().Name("tree_content").
-                  CenterPane().Hide());
-
-    m_mgr.AddPane(CreateSizeReportCtrl(), wxAuiPaneInfo().Name("sizereport_content").
-                  CenterPane().Hide());
-
-    m_mgr.AddPane(CreateTextCtrl(), wxAuiPaneInfo().Name("text_content").
-                  CenterPane().Hide());
-
-    m_mgr.AddPane(CreateHTMLCtrl(), wxAuiPaneInfo().Name("html_content").
-                  CenterPane().Hide());
-
-    m_mgr.AddPane(CreateNotebook(), wxAuiPaneInfo().Name("notebook_content").
-                  CenterPane().PaneBorder(false));
-
-    // add the toolbars to the manager
-    m_mgr.AddPane(tb1, wxAuiPaneInfo().
-                  Name("tb1").Caption("Big Toolbar").
-                  ToolbarPane().Top());
-
-    m_mgr.AddPane(tb2, wxAuiPaneInfo().
-                  Name("tb2").Caption("Toolbar 2 (Horizontal)").
-                  ToolbarPane().Top().Row(1));
-
-    m_mgr.AddPane(tb3, wxAuiPaneInfo().
-                  Name("tb3").Caption("Toolbar 3").
-                  ToolbarPane().Top().Row(1).Position(1));
-
-    m_mgr.AddPane(tb4, wxAuiPaneInfo().
-                  Name("tb4").Caption("Sample Bookmark Toolbar").
-                  ToolbarPane().Top().Row(2));
-
-    m_mgr.AddPane(tb5, wxAuiPaneInfo().
-                  Name("tb5").Caption("Sample Vertical Toolbar").
-                  ToolbarPane().Left().
-                  GripperTop());
-
-    m_mgr.AddPane(new wxButton(this, wxID_ANY, _("Test Button")),
-                  wxAuiPaneInfo().Name("tb6").
-                  ToolbarPane().Top().Row(2).Position(1).
-                  LeftDockable(false).RightDockable(false));
- 
- 
- */

@@ -4,6 +4,7 @@
 
 #include "AuiNotebook.h"
 #include "ImageSet.h"
+#include "Font.h"
 #include "ApiUtils.h"
 #include "Exceptions.h"
 
@@ -128,17 +129,52 @@ ALTERNET_UI_API c_bool AuiNotebook_SetPageBitmap_(AuiNotebook* obj, uint64_t pag
         });
 }
 
-ALTERNET_UI_API int AuiNotebook_SetSelection_(AuiNotebook* obj, uint64_t newPage)
+ALTERNET_UI_API int64_t AuiNotebook_SetSelection_(AuiNotebook* obj, uint64_t newPage)
 {
-    return MarshalExceptions<int>([&](){
+    return MarshalExceptions<int64_t>([&](){
             return obj->SetSelection(newPage);
         });
 }
 
-ALTERNET_UI_API int AuiNotebook_GetSelection_(AuiNotebook* obj)
+ALTERNET_UI_API int64_t AuiNotebook_GetSelection_(AuiNotebook* obj)
 {
-    return MarshalExceptions<int>([&](){
+    return MarshalExceptions<int64_t>([&](){
             return obj->GetSelection();
+        });
+}
+
+ALTERNET_UI_API int64_t AuiNotebook_ChangeSelection_(AuiNotebook* obj, uint64_t newPage)
+{
+    return MarshalExceptions<int64_t>([&](){
+            return obj->ChangeSelection(newPage);
+        });
+}
+
+ALTERNET_UI_API void AuiNotebook_AdvanceSelection_(AuiNotebook* obj, c_bool forward)
+{
+    MarshalExceptions<void>([&](){
+            obj->AdvanceSelection(forward);
+        });
+}
+
+ALTERNET_UI_API void AuiNotebook_SetMeasuringFont_(AuiNotebook* obj, Font* font)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetMeasuringFont(font);
+        });
+}
+
+ALTERNET_UI_API void AuiNotebook_SetNormalFont_(AuiNotebook* obj, Font* font)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetNormalFont(font);
+        });
+}
+
+ALTERNET_UI_API void AuiNotebook_SetSelectedFont_(AuiNotebook* obj, Font* font)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetSelectedFont(font);
         });
 }
 

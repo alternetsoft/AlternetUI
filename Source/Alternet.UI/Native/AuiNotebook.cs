@@ -146,7 +146,7 @@ namespace Alternet.UI.Native
             return m;
         }
         
-        public int SetSelection(ulong newPage)
+        public long SetSelection(ulong newPage)
         {
             CheckDisposed();
             var n = NativeApi.AuiNotebook_SetSelection_(NativePointer, newPage);
@@ -154,12 +154,44 @@ namespace Alternet.UI.Native
             return m;
         }
         
-        public int GetSelection()
+        public long GetSelection()
         {
             CheckDisposed();
             var n = NativeApi.AuiNotebook_GetSelection_(NativePointer);
             var m = n;
             return m;
+        }
+        
+        public long ChangeSelection(ulong newPage)
+        {
+            CheckDisposed();
+            var n = NativeApi.AuiNotebook_ChangeSelection_(NativePointer, newPage);
+            var m = n;
+            return m;
+        }
+        
+        public void AdvanceSelection(bool forward)
+        {
+            CheckDisposed();
+            NativeApi.AuiNotebook_AdvanceSelection_(NativePointer, forward);
+        }
+        
+        public void SetMeasuringFont(Font? font)
+        {
+            CheckDisposed();
+            NativeApi.AuiNotebook_SetMeasuringFont_(NativePointer, font?.NativePointer ?? IntPtr.Zero);
+        }
+        
+        public void SetNormalFont(Font? font)
+        {
+            CheckDisposed();
+            NativeApi.AuiNotebook_SetNormalFont_(NativePointer, font?.NativePointer ?? IntPtr.Zero);
+        }
+        
+        public void SetSelectedFont(Font? font)
+        {
+            CheckDisposed();
+            NativeApi.AuiNotebook_SetSelectedFont_(NativePointer, font?.NativePointer ?? IntPtr.Zero);
         }
         
         public void Split(ulong page, int direction)
@@ -385,10 +417,25 @@ namespace Alternet.UI.Native
             public static extern bool AuiNotebook_SetPageBitmap_(IntPtr obj, ulong page, IntPtr bitmap);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int AuiNotebook_SetSelection_(IntPtr obj, ulong newPage);
+            public static extern long AuiNotebook_SetSelection_(IntPtr obj, ulong newPage);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int AuiNotebook_GetSelection_(IntPtr obj);
+            public static extern long AuiNotebook_GetSelection_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern long AuiNotebook_ChangeSelection_(IntPtr obj, ulong newPage);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void AuiNotebook_AdvanceSelection_(IntPtr obj, bool forward);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void AuiNotebook_SetMeasuringFont_(IntPtr obj, IntPtr font);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void AuiNotebook_SetNormalFont_(IntPtr obj, IntPtr font);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void AuiNotebook_SetSelectedFont_(IntPtr obj, IntPtr font);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void AuiNotebook_Split_(IntPtr obj, ulong page, int direction);

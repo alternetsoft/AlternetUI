@@ -1,5 +1,7 @@
 using System;
 using Alternet.Base.Collections;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Alternet.UI
 {
@@ -10,8 +12,15 @@ namespace Alternet.UI
         {
         }
 
+        public override IEnumerable<Control> AllChildrenIncludedInLayout
+            => Enumerable.Empty<Control>();
+
         public new Native.AuiToolBar NativeControl =>
             (Native.AuiToolBar)base.NativeControl!;
+
+        public override void OnLayout()
+        {
+        }
 
         internal override Native.Control CreateNativeControl()
         {

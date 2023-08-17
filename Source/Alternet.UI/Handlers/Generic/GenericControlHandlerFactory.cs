@@ -42,6 +42,10 @@ namespace Alternet.UI
             StockControlHandlerFactories.Native.CreateAuiToolbarHandler(control);
 
         /// <inheritdoc/>
+        public ControlHandler CreateAuiNotebookHandler(Control control) =>
+            StockControlHandlerFactories.Native.CreateAuiNotebookHandler(control);
+
+        /// <inheritdoc/>
         public ControlHandler CreateTabControlHandler(Control control) =>
             StockControlHandlerFactories.Native.CreateTabControlHandler(control);
 

@@ -2,13 +2,6 @@
 
 namespace Alternet::UI
 {
-    wxBitmapBundle BitmapBundle(ImageSet* bimtapBundle)
-    {
-        if (bimtapBundle == nullptr)
-            return wxBitmapBundle();
-        return bimtapBundle->GetBitmapBundle();
-    }
-
     class wxAuiToolBar2 : public wxAuiToolBar, public wxWidgetExtender
     {
     public:

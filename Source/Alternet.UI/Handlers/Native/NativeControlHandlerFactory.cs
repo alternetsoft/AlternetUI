@@ -10,6 +10,10 @@ namespace Alternet.UI
             new NativeAuiToolbarHandler();
 
         /// <inheritdoc/>
+        public ControlHandler CreateAuiNotebookHandler(Control control) =>
+            new NativeAuiNotebookHandler();
+
+        /// <inheritdoc/>
         public ControlHandler CreateButtonHandler(Control control) =>
             new NativeButtonHandler();
 

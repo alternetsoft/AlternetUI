@@ -760,6 +760,8 @@ namespace Alternet.UI
         /// </summary>
         public virtual ControlId ControlKind => ControlId.Control;
 
+        internal IntPtr WxWidget => Handler.NativeControl!.WxWidget;
+        
         internal static int ScreenShotCounter { get; set; } = 0;
 
         internal virtual bool IsDummy => false;

@@ -43,8 +43,15 @@ namespace NativeApi.Api
         public bool SetPageBitmap(ulong page, ImageSet? bitmap) =>
             throw new Exception();
 
-        public int SetSelection(ulong newPage) => throw new Exception();
-        public int GetSelection() => throw new Exception();
+        public long SetSelection(ulong newPage) => throw new Exception();
+        public long GetSelection() => throw new Exception();
+
+        public long ChangeSelection(ulong newPage) => throw new Exception();
+        public void AdvanceSelection(bool forward = true) => throw new Exception();
+
+        public void SetMeasuringFont(Font? font) => throw new Exception();
+        public void SetNormalFont(Font? font) => throw new Exception();
+        public void SetSelectedFont(Font? font) => throw new Exception();
 
         public void Split(ulong page, int direction) => throw new Exception();
 

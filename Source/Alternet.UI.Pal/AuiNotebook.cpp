@@ -88,6 +88,7 @@ namespace Alternet::UI
         event.Skip();
     }
 
+    //can Veto
     void AuiNotebook::OnPageChanging(wxAuiNotebookEvent& event)
     {
         FromEventData(event);
@@ -181,7 +182,7 @@ namespace Alternet::UI
             wxDefaultPosition,
             wxDefaultSize,
             style);
-
+        
         window->Bind(wxEVT_AUINOTEBOOK_PAGE_CLOSE,
             &AuiNotebook::OnPageClose, this);
         window->Bind(wxEVT_AUINOTEBOOK_PAGE_CLOSED,
@@ -212,6 +213,7 @@ namespace Alternet::UI
             &AuiNotebook::OnTabRightMouseUp, this);
         window->Bind(wxEVT_AUINOTEBOOK_BG_DCLICK,
             &AuiNotebook::OnBgDclickMouse, this);
+        
         return window;
     }
 
@@ -222,114 +224,151 @@ namespace Alternet::UI
 
     void AuiNotebook::SetArtProvider(void* art)
     {
+        GetNotebook()->SetArtProvider((wxAuiTabArt*)art);
     }
 
     void* AuiNotebook::GetArtProvider()
     {
-        return nullptr;
+        return GetNotebook()->GetArtProvider();
     }
 
     void AuiNotebook::SetUniformBitmapSize(int width, int height)
     {
+        GetNotebook()->SetUniformBitmapSize(wxSize(width, height));
     }
 
     void AuiNotebook::SetTabCtrlHeight(int height)
     {
+        GetNotebook()->SetTabCtrlHeight(height);
     }
 
     bool AuiNotebook::AddPage(void* page, const string& caption,
         bool select, ImageSet* bitmap)
     {
-        return false;
+        return GetNotebook()->AddPage((wxWindow*)page, wxStr(caption),
+            select, BitmapBundle(bitmap));
     }
 
     bool AuiNotebook::InsertPage(uint64_t pageIdx, void* page, const string& caption,
         bool select, ImageSet* bitmap)
     {
-        return false;
+        return GetNotebook()->InsertPage(pageIdx, (wxWindow*) page, wxStr(caption),
+            select, BitmapBundle(bitmap));
     }
 
     bool AuiNotebook::DeletePage(uint64_t page)
     {
-        return false;
+        return GetNotebook()->DeletePage(page);
     }
 
     bool AuiNotebook::RemovePage(uint64_t page)
     {
-        return false;
+        return GetNotebook()->RemovePage(page);
     }
 
     uint64_t AuiNotebook::GetPageCount()
     {
-        return 0;
+        return GetNotebook()->GetPageCount();
     }
 
     void* AuiNotebook::GetPage(uint64_t pageIdx)
     {
-        return nullptr;
+        return GetNotebook()->GetPage(pageIdx);
     }
 
     int AuiNotebook::FindPage(void* page)
     {
-        return 0;
+        return GetNotebook()->FindPage((wxWindow*) page);
     }
 
     bool AuiNotebook::SetPageText(uint64_t page, const string& text)
     {
-        return false;
+        return GetNotebook()->SetPageText(page, wxStr(text));
     }
 
     string AuiNotebook::GetPageText(uint64_t pageIdx)
     {
-        return wxStr(wxEmptyString);
+        return wxStr(GetNotebook()->GetPageText(pageIdx));
     }
 
     bool AuiNotebook::SetPageToolTip(uint64_t page, const string& text)
     {
-        return false;
+        return GetNotebook()->SetPageToolTip(page, wxStr(text));
     }
 
     string AuiNotebook::GetPageToolTip(uint64_t pageIdx)
     {
-        return wxStr(wxEmptyString);
+        return wxStr(GetNotebook()->GetPageToolTip(pageIdx));
     }
 
     bool AuiNotebook::SetPageBitmap(uint64_t page, ImageSet* bitmap)
     {
-        return false;
+        return GetNotebook()->SetPageBitmap(page, BitmapBundle(bitmap));
     }
 
-    int AuiNotebook::SetSelection(uint64_t newPage)
+    int64_t AuiNotebook::SetSelection(uint64_t newPage)
     {
-        return 0;
+        return GetNotebook()->SetSelection(newPage);
     }
 
-    int AuiNotebook::GetSelection()
+    int64_t AuiNotebook::GetSelection()
     {
-        return 0;
+        return GetNotebook()->GetSelection();
+    }
+
+    int64_t AuiNotebook::ChangeSelection(uint64_t newPage)
+    {
+        return GetNotebook()->ChangeSelection(newPage);
+    }
+
+    void AuiNotebook::AdvanceSelection(bool forward)
+    {
+        GetNotebook()->AdvanceSelection(forward);
+    }
+
+    void AuiNotebook::SetMeasuringFont(Font* font)
+    {
+        if (font == nullptr)
+            return;
+        GetNotebook()->SetMeasuringFont(font->GetWxFont());
+    }
+
+    void AuiNotebook::SetNormalFont(Font* font)
+    {
+        if (font == nullptr)
+            return;
+        GetNotebook()->SetNormalFont(font->GetWxFont());
+    }
+
+    void AuiNotebook::SetSelectedFont(Font* font)
+    {
+        if (font == nullptr)
+            return;
+        GetNotebook()->SetSelectedFont(font->GetWxFont());
     }
 
     void AuiNotebook::Split(uint64_t page, int direction)
     {
+        GetNotebook()->Split(page, direction);
     }
 
     int AuiNotebook::GetTabCtrlHeight()
     {
-        return 0;
+        return GetNotebook()->GetTabCtrlHeight();
     }
 
     int AuiNotebook::GetHeightForPageHeight(int pageHeight)
     {
-        return 0;
+        return GetNotebook()->GetHeightForPageHeight(pageHeight);
     }
 
     bool AuiNotebook::ShowWindowMenu()
     {
-        return false;
+        return GetNotebook()->ShowWindowMenu();
     }
 
     bool AuiNotebook::DeleteAllPages()
     {
-        return false;
+        return GetNotebook()->DeleteAllPages();
     }
 }
