@@ -23,10 +23,10 @@ namespace AuiManagerSample
         private readonly ListBox listBox3;
         private readonly AuiToolbar toolbar4 = new();
 
-        int calendarToolId;
-        int photoToolId;
-        int pencilToolId;
-        int graphToolId;
+        private readonly int calendarToolId;
+        private readonly int photoToolId;
+        private readonly int pencilToolId;
+        private readonly int graphToolId;
 
         static MainWindow()
         {
@@ -40,8 +40,7 @@ namespace AuiManagerSample
                 HasBorder = false
             };
             listBox.Add(paneName);
-            if (parent == null)
-                parent = panel;
+            parent ??= panel;
             parent.Children.Add(listBox);
             listBox.SetBounds(0, 0, 200, 100, BoundsSpecified.Size);
             return listBox;

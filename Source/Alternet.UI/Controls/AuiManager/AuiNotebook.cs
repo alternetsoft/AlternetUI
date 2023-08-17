@@ -455,6 +455,96 @@ namespace Alternet.UI
             NativeControl.SetArtProvider(art);
         }
 
+        internal void RaisePageClose(EventArgs e)
+        {
+            OnPageClose(e);
+            PageClose?.Invoke(this, e);
+        }
+
+        internal void RaisePageClosed(EventArgs e)
+        {
+            OnPageClosed(e);
+            PageClosed?.Invoke(this, e);
+        }
+
+        internal void RaisePageChanged(EventArgs e)
+        {
+            OnPageChanged(e);
+            PageChanged?.Invoke(this, e);
+        }
+
+        internal void RaisePageChanging(EventArgs e)
+        {
+            OnPageChanging(e);
+            PageChanging?.Invoke(this, e);
+        }
+
+        internal void RaiseWindowListButton(EventArgs e)
+        {
+            OnWindowListButton(e);
+            WindowListButton?.Invoke(this, e);
+        }
+
+        internal void RaiseBeginDrag(EventArgs e)
+        {
+            OnBeginDrag(e);
+            BeginDrag?.Invoke(this, e);
+        }
+
+        internal void RaiseEndDrag(EventArgs e)
+        {
+            OnEndDrag(e);
+            EndDrag?.Invoke(this, e);
+        }
+
+        internal void RaiseDragMotion(EventArgs e)
+        {
+            OnDragMotion(e);
+            DragMotion?.Invoke(this, e);
+        }
+
+        internal void RaiseAllowTabDrop(EventArgs e)
+        {
+            OnAllowTabDrop(e);
+            AllowTabDrop?.Invoke(this, e);
+        }
+
+        internal void RaiseDragDone(EventArgs e)
+        {
+            OnDragDone(e);
+            DragDone?.Invoke(this, e);
+        }
+
+        internal void RaiseTabMiddleMouseDown(EventArgs e)
+        {
+            OnTabMiddleMouseDown(e);
+            TabMiddleMouseDown?.Invoke(this, e);
+        }
+
+        internal void RaiseTabMiddleMouseUp(EventArgs e)
+        {
+            OnTabMiddleMouseUp(e);
+            TabMiddleMouseUp?.Invoke(this, e);
+        }
+
+        internal void RaiseTabRightMouseDown(EventArgs e)
+        {
+            OnTabRightMouseDown(e);
+            TabRightMouseDown?.Invoke(this, e);
+        }
+
+        internal void RaiseTabRightMouseUp(EventArgs e)
+        {
+            OnTabRightMouseUp(e);
+            TabRightMouseUp?.Invoke(this, e);
+        }
+
+        internal void RaiseBgDclickMouse(EventArgs e)
+        {
+            OnBgDclickMouse(e);
+            BgDclickMouse?.Invoke(this, e);
+        }
+
         /// <summary>
         /// Returns the associated art provider.
         /// </summary>
@@ -467,6 +557,144 @@ namespace Alternet.UI
         protected override ControlHandler CreateHandler()
         {
             return GetEffectiveControlHandlerHactory().CreateAuiNotebookHandler(this);
+        }
+
+        /// <summary>
+        /// Called when a page is about to be closed.
+        /// </summary>
+        /// <param name="e">An <see cref="EventArgs"/> that contains
+        /// the event data.</param>
+        protected virtual void OnPageClose(EventArgs e)
+        {
+        }
+
+        /// <summary>
+        /// Occurs when a page has been closed.
+        /// </summary>
+        /// <param name="e">An <see cref="EventArgs"/> that contains
+        /// the event data.</param>
+        protected virtual void OnPageClosed(EventArgs e)
+        {
+        }
+
+        /// <summary>
+        /// Called when the page selection was changed.
+        /// </summary>
+        /// <param name="e">An <see cref="EventArgs"/> that contains
+        /// the event data.</param>
+        protected virtual void OnPageChanged(EventArgs e)
+        {
+        }
+
+        /// <summary>
+        /// Called when the page selection is about to be changed.
+        /// This event can be vetoed.
+        /// </summary>
+        /// <param name="e">An <see cref="EventArgs"/> that contains
+        /// the event data.</param>
+        protected virtual void OnPageChanging(EventArgs e)
+        {
+        }
+
+        /// <summary>
+        /// Called when the window list button has been pressed.
+        /// </summary>
+        /// <param name="e">An <see cref="EventArgs"/> that contains
+        /// the event data.</param>
+        protected virtual void OnWindowListButton(EventArgs e)
+        {
+        }
+
+        /// <summary>
+        /// Called when dragging is about to begin.
+        /// </summary>
+        /// <param name="e">An <see cref="EventArgs"/> that contains
+        /// the event data.</param>
+        protected virtual void OnBeginDrag(EventArgs e)
+        {
+        }
+
+        /// <summary>
+        /// Called when dragging has ended.
+        /// </summary>
+        /// <param name="e">An <see cref="EventArgs"/> that contains
+        /// the event data.</param>
+        protected virtual void OnEndDrag(EventArgs e)
+        {
+        }
+
+        /// <summary>
+        /// Called during a drag and drop operation.
+        /// </summary>
+        /// <param name="e">An <see cref="EventArgs"/> that contains
+        /// the event data.</param>
+        protected virtual void OnDragMotion(EventArgs e)
+        {
+        }
+
+        /// <summary>
+        /// Occurs when application needs to query whether to allow a tab
+        /// to be dropped. This event must be specially allowed.
+        /// </summary>
+        /// <param name="e">An <see cref="EventArgs"/> that contains
+        /// the event data.</param>
+        protected virtual void OnAllowTabDrop(EventArgs e)
+        {
+        }
+
+        /// <summary>
+        /// Called to notify that the tab has been dragged.
+        /// </summary>
+        /// <param name="e">An <see cref="EventArgs"/> that contains
+        /// the event data.</param>
+        protected virtual void OnDragDone(EventArgs e)
+        {
+        }
+
+        /// <summary>
+        /// Called when the middle mouse button is pressed on a tab.
+        /// </summary>
+        /// <param name="e">An <see cref="EventArgs"/> that contains
+        /// the event data.</param>
+        protected virtual void OnTabMiddleMouseDown(EventArgs e)
+        {
+        }
+
+        /// <summary>
+        /// Called when the middle mouse button is released on a tab.
+        /// </summary>
+        /// <param name="e">An <see cref="EventArgs"/> that contains
+        /// the event data.</param>
+        protected virtual void OnTabMiddleMouseUp(EventArgs e)
+        {
+        }
+
+        /// <summary>
+        /// Called when the right mouse button is pressed on a tab.
+        /// </summary>
+        /// <param name="e">An <see cref="EventArgs"/> that contains
+        /// the event data.</param>
+        protected virtual void OnTabRightMouseDown(EventArgs e)
+        {
+        }
+
+        /// <summary>
+        /// Called when the right mouse button is released on a tab.
+        /// </summary>
+        /// <param name="e">An <see cref="EventArgs"/> that contains
+        /// the event data.</param>
+        protected virtual void OnTabRightMouseUp(EventArgs e)
+        {
+        }
+
+        /// <summary>
+        /// Called when the mouse button is double clicked on the tabs
+        /// background area.
+        /// </summary>
+        /// <param name="e">An <see cref="EventArgs"/> that contains
+        /// the event data.</param>
+        protected virtual void OnBgDclickMouse(EventArgs e)
+        {
         }
     }
 }

@@ -84,7 +84,6 @@ namespace Alternet.UI
             set => NativeControl.SetToolBitmapSize(value);
         }
 
-
         /// <summary>
         /// Gets or sets tool border padding.
         /// </summary>
@@ -722,7 +721,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Called when the tool overflow button is clicked..
+        /// Called when the tool overflow button is clicked.
         /// </summary>
         /// <param name="e">An <see cref="EventArgs"/> that contains
         /// the event data.</param>
@@ -731,7 +730,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Called when the tool is clicked with right mouse button..
+        /// Called when the tool is clicked with right mouse button.
         /// </summary>
         /// <param name="e">An <see cref="EventArgs"/> that contains
         /// the event data.</param>
@@ -740,7 +739,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Called when the user begins toolbar dragging by the mouse..
+        /// Called when the user begins toolbar dragging by the mouse.
         /// </summary>
         /// <param name="e">An <see cref="EventArgs"/> that contains
         /// the event data.</param>
@@ -749,7 +748,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Called when the user begins toolbar dragging by the mouse..
+        /// Called when the user begins toolbar dragging by the mouse.
         /// </summary>
         /// <param name="e">An <see cref="EventArgs"/> that contains
         /// the event data.</param>
