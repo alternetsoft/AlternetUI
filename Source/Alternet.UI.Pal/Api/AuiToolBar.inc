@@ -16,6 +16,9 @@ Int32Point GetEventClickPoint();
 
 Int32Rect GetEventItemRect();
 
+void DoOnCaptureLost();
+void DoOnLeftUp(int x, int y);
+void DoOnLeftDown(int x, int y);
 static void* CreateEx(int64_t styles);
 void SetArtProvider(void* art);
 void* GetArtProvider();
@@ -84,6 +87,7 @@ enum class AuiToolBarEvent
     ToolMiddleClick,
     OverflowClick,
     ToolRightClick,
+    ToolCommand,
 };
 typedef void* (*AuiToolBarEventCallbackType)(AuiToolBar* obj, AuiToolBarEvent event, void* param);
 static void SetEventCallback(AuiToolBarEventCallbackType value) { eventCallback = value; }

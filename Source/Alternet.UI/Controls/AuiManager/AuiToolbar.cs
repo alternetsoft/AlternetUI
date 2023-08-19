@@ -19,6 +19,7 @@ namespace Alternet.UI
 
         private readonly Dictionary<int, ToolData> toolData = new();
         private int idCounter = 0;
+        private int showingDropDown = 0;
 
         /// <summary>
         /// Occurs when the tool is clicked.
@@ -590,6 +591,21 @@ namespace Alternet.UI
             NativeControl.SetToolSticky(toolId, sticky);
         }
 
+        internal void DoOnCaptureLost()
+        {
+            NativeControl.DoOnCaptureLost();
+        }
+
+        internal void DoOnLeftUp(int x, int y)
+        {
+            NativeControl.DoOnLeftUp(x, y);
+        }
+        
+        internal void DoOnLeftDown(int x, int y)
+        {
+            NativeControl.DoOnLeftDown(x, y);
+        }
+
         /// <summary>
         /// Shows context menu under the toolbar item.
         /// </summary>
@@ -597,19 +613,45 @@ namespace Alternet.UI
         /// <param name="contextMenu">Context menu.</param>
         public void ShowDropDownMenu(int toolId, ContextMenu contextMenu)
         {
-            Window? window = ParentWindow;
-            if (window == null)
+            if (showingDropDown > 0)
                 return;
 
-            SetToolSticky(toolId, true);
+            showingDropDown++;
 
-            Rect toolRect = GetToolRect(toolId);
-            Point pt = ClientToScreen(toolRect.BottomLeft);
-            pt = window.ScreenToClient(pt);
+            try
+            {
+                Window? window = ParentWindow;
+                if (window == null)
+                    return;
+                //Control.NotifyCaptureLost();
+                //window.CaptureMouse();
+                //window.ReleaseMouseCapture();
 
-            window.ShowPopupMenu(contextMenu, (int)pt.X, (int)pt.Y);
+                SetToolSticky(toolId, true);
+                //window.SendMouseDownEvent(100, 0);
+                //window.SendMouseUpEvent(100, 0);
+                //Application.Current.ProcessPendingEvents();
 
-            SetToolSticky(toolId, false);
+                Rect toolRect = GetToolRect(toolId);
+                Point pt = ClientToScreen(toolRect.BottomLeft);
+                pt = window.ScreenToClient(pt);
+
+                window.ShowPopupMenu(contextMenu, (int)pt.X, (int)pt.Y);
+                //Control.NotifyCaptureLost();
+                //window.CaptureMouse();
+                //window.ReleaseMouseCapture();
+                //window.SendMouseDownEvent(100, 0);
+                //window.SendMouseUpEvent(100, 0);
+                //DoOnLeftUp(0, 0);
+                //Control.NotifyCaptureLost();
+                DoOnCaptureLost();
+
+                SetToolSticky(toolId, false);
+            }
+            finally
+            {
+                showingDropDown--;
+            }
         }
 
         /// <summary>
@@ -846,14 +888,17 @@ namespace Alternet.UI
             ToolRightClick?.Invoke(this, e);
         }
 
-        internal void RaiseToolDropDown(EventArgs e)
+        internal void RaiseToolCommand(EventArgs e)
         {
-            OnToolDropDown(e);
-            ToolDropDown?.Invoke(this, e);
+            ProcessToolClick();
+        }
+
+        internal void ProcessToolClick()
+        {
             var toolData = GetToolData(EventToolId, false);
             if (toolData == null)
                 return;
-            toolData.OnClick(this, e);
+            toolData.OnClick(this, EventArgs.Empty);
 
             AuiToolbarItemDropDownOnEvent dropDownOnEvent = toolData.DropDownOnEvent;
 
@@ -875,6 +920,12 @@ namespace Alternet.UI
             if (!show)
                 return;
             ShowDropDownMenu(EventToolId, menu);
+        }
+
+        internal void RaiseToolDropDown(EventArgs e)
+        {
+            OnToolDropDown(e);
+            ToolDropDown?.Invoke(this, e);
         }
 
         internal void RaiseToolMiddleClick(EventArgs e)

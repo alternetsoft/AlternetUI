@@ -10,11 +10,16 @@ namespace NativeApi.Api
 	//https://docs.wxwidgets.org/3.2/classwx_aui_tool_bar.html
 	public class AuiToolBar	: Control
 	{
+        public void DoOnCaptureLost() { }
+        public void DoOnLeftUp(int x, int y) { }
+        public void DoOnLeftDown(int x, int y) { }
+
         public event EventHandler? ToolDropDown;
         public event EventHandler? BeginDrag;
         public event EventHandler? ToolMiddleClick;
         public event EventHandler? OverflowClick;
         public event EventHandler? ToolRightClick;
+        public event EventHandler? ToolCommand;
 
         public static IntPtr CreateEx(long styles) => throw new Exception();
 

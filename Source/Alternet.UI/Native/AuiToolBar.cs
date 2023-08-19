@@ -89,6 +89,24 @@ namespace Alternet.UI.Native
             
         }
         
+        public void DoOnCaptureLost()
+        {
+            CheckDisposed();
+            NativeApi.AuiToolBar_DoOnCaptureLost_(NativePointer);
+        }
+        
+        public void DoOnLeftUp(int x, int y)
+        {
+            CheckDisposed();
+            NativeApi.AuiToolBar_DoOnLeftUp_(NativePointer, x, y);
+        }
+        
+        public void DoOnLeftDown(int x, int y)
+        {
+            CheckDisposed();
+            NativeApi.AuiToolBar_DoOnLeftDown_(NativePointer, x, y);
+        }
+        
         public static System.IntPtr CreateEx(long styles)
         {
             var n = NativeApi.AuiToolBar_CreateEx_(styles);
@@ -573,6 +591,10 @@ namespace Alternet.UI.Native
                 {
                     ToolRightClick?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
                 }
+                case NativeApi.AuiToolBarEvent.ToolCommand:
+                {
+                    ToolCommand?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                }
                 default: throw new Exception("Unexpected AuiToolBarEvent value: " + e);
             }
         }
@@ -582,6 +604,7 @@ namespace Alternet.UI.Native
         public event EventHandler? ToolMiddleClick;
         public event EventHandler? OverflowClick;
         public event EventHandler? ToolRightClick;
+        public event EventHandler? ToolCommand;
         
         [SuppressUnmanagedCodeSecurity]
         public class NativeApi : NativeApiProvider
@@ -598,6 +621,7 @@ namespace Alternet.UI.Native
                 ToolMiddleClick,
                 OverflowClick,
                 ToolRightClick,
+                ToolCommand,
             }
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
@@ -623,6 +647,15 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern Alternet.Drawing.Int32Rect AuiToolBar_GetEventItemRect_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void AuiToolBar_DoOnCaptureLost_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void AuiToolBar_DoOnLeftUp_(IntPtr obj, int x, int y);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void AuiToolBar_DoOnLeftDown_(IntPtr obj, int x, int y);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern System.IntPtr AuiToolBar_CreateEx_(long styles);

@@ -13,7 +13,73 @@ namespace Alternet::UI
         {
             Create(parent, id, pos, size, style);
         }
+        void OnLeaveWindow(wxMouseEvent& evt) 
+        {
+            wxAuiToolBar::OnLeaveWindow(evt);
+        }
+        void OnCaptureLost(wxMouseCaptureLostEvent& evt)
+        {
+            wxAuiToolBar::OnCaptureLost(evt);
+        }
+
+        void OnLeftDown(wxMouseEvent& evt)
+        {
+            wxAuiToolBar::OnLeftDown(evt);
+        }
+
+        void OnLeftUp(wxMouseEvent& evt)
+        {
+            wxAuiToolBar::OnLeftUp(evt);
+        }
+
+        void OnRightDown(wxMouseEvent& evt)
+        {
+            wxAuiToolBar::OnRightDown(evt);
+        }
+
+        void OnRightUp(wxMouseEvent& evt)
+        {
+            wxAuiToolBar::OnRightUp(evt);
+        }
+        
+        void OnMiddleDown(wxMouseEvent& evt)
+        {
+            wxAuiToolBar::OnMiddleDown(evt);
+        }
+        
+        void OnMiddleUp(wxMouseEvent& evt)
+        {
+            wxAuiToolBar::OnMiddleUp(evt);
+        }
+        
+        void OnMotion(wxMouseEvent& evt)
+        {
+            wxAuiToolBar::OnMotion(evt);
+        }
     };
+
+    void AuiToolBar::DoOnCaptureLost()
+    {
+        auto window = dynamic_cast<wxAuiToolBar2*>(GetWxWindow());
+        wxMouseCaptureLostEvent ev = wxMouseCaptureLostEvent();
+        window->OnCaptureLost(ev);
+    }
+
+    void AuiToolBar::DoOnLeftUp(int x, int y)
+    {
+        auto window = dynamic_cast<wxAuiToolBar2*>(GetWxWindow());
+        wxMouseEvent ev = wxMouseEvent(wxEVT_LEFT_UP);
+        ev.SetX(x);ev.SetY(y);
+        window->OnLeftUp(ev);
+    }
+
+    void AuiToolBar::DoOnLeftDown(int x, int y)
+    {
+        auto window = dynamic_cast<wxAuiToolBar2*>(GetWxWindow());
+        wxMouseEvent ev = wxMouseEvent(wxEVT_LEFT_DOWN);
+        ev.SetX(x);ev.SetY(y);
+        window->OnLeftDown(ev);
+    }
 
 	AuiToolBar::AuiToolBar()
 	{
@@ -53,12 +119,20 @@ namespace Alternet::UI
             wxDefaultSize,
             style);
 
+        //toolbar->Bind(wxEVT_LEFT_DOWN, &AuiToolBar::OnLeftDown, this);
+        toolbar->Bind(wxEVT_TOOL, &AuiToolBar::OnToolbarCommand, this);
         toolbar->Bind(wxEVT_AUITOOLBAR_TOOL_DROPDOWN, &AuiToolBar::OnToolDropDown, this);
         toolbar->Bind(wxEVT_AUITOOLBAR_OVERFLOW_CLICK, &AuiToolBar::OnOverflowClick, this);
         toolbar->Bind(wxEVT_AUITOOLBAR_RIGHT_CLICK, &AuiToolBar::OnRightClick, this);
         toolbar->Bind(wxEVT_AUITOOLBAR_MIDDLE_CLICK, &AuiToolBar::OnMiddleClick, this);
         toolbar->Bind(wxEVT_AUITOOLBAR_BEGIN_DRAG, &AuiToolBar::OnBeginDrag, this);
         return toolbar;
+    }
+
+    void AuiToolBar::OnToolbarCommand(wxCommandEvent& event)
+    {
+        event.Skip();
+        RaiseEvent(AuiToolBarEvent::ToolCommand);
     }
 
     int AuiToolBar::GetEventToolId() 
@@ -89,11 +163,18 @@ namespace Alternet::UI
         _eventItemRect = Int32Rect(event.GetItemRect());
     }
 
+    void AuiToolBar::OnLeftDown(wxMouseEvent& evt)
+    {
+        evt.Skip();
+    }
+
     void AuiToolBar::OnToolDropDown(wxAuiToolBarEvent& event)
     {
         FromEventData(event);
-        RaiseEvent(AuiToolBarEvent::ToolDropDown);
         event.Skip();
+        RaiseEvent(AuiToolBarEvent::ToolDropDown);
+        wxCommandEvent ev = wxCommandEvent(wxEVT_TOOL);
+        GetToolbar()->GetEventHandler()->AddPendingEvent(ev);
     }
 
     void AuiToolBar::OnBeginDrag(wxAuiToolBarEvent& event)
@@ -136,6 +217,8 @@ namespace Alternet::UI
             auto window = GetWxWindow();
             if (window != nullptr)
             {
+                //window->Unbind(wxEVT_LEFT_DOWN, &AuiToolBar::OnLeftDown, this);
+                window->Unbind(wxEVT_TOOL, &AuiToolBar::OnToolbarCommand, this);
                 window->Unbind(wxEVT_AUITOOLBAR_TOOL_DROPDOWN,
                     &AuiToolBar::OnToolDropDown, this);
                 window->Unbind(wxEVT_AUITOOLBAR_OVERFLOW_CLICK,

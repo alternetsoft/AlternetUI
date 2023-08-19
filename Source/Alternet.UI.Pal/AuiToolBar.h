@@ -21,6 +21,9 @@ namespace Alternet::UI
         Int32Rect _eventItemRect = Int32Rect();
     private:
         long _createStyle = wxAUI_TB_DEFAULT_STYLE;
+
+        void OnToolbarCommand(wxCommandEvent& event);
+        void OnLeftDown(wxMouseEvent& evt);
         void FromEventData(wxAuiToolBarEvent& event);
         void OnToolDropDown(wxAuiToolBarEvent& event);
         void OnBeginDrag(wxAuiToolBarEvent& event);

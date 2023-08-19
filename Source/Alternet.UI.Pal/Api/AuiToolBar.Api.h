@@ -58,6 +58,27 @@ ALTERNET_UI_API Int32Rect_C AuiToolBar_GetEventItemRect_(AuiToolBar* obj)
         });
 }
 
+ALTERNET_UI_API void AuiToolBar_DoOnCaptureLost_(AuiToolBar* obj)
+{
+    MarshalExceptions<void>([&](){
+            obj->DoOnCaptureLost();
+        });
+}
+
+ALTERNET_UI_API void AuiToolBar_DoOnLeftUp_(AuiToolBar* obj, int x, int y)
+{
+    MarshalExceptions<void>([&](){
+            obj->DoOnLeftUp(x, y);
+        });
+}
+
+ALTERNET_UI_API void AuiToolBar_DoOnLeftDown_(AuiToolBar* obj, int x, int y)
+{
+    MarshalExceptions<void>([&](){
+            obj->DoOnLeftDown(x, y);
+        });
+}
+
 ALTERNET_UI_API void* AuiToolBar_CreateEx_(int64_t styles)
 {
     return MarshalExceptions<void*>([&](){
