@@ -214,6 +214,25 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Processes all pending events.
+        /// </summary>
+        public void ProcessPendingEvents()
+        {
+            nativeApplication.ProcessPendingEvents();
+        }
+
+        /// <summary>
+        /// Checks whether there are any pending events in the queue.
+        /// </summary>
+        /// <returns><c>true</c> if there are any pending events in the queue,
+        /// <c>false</c> otherwise.</returns>
+        public bool HasPendingEvents()
+        {
+            return nativeApplication.HasPendingEvents();
+        }
+
+
+        /// <summary>
         /// Gets or sets the application display name.
         /// </summary>
         /// <remarks>

@@ -173,6 +173,20 @@ ALTERNET_UI_API void Application_BeginInvoke_(Application* obj, PInvokeCallbackA
         });
 }
 
+ALTERNET_UI_API void Application_ProcessPendingEvents_(Application* obj)
+{
+    MarshalExceptions<void>([&](){
+            obj->ProcessPendingEvents();
+        });
+}
+
+ALTERNET_UI_API c_bool Application_HasPendingEvents_(Application* obj)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return obj->HasPendingEvents();
+        });
+}
+
 ALTERNET_UI_API void Application_SetEventCallback_(Application::ApplicationEventCallbackType callback)
 {
     Application::SetEventCallback(callback);

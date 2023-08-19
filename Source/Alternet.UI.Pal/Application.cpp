@@ -347,6 +347,16 @@ wxDEFINE_EVENT( wxEVT_HOTKEY, wxKeyEvent );
         wxSystemOptions::SetOption(wxStr(name), value);
     }
 
+    void Application::ProcessPendingEvents()
+    {
+        _app->ProcessPendingEvents();
+    }
+
+    bool Application::HasPendingEvents()
+    {
+        return _app->HasPendingEvents();
+    }
+
     void Application::Run(Window* window)
     {
         verifyNonNull(window);

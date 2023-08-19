@@ -42,6 +42,8 @@ void WakeUpIdle();
 void Exit();
 static void SuppressDiagnostics(int flags);
 void BeginInvoke(PInvokeCallbackActionType action);
+void ProcessPendingEvents();
+bool HasPendingEvents();
 public:
 enum class ApplicationEvent
 {

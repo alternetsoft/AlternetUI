@@ -36,5 +36,10 @@ namespace NativeApi.Api
         public static void SuppressDiagnostics(int flags) => throw new Exception();
 
         public void BeginInvoke([CallbackMarshal(freeAfterFirstCall: true)] Action action) => throw new Exception();
+
+        public void ProcessPendingEvents() { }
+
+        public bool HasPendingEvents() => throw new Exception();
+
     }
 }

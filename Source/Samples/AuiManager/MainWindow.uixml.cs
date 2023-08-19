@@ -339,12 +339,14 @@ namespace AuiManagerSample
                 Text = "_Open...",
                 Shortcut = "Ctrl+O",
             };
+            menuItem1.Click += (sender, e) => { Log("Click drop down menu item: Open"); };
 
             MenuItem menuItem2 = new()
             {
                 Text = "_Save...",
                 Shortcut = "Ctrl+S",
             };
+            menuItem2.Click += (sender, e) => { Log("Click drop down menu item: Save"); };
 
             contextMenu.Items.Add(menuItem1);
             contextMenu.Items.Add(menuItem2);

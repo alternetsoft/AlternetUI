@@ -219,6 +219,20 @@ namespace Alternet.UI.Native
             NativeApi.Application_BeginInvoke_(NativePointer, actionSink);
         }
         
+        public void ProcessPendingEvents()
+        {
+            CheckDisposed();
+            NativeApi.Application_ProcessPendingEvents_(NativePointer);
+        }
+        
+        public bool HasPendingEvents()
+        {
+            CheckDisposed();
+            var n = NativeApi.Application_HasPendingEvents_(NativePointer);
+            var m = n;
+            return m;
+        }
+        
         static GCHandle eventCallbackGCHandle;
         
         static void SetEventCallback()
@@ -336,6 +350,12 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Application_BeginInvoke_(IntPtr obj, PInvokeCallbackActionType action);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Application_ProcessPendingEvents_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool Application_HasPendingEvents_(IntPtr obj);
             
         }
     }

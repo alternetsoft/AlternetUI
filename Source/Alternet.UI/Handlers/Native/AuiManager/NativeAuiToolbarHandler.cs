@@ -43,6 +43,7 @@ namespace Alternet.UI
         protected override void OnDetach()
         {
             base.OnDetach();
+            NativeControl.ToolCommand -= NativeControl_ToolCommand;
             NativeControl.ToolDropDown -= NativeControl_ToolDropDown;
             NativeControl.BeginDrag -= NativeControl_BeginDrag;
             NativeControl.ToolMiddleClick -= NativeControl_ToolMiddleClick;
@@ -54,11 +55,17 @@ namespace Alternet.UI
         {
             base.OnAttach();
 
+            NativeControl.ToolCommand += NativeControl_ToolCommand;
             NativeControl.ToolDropDown += NativeControl_ToolDropDown;
             NativeControl.BeginDrag += NativeControl_BeginDrag;
             NativeControl.ToolMiddleClick += NativeControl_ToolMiddleClick;
             NativeControl.OverflowClick += NativeControl_OverflowClick;
             NativeControl.ToolRightClick += NativeControl_ToolRightClick;
+        }
+
+        private void NativeControl_ToolCommand(object sender, EventArgs e)
+        {
+            Control.RaiseToolCommand(e);
         }
 
         private void NativeControl_ToolRightClick(object? sender, EventArgs e)
