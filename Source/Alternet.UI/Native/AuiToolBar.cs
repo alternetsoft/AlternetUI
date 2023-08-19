@@ -53,6 +53,42 @@ namespace Alternet.UI.Native
             
         }
         
+        public bool EventIsDropDownClicked
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.AuiToolBar_GetEventIsDropDownClicked_(NativePointer);
+                var m = n;
+                return m;
+            }
+            
+        }
+        
+        public Alternet.Drawing.Int32Point EventClickPoint
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.AuiToolBar_GetEventClickPoint_(NativePointer);
+                var m = n;
+                return m;
+            }
+            
+        }
+        
+        public Alternet.Drawing.Int32Rect EventItemRect
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.AuiToolBar_GetEventItemRect_(NativePointer);
+                var m = n;
+                return m;
+            }
+            
+        }
+        
         public static System.IntPtr CreateEx(long styles)
         {
             var n = NativeApi.AuiToolBar_CreateEx_(styles);
@@ -578,6 +614,15 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern int AuiToolBar_GetEventToolId_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool AuiToolBar_GetEventIsDropDownClicked_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern Alternet.Drawing.Int32Point AuiToolBar_GetEventClickPoint_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern Alternet.Drawing.Int32Rect AuiToolBar_GetEventItemRect_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern System.IntPtr AuiToolBar_CreateEx_(long styles);

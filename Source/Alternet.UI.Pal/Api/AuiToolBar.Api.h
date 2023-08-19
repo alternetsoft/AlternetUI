@@ -37,6 +37,27 @@ ALTERNET_UI_API int AuiToolBar_GetEventToolId_(AuiToolBar* obj)
         });
 }
 
+ALTERNET_UI_API c_bool AuiToolBar_GetEventIsDropDownClicked_(AuiToolBar* obj)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return obj->GetEventIsDropDownClicked();
+        });
+}
+
+ALTERNET_UI_API Int32Point_C AuiToolBar_GetEventClickPoint_(AuiToolBar* obj)
+{
+    return MarshalExceptions<Int32Point_C>([&](){
+            return obj->GetEventClickPoint();
+        });
+}
+
+ALTERNET_UI_API Int32Rect_C AuiToolBar_GetEventItemRect_(AuiToolBar* obj)
+{
+    return MarshalExceptions<Int32Rect_C>([&](){
+            return obj->GetEventItemRect();
+        });
+}
+
 ALTERNET_UI_API void* AuiToolBar_CreateEx_(int64_t styles)
 {
     return MarshalExceptions<void*>([&](){

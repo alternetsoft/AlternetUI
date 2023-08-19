@@ -86,6 +86,48 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets whether is drop down part of the tool was clicked when event is fired.
+        /// </summary>
+        /// <remarks>
+        /// Use it in the <see cref="ToolDropDown"/> or other event handlers.
+        /// </remarks>
+        public bool EventIsDropDownClicked
+        {
+            get
+            {
+                return NativeControl.EventIsDropDownClicked;
+            }
+        }
+
+        /// <summary>
+        /// Gets mouse click point passed in the event handler.
+        /// </summary>
+        /// <remarks>
+        /// Use it in the <see cref="ToolDropDown"/> or other event handlers.
+        /// </remarks>
+        public Int32Point EventClickPoint
+        {
+            get
+            {
+                return NativeControl.EventClickPoint;
+            }
+        }
+
+        /// <summary>
+        /// Gets tool item rectangle passed in the event handler.
+        /// </summary>
+        /// <remarks>
+        /// Use it in the <see cref="ToolDropDown"/> or other event handlers.
+        /// </remarks>
+        public Int32Rect EventItemRect
+        {
+            get
+            {
+                return NativeControl.EventItemRect;
+            }
+        }
+
+        /// <summary>
         /// Gets or sets the default size of each tool bitmap.
         /// </summary>
         /// <remarks>

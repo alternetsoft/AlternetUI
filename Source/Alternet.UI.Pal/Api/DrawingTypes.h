@@ -82,7 +82,8 @@ namespace Alternet::UI
 
         Size(wxSize size) : Width(size.x), Height(size.y) {}
 
-        inline Size operator+(const Size& rhs) const { return Size(Width + rhs.Width, Height + rhs.Height); }
+        inline Size operator+(const Size& rhs) const {
+            return Size(Width + rhs.Width, Height + rhs.Height); }
         inline Size& operator+=(const Size& rhs) 
         {
             Width += rhs.Width;
@@ -104,6 +105,8 @@ namespace Alternet::UI
 
         Int32Point(int x, int y) : X(x), Y(y) {}
 
+        Int32Point(wxPoint p) : X(p.x), Y(p.y) {}
+
         operator Int32Point_C() const { return Int32Point_C{ X, Y }; }
 
         bool operator==(const Int32Point& rhs) { return X == rhs.X && Y == rhs.Y; }
@@ -120,8 +123,10 @@ namespace Alternet::UI
 
         operator Point_C() const { return Point_C{ X, Y }; }
 
-        inline Point operator+(const Size& value) const { return Point(X + value.Width, Y + value.Height); }
-        inline Point operator-(const Size& value) const { return Point(X - value.Width, Y - value.Height); }
+        inline Point operator+(const Size& value) const {
+            return Point(X + value.Width, Y + value.Height); }
+        inline Point operator-(const Size& value) const {
+            return Point(X - value.Width, Y - value.Height); }
 
         bool operator==(const Point& rhs) { return X == rhs.X && Y == rhs.Y; }
         bool operator!=(const Point& rhs) { return !(*this == rhs); }
@@ -133,16 +138,21 @@ namespace Alternet::UI
 
         Int32Rect() {}
 
+        Int32Rect(wxRect r) : X(r.x), Y(r.y), Width(r.width), Height(r.height) {}
+
         Int32Rect(int x, int y, int width, int height) : X(x), Y(y), Width(width), Height(height) {}
 
-        Int32Rect(const Int32Point& location, const Int32Size& size) : Int32Rect(location.X, location.Y, size.Width, size.Height) {}
+        Int32Rect(const Int32Point& location, const Int32Size& size) :
+            Int32Rect(location.X, location.Y, size.Width, size.Height) {}
 
         inline Int32Point GetLocation() const { return Int32Point(X, Y); };
         inline Int32Size GetSize() const { return Int32Size(Width, Height); };
 
         operator Int32Rect_C() { return Int32Rect_C{ X, Y, Width, Height }; }
 
-        bool operator==(const Int32Rect& rhs) { return X == rhs.X && Y == rhs.Y && Width == rhs.Width && Height == rhs.Height; }
+        bool operator==(const Int32Rect& rhs)
+        { return X == rhs.X && Y == rhs.Y && Width == rhs.Width && Height == rhs.Height; }
+        
         bool operator!=(const Int32Rect& rhs) { return !(*this == rhs); }
     };
 

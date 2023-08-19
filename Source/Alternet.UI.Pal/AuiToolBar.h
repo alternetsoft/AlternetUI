@@ -16,7 +16,9 @@ namespace Alternet::UI
         AuiToolBar(long styles);
         wxWindow* CreateWxWindowCore(wxWindow* parent) override;
         int _eventToolId = 0;
-
+        bool _eventIsDropDownClicked = false;
+        Int32Point _eventClickPoint = Int32Point();
+        Int32Rect _eventItemRect = Int32Rect();
     private:
         long _createStyle = wxAUI_TB_DEFAULT_STYLE;
         void FromEventData(wxAuiToolBarEvent& event);

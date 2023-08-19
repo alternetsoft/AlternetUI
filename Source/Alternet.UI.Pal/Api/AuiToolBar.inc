@@ -7,6 +7,15 @@ void SetCreateStyle(int64_t value);
 
 int GetEventToolId();
 
+
+bool GetEventIsDropDownClicked();
+
+
+Int32Point GetEventClickPoint();
+
+
+Int32Rect GetEventItemRect();
+
 static void* CreateEx(int64_t styles);
 void SetArtProvider(void* art);
 void* GetArtProvider();

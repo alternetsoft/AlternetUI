@@ -195,22 +195,22 @@ namespace AuiManagerSample
             notebook5.BgDclickMouse += NotebookBgDclickMouse;
         }
 
-        private void Toolbar4_ToolRightClick(object sender, EventArgs e)
+        private void Toolbar4_ToolRightClick(object? sender, EventArgs e)
         {
             Log($"Toolbar: ToolRightClick {toolbar4.EventToolId}");
         }
 
-        private void Toolbar4_OverflowClick(object sender, EventArgs e)
+        private void Toolbar4_OverflowClick(object? sender, EventArgs e)
         {
             Log($"Toolbar: OverflowClick");
         }
 
-        private void Toolbar4_ToolMiddleClick(object sender, EventArgs e)
+        private void Toolbar4_ToolMiddleClick(object? sender, EventArgs e)
         {
             Log($"Toolbar: ToolMiddleClick {toolbar4.EventToolId}");
         }
 
-        private void Toolbar4_BeginDrag(object sender, EventArgs e)
+        private void Toolbar4_BeginDrag(object? sender, EventArgs e)
         {
             Log($"Toolbar: BeginDrag");
         }
@@ -238,7 +238,8 @@ namespace AuiManagerSample
 
         private void GraphButton_Click(object? sender, EventArgs e)
         {
-            Log("Graph clicked");
+            var isDropDownClicked = toolbar4.EventIsDropDownClicked;
+            Log($"Graph clicked, DropDownPart = {isDropDownClicked}");
         }
 
         private void ToolButton_Click(object? sender, EventArgs e)

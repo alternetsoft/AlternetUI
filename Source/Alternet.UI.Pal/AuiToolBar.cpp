@@ -66,9 +66,27 @@ namespace Alternet::UI
         return _eventToolId;
     }
 
+    bool AuiToolBar::GetEventIsDropDownClicked()
+    {
+        return _eventIsDropDownClicked;
+    }
+
+    Int32Point AuiToolBar::GetEventClickPoint()
+    {
+        return _eventClickPoint;
+    }
+
+    Int32Rect AuiToolBar::GetEventItemRect()
+    {
+        return _eventItemRect;
+    }
+
     void AuiToolBar::FromEventData(wxAuiToolBarEvent& event)
     {
         _eventToolId = event.GetToolId();
+        _eventIsDropDownClicked = event.IsDropDownClicked();
+        _eventClickPoint = Int32Point(event.GetClickPoint());
+        _eventItemRect = Int32Rect(event.GetItemRect());
     }
 
     void AuiToolBar::OnToolDropDown(wxAuiToolBarEvent& event)

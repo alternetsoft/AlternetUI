@@ -21,6 +21,10 @@ namespace NativeApi.Api
         public long CreateStyle { get; set; }
 
         public int EventToolId { get; }
+        public bool EventIsDropDownClicked { get; }
+        public Int32Point EventClickPoint { get; }
+        public Int32Rect EventItemRect { get; }
+
         public void SetArtProvider(IntPtr art) {}
         public IntPtr GetArtProvider() => throw new Exception();
 
