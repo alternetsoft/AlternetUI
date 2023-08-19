@@ -384,6 +384,18 @@ namespace Alternet.UI.Native
             NativeApi.Control_SendSizeEvent_(NativePointer);
         }
         
+        public void SendMouseDownEvent(int x, int y)
+        {
+            CheckDisposed();
+            NativeApi.Control_SendMouseDownEvent_(NativePointer, x, y);
+        }
+        
+        public void SendMouseUpEvent(int x, int y)
+        {
+            CheckDisposed();
+            NativeApi.Control_SendMouseUpEvent_(NativePointer, x, y);
+        }
+        
         public System.IntPtr GetContainingSizer()
         {
             CheckDisposed();
@@ -448,6 +460,11 @@ namespace Alternet.UI.Native
             var n = NativeApi.Control_GetScrollBarMaximum_(NativePointer, orientation);
             var m = n;
             return m;
+        }
+        
+        public static void NotifyCaptureLost()
+        {
+            NativeApi.Control_NotifyCaptureLost_();
         }
         
         public void ShowPopupMenu(System.IntPtr menu, int x, int y)
@@ -892,6 +909,12 @@ namespace Alternet.UI.Native
             public static extern void Control_SendSizeEvent_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Control_SendMouseDownEvent_(IntPtr obj, int x, int y);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Control_SendMouseUpEvent_(IntPtr obj, int x, int y);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern System.IntPtr Control_GetContainingSizer_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
@@ -917,6 +940,9 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern int Control_GetScrollBarMaximum_(IntPtr obj, ScrollBarOrientation orientation);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Control_NotifyCaptureLost_();
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Control_ShowPopupMenu_(IntPtr obj, System.IntPtr menu, int x, int y);
