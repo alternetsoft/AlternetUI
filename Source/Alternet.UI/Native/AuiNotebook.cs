@@ -48,6 +48,30 @@ namespace Alternet.UI.Native
             
         }
         
+        public long CreateStyle
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.AuiNotebook_GetCreateStyle_(NativePointer);
+                var m = n;
+                return m;
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.AuiNotebook_SetCreateStyle_(NativePointer, value);
+            }
+        }
+        
+        public static System.IntPtr CreateEx(long styles)
+        {
+            var n = NativeApi.AuiNotebook_CreateEx_(styles);
+            var m = n;
+            return m;
+        }
+        
         public void SetArtProvider(System.IntPtr art)
         {
             CheckDisposed();
@@ -281,7 +305,11 @@ namespace Alternet.UI.Native
             {
                 case NativeApi.AuiNotebookEvent.PageClose:
                 {
-                    PageClose?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                    {
+                        var cea = new CancelEventArgs();
+                        PageClose?.Invoke(this, cea);
+                        return cea.Cancel ? new IntPtr(1) : IntPtr.Zero;
+                    }
                 }
                 case NativeApi.AuiNotebookEvent.PageClosed:
                 {
@@ -293,11 +321,19 @@ namespace Alternet.UI.Native
                 }
                 case NativeApi.AuiNotebookEvent.PageChanging:
                 {
-                    PageChanging?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                    {
+                        var cea = new CancelEventArgs();
+                        PageChanging?.Invoke(this, cea);
+                        return cea.Cancel ? new IntPtr(1) : IntPtr.Zero;
+                    }
                 }
-                case NativeApi.AuiNotebookEvent.WindowListButton:
+                case NativeApi.AuiNotebookEvent.PageButton:
                 {
-                    WindowListButton?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                    {
+                        var cea = new CancelEventArgs();
+                        PageButton?.Invoke(this, cea);
+                        return cea.Cancel ? new IntPtr(1) : IntPtr.Zero;
+                    }
                 }
                 case NativeApi.AuiNotebookEvent.BeginDrag:
                 {
@@ -343,11 +379,11 @@ namespace Alternet.UI.Native
             }
         }
         
-        public event EventHandler? PageClose;
+        public event EventHandler<CancelEventArgs>? PageClose;
         public event EventHandler? PageClosed;
         public event EventHandler? PageChanged;
-        public event EventHandler? PageChanging;
-        public event EventHandler? WindowListButton;
+        public event EventHandler<CancelEventArgs>? PageChanging;
+        public event EventHandler<CancelEventArgs>? PageButton;
         public event EventHandler? BeginDrag;
         public event EventHandler? EndDrag;
         public event EventHandler? DragMotion;
@@ -373,7 +409,7 @@ namespace Alternet.UI.Native
                 PageClosed,
                 PageChanged,
                 PageChanging,
-                WindowListButton,
+                PageButton,
                 BeginDrag,
                 EndDrag,
                 DragMotion,
@@ -397,6 +433,15 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern int AuiNotebook_GetEventOldSelection_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern long AuiNotebook_GetCreateStyle_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void AuiNotebook_SetCreateStyle_(IntPtr obj, long value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr AuiNotebook_CreateEx_(long styles);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void AuiNotebook_SetArtProvider_(IntPtr obj, System.IntPtr art);

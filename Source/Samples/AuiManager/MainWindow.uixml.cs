@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel;
 using System.IO;
 using Alternet.Drawing;
 using Alternet.UI;
@@ -23,6 +24,8 @@ namespace AuiManagerSample
         private readonly ListBox listBox3;
         private readonly AuiToolbar toolbar4 = new();
         private readonly AuiNotebook notebook5;
+        private readonly ListBox listBox5;
+        private readonly ListBox listBox6;
 
         private readonly int calendarToolId;
         private readonly int photoToolId;
@@ -32,6 +35,13 @@ namespace AuiManagerSample
         static MainWindow()
         {
             WebBrowser.CrtSetDbgFlag(0);
+            AuiNotebook.DefaultCreateStyle =
+                AuiNotebookCreateStyle.Top |
+                AuiNotebookCreateStyle.TabMove |
+                AuiNotebookCreateStyle.ScrollButtons |
+                AuiNotebookCreateStyle.WindowListButton |
+                AuiNotebookCreateStyle.CloseOnAllTabs;
+            AuiToolbar.DefaultCreateStyle = AuiToolbarCreateStyle.DefaultStyle;
         }
 
         private ListBox CreateListBox(string paneName, Control? parent = null)
@@ -146,11 +156,12 @@ namespace AuiManagerSample
             var pane5 = manager.CreatePaneInfo();
             pane5.Name("pane5").CenterPane().PaneBorder(false);
             notebook5 = new AuiNotebook();
-            var listBox5 = CreateListBox("ListBox 5");
-            var listBox6 = CreateListBox("ListBox 6");
+            listBox5 = CreateListBox("ListBox 5");
+            listBox6 = CreateListBox("ListBox 6");
 
             notebook5.AddPage(listBox5, "ListBox 5");
             notebook5.AddPage(listBox6, "ListBox 6");
+            listBox6.Add("This page can not be closed");
 
             panel.Children.Add(notebook5);
             manager.AddPane(notebook5, pane5);
@@ -166,7 +177,7 @@ namespace AuiManagerSample
             notebook5.PageClosed += NotebookPageClosed;
             notebook5.PageChanged += NotebookPageChanged;
             notebook5.PageChanging += NotebookPageChanging;
-            notebook5.WindowListButton += NotebookWindowListButton;
+            notebook5.PageButton += NotebookPageButton;
             notebook5.BeginDrag += NotebookBeginDrag;
             notebook5.EndDrag += NotebookEndDrag;
             notebook5.AllowTabDrop += NotebookAllowTabDrop;
@@ -228,9 +239,11 @@ namespace AuiManagerSample
         {
         }
 
-        private void NotebookPageClose(object? sender, EventArgs e)
+        private void NotebookPageClose(object? sender, CancelEventArgs e)
         {
             LogNotebook("PageClose");
+            //if (false)
+            //    e.Cancel = true;
         }
 
         private void NotebookPageClosed(object? sender, EventArgs e)
@@ -243,14 +256,17 @@ namespace AuiManagerSample
             LogNotebook("PageChanged");
         }
 
-        private void NotebookPageChanging(object? sender, EventArgs e)
+        private void NotebookPageChanging(object? sender, CancelEventArgs e)
         {
             LogNotebook("PageChanging");
         }
 
-        private void NotebookWindowListButton(object? sender, EventArgs e)
+        private void NotebookPageButton(object? sender, CancelEventArgs e)
         {
-            LogNotebook("WindowListButton");
+            var selection = notebook5.EventSelection;
+            LogNotebook("PageButton");
+            if (selection == notebook5.FindPage(listBox6))
+                e.Cancel = true;
         }
 
         private void NotebookBeginDrag(object? sender, EventArgs e)

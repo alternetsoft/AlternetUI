@@ -46,6 +46,32 @@ namespace Alternet.UI
         public event EventHandler? ToolRightClick;
 
         /// <summary>
+        /// Defines default visual style for the newly created
+        /// <see cref="AuiNotebook"/> controls.
+        /// </summary>
+        public static AuiToolbarCreateStyle DefaultCreateStyle { get; set; }
+            = AuiToolbarCreateStyle.DefaultStyle;
+
+        /// <summary>
+        /// Defines visual style and behavior of the <see cref="AuiToolbar"/> control.
+        /// </summary>
+        /// <remarks>
+        /// When this property is changed, control is recreated.
+        /// </remarks>
+        public AuiToolbarCreateStyle CreateStyle
+        {
+            get
+            {
+                return (AuiToolbarCreateStyle)Handler.CreateStyle;
+            }
+
+            set
+            {
+                Handler.CreateStyle = (int)value;
+            }
+        }
+
+        /// <summary>
         /// Gets id of the tool passed in the event handler.
         /// </summary>
         /// <remarks>

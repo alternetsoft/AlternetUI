@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using Alternet.Base.Collections;
 
@@ -18,13 +19,26 @@ namespace Alternet.UI
         public new Native.AuiNotebook NativeControl =>
             (Native.AuiNotebook)base.NativeControl!;
 
+        public long CreateStyle
+        {
+            get
+            {
+                return NativeControl.CreateStyle;
+            }
+
+            set
+            {
+                NativeControl.CreateStyle = value;
+            }
+        }
+
         public override void OnLayout()
         {
         }
 
         internal override Native.Control CreateNativeControl()
         {
-            return new Native.AuiNotebook();
+            return new NativeAuiNotebook(AuiNotebook.DefaultCreateStyle);
         }
 
         protected override void OnDetach()
@@ -34,7 +48,7 @@ namespace Alternet.UI
             NativeControl.PageClosed -= NativeControl_PageClosed;
             NativeControl.PageChanged -= NativeControl_PageChanged;
             NativeControl.PageChanging -= NativeControl_PageChanging;
-            NativeControl.WindowListButton -= NativeControl_WindowListButton;
+            NativeControl.PageButton -= NativeControl_PageButton;
             NativeControl.BeginDrag -= NativeControl_BeginDrag;
             NativeControl.EndDrag -= NativeControl_EndDrag;
             NativeControl.DragMotion -= NativeControl_DragMotion;
@@ -54,7 +68,7 @@ namespace Alternet.UI
             NativeControl.PageClosed += NativeControl_PageClosed;
             NativeControl.PageChanged += NativeControl_PageChanged;
             NativeControl.PageChanging += NativeControl_PageChanging;
-            NativeControl.WindowListButton += NativeControl_WindowListButton;
+            NativeControl.PageButton += NativeControl_PageButton;
             NativeControl.BeginDrag += NativeControl_BeginDrag;
             NativeControl.EndDrag += NativeControl_EndDrag;
             NativeControl.DragMotion += NativeControl_DragMotion;
@@ -117,12 +131,12 @@ namespace Alternet.UI
             Control.RaiseBeginDrag(e);
         }
 
-        private void NativeControl_WindowListButton(object? sender, EventArgs e)
+        private void NativeControl_PageButton(object? sender, CancelEventArgs e)
         {
-            Control.RaiseWindowListButton(e);
+            Control.RaisePageButton(e);
         }
 
-        private void NativeControl_PageChanging(object? sender, EventArgs e)
+        private void NativeControl_PageChanging(object? sender, CancelEventArgs e)
         {
             Control.RaisePageChanging(e);
         }
@@ -137,9 +151,18 @@ namespace Alternet.UI
             Control.RaisePageClosed(e);
         }
 
-        private void NativeControl_PageClose(object? sender, EventArgs e)
+        private void NativeControl_PageClose(object? sender, CancelEventArgs e)
         {
             Control.RaisePageClose(e);
+        }
+
+        public class NativeAuiNotebook : Native.AuiNotebook
+        {
+            public NativeAuiNotebook(AuiNotebookCreateStyle style)
+                : base()
+            {
+                SetNativePointer(NativeApi.AuiNotebook_CreateEx_((int)style));
+            }
         }
     }
 }

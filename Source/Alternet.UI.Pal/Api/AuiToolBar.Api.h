@@ -16,10 +16,31 @@ ALTERNET_UI_API AuiToolBar* AuiToolBar_Create_()
         });
 }
 
+ALTERNET_UI_API int64_t AuiToolBar_GetCreateStyle_(AuiToolBar* obj)
+{
+    return MarshalExceptions<int64_t>([&](){
+            return obj->GetCreateStyle();
+        });
+}
+
+ALTERNET_UI_API void AuiToolBar_SetCreateStyle_(AuiToolBar* obj, int64_t value)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetCreateStyle(value);
+        });
+}
+
 ALTERNET_UI_API int AuiToolBar_GetEventToolId_(AuiToolBar* obj)
 {
     return MarshalExceptions<int>([&](){
             return obj->GetEventToolId();
+        });
+}
+
+ALTERNET_UI_API void* AuiToolBar_CreateEx_(int64_t styles)
+{
+    return MarshalExceptions<void*>([&](){
+            return AuiToolBar::CreateEx(styles);
         });
 }
 

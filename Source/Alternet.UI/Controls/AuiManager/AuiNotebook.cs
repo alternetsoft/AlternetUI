@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,7 +17,7 @@ namespace Alternet.UI
         /// <summary>
         /// Occurs when a page is about to be closed.
         /// </summary>
-        public event EventHandler? PageClose;
+        public event CancelEventHandler? PageClose;
 
         /// <summary>
         /// Occurs when a page has been closed.
@@ -32,12 +33,12 @@ namespace Alternet.UI
         /// Occurs when the page selection is about to be changed.
         /// This event can be vetoed.
         /// </summary>
-        public event EventHandler? PageChanging;
+        public event CancelEventHandler? PageChanging;
 
         /// <summary>
-        /// Occurs when the window list button has been pressed.
+        /// Occurs when the page button has been pressed.
         /// </summary>
-        public event EventHandler? WindowListButton;
+        public event CancelEventHandler? PageButton;
 
         /// <summary>
         /// Occurs when dragging is about to begin.
@@ -91,6 +92,38 @@ namespace Alternet.UI
         /// </summary>
         public event EventHandler? BgDclickMouse;
 
+        /// <summary>
+        /// Defines default visual style for the newly created
+        /// <see cref="AuiNotebook"/> controls.
+        /// </summary>
+        public static AuiNotebookCreateStyle DefaultCreateStyle { get; set; }
+            = AuiNotebookCreateStyle.DefaultStyle;
+
+        /// <summary>
+        /// Defines visual style and behavior of the <see cref="AuiNotebook"/> control.
+        /// </summary>
+        /// <remarks>
+        /// When this property is changed, control is recreated.
+        /// </remarks>
+        public AuiNotebookCreateStyle CreateStyle
+        {
+            get
+            {
+                return (AuiNotebookCreateStyle)Handler.CreateStyle;
+            }
+
+            set
+            {
+                Handler.CreateStyle = (int)value;
+            }
+        }
+
+        /// <summary>
+        /// Gets index of the currently selected page passed in the event handlers.
+        /// </summary>
+        /// <remarks>
+        /// You can use it in the event handlers.
+        /// </remarks>
         public int EventSelection
         {
             get
@@ -99,6 +132,12 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets index of the previously selected page passed in some event handlers.
+        /// </summary>
+        /// <remarks>
+        /// You can use it in the event handlers.
+        /// </remarks>
         public int EventOldSelection
         {
             get
@@ -471,9 +510,11 @@ namespace Alternet.UI
             NativeControl.SetArtProvider(art);
         }
 
-        internal void RaisePageClose(EventArgs e)
+        internal void RaisePageClose(CancelEventArgs e)
         {
             OnPageClose(e);
+            if (e.Cancel)
+                return;
             PageClose?.Invoke(this, e);
         }
 
@@ -489,16 +530,20 @@ namespace Alternet.UI
             PageChanged?.Invoke(this, e);
         }
 
-        internal void RaisePageChanging(EventArgs e)
+        internal void RaisePageChanging(CancelEventArgs e)
         {
             OnPageChanging(e);
+            if (e.Cancel)
+                return;
             PageChanging?.Invoke(this, e);
         }
 
-        internal void RaiseWindowListButton(EventArgs e)
+        internal void RaisePageButton(CancelEventArgs e)
         {
-            OnWindowListButton(e);
-            WindowListButton?.Invoke(this, e);
+            OnPageButton(e);
+            if (e.Cancel)
+                return;
+            PageButton?.Invoke(this, e);
         }
 
         internal void RaiseBeginDrag(EventArgs e)
@@ -617,7 +662,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="e">An <see cref="EventArgs"/> that contains
         /// the event data.</param>
-        protected virtual void OnWindowListButton(EventArgs e)
+        protected virtual void OnPageButton(EventArgs e)
         {
         }
 

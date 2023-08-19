@@ -16,6 +16,10 @@ namespace NativeApi.Api
         public event EventHandler? OverflowClick;
         public event EventHandler? ToolRightClick;
 
+        public static IntPtr CreateEx(long styles) => throw new Exception();
+
+        public long CreateStyle { get; set; }
+
         public int EventToolId { get; }
         public void SetArtProvider(IntPtr art) {}
         public IntPtr GetArtProvider() => throw new Exception();

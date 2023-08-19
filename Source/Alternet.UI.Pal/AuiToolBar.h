@@ -13,10 +13,12 @@ namespace Alternet::UI
 #include "Api/AuiToolBar.inc"
     public:
         wxAuiToolBar* GetToolbar();
+        AuiToolBar(long styles);
         wxWindow* CreateWxWindowCore(wxWindow* parent) override;
         int _eventToolId = 0;
 
     private:
+        long _createStyle = wxAUI_TB_DEFAULT_STYLE;
         void FromEventData(wxAuiToolBarEvent& event);
         void OnToolDropDown(wxAuiToolBarEvent& event);
         void OnBeginDrag(wxAuiToolBarEvent& event);

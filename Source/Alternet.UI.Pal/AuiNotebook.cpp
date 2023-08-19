@@ -20,6 +20,16 @@ namespace Alternet::UI
 
 	}
 
+    AuiNotebook::AuiNotebook(long styles)
+    {
+        _createStyle = styles;
+    }
+
+    /*static*/ void* AuiNotebook::CreateEx(int64_t styles)
+    {
+        return new AuiNotebook(styles);
+    }
+
 	AuiNotebook::~AuiNotebook()
 	{
         if (IsWxWindowCreated())
@@ -36,7 +46,7 @@ namespace Alternet::UI
                 window->Unbind(wxEVT_AUINOTEBOOK_PAGE_CHANGING,
                     &AuiNotebook::OnPageChanging, this);
                 window->Unbind(wxEVT_AUINOTEBOOK_BUTTON,
-                    &AuiNotebook::OnWindowListButton, this);
+                    &AuiNotebook::OnPageButton, this);
                 window->Unbind(wxEVT_AUINOTEBOOK_BEGIN_DRAG,
                     &AuiNotebook::OnBeginDrag, this);
                 window->Unbind(wxEVT_AUINOTEBOOK_END_DRAG,
@@ -80,8 +90,9 @@ namespace Alternet::UI
     void AuiNotebook::OnPageClose(wxAuiNotebookEvent& event)
     {
         FromEventData(event);
-        RaiseEvent(AuiNotebookEvent::PageClose);
-        event.Skip();
+        bool c = RaiseEvent(AuiNotebookEvent::PageClose);
+        if (!c)
+            event.Skip();
     }
 
     void AuiNotebook::OnPageClosed(wxAuiNotebookEvent& event)
@@ -102,15 +113,17 @@ namespace Alternet::UI
     void AuiNotebook::OnPageChanging(wxAuiNotebookEvent& event)
     {
         FromEventData(event);
-        RaiseEvent(AuiNotebookEvent::PageChanging);
-        event.Skip();
+        bool c = RaiseEvent(AuiNotebookEvent::PageChanging);
+        if (!c)
+            event.Skip();
     }
 
-    void AuiNotebook::OnWindowListButton(wxAuiNotebookEvent& event)
+    void AuiNotebook::OnPageButton(wxAuiNotebookEvent& event)
     {
         FromEventData(event);
-        RaiseEvent(AuiNotebookEvent::WindowListButton);
-        event.Skip();
+        bool c = RaiseEvent(AuiNotebookEvent::PageButton);
+        if (!c)
+            event.Skip();
     }
 
     void AuiNotebook::OnBeginDrag(wxAuiNotebookEvent& event)
@@ -183,9 +196,22 @@ namespace Alternet::UI
         event.Skip();
     }
 
+    int64_t AuiNotebook::GetCreateStyle()
+    {
+        return _createStyle;
+    }
+
+    void AuiNotebook::SetCreateStyle(int64_t value)
+    {
+        if (_createStyle == value)
+            return;
+        _createStyle = value;
+        RecreateWxWindowIfNeeded();
+    }
+
     wxWindow* AuiNotebook::CreateWxWindowCore(wxWindow* parent)
     {
-        long style = wxAUI_NB_DEFAULT_STYLE;
+        long style = _createStyle;
 
         auto window = new wxAuiNotebook2(parent,
             wxID_ANY,
@@ -202,7 +228,7 @@ namespace Alternet::UI
         window->Bind(wxEVT_AUINOTEBOOK_PAGE_CHANGING,
             &AuiNotebook::OnPageChanging, this);
         window->Bind(wxEVT_AUINOTEBOOK_BUTTON,
-            &AuiNotebook::OnWindowListButton, this);
+            &AuiNotebook::OnPageButton, this);
         window->Bind(wxEVT_AUINOTEBOOK_BEGIN_DRAG,
             &AuiNotebook::OnBeginDrag, this);
         window->Bind(wxEVT_AUINOTEBOOK_END_DRAG,

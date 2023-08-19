@@ -10,7 +10,7 @@ namespace Alternet.UI
     /// Defines all <see cref="AuiNotebook"/> options.
     /// </summary>
     [Flags]
-    public enum AuiNotebookOption
+    public enum AuiNotebookCreateStyle
     {
         /// <summary>
         /// With this style, tabs are drawn along the top of the notebook.

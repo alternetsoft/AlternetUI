@@ -12,6 +12,19 @@ namespace Alternet.UI
         {
         }
 
+        public long CreateStyle
+        {
+            get
+            {
+                return NativeControl.CreateStyle;
+            }
+
+            set
+            {
+                NativeControl.CreateStyle = value;
+            }
+        }
+
         public override IEnumerable<Control> AllChildrenIncludedInLayout
             => Enumerable.Empty<Control>();
 
@@ -24,7 +37,7 @@ namespace Alternet.UI
 
         internal override Native.Control CreateNativeControl()
         {
-            return new Native.AuiToolBar();
+            return new NativeAuiToolBar(AuiToolbar.DefaultCreateStyle);
         }
 
         protected override void OnDetach()
@@ -71,6 +84,15 @@ namespace Alternet.UI
         private void NativeControl_ToolDropDown(object? sender, EventArgs e)
         {
             Control.RaiseToolDropDown(e);
+        }
+
+        public class NativeAuiToolBar : Native.AuiToolBar
+        {
+            public NativeAuiToolBar(AuiToolbarCreateStyle style)
+                : base()
+            {
+                SetNativePointer(NativeApi.AuiToolBar_CreateEx_((int)style));
+            }
         }
     }
 }

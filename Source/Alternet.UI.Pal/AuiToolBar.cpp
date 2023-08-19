@@ -20,9 +20,32 @@ namespace Alternet::UI
 
 	}
 
+    AuiToolBar::AuiToolBar(long styles)
+    {
+        _createStyle = styles;
+    }
+
+    /*static*/ void* AuiToolBar::CreateEx(int64_t styles)
+    {
+        return new AuiToolBar(styles);
+    }
+
+    int64_t AuiToolBar::GetCreateStyle()
+    {
+        return _createStyle;
+    }
+
+    void AuiToolBar::SetCreateStyle(int64_t value)
+    {
+        if (_createStyle == value)
+            return;
+        _createStyle = value;
+        RecreateWxWindowIfNeeded();
+    }
+
     wxWindow* AuiToolBar::CreateWxWindowCore(wxWindow* parent)
     {
-        long style = wxAUI_TB_DEFAULT_STYLE;
+        long style = _createStyle;
 
         auto toolbar = new wxAuiToolBar2(parent,
             wxID_ANY,

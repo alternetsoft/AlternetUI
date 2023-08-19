@@ -24,6 +24,23 @@ namespace Alternet.UI.Native
         {
         }
         
+        public long CreateStyle
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.AuiToolBar_GetCreateStyle_(NativePointer);
+                var m = n;
+                return m;
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.AuiToolBar_SetCreateStyle_(NativePointer, value);
+            }
+        }
+        
         public int EventToolId
         {
             get
@@ -34,6 +51,13 @@ namespace Alternet.UI.Native
                 return m;
             }
             
+        }
+        
+        public static System.IntPtr CreateEx(long styles)
+        {
+            var n = NativeApi.AuiToolBar_CreateEx_(styles);
+            var m = n;
+            return m;
         }
         
         public void SetArtProvider(System.IntPtr art)
@@ -547,7 +571,16 @@ namespace Alternet.UI.Native
             public static extern IntPtr AuiToolBar_Create_();
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern long AuiToolBar_GetCreateStyle_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void AuiToolBar_SetCreateStyle_(IntPtr obj, long value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern int AuiToolBar_GetEventToolId_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr AuiToolBar_CreateEx_(long styles);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void AuiToolBar_SetArtProvider_(IntPtr obj, System.IntPtr art);

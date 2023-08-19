@@ -6,6 +6,11 @@ int GetEventSelection();
 
 int GetEventOldSelection();
 
+
+int64_t GetCreateStyle();
+void SetCreateStyle(int64_t value);
+
+static void* CreateEx(int64_t styles);
 void SetArtProvider(void* art);
 void* GetArtProvider();
 void SetUniformBitmapSize(int width, int height);
@@ -41,7 +46,7 @@ enum class AuiNotebookEvent
     PageClosed,
     PageChanged,
     PageChanging,
-    WindowListButton,
+    PageButton,
     BeginDrag,
     EndDrag,
     DragMotion,

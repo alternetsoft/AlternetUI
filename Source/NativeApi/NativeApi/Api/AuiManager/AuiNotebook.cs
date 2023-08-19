@@ -12,6 +12,8 @@ namespace NativeApi.Api
         public int EventSelection { get; }
         public int EventOldSelection { get; }
 
+        public static IntPtr CreateEx(long styles) => throw new Exception();
+
         public void SetArtProvider(IntPtr art) => throw new Exception();
         public IntPtr GetArtProvider() => throw new Exception();
 
@@ -68,20 +70,39 @@ namespace NativeApi.Api
 
         public bool DeleteAllPages() => throw new Exception();
 
+        public long CreateStyle { get; set; }
+
+        [NativeEvent(cancellable: true)]
         public event EventHandler? PageClose;
+        
         public event EventHandler? PageClosed;
+        
         public event EventHandler? PageChanged;
+
+        [NativeEvent(cancellable: true)]
         public event EventHandler? PageChanging;
-        public event EventHandler? WindowListButton;
+
+        [NativeEvent(cancellable: true)]
+        public event EventHandler? PageButton;
+
         public event EventHandler? BeginDrag;
+        
         public event EventHandler? EndDrag;
+        
         public event EventHandler? DragMotion;
+
         public event EventHandler? AllowTabDrop;
+        
         public event EventHandler? DragDone;
+        
         public event EventHandler? TabMiddleMouseDown;
+        
         public event EventHandler? TabMiddleMouseUp;
+        
         public event EventHandler? TabRightMouseDown;
+        
         public event EventHandler? TabRightMouseUp;
+        
         public event EventHandler? BgDclickMouse;
     }
 }

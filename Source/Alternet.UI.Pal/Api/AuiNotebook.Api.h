@@ -31,6 +31,27 @@ ALTERNET_UI_API int AuiNotebook_GetEventOldSelection_(AuiNotebook* obj)
         });
 }
 
+ALTERNET_UI_API int64_t AuiNotebook_GetCreateStyle_(AuiNotebook* obj)
+{
+    return MarshalExceptions<int64_t>([&](){
+            return obj->GetCreateStyle();
+        });
+}
+
+ALTERNET_UI_API void AuiNotebook_SetCreateStyle_(AuiNotebook* obj, int64_t value)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetCreateStyle(value);
+        });
+}
+
+ALTERNET_UI_API void* AuiNotebook_CreateEx_(int64_t styles)
+{
+    return MarshalExceptions<void*>([&](){
+            return AuiNotebook::CreateEx(styles);
+        });
+}
+
 ALTERNET_UI_API void AuiNotebook_SetArtProvider_(AuiNotebook* obj, void* art)
 {
     MarshalExceptions<void>([&](){

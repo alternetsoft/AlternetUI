@@ -6,7 +6,7 @@ namespace Alternet.UI
     /// Defines the appearance of a <see cref="AuiToolbar"/>.
     /// </summary>
     [Flags]
-    public enum AuiToolBarStyle
+    public enum AuiToolbarCreateStyle
     {
         /// <summary>
         /// Shows the text in the toolbar buttons; by default only icons are shown.

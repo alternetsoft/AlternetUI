@@ -14,13 +14,14 @@ namespace Alternet::UI
     public:
         wxAuiNotebook* GetNotebook();
         wxWindow* CreateWxWindowCore(wxWindow* parent) override;
+        AuiNotebook(long styles);
 
         void FromEventData(wxAuiNotebookEvent& event);
         void OnPageClose(wxAuiNotebookEvent& event);
         void OnPageClosed(wxAuiNotebookEvent& event);
         void OnPageChanged(wxAuiNotebookEvent& event);
         void OnPageChanging(wxAuiNotebookEvent& event);
-        void OnWindowListButton(wxAuiNotebookEvent& event);
+        void OnPageButton(wxAuiNotebookEvent& event);
         void OnBeginDrag(wxAuiNotebookEvent& event);
         void OnEndDrag(wxAuiNotebookEvent& event);
         void OnDragMotion(wxAuiNotebookEvent& event);
@@ -34,5 +35,6 @@ namespace Alternet::UI
     private:
         int _eventSelection = 0;
         int _eventOldSelection = 0;
+        long _createStyle = wxAUI_NB_DEFAULT_STYLE;
     };
 }
