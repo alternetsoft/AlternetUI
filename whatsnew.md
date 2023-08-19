@@ -1,3 +1,8 @@
+# 0.9.400 (2023 September ?)
+
+- Added AuiManager, AuiToolbar, AuiNotebook controls.
+- Added AuiManager sample.
+
 # 0.9.300 (2023 August 9)
 
 - Added LinkLabel, SplitterPanel, LayoutPanel controls.
