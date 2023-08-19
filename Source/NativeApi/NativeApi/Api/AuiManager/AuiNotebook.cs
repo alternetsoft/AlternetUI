@@ -9,6 +9,9 @@ namespace NativeApi.Api
     // https://docs.wxwidgets.org/3.2/classwx_aui_notebook.html
     public class AuiNotebook : Control
 	{
+        public int EventSelection { get; }
+        public int EventOldSelection { get; }
+
         public void SetArtProvider(IntPtr art) => throw new Exception();
         public IntPtr GetArtProvider() => throw new Exception();
 

@@ -17,6 +17,20 @@ ALTERNET_UI_API AuiNotebook* AuiNotebook_Create_()
         });
 }
 
+ALTERNET_UI_API int AuiNotebook_GetEventSelection_(AuiNotebook* obj)
+{
+    return MarshalExceptions<int>([&](){
+            return obj->GetEventSelection();
+        });
+}
+
+ALTERNET_UI_API int AuiNotebook_GetEventOldSelection_(AuiNotebook* obj)
+{
+    return MarshalExceptions<int>([&](){
+            return obj->GetEventOldSelection();
+        });
+}
+
 ALTERNET_UI_API void AuiNotebook_SetArtProvider_(AuiNotebook* obj, void* art)
 {
     MarshalExceptions<void>([&](){

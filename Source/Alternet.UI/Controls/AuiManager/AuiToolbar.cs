@@ -18,6 +18,7 @@ namespace Alternet.UI
         public const int DefaultSpacerWidth = 5;
 
         private int idCounter = 0;
+        private readonly Dictionary<int, ToolData> toolData = new();
 
         /// <summary>
         /// Occurs when the tool is clicked.
@@ -572,6 +573,30 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Registers event handler which is called when tool is clicked.
+        /// </summary>
+        /// <param name="toolId">ID of a previously added tool.</param>
+        /// <param name="ev">Event handler.</param>
+        public void AddToolOnClick(int toolId, EventHandler ev)
+        {
+            var toolData = GetToolData(toolId, true);
+            toolData!.Click += ev;
+        }
+
+        /// <summary>
+        /// Unregisters event handler which was called when tool is clicked.
+        /// </summary>
+        /// <param name="toolId">ID of a previously added tool.</param>
+        /// <param name="ev">Event handler.</param>
+        public void RemoveToolOnClick(int toolId, EventHandler ev)
+        {
+            var toolData = GetToolData(toolId, false);
+            if (toolData == null)
+                return;
+            toolData.Click -= ev;
+        }
+
+        /// <summary>
         /// Sets the short help for the given tool.
         /// </summary>
         /// <param name="toolId">ID of a previously added tool.</param>
@@ -689,6 +714,10 @@ namespace Alternet.UI
         {
             OnToolDropDown(e);
             ToolDropDown?.Invoke(this, e);
+            var toolData = GetToolData(EventToolId, false);
+            if (toolData == null)
+                return;
+            toolData.OnClick(this, e);
         }
 
         internal void RaiseToolMiddleClick(EventArgs e)
@@ -709,6 +738,21 @@ namespace Alternet.UI
         internal IntPtr GetArtProvider()
         {
             return NativeControl.GetArtProvider();
+        }
+
+        internal ToolData? GetToolData(int toolId, bool add)
+        {
+            if (toolData.TryGetValue(toolId, out ToolData? tool))
+                return tool;
+
+            if (add)
+            {
+                tool = new();
+                toolData.Add(toolId, tool);
+                return tool;
+            }
+
+            return null;
         }
 
         /// <summary>
@@ -768,5 +812,15 @@ namespace Alternet.UI
             idCounter++;
             return result;
         }
-    }
+
+        internal class ToolData
+        {
+            public event EventHandler? Click;
+
+            public void OnClick(object? sender, EventArgs ev)
+            {
+                Click?.Invoke(sender, ev);
+            }
+        }
+   }
 }

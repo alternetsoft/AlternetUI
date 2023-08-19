@@ -32,6 +32,7 @@ namespace Alternet::UI
         void OnTabRightMouseUp(wxAuiNotebookEvent& event);
         void OnBgDclickMouse(wxAuiNotebookEvent& event);
     private:
-    
+        int _eventSelection = 0;
+        int _eventOldSelection = 0;
     };
 }

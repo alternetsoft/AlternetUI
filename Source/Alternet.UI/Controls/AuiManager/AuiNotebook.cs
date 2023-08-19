@@ -91,6 +91,22 @@ namespace Alternet.UI
         /// </summary>
         public event EventHandler? BgDclickMouse;
 
+        public int EventSelection
+        {
+            get
+            {
+                return NativeControl.EventSelection;
+            }
+        }
+
+        public int EventOldSelection
+        {
+            get
+            {
+                return NativeControl.EventOldSelection;
+            }
+        }
+
         /// <inheritdoc/>
         public override ControlId ControlKind => ControlId.AuiNotebook;
 

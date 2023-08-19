@@ -7,7 +7,7 @@ namespace AuiManagerSample
 {
     public partial class MainWindow : Window
     {
-        private const string ResPrefix = 
+        private const string ResPrefix =
             "embres:AuiManagerSample.Resources.Icons.Small.";
         private const string ResPrefixCalendar = $"{ResPrefix}Calendar16.png";
         private const string ResPrefixPhoto = $"{ResPrefix}Photo16.png";
@@ -22,6 +22,7 @@ namespace AuiManagerSample
         private readonly LayoutPanel panel = new();
         private readonly ListBox listBox3;
         private readonly AuiToolbar toolbar4 = new();
+        private readonly AuiNotebook notebook5;
 
         private readonly int calendarToolId;
         private readonly int photoToolId;
@@ -71,7 +72,7 @@ namespace AuiManagerSample
             listBox2.Add("TopDockable(false)");
             listBox2.Add("BottomDockable(false)");
             manager.AddPane(listBox2, pane2);
-           
+
             var pane3 = manager.CreatePaneInfo();
             pane3.Name("pane3").Caption("Pane 3").Bottom()
                 .LeftDockable(false).RightDockable(false);
@@ -79,14 +80,14 @@ namespace AuiManagerSample
             listBox3.Add("LeftDockable(false)");
             listBox3.Add("RightDockable(false)");
             manager.AddPane(listBox3, pane3);
-            
+
             // Toolbar pane
             var pane4 = manager.CreatePaneInfo();
             pane4.Name("pane4").Caption("Pane 4").Top().ToolbarPane();
 
             calendarToolId = toolbar4.AddTool(
-                "Calendar", 
-                ImageCalendar, 
+                "Calendar",
+                ImageCalendar,
                 "Calendar Hint");
 
             toolbar4.AddSeparator();
@@ -131,6 +132,10 @@ namespace AuiManagerSample
             toolbar4.Realize();
 
             toolbar4.ToolDropDown += ToolButton_Click;
+            toolbar4.BeginDrag += Toolbar4_BeginDrag;
+            toolbar4.ToolMiddleClick += Toolbar4_ToolMiddleClick;
+            toolbar4.OverflowClick += Toolbar4_OverflowClick;
+            toolbar4.ToolRightClick += Toolbar4_ToolRightClick;
 
             AuiToolbarItemKind kind = toolbar4.GetToolKind(pencilToolId);
 
@@ -140,7 +145,7 @@ namespace AuiManagerSample
             // Notenook pane
             var pane5 = manager.CreatePaneInfo();
             pane5.Name("pane5").CenterPane().PaneBorder(false);
-            var notebook5 = new AuiNotebook();
+            notebook5 = new AuiNotebook();
             var listBox5 = CreateListBox("ListBox 5");
             var listBox6 = CreateListBox("ListBox 6");
 
@@ -150,8 +155,47 @@ namespace AuiManagerSample
             panel.Children.Add(notebook5);
             manager.AddPane(notebook5, pane5);
 
-
             manager.Update();
+
+            toolbar4.AddToolOnClick(calendarToolId, CalendarButton_Click);
+            toolbar4.AddToolOnClick(photoToolId, PhotoButton_Click);
+            toolbar4.AddToolOnClick(pencilToolId, PencilButton_Click);
+            toolbar4.AddToolOnClick(graphToolId, GraphButton_Click);
+
+            notebook5.PageClose += NotebookPageClose;
+            notebook5.PageClosed += NotebookPageClosed;
+            notebook5.PageChanged += NotebookPageChanged;
+            notebook5.PageChanging += NotebookPageChanging;
+            notebook5.WindowListButton += NotebookWindowListButton;
+            notebook5.BeginDrag += NotebookBeginDrag;
+            notebook5.EndDrag += NotebookEndDrag;
+            notebook5.AllowTabDrop += NotebookAllowTabDrop;
+            notebook5.DragDone += NotebookDragDone;
+            notebook5.TabMiddleMouseDown += NotebookTabMiddleMouseDown;
+            notebook5.TabMiddleMouseUp += NotebookTabMiddleMouseUp;
+            notebook5.TabRightMouseDown += NotebookTabRightMouseDown;
+            notebook5.TabRightMouseUp += NotebookTabRightMouseUp;
+            notebook5.BgDclickMouse += NotebookBgDclickMouse;
+        }
+
+        private void Toolbar4_ToolRightClick(object sender, EventArgs e)
+        {
+            Log($"Toolbar: ToolRightClick {toolbar4.EventToolId}");
+        }
+
+        private void Toolbar4_OverflowClick(object sender, EventArgs e)
+        {
+            Log($"Toolbar: OverflowClick");
+        }
+
+        private void Toolbar4_ToolMiddleClick(object sender, EventArgs e)
+        {
+            Log($"Toolbar: ToolMiddleClick {toolbar4.EventToolId}");
+        }
+
+        private void Toolbar4_BeginDrag(object sender, EventArgs e)
+        {
+            Log($"Toolbar: BeginDrag");
         }
 
         private void Log(string s)
@@ -160,33 +204,104 @@ namespace AuiManagerSample
             listBox3.SelectLastItem();
         }
 
+        private void CalendarButton_Click(object? sender, EventArgs e)
+        {
+            Log("Calendar clicked");
+        }
+
+        private void PhotoButton_Click(object? sender, EventArgs e)
+        {
+            Log("Photo clicked");
+        }
+
+        private void PencilButton_Click(object? sender, EventArgs e)
+        {
+            Log("Pencil clicked");
+        }
+
+        private void GraphButton_Click(object? sender, EventArgs e)
+        {
+            Log("Graph clicked");
+        }
+
         private void ToolButton_Click(object? sender, EventArgs e)
         {
-            var id = toolbar4.EventToolId;
+        }
 
-            if(id == calendarToolId)
-            {
-                Log("Calendar clicked");
-                return;
-            }
-            
-            if (id == photoToolId) 
-            {
-                Log("Photo clicked");
-                return;
-            }
-            
-            if (id == pencilToolId) 
-            {
-                Log("Pencil clicked");
-                return;
-            }
+        private void NotebookPageClose(object? sender, EventArgs e)
+        {
+            LogNotebook("PageClose");
+        }
 
-            if (id == graphToolId) 
-            {
-                Log("Graph clicked");
-                return;
-            }
+        private void NotebookPageClosed(object? sender, EventArgs e)
+        {
+            LogNotebook("PageClosed");
+        }
+
+        private void NotebookPageChanged(object? sender, EventArgs e)
+        {
+            LogNotebook("PageChanged");
+        }
+
+        private void NotebookPageChanging(object? sender, EventArgs e)
+        {
+            LogNotebook("PageChanging");
+        }
+
+        private void NotebookWindowListButton(object? sender, EventArgs e)
+        {
+            LogNotebook("WindowListButton");
+        }
+
+        private void NotebookBeginDrag(object? sender, EventArgs e)
+        {
+            LogNotebook("BeginDrag");
+        }
+
+        private void NotebookEndDrag(object? sender, EventArgs e)
+        {
+            LogNotebook("EndDrag");
+        }
+
+        private void NotebookAllowTabDrop(object? sender, EventArgs e)
+        {
+            LogNotebook("AllowTabDrop");
+        }
+
+        private void NotebookDragDone(object? sender, EventArgs e)
+        {
+            LogNotebook("DragDone");
+        }
+
+        private void NotebookTabMiddleMouseDown(object? sender, EventArgs e)
+        {
+            LogNotebook("TabMiddleMouseDown");
+        }
+
+        private void NotebookTabMiddleMouseUp(object? sender, EventArgs e)
+        {
+            LogNotebook("TabMiddleMouseUp");
+        }
+
+        private void NotebookTabRightMouseDown(object? sender, EventArgs e)
+        {
+            LogNotebook("TabRightMouseDown");
+        }
+
+        private void NotebookTabRightMouseUp(object? sender, EventArgs e)
+        {
+            LogNotebook($"TabRightMouseUp");
+        }
+
+        private void NotebookBgDclickMouse(object? sender, EventArgs e)
+        {
+            LogNotebook("BgDclickMouse");
+        }
+
+        private void LogNotebook(string s)
+        {
+            Log($"Notebook: {s}, Sel {notebook5.EventSelection}," +
+                $" OldSel {notebook5.EventOldSelection}");
         }
     }
 }

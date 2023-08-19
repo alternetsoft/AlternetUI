@@ -61,10 +61,20 @@ namespace Alternet::UI
         }
     }
 
+    int AuiNotebook::GetEventSelection()
+    {
+        return _eventSelection;
+    }
+
+    int AuiNotebook::GetEventOldSelection()
+    {
+        return _eventOldSelection;
+    }
+
     void AuiNotebook::FromEventData(wxAuiNotebookEvent& event)
     {
-        int _eventSelection = event.GetSelection();
-        int _eventOldSelection = event.GetOldSelection();
+        _eventSelection = event.GetSelection();
+        _eventOldSelection = event.GetOldSelection();
     }
 
     void AuiNotebook::OnPageClose(wxAuiNotebookEvent& event)

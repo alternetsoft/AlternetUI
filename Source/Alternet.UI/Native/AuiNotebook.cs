@@ -24,6 +24,30 @@ namespace Alternet.UI.Native
         {
         }
         
+        public int EventSelection
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.AuiNotebook_GetEventSelection_(NativePointer);
+                var m = n;
+                return m;
+            }
+            
+        }
+        
+        public int EventOldSelection
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.AuiNotebook_GetEventOldSelection_(NativePointer);
+                var m = n;
+                return m;
+            }
+            
+        }
+        
         public void SetArtProvider(System.IntPtr art)
         {
             CheckDisposed();
@@ -367,6 +391,12 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern IntPtr AuiNotebook_Create_();
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int AuiNotebook_GetEventSelection_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int AuiNotebook_GetEventOldSelection_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void AuiNotebook_SetArtProvider_(IntPtr obj, System.IntPtr art);
