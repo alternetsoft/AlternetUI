@@ -284,6 +284,20 @@ ALTERNET_UI_API void Control_SendSizeEvent_(Control* obj)
         });
 }
 
+ALTERNET_UI_API void Control_SendMouseDownEvent_(Control* obj, int x, int y)
+{
+    MarshalExceptions<void>([&](){
+            obj->SendMouseDownEvent(x, y);
+        });
+}
+
+ALTERNET_UI_API void Control_SendMouseUpEvent_(Control* obj, int x, int y)
+{
+    MarshalExceptions<void>([&](){
+            obj->SendMouseUpEvent(x, y);
+        });
+}
+
 ALTERNET_UI_API void* Control_GetContainingSizer_(Control* obj)
 {
     return MarshalExceptions<void*>([&](){
@@ -344,6 +358,13 @@ ALTERNET_UI_API int Control_GetScrollBarMaximum_(Control* obj, ScrollBarOrientat
 {
     return MarshalExceptions<int>([&](){
             return obj->GetScrollBarMaximum(orientation);
+        });
+}
+
+ALTERNET_UI_API void Control_NotifyCaptureLost_()
+{
+    MarshalExceptions<void>([&](){
+            Control::NotifyCaptureLost();
         });
 }
 

@@ -8,6 +8,8 @@ namespace NativeApi.Api
 {
     public abstract class Control
     {
+        public static void NotifyCaptureLost() { }
+
         public void ShowPopupMenu(IntPtr menu, int x, int y) { }
         public void BeginIgnoreRecreate() {}
         public void EndIgnoreRecreate() {}
@@ -122,6 +124,9 @@ namespace NativeApi.Api
         public void SaveScreenshot(string fileName) => throw new Exception();
 
         public void SendSizeEvent() => throw new Exception();
+
+        public void SendMouseDownEvent(int x, int y) => throw new Exception();
+        public void SendMouseUpEvent(int x, int y) => throw new Exception();
 
         public bool IsScrollable { get; set; }
 

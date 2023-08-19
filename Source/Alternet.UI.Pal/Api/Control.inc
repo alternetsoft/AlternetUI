@@ -85,6 +85,8 @@ void SetIsScrollable(bool value);
 
 void SaveScreenshot(const string& fileName);
 void SendSizeEvent();
+void SendMouseDownEvent(int x, int y);
+void SendMouseUpEvent(int x, int y);
 void* GetContainingSizer();
 void* GetSizer();
 void SetSizer(void* sizer, bool deleteOld);
@@ -94,6 +96,7 @@ bool IsScrollBarVisible(ScrollBarOrientation orientation);
 int GetScrollBarValue(ScrollBarOrientation orientation);
 int GetScrollBarLargeChange(ScrollBarOrientation orientation);
 int GetScrollBarMaximum(ScrollBarOrientation orientation);
+static void NotifyCaptureLost();
 void ShowPopupMenu(void* menu, int x, int y);
 void BeginIgnoreRecreate();
 void EndIgnoreRecreate();

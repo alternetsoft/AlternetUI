@@ -591,6 +591,27 @@ namespace Alternet::UI
         }
     }
 
+    void Control::SendMouseDownEvent(int x, int y) 
+    {
+        auto window = GetWxWindow();
+        wxMouseEvent ev = wxMouseEvent(wxEVT_LEFT_DOWN);
+        ev.SetX(x);ev.SetY(y);
+        window->GetEventHandler()->AddPendingEvent(ev);
+    }
+
+    void Control::SendMouseUpEvent(int x, int y)
+    {
+        auto window = GetWxWindow();
+        wxMouseEvent ev = wxMouseEvent(wxEVT_LEFT_UP);
+        ev.SetX(x);ev.SetY(y);
+        window->GetEventHandler()->AddPendingEvent(ev);
+    }
+
+    void Control::NotifyCaptureLost()
+    {
+        wxWindowBaseUnprotected::NotifyCaptureLost();
+    }
+
     bool Control::GetIsMouseCaptured()
     {
         return GetWxWindow()->HasCapture();

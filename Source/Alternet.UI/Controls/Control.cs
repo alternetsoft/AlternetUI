@@ -1536,6 +1536,21 @@ namespace Alternet.UI
 
         internal void RaiseDragLeave(EventArgs e) => OnDragLeave(e);
 
+        internal static void NotifyCaptureLost()
+        {
+            Native.Control.NotifyCaptureLost();
+        }
+
+        internal void SendMouseDownEvent(int x, int y)
+        {
+            Handler?.NativeControl?.SendMouseDownEvent(x, y);
+        }
+
+        internal void SendMouseUpEvent(int x, int y)
+        {
+            Handler?.NativeControl?.SendMouseUpEvent(x, y);
+        }
+
         /// <summary>
         /// Ensures that the control <see cref="Handler"/> is created,
         /// creating and attaching it if necessary.

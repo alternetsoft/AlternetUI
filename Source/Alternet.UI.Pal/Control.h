@@ -9,6 +9,16 @@
 
 namespace Alternet::UI
 {
+    class wxWindowBaseUnprotected: public wxWindowBase
+    {
+    public:
+        static void NotifyCaptureLost() 
+        {
+            wxWindowBase::NotifyCaptureLost();
+        }
+    };
+
+
     class wxDummyPanel : public wxPanel 
     {
     public:        
