@@ -1,5 +1,6 @@
-using Alternet.Base.Collections;
+using System;
 using System.Collections.Generic;
+using Alternet.Base.Collections;
 
 namespace Alternet.UI
 {
@@ -16,6 +17,8 @@ namespace Alternet.UI
             Items.ItemInserted += Items_ItemInserted;
             Items.ItemRemoved += Items_ItemRemoved;
         }
+
+        internal IntPtr MenuHandle => (Handler.NativeControl as Native.Menu)!.MenuHandle;
 
         internal override bool IsDummy => true;
 

@@ -23,6 +23,18 @@ namespace Alternet.UI.Native
         {
         }
         
+        public System.IntPtr MenuHandle
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.Menu_GetMenuHandle_(NativePointer);
+                var m = n;
+                return m;
+            }
+            
+        }
+        
         public int ItemsCount
         {
             get
@@ -61,6 +73,9 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern IntPtr Menu_Create_();
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr Menu_GetMenuHandle_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern int Menu_GetItemsCount_(IntPtr obj);

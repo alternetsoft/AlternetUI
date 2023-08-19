@@ -17,6 +17,11 @@ namespace Alternet::UI
         _menu = nullptr;
     }
 
+    void* Menu::GetMenuHandle()
+    {
+        return _menu;
+    }
+
     void Menu::CreateWxMenu()
     {
         _menu = new wxMenu();

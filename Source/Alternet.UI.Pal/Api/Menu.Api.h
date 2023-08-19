@@ -17,6 +17,13 @@ ALTERNET_UI_API Menu* Menu_Create_()
         });
 }
 
+ALTERNET_UI_API void* Menu_GetMenuHandle_(Menu* obj)
+{
+    return MarshalExceptions<void*>([&](){
+            return obj->GetMenuHandle();
+        });
+}
+
 ALTERNET_UI_API int Menu_GetItemsCount_(Menu* obj)
 {
     return MarshalExceptions<int>([&](){
