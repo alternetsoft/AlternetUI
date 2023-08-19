@@ -399,7 +399,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Defines visual style of the <see cref="SplitterPanel"/> controls.
+        /// Defines visual style and behavior of the <see cref="SplitterPanel"/> control.
         /// </summary>
         /// <remarks>
         /// When this property is changed, control is recreated.
