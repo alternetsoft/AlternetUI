@@ -41,7 +41,9 @@ namespace AuiManagerSample
                 AuiNotebookCreateStyle.ScrollButtons |
                 AuiNotebookCreateStyle.WindowListButton |
                 AuiNotebookCreateStyle.CloseOnAllTabs;
-            AuiToolbar.DefaultCreateStyle = AuiToolbarCreateStyle.DefaultStyle;
+            AuiToolbar.DefaultCreateStyle = 
+                //AuiToolbarCreateStyle.PlainBackground |
+                AuiToolbarCreateStyle.DefaultStyle;
         }
 
         private ListBox CreateListBox(string paneName, Control? parent = null)
@@ -65,26 +67,30 @@ namespace AuiManagerSample
 
             Children.Add(panel);
 
+            manager.SetFlags(AuiManagerOption.Default | AuiManagerOption.AllowActivePane);
             manager.SetManagedWindow(panel);
 
+            // Left Pane
             var pane1 = manager.CreatePaneInfo();
-            pane1.Name("pane1").Caption("Pane 1").Left()
+            pane1.Name("pane1").Caption("Pane 1").Left().PaneBorder(false)
                 .TopDockable(false).BottomDockable(false);
             var listBox1 = CreateListBox("Pane 1");
             listBox1.Add("TopDockable(false)");
             listBox1.Add("BottomDockable(false)");
             manager.AddPane(listBox1, pane1);
 
+            // Right Pane
             var pane2 = manager.CreatePaneInfo();
-            pane2.Name("pane2").Caption("Pane 2").Right()
+            pane2.Name("pane2").Caption("Pane 2").Right().PaneBorder(false)
                 .TopDockable(false).BottomDockable(false);
             var listBox2 = CreateListBox("Pane 2");
             listBox2.Add("TopDockable(false)");
             listBox2.Add("BottomDockable(false)");
             manager.AddPane(listBox2, pane2);
 
+            // Bottom Pane    
             var pane3 = manager.CreatePaneInfo();
-            pane3.Name("pane3").Caption("Pane 3").Bottom()
+            pane3.Name("pane3").Caption("Pane 3").Bottom().PaneBorder(false)
                 .LeftDockable(false).RightDockable(false);
             listBox3 = CreateListBox("Pane 3");
             listBox3.Add("LeftDockable(false)");
@@ -93,7 +99,7 @@ namespace AuiManagerSample
 
             // Toolbar pane
             var pane4 = manager.CreatePaneInfo();
-            pane4.Name("pane4").Caption("Pane 4").Top().ToolbarPane();
+            pane4.Name("pane4").Caption("Pane 4").Top().ToolbarPane().PaneBorder(false);
 
             calendarToolId = toolbar4.AddTool(
                 "Calendar",
