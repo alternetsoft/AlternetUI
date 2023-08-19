@@ -1,4 +1,4 @@
-namespace Alternet.UI
+﻿namespace Alternet.UI
 {
     internal abstract class NativeControlHandler<TControl, TNativeControl> : ControlHandler
         where TControl : Control
