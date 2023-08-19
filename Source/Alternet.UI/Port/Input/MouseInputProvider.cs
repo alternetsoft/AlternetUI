@@ -11,7 +11,7 @@ namespace Alternet.UI
         public MouseInputProvider(Native.Mouse nativeMouse)
         {
             this.nativeMouse = nativeMouse;
-            nativeMouse.MouseMove += NativeMouse_MouseMove;
+            //nativeMouse.MouseMove += NativeMouse_MouseMove;
             
             nativeMouse.MouseDown += NativeMouse_MouseDown;
             nativeMouse.MouseUp += NativeMouse_MouseUp;
@@ -92,7 +92,7 @@ namespace Alternet.UI
             {
                 if (disposing)
                 {
-                    nativeMouse.MouseMove -= NativeMouse_MouseMove;
+                    //nativeMouse.MouseMove -= NativeMouse_MouseMove;
                     
                     nativeMouse.MouseDown -= NativeMouse_MouseDown;
                     nativeMouse.MouseUp -= NativeMouse_MouseUp;
