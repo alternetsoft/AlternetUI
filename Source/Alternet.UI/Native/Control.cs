@@ -450,6 +450,12 @@ namespace Alternet.UI.Native
             return m;
         }
         
+        public void ShowPopupMenu(System.IntPtr menu, int x, int y)
+        {
+            CheckDisposed();
+            NativeApi.Control_ShowPopupMenu_(NativePointer, menu, x, y);
+        }
+        
         public void BeginIgnoreRecreate()
         {
             CheckDisposed();
@@ -911,6 +917,9 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern int Control_GetScrollBarMaximum_(IntPtr obj, ScrollBarOrientation orientation);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Control_ShowPopupMenu_(IntPtr obj, System.IntPtr menu, int x, int y);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Control_BeginIgnoreRecreate_(IntPtr obj);

@@ -480,6 +480,25 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets the parent window of the control).
+        /// </summary>
+        public Window? ParentWindow
+        {
+            get
+            {
+                var result = Parent;
+                while (true)
+                {
+                    if (result == null)
+                        return null;
+                    if (result is Window)
+                        return (Window?)result;
+                    result = result.Parent;
+                }
+            }
+        }
+
+        /// <summary>
         /// Gets or sets the suggested size of the control.
         /// </summary>
         /// <value>The suggested size of the control, in device-independent
@@ -1334,6 +1353,11 @@ namespace Alternet.UI
         public void SaveScreenshot(string fileName)
         {
             Handler?.SaveScreenshot(fileName);
+        }
+
+        public void ShowPopupMenu(Menu menu, int x, int y)
+        {
+            Handler.ShowPopupMenu(menu, x, y);
         }
 
         /// <summary>

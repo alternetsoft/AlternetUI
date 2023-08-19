@@ -33,6 +33,11 @@ namespace Alternet::UI
     {
     }
 
+    void Control::ShowPopupMenu(void* menu, int x, int y)
+    {
+        GetWxWindow()->PopupMenu((wxMenu*)menu, x, y);
+    }
+
     Control::~Control()
     {
         DestroyDropTarget();

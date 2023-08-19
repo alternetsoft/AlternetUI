@@ -347,6 +347,13 @@ ALTERNET_UI_API int Control_GetScrollBarMaximum_(Control* obj, ScrollBarOrientat
         });
 }
 
+ALTERNET_UI_API void Control_ShowPopupMenu_(Control* obj, void* menu, int x, int y)
+{
+    MarshalExceptions<void>([&](){
+            obj->ShowPopupMenu(menu, x, y);
+        });
+}
+
 ALTERNET_UI_API void Control_BeginIgnoreRecreate_(Control* obj)
 {
     MarshalExceptions<void>([&](){

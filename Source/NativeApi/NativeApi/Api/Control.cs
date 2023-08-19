@@ -8,6 +8,7 @@ namespace NativeApi.Api
 {
     public abstract class Control
     {
+        public void ShowPopupMenu(IntPtr menu, int x, int y) { }
         public void BeginIgnoreRecreate() {}
         public void EndIgnoreRecreate() {}
         public Size GetDPI() => throw new Exception();

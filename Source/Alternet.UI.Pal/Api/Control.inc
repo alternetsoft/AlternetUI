@@ -94,6 +94,7 @@ bool IsScrollBarVisible(ScrollBarOrientation orientation);
 int GetScrollBarValue(ScrollBarOrientation orientation);
 int GetScrollBarLargeChange(ScrollBarOrientation orientation);
 int GetScrollBarMaximum(ScrollBarOrientation orientation);
+void ShowPopupMenu(void* menu, int x, int y);
 void BeginIgnoreRecreate();
 void EndIgnoreRecreate();
 Size GetDPI();

@@ -681,6 +681,11 @@ namespace Alternet.UI
             }
         }
 
+        internal void ShowPopupMenu(Menu menu, int x, int y)
+        {
+            NativeControl!.ShowPopupMenu(menu.MenuHandle, x, y);
+        }
+
         internal DrawingContext CreateDrawingContext()
         {
             var nativeControl = NativeControl;
