@@ -131,7 +131,6 @@ namespace Alternet::UI
 
     void AuiToolBar::OnToolbarCommand(wxCommandEvent& event)
     {
-        event.Skip();
         RaiseEvent(AuiToolBarEvent::ToolCommand);
     }
 
@@ -171,10 +170,10 @@ namespace Alternet::UI
     void AuiToolBar::OnToolDropDown(wxAuiToolBarEvent& event)
     {
         FromEventData(event);
-        event.Skip();
         RaiseEvent(AuiToolBarEvent::ToolDropDown);
-        wxCommandEvent ev = wxCommandEvent(wxEVT_TOOL);
-        GetToolbar()->GetEventHandler()->AddPendingEvent(ev);
+        wxCommandEvent* ev = new wxCommandEvent(wxEVT_TOOL);
+        GetToolbar()->GetEventHandler()->QueueEvent(ev);
+        event.Skip();
     }
 
     void AuiToolBar::OnBeginDrag(wxAuiToolBarEvent& event)

@@ -27,6 +27,7 @@ namespace AuiManagerSample
         private readonly ListBox listBox5;
         private readonly ListBox listBox6;
         private readonly ContextMenu contextMenu = new();
+        private readonly ContextMenu contextMenu2 = new();
 
         private readonly int calendarToolId;
         private readonly int photoToolId;
@@ -64,6 +65,7 @@ namespace AuiManagerSample
         {
             Icon = ImageSet.FromUrlOrNull("embres:AuiManagerSample.Sample.ico");
             InitContextMenu();
+            InitLogContextMenu();
 
             InitializeComponent();
 
@@ -149,7 +151,8 @@ namespace AuiManagerSample
 
             toolbar4.Realize();
 
-            toolbar4.ToolDropDown += ToolButton_Click;
+            toolbar4.ToolCommand += Toolbar4_ToolCommand;
+            toolbar4.ToolDropDown += ToolDropDown_Click;
             toolbar4.BeginDrag += Toolbar4_BeginDrag;
             toolbar4.ToolMiddleClick += Toolbar4_ToolMiddleClick;
             toolbar4.OverflowClick += Toolbar4_OverflowClick;
@@ -200,6 +203,18 @@ namespace AuiManagerSample
             toolbar4.SetToolDropDownOnEvent(graphToolId, AuiToolbarItemDropDownOnEvent.ClickArrow);
             toolbar4.SetToolDropDownMenu(photoToolId, contextMenu);
             toolbar4.SetToolDropDownMenu(graphToolId, contextMenu);
+
+            listBox3.MouseRightButtonUp += Log_MouseRightButtonUp;
+        }
+
+        private void Log_MouseRightButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            contextMenu2.Show(listBox3, e.GetPosition(listBox3));
+        }
+
+        private void Toolbar4_ToolCommand(object sender, EventArgs e)
+        {
+            Log("ToolCommand");
         }
 
         private void Toolbar4_ToolRightClick(object? sender, EventArgs e)
@@ -243,8 +258,9 @@ namespace AuiManagerSample
             Log("Pencil clicked");
         }
 
-        private void ToolButton_Click(object? sender, EventArgs e)
+        private void ToolDropDown_Click(object? sender, EventArgs e)
         {
+            Log("ToolDropDown");
         }
 
         private void NotebookPageClose(object? sender, CancelEventArgs e)
@@ -350,6 +366,17 @@ namespace AuiManagerSample
 
             contextMenu.Items.Add(menuItem1);
             contextMenu.Items.Add(menuItem2);
+        }
+
+        private void InitLogContextMenu()
+        {
+            MenuItem menuItem1 = new()
+            {
+                Text = "Clear",
+            };
+            menuItem1.Click += (sender, e) => { listBox3.Items.Clear(); };
+
+            contextMenu2.Items.Add(menuItem1);
         }
     }
 }

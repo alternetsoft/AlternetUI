@@ -27,6 +27,13 @@ namespace Alternet.UI
         public event EventHandler? ToolDropDown;
 
         /// <summary>
+        /// Occurs when the tool is clicked, after <see cref="ToolDropDown"/>.
+        /// </summary>
+        /// <remarks>It is better to process commands here than in
+        /// <see cref="ToolDropDown"/> event handler.</remarks>
+        public event EventHandler? ToolCommand;
+
+        /// <summary>
         /// Occurs when the user begins toolbar dragging by the mouse.
         /// </summary>
         public event EventHandler? BeginDrag;
@@ -591,21 +598,6 @@ namespace Alternet.UI
             NativeControl.SetToolSticky(toolId, sticky);
         }
 
-        internal void DoOnCaptureLost()
-        {
-            NativeControl.DoOnCaptureLost();
-        }
-
-        internal void DoOnLeftUp(int x, int y)
-        {
-            NativeControl.DoOnLeftUp(x, y);
-        }
-        
-        internal void DoOnLeftDown(int x, int y)
-        {
-            NativeControl.DoOnLeftDown(x, y);
-        }
-
         /// <summary>
         /// Shows context menu under the toolbar item.
         /// </summary>
@@ -623,29 +615,15 @@ namespace Alternet.UI
                 Window? window = ParentWindow;
                 if (window == null)
                     return;
-                //Control.NotifyCaptureLost();
-                //window.CaptureMouse();
-                //window.ReleaseMouseCapture();
 
                 SetToolSticky(toolId, true);
-                //window.SendMouseDownEvent(100, 0);
-                //window.SendMouseUpEvent(100, 0);
-                //Application.Current.ProcessPendingEvents();
 
                 Rect toolRect = GetToolRect(toolId);
                 Point pt = ClientToScreen(toolRect.BottomLeft);
                 pt = window.ScreenToClient(pt);
 
                 window.ShowPopupMenu(contextMenu, (int)pt.X, (int)pt.Y);
-                //Control.NotifyCaptureLost();
-                //window.CaptureMouse();
-                //window.ReleaseMouseCapture();
-                //window.SendMouseDownEvent(100, 0);
-                //window.SendMouseUpEvent(100, 0);
-                //DoOnLeftUp(0, 0);
-                //Control.NotifyCaptureLost();
                 DoOnCaptureLost();
-
                 SetToolSticky(toolId, false);
             }
             finally
@@ -890,6 +868,8 @@ namespace Alternet.UI
 
         internal void RaiseToolCommand(EventArgs e)
         {
+            OnToolCommand(e);
+            ToolCommand?.Invoke(this, e);
             ProcessToolClick();
         }
 
@@ -963,12 +943,36 @@ namespace Alternet.UI
             return null;
         }
 
+        internal void DoOnCaptureLost()
+        {
+            NativeControl.DoOnCaptureLost();
+        }
+
+        internal void DoOnLeftUp(int x, int y)
+        {
+            NativeControl.DoOnLeftUp(x, y);
+        }
+
+        internal void DoOnLeftDown(int x, int y)
+        {
+            NativeControl.DoOnLeftDown(x, y);
+        }
+
         /// <summary>
         /// Called when the tool is clicked.
         /// </summary>
         /// <param name="e">An <see cref="EventArgs"/> that contains
         /// the event data.</param>
         protected virtual void OnToolDropDown(EventArgs e)
+        {
+        }
+
+        /// <summary>
+        /// Called when the tool is clicked, after <see cref="OnToolDropDown"/>.
+        /// </summary>
+        /// <param name="e">An <see cref="EventArgs"/> that contains
+        /// the event data.</param>
+        protected virtual void OnToolCommand(EventArgs e)
         {
         }
 
