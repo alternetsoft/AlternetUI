@@ -47,7 +47,7 @@ namespace Alternet.UI
         private ImageSet? image = null;
         private ImageSet? disabledImage = null;
         private bool @checked;
-        bool preCommandEnabledValue = true;
+        private bool preCommandEnabledValue = true;
 
         /// <summary>
         /// Initializes a new instance of the <see cref='ToolbarItem'/> class.

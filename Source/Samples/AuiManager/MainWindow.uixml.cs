@@ -26,6 +26,7 @@ namespace AuiManagerSample
         private readonly AuiNotebook notebook5;
         private readonly ListBox listBox5;
         private readonly ListBox listBox6;
+        private readonly ContextMenu contextMenu = new();
 
         private readonly int calendarToolId;
         private readonly int photoToolId;
@@ -62,6 +63,7 @@ namespace AuiManagerSample
         public MainWindow()
         {
             Icon = ImageSet.FromUrlOrNull("embres:AuiManagerSample.Sample.ico");
+            InitContextMenu();
 
             InitializeComponent();
 
@@ -193,6 +195,11 @@ namespace AuiManagerSample
             notebook5.TabRightMouseDown += NotebookTabRightMouseDown;
             notebook5.TabRightMouseUp += NotebookTabRightMouseUp;
             notebook5.BgDclickMouse += NotebookBgDclickMouse;
+
+            toolbar4.SetToolDropDownOnEvent(photoToolId, AuiToolbarItemDropDownOnEvent.Click);
+            toolbar4.SetToolDropDownOnEvent(graphToolId, AuiToolbarItemDropDownOnEvent.ClickArrow);
+            toolbar4.SetToolDropDownMenu(photoToolId, contextMenu);
+            toolbar4.SetToolDropDownMenu(graphToolId, contextMenu);
         }
 
         private void Toolbar4_ToolRightClick(object? sender, EventArgs e)
@@ -236,12 +243,6 @@ namespace AuiManagerSample
             Log("Pencil clicked");
         }
 
-        private void GraphButton_Click(object? sender, EventArgs e)
-        {
-            var isDropDownClicked = toolbar4.EventIsDropDownClicked;
-            Log($"Graph clicked, DropDownPart = {isDropDownClicked}");
-        }
-
         private void ToolButton_Click(object? sender, EventArgs e)
         {
         }
@@ -249,8 +250,6 @@ namespace AuiManagerSample
         private void NotebookPageClose(object? sender, CancelEventArgs e)
         {
             LogNotebook("PageClose");
-            //if (false)
-            //    e.Cancel = true;
         }
 
         private void NotebookPageClosed(object? sender, EventArgs e)
@@ -325,6 +324,30 @@ namespace AuiManagerSample
         {
             Log($"Notebook: {s}, Sel {notebook5.EventSelection}," +
                 $" OldSel {notebook5.EventOldSelection}");
+        }
+
+        private void GraphButton_Click(object? sender, EventArgs e)
+        {
+            var isDropDownClicked = toolbar4.EventIsDropDownClicked;
+            Log($"Graph clicked, DropDownPart = {isDropDownClicked}");
+        }
+
+        private void InitContextMenu()
+        {
+            MenuItem menuItem1 = new()
+            {
+                Text = "_Open...",
+                Shortcut = "Ctrl+O",
+            };
+
+            MenuItem menuItem2 = new()
+            {
+                Text = "_Save...",
+                Shortcut = "Ctrl+S",
+            };
+
+            contextMenu.Items.Add(menuItem1);
+            contextMenu.Items.Add(menuItem2);
         }
     }
 }

@@ -17,8 +17,8 @@ namespace Alternet.UI
         /// </summary>
         public const int DefaultSpacerWidth = 5;
 
-        private int idCounter = 0;
         private readonly Dictionary<int, ToolData> toolData = new();
+        private int idCounter = 0;
 
         /// <summary>
         /// Occurs when the tool is clicked.
@@ -591,6 +591,28 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Shows context menu under the toolbar item.
+        /// </summary>
+        /// <param name="toolId">ID of a previously added tool.</param>
+        /// <param name="contextMenu">Context menu.</param>
+        public void ShowDropDownMenu(int toolId, ContextMenu contextMenu)
+        {
+            Window? window = ParentWindow;
+            if (window == null)
+                return;
+
+            SetToolSticky(toolId, true);
+
+            Rect toolRect = GetToolRect(toolId);
+            Point pt = ClientToScreen(toolRect.BottomLeft);
+            pt = window.ScreenToClient(pt);
+
+            window.ShowPopupMenu(contextMenu, (int)pt.X, (int)pt.Y);
+
+            SetToolSticky(toolId, false);
+        }
+
+        /// <summary>
         /// Gets the specified toolbar item Sticky property value.
         /// </summary>
         /// <param name="toolId">ID of a previously added tool.</param>
@@ -649,6 +671,52 @@ namespace Alternet.UI
         {
             var toolData = GetToolData(toolId, true);
             toolData!.Click += ev;
+        }
+
+        /// <summary>
+        /// Sets a menu used as this toolbar item drop-down.
+        /// </summary>
+        /// <param name="toolId">ID of a previously added tool.</param>
+        /// <param name="menu">Drop down menu.</param>
+        public void SetToolDropDownMenu(int toolId, ContextMenu menu)
+        {
+            var toolData = GetToolData(toolId, true);
+            toolData!.DropDownMenu = menu;
+        }
+
+        /// <summary>
+        /// Gets a menu used as this toolbar item drop-down.
+        /// </summary>
+        /// <param name="toolId">ID of a previously added tool.</param>
+        public ContextMenu? GetToolDropDownMenu(int toolId)
+        {
+            var toolData = GetToolData(toolId, false);
+            if (toolData == null)
+                return null;
+            return toolData.DropDownMenu;
+        }
+
+        /// <summary>
+        /// Sets when a drop down menu associated with the toolbar item is shown.
+        /// </summary>
+        /// <param name="toolId">ID of a previously added tool.</param>
+        /// <param name="onEvent">Type of event which shows a drop down menu.</param>
+        public void SetToolDropDownOnEvent(int toolId, AuiToolbarItemDropDownOnEvent onEvent)
+        {
+            var toolData = GetToolData(toolId, true);
+            toolData!.DropDownOnEvent = onEvent;
+        }
+
+        /// <summary>
+        /// Gets type of the event which shows a drop down menu associated with the toolbar item.
+        /// </summary>
+        /// <param name="toolId">ID of a previously added tool.</param>
+        public AuiToolbarItemDropDownOnEvent GetToolDropDownOnEvent(int toolId)
+        {
+            var toolData = GetToolData(toolId, false);
+            if (toolData == null)
+                return AuiToolbarItemDropDownOnEvent.None;
+            return toolData.DropDownOnEvent;
         }
 
         /// <summary>
@@ -786,6 +854,27 @@ namespace Alternet.UI
             if (toolData == null)
                 return;
             toolData.OnClick(this, e);
+
+            AuiToolbarItemDropDownOnEvent dropDownOnEvent = toolData.DropDownOnEvent;
+
+            if (dropDownOnEvent == AuiToolbarItemDropDownOnEvent.None)
+                return;
+
+            ContextMenu? menu = toolData.DropDownMenu;
+            if (menu == null)
+                return;
+
+            var show = false;
+
+            if (dropDownOnEvent == AuiToolbarItemDropDownOnEvent.Click && !EventIsDropDownClicked)
+                show = true;
+            if (dropDownOnEvent == AuiToolbarItemDropDownOnEvent.ClickArrow &&
+                EventIsDropDownClicked)
+                show = true;
+
+            if (!show)
+                return;
+            ShowDropDownMenu(EventToolId, menu);
         }
 
         internal void RaiseToolMiddleClick(EventArgs e)
@@ -885,10 +974,14 @@ namespace Alternet.UI
         {
             public event EventHandler? Click;
 
+            public ContextMenu? DropDownMenu { get; set; }
+
+            public AuiToolbarItemDropDownOnEvent DropDownOnEvent { get; set; }
+
             public void OnClick(object? sender, EventArgs ev)
             {
                 Click?.Invoke(sender, ev);
             }
         }
-   }
+    }
 }

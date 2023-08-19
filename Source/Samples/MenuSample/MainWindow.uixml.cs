@@ -12,7 +12,7 @@ namespace MenuSample
         Toolbar? toolbar;
         ToolbarItem? dynamicToolbarItemsSeparator;
         ToolbarItem? checkableToolbarItem;
-        private bool IsDebugBackground = false;
+        private readonly bool IsDebugBackground = false;
 
         public MainWindow()
         {
@@ -114,7 +114,7 @@ namespace MenuSample
             vertToolbar2.Margin = new(0, 0, 5, 0);
         }*/
 
-        private void SetDebugBackground(Control control)
+        internal void SetDebugBackground(Control control)
         {
             if (!IsDebugBackground)
                 return;
