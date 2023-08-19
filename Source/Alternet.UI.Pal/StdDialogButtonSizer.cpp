@@ -2,4 +2,11 @@
 
 namespace Alternet::UI
 {
+	StdDialogButtonSizer::StdDialogButtonSizer()
+	{
+	}
+
+	StdDialogButtonSizer::~StdDialogButtonSizer()
+	{
+	}
 }

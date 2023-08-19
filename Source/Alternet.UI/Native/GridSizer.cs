@@ -8,14 +8,15 @@ using System.ComponentModel;
 using System.Security;
 namespace Alternet.UI.Native
 {
-    internal abstract class GridSizer : Sizer
+    internal class GridSizer : Sizer
     {
         static GridSizer()
         {
         }
         
-        protected GridSizer()
+        public GridSizer()
         {
+            SetNativePointer(NativeApi.GridSizer_Create_());
         }
         
         public GridSizer(IntPtr nativePointer) : base(nativePointer)
@@ -27,6 +28,9 @@ namespace Alternet.UI.Native
         public class NativeApi : NativeApiProvider
         {
             static NativeApi() => Initialize();
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern IntPtr GridSizer_Create_();
             
         }
     }

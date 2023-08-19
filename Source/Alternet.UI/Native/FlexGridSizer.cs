@@ -8,14 +8,15 @@ using System.ComponentModel;
 using System.Security;
 namespace Alternet.UI.Native
 {
-    internal abstract class FlexGridSizer : GridSizer
+    internal class FlexGridSizer : GridSizer
     {
         static FlexGridSizer()
         {
         }
         
-        protected FlexGridSizer()
+        public FlexGridSizer()
         {
+            SetNativePointer(NativeApi.FlexGridSizer_Create_());
         }
         
         public FlexGridSizer(IntPtr nativePointer) : base(nativePointer)
@@ -27,6 +28,9 @@ namespace Alternet.UI.Native
         public class NativeApi : NativeApiProvider
         {
             static NativeApi() => Initialize();
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern IntPtr FlexGridSizer_Create_();
             
         }
     }

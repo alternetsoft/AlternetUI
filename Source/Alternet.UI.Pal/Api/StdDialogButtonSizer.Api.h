@@ -2,9 +2,16 @@
 
 #pragma once
 
-
+#include "StdDialogButtonSizer.h"
 #include "ApiUtils.h"
 #include "Exceptions.h"
 
 using namespace Alternet::UI;
+
+ALTERNET_UI_API StdDialogButtonSizer* StdDialogButtonSizer_Create_()
+{
+    return MarshalExceptions<StdDialogButtonSizer*>([&](){
+            return new StdDialogButtonSizer();
+        });
+}
 

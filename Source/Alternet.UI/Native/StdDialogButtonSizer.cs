@@ -8,14 +8,15 @@ using System.ComponentModel;
 using System.Security;
 namespace Alternet.UI.Native
 {
-    internal abstract class StdDialogButtonSizer : BoxSizer
+    internal class StdDialogButtonSizer : BoxSizer
     {
         static StdDialogButtonSizer()
         {
         }
         
-        protected StdDialogButtonSizer()
+        public StdDialogButtonSizer()
         {
+            SetNativePointer(NativeApi.StdDialogButtonSizer_Create_());
         }
         
         public StdDialogButtonSizer(IntPtr nativePointer) : base(nativePointer)
@@ -27,6 +28,9 @@ namespace Alternet.UI.Native
         public class NativeApi : NativeApiProvider
         {
             static NativeApi() => Initialize();
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern IntPtr StdDialogButtonSizer_Create_();
             
         }
     }

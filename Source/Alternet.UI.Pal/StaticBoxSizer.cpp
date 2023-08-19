@@ -2,4 +2,11 @@
 
 namespace Alternet::UI
 {
+	StaticBoxSizer::StaticBoxSizer()
+	{
+	}
+
+	StaticBoxSizer::~StaticBoxSizer()
+	{
+	}
 }

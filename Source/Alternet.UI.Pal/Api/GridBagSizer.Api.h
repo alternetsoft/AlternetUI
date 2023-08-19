@@ -2,9 +2,16 @@
 
 #pragma once
 
-
+#include "GridBagSizer.h"
 #include "ApiUtils.h"
 #include "Exceptions.h"
 
 using namespace Alternet::UI;
+
+ALTERNET_UI_API GridBagSizer* GridBagSizer_Create_()
+{
+    return MarshalExceptions<GridBagSizer*>([&](){
+            return new GridBagSizer();
+        });
+}
 

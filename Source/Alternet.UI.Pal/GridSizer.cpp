@@ -2,4 +2,11 @@
 
 namespace Alternet::UI
 {
+	GridSizer::GridSizer()
+	{
+	}
+
+	GridSizer::~GridSizer()
+	{
+	}
 }

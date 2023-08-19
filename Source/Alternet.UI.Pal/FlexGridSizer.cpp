@@ -2,4 +2,11 @@
 
 namespace Alternet::UI
 {
+	FlexGridSizer::FlexGridSizer()
+	{
+	}
+
+	FlexGridSizer::~FlexGridSizer()
+	{
+	}
 }
