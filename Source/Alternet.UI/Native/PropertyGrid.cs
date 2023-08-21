@@ -23,6 +23,30 @@ namespace Alternet.UI.Native
         {
         }
         
+        public long CreateStyle
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.PropertyGrid_GetCreateStyle_(NativePointer);
+                var m = n;
+                return m;
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.PropertyGrid_SetCreateStyle_(NativePointer, value);
+            }
+        }
+        
+        public static System.IntPtr CreateEx(long styles)
+        {
+            var n = NativeApi.PropertyGrid_CreateEx_(styles);
+            var m = n;
+            return m;
+        }
+        
         
         [SuppressUnmanagedCodeSecurity]
         public class NativeApi : NativeApiProvider
@@ -31,6 +55,15 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern IntPtr PropertyGrid_Create_();
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern long PropertyGrid_GetCreateStyle_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void PropertyGrid_SetCreateStyle_(IntPtr obj, long value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr PropertyGrid_CreateEx_(long styles);
             
         }
     }

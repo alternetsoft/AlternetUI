@@ -11,8 +11,13 @@ namespace NativeApi.Api
 	//https://docs.wxwidgets.org/3.2/classwx_property_grid.html
 	public class PropertyGrid : Control
 	{
-/*
 
-*/
-    	}
+        public static IntPtr CreateEx(long styles) => throw new Exception();
+
+        public long CreateStyle { get; set; }
+
+        /*
+
+        */
+    }
 }

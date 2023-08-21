@@ -15,3 +15,24 @@ ALTERNET_UI_API PropertyGrid* PropertyGrid_Create_()
         });
 }
 
+ALTERNET_UI_API int64_t PropertyGrid_GetCreateStyle_(PropertyGrid* obj)
+{
+    return MarshalExceptions<int64_t>([&](){
+            return obj->GetCreateStyle();
+        });
+}
+
+ALTERNET_UI_API void PropertyGrid_SetCreateStyle_(PropertyGrid* obj, int64_t value)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetCreateStyle(value);
+        });
+}
+
+ALTERNET_UI_API void* PropertyGrid_CreateEx_(int64_t styles)
+{
+    return MarshalExceptions<void*>([&](){
+            return PropertyGrid::CreateEx(styles);
+        });
+}
+
