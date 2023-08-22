@@ -36,3 +36,66 @@ ALTERNET_UI_API void* PropertyGrid_CreateEx_(int64_t styles)
         });
 }
 
+ALTERNET_UI_API void* PropertyGrid_CreateStringProperty_(PropertyGrid* obj, const char16_t* label, const char16_t* name, const char16_t* value)
+{
+    return MarshalExceptions<void*>([&](){
+            return obj->CreateStringProperty(label, name, value);
+        });
+}
+
+ALTERNET_UI_API void* PropertyGrid_CreateBoolProperty_(PropertyGrid* obj, const char16_t* label, const char16_t* name, c_bool value)
+{
+    return MarshalExceptions<void*>([&](){
+            return obj->CreateBoolProperty(label, name, value);
+        });
+}
+
+ALTERNET_UI_API void* PropertyGrid_CreateIntProperty_(PropertyGrid* obj, const char16_t* label, const char16_t* name, int64_t value)
+{
+    return MarshalExceptions<void*>([&](){
+            return obj->CreateIntProperty(label, name, value);
+        });
+}
+
+ALTERNET_UI_API void* PropertyGrid_CreateFloatProperty_(PropertyGrid* obj, const char16_t* label, const char16_t* name, double value)
+{
+    return MarshalExceptions<void*>([&](){
+            return obj->CreateFloatProperty(label, name, value);
+        });
+}
+
+ALTERNET_UI_API void* PropertyGrid_CreateUIntProperty_(PropertyGrid* obj, const char16_t* label, const char16_t* name, uint64_t value)
+{
+    return MarshalExceptions<void*>([&](){
+            return obj->CreateUIntProperty(label, name, value);
+        });
+}
+
+ALTERNET_UI_API void* PropertyGrid_CreateLongStringProperty_(PropertyGrid* obj, const char16_t* label, const char16_t* name, const char16_t* value)
+{
+    return MarshalExceptions<void*>([&](){
+            return obj->CreateLongStringProperty(label, name, value);
+        });
+}
+
+ALTERNET_UI_API void* PropertyGrid_CreateDateProperty_(PropertyGrid* obj, const char16_t* label, const char16_t* name, DateTime value)
+{
+    return MarshalExceptions<void*>([&](){
+            return obj->CreateDateProperty(label, name, value);
+        });
+}
+
+ALTERNET_UI_API void PropertyGrid_Clear_(PropertyGrid* obj)
+{
+    MarshalExceptions<void>([&](){
+            obj->Clear();
+        });
+}
+
+ALTERNET_UI_API void* PropertyGrid_Append_(PropertyGrid* obj, void* property)
+{
+    return MarshalExceptions<void*>([&](){
+            return obj->Append(property);
+        });
+}
+

@@ -72,4 +72,52 @@ namespace Alternet::UI
         }
     }
 
+    void* PropertyGrid::CreateStringProperty(const string& label, const string& name,
+        const string& value)
+    {
+        return new wxStringProperty(wxStr(label), wxStr(name), wxStr(value));
+    }
+
+    void* PropertyGrid::CreateBoolProperty(const string& label, const string& name, bool value)
+    {
+        return new wxBoolProperty(wxStr(label), wxStr(name), value);
+    }
+
+    void* PropertyGrid::CreateIntProperty(const string& label, const string& name, int64_t value)
+    {
+        return new wxIntProperty(wxStr(label), wxStr(name), (long)value);
+    }
+
+    void* PropertyGrid::CreateFloatProperty(const string& label, const string& name, double value)
+    {
+        return new wxFloatProperty(wxStr(label), wxStr(name), value);
+    }
+
+    void* PropertyGrid::CreateUIntProperty(const string& label, const string& name, uint64_t value)
+    {
+        return new wxUIntProperty(wxStr(label), wxStr(name), (unsigned long)value);
+    }
+
+    void* PropertyGrid::CreateLongStringProperty(const string& label, const string& name,
+        const string& value)
+    {
+        return new wxLongStringProperty(wxStr(label), wxStr(name), wxStr(value));
+    }
+
+    void* PropertyGrid::CreateDateProperty(const string& label, const string& name,
+        const DateTime& value)
+    {
+        return new wxDateProperty(wxStr(label), wxStr(name), value);
+    }
+
+    void PropertyGrid::Clear()
+    {
+        GetPropGrid()->Clear();
+    }
+
+    void* PropertyGrid::Append(void* property)
+    {
+        return GetPropGrid()->Append((wxPGProperty*)property);
+    }
+
 }

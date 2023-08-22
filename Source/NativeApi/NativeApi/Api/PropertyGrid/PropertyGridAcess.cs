@@ -11,23 +11,64 @@ namespace NativeApi.Api
     //https://docs.wxwidgets.org/3.2/classwx_property_grid.html
     public partial class PropertyGrid : Control
     {
+        public IntPtr CreateStringProperty(string label, string name, string value) =>
+            throw new Exception();
+
+        public IntPtr CreateBoolProperty(string label, string name, bool value = false) =>
+            throw new Exception();
+
+        /*public IntPtr CreateFlagsProperty(
+            string label,
+            string name,
+            string[] labels,
+            int[] values,
+            int value = 0) => throw new Exception();
+
+        public IntPtr CreateEnumProperty(
+            string label,
+            string name,
+            string[] labels,
+            int[] values,
+            int value = 0) => throw new Exception();*/
+
+        public IntPtr CreateIntProperty(string label, string name, long value = 0) =>
+            throw new Exception();
+
+        public IntPtr CreateFloatProperty(string label, string name, double value = 0.0) =>
+            throw new Exception();
+
+        public IntPtr CreateUIntProperty(string label, string name, ulong value = 0) =>
+            throw new Exception();
+
+        public IntPtr CreateLongStringProperty(string label, string name, string value) =>
+            throw new Exception();
+
+        public IntPtr CreateDateProperty(string label, string name, DateTime value) =>
+            throw new Exception();
+
+        public void Clear() => throw new Exception();
+
+        public IntPtr Append(IntPtr property) => throw new Exception();
 
         /*
-            wxPGProperty* Append( wxPGProperty* property );
+        public bool ClearSelection(bool validation = false) => throw new Exception();
 
+        public void ClearModifiedStatus() => throw new Exception();
+
+        public bool CollapseAll() => throw new Exception();
+
+        public bool EditorValidate() => throw new Exception();
+
+        public bool ExpandAll(bool expand = true) => throw new Exception();
+
+
+
+        ====
             wxPGProperty* AppendIn( wxPGPropArg id, wxPGProperty* newproperty );
 
             void BeginAddChildren( wxPGPropArg id );
 
-            virtual void Clear() = 0;
-
-            bool ClearSelection( bool validation = false );
-
-            void ClearModifiedStatus();
-
             bool Collapse( wxPGPropArg id );
-
-            bool CollapseAll() { return ExpandAll(false); }
 
             bool ChangePropertyValue( wxPGPropArg id, wxVariant newValue );
 
@@ -35,17 +76,13 @@ namespace NativeApi.Api
 
             wxPGProperty* RemoveProperty( wxPGPropArg id );
 
-            bool DisableProperty( wxPGPropArg id ) { return EnableProperty(id,false); }
-
-            bool EditorValidate();
+            bool DisableProperty( wxPGPropArg id )
 
             bool EnableProperty( wxPGPropArg id, bool enable = true );
 
             void EndAddChildren( wxPGPropArg id );
 
             bool Expand( wxPGPropArg id );
-
-            bool ExpandAll( bool expand = true );
 
             wxPGProperty* GetFirstChild( wxPGPropArg id )
 

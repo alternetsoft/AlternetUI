@@ -5,6 +5,9 @@
 #include "Object.h"
 #include "wx/propgrid/propgrid.h"
 #include "wx/propgrid/propgridiface.h"
+#include "wx/propgrid/props.h"
+#include "wx/propgrid/advprops.h"
+#include "wx/propgrid/property.h"
 
 namespace Alternet::UI
 {

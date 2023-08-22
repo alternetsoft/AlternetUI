@@ -5,6 +5,15 @@ int64_t GetCreateStyle();
 void SetCreateStyle(int64_t value);
 
 static void* CreateEx(int64_t styles);
+void* CreateStringProperty(const string& label, const string& name, const string& value);
+void* CreateBoolProperty(const string& label, const string& name, bool value);
+void* CreateIntProperty(const string& label, const string& name, int64_t value);
+void* CreateFloatProperty(const string& label, const string& name, double value);
+void* CreateUIntProperty(const string& label, const string& name, uint64_t value);
+void* CreateLongStringProperty(const string& label, const string& name, const string& value);
+void* CreateDateProperty(const string& label, const string& name, const DateTime& value);
+void Clear();
+void* Append(void* property);
 public:
 PropertyGrid();
 protected:
