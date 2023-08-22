@@ -16,6 +16,7 @@ namespace Alternet.UI
         MenuItem,
         CheckBox,
         RadioButton,
+        PropertyGrid,
         ColorPicker,
         DateTimePicker,
         Grid,

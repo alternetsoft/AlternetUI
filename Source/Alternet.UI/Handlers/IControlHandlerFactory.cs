@@ -145,6 +145,12 @@ namespace Alternet.UI
 
         /// <summary>
         /// Creates a <see cref="ControlHandler"/> for
+        /// <see cref="PropertyGrid"/> control.
+        /// </summary>
+        ControlHandler CreatePropertyGridHandler(Control control);
+
+        /// <summary>
+        /// Creates a <see cref="ControlHandler"/> for
         /// <see cref="AuiNotebook"/> control.
         /// </summary>
         ControlHandler CreateAuiNotebookHandler(Control control);

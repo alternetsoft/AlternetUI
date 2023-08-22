@@ -54,6 +54,10 @@ namespace Alternet.UI
             StockControlHandlerFactories.Native.CreateGroupBoxHandler(control);
 
         /// <inheritdoc/>
+        public ControlHandler CreatePropertyGridHandler(Control control) =>
+            StockControlHandlerFactories.Native.CreatePropertyGridHandler(control);
+
+        /// <inheritdoc/>
         public ControlHandler CreateProgressBarHandler(Control control) =>
             StockControlHandlerFactories.Native.CreateProgressBarHandler(control);
 

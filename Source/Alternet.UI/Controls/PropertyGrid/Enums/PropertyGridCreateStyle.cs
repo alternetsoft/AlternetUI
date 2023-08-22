@@ -92,5 +92,10 @@ namespace Alternet.UI
         /// property grid. Recommended if you use a header.
         /// </summary>
         InternalBorder = 0x00004000,
+
+        /// <summary>
+        /// Default style of the property grid.
+        /// </summary>
+        DefaultStyle = 0,
     }
 }
