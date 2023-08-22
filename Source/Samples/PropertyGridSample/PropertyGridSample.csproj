@@ -1,0 +1,30 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="..\CommonData\TargetFrameworks.props" />
+
+    <PropertyGroup>
+      <OutputType>WinExe</OutputType>
+      <Platforms>AnyCPU;x64;x86</Platforms>
+      <ApplicationManifest>app.manifest</ApplicationManifest>
+      <LangVersion>latest</LangVersion>
+      <Nullable>enable</Nullable>
+      <ApplicationIcon>../CommonData/Sample.ico</ApplicationIcon>
+    </PropertyGroup>
+
+	<ItemGroup>
+      <Compile Remove="build\**" />
+      <Compile Remove="Resources\**" />
+      <EmbeddedResource Remove="build\**" />
+      <EmbeddedResource Remove="Resources\**" />
+      <None Remove="build\**" />
+      <None Remove="Resources\**" />
+      <UIXml Remove="Resources\**" />
+    </ItemGroup>
+
+    <ItemGroup Condition="$(DefineConstants.Contains(';NETFRAMEWORK'))">
+        <Reference Include="Microsoft.CSharp" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\..\Alternet.UI\Alternet.UI.csproj" />
+    </ItemGroup>
+</Project>

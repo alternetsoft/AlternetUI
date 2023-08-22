@@ -1,0 +1,12 @@
+<Window x:Class="PropertyGridSample.MainWindow"
+        xmlns="http://schemas.alternetsoft.com/ui/2021"
+        xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
+        xmlns:local="clr-namespace:PropertyGridSample;assembly=PropertyGridSample"
+        Title="Alternet UI PropertyGrid Sample"
+        Width="900" Height="700" StartLocation="CenterScreen">
+  <Window.StatusBar>
+    <StatusBar Name="statusBar">
+      <StatusBarPanel Text="Ready" />
+    </StatusBar>
+  </Window.StatusBar>
+</Window>
