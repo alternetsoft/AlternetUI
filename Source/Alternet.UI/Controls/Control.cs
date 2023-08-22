@@ -1355,7 +1355,24 @@ namespace Alternet.UI
             Handler?.SaveScreenshot(fileName);
         }
 
-        public void ShowPopupMenu(Menu menu, int x, int y)
+        /// <summary>
+        /// Pops up the given menu at the specified coordinates, relative to this window,
+        /// and returns control when the user has dismissed the menu.
+        /// </summary>
+        /// <remarks>
+        /// If a menu item is selected, the corresponding menu event is generated and will
+        /// be processed as usual. If coordinates are not specified (-1,-1), the current
+        /// mouse cursor position is used.
+        /// </remarks>
+        /// <remarks>
+        /// It is recommended to not explicitly specify coordinates when calling PopupMenu
+        /// in response to mouse click, because some of the ports(namely, on Linux)
+        /// can do a better job of positioning the menu in that case.
+        /// </remarks>
+        /// <param name="menu">The menu to pop up.</param>
+        /// <param name="x">The X position where the menu will appear.</param>
+        /// <param name="y">The Y position where the menu will appear.</param>
+        public void ShowPopupMenu(Menu menu, int x = -1, int y = -1)
         {
             Handler.ShowPopupMenu(menu, x, y);
         }
