@@ -1,6 +1,8 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
+using System.Reflection;
 using Alternet.Drawing;
 using Alternet.UI;
 
@@ -41,7 +43,7 @@ namespace PropertyGridSample
 
             Children.Add(panel);
 
-            manager.SetFlags(AuiManagerOption.Default | AuiManagerOption.AllowActivePane);
+            manager.SetFlags(AuiManagerOption.Default);
             manager.SetManagedWindow(panel);
 
             // Left Pane
@@ -76,6 +78,23 @@ namespace PropertyGridSample
             manager.Update();
 
             logListBox.MouseRightButtonUp += Log_MouseRightButtonUp;
+            controlsListBox.SelectionChanged += ControlsListBox_SelectionChanged;
+
+            IEnumerable<Type> result = GetTypeDescendants(typeof(Control));
+            foreach(Type type in result)
+            {
+                ControlListBoxItem item = new(type);
+                controlsListBox.Add(item);
+            }
+        }
+
+        private void ControlsListBox_SelectionChanged(object? sender, EventArgs e)
+        {
+            propertiesListBox.Items.Clear();
+            var item = controlsListBox.SelectedItem;
+            if (item == null)
+                return;
+            propertiesListBox.Add(item.ToString()!);
         }
 
         private void Log_MouseRightButtonUp(object sender, MouseButtonEventArgs e)
@@ -98,6 +117,79 @@ namespace PropertyGridSample
             menuItem1.Click += (sender, e) => { logListBox.Items.Clear(); };
 
             contextMenu2.Items.Add(menuItem1);
+        }
+
+        public bool TypeIsDescendant(Type type, Type checkType)
+        {
+            do
+            {
+                if (type == null)
+                    return false;
+
+                var baseType = type.BaseType;
+
+                if (baseType == checkType)
+                    return true;
+
+                if (type.IsInterface)
+                    if (baseType == null)
+                        return false;
+
+                if (type.IsClass)
+                    if (baseType == typeof(object))
+                        return false;
+
+                type = baseType!;
+
+            } while (true);
+        }
+
+        public IEnumerable<Type> GetTypeDescendants(Type type)
+        {
+            List<Type> result = new();
+
+            Assembly asm = type.Assembly;
+
+            var definedTypes = asm.DefinedTypes;
+
+            foreach(TypeInfo typeInfo in definedTypes)
+            {
+                var resultType = typeInfo.AsType();
+                if (TypeIsDescendant(resultType, type))
+                    result.Add(resultType);
+            }
+
+            return result;
+        }
+
+        private class ControlListBoxItem
+        {
+            private Control? instance;
+            private Type type;
+
+            public ControlListBoxItem(Type type)
+            {
+                this.type = type;                                
+            }
+
+            public Type ControlType => type;
+            
+            public Control ControlInstance
+            {
+                get
+                {
+                    if (instance == null)
+                    {
+                        instance = (Control)Activator.CreateInstance(type)!;
+                    }
+                    return instance;
+                }
+            }
+
+            public override string ToString()
+            {
+                return type.Name;
+            }
         }
     }
 }
