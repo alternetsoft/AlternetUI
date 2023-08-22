@@ -18,21 +18,6 @@ namespace Alternet.UI
             Items.ItemRemoved += Items_ItemRemoved;
         }
 
-        internal IntPtr MenuHandle => (Handler.NativeControl as Native.Menu)!.MenuHandle;
-
-        internal override bool IsDummy => true;
-
-        private void Items_ItemInserted(object? sender, CollectionChangeEventArgs<MenuItem> e)
-        {
-            // This is required for data binding inheritance.
-            Children.Add(e.Item);
-        }
-
-        private void Items_ItemRemoved(object? sender, CollectionChangeEventArgs<MenuItem> e)
-        {
-            Children.Remove(e.Item);
-        }
-
         /// <summary>
         /// Gets a collection of <see cref="MenuItem"/> objects associated with the menu.
         /// </summary>
@@ -45,7 +30,22 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override IReadOnlyList<FrameworkElement> ContentElements => Items;
 
+        internal IntPtr MenuHandle => (Handler.NativeControl as Native.Menu)!.MenuHandle;
+
+        internal override bool IsDummy => true;
+
         /// <inheritdoc />
         protected override IEnumerable<FrameworkElement> LogicalChildrenCollection => Items;
+
+        private void Items_ItemInserted(object? sender, CollectionChangeEventArgs<MenuItem> e)
+        {
+            // This is required for data binding inheritance.
+            Children.Add(e.Item);
+        }
+
+        private void Items_ItemRemoved(object? sender, CollectionChangeEventArgs<MenuItem> e)
+        {
+            Children.Remove(e.Item);
+        }
     }
 }

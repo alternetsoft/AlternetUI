@@ -63,7 +63,7 @@ namespace Alternet.UI
             NativeControl.ToolRightClick += NativeControl_ToolRightClick;
         }
 
-        private void NativeControl_ToolCommand(object sender, EventArgs e)
+        private void NativeControl_ToolCommand(object? sender, EventArgs e)
         {
             Control.RaiseToolCommand(e);
         }

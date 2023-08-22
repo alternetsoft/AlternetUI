@@ -1480,6 +1480,11 @@ namespace Alternet.UI
             Handler?.EndIgnoreRecreate();
         }
 
+        internal static void NotifyCaptureLost()
+        {
+            Native.Control.NotifyCaptureLost();
+        }
+
         internal static void OnVisualStatePropertyChanged(
             Control control,
             DependencyPropertyChangedEventArgs e)
@@ -1552,11 +1557,6 @@ namespace Alternet.UI
         internal void RaiseDragEnter(DragEventArgs e) => OnDragEnter(e);
 
         internal void RaiseDragLeave(EventArgs e) => OnDragLeave(e);
-
-        internal static void NotifyCaptureLost()
-        {
-            Native.Control.NotifyCaptureLost();
-        }
 
         internal void SendMouseDownEvent(int x, int y)
         {
