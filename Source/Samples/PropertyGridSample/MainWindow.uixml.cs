@@ -22,7 +22,7 @@ namespace PropertyGridSample
             WebBrowser.CrtSetDbgFlag(0);
         }
 
-        private ListBox CreateListBox(string paneName, Control? parent = null)
+        private ListBox CreateListBox(Control? parent = null)
         {
             ListBox listBox = new()
             {
@@ -50,21 +50,21 @@ namespace PropertyGridSample
             var pane1 = manager.CreatePaneInfo();
             pane1.Name("pane1").Caption("Controls").Left().PaneBorder(false).CloseButton(false)
                 .TopDockable(false).BottomDockable(false).Movable(false).Floatable(false);
-            controlsListBox = CreateListBox("Pane 1");
+            controlsListBox = CreateListBox();
             manager.AddPane(controlsListBox, pane1);
 
             // Right Pane
             var pane2 = manager.CreatePaneInfo();
             pane2.Name("pane2").Caption("Properties").Right().PaneBorder(false).CloseButton(false)
                 .TopDockable(false).BottomDockable(false).Movable(false).Floatable(false);
-            propertiesListBox = CreateListBox("Pane 2");
+            propertiesListBox = CreateListBox();
             manager.AddPane(propertiesListBox, pane2);
 
             // Bottom Pane    
             var pane3 = manager.CreatePaneInfo();
             pane3.Name("pane3").Caption("Output").Bottom().PaneBorder(false).CloseButton(false)
                 .LeftDockable(false).RightDockable(false).Movable(false).Floatable(false);
-            logListBox = CreateListBox("Pane 3");
+            logListBox = CreateListBox();
             manager.AddPane(logListBox, pane3);
 
             // Notenook pane
@@ -80,7 +80,7 @@ namespace PropertyGridSample
             logListBox.MouseRightButtonUp += Log_MouseRightButtonUp;
             controlsListBox.SelectionChanged += ControlsListBox_SelectionChanged;
 
-            IEnumerable<Type> result = GetTypeDescendants(typeof(Control));
+            IEnumerable<Type> result = AssemblyUtils.GetTypeDescendants(typeof(Control));
             foreach(Type type in result)
             {
                 ControlListBoxItem item = new(type);
@@ -99,10 +99,10 @@ namespace PropertyGridSample
 
         private void Log_MouseRightButtonUp(object sender, MouseButtonEventArgs e)
         {
-            contextMenu2.Show(logListBox, e.GetPosition(logListBox));
+            logListBox.ShowPopupMenu(contextMenu2);
         }
 
-        private void Log(string s)
+        internal void Log(string s)
         {
             logListBox.Add(s);
             logListBox.SelectLastItem();
@@ -119,53 +119,10 @@ namespace PropertyGridSample
             contextMenu2.Items.Add(menuItem1);
         }
 
-        public bool TypeIsDescendant(Type type, Type checkType)
-        {
-            do
-            {
-                if (type == null)
-                    return false;
-
-                var baseType = type.BaseType;
-
-                if (baseType == checkType)
-                    return true;
-
-                if (type.IsInterface)
-                    if (baseType == null)
-                        return false;
-
-                if (type.IsClass)
-                    if (baseType == typeof(object))
-                        return false;
-
-                type = baseType!;
-
-            } while (true);
-        }
-
-        public IEnumerable<Type> GetTypeDescendants(Type type)
-        {
-            List<Type> result = new();
-
-            Assembly asm = type.Assembly;
-
-            var definedTypes = asm.DefinedTypes;
-
-            foreach(TypeInfo typeInfo in definedTypes)
-            {
-                var resultType = typeInfo.AsType();
-                if (TypeIsDescendant(resultType, type))
-                    result.Add(resultType);
-            }
-
-            return result;
-        }
-
         private class ControlListBoxItem
         {
             private Control? instance;
-            private Type type;
+            private readonly Type type;
 
             public ControlListBoxItem(Type type)
             {
@@ -178,10 +135,7 @@ namespace PropertyGridSample
             {
                 get
                 {
-                    if (instance == null)
-                    {
-                        instance = (Control)Activator.CreateInstance(type)!;
-                    }
+                    instance ??= (Control)Activator.CreateInstance(type)!;
                     return instance;
                 }
             }
