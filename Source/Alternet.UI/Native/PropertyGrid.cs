@@ -23,6 +23,34 @@ namespace Alternet.UI.Native
         {
         }
         
+        public static string NameAsLabel
+        {
+            get
+            {
+                var n = NativeApi.PropertyGrid_GetNameAsLabel_();
+                var m = n;
+                return m;
+            }
+            
+        }
+        
+        public bool HasBorder
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.PropertyGrid_GetHasBorder_(NativePointer);
+                var m = n;
+                return m;
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.PropertyGrid_SetHasBorder_(NativePointer, value);
+            }
+        }
+        
         public long CreateStyle
         {
             get
@@ -125,6 +153,15 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern IntPtr PropertyGrid_Create_();
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern string PropertyGrid_GetNameAsLabel_();
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool PropertyGrid_GetHasBorder_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void PropertyGrid_SetHasBorder_(IntPtr obj, bool value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern long PropertyGrid_GetCreateStyle_(IntPtr obj);

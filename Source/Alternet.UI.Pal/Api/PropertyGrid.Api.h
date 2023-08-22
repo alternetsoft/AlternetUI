@@ -15,6 +15,27 @@ ALTERNET_UI_API PropertyGrid* PropertyGrid_Create_()
         });
 }
 
+ALTERNET_UI_API char16_t* PropertyGrid_GetNameAsLabel_()
+{
+    return MarshalExceptions<char16_t*>([&](){
+            return AllocPInvokeReturnString(PropertyGrid::GetNameAsLabel());
+        });
+}
+
+ALTERNET_UI_API c_bool PropertyGrid_GetHasBorder_(PropertyGrid* obj)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return obj->GetHasBorder();
+        });
+}
+
+ALTERNET_UI_API void PropertyGrid_SetHasBorder_(PropertyGrid* obj, c_bool value)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetHasBorder(value);
+        });
+}
+
 ALTERNET_UI_API int64_t PropertyGrid_GetCreateStyle_(PropertyGrid* obj)
 {
     return MarshalExceptions<int64_t>([&](){

@@ -13,7 +13,7 @@ namespace PropertyGridSample
         private readonly AuiManager manager = new();
         private readonly LayoutPanel panel = new();
         private readonly ListBox controlsListBox;
-        private readonly ListBox propertiesListBox;
+        private readonly PropertyGrid propertyGrid = new();
         private readonly ListBox logListBox;
         private readonly ContextMenu contextMenu2 = new();
 
@@ -56,9 +56,11 @@ namespace PropertyGridSample
             // Right Pane
             var pane2 = manager.CreatePaneInfo();
             pane2.Name("pane2").Caption("Properties").Right().PaneBorder(false).CloseButton(false)
-                .TopDockable(false).BottomDockable(false).Movable(false).Floatable(false);
-            propertiesListBox = CreateListBox();
-            manager.AddPane(propertiesListBox, pane2);
+                .TopDockable(false).BottomDockable(false).Movable(false).Floatable(false)
+                .BestSize(200,200);
+            propertyGrid.HasBorder = false;
+            panel.Children.Add(propertyGrid);
+            manager.AddPane(propertyGrid, pane2);
 
             // Bottom Pane    
             var pane3 = manager.CreatePaneInfo();
@@ -86,15 +88,36 @@ namespace PropertyGridSample
                 ControlListBoxItem item = new(type);
                 controlsListBox.Add(item);
             }
+
         }
 
         private void ControlsListBox_SelectionChanged(object? sender, EventArgs e)
         {
-            propertiesListBox.Items.Clear();
+            propertyGrid.Clear();
             var item = controlsListBox.SelectedItem;
             if (item == null)
                 return;
-            propertiesListBox.Add(item.ToString()!);
+
+            var prop = propertyGrid.CreateStringProperty(item.ToString()!, item.ToString()!);
+            propertyGrid.Add(prop);
+
+            prop = propertyGrid.CreateBoolProperty("Bool");
+            propertyGrid.Add(prop);
+
+            prop = propertyGrid.CreateIntProperty("Int");
+            propertyGrid.Add(prop);
+
+            prop = propertyGrid.CreateFloatProperty("Float");
+            propertyGrid.Add(prop);
+
+            prop = propertyGrid.CreateUIntProperty("UInt");
+            propertyGrid.Add(prop);
+
+            prop = propertyGrid.CreateLongStringProperty("Long string");
+            propertyGrid.Add(prop);
+
+            //prop = propertyGrid.CreateDateProperty("Date");
+            //propertyGrid.Add(prop);
         }
 
         private void Log_MouseRightButtonUp(object sender, MouseButtonEventArgs e)

@@ -11,6 +11,8 @@ namespace NativeApi.Api
 	//https://docs.wxwidgets.org/3.2/classwx_property_grid.html
 	public partial class PropertyGrid : Control
 	{
+        public static string NameAsLabel { get; }
+        public bool HasBorder { get; set; }
 
         public static IntPtr CreateEx(long styles) => throw new Exception();
 

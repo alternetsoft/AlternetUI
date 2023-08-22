@@ -20,6 +20,7 @@ namespace Alternet::UI
         PropertyGrid(long styles);
 
     private:
+        bool _hasBorder = true;
         long _createStyle = wxPG_DEFAULT_STYLE;
 
     };

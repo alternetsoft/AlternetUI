@@ -38,9 +38,30 @@ namespace Alternet::UI
         RecreateWxWindowIfNeeded();
     }
 
+    string PropertyGrid::GetNameAsLabel()
+    {
+        return wxStr(wxPG_LABEL);
+    }
+
+    bool PropertyGrid::GetHasBorder()
+    {
+        return _hasBorder;
+    }
+
+    void PropertyGrid::SetHasBorder(bool value)
+    {
+        if (_hasBorder == value)
+            return;
+        _hasBorder = value;
+        RecreateWxWindowIfNeeded();
+    }
+
     wxWindow* PropertyGrid::CreateWxWindowCore(wxWindow* parent)
     {
         long style = _createStyle;
+
+        if (!_hasBorder)
+            style |= wxBORDER_NONE;
 
         auto result = new wxPropertyGrid2(parent, wxID_ANY,
             wxDefaultPosition,
@@ -107,7 +128,8 @@ namespace Alternet::UI
     void* PropertyGrid::CreateDateProperty(const string& label, const string& name,
         const DateTime& value)
     {
-        return new wxDateProperty(wxStr(label), wxStr(name), value);
+        wxDateTime dt = value;
+        return new wxDateProperty(wxStr(label), wxStr(name), dt);
     }
 
     void PropertyGrid::Clear()

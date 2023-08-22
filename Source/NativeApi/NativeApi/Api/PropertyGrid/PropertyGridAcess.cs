@@ -17,20 +17,6 @@ namespace NativeApi.Api
         public IntPtr CreateBoolProperty(string label, string name, bool value = false) =>
             throw new Exception();
 
-        /*public IntPtr CreateFlagsProperty(
-            string label,
-            string name,
-            string[] labels,
-            int[] values,
-            int value = 0) => throw new Exception();
-
-        public IntPtr CreateEnumProperty(
-            string label,
-            string name,
-            string[] labels,
-            int[] values,
-            int value = 0) => throw new Exception();*/
-
         public IntPtr CreateIntProperty(string label, string name, long value = 0) =>
             throw new Exception();
 
@@ -49,6 +35,20 @@ namespace NativeApi.Api
         public void Clear() => throw new Exception();
 
         public IntPtr Append(IntPtr property) => throw new Exception();
+
+        /*public IntPtr CreateFlagsProperty(
+            string label,
+            string name,
+            string[] labels,
+            int[] values,
+            int value = 0) => throw new Exception();
+
+        public IntPtr CreateEnumProperty(
+            string label,
+            string name,
+            string[] labels,
+            int[] values,
+            int value = 0) => throw new Exception();*/
 
         /*
         public bool ClearSelection(bool validation = false) => throw new Exception();

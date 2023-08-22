@@ -17,6 +17,8 @@ namespace Alternet.UI
     /// </remarks>
     public class PropertyGrid : Control
     {
+        private static readonly string nameAsLabel = Native.PropertyGrid.NameAsLabel;
+
         /// <summary>
         /// Defines default visual style for the newly created
         /// <see cref="PropertyGrid"/> controls.
@@ -43,6 +45,22 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether the control has a border.
+        /// </summary>
+        public bool HasBorder
+        {
+            get
+            {
+                return NativeControl.HasBorder;
+            }
+
+            set
+            {
+                NativeControl.HasBorder = value;
+            }
+        }
+
         /// <inheritdoc/>
         public override ControlId ControlKind => ControlId.PropertyGrid;
 
@@ -56,6 +74,95 @@ namespace Alternet.UI
         }
 
         internal Native.PropertyGrid NativeControl => Handler.NativeControl;
+
+        private string CorrectPropName(string? name)
+        {
+            if (name is null)
+                return Native.PropertyGrid.NameAsLabel;
+            return name;
+        }
+
+        public IPropertyGridItem CreateStringProperty(
+            string label,
+            string? name = null,
+            string? value = null)
+        {
+            value ??= string.Empty;
+            var handle = NativeControl.CreateStringProperty(label, CorrectPropName(name), value!);
+            return new PropertyGridItem(handle);
+        }
+
+        public IPropertyGridItem CreateBoolProperty(
+            string label,
+            string? name = null,
+            bool value = false)
+        {
+            var handle = NativeControl.CreateBoolProperty(label, CorrectPropName(name), value);
+            return new PropertyGridItem(handle);
+        }
+
+        public IPropertyGridItem CreateIntProperty(
+            string label,
+            string? name = null,
+            long value = 0)
+        {
+            var handle = NativeControl.CreateIntProperty(label, CorrectPropName(name), value);
+            return new PropertyGridItem(handle);
+        }
+
+        public IPropertyGridItem CreateFloatProperty(
+            string label,
+            string? name = null,
+            double value = 0.0)
+        {
+            var handle = NativeControl.CreateFloatProperty(label, CorrectPropName(name), value);
+            return new PropertyGridItem(handle);
+        }
+
+        public IPropertyGridItem CreateUIntProperty(
+            string label,
+            string? name = null,
+            ulong value = 0)
+        {
+            var handle = NativeControl.CreateUIntProperty(label, CorrectPropName(name), value);
+            return new PropertyGridItem(handle);
+        }
+
+        public IPropertyGridItem CreateLongStringProperty(
+            string label,
+            string? name = null,
+            string? value = null)
+        {
+            value ??= string.Empty;
+            var handle = NativeControl.CreateLongStringProperty(
+                label,
+                CorrectPropName(name),
+                value);
+            return new PropertyGridItem(handle);
+        }
+
+        public IPropertyGridItem CreateDateProperty(
+            string label,
+            string? name = null,
+            DateTime? value = null)
+        {
+            value ??= DateTime.Now.Date;
+            var handle = NativeControl.CreateDateProperty(
+                label,
+                CorrectPropName(name),
+                value.Value);
+            return new PropertyGridItem(handle);
+        }
+
+        public void Clear()
+        {
+            NativeControl.Clear();
+        }
+
+        public void Add(IPropertyGridItem prop)
+        {
+            var result = NativeControl.Append(prop.Handle);
+        }
 
         /// <inheritdoc/>
         protected override ControlHandler CreateHandler()
