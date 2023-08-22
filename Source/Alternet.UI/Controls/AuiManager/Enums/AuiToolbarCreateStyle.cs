@@ -68,7 +68,7 @@ namespace Alternet.UI
         OrientationMask = Vertical | Horizontal,
 
         /// <summary>
-        /// By default only icons are shown.
+        /// Default style of the toolbar.
         /// </summary>
         DefaultStyle = 0,
     }

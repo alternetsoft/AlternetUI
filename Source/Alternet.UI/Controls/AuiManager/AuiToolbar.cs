@@ -55,7 +55,7 @@ namespace Alternet.UI
 
         /// <summary>
         /// Defines default visual style for the newly created
-        /// <see cref="AuiNotebook"/> controls.
+        /// <see cref="AuiToolbar"/> controls.
         /// </summary>
         public static AuiToolbarCreateStyle DefaultCreateStyle { get; set; }
             = AuiToolbarCreateStyle.DefaultStyle;
