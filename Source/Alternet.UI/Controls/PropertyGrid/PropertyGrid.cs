@@ -75,13 +75,13 @@ namespace Alternet.UI
 
         internal Native.PropertyGrid NativeControl => Handler.NativeControl;
 
-        private string CorrectPropName(string? name)
-        {
-            if (name is null)
-                return Native.PropertyGrid.NameAsLabel;
-            return name;
-        }
-
+        /// <summary>
+        /// Creates <see cref="string"/> property.
+        /// </summary>
+        /// <param name="label">Property label.</param>
+        /// <param name="name">Property name.</param>
+        /// <param name="value">Default property value.</param>
+        /// <returns>Property declaration for use with <see cref="PropertyGrid.Add"/>.</returns>
         public IPropertyGridItem CreateStringProperty(
             string label,
             string? name = null,
@@ -92,6 +92,13 @@ namespace Alternet.UI
             return new PropertyGridItem(handle);
         }
 
+        /// <summary>
+        /// Creates <see cref="bool"/> property.
+        /// </summary>
+        /// <param name="label">Property label.</param>
+        /// <param name="name">Property name.</param>
+        /// <param name="value">Default property value.</param>
+        /// <returns>Property declaration for use with <see cref="PropertyGrid.Add"/>.</returns>
         public IPropertyGridItem CreateBoolProperty(
             string label,
             string? name = null,
@@ -101,6 +108,13 @@ namespace Alternet.UI
             return new PropertyGridItem(handle);
         }
 
+        /// <summary>
+        /// Creates <see cref="int"/> property. Supports also <see cref="long"/> values.
+        /// </summary>
+        /// <param name="label">Property label.</param>
+        /// <param name="name">Property name.</param>
+        /// <param name="value">Default property value.</param>
+        /// <returns>Property declaration for use with <see cref="PropertyGrid.Add"/>.</returns>
         public IPropertyGridItem CreateIntProperty(
             string label,
             string? name = null,
@@ -110,6 +124,13 @@ namespace Alternet.UI
             return new PropertyGridItem(handle);
         }
 
+        /// <summary>
+        /// Creates <see cref="double"/> property.
+        /// </summary>
+        /// <param name="label">Property label.</param>
+        /// <param name="name">Property name.</param>
+        /// <param name="value">Default property value.</param>
+        /// <returns>Property declaration for use with <see cref="PropertyGrid.Add"/>.</returns>
         public IPropertyGridItem CreateFloatProperty(
             string label,
             string? name = null,
@@ -119,6 +140,13 @@ namespace Alternet.UI
             return new PropertyGridItem(handle);
         }
 
+        /// <summary>
+        /// Creates <see cref="uint"/> property. Supports also <see cref="ulong"/> values.
+        /// </summary>
+        /// <param name="label">Property label.</param>
+        /// <param name="name">Property name.</param>
+        /// <param name="value">Default property value.</param>
+        /// <returns>Property declaration for use with <see cref="PropertyGrid.Add"/>.</returns>
         public IPropertyGridItem CreateUIntProperty(
             string label,
             string? name = null,
@@ -128,6 +156,14 @@ namespace Alternet.UI
             return new PropertyGridItem(handle);
         }
 
+        /// <summary>
+        /// Creates <see cref="string"/> property with additional edit dialog for
+        /// entering long values.
+        /// </summary>
+        /// <param name="label">Property label.</param>
+        /// <param name="name">Property name.</param>
+        /// <param name="value">Default property value.</param>
+        /// <returns>Property declaration for use with <see cref="PropertyGrid.Add"/>.</returns>
         public IPropertyGridItem CreateLongStringProperty(
             string label,
             string? name = null,
@@ -141,6 +177,13 @@ namespace Alternet.UI
             return new PropertyGridItem(handle);
         }
 
+        /// <summary>
+        /// Creates <see cref="DateTime"/> property.
+        /// </summary>
+        /// <param name="label">Property label.</param>
+        /// <param name="name">Property name.</param>
+        /// <param name="value">Default property value.</param>
+        /// <returns>Property declaration for use with <see cref="PropertyGrid.Add"/>.</returns>
         public IPropertyGridItem CreateDateProperty(
             string label,
             string? name = null,
@@ -160,11 +203,18 @@ namespace Alternet.UI
             return new PropertyGridItem(handle);
         }
 
+        /// <summary>
+        /// Deletes all items from the property grid.
+        /// </summary>
         public void Clear()
         {
             NativeControl.Clear();
         }
 
+        /// <summary>
+        /// Adds item to the property grid.
+        /// </summary>
+        /// <param name="prop">Item to add.</param>
         public void Add(IPropertyGridItem prop)
         {
             var result = NativeControl.Append(prop.Handle);
@@ -174,6 +224,13 @@ namespace Alternet.UI
         protected override ControlHandler CreateHandler()
         {
             return GetEffectiveControlHandlerHactory().CreatePropertyGridHandler(this);
+        }
+
+        private string CorrectPropName(string? name)
+        {
+            if (name is null)
+                return Native.PropertyGrid.NameAsLabel;
+            return name;
         }
     }
 }
