@@ -67,6 +67,7 @@
 #include "Api/Popup.Api.h"
 #include "Api/ProgressBar.Api.h"
 #include "Api/PropertyGrid.Api.h"
+#include "Api/PropertyGridChoices.Api.h"
 #include "Api/RadioButton.Api.h"
 #include "Api/BoxSizer.Api.h"
 #include "Api/FlexGridSizer.Api.h"

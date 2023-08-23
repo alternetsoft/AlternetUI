@@ -133,6 +133,40 @@ namespace Alternet.UI.Native
             return n;
         }
         
+        public bool ClearSelection(bool validation)
+        {
+            CheckDisposed();
+            var n = NativeApi.PropertyGrid_ClearSelection_(NativePointer, validation);
+            return n;
+        }
+        
+        public void ClearModifiedStatus()
+        {
+            CheckDisposed();
+            NativeApi.PropertyGrid_ClearModifiedStatus_(NativePointer);
+        }
+        
+        public bool CollapseAll()
+        {
+            CheckDisposed();
+            var n = NativeApi.PropertyGrid_CollapseAll_(NativePointer);
+            return n;
+        }
+        
+        public bool EditorValidate()
+        {
+            CheckDisposed();
+            var n = NativeApi.PropertyGrid_EditorValidate_(NativePointer);
+            return n;
+        }
+        
+        public bool ExpandAll(bool expand)
+        {
+            CheckDisposed();
+            var n = NativeApi.PropertyGrid_ExpandAll_(NativePointer, expand);
+            return n;
+        }
+        
         
         [SuppressUnmanagedCodeSecurity]
         public class NativeApi : NativeApiProvider
@@ -186,6 +220,21 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern System.IntPtr PropertyGrid_Append_(IntPtr obj, System.IntPtr property);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool PropertyGrid_ClearSelection_(IntPtr obj, bool validation);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void PropertyGrid_ClearModifiedStatus_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool PropertyGrid_CollapseAll_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool PropertyGrid_EditorValidate_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool PropertyGrid_ExpandAll_(IntPtr obj, bool expand);
             
         }
     }

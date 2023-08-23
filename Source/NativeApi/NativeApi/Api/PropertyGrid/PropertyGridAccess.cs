@@ -36,21 +36,18 @@ namespace NativeApi.Api
 
         public IntPtr Append(IntPtr property) => throw new Exception();
 
-        /*public IntPtr CreateFlagsProperty(
+        /*public IntPtr CreateEnumProperty(
             string label,
             string name,
-            string[] labels,
-            int[] values,
+            IntPtr choices,
             int value = 0) => throw new Exception();
 
-        public IntPtr CreateEnumProperty(
+        public IntPtr CreateFlagsProperty(
             string label,
             string name,
-            string[] labels,
-            int[] values,
+            IntPtr choices,
             int value = 0) => throw new Exception();*/
 
-        /*
         public bool ClearSelection(bool validation = false) => throw new Exception();
 
         public void ClearModifiedStatus() => throw new Exception();
@@ -61,6 +58,40 @@ namespace NativeApi.Api
 
         public bool ExpandAll(bool expand = true) => throw new Exception();
 
+        /*
+
+            wxPGProperty* GetFirst( int flags = wxPG_ITERATE_ALL )
+
+            wxPGProperty* GetProperty( const wxString& name ) const
+
+            wxPGProperty* GetPropertyByLabel( const wxString& label ) const;
+
+            wxPGProperty* GetPropertyByName( const wxString& name ) const;
+
+            wxPGProperty* GetPropertyByName( const wxString& name,
+                                             const wxString& subname ) const;
+
+            wxPGProperty* GetSelection() const;
+            wxString GetPropertyName( wxPGProperty* property )
+            static void InitAllTypeHandlers()
+
+            static void RegisterAdditionalEditors();
+
+            bool RestoreEditableState( const wxString& src,
+                                       int restoreStates = AllStates );
+
+            wxString SaveEditableState( int includedStates = AllStates ) const;
+
+            static void SetBoolChoices( const wxString& trueChoice,
+                                        const wxString& falseChoice );
+
+            bool SetColumnProportion( unsigned int column, int proportion );
+
+            int GetColumnProportion( unsigned int column ) const
+
+            void Sort( int flags = 0 );
+            wxPGProperty* GetPropertyByNameA( const wxString& name ) const;
+            virtual void RefreshProperty( wxPGProperty* p ) = 0;
 
 
         ====
@@ -97,12 +128,6 @@ namespace NativeApi.Api
 
             wxPropertyGridConstIterator GetIterator( int flags, int startPos ) const
 
-            wxPGProperty* GetFirst( int flags = wxPG_ITERATE_ALL )
-
-            const wxPGProperty* GetFirst( int flags = wxPG_ITERATE_ALL ) const
-
-            wxPGProperty* GetProperty( const wxString& name ) const
-
             const wxPGAttributeStorage& GetPropertyAttributes( wxPGPropArg id ) const
 
             void GetPropertiesWithFlag( wxArrayPGProperty* targetArr,
@@ -118,13 +143,6 @@ namespace NativeApi.Api
 
             void* GetPropertyClientData( wxPGPropArg id ) const
 
-            wxPGProperty* GetPropertyByLabel( const wxString& label ) const;
-
-            wxPGProperty* GetPropertyByName( const wxString& name ) const;
-
-            wxPGProperty* GetPropertyByName( const wxString& name,
-                                             const wxString& subname ) const;
-
             const wxPGEditor* GetPropertyEditor( wxPGPropArg id ) const
 
             wxString GetPropertyHelpString( wxPGPropArg id ) const
@@ -132,8 +150,6 @@ namespace NativeApi.Api
             wxBitmap* GetPropertyImage( wxPGPropArg id ) const
 
             const wxString& GetPropertyLabel( wxPGPropArg id )
-
-            wxString GetPropertyName( wxPGProperty* property )
 
             wxPGProperty* GetPropertyParent( wxPGPropArg id )
 
@@ -163,7 +179,6 @@ namespace NativeApi.Api
             wxVariant GetPropertyValues( const wxString& listname = wxEmptyString,
                 wxPGProperty* baseparent = NULL, long flags = 0 ) const
 
-            wxPGProperty* GetSelection() const;
 
             const wxArrayPGProperty& GetSelectedProperties() const
 
@@ -174,8 +189,6 @@ namespace NativeApi.Api
             bool HideProperty( wxPGPropArg id,
                                bool hide = true,
                                int flags = wxPG_RECURSE );
-
-            static void InitAllTypeHandlers()
 
             wxPGProperty* Insert( wxPGPropArg priorThis, wxPGProperty* newproperty );
 
@@ -201,7 +214,6 @@ namespace NativeApi.Api
 
             virtual void RefreshGrid( wxPropertyGridPageState* state = NULL );
 
-            static void RegisterAdditionalEditors();
 
             wxPGProperty* ReplaceProperty( wxPGPropArg id, wxPGProperty* property );
 
@@ -232,17 +244,8 @@ namespace NativeApi.Api
                                    DescBoxState
             };
 
-            bool RestoreEditableState( const wxString& src,
-                                       int restoreStates = AllStates );
 
-            wxString SaveEditableState( int includedStates = AllStates ) const;
 
-            static void SetBoolChoices( const wxString& trueChoice,
-                                        const wxString& falseChoice );
-
-            bool SetColumnProportion( unsigned int column, int proportion );
-
-            int GetColumnProportion( unsigned int column ) const
 
             void SetPropertyAttribute( wxPGPropArg id,
                                        const wxString& attrName,
@@ -339,14 +342,10 @@ namespace NativeApi.Api
 
             void SetValidationFailureBehavior( int vfbFlags );
 
-            void Sort( int flags = 0 );
             void SortChildren( wxPGPropArg id, int flags = 0 )
 
-            wxPGProperty* GetPropertyByNameA( const wxString& name ) const;
 
             static wxPGEditor* GetEditorByName( const wxString& editorName );
-
-            virtual void RefreshProperty( wxPGProperty* p ) = 0;
 
          */
     }

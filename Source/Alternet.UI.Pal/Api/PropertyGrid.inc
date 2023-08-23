@@ -21,6 +21,11 @@ void* CreateLongStringProperty(const string& label, const string& name, const st
 void* CreateDateProperty(const string& label, const string& name, const DateTime& value);
 void Clear();
 void* Append(void* property);
+bool ClearSelection(bool validation);
+void ClearModifiedStatus();
+bool CollapseAll();
+bool EditorValidate();
+bool ExpandAll(bool expand);
 public:
 PropertyGrid();
 protected:

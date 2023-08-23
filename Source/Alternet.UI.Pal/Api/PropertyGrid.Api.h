@@ -120,3 +120,38 @@ ALTERNET_UI_API void* PropertyGrid_Append_(PropertyGrid* obj, void* property)
         });
 }
 
+ALTERNET_UI_API c_bool PropertyGrid_ClearSelection_(PropertyGrid* obj, c_bool validation)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return obj->ClearSelection(validation);
+        });
+}
+
+ALTERNET_UI_API void PropertyGrid_ClearModifiedStatus_(PropertyGrid* obj)
+{
+    MarshalExceptions<void>([&](){
+            obj->ClearModifiedStatus();
+        });
+}
+
+ALTERNET_UI_API c_bool PropertyGrid_CollapseAll_(PropertyGrid* obj)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return obj->CollapseAll();
+        });
+}
+
+ALTERNET_UI_API c_bool PropertyGrid_EditorValidate_(PropertyGrid* obj)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return obj->EditorValidate();
+        });
+}
+
+ALTERNET_UI_API c_bool PropertyGrid_ExpandAll_(PropertyGrid* obj, c_bool expand)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return obj->ExpandAll(expand);
+        });
+}
+

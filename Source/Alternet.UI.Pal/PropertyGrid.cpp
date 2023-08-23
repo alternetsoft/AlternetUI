@@ -142,4 +142,43 @@ namespace Alternet::UI
         return GetPropGrid()->Append((wxPGProperty*)property);
     }
 
+    bool PropertyGrid::ClearSelection(bool validation)
+    {
+        return GetPropGrid()->ClearSelection(validation);
+    }
+
+    void PropertyGrid::ClearModifiedStatus()
+    {
+        GetPropGrid()->ClearModifiedStatus();
+    }
+
+    bool PropertyGrid::CollapseAll()
+    {
+        return GetPropGrid()->CollapseAll();
+    }
+
+    bool PropertyGrid::EditorValidate()
+    {
+        return GetPropGrid()->EditorValidate();
+    }
+
+    bool PropertyGrid::ExpandAll(bool expand)
+    {
+        return GetPropGrid()->ExpandAll(expand);
+    }
+
+    /*void* CreateEnumProperty(const string& label, const string& name, void* choices, int value)
+    {
+        auto pgc = (PropertyGridChoices*)choices;
+
+        return new wxEnumProperty(wxStr(label), wxStr(name), pgc->choices, value);
+    }
+
+    void* CreateFlagsProperty(const string& label, const string& name, void* choices, int value)
+    {
+        auto pgc = (PropertyGridChoices*)choices;
+
+        return new wxFlagsProperty(wxStr(label), wxStr(name), pgc->choices, value);
+    }*/
+
 }

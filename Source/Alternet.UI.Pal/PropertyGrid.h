@@ -3,6 +3,7 @@
 #include "Control.h"
 #include "ApiTypes.h"
 #include "Object.h"
+#include "PropertyGridChoices.h"
 #include "wx/propgrid/propgrid.h"
 #include "wx/propgrid/propgridiface.h"
 #include "wx/propgrid/props.h"

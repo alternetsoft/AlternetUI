@@ -17,7 +17,7 @@ namespace Alternet.UI
     /// </remarks>
     public class PropertyGrid : Control
     {
-        private static readonly string nameAsLabel = Native.PropertyGrid.NameAsLabel;
+        private static readonly string NameAsLabel = Native.PropertyGrid.NameAsLabel;
 
         /// <summary>
         /// Defines default visual style for the newly created
@@ -201,6 +201,39 @@ namespace Alternet.UI
                 CorrectPropName(name),
                 dt);
             return new PropertyGridItem(handle);
+        }
+
+        /*public IPropertyGridItem CreateEnumProperty(
+            string label,
+            string name,
+            IPropertyGridChoices choices,
+            int value = 0)
+        {
+            var handle = NativeControl.CreateEnumProperty(
+                label,
+                CorrectPropName(name),
+                choices.Handle,
+                value);
+            return new PropertyGridItem(handle);
+        }*/
+
+        /*public IPropertyGridItem CreateFlagsProperty(
+            string label,
+            string name,
+            IPropertyGridChoices choices,
+            int value = 0)
+        {
+            var handle = NativeControl.CreateFlagsProperty(
+                label,
+                CorrectPropName(name),
+                choices.Handle,
+                value);
+            return new PropertyGridItem(handle);
+        }*/
+
+        public IPropertyGridChoices CreateChoices()
+        {
+            return new PropertyGridChoices();
         }
 
         /// <summary>
