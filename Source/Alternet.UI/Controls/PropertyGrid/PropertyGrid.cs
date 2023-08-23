@@ -18,6 +18,7 @@ namespace Alternet.UI
     public class PropertyGrid : Control
     {
         private static readonly string NameAsLabel = Native.PropertyGrid.NameAsLabel;
+        private static Dictionary<Type, IPropertyGridChoices> ChoicesCache = null;
 
         /// <summary>
         /// Defines default visual style for the newly created
@@ -256,6 +257,24 @@ namespace Alternet.UI
         public IPropertyGridChoices CreateChoices()
         {
             return new PropertyGridChoices();
+        }
+
+        /// <summary>
+        /// Creates property choices list for the given enumeration type or returns it from
+        /// the internal cache if it was previously created.
+        /// </summary>
+        /// <remarks>
+        /// Result can be used in <see cref="CreateFlagsProperty"/> and
+        /// <see cref="CreateEnumProperty"/>.
+        /// </remarks>
+        public IPropertyGridChoices CreateChoicesOnce(Type enumType)
+        {
+            ChoicesCache ??= new();
+            if (ChoicesCache.TryGetValue(enumType, out IPropertyGridChoices? result))
+                return result;
+            result = CreateChoices(enumType);
+            ChoicesCache.Add(enumType, result);
+            return result;
         }
 
         /// <summary>
