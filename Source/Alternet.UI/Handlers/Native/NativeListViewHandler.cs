@@ -48,7 +48,7 @@ namespace Alternet.UI
             get
             {
                 var i = NativeControl.TopItemIndex;
-                return i == -1 ? null : Control.Items[(int)i];
+                return i < 0 || i >= Control.Items.Count ? null : Control.Items[(int)i];
             }
         }
 
