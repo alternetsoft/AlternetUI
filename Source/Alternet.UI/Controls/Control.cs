@@ -797,11 +797,13 @@ namespace Alternet.UI
         /// <summary>
         /// Gets a value indicating whether the control has input focus.
         /// </summary>
+        [Browsable(false)]
         public bool IsFocused => Handler.IsFocused;
 
         /// <summary>
         /// Returns control identifier.
         /// </summary>
+        [Browsable(false)]
         public virtual ControlId ControlKind => ControlId.Control;
 
         internal static int ScreenShotCounter { get; set; } = 0;

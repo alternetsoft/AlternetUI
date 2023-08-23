@@ -13,6 +13,7 @@ using Alternet.UI.Threading;
 using Alternet.UI.Internal.ComponentModel;
 using Alternet.UI.Internal.KnownBoxes;
 using Alternet.UI.Internal;
+using System.ComponentModel;
 
 namespace Alternet.UI
 {
@@ -111,6 +112,7 @@ namespace Alternet.UI
         ///     Indicates whether or not this object is in a Read-Only state; when in a Read-Only state, SetValue is not permitted,
         ///     though the effective value for a property may change.
         /// </summary>
+        [Browsable(false)]
         public bool IsSealed
         {
             get

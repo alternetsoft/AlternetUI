@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel;
 using System.Diagnostics;
 using Alternet.UI.Internal.KnownBoxes;
 
@@ -966,6 +967,7 @@ namespace Alternet.UI
         /// <summary>
         ///     Gettor and Settor for Focusable Property
         /// </summary>
+        [Browsable(false)]
         public bool Focusable
         {
             get { return (bool)GetValue(FocusableProperty); }

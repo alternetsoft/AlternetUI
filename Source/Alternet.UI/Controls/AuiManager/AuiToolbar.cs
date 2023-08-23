@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -85,6 +86,7 @@ namespace Alternet.UI
         /// <remarks>
         /// Use it in the <see cref="ToolDropDown"/> or other event handlers.
         /// </remarks>
+        [Browsable(false)]
         public int EventToolId
         {
             get
@@ -99,6 +101,7 @@ namespace Alternet.UI
         /// <remarks>
         /// Use it in the <see cref="ToolDropDown"/> or other event handlers.
         /// </remarks>
+        [Browsable(false)]
         public bool EventIsDropDownClicked
         {
             get

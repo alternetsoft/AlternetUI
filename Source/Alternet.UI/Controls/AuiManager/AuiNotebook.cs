@@ -124,6 +124,7 @@ namespace Alternet.UI
         /// <remarks>
         /// You can use it in the event handlers.
         /// </remarks>
+        [Browsable(false)]
         public int EventSelection
         {
             get
@@ -138,6 +139,7 @@ namespace Alternet.UI
         /// <remarks>
         /// You can use it in the event handlers.
         /// </remarks>
+        [Browsable(false)]
         public int EventOldSelection
         {
             get
