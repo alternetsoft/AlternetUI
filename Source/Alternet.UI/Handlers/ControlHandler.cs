@@ -21,7 +21,7 @@ namespace Alternet.UI
 
         private Native.Control? nativeControl;
         private bool isVisualChild;
-        Collection<Control>? visualChildren;
+        private Collection<Control>? visualChildren;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Control"/> class.
@@ -91,22 +91,6 @@ namespace Alternet.UI
 
                 PerformLayout(); // todo: use event
             }
-        }
-
-        /// <inheritdoc cref="Control.GetDPI"/>
-        public Size GetDPI()
-        {
-            if (NativeControl == null)
-                return Size.Empty;
-            return NativeControl.GetDPI();
-        }
-
-        internal IntPtr GetHandle()
-        {
-            if (NativeControl == null)
-                throw new InvalidOperationException();
-
-            return NativeControl.Handle;
         }
 
         /// <summary>
@@ -199,6 +183,42 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets a value indicating whether the user can give the focus to this control using the TAB key.
+        /// </summary>
+        public virtual bool TabStop
+        {
+            get
+            {
+                if (NativeControl == null)
+                    throw new InvalidOperationException();
+
+                return NativeControl.TabStop;
+            }
+
+            set
+            {
+                if (NativeControl == null)
+                    throw new InvalidOperationException();
+
+                NativeControl.TabStop = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether the control has input focus.
+        /// </summary>
+        public bool IsFocused
+        {
+            get
+            {
+                if (NativeControl == null)
+                    throw new InvalidOperationException();
+
+                return NativeControl.IsFocused;
+            }
+        }
+
+        /// <summary>
         /// Gets whether there are any items in the <see cref="VisualChildren"/> list.
         /// </summary>
         public virtual bool HasVisualChildren =>
@@ -280,7 +300,7 @@ namespace Alternet.UI
                     if (NeedsNativeControl())
                     {
                         nativeControl = CreateNativeControl();
-                        // handlersByNativeControls.Add(nativeControl, this);
+                        /*handlersByNativeControls.Add(nativeControl, this);*/
                         nativeControl.handler = this;
                         OnNativeControlCreated();
                     }
@@ -291,9 +311,6 @@ namespace Alternet.UI
         }
 
         internal bool NativeControlCreated => nativeControl != null;
-
-        private protected virtual bool NeedRelayoutParentOnVisibleChanged =>
-            Control.Parent is not TabControl; // todo
 
         /// <summary>
         /// This property may be overridden by control handlers to indicate that
@@ -309,6 +326,9 @@ namespace Alternet.UI
         /// even if the control is a visual child. Default value is <c>false</c>.
         /// </summary>
         protected virtual bool VisualChildNeedsNativeControl => false;
+
+        private protected virtual bool NeedRelayoutParentOnVisibleChanged =>
+            Control.Parent is not TabControl; // todo
 
         private bool IsLayoutSuspended => layoutSuspendCount != 0;
 
@@ -327,6 +347,14 @@ namespace Alternet.UI
                 return null;
 
             return handler.Control;
+        }
+
+        /// <inheritdoc cref="Control.GetDPI"/>
+        public Size GetDPI()
+        {
+            if (NativeControl == null)
+                return Size.Empty;
+            return NativeControl.GetDPI();
         }
 
         /// <inheritdoc cref="Control.BeginIgnoreRecreate"/>
@@ -663,6 +691,54 @@ namespace Alternet.UI
                 throw new InvalidOperationException();
 
             NativeControl.SetMouseCapture(false);
+        }
+
+        /// <summary>
+        /// Sets input focus to the control.
+        /// </summary>
+        /// <returns><see langword="true"/> if the input focus request was successful; otherwise, <see langword="false"/>.</returns>
+        /// <remarks>The <see cref="SetFocus"/> method returns true if the control successfully received input focus.</remarks>
+        public bool SetFocus()
+        {
+            if (NativeControl == null)
+                throw new InvalidOperationException();
+
+            return NativeControl.SetFocus();
+        }
+
+        /// <summary>
+        /// Focuses the next control.
+        /// </summary>
+        public void FocusNextControl(bool forward, bool nested)
+        {
+            if (NativeControl == null)
+                throw new InvalidOperationException();
+
+            NativeControl.FocusNextControl(forward, nested);
+        }
+
+        /*
+        private static Dictionary<Native.Control, ControlHandler>
+            handlersByNativeControls = new();
+        */
+
+        internal static ControlHandler? NativeControlToHandler(
+            Native.Control control)
+        {
+            /*
+              handlersByNativeControls.TryGetValue(
+                  control,
+                  out var handler) ? handler : null;
+            */
+            return (ControlHandler?)control.handler;
+        }
+
+        internal IntPtr GetHandle()
+        {
+            if (NativeControl == null)
+                throw new InvalidOperationException();
+
+            return NativeControl.Handle;
         }
 
         internal void SaveScreenshot(string fileName)
@@ -1226,82 +1302,6 @@ namespace Alternet.UI
         {
             if (nativeControl != null && childControl.Handler.nativeControl != null)
                 nativeControl?.RemoveChild(childControl.Handler.nativeControl);
-        }
-
-        /// <summary>
-        /// Sets input focus to the control.
-        /// </summary>
-        /// <returns><see langword="true"/> if the input focus request was successful; otherwise, <see langword="false"/>.</returns>
-        /// <remarks>The <see cref="SetFocus"/> method returns true if the control successfully received input focus.</remarks>
-        public bool SetFocus()
-        {
-            if (NativeControl == null)
-                throw new InvalidOperationException();
-
-            return NativeControl.SetFocus();
-        }
-
-        /// <summary>
-        /// Focuses the next control.
-        /// </summary>
-        public void FocusNextControl(bool forward, bool nested)
-        {
-            if (NativeControl == null)
-                throw new InvalidOperationException();
-
-            NativeControl.FocusNextControl(forward, nested);
-        }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether the user can give the focus to this control using the TAB key.
-        /// </summary>
-        public virtual bool TabStop
-        {
-            get
-            {
-                if (NativeControl == null)
-                    throw new InvalidOperationException();
-
-                return NativeControl.TabStop;
-            }
-
-            set
-            {
-                if (NativeControl == null)
-                    throw new InvalidOperationException();
-
-                NativeControl.TabStop = value;
-            }
-        }
-
-        /// <summary>
-        /// Gets a value indicating whether the control has input focus.
-        /// </summary>
-        public bool IsFocused
-        {
-            get
-            {
-                if (NativeControl == null)
-                    throw new InvalidOperationException();
-
-                return NativeControl.IsFocused;
-            }
-        }
-
-        /*
-        private static Dictionary<Native.Control, ControlHandler>
-            handlersByNativeControls = new();
-        */
-
-        internal static ControlHandler? NativeControlToHandler(
-            Native.Control control)
-        {
-            /*
-              handlersByNativeControls.TryGetValue(
-                  control,
-                  out var handler) ? handler : null;
-            */
-            return (ControlHandler?)control.handler;
         }
 
         private Control? TryFindClosestParentWithNativeControl()
