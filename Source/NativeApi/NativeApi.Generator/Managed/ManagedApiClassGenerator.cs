@@ -302,7 +302,7 @@ using System.Security;");
                 var parameterType = 
                     types.GetTypeName(cparameter);
 
-                var cparameterType = cparameter.GetType();
+                var cparameterType = cparameter.Type;// GetType();
 
                 var managedParameterTypeName = TypeProvider.GetManagedName(
                     cparameterType!,
