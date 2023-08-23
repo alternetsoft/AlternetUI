@@ -36,7 +36,7 @@ namespace NativeApi.Api
 
         public IntPtr Append(IntPtr property) => throw new Exception();
 
-        /*public IntPtr CreateEnumProperty(
+        public IntPtr CreateEnumProperty(
             string label,
             string name,
             IntPtr choices,
@@ -46,7 +46,7 @@ namespace NativeApi.Api
             string label,
             string name,
             IntPtr choices,
-            int value = 0) => throw new Exception();*/
+            int value = 0) => throw new Exception();
 
         public bool ClearSelection(bool validation = false) => throw new Exception();
 
@@ -124,26 +124,14 @@ namespace NativeApi.Api
             GetIterator( int flags = wxPG_ITERATE_DEFAULT,
                          wxPGProperty* firstProp = NULL ) const
 
-            wxPropertyGridIterator GetIterator( int flags, int startPos )
-
-            wxPropertyGridConstIterator GetIterator( int flags, int startPos ) const
-
             const wxPGAttributeStorage& GetPropertyAttributes( wxPGPropArg id ) const
 
-            void GetPropertiesWithFlag( wxArrayPGProperty* targetArr,
-                                        wxPGProperty::FlagType flags,
-                                        bool inverse = false,
-                                        int iterFlags = wxPG_ITERATE_PROPERTIES |
-                                                        wxPG_ITERATE_HIDDEN |
-                                                        wxPG_ITERATE_CATEGORIES) const;
             wxVariant GetPropertyAttribute( wxPGPropArg id,
                                             const wxString& attrName ) const
 
             wxPropertyCategory* GetPropertyCategory( wxPGPropArg id ) const
 
             void* GetPropertyClientData( wxPGPropArg id ) const
-
-            const wxPGEditor* GetPropertyEditor( wxPGPropArg id ) const
 
             wxString GetPropertyHelpString( wxPGPropArg id ) const
 

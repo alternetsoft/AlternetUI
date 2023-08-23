@@ -133,6 +133,20 @@ namespace Alternet.UI.Native
             return n;
         }
         
+        public System.IntPtr CreateEnumProperty(string label, string name, System.IntPtr choices, int value)
+        {
+            CheckDisposed();
+            var n = NativeApi.PropertyGrid_CreateEnumProperty_(NativePointer, label, name, choices, value);
+            return n;
+        }
+        
+        public System.IntPtr CreateFlagsProperty(string label, string name, System.IntPtr choices, int value)
+        {
+            CheckDisposed();
+            var n = NativeApi.PropertyGrid_CreateFlagsProperty_(NativePointer, label, name, choices, value);
+            return n;
+        }
+        
         public bool ClearSelection(bool validation)
         {
             CheckDisposed();
@@ -220,6 +234,12 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern System.IntPtr PropertyGrid_Append_(IntPtr obj, System.IntPtr property);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr PropertyGrid_CreateEnumProperty_(IntPtr obj, string label, string name, System.IntPtr choices, int value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr PropertyGrid_CreateFlagsProperty_(IntPtr obj, string label, string name, System.IntPtr choices, int value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool PropertyGrid_ClearSelection_(IntPtr obj, bool validation);

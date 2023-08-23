@@ -203,37 +203,84 @@ namespace Alternet.UI
             return new PropertyGridItem(handle);
         }
 
-        /*public IPropertyGridItem CreateEnumProperty(
+        /// <summary>
+        /// Creates enumeration property.
+        /// </summary>
+        /// <param name="label">Property label.</param>
+        /// <param name="name">Property name.</param>
+        /// <param name="choices">Enumeration elements.</param>
+        /// <param name="value">Default property value.</param>
+        /// <returns>Property declaration for use with <see cref="PropertyGrid.Add"/>.</returns>
+        public IPropertyGridItem CreateEnumProperty(
             string label,
-            string name,
+            string? name,
             IPropertyGridChoices choices,
-            int value = 0)
+            object? value = null)
         {
+            value ??= 0;
             var handle = NativeControl.CreateEnumProperty(
                 label,
                 CorrectPropName(name),
                 choices.Handle,
-                value);
+                (int)value);
             return new PropertyGridItem(handle);
-        }*/
+        }
 
-        /*public IPropertyGridItem CreateFlagsProperty(
+        /// <summary>
+        /// Creates flags property (like enumeration with Flags attribute).
+        /// </summary>
+        /// <param name="label">Property label.</param>
+        /// <param name="name">Property name.</param>
+        /// <param name="choices">Elements.</param>
+        /// <param name="value">Default property value.</param>
+        /// <returns>Property declaration for use with <see cref="PropertyGrid.Add"/>.</returns>
+        public IPropertyGridItem CreateFlagsProperty(
             string label,
-            string name,
+            string? name,
             IPropertyGridChoices choices,
-            int value = 0)
+            object? value = null)
         {
+            value ??= 0;
             var handle = NativeControl.CreateFlagsProperty(
                 label,
                 CorrectPropName(name),
                 choices.Handle,
-                value);
+                (int)value);
             return new PropertyGridItem(handle);
-        }*/
+        }
 
+        /// <summary>
+        /// Creates property choices list for use with <see cref="CreateFlagsProperty"/> and
+        /// <see cref="CreateEnumProperty"/>.
+        /// </summary>
         public IPropertyGridChoices CreateChoices()
         {
             return new PropertyGridChoices();
+        }
+
+        /// <summary>
+        /// Creates property choices list for the given enumeration type.
+        /// </summary>
+        /// <remarks>
+        /// Result can be used in <see cref="CreateFlagsProperty"/> and
+        /// <see cref="CreateEnumProperty"/>.
+        /// </remarks>
+        public IPropertyGridChoices CreateChoices(Type enumType)
+        {
+            var result = CreateChoices();
+
+            if (!enumType.IsEnum)
+                return result;
+
+            var values = Enum.GetValues(enumType);
+
+            foreach (int i in values)
+            {
+                var name = Enum.GetName(enumType, i);
+                result.Add(name!, i);
+            }
+
+            return result;
         }
 
         /// <summary>

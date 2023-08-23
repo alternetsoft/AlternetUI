@@ -57,7 +57,7 @@ namespace PropertyGridSample
             var pane2 = manager.CreatePaneInfo();
             pane2.Name("pane2").Caption("Properties").Right().PaneBorder(false).CloseButton(false)
                 .TopDockable(false).BottomDockable(false).Movable(false).Floatable(false)
-                .BestSize(200,200);
+                .BestSize(400,200);
             propertyGrid.HasBorder = false;
             panel.Children.Add(propertyGrid);
             manager.AddPane(propertyGrid, pane2);
@@ -89,19 +89,14 @@ namespace PropertyGridSample
                 controlsListBox.Add(item);
             }
 
+            InitDefaultPropertyGrid();
         }
 
-        private void ControlsListBox_SelectionChanged(object? sender, EventArgs e)
+        private void InitDefaultPropertyGrid()
         {
             propertyGrid.Clear();
-            var item = controlsListBox.SelectedItem;
-            if (item == null)
-                return;
 
-            var prop = propertyGrid.CreateStringProperty(item.ToString()!, item.ToString()!);
-            propertyGrid.Add(prop);
-
-            prop = propertyGrid.CreateBoolProperty("Bool");
+            var prop = propertyGrid.CreateBoolProperty("Bool");
             propertyGrid.Add(prop);
 
             prop = propertyGrid.CreateIntProperty("Int");
@@ -118,6 +113,38 @@ namespace PropertyGridSample
 
             prop = propertyGrid.CreateDateProperty("Date");
             propertyGrid.Add(prop);
+
+            var choices1 = propertyGrid.CreateChoices(typeof(PropertyGridCreateStyle));
+            prop = propertyGrid.CreateFlagsProperty("Flags", null, choices1,
+                PropertyGrid.DefaultCreateStyle);
+            propertyGrid.Add(prop);
+
+            var choices2 = propertyGrid.CreateChoices(typeof(HorizontalAlignment));
+            prop = propertyGrid.CreateEnumProperty("Enum", null, choices2,
+                HorizontalAlignment.Center);
+            propertyGrid.Add(prop);
+        }
+
+        private void ControlsListBox_SelectionChanged(object? sender, EventArgs e)
+        {
+            propertyGrid.Clear();
+            var item = controlsListBox.SelectedItem as ControlListBoxItem;
+            if (item == null)
+                return;
+            var control = item.ControlInstance;
+
+            Type myType = control.GetType();
+            IList<PropertyInfo> props = new List<PropertyInfo>(myType.GetProperties());
+
+            foreach (PropertyInfo p in props)
+            {
+                object? propValue = p.GetValue(control, null);
+                string propName = p.Name;
+
+                var prop = propertyGrid.CreateStringProperty(propName, null, propValue?.ToString());
+                propertyGrid.Add(prop);
+            }
+
         }
 
         private void Log_MouseRightButtonUp(object sender, MouseButtonEventArgs e)

@@ -21,6 +21,8 @@ void* CreateLongStringProperty(const string& label, const string& name, const st
 void* CreateDateProperty(const string& label, const string& name, const DateTime& value);
 void Clear();
 void* Append(void* property);
+void* CreateEnumProperty(const string& label, const string& name, void* choices, int value);
+void* CreateFlagsProperty(const string& label, const string& name, void* choices, int value);
 bool ClearSelection(bool validation);
 void ClearModifiedStatus();
 bool CollapseAll();

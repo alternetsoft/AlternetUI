@@ -96,6 +96,6 @@ namespace Alternet.UI
         /// <summary>
         /// Default style of the property grid.
         /// </summary>
-        DefaultStyle = 0,
+        DefaultStyle = BoldModified | Tooltips,
     }
 }

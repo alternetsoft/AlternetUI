@@ -224,6 +224,7 @@ namespace Alternet.UI
         /// Gets or sets size of the <see cref="Control"/>'s client area, in
         /// device-independent units (1/96th inch per unit).
         /// </summary>
+        [Browsable(false)]
         public Size ClientSize
         {
             get => Handler.ClientSize;
@@ -233,6 +234,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets a value indicating whether the mouse is captured to this control.
         /// </summary>
+        [Browsable(false)]
         public bool IsMouseCaptured => Handler.IsMouseCaptured;
 
         /// <summary>
@@ -316,6 +318,7 @@ namespace Alternet.UI
         /// </summary>
         /// <value>The position of the control's upper-left corner, in logical
         /// units (1/96th of an inch).</value>
+        [Browsable(false)]
         public Point Location
         {
             get
@@ -391,6 +394,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets a <see cref="ControlHandler"/> associated with this class.
         /// </summary>
+        [Browsable(false)]
         public ControlHandler Handler
         {
             get
@@ -403,6 +407,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets whether <see cref="Dispose(bool)"/> has been called.
         /// </summary>
+        [Browsable(false)]
         public bool IsDisposed { get; private set; }
 
         /// <summary>
@@ -429,6 +434,7 @@ namespace Alternet.UI
         /// performance of applications with many controls.</para>
         /// </remarks>
         [Content]
+        [Browsable(false)]
         public Collection<Control> Children
         {
             get
@@ -447,6 +453,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets whether there are any items in the <see cref="Children"/> list.
         /// </summary>
+        [Browsable(false)]
         public bool HasChildren
         {
             get
@@ -456,6 +463,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        [Browsable(false)]
         public override IReadOnlyList<FrameworkElement> ContentElements
         {
             get
@@ -469,6 +477,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets the parent container of the control.
         /// </summary>
+        [Browsable(false)]
         public Control? Parent
         {
             get => parent;
@@ -482,6 +491,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets the parent window of the control).
         /// </summary>
+        [Browsable(false)]
         public Window? ParentWindow
         {
             get
@@ -515,6 +525,7 @@ namespace Alternet.UI
         /// The value of this property is always the same as the value that was
         /// set to it and is not changed by the layout system.
         /// </remarks>
+        [Browsable(false)]
         public virtual Size Size
         {
             get
@@ -588,6 +599,7 @@ namespace Alternet.UI
         /// <value>If <c>true</c>, the control paints itself rather than the
         /// operating system doing so.
         /// If <c>false</c>, the <see cref="Paint"/> event is not raised.</value>
+        [Browsable(false)]
         public virtual bool UserPaint
         {
             get => Handler.UserPaint;

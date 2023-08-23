@@ -79,11 +79,13 @@ namespace Alternet.UI
         /// <summary>
         /// Returns a collection of elements which can be treated as "logical children" of this element.
         /// </summary>
+        [Browsable(false)]
         protected virtual IEnumerable<FrameworkElement> LogicalChildrenCollection => emptyLogicalChildren;
 
         /// <summary>
         /// Returns a collection of content elements which is used by the UIXML loader to find content items by index.
         /// </summary>
+        [Browsable(false)]
         public virtual IReadOnlyList<FrameworkElement> ContentElements => LogicalChildrenCollection.ToArray();
 
         /// <summary>

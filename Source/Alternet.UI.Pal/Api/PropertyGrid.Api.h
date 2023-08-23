@@ -120,6 +120,20 @@ ALTERNET_UI_API void* PropertyGrid_Append_(PropertyGrid* obj, void* property)
         });
 }
 
+ALTERNET_UI_API void* PropertyGrid_CreateEnumProperty_(PropertyGrid* obj, const char16_t* label, const char16_t* name, void* choices, int value)
+{
+    return MarshalExceptions<void*>([&](){
+            return obj->CreateEnumProperty(label, name, choices, value);
+        });
+}
+
+ALTERNET_UI_API void* PropertyGrid_CreateFlagsProperty_(PropertyGrid* obj, const char16_t* label, const char16_t* name, void* choices, int value)
+{
+    return MarshalExceptions<void*>([&](){
+            return obj->CreateFlagsProperty(label, name, choices, value);
+        });
+}
+
 ALTERNET_UI_API c_bool PropertyGrid_ClearSelection_(PropertyGrid* obj, c_bool validation)
 {
     return MarshalExceptions<c_bool>([&](){
