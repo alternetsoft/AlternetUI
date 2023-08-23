@@ -813,15 +813,6 @@ namespace Alternet.UI
             }
         }
 
-        internal virtual Rect DrawClientRectangle
-        {
-            get
-            {
-                var size = ClientSize;
-                return new(0, 0, size.Width - 1, size.Height - 1);
-            }
-        }
-
         internal bool HasExtendedProps => extendedProps != null;
 
         internal ControlExtendedProps ExtendedProps
@@ -830,6 +821,19 @@ namespace Alternet.UI
             {
                 extendedProps ??= new();
                 return extendedProps;
+            }
+        }
+
+        /// <summary>
+        /// Returns rectangle in which custom drawing need to be performed.
+        /// Useful for custom draw controls
+        /// </summary>
+        protected virtual Rect DrawClientRectangle
+        {
+            get
+            {
+                var size = ClientSize;
+                return new(0, 0, size.Width - 1, size.Height - 1);
             }
         }
 
