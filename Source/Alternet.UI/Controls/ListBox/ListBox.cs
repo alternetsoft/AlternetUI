@@ -250,10 +250,17 @@ namespace Alternet.UI
             {
                 CheckDisposed();
 
-                if (SelectedIndex == null)
+                var selectedIndex = SelectedIndex;
+
+                if (selectedIndex == null)
                     return null;
 
-                return Items[SelectedIndex.Value];
+                int value = selectedIndex.Value;
+
+                if (value >= Items.Count || value < 0)
+                    return null;
+
+                return Items[value];
             }
 
             set
