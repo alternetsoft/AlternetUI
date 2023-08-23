@@ -29,7 +29,7 @@ namespace NativeApi.Api
         public IntPtr CreateLongStringProperty(string label, string name, string value) =>
             throw new Exception();
 
-        public IntPtr CreateDateProperty(string label, string name, DateTime value) =>
+        public IntPtr CreateDateProperty(string label, string name, Alternet.UI.DateTime value) =>
             throw new Exception();
 
         public void Clear() => throw new Exception();

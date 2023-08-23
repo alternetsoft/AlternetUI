@@ -113,7 +113,7 @@ namespace Alternet.UI.Native
             return n;
         }
         
-        public System.IntPtr CreateDateProperty(string label, string name, System.DateTime value)
+        public System.IntPtr CreateDateProperty(string label, string name, DateTime value)
         {
             CheckDisposed();
             var n = NativeApi.PropertyGrid_CreateDateProperty_(NativePointer, label, name, value);
@@ -179,7 +179,7 @@ namespace Alternet.UI.Native
             public static extern System.IntPtr PropertyGrid_CreateLongStringProperty_(IntPtr obj, string label, string name, string value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr PropertyGrid_CreateDateProperty_(IntPtr obj, string label, string name, System.DateTime value);
+            public static extern System.IntPtr PropertyGrid_CreateDateProperty_(IntPtr obj, string label, string name, NativeApiTypes.DateTime value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void PropertyGrid_Clear_(IntPtr obj);

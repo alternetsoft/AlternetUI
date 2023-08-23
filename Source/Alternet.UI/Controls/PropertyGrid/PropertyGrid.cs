@@ -146,11 +146,17 @@ namespace Alternet.UI
             string? name = null,
             DateTime? value = null)
         {
-            value ??= DateTime.Now.Date;
+            DateTime dt;
+
+            if (value == null)
+                dt = DateTime.Now;
+            else
+                dt = value.Value;
+
             var handle = NativeControl.CreateDateProperty(
                 label,
                 CorrectPropName(name),
-                value.Value);
+                dt);
             return new PropertyGridItem(handle);
         }
 

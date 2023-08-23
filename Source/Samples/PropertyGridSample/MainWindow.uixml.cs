@@ -116,8 +116,8 @@ namespace PropertyGridSample
             prop = propertyGrid.CreateLongStringProperty("Long string");
             propertyGrid.Add(prop);
 
-            //prop = propertyGrid.CreateDateProperty("Date");
-            //propertyGrid.Add(prop);
+            prop = propertyGrid.CreateDateProperty("Date");
+            propertyGrid.Add(prop);
         }
 
         private void Log_MouseRightButtonUp(object sender, MouseButtonEventArgs e)
