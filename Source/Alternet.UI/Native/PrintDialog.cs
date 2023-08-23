@@ -29,8 +29,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.PrintDialog_GetAllowSomePages_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -46,8 +45,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.PrintDialog_GetAllowSelection_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -63,8 +61,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.PrintDialog_GetAllowPrintToFile_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -80,8 +77,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.PrintDialog_GetShowHelp_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -113,8 +109,7 @@ namespace Alternet.UI.Native
         {
             CheckDisposed();
             var n = NativeApi.PrintDialog_ShowModal_(NativePointer, owner?.NativePointer ?? IntPtr.Zero);
-            var m = n;
-            return m;
+            return n;
         }
         
         

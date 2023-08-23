@@ -30,8 +30,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.AuiNotebook_GetEventSelection_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
         }
@@ -42,8 +41,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.AuiNotebook_GetEventOldSelection_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
         }
@@ -54,8 +52,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.AuiNotebook_GetCreateStyle_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -68,8 +65,7 @@ namespace Alternet.UI.Native
         public static System.IntPtr CreateEx(long styles)
         {
             var n = NativeApi.AuiNotebook_CreateEx_(styles);
-            var m = n;
-            return m;
+            return n;
         }
         
         public void SetArtProvider(System.IntPtr art)
@@ -82,8 +78,7 @@ namespace Alternet.UI.Native
         {
             CheckDisposed();
             var n = NativeApi.AuiNotebook_GetArtProvider_(NativePointer);
-            var m = n;
-            return m;
+            return n;
         }
         
         public void SetUniformBitmapSize(int width, int height)
@@ -102,120 +97,105 @@ namespace Alternet.UI.Native
         {
             CheckDisposed();
             var n = NativeApi.AuiNotebook_AddPage_(NativePointer, page, caption, select, bitmap?.NativePointer ?? IntPtr.Zero);
-            var m = n;
-            return m;
+            return n;
         }
         
         public bool InsertPage(ulong pageIdx, System.IntPtr page, string caption, bool select, ImageSet? bitmap)
         {
             CheckDisposed();
             var n = NativeApi.AuiNotebook_InsertPage_(NativePointer, pageIdx, page, caption, select, bitmap?.NativePointer ?? IntPtr.Zero);
-            var m = n;
-            return m;
+            return n;
         }
         
         public bool DeletePage(ulong page)
         {
             CheckDisposed();
             var n = NativeApi.AuiNotebook_DeletePage_(NativePointer, page);
-            var m = n;
-            return m;
+            return n;
         }
         
         public bool RemovePage(ulong page)
         {
             CheckDisposed();
             var n = NativeApi.AuiNotebook_RemovePage_(NativePointer, page);
-            var m = n;
-            return m;
+            return n;
         }
         
         public ulong GetPageCount()
         {
             CheckDisposed();
             var n = NativeApi.AuiNotebook_GetPageCount_(NativePointer);
-            var m = n;
-            return m;
+            return n;
         }
         
         public System.IntPtr GetPage(ulong pageIdx)
         {
             CheckDisposed();
             var n = NativeApi.AuiNotebook_GetPage_(NativePointer, pageIdx);
-            var m = n;
-            return m;
+            return n;
         }
         
         public int FindPage(System.IntPtr page)
         {
             CheckDisposed();
             var n = NativeApi.AuiNotebook_FindPage_(NativePointer, page);
-            var m = n;
-            return m;
+            return n;
         }
         
         public bool SetPageText(ulong page, string text)
         {
             CheckDisposed();
             var n = NativeApi.AuiNotebook_SetPageText_(NativePointer, page, text);
-            var m = n;
-            return m;
+            return n;
         }
         
         public string GetPageText(ulong pageIdx)
         {
             CheckDisposed();
             var n = NativeApi.AuiNotebook_GetPageText_(NativePointer, pageIdx);
-            var m = n;
-            return m;
+            return n;
         }
         
         public bool SetPageToolTip(ulong page, string text)
         {
             CheckDisposed();
             var n = NativeApi.AuiNotebook_SetPageToolTip_(NativePointer, page, text);
-            var m = n;
-            return m;
+            return n;
         }
         
         public string GetPageToolTip(ulong pageIdx)
         {
             CheckDisposed();
             var n = NativeApi.AuiNotebook_GetPageToolTip_(NativePointer, pageIdx);
-            var m = n;
-            return m;
+            return n;
         }
         
         public bool SetPageBitmap(ulong page, ImageSet? bitmap)
         {
             CheckDisposed();
             var n = NativeApi.AuiNotebook_SetPageBitmap_(NativePointer, page, bitmap?.NativePointer ?? IntPtr.Zero);
-            var m = n;
-            return m;
+            return n;
         }
         
         public long SetSelection(ulong newPage)
         {
             CheckDisposed();
             var n = NativeApi.AuiNotebook_SetSelection_(NativePointer, newPage);
-            var m = n;
-            return m;
+            return n;
         }
         
         public long GetSelection()
         {
             CheckDisposed();
             var n = NativeApi.AuiNotebook_GetSelection_(NativePointer);
-            var m = n;
-            return m;
+            return n;
         }
         
         public long ChangeSelection(ulong newPage)
         {
             CheckDisposed();
             var n = NativeApi.AuiNotebook_ChangeSelection_(NativePointer, newPage);
-            var m = n;
-            return m;
+            return n;
         }
         
         public void AdvanceSelection(bool forward)
@@ -252,32 +232,28 @@ namespace Alternet.UI.Native
         {
             CheckDisposed();
             var n = NativeApi.AuiNotebook_GetTabCtrlHeight_(NativePointer);
-            var m = n;
-            return m;
+            return n;
         }
         
         public int GetHeightForPageHeight(int pageHeight)
         {
             CheckDisposed();
             var n = NativeApi.AuiNotebook_GetHeightForPageHeight_(NativePointer, pageHeight);
-            var m = n;
-            return m;
+            return n;
         }
         
         public bool ShowWindowMenu()
         {
             CheckDisposed();
             var n = NativeApi.AuiNotebook_ShowWindowMenu_(NativePointer);
-            var m = n;
-            return m;
+            return n;
         }
         
         public bool DeleteAllPages()
         {
             CheckDisposed();
             var n = NativeApi.AuiNotebook_DeleteAllPages_(NativePointer);
-            var m = n;
-            return m;
+            return n;
         }
         
         static GCHandle eventCallbackGCHandle;

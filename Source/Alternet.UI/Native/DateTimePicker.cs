@@ -30,8 +30,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.DateTimePicker_GetHasBorder_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -47,8 +46,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.DateTimePicker_GetValue_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -64,8 +62,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.DateTimePicker_GetMinValue_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -81,8 +78,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.DateTimePicker_GetMaxValue_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -98,8 +94,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.DateTimePicker_GetValueKind_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -115,8 +110,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.DateTimePicker_GetPopupKind_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set

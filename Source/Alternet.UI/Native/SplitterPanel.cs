@@ -30,8 +30,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.SplitterPanel_GetStyles_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -47,8 +46,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.SplitterPanel_GetMinimumPaneSize_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -64,8 +62,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.SplitterPanel_GetSashGravity_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -81,8 +78,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.SplitterPanel_GetSashSize_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -98,8 +94,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.SplitterPanel_GetSplitMode_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -115,8 +110,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.SplitterPanel_GetSashVisible_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -132,8 +126,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.SplitterPanel_GetIsSplit_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
         }
@@ -144,8 +137,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.SplitterPanel_GetCanDoubleClick_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -161,8 +153,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.SplitterPanel_GetCanMoveSplitter_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -178,8 +169,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.SplitterPanel_GetSashPosition_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -195,8 +185,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.SplitterPanel_GetRedrawOnSashPosition_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -212,8 +201,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.SplitterPanel_GetDefaultSashSize_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
         }
@@ -247,8 +235,7 @@ namespace Alternet.UI.Native
         public static System.IntPtr CreateEx(long styles)
         {
             var n = NativeApi.SplitterPanel_CreateEx_(styles);
-            var m = n;
-            return m;
+            return n;
         }
         
         public void Initialize(Control window)
@@ -261,32 +248,28 @@ namespace Alternet.UI.Native
         {
             CheckDisposed();
             var n = NativeApi.SplitterPanel_Replace_(NativePointer, winOld.NativePointer, winNew.NativePointer);
-            var m = n;
-            return m;
+            return n;
         }
         
         public bool SplitHorizontally(Control window1, Control window2, int sashPosition)
         {
             CheckDisposed();
             var n = NativeApi.SplitterPanel_SplitHorizontally_(NativePointer, window1.NativePointer, window2.NativePointer, sashPosition);
-            var m = n;
-            return m;
+            return n;
         }
         
         public bool SplitVertically(Control window1, Control window2, int sashPosition)
         {
             CheckDisposed();
             var n = NativeApi.SplitterPanel_SplitVertically_(NativePointer, window1.NativePointer, window2.NativePointer, sashPosition);
-            var m = n;
-            return m;
+            return n;
         }
         
         public bool DoUnsplit(Control toRemove)
         {
             CheckDisposed();
             var n = NativeApi.SplitterPanel_DoUnsplit_(NativePointer, toRemove.NativePointer);
-            var m = n;
-            return m;
+            return n;
         }
         
         public void UpdateSize()

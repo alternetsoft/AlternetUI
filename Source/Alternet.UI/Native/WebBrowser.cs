@@ -30,8 +30,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.WebBrowser_GetHasBorder_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -47,8 +46,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.WebBrowser_GetCanGoBack_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
         }
@@ -59,8 +57,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.WebBrowser_GetCanGoForward_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
         }
@@ -71,8 +68,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.WebBrowser_GetCanCut_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
         }
@@ -83,8 +79,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.WebBrowser_GetCanCopy_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
         }
@@ -95,8 +90,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.WebBrowser_GetCanUndo_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
         }
@@ -107,8 +101,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.WebBrowser_GetCanRedo_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
         }
@@ -119,8 +112,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.WebBrowser_GetIsBusy_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
         }
@@ -131,8 +123,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.WebBrowser_GetCanPaste_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
         }
@@ -143,8 +134,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.WebBrowser_GetZoomFactor_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -160,8 +150,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.WebBrowser_GetHasSelection_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
         }
@@ -172,8 +161,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.WebBrowser_GetSelectedSource_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
         }
@@ -184,8 +172,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.WebBrowser_GetSelectedText_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
         }
@@ -196,8 +183,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.WebBrowser_GetPageSource_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
         }
@@ -208,8 +194,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.WebBrowser_GetPageText_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
         }
@@ -220,8 +205,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.WebBrowser_GetAccessToDevToolsEnabled_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -237,8 +221,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.WebBrowser_GetPreferredColorScheme_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -254,8 +237,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.WebBrowser_GetUserAgent_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -271,8 +253,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.WebBrowser_GetContextMenuEnabled_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -288,8 +269,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.WebBrowser_GetEditable_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -305,8 +285,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.WebBrowser_GetZoom_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -340,15 +319,13 @@ namespace Alternet.UI.Native
         {
             CheckDisposed();
             var n = NativeApi.WebBrowser_DoCommand_(NativePointer, cmdName, cmdParam1, cmdParam2);
-            var m = n;
-            return m;
+            return n;
         }
         
         public static string DoCommandGlobal(string cmdName, string cmdParam1, string cmdParam2)
         {
             var n = NativeApi.WebBrowser_DoCommandGlobal_(cmdName, cmdParam1, cmdParam2);
-            var m = n;
-            return m;
+            return n;
         }
         
         public void SetVirtualHostNameToFolderMapping(string hostName, string folderPath, int accessKind)
@@ -361,8 +338,7 @@ namespace Alternet.UI.Native
         {
             CheckDisposed();
             var n = NativeApi.WebBrowser_GetNativeBackend_(NativePointer);
-            var m = n;
-            return m;
+            return n;
         }
         
         public void GoBack()
@@ -471,16 +447,14 @@ namespace Alternet.UI.Native
         {
             CheckDisposed();
             var n = NativeApi.WebBrowser_AddScriptMessageHandler_(NativePointer, name);
-            var m = n;
-            return m;
+            return n;
         }
         
         public bool RemoveScriptMessageHandler(string name)
         {
             CheckDisposed();
             var n = NativeApi.WebBrowser_RemoveScriptMessageHandler_(NativePointer, name);
-            var m = n;
-            return m;
+            return n;
         }
         
         public void RunScriptAsync(string javascript, System.IntPtr clientData)
@@ -498,8 +472,7 @@ namespace Alternet.UI.Native
         public static int GetBackendOS()
         {
             var n = NativeApi.WebBrowser_GetBackendOS_();
-            var m = n;
-            return m;
+            return n;
         }
         
         public static void SetEdgePath(string path)
@@ -511,16 +484,14 @@ namespace Alternet.UI.Native
         {
             CheckDisposed();
             var n = NativeApi.WebBrowser_GetCurrentTitle_(NativePointer);
-            var m = n;
-            return m;
+            return n;
         }
         
         public string GetCurrentURL()
         {
             CheckDisposed();
             var n = NativeApi.WebBrowser_GetCurrentURL_(NativePointer);
-            var m = n;
-            return m;
+            return n;
         }
         
         public void LoadURL(string url)
@@ -533,8 +504,7 @@ namespace Alternet.UI.Native
         {
             CheckDisposed();
             var n = NativeApi.WebBrowser_RunScript_(NativePointer, javascript);
-            var m = n;
-            return m;
+            return n;
         }
         
         public void SetPage(string text, string baseUrl)
@@ -547,8 +517,7 @@ namespace Alternet.UI.Native
         {
             CheckDisposed();
             var n = NativeApi.WebBrowser_AddUserScript_(NativePointer, javascript, injectionTime);
-            var m = n;
-            return m;
+            return n;
         }
         
         static GCHandle eventCallbackGCHandle;

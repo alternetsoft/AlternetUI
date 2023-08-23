@@ -43,8 +43,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.Control_GetToolTip_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -60,8 +59,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.Control_GetAllowDrop_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -77,8 +75,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.Control_GetSize_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -94,8 +91,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.Control_GetLocation_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -111,8 +107,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.Control_GetBounds_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -128,8 +123,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.Control_GetClientSize_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -145,8 +139,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.Control_GetIntrinsicLayoutPadding_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
         }
@@ -157,8 +150,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.Control_GetIntrinsicPreferredSizePadding_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
         }
@@ -169,8 +161,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.Control_GetVisible_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -186,8 +177,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.Control_GetEnabled_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -203,8 +193,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.Control_GetUserPaint_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -220,8 +209,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.Control_GetIsMouseOver_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
         }
@@ -232,8 +220,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.Control_GetHasWindowCreated_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
         }
@@ -244,8 +231,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.Control_GetBackgroundColor_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -261,8 +247,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.Control_GetForegroundColor_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -296,8 +281,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.Control_GetIsMouseCaptured_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
         }
@@ -308,8 +292,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.Control_GetTabStop_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -325,8 +308,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.Control_GetIsFocused_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
         }
@@ -337,8 +319,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.Control_GetHandle_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
         }
@@ -349,8 +330,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.Control_GetWxWidget_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
         }
@@ -361,8 +341,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.Control_GetIsScrollable_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -400,16 +379,14 @@ namespace Alternet.UI.Native
         {
             CheckDisposed();
             var n = NativeApi.Control_GetContainingSizer_(NativePointer);
-            var m = n;
-            return m;
+            return n;
         }
         
         public System.IntPtr GetSizer()
         {
             CheckDisposed();
             var n = NativeApi.Control_GetSizer_(NativePointer);
-            var m = n;
-            return m;
+            return n;
         }
         
         public void SetSizer(System.IntPtr sizer, bool deleteOld)
@@ -434,32 +411,28 @@ namespace Alternet.UI.Native
         {
             CheckDisposed();
             var n = NativeApi.Control_IsScrollBarVisible_(NativePointer, orientation);
-            var m = n;
-            return m;
+            return n;
         }
         
         public int GetScrollBarValue(ScrollBarOrientation orientation)
         {
             CheckDisposed();
             var n = NativeApi.Control_GetScrollBarValue_(NativePointer, orientation);
-            var m = n;
-            return m;
+            return n;
         }
         
         public int GetScrollBarLargeChange(ScrollBarOrientation orientation)
         {
             CheckDisposed();
             var n = NativeApi.Control_GetScrollBarLargeChange_(NativePointer, orientation);
-            var m = n;
-            return m;
+            return n;
         }
         
         public int GetScrollBarMaximum(ScrollBarOrientation orientation)
         {
             CheckDisposed();
             var n = NativeApi.Control_GetScrollBarMaximum_(NativePointer, orientation);
-            var m = n;
-            return m;
+            return n;
         }
         
         public static void NotifyCaptureLost()
@@ -489,8 +462,7 @@ namespace Alternet.UI.Native
         {
             CheckDisposed();
             var n = NativeApi.Control_GetDPI_(NativePointer);
-            var m = n;
-            return m;
+            return n;
         }
         
         public void SetMouseCapture(bool value)
@@ -527,16 +499,14 @@ namespace Alternet.UI.Native
         {
             CheckDisposed();
             var n = NativeApi.Control_GetPreferredSize_(NativePointer, availableSize);
-            var m = n;
-            return m;
+            return n;
         }
         
         public DragDropEffects DoDragDrop(UnmanagedDataObject data, DragDropEffects allowedEffects)
         {
             CheckDisposed();
             var n = NativeApi.Control_DoDragDrop_(NativePointer, data.NativePointer, allowedEffects);
-            var m = n;
-            return m;
+            return n;
         }
         
         public DrawingContext OpenPaintDrawingContext()
@@ -587,32 +557,28 @@ namespace Alternet.UI.Native
         {
             CheckDisposed();
             var n = NativeApi.Control_ClientToScreen_(NativePointer, point);
-            var m = n;
-            return m;
+            return n;
         }
         
         public Alternet.Drawing.Point ScreenToClient(Alternet.Drawing.Point point)
         {
             CheckDisposed();
             var n = NativeApi.Control_ScreenToClient_(NativePointer, point);
-            var m = n;
-            return m;
+            return n;
         }
         
         public Alternet.Drawing.Int32Point ScreenToDevice(Alternet.Drawing.Point point)
         {
             CheckDisposed();
             var n = NativeApi.Control_ScreenToDevice_(NativePointer, point);
-            var m = n;
-            return m;
+            return n;
         }
         
         public Alternet.Drawing.Point DeviceToScreen(Alternet.Drawing.Int32Point point)
         {
             CheckDisposed();
             var n = NativeApi.Control_DeviceToScreen_(NativePointer, point);
-            var m = n;
-            return m;
+            return n;
         }
         
         public static Control? GetFocusedControl()
@@ -627,8 +593,7 @@ namespace Alternet.UI.Native
         {
             CheckDisposed();
             var n = NativeApi.Control_SetFocus_(NativePointer);
-            var m = n;
-            return m;
+            return n;
         }
         
         public void FocusNextControl(bool forward, bool nested)

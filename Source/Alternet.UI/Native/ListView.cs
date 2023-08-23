@@ -30,8 +30,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.ListView_GetHasBorder_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -47,8 +46,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.ListView_GetItemsCount_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
         }
@@ -95,8 +93,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.ListView_GetCurrentView_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -112,8 +109,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.ListView_GetSelectionMode_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -155,8 +151,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.ListView_GetAllowLabelEdit_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -172,8 +167,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.ListView_GetTopItemIndex_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
         }
@@ -184,8 +178,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.ListView_GetGridLinesDisplayMode_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -201,8 +194,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.ListView_GetSortMode_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -218,8 +210,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.ListView_GetColumnHeaderVisible_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -235,8 +226,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.ListView_GetFocusedItemIndex_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -292,32 +282,28 @@ namespace Alternet.UI.Native
         {
             CheckDisposed();
             var n = NativeApi.ListView_ItemHitTest_(NativePointer, point);
-            var m = n;
-            return m;
+            return n;
         }
         
         public ListViewHitTestLocations GetHitTestResultLocations(System.IntPtr hitTestResult)
         {
             CheckDisposed();
             var n = NativeApi.ListView_GetHitTestResultLocations_(NativePointer, hitTestResult);
-            var m = n;
-            return m;
+            return n;
         }
         
         public long GetHitTestResultItemIndex(System.IntPtr hitTestResult)
         {
             CheckDisposed();
             var n = NativeApi.ListView_GetHitTestResultItemIndex_(NativePointer, hitTestResult);
-            var m = n;
-            return m;
+            return n;
         }
         
         public long GetHitTestResultColumnIndex(System.IntPtr hitTestResult)
         {
             CheckDisposed();
             var n = NativeApi.ListView_GetHitTestResultColumnIndex_(NativePointer, hitTestResult);
-            var m = n;
-            return m;
+            return n;
         }
         
         public void FreeHitTestResult(System.IntPtr hitTestResult)
@@ -336,8 +322,7 @@ namespace Alternet.UI.Native
         {
             CheckDisposed();
             var n = NativeApi.ListView_GetItemBounds_(NativePointer, itemIndex, portion);
-            var m = n;
-            return m;
+            return n;
         }
         
         public void Clear()

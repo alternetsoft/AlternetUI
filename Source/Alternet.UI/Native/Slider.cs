@@ -30,8 +30,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.Slider_GetMinimum_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -47,8 +46,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.Slider_GetMaximum_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -64,8 +62,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.Slider_GetValue_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -81,8 +78,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.Slider_GetSmallChange_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -98,8 +94,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.Slider_GetLargeChange_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -115,8 +110,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.Slider_GetTickFrequency_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -132,8 +126,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.Slider_GetOrientation_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -149,8 +142,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.Slider_GetTickStyle_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set

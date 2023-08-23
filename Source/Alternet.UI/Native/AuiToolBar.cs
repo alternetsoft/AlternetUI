@@ -30,8 +30,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.AuiToolBar_GetCreateStyle_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -47,8 +46,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.AuiToolBar_GetEventToolId_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
         }
@@ -59,8 +57,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.AuiToolBar_GetEventIsDropDownClicked_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
         }
@@ -71,8 +68,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.AuiToolBar_GetEventClickPoint_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
         }
@@ -83,8 +79,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.AuiToolBar_GetEventItemRect_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
         }
@@ -110,8 +105,7 @@ namespace Alternet.UI.Native
         public static System.IntPtr CreateEx(long styles)
         {
             var n = NativeApi.AuiToolBar_CreateEx_(styles);
-            var m = n;
-            return m;
+            return n;
         }
         
         public void SetArtProvider(System.IntPtr art)
@@ -124,120 +118,105 @@ namespace Alternet.UI.Native
         {
             CheckDisposed();
             var n = NativeApi.AuiToolBar_GetArtProvider_(NativePointer);
-            var m = n;
-            return m;
+            return n;
         }
         
         public int GetToolKind(int toolId)
         {
             CheckDisposed();
             var n = NativeApi.AuiToolBar_GetToolKind_(NativePointer, toolId);
-            var m = n;
-            return m;
+            return n;
         }
         
         public System.IntPtr AddTool(int toolId, string label, ImageSet? bitmapBundle, string shortHelpString, int itemKind)
         {
             CheckDisposed();
             var n = NativeApi.AuiToolBar_AddTool_(NativePointer, toolId, label, bitmapBundle?.NativePointer ?? IntPtr.Zero, shortHelpString, itemKind);
-            var m = n;
-            return m;
+            return n;
         }
         
         public System.IntPtr AddTool2(int toolId, string label, ImageSet? bitmapBundle, ImageSet? disabledBitmapBundle, int itemKind, string shortHelpString, string longHelpString, System.IntPtr clientData)
         {
             CheckDisposed();
             var n = NativeApi.AuiToolBar_AddTool2_(NativePointer, toolId, label, bitmapBundle?.NativePointer ?? IntPtr.Zero, disabledBitmapBundle?.NativePointer ?? IntPtr.Zero, itemKind, shortHelpString, longHelpString, clientData);
-            var m = n;
-            return m;
+            return n;
         }
         
         public System.IntPtr AddTool3(int toolId, ImageSet? bitmapBundle, ImageSet? disabledBitmapBundle, bool toggle, System.IntPtr clientData, string shortHelpString, string longHelpString)
         {
             CheckDisposed();
             var n = NativeApi.AuiToolBar_AddTool3_(NativePointer, toolId, bitmapBundle?.NativePointer ?? IntPtr.Zero, disabledBitmapBundle?.NativePointer ?? IntPtr.Zero, toggle, clientData, shortHelpString, longHelpString);
-            var m = n;
-            return m;
+            return n;
         }
         
         public System.IntPtr AddLabel(int toolId, string label, int width)
         {
             CheckDisposed();
             var n = NativeApi.AuiToolBar_AddLabel_(NativePointer, toolId, label, width);
-            var m = n;
-            return m;
+            return n;
         }
         
         public System.IntPtr AddControl(System.IntPtr control, string label)
         {
             CheckDisposed();
             var n = NativeApi.AuiToolBar_AddControl_(NativePointer, control, label);
-            var m = n;
-            return m;
+            return n;
         }
         
         public System.IntPtr AddSeparator()
         {
             CheckDisposed();
             var n = NativeApi.AuiToolBar_AddSeparator_(NativePointer);
-            var m = n;
-            return m;
+            return n;
         }
         
         public System.IntPtr AddSpacer(int pixels)
         {
             CheckDisposed();
             var n = NativeApi.AuiToolBar_AddSpacer_(NativePointer, pixels);
-            var m = n;
-            return m;
+            return n;
         }
         
         public System.IntPtr AddStretchSpacer(int proportion)
         {
             CheckDisposed();
             var n = NativeApi.AuiToolBar_AddStretchSpacer_(NativePointer, proportion);
-            var m = n;
-            return m;
+            return n;
         }
         
         public bool Realize()
         {
             CheckDisposed();
             var n = NativeApi.AuiToolBar_Realize_(NativePointer);
-            var m = n;
-            return m;
+            return n;
         }
         
         public System.IntPtr FindControl(int windowId)
         {
             CheckDisposed();
             var n = NativeApi.AuiToolBar_FindControl_(NativePointer, windowId);
-            var m = n;
-            return m;
+            return n;
         }
         
         public System.IntPtr FindToolByPosition(int x, int y)
         {
             CheckDisposed();
             var n = NativeApi.AuiToolBar_FindToolByPosition_(NativePointer, x, y);
-            var m = n;
-            return m;
+            return n;
         }
         
         public System.IntPtr FindToolByIndex(int idx)
         {
             CheckDisposed();
             var n = NativeApi.AuiToolBar_FindToolByIndex_(NativePointer, idx);
-            var m = n;
-            return m;
+            return n;
         }
         
         public System.IntPtr FindTool(int toolId)
         {
             CheckDisposed();
             var n = NativeApi.AuiToolBar_FindTool_(NativePointer, toolId);
-            var m = n;
-            return m;
+            return n;
         }
         
         public void Clear()
@@ -250,72 +229,63 @@ namespace Alternet.UI.Native
         {
             CheckDisposed();
             var n = NativeApi.AuiToolBar_DestroyTool_(NativePointer, toolId);
-            var m = n;
-            return m;
+            return n;
         }
         
         public bool DestroyToolByIndex(int idx)
         {
             CheckDisposed();
             var n = NativeApi.AuiToolBar_DestroyToolByIndex_(NativePointer, idx);
-            var m = n;
-            return m;
+            return n;
         }
         
         public bool DeleteTool(int toolId)
         {
             CheckDisposed();
             var n = NativeApi.AuiToolBar_DeleteTool_(NativePointer, toolId);
-            var m = n;
-            return m;
+            return n;
         }
         
         public bool DeleteByIndex(int toolId)
         {
             CheckDisposed();
             var n = NativeApi.AuiToolBar_DeleteByIndex_(NativePointer, toolId);
-            var m = n;
-            return m;
+            return n;
         }
         
         public int GetToolIndex(int toolId)
         {
             CheckDisposed();
             var n = NativeApi.AuiToolBar_GetToolIndex_(NativePointer, toolId);
-            var m = n;
-            return m;
+            return n;
         }
         
         public bool GetToolFits(int toolId)
         {
             CheckDisposed();
             var n = NativeApi.AuiToolBar_GetToolFits_(NativePointer, toolId);
-            var m = n;
-            return m;
+            return n;
         }
         
         public Alternet.Drawing.Rect GetToolRect(int toolId)
         {
             CheckDisposed();
             var n = NativeApi.AuiToolBar_GetToolRect_(NativePointer, toolId);
-            var m = n;
-            return m;
+            return n;
         }
         
         public bool GetToolFitsByIndex(int toolId)
         {
             CheckDisposed();
             var n = NativeApi.AuiToolBar_GetToolFitsByIndex_(NativePointer, toolId);
-            var m = n;
-            return m;
+            return n;
         }
         
         public bool GetToolBarFits()
         {
             CheckDisposed();
             var n = NativeApi.AuiToolBar_GetToolBarFits_(NativePointer);
-            var m = n;
-            return m;
+            return n;
         }
         
         public void SetToolBitmapSize(Alternet.Drawing.Size size)
@@ -328,16 +298,14 @@ namespace Alternet.UI.Native
         {
             CheckDisposed();
             var n = NativeApi.AuiToolBar_GetToolBitmapSize_(NativePointer);
-            var m = n;
-            return m;
+            return n;
         }
         
         public bool GetOverflowVisible()
         {
             CheckDisposed();
             var n = NativeApi.AuiToolBar_GetOverflowVisible_(NativePointer);
-            var m = n;
-            return m;
+            return n;
         }
         
         public void SetOverflowVisible(bool visible)
@@ -350,8 +318,7 @@ namespace Alternet.UI.Native
         {
             CheckDisposed();
             var n = NativeApi.AuiToolBar_GetGripperVisible_(NativePointer);
-            var m = n;
-            return m;
+            return n;
         }
         
         public void SetGripperVisible(bool visible)
@@ -370,8 +337,7 @@ namespace Alternet.UI.Native
         {
             CheckDisposed();
             var n = NativeApi.AuiToolBar_GetToolToggled_(NativePointer, toolId);
-            var m = n;
-            return m;
+            return n;
         }
         
         public void SetMargins(int left, int right, int top, int bottom)
@@ -390,8 +356,7 @@ namespace Alternet.UI.Native
         {
             CheckDisposed();
             var n = NativeApi.AuiToolBar_GetToolEnabled_(NativePointer, toolId);
-            var m = n;
-            return m;
+            return n;
         }
         
         public void SetToolDropDown(int toolId, bool dropdown)
@@ -404,8 +369,7 @@ namespace Alternet.UI.Native
         {
             CheckDisposed();
             var n = NativeApi.AuiToolBar_GetToolDropDown_(NativePointer, toolId);
-            var m = n;
-            return m;
+            return n;
         }
         
         public void SetToolBorderPadding(int padding)
@@ -418,8 +382,7 @@ namespace Alternet.UI.Native
         {
             CheckDisposed();
             var n = NativeApi.AuiToolBar_GetToolBorderPadding_(NativePointer);
-            var m = n;
-            return m;
+            return n;
         }
         
         public void SetToolTextOrientation(int orientation)
@@ -432,8 +395,7 @@ namespace Alternet.UI.Native
         {
             CheckDisposed();
             var n = NativeApi.AuiToolBar_GetToolTextOrientation_(NativePointer);
-            var m = n;
-            return m;
+            return n;
         }
         
         public void SetToolPacking(int packing)
@@ -446,8 +408,7 @@ namespace Alternet.UI.Native
         {
             CheckDisposed();
             var n = NativeApi.AuiToolBar_GetToolPacking_(NativePointer);
-            var m = n;
-            return m;
+            return n;
         }
         
         public void SetToolProportion(int toolId, int proportion)
@@ -460,8 +421,7 @@ namespace Alternet.UI.Native
         {
             CheckDisposed();
             var n = NativeApi.AuiToolBar_GetToolProportion_(NativePointer, toolId);
-            var m = n;
-            return m;
+            return n;
         }
         
         public void SetToolSeparation(int separation)
@@ -474,8 +434,7 @@ namespace Alternet.UI.Native
         {
             CheckDisposed();
             var n = NativeApi.AuiToolBar_GetToolSeparation_(NativePointer);
-            var m = n;
-            return m;
+            return n;
         }
         
         public void SetToolSticky(int toolId, bool sticky)
@@ -488,16 +447,14 @@ namespace Alternet.UI.Native
         {
             CheckDisposed();
             var n = NativeApi.AuiToolBar_GetToolSticky_(NativePointer, toolId);
-            var m = n;
-            return m;
+            return n;
         }
         
         public string GetToolLabel(int toolId)
         {
             CheckDisposed();
             var n = NativeApi.AuiToolBar_GetToolLabel_(NativePointer, toolId);
-            var m = n;
-            return m;
+            return n;
         }
         
         public void SetToolLabel(int toolId, string label)
@@ -516,8 +473,7 @@ namespace Alternet.UI.Native
         {
             CheckDisposed();
             var n = NativeApi.AuiToolBar_GetToolShortHelp_(NativePointer, toolId);
-            var m = n;
-            return m;
+            return n;
         }
         
         public void SetToolShortHelp(int toolId, string helpString)
@@ -530,8 +486,7 @@ namespace Alternet.UI.Native
         {
             CheckDisposed();
             var n = NativeApi.AuiToolBar_GetToolLongHelp_(NativePointer, toolId);
-            var m = n;
-            return m;
+            return n;
         }
         
         public void SetToolLongHelp(int toolId, string helpString)
@@ -544,8 +499,7 @@ namespace Alternet.UI.Native
         {
             CheckDisposed();
             var n = NativeApi.AuiToolBar_GetToolCount_(NativePointer);
-            var m = n;
-            return m;
+            return n;
         }
         
         static GCHandle eventCallbackGCHandle;

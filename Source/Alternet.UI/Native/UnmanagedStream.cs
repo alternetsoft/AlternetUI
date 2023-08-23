@@ -29,8 +29,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.UnmanagedStream_GetLength_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
         }
@@ -41,8 +40,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.UnmanagedStream_GetIsOK_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
         }
@@ -53,8 +51,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.UnmanagedStream_GetIsSeekable_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
         }
@@ -65,8 +62,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.UnmanagedStream_GetPosition_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -80,8 +76,7 @@ namespace Alternet.UI.Native
         {
             CheckDisposed();
             var n = NativeApi.UnmanagedStream_Read_(NativePointer, buffer, buffer.Length, length);
-            var m = n;
-            return m;
+            return n;
         }
         
         

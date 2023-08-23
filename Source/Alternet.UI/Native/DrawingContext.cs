@@ -64,8 +64,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.DrawingContext_GetInterpolationMode_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -159,8 +158,7 @@ namespace Alternet.UI.Native
         {
             CheckDisposed();
             var n = NativeApi.DrawingContext_MeasureText_(NativePointer, text, font.NativePointer, maximumWidth, textWrapping);
-            var m = n;
-            return m;
+            return n;
         }
         
         public void Push()

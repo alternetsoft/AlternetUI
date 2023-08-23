@@ -28,16 +28,14 @@ namespace Alternet.UI.Native
         {
             CheckDisposed();
             var n = NativeApi.Mouse_GetPosition_(NativePointer);
-            var m = n;
-            return m;
+            return n;
         }
         
         public MouseButtonState GetButtonState(MouseButton button)
         {
             CheckDisposed();
             var n = NativeApi.Mouse_GetButtonState_(NativePointer, button);
-            var m = n;
-            return m;
+            return n;
         }
         
         static GCHandle eventCallbackGCHandle;

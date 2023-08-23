@@ -30,8 +30,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.MenuItem_GetManagedCommandId_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -47,8 +46,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.MenuItem_GetText_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -64,8 +62,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.MenuItem_GetRole_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -81,8 +78,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.MenuItem_GetChecked_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set

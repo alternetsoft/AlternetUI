@@ -29,8 +29,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.Image_GetSize_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
         }
@@ -41,8 +40,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.Image_GetPixelSize_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
         }
@@ -81,8 +79,7 @@ namespace Alternet.UI.Native
         {
             CheckDisposed();
             var n = NativeApi.Image_GrayScale_(NativePointer);
-            var m = n;
-            return m;
+            return n;
         }
         
         

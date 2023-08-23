@@ -31,15 +31,13 @@ namespace Alternet.UI.Native
         public static System.IntPtr CreateAuiManager()
         {
             var n = NativeApi.AuiManager_CreateAuiManager_();
-            var m = n;
-            return m;
+            return n;
         }
         
         public static System.IntPtr CreateAuiManager2(System.IntPtr managedWnd, uint flags)
         {
             var n = NativeApi.AuiManager_CreateAuiManager2_(managedWnd, flags);
-            var m = n;
-            return m;
+            return n;
         }
         
         public static void UnInit(System.IntPtr handle)
@@ -55,22 +53,19 @@ namespace Alternet.UI.Native
         public static uint GetFlags(System.IntPtr handle)
         {
             var n = NativeApi.AuiManager_GetFlags_(handle);
-            var m = n;
-            return m;
+            return n;
         }
         
         public static bool AlwaysUsesLiveResize()
         {
             var n = NativeApi.AuiManager_AlwaysUsesLiveResize_();
-            var m = n;
-            return m;
+            return n;
         }
         
         public static bool HasLiveResize(System.IntPtr handle)
         {
             var n = NativeApi.AuiManager_HasLiveResize_(handle);
-            var m = n;
-            return m;
+            return n;
         }
         
         public static void SetManagedWindow(System.IntPtr handle, System.IntPtr managedWnd)
@@ -81,15 +76,13 @@ namespace Alternet.UI.Native
         public static System.IntPtr GetManagedWindow(System.IntPtr handle)
         {
             var n = NativeApi.AuiManager_GetManagedWindow_(handle);
-            var m = n;
-            return m;
+            return n;
         }
         
         public static System.IntPtr GetManager(System.IntPtr window)
         {
             var n = NativeApi.AuiManager_GetManager_(window);
-            var m = n;
-            return m;
+            return n;
         }
         
         public static void SetArtProvider(System.IntPtr handle, System.IntPtr artProvider)
@@ -100,15 +93,13 @@ namespace Alternet.UI.Native
         public static System.IntPtr GetArtProvider(System.IntPtr handle)
         {
             var n = NativeApi.AuiManager_GetArtProvider_(handle);
-            var m = n;
-            return m;
+            return n;
         }
         
         public static bool DetachPane(System.IntPtr handle, System.IntPtr window)
         {
             var n = NativeApi.AuiManager_DetachPane_(handle, window);
-            var m = n;
-            return m;
+            return n;
         }
         
         public static void Update(System.IntPtr handle)
@@ -119,15 +110,13 @@ namespace Alternet.UI.Native
         public static string SavePerspective(System.IntPtr handle)
         {
             var n = NativeApi.AuiManager_SavePerspective_(handle);
-            var m = n;
-            return m;
+            return n;
         }
         
         public static bool LoadPerspective(System.IntPtr handle, string perspective, bool update)
         {
             var n = NativeApi.AuiManager_LoadPerspective_(handle, perspective, update);
-            var m = n;
-            return m;
+            return n;
         }
         
         public static void SetDockSizeConstraint(System.IntPtr handle, double widthPct, double heightPct)
@@ -143,50 +132,43 @@ namespace Alternet.UI.Native
         public static System.IntPtr GetPane(System.IntPtr handle, System.IntPtr window)
         {
             var n = NativeApi.AuiManager_GetPane_(handle, window);
-            var m = n;
-            return m;
+            return n;
         }
         
         public static System.IntPtr GetPaneByName(System.IntPtr handle, string name)
         {
             var n = NativeApi.AuiManager_GetPaneByName_(handle, name);
-            var m = n;
-            return m;
+            return n;
         }
         
         public static bool AddPane(System.IntPtr handle, System.IntPtr window, System.IntPtr paneInfo)
         {
             var n = NativeApi.AuiManager_AddPane_(handle, window, paneInfo);
-            var m = n;
-            return m;
+            return n;
         }
         
         public static bool AddPane2(System.IntPtr handle, System.IntPtr window, System.IntPtr paneInfo, double dropPosX, double dropPosY)
         {
             var n = NativeApi.AuiManager_AddPane2_(handle, window, paneInfo, dropPosX, dropPosY);
-            var m = n;
-            return m;
+            return n;
         }
         
         public static bool AddPane3(System.IntPtr handle, System.IntPtr window, int direction, string caption)
         {
             var n = NativeApi.AuiManager_AddPane3_(handle, window, direction, caption);
-            var m = n;
-            return m;
+            return n;
         }
         
         public static bool InsertPane(System.IntPtr handle, System.IntPtr window, System.IntPtr insertLocPaneInfo, int insertLevel)
         {
             var n = NativeApi.AuiManager_InsertPane_(handle, window, insertLocPaneInfo, insertLevel);
-            var m = n;
-            return m;
+            return n;
         }
         
         public static string SavePaneInfo(System.IntPtr handle, System.IntPtr paneInfo)
         {
             var n = NativeApi.AuiManager_SavePaneInfo_(handle, paneInfo);
-            var m = n;
-            return m;
+            return n;
         }
         
         public static void LoadPaneInfo(System.IntPtr handle, string panePart, System.IntPtr paneInfo)
@@ -197,8 +179,7 @@ namespace Alternet.UI.Native
         public static Alternet.Drawing.Size GetDockSizeConstraint(System.IntPtr handle)
         {
             var n = NativeApi.AuiManager_GetDockSizeConstraint_(handle);
-            var m = n;
-            return m;
+            return n;
         }
         
         public static void ClosePane(System.IntPtr handle, System.IntPtr paneInfo)
@@ -219,15 +200,13 @@ namespace Alternet.UI.Native
         public static System.IntPtr CreateFloatingFrame(System.IntPtr handle, System.IntPtr parentWindow, System.IntPtr paneInfo)
         {
             var n = NativeApi.AuiManager_CreateFloatingFrame_(handle, parentWindow, paneInfo);
-            var m = n;
-            return m;
+            return n;
         }
         
         public static bool CanDockPanel(System.IntPtr handle, System.IntPtr paneInfo)
         {
             var n = NativeApi.AuiManager_CanDockPanel_(handle, paneInfo);
-            var m = n;
-            return m;
+            return n;
         }
         
         

@@ -30,8 +30,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.ListBox_GetHasBorder_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -47,8 +46,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.ListBox_GetItemsCount_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
         }
@@ -59,8 +57,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.ListBox_GetSelectionMode_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -99,8 +96,7 @@ namespace Alternet.UI.Native
         public static System.IntPtr CreateEx(long styles)
         {
             var n = NativeApi.ListBox_CreateEx_(styles);
-            var m = n;
-            return m;
+            return n;
         }
         
         public void InsertItem(int index, string value)
@@ -143,8 +139,7 @@ namespace Alternet.UI.Native
         {
             CheckDisposed();
             var n = NativeApi.ListBox_ItemHitTest_(NativePointer, position);
-            var m = n;
-            return m;
+            return n;
         }
         
         static GCHandle eventCallbackGCHandle;

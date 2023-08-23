@@ -29,8 +29,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.FontDialog_GetAllowSymbols_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -46,8 +45,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.FontDialog_GetShowHelp_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -63,8 +61,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.FontDialog_GetEnableEffects_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -80,8 +77,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.FontDialog_GetRestrictSelection_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -97,8 +93,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.FontDialog_GetColor_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -114,8 +109,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.FontDialog_GetResultFontName_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
         }
@@ -126,8 +120,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.FontDialog_GetResultFontSizeInPoints_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
         }
@@ -138,8 +131,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.FontDialog_GetResultFontStyle_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
         }
@@ -150,8 +142,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.FontDialog_GetTitle_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -165,8 +156,7 @@ namespace Alternet.UI.Native
         {
             CheckDisposed();
             var n = NativeApi.FontDialog_ShowModal_(NativePointer, owner?.NativePointer ?? IntPtr.Zero);
-            var m = n;
-            return m;
+            return n;
         }
         
         public void SetRange(int minRange, int maxRange)

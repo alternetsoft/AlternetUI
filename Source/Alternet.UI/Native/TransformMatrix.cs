@@ -29,8 +29,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.TransformMatrix_GetM11_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -46,8 +45,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.TransformMatrix_GetM12_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -63,8 +61,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.TransformMatrix_GetM21_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -80,8 +77,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.TransformMatrix_GetM22_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -97,8 +93,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.TransformMatrix_GetDX_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -114,8 +109,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.TransformMatrix_GetDY_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -131,8 +125,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.TransformMatrix_GetIsIdentity_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
         }
@@ -183,32 +176,28 @@ namespace Alternet.UI.Native
         {
             CheckDisposed();
             var n = NativeApi.TransformMatrix_TransformPoint_(NativePointer, point);
-            var m = n;
-            return m;
+            return n;
         }
         
         public Alternet.Drawing.Size TransformSize(Alternet.Drawing.Size size)
         {
             CheckDisposed();
             var n = NativeApi.TransformMatrix_TransformSize_(NativePointer, size);
-            var m = n;
-            return m;
+            return n;
         }
         
         public bool IsEqualTo(TransformMatrix other)
         {
             CheckDisposed();
             var n = NativeApi.TransformMatrix_IsEqualTo_(NativePointer, other.NativePointer);
-            var m = n;
-            return m;
+            return n;
         }
         
         public int GetHashCode_()
         {
             CheckDisposed();
             var n = NativeApi.TransformMatrix_GetHashCode__(NativePointer);
-            var m = n;
-            return m;
+            return n;
         }
         
         

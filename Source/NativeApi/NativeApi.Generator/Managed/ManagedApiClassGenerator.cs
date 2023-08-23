@@ -185,14 +185,24 @@ using System.Security;");
                         {
                             w.WriteLine($"var n = NativeApi.{nativeDeclaringTypeName}_Get{propertyName}_({(isStatic ? "" : "NativePointer")});");
 
-                            w.Write("var m = ");
-                            w.Write(string.Format(GetNativeToManagedFormatString(contextualProperty, out var isComplexType), "n"));
-                            w.WriteLine(";");
+                            var complexTypeStr =
+                                string.Format(GetNativeToManagedFormatString(
+                                    contextualProperty,
+                                    out var isComplexType),
+                                    "n");
+                            if(isComplexType || complexTypeStr != "n")
+                            {
+                                w.Write("var m = ");
+                                w.Write(complexTypeStr);
+                                w.WriteLine(";");
 
-                            if (isComplexType)
-                                w.WriteLine("ReleaseNativeObjectPointer(n);");
+                                if (isComplexType)
+                                    w.WriteLine("ReleaseNativeObjectPointer(n);");
 
-                            w.WriteLine("return m;");
+                                w.WriteLine("return m;");
+                            }
+                            else
+                                w.WriteLine("return n;");
                         }
 
                     }
@@ -333,15 +343,21 @@ using System.Security;");
             else
             {
                 w.WriteLine($"var n = {callString};");
-
-                w.Write("var m = ");
-                w.Write(string.Format(GetNativeToManagedFormatString(method.ReturnParameter.ToContextualParameter(), out var isComplexType), "n"));
-                w.WriteLine(";");
-
-                if (isComplexType)
-                    w.WriteLine("ReleaseNativeObjectPointer(n);");
-
-                w.WriteLine("return m;");
+                string complexTypeStr = string.Format(GetNativeToManagedFormatString(
+                    method.ReturnParameter.ToContextualParameter(),
+                    out var isComplexType),
+                    "n");
+                if(isComplexType || complexTypeStr != "n")
+                {
+                    w.Write("var m = ");
+                    w.Write(complexTypeStr);
+                    w.WriteLine(";");
+                    if (isComplexType)
+                        w.WriteLine("ReleaseNativeObjectPointer(n);");
+                    w.WriteLine("return m;");
+                }
+                else
+                    w.WriteLine("return n;");
             }
 
             w.Indent--;
@@ -442,11 +458,13 @@ using System.Security;");
                                     {
                                         w.WriteLine($"var cea = new CancelEventArgs();");
                                         w.WriteLine($"{e.Name}?.Invoke(this, cea);");
-                                        w.WriteLine($"return cea.Cancel ? new IntPtr(1) : IntPtr.Zero;");
+                                        w.WriteLine(
+                                            $"return cea.Cancel ? new IntPtr(1) : IntPtr.Zero;");
                                     }
                                 }
                                 else
-                                    w.WriteLine($"{e.Name}?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;");
+                                    w.WriteLine(
+                                        $"{e.Name}?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;");
                             }
                         }
                     }
@@ -466,23 +484,35 @@ using System.Security;");
                 else
                 {
                     var attribute = MemberProvider.GetEventAttribute(e);
-                    argsType = attribute.Cancellable ? "EventHandler<CancelEventArgs>" : "EventHandler";
+                    argsType = attribute.Cancellable ?
+                        "EventHandler<CancelEventArgs>" : "EventHandler";
                 }
                 w.WriteLine($"public event {argsType}? {e.Name};");
             }
         }
 
-        static string GetManagedToNativeArgument(ParameterInfo parameter, Types types, Types pinvokeTypes)
+        static string GetManagedToNativeArgument(
+            ParameterInfo parameter,
+            Types types,
+            Types pinvokeTypes)
         {
             string name = parameter.Name!;
             
             if (MemberProvider.TryGetCallbackMarshalAttribute(parameter) != null)
                 return name + "Sink";
 
-            return GetManagedToNativeArgument(parameter.ToContextualParameter(), name, types, pinvokeTypes);
+            return GetManagedToNativeArgument(
+                parameter.ToContextualParameter(),
+                name,
+                types,
+                pinvokeTypes);
         }
 
-        static string GetManagedToNativeArgument(ContextualType type, string name, Types types, Types pinvokeTypes)
+        static string GetManagedToNativeArgument(
+            ContextualType type,
+            string name,
+            Types types,
+            Types pinvokeTypes)
         {
             if (type.OriginalType.IsArray)
             {
@@ -514,16 +544,20 @@ using System.Security;");
 
         static string GetNativeToManagedFormatString(ContextualType type, out bool isComplexType)
         {
-            var factory = type.OriginalType.IsAbstract ? "null" : $"p => new {type.OriginalType.Name}(p)";
+            var factory = type.OriginalType.IsAbstract ?
+                "null" : $"p => new {type.OriginalType.Name}(p)";
 
             isComplexType = TypeProvider.IsComplexType(type);
             if (isComplexType)
-                return $"NativeObject.GetFromNativePointer<{type.OriginalType.Name}>({{0}}, {factory})" + (type.Nullability == Nullability.NotNullable ? "!" : "");
+                return "NativeObject.GetFromNativePointer"
+                    + $"<{type.OriginalType.Name}>({{0}}, {factory})" 
+                    + (type.Nullability == Nullability.NotNullable ? "!" : "");
 
             return "{0}";
         }
 
-        static string GetModifiers(MemberInfo member) => MemberProvider.IsStatic(member) ? "static " : "";
+        static string GetModifiers(MemberInfo member) => MemberProvider.IsStatic(member) ?
+            "static " : "";
 
         private string GetFinalCode(string code, Types types)
         {

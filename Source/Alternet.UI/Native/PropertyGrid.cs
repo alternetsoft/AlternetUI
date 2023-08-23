@@ -28,8 +28,7 @@ namespace Alternet.UI.Native
             get
             {
                 var n = NativeApi.PropertyGrid_GetNameAsLabel_();
-                var m = n;
-                return m;
+                return n;
             }
             
         }
@@ -40,8 +39,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.PropertyGrid_GetHasBorder_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -57,8 +55,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.PropertyGrid_GetCreateStyle_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -71,64 +68,56 @@ namespace Alternet.UI.Native
         public static System.IntPtr CreateEx(long styles)
         {
             var n = NativeApi.PropertyGrid_CreateEx_(styles);
-            var m = n;
-            return m;
+            return n;
         }
         
         public System.IntPtr CreateStringProperty(string label, string name, string value)
         {
             CheckDisposed();
             var n = NativeApi.PropertyGrid_CreateStringProperty_(NativePointer, label, name, value);
-            var m = n;
-            return m;
+            return n;
         }
         
         public System.IntPtr CreateBoolProperty(string label, string name, bool value)
         {
             CheckDisposed();
             var n = NativeApi.PropertyGrid_CreateBoolProperty_(NativePointer, label, name, value);
-            var m = n;
-            return m;
+            return n;
         }
         
         public System.IntPtr CreateIntProperty(string label, string name, long value)
         {
             CheckDisposed();
             var n = NativeApi.PropertyGrid_CreateIntProperty_(NativePointer, label, name, value);
-            var m = n;
-            return m;
+            return n;
         }
         
         public System.IntPtr CreateFloatProperty(string label, string name, double value)
         {
             CheckDisposed();
             var n = NativeApi.PropertyGrid_CreateFloatProperty_(NativePointer, label, name, value);
-            var m = n;
-            return m;
+            return n;
         }
         
         public System.IntPtr CreateUIntProperty(string label, string name, ulong value)
         {
             CheckDisposed();
             var n = NativeApi.PropertyGrid_CreateUIntProperty_(NativePointer, label, name, value);
-            var m = n;
-            return m;
+            return n;
         }
         
         public System.IntPtr CreateLongStringProperty(string label, string name, string value)
         {
             CheckDisposed();
             var n = NativeApi.PropertyGrid_CreateLongStringProperty_(NativePointer, label, name, value);
-            var m = n;
-            return m;
+            return n;
         }
         
         public System.IntPtr CreateDateProperty(string label, string name, System.DateTime value)
         {
             CheckDisposed();
             var n = NativeApi.PropertyGrid_CreateDateProperty_(NativePointer, label, name, value);
-            var m = n;
-            return m;
+            return n;
         }
         
         public void Clear()
@@ -141,8 +130,7 @@ namespace Alternet.UI.Native
         {
             CheckDisposed();
             var n = NativeApi.PropertyGrid_Append_(NativePointer, property);
-            var m = n;
-            return m;
+            return n;
         }
         
         

@@ -29,8 +29,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.SelectDirectoryDialog_GetInitialDirectory_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -46,8 +45,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.SelectDirectoryDialog_GetTitle_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -63,8 +61,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.SelectDirectoryDialog_GetDirectoryName_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -78,8 +75,7 @@ namespace Alternet.UI.Native
         {
             CheckDisposed();
             var n = NativeApi.SelectDirectoryDialog_ShowModal_(NativePointer, owner?.NativePointer ?? IntPtr.Zero);
-            var m = n;
-            return m;
+            return n;
         }
         
         

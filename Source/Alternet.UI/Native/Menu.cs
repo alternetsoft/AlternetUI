@@ -29,8 +29,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.Menu_GetMenuHandle_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
         }
@@ -41,8 +40,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.Menu_GetItemsCount_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
         }

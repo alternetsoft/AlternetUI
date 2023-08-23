@@ -29,8 +29,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.ColorDialog_GetColor_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -46,8 +45,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.ColorDialog_GetTitle_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -61,8 +59,7 @@ namespace Alternet.UI.Native
         {
             CheckDisposed();
             var n = NativeApi.ColorDialog_ShowModal_(NativePointer, owner?.NativePointer ?? IntPtr.Zero);
-            var m = n;
-            return m;
+            return n;
         }
         
         

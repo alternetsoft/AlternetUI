@@ -30,8 +30,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.TextBox_GetText_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -47,8 +46,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.TextBox_GetReportedUrl_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
         }
@@ -59,8 +57,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.TextBox_GetEditControlOnly_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -76,8 +73,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.TextBox_GetReadOnly_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -93,8 +89,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.TextBox_GetMultiline_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -110,8 +105,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.TextBox_GetIsRichEdit_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -127,8 +121,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.TextBox_GetHasSelection_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
         }
@@ -139,8 +132,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.TextBox_GetIsModified_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -156,8 +148,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.TextBox_GetCanCopy_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
         }
@@ -168,8 +159,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.TextBox_GetCanCut_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
         }
@@ -180,8 +170,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.TextBox_GetCanPaste_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
         }
@@ -192,8 +181,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.TextBox_GetCanRedo_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
         }
@@ -204,8 +192,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.TextBox_GetCanUndo_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
         }
@@ -216,8 +203,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.TextBox_GetIsEmpty_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
         }
@@ -228,8 +214,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.TextBox_GetEmptyTextHint_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -245,8 +230,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.TextBox_GetHideSelection_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -262,8 +246,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.TextBox_GetProcessTab_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -279,8 +262,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.TextBox_GetProcessEnter_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -296,8 +278,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.TextBox_GetIsPassword_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -313,8 +294,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.TextBox_GetAutoUrl_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -330,8 +310,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.TextBox_GetHideVertScrollbar_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -345,40 +324,35 @@ namespace Alternet.UI.Native
         {
             CheckDisposed();
             var n = NativeApi.TextBox_GetLineLength_(NativePointer, lineNo);
-            var m = n;
-            return m;
+            return n;
         }
         
         public string GetLineText(long lineNo)
         {
             CheckDisposed();
             var n = NativeApi.TextBox_GetLineText_(NativePointer, lineNo);
-            var m = n;
-            return m;
+            return n;
         }
         
         public int GetNumberOfLines()
         {
             CheckDisposed();
             var n = NativeApi.TextBox_GetNumberOfLines_(NativePointer);
-            var m = n;
-            return m;
+            return n;
         }
         
         public Alternet.Drawing.Point PositionToXY(long pos)
         {
             CheckDisposed();
             var n = NativeApi.TextBox_PositionToXY_(NativePointer, pos);
-            var m = n;
-            return m;
+            return n;
         }
         
         public Alternet.Drawing.Point PositionToCoords(long pos)
         {
             CheckDisposed();
             var n = NativeApi.TextBox_PositionToCoords_(NativePointer, pos);
-            var m = n;
-            return m;
+            return n;
         }
         
         public void ShowPosition(long pos)
@@ -391,40 +365,35 @@ namespace Alternet.UI.Native
         {
             CheckDisposed();
             var n = NativeApi.TextBox_XYToPosition_(NativePointer, x, y);
-            var m = n;
-            return m;
+            return n;
         }
         
         public System.IntPtr GetDefaultStyle()
         {
             CheckDisposed();
             var n = NativeApi.TextBox_GetDefaultStyle_(NativePointer);
-            var m = n;
-            return m;
+            return n;
         }
         
         public System.IntPtr GetStyle(long position)
         {
             CheckDisposed();
             var n = NativeApi.TextBox_GetStyle_(NativePointer, position);
-            var m = n;
-            return m;
+            return n;
         }
         
         public bool SetDefaultStyle(System.IntPtr style)
         {
             CheckDisposed();
             var n = NativeApi.TextBox_SetDefaultStyle_(NativePointer, style);
-            var m = n;
-            return m;
+            return n;
         }
         
         public bool SetStyle(long start, long end, System.IntPtr style)
         {
             CheckDisposed();
             var n = NativeApi.TextBox_SetStyle_(NativePointer, start, end, style);
-            var m = n;
-            return m;
+            return n;
         }
         
         public void Clear()
@@ -455,8 +424,7 @@ namespace Alternet.UI.Native
         {
             CheckDisposed();
             var n = NativeApi.TextBox_GetInsertionPoint_(NativePointer);
-            var m = n;
-            return m;
+            return n;
         }
         
         public void Paste()
@@ -535,16 +503,14 @@ namespace Alternet.UI.Native
         {
             CheckDisposed();
             var n = NativeApi.TextBox_GetRange_(NativePointer, from, to);
-            var m = n;
-            return m;
+            return n;
         }
         
         public string GetStringSelection()
         {
             CheckDisposed();
             var n = NativeApi.TextBox_GetStringSelection_(NativePointer);
-            var m = n;
-            return m;
+            return n;
         }
         
         public void EmptyUndoBuffer()
@@ -557,32 +523,28 @@ namespace Alternet.UI.Native
         {
             CheckDisposed();
             var n = NativeApi.TextBox_IsValidPosition_(NativePointer, pos);
-            var m = n;
-            return m;
+            return n;
         }
         
         public long GetLastPosition()
         {
             CheckDisposed();
             var n = NativeApi.TextBox_GetLastPosition_(NativePointer);
-            var m = n;
-            return m;
+            return n;
         }
         
         public long GetSelectionStart()
         {
             CheckDisposed();
             var n = NativeApi.TextBox_GetSelectionStart_(NativePointer);
-            var m = n;
-            return m;
+            return n;
         }
         
         public long GetSelectionEnd()
         {
             CheckDisposed();
             var n = NativeApi.TextBox_GetSelectionEnd_(NativePointer);
-            var m = n;
-            return m;
+            return n;
         }
         
         static GCHandle eventCallbackGCHandle;

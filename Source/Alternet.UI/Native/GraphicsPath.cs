@@ -29,8 +29,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.GraphicsPath_GetFillMode_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -104,8 +103,7 @@ namespace Alternet.UI.Native
         {
             CheckDisposed();
             var n = NativeApi.GraphicsPath_GetBounds_(NativePointer);
-            var m = n;
-            return m;
+            return n;
         }
         
         public void StartFigure(Alternet.Drawing.Point point)

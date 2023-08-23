@@ -29,8 +29,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.ProgressBar_GetMinimum_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -46,8 +45,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.ProgressBar_GetMaximum_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -63,8 +61,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.ProgressBar_GetValue_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -80,8 +77,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.ProgressBar_GetIsIndeterminate_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -97,8 +93,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.ProgressBar_GetOrientation_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set

@@ -66,8 +66,7 @@ namespace Alternet.UI.Native
         {
             CheckDisposed();
             var n = NativeApi.CheckListBox_IsChecked_(NativePointer, item);
-            var m = n;
-            return m;
+            return n;
         }
         
         static GCHandle eventCallbackGCHandle;

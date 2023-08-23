@@ -29,8 +29,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.Label_GetText_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -44,8 +43,7 @@ namespace Alternet.UI.Native
         {
             CheckDisposed();
             var n = NativeApi.Label_IsEllipsized_(NativePointer);
-            var m = n;
-            return m;
+            return n;
         }
         
         public void Wrap(int width)

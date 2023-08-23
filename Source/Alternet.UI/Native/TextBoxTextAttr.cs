@@ -26,36 +26,31 @@ namespace Alternet.UI.Native
         public static bool HasPageBreak(System.IntPtr attr)
         {
             var n = NativeApi.TextBoxTextAttr_HasPageBreak_(attr);
-            var m = n;
-            return m;
+            return n;
         }
         
         public static bool HasTextEffects(System.IntPtr attr)
         {
             var n = NativeApi.TextBoxTextAttr_HasTextEffects_(attr);
-            var m = n;
-            return m;
+            return n;
         }
         
         public static bool HasTextEffect(System.IntPtr attr, int effect)
         {
             var n = NativeApi.TextBoxTextAttr_HasTextEffect_(attr, effect);
-            var m = n;
-            return m;
+            return n;
         }
         
         public static bool HasOutlineLevel(System.IntPtr attr)
         {
             var n = NativeApi.TextBoxTextAttr_HasOutlineLevel_(attr);
-            var m = n;
-            return m;
+            return n;
         }
         
         public static bool HasFlag(System.IntPtr attr, long flag)
         {
             var n = NativeApi.TextBoxTextAttr_HasFlag_(attr, flag);
-            var m = n;
-            return m;
+            return n;
         }
         
         public static void RemoveFlag(System.IntPtr attr, long flag)
@@ -81,8 +76,7 @@ namespace Alternet.UI.Native
         public static System.IntPtr CreateTextAttr()
         {
             var n = NativeApi.TextBoxTextAttr_CreateTextAttr_();
-            var m = n;
-            return m;
+            return n;
         }
         
         public static void SetTextColor(System.IntPtr attr, Alternet.Drawing.Color colText)
@@ -143,22 +137,19 @@ namespace Alternet.UI.Native
         public static Alternet.Drawing.Color GetTextColor(System.IntPtr attr)
         {
             var n = NativeApi.TextBoxTextAttr_GetTextColor_(attr);
-            var m = n;
-            return m;
+            return n;
         }
         
         public static Alternet.Drawing.Color GetBackgroundColor(System.IntPtr attr)
         {
             var n = NativeApi.TextBoxTextAttr_GetBackgroundColor_(attr);
-            var m = n;
-            return m;
+            return n;
         }
         
         public static int GetAlignment(System.IntPtr attr)
         {
             var n = NativeApi.TextBoxTextAttr_GetAlignment_(attr);
-            var m = n;
-            return m;
+            return n;
         }
         
         public static void SetURL(System.IntPtr attr, string url)
@@ -249,358 +240,307 @@ namespace Alternet.UI.Native
         public static long GetFlags(System.IntPtr attr)
         {
             var n = NativeApi.TextBoxTextAttr_GetFlags_(attr);
-            var m = n;
-            return m;
+            return n;
         }
         
         public static int GetFontSize(System.IntPtr attr)
         {
             var n = NativeApi.TextBoxTextAttr_GetFontSize_(attr);
-            var m = n;
-            return m;
+            return n;
         }
         
         public static int GetFontStyle(System.IntPtr attr)
         {
             var n = NativeApi.TextBoxTextAttr_GetFontStyle_(attr);
-            var m = n;
-            return m;
+            return n;
         }
         
         public static int GetFontWeight(System.IntPtr attr)
         {
             var n = NativeApi.TextBoxTextAttr_GetFontWeight_(attr);
-            var m = n;
-            return m;
+            return n;
         }
         
         public static bool GetFontUnderlined(System.IntPtr attr)
         {
             var n = NativeApi.TextBoxTextAttr_GetFontUnderlined_(attr);
-            var m = n;
-            return m;
+            return n;
         }
         
         public static int GetUnderlineType(System.IntPtr attr)
         {
             var n = NativeApi.TextBoxTextAttr_GetUnderlineType_(attr);
-            var m = n;
-            return m;
+            return n;
         }
         
         public static Alternet.Drawing.Color GetUnderlineColor(System.IntPtr attr)
         {
             var n = NativeApi.TextBoxTextAttr_GetUnderlineColor_(attr);
-            var m = n;
-            return m;
+            return n;
         }
         
         public static bool GetFontStrikethrough(System.IntPtr attr)
         {
             var n = NativeApi.TextBoxTextAttr_GetFontStrikethrough_(attr);
-            var m = n;
-            return m;
+            return n;
         }
         
         public static string GetFontFaceName(System.IntPtr attr)
         {
             var n = NativeApi.TextBoxTextAttr_GetFontFaceName_(attr);
-            var m = n;
-            return m;
+            return n;
         }
         
         public static int GetFontFamily(System.IntPtr attr)
         {
             var n = NativeApi.TextBoxTextAttr_GetFontFamily_(attr);
-            var m = n;
-            return m;
+            return n;
         }
         
         public static int GetParagraphSpacingAfter(System.IntPtr attr)
         {
             var n = NativeApi.TextBoxTextAttr_GetParagraphSpacingAfter_(attr);
-            var m = n;
-            return m;
+            return n;
         }
         
         public static int GetParagraphSpacingBefore(System.IntPtr attr)
         {
             var n = NativeApi.TextBoxTextAttr_GetParagraphSpacingBefore_(attr);
-            var m = n;
-            return m;
+            return n;
         }
         
         public static int GetLineSpacing(System.IntPtr attr)
         {
             var n = NativeApi.TextBoxTextAttr_GetLineSpacing_(attr);
-            var m = n;
-            return m;
+            return n;
         }
         
         public static int GetBulletStyle(System.IntPtr attr)
         {
             var n = NativeApi.TextBoxTextAttr_GetBulletStyle_(attr);
-            var m = n;
-            return m;
+            return n;
         }
         
         public static int GetBulletNumber(System.IntPtr attr)
         {
             var n = NativeApi.TextBoxTextAttr_GetBulletNumber_(attr);
-            var m = n;
-            return m;
+            return n;
         }
         
         public static string GetBulletText(System.IntPtr attr)
         {
             var n = NativeApi.TextBoxTextAttr_GetBulletText_(attr);
-            var m = n;
-            return m;
+            return n;
         }
         
         public static string GetURL(System.IntPtr attr)
         {
             var n = NativeApi.TextBoxTextAttr_GetURL_(attr);
-            var m = n;
-            return m;
+            return n;
         }
         
         public static int GetTextEffects(System.IntPtr attr)
         {
             var n = NativeApi.TextBoxTextAttr_GetTextEffects_(attr);
-            var m = n;
-            return m;
+            return n;
         }
         
         public static int GetTextEffectFlags(System.IntPtr attr)
         {
             var n = NativeApi.TextBoxTextAttr_GetTextEffectFlags_(attr);
-            var m = n;
-            return m;
+            return n;
         }
         
         public static int GetOutlineLevel(System.IntPtr attr)
         {
             var n = NativeApi.TextBoxTextAttr_GetOutlineLevel_(attr);
-            var m = n;
-            return m;
+            return n;
         }
         
         public static bool IsCharacterStyle(System.IntPtr attr)
         {
             var n = NativeApi.TextBoxTextAttr_IsCharacterStyle_(attr);
-            var m = n;
-            return m;
+            return n;
         }
         
         public static bool IsParagraphStyle(System.IntPtr attr)
         {
             var n = NativeApi.TextBoxTextAttr_IsParagraphStyle_(attr);
-            var m = n;
-            return m;
+            return n;
         }
         
         public static bool IsDefault(System.IntPtr attr)
         {
             var n = NativeApi.TextBoxTextAttr_IsDefault_(attr);
-            var m = n;
-            return m;
+            return n;
         }
         
         public static bool HasTextColor(System.IntPtr attr)
         {
             var n = NativeApi.TextBoxTextAttr_HasTextColor_(attr);
-            var m = n;
-            return m;
+            return n;
         }
         
         public static bool HasBackgroundColor(System.IntPtr attr)
         {
             var n = NativeApi.TextBoxTextAttr_HasBackgroundColor_(attr);
-            var m = n;
-            return m;
+            return n;
         }
         
         public static bool HasAlignment(System.IntPtr attr)
         {
             var n = NativeApi.TextBoxTextAttr_HasAlignment_(attr);
-            var m = n;
-            return m;
+            return n;
         }
         
         public static bool HasTabs(System.IntPtr attr)
         {
             var n = NativeApi.TextBoxTextAttr_HasTabs_(attr);
-            var m = n;
-            return m;
+            return n;
         }
         
         public static bool HasLeftIndent(System.IntPtr attr)
         {
             var n = NativeApi.TextBoxTextAttr_HasLeftIndent_(attr);
-            var m = n;
-            return m;
+            return n;
         }
         
         public static bool HasRightIndent(System.IntPtr attr)
         {
             var n = NativeApi.TextBoxTextAttr_HasRightIndent_(attr);
-            var m = n;
-            return m;
+            return n;
         }
         
         public static bool HasFontWeight(System.IntPtr attr)
         {
             var n = NativeApi.TextBoxTextAttr_HasFontWeight_(attr);
-            var m = n;
-            return m;
+            return n;
         }
         
         public static bool HasFontSize(System.IntPtr attr)
         {
             var n = NativeApi.TextBoxTextAttr_HasFontSize_(attr);
-            var m = n;
-            return m;
+            return n;
         }
         
         public static bool HasFontPointSize(System.IntPtr attr)
         {
             var n = NativeApi.TextBoxTextAttr_HasFontPointSize_(attr);
-            var m = n;
-            return m;
+            return n;
         }
         
         public static bool HasFontPixelSize(System.IntPtr attr)
         {
             var n = NativeApi.TextBoxTextAttr_HasFontPixelSize_(attr);
-            var m = n;
-            return m;
+            return n;
         }
         
         public static bool HasFontItalic(System.IntPtr attr)
         {
             var n = NativeApi.TextBoxTextAttr_HasFontItalic_(attr);
-            var m = n;
-            return m;
+            return n;
         }
         
         public static bool HasFontUnderlined(System.IntPtr attr)
         {
             var n = NativeApi.TextBoxTextAttr_HasFontUnderlined_(attr);
-            var m = n;
-            return m;
+            return n;
         }
         
         public static bool HasFontStrikethrough(System.IntPtr attr)
         {
             var n = NativeApi.TextBoxTextAttr_HasFontStrikethrough_(attr);
-            var m = n;
-            return m;
+            return n;
         }
         
         public static bool HasFontFaceName(System.IntPtr attr)
         {
             var n = NativeApi.TextBoxTextAttr_HasFontFaceName_(attr);
-            var m = n;
-            return m;
+            return n;
         }
         
         public static bool HasFontEncoding(System.IntPtr attr)
         {
             var n = NativeApi.TextBoxTextAttr_HasFontEncoding_(attr);
-            var m = n;
-            return m;
+            return n;
         }
         
         public static bool HasFontFamily(System.IntPtr attr)
         {
             var n = NativeApi.TextBoxTextAttr_HasFontFamily_(attr);
-            var m = n;
-            return m;
+            return n;
         }
         
         public static bool HasFont(System.IntPtr attr)
         {
             var n = NativeApi.TextBoxTextAttr_HasFont_(attr);
-            var m = n;
-            return m;
+            return n;
         }
         
         public static bool HasParagraphSpacingAfter(System.IntPtr attr)
         {
             var n = NativeApi.TextBoxTextAttr_HasParagraphSpacingAfter_(attr);
-            var m = n;
-            return m;
+            return n;
         }
         
         public static bool HasParagraphSpacingBefore(System.IntPtr attr)
         {
             var n = NativeApi.TextBoxTextAttr_HasParagraphSpacingBefore_(attr);
-            var m = n;
-            return m;
+            return n;
         }
         
         public static bool HasLineSpacing(System.IntPtr attr)
         {
             var n = NativeApi.TextBoxTextAttr_HasLineSpacing_(attr);
-            var m = n;
-            return m;
+            return n;
         }
         
         public static bool HasCharacterStyleName(System.IntPtr attr)
         {
             var n = NativeApi.TextBoxTextAttr_HasCharacterStyleName_(attr);
-            var m = n;
-            return m;
+            return n;
         }
         
         public static bool HasParagraphStyleName(System.IntPtr attr)
         {
             var n = NativeApi.TextBoxTextAttr_HasParagraphStyleName_(attr);
-            var m = n;
-            return m;
+            return n;
         }
         
         public static bool HasListStyleName(System.IntPtr attr)
         {
             var n = NativeApi.TextBoxTextAttr_HasListStyleName_(attr);
-            var m = n;
-            return m;
+            return n;
         }
         
         public static bool HasBulletStyle(System.IntPtr attr)
         {
             var n = NativeApi.TextBoxTextAttr_HasBulletStyle_(attr);
-            var m = n;
-            return m;
+            return n;
         }
         
         public static bool HasBulletNumber(System.IntPtr attr)
         {
             var n = NativeApi.TextBoxTextAttr_HasBulletNumber_(attr);
-            var m = n;
-            return m;
+            return n;
         }
         
         public static bool HasBulletText(System.IntPtr attr)
         {
             var n = NativeApi.TextBoxTextAttr_HasBulletText_(attr);
-            var m = n;
-            return m;
+            return n;
         }
         
         public static bool HasBulletName(System.IntPtr attr)
         {
             var n = NativeApi.TextBoxTextAttr_HasBulletName_(attr);
-            var m = n;
-            return m;
+            return n;
         }
         
         public static bool HasURL(System.IntPtr attr)
         {
             var n = NativeApi.TextBoxTextAttr_HasURL_(attr);
-            var m = n;
-            return m;
+            return n;
         }
         
         

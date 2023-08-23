@@ -30,8 +30,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.ColorPicker_GetValue_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set

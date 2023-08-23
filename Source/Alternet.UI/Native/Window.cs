@@ -30,8 +30,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.Window_GetTitle_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -47,8 +46,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.Window_GetWindowStartLocation_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -64,8 +62,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.Window_GetShowInTaskbar_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -81,8 +78,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.Window_GetMinimizeEnabled_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -98,8 +94,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.Window_GetMaximizeEnabled_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -115,8 +110,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.Window_GetCloseEnabled_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -132,8 +126,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.Window_GetAlwaysOnTop_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -149,8 +142,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.Window_GetIsToolWindow_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -166,8 +158,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.Window_GetResizable_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -183,8 +174,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.Window_GetHasBorder_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -200,8 +190,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.Window_GetHasTitleBar_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -217,8 +206,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.Window_GetModalResult_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -234,8 +222,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.Window_GetMinimumSize_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -251,8 +238,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.Window_GetMaximumSize_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -268,8 +254,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.Window_GetModal_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
         }
@@ -280,8 +265,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.Window_GetIsActive_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
         }
@@ -331,8 +315,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.Window_GetState_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set

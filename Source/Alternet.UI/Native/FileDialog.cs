@@ -29,8 +29,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.FileDialog_GetMode_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -46,8 +45,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.FileDialog_GetInitialDirectory_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -63,8 +61,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.FileDialog_GetTitle_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -80,8 +77,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.FileDialog_GetFilter_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -97,8 +93,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.FileDialog_GetSelectedFilterIndex_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -114,8 +109,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.FileDialog_GetFileName_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -131,8 +125,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.FileDialog_GetAllowMultipleSelection_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -172,8 +165,7 @@ namespace Alternet.UI.Native
         {
             CheckDisposed();
             var n = NativeApi.FileDialog_ShowModal_(NativePointer, owner?.NativePointer ?? IntPtr.Zero);
-            var m = n;
-            return m;
+            return n;
         }
         
         

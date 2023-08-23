@@ -53,16 +53,14 @@ namespace Alternet.UI.Native
         {
             CheckDisposed();
             var n = NativeApi.UnmanagedDataObject_GetStringData_(NativePointer, format);
-            var m = n;
-            return m;
+            return n;
         }
         
         public string GetFileNamesData(string format)
         {
             CheckDisposed();
             var n = NativeApi.UnmanagedDataObject_GetFileNamesData_(NativePointer, format);
-            var m = n;
-            return m;
+            return n;
         }
         
         public UnmanagedStream GetStreamData(string format)
@@ -96,8 +94,7 @@ namespace Alternet.UI.Native
         {
             CheckDisposed();
             var n = NativeApi.UnmanagedDataObject_GetDataPresent_(NativePointer, format);
-            var m = n;
-            return m;
+            return n;
         }
         
         

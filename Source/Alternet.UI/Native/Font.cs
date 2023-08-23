@@ -54,8 +54,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.Font_GetName_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
         }
@@ -66,8 +65,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.Font_GetSizeInPoints_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
         }
@@ -78,8 +76,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.Font_GetStyle_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
         }
@@ -90,8 +87,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.Font_GetDescription_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
         }
@@ -111,31 +107,27 @@ namespace Alternet.UI.Native
         public static bool IsFamilyValid(string fontFamily)
         {
             var n = NativeApi.Font_IsFamilyValid_(fontFamily);
-            var m = n;
-            return m;
+            return n;
         }
         
         public static string GetGenericFamilyName(GenericFontFamily genericFamily)
         {
             var n = NativeApi.Font_GetGenericFamilyName_(genericFamily);
-            var m = n;
-            return m;
+            return n;
         }
         
         public bool IsEqualTo(Font other)
         {
             CheckDisposed();
             var n = NativeApi.Font_IsEqualTo_(NativePointer, other.NativePointer);
-            var m = n;
-            return m;
+            return n;
         }
         
         public string Serialize()
         {
             CheckDisposed();
             var n = NativeApi.Font_Serialize_(NativePointer);
-            var m = n;
-            return m;
+            return n;
         }
         
         

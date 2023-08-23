@@ -30,8 +30,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.Application_GetName_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -86,8 +85,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.Application_GetDisplayName_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -103,8 +101,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.Application_GetAppClassName_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -120,8 +117,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.Application_GetVendorName_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -137,8 +133,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.Application_GetVendorDisplayName_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -154,8 +149,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.Application_GetInUixmlPreviewerMode_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -171,8 +165,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.Application_GetInvokeRequired_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
         }
@@ -229,8 +222,7 @@ namespace Alternet.UI.Native
         {
             CheckDisposed();
             var n = NativeApi.Application_HasPendingEvents_(NativePointer);
-            var m = n;
-            return m;
+            return n;
         }
         
         static GCHandle eventCallbackGCHandle;

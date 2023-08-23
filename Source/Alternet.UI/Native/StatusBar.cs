@@ -29,8 +29,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.StatusBar_GetPanelCount_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
         }
@@ -41,8 +40,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.StatusBar_GetSizingGripVisible_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set

@@ -30,8 +30,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.ComboBox_GetHasBorder_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -47,8 +46,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.ComboBox_GetItemsCount_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
         }
@@ -59,8 +57,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.ComboBox_GetIsEditable_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -76,8 +73,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.ComboBox_GetSelectedIndex_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -93,8 +89,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.ComboBox_GetText_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -110,8 +105,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.ComboBox_GetTextSelectionStart_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
         }
@@ -122,8 +116,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.ComboBox_GetTextSelectionLength_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
         }
@@ -138,8 +131,7 @@ namespace Alternet.UI.Native
         {
             CheckDisposed();
             var n = NativeApi.ComboBox_CreateItemsInsertion_(NativePointer);
-            var m = n;
-            return m;
+            return n;
         }
         
         public void AddItemToInsertion(System.IntPtr insertion, string item)

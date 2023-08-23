@@ -31,8 +31,7 @@ namespace Alternet.UI.Native
         public static System.IntPtr CreateAuiPaneInfo()
         {
             var n = NativeApi.AuiPaneInfo_CreateAuiPaneInfo_();
-            var m = n;
-            return m;
+            return n;
         }
         
         public static void SafeSet(System.IntPtr handle, System.IntPtr source)
@@ -43,169 +42,145 @@ namespace Alternet.UI.Native
         public static bool IsOk(System.IntPtr handle)
         {
             var n = NativeApi.AuiPaneInfo_IsOk_(handle);
-            var m = n;
-            return m;
+            return n;
         }
         
         public static bool IsFixed(System.IntPtr handle)
         {
             var n = NativeApi.AuiPaneInfo_IsFixed_(handle);
-            var m = n;
-            return m;
+            return n;
         }
         
         public static bool IsResizable(System.IntPtr handle)
         {
             var n = NativeApi.AuiPaneInfo_IsResizable_(handle);
-            var m = n;
-            return m;
+            return n;
         }
         
         public static bool IsShown(System.IntPtr handle)
         {
             var n = NativeApi.AuiPaneInfo_IsShown_(handle);
-            var m = n;
-            return m;
+            return n;
         }
         
         public static bool IsFloating(System.IntPtr handle)
         {
             var n = NativeApi.AuiPaneInfo_IsFloating_(handle);
-            var m = n;
-            return m;
+            return n;
         }
         
         public static bool IsDocked(System.IntPtr handle)
         {
             var n = NativeApi.AuiPaneInfo_IsDocked_(handle);
-            var m = n;
-            return m;
+            return n;
         }
         
         public static bool IsToolbar(System.IntPtr handle)
         {
             var n = NativeApi.AuiPaneInfo_IsToolbar_(handle);
-            var m = n;
-            return m;
+            return n;
         }
         
         public static bool IsTopDockable(System.IntPtr handle)
         {
             var n = NativeApi.AuiPaneInfo_IsTopDockable_(handle);
-            var m = n;
-            return m;
+            return n;
         }
         
         public static bool IsBottomDockable(System.IntPtr handle)
         {
             var n = NativeApi.AuiPaneInfo_IsBottomDockable_(handle);
-            var m = n;
-            return m;
+            return n;
         }
         
         public static bool IsLeftDockable(System.IntPtr handle)
         {
             var n = NativeApi.AuiPaneInfo_IsLeftDockable_(handle);
-            var m = n;
-            return m;
+            return n;
         }
         
         public static bool IsRightDockable(System.IntPtr handle)
         {
             var n = NativeApi.AuiPaneInfo_IsRightDockable_(handle);
-            var m = n;
-            return m;
+            return n;
         }
         
         public static bool IsDockable(System.IntPtr handle)
         {
             var n = NativeApi.AuiPaneInfo_IsDockable_(handle);
-            var m = n;
-            return m;
+            return n;
         }
         
         public static bool IsFloatable(System.IntPtr handle)
         {
             var n = NativeApi.AuiPaneInfo_IsFloatable_(handle);
-            var m = n;
-            return m;
+            return n;
         }
         
         public static bool IsMovable(System.IntPtr handle)
         {
             var n = NativeApi.AuiPaneInfo_IsMovable_(handle);
-            var m = n;
-            return m;
+            return n;
         }
         
         public static bool IsDestroyOnClose(System.IntPtr handle)
         {
             var n = NativeApi.AuiPaneInfo_IsDestroyOnClose_(handle);
-            var m = n;
-            return m;
+            return n;
         }
         
         public static bool IsMaximized(System.IntPtr handle)
         {
             var n = NativeApi.AuiPaneInfo_IsMaximized_(handle);
-            var m = n;
-            return m;
+            return n;
         }
         
         public static bool HasCaption(System.IntPtr handle)
         {
             var n = NativeApi.AuiPaneInfo_HasCaption_(handle);
-            var m = n;
-            return m;
+            return n;
         }
         
         public static bool HasGripper(System.IntPtr handle)
         {
             var n = NativeApi.AuiPaneInfo_HasGripper_(handle);
-            var m = n;
-            return m;
+            return n;
         }
         
         public static bool HasBorder(System.IntPtr handle)
         {
             var n = NativeApi.AuiPaneInfo_HasBorder_(handle);
-            var m = n;
-            return m;
+            return n;
         }
         
         public static bool HasCloseButton(System.IntPtr handle)
         {
             var n = NativeApi.AuiPaneInfo_HasCloseButton_(handle);
-            var m = n;
-            return m;
+            return n;
         }
         
         public static bool HasMaximizeButton(System.IntPtr handle)
         {
             var n = NativeApi.AuiPaneInfo_HasMaximizeButton_(handle);
-            var m = n;
-            return m;
+            return n;
         }
         
         public static bool HasMinimizeButton(System.IntPtr handle)
         {
             var n = NativeApi.AuiPaneInfo_HasMinimizeButton_(handle);
-            var m = n;
-            return m;
+            return n;
         }
         
         public static bool HasPinButton(System.IntPtr handle)
         {
             var n = NativeApi.AuiPaneInfo_HasPinButton_(handle);
-            var m = n;
-            return m;
+            return n;
         }
         
         public static bool HasGripperTop(System.IntPtr handle)
         {
             var n = NativeApi.AuiPaneInfo_HasGripperTop_(handle);
-            var m = n;
-            return m;
+            return n;
         }
         
         public static void Window(System.IntPtr handle, System.IntPtr window)
@@ -426,8 +401,7 @@ namespace Alternet.UI.Native
         public static bool IsValid(System.IntPtr handle)
         {
             var n = NativeApi.AuiPaneInfo_IsValid_(handle);
-            var m = n;
-            return m;
+            return n;
         }
         
         public static void DefaultPane(System.IntPtr handle)
@@ -453,8 +427,7 @@ namespace Alternet.UI.Native
         public static bool HasFlag(System.IntPtr handle, int flag)
         {
             var n = NativeApi.AuiPaneInfo_HasFlag_(handle, flag);
-            var m = n;
-            return m;
+            return n;
         }
         
         

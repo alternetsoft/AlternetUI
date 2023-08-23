@@ -29,8 +29,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.Toolbar_GetItemsCount_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
         }
@@ -41,8 +40,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.Toolbar_GetItemTextVisible_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -58,8 +56,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.Toolbar_GetItemImagesVisible_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -75,8 +72,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.Toolbar_GetNoDivider_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -92,8 +88,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.Toolbar_GetIsVertical_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -109,8 +104,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.Toolbar_GetIsBottom_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -126,8 +120,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.Toolbar_GetIsRight_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -143,8 +136,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.Toolbar_GetImageToTextDisplayMode_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -157,8 +149,7 @@ namespace Alternet.UI.Native
         public static System.IntPtr CreateEx(bool mainToolbar)
         {
             var n = NativeApi.Toolbar_CreateEx_(mainToolbar);
-            var m = n;
-            return m;
+            return n;
         }
         
         public void InsertItemAt(int index, ToolbarItem item)

@@ -29,8 +29,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.PrintPreviewDialog_GetTitle_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set

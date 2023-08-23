@@ -93,24 +93,21 @@ namespace Alternet.UI.Native
         {
             CheckDisposed();
             var n = NativeApi.Region_GetBounds_(NativePointer);
-            var m = n;
-            return m;
+            return n;
         }
         
         public bool IsEqualTo(Region other)
         {
             CheckDisposed();
             var n = NativeApi.Region_IsEqualTo_(NativePointer, other.NativePointer);
-            var m = n;
-            return m;
+            return n;
         }
         
         public int GetHashCode_()
         {
             CheckDisposed();
             var n = NativeApi.Region_GetHashCode__(NativePointer);
-            var m = n;
-            return m;
+            return n;
         }
         
         

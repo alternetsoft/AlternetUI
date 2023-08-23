@@ -29,8 +29,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.StatusBarPanel_GetText_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set

@@ -30,8 +30,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.TreeView_GetHideRoot_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -47,8 +46,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.TreeView_GetVariableRowHeight_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -64,8 +62,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.TreeView_GetTwistButtons_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -81,8 +78,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.TreeView_GetStateImageSpacing_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -98,8 +94,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.TreeView_GetIndentation_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -115,8 +110,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.TreeView_GetRowLines_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -132,8 +126,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.TreeView_GetHasBorder_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -167,8 +160,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.TreeView_GetRootItem_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
         }
@@ -179,8 +171,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.TreeView_GetSelectionMode_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -222,8 +213,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.TreeView_GetShowLines_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -239,8 +229,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.TreeView_GetShowRootLines_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -256,8 +245,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.TreeView_GetShowExpandButtons_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -273,8 +261,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.TreeView_GetTopItem_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
         }
@@ -285,8 +272,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.TreeView_GetFullRowSelect_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -302,8 +288,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.TreeView_GetAllowLabelEdit_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -317,16 +302,14 @@ namespace Alternet.UI.Native
         {
             CheckDisposed();
             var n = NativeApi.TreeView_GetItemCount_(NativePointer, parentItem);
-            var m = n;
-            return m;
+            return n;
         }
         
         public System.IntPtr InsertItem(System.IntPtr parentItem, System.IntPtr insertAfter, string text, int imageIndex, bool parentIsExpanded)
         {
             CheckDisposed();
             var n = NativeApi.TreeView_InsertItem_(NativePointer, parentItem, insertAfter, text, imageIndex, parentIsExpanded);
-            var m = n;
-            return m;
+            return n;
         }
         
         public void RemoveItem(System.IntPtr item)
@@ -369,24 +352,21 @@ namespace Alternet.UI.Native
         {
             CheckDisposed();
             var n = NativeApi.TreeView_ItemHitTest_(NativePointer, point);
-            var m = n;
-            return m;
+            return n;
         }
         
         public TreeViewHitTestLocations GetHitTestResultLocations(System.IntPtr hitTestResult)
         {
             CheckDisposed();
             var n = NativeApi.TreeView_GetHitTestResultLocations_(NativePointer, hitTestResult);
-            var m = n;
-            return m;
+            return n;
         }
         
         public System.IntPtr GetHitTestResultItem(System.IntPtr hitTestResult)
         {
             CheckDisposed();
             var n = NativeApi.TreeView_GetHitTestResultItem_(NativePointer, hitTestResult);
-            var m = n;
-            return m;
+            return n;
         }
         
         public void FreeHitTestResult(System.IntPtr hitTestResult)
@@ -399,8 +379,7 @@ namespace Alternet.UI.Native
         {
             CheckDisposed();
             var n = NativeApi.TreeView_IsItemSelected_(NativePointer, item);
-            var m = n;
-            return m;
+            return n;
         }
         
         public void SetFocused(System.IntPtr item, bool value)
@@ -413,8 +392,7 @@ namespace Alternet.UI.Native
         {
             CheckDisposed();
             var n = NativeApi.TreeView_IsItemFocused_(NativePointer, item);
-            var m = n;
-            return m;
+            return n;
         }
         
         public void SetItemText(System.IntPtr item, string text)
@@ -427,8 +405,7 @@ namespace Alternet.UI.Native
         {
             CheckDisposed();
             var n = NativeApi.TreeView_GetItemText_(NativePointer, item);
-            var m = n;
-            return m;
+            return n;
         }
         
         public void SetItemImageIndex(System.IntPtr item, int imageIndex)
@@ -441,8 +418,7 @@ namespace Alternet.UI.Native
         {
             CheckDisposed();
             var n = NativeApi.TreeView_GetItemImageIndex_(NativePointer, item);
-            var m = n;
-            return m;
+            return n;
         }
         
         public void BeginLabelEdit(System.IntPtr item)

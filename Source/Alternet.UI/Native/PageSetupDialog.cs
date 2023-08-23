@@ -47,8 +47,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.PageSetupDialog_GetMinMargins_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -64,8 +63,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.PageSetupDialog_GetMinMarginsValueSet_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -81,8 +79,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.PageSetupDialog_GetAllowMargins_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -98,8 +95,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.PageSetupDialog_GetAllowOrientation_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -115,8 +111,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.PageSetupDialog_GetAllowPaper_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -132,8 +127,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.PageSetupDialog_GetAllowPrinter_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -147,8 +141,7 @@ namespace Alternet.UI.Native
         {
             CheckDisposed();
             var n = NativeApi.PageSetupDialog_ShowModal_(NativePointer, owner?.NativePointer ?? IntPtr.Zero);
-            var m = n;
-            return m;
+            return n;
         }
         
         

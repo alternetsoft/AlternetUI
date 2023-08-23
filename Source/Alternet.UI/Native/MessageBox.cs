@@ -25,8 +25,7 @@ namespace Alternet.UI.Native
         public static MessageBoxResult Show(Window? owner, string text, string? caption, MessageBoxButtons buttons, MessageBoxIcon icon, MessageBoxDefaultButton defaultButton)
         {
             var n = NativeApi.MessageBox__Show_(owner?.NativePointer ?? IntPtr.Zero, text, caption, buttons, icon, defaultButton);
-            var m = n;
-            return m;
+            return n;
         }
         
         

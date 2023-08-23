@@ -30,8 +30,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.NotifyIcon_GetText_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -83,8 +82,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.NotifyIcon_GetVisible_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set

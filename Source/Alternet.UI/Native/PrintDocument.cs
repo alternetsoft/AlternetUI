@@ -30,8 +30,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.PrintDocument_GetOriginAtMargins_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -47,8 +46,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.PrintDocument_GetDocumentName_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -103,8 +101,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.PrintDocument_GetPrintPage_HasMorePages_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -120,8 +117,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.PrintDocument_GetPrintPage_MarginBounds_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
         }
@@ -132,8 +128,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.PrintDocument_GetPrintPage_PhysicalPageBounds_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
         }
@@ -144,8 +139,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.PrintDocument_GetPrintPage_PageBounds_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
         }
@@ -156,8 +150,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.PrintDocument_GetPrintPage_PrintablePageBounds_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
         }
@@ -168,8 +161,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.PrintDocument_GetPrintPage_PageNumber_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
         }

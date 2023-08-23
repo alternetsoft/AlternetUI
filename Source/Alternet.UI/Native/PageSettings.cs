@@ -29,8 +29,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.PageSettings_GetColor_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -46,8 +45,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.PageSettings_GetLandscape_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -63,8 +61,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.PageSettings_GetMargins_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -80,8 +77,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.PageSettings_GetCustomPaperSize_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -97,8 +93,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.PageSettings_GetUseCustomPaperSize_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -114,8 +109,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.PageSettings_GetPaperSize_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -131,8 +125,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.PageSettings_GetPrinterResolution_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set

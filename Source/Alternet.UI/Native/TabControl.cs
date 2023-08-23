@@ -30,8 +30,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.TabControl_GetPageCount_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
         }
@@ -42,8 +41,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.TabControl_GetSelectedPageIndex_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -59,8 +57,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.TabControl_GetTabAlignment_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -92,8 +89,7 @@ namespace Alternet.UI.Native
         {
             CheckDisposed();
             var n = NativeApi.TabControl_GetTotalPreferredSizeFromPageSize_(NativePointer, pageSize);
-            var m = n;
-            return m;
+            return n;
         }
         
         static GCHandle eventCallbackGCHandle;

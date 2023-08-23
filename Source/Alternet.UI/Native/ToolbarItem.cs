@@ -30,8 +30,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.ToolbarItem_GetManagedCommandId_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -47,8 +46,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.ToolbarItem_GetText_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -64,8 +62,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.ToolbarItem_GetChecked_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -99,8 +96,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.ToolbarItem_GetIsCheckable_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set

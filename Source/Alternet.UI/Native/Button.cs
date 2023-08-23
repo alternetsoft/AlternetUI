@@ -30,8 +30,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.Button_GetText_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -47,8 +46,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.Button_GetIsDefault_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -64,8 +62,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.Button_GetHasBorder_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -81,8 +78,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.Button_GetIsCancel_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -170,8 +166,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.Button_GetAcceptsFocus_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -187,8 +182,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.Button_GetAcceptsFocusFromKeyboard_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -204,8 +198,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.Button_GetAcceptsFocusRecursively_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -221,8 +214,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.Button_GetTextVisible_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -238,8 +230,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.Button_GetTextAlign_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set

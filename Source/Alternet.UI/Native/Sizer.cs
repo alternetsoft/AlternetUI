@@ -29,8 +29,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.Sizer_GetHandle_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
         }
@@ -39,8 +38,7 @@ namespace Alternet.UI.Native
         {
             CheckDisposed();
             var n = NativeApi.Sizer_AddWindow_(NativePointer, window, proportion, flag, border, userData);
-            var m = n;
-            return m;
+            return n;
         }
         
         

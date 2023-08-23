@@ -29,8 +29,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.PrinterSettings_GetDuplex_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -46,8 +45,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.PrinterSettings_GetFromPage_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -63,8 +61,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.PrinterSettings_GetToPage_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -80,8 +77,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.PrinterSettings_GetMinimumPage_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -97,8 +93,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.PrinterSettings_GetMaximumPage_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -114,8 +109,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.PrinterSettings_GetPrintRange_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -131,8 +125,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.PrinterSettings_GetCollate_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -148,8 +141,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.PrinterSettings_GetCopies_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -165,8 +157,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.PrinterSettings_GetPrintToFile_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -182,8 +173,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.PrinterSettings_GetPrinterName_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
@@ -199,8 +189,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.PrinterSettings_GetIsValid_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
         }
@@ -211,8 +200,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.PrinterSettings_GetIsDefaultPrinter_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
         }
@@ -223,8 +211,7 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.PrinterSettings_GetPrintFileName_(NativePointer);
-                var m = n;
-                return m;
+                return n;
             }
             
             set
