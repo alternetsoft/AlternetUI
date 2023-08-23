@@ -251,7 +251,7 @@ namespace Alternet::UI
     void* AuiToolBar::AddTool(int toolId, const string& label, ImageSet* bitmapBundle,
         const string& shortHelpString, int itemKind)
     {
-        return GetToolbar()->AddTool(toolId, wxStr(label), BitmapBundle(bitmapBundle),
+        return GetToolbar()->AddTool(toolId, wxStr(label), ImageSet::BitmapBundle(bitmapBundle),
             wxStr(shortHelpString), (wxItemKind)itemKind);
     }
 
@@ -259,8 +259,8 @@ namespace Alternet::UI
         ImageSet* disabledBitmapBundle, int itemKind, const string& shortHelpString,
         const string& longHelpString, void* clientData)
     {
-        return GetToolbar()->AddTool(toolId, wxStr(label), BitmapBundle(bitmapBundle),
-            BitmapBundle(disabledBitmapBundle), (wxItemKind)itemKind, 
+        return GetToolbar()->AddTool(toolId, wxStr(label), ImageSet::BitmapBundle(bitmapBundle),
+            ImageSet::BitmapBundle(disabledBitmapBundle), (wxItemKind)itemKind,
             wxStr(shortHelpString),
             wxStr(longHelpString), (wxObject*) clientData);
     }
@@ -269,8 +269,8 @@ namespace Alternet::UI
         ImageSet* disabledBitmapBundle, bool toggle, void* clientData,
         const string& shortHelpString, const string& longHelpString)
     {
-        return GetToolbar()->AddTool(toolId, BitmapBundle(bitmapBundle),
-            BitmapBundle(disabledBitmapBundle), toggle, (wxObject*) clientData,
+        return GetToolbar()->AddTool(toolId, ImageSet::BitmapBundle(bitmapBundle),
+            ImageSet::BitmapBundle(disabledBitmapBundle), toggle, (wxObject*) clientData,
             wxStr(shortHelpString), wxStr(longHelpString));
     }
 
@@ -544,6 +544,6 @@ namespace Alternet::UI
 
     void AuiToolBar::SetToolBitmap(int toolId, ImageSet* bitmapBundle)
     {
-        GetToolbar()->SetToolBitmap(toolId, BitmapBundle(bitmapBundle));
+        GetToolbar()->SetToolBitmap(toolId, ImageSet::BitmapBundle(bitmapBundle));
     }
 }

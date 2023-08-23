@@ -13,6 +13,12 @@ namespace Alternet::UI
         wxIconBundle* GetIconBundle();
         wxBitmapBundle GetBitmapBundle();
 
+        static wxBitmapBundle BitmapBundle(ImageSet* bimtapBundle)
+        {
+            if (bimtapBundle == nullptr)
+                return wxBitmapBundle();
+            return bimtapBundle->GetBitmapBundle();
+        }
     private:
         wxIconBundle _iconBundle;
         

@@ -282,14 +282,14 @@ namespace Alternet::UI
         bool select, ImageSet* bitmap)
     {
         return GetNotebook()->AddPage((wxWindow*)page, wxStr(caption),
-            select, BitmapBundle(bitmap));
+            select, ImageSet::BitmapBundle(bitmap));
     }
 
     bool AuiNotebook::InsertPage(uint64_t pageIdx, void* page, const string& caption,
         bool select, ImageSet* bitmap)
     {
         return GetNotebook()->InsertPage(pageIdx, (wxWindow*) page, wxStr(caption),
-            select, BitmapBundle(bitmap));
+            select, ImageSet::BitmapBundle(bitmap));
     }
 
     bool AuiNotebook::DeletePage(uint64_t page)
@@ -339,7 +339,7 @@ namespace Alternet::UI
 
     bool AuiNotebook::SetPageBitmap(uint64_t page, ImageSet* bitmap)
     {
-        return GetNotebook()->SetPageBitmap(page, BitmapBundle(bitmap));
+        return GetNotebook()->SetPageBitmap(page, ImageSet::BitmapBundle(bitmap));
     }
 
     int64_t AuiNotebook::SetSelection(uint64_t newPage)
