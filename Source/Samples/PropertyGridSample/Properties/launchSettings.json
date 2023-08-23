@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "PropertyGridSample": {
+      "commandName": "Project",
+      "nativeDebugging": true
+    }
+  }
+}

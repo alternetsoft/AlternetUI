@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Alternet.UI": {
+      "commandName": "Project",
+      "nativeDebugging": true
+    }
+  }
+}
