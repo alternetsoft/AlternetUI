@@ -3,6 +3,7 @@
 #pragma once
 
 #include "AuiPaneInfo.h"
+#include "ImageSet.h"
 #include "ApiUtils.h"
 #include "Exceptions.h"
 
@@ -225,10 +226,10 @@ ALTERNET_UI_API void AuiPaneInfo_Caption_(void* handle, const char16_t* value)
         });
 }
 
-ALTERNET_UI_API void AuiPaneInfo_Icon_(void* handle, void* bitmapBundle)
+ALTERNET_UI_API void AuiPaneInfo_Image_(void* handle, ImageSet* bitmap)
 {
     MarshalExceptions<void>([&](){
-            AuiPaneInfo::Icon(handle, bitmapBundle);
+            AuiPaneInfo::Image(handle, bitmap);
         });
 }
 

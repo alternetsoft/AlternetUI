@@ -177,9 +177,9 @@ namespace Alternet::UI
 		PaneInfo(handle).Caption(wxStr(value));
 	}
 	
-	void AuiPaneInfo::Icon(void* handle, void* bitmapBundle)
+	void AuiPaneInfo::Image(void* handle, ImageSet* bitmap)
 	{
-		PaneInfo(handle).Icon(*(wxBitmapBundle*)bitmapBundle);
+		PaneInfo(handle).Icon(ImageSet::BitmapBundle(bitmap));
 	}
 	
 	void AuiPaneInfo::Left(void* handle)
@@ -259,7 +259,7 @@ namespace Alternet::UI
 	
 	void AuiPaneInfo::Resizable(void* handle, bool resizable)
 	{
-		PaneInfo(handle).Resizable();
+		PaneInfo(handle).Resizable(resizable);
 	}
 	
 	void AuiPaneInfo::Dock(void* handle)
@@ -279,12 +279,12 @@ namespace Alternet::UI
 	
 	void AuiPaneInfo::Show(void* handle, bool show)
 	{
-		PaneInfo(handle).Show();
+		PaneInfo(handle).Show(show);
 	}
 	
 	void AuiPaneInfo::CaptionVisible(void* handle, bool visible)
 	{
-		PaneInfo(handle).CaptionVisible();
+		PaneInfo(handle).CaptionVisible(visible);
 	}
 
 	void AuiPaneInfo::Maximize(void* handle)

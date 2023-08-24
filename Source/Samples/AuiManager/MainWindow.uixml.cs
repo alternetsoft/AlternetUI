@@ -86,7 +86,7 @@ namespace AuiManagerSample
             // Right Pane
             var pane2 = manager.CreatePaneInfo();
             pane2.Name("pane2").Caption("Pane 2").Right().PaneBorder(false)
-                .TopDockable(false).BottomDockable(false);
+                .TopDockable(false).BottomDockable(false).Image(ImageCalendar);
             var listBox2 = CreateListBox("Pane 2");
             listBox2.Add("TopDockable(false)");
             listBox2.Add("BottomDockable(false)");
@@ -170,8 +170,8 @@ namespace AuiManagerSample
             listBox5 = CreateListBox("ListBox 5");
             listBox6 = CreateListBox("ListBox 6");
 
-            notebook5.AddPage(listBox5, "ListBox 5");
-            notebook5.AddPage(listBox6, "ListBox 6");
+            notebook5.AddPage(listBox5, "ListBox 5", false, ImagePencil);
+            notebook5.AddPage(listBox6, "ListBox 6", true, ImagePhoto);
             listBox6.Add("This page can not be closed");
 
             panel.Children.Add(notebook5);
@@ -207,12 +207,12 @@ namespace AuiManagerSample
             listBox3.MouseRightButtonUp += Log_MouseRightButtonUp;
         }
 
-        private void Log_MouseRightButtonUp(object sender, MouseButtonEventArgs e)
+        private void Log_MouseRightButtonUp(object? sender, MouseButtonEventArgs e)
         {
             contextMenu2.Show(listBox3, e.GetPosition(listBox3));
         }
 
-        private void Toolbar4_ToolCommand(object sender, EventArgs e)
+        private void Toolbar4_ToolCommand(object? sender, EventArgs e)
         {
             Log("ToolCommand");
         }

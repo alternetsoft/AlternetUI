@@ -30,7 +30,7 @@ static bool HasGripperTop(void* handle);
 static void Window(void* handle, void* window);
 static void Name(void* handle, const string& value);
 static void Caption(void* handle, const string& value);
-static void Icon(void* handle, void* bitmapBundle);
+static void Image(void* handle, ImageSet* bitmap);
 static void Left(void* handle);
 static void Right(void* handle);
 static void Top(void* handle);

@@ -213,7 +213,12 @@ namespace Alternet.UI
         /// <returns>Returns this pane info instance.</returns>
         IAuiPaneInfo Caption(string value);
 
-        // void Icon(IntPtr bitmapBundle);
+        /// <summary>
+        /// Sets the icon of the pane.
+        /// </summary>
+        /// <param name="bitmap">Bitmap to show in the title bar.</param>
+        /// <returns>Returns this pane info instance.</returns>
+        IAuiPaneInfo Image(ImageSet? bitmap);
 
         /// <summary>
         /// Sets the pane dock position to the left of the frame.

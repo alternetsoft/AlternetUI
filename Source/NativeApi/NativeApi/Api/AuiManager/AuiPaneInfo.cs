@@ -42,7 +42,7 @@ namespace NativeApi.Api
         public static void Window(IntPtr handle, IntPtr window) => throw new Exception();
         public static void Name(IntPtr handle, string value) => throw new Exception();
         public static void Caption(IntPtr handle, string value) => throw new Exception();
-        public static void Icon(IntPtr handle, IntPtr bitmapBundle) =>
+        public static void Image(IntPtr handle, ImageSet? bitmap) =>
             throw new Exception();
         public static void Left(IntPtr handle) => throw new Exception();
         public static void Right(IntPtr handle) => throw new Exception();

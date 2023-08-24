@@ -198,9 +198,9 @@ namespace Alternet.UI.Native
             NativeApi.AuiPaneInfo_Caption_(handle, value);
         }
         
-        public static void Icon(System.IntPtr handle, System.IntPtr bitmapBundle)
+        public static void Image(System.IntPtr handle, ImageSet? bitmap)
         {
-            NativeApi.AuiPaneInfo_Icon_(handle, bitmapBundle);
+            NativeApi.AuiPaneInfo_Image_(handle, bitmap?.NativePointer ?? IntPtr.Zero);
         }
         
         public static void Left(System.IntPtr handle)
@@ -530,7 +530,7 @@ namespace Alternet.UI.Native
             public static extern void AuiPaneInfo_Caption_(System.IntPtr handle, string value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void AuiPaneInfo_Icon_(System.IntPtr handle, System.IntPtr bitmapBundle);
+            public static extern void AuiPaneInfo_Image_(System.IntPtr handle, IntPtr bitmap);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void AuiPaneInfo_Left_(System.IntPtr handle);

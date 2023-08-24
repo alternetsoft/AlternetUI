@@ -384,6 +384,12 @@ namespace Alternet.UI
             return this;
         }
 
+        public IAuiPaneInfo Image(ImageSet? bitmap)
+        {
+            Native.AuiPaneInfo.Image(handle, bitmap?.NativeImageSet);
+            return this;
+        }
+
         public IAuiPaneInfo RightDockable(bool b = true)
         {
             Native.AuiPaneInfo.RightDockable(handle, b);
