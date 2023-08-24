@@ -45,6 +45,7 @@ bool SetColumnProportion(uint32_t column, int proportion);
 int GetColumnProportion(uint32_t column);
 void Sort(int flags);
 void RefreshProperty(void* p);
+void* CreateColorProperty(const string& label, const string& name, const Color& value);
 public:
 PropertyGrid();
 protected:

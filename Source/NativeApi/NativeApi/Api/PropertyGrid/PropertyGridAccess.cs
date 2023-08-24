@@ -97,6 +97,9 @@ namespace NativeApi.Api
 
         public void RefreshProperty(IntPtr p) => throw new Exception();
 
+        public IntPtr CreateColorProperty(string label, string name, Color value) =>
+            throw new Exception();
+
         /*
 
         ====

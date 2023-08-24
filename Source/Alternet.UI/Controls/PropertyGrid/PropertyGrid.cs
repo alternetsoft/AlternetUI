@@ -438,7 +438,7 @@ namespace Alternet.UI
             return GetEffectiveControlHandlerHactory().CreatePropertyGridHandler(this);
         }
 
-        private string CorrectPropName(string? name)
+        private static string CorrectPropName(string? name)
         {
             if (name is null)
                 return NameAsLabel;

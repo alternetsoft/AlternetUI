@@ -288,3 +288,10 @@ ALTERNET_UI_API void PropertyGrid_RefreshProperty_(PropertyGrid* obj, void* p)
         });
 }
 
+ALTERNET_UI_API void* PropertyGrid_CreateColorProperty_(PropertyGrid* obj, const char16_t* label, const char16_t* name, Color value)
+{
+    return MarshalExceptions<void*>([&](){
+            return obj->CreateColorProperty(label, name, value);
+        });
+}
+

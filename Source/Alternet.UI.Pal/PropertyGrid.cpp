@@ -182,6 +182,13 @@ namespace Alternet::UI
         return new wxEnumProperty(wxStr(label), wxStr(name), pgc->choices, value);
     }
 
+    void* PropertyGrid::CreateColorProperty(const string& label, const string& name,
+        const Color& value)
+    {
+        wxColor wxc = value;
+        return new wxColourProperty(wxStr(label), wxStr(name), wxc);
+    }
+
     void* PropertyGrid::CreateFlagsProperty(const string& label, const string& name,
         void* choices, int value)
     {

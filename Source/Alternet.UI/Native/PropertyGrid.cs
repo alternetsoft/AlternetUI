@@ -292,6 +292,13 @@ namespace Alternet.UI.Native
             NativeApi.PropertyGrid_RefreshProperty_(NativePointer, p);
         }
         
+        public System.IntPtr CreateColorProperty(string label, string name, Alternet.Drawing.Color value)
+        {
+            CheckDisposed();
+            var n = NativeApi.PropertyGrid_CreateColorProperty_(NativePointer, label, name, value);
+            return n;
+        }
+        
         
         [SuppressUnmanagedCodeSecurity]
         public class NativeApi : NativeApiProvider
@@ -417,6 +424,9 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void PropertyGrid_RefreshProperty_(IntPtr obj, System.IntPtr p);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr PropertyGrid_CreateColorProperty_(IntPtr obj, string label, string name, NativeApiTypes.Color value);
             
         }
     }

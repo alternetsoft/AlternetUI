@@ -50,15 +50,17 @@ namespace PropertyGridSample
             // Left Pane
             var pane1 = manager.CreatePaneInfo();
             pane1.Name("pane1").Caption("Controls").Left().PaneBorder(false).CloseButton(false)
-                .TopDockable(false).BottomDockable(false).Movable(false).Floatable(false);
+                .TopDockable(false).BottomDockable(false).Movable(false).Floatable(false)
+                .CaptionVisible(false);
             controlsListBox = CreateListBox();
             manager.AddPane(controlsListBox, pane1);
 
             // Right Pane
             var pane2 = manager.CreatePaneInfo();
-            pane2.Name("pane2").Caption("Properties").Right().PaneBorder(false).CloseButton(false)
+            pane2.Name("pane2").Caption("Properties").Right().PaneBorder(false)
+                .CloseButton(false)
                 .TopDockable(false).BottomDockable(false).Movable(false).Floatable(false)
-                .BestSize(400, 200);
+                .BestSize(400, 200).CaptionVisible(false);
             propertyGrid.HasBorder = false;
             panel.Children.Add(propertyGrid);
             manager.AddPane(propertyGrid, pane2);
