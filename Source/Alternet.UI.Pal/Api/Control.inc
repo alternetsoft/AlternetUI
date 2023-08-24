@@ -83,6 +83,8 @@ void* GetWxWidget();
 bool GetIsScrollable();
 void SetIsScrollable(bool value);
 
+void EndInit();
+void Destroy();
 void SaveScreenshot(const string& fileName);
 void SendSizeEvent();
 void SendMouseDownEvent(int x, int y);
@@ -96,6 +98,8 @@ bool IsScrollBarVisible(ScrollBarOrientation orientation);
 int GetScrollBarValue(ScrollBarOrientation orientation);
 int GetScrollBarLargeChange(ScrollBarOrientation orientation);
 int GetScrollBarMaximum(ScrollBarOrientation orientation);
+void Freeze();
+void Thaw();
 static void NotifyCaptureLost();
 void ShowPopupMenu(void* menu, int x, int y);
 void BeginIgnoreRecreate();
@@ -122,8 +126,6 @@ static Control* GetFocusedControl();
 bool SetFocus();
 void FocusNextControl(bool forward, bool nested);
 void BeginInit();
-void EndInit();
-void Destroy();
 public:
 enum class ControlEvent
 {

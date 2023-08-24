@@ -270,6 +270,20 @@ ALTERNET_UI_API void Control_SetIsScrollable_(Control* obj, c_bool value)
         });
 }
 
+ALTERNET_UI_API void Control_EndInit_(Control* obj)
+{
+    MarshalExceptions<void>([&](){
+            obj->EndInit();
+        });
+}
+
+ALTERNET_UI_API void Control_Destroy_(Control* obj)
+{
+    MarshalExceptions<void>([&](){
+            obj->Destroy();
+        });
+}
+
 ALTERNET_UI_API void Control_SaveScreenshot_(Control* obj, const char16_t* fileName)
 {
     MarshalExceptions<void>([&](){
@@ -358,6 +372,20 @@ ALTERNET_UI_API int Control_GetScrollBarMaximum_(Control* obj, ScrollBarOrientat
 {
     return MarshalExceptions<int>([&](){
             return obj->GetScrollBarMaximum(orientation);
+        });
+}
+
+ALTERNET_UI_API void Control_Freeze_(Control* obj)
+{
+    MarshalExceptions<void>([&](){
+            obj->Freeze();
+        });
+}
+
+ALTERNET_UI_API void Control_Thaw_(Control* obj)
+{
+    MarshalExceptions<void>([&](){
+            obj->Thaw();
         });
 }
 
@@ -540,20 +568,6 @@ ALTERNET_UI_API void Control_BeginInit_(Control* obj)
 {
     MarshalExceptions<void>([&](){
             obj->BeginInit();
-        });
-}
-
-ALTERNET_UI_API void Control_EndInit_(Control* obj)
-{
-    MarshalExceptions<void>([&](){
-            obj->EndInit();
-        });
-}
-
-ALTERNET_UI_API void Control_Destroy_(Control* obj)
-{
-    MarshalExceptions<void>([&](){
-            obj->Destroy();
         });
 }
 

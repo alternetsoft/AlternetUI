@@ -351,6 +351,18 @@ namespace Alternet.UI.Native
             }
         }
         
+        public void EndInit()
+        {
+            CheckDisposed();
+            NativeApi.Control_EndInit_(NativePointer);
+        }
+        
+        public void Destroy()
+        {
+            CheckDisposed();
+            NativeApi.Control_Destroy_(NativePointer);
+        }
+        
         public void SaveScreenshot(string fileName)
         {
             CheckDisposed();
@@ -433,6 +445,18 @@ namespace Alternet.UI.Native
             CheckDisposed();
             var n = NativeApi.Control_GetScrollBarMaximum_(NativePointer, orientation);
             return n;
+        }
+        
+        public void Freeze()
+        {
+            CheckDisposed();
+            NativeApi.Control_Freeze_(NativePointer);
+        }
+        
+        public void Thaw()
+        {
+            CheckDisposed();
+            NativeApi.Control_Thaw_(NativePointer);
         }
         
         public static void NotifyCaptureLost()
@@ -606,18 +630,6 @@ namespace Alternet.UI.Native
         {
             CheckDisposed();
             NativeApi.Control_BeginInit_(NativePointer);
-        }
-        
-        public void EndInit()
-        {
-            CheckDisposed();
-            NativeApi.Control_EndInit_(NativePointer);
-        }
-        
-        public void Destroy()
-        {
-            CheckDisposed();
-            NativeApi.Control_Destroy_(NativePointer);
         }
         
         static GCHandle eventCallbackGCHandle;
@@ -868,6 +880,12 @@ namespace Alternet.UI.Native
             public static extern void Control_SetIsScrollable_(IntPtr obj, bool value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Control_EndInit_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Control_Destroy_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Control_SaveScreenshot_(IntPtr obj, string fileName);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
@@ -905,6 +923,12 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern int Control_GetScrollBarMaximum_(IntPtr obj, ScrollBarOrientation orientation);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Control_Freeze_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Control_Thaw_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Control_NotifyCaptureLost_();
@@ -983,12 +1007,6 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Control_BeginInit_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Control_EndInit_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Control_Destroy_(IntPtr obj);
             
         }
     }

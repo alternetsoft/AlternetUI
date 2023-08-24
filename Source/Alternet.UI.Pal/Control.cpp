@@ -8,7 +8,6 @@ namespace Alternet::UI
 {
     wxDummyPanel::wxDummyPanel(wxString idstr) 
     {
-        //Hide();
     }
 
     /*static*/ Control::ControlsByWxWindowsMap Control::s_controlsByWxWindowsMap;
@@ -713,6 +712,16 @@ namespace Alternet::UI
     bool Control::RetrieveFrozen()
     {
         return GetWxWindow()->IsFrozen();
+    }
+
+    void Control::Freeze()
+    {
+        GetWxWindow()->Freeze();
+    }
+
+    void Control::Thaw() 
+    {
+        GetWxWindow()->Thaw();
     }
 
     void Control::ApplyFrozen(bool value)

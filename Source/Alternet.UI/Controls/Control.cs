@@ -63,7 +63,6 @@ namespace Alternet.UI
         private ControlExtendedProps? extendedProps = null;
         private Thickness? minMargin;
         private Thickness? minPadding;
-
         private bool visible = true;
         private Control? parent;
 
@@ -766,6 +765,7 @@ namespace Alternet.UI
         /// Returns rectangle in which custom drawing need to be performed.
         /// Useful for custom draw controls
         /// </summary>
+        [Browsable(false)]
         public virtual Rect DrawClientRectangle
         {
             get

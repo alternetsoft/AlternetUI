@@ -8,6 +8,9 @@ namespace NativeApi.Api
 {
     public abstract class Control
     {
+        public void Freeze() { }
+        public void Thaw() { }
+
         public static void NotifyCaptureLost() { }
 
         public void ShowPopupMenu(IntPtr menu, int x, int y) { }
