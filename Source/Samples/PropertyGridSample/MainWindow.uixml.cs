@@ -102,7 +102,10 @@ namespace PropertyGridSample
             {
                 propertyGrid.Clear();
 
-                var prop = propertyGrid.CreateBoolProperty("Bool");
+                var prop = propertyGrid.CreatePropCategory("Category 1");
+                propertyGrid.Add(prop);
+
+                prop = propertyGrid.CreateBoolProperty("Bool");
                 propertyGrid.Add(prop);
 
                 prop = propertyGrid.CreateIntProperty("Int");
@@ -118,6 +121,9 @@ namespace PropertyGridSample
                 propertyGrid.Add(prop);
 
                 prop = propertyGrid.CreateDateProperty("Date");
+                propertyGrid.Add(prop);
+
+                prop = propertyGrid.CreatePropCategory("Category 2");
                 propertyGrid.Add(prop);
 
                 var choices1 = propertyGrid.CreateChoicesOnce(typeof(PropertyGridCreateStyle));

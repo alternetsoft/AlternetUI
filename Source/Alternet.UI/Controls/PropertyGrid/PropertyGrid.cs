@@ -17,7 +17,7 @@ namespace Alternet.UI
     /// </remarks>
     public class PropertyGrid : Control
     {
-        private static readonly string NameAsLabel = Native.PropertyGrid.NameAsLabel;
+        internal static readonly string NameAsLabel = Native.PropertyGrid.NameAsLabel;
         private static Dictionary<Type, IPropertyGridChoices>? choicesCache = null;
 
         /// <summary>
@@ -90,7 +90,7 @@ namespace Alternet.UI
         {
             value ??= string.Empty;
             var handle = NativeControl.CreateStringProperty(label, CorrectPropName(name), value!);
-            return new PropertyGridItem(handle);
+            return new PropertyGridItem(handle, label, name, value);
         }
 
         /// <summary>
@@ -106,7 +106,7 @@ namespace Alternet.UI
             bool value = false)
         {
             var handle = NativeControl.CreateBoolProperty(label, CorrectPropName(name), value);
-            return new PropertyGridItem(handle);
+            return new PropertyGridItem(handle, label, name, value);
         }
 
         /// <summary>
@@ -122,7 +122,7 @@ namespace Alternet.UI
             long value = 0)
         {
             var handle = NativeControl.CreateIntProperty(label, CorrectPropName(name), value);
-            return new PropertyGridItem(handle);
+            return new PropertyGridItem(handle, label, name, value);
         }
 
         /// <summary>
@@ -138,7 +138,7 @@ namespace Alternet.UI
             double value = 0.0)
         {
             var handle = NativeControl.CreateFloatProperty(label, CorrectPropName(name), value);
-            return new PropertyGridItem(handle);
+            return new PropertyGridItem(handle, label, name, value);
         }
 
         /// <summary>
@@ -154,7 +154,7 @@ namespace Alternet.UI
             ulong value = 0)
         {
             var handle = NativeControl.CreateUIntProperty(label, CorrectPropName(name), value);
-            return new PropertyGridItem(handle);
+            return new PropertyGridItem(handle, label, name, value);
         }
 
         /// <summary>
@@ -175,7 +175,7 @@ namespace Alternet.UI
                 label,
                 CorrectPropName(name),
                 value);
-            return new PropertyGridItem(handle);
+            return new PropertyGridItem(handle, label, name, value);
         }
 
         /// <summary>
@@ -201,7 +201,7 @@ namespace Alternet.UI
                 label,
                 CorrectPropName(name),
                 dt);
-            return new PropertyGridItem(handle);
+            return new PropertyGridItem(handle, label, name, value);
         }
 
         /// <summary>
@@ -224,7 +224,7 @@ namespace Alternet.UI
                 CorrectPropName(name),
                 choices.Handle,
                 (int)value);
-            return new PropertyGridItem(handle);
+            return new PropertyGridItem(handle, label, name, value);
         }
 
         /// <summary>
@@ -247,14 +247,16 @@ namespace Alternet.UI
                 CorrectPropName(name),
                 choices.Handle,
                 (int)value);
-            return new PropertyGridItem(handle);
+            return new PropertyGridItem(handle, label, name, value);
         }
 
         /// <summary>
         /// Creates property choices list for use with <see cref="CreateFlagsProperty"/> and
         /// <see cref="CreateEnumProperty"/>.
         /// </summary>
+#pragma warning disable CA1822 // Mark members as static
         public IPropertyGridChoices CreateChoices()
+#pragma warning restore CA1822 // Mark members as static
         {
             return new PropertyGridChoices();
         }
@@ -317,7 +319,117 @@ namespace Alternet.UI
         /// <param name="prop">Item to add.</param>
         public void Add(IPropertyGridItem prop)
         {
-            var result = NativeControl.Append(prop.Handle);
+            NativeControl.Append(prop.Handle);
+        }
+
+        public IPropertyGridItem CreatePropCategory(string label, string? name = null)
+        {
+            var handle = NativeControl.CreatePropCategory(
+                label,
+                CorrectPropName(name));
+            var result = new PropertyGridItem(handle, label, name, null)
+            {
+                IsCategory = true,
+            };
+            return result;
+        }
+
+        internal static void InitAllTypeHandlers()
+        {
+            Native.PropertyGrid.InitAllTypeHandlers();
+        }
+
+        internal static void RegisterAdditionalEditors()
+        {
+            Native.PropertyGrid.RegisterAdditionalEditors();
+        }
+
+        internal static void SetBoolChoices(string trueChoice, string falseChoice)
+        {
+            Native.PropertyGrid.SetBoolChoices(trueChoice, falseChoice);
+        }
+
+        // !!
+        internal IntPtr GetFirst(int flags)
+        {
+            var result = NativeControl.GetFirst(flags);
+            return result;
+        }
+
+        // !!
+        internal IntPtr GetProperty(string name)
+        {
+            var result = NativeControl.GetProperty(name);
+            return result;
+        }
+
+        // !!
+        internal IntPtr GetPropertyByLabel(string label)
+        {
+            var result = NativeControl.GetPropertyByLabel(label);
+            return result;
+        }
+
+        // !!
+        internal IntPtr GetPropertyByName(string name)
+        {
+            var result = NativeControl.GetPropertyByName(name);
+            return result;
+        }
+
+        // !!
+        internal IntPtr GetPropertyByNameAndSubName(string name, string subname)
+        {
+            var result = NativeControl.GetPropertyByNameAndSubName(name, subname);
+            return result;
+        }
+
+        // !!
+        internal IntPtr GetSelection()
+        {
+            var result = NativeControl.GetSelection();
+            return result;
+        }
+
+        // !!
+        internal string GetPropertyName(IntPtr property)
+        {
+            return NativeControl.GetPropertyName(property);
+        }
+
+        // !!
+        internal bool RestoreEditableState(string src, int restoreStates)
+        {
+            return NativeControl.RestoreEditableState(src, restoreStates);
+        }
+
+        // !!
+        internal string SaveEditableState(int includedStates)
+        {
+            return NativeControl.SaveEditableState(includedStates);
+        }
+
+        // !!
+        internal bool SetColumnProportion(uint column, int proportion)
+        {
+            return NativeControl.SetColumnProportion(column, proportion);
+        }
+
+        internal int GetColumnProportion(uint column)
+        {
+            return NativeControl.GetColumnProportion(column);
+        }
+
+        // !!
+        internal void Sort(int flags = 0)
+        {
+            NativeControl.Sort(flags);
+        }
+
+        // !!
+        internal void RefreshProperty(IntPtr p)
+        {
+            NativeControl.RefreshProperty(p);
         }
 
         /// <inheritdoc/>

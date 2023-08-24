@@ -78,9 +78,14 @@ namespace Alternet::UI
         bindScrollEvents = false;
 	}
 
+    wxPropertyGridInterface* PropertyGrid::GetPropGridInterface()
+    {
+        return dynamic_cast<wxPropertyGridInterface*>(GetWxWindow());
+    }
+    
     wxPropertyGrid* PropertyGrid::GetPropGrid()
     {
-        return dynamic_cast<wxPropertyGrid2*>(GetWxWindow());
+        return dynamic_cast<wxPropertyGrid*>(GetWxWindow());
     }
 
 	PropertyGrid::~PropertyGrid()
@@ -185,4 +190,88 @@ namespace Alternet::UI
         return new wxFlagsProperty(wxStr(label), wxStr(name), pgc->choices, value);
     }
 
+    void PropertyGrid::SetBoolChoices(const string& trueChoice, const string& falseChoice)
+    {
+        wxPropertyGrid::SetBoolChoices(wxStr(trueChoice), wxStr(falseChoice));
+    }
+
+    void PropertyGrid::InitAllTypeHandlers()
+    {
+        wxPropertyGrid::InitAllTypeHandlers();
+    }
+
+    void PropertyGrid::RegisterAdditionalEditors()
+    {
+        wxPropertyGrid::RegisterAdditionalEditors();
+    }
+
+    void* PropertyGrid::CreatePropCategory(const string& label, const string& name)
+    {
+        return new wxPropertyCategory(wxStr(label), wxStr(name));
+    }
+
+    void* PropertyGrid::GetFirst(int flags)
+    {
+        return GetPropGridInterface()->GetFirst(flags);
+    }
+
+    void* PropertyGrid::GetProperty(const string& name)
+    {
+        return GetPropGrid()->GetProperty(wxStr(name));
+    }
+
+    void* PropertyGrid::GetPropertyByLabel(const string& label)
+    {
+        return GetPropGrid()->GetPropertyByLabel(wxStr(label));
+    }
+
+    void* PropertyGrid::GetPropertyByName(const string& name) 
+    {
+        return GetPropGrid()->GetPropertyByName(wxStr(name));
+    }
+
+    void* PropertyGrid::GetPropertyByNameAndSubName(const string& name, const string& subname) 
+    {
+        return GetPropGrid()->GetPropertyByName(wxStr(name), wxStr(subname));
+    }
+
+    void* PropertyGrid::GetSelection() 
+    {
+        return GetPropGrid()->GetSelection();
+    }
+
+    string PropertyGrid::GetPropertyName(void* property) 
+    {
+        return wxStr(GetPropGrid()->GetPropertyName((wxPGProperty*)property));
+    }
+
+    bool PropertyGrid::RestoreEditableState(const string& src, int restoreStates) 
+    {
+        return GetPropGrid()->RestoreEditableState(wxStr(src), restoreStates);
+    }
+
+    string PropertyGrid::SaveEditableState(int includedStates) 
+    {
+        return wxStr(GetPropGrid()->SaveEditableState(includedStates));
+    }
+
+    bool PropertyGrid::SetColumnProportion(uint32_t column, int proportion) 
+    {
+        return GetPropGrid()->SetColumnProportion(column, proportion);
+    }
+
+    int PropertyGrid::GetColumnProportion(uint32_t column) 
+    {
+        return GetPropGrid()->GetColumnProportion(column);
+    }
+
+    void PropertyGrid::Sort(int flags) 
+    {
+        return GetPropGrid()->Sort(flags);
+    }
+
+    void PropertyGrid::RefreshProperty(void* p) 
+    {
+        return GetPropGrid()->RefreshProperty((wxPGProperty*)p);
+    }
 }

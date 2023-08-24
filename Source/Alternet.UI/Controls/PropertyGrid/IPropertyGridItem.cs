@@ -15,5 +15,25 @@ namespace Alternet.UI
         /// Item handle.
         /// </summary>
         IntPtr Handle { get; }
+
+        /// <summary>
+        /// Item name.
+        /// </summary>
+        string Name { get; }
+
+        /// <summary>
+        /// Item label.
+        /// </summary>
+        string Label { get; }
+
+        /// <summary>
+        /// Item default value.
+        /// </summary>
+        object? DefaultValue { get; }
+
+        /// <summary>
+        /// Item is category.
+        /// </summary>
+        bool IsCategory { get; }
     }
 }

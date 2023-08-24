@@ -58,281 +58,209 @@ namespace NativeApi.Api
 
         public bool ExpandAll(bool expand = true) => throw new Exception();
 
+        public IntPtr CreatePropCategory(
+            string label,
+            string name) => throw new Exception();
+
+        public IntPtr GetFirst(int flags) => throw new Exception();
+
+        public IntPtr GetProperty(string name) => throw new Exception();
+
+        public IntPtr GetPropertyByLabel(string label) => throw new Exception();
+
+        public IntPtr GetPropertyByName(string name) => throw new Exception();
+
+        public IntPtr GetPropertyByNameAndSubName(string name, string subname) =>
+            throw new Exception();
+
+        public IntPtr GetSelection() => throw new Exception();
+
+        public string GetPropertyName(IntPtr property) => throw new Exception();
+
+        public static void InitAllTypeHandlers() => throw new Exception();
+
+        public static void RegisterAdditionalEditors() => throw new Exception();
+
+        public bool RestoreEditableState(string src, int restoreStates) =>
+            throw new Exception();
+
+        public string SaveEditableState(int includedStates) => throw new Exception();
+
+        public static void SetBoolChoices(string trueChoice, string falseChoice) =>
+            throw new Exception();
+
+        public bool SetColumnProportion(uint column, int proportion) => throw new Exception();
+
+        public int GetColumnProportion(uint column) => throw new Exception();
+
+        public void Sort(int flags = 0) => throw new Exception();
+
+        public void RefreshProperty(IntPtr p) => throw new Exception();
+
         /*
 
-            wxPGProperty* GetFirst( int flags = wxPG_ITERATE_ALL)
-
-            wxPGProperty* GetProperty( const wxString& name)
-
-            wxPGProperty* GetPropertyByLabel( const wxString& label);
-
-            wxPGProperty* GetPropertyByName( const wxString& name);
-
-            wxPGProperty* GetPropertyByName( const wxString& name,
-                                             const wxString& subname);
-
-            wxPGProperty* GetSelection();
-            wxString GetPropertyName( wxPGProperty* property)
-            static void InitAllTypeHandlers()
-
-            static void RegisterAdditionalEditors();
-
-            bool RestoreEditableState( const wxString& src, int restoreStates);
-
-            wxString SaveEditableState( int includedStates);
-
-            static void SetBoolChoices( const wxString& trueChoice,
-                                        const wxString& falseChoice);
-
-            bool SetColumnProportion(unsigned int column, int proportion);
-
-            int GetColumnProportion(unsigned int column)
-
-            void Sort(int flags = 0);
-            wxPGProperty* GetPropertyByNameA(const wxString& name);
-            void RefreshProperty(wxPGProperty* p);
-
-
         ====
-            wxPGProperty* AppendIn( wxPGPropArg id, wxPGProperty* newproperty );
+            public void SetPropertyReadOnly(wxPGPropArg id, bool set = true, int flags) =>
+                throw new Exception();
 
-            void BeginAddChildren( wxPGPropArg id );
+            public void SetPropertyValueUnspecified(wxPGPropArg id) => throw new Exception();
 
-            bool Collapse( wxPGPropArg id );
 
-            bool ChangePropertyValue( wxPGPropArg id, wxVariant newValue );
+            public IntPtr AppendIn(wxPGPropArg id, IntPtr newproperty) => throw new Exception();
 
-            void DeleteProperty( wxPGPropArg id );
+            public void BeginAddChildren(wxPGPropArg id) => throw new Exception();
 
-            wxPGProperty* RemoveProperty( wxPGPropArg id );
+            public bool Collapse(wxPGPropArg id) => throw new Exception();
 
-            bool DisableProperty( wxPGPropArg id )
+            public bool ChangePropertyValue(wxPGPropArg id, wxVariant newValue) =>
+                throw new Exception();
 
-            bool EnableProperty( wxPGPropArg id, bool enable = true );
+            public void DeleteProperty(wxPGPropArg id) => throw new Exception();
 
-            void EndAddChildren( wxPGPropArg id );
+            public IntPtr RemoveProperty(wxPGPropArg id) => throw new Exception();
 
-            bool Expand( wxPGPropArg id );
+            public bool DisableProperty(wxPGPropArg id) => throw new Exception();
 
-            wxPGProperty* GetFirstChild( wxPGPropArg id )
+            public bool EnableProperty(wxPGPropArg id, bool enable = true) =>
+                throw new Exception();
 
-            wxPropertyGridIterator GetIterator( int flags = wxPG_ITERATE_DEFAULT,
-                                                wxPGProperty* firstProp = NULL )
+            public void EndAddChildren(wxPGPropArg id) => throw new Exception();
 
-            wxPropertyGridConstIterator
-            GetIterator( int flags = wxPG_ITERATE_DEFAULT,
-                         wxPGProperty* firstProp = NULL ) const
+            public bool Expand(wxPGPropArg id) => throw new Exception();
 
-            const wxPGAttributeStorage& GetPropertyAttributes( wxPGPropArg id ) const
+            public IntPtr GetFirstChild(wxPGPropArg id) => throw new Exception();
 
-            wxVariant GetPropertyAttribute( wxPGPropArg id,
-                                            const wxString& attrName ) const
+            public IntPtr GetPropertyCategory(wxPGPropArg id) => throw new Exception();
 
-            wxPropertyCategory* GetPropertyCategory( wxPGPropArg id ) const
+            public IntPtr GetPropertyClientData(wxPGPropArg id) => throw new Exception();
 
-            void* GetPropertyClientData( wxPGPropArg id ) const
+            public string GetPropertyHelpString(wxPGPropArg id) => throw new Exception();
 
-            wxString GetPropertyHelpString( wxPGPropArg id ) const
+            public IntPtr GetPropertyImage(wxPGPropArg id) => throw new Exception();
 
-            wxBitmap* GetPropertyImage( wxPGPropArg id ) const
+            public string GetPropertyLabel(wxPGPropArg id) => throw new Exception();
 
-            const wxString& GetPropertyLabel( wxPGPropArg id )
+            public IntPtr GetPropertyParent(wxPGPropArg id) => throw new Exception();
 
-            wxPGProperty* GetPropertyParent( wxPGPropArg id )
+            public string GetPropertyValueAsString(wxPGPropArg id) => throw new Exception();
 
-            wxVariant GetPropertyValue(wxPGPropArg id);
+            public long GetPropertyValueAsLong(wxPGPropArg id) => throw new Exception();
 
-            wxString GetPropertyValueAsString( wxPGPropArg id ) const;
-            long GetPropertyValueAsLong( wxPGPropArg id ) const;
-            unsigned long GetPropertyValueAsULong( wxPGPropArg id ) const
+            public ulong GetPropertyValueAsULong(wxPGPropArg id) => throw new Exception();
 
-            int GetPropertyValueAsInt( wxPGPropArg id ) const
-                { return (int)GetPropertyValueAsLong(id); }
+            public int GetPropertyValueAsInt(wxPGPropArg id) => throw new Exception();
 
-            bool GetPropertyValueAsBool( wxPGPropArg id ) const;
+            public bool GetPropertyValueAsBool(wxPGPropArg id) => throw new Exception();
 
-            double GetPropertyValueAsDouble( wxPGPropArg id ) const;
+            public double GetPropertyValueAsDouble(wxPGPropArg id) => throw new Exception();
 
-            wxArrayString GetPropertyValueAsArrayString(wxPGPropArg id) const;
+            public Alternet.UI.DateTime GetPropertyValueAsDate(wxPGPropArg id) =>
+                throw new Exception();
 
-            wxLongLong_t GetPropertyValueAsLongLong(wxPGPropArg id) const;
+            public bool HideProperty(wxPGPropArg id, bool hide = true, int flags) =>
+                throw new Exception();
 
-            wxULongLong_t GetPropertyValueAsULongLong(wxPGPropArg id) const;
+            public IntPtr Insert(wxPGPropArg priorThis, IntPtr newproperty) =>
+                throw new Exception();
 
-            wxArrayInt GetPropertyValueAsArrayInt(wxPGPropArg id) const;
+            public IntPtr Insert(wxPGPropArg parent, int index, IntPtr newproperty) =>
+                throw new Exception();
 
-            wxDateTime GetPropertyValueAsDateTime(wxPGPropArg id) const;
+            public bool IsPropertyCategory(wxPGPropArg id) => throw new Exception();
 
-            wxVariant GetPropertyValues( const wxString& listname = wxEmptyString,
-                wxPGProperty* baseparent = NULL, long flags = 0 ) const
+            public bool IsPropertyEnabled(wxPGPropArg id) => throw new Exception();
 
+            public bool IsPropertyExpanded(wxPGPropArg id) => throw new Exception();
 
-            const wxArrayPGProperty& GetSelectedProperties() const
+            public bool IsPropertyModified(wxPGPropArg id) => throw new Exception();
 
-            wxPropertyGridPageState* GetState() const { return m_pState; }
+            public bool IsPropertySelected(wxPGPropArg id) => throw new Exception();
 
-            virtual wxPGVIterator GetVIterator( int flags ) const;
+            public bool IsPropertyShown(wxPGPropArg id) => throw new Exception();
 
-            bool HideProperty( wxPGPropArg id,
-                               bool hide = true,
-                               int flags = wxPG_RECURSE );
+            public bool IsPropertyValueUnspecified(wxPGPropArg id) => throw new Exception();
 
-            wxPGProperty* Insert( wxPGPropArg priorThis, wxPGProperty* newproperty );
+            public void LimitPropertyEditing(wxPGPropArg id, bool limit = true) =>
+                throw new Exception();
 
-            wxPGProperty* Insert( wxPGPropArg parent,
-                                  int index,
-                                  wxPGProperty* newproperty );
+            public IntPtr ReplaceProperty(wxPGPropArg id, IntPtr property) =>
+                throw new Exception();
 
-            bool IsPropertyCategory( wxPGPropArg id ) const
+            public void SetPropertyBackgroundColor(wxPGPropArg id, Color color, int flags) =>
+                throw new Exception();
 
-            bool IsPropertyEnabled( wxPGPropArg id ) const
+            public void SetPropertyColorsToDefault(wxPGPropArg id, int flags) =>
+                throw new Exception();
 
-            bool IsPropertyExpanded( wxPGPropArg id ) const;
+            public void SetPropertyTextColor(wxPGPropArg id, Color col, int flags) =>
+                throw new Exception();
 
-            bool IsPropertyModified( wxPGPropArg id ) const
+            public Color GetPropertyBackgroundColor(wxPGPropArg id) => throw new Exception();
 
-            bool IsPropertySelected( wxPGPropArg id ) const
+            public Color GetPropertyTextColor(wxPGPropArg id) => throw new Exception();
 
-            bool IsPropertyShown( wxPGPropArg id ) const
+            public void SetPropertyClientData(wxPGPropArg id, IntPtr clientData) =>
+                throw new Exception();
 
-            bool IsPropertyValueUnspecified( wxPGPropArg id ) const
+            public void SetPropertyEditor(wxPGPropArg id, IntPtr editor) =>
+                throw new Exception();
 
-            void LimitPropertyEditing( wxPGPropArg id, bool limit = true );
+            public void SetPropertyEditor(wxPGPropArg id, string editorName) =>
+                throw new Exception();
 
-            virtual void RefreshGrid( wxPropertyGridPageState* state = NULL );
+            public void SetPropertyLabel(wxPGPropArg id, string newproplabel) =>
+                throw new Exception();
 
+            public void SetPropertyName(wxPGPropArg id, string newName) =>
+                throw new Exception();
 
-            wxPGProperty* ReplaceProperty( wxPGPropArg id, wxPGProperty* property );
+            public void SetPropertyHelpString(wxPGPropArg id, string helpString) =>
+                throw new Exception();
 
-            enum EditableStateFlags
-            {
-                // Include selected property.
-                SelectionState   = 0x01,
-                // Include expanded/collapsed property information.
-                ExpandedState    = 0x02,
-                // Include scrolled position.
-                ScrollPosState   = 0x04,
-                // Include selected page information.
-                // Only applies to wxPropertyGridManager.
-                PageState        = 0x08,
-                // Include splitter position. Stored for each page.
-                SplitterPosState = 0x10,
-                // Include description box size.
-                // Only applies to wxPropertyGridManager.
-                DescBoxState     = 0x20,
+            public bool SetPropertyMaxLength(wxPGPropArg id, int maxLen) =>
+                throw new Exception();
 
-                // Include all supported user editable state information.
-                // This is usually the default value.
-                AllStates        = SelectionState |
-                                   ExpandedState |
-                                   ScrollPosState |
-                                   PageState |
-                                   SplitterPosState |
-                                   DescBoxState
-            };
+            public void SetPropertyValueAsLong(wxPGPropArg id, long value) =>
+                throw new Exception();
 
+            public void SetPropertyValueAsInt(wxPGPropArg id, int value) =>
+                throw new Exception();
 
+            public void SetPropertyValueAsDouble(wxPGPropArg id, double value) =>
+                throw new Exception();
 
+            public void SetPropertyValueAsBool(wxPGPropArg id, bool value) =>
+                throw new Exception();
 
-            void SetPropertyAttribute( wxPGPropArg id,
-                                       const wxString& attrName,
-                                       wxVariant value,
-                                       long argFlags = 0 )
+            public void SetPropertyValueAsStr(wxPGPropArg id, string value) =>
+                throw new Exception();
 
-            void SetPropertyAttributeAll( const wxString& attrName, wxVariant value );
+            public void SetPropertyValueAsDateTime(wxPGPropArg id, ALternet.UI.DateTime value) =>
+                throw new Exception();
 
-            void SetPropertyBackgroundColour( wxPGPropArg id,
-                                              const wxColour& colour,
-                                              int flags = wxPG_RECURSE );
+            public void SetPropertyValueAsLong(wxPGPropArg id, long value) =>
+                throw new Exception();
 
-            void SetPropertyColoursToDefault(wxPGPropArg id, int flags = wxPG_DONT_RECURSE);
+            public void SetValidationFailureBehavior(int vfbFlags) => throw new Exception();
 
-            void SetPropertyTextColour( wxPGPropArg id,
-                                        const wxColour& col,
-                                        int flags = wxPG_RECURSE );
+            public void SortChildren(wxPGPropArg id, int flags = 0) => throw new Exception();
 
-            wxColour GetPropertyBackgroundColour( wxPGPropArg id ) const
+            public static IntPtr GetEditorByName(string& editorName) => throw new Exception();
 
-            wxColour GetPropertyTextColour( wxPGPropArg id ) const
+            //public void SetPropertyImage(wxPGPropArg id, const wxBitmapBundle& bmp) =>
+                throw new Exception();
 
-            void SetPropertyCell( wxPGPropArg id,
-                                  int column,
-                                  const wxString& text = wxEmptyString,
-                                  const wxBitmapBundle& bitmap = wxBitmapBundle(),
-                                  const wxColour& fgCol = wxNullColour,
-                                  const wxColour& bgCol = wxNullColour );
+            //public void SetPropertyAttribute(wxPGPropArg id,
+            //                           string attrName,
+            //                           wxVariant value,
+            //                           long argFlags = 0) =>
+            //    throw new Exception();
 
-            void SetPropertyClientData( wxPGPropArg id, void* clientData )
+            //public void SetPropertyAttributeAll(string attrName, wxVariant value) =>
+                throw new Exception();
 
-            void SetPropertyEditor( wxPGPropArg id, const wxPGEditor* editor )
-
-            void SetPropertyEditor( wxPGPropArg id, const wxString& editorName )
-
-            void SetPropertyLabel( wxPGPropArg id, const wxString& newproplabel );
-
-            void SetPropertyName( wxPGPropArg id, const wxString& newName )
-
-            void SetPropertyReadOnly( wxPGPropArg id,
-                                      bool set = true,
-                                      int flags = wxPG_RECURSE );
-
-            void SetPropertyValueUnspecified( wxPGPropArg id )
-
-            void SetPropertyValues( const wxVariantList& list,
-                                    wxPGPropArg defaultCategory = wxNullProperty )
-
-            void SetPropertyValues( const wxVariant& list,
-                                    wxPGPropArg defaultCategory = wxNullProperty )
-
-            void SetPropertyHelpString( wxPGPropArg id, const wxString& helpString )
-
-            void SetPropertyImage( wxPGPropArg id, const wxBitmapBundle& bmp )
-
-            bool SetPropertyMaxLength( wxPGPropArg id, int maxLen );
-
-            void SetPropertyValidator( wxPGPropArg id, const wxValidator& validator )
-
-            void SetPropertyValue( wxPGPropArg id, long value )
-
-            void SetPropertyValue( wxPGPropArg id, int value )
-
-            void SetPropertyValue( wxPGPropArg id, double value )
-
-            void SetPropertyValue( wxPGPropArg id, bool value )
-
-            void SetPropertyValue( wxPGPropArg id, const wchar_t* value )
-
-            void SetPropertyValue( wxPGPropArg id, const char* value )
-
-            void SetPropertyValue( wxPGPropArg id, const wxString& value )
-
-            void SetPropertyValue( wxPGPropArg id, const wxArrayString& value )
-
-            void SetPropertyValue( wxPGPropArg id, const wxDateTime& value )
-
-            void SetPropertyValue( wxPGPropArg id, wxObject* value )
-
-            void SetPropertyValue( wxPGPropArg id, wxObject& value )
-            void SetPropertyValue(wxPGPropArg id, wxLongLong_t value)
-
-            void SetPropertyValue( wxPGPropArg id, wxLongLong value )
-
-            void SetPropertyValue(wxPGPropArg id, wxULongLong_t value)
-
-            void SetPropertyValue( wxPGPropArg id, wxULongLong value )
-
-            void SetPropertyValue( wxPGPropArg id, const wxArrayInt& value )
-            void SetPropertyValueString( wxPGPropArg id, const wxString& value );
-            void SetPropertyValue( wxPGPropArg id, wxVariant value )
-
-            void SetPropVal( wxPGPropArg id, wxVariant& value );
-
-            void SetValidationFailureBehavior( int vfbFlags );
-
-            void SortChildren( wxPGPropArg id, int flags = 0 )
-
-
-            static wxPGEditor* GetEditorByName( const wxString& editorName );
+            //const wxArrayPGProperty& GetSelectedProperties() =>
+                throw new Exception();
 
          */
     }

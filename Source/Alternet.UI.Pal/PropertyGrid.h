@@ -18,6 +18,7 @@ namespace Alternet::UI
     public:
         wxWindow* CreateWxWindowCore(wxWindow* parent) override;
         wxPropertyGrid* GetPropGrid();
+        wxPropertyGridInterface* GetPropGridInterface();
         PropertyGrid(long styles);
 
     private:

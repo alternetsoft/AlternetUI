@@ -28,6 +28,23 @@ void ClearModifiedStatus();
 bool CollapseAll();
 bool EditorValidate();
 bool ExpandAll(bool expand);
+void* CreatePropCategory(const string& label, const string& name);
+void* GetFirst(int flags);
+void* GetProperty(const string& name);
+void* GetPropertyByLabel(const string& label);
+void* GetPropertyByName(const string& name);
+void* GetPropertyByNameAndSubName(const string& name, const string& subname);
+void* GetSelection();
+string GetPropertyName(void* property);
+static void InitAllTypeHandlers();
+static void RegisterAdditionalEditors();
+bool RestoreEditableState(const string& src, int restoreStates);
+string SaveEditableState(int includedStates);
+static void SetBoolChoices(const string& trueChoice, const string& falseChoice);
+bool SetColumnProportion(uint32_t column, int proportion);
+int GetColumnProportion(uint32_t column);
+void Sort(int flags);
+void RefreshProperty(void* p);
 public:
 PropertyGrid();
 protected:

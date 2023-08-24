@@ -169,3 +169,122 @@ ALTERNET_UI_API c_bool PropertyGrid_ExpandAll_(PropertyGrid* obj, c_bool expand)
         });
 }
 
+ALTERNET_UI_API void* PropertyGrid_CreatePropCategory_(PropertyGrid* obj, const char16_t* label, const char16_t* name)
+{
+    return MarshalExceptions<void*>([&](){
+            return obj->CreatePropCategory(label, name);
+        });
+}
+
+ALTERNET_UI_API void* PropertyGrid_GetFirst_(PropertyGrid* obj, int flags)
+{
+    return MarshalExceptions<void*>([&](){
+            return obj->GetFirst(flags);
+        });
+}
+
+ALTERNET_UI_API void* PropertyGrid_GetProperty_(PropertyGrid* obj, const char16_t* name)
+{
+    return MarshalExceptions<void*>([&](){
+            return obj->GetProperty(name);
+        });
+}
+
+ALTERNET_UI_API void* PropertyGrid_GetPropertyByLabel_(PropertyGrid* obj, const char16_t* label)
+{
+    return MarshalExceptions<void*>([&](){
+            return obj->GetPropertyByLabel(label);
+        });
+}
+
+ALTERNET_UI_API void* PropertyGrid_GetPropertyByName_(PropertyGrid* obj, const char16_t* name)
+{
+    return MarshalExceptions<void*>([&](){
+            return obj->GetPropertyByName(name);
+        });
+}
+
+ALTERNET_UI_API void* PropertyGrid_GetPropertyByNameAndSubName_(PropertyGrid* obj, const char16_t* name, const char16_t* subname)
+{
+    return MarshalExceptions<void*>([&](){
+            return obj->GetPropertyByNameAndSubName(name, subname);
+        });
+}
+
+ALTERNET_UI_API void* PropertyGrid_GetSelection_(PropertyGrid* obj)
+{
+    return MarshalExceptions<void*>([&](){
+            return obj->GetSelection();
+        });
+}
+
+ALTERNET_UI_API char16_t* PropertyGrid_GetPropertyName_(PropertyGrid* obj, void* property)
+{
+    return MarshalExceptions<char16_t*>([&](){
+            return AllocPInvokeReturnString(obj->GetPropertyName(property));
+        });
+}
+
+ALTERNET_UI_API void PropertyGrid_InitAllTypeHandlers_()
+{
+    MarshalExceptions<void>([&](){
+            PropertyGrid::InitAllTypeHandlers();
+        });
+}
+
+ALTERNET_UI_API void PropertyGrid_RegisterAdditionalEditors_()
+{
+    MarshalExceptions<void>([&](){
+            PropertyGrid::RegisterAdditionalEditors();
+        });
+}
+
+ALTERNET_UI_API c_bool PropertyGrid_RestoreEditableState_(PropertyGrid* obj, const char16_t* src, int restoreStates)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return obj->RestoreEditableState(src, restoreStates);
+        });
+}
+
+ALTERNET_UI_API char16_t* PropertyGrid_SaveEditableState_(PropertyGrid* obj, int includedStates)
+{
+    return MarshalExceptions<char16_t*>([&](){
+            return AllocPInvokeReturnString(obj->SaveEditableState(includedStates));
+        });
+}
+
+ALTERNET_UI_API void PropertyGrid_SetBoolChoices_(const char16_t* trueChoice, const char16_t* falseChoice)
+{
+    MarshalExceptions<void>([&](){
+            PropertyGrid::SetBoolChoices(trueChoice, falseChoice);
+        });
+}
+
+ALTERNET_UI_API c_bool PropertyGrid_SetColumnProportion_(PropertyGrid* obj, uint32_t column, int proportion)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return obj->SetColumnProportion(column, proportion);
+        });
+}
+
+ALTERNET_UI_API int PropertyGrid_GetColumnProportion_(PropertyGrid* obj, uint32_t column)
+{
+    return MarshalExceptions<int>([&](){
+            return obj->GetColumnProportion(column);
+        });
+}
+
+ALTERNET_UI_API void PropertyGrid_Sort_(PropertyGrid* obj, int flags)
+{
+    MarshalExceptions<void>([&](){
+            obj->Sort(flags);
+        });
+}
+
+ALTERNET_UI_API void PropertyGrid_RefreshProperty_(PropertyGrid* obj, void* p)
+{
+    MarshalExceptions<void>([&](){
+            obj->RefreshProperty(p);
+        });
+}
+

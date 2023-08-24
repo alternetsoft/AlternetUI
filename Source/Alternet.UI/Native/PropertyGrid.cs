@@ -181,6 +181,117 @@ namespace Alternet.UI.Native
             return n;
         }
         
+        public System.IntPtr CreatePropCategory(string label, string name)
+        {
+            CheckDisposed();
+            var n = NativeApi.PropertyGrid_CreatePropCategory_(NativePointer, label, name);
+            return n;
+        }
+        
+        public System.IntPtr GetFirst(int flags)
+        {
+            CheckDisposed();
+            var n = NativeApi.PropertyGrid_GetFirst_(NativePointer, flags);
+            return n;
+        }
+        
+        public System.IntPtr GetProperty(string name)
+        {
+            CheckDisposed();
+            var n = NativeApi.PropertyGrid_GetProperty_(NativePointer, name);
+            return n;
+        }
+        
+        public System.IntPtr GetPropertyByLabel(string label)
+        {
+            CheckDisposed();
+            var n = NativeApi.PropertyGrid_GetPropertyByLabel_(NativePointer, label);
+            return n;
+        }
+        
+        public System.IntPtr GetPropertyByName(string name)
+        {
+            CheckDisposed();
+            var n = NativeApi.PropertyGrid_GetPropertyByName_(NativePointer, name);
+            return n;
+        }
+        
+        public System.IntPtr GetPropertyByNameAndSubName(string name, string subname)
+        {
+            CheckDisposed();
+            var n = NativeApi.PropertyGrid_GetPropertyByNameAndSubName_(NativePointer, name, subname);
+            return n;
+        }
+        
+        public System.IntPtr GetSelection()
+        {
+            CheckDisposed();
+            var n = NativeApi.PropertyGrid_GetSelection_(NativePointer);
+            return n;
+        }
+        
+        public string GetPropertyName(System.IntPtr property)
+        {
+            CheckDisposed();
+            var n = NativeApi.PropertyGrid_GetPropertyName_(NativePointer, property);
+            return n;
+        }
+        
+        public static void InitAllTypeHandlers()
+        {
+            NativeApi.PropertyGrid_InitAllTypeHandlers_();
+        }
+        
+        public static void RegisterAdditionalEditors()
+        {
+            NativeApi.PropertyGrid_RegisterAdditionalEditors_();
+        }
+        
+        public bool RestoreEditableState(string src, int restoreStates)
+        {
+            CheckDisposed();
+            var n = NativeApi.PropertyGrid_RestoreEditableState_(NativePointer, src, restoreStates);
+            return n;
+        }
+        
+        public string SaveEditableState(int includedStates)
+        {
+            CheckDisposed();
+            var n = NativeApi.PropertyGrid_SaveEditableState_(NativePointer, includedStates);
+            return n;
+        }
+        
+        public static void SetBoolChoices(string trueChoice, string falseChoice)
+        {
+            NativeApi.PropertyGrid_SetBoolChoices_(trueChoice, falseChoice);
+        }
+        
+        public bool SetColumnProportion(uint column, int proportion)
+        {
+            CheckDisposed();
+            var n = NativeApi.PropertyGrid_SetColumnProportion_(NativePointer, column, proportion);
+            return n;
+        }
+        
+        public int GetColumnProportion(uint column)
+        {
+            CheckDisposed();
+            var n = NativeApi.PropertyGrid_GetColumnProportion_(NativePointer, column);
+            return n;
+        }
+        
+        public void Sort(int flags)
+        {
+            CheckDisposed();
+            NativeApi.PropertyGrid_Sort_(NativePointer, flags);
+        }
+        
+        public void RefreshProperty(System.IntPtr p)
+        {
+            CheckDisposed();
+            NativeApi.PropertyGrid_RefreshProperty_(NativePointer, p);
+        }
+        
         
         [SuppressUnmanagedCodeSecurity]
         public class NativeApi : NativeApiProvider
@@ -255,6 +366,57 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool PropertyGrid_ExpandAll_(IntPtr obj, bool expand);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr PropertyGrid_CreatePropCategory_(IntPtr obj, string label, string name);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr PropertyGrid_GetFirst_(IntPtr obj, int flags);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr PropertyGrid_GetProperty_(IntPtr obj, string name);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr PropertyGrid_GetPropertyByLabel_(IntPtr obj, string label);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr PropertyGrid_GetPropertyByName_(IntPtr obj, string name);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr PropertyGrid_GetPropertyByNameAndSubName_(IntPtr obj, string name, string subname);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr PropertyGrid_GetSelection_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern string PropertyGrid_GetPropertyName_(IntPtr obj, System.IntPtr property);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void PropertyGrid_InitAllTypeHandlers_();
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void PropertyGrid_RegisterAdditionalEditors_();
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool PropertyGrid_RestoreEditableState_(IntPtr obj, string src, int restoreStates);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern string PropertyGrid_SaveEditableState_(IntPtr obj, int includedStates);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void PropertyGrid_SetBoolChoices_(string trueChoice, string falseChoice);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool PropertyGrid_SetColumnProportion_(IntPtr obj, uint column, int proportion);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int PropertyGrid_GetColumnProportion_(IntPtr obj, uint column);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void PropertyGrid_Sort_(IntPtr obj, int flags);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void PropertyGrid_RefreshProperty_(IntPtr obj, System.IntPtr p);
             
         }
     }
