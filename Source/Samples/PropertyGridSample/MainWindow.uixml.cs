@@ -137,6 +137,9 @@ namespace PropertyGridSample
                 prop = propertyGrid.CreateEnumProperty("Enum", null, choices2,
                     HorizontalAlignment.Center);
                 propertyGrid.Add(prop);
+
+                prop = propertyGrid.CreateColorProperty("Color", null, Color.Red);
+                propertyGrid.Add(prop);
             }
             finally
             {

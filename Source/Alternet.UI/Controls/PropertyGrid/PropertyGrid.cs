@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Alternet.Drawing;
 
 namespace Alternet.UI
 {
@@ -90,7 +91,9 @@ namespace Alternet.UI
         {
             value ??= string.Empty;
             var handle = NativeControl.CreateStringProperty(label, CorrectPropName(name), value!);
-            return new PropertyGridItem(handle, label, name, value);
+            var result = new PropertyGridItem(handle, label, name, value);
+            OnPropertyCreated(result);
+            return result;
         }
 
         /// <summary>
@@ -106,7 +109,9 @@ namespace Alternet.UI
             bool value = false)
         {
             var handle = NativeControl.CreateBoolProperty(label, CorrectPropName(name), value);
-            return new PropertyGridItem(handle, label, name, value);
+            var result = new PropertyGridItem(handle, label, name, value);
+            OnPropertyCreated(result);
+            return result;
         }
 
         /// <summary>
@@ -122,7 +127,9 @@ namespace Alternet.UI
             long value = 0)
         {
             var handle = NativeControl.CreateIntProperty(label, CorrectPropName(name), value);
-            return new PropertyGridItem(handle, label, name, value);
+            var result = new PropertyGridItem(handle, label, name, value);
+            OnPropertyCreated(result);
+            return result;
         }
 
         /// <summary>
@@ -138,7 +145,27 @@ namespace Alternet.UI
             double value = 0.0)
         {
             var handle = NativeControl.CreateFloatProperty(label, CorrectPropName(name), value);
-            return new PropertyGridItem(handle, label, name, value);
+            var result = new PropertyGridItem(handle, label, name, value);
+            OnPropertyCreated(result);
+            return result;
+        }
+
+        /// <summary>
+        /// Creates <see cref="Color"/> property.
+        /// </summary>
+        /// <param name="label">Property label.</param>
+        /// <param name="name">Property name.</param>
+        /// <param name="value">Default property value.</param>
+        /// <returns>Property declaration for use with <see cref="PropertyGrid.Add"/>.</returns>
+        public IPropertyGridItem CreateColorProperty(
+            string label,
+            string? name,
+            Color value)
+        {
+            var handle = NativeControl.CreateColorProperty(label, CorrectPropName(name), value);
+            var result = new PropertyGridItem(handle, label, name, value);
+            OnPropertyCreated(result);
+            return result;
         }
 
         /// <summary>
@@ -154,7 +181,9 @@ namespace Alternet.UI
             ulong value = 0)
         {
             var handle = NativeControl.CreateUIntProperty(label, CorrectPropName(name), value);
-            return new PropertyGridItem(handle, label, name, value);
+            var result = new PropertyGridItem(handle, label, name, value);
+            OnPropertyCreated(result);
+            return result;
         }
 
         /// <summary>
@@ -175,7 +204,9 @@ namespace Alternet.UI
                 label,
                 CorrectPropName(name),
                 value);
-            return new PropertyGridItem(handle, label, name, value);
+            var result = new PropertyGridItem(handle, label, name, value);
+            OnPropertyCreated(result);
+            return result;
         }
 
         /// <summary>
@@ -201,7 +232,9 @@ namespace Alternet.UI
                 label,
                 CorrectPropName(name),
                 dt);
-            return new PropertyGridItem(handle, label, name, value);
+            var result = new PropertyGridItem(handle, label, name, value);
+            OnPropertyCreated(result);
+            return result;
         }
 
         /// <summary>
@@ -224,7 +257,9 @@ namespace Alternet.UI
                 CorrectPropName(name),
                 choices.Handle,
                 (int)value);
-            return new PropertyGridItem(handle, label, name, value);
+            var result = new PropertyGridItem(handle, label, name, value);
+            OnPropertyCreated(result);
+            return result;
         }
 
         /// <summary>
@@ -247,7 +282,9 @@ namespace Alternet.UI
                 CorrectPropName(name),
                 choices.Handle,
                 (int)value);
-            return new PropertyGridItem(handle, label, name, value);
+            var result = new PropertyGridItem(handle, label, name, value);
+            OnPropertyCreated(result);
+            return result;
         }
 
         /// <summary>
@@ -322,6 +359,12 @@ namespace Alternet.UI
             NativeControl.Append(prop.Handle);
         }
 
+        /// <summary>
+        /// Creates properties category.
+        /// </summary>
+        /// <param name="label">Category label.</param>
+        /// <param name="name">Category name.</param>
+        /// <returns>Category declaration for use with <see cref="PropertyGrid.Add"/>.</returns>
         public IPropertyGridItem CreatePropCategory(string label, string? name = null)
         {
             var handle = NativeControl.CreatePropCategory(
@@ -331,22 +374,39 @@ namespace Alternet.UI
             {
                 IsCategory = true,
             };
+            OnPropertyCreated(result);
             return result;
         }
 
-        internal static void InitAllTypeHandlers()
+        /// <summary>
+        /// Registers all type handlers for use in <see cref="PropertyGrid"/>.
+        /// </summary>
+        public static void InitAllTypeHandlers()
         {
             Native.PropertyGrid.InitAllTypeHandlers();
         }
 
-        internal static void RegisterAdditionalEditors()
+        /// <summary>
+        /// Registers additional editors for use in <see cref="PropertyGrid"/>.
+        /// </summary>
+        public static void RegisterAdditionalEditors()
         {
             Native.PropertyGrid.RegisterAdditionalEditors();
         }
 
-        internal static void SetBoolChoices(string trueChoice, string falseChoice)
+        /// <summary>
+        /// Sets string constants for <c>true</c> and <c>false</c> words
+        /// used in <see cref="bool"/> properties.
+        /// </summary>
+        /// <param name="trueChoice"></param>
+        /// <param name="falseChoice"></param>
+        public static void SetBoolChoices(string trueChoice, string falseChoice)
         {
             Native.PropertyGrid.SetBoolChoices(trueChoice, falseChoice);
+        }
+
+        internal virtual void OnPropertyCreated(IPropertyGridItem item)
+        {
         }
 
         // !!
