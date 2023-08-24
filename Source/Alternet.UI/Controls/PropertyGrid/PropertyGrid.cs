@@ -18,7 +18,7 @@ namespace Alternet.UI
     public class PropertyGrid : Control
     {
         private static readonly string NameAsLabel = Native.PropertyGrid.NameAsLabel;
-        private static Dictionary<Type, IPropertyGridChoices> ChoicesCache = null;
+        private static Dictionary<Type, IPropertyGridChoices>? choicesCache = null;
 
         /// <summary>
         /// Defines default visual style for the newly created
@@ -269,11 +269,11 @@ namespace Alternet.UI
         /// </remarks>
         public IPropertyGridChoices CreateChoicesOnce(Type enumType)
         {
-            ChoicesCache ??= new();
-            if (ChoicesCache.TryGetValue(enumType, out IPropertyGridChoices? result))
+            choicesCache ??= new();
+            if (choicesCache.TryGetValue(enumType, out IPropertyGridChoices? result))
                 return result;
             result = CreateChoices(enumType);
-            ChoicesCache.Add(enumType, result);
+            choicesCache.Add(enumType, result);
             return result;
         }
 
@@ -292,11 +292,12 @@ namespace Alternet.UI
                 return result;
 
             var values = Enum.GetValues(enumType);
+            var names = Enum.GetNames(enumType);
 
-            foreach (int i in values)
+            for(int i = 0; i < values.Length; i++)
             {
-                var name = Enum.GetName(enumType, i);
-                result.Add(name!, i);
+                var value = values.GetValue(i);
+                result.Add(names[i], (int)value!);
             }
 
             return result;
@@ -328,7 +329,7 @@ namespace Alternet.UI
         private string CorrectPropName(string? name)
         {
             if (name is null)
-                return Native.PropertyGrid.NameAsLabel;
+                return NameAsLabel;
             return name;
         }
     }

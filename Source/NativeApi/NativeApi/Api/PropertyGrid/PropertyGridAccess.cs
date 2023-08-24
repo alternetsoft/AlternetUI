@@ -60,38 +60,37 @@ namespace NativeApi.Api
 
         /*
 
-            wxPGProperty* GetFirst( int flags = wxPG_ITERATE_ALL )
+            wxPGProperty* GetFirst( int flags = wxPG_ITERATE_ALL)
 
-            wxPGProperty* GetProperty( const wxString& name ) const
+            wxPGProperty* GetProperty( const wxString& name)
 
-            wxPGProperty* GetPropertyByLabel( const wxString& label ) const;
+            wxPGProperty* GetPropertyByLabel( const wxString& label);
 
-            wxPGProperty* GetPropertyByName( const wxString& name ) const;
+            wxPGProperty* GetPropertyByName( const wxString& name);
 
             wxPGProperty* GetPropertyByName( const wxString& name,
-                                             const wxString& subname ) const;
+                                             const wxString& subname);
 
-            wxPGProperty* GetSelection() const;
-            wxString GetPropertyName( wxPGProperty* property )
+            wxPGProperty* GetSelection();
+            wxString GetPropertyName( wxPGProperty* property)
             static void InitAllTypeHandlers()
 
             static void RegisterAdditionalEditors();
 
-            bool RestoreEditableState( const wxString& src,
-                                       int restoreStates = AllStates );
+            bool RestoreEditableState( const wxString& src, int restoreStates);
 
-            wxString SaveEditableState( int includedStates = AllStates ) const;
+            wxString SaveEditableState( int includedStates);
 
             static void SetBoolChoices( const wxString& trueChoice,
-                                        const wxString& falseChoice );
+                                        const wxString& falseChoice);
 
-            bool SetColumnProportion( unsigned int column, int proportion );
+            bool SetColumnProportion(unsigned int column, int proportion);
 
-            int GetColumnProportion( unsigned int column ) const
+            int GetColumnProportion(unsigned int column)
 
-            void Sort( int flags = 0 );
-            wxPGProperty* GetPropertyByNameA( const wxString& name ) const;
-            virtual void RefreshProperty( wxPGProperty* p ) = 0;
+            void Sort(int flags = 0);
+            wxPGProperty* GetPropertyByNameA(const wxString& name);
+            void RefreshProperty(wxPGProperty* p);
 
 
         ====
