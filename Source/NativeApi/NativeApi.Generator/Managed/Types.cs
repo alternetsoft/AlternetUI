@@ -9,8 +9,7 @@ namespace ApiGenerator.Managed
 {
     internal abstract class Types
     {
-        protected static readonly Dictionary<Type, string> aliases =
-            new Dictionary<Type, string>()
+        protected static readonly Dictionary<Type, string> aliases = new()
         {
             { typeof(byte), "byte" },
             { typeof(sbyte), "sbyte" },
@@ -32,8 +31,10 @@ namespace ApiGenerator.Managed
 
         protected abstract string GetApiClassTypeName(ContextualType type);
 
+#pragma warning disable CA1822
         protected string GetNullableDecoratedName(ContextualType type, string name) =>
             type.Nullability == Nullability.Nullable ? name + "?" : name;
+#pragma warning restore CA1822
 
         public string GetParameterTypeName(ParameterInfo parameter)
         {

@@ -139,7 +139,9 @@ using System.Security;");
             w.WriteLine();
         }
 
+#pragma warning disable CA1822
         string? GetBaseClass(Type type, Types types)
+#pragma warning restore CA1822
         {
             var baseType = type.BaseType;
             if (baseType == null)
@@ -559,7 +561,11 @@ using System.Security;");
         static string GetModifiers(MemberInfo member) => MemberProvider.IsStatic(member) ?
             "static " : "";
 
+#pragma warning disable CA1822
+#pragma warning disable IDE0060
         private string GetFinalCode(string code, Types types)
+#pragma warning restore IDE0060
+#pragma warning restore CA1822
         {
             var finalCode = new StringBuilder();
             finalCode.AppendLine(GeneratorUtils.HeaderText);
