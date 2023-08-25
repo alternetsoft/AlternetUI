@@ -139,6 +139,11 @@ The following table summarizes the available layout controls.
 |----------------|-----------------|
 |<xref:Alternet.UI.Grid>|Defines a flexible grid area that consists of columns and rows.|
 |<xref:Alternet.UI.StackPanel>|Arranges child controls into a single line that can be oriented horizontally or vertically.|
+|<xref:Alternet.UI.VerticalStackPanel>|Arranges child controls into a single line that can be oriented vertically.|
+|<xref:Alternet.UI.HorizontalStackPanel>|Arranges child controls into a single line that can be oriented horizontally.|
+|<xref:Alternet.UI.SplitterPanel>|Manages up to two subcontrols which are aligned vertically or horizontally with splitter control between them.|
+|<xref:Alternet.UI.LayoutPanel>|Arranges child controls using different methods.|
+|<xref:Alternet.UI.AuiManager>|Implement advanced docking and floating toolbars and panes framework.|
 
 ## Custom Layout Behaviors
 

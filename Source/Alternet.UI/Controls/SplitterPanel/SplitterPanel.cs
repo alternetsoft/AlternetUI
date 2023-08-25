@@ -11,7 +11,8 @@ using Alternet.Base.Collections;
 namespace Alternet.UI
 {
     /// <summary>
-    /// This control manages up to two subcontrols. The current view of the control
+    /// This control manages up to two subcontrols which are aligned vertically or horizontally
+    /// with splitter control between them. The current view of the control
     /// can be split into two programmatically, and unsplit either
     /// programmatically or via the user interface.
     /// </summary>

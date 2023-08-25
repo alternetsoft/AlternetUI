@@ -13,6 +13,8 @@ namespace Alternet.UI
     /// <remarks>
     /// Currently only default layout method is implemeted.
     /// Use <see cref="SetDock"/> to specify child controls dock style.
+    /// If it dock style is not specified, controls are positioned absolutely using
+    /// <see cref="Control.Bounds"/>.
     /// </remarks>
     public class LayoutPanel : Control
     {
