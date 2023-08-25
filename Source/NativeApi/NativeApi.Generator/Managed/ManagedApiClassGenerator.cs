@@ -276,7 +276,7 @@ using System.Security;");
 
             var tp = method.ReturnParameter.ToContextualParameter();
             var returnTypeName = types.GetTypeName(tp);
-            var tpType = tp.GetType();
+            var tpType = tp.Type;// GetType();
 
             var managedDeclaringTypeName = TypeProvider.GetManagedName(
                 tpType!,
