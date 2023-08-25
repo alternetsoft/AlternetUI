@@ -20,7 +20,8 @@ namespace Alternet::UI
         wxPropertyGrid* GetPropGrid();
         wxPropertyGridInterface* GetPropGridInterface();
         PropertyGrid(long styles);
-
+        wxPGPropArgCls _propArg = NULL;
+        void ToPropArg(void* id);
     private:
         bool _hasBorder = true;
         long _createStyle = wxPG_DEFAULT_STYLE;

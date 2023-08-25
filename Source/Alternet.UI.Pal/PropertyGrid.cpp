@@ -282,64 +282,357 @@ namespace Alternet::UI
         return GetPropGrid()->RefreshProperty((wxPGProperty*)p);
     }
 
+    void PropertyGrid::ToPropArg(void * id)
+    {
+        _propArg = wxPGPropArgCls((wxPGProperty*)id);
+    }
+
     //--------------------------------------
 
-    void PropertyGrid::SetPropertyLabel(void* id, const string & newproplabel){}
-    void PropertyGrid::SetPropertyName(void* id, const string& newName) {}
-    void PropertyGrid::SetPropertyHelpString(void* id, const string& helpString) {}
-    bool PropertyGrid::SetPropertyMaxLength(void* id, int maxLen) { return false; }
-    void PropertyGrid::SetPropertyValueAsLong(void* id, int64_t value) {}
-    void PropertyGrid::SetPropertyValueAsInt(void* id, int value) {}
-    void PropertyGrid::SetPropertyValueAsDouble(void* id, double value) {}
-    void PropertyGrid::SetPropertyValueAsBool(void* id, bool value) {}
-    void PropertyGrid::SetPropertyValueAsStr(void* id, const string& value) {}
-    void PropertyGrid::SetPropertyValueAsDateTime(void* id, const DateTime& value) {}
-    void PropertyGrid::SetValidationFailureBehavior(int vfbFlags) {}
-    void PropertyGrid::SortChildren(void* id, int flags) {}
-    /*static*/ void* PropertyGrid::GetEditorByName(const string& editorName) { return nullptr; }
-    void PropertyGrid::SetPropertyReadOnly(void* id, bool set, int flags) {}
-    void PropertyGrid::SetPropertyValueUnspecified(void* id) {}
-    void* PropertyGrid::AppendIn(void* id, void* newproperty) { return nullptr; }
-    void PropertyGrid::BeginAddChildren(void* id) {}
-    bool PropertyGrid::Collapse(void* id) { return false; }
-    void PropertyGrid::DeleteProperty(void* id) {}
-    void* PropertyGrid::RemoveProperty(void* id) { return nullptr; }
-    bool PropertyGrid::DisableProperty(void* id) { return false; }
-    bool PropertyGrid::EnableProperty(void* id, bool enable) { return false; }
-    void PropertyGrid::EndAddChildren(void* id) {}
-    bool PropertyGrid::Expand(void* id) { return false; }
-    void* PropertyGrid::GetFirstChild(void* id) { return nullptr; }
-    void* PropertyGrid::GetPropertyCategory(void* id) { return nullptr; }
-    void* PropertyGrid::GetPropertyClientData(void* id) { return nullptr; }
-    string PropertyGrid::GetPropertyHelpString(void* id) { return wxStr(wxEmptyString); }
-    void* PropertyGrid::GetPropertyImage(void* id) { return nullptr; }
-    string PropertyGrid::GetPropertyLabel(void* id) { return wxStr(wxEmptyString); }
-    void* PropertyGrid::GetPropertyParent(void* id) { return nullptr; }
-    string PropertyGrid::GetPropertyValueAsString(void* id) { return wxStr(wxEmptyString); }
-    int64_t PropertyGrid::GetPropertyValueAsLong(void* id) { return 0; }
-    uint64_t PropertyGrid::GetPropertyValueAsULong(void* id) { return 0; }
-    int PropertyGrid::GetPropertyValueAsInt(void* id) { return 0; }
-    bool PropertyGrid::GetPropertyValueAsBool(void* id) { return false; }
-    double PropertyGrid::GetPropertyValueAsDouble(void* id) { return 0; }
-    DateTime PropertyGrid::GetPropertyValueAsDateTime(void* id) { return DateTime(); }
-    bool PropertyGrid::HideProperty(void* id, bool hide, int flags) { return false; }
-    void* PropertyGrid::Insert(void* priorThis, void* newproperty) { return nullptr; }
-    void* PropertyGrid::InsertByIndex(void* parent, int index, void* newproperty) { return nullptr; }
-    bool PropertyGrid::IsPropertyCategory(void* id) { return false; }
-    bool PropertyGrid::IsPropertyEnabled(void* id) { return false; }
-    bool PropertyGrid::IsPropertyExpanded(void* id) { return false; }
-    bool PropertyGrid::IsPropertyModified(void* id) { return false; }
-    bool PropertyGrid::IsPropertySelected(void* id) { return false; }
-    bool PropertyGrid::IsPropertyShown(void* id) { return false; }
-    bool PropertyGrid::IsPropertyValueUnspecified(void* id) { return false; }
-    void PropertyGrid::LimitPropertyEditing(void* id, bool limit) {}
-    void* PropertyGrid::ReplaceProperty(void* id, void* property) { return nullptr; }
-    void PropertyGrid::SetPropertyBackgroundColor(void* id, const Color& color, int flags) {}
-    void PropertyGrid::SetPropertyColorsToDefault(void* id, int flags) {}
-    void PropertyGrid::SetPropertyTextColor(void* id, const Color& col, int flags) {}
-    Color PropertyGrid::GetPropertyBackgroundColor(void* id) { return Color(); }
-    Color PropertyGrid::GetPropertyTextColor(void* id) { return Color(); }
-    void PropertyGrid::SetPropertyClientData(void* id, void* clientData) {}
-    void PropertyGrid::SetPropertyEditor(void* id, void* editor) {}
-    void PropertyGrid::SetPropertyEditorByName(void* id, const string& editorName) {}
+    void PropertyGrid::SetPropertyLabel(void* id, const string & newproplabel)
+    {
+        ToPropArg(id);
+        GetPropGrid()->SetPropertyLabel(_propArg, wxStr(newproplabel));
+    }
+
+    void PropertyGrid::SetPropertyName(void* id, const string& newName)
+    {
+        ToPropArg(id);
+        GetPropGrid()->SetPropertyName(_propArg, wxStr(newName));
+    }
+
+    void PropertyGrid::SetPropertyHelpString(void* id, const string& helpString) 
+    {
+        ToPropArg(id);
+        GetPropGrid()->SetPropertyHelpString(_propArg, wxStr(helpString));
+    }
+
+    bool PropertyGrid::SetPropertyMaxLength(void* id, int maxLen)
+    {
+        ToPropArg(id);
+        return GetPropGrid()->SetPropertyMaxLength(_propArg, maxLen);
+    }
+
+    void PropertyGrid::SetPropertyValueAsLong(void* id, int64_t value)
+    {
+        ToPropArg(id);
+        GetPropGrid()->SetPropertyValue(_propArg, value);
+    }
+
+    void PropertyGrid::SetPropertyValueAsInt(void* id, int value)
+    {
+        ToPropArg(id);
+        GetPropGrid()->SetPropertyValue(_propArg, value);
+    }
+
+    void PropertyGrid::SetPropertyValueAsDouble(void* id, double value)
+    {
+        ToPropArg(id);
+        GetPropGrid()->SetPropertyValue(_propArg, value);
+    }
+
+    void PropertyGrid::SetPropertyValueAsBool(void* id, bool value)
+    {
+        ToPropArg(id);
+        GetPropGrid()->SetPropertyValue(_propArg, value);
+    }
+
+    void PropertyGrid::SetPropertyValueAsStr(void* id, const string& value)
+    {
+        ToPropArg(id);
+        GetPropGrid()->SetPropertyValue(_propArg, wxStr(value));
+    }
+
+    void PropertyGrid::SetPropertyValueAsDateTime(void* id, const DateTime& value)
+    {
+        ToPropArg(id);
+        GetPropGrid()->SetPropertyValue(_propArg, value);
+    }
+
+    void PropertyGrid::SetValidationFailureBehavior(int vfbFlags)
+    {
+        GetPropGrid()->SetValidationFailureBehavior(vfbFlags);
+    }
+
+    void PropertyGrid::SortChildren(void* id, int flags) 
+    {
+        ToPropArg(id);
+        GetPropGrid()->SortChildren(_propArg, flags);
+    }
+
+    /*static*/ void* PropertyGrid::GetEditorByName(const string& editorName)
+    {
+        return wxPropertyGrid::GetEditorByName(wxStr(editorName));
+    }
+    
+    void PropertyGrid::SetPropertyReadOnly(void* id, bool set, int flags)
+    {
+        ToPropArg(id);
+        GetPropGrid()->SetPropertyReadOnly(_propArg, set, flags);
+    }
+
+    void PropertyGrid::SetPropertyValueUnspecified(void* id)
+    {
+        ToPropArg(id);
+        GetPropGrid()->SetPropertyValueUnspecified(_propArg);
+    }
+
+    void* PropertyGrid::AppendIn(void* id, void* newproperty)
+    { 
+        ToPropArg(id);
+        return GetPropGrid()->AppendIn(_propArg, (wxPGProperty*)newproperty);
+    }
+    
+    void PropertyGrid::BeginAddChildren(void* id)
+    {
+        ToPropArg(id);
+        GetPropGrid()->BeginAddChildren(_propArg);
+    }
+
+    bool PropertyGrid::Collapse(void* id)
+    {
+        ToPropArg(id);
+        return GetPropGrid()->Collapse(_propArg);
+    }
+    
+    void PropertyGrid::DeleteProperty(void* id) 
+    {
+        ToPropArg(id);
+        GetPropGrid()->DeleteProperty(_propArg);
+    }
+    
+    void* PropertyGrid::RemoveProperty(void* id)
+    { 
+        ToPropArg(id);
+        return GetPropGrid()->RemoveProperty(_propArg);
+    }
+    
+    bool PropertyGrid::DisableProperty(void* id)
+    { 
+        ToPropArg(id);
+        return GetPropGrid()->DisableProperty(_propArg);
+    }
+    
+    bool PropertyGrid::EnableProperty(void* id, bool enable)
+    {
+        ToPropArg(id);
+        return GetPropGrid()->EnableProperty(_propArg, enable);
+    }
+
+    void PropertyGrid::EndAddChildren(void* id)
+    {
+        ToPropArg(id);
+        GetPropGrid()->EndAddChildren(_propArg);
+    }
+
+    bool PropertyGrid::Expand(void* id)
+    { 
+        ToPropArg(id);
+        return GetPropGrid()->Expand(_propArg);
+    }
+
+    void* PropertyGrid::GetFirstChild(void* id)
+    { 
+        ToPropArg(id);
+        return GetPropGrid()->GetFirstChild(_propArg);
+    }
+
+    void* PropertyGrid::GetPropertyCategory(void* id)
+    { 
+        ToPropArg(id);
+        return GetPropGrid()->GetPropertyCategory(_propArg);
+    }
+
+    void* PropertyGrid::GetPropertyClientData(void* id)
+    { 
+        ToPropArg(id);
+        return GetPropGrid()->GetPropertyClientData(_propArg);
+    }
+
+    string PropertyGrid::GetPropertyHelpString(void* id)
+    { 
+        ToPropArg(id);
+        return wxStr(GetPropGrid()->GetPropertyHelpString(_propArg));
+    }
+    
+    void* PropertyGrid::GetPropertyImage(void* id)
+    { 
+        ToPropArg(id);
+        return GetPropGrid()->GetPropertyImage(_propArg);
+    }
+
+    string PropertyGrid::GetPropertyLabel(void* id)
+    { 
+        ToPropArg(id);
+        return wxStr(GetPropGrid()->GetPropertyLabel(_propArg));
+    }
+
+    void* PropertyGrid::GetPropertyParent(void* id)
+    { 
+        ToPropArg(id);
+        return GetPropGrid()->GetPropertyParent(_propArg);
+    }
+
+    string PropertyGrid::GetPropertyValueAsString(void* id)
+    { 
+        ToPropArg(id);
+        return wxStr(GetPropGrid()->GetPropertyValueAsString(_propArg));
+    }
+
+    int64_t PropertyGrid::GetPropertyValueAsLong(void* id)
+    { 
+        ToPropArg(id);
+        return GetPropGrid()->GetPropertyValueAsLong(_propArg);
+    }
+
+    uint64_t PropertyGrid::GetPropertyValueAsULong(void* id)
+    { 
+        ToPropArg(id);
+        return GetPropGrid()->GetPropertyValueAsULong(_propArg);
+    }
+    
+    int PropertyGrid::GetPropertyValueAsInt(void* id)
+    { 
+        ToPropArg(id);
+        return GetPropGrid()->GetPropertyValueAsInt(_propArg);
+    }
+
+    bool PropertyGrid::GetPropertyValueAsBool(void* id)
+    { 
+        ToPropArg(id);
+        return GetPropGrid()->GetPropertyValueAsBool(_propArg);
+    }
+
+    double PropertyGrid::GetPropertyValueAsDouble(void* id)
+    { 
+        ToPropArg(id);
+        return GetPropGrid()->GetPropertyValueAsDouble(_propArg);
+    }
+
+    DateTime PropertyGrid::GetPropertyValueAsDateTime(void* id)
+    { 
+        ToPropArg(id);
+        return GetPropGrid()->GetPropertyValueAsDateTime(_propArg);
+    }
+
+    bool PropertyGrid::HideProperty(void* id, bool hide, int flags)
+    { 
+        ToPropArg(id);
+        return GetPropGrid()->HideProperty(_propArg, hide, flags);
+    }
+
+    void* PropertyGrid::Insert(void* priorThis, void* newproperty)
+    { 
+        ToPropArg(priorThis);
+        return GetPropGrid()->Insert(_propArg, (wxPGProperty*)newproperty);
+    }
+
+    void* PropertyGrid::InsertByIndex(void* parent, int index, void* newproperty)
+    { 
+        ToPropArg(parent);
+        return GetPropGrid()->Insert(_propArg, index, (wxPGProperty*)newproperty);
+    }
+
+    bool PropertyGrid::IsPropertyCategory(void* id)
+    {
+        ToPropArg(id);
+        return GetPropGrid()->IsPropertyCategory(_propArg);
+    }
+
+    bool PropertyGrid::IsPropertyEnabled(void* id)
+    {
+        ToPropArg(id);
+        return GetPropGrid()->IsPropertyEnabled(_propArg);
+    }
+
+    bool PropertyGrid::IsPropertyExpanded(void* id)
+    {
+        ToPropArg(id);
+        return GetPropGrid()->IsPropertyExpanded(_propArg);
+    }
+
+    bool PropertyGrid::IsPropertyModified(void* id)
+    {
+        ToPropArg(id);
+        return GetPropGrid()->IsPropertyModified(_propArg);
+    }
+
+    bool PropertyGrid::IsPropertySelected(void* id)
+    {
+        ToPropArg(id);
+        return GetPropGrid()->IsPropertySelected(_propArg);
+    }
+
+    bool PropertyGrid::IsPropertyShown(void* id)
+    {
+        ToPropArg(id);
+        return GetPropGrid()->IsPropertyShown(_propArg);
+    }
+
+    bool PropertyGrid::IsPropertyValueUnspecified(void* id)
+    {
+        ToPropArg(id);
+        return GetPropGrid()->IsPropertyValueUnspecified(_propArg);
+    }
+
+    void PropertyGrid::LimitPropertyEditing(void* id, bool limit)
+    {
+        ToPropArg(id);
+        GetPropGrid()->LimitPropertyEditing(_propArg, limit);
+    }
+
+    void* PropertyGrid::ReplaceProperty(void* id, void* property)
+    { 
+        ToPropArg(id);
+        return GetPropGrid()->ReplaceProperty(_propArg, (wxPGProperty*)property);
+    }
+
+    void PropertyGrid::SetPropertyBackgroundColor(void* id, const Color& color, int flags)
+    {
+        ToPropArg(id);
+        GetPropGrid()->SetPropertyBackgroundColour(_propArg, color, flags);
+    }
+
+    void PropertyGrid::SetPropertyColorsToDefault(void* id, int flags)
+    {
+        ToPropArg(id);
+        GetPropGrid()->SetPropertyColoursToDefault(_propArg, flags);
+    }
+
+    void PropertyGrid::SetPropertyTextColor(void* id, const Color& col, int flags)
+    {
+        ToPropArg(id);
+        GetPropGrid()->SetPropertyTextColour(_propArg, col, flags);
+    }
+
+    Color PropertyGrid::GetPropertyBackgroundColor(void* id)
+    { 
+        ToPropArg(id);
+        return GetPropGrid()->GetPropertyBackgroundColour(_propArg);
+    }
+
+    Color PropertyGrid::GetPropertyTextColor(void* id)
+    { 
+        ToPropArg(id);
+        return GetPropGrid()->GetPropertyTextColour(_propArg);
+    }
+
+    void PropertyGrid::SetPropertyClientData(void* id, void* clientData)
+    {
+        ToPropArg(id);
+        GetPropGrid()->SetPropertyClientData(_propArg, clientData);
+    }
+
+    void PropertyGrid::SetPropertyEditor(void* id, void* editor)
+    {
+        ToPropArg(id);
+        GetPropGrid()->SetPropertyEditor(_propArg, (wxPGEditor*)editor);
+    }
+
+    void PropertyGrid::SetPropertyEditorByName(void* id, const string& editorName)
+    {
+        ToPropArg(id);
+        GetPropGrid()->SetPropertyEditor(_propArg, wxStr(editorName));
+    }
+
 }
