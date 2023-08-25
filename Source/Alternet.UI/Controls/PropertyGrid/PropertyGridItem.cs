@@ -9,27 +9,27 @@ namespace Alternet.UI
     internal class PropertyGridItem : IPropertyGridItem
     {
         private readonly IntPtr handle;
-        private readonly string name;
-        private readonly string label;
+        private readonly string defaultName;
+        private readonly string defaultLabel;
         private readonly object? defaultValue;
         private bool isCategory = false;
 
         public PropertyGridItem(IntPtr handle, string label, string? name, object? defaultValue)
         {
             this.handle = handle;
-            this.label = label;
+            this.defaultLabel = label;
             this.defaultValue = defaultValue;
             if (name == PropertyGrid.NameAsLabel || name == null)
-                this.name = label;
+                this.defaultName = label;
             else
-                this.name = name;
+                this.defaultName = name;
         }
 
         public IntPtr Handle => handle;
 
-        public string Name => name;
+        public string DefaultName => defaultName;
 
-        public string Label => label;
+        public string DefaultLabel => defaultLabel;
 
         public object? DefaultValue => defaultValue;
 

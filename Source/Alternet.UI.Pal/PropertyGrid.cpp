@@ -287,8 +287,6 @@ namespace Alternet::UI
         _propArg = wxPGPropArgCls((wxPGProperty*)id);
     }
 
-    //--------------------------------------
-
     void PropertyGrid::SetPropertyLabel(void* id, const string & newproplabel)
     {
         ToPropArg(id);

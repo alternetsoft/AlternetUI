@@ -19,6 +19,9 @@ namespace Alternet.UI
     public class PropertyGrid : Control
     {
         internal static readonly string NameAsLabel = Native.PropertyGrid.NameAsLabel;
+        private const int PGDONTRECURSE = 0x00000000;
+        private const int PGRECURSE = 0x00000020;
+        private const int PGSORTTOPLEVELONLY = 0x00000200;
         private static Dictionary<Type, IPropertyGridChoices>? choicesCache = null;
 
         /// <summary>
@@ -76,6 +79,33 @@ namespace Alternet.UI
         }
 
         internal Native.PropertyGrid NativeControl => Handler.NativeControl;
+
+        /// <summary>
+        /// Registers all type handlers for use in <see cref="PropertyGrid"/>.
+        /// </summary>
+        public static void InitAllTypeHandlers()
+        {
+            Native.PropertyGrid.InitAllTypeHandlers();
+        }
+
+        /// <summary>
+        /// Registers additional editors for use in <see cref="PropertyGrid"/>.
+        /// </summary>
+        public static void RegisterAdditionalEditors()
+        {
+            Native.PropertyGrid.RegisterAdditionalEditors();
+        }
+
+        /// <summary>
+        /// Sets string constants for <c>true</c> and <c>false</c> words
+        /// used in <see cref="bool"/> properties.
+        /// </summary>
+        /// <param name="trueChoice"></param>
+        /// <param name="falseChoice"></param>
+        public static void SetBoolChoices(string trueChoice, string falseChoice)
+        {
+            Native.PropertyGrid.SetBoolChoices(trueChoice, falseChoice);
+        }
 
         /// <summary>
         /// Creates <see cref="string"/> property.
@@ -291,9 +321,9 @@ namespace Alternet.UI
         /// Creates property choices list for use with <see cref="CreateFlagsProperty"/> and
         /// <see cref="CreateEnumProperty"/>.
         /// </summary>
-#pragma warning disable CA1822 // Mark members as static
+#pragma warning disable
         public IPropertyGridChoices CreateChoices()
-#pragma warning restore CA1822 // Mark members as static
+#pragma warning restore
         {
             return new PropertyGridChoices();
         }
@@ -333,7 +363,7 @@ namespace Alternet.UI
             var values = Enum.GetValues(enumType);
             var names = Enum.GetNames(enumType);
 
-            for(int i = 0; i < values.Length; i++)
+            for (int i = 0; i < values.Length; i++)
             {
                 var value = values.GetValue(i);
                 result.Add(names[i], (int)value!);
@@ -378,118 +408,382 @@ namespace Alternet.UI
             return result;
         }
 
-        /// <summary>
-        /// Registers all type handlers for use in <see cref="PropertyGrid"/>.
-        /// </summary>
-        public static void InitAllTypeHandlers()
+        public string GetPropertyName(IPropertyGridItem property)
         {
-            Native.PropertyGrid.InitAllTypeHandlers();
+            return NativeControl.GetPropertyName(property.Handle);
         }
 
-        /// <summary>
-        /// Registers additional editors for use in <see cref="PropertyGrid"/>.
-        /// </summary>
-        public static void RegisterAdditionalEditors()
+        public bool RestoreEditableState(
+            string src,
+            PropertyGridEditableStateFlags restoreStates = PropertyGridEditableStateFlags.AllStates)
         {
-            Native.PropertyGrid.RegisterAdditionalEditors();
+            return NativeControl.RestoreEditableState(src, (int)restoreStates);
         }
 
-        /// <summary>
-        /// Sets string constants for <c>true</c> and <c>false</c> words
-        /// used in <see cref="bool"/> properties.
-        /// </summary>
-        /// <param name="trueChoice"></param>
-        /// <param name="falseChoice"></param>
-        public static void SetBoolChoices(string trueChoice, string falseChoice)
+        public string SaveEditableState(
+            PropertyGridEditableStateFlags includedStates =
+                PropertyGridEditableStateFlags.AllStates)
         {
-            Native.PropertyGrid.SetBoolChoices(trueChoice, falseChoice);
+            return NativeControl.SaveEditableState((int)includedStates);
+        }
+
+        public bool SetColumnProportion(uint column, int proportion)
+        {
+            return NativeControl.SetColumnProportion(column, proportion);
+        }
+
+        public int GetColumnProportion(uint column)
+        {
+            return NativeControl.GetColumnProportion(column);
+        }
+
+        public void Sort(bool topLevelOnly = false)
+        {
+            var flags = topLevelOnly ? PGSORTTOPLEVELONLY : 0;
+            NativeControl.Sort(flags);
+        }
+
+        public void RefreshProperty(IPropertyGridItem p)
+        {
+            NativeControl.RefreshProperty(p.Handle);
+        }
+
+        public void SetPropertyReadOnly(IPropertyGridItem prop, bool isSet, bool recurse = true)
+        {
+            var flags = recurse ? PGRECURSE : PGDONTRECURSE;
+
+            NativeControl.SetPropertyReadOnly(prop.Handle, isSet, flags);
+        }
+
+        public void SetPropertyValueUnspecified(IPropertyGridItem prop)
+        {
+            NativeControl.SetPropertyValueUnspecified(prop.Handle);
+        }
+
+        public void AppendIn(IPropertyGridItem prop, IPropertyGridItem newproperty)
+        {
+            /*var result = */NativeControl.AppendIn(prop.Handle, newproperty.Handle);
+        }
+
+        public void BeginAddChildren(IPropertyGridItem prop)
+        {
+            NativeControl.BeginAddChildren(prop.Handle);
+        }
+
+        public bool Collapse(IPropertyGridItem prop)
+        {
+            return NativeControl.Collapse(prop.Handle);
+        }
+
+        public void RemoveProperty(IPropertyGridItem prop)
+        {
+            /*var result = */NativeControl.RemoveProperty(prop.Handle);
+        }
+
+        public bool DisableProperty(IPropertyGridItem prop)
+        {
+            return NativeControl.DisableProperty(prop.Handle);
+        }
+
+        public bool EnableProperty(IPropertyGridItem prop, bool enable = true)
+        {
+            return NativeControl.EnableProperty(prop.Handle, enable);
+        }
+
+        public void EndAddChildren(IPropertyGridItem prop)
+        {
+            NativeControl.EndAddChildren(prop.Handle);
+        }
+
+        public bool Expand(IPropertyGridItem prop)
+        {
+            return NativeControl.Expand(prop.Handle);
+        }
+
+        public IntPtr GetPropertyClientData(IPropertyGridItem prop)
+        {
+            return NativeControl.GetPropertyClientData(prop.Handle);
+        }
+
+        public string GetPropertyHelpString(IPropertyGridItem prop)
+        {
+            return NativeControl.GetPropertyHelpString(prop.Handle);
+        }
+
+        public string GetPropertyLabel(IPropertyGridItem prop)
+        {
+            return NativeControl.GetPropertyLabel(prop.Handle);
+        }
+
+        public string GetPropertyValueAsString(IPropertyGridItem prop)
+        {
+            return NativeControl.GetPropertyValueAsString(prop.Handle);
+        }
+
+        public long GetPropertyValueAsLong(IPropertyGridItem prop)
+        {
+            return NativeControl.GetPropertyValueAsLong(prop.Handle);
+        }
+
+        public ulong GetPropertyValueAsULong(IPropertyGridItem prop)
+        {
+            return NativeControl.GetPropertyValueAsULong(prop.Handle);
+        }
+
+        public int GetPropertyValueAsInt(IPropertyGridItem prop)
+        {
+            return NativeControl.GetPropertyValueAsInt(prop.Handle);
+        }
+
+        public bool GetPropertyValueAsBool(IPropertyGridItem prop)
+        {
+            return NativeControl.GetPropertyValueAsBool(prop.Handle);
+        }
+
+        public double GetPropertyValueAsDouble(IPropertyGridItem prop)
+        {
+            return NativeControl.GetPropertyValueAsDouble(prop.Handle);
+        }
+
+        public DateTime GetPropertyValueAsDateTime(IPropertyGridItem prop)
+        {
+            return NativeControl.GetPropertyValueAsDateTime(prop.Handle);
+        }
+
+        public bool HideProperty(IPropertyGridItem prop, bool hide, bool recurse = true)
+        {
+            var flags = recurse ? PGRECURSE : PGDONTRECURSE;
+            return NativeControl.HideProperty(prop.Handle, hide, flags);
+        }
+
+        public void Insert(IPropertyGridItem priorThis, IPropertyGridItem newproperty)
+        {
+            /*var result = */NativeControl.Insert(priorThis.Handle, newproperty.Handle);
+        }
+
+        public void Insert(IPropertyGridItem parent, int index, IPropertyGridItem newproperty)
+        {
+            /*var result = */NativeControl.InsertByIndex(parent.Handle, index, newproperty.Handle);
+        }
+
+        public bool IsPropertyCategory(IPropertyGridItem prop)
+        {
+            return NativeControl.IsPropertyCategory(prop.Handle);
+        }
+
+        public bool IsPropertyEnabled(IPropertyGridItem prop)
+        {
+            return NativeControl.IsPropertyEnabled(prop.Handle);
+        }
+
+        public bool IsPropertyExpanded(IPropertyGridItem prop)
+        {
+            return NativeControl.IsPropertyExpanded(prop.Handle);
+        }
+
+        public bool IsPropertyModified(IPropertyGridItem prop)
+        {
+            return NativeControl.IsPropertyModified(prop.Handle);
+        }
+
+        public bool IsPropertySelected(IPropertyGridItem prop)
+        {
+            return NativeControl.IsPropertySelected(prop.Handle);
+        }
+
+        public bool IsPropertyShown(IPropertyGridItem prop)
+        {
+            return NativeControl.IsPropertyShown(prop.Handle);
+        }
+
+        public bool IsPropertyValueUnspecified(IPropertyGridItem prop)
+        {
+            return NativeControl.IsPropertyValueUnspecified(prop.Handle);
+        }
+
+        public void LimitPropertyEditing(IPropertyGridItem prop, bool limit = true)
+        {
+            NativeControl.LimitPropertyEditing(prop.Handle, limit);
+        }
+
+        public void ReplaceProperty(IPropertyGridItem prop, IPropertyGridItem newProp)
+        {
+            /*var result = */NativeControl.ReplaceProperty(prop.Handle, newProp.Handle);
+        }
+
+        public void SetPropertyBackgroundColor(
+            IPropertyGridItem prop,
+            Color color,
+            bool recurse = true)
+        {
+            var flags = recurse ? PGRECURSE : PGDONTRECURSE;
+            NativeControl.SetPropertyBackgroundColor(prop.Handle, color, flags);
+        }
+
+        public void SetPropertyColorsToDefault(IPropertyGridItem prop, bool recurse = true)
+        {
+            var flags = recurse ? PGRECURSE : PGDONTRECURSE;
+            NativeControl.SetPropertyColorsToDefault(prop.Handle, flags);
+        }
+
+        public void SetPropertyTextColor(IPropertyGridItem prop, Color col, bool recurse = true)
+        {
+            var flags = recurse ? PGRECURSE : PGDONTRECURSE;
+            NativeControl.SetPropertyTextColor(prop.Handle, col, flags);
+        }
+
+        public Color GetPropertyBackgroundColor(IPropertyGridItem prop)
+        {
+            return NativeControl.GetPropertyBackgroundColor(prop.Handle);
+        }
+
+        public Color GetPropertyTextColor(IPropertyGridItem prop)
+        {
+            return NativeControl.GetPropertyTextColor(prop.Handle);
+        }
+
+        public void SetPropertyClientData(IPropertyGridItem prop, IntPtr clientData)
+        {
+            NativeControl.SetPropertyClientData(prop.Handle, clientData);
+        }
+
+        public void SetPropertyLabel(IPropertyGridItem prop, string newproplabel)
+        {
+            NativeControl.SetPropertyLabel(prop.Handle, newproplabel);
+        }
+
+        public void SetPropertyHelpString(IPropertyGridItem prop, string helpString)
+        {
+            NativeControl.SetPropertyHelpString(prop.Handle, helpString);
+        }
+
+        public bool SetPropertyMaxLength(IPropertyGridItem prop, int maxLen)
+        {
+            return NativeControl.SetPropertyMaxLength(prop.Handle, maxLen);
+        }
+
+        public void SetPropertyValueAsLong(IPropertyGridItem prop, long value)
+        {
+            NativeControl.SetPropertyValueAsLong(prop.Handle, value);
+        }
+
+        public void SetPropertyValueAsInt(IPropertyGridItem prop, int value)
+        {
+            NativeControl.SetPropertyValueAsInt(prop.Handle, value);
+        }
+
+        public void SetPropertyValueAsDouble(IPropertyGridItem prop, double value)
+        {
+            NativeControl.SetPropertyValueAsDouble(prop.Handle, value);
+        }
+
+        public void SetPropertyValueAsBool(IPropertyGridItem prop, bool value)
+        {
+            NativeControl.SetPropertyValueAsBool(prop.Handle, value);
+        }
+
+        public void SetPropertyValueAsStr(IPropertyGridItem prop, string value)
+        {
+            NativeControl.SetPropertyValueAsStr(prop.Handle, value);
+        }
+
+        public void SetPropertyValueAsDateTime(IPropertyGridItem prop, DateTime value)
+        {
+            NativeControl.SetPropertyValueAsDateTime(prop.Handle, value);
+        }
+
+        public void SetValidationFailureBehavior(PropertyGridValidationFailure vfbFlags)
+        {
+            NativeControl.SetValidationFailureBehavior((int)vfbFlags);
+        }
+
+        public void SortChildren(IPropertyGridItem prop, bool recurse = false)
+        {
+            var flags = recurse ? PGRECURSE : PGDONTRECURSE;
+            NativeControl.SortChildren(prop.Handle, flags);
+        }
+
+        public void SetPropertyEditorByName(IPropertyGridItem prop, string editorName)
+        {
+            NativeControl.SetPropertyEditorByName(prop.Handle, editorName);
+        }
+
+        internal static IntPtr GetEditorByName(string editorName)
+        {
+            return Native.PropertyGrid.GetEditorByName(editorName);
+        }
+
+        internal IntPtr GetPropertyImage(IPropertyGridItem prop)
+        {
+            return NativeControl.GetPropertyImage(prop.Handle);
+        }
+
+        internal void SetPropertyEditor(IPropertyGridItem prop, IntPtr editor)
+        {
+            NativeControl.SetPropertyEditor(prop.Handle, editor);
         }
 
         internal virtual void OnPropertyCreated(IPropertyGridItem item)
         {
         }
 
-        // !!
-        internal IntPtr GetFirst(int flags)
+        internal IPropertyGridItem? GetPropertyParent(IPropertyGridItem prop)
         {
-            var result = NativeControl.GetFirst(flags);
-            return result;
+            var result = NativeControl.GetPropertyParent(prop.Handle);
+            return PtrToItem(result);
         }
 
-        // !!
-        internal IntPtr GetProperty(string name)
+        internal IPropertyGridItem? GetFirstChild(IPropertyGridItem prop)
+        {
+            var result = NativeControl.GetFirstChild(prop.Handle);
+            return PtrToItem(result);
+        }
+
+        internal IPropertyGridItem? GetPropertyCategory(IPropertyGridItem prop)
+        {
+            var result = NativeControl.GetPropertyCategory(prop.Handle);
+            return PtrToItem(result);
+        }
+
+        internal IPropertyGridItem? GetFirst(PropertyGridIteratorFlags flags)
+        {
+            var result = NativeControl.GetFirst((int)flags);
+            return PtrToItem(result);
+        }
+
+        internal IPropertyGridItem? GetProperty(string name)
         {
             var result = NativeControl.GetProperty(name);
-            return result;
+            return PtrToItem(result);
         }
 
-        // !!
-        internal IntPtr GetPropertyByLabel(string label)
+        internal IPropertyGridItem? GetPropertyByLabel(string label)
         {
             var result = NativeControl.GetPropertyByLabel(label);
-            return result;
+            return PtrToItem(result);
         }
 
-        // !!
-        internal IntPtr GetPropertyByName(string name)
+        internal IPropertyGridItem? GetPropertyByName(string name)
         {
             var result = NativeControl.GetPropertyByName(name);
-            return result;
+            return PtrToItem(result);
         }
 
-        // !!
-        internal IntPtr GetPropertyByNameAndSubName(string name, string subname)
+        internal IPropertyGridItem? GetPropertyByNameAndSubName(string name, string subname)
         {
             var result = NativeControl.GetPropertyByNameAndSubName(name, subname);
-            return result;
+            return PtrToItem(result);
         }
 
-        // !!
-        internal IntPtr GetSelection()
+        internal IPropertyGridItem? GetSelection()
         {
             var result = NativeControl.GetSelection();
-            return result;
+            return PtrToItem(result);
         }
 
-        // !!
-        internal string GetPropertyName(IntPtr property)
+        internal void DeleteProperty(IPropertyGridItem prop)
         {
-            return NativeControl.GetPropertyName(property);
-        }
-
-        // !!
-        internal bool RestoreEditableState(string src, int restoreStates)
-        {
-            return NativeControl.RestoreEditableState(src, restoreStates);
-        }
-
-        // !!
-        internal string SaveEditableState(int includedStates)
-        {
-            return NativeControl.SaveEditableState(includedStates);
-        }
-
-        // !!
-        internal bool SetColumnProportion(uint column, int proportion)
-        {
-            return NativeControl.SetColumnProportion(column, proportion);
-        }
-
-        internal int GetColumnProportion(uint column)
-        {
-            return NativeControl.GetColumnProportion(column);
-        }
-
-        // !!
-        internal void Sort(int flags = 0)
-        {
-            NativeControl.Sort(flags);
-        }
-
-        // !!
-        internal void RefreshProperty(IntPtr p)
-        {
-            NativeControl.RefreshProperty(p);
+            NativeControl.DeleteProperty(prop.Handle);
         }
 
         /// <inheritdoc/>
@@ -503,6 +797,13 @@ namespace Alternet.UI
             if (name is null)
                 return NameAsLabel;
             return name;
+        }
+
+#pragma warning disable
+        private IPropertyGridItem? PtrToItem(IntPtr ptr)
+#pragma warning restore
+        {
+            return null;
         }
     }
 }

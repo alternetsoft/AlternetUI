@@ -19,12 +19,12 @@ namespace Alternet.UI
         /// <summary>
         /// Item name.
         /// </summary>
-        string Name { get; }
+        string DefaultName { get; }
 
         /// <summary>
         /// Item label.
         /// </summary>
-        string Label { get; }
+        string DefaultLabel { get; }
 
         /// <summary>
         /// Item default value.
