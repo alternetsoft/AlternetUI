@@ -65,6 +65,85 @@ namespace Alternet.UI.Native
             }
         }
         
+        public void SetPropertyLabel(System.IntPtr id, string newproplabel)
+        {
+            CheckDisposed();
+            NativeApi.PropertyGrid_SetPropertyLabel_(NativePointer, id, newproplabel);
+        }
+        
+        public void SetPropertyName(System.IntPtr id, string newName)
+        {
+            CheckDisposed();
+            NativeApi.PropertyGrid_SetPropertyName_(NativePointer, id, newName);
+        }
+        
+        public void SetPropertyHelpString(System.IntPtr id, string helpString)
+        {
+            CheckDisposed();
+            NativeApi.PropertyGrid_SetPropertyHelpString_(NativePointer, id, helpString);
+        }
+        
+        public bool SetPropertyMaxLength(System.IntPtr id, int maxLen)
+        {
+            CheckDisposed();
+            var n = NativeApi.PropertyGrid_SetPropertyMaxLength_(NativePointer, id, maxLen);
+            return n;
+        }
+        
+        public void SetPropertyValueAsLong(System.IntPtr id, long value)
+        {
+            CheckDisposed();
+            NativeApi.PropertyGrid_SetPropertyValueAsLong_(NativePointer, id, value);
+        }
+        
+        public void SetPropertyValueAsInt(System.IntPtr id, int value)
+        {
+            CheckDisposed();
+            NativeApi.PropertyGrid_SetPropertyValueAsInt_(NativePointer, id, value);
+        }
+        
+        public void SetPropertyValueAsDouble(System.IntPtr id, double value)
+        {
+            CheckDisposed();
+            NativeApi.PropertyGrid_SetPropertyValueAsDouble_(NativePointer, id, value);
+        }
+        
+        public void SetPropertyValueAsBool(System.IntPtr id, bool value)
+        {
+            CheckDisposed();
+            NativeApi.PropertyGrid_SetPropertyValueAsBool_(NativePointer, id, value);
+        }
+        
+        public void SetPropertyValueAsStr(System.IntPtr id, string value)
+        {
+            CheckDisposed();
+            NativeApi.PropertyGrid_SetPropertyValueAsStr_(NativePointer, id, value);
+        }
+        
+        public void SetPropertyValueAsDateTime(System.IntPtr id, DateTime value)
+        {
+            CheckDisposed();
+            NativeApi.PropertyGrid_SetPropertyValueAsDateTime_(NativePointer, id, value);
+        }
+        
+        public void SetValidationFailureBehavior(int vfbFlags)
+        {
+            CheckDisposed();
+            NativeApi.PropertyGrid_SetValidationFailureBehavior_(NativePointer, vfbFlags);
+        }
+        
+        public void SortChildren(System.IntPtr id, int flags)
+        {
+            CheckDisposed();
+            NativeApi.PropertyGrid_SortChildren_(NativePointer, id, flags);
+        }
+        
+        public static System.IntPtr GetEditorByName(string editorName)
+        {
+            var n = NativeApi.PropertyGrid_GetEditorByName_(editorName);
+            return n;
+        }
+        
         public static System.IntPtr CreateEx(long styles)
         {
             var n = NativeApi.PropertyGrid_CreateEx_(styles);
@@ -299,6 +378,309 @@ namespace Alternet.UI.Native
             return n;
         }
         
+        public void SetPropertyReadOnly(System.IntPtr id, bool set, int flags)
+        {
+            CheckDisposed();
+            NativeApi.PropertyGrid_SetPropertyReadOnly_(NativePointer, id, set, flags);
+        }
+        
+        public void SetPropertyValueUnspecified(System.IntPtr id)
+        {
+            CheckDisposed();
+            NativeApi.PropertyGrid_SetPropertyValueUnspecified_(NativePointer, id);
+        }
+        
+        public System.IntPtr AppendIn(System.IntPtr id, System.IntPtr newproperty)
+        {
+            CheckDisposed();
+            var n = NativeApi.PropertyGrid_AppendIn_(NativePointer, id, newproperty);
+            return n;
+        }
+        
+        public void BeginAddChildren(System.IntPtr id)
+        {
+            CheckDisposed();
+            NativeApi.PropertyGrid_BeginAddChildren_(NativePointer, id);
+        }
+        
+        public bool Collapse(System.IntPtr id)
+        {
+            CheckDisposed();
+            var n = NativeApi.PropertyGrid_Collapse_(NativePointer, id);
+            return n;
+        }
+        
+        public void DeleteProperty(System.IntPtr id)
+        {
+            CheckDisposed();
+            NativeApi.PropertyGrid_DeleteProperty_(NativePointer, id);
+        }
+        
+        public System.IntPtr RemoveProperty(System.IntPtr id)
+        {
+            CheckDisposed();
+            var n = NativeApi.PropertyGrid_RemoveProperty_(NativePointer, id);
+            return n;
+        }
+        
+        public bool DisableProperty(System.IntPtr id)
+        {
+            CheckDisposed();
+            var n = NativeApi.PropertyGrid_DisableProperty_(NativePointer, id);
+            return n;
+        }
+        
+        public bool EnableProperty(System.IntPtr id, bool enable)
+        {
+            CheckDisposed();
+            var n = NativeApi.PropertyGrid_EnableProperty_(NativePointer, id, enable);
+            return n;
+        }
+        
+        public void EndAddChildren(System.IntPtr id)
+        {
+            CheckDisposed();
+            NativeApi.PropertyGrid_EndAddChildren_(NativePointer, id);
+        }
+        
+        public bool Expand(System.IntPtr id)
+        {
+            CheckDisposed();
+            var n = NativeApi.PropertyGrid_Expand_(NativePointer, id);
+            return n;
+        }
+        
+        public System.IntPtr GetFirstChild(System.IntPtr id)
+        {
+            CheckDisposed();
+            var n = NativeApi.PropertyGrid_GetFirstChild_(NativePointer, id);
+            return n;
+        }
+        
+        public System.IntPtr GetPropertyCategory(System.IntPtr id)
+        {
+            CheckDisposed();
+            var n = NativeApi.PropertyGrid_GetPropertyCategory_(NativePointer, id);
+            return n;
+        }
+        
+        public System.IntPtr GetPropertyClientData(System.IntPtr id)
+        {
+            CheckDisposed();
+            var n = NativeApi.PropertyGrid_GetPropertyClientData_(NativePointer, id);
+            return n;
+        }
+        
+        public string GetPropertyHelpString(System.IntPtr id)
+        {
+            CheckDisposed();
+            var n = NativeApi.PropertyGrid_GetPropertyHelpString_(NativePointer, id);
+            return n;
+        }
+        
+        public System.IntPtr GetPropertyImage(System.IntPtr id)
+        {
+            CheckDisposed();
+            var n = NativeApi.PropertyGrid_GetPropertyImage_(NativePointer, id);
+            return n;
+        }
+        
+        public string GetPropertyLabel(System.IntPtr id)
+        {
+            CheckDisposed();
+            var n = NativeApi.PropertyGrid_GetPropertyLabel_(NativePointer, id);
+            return n;
+        }
+        
+        public System.IntPtr GetPropertyParent(System.IntPtr id)
+        {
+            CheckDisposed();
+            var n = NativeApi.PropertyGrid_GetPropertyParent_(NativePointer, id);
+            return n;
+        }
+        
+        public string GetPropertyValueAsString(System.IntPtr id)
+        {
+            CheckDisposed();
+            var n = NativeApi.PropertyGrid_GetPropertyValueAsString_(NativePointer, id);
+            return n;
+        }
+        
+        public long GetPropertyValueAsLong(System.IntPtr id)
+        {
+            CheckDisposed();
+            var n = NativeApi.PropertyGrid_GetPropertyValueAsLong_(NativePointer, id);
+            return n;
+        }
+        
+        public ulong GetPropertyValueAsULong(System.IntPtr id)
+        {
+            CheckDisposed();
+            var n = NativeApi.PropertyGrid_GetPropertyValueAsULong_(NativePointer, id);
+            return n;
+        }
+        
+        public int GetPropertyValueAsInt(System.IntPtr id)
+        {
+            CheckDisposed();
+            var n = NativeApi.PropertyGrid_GetPropertyValueAsInt_(NativePointer, id);
+            return n;
+        }
+        
+        public bool GetPropertyValueAsBool(System.IntPtr id)
+        {
+            CheckDisposed();
+            var n = NativeApi.PropertyGrid_GetPropertyValueAsBool_(NativePointer, id);
+            return n;
+        }
+        
+        public double GetPropertyValueAsDouble(System.IntPtr id)
+        {
+            CheckDisposed();
+            var n = NativeApi.PropertyGrid_GetPropertyValueAsDouble_(NativePointer, id);
+            return n;
+        }
+        
+        public DateTime GetPropertyValueAsDateTime(System.IntPtr id)
+        {
+            CheckDisposed();
+            var n = NativeApi.PropertyGrid_GetPropertyValueAsDateTime_(NativePointer, id);
+            return n;
+        }
+        
+        public bool HideProperty(System.IntPtr id, bool hide, int flags)
+        {
+            CheckDisposed();
+            var n = NativeApi.PropertyGrid_HideProperty_(NativePointer, id, hide, flags);
+            return n;
+        }
+        
+        public System.IntPtr Insert(System.IntPtr priorThis, System.IntPtr newproperty)
+        {
+            CheckDisposed();
+            var n = NativeApi.PropertyGrid_Insert_(NativePointer, priorThis, newproperty);
+            return n;
+        }
+        
+        public System.IntPtr InsertByIndex(System.IntPtr parent, int index, System.IntPtr newproperty)
+        {
+            CheckDisposed();
+            var n = NativeApi.PropertyGrid_InsertByIndex_(NativePointer, parent, index, newproperty);
+            return n;
+        }
+        
+        public bool IsPropertyCategory(System.IntPtr id)
+        {
+            CheckDisposed();
+            var n = NativeApi.PropertyGrid_IsPropertyCategory_(NativePointer, id);
+            return n;
+        }
+        
+        public bool IsPropertyEnabled(System.IntPtr id)
+        {
+            CheckDisposed();
+            var n = NativeApi.PropertyGrid_IsPropertyEnabled_(NativePointer, id);
+            return n;
+        }
+        
+        public bool IsPropertyExpanded(System.IntPtr id)
+        {
+            CheckDisposed();
+            var n = NativeApi.PropertyGrid_IsPropertyExpanded_(NativePointer, id);
+            return n;
+        }
+        
+        public bool IsPropertyModified(System.IntPtr id)
+        {
+            CheckDisposed();
+            var n = NativeApi.PropertyGrid_IsPropertyModified_(NativePointer, id);
+            return n;
+        }
+        
+        public bool IsPropertySelected(System.IntPtr id)
+        {
+            CheckDisposed();
+            var n = NativeApi.PropertyGrid_IsPropertySelected_(NativePointer, id);
+            return n;
+        }
+        
+        public bool IsPropertyShown(System.IntPtr id)
+        {
+            CheckDisposed();
+            var n = NativeApi.PropertyGrid_IsPropertyShown_(NativePointer, id);
+            return n;
+        }
+        
+        public bool IsPropertyValueUnspecified(System.IntPtr id)
+        {
+            CheckDisposed();
+            var n = NativeApi.PropertyGrid_IsPropertyValueUnspecified_(NativePointer, id);
+            return n;
+        }
+        
+        public void LimitPropertyEditing(System.IntPtr id, bool limit)
+        {
+            CheckDisposed();
+            NativeApi.PropertyGrid_LimitPropertyEditing_(NativePointer, id, limit);
+        }
+        
+        public System.IntPtr ReplaceProperty(System.IntPtr id, System.IntPtr property)
+        {
+            CheckDisposed();
+            var n = NativeApi.PropertyGrid_ReplaceProperty_(NativePointer, id, property);
+            return n;
+        }
+        
+        public void SetPropertyBackgroundColor(System.IntPtr id, Alternet.Drawing.Color color, int flags)
+        {
+            CheckDisposed();
+            NativeApi.PropertyGrid_SetPropertyBackgroundColor_(NativePointer, id, color, flags);
+        }
+        
+        public void SetPropertyColorsToDefault(System.IntPtr id, int flags)
+        {
+            CheckDisposed();
+            NativeApi.PropertyGrid_SetPropertyColorsToDefault_(NativePointer, id, flags);
+        }
+        
+        public void SetPropertyTextColor(System.IntPtr id, Alternet.Drawing.Color col, int flags)
+        {
+            CheckDisposed();
+            NativeApi.PropertyGrid_SetPropertyTextColor_(NativePointer, id, col, flags);
+        }
+        
+        public Alternet.Drawing.Color GetPropertyBackgroundColor(System.IntPtr id)
+        {
+            CheckDisposed();
+            var n = NativeApi.PropertyGrid_GetPropertyBackgroundColor_(NativePointer, id);
+            return n;
+        }
+        
+        public Alternet.Drawing.Color GetPropertyTextColor(System.IntPtr id)
+        {
+            CheckDisposed();
+            var n = NativeApi.PropertyGrid_GetPropertyTextColor_(NativePointer, id);
+            return n;
+        }
+        
+        public void SetPropertyClientData(System.IntPtr id, System.IntPtr clientData)
+        {
+            CheckDisposed();
+            NativeApi.PropertyGrid_SetPropertyClientData_(NativePointer, id, clientData);
+        }
+        
+        public void SetPropertyEditor(System.IntPtr id, System.IntPtr editor)
+        {
+            CheckDisposed();
+            NativeApi.PropertyGrid_SetPropertyEditor_(NativePointer, id, editor);
+        }
+        
+        public void SetPropertyEditorByName(System.IntPtr id, string editorName)
+        {
+            CheckDisposed();
+            NativeApi.PropertyGrid_SetPropertyEditorByName_(NativePointer, id, editorName);
+        }
+        
         
         [SuppressUnmanagedCodeSecurity]
         public class NativeApi : NativeApiProvider
@@ -322,6 +704,45 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void PropertyGrid_SetCreateStyle_(IntPtr obj, long value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void PropertyGrid_SetPropertyLabel_(IntPtr obj, System.IntPtr id, string newproplabel);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void PropertyGrid_SetPropertyName_(IntPtr obj, System.IntPtr id, string newName);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void PropertyGrid_SetPropertyHelpString_(IntPtr obj, System.IntPtr id, string helpString);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool PropertyGrid_SetPropertyMaxLength_(IntPtr obj, System.IntPtr id, int maxLen);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void PropertyGrid_SetPropertyValueAsLong_(IntPtr obj, System.IntPtr id, long value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void PropertyGrid_SetPropertyValueAsInt_(IntPtr obj, System.IntPtr id, int value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void PropertyGrid_SetPropertyValueAsDouble_(IntPtr obj, System.IntPtr id, double value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void PropertyGrid_SetPropertyValueAsBool_(IntPtr obj, System.IntPtr id, bool value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void PropertyGrid_SetPropertyValueAsStr_(IntPtr obj, System.IntPtr id, string value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void PropertyGrid_SetPropertyValueAsDateTime_(IntPtr obj, System.IntPtr id, NativeApiTypes.DateTime value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void PropertyGrid_SetValidationFailureBehavior_(IntPtr obj, int vfbFlags);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void PropertyGrid_SortChildren_(IntPtr obj, System.IntPtr id, int flags);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr PropertyGrid_GetEditorByName_(string editorName);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern System.IntPtr PropertyGrid_CreateEx_(long styles);
@@ -427,6 +848,141 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern System.IntPtr PropertyGrid_CreateColorProperty_(IntPtr obj, string label, string name, NativeApiTypes.Color value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void PropertyGrid_SetPropertyReadOnly_(IntPtr obj, System.IntPtr id, bool set, int flags);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void PropertyGrid_SetPropertyValueUnspecified_(IntPtr obj, System.IntPtr id);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr PropertyGrid_AppendIn_(IntPtr obj, System.IntPtr id, System.IntPtr newproperty);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void PropertyGrid_BeginAddChildren_(IntPtr obj, System.IntPtr id);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool PropertyGrid_Collapse_(IntPtr obj, System.IntPtr id);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void PropertyGrid_DeleteProperty_(IntPtr obj, System.IntPtr id);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr PropertyGrid_RemoveProperty_(IntPtr obj, System.IntPtr id);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool PropertyGrid_DisableProperty_(IntPtr obj, System.IntPtr id);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool PropertyGrid_EnableProperty_(IntPtr obj, System.IntPtr id, bool enable);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void PropertyGrid_EndAddChildren_(IntPtr obj, System.IntPtr id);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool PropertyGrid_Expand_(IntPtr obj, System.IntPtr id);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr PropertyGrid_GetFirstChild_(IntPtr obj, System.IntPtr id);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr PropertyGrid_GetPropertyCategory_(IntPtr obj, System.IntPtr id);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr PropertyGrid_GetPropertyClientData_(IntPtr obj, System.IntPtr id);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern string PropertyGrid_GetPropertyHelpString_(IntPtr obj, System.IntPtr id);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr PropertyGrid_GetPropertyImage_(IntPtr obj, System.IntPtr id);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern string PropertyGrid_GetPropertyLabel_(IntPtr obj, System.IntPtr id);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr PropertyGrid_GetPropertyParent_(IntPtr obj, System.IntPtr id);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern string PropertyGrid_GetPropertyValueAsString_(IntPtr obj, System.IntPtr id);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern long PropertyGrid_GetPropertyValueAsLong_(IntPtr obj, System.IntPtr id);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern ulong PropertyGrid_GetPropertyValueAsULong_(IntPtr obj, System.IntPtr id);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int PropertyGrid_GetPropertyValueAsInt_(IntPtr obj, System.IntPtr id);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool PropertyGrid_GetPropertyValueAsBool_(IntPtr obj, System.IntPtr id);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern double PropertyGrid_GetPropertyValueAsDouble_(IntPtr obj, System.IntPtr id);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern NativeApiTypes.DateTime PropertyGrid_GetPropertyValueAsDateTime_(IntPtr obj, System.IntPtr id);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool PropertyGrid_HideProperty_(IntPtr obj, System.IntPtr id, bool hide, int flags);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr PropertyGrid_Insert_(IntPtr obj, System.IntPtr priorThis, System.IntPtr newproperty);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr PropertyGrid_InsertByIndex_(IntPtr obj, System.IntPtr parent, int index, System.IntPtr newproperty);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool PropertyGrid_IsPropertyCategory_(IntPtr obj, System.IntPtr id);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool PropertyGrid_IsPropertyEnabled_(IntPtr obj, System.IntPtr id);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool PropertyGrid_IsPropertyExpanded_(IntPtr obj, System.IntPtr id);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool PropertyGrid_IsPropertyModified_(IntPtr obj, System.IntPtr id);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool PropertyGrid_IsPropertySelected_(IntPtr obj, System.IntPtr id);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool PropertyGrid_IsPropertyShown_(IntPtr obj, System.IntPtr id);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool PropertyGrid_IsPropertyValueUnspecified_(IntPtr obj, System.IntPtr id);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void PropertyGrid_LimitPropertyEditing_(IntPtr obj, System.IntPtr id, bool limit);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr PropertyGrid_ReplaceProperty_(IntPtr obj, System.IntPtr id, System.IntPtr property);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void PropertyGrid_SetPropertyBackgroundColor_(IntPtr obj, System.IntPtr id, NativeApiTypes.Color color, int flags);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void PropertyGrid_SetPropertyColorsToDefault_(IntPtr obj, System.IntPtr id, int flags);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void PropertyGrid_SetPropertyTextColor_(IntPtr obj, System.IntPtr id, NativeApiTypes.Color col, int flags);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern NativeApiTypes.Color PropertyGrid_GetPropertyBackgroundColor_(IntPtr obj, System.IntPtr id);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern NativeApiTypes.Color PropertyGrid_GetPropertyTextColor_(IntPtr obj, System.IntPtr id);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void PropertyGrid_SetPropertyClientData_(IntPtr obj, System.IntPtr id, System.IntPtr clientData);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void PropertyGrid_SetPropertyEditor_(IntPtr obj, System.IntPtr id, System.IntPtr editor);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void PropertyGrid_SetPropertyEditorByName_(IntPtr obj, System.IntPtr id, string editorName);
             
         }
     }

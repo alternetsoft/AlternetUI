@@ -9,7 +9,7 @@ namespace Alternet.UI
 {
     internal class PropertyGridChoices : IPropertyGridChoices
     {
-        private IntPtr handle;
+        private readonly IntPtr handle;
 
         public PropertyGridChoices(IntPtr handle)
         {
