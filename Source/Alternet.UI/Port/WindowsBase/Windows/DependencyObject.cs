@@ -61,6 +61,7 @@ namespace Alternet.UI
         }
 
         /// <summary>Returns the DType that represents the CLR type of this instance</summary>
+        [Browsable(false)]
         public DependencyObjectType DependencyObjectType
         {
             get
