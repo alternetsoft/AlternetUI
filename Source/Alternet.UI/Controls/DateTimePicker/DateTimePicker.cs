@@ -32,9 +32,8 @@ namespace Alternet.UI
                 typeof(DateTime),
                 typeof(DateTimePicker),
                 new FrameworkPropertyMetadata(
-                    DateTime.MinValue, // default value
-                    FrameworkPropertyMetadataOptions.BindsTwoWayByDefault |
-                        FrameworkPropertyMetadataOptions.AffectsPaint,
+                    DateTime.Now, // default value
+                    FrameworkPropertyMetadataOptions.BindsTwoWayByDefault | FrameworkPropertyMetadataOptions.AffectsPaint,
                     new PropertyChangedCallback(OnValuePropertyChanged),
                     null, // CoerseValueCallback
                     true, // IsAnimationProhibited
