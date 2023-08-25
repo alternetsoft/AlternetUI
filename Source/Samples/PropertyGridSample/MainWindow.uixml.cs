@@ -119,6 +119,9 @@ namespace PropertyGridSample
                 prop = propertyGrid.CreateUIntProperty("UInt");
                 propertyGrid.Add(prop);
 
+                prop = propertyGrid.CreateStringProperty("String");
+                propertyGrid.Add(prop);
+
                 prop = propertyGrid.CreateLongStringProperty("Long string");
                 propertyGrid.Add(prop);
 
@@ -140,6 +143,14 @@ namespace PropertyGridSample
 
                 prop = propertyGrid.CreateColorProperty("Color", null, Color.Red);
                 propertyGrid.Add(prop);
+
+                prop = propertyGrid.CreateStringProperty(
+                    "Readonly prop",
+                    null,
+                    "Some Text");
+                propertyGrid.SetPropertyReadOnly(prop, true, false);
+                propertyGrid.Add(prop);
+
             }
             finally
             {
@@ -157,8 +168,6 @@ namespace PropertyGridSample
 
             string propName = p.Name;
             var propType = p.PropertyType;
-
-            var ronly = !p.CanWrite;    // need to set readonly flags
 
             var browsable = p.GetCustomAttribute(
                 typeof(BrowsableAttribute)) as BrowsableAttribute;
@@ -304,6 +313,9 @@ namespace PropertyGridSample
                             propValue?.ToString());
                         break;
                 }
+
+            if (!p.CanWrite)
+                propertyGrid.SetPropertyReadOnly(prop!, true);
             return prop;
         }
 
