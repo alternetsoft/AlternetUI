@@ -2,6 +2,7 @@
 
 - Added AuiManager, AuiToolbar, AuiNotebook controls.
 - Added AuiManager sample.
+- Added PropertyGrid control and sample.
 
 # 0.9.300 (2023 August 9)
 
