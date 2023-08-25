@@ -386,6 +386,8 @@ namespace Alternet.UI
         /// <param name="prop">Item to add.</param>
         public void Add(IPropertyGridItem prop)
         {
+            if (prop == null)
+                return;
             NativeControl.Append(prop.Handle);
         }
 

@@ -151,6 +151,8 @@ namespace PropertyGridSample
                 propertyGrid.SetPropertyReadOnly(prop, true, false);
                 propertyGrid.Add(prop);
 
+                prop = CreateProperty(new Border(), "BorderColor");
+                propertyGrid.Add(prop!);
             }
             finally
             {
@@ -158,7 +160,76 @@ namespace PropertyGridSample
             }
         }
 
-        public IPropertyGridItem? CreatePropByInfo(object instance, PropertyInfo p)
+        /*
+        Font readonly
+            double SizeInPoints
+            string Name,
+            FontStyle Style         
+         */
+        public IPropertyGridItem CreateFontProperty(
+            string label,
+            string? name = null,
+            Font? value = null)
+        {
+            return null!;
+        }
+        /*
+            GradientStop(Color color, double offset)
+ 
+            LinearGradientBrush
+                Point startPoint;
+                Point endPoint;
+                GradientStop[] GradientStops;
+
+            RadialGradientBrush
+                Point Center
+                double Radius
+                Point GradientOrigin
+                GradientStop[] GradientStops
+
+            HatchBrush // readonly
+                Color Color
+                BrushHatchStyle HatchStyle
+
+            SolidBrush // readonly
+                Color Color
+         */
+        public IPropertyGridItem CreateBrushProperty(
+            string label,
+            string? name = null,
+            Brush? value = null)
+        {
+            return null!;
+        }
+
+        /*
+        Color Color;
+        PenDashStyle DashStyle;
+        LineCap LineCap;
+        LineJoin LineJoin;
+        double Width;
+         */
+
+        public IPropertyGridItem CreatePenProperty(
+            string label,
+            string? name = null,
+            Pen? value = null)
+        {
+            return null!;
+        }
+
+        public IPropertyGridItem? CreateProperty(object instance, string name)
+        {
+            if (instance == null)
+                return null;
+            var type = instance.GetType();
+            var propInfo = type.GetProperty(name);
+            if (propInfo == null)
+                return null;
+            return CreateProperty(instance, propInfo);
+        }
+
+        public IPropertyGridItem? CreateProperty(object instance, PropertyInfo p)
         {
             if (!p.CanRead)
                 return null;
@@ -332,7 +403,7 @@ namespace PropertyGridSample
             {
                 if (addedNames.ContainsKey(p.Name))
                     continue;
-                IPropertyGridItem? prop = CreatePropByInfo(instance, p);
+                IPropertyGridItem? prop = CreateProperty(instance, p);
                 if (prop == null)
                     continue;
                 propertyGrid.Add(prop!);
