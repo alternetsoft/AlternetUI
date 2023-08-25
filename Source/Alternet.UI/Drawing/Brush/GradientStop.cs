@@ -15,10 +15,12 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="GradientStop"/> class with the specified color and offset.
+        /// Initializes a new instance of the <see cref="GradientStop"/> class with the specified
+        /// color and offset.
         /// </summary>
         /// <param name="color">The color value of the gradient stop.</param>
-        /// <param name="offset">The location in the gradient where the gradient stop is placed.</param>
+        /// <param name="offset">The location in the gradient where the gradient stop is
+        /// placed.</param>
         public GradientStop(Color color, double offset)
         {
             Color = color;
@@ -48,10 +50,10 @@ namespace Alternet.Drawing
         /// </summary>
         public static bool operator ==(GradientStop? a, GradientStop? b)
         {
-            if (ReferenceEquals(a, null) && ReferenceEquals(b, null))
+            if (a is null && b is null)
                 return true;
 
-            if (ReferenceEquals(a, null) || ReferenceEquals(b, null))
+            if (a is null || b is null)
                 return false;
 
             return a.Equals(b);
@@ -90,12 +92,13 @@ namespace Alternet.Drawing
         /// Determines whether the specified object is equal to the current object.
         /// </summary>
         /// <param name="obj">The object to compare with the current object.</param>
-        /// <returns><c>true</c> if the specified object is equal to the current object; otherwise, <c>false</c>.</returns>
+        /// <returns><c>true</c> if the specified object is equal to the current object;
+        /// otherwise, <c>false</c>.</returns>
         public override bool Equals(object? obj)
         {
             var o = obj as GradientStop;
 
-            if (ReferenceEquals(o, null))
+            if (o is null)
                 return false;
 
             if (GetType() != obj?.GetType())

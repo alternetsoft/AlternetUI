@@ -1,18 +1,22 @@
 using System;
 using System.ComponentModel;
+using Alternet.UI;
 
 namespace Alternet.Drawing
 {
     /// <summary>
-    /// Defines objects used to fill the interiors of graphical shapes such as rectangles, ellipses, pies, polygons, and paths.
+    /// Defines objects used to fill the interiors of graphical shapes such as rectangles,
+    /// ellipses, pies, polygons, and paths.
     /// </summary>
     /// <remarks>
     /// This is an abstract base class and cannot be instantiated. To create a brush object,
-    /// use classes derived from <see cref="Brush" />, such as <see cref="SolidBrush" /> or <see cref="HatchBrush" />.
+    /// use classes derived from <see cref="Brush" />, such as <see cref="SolidBrush" /> or
+    /// <see cref="HatchBrush" />.
     /// </remarks>
     [TypeConverter(typeof(BrushConverter))]
     public abstract class Brush : IDisposable, IEquatable<Brush>
     {
+        private readonly bool immutable;
         private bool isDisposed;
         private Pen? asPen;
 
@@ -21,8 +25,6 @@ namespace Alternet.Drawing
             NativeBrush = nativeBrush;
             this.immutable = immutable;
         }
-
-        private bool immutable;
 
         /// <summary>
         /// Creates <see cref="Pen"/> with this brush as a parameter.
@@ -47,10 +49,10 @@ namespace Alternet.Drawing
         /// </summary>
         public static bool operator ==(Brush? a, Brush? b)
         {
-            if (ReferenceEquals(a, null) && ReferenceEquals(b, null))
+            if (a is null && b is null)
                 return true;
 
-            if (ReferenceEquals(a, null) || ReferenceEquals(b, null))
+            if (a is null || b is null)
                 return false;
 
             return a.Equals(b);
@@ -109,7 +111,8 @@ namespace Alternet.Drawing
         /// Determines whether the specified object is equal to the current object.
         /// </summary>
         /// <param name="obj">The object to compare with the current object.</param>
-        /// <returns><c>true</c> if the specified object is equal to the current object; otherwise, <c>false</c>.</returns>
+        /// <returns><c>true</c> if the specified object is equal to the current object;
+        /// otherwise, <c>false</c>.</returns>
         public override bool Equals(object? obj)
         {
             var brush = obj as Brush;
@@ -122,12 +125,6 @@ namespace Alternet.Drawing
 
             return Equals(brush);
         }
-
-        private protected abstract int GetHashCodeCore();
-
-        private protected abstract bool EqualsCore(Brush other);
-
-        private protected abstract string ToStringCore();
 
         /// <summary>
         /// Throws <see cref="ObjectDisposedException"/> if the object has been disposed.
@@ -143,14 +140,15 @@ namespace Alternet.Drawing
         /// and optionally releases the managed resources.
         /// </summary>
         /// <param name="disposing">
-        /// <c>true</c> to release both managed and unmanaged resources; false<c></c> to release only unmanaged resources.
+        /// <c>true</c> to release both managed and unmanaged resources; false<c></c> to release
+        /// only unmanaged resources.
         /// </param>
         protected virtual void Dispose(bool disposing)
         {
             if (!isDisposed)
             {
                 if (immutable)
-                    throw new InvalidOperationException("Cannot dispose an immutable brush.");
+                    throw new InvalidOperationException(ErrorMessages.CannotDisposeImmutableObject);
 
                 if (disposing)
                 {
@@ -161,5 +159,11 @@ namespace Alternet.Drawing
                 isDisposed = true;
             }
         }
+
+        private protected abstract int GetHashCodeCore();
+
+        private protected abstract bool EqualsCore(Brush other);
+
+        private protected abstract string ToStringCore();
     }
 }

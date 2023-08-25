@@ -16,47 +16,63 @@ namespace Alternet.Drawing
         /// <summary>
         /// Initializes a new instance of the <see cref="RadialGradientBrush"/> class.
         /// </summary>
-        public RadialGradientBrush() : this(new GradientStop[0])
+        public RadialGradientBrush()
+            : this(new GradientStop[0])
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="RadialGradientBrush"/> class with the specified start color and end color.
+        /// Initializes a new instance of the <see cref="RadialGradientBrush"/> class
+        /// with the specified start color and end color.
         /// </summary>
         /// <param name="startColor">The Color at offset 0.0.</param>
         /// <param name="endColor">The Color at offset 1.0.</param>
-        public RadialGradientBrush(Color startColor, Color endColor) : this(GetGradientStopsFromEdgeColors(startColor, endColor))
+        public RadialGradientBrush(Color startColor, Color endColor)
+            : this(GetGradientStopsFromEdgeColors(startColor, endColor))
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="RadialGradientBrush"/> class that has the specified gradient stops.
+        /// Initializes a new instance of the <see cref="RadialGradientBrush"/> class that has
+        /// the specified gradient stops.
         /// </summary>
-        /// <param name="gradientStops">The <see cref="GradientStop"/> instances array to set on this brush.</param>
-        public RadialGradientBrush(GradientStop[] gradientStops) : this(new Point(0, 0), 10, gradientStops)
+        /// <param name="gradientStops">The <see cref="GradientStop"/> instances array to set on
+        /// this brush.</param>
+        public RadialGradientBrush(GradientStop[] gradientStops)
+            : this(new Point(0, 0), 10, gradientStops)
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the RadialGradientBrush class that has the specified center, radius, and gradient stops.
+        /// Initializes a new instance of the RadialGradientBrush class that has the specified
+        /// center, radius, and gradient stops.
         /// </summary>
         /// <param name="center">The center of the outermost circle of the radial gradient.</param>
         /// <param name="radius">The radius of the outermost circle of the radial gradient.</param>
-        /// <param name="gradientStops">The <see cref="GradientStop"/> instances array to set on this brush.</param>
-        public RadialGradientBrush(Point center, double radius, GradientStop[] gradientStops) :
-            this(center, radius, new Point(0, 0), gradientStops)
+        /// <param name="gradientStops">The <see cref="GradientStop"/> instances array to set on
+        /// this brush.</param>
+        public RadialGradientBrush(Point center, double radius, GradientStop[] gradientStops)
+            : this(center, radius, new Point(0, 0), gradientStops)
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="RadialGradientBrush"/> class that has the specified gradient stops,
+        /// Initializes a new instance of the <see cref="RadialGradientBrush"/> class that has
+        /// the specified gradient stops,
         /// start point and end point.
         /// </summary>
         /// <param name="center">The center of the outermost circle of the radial gradient.</param>
         /// <param name="radius">The radius of the outermost circle of the radial gradient.</param>
-        /// <param name="gradientOrigin">The location of the two-dimensional focal point that defines the beginning of the gradient.</param>
-        /// <param name="gradientStops">The <see cref="GradientStop"/> instances array to set on this brush.</param>
-        public RadialGradientBrush(Point center, double radius, Point gradientOrigin, GradientStop[] gradientStops) : this(new UI.Native.RadialGradientBrush())
+        /// <param name="gradientOrigin">The location of the two-dimensional focal point that
+        /// defines the beginning of the gradient.</param>
+        /// <param name="gradientStops">The <see cref="GradientStop"/> instances array to set on
+        /// this brush.</param>
+        public RadialGradientBrush(
+            Point center,
+            double radius,
+            Point gradientOrigin,
+            GradientStop[] gradientStops)
+            : this(new UI.Native.RadialGradientBrush())
         {
             this.center = center;
             this.radius = radius;
@@ -66,7 +82,8 @@ namespace Alternet.Drawing
             ReinitializeNativeBrush();
         }
 
-        private RadialGradientBrush(UI.Native.RadialGradientBrush nativeBrush) : base(nativeBrush, false)
+        private RadialGradientBrush(UI.Native.RadialGradientBrush nativeBrush)
+            : base(nativeBrush, false)
         {
             gradientStops = new GradientStop[0];
         }
@@ -79,11 +96,9 @@ namespace Alternet.Drawing
             get => center;
             set
             {
-                CheckDisposed();
-
                 if (center == value)
                     return;
-
+                CheckDisposed();
                 center = value;
                 ReinitializeNativeBrush();
             }
@@ -97,53 +112,50 @@ namespace Alternet.Drawing
             get => radius;
             set
             {
-                CheckDisposed();
-
                 if (radius == value)
                     return;
-
+                CheckDisposed();
                 radius = value;
                 ReinitializeNativeBrush();
             }
         }
 
         /// <summary>
-        /// Gets or sets the location of the two-dimensional focal point that defines the beginning of the gradient.
+        /// Gets or sets the location of the two-dimensional focal point that defines the
+        /// beginning of the gradient.
         /// </summary>
         public Point GradientOrigin
         {
             get => gradientOrigin;
             set
             {
-                CheckDisposed();
-
                 if (gradientOrigin == value)
                     return;
-
+                CheckDisposed();
                 gradientOrigin = value;
                 ReinitializeNativeBrush();
             }
         }
 
         /// <summary>
-        /// Gets or sets the <see cref="GradientStop"/> instances array defining the color transition in this brush.
+        /// Gets or sets the <see cref="GradientStop"/> instances array defining the color
+        /// transition in this brush.
         /// </summary>
         public GradientStop[] GradientStops
         {
             get => gradientStops;
             set
             {
-                CheckDisposed();
-
                 if (gradientStops == value)
                     return;
-
+                CheckDisposed();
                 gradientStops = value;
                 ReinitializeNativeBrush();
             }
         }
 
-        internal new UI.Native.RadialGradientBrush NativeBrush => (UI.Native.RadialGradientBrush)base.NativeBrush;
+        internal new UI.Native.RadialGradientBrush NativeBrush =>
+            (UI.Native.RadialGradientBrush)base.NativeBrush;
 
         private protected override bool EqualsCore(Brush other)
         {
@@ -170,10 +182,25 @@ namespace Alternet.Drawing
             return hashCode.ToHashCode();
         }
 
-        private protected override string ToStringCore() => $"RadialGradientBrush";
+        private protected override string ToStringCore()
+        {
+            try
+            {
+                return $"RadialGradientBrush ({Center}, {Radius}, {GradientOrigin}, {GradientStops})";
+            }
+            catch
+            {
+                return $"RadialGradientBrush";
+            }
+        }
 
-        private static GradientStop[] GetGradientStopsFromEdgeColors(Color startColor, Color endColor) =>
-                                    new[] { new GradientStop(startColor, 0), new GradientStop(endColor, 1) };
+        private static GradientStop[] GetGradientStopsFromEdgeColors(
+            Color startColor,
+            Color endColor) => new[]
+            {
+                new GradientStop(startColor, 0),
+                new GradientStop(endColor, 1),
+            };
 
         private void ReinitializeNativeBrush()
         {

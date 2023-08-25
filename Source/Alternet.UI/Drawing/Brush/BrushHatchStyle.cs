@@ -1,5 +1,4 @@
-﻿
-namespace Alternet.Drawing
+﻿namespace Alternet.Drawing
 {
     /// <summary>
     /// Specifies the different patterns available for <see cref="HatchBrush"/> objects.
@@ -34,6 +33,6 @@ namespace Alternet.Drawing
         /// <summary>
         /// A pattern of vertical lines.
         /// </summary>
-        Vertical
+        Vertical,
     }
 }

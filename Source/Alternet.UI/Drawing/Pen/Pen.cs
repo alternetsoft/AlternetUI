@@ -1,4 +1,5 @@
 using System;
+using Alternet.UI;
 
 namespace Alternet.Drawing
 {
@@ -11,6 +12,9 @@ namespace Alternet.Drawing
     /// </remarks>
     public sealed class Pen : IDisposable, IEquatable<Pen>
     {
+        private static Pen? defaultPen;
+
+        private readonly bool immutable;
         private bool isDisposed;
         private Color color;
         private PenDashStyle dashStyle;
@@ -22,10 +26,14 @@ namespace Alternet.Drawing
         /// Initializes a new instance of the <see cref="Pen"/> class with the specified
         /// <see cref="Color"/>, <see cref="Width"/> and <see cref="DashStyle"/> properties.
         /// </summary>
-        /// <param name="color">A <see cref="Color"/> structure that indicates the color of this <see cref="Pen"/>.</param>
-        /// <param name="width">A value indicating the width of this <see cref="Pen"/>, in device-independent units (1/96th inch per unit).</param>
-        /// <param name="dashStyle">A style used for dashed lines drawn with this <see cref="Pen"/>.</param>
-        public Pen(Color color, double width, PenDashStyle dashStyle) : this(color, width, dashStyle, LineCap.Flat, LineJoin.Miter)
+        /// <param name="color">A <see cref="Color"/> structure that indicates the color of this
+        /// <see cref="Pen"/>.</param>
+        /// <param name="width">A value indicating the width of this <see cref="Pen"/>, in
+        /// device-independent units (1/96th inch per unit).</param>
+        /// <param name="dashStyle">A style used for dashed lines drawn with this
+        /// <see cref="Pen"/>.</param>
+        public Pen(Color color, double width, PenDashStyle dashStyle)
+            : this(color, width, dashStyle, LineCap.Flat, LineJoin.Miter)
         {
         }
 
@@ -33,17 +41,70 @@ namespace Alternet.Drawing
         /// Initializes a new instance of the <see cref="Pen"/> class with the specified
         /// <see cref="Color"/>, <see cref="Width"/> and <see cref="DashStyle"/> properties.
         /// </summary>
-        /// <param name="color">A <see cref="Color"/> structure that indicates the color of this <see cref="Pen"/>.</param>
-        /// <param name="width">A value indicating the width of this <see cref="Pen"/>, in device-independent units (1/96th inch per unit).</param>
-        /// <param name="dashStyle">A style used for dashed lines drawn with this <see cref="Pen"/>.</param>
-        /// <param name="lineCap">Specifies the available cap styles with which a <see cref="Pen"/> object can end a line.</param>
+        /// <param name="color">A <see cref="Color"/> structure that indicates the color of
+        /// this <see cref="Pen"/>.</param>
+        /// <param name="width">A value indicating the width of this <see cref="Pen"/>, in
+        /// device-independent units (1/96th inch per unit).</param>
+        /// <param name="dashStyle">A style used for dashed lines drawn with this
+        /// <see cref="Pen"/>.</param>
+        /// <param name="lineCap">Specifies the available cap styles with which a
+        /// <see cref="Pen"/> object can end a line.</param>
         /// <param name="lineJoin">Specifies how to join consecutive line or curve segments.</param>
-        public Pen(Color color, double width, PenDashStyle dashStyle, LineCap lineCap, LineJoin lineJoin) :
-            this(color, width, dashStyle, lineCap, lineJoin, immutable: false)
+        public Pen(
+            Color color,
+            double width,
+            PenDashStyle dashStyle,
+            LineCap lineCap,
+            LineJoin lineJoin)
+            : this(color, width, dashStyle, lineCap, lineJoin, immutable: false)
         {
         }
 
-        internal Pen(Color color, double width, PenDashStyle dashStyle, LineCap lineCap, LineJoin lineJoin, bool immutable) : this(new UI.Native.Pen())
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Pen"/> class with the specified
+        /// <see cref="Color"/> and <see cref="Width"/>.
+        /// </summary>
+        /// <param name="color">A <see cref="Color"/> structure that indicates the color of this
+        /// <see cref="Pen"/>.</param>
+        /// <param name="width">A value indicating the width of this <see cref="Pen"/>, in
+        /// device-independent units (1/96th inch per unit).</param>
+        public Pen(Color color, double width)
+            : this(color, width, PenDashStyle.Solid)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Pen"/> class with the specified
+        /// <see cref="Color"/>.
+        /// </summary>
+        /// <param name="color">A <see cref="Color"/> structure that indicates the color
+        /// of this <see cref="Pen"/>.</param>
+        public Pen(Color color)
+            : this(color, 1)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Pen"/> class with the specified
+        /// <see cref="Brush"/>.
+        /// </summary>
+        /// <param name="brush">A <see cref="Brush"/> that indicates the color of this
+        /// <see cref="Pen"/>.</param>
+        public Pen(Brush brush)
+            : this(brush as SolidBrush != null ?
+                    ((SolidBrush)brush).Color :
+                    throw new ArgumentException(ErrorMessages.OnlySolidBrushInstancesSupported))
+        {
+        }
+
+        internal Pen(
+            Color color,
+            double width,
+            PenDashStyle dashStyle,
+            LineCap lineCap,
+            LineJoin lineJoin,
+            bool immutable)
+            : this(new UI.Native.Pen())
         {
             this.color = color;
             this.width = width;
@@ -56,57 +117,32 @@ namespace Alternet.Drawing
             ReinitializeNativePen();
         }
 
-        private bool immutable;
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Pen"/> class with the specified
-        /// <see cref="Color"/> and <see cref="Width"/>.
-        /// </summary>
-        /// <param name="color">A <see cref="Color"/> structure that indicates the color of this <see cref="Pen"/>.</param>
-        /// <param name="width">A value indicating the width of this <see cref="Pen"/>, in device-independent units (1/96th inch per unit).</param>
-        public Pen(Color color, double width) : this(color, width, PenDashStyle.Solid)
-        {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Pen"/> class with the specified <see cref="Color"/>.
-        /// </summary>
-        /// <param name="color">A <see cref="Color"/> structure that indicates the color of this <see cref="Pen"/>.</param>
-        public Pen(Color color) : this(color, 1)
-        {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Pen"/> class with the specified <see cref="Brush"/>.
-        /// </summary>
-        /// <param name="brush">A <see cref="Brush"/> that indicates the color of this <see cref="Pen"/>.</param>
-        public Pen(Brush brush) :
-            this(
-                brush as SolidBrush != null ?
-                    ((SolidBrush)brush).Color :
-                    throw new ArgumentException("Only SolidBrush instances are supported for Pen initialization."))
-        {
-        }
-
         private Pen(UI.Native.Pen nativePen)
         {
             NativePen = nativePen;
         }
 
         /// <summary>
+        /// Gets the default pen.
+        /// </summary>
+        /// <value>
+        /// Default pen has width equal to 1 and Black color.
+        /// </value>
+        public static Pen Default => defaultPen ??= new(Color.Black);
+
+        /// <summary>
         /// Gets or sets the color of this <see cref="Pen"/>.
         /// </summary>
-        /// <value>A <see cref="Drawing.Color"/> structure that represents the color for this <see cref="Pen"/>.</value>
+        /// <value>A <see cref="Drawing.Color"/> structure that represents the color for this
+        /// <see cref="Pen"/>.</value>
         public Color Color
         {
             get => color;
 
             set
             {
-                CheckModificationOfImmutableObject();
-                if (color == value)
+                if (color == value || immutable)
                     return;
-
                 color = value;
                 ReinitializeNativePen();
             }
@@ -115,17 +151,16 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets or sets the style used for dashed lines drawn with this <see cref="Pen"/>.
         /// </summary>
-        /// <value>One of the <see cref="PenDashStyle"/> values that represents the dash style of this <see cref="Pen"/>.</value>
+        /// <value>One of the <see cref="PenDashStyle"/> values that represents the dash style
+        /// of this <see cref="Pen"/>.</value>
         public PenDashStyle DashStyle
         {
             get => dashStyle;
 
             set
             {
-                CheckModificationOfImmutableObject();
-                if (dashStyle == value)
+                if (dashStyle == value || immutable)
                     return;
-
                 dashStyle = value;
                 ReinitializeNativePen();
             }
@@ -140,10 +175,8 @@ namespace Alternet.Drawing
 
             set
             {
-                CheckModificationOfImmutableObject();
-                if (lineCap == value)
+                if (lineCap == value || immutable)
                     return;
-
                 lineCap = value;
                 ReinitializeNativePen();
             }
@@ -158,38 +191,30 @@ namespace Alternet.Drawing
 
             set
             {
-                CheckModificationOfImmutableObject();
-                if (lineJoin == value)
+                if (lineJoin == value || immutable)
                     return;
-
                 lineJoin = value;
                 ReinitializeNativePen();
             }
         }
 
         /// <summary>
-        /// Gets or sets the width of this <see cref="Pen"/>, in device-independent units (1/96th inch per unit).
+        /// Gets or sets the width of this <see cref="Pen"/>, in device-independent units
+        /// (1/96th inch per unit).
         /// </summary>
-        /// <value>The width of this <see cref="Pen"/>, in device-independent units (1/96th inch per unit).</value>
+        /// <value>The width of this <see cref="Pen"/>, in device-independent units
+        /// (1/96th inch per unit).</value>
         public double Width
         {
             get => width;
 
             set
             {
-                CheckModificationOfImmutableObject();
-                if (width == value)
+                if (width == value || immutable)
                     return;
-
                 width = value;
                 ReinitializeNativePen();
             }
-        }
-
-        private void CheckModificationOfImmutableObject()
-        {
-            if (immutable)
-                throw new InvalidOperationException("Cannot change an immutable pen.");
         }
 
         internal UI.Native.Pen NativePen { get; private set; }
@@ -199,10 +224,10 @@ namespace Alternet.Drawing
         /// </summary>
         public static bool operator ==(Pen? a, Pen? b)
         {
-            if (ReferenceEquals(a, null) && ReferenceEquals(b, null))
+            if (a is null && b is null)
                 return true;
 
-            if (ReferenceEquals(a, null) || ReferenceEquals(b, null))
+            if (a is null || b is null)
                 return false;
 
             return a.Equals(b);
@@ -261,12 +286,11 @@ namespace Alternet.Drawing
         /// Determines whether the specified object is equal to the current object.
         /// </summary>
         /// <param name="obj">The object to compare with the current object.</param>
-        /// <returns><c>true</c> if the specified object is equal to the current object; otherwise, <c>false</c>.</returns>
+        /// <returns><c>true</c> if the specified object is equal to the current object;
+        /// otherwise, <c>false</c>.</returns>
         public override bool Equals(object? obj)
         {
-            var pen = obj as Pen;
-
-            if (ReferenceEquals(pen, null))
+            if (obj is not Pen pen)
                 return false;
 
             if (GetType() != obj?.GetType())
@@ -294,13 +318,12 @@ namespace Alternet.Drawing
                 throw new ObjectDisposedException(null);
         }
 
-        /// <inheritdoc/>
         private void Dispose(bool disposing)
         {
             if (!isDisposed)
             {
                 if (immutable)
-                    throw new InvalidOperationException("Cannot dispose an immutable pen.");
+                    throw new InvalidOperationException(ErrorMessages.CannotDisposeImmutableObject);
 
                 if (disposing)
                 {

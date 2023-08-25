@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel;
 
 namespace Alternet.Drawing
 {
@@ -88,6 +89,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Returns bold version of the font.
         /// </summary>
+        [Browsable(false)]
         public Font AsBold
         {
             get
@@ -105,6 +107,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Returns underlined version of the font.
         /// </summary>
+        [Browsable(false)]
         public Font AsUnderlined
         {
             get

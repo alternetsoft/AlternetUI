@@ -63,7 +63,7 @@ namespace Alternet.UI
         {
             get
             {
-                DateTime maxSupportedDateTime = 
+                DateTime maxSupportedDateTime =
                     CultureInfo.CurrentCulture.Calendar.MaxSupportedDateTime;
                 if (maxSupportedDateTime.Year > MaxDateTime.Year)
                 {
@@ -105,15 +105,6 @@ namespace Alternet.UI
         {
             get { return (DateTime)GetValue(ValueProperty); }
             set { SetValue(ValueProperty, value); }
-        }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether the control has a border.
-        /// </summary>
-        internal bool HasBorder
-        {
-            get => Handler.HasBorder;
-            set => Handler.HasBorder = value;
         }
 
         /// <summary>Gets or sets the maximum date and time that can be
@@ -274,12 +265,22 @@ namespace Alternet.UI
 
             set
             {
-                if(WebBrowser.GetBackendOS() != WebBrowserBackendOS.Windows)
+                if(!Application.IsWindowsOS)
                 {
                     value = DateTimePickerPopupKind.Default;
                 }
+
                 Handler.PopupKind = value;
             }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the control has a border.
+        /// </summary>
+        internal bool HasBorder
+        {
+            get => Handler.HasBorder;
+            set => Handler.HasBorder = value;
         }
 
         internal new NativeDateTimePickerHandler Handler =>
@@ -331,6 +332,13 @@ namespace Alternet.UI
         {
         }
 
+        /// <inheritdoc/>
+        protected override ControlHandler CreateHandler()
+        {
+            return GetEffectiveControlHandlerHactory().
+                CreateDateTimePickerHandler(this);
+        }
+
         /// <summary>
         /// Callback for changes to the Value property
         /// </summary>
@@ -344,7 +352,9 @@ namespace Alternet.UI
                 (DateTime)e.NewValue);
         }
 
+#pragma warning disable
         private void OnValuePropertyChanged(DateTime oldValue, DateTime newValue)
+#pragma warning restore
         {
             RaiseValueChanged(EventArgs.Empty);
         }
@@ -370,13 +380,5 @@ namespace Alternet.UI
 
             SetRange(EffectiveMinDate(min), EffectiveMaxDate(max));
         }
-
-        /// <inheritdoc/>
-        protected override ControlHandler CreateHandler()
-        {
-            return GetEffectiveControlHandlerHactory().
-                CreateDateTimePickerHandler(this);
-        }
-
     }
 }

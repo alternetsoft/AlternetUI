@@ -15,48 +15,58 @@ namespace Alternet.Drawing
         /// <summary>
         /// Initializes a new instance of the <see cref="LinearGradientBrush"/> class.
         /// </summary>
-        public LinearGradientBrush() : this(new GradientStop[0])
+        public LinearGradientBrush()
+            : this(new GradientStop[0])
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="LinearGradientBrush"/> class with the specified start color and end color.
+        /// Initializes a new instance of the <see cref="LinearGradientBrush"/> class
+        /// with the specified start color and end color.
         /// </summary>
         /// <param name="startColor">The Color at offset 0.0.</param>
         /// <param name="endColor">The Color at offset 1.0.</param>
-        public LinearGradientBrush(Color startColor, Color endColor) : this(GetGradientStopsFromEdgeColors(startColor, endColor))
+        public LinearGradientBrush(Color startColor, Color endColor)
+            : this(GetGradientStopsFromEdgeColors(startColor, endColor))
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="LinearGradientBrush"/> class that has the specified gradient stops.
+        /// Initializes a new instance of the <see cref="LinearGradientBrush"/> class that has
+        /// the specified gradient stops.
         /// </summary>
-        /// <param name="gradientStops">The <see cref="GradientStop"/> instances array to set on this brush.</param>
-        public LinearGradientBrush(GradientStop[] gradientStops) : this(new Point(), new Point(1, 1), gradientStops)
+        /// <param name="gradientStops">The <see cref="GradientStop"/> instances array to set on
+        /// this brush.</param>
+        public LinearGradientBrush(GradientStop[] gradientStops)
+            : this(new Point(), new Point(1, 1), gradientStops)
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the LinearGradientBrush class that has the specified start color, end color,
+        /// Initializes a new instance of the LinearGradientBrush class that has the specified
+        /// start color, end color,
         /// start point, end point.
         /// </summary>
         /// <param name="startPoint">The start point of the gradient.</param>
         /// <param name="endPoint">The end point of the gradient.</param>
         /// <param name="startColor">The start color of the gradient.</param>
         /// <param name="endColor">The end color of the gradient.</param>
-        public LinearGradientBrush(Point startPoint, Point endPoint, Color startColor, Color endColor) :
-            this(startPoint, endPoint, GetGradientStopsFromEdgeColors(startColor, endColor))
+        public LinearGradientBrush(Point startPoint, Point endPoint, Color startColor, Color endColor)
+            : this(startPoint, endPoint, GetGradientStopsFromEdgeColors(startColor, endColor))
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="LinearGradientBrush"/> class that has the specified gradient stops,
+        /// Initializes a new instance of the <see cref="LinearGradientBrush"/> class that has
+        /// the specified gradient stops,
         /// start point and end point.
         /// </summary>
         /// <param name="startPoint">The start point of the gradient.</param>
         /// <param name="endPoint">The end point of the gradient.</param>
-        /// <param name="gradientStops">The <see cref="GradientStop"/> instances array to set on this brush.</param>
-        public LinearGradientBrush(Point startPoint, Point endPoint, GradientStop[] gradientStops) : this(new UI.Native.LinearGradientBrush())
+        /// <param name="gradientStops">The <see cref="GradientStop"/> instances array to set on
+        /// this brush.</param>
+        public LinearGradientBrush(Point startPoint, Point endPoint, GradientStop[] gradientStops)
+            : this(new UI.Native.LinearGradientBrush())
         {
             this.startPoint = startPoint;
             this.endPoint = endPoint;
@@ -65,7 +75,8 @@ namespace Alternet.Drawing
             ReinitializeNativeBrush();
         }
 
-        private LinearGradientBrush(UI.Native.LinearGradientBrush nativeBrush) : base(nativeBrush, false)
+        private LinearGradientBrush(UI.Native.LinearGradientBrush nativeBrush)
+            : base(nativeBrush, false)
         {
             gradientStops = new GradientStop[0];
         }
@@ -79,11 +90,9 @@ namespace Alternet.Drawing
 
             set
             {
-                CheckDisposed();
-
                 if (startPoint == value)
                     return;
-
+                CheckDisposed();
                 startPoint = value;
                 ReinitializeNativeBrush();
             }
@@ -98,18 +107,17 @@ namespace Alternet.Drawing
 
             set
             {
-                CheckDisposed();
-
                 if (endPoint == value)
                     return;
-
+                CheckDisposed();
                 endPoint = value;
                 ReinitializeNativeBrush();
             }
         }
 
         /// <summary>
-        /// Gets or sets the <see cref="GradientStop"/> instances array defining the color transition in this brush.
+        /// Gets or sets the <see cref="GradientStop"/> instances array defining the color
+        /// transition in this brush.
         /// </summary>
         public GradientStop[] GradientStops
         {
@@ -117,29 +125,16 @@ namespace Alternet.Drawing
 
             set
             {
-                CheckDisposed();
-
                 if (gradientStops == value)
                     return;
-
+                CheckDisposed();
                 gradientStops = value;
                 ReinitializeNativeBrush();
             }
         }
 
-        internal new UI.Native.LinearGradientBrush NativeBrush => (UI.Native.LinearGradientBrush)base.NativeBrush;
-
-        private static GradientStop[] GetGradientStopsFromEdgeColors(Color startColor, Color endColor) =>
-                                    new[] { new GradientStop(startColor, 0), new GradientStop(endColor, 1) };
-
-        private void ReinitializeNativeBrush()
-        {
-            NativeBrush.Initialize(
-                startPoint,
-                endPoint,
-                gradientStops.Select(x => x.Color).ToArray(),
-                gradientStops.Select(x => x.Offset).ToArray());
-        }
+        internal new UI.Native.LinearGradientBrush NativeBrush =>
+            (UI.Native.LinearGradientBrush)base.NativeBrush;
 
         private protected override bool EqualsCore(Brush other)
         {
@@ -164,6 +159,33 @@ namespace Alternet.Drawing
             return hashCode.ToHashCode();
         }
 
-        private protected override string ToStringCore() => $"LinearGradientBrush";
+        private protected override string ToStringCore()
+        {
+            try
+            {
+                return $"LinearGradientBrush ({StartPoint}, {EndPoint}, {GradientStops})";
+            }
+            catch
+            {
+                return $"LinearGradientBrush";
+            }
+        }
+
+        private static GradientStop[] GetGradientStopsFromEdgeColors(
+            Color startColor,
+            Color endColor) => new[]
+            {
+                new GradientStop(startColor, 0),
+                new GradientStop(endColor, 1),
+            };
+
+        private void ReinitializeNativeBrush()
+        {
+            NativeBrush.Initialize(
+                startPoint,
+                endPoint,
+                gradientStops.Select(x => x.Color).ToArray(),
+                gradientStops.Select(x => x.Offset).ToArray());
+        }
     }
 }
