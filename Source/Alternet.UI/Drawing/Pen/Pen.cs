@@ -135,6 +135,13 @@ namespace Alternet.Drawing
         /// </summary>
         /// <value>A <see cref="Drawing.Color"/> structure that represents the color for this
         /// <see cref="Pen"/>.</value>
+        /// <remarks>
+        /// If <see cref="Pen"/> is immutable (for example <see cref="Pens.Black"/>),
+        /// this property is readonly.
+        /// </remarks>
+        /// <remarks>
+        /// Default value is <see cref="Color.Black"/>.
+        /// </remarks>
         public Color Color
         {
             get => color;
@@ -153,6 +160,13 @@ namespace Alternet.Drawing
         /// </summary>
         /// <value>One of the <see cref="PenDashStyle"/> values that represents the dash style
         /// of this <see cref="Pen"/>.</value>
+        /// <remarks>
+        /// If <see cref="Pen"/> is immutable (for example <see cref="Pens.Black"/>),
+        /// this property is readonly.
+        /// </remarks>
+        /// <remarks>
+        /// Default value is <see cref="PenDashStyle.Solid"/>.
+        /// </remarks>
         public PenDashStyle DashStyle
         {
             get => dashStyle;
@@ -169,6 +183,13 @@ namespace Alternet.Drawing
         /// <summary>
         /// Specifies the available cap styles with which a <see cref="Pen"/> object can end a line.
         /// </summary>
+        /// <remarks>
+        /// If <see cref="Pen"/> is immutable (for example <see cref="Pens.Black"/>),
+        /// this property is readonly.
+        /// </remarks>
+        /// <remarks>
+        /// Default value is <see cref="LineCap.Flat"/>.
+        /// </remarks>
         public LineCap LineCap
         {
             get => lineCap;
@@ -185,6 +206,13 @@ namespace Alternet.Drawing
         /// <summary>
         /// Specifies how to join consecutive line or curve segments.
         /// </summary>
+        /// <remarks>
+        /// If <see cref="Pen"/> is immutable (for example <see cref="Pens.Black"/>),
+        /// this property is readonly.
+        /// </remarks>
+        /// <remarks>
+        /// Default value is <see cref="LineJoin.Miter"/>.
+        /// </remarks>
         public LineJoin LineJoin
         {
             get => lineJoin;
@@ -204,6 +232,13 @@ namespace Alternet.Drawing
         /// </summary>
         /// <value>The width of this <see cref="Pen"/>, in device-independent units
         /// (1/96th inch per unit).</value>
+        /// <remarks>
+        /// If <see cref="Pen"/> is immutable (for example <see cref="Pens.Black"/>),
+        /// this property is readonly.
+        /// </remarks>
+        /// <remarks>
+        /// Default value is 1.
+        /// </remarks>
         public double Width
         {
             get => width;

@@ -5,7 +5,8 @@ namespace Alternet.Drawing
     /// </summary>
     /// <remarks>
     /// The <see cref="Pens"/> class contains static read-only properties that
-    /// return a <see cref="Pen"/> object of the color indicated by the property name, with a width of 1.
+    /// return a <see cref="Pen"/> object of the color indicated by the property name,
+    /// with a width of 1.
     /// </remarks>
     public static class Pens
     {
@@ -1282,7 +1283,16 @@ namespace Alternet.Drawing
         private static Pen GetPen(ref Pen? pen, Color color)
         {
             if (pen == null)
-                pen = new Pen(color, 1, PenDashStyle.Solid, LineCap.Flat, LineJoin.Miter, immutable: true);
+            {
+                pen = new Pen(
+                    color,
+                    1,
+                    PenDashStyle.Solid,
+                    LineCap.Flat,
+                    LineJoin.Miter,
+                    immutable: true);
+            }
+
             return pen;
         }
     }
