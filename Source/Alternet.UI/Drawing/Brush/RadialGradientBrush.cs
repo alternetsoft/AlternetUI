@@ -154,6 +154,12 @@ namespace Alternet.Drawing
             }
         }
 
+        /// <inheritdoc/>
+        public override BrushType BrushType => BrushType.RadialGradient;
+
+        internal override Color BrushColor => GradientStops.Length > 0 ?
+            GradientStops[0].Color : Color.Black;
+
         internal new UI.Native.RadialGradientBrush NativeBrush =>
             (UI.Native.RadialGradientBrush)base.NativeBrush;
 

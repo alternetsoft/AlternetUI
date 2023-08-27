@@ -133,6 +133,12 @@ namespace Alternet.Drawing
             }
         }
 
+        /// <inheritdoc/>
+        public override BrushType BrushType => BrushType.LinearGradient;
+
+        internal override Color BrushColor => GradientStops.Length > 0 ?
+            GradientStops[0].Color : Color.Black;
+
         internal new UI.Native.LinearGradientBrush NativeBrush =>
             (UI.Native.LinearGradientBrush)base.NativeBrush;
 

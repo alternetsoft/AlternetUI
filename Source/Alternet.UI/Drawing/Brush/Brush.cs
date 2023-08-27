@@ -27,6 +27,12 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Gets whether this object is immutable (properties are readonly).
+        /// </summary>
+        [Browsable(false)]
+        public bool Immutable => immutable;
+
+        /// <summary>
         /// Creates <see cref="Pen"/> with this brush as a parameter.
         /// </summary>
         /// <remarks>
@@ -37,10 +43,17 @@ namespace Alternet.Drawing
             get
             {
                 if (asPen == null)
-                    asPen = new Pen(this);
+                    asPen = new Pen(BrushColor);
                 return asPen;
             }
         }
+
+        /// <summary>
+        /// Gets type of the brush.
+        /// </summary>
+        public virtual BrushType BrushType => BrushType.None;
+
+        internal virtual Color BrushColor => Color.Black;
 
         internal UI.Native.Brush NativeBrush { get; private set; }
 
@@ -115,9 +128,7 @@ namespace Alternet.Drawing
         /// otherwise, <c>false</c>.</returns>
         public override bool Equals(object? obj)
         {
-            var brush = obj as Brush;
-
-            if (ReferenceEquals(brush, null))
+            if (obj is not Brush brush)
                 return false;
 
             if (GetType() != obj?.GetType())

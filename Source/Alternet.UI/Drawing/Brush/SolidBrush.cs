@@ -29,6 +29,11 @@ namespace Alternet.Drawing
         /// <value>A <see cref="Color"/> structure that represents the color of this brush.</value>
         public Color Color { get; }
 
+        /// <inheritdoc/>
+        public override BrushType BrushType => BrushType.Solid;
+
+        internal override Color BrushColor => this.Color;
+
         private protected override bool EqualsCore(Brush other)
         {
             var o = other as SolidBrush;

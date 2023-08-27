@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel;
 using Alternet.UI;
 
 namespace Alternet.Drawing
@@ -129,6 +130,12 @@ namespace Alternet.Drawing
         /// Default pen has width equal to 1 and Black color.
         /// </value>
         public static Pen Default => defaultPen ??= new(Color.Black);
+
+        /// <summary>
+        /// Gets whether this object is immutable (properties are readonly).
+        /// </summary>
+        [Browsable(false)]
+        public bool Immutable => immutable;
 
         /// <summary>
         /// Gets or sets the color of this <see cref="Pen"/>.

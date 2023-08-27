@@ -45,6 +45,11 @@ namespace Alternet.Drawing
         /// this <see cref="HatchBrush"/>.</value>
         public BrushHatchStyle HatchStyle { get; }
 
+        /// <inheritdoc/>
+        public override BrushType BrushType => BrushType.Hatch;
+
+        internal override Color BrushColor => this.Color;
+
         private protected override bool EqualsCore(Brush other)
         {
             var o = other as HatchBrush;
