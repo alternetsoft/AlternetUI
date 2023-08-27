@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,11 +26,144 @@ namespace Alternet.UI
         private static Dictionary<Type, IPropertyGridChoices>? choicesCache = null;
 
         /// <summary>
+        /// Occurs when a property selection has been changed, either by user action
+        /// or by indirect program function.
+        /// </summary>
+        /// <remarks>
+        /// For instance, collapsing a parent property programmatically causes any selected
+        /// child property to become unselected, and may therefore cause this event to be generated.
+        /// </remarks>
+        public event EventHandler? PropertySelected;
+
+        /// <summary>
+        /// Occurs when property value has been changed by the user.
+        /// </summary>
+        public event EventHandler? PropertyChanged;
+
+        /// <summary>
+        /// Occurs when property value is about to be changed by the user.
+        /// </summary>
+        /// <remarks>
+        /// You can veto this event to prevent the action.
+        /// </remarks>
+        public event EventHandler<CancelEventArgs>? PropertyChanging;
+
+        /// <summary>
+        /// Occurs when mouse moves over a property.
+        /// </summary>
+        public event EventHandler? PropertyHighlighted;
+
+        /// <summary>
+        /// Occurs when when property is clicked with right mouse button.
+        /// </summary>
+        public event EventHandler? PropertyRightClick;
+
+        /// <summary>
+        /// Occurs when property is double-clicked with left mouse button.
+        /// </summary>
+        public event EventHandler? PropertyDoubleClick;
+
+        /// <summary>
+        /// Occurs when user collapses a property or category.
+        /// </summary>
+        public event EventHandler? ItemCollapsed;
+
+        /// <summary>
+        /// Occurs when user expands a property or category.
+        /// </summary>
+        public event EventHandler? ItemExpanded;
+
+        /// <summary>
+        /// Occurs when user is about to begin editing a property label.
+        /// </summary>
+        /// <remarks>
+        /// You can veto this event to prevent the action.
+        /// </remarks>
+        public event EventHandler<CancelEventArgs>? LabelEditBegin;
+
+        /// <summary>
+        /// Occurs when user is about to end editing of a property label.
+        /// </summary>
+        /// <remarks>
+        /// You can veto this event to prevent the action.
+        /// </remarks>
+        public event EventHandler<CancelEventArgs>? LabelEditEnding;
+
+        /// <summary>
+        /// Occurs when user starts resizing a column.
+        /// </summary>
+        /// <remarks>
+        /// You can veto this event to prevent the action.
+        /// </remarks>
+        public event EventHandler<CancelEventArgs>? ColBeginDrag;
+
+        /// <summary>
+        /// Occurs when a column resize by the user is in progress. This event is also
+        /// generated when user double-clicks the splitter in order to recenter it.
+        /// </summary>
+        public event EventHandler? ColDragging;
+
+        /// <summary>
+        /// Occurs after column resize by the user has finished.
+        /// </summary>
+        public event EventHandler? ColEndDrag;
+
+        /// <summary>
         /// Defines default visual style for the newly created
         /// <see cref="PropertyGrid"/> controls.
         /// </summary>
         public static PropertyGridCreateStyle DefaultCreateStyle { get; set; }
             = PropertyGridCreateStyle.DefaultStyle;
+
+        public PropertyGridValidationFailure EventValidationFailureBehavior
+        {
+            get
+            {
+                return (PropertyGridValidationFailure)NativeControl.EventValidationFailureBehavior;
+            }
+
+            set
+            {
+                NativeControl.EventValidationFailureBehavior = (int)value;
+            }
+        }
+
+        public int EventColumn
+        {
+            get
+            {
+                return NativeControl.EventColumn;
+            }
+        }
+
+        public IntPtr EventProperty
+        {
+            get
+            {
+                return NativeControl.EventProperty;
+            }
+        }
+
+        public string EventPropName
+        {
+            get
+            {
+                return NativeControl.EventPropertyName;
+            }
+        }
+
+        public string EventValidationFailureMessage
+        {
+            get
+            {
+                return NativeControl.EventValidationFailureMessage;
+            }
+
+            set
+            {
+                NativeControl.EventValidationFailureMessage = value;
+            }
+        }
 
         /// <summary>
         /// Defines visual style and behavior of the <see cref="PropertyGrid"/> control.
@@ -464,7 +598,8 @@ namespace Alternet.UI
 
         public void AppendIn(IPropertyGridItem prop, IPropertyGridItem newproperty)
         {
-            /*var result = */NativeControl.AppendIn(prop.Handle, newproperty.Handle);
+            /*var result = */
+            NativeControl.AppendIn(prop.Handle, newproperty.Handle);
         }
 
         public void BeginAddChildren(IPropertyGridItem prop)
@@ -479,7 +614,8 @@ namespace Alternet.UI
 
         public void RemoveProperty(IPropertyGridItem prop)
         {
-            /*var result = */NativeControl.RemoveProperty(prop.Handle);
+            /*var result = */
+            NativeControl.RemoveProperty(prop.Handle);
         }
 
         public bool DisableProperty(IPropertyGridItem prop)
@@ -560,12 +696,14 @@ namespace Alternet.UI
 
         public void Insert(IPropertyGridItem priorThis, IPropertyGridItem newproperty)
         {
-            /*var result = */NativeControl.Insert(priorThis.Handle, newproperty.Handle);
+            /*var result = */
+            NativeControl.Insert(priorThis.Handle, newproperty.Handle);
         }
 
         public void Insert(IPropertyGridItem parent, int index, IPropertyGridItem newproperty)
         {
-            /*var result = */NativeControl.InsertByIndex(parent.Handle, index, newproperty.Handle);
+            /*var result = */
+            NativeControl.InsertByIndex(parent.Handle, index, newproperty.Handle);
         }
 
         public bool IsPropertyCategory(IPropertyGridItem prop)
@@ -610,7 +748,8 @@ namespace Alternet.UI
 
         public void ReplaceProperty(IPropertyGridItem prop, IPropertyGridItem newProp)
         {
-            /*var result = */NativeControl.ReplaceProperty(prop.Handle, newProp.Handle);
+            /*var result = */
+            NativeControl.ReplaceProperty(prop.Handle, newProp.Handle);
         }
 
         public void SetPropertyBackgroundColor(
@@ -786,6 +925,202 @@ namespace Alternet.UI
         internal void DeleteProperty(IPropertyGridItem prop)
         {
             NativeControl.DeleteProperty(prop.Handle);
+        }
+
+        internal void RaisePropertySelected(EventArgs e)
+        {
+            OnPropertySelected(e);
+            PropertySelected?.Invoke(this, e);
+        }
+
+        internal void RaisePropertyChanged(EventArgs e)
+        {
+            OnPropertyChanged(e);
+            PropertyChanged?.Invoke(this, e);
+        }
+
+        internal void RaisePropertyChanging(CancelEventArgs e)
+        {
+            OnPropertyChanging(e);
+            PropertyChanging?.Invoke(this, e);
+        }
+
+        internal void RaisePropertyHighlighted(EventArgs e)
+        {
+            OnPropertyHighlighted(e);
+            PropertyHighlighted?.Invoke(this, e);
+        }
+
+        internal void RaisePropertyRightClick(EventArgs e)
+        {
+            OnPropertyRightClick(e);
+            PropertyRightClick?.Invoke(this, e);
+        }
+
+        internal void RaisePropertyDoubleClick(EventArgs e)
+        {
+            OnPropertyDoubleClick(e);
+            PropertyDoubleClick?.Invoke(this, e);
+        }
+
+        internal void RaiseItemCollapsed(EventArgs e)
+        {
+            OnItemCollapsed(e);
+            ItemCollapsed?.Invoke(this, e);
+        }
+
+        internal void RaiseItemExpanded(EventArgs e)
+        {
+            OnItemExpanded(e);
+            ItemExpanded?.Invoke(this, e);
+        }
+
+        internal void RaiseColEndDrag(EventArgs e)
+        {
+            OnColEndDrag(e);
+            ColEndDrag?.Invoke(this, e);
+        }
+
+        internal void RaiseColDragging(EventArgs e)
+        {
+            OnColDragging(e);
+            ColDragging?.Invoke(this, e);
+        }
+
+        internal void RaiseColBeginDrag(CancelEventArgs e)
+        {
+            OnColBeginDrag(e);
+            ColBeginDrag?.Invoke(this, e);
+        }
+
+        internal void RaiseLabelEditEnding(CancelEventArgs e)
+        {
+            OnLabelEditEnding(e);
+            LabelEditEnding?.Invoke(this, e);
+        }
+
+        internal void RaiseLabelEditBegin(CancelEventArgs e)
+        {
+            OnLabelEditBegin(e);
+            LabelEditBegin?.Invoke(this, e);
+        }
+
+        /// <summary>
+        /// Called when user is about to begin editing a property label.
+        /// </summary>
+        /// <param name="e">An <see cref="EventArgs"/> that contains
+        /// the event data.</param>
+        protected virtual void OnLabelEditBegin(CancelEventArgs e)
+        {
+        }
+
+        /// <summary>
+        /// Called when user is about to end editing of a property label.
+        /// </summary>
+        /// <param name="e">An <see cref="EventArgs"/> that contains
+        /// the event data.</param>
+        protected virtual void OnLabelEditEnding(CancelEventArgs e)
+        {
+        }
+
+        /// <summary>
+        /// Called when user starts resizing a column.
+        /// </summary>
+        /// <param name="e">An <see cref="EventArgs"/> that contains
+        /// the event data.</param>
+        protected virtual void OnColBeginDrag(CancelEventArgs e)
+        {
+        }
+
+        /// <summary>
+        /// Called when a column resize by the user is in progress.
+        /// </summary>
+        /// <param name="e">An <see cref="EventArgs"/> that contains
+        /// the event data.</param>
+        protected virtual void OnColDragging(EventArgs e)
+        {
+        }
+
+        /// <summary>
+        /// Called after column resize by the user has finished.
+        /// </summary>
+        /// <param name="e">An <see cref="EventArgs"/> that contains
+        /// the event data.</param>
+        protected virtual void OnColEndDrag(EventArgs e)
+        {
+        }
+
+        /// <summary>
+        /// Called when user expands a property or category.
+        /// </summary>
+        /// <param name="e">An <see cref="EventArgs"/> that contains
+        /// the event data.</param>
+        protected virtual void OnItemExpanded(EventArgs e)
+        {
+        }
+
+        /// <summary>
+        /// Called when user collapses a property or category.
+        /// </summary>
+        /// <param name="e">An <see cref="EventArgs"/> that contains
+        /// the event data.</param>
+        protected virtual void OnItemCollapsed(EventArgs e)
+        {
+        }
+
+        /// <summary>
+        /// Called when property is double-clicked with left mouse button.
+        /// </summary>
+        /// <param name="e">An <see cref="EventArgs"/> that contains
+        /// the event data.</param>
+        protected virtual void OnPropertyDoubleClick(EventArgs e)
+        {
+        }
+
+        /// <summary>
+        /// Called when property is clicked with right mouse button.
+        /// </summary>
+        /// <param name="e">An <see cref="EventArgs"/> that contains
+        /// the event data.</param>
+        protected virtual void OnPropertyRightClick(EventArgs e)
+        {
+        }
+
+        /// <summary>
+        /// Called when mouse moves over a property.
+        /// </summary>
+        /// <param name="e">An <see cref="EventArgs"/> that contains
+        /// the event data.</param>
+        protected virtual void OnPropertyHighlighted(EventArgs e)
+        {
+        }
+
+        /// <summary>
+        /// Called when property value is about to be changed by the user.
+        /// </summary>
+        /// <param name="e">An <see cref="EventArgs"/> that contains
+        /// the event data.</param>
+        protected virtual void OnPropertyChanging(CancelEventArgs e)
+        {
+        }
+
+        /// <summary>
+        /// Called when property value has been changed by the user.
+        /// </summary>
+        /// <param name="e">An <see cref="EventArgs"/> that contains
+        /// the event data.</param>
+        protected virtual void OnPropertyChanged(EventArgs e)
+        {
+        }
+
+        /// <summary>
+        /// Called when a property selection has been changed, either by user action
+        /// or by indirect program function.
+        /// </summary>
+        /// <param name="e">An <see cref="EventArgs"/> that contains
+        /// the event data.</param>
+        protected virtual void OnPropertySelected(EventArgs e)
+        {
         }
 
         /// <inheritdoc/>

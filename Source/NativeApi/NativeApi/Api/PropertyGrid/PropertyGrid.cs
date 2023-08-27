@@ -11,6 +11,42 @@ namespace NativeApi.Api
 	//https://docs.wxwidgets.org/3.2/classwx_property_grid.html
 	public partial class PropertyGrid : Control
 	{
+        public int EventValidationFailureBehavior { get; set; }
+        public int EventColumn { get;}
+        public IntPtr EventProperty { get;}
+        public string EventPropertyName { get; }
+        public string EventValidationFailureMessage { get; set; }
+
+        public event EventHandler? Selected;
+        
+        public event EventHandler? Changed;
+
+        [NativeEvent(cancellable: true)]
+        public event EventHandler? Changing;
+        
+        public event EventHandler? Highlighted;
+        
+        public event EventHandler? RightClick;
+        
+        public event EventHandler? DoubleClick;
+        
+        public event EventHandler? ItemCollapsed;
+        
+        public event EventHandler? ItemExpanded;
+
+        [NativeEvent(cancellable: true)]
+        public event EventHandler? LabelEditBegin;
+
+        [NativeEvent(cancellable: true)]
+        public event EventHandler? LabelEditEnding;
+
+        [NativeEvent(cancellable: true)]
+        public event EventHandler? ColBeginDrag;
+        
+        public event EventHandler? ColDragging;
+        
+        public event EventHandler? ColEndDrag;
+
         public static string NameAsLabel { get; }
         public bool HasBorder { get; set; }
 
@@ -19,231 +55,149 @@ namespace NativeApi.Api
         public long CreateStyle { get; set; }
 
         /*
-    void AddActionTrigger( int action, int keycode, int modifiers = 0 );
+    public void eeAddActionTrigger(int action, int keycode, int modifiers = 0);
 
-    void DedicateKey( int keycode )
+    public void eeDedicateKey(int keycode);
 
-    static void AutoGetTranslation( bool enable );
+    public static void eeAutoGetTranslation(bool enable);
 
-    void CenterSplitter( bool enableAutoResizing = false );
+    public void eeCenterSplitter(bool enableAutoResizing = false);
 
-    void ClearActionTriggers( int action );
+    public void eeClearActionTriggers(int action);
 
-    bool CommitChangesFromEditor( wxUint32 flags = 0 );
+    public bool eeCommitChangesFromEditor(wxUint32 flags = 0);
 
-    void EditorsValueWasModified() { m_iFlags |= wxPG_FL_VALUE_MODIFIED; }
+    public void eeEditorsValueWasModified();
 
-    void EditorsValueWasNotModified()
+    public void eeEditorsValueWasNotModified();
 
-    bool EnableCategories( bool enable );
+    public bool eeEnableCategories(bool enable);
 
-    wxSize FitColumns()
+    public Size eeFitColumns();
 
-    wxColour GetCaptionBackgroundColour() const { return m_colCapBack; }
+    public Color eeGetCaptionBackgroundColor();
 
-    wxColour GetCaptionForegroundColour() const { return m_colCapFore; }
+    public Color eeGetCaptionForegroundColor();
 
-    wxColour GetCellBackgroundColour() const { return m_colPropBack; }
+    public Color eeGetCellBackgroundColor();
 
-    wxColour GetCellDisabledTextColour() const { return m_colDisPropFore; }
+    public Color eeGetCellDisabledTextColor();
 
-    wxColour GetCellTextColour() const { return m_colPropFore; }
+    public Color eeGetCellTextColor();
 
-    unsigned int GetColumnCount() const
+    public uint eeGetColumnCount();
 
-    wxColour GetEmptySpaceColour() const { return m_colEmptySpace; }
+    public Color eeGetEmptySpaceColor();
 
-    int GetFontHeight() const { return m_fontHeight; }
+    public int eeGetFontHeight();
 
-    wxColour GetLineColour() const { return m_colLine; }
+    public Color eeGetLineColor();
 
-    wxColour GetMarginColour() const { return m_colMargin; }
+    public Color eeGetMarginColor()
 
-    int GetMarginWidth() const { return m_marginWidth; }
+    public int eeGetMarginWidth(); 
 
-    int GetRowHeight() const { return m_lineHeight; }
+    public int eeGetRowHeight();
 
-    wxColour GetSelectionBackgroundColour() const { return m_colSelBack; }
+    public Color eeGetSelectionBackgroundColor();
 
-    wxColour GetSelectionForegroundColour() const { return m_colSelFore; }
+    public Color eeGetSelectionForegroundColor();
 
-    int GetSplitterPosition( unsigned int splitterIndex = 0 ) const
+    public int eeGetSplitterPosition(uint splitterIndex = 0);
 
-    int GetVerticalSpacing() const { return (int)m_vspacing; }
+    public int eeGetVerticalSpacing();
 
-    bool IsEditorFocused() const;
+    public bool eeIsEditorFocused();
 
-    bool IsEditorsValueModified()
+    public bool eeIsEditorsValueModified();
 
-    bool IsAnyModified() const
+    public bool eeIsAnyModified();
 
-    void ResetColours();
+    public void eeResetColors();
 
-    void ResetColumnSizes( bool enableAutoResizing = false );
+    public void eeResetColumnSizes(bool enableAutoResizing = false);
 
-    void MakeColumnEditable( unsigned int column, bool editable = true );
+    public void eeMakeColumnEditable(uint column, bool editable = true);
 
-    void BeginLabelEdit( unsigned int column = 0 );
+    public void eeBeginLabelEdit(uint column = 0);
 
-    void EndLabelEdit( bool commit = true );
+    public void eeEndLabelEdit(bool commit = true);
 
-    void SetCaptionBackgroundColour(const wxColour& col);
+    public void eeSetCaptionBackgroundColor(Color col);
 
-    void SetCaptionTextColour(const wxColour& col);
+    public void eeSetCaptionTextColor(Color col);
 
-    void SetCellBackgroundColour(const wxColour& col);
+    public void eeSetCellBackgroundColor(Color col);
 
-    void SetCellDisabledTextColour(const wxColour& col);
+    public void eeSetCellDisabledTextColor(Color col);
 
-    void SetCellTextColour(const wxColour& col);
+    public void eeSetCellTextColor(Color col);
 
-    void SetColumnCount( int colCount );
+    public void eeSetColumnCount(int colCount);
 
-    void SetEmptySpaceColour(const wxColour& col);
+    public void eeSetEmptySpaceColor(Color col);
 
-    void SetLineColour(const wxColour& col);
+    public void eeSetLineColor(Color col);
 
-    void SetMarginColour(const wxColour& col);
+    public void eeSetMarginColor(Color col);
 
-    void SetSelectionBackgroundColour(const wxColour& col);
+    public void eeSetSelectionBackgroundColor(Color col);
 
-    void SetSelectionTextColour(const wxColour& col);
+    public void eeSetSelectionTextColor(Color col);
 
-    void SetSplitterPosition( int newXPos, int col = 0 );
+    public void eeSetSplitterPosition(int newXPos, int col = 0);
 
-    wxString GetUnspecifiedValueText( int argFlags = 0 ) const;
+    public string eeGetUnspecifiedValueText(int argFlags = 0);
 
-    void SetVirtualWidth( int width );
+    public void eeSetVirtualWidth(int width);
 
-    void SetSplitterLeft( bool privateChildrenToo = false );
+    public void eeSetSplitterLeft(bool privateChildrenToo = false);
 
-    void SetVerticalSpacing( int vspacing );
+    public void eeSetVerticalSpacing(int vspacing);
 
-    bool HasVirtualWidth() const
+    public bool eeHasVirtualWidth();
 
-    unsigned int GetCommonValueCount() const
+    public uint eeGetCommonValueCount();
 
-    wxString GetCommonValueLabel( unsigned int i ) const
+    public string eeGetCommonValueLabel(uint i);
 
-    int GetUnspecifiedCommonValue() const { return m_cvUnspecified; }
+    public int eeGetUnspecifiedCommonValue();
 
-    void SetUnspecifiedCommonValue( int index ) { m_cvUnspecified = index; }
+    public void eeSetUnspecifiedCommonValue(int index);
 
-    static bool IsSmallScreen();
+    public static bool eeIsSmallScreen();
 
-    void RefreshEditor();
+    public void eeRefreshEditor();
 
-    bool WasValueChangedInEvent() const
+    public bool eeWasValueChangedInEvent();
 
-    int GetSpacingY() const { return m_spacingy; }
+    public int eeGetSpacingY();
 
-    void SetupTextCtrlValue( const wxString& text ) { m_prevTcValue = text; }
+    public void eeSetupTextCtrlValue(string text);
 
-    bool UnfocusEditor();
-====
-    bool ChangePropertyValue( wxPGPropArg id, wxVariant newValue );
+    public bool eeUnfocusEditor();
 
-    bool EnsureVisible( wxPGPropArg id );
+    public IntPtr eeGetLastItem(int flags);
 
-    wxWindow* GetPanel()
+    public IntPtr eeGetRoot();
 
-    wxFont& GetCaptionFont() { return m_captionFont; }
+    public IntPtr eeGetSelectedProperty();
 
-    wxPropertyGrid* GetGrid() { return this; }
+    public void eeRefreshProperty(IntPtr p);
 
-    wxRect GetImageRect( wxPGProperty* p, int item ) const;
+    public bool eeEnsureVisible(IntPtr propArg id);
 
-    wxSize GetImageSize( wxPGProperty* p = NULL, int item = -1 ) const;
+    public bool eeSelectProperty(IntPtr propArg, bool focus = false);
 
-    wxPGProperty* GetLastItem( int flags = wxPG_ITERATE_DEFAULT )
+    public bool eeAddToSelection(IntPtr propArg);
 
-    wxPGProperty* GetLastItem( int flags = wxPG_ITERATE_DEFAULT )
+    public bool eeRemoveFromSelection(IntPtr propArg);
 
-    wxVariant GetUncommittedPropertyValue();
+    public void eeSetCurrentCategory(IntPtr propArg);
 
-    wxPGProperty* GetRoot() const { return m_pState->m_properties; }
+    public Int32Rect eeGetImageRect(IntPtr p, int item);
 
-    wxPGProperty* GetSelectedProperty() const { return GetSelection(); }
-
-    wxTextCtrl* GetEditorTextCtrl() const;
-
-    wxPGValidationInfo& GetValidationInfo()
-
-    wxPropertyGridHitTestResult HitTest( const wxPoint& pt ) const;
-
-    void OnTLPChanging( wxWindow* newTLP );
-
-    void RefreshProperty( wxPGProperty* p );
-
-    static wxPGEditor* RegisterEditorClass( wxPGEditor* editor,
-                                            bool noDefCheck = false )
-
-    static wxPGEditor* DoRegisterEditorClass( wxPGEditor* editorClass,
-                                              const wxString& editorName,
-                                              bool noDefCheck = false );
-    bool SelectProperty( wxPGPropArg id, bool focus = false );
-
-    void SetSelection( const wxArrayPGProperty& newSelection )
-
-    bool AddToSelection( wxPGPropArg id )
-
-    bool RemoveFromSelection( wxPGPropArg id )
-
-    wxTextCtrl* GetLabelEditor() const
-
-    void SetCurrentCategory( wxPGPropArg id );
-
-    void SetSortFunction( wxPGSortCallback sortFunction );
-
-    wxPGSortCallback GetSortFunction();
-
-    void SetUnspecifiedValueAppearance( const wxPGCell& cell );
-
-    const wxPGCell& GetUnspecifiedValueAppearance() const
-
-    void ShowPropertyError( wxPGPropArg id, const wxString& msg );
-
-    const wxPGCommonValue* GetCommonValue( unsigned int i ) const
-
-    wxWindow* GenerateEditorButton( const wxPoint& pos, const wxSize& sz );
-
-    void FixPosForTextCtrl( wxWindow* ctrl,
-                            unsigned int forColumn = 1,
-                            const wxPoint& offset = wxPoint(0, 0) );
-
-    wxWindow* GenerateEditorTextCtrl( const wxPoint& pos,
-                                      const wxSize& sz,
-                                      const wxString& value,
-                                      wxWindow* secondary,
-                                      int extraStyle = 0,
-                                      int maxLen = 0,
-                                      unsigned int forColumn = 1 );
-
-    wxWindow* GenerateEditorTextCtrlAndButton( const wxPoint& pos,
-        const wxSize& sz, wxWindow** psecondary, int limited_editing,
-        wxPGProperty* property );
-
-    wxPoint GetGoodEditorDialogPosition( wxPGProperty* p,
-                                         const wxSize& sz );
-
-    static wxString& ExpandEscapeSequences( wxString& dst_str,
-                                            const wxString& src_str );
-
-    static wxString& CreateEscapeSequences( wxString& dst_str,
-                                            const wxString& src_str );
-
-    static wxBitmap RescaleBitmap(const wxBitmap& srcBmp, double scaleX, double scaleY);
-
-    wxRect GetPropertyRect( const wxPGProperty* p1,
-                            const wxPGProperty* p2 ) const;
-
-    wxWindow* GetEditorControl() const;
-
-    wxWindow* GetPrimaryEditor() const
-
-    wxWindow* GetEditorControlSecondary() const
-
-    void SwitchState( wxPropertyGridPageState* pNewState );
+    public Int32Size eeGetImageSize(IntPtr p = null, int item = -1);
         */
     }
 }

@@ -69,8 +69,158 @@ namespace Alternet::UI
             wxDefaultSize,
             style);
 
-        //toolbar->Bind(wxEVT_LEFT_DOWN, &AuiToolBar::OnLeftDown, this);
+        result->Bind(wxEVT_PG_SELECTED, &PropertyGrid::OnSelected, this);
+        result->Bind(wxEVT_PG_CHANGED, &PropertyGrid::OnChanged, this);
+        result->Bind(wxEVT_PG_CHANGING, &PropertyGrid::OnChanging, this);
+        result->Bind(wxEVT_PG_HIGHLIGHTED, &PropertyGrid::OnHighlighted, this);
+        result->Bind(wxEVT_PG_RIGHT_CLICK, &PropertyGrid::OnRightClick, this);
+        result->Bind(wxEVT_PG_DOUBLE_CLICK, &PropertyGrid::OnDoubleClick, this);
+        result->Bind(wxEVT_PG_ITEM_COLLAPSED, &PropertyGrid::OnItemCollapsed, this);
+        result->Bind(wxEVT_PG_ITEM_EXPANDED, &PropertyGrid::OnItemExpanded, this);
+        result->Bind(wxEVT_PG_LABEL_EDIT_BEGIN, &PropertyGrid::OnLabelEditBegin, this);
+        result->Bind(wxEVT_PG_LABEL_EDIT_ENDING, &PropertyGrid::OnLabelEditEnding, this);
+        result->Bind(wxEVT_PG_COL_BEGIN_DRAG, &PropertyGrid::OnColBeginDrag, this);
+        result->Bind(wxEVT_PG_COL_DRAGGING, &PropertyGrid::OnColDragging, this);
+        result->Bind(wxEVT_PG_COL_END_DRAG, &PropertyGrid::OnColEndDrag, this);
+
         return result;
+    }
+
+    void PropertyGrid::OnSelected(wxPropertyGridEvent& event)
+    {
+        FromEventData(PropertyGridEvent::Selected,event);
+        RaiseEvent(PropertyGridEvent::Selected);
+        ToEventData(PropertyGridEvent::Selected, event);
+        event.Skip();
+    }
+
+    void PropertyGrid::OnChanged(wxPropertyGridEvent& event)
+    {
+        FromEventData(PropertyGridEvent::Changed,event);
+        RaiseEvent(PropertyGridEvent::Changed);
+        ToEventData(PropertyGridEvent::Changed, event);
+        event.Skip();
+    }
+
+    void PropertyGrid::OnChanging(wxPropertyGridEvent& event) 
+    {
+        FromEventData(PropertyGridEvent::Changing,event);
+        bool c = RaiseEvent(PropertyGridEvent::Changing);
+        ToEventData(PropertyGridEvent::Changing, event);
+        if (c)
+            event.Veto();
+        else
+            event.Skip();
+    }
+
+    void PropertyGrid::OnHighlighted(wxPropertyGridEvent& event) 
+    {
+        FromEventData(PropertyGridEvent::Highlighted,event);
+        RaiseEvent(PropertyGridEvent::Highlighted);
+        ToEventData(PropertyGridEvent::Highlighted, event);
+        event.Skip();
+    }
+
+    void PropertyGrid::OnRightClick(wxPropertyGridEvent& event) 
+    {
+        FromEventData(PropertyGridEvent::RightClick,event);
+        RaiseEvent(PropertyGridEvent::RightClick);
+        ToEventData(PropertyGridEvent::RightClick, event);
+        event.Skip();
+    }
+    
+    void PropertyGrid::OnDoubleClick(wxPropertyGridEvent& event) 
+    {
+        FromEventData(PropertyGridEvent::DoubleClick,event);
+        RaiseEvent(PropertyGridEvent::DoubleClick);
+        ToEventData(PropertyGridEvent::DoubleClick, event);
+        event.Skip();
+    }
+
+    void PropertyGrid::OnItemCollapsed(wxPropertyGridEvent& event) 
+    {
+        FromEventData(PropertyGridEvent::ItemCollapsed,event);
+        RaiseEvent(PropertyGridEvent::ItemCollapsed);
+        ToEventData(PropertyGridEvent::ItemCollapsed, event);
+        event.Skip();
+    }
+
+    void PropertyGrid::OnItemExpanded(wxPropertyGridEvent& event) 
+    {
+        FromEventData(PropertyGridEvent::ItemExpanded,event);
+        RaiseEvent(PropertyGridEvent::ItemExpanded);
+        ToEventData(PropertyGridEvent::ItemExpanded, event);
+        event.Skip();
+    }
+
+    void PropertyGrid::OnLabelEditBegin(wxPropertyGridEvent& event)
+    {
+        FromEventData(PropertyGridEvent::LabelEditBegin,event);
+        bool c = RaiseEvent(PropertyGridEvent::LabelEditBegin);
+        ToEventData(PropertyGridEvent::LabelEditBegin, event);
+        if (c)
+            event.Veto();
+        else
+            event.Skip();
+    }
+
+    void PropertyGrid::OnLabelEditEnding(wxPropertyGridEvent& event)
+    {
+        FromEventData(PropertyGridEvent::LabelEditEnding,event);
+        bool c = RaiseEvent(PropertyGridEvent::LabelEditEnding);
+        ToEventData(PropertyGridEvent::LabelEditEnding, event);
+        if (c)
+            event.Veto();
+        else
+            event.Skip();
+    }
+
+    void PropertyGrid::OnColBeginDrag(wxPropertyGridEvent& event)
+    {
+        FromEventData(PropertyGridEvent::ColBeginDrag,event);
+        bool c = RaiseEvent(PropertyGridEvent::ColBeginDrag);
+        ToEventData(PropertyGridEvent::ColBeginDrag, event);
+        if (c)
+            event.Veto();
+        else
+            event.Skip();
+    }
+
+    void PropertyGrid::OnColDragging(wxPropertyGridEvent& event) 
+    {
+        FromEventData(PropertyGridEvent::ColDragging,event);
+        RaiseEvent(PropertyGridEvent::ColDragging);
+        ToEventData(PropertyGridEvent::ColDragging, event);
+        event.Skip();
+    }
+
+    void PropertyGrid::OnColEndDrag(wxPropertyGridEvent& event) 
+    {
+        FromEventData(PropertyGridEvent::ColEndDrag,event);
+        RaiseEvent(PropertyGridEvent::ColEndDrag);
+        ToEventData(PropertyGridEvent::ColEndDrag, event);
+        event.Skip();
+    }
+
+    void PropertyGrid::ToEventData(PropertyGridEvent evType, wxPropertyGridEvent& event)
+    {
+        if (evType == PropertyGridEvent::Changing)
+        {
+            event.SetValidationFailureBehavior(_eventValidationFailureBehavior);
+            event.SetValidationFailureMessage(wxStr(_eventValidationFailureMessage));
+        }
+    }
+
+    void PropertyGrid::FromEventData(PropertyGridEvent evType, wxPropertyGridEvent& event)
+    {
+        if (evType == PropertyGridEvent::Changing)
+        {
+            _eventValidationFailureBehavior = event.GetValidationFailureBehavior();
+            _eventValidationFailureMessage = wxStr(event.GetValidationInfo().GetFailureMessage());
+        }
+        _eventColumn = event.GetColumn();
+        _eventProperty = event.GetProperty();
+        _eventPropertyName = wxStr(event.GetPropertyName());
     }
 
 	PropertyGrid::PropertyGrid()
@@ -95,7 +245,19 @@ namespace Alternet::UI
             auto window = GetWxWindow();
             if (window != nullptr)
             {
-                //window->Unbind(wxEVT_LEFT_DOWN, &AuiToolBar::OnLeftDown, this);    
+                window->Unbind(wxEVT_PG_SELECTED, &PropertyGrid::OnSelected, this);
+                window->Unbind(wxEVT_PG_CHANGED, &PropertyGrid::OnChanged, this);
+                window->Unbind(wxEVT_PG_CHANGING, &PropertyGrid::OnChanging, this);
+                window->Unbind(wxEVT_PG_HIGHLIGHTED, &PropertyGrid::OnHighlighted, this);
+                window->Unbind(wxEVT_PG_RIGHT_CLICK, &PropertyGrid::OnRightClick, this);
+                window->Unbind(wxEVT_PG_DOUBLE_CLICK, &PropertyGrid::OnDoubleClick, this);
+                window->Unbind(wxEVT_PG_ITEM_COLLAPSED, &PropertyGrid::OnItemCollapsed, this);
+                window->Unbind(wxEVT_PG_ITEM_EXPANDED, &PropertyGrid::OnItemExpanded, this);
+                window->Unbind(wxEVT_PG_LABEL_EDIT_BEGIN, &PropertyGrid::OnLabelEditBegin, this);
+                window->Unbind(wxEVT_PG_LABEL_EDIT_ENDING, &PropertyGrid::OnLabelEditEnding, this);
+                window->Unbind(wxEVT_PG_COL_BEGIN_DRAG, &PropertyGrid::OnColBeginDrag, this);
+                window->Unbind(wxEVT_PG_COL_DRAGGING, &PropertyGrid::OnColDragging, this);
+                window->Unbind(wxEVT_PG_COL_END_DRAG, &PropertyGrid::OnColEndDrag, this);
             }
         }
     }
@@ -633,4 +795,38 @@ namespace Alternet::UI
         GetPropGrid()->SetPropertyEditor(_propArg, wxStr(editorName));
     }
 
+    int PropertyGrid::GetEventValidationFailureBehavior()
+    {
+        return _eventValidationFailureBehavior;
+    }
+
+    void PropertyGrid::SetEventValidationFailureBehavior(int value)
+    {
+        _eventValidationFailureBehavior = value;
+    }
+
+    int PropertyGrid::GetEventColumn()
+    {
+        return _eventColumn;
+    }
+
+    void* PropertyGrid::GetEventProperty()
+    {
+        return _eventProperty;
+    }
+
+    string PropertyGrid::GetEventPropertyName()
+    {
+        return _eventPropertyName;
+    }
+
+    string PropertyGrid::GetEventValidationFailureMessage()
+    {
+        return _eventValidationFailureMessage;
+    }
+
+    void PropertyGrid::SetEventValidationFailureMessage(const string& value)
+    {
+        _eventValidationFailureMessage = value;
+    }
 }

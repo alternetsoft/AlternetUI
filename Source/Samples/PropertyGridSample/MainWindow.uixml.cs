@@ -95,6 +95,20 @@ namespace PropertyGridSample
             }
 
             InitDefaultPropertyGrid();
+
+            propertyGrid.PropertySelected += PGPropertySelected;
+            propertyGrid.PropertyChanged += PGPropertyChanged;
+            propertyGrid.PropertyChanging += PGPropertyChanging;
+            propertyGrid.PropertyHighlighted += PGPropertyHighlighted;
+            propertyGrid.PropertyRightClick += PGPropertyRightClick;
+            propertyGrid.PropertyDoubleClick += PGPropertyDoubleClick;
+            propertyGrid.ItemCollapsed += PGItemCollapsed;
+            propertyGrid.ItemExpanded += PGItemExpanded;
+            propertyGrid.LabelEditBegin += PGLabelEditBegin;
+            propertyGrid.LabelEditEnding += PGLabelEditEnding;
+            propertyGrid.ColBeginDrag += PGColBeginDrag;
+            propertyGrid.ColDragging += PGColDragging;
+            propertyGrid.ColEndDrag += PGColEndDrag;
         }
 
         private void InitDefaultPropertyGrid()
@@ -153,6 +167,14 @@ namespace PropertyGridSample
 
                 prop = CreateProperty(new Border(), "BorderColor");
                 propertyGrid.Add(prop!);
+
+
+                prop = propertyGrid.CreateStringProperty(
+                                    "Error if changed",
+                                    null,
+                                    "Some Text");
+                propertyGrid.Add(prop);
+
             }
             finally
             {
@@ -160,12 +182,6 @@ namespace PropertyGridSample
             }
         }
 
-        /*
-        Font readonly
-            double SizeInPoints
-            string Name,
-            FontStyle Style         
-         */
         public IPropertyGridItem CreateFontProperty(
             string label,
             string? name = null,
@@ -173,27 +189,7 @@ namespace PropertyGridSample
         {
             return null!;
         }
-        /*
-            GradientStop(Color color, double offset)
- 
-            LinearGradientBrush
-                Point startPoint;
-                Point endPoint;
-                GradientStop[] GradientStops;
 
-            RadialGradientBrush
-                Point Center
-                double Radius
-                Point GradientOrigin
-                GradientStop[] GradientStops
-
-            HatchBrush // readonly
-                Color Color
-                BrushHatchStyle HatchStyle
-
-            SolidBrush // readonly
-                Color Color
-         */
         public IPropertyGridItem CreateBrushProperty(
             string label,
             string? name = null,
@@ -201,14 +197,6 @@ namespace PropertyGridSample
         {
             return null!;
         }
-
-        /*
-        Color Color;
-        PenDashStyle DashStyle;
-        LineCap LineCap;
-        LineJoin LineJoin;
-        double Width;
-         */
 
         public IPropertyGridItem CreatePenProperty(
             string label,
@@ -240,6 +228,7 @@ namespace PropertyGridSample
             string propName = p.Name;
             var propType = p.PropertyType;
 
+            // Move to AssemblyUtils.GetBrowsable(PropertyInfo p)
             var browsable = p.GetCustomAttribute(
                 typeof(BrowsableAttribute)) as BrowsableAttribute;
             if (browsable is not null)
@@ -247,6 +236,7 @@ namespace PropertyGridSample
                 if (!browsable.Browsable)
                     return null;
             }
+            //
 
             object? propValue = p.GetValue(instance, null);
             TypeCode typeCode = Type.GetTypeCode(propType);
@@ -434,7 +424,7 @@ namespace PropertyGridSample
             SetProps(control);
         }
 
-        private void Log_MouseRightButtonUp(object sender, MouseButtonEventArgs e)
+        private void Log_MouseRightButtonUp(object? sender, MouseButtonEventArgs e)
         {
             logListBox.ShowPopupMenu(contextMenu2);
         }
@@ -454,6 +444,80 @@ namespace PropertyGridSample
             menuItem1.Click += (sender, e) => { logListBox.Items.Clear(); };
 
             contextMenu2.Items.Add(menuItem1);
+        }
+
+        private void LogEvent(string name)
+        {
+            string s = $"Event: {name}. PropName: <{propertyGrid.EventPropName}>";
+            if(logListBox.LastItem?.ToString() != s)
+                Log(s);
+        }
+
+        private void PGPropertySelected(object? sender, EventArgs e)
+        { 
+            LogEvent("PropertySelected"); 
+        }
+
+        private void PGPropertyChanged(object? sender, EventArgs e)
+        {
+            LogEvent("PropertyChanged");
+        }
+
+        private void PGPropertyChanging(object? sender, CancelEventArgs e)
+        {
+            LogEvent("PropertyChanging");
+            if(propertyGrid.EventPropName == "Error if changed")
+                e.Cancel = true;
+        }
+
+        private void PGPropertyHighlighted(object? sender, EventArgs e)
+        {
+            LogEvent("PropertyHighlighted");
+        }
+
+        private void PGPropertyRightClick(object? sender, EventArgs e)
+        {
+            LogEvent("PropertyRightClick");
+        }
+
+        private void PGPropertyDoubleClick(object? sender, EventArgs e)
+        {
+            LogEvent("PropertyDoubleClick");
+        }
+
+        private void PGItemCollapsed(object? sender, EventArgs e)
+        {
+            LogEvent("ItemCollapsed");
+        }
+
+        private void PGItemExpanded(object? sender, EventArgs e)
+        {
+            LogEvent("ItemExpanded");
+        }
+
+        private void PGLabelEditBegin(object? sender, CancelEventArgs e)
+        {
+            LogEvent("LabelEditBegin");
+        }
+
+        private void PGLabelEditEnding(object? sender, CancelEventArgs e)
+        {
+            LogEvent("LabelEditEnding");
+        }
+
+        private void PGColBeginDrag(object? sender, CancelEventArgs e)
+        {
+            LogEvent("ColBeginDrag");
+        }
+
+        private void PGColDragging(object? sender, EventArgs e)
+        {
+            LogEvent("ColDragging");
+        }
+
+        private void PGColEndDrag(object? sender, EventArgs e)
+        {
+            LogEvent("ColEndDrag");
         }
 
         private class ControlListBoxItem

@@ -20,11 +20,31 @@ namespace Alternet::UI
         wxPropertyGrid* GetPropGrid();
         wxPropertyGridInterface* GetPropGridInterface();
         PropertyGrid(long styles);
-        wxPGPropArgCls _propArg = NULL;
+        wxPGPropArgCls _propArg = wxPGPropArgCls(0);
         void ToPropArg(void* id);
     private:
         bool _hasBorder = true;
         long _createStyle = wxPG_DEFAULT_STYLE;
+        int _eventValidationFailureBehavior = 0;
+        int _eventColumn = 0;
+        void* _eventProperty = nullptr;
+        string _eventPropertyName = wxStr(wxEmptyString);
+        string _eventValidationFailureMessage = wxStr(wxEmptyString);
 
+        void FromEventData(PropertyGridEvent evType, wxPropertyGridEvent& event);
+        void ToEventData(PropertyGridEvent evType, wxPropertyGridEvent& event);
+        void OnSelected(wxPropertyGridEvent& event);
+        void OnChanged(wxPropertyGridEvent& event);
+        void OnChanging(wxPropertyGridEvent& event);
+        void OnHighlighted(wxPropertyGridEvent& event);
+        void OnRightClick(wxPropertyGridEvent& event);
+        void OnDoubleClick(wxPropertyGridEvent& event);
+        void OnItemCollapsed(wxPropertyGridEvent& event);
+        void OnItemExpanded(wxPropertyGridEvent& event);
+        void OnLabelEditBegin(wxPropertyGridEvent& event);
+        void OnLabelEditEnding(wxPropertyGridEvent& event);
+        void OnColBeginDrag(wxPropertyGridEvent& event);
+        void OnColDragging(wxPropertyGridEvent& event);
+        void OnColEndDrag(wxPropertyGridEvent& event);
     };
 }
