@@ -237,6 +237,28 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Turns on or off <see cref="FontStyle"/> element(s).
+        /// </summary>
+        /// <param name="value">Original value.</param>
+        /// <param name="element">Element to add or remove.</param>
+        /// <param name="add"><c>true</c> to add, <c>false</c> to remove.</param>
+        /// <returns>Changed <see cref="FontStyle"/> value with added or removed element.</returns>
+        /// <example>
+        /// <code>
+        /// Style = Font.ChangeFontStyle(Style, FontStyle.Italic, value);
+        /// </code>
+        /// </example>
+        public static FontStyle ChangeFontStyle(FontStyle value, FontStyle element, bool add)
+        {
+            var result = value;
+            if (add)
+                result |= element;
+            else
+                result &= ~element;
+            return result;
+        }
+
+        /// <summary>
         /// Releases all resources used by this <see cref="Font"/>.
         /// </summary>
         public void Dispose()
