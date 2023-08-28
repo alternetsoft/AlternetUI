@@ -313,6 +313,28 @@ namespace Alternet.UI.Native
             
         }
         
+        public bool IsFocusable
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.Control_GetIsFocusable_(NativePointer);
+                return n;
+            }
+            
+        }
+        
+        public bool CanAcceptFocus
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.Control_GetCanAcceptFocus_(NativePointer);
+                return n;
+            }
+            
+        }
+        
         public System.IntPtr Handle
         {
             get
@@ -349,6 +371,12 @@ namespace Alternet.UI.Native
                 CheckDisposed();
                 NativeApi.Control_SetIsScrollable_(NativePointer, value);
             }
+        }
+        
+        public void BeginInit()
+        {
+            CheckDisposed();
+            NativeApi.Control_BeginInit_(NativePointer);
         }
         
         public void EndInit()
@@ -626,12 +654,6 @@ namespace Alternet.UI.Native
             NativeApi.Control_FocusNextControl_(NativePointer, forward, nested);
         }
         
-        public void BeginInit()
-        {
-            CheckDisposed();
-            NativeApi.Control_BeginInit_(NativePointer);
-        }
-        
         static GCHandle eventCallbackGCHandle;
         
         static void SetEventCallback()
@@ -868,6 +890,12 @@ namespace Alternet.UI.Native
             public static extern bool Control_GetIsFocused_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool Control_GetIsFocusable_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool Control_GetCanAcceptFocus_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern System.IntPtr Control_GetHandle_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
@@ -878,6 +906,9 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Control_SetIsScrollable_(IntPtr obj, bool value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Control_BeginInit_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Control_EndInit_(IntPtr obj);
@@ -1004,9 +1035,6 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Control_FocusNextControl_(IntPtr obj, bool forward, bool nested);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Control_BeginInit_(IntPtr obj);
             
         }
     }

@@ -74,6 +74,12 @@ void SetTabStop(bool value);
 bool GetIsFocused();
 
 
+bool GetIsFocusable();
+
+
+bool GetCanAcceptFocus();
+
+
 void* GetHandle();
 
 
@@ -83,6 +89,7 @@ void* GetWxWidget();
 bool GetIsScrollable();
 void SetIsScrollable(bool value);
 
+void BeginInit();
 void EndInit();
 void Destroy();
 void SaveScreenshot(const string& fileName);
@@ -125,7 +132,6 @@ Point DeviceToScreen(const Int32Point& point);
 static Control* GetFocusedControl();
 bool SetFocus();
 void FocusNextControl(bool forward, bool nested);
-void BeginInit();
 public:
 enum class ControlEvent
 {

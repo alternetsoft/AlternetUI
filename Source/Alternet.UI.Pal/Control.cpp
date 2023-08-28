@@ -32,6 +32,16 @@ namespace Alternet::UI
     {
     }
 
+    bool Control::GetIsFocusable()
+    {
+        return GetWxWindow()->IsFocusable();
+    }
+
+    bool Control::GetCanAcceptFocus()
+    {
+        return GetWxWindow()->CanAcceptFocus();
+    }
+
     void Control::ShowPopupMenu(void* menu, int x, int y)
     {
         GetWxWindow()->PopupMenu((wxMenu*)menu, x, y);

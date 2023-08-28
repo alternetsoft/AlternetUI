@@ -114,6 +114,8 @@ namespace NativeApi.Api
             throw new Exception();
         public event EventHandler? GotFocus;
         public event EventHandler? LostFocus;
+        public bool IsFocusable { get; }
+        public bool CanAcceptFocus { get; }
 
         public void BeginInit() => throw new Exception();
         public void EndInit() => throw new Exception();

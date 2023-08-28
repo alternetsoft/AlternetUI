@@ -237,6 +237,23 @@ namespace Alternet.UI
         public bool IsMouseCaptured => Handler.IsMouseCaptured;
 
         /// <summary>
+        /// Gets whether this control itself can have focus.
+        /// </summary>
+        [Browsable(false)]
+        public bool IsFocusable => Handler.IsFocusable;
+
+        /// <summary>
+        /// Gets whether this control can have focus right now.
+        /// </summary>
+        /// <remarks>
+        /// If this property returns true, it means that calling <see cref="SetFocus"/> will put
+        /// focus either to this control or one of its children. If you need to know whether
+        /// this control accepts focus itself, use <see cref="IsFocusable"/>.
+        /// </remarks>
+        [Browsable(false)]
+        public bool CanAcceptFocus => Handler.CanAcceptFocus;
+
+        /// <summary>
         /// Gets or sets the object that contains data about the control.
         /// </summary>
         /// <value>An <see cref="object"/> that contains data about the control.

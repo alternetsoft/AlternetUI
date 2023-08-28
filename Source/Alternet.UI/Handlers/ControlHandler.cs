@@ -7,7 +7,8 @@ using Alternet.Drawing;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Provides base functionality for implementing a specific <see cref="Control"/> behavior and appearance.
+    /// Provides base functionality for implementing a specific <see cref="Control"/> behavior
+    /// and appearance.
     /// </summary>
     public abstract class ControlHandler
     {
@@ -39,12 +40,24 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets a value indicating whether this <see cref="ControlHandler"/> is attached to a <see cref="Control"/>.
+        /// Gets a value indicating whether this <see cref="ControlHandler"/> is attached
+        /// to a <see cref="Control"/>.
         /// </summary>
         public bool IsAttached => control != null;
 
         /// <summary>
-        /// Gets or sets the <see cref="Control"/> bounds relative to the parent, in device-independent units (1/96th inch per unit).
+        /// <inheritdoc cref="Control.IsFocusable"/>
+        /// </summary>
+        public bool IsFocusable => NativeControl != null ? NativeControl.IsFocusable : false;
+
+        /// <summary>
+        /// <inheritdoc cref="Control.CanAcceptFocus"/>
+        /// </summary>
+        public bool CanAcceptFocus => NativeControl != null ? NativeControl.CanAcceptFocus : false;
+
+        /// <summary>
+        /// Gets or sets the <see cref="Control"/> bounds relative to the parent, in
+        /// device-independent units (1/96th inch per unit).
         /// </summary>
         public virtual Rect Bounds
         {
@@ -148,7 +161,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets a value indicating whether the <see cref="Control"/> is contained in a <see cref="VisualChildren"/> collection.
+        /// Gets a value indicating whether the <see cref="Control"/> is contained in a
+        /// <see cref="VisualChildren"/> collection.
         /// </summary>
         public bool IsVisualChild
         {
@@ -183,7 +197,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether the user can give the focus to this control using the TAB key.
+        /// Gets or sets a value indicating whether the user can give the focus to this control
+        /// using the TAB key.
         /// </summary>
         public virtual bool TabStop
         {
@@ -483,8 +498,10 @@ namespace Alternet.UI
                 // control.Handler.Bounds = new RectangleF(
                 //    childrenLayoutBounds.Location + new SizeF(margin.Left, margin.Top),
                 //    new SizeF(
-                //        double.IsNaN(specifiedWidth) ? childrenLayoutBounds.Width - margin.Horizontal : specifiedWidth,
-                //        double.IsNaN(specifiedHeight) ? childrenLayoutBounds.Height - margin.Vertical : specifiedHeight));
+                //        double.IsNaN(specifiedWidth) ?
+                //        childrenLayoutBounds.Width - margin.Horizontal : specifiedWidth,
+                //        double.IsNaN(specifiedHeight) ?
+                //        childrenLayoutBounds.Height - margin.Vertical : specifiedHeight));
             }
         }
 
@@ -696,8 +713,10 @@ namespace Alternet.UI
         /// <summary>
         /// Sets input focus to the control.
         /// </summary>
-        /// <returns><see langword="true"/> if the input focus request was successful; otherwise, <see langword="false"/>.</returns>
-        /// <remarks>The <see cref="SetFocus"/> method returns true if the control successfully received input focus.</remarks>
+        /// <returns><see langword="true"/> if the input focus request was successful;
+        /// otherwise, <see langword="false"/>.</returns>
+        /// <remarks>The <see cref="SetFocus"/> method returns true if the control
+        /// successfully received input focus.</remarks>
         public bool SetFocus()
         {
             if (NativeControl == null)
@@ -1325,24 +1344,21 @@ namespace Alternet.UI
         {
             if (NativeControl != null)
             {
-                Control.Visible = NativeControl.Visible;
+                bool visible = NativeControl.Visible;
+                Control.Visible = visible;
 
-#if NETCOREAPP
-                if (System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.Linux))
+                if (Application.IsLinuxOS && visible)
                 {
-                    if (NativeControl.Visible)
-                    {
-                        // todo: this is a workaround for a problem on Linux when
-                        // ClientSize is not reported correctly until the window is shown
-                        // So we need to relayout all after the proper client size is available
-                        // This should be changed later in respect to RedrawOnResize functionality.
-                        // Also we may need to do this for top-level windows.
-                        // Doing this on Windows results in strange glitches like disappearing tab controls' tab.
-                        // See https://forums.wxwidgets.org/viewtopic.php?f=1&t=47439
-                        PerformLayout();
-                    }
+                    // todo: this is a workaround for a problem on Linux when
+                    // ClientSize is not reported correctly until the window is shown
+                    // So we need to relayout all after the proper client size is available
+                    // This should be changed later in respect to RedrawOnResize functionality.
+                    // Also we may need to do this for top-level windows.
+                    // Doing this on Windows results in strange glitches like disappearing
+                    // tab controls' tab.
+                    // See https://forums.wxwidgets.org/viewtopic.php?f=1&t=47439
+                    PerformLayout();
                 }
-#endif
             }
         }
 

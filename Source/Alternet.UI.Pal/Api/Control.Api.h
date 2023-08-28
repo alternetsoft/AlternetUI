@@ -242,6 +242,20 @@ ALTERNET_UI_API c_bool Control_GetIsFocused_(Control* obj)
         });
 }
 
+ALTERNET_UI_API c_bool Control_GetIsFocusable_(Control* obj)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return obj->GetIsFocusable();
+        });
+}
+
+ALTERNET_UI_API c_bool Control_GetCanAcceptFocus_(Control* obj)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return obj->GetCanAcceptFocus();
+        });
+}
+
 ALTERNET_UI_API void* Control_GetHandle_(Control* obj)
 {
     return MarshalExceptions<void*>([&](){
@@ -267,6 +281,13 @@ ALTERNET_UI_API void Control_SetIsScrollable_(Control* obj, c_bool value)
 {
     MarshalExceptions<void>([&](){
             obj->SetIsScrollable(value);
+        });
+}
+
+ALTERNET_UI_API void Control_BeginInit_(Control* obj)
+{
+    MarshalExceptions<void>([&](){
+            obj->BeginInit();
         });
 }
 
@@ -561,13 +582,6 @@ ALTERNET_UI_API void Control_FocusNextControl_(Control* obj, c_bool forward, c_b
 {
     MarshalExceptions<void>([&](){
             obj->FocusNextControl(forward, nested);
-        });
-}
-
-ALTERNET_UI_API void Control_BeginInit_(Control* obj)
-{
-    MarshalExceptions<void>([&](){
-            obj->BeginInit();
         });
 }
 
