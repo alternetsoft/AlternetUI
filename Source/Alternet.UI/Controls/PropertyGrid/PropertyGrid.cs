@@ -54,7 +54,7 @@ namespace Alternet.UI
         public event EventHandler? PropertyHighlighted;
 
         /// <summary>
-        /// Occurs when when property is clicked with right mouse button.
+        /// Occurs when property is clicked with right mouse button.
         /// </summary>
         public event EventHandler? PropertyRightClick;
 
@@ -115,6 +115,12 @@ namespace Alternet.UI
         public static PropertyGridCreateStyle DefaultCreateStyle { get; set; }
             = PropertyGridCreateStyle.DefaultStyle;
 
+        /// <summary>
+        /// Gets or sets validation failure behavior flags used in the event handler.
+        /// </summary>
+        /// <remarks>
+        /// Use it in the event handlers.
+        /// </remarks>
         public PropertyGridValidationFailure EventValidationFailureBehavior
         {
             get
@@ -128,6 +134,12 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets column index on which event is fired.
+        /// </summary>
+        /// <remarks>
+        /// Use it in the event handlers.
+        /// </remarks>
         public int EventColumn
         {
             get
@@ -136,14 +148,26 @@ namespace Alternet.UI
             }
         }
 
-        public IntPtr EventProperty
+        /// <summary>
+        /// Gets property used in the event handler.
+        /// </summary>
+        /// <remarks>
+        /// Use it in the event handlers.
+        /// </remarks>
+        public IPropertyGridItem? EventProperty
         {
             get
             {
-                return NativeControl.EventProperty;
+                return PtrToItem(NativeControl.EventProperty);
             }
         }
 
+        /// <summary>
+        /// Gets property name used in the event handler.
+        /// </summary>
+        /// <remarks>
+        /// Use it in the event handlers.
+        /// </remarks>
         public string EventPropName
         {
             get
@@ -152,6 +176,12 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets or sets validation failure message used in the event handler.
+        /// </summary>
+        /// <remarks>
+        /// Use it in the event handlers.
+        /// </remarks>
         public string EventValidationFailureMessage
         {
             get

@@ -11,17 +11,67 @@ namespace PropertyGridSample
 {
     public partial class MainWindow : Window
     {
+        private const string ResPrefix =
+            "embres:PropertyGridSample.Resources.";
+        private const string ResPrefixImage = $"{ResPrefix}logo-128x128.png";
+
+        private static readonly Image DefaultImage = Image.FromUrl(ResPrefixImage);
+
+        private static readonly Dictionary<Type, Action<Control>> Initializers = new();
         private readonly AuiManager manager = new();
         private readonly LayoutPanel panel = new();
         private readonly ListBox controlsListBox;
         private readonly PropertyGrid propertyGrid = new();
         private readonly ListBox logListBox;
         private readonly ContextMenu contextMenu2 = new();
+        private readonly StackPanel controlPanel = new();
+
 
         static MainWindow()
         {
             WebBrowser.CrtSetDbgFlag(0);
+
+            Initializers.Add(typeof(Label), (c) => { (c as Label)!.Text = "Label"; });
+
+            Initializers.Add(typeof(Border), (c) => { c.Height = 150; });
+
+            Initializers.Add(typeof(Button), (c) => 
+            { 
+                (c as Button)!.Text = "Button"; 
+            });
+
+            Initializers.Add(typeof(CheckBox), (c) =>
+            {
+                (c as CheckBox)!.Text = "CheckBox";
+            });
+
+            Initializers.Add(typeof(RadioButton), (c) =>
+            {
+                (c as RadioButton)!.Text = "RadioButton";
+            });
+
+            Initializers.Add(typeof(LinkLabel), (c) =>
+            {
+                LinkLabel linkLabel = (c as LinkLabel)!;
+                linkLabel.Text = "LinkLabel";
+                linkLabel.Url = "https://www.google.com/";
+            });
+
+            Initializers.Add(typeof(GroupBox), (c) =>
+            {
+                GroupBox control = (c as GroupBox)!;
+                control.Title = "GroupBox";
+                control.Height = 150;
+            });
+
+            Initializers.Add(typeof(PictureBox), (c) =>
+            {
+                PictureBox control = (c as PictureBox)!;
+                control.Image = DefaultImage;
+            });
         }
+
+        public Decimal DecimalValue { get; set; }
 
         private ListBox CreateListBox(Control? parent = null)
         {
@@ -74,27 +124,56 @@ namespace PropertyGridSample
 
             // Notenook pane
             var pane5 = manager.CreatePaneInfo();
-            pane5.Name("pane5").CenterPane().PaneBorder(false);
-            var controlPanel = new Panel();
+            pane5.Name("pane5").CenterPane().PaneBorder(true);
+
+            controlPanel.HorizontalAlignment = HorizontalAlignment.Center;
+            controlPanel.VerticalAlignment = VerticalAlignment.Center;
 
             panel.Children.Add(controlPanel);
             manager.AddPane(controlPanel, pane5);
 
             manager.Update();
 
-            logListBox.MouseRightButtonUp += Log_MouseRightButtonUp;
-            controlsListBox.SelectionChanged += ControlsListBox_SelectionChanged;
+            ControlListBoxItem item;
+
+            Type[] badTypes = new Type[] 
+            {
+              typeof(WebBrowser),
+              typeof(Panel),
+              typeof(Control),
+              typeof(AuiNotebook),
+              typeof(AuiToolbar),
+              typeof(SplitterPanel),
+              typeof(Grid),
+              typeof(StackPanel),
+              typeof(HorizontalStackPanel),
+              typeof(VerticalStackPanel),
+              typeof(ScrollViewer),
+              typeof(StatusBarPanel),
+              typeof(LayoutPanel),
+              typeof(MenuItem),
+              typeof(UserPaintControl),
+              typeof(StatusBar),
+              typeof(Toolbar),
+              typeof(TabPage),
+              typeof(TabControl),
+              typeof(Window),
+              typeof(ToolbarItem),
+            };
 
             IEnumerable<Type> result = AssemblyUtils.GetTypeDescendants(typeof(Control));
             foreach (Type type in result)
             {
-                if (type == typeof(WebBrowser) || type == typeof(Window))
+                if (Array.IndexOf(badTypes, type) >= 0)
                     continue;
-                ControlListBoxItem item = new(type);
+                item = new(type);
                 controlsListBox.Add(item);
             }
 
             InitDefaultPropertyGrid();
+
+            logListBox.MouseRightButtonUp += Log_MouseRightButtonUp;
+            controlsListBox.SelectionChanged += ControlsListBox_SelectionChanged;
 
             propertyGrid.PropertySelected += PGPropertySelected;
             propertyGrid.PropertyChanged += PGPropertyChanged;
@@ -168,6 +247,8 @@ namespace PropertyGridSample
                 prop = CreateProperty(new Border(), "BorderColor");
                 propertyGrid.Add(prop!);
 
+                prop = CreateProperty(this, "DecimalValue");
+                propertyGrid.Add(prop!);
 
                 prop = propertyGrid.CreateStringProperty(
                                     "Error if changed",
@@ -224,24 +305,18 @@ namespace PropertyGridSample
             ParameterInfo[] paramInfo = p.GetIndexParameters();
             if (paramInfo.Length > 0)
                 return null;
+            if (!AssemblyUtils.GetBrowsable(p))
+                return null;
 
             string propName = p.Name;
             var propType = p.PropertyType;
-
-            // Move to AssemblyUtils.GetBrowsable(PropertyInfo p)
-            var browsable = p.GetCustomAttribute(
-                typeof(BrowsableAttribute)) as BrowsableAttribute;
-            if (browsable is not null)
-            {
-                if (!browsable.Browsable)
-                    return null;
-            }
-            //
-
             object? propValue = p.GetValue(instance, null);
             TypeCode typeCode = Type.GetTypeCode(propType);
-
             IPropertyGridItem? prop = null;
+
+            var underlyingType = Nullable.GetUnderlyingType(propType);
+            var isNullable = underlyingType != null;
+            var realType = underlyingType ?? propType;
 
             if (propValue is null)     // remove it
                 return null;
@@ -274,6 +349,14 @@ namespace PropertyGridSample
                     case TypeCode.DBNull:
                         return null;
                     case TypeCode.Object:
+                        if(realType  == typeof(Color))
+                        {
+                            prop = propertyGrid.CreateColorProperty(
+                                propName,
+                                null,
+                                (Color)propValue);
+                            break;
+                        }
                         prop = propertyGrid.CreateStringProperty(
                             propName,
                             null,
@@ -385,7 +468,8 @@ namespace PropertyGridSample
             Type myType = instance.GetType();
             BindingFlags bindingFlags = BindingFlags.Instance | BindingFlags.Public;
 
-            IList<PropertyInfo> props = new List<PropertyInfo>(myType.GetProperties(bindingFlags));
+            IList<PropertyInfo> props =
+                new List<PropertyInfo>(myType.GetProperties(bindingFlags));
 
             SortedList<string, PropertyInfo> addedNames = new();
 
@@ -421,6 +505,13 @@ namespace PropertyGridSample
         {
             var item = controlsListBox.SelectedItem as ControlListBoxItem;
             var control = item?.ControlInstance;
+            if(control != null)
+            {
+                controlPanel.Children.Clear();
+                controlPanel.Padding = new(25, 100, 25, 100);
+                if (control.Parent == null)
+                    controlPanel.Children.Add(control);
+            }
             SetProps(control);
         }
 
@@ -472,7 +563,7 @@ namespace PropertyGridSample
 
         private void PGPropertyHighlighted(object? sender, EventArgs e)
         {
-            LogEvent("PropertyHighlighted");
+            /*LogEvent("PropertyHighlighted");*/
         }
 
         private void PGPropertyRightClick(object? sender, EventArgs e)
@@ -536,7 +627,14 @@ namespace PropertyGridSample
             {
                 get
                 {
-                    instance ??= (Control)Activator.CreateInstance(type)!;
+                    if(instance == null)
+                    {
+                        instance = (Control)Activator.CreateInstance(type);
+                        if (!Initializers.TryGetValue(instance.GetType(), out Action<Control> action))
+                            return instance;
+                        action(instance);
+                    }
+                    
                     return instance;
                 }
             }

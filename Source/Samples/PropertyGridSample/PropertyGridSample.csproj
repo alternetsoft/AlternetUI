@@ -12,16 +12,20 @@
 
 	<ItemGroup>
       <Compile Remove="build\**" />
-      <Compile Remove="Resources\**" />
       <EmbeddedResource Remove="build\**" />
-      <EmbeddedResource Remove="Resources\**" />
       <None Remove="build\**" />
-      <None Remove="Resources\**" />
-      <UIXml Remove="Resources\**" />
     </ItemGroup>
 
     <ItemGroup Condition="$(DefineConstants.Contains(';NETFRAMEWORK'))">
         <Reference Include="Microsoft.CSharp" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="Resources\logo-128x128.png" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Include="Resources\logo-128x128.png" />
     </ItemGroup>
 
     <ItemGroup>
