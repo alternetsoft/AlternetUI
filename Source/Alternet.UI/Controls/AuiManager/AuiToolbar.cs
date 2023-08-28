@@ -116,6 +116,7 @@ namespace Alternet.UI
         /// <remarks>
         /// Use it in the <see cref="ToolDropDown"/> or other event handlers.
         /// </remarks>
+        [Browsable(false)]
         public Int32Point EventClickPoint
         {
             get
@@ -130,6 +131,7 @@ namespace Alternet.UI
         /// <remarks>
         /// Use it in the <see cref="ToolDropDown"/> or other event handlers.
         /// </remarks>
+        [Browsable(false)]
         public Int32Rect EventItemRect
         {
             get

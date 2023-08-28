@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using Alternet.Base.Collections;
 using Alternet.Drawing;
@@ -44,6 +45,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets a <see cref="CheckListBoxHandler"/> associated with this class.
         /// </summary>
+        [Browsable(false)]
         public new CheckListBoxHandler Handler
         {
             get
@@ -85,6 +87,7 @@ namespace Alternet.UI
         /// of items that are currently checked in the <see cref="CheckListBox"/>.
         /// With this reference, you obtain a count of the items in the
         /// collection and iterate through it.</remarks>
+        [Browsable(false)]
         public Collection<object> CheckedItems { get; } =
             new Collection<object> { ThrowOnNullItemAddition = true };
 
@@ -104,6 +107,7 @@ namespace Alternet.UI
         /// If no items are currently checked, an empty
         /// <see cref="IReadOnlyList{T}"/> is returned.
         /// </value>
+        [Browsable(false)]
         public IReadOnlyList<int> CheckedIndices
         {
             get
@@ -144,6 +148,7 @@ namespace Alternet.UI
         /// If no items are currently selected, an empty
         /// <see cref="IReadOnlyList{T}"/> is returned.
         /// </value>
+        [Browsable(false)]
         public IReadOnlyList<int> CheckedIndicesDescending
         {
             get
@@ -162,6 +167,7 @@ namespace Alternet.UI
         /// of <c>null</c> is returned if no item is checked.</value>
         /// <exception cref="ArgumentOutOfRangeException">The assigned value
         /// is less than 0 or greater than or equal to the item count.</exception>
+        [Browsable(false)]
         public int? CheckedIndex
         {
             get

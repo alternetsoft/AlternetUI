@@ -121,6 +121,7 @@ namespace Alternet.UI
         /// <remarks>
         /// Use it in the event handlers.
         /// </remarks>
+        [Browsable(false)]
         public PropertyGridValidationFailure EventValidationFailureBehavior
         {
             get
@@ -140,6 +141,7 @@ namespace Alternet.UI
         /// <remarks>
         /// Use it in the event handlers.
         /// </remarks>
+        [Browsable(false)]
         public int EventColumn
         {
             get
@@ -154,6 +156,7 @@ namespace Alternet.UI
         /// <remarks>
         /// Use it in the event handlers.
         /// </remarks>
+        [Browsable(false)]
         public IPropertyGridItem? EventProperty
         {
             get
@@ -168,6 +171,7 @@ namespace Alternet.UI
         /// <remarks>
         /// Use it in the event handlers.
         /// </remarks>
+        [Browsable(false)]
         public string EventPropName
         {
             get
@@ -182,6 +186,7 @@ namespace Alternet.UI
         /// <remarks>
         /// Use it in the event handlers.
         /// </remarks>
+        [Browsable(false)]
         public string EventValidationFailureMessage
         {
             get

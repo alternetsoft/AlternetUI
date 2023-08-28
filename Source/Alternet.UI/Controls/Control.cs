@@ -282,6 +282,7 @@ namespace Alternet.UI
         /// Gets or sets the <see cref="Control"/> bounds relative to the parent,
         /// in device-independent units (1/96th inch per unit).
         /// </summary>
+        [Browsable(false)]
         public virtual Rect Bounds
         {
             get => Handler.Bounds;

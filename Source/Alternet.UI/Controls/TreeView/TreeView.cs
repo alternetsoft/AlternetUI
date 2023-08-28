@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using Alternet.Base.Collections;
 using Alternet.Drawing;
@@ -353,6 +354,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets a <see cref="TreeViewHandler"/> associated with this class.
         /// </summary>
+        [Browsable(false)]
         public new TreeViewHandler Handler
         {
             get
@@ -427,6 +429,7 @@ namespace Alternet.UI
         /// single element containing the only selected item in the
         /// <see cref="TreeView"/>.
         /// </remarks>
+        [Browsable(false)]
         public IReadOnlyList<TreeViewItem> SelectedItems
         {
             get

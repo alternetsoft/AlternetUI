@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel;
 
 namespace Alternet.UI
 {
@@ -43,6 +44,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets a <see cref="ProgressBarHandler"/> associated with this class.
         /// </summary>
+        [Browsable(false)]
         public new ProgressBarHandler Handler
         {
             get

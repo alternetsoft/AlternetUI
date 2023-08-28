@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using Alternet.Drawing;
 
@@ -54,6 +55,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets a <see cref="ListBoxHandler"/> associated with this class.
         /// </summary>
+        [Browsable(false)]
         public new ListBoxHandler Handler
         {
             get
@@ -97,6 +99,7 @@ namespace Alternet.UI
         /// </para>
         /// </remarks>
         /// <seealso cref="SelectedIndicesDescending"/>
+        [Browsable(false)]
         public IReadOnlyList<int> SelectedIndices
         {
             get
@@ -161,6 +164,7 @@ namespace Alternet.UI
         /// If no items are currently selected, an empty
         /// <see cref="IReadOnlyList{T}"/> is returned.
         /// </value>
+        [Browsable(false)]
         public IReadOnlyList<int> SelectedIndicesDescending
         {
             get
@@ -306,6 +310,7 @@ namespace Alternet.UI
         /// <see cref="ListBox"/>.
         /// </para>
         /// </remarks>
+        [Browsable(false)]
         public IReadOnlyList<object> SelectedItems
         {
             get

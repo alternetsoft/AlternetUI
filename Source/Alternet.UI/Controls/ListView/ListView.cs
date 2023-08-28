@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using Alternet.Base.Collections;
 using Alternet.Drawing;
@@ -112,6 +113,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets a <see cref="ListViewHandler"/> associated with this class.
         /// </summary>
+        [Browsable(false)]
         public new ListViewHandler Handler
         {
             get
@@ -158,6 +160,7 @@ namespace Alternet.UI
         /// you can use the <see cref="SelectedItems"/> property if you want to obtain all the selected items in a multiple-selection <see cref="ListView"/>.
         /// </para>
         /// </remarks>
+        [Browsable(false)]
         public IReadOnlyList<long> SelectedIndices
         {
             get
@@ -295,6 +298,7 @@ namespace Alternet.UI
         /// In addition, you can use the <see cref="SelectedIndices"/> property to obtain all the selected indexes in a multiple-selection <see cref="ListView"/>.
         /// </para>
         /// </remarks>
+        [Browsable(false)]
         public IReadOnlyList<ListViewItem> SelectedItems
         {
             get
@@ -484,6 +488,7 @@ namespace Alternet.UI
         /// If no items are currently selected, an empty <see cref="IReadOnlyList{T}"/>
         /// is returned.
         /// </value>
+        [Browsable(false)]
         public IReadOnlyList<long> SelectedIndicesDescending
         {
             get

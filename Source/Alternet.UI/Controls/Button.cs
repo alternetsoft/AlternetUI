@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel;
 using Alternet.Drawing;
 
 namespace Alternet.UI
@@ -78,6 +79,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets a <see cref="ButtonHandler"/> associated with this class.
         /// </summary>
+        [Browsable(false)]
         public new ButtonHandler Handler
         {
             get

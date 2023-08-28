@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel;
 
 namespace Alternet.UI
 {
@@ -25,6 +26,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets a <see cref="SliderHandler"/> associated with this class.
         /// </summary>
+        [Browsable(false)]
         public new SliderHandler Handler
         {
             get
