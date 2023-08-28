@@ -395,6 +395,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the border brush of the control.
         /// </summary>
+        [Browsable(false)]
         public Brush? BorderBrush
         {
             get => borderBrush;

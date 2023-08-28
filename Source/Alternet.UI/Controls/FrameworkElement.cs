@@ -801,6 +801,7 @@ namespace Alternet.UI
         /// <summary>
         ///     DataContext Property
         /// </summary>
+        [Browsable(false)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         [Localizability(LocalizationCategory.NeverLocalize)]
         public object? DataContext
