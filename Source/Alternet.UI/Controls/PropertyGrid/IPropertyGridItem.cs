@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -11,6 +12,36 @@ namespace Alternet.UI
     /// </summary>
     public interface IPropertyGridItem
     {
+        /// <summary>
+        /// Gets objects instance in which property is contained.
+        /// </summary>
+        /// <remarks>
+        /// This is used when object properties are added to <see cref="PropertyGrid"/>.
+        /// </remarks>
+        object? Instance { get; }
+
+        /// <summary>
+        /// Gets property information.
+        /// </summary>
+        /// <remarks>
+        /// This is used when object properties are added to <see cref="PropertyGrid"/>.
+        /// </remarks>
+        PropertyInfo? PropInfo { get; }
+
+        /// <summary>
+        /// Gets list of children properties.
+        /// </summary>
+        /// <remarks>
+        /// You can change list of children properties before item is
+        /// added to <see cref="PropertyGrid"/>.
+        /// </remarks>
+        IList<IPropertyGridItem> Children { get; }
+
+        /// <summary>
+        /// Gets whether <see cref="Children"/> has items.
+        /// </summary>
+        bool HasChildren { get; }
+
         /// <summary>
         /// Item handle.
         /// </summary>

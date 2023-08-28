@@ -72,6 +72,9 @@ namespace PropertyGridSample
         }
 
         public Decimal DecimalValue { get; set; }
+        public Font FontValue { get; set; }
+        public Brush BrushValue { get; set; }
+        public Pen PenValue { get; set; }
 
         private ListBox CreateListBox(Control? parent = null)
         {
@@ -250,6 +253,15 @@ namespace PropertyGridSample
                 prop = CreateProperty(this, "DecimalValue");
                 propertyGrid.Add(prop!);
 
+                prop = CreateProperty(this, "FontValue");
+                propertyGrid.Add(prop!);
+
+                prop = CreateProperty(this, "BrushValue");
+                propertyGrid.Add(prop!);
+
+                prop = CreateProperty(this, "PenValue");
+                propertyGrid.Add(prop!);
+
                 prop = propertyGrid.CreateStringProperty(
                                     "Error if changed",
                                     null,
@@ -265,26 +277,54 @@ namespace PropertyGridSample
 
         public IPropertyGridItem CreateFontProperty(
             string label,
-            string? name = null,
-            Font? value = null)
+            string? name,
+            object instance,
+            PropertyInfo p)
         {
-            return propertyGrid.CreateStringProperty(label, name, value?.ToString());
+            object? value = p.GetValue(instance, null);
+            var result = propertyGrid.CreateStringProperty(label, name, "(Font)");
+            return result;
         }
 
         public IPropertyGridItem CreateBrushProperty(
             string label,
-            string? name = null,
-            Brush? value = null)
+            string? name,
+            object instance,
+            PropertyInfo p)
         {
-            return propertyGrid.CreateStringProperty(label, name, value?.ToString());
+            object? value = p.GetValue(instance, null);
+            var result = propertyGrid.CreateStringProperty(label, name, "(Brush)");
+            return result;
         }
 
         public IPropertyGridItem CreatePenProperty(
             string label,
-            string? name = null,
-            Pen? value = null)
+            string? name,
+            object instance,
+            PropertyInfo p)
         {
-            return propertyGrid.CreateStringProperty(label, name, value?.ToString());
+            PropertyGridAdapterPen adapter = new()
+            {
+                Instance = instance,
+                PropInfo = p
+            };
+            IPropertyGridItem result =
+                propertyGrid.CreateStringProperty(label, name, "(Pen)");
+            propertyGrid.SetPropertyReadOnly(result, true, false);
+
+            var itemColor = CreateProperty(adapter, "Color");
+            var itemDashStyle = CreateProperty(adapter, "DashStyle");
+            var itemLineCap = CreateProperty(adapter, "LineCap");
+            var itemLineJoin = CreateProperty(adapter, "LineJoin");
+            var itemWidth = CreateProperty(adapter, "Width");
+
+            result.Children.Add(itemColor!);
+            result.Children.Add(itemDashStyle!);
+            result.Children.Add(itemLineCap!);
+            result.Children.Add(itemLineJoin!);
+            result.Children.Add(itemWidth!);
+
+            return result;
         }
 
         public IPropertyGridItem? CreateProperty(object instance, string name)
@@ -357,28 +397,19 @@ namespace PropertyGridSample
                         }
                         if (realType == typeof(Font))
                         {
-                            prop = CreateFontProperty(
-                                propName,
-                                null,
-                                (Font)propValue);
+                            prop = CreateFontProperty(propName, null, instance, p);
                             setPropReadonly = true;
                             break;
                         }
                         if (realType == typeof(Brush))
                         {
-                            prop = CreateBrushProperty(
-                                propName,
-                                null,
-                                (Brush)propValue);
+                            prop = CreateBrushProperty(propName, null, instance, p);
                             setPropReadonly = true;
                             break;
                         }
                         if (realType == typeof(Pen))
                         {
-                            prop = CreatePenProperty(
-                                propName,
-                                null,
-                                (Pen)propValue);
+                            prop = CreatePenProperty(propName,null, instance, p);
                             setPropReadonly = true;
                             break;
                         }
@@ -389,71 +420,38 @@ namespace PropertyGridSample
                         setPropReadonly = true;
                         break;
                     case TypeCode.Boolean:
-                        prop = propertyGrid.CreateBoolProperty(
-                            propName,
-                            null,
-                            (bool)propValue!);
+                        prop = propertyGrid.CreateBoolProperty(propName, null, (bool)propValue!);
                         break;
                     case TypeCode.SByte:
-                        prop = propertyGrid.CreateIntProperty(
-                            propName,
-                            null,
-                            (sbyte)propValue!);
+                        prop = propertyGrid.CreateIntProperty(propName, null, (sbyte)propValue!);
                         break;
                     case TypeCode.Int16:
-                        prop = propertyGrid.CreateIntProperty(
-                            propName,
-                            null,
-                            (Int16)propValue!);
+                        prop = propertyGrid.CreateIntProperty(propName, null, (Int16)propValue!);
                         break;
                     case TypeCode.Int32:
-                        prop = propertyGrid.CreateIntProperty(
-                            propName,
-                            null,
-                            (int)propValue!);
+                        prop = propertyGrid.CreateIntProperty(propName, null, (int)propValue!);
                         break;
                     case TypeCode.Int64:
-                        prop = propertyGrid.CreateIntProperty(
-                            propName,
-                            null,
-                            (long)propValue!);
+                        prop = propertyGrid.CreateIntProperty(propName, null, (long)propValue!);
                         break;
                     case TypeCode.Byte:
-                        prop = propertyGrid.CreateUIntProperty(
-                            propName,
-                            null,
-                            (byte)propValue!);
+                        prop = propertyGrid.CreateUIntProperty(propName, null, (byte)propValue!);
                         break;
                     case TypeCode.UInt32:
-                        prop = propertyGrid.CreateUIntProperty(
-                            propName,
-                            null,
-                            (uint)propValue!);
+                        prop = propertyGrid.CreateUIntProperty(propName, null, (uint)propValue!);
                         break;
                     case TypeCode.UInt16:
-                        prop = propertyGrid.CreateUIntProperty(
-                            propName,
-                            null,
-                            (UInt16)propValue!);
+                        prop = propertyGrid.CreateUIntProperty(propName, null, (UInt16)propValue!);
                         break;
                     case TypeCode.UInt64:
-                        prop = propertyGrid.CreateUIntProperty(
-                            propName,
-                            null,
-                            (ulong)propValue!);
+                        prop = propertyGrid.CreateUIntProperty(propName, null, (ulong)propValue!);
                         break;
 
                     case TypeCode.Single:
-                        prop = propertyGrid.CreateFloatProperty(
-                            propName,
-                            null,
-                            (Single)propValue!);
+                        prop = propertyGrid.CreateFloatProperty(propName, null, (Single)propValue!);
                         break;
                     case TypeCode.Double:
-                        prop = propertyGrid.CreateFloatProperty(
-                            propName,
-                            null,
-                            (double)propValue!);
+                        prop = propertyGrid.CreateFloatProperty(propName, null, (double)propValue!);
                         break;
                     case TypeCode.Decimal:
                         decimal asDecimal = (decimal)propValue;

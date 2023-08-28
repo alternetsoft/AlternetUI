@@ -24,6 +24,7 @@ namespace Alternet.UI
         private const int PGRECURSE = 0x00000020;
         private const int PGSORTTOPLEVELONLY = 0x00000200;
         private static Dictionary<Type, IPropertyGridChoices>? choicesCache = null;
+        private Dictionary<IntPtr, IPropertyGridItem> items = new();
 
         /// <summary>
         /// Occurs when a property selection has been changed, either by user action
@@ -546,6 +547,7 @@ namespace Alternet.UI
         /// </summary>
         public void Clear()
         {
+            items.Clear();
             NativeControl.Clear();
         }
 
@@ -558,6 +560,14 @@ namespace Alternet.UI
             if (prop == null)
                 return;
             NativeControl.Append(prop.Handle);
+            items.Add(prop.Handle, prop);
+            if (!prop.HasChildren)
+                return;
+            foreach(IPropertyGridItem child in prop.Children)
+            {
+                items.Add(child.Handle, child);
+                AppendIn(prop, child);
+            }
         }
 
         /// <summary>
@@ -651,6 +661,7 @@ namespace Alternet.UI
         {
             /*var result = */
             NativeControl.RemoveProperty(prop.Handle);
+            items.Remove(prop.Handle);
         }
 
         public bool DisableProperty(IPropertyGridItem prop)
@@ -960,6 +971,7 @@ namespace Alternet.UI
         internal void DeleteProperty(IPropertyGridItem prop)
         {
             NativeControl.DeleteProperty(prop.Handle);
+            items.Remove(prop.Handle);
         }
 
         internal void RaisePropertySelected(EventArgs e)
@@ -1171,10 +1183,10 @@ namespace Alternet.UI
             return name;
         }
 
-#pragma warning disable
         private IPropertyGridItem? PtrToItem(IntPtr ptr)
-#pragma warning restore
         {
+            if(items.TryGetValue(ptr, out IPropertyGridItem? result))
+                return result;
             return null;
         }
     }
