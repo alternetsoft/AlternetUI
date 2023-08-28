@@ -20,7 +20,7 @@ namespace Alternet.UI
         /// </summary>
         /// <remarks>
         /// Used in Linux where height of the <see cref="ComboBox"/>
-        /// control is bigger than <see cref="TextBox"/> control.
+        /// is bigger than height of the <see cref="TextBox"/>.
         /// </remarks>
         /// <remarks>
         /// All <see cref="TextBox"/> of the child controls are also affected
@@ -30,7 +30,7 @@ namespace Alternet.UI
         /// operation is performed</param>
         public static void AdjustTextBoxesHeight(Control container)
         {
-            if (container == null)
+            if (container == null || !AllPlatformDefaults.PlatformCurrent.AdjustTextBoxesHeight)
                 return;
 
             Control? comboBox = null;

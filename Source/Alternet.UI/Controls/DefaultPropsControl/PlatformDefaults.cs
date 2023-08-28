@@ -11,6 +11,8 @@ namespace Alternet.UI
         {
         }
 
+        public bool AdjustTextBoxesHeight { get; set; } = false;
+
         /// <summary>
         /// Returns default property values for all controls in the library.
         /// </summary>

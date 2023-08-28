@@ -151,13 +151,6 @@ namespace AuiManagerSample
 
             toolbar4.Realize();
 
-            toolbar4.ToolCommand += Toolbar4_ToolCommand;
-            toolbar4.ToolDropDown += ToolDropDown_Click;
-            toolbar4.BeginDrag += Toolbar4_BeginDrag;
-            toolbar4.ToolMiddleClick += Toolbar4_ToolMiddleClick;
-            toolbar4.OverflowClick += Toolbar4_OverflowClick;
-            toolbar4.ToolRightClick += Toolbar4_ToolRightClick;
-
             AuiToolbarItemKind kind = toolbar4.GetToolKind(pencilToolId);
 
             panel.Children.Add(toolbar4);
@@ -178,6 +171,10 @@ namespace AuiManagerSample
             manager.AddPane(notebook5, pane5);
 
             manager.Update();
+
+            // On Linux height of the ComboBox is greater than height of the TextBox.
+            // We need to increase height of all window's TextBoxes.
+            LayoutFactory.AdjustTextBoxesHeight(this);
 
             toolbar4.AddToolOnClick(calendarToolId, CalendarButton_Click);
             toolbar4.AddToolOnClick(photoToolId, PhotoButton_Click);
@@ -203,6 +200,13 @@ namespace AuiManagerSample
             toolbar4.SetToolDropDownOnEvent(graphToolId, AuiToolbarItemDropDownOnEvent.ClickArrow);
             toolbar4.SetToolDropDownMenu(photoToolId, contextMenu);
             toolbar4.SetToolDropDownMenu(graphToolId, contextMenu);
+
+            toolbar4.ToolCommand += Toolbar4_ToolCommand;
+            toolbar4.ToolDropDown += ToolDropDown_Click;
+            toolbar4.BeginDrag += Toolbar4_BeginDrag;
+            toolbar4.ToolMiddleClick += Toolbar4_ToolMiddleClick;
+            toolbar4.OverflowClick += Toolbar4_OverflowClick;
+            toolbar4.ToolRightClick += Toolbar4_ToolRightClick;
 
             listBox3.MouseRightButtonUp += Log_MouseRightButtonUp;
         }

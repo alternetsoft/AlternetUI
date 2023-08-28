@@ -13,6 +13,7 @@ namespace Alternet.UI
 
             PlatformLinux.Controls.RadioButton.MinMargin = minCheckBoxMargin;
             PlatformLinux.Controls.CheckBox.MinMargin = minCheckBoxMargin;
+            PlatformLinux.AdjustTextBoxesHeight = true;
         }
 
         /// <summary>
