@@ -16,6 +16,7 @@ namespace Alternet.Drawing
     [TypeConverter(typeof(BrushConverter))]
     public abstract class Brush : IDisposable, IEquatable<Brush>
     {
+        private static Brush? defaultBrush;
         private readonly bool immutable;
         private bool isDisposed;
         private Pen? asPen;
@@ -25,6 +26,14 @@ namespace Alternet.Drawing
             NativeBrush = nativeBrush;
             this.immutable = immutable;
         }
+
+        /// <summary>
+        /// Gets the default brush.
+        /// </summary>
+        /// <value>
+        /// Default brush is <see cref="SolidBrush"/> with Black color.
+        /// </value>
+        public static Brush Default => defaultBrush ??= Brushes.Black;
 
         /// <summary>
         /// Gets whether this object is immutable (properties are readonly).
