@@ -37,7 +37,7 @@ namespace Alternet.UI
 
             set
             {
-                if (sizeInPoints == value)
+                if (SizeInPoints == value)
                     return;
                 sizeInPoints = value;
                 OnInstancePropertyChanged();
@@ -56,7 +56,7 @@ namespace Alternet.UI
 
             set
             {
-                if (name == value)
+                if (Name == value)
                     return;
                 name = value;
                 OnInstancePropertyChanged();
@@ -115,7 +115,7 @@ namespace Alternet.UI
 
             set
             {
-                if (style == value)
+                if (Style == value)
                     return;
                 style = value;
                 OnInstancePropertyChanged();

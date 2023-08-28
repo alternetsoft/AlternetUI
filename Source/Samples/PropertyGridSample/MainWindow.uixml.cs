@@ -286,7 +286,6 @@ namespace PropertyGridSample
                 Instance = instance,
                 PropInfo = p
             };
-            object? value = p.GetValue(instance, null);
             var result = propertyGrid.CreateStringProperty(label, name, "(Font)");
             propertyGrid.SetPropertyReadOnly(result, true, false);
 
@@ -312,9 +311,33 @@ namespace PropertyGridSample
             object instance,
             PropertyInfo p)
         {
-            object? value = p.GetValue(instance, null);
+            PropertyGridAdapterBrush adapter = new()
+            {
+                Instance = instance,
+                PropInfo = p
+            };
             var result = propertyGrid.CreateStringProperty(label, name, "(Brush)");
             propertyGrid.SetPropertyReadOnly(result, true, false);
+
+            var itemBrushType = CreateProperty(adapter, "BrushType");
+            var itemColor = CreateProperty(adapter, "Color");
+            var itemLinearGradientStart = CreateProperty(adapter, "LinearGradientStart");
+            var itemLinearGradientEnd = CreateProperty(adapter, "LinearGradientEnd");
+            var itemRadialGradientCenter = CreateProperty(adapter, "RadialGradientCenter");
+            var itemRadialGradientOrigin = CreateProperty(adapter, "RadialGradientOrigin");
+            var itemRadialGradientRadius = CreateProperty(adapter, "RadialGradientRadius");
+            var itemGradientStops = CreateProperty(adapter, "GradientStops");
+            var itemHatchStyle = CreateProperty(adapter, "HatchStyle");
+
+            result.Children.Add(itemBrushType!);
+            result.Children.Add(itemColor!);
+            result.Children.Add(itemLinearGradientStart!);
+            result.Children.Add(itemLinearGradientEnd!);
+            result.Children.Add(itemRadialGradientCenter!);
+            result.Children.Add(itemRadialGradientOrigin!);
+            result.Children.Add(itemRadialGradientRadius!);
+            result.Children.Add(itemGradientStops!);
+            result.Children.Add(itemHatchStyle!);
 
             return result;
         }

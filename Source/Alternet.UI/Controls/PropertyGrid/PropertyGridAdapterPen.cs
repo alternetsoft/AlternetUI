@@ -39,7 +39,7 @@ namespace Alternet.UI
 
             set
             {
-                if (color == value)
+                if (Color == value)
                     return;
                 color = value;
                 OnInstancePropertyChanged();
@@ -58,7 +58,7 @@ namespace Alternet.UI
 
             set
             {
-                if (dashStyle == value)
+                if (DashStyle == value)
                     return;
                 dashStyle = value;
                 OnInstancePropertyChanged();
@@ -77,7 +77,7 @@ namespace Alternet.UI
 
             set
             {
-                if (lineCap == value)
+                if (LineCap == value)
                     return;
                 lineCap = value;
                 OnInstancePropertyChanged();
@@ -96,7 +96,7 @@ namespace Alternet.UI
 
             set
             {
-                if (lineJoin == value)
+                if (LineJoin == value)
                     return;
                 lineJoin = value;
                 OnInstancePropertyChanged();
@@ -117,7 +117,7 @@ namespace Alternet.UI
             {
                 if (value < 0)
                     value = 1;
-                if (width == value)
+                if (Width == value)
                     return;
                 width = value;
                 OnInstancePropertyChanged();
