@@ -7,6 +7,10 @@ namespace Alternet.UI
     /// <summary>
     /// Represents an individual item that is displayed within a toolbar.
     /// </summary>
+    /// <remarks>
+    /// Please use <see cref="AuiManager"/> and <see cref="AuiToolbar"/> instead of
+    /// <see cref="Toolbar"/> as it is deprecated and has limited functionality.
+    /// </remarks>
     public class ToolbarItem : Control, ICommandSource
     {
         /// <summary>
