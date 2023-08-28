@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -12,6 +13,19 @@ namespace Alternet.UI
     /// </summary>
     public static class AssemblyUtils
     {
+        /// <summary>
+        /// Returns whether property is browsable.
+        /// </summary>
+        /// <param name="p">Property info.</param>
+        /// <returns><c>true</c> if property is browsable, <c>false</c> otherwise.</returns>
+        public static bool GetBrowsable(PropertyInfo p)
+        {
+            var browsable = p.GetCustomAttribute(typeof(BrowsableAttribute)) as BrowsableAttribute;
+            if (browsable is not null)
+                return browsable.Browsable;
+            return true;
+        }
+
         /// <summary>
         /// Returns <c>true</c> if specified type is a descendant of another type.
         /// </summary>
