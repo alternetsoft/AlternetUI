@@ -79,7 +79,8 @@ namespace Alternet::UI
 
         if (IsWxWindowCreated())
         {
-            GetItemContainer()->Insert(*strings, index);
+            if(strings->GetCount()>0)
+                GetItemContainer()->Insert(*strings, index);
         }
         else
         {
