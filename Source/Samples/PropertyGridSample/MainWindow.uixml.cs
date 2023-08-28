@@ -308,6 +308,7 @@ namespace PropertyGridSample
             if (!AssemblyUtils.GetBrowsable(p))
                 return null;
 
+            var setPropReadonly = false;
             string propName = p.Name;
             var propType = p.PropertyType;
             object? propValue = p.GetValue(instance, null);
@@ -317,9 +318,6 @@ namespace PropertyGridSample
             var underlyingType = Nullable.GetUnderlyingType(propType);
             var isNullable = underlyingType != null;
             var realType = underlyingType ?? propType;
-
-            if (propValue is null)     // remove it
-                return null;
 
             if (propType.IsEnum)
             {
@@ -363,6 +361,7 @@ namespace PropertyGridSample
                                 propName,
                                 null,
                                 (Font)propValue);
+                            setPropReadonly = true;
                             break;
                         }
                         if (realType == typeof(Brush))
@@ -371,6 +370,7 @@ namespace PropertyGridSample
                                 propName,
                                 null,
                                 (Brush)propValue);
+                            setPropReadonly = true;
                             break;
                         }
                         if (realType == typeof(Pen))
@@ -379,12 +379,14 @@ namespace PropertyGridSample
                                 propName,
                                 null,
                                 (Pen)propValue);
+                            setPropReadonly = true;
                             break;
                         }
                         prop = propertyGrid.CreateStringProperty(
                             propName,
                             null,
                             propValue?.ToString());
+                        setPropReadonly = true;
                         break;
                     case TypeCode.Boolean:
                         prop = propertyGrid.CreateBoolProperty(
@@ -482,7 +484,7 @@ namespace PropertyGridSample
                         break;
                 }
 
-            if (!p.CanWrite)
+            if (!p.CanWrite || setPropReadonly)
                 propertyGrid.SetPropertyReadOnly(prop!, true);
             return prop;
         }
