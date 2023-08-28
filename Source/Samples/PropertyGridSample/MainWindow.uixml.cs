@@ -268,7 +268,7 @@ namespace PropertyGridSample
             string? name = null,
             Font? value = null)
         {
-            return null!;
+            return propertyGrid.CreateStringProperty(label, name, value?.ToString());
         }
 
         public IPropertyGridItem CreateBrushProperty(
@@ -276,7 +276,7 @@ namespace PropertyGridSample
             string? name = null,
             Brush? value = null)
         {
-            return null!;
+            return propertyGrid.CreateStringProperty(label, name, value?.ToString());
         }
 
         public IPropertyGridItem CreatePenProperty(
@@ -284,7 +284,7 @@ namespace PropertyGridSample
             string? name = null,
             Pen? value = null)
         {
-            return null!;
+            return propertyGrid.CreateStringProperty(label, name, value?.ToString());
         }
 
         public IPropertyGridItem? CreateProperty(object instance, string name)
@@ -355,6 +355,30 @@ namespace PropertyGridSample
                                 propName,
                                 null,
                                 (Color)propValue);
+                            break;
+                        }
+                        if (realType == typeof(Font))
+                        {
+                            prop = CreateFontProperty(
+                                propName,
+                                null,
+                                (Font)propValue);
+                            break;
+                        }
+                        if (realType == typeof(Brush))
+                        {
+                            prop = CreateBrushProperty(
+                                propName,
+                                null,
+                                (Brush)propValue);
+                            break;
+                        }
+                        if (realType == typeof(Pen))
+                        {
+                            prop = CreatePenProperty(
+                                propName,
+                                null,
+                                (Pen)propValue);
                             break;
                         }
                         prop = propertyGrid.CreateStringProperty(
