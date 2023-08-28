@@ -568,6 +568,8 @@ namespace Alternet.UI
                 items.Add(child.Handle, child);
                 AppendIn(prop, child);
             }
+
+            Collapse(prop);
         }
 
         /// <summary>

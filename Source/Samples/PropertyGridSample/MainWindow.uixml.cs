@@ -72,9 +72,9 @@ namespace PropertyGridSample
         }
 
         public Decimal DecimalValue { get; set; }
-        public Font FontValue { get; set; }
-        public Brush BrushValue { get; set; }
-        public Pen PenValue { get; set; }
+        public Font FontValue { get; set; } = Font.Default;
+        public Brush BrushValue { get; set; } = Brush.Default;
+        public Pen PenValue { get; set; } = Pen.Default;
 
         private ListBox CreateListBox(Control? parent = null)
         {
@@ -281,8 +281,28 @@ namespace PropertyGridSample
             object instance,
             PropertyInfo p)
         {
+            PropertyGridAdapterFont adapter = new()
+            {
+                Instance = instance,
+                PropInfo = p
+            };
             object? value = p.GetValue(instance, null);
             var result = propertyGrid.CreateStringProperty(label, name, "(Font)");
+            propertyGrid.SetPropertyReadOnly(result, true, false);
+
+            var itemName = CreateProperty(adapter, "Name");
+            var itemSizeInPoints = CreateProperty(adapter, "SizeInPoints");
+            var itemIsBold = CreateProperty(adapter, "IsBold");
+            var itemIsItalic = CreateProperty(adapter, "IsItalic");
+            var itemIsStrikethrough = CreateProperty(adapter, "IsStrikethrough");
+            var itemIsUnderlined = CreateProperty(adapter, "IsUnderlined");
+        
+            result.Children.Add(itemName!);
+            result.Children.Add(itemSizeInPoints!);
+            result.Children.Add(itemIsBold!);
+            result.Children.Add(itemIsItalic!);
+            result.Children.Add(itemIsStrikethrough!);
+            result.Children.Add(itemIsUnderlined!);
             return result;
         }
 
@@ -294,6 +314,8 @@ namespace PropertyGridSample
         {
             object? value = p.GetValue(instance, null);
             var result = propertyGrid.CreateStringProperty(label, name, "(Brush)");
+            propertyGrid.SetPropertyReadOnly(result, true, false);
+
             return result;
         }
 
