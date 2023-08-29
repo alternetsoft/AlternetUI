@@ -119,25 +119,26 @@ namespace AuiManagerSample
 
             toolbar4.AddLabel("Text1");
 
-            var control4 = new ComboBox
+            //var control4 = new ComboBox
+            //{
+            //    IsEditable = false
+            //};
+            //control4.Add("Item 1");
+            //control4.Add("Item 2");
+            //control4.Add("Item 3");
+            var textBox4 = new TextBox
             {
-                IsEditable = false
+                Text = "value"
             };
-            control4.Add("Item 1");
-            control4.Add("Item 2");
-            control4.Add("Item 3");
-            toolbar4.Children.Add(control4);
-            toolbar4.AddControl(control4);
+			
+            //toolbar4.Children.Add(control4);
+            //toolbar4.AddControl(control4);
 
             photoToolId = toolbar4.AddTool(
                 "Photo",
                 ImagePhoto,
                 "Photo Hint");
 
-            var textBox4 = new TextBox
-            {
-                Text = "value"
-            };
             toolbar4.Children.Add(textBox4);
             toolbar4.AddControl(textBox4);
 
@@ -151,9 +152,21 @@ namespace AuiManagerSample
 
             toolbar4.Realize();
 
+            //Log(textBox4.Bounds.Height.ToString());
+	    //Log(control4.Bounds.Height.ToString());		
+
+            // On Linux height of the ComboBox is greater than height of the TextBox.
+            // We need to increase height of all window's TextBoxes.
+            //LayoutFactory.AdjustTextBoxesHeight(toolbar4);
+
+            //Log(textBox4.Bounds.Height.ToString());
+	    //Log(control4.Bounds.Height.ToString());		
+            //toolbar4.Realize();
+
             AuiToolbarItemKind kind = toolbar4.GetToolKind(pencilToolId);
 
             panel.Children.Add(toolbar4);
+
             manager.AddPane(toolbar4, pane4);
 
             // Notenook pane
@@ -171,10 +184,6 @@ namespace AuiManagerSample
             manager.AddPane(notebook5, pane5);
 
             manager.Update();
-
-            // On Linux height of the ComboBox is greater than height of the TextBox.
-            // We need to increase height of all window's TextBoxes.
-            LayoutFactory.AdjustTextBoxesHeight(this);
 
             toolbar4.AddToolOnClick(calendarToolId, CalendarButton_Click);
             toolbar4.AddToolOnClick(photoToolId, PhotoButton_Click);
