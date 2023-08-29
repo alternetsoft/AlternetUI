@@ -110,6 +110,8 @@ namespace Alternet.UI
                 foreach (Control control in editors)
                     control.Height = maxHeight;
 
+                /*control.SetBounds(0, 0, 0, maxHeight, BoundsSpecified.Height);*/
+
                 void AddTextEditors(Control container)
                 {
                     foreach (Control control in container.Children)
@@ -129,36 +131,5 @@ namespace Alternet.UI
                 container.ResumeLayout(true);
             }
         }
-
-        /*public static void AddToolbarSizer(Control control, Toolbar toolbar)
-        {
-            int wxLEFT = 0x0010;
-            int wxRIGHT = 0x0020;
-            int wxUP = 0x0040;
-            int wxDOWN = 0x0080;
-
-            int wxALL = (wxUP | wxDOWN | wxRIGHT | wxLEFT);
-
-            int wxSTRETCH_NOT = 0x0000;
-            int wxSHRINK = 0x1000;
-            int wxGROW = 0x2000;
-            int wxEXPAND = wxGROW;
-            int wxSHAPED = 0x4000;
-            int wxTILE = 0xc000;
-
-            int wxHORIZONTAL = 0x0004;
-            int wxVERTICAL = 0x0008;
-            int wxBOTH = wxVERTICAL | wxHORIZONTAL;
-
-
-            var sizer = new Native.BoxSizer();
-
-            var nativeControl = control.Handler.NativeControl;
-            var nativeSizer = sizer.Handle;
-            var nativeToolbar = toolbar.Handler.NativeControl.WxWidget;
-
-            nativeControl?.SetSizer(nativeSizer, true);
-            sizer.AddWindow(nativeToolbar, 1, wxALL | wxGROW, 0, IntPtr.Zero);
-        }*/
     }
 }
