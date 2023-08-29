@@ -54,5 +54,3 @@ namespace Alternet.UI
         Windows = 1 << 3,
     }
 }
-
-
