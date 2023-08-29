@@ -1483,6 +1483,35 @@ namespace Alternet.UI
             LabelEditBegin?.Invoke(this, e);
         }
 
+        internal IntPtr ToVariant(object value)
+        {
+            return IntPtr.Zero;
+        }
+
+        public bool ChangePropertyValue(IPropertyGridItem id, object value)
+        {
+            return NativeControl.ChangePropertyValue(id.Handle, ToVariant(value));
+        }
+
+        public void SetPropertyImage(IPropertyGridItem id, ImageSet? bmp)
+        {
+            NativeControl.SetPropertyImage(id.Handle, bmp?.NativeImageSet);
+        }
+
+        public void SetPropertyAttribute(
+            IPropertyGridItem id,
+            string attrName,
+            object value,
+            PropertyGridItemValueFlags argFlags = 0)
+        {
+            NativeControl.SetPropertyAttribute(id.Handle, attrName, ToVariant(value), (int)argFlags);
+        }
+
+        public void SetPropertyAttributeAll(string attrName, object value)
+        {
+            NativeControl.SetPropertyAttributeAll(attrName, ToVariant(value));
+        }
+
         /// <summary>
         /// Called when user is about to begin editing a property label.
         /// </summary>

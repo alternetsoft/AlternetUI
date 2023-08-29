@@ -239,27 +239,17 @@ namespace NativeApi.Api
         public void SortChildren(IntPtr id, int flags = 0) => throw new Exception();
 
         public static IntPtr GetEditorByName(string editorName) => throw new Exception();
-        /*
 
-        ====
-        public bool ChangePropertyValue(IntPtr id, wxVariant newValue) =>
+        public bool ChangePropertyValue(IntPtr id, IntPtr variant) =>
             throw new Exception();
 
-            public void SetPropertyImage(IntPtr id, const wxBitmapBundle& bmp) =>
-                throw new Exception();
+        public void SetPropertyImage(IntPtr id, ImageSet? bmp) =>
+            throw new Exception();
 
-            public void SetPropertyAttribute(IntPtr id,
-                                       string attrName,
-                                       wxVariant value,
-                                       long argFlags = 0) =>
-                throw new Exception();
+        public void SetPropertyAttribute(IntPtr id, string attrName, IntPtr variant,
+            long argFlags = 0) => throw new Exception();
 
-            public void SetPropertyAttributeAll(string attrName, wxVariant value) =>
-                throw new Exception();
-
-            const wxArrayPGProperty& GetSelectedProperties() =>
-                throw new Exception();
-
-         */
+        public void SetPropertyAttributeAll(string attrName, IntPtr variant) =>
+            throw new Exception();
     }
 }

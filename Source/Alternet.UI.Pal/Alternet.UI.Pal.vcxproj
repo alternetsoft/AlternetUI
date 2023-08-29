@@ -266,6 +266,7 @@
     <ClCompile Include="ProgressBar.cpp" />
     <ClCompile Include="PropertyGrid.cpp" />
     <ClCompile Include="PropertyGridChoices.cpp" />
+    <ClCompile Include="PropertyGridVariant.cpp" />
     <ClCompile Include="RadialGradientBrush.cpp" />
     <ClCompile Include="RadioButton.cpp" />
     <ClCompile Include="Region.cpp" />
@@ -373,6 +374,7 @@
     <ClInclude Include="Api\ProgressBar.Api.h" />
     <ClInclude Include="Api\PropertyGrid.Api.h" />
     <ClInclude Include="Api\PropertyGridChoices.Api.h" />
+    <ClInclude Include="Api\PropertyGridVariant.Api.h" />
     <ClInclude Include="Api\RadialGradientBrush.Api.h" />
     <ClInclude Include="Api\RadioButton.Api.h" />
     <ClInclude Include="Api\Region.Api.h" />
@@ -482,6 +484,7 @@
     <ClInclude Include="ProgressBar.h" />
     <ClInclude Include="PropertyGrid.h" />
     <ClInclude Include="PropertyGridChoices.h" />
+    <ClInclude Include="PropertyGridVariant.h" />
     <ClInclude Include="RadialGradientBrush.h" />
     <ClInclude Include="RadioButton.h" />
     <ClInclude Include="Region.h" />
@@ -580,6 +583,7 @@
     <None Include="Api\ProgressBar.inc" />
     <None Include="Api\PropertyGrid.inc" />
     <None Include="Api\PropertyGridChoices.inc" />
+    <None Include="Api\PropertyGridVariant.inc" />
     <None Include="Api\RadialGradientBrush.inc" />
     <None Include="Api\RadioButton.inc" />
     <None Include="Api\Region.inc" />

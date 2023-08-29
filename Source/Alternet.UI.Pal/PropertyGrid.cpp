@@ -1201,4 +1201,34 @@ namespace Alternet::UI
 	{
 		GetPropGrid()->SetSplitterPosition(newXPos, col);
 	}
+
+	bool PropertyGrid::ChangePropertyValue(void* id, void* variant)
+	{
+		ToPropArg(id);
+		return GetPropGrid()->ChangePropertyValue(_propArg, ToVariant(variant));
+	}
+
+	wxVariant PropertyGrid::ToVariant(void* variant)
+	{
+		return wxVariant();
+	}
+
+	void PropertyGrid::SetPropertyImage(void* id, ImageSet* bmp)
+	{
+		ToPropArg(id);
+		GetPropGrid()->SetPropertyImage(_propArg, ImageSet::BitmapBundle(bmp));
+	}
+
+	void PropertyGrid::SetPropertyAttribute(void* id, const string& attrName, 
+		void* variant, int64_t argFlags)
+	{
+		ToPropArg(id);
+		GetPropGrid()->SetPropertyAttribute(_propArg, wxStr(attrName),
+			ToVariant(variant), argFlags);
+	}
+
+	void PropertyGrid::SetPropertyAttributeAll(const string& attrName, void* variant)
+	{
+		GetPropGrid()->SetPropertyAttributeAll(wxStr(attrName), ToVariant(variant));
+	}
 }

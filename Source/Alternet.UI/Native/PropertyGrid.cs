@@ -366,6 +366,31 @@ namespace Alternet.UI.Native
             return n;
         }
         
+        public bool ChangePropertyValue(System.IntPtr id, System.IntPtr variant)
+        {
+            CheckDisposed();
+            var n = NativeApi.PropertyGrid_ChangePropertyValue_(NativePointer, id, variant);
+            return n;
+        }
+        
+        public void SetPropertyImage(System.IntPtr id, ImageSet? bmp)
+        {
+            CheckDisposed();
+            NativeApi.PropertyGrid_SetPropertyImage_(NativePointer, id, bmp?.NativePointer ?? IntPtr.Zero);
+        }
+        
+        public void SetPropertyAttribute(System.IntPtr id, string attrName, System.IntPtr variant, long argFlags)
+        {
+            CheckDisposed();
+            NativeApi.PropertyGrid_SetPropertyAttribute_(NativePointer, id, attrName, variant, argFlags);
+        }
+        
+        public void SetPropertyAttributeAll(string attrName, System.IntPtr variant)
+        {
+            CheckDisposed();
+            NativeApi.PropertyGrid_SetPropertyAttributeAll_(NativePointer, attrName, variant);
+        }
+        
         public void SetSelectionTextColor(Alternet.Drawing.Color col)
         {
             CheckDisposed();
@@ -1510,6 +1535,18 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern System.IntPtr PropertyGrid_GetEditorByName_(string editorName);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool PropertyGrid_ChangePropertyValue_(IntPtr obj, System.IntPtr id, System.IntPtr variant);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void PropertyGrid_SetPropertyImage_(IntPtr obj, System.IntPtr id, IntPtr bmp);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void PropertyGrid_SetPropertyAttribute_(IntPtr obj, System.IntPtr id, string attrName, System.IntPtr variant, long argFlags);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void PropertyGrid_SetPropertyAttributeAll_(IntPtr obj, string attrName, System.IntPtr variant);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void PropertyGrid_SetSelectionTextColor_(IntPtr obj, NativeApiTypes.Color col);

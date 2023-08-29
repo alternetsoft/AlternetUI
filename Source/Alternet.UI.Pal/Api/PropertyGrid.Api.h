@@ -3,6 +3,7 @@
 #pragma once
 
 #include "PropertyGrid.h"
+#include "ImageSet.h"
 #include "ApiUtils.h"
 #include "Exceptions.h"
 
@@ -348,6 +349,34 @@ ALTERNET_UI_API void* PropertyGrid_GetEditorByName_(const char16_t* editorName)
 {
     return MarshalExceptions<void*>([&](){
             return PropertyGrid::GetEditorByName(editorName);
+        });
+}
+
+ALTERNET_UI_API c_bool PropertyGrid_ChangePropertyValue_(PropertyGrid* obj, void* id, void* variant)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return obj->ChangePropertyValue(id, variant);
+        });
+}
+
+ALTERNET_UI_API void PropertyGrid_SetPropertyImage_(PropertyGrid* obj, void* id, ImageSet* bmp)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetPropertyImage(id, bmp);
+        });
+}
+
+ALTERNET_UI_API void PropertyGrid_SetPropertyAttribute_(PropertyGrid* obj, void* id, const char16_t* attrName, void* variant, int64_t argFlags)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetPropertyAttribute(id, attrName, variant, argFlags);
+        });
+}
+
+ALTERNET_UI_API void PropertyGrid_SetPropertyAttributeAll_(PropertyGrid* obj, const char16_t* attrName, void* variant)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetPropertyAttributeAll(attrName, variant);
         });
 }
 
