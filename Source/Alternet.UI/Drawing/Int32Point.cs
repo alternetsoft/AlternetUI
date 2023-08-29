@@ -17,7 +17,7 @@ namespace Alternet.Drawing
      Also do not change order of the fields.
     */
     [Serializable]
-    [StructLayout(LayoutKind.Sequential)]
+    [StructLayout(LayoutKind.Sequential, Pack = 1)]
     /*[TypeConverter("System.Drawing.PointConverter, System.Drawing,
       Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]*/
     public struct Int32Point : IEquatable<Int32Point>

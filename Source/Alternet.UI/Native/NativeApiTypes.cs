@@ -151,7 +151,7 @@ namespace Alternet.UI.Native
                 new(v.Left, v.Top, v.Right, v.Bottom);
         }*/
 
-        [StructLayout(LayoutKind.Sequential)]
+        [StructLayout(LayoutKind.Sequential, Pack = 1)]
         public struct Color
         {
             public byte R;
@@ -184,7 +184,7 @@ namespace Alternet.UI.Native
                 new Color(color.R, color.G, color.B, color.A);
         }
 
-        [StructLayout(LayoutKind.Sequential)]
+        [StructLayout(LayoutKind.Sequential, Pack = 1)]
         public struct DateTime
         {
             public int Year; /* 1-9999 */

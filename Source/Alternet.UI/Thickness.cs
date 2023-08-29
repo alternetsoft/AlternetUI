@@ -16,7 +16,7 @@ namespace Alternet.UI
     /// It contains four doubles each corresponding to a side:
     /// Left, Top, Right, Bottom.
     /// </summary>
-    [StructLayout(LayoutKind.Sequential)]
+    [StructLayout(LayoutKind.Sequential, Pack = 1)]    
     public struct Thickness : IEquatable<Thickness>
     {
         /// <summary>

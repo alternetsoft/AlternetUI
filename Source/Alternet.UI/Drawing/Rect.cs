@@ -20,7 +20,7 @@ namespace Alternet.Drawing
     /// Stores the location and size of a rectangular region.
     /// </summary>
     [Serializable]
-    [StructLayout(LayoutKind.Sequential)]
+    [StructLayout(LayoutKind.Sequential, Pack = 1)]
     public struct Rect : IEquatable<Rect>
     {
         /// <summary>

@@ -21,7 +21,7 @@ namespace Alternet.Drawing
     /// and height.
     /// </summary>
     [Serializable]
-    [StructLayout(LayoutKind.Sequential)]
+    [StructLayout(LayoutKind.Sequential, Pack = 1)]
     /* [System.Runtime.CompilerServices.TypeForwardedFrom(
        "System.Drawing, Version=4.0.0.0, Culture=neutral, 
             PublicKeyToken=b03f5f7f11d50a3a")]

@@ -20,7 +20,7 @@ namespace Alternet.Drawing
     /// Represents an ordered pair of x and y coordinates that define a point in a two-dimensional plane.
     /// </summary>
     [Serializable]
-    [StructLayout(LayoutKind.Sequential)]
+    [StructLayout(LayoutKind.Sequential, Pack = 1)]
     public struct Point : IEquatable<Point>
     {
         /// <summary>
