@@ -2,6 +2,25 @@
 public:
 static void Delete(void* handle);
 static void* CreateVariant();
+static bool IsNull(void* handle);
+static bool Unshare(void* handle);
+static void MakeNull(void* handle);
+static void Clear(void* handle);
+static string GetValueType(void* handle);
+static bool IsType(void* handle, const string& type);
+static string MakeString(void* handle);
+static double GetDouble(void* handle);
+static bool GetBool(void* handle);
+static int64_t GetLong(void* handle);
+static DateTime GetDateTime(void* handle);
+static string GetString(void* handle);
+static void SetDouble(void* handle, double val);
+static void SetBool(void* handle, bool val);
+static void SetLong(void* handle, int64_t val);
+static void SetInt(void* handle, int val);
+static void SetShort(void* handle, int16_t val);
+static void SetDateTime(void* handle, const DateTime& val);
+static void SetString(void* handle, const string& value);
 public:
 PropertyGridVariant();
 protected:

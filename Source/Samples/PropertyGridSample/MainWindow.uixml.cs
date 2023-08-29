@@ -213,6 +213,11 @@ namespace PropertyGridSample
                 propertyGrid.Add(prop);
 
                 prop = propertyGrid.CreateBoolProperty("Bool");
+                propertyGrid.SetPropertyAttribute(
+                    prop,
+                    PropertyGridItemAttrId.UseCheckbox.ToString(),
+                    true);
+
                 propertyGrid.Add(prop);
 
                 prop = propertyGrid.CreateIntProperty("Int");
@@ -505,16 +510,15 @@ namespace PropertyGridSample
                         break;
                     case TypeCode.UInt16:
                         propValue ??= 0;
-                        prop = propertyGrid.CreateUIntProperty(propName, null, (UInt16)propValue!);
+                        prop = propertyGrid.CreateUIntProperty(propName, null, (ushort)propValue!);
                         break;
                     case TypeCode.UInt64:
                         propValue ??= 0;
                         prop = propertyGrid.CreateUIntProperty(propName, null, (ulong)propValue!);
                         break;
-
                     case TypeCode.Single:
-                        propValue ??= (Single)0;
-                        prop = propertyGrid.CreateFloatProperty(propName, null, (Single)propValue!);
+                        propValue ??= (float)0;
+                        prop = propertyGrid.CreateFloatProperty(propName, null, (float)propValue!);
                         break;
                     case TypeCode.Double:
                         propValue ??= (double)0;
@@ -522,13 +526,13 @@ namespace PropertyGridSample
                         break;
                     case TypeCode.Decimal:
                         propValue ??= (decimal)0;
-                        decimal asDecimal = (decimal)propValue!;
+                        Int64 asDecimal = Convert.ToInt64((decimal)propValue);
                         try
                         {
-                            prop = propertyGrid.CreateUIntProperty(
+                            prop = propertyGrid.CreateIntProperty(
                                 propName,
                                 null,
-                                (ulong)asDecimal!);
+                                (long)asDecimal!);
                             break;
                         }
                         catch

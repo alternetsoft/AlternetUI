@@ -10,7 +10,10 @@ namespace Alternet::UI
     {
 #include "Api/PropertyGridVariant.inc"
     public:
-    
+        wxVariant variant = wxVariant();
+
+        static wxVariant& ToVar(void* handle);
+        static void FromVariant(void* handle, wxVariant& value);
     private:
     
     };

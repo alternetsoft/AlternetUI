@@ -11,6 +11,7 @@
 #include "wx/propgrid/advprops.h"
 #include "wx/propgrid/property.h"
 #include "wx/variant.h"
+#include "PropertyGridVariant.h"
 
 namespace Alternet::UI
 {
@@ -24,7 +25,7 @@ namespace Alternet::UI
         PropertyGrid(long styles);
         wxPGPropArgCls _propArg = wxPGPropArgCls(0);
         void ToPropArg(void* id);
-        wxVariant ToVariant(void* variant);
+        //wxVariant ToVariant(void* variant);
     private:
         bool _hasBorder = true;
         long _createStyle = wxPG_DEFAULT_STYLE;

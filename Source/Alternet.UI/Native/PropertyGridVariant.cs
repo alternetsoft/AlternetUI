@@ -34,6 +34,111 @@ namespace Alternet.UI.Native
             return n;
         }
         
+        public static bool IsNull(System.IntPtr handle)
+        {
+            var n = NativeApi.PropertyGridVariant_IsNull_(handle);
+            return n;
+        }
+        
+        public static bool Unshare(System.IntPtr handle)
+        {
+            var n = NativeApi.PropertyGridVariant_Unshare_(handle);
+            return n;
+        }
+        
+        public static void MakeNull(System.IntPtr handle)
+        {
+            NativeApi.PropertyGridVariant_MakeNull_(handle);
+        }
+        
+        public static void Clear(System.IntPtr handle)
+        {
+            NativeApi.PropertyGridVariant_Clear_(handle);
+        }
+        
+        public static string GetValueType(System.IntPtr handle)
+        {
+            var n = NativeApi.PropertyGridVariant_GetValueType_(handle);
+            return n;
+        }
+        
+        public static bool IsType(System.IntPtr handle, string type)
+        {
+            var n = NativeApi.PropertyGridVariant_IsType_(handle, type);
+            return n;
+        }
+        
+        public static string MakeString(System.IntPtr handle)
+        {
+            var n = NativeApi.PropertyGridVariant_MakeString_(handle);
+            return n;
+        }
+        
+        public static double GetDouble(System.IntPtr handle)
+        {
+            var n = NativeApi.PropertyGridVariant_GetDouble_(handle);
+            return n;
+        }
+        
+        public static bool GetBool(System.IntPtr handle)
+        {
+            var n = NativeApi.PropertyGridVariant_GetBool_(handle);
+            return n;
+        }
+        
+        public static long GetLong(System.IntPtr handle)
+        {
+            var n = NativeApi.PropertyGridVariant_GetLong_(handle);
+            return n;
+        }
+        
+        public static DateTime GetDateTime(System.IntPtr handle)
+        {
+            var n = NativeApi.PropertyGridVariant_GetDateTime_(handle);
+            return n;
+        }
+        
+        public static string GetString(System.IntPtr handle)
+        {
+            var n = NativeApi.PropertyGridVariant_GetString_(handle);
+            return n;
+        }
+        
+        public static void SetDouble(System.IntPtr handle, double val)
+        {
+            NativeApi.PropertyGridVariant_SetDouble_(handle, val);
+        }
+        
+        public static void SetBool(System.IntPtr handle, bool val)
+        {
+            NativeApi.PropertyGridVariant_SetBool_(handle, val);
+        }
+        
+        public static void SetLong(System.IntPtr handle, long val)
+        {
+            NativeApi.PropertyGridVariant_SetLong_(handle, val);
+        }
+        
+        public static void SetInt(System.IntPtr handle, int val)
+        {
+            NativeApi.PropertyGridVariant_SetInt_(handle, val);
+        }
+        
+        public static void SetShort(System.IntPtr handle, short val)
+        {
+            NativeApi.PropertyGridVariant_SetShort_(handle, val);
+        }
+        
+        public static void SetDateTime(System.IntPtr handle, DateTime val)
+        {
+            NativeApi.PropertyGridVariant_SetDateTime_(handle, val);
+        }
+        
+        public static void SetString(System.IntPtr handle, string value)
+        {
+            NativeApi.PropertyGridVariant_SetString_(handle, value);
+        }
+        
         
         [SuppressUnmanagedCodeSecurity]
         public class NativeApi : NativeApiProvider
@@ -48,6 +153,63 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern System.IntPtr PropertyGridVariant_CreateVariant_();
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool PropertyGridVariant_IsNull_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool PropertyGridVariant_Unshare_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void PropertyGridVariant_MakeNull_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void PropertyGridVariant_Clear_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern string PropertyGridVariant_GetValueType_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool PropertyGridVariant_IsType_(System.IntPtr handle, string type);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern string PropertyGridVariant_MakeString_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern double PropertyGridVariant_GetDouble_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool PropertyGridVariant_GetBool_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern long PropertyGridVariant_GetLong_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern NativeApiTypes.DateTime PropertyGridVariant_GetDateTime_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern string PropertyGridVariant_GetString_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void PropertyGridVariant_SetDouble_(System.IntPtr handle, double val);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void PropertyGridVariant_SetBool_(System.IntPtr handle, bool val);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void PropertyGridVariant_SetLong_(System.IntPtr handle, long val);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void PropertyGridVariant_SetInt_(System.IntPtr handle, int val);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void PropertyGridVariant_SetShort_(System.IntPtr handle, short val);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void PropertyGridVariant_SetDateTime_(System.IntPtr handle, NativeApiTypes.DateTime val);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void PropertyGridVariant_SetString_(System.IntPtr handle, string value);
             
         }
     }

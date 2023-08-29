@@ -653,14 +653,14 @@ namespace Alternet::UI
 
 	int64_t PropertyGrid::GetPropertyValueAsLong(void* id)
 	{
-		ToPropArg(id);
-		return GetPropGrid()->GetPropertyValueAsLong(_propArg);
+		ToPropArg(id);		
+		return GetPropGrid()->GetPropertyValueAsLongLong(_propArg);
 	}
 
 	uint64_t PropertyGrid::GetPropertyValueAsULong(void* id)
 	{
 		ToPropArg(id);
-		return GetPropGrid()->GetPropertyValueAsULong(_propArg);
+		return GetPropGrid()->GetPropertyValueAsULongLong(_propArg);
 	}
 
 	int PropertyGrid::GetPropertyValueAsInt(void* id)
@@ -1205,12 +1205,8 @@ namespace Alternet::UI
 	bool PropertyGrid::ChangePropertyValue(void* id, void* variant)
 	{
 		ToPropArg(id);
-		return GetPropGrid()->ChangePropertyValue(_propArg, ToVariant(variant));
-	}
-
-	wxVariant PropertyGrid::ToVariant(void* variant)
-	{
-		return wxVariant();
+		wxVariant v = PropertyGridVariant::ToVar(variant);
+		return GetPropGrid()->ChangePropertyValue(_propArg, v);
 	}
 
 	void PropertyGrid::SetPropertyImage(void* id, ImageSet* bmp)
@@ -1223,12 +1219,13 @@ namespace Alternet::UI
 		void* variant, int64_t argFlags)
 	{
 		ToPropArg(id);
-		GetPropGrid()->SetPropertyAttribute(_propArg, wxStr(attrName),
-			ToVariant(variant), argFlags);
+		wxVariant v = PropertyGridVariant::ToVar(variant);
+		GetPropGrid()->SetPropertyAttribute(_propArg, wxStr(attrName), v, argFlags);
 	}
 
 	void PropertyGrid::SetPropertyAttributeAll(const string& attrName, void* variant)
 	{
-		GetPropGrid()->SetPropertyAttributeAll(wxStr(attrName), ToVariant(variant));
+		wxVariant v = PropertyGridVariant::ToVar(variant);
+		GetPropGrid()->SetPropertyAttributeAll(wxStr(attrName), v);
 	}
 }

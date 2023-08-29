@@ -25,6 +25,7 @@ namespace Alternet.UI
         private const int PGSORTTOPLEVELONLY = 0x00000200;
         private static Dictionary<Type, IPropertyGridChoices>? choicesCache = null;
         private Dictionary<IntPtr, IPropertyGridItem> items = new();
+        PropertyGridVariant variant = new();
 
         /// <summary>
         /// Occurs when a property selection has been changed, either by user action
@@ -1483,14 +1484,15 @@ namespace Alternet.UI
             LabelEditBegin?.Invoke(this, e);
         }
 
-        internal IntPtr ToVariant(object value)
+        internal PropertyGridVariant ToVariant(object value)
         {
-            return IntPtr.Zero;
+            variant.AsObject = value;
+            return variant;
         }
 
         public bool ChangePropertyValue(IPropertyGridItem id, object value)
         {
-            return NativeControl.ChangePropertyValue(id.Handle, ToVariant(value));
+            return NativeControl.ChangePropertyValue(id.Handle, ToVariant(value).Handle);
         }
 
         public void SetPropertyImage(IPropertyGridItem id, ImageSet? bmp)
@@ -1504,12 +1506,16 @@ namespace Alternet.UI
             object value,
             PropertyGridItemValueFlags argFlags = 0)
         {
-            NativeControl.SetPropertyAttribute(id.Handle, attrName, ToVariant(value), (int)argFlags);
+            NativeControl.SetPropertyAttribute(
+                id.Handle,
+                attrName,
+                ToVariant(value).Handle,
+                (int)argFlags);
         }
 
         public void SetPropertyAttributeAll(string attrName, object value)
         {
-            NativeControl.SetPropertyAttributeAll(attrName, ToVariant(value));
+            NativeControl.SetPropertyAttributeAll(attrName, ToVariant(value).Handle);
         }
 
         /// <summary>
