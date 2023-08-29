@@ -1,5 +1,6 @@
 #pragma once
 #include "Common.h"
+#include "Keyboard.h"
 #include "Control.h"
 #include "ApiTypes.h"
 #include "Object.h"

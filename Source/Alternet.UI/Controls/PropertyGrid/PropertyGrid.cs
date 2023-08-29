@@ -110,11 +110,18 @@ namespace Alternet.UI
         public event EventHandler? ColEndDrag;
 
         /// <summary>
-        /// Defines default visual style for the newly created
+        /// Defines default style for the newly created
         /// <see cref="PropertyGrid"/> controls.
         /// </summary>
         public static PropertyGridCreateStyle DefaultCreateStyle { get; set; }
             = PropertyGridCreateStyle.DefaultStyle;
+
+        /// <summary>
+        /// Defines default extended style for the newly created
+        /// <see cref="PropertyGrid"/> controls.
+        /// </summary>
+        public static PropertyGridCreateStyleEx DefaultCreateStyleEx { get; set; }
+            = PropertyGridCreateStyleEx.DefaultStyle;
 
         /// <summary>
         /// Gets or sets validation failure behavior flags used in the event handler.
@@ -217,6 +224,25 @@ namespace Alternet.UI
             set
             {
                 Handler.CreateStyle = (int)value;
+            }
+        }
+
+        /// <summary>
+        /// Defines extended style of the <see cref="PropertyGrid"/> control.
+        /// </summary>
+        /// <remarks>
+        /// When this property is changed, control is recreated.
+        /// </remarks>
+        public PropertyGridCreateStyleEx CreateStyleEx
+        {
+            get
+            {
+                return (PropertyGridCreateStyleEx)Handler.CreateStyleEx;
+            }
+
+            set
+            {
+                Handler.CreateStyleEx = (int)value;
             }
         }
 
@@ -563,7 +589,7 @@ namespace Alternet.UI
             items.Add(prop.Handle, prop);
             if (!prop.HasChildren)
                 return;
-            foreach(IPropertyGridItem child in prop.Children)
+            foreach (IPropertyGridItem child in prop.Children)
             {
                 items.Add(child.Handle, child);
                 AppendIn(prop, child);
@@ -897,6 +923,409 @@ namespace Alternet.UI
             NativeControl.SetPropertyEditorByName(prop.Handle, editorName);
         }
 
+        /// <summary>
+        /// Sets all <see cref="PropertyGrid"/> colors.
+        /// </summary>
+        /// <param name="colors">New color settings.</param>
+        public void ApplyColors(PropertyGridColors? colors = null)
+        {
+            if(colors == null)
+            {
+                ResetColors();
+                return;
+            }
+
+            BeginUpdate();
+            try
+            {
+                if (colors.ResetColors)
+                    ResetColors();
+
+                if (colors.CaptionBackgroundColor is not null)
+                    SetCaptionBackgroundColor(colors.CaptionBackgroundColor.Value);
+                if (colors.CaptionForegroundColor is not null)
+                    SetCaptionTextColor(colors.CaptionForegroundColor.Value);
+                if (colors.CellDisabledTextColor is not null)
+                    SetCellDisabledTextColor(colors.CellDisabledTextColor.Value);
+                if (colors.EmptySpaceColor is not null)
+                    SetEmptySpaceColor(colors.EmptySpaceColor.Value);
+                if (colors.LineColor is not null)
+                    SetLineColor(colors.LineColor.Value);
+                if (colors.MarginColor is not null)
+                    SetMarginColor(colors.MarginColor.Value);
+                if (colors.SelectionBackgroundColor is not null)
+                    SetSelectionBackgroundColor(colors.SelectionBackgroundColor.Value);
+                if (colors.SelectionForegroundColor is not null)
+                    SetSelectionTextColor(colors.SelectionForegroundColor.Value);
+                if (colors.CellTextColor is not null)
+                    SetCellTextColor(colors.CellTextColor.Value);
+                if (colors.CellBackgroundColor is not null)
+                    SetCellBackgroundColor(colors.CellBackgroundColor.Value);
+            }
+            finally
+            {
+                EndUpdate();
+            }
+        }
+
+        public void AddActionTrigger(
+            PropertyGridKeyboardAction action,
+            Key keycode,
+            ModifierKeys modifiers = 0)
+        {
+            NativeControl.AddActionTrigger((int)action, (int)keycode, (int)modifiers);
+        }
+
+        public void ClearActionTriggers(PropertyGridKeyboardAction action)
+        {
+            NativeControl.ClearActionTriggers((int)action);
+        }
+
+        internal void DedicateKey(int keycode)
+        {
+            NativeControl.DedicateKey(keycode);
+        }
+
+        public static void AutoGetTranslation(bool enable)
+        {
+            Native.PropertyGrid.AutoGetTranslation(enable);
+        }
+
+        public void CenterSplitter(bool enableAutoResizing = false)
+        {
+            NativeControl.CenterSplitter(enableAutoResizing);
+        }
+
+        internal bool CommitChangesFromEditor()
+        {
+            return NativeControl.CommitChangesFromEditor(0);
+        }
+
+        public void EditorsValueWasModified()
+        {
+            NativeControl.EditorsValueWasModified();
+        }
+
+        public void EditorsValueWasNotModified()
+        {
+            NativeControl.EditorsValueWasNotModified();
+        }
+
+        public bool EnableCategories(bool enable)
+        {
+            return NativeControl.EnableCategories(enable);
+        }
+
+        public Size FitColumns()
+        {
+            return NativeControl.FitColumns();
+        }
+
+        internal Color GetCaptionBackgroundColor()
+        {
+            return NativeControl.GetCaptionBackgroundColor();
+        }
+
+        internal Color GetCaptionForegroundColor()
+        {
+            return NativeControl.GetCaptionForegroundColor();
+        }
+
+        internal Color GetCellBackgroundColor()
+        {
+            return NativeControl.GetCellBackgroundColor();
+        }
+
+        internal Color GetCellDisabledTextColor()
+        {
+            return NativeControl.GetCellDisabledTextColor();
+        }
+
+        internal Color GetCellTextColor()
+        {
+            return NativeControl.GetCellTextColor();
+        }
+
+        public uint GetColumnCount()
+        {
+            return NativeControl.GetColumnCount();
+        }
+
+        internal Color GetEmptySpaceColor()
+        {
+            return NativeControl.GetEmptySpaceColor();
+        }
+
+        public int GetFontHeight()
+        {
+            return NativeControl.GetFontHeight();
+        }
+
+        internal Color GetLineColor()
+        {
+            return NativeControl.GetLineColor();
+        }
+
+        internal Color GetMarginColor()
+        {
+            return NativeControl.GetMarginColor();
+        }
+
+        public int GetMarginWidth()
+        {
+            return NativeControl.GetMarginWidth();
+        }
+
+        public int GetRowHeight()
+        {
+            return NativeControl.GetRowHeight();
+        }
+
+        internal Color GetSelectionBackgroundColor()
+        {
+            return NativeControl.GetSelectionBackgroundColor();
+        }
+
+        internal Color GetSelectionForegroundColor()
+        {
+            return NativeControl.GetSelectionForegroundColor();
+        }
+
+        public int GetSplitterPosition(uint splitterIndex = 0)
+        {
+            return NativeControl.GetSplitterPosition(splitterIndex);
+        }
+
+        public int GetVerticalSpacing()
+        {
+            return NativeControl.GetVerticalSpacing();
+        }
+
+        public bool IsEditorFocused()
+        {
+            return NativeControl.IsEditorFocused();
+        }
+
+        public bool IsEditorsValueModified()
+        {
+            return NativeControl.IsEditorsValueModified();
+        }
+
+        public bool IsAnyModified()
+        {
+            return NativeControl.IsAnyModified();
+        }
+
+        public void ResetColors()
+        {
+            NativeControl.ResetColors();
+        }
+
+        public void ResetColumnSizes(bool enableAutoResizing = false)
+        {
+            NativeControl.ResetColumnSizes(enableAutoResizing);
+        }
+
+        public void MakeColumnEditable(uint column, bool editable = true)
+        {
+            NativeControl.MakeColumnEditable(column, editable);
+        }
+
+        public void BeginLabelEdit(uint column = 0)
+        {
+            NativeControl.BeginLabelEdit(column);
+        }
+
+        public void EndLabelEdit(bool commit = true)
+        {
+            NativeControl.EndLabelEdit(commit);
+        }
+
+        internal void SetCaptionBackgroundColor(Color col)
+        {
+            NativeControl.SetCaptionBackgroundColor(col);
+        }
+
+        internal void SetCaptionTextColor(Color col)
+        {
+            NativeControl.SetCaptionTextColor(col);
+        }
+
+        internal void SetCellBackgroundColor(Color col)
+        {
+            NativeControl.SetCellBackgroundColor(col);
+        }
+
+        internal void SetCellDisabledTextColor(Color col)
+        {
+            NativeControl.SetCellDisabledTextColor(col);
+        }
+
+        internal void SetCellTextColor(Color col)
+        {
+            NativeControl.SetCellTextColor(col);
+        }
+
+        public void SetColumnCount(int colCount)
+        {
+            NativeControl.SetColumnCount(colCount);
+        }
+
+        internal void SetEmptySpaceColor(Color col)
+        {
+            NativeControl.SetEmptySpaceColor(col);
+        }
+
+        internal void SetLineColor(Color col)
+        {
+            NativeControl.SetLineColor(col);
+        }
+
+        internal void SetMarginColor(Color col)
+        {
+            NativeControl.SetMarginColor(col);
+        }
+
+        internal void SetSelectionBackgroundColor(Color col)
+        {
+            NativeControl.SetSelectionBackgroundColor(col);
+        }
+
+        internal void SetSelectionTextColor(Color col)
+        {
+            NativeControl.SetSelectionTextColor(col);
+        }
+
+        public void SetSplitterPosition(int newXPos, int col = 0)
+        {
+            NativeControl.SetSplitterPosition(newXPos, col);
+        }
+
+        public string GetUnspecifiedValueText()
+        {
+            return NativeControl.GetUnspecifiedValueText(0);
+        }
+
+        public void SetVirtualWidth(int width)
+        {
+            NativeControl.SetVirtualWidth(width);
+        }
+
+        public void SetSplitterLeft(bool privateChildrenToo = false)
+        {
+            NativeControl.SetSplitterLeft(privateChildrenToo);
+        }
+
+        public void SetVerticalSpacing(int vspacing)
+        {
+            NativeControl.SetVerticalSpacing(vspacing);
+        }
+
+        public bool HasVirtualWidth()
+        {
+            return NativeControl.HasVirtualWidth();
+        }
+
+        public uint GetCommonValueCount()
+        {
+            return NativeControl.GetCommonValueCount();
+        }
+
+        public string GetCommonValueLabel(uint i)
+        {
+            return NativeControl.GetCommonValueLabel(i);
+        }
+
+        public int GetUnspecifiedCommonValue()
+        {
+            return NativeControl.GetUnspecifiedCommonValue();
+        }
+
+        public void SetUnspecifiedCommonValue(int index)
+        {
+            NativeControl.SetUnspecifiedCommonValue(index);
+        }
+
+        public static bool IsSmallScreen()
+        {
+            return Native.PropertyGrid.IsSmallScreen();
+        }
+
+        public void RefreshEditor()
+        {
+            NativeControl.RefreshEditor();
+        }
+
+        public bool WasValueChangedInEvent()
+        {
+            return NativeControl.WasValueChangedInEvent();
+        }
+
+        public int GetSpacingY()
+        {
+            return NativeControl.GetSpacingY();
+        }
+
+        public void SetupTextCtrlValue(string text)
+        {
+            NativeControl.SetupTextCtrlValue(text);
+        }
+
+        public bool UnfocusEditor()
+        {
+            return NativeControl.UnfocusEditor();
+        }
+
+        public IPropertyGridItem? GetLastItem(PropertyGridIteratorFlags flags)
+        {
+            return PtrToItem(NativeControl.GetLastItem((int)flags));
+        }
+
+        public IPropertyGridItem? GetRoot()
+        {
+            return PtrToItem(NativeControl.GetRoot());
+        }
+
+        public IPropertyGridItem? GetSelectedProperty()
+        {
+            return PtrToItem(NativeControl.GetSelectedProperty());
+        }
+
+        public bool EnsureVisible(IPropertyGridItem prop)
+        {
+            return NativeControl.EnsureVisible(prop.Handle);
+        }
+
+        public bool SelectProperty(IPropertyGridItem prop, bool focus = false)
+        {
+            return NativeControl.SelectProperty(prop.Handle, focus);
+        }
+
+        public bool AddToSelection(IPropertyGridItem prop)
+        {
+            return NativeControl.AddToSelection(prop.Handle);
+        }
+
+        public bool RemoveFromSelection(IPropertyGridItem prop)
+        {
+            return NativeControl.RemoveFromSelection(prop.Handle);
+        }
+
+        public void SetCurrentCategory(IPropertyGridItem prop)
+        {
+            NativeControl.SetCurrentCategory(prop.Handle);
+        }
+
+        public Int32Rect GetImageRect(IPropertyGridItem prop, int item)
+        {
+            return NativeControl.GetImageRect(prop.Handle, item);
+        }
+
+        public Int32Size GetImageSize(IPropertyGridItem prop, int item)
+        {
+            return NativeControl.GetImageSize(prop.Handle, item);
+        }
+
         internal static IntPtr GetEditorByName(string editorName)
         {
             return Native.PropertyGrid.GetEditorByName(editorName);
@@ -1187,7 +1616,7 @@ namespace Alternet.UI
 
         private IPropertyGridItem? PtrToItem(IntPtr ptr)
         {
-            if(items.TryGetValue(ptr, out IPropertyGridItem? result))
+            if (items.TryGetValue(ptr, out IPropertyGridItem? result))
                 return result;
             return null;
         }

@@ -90,6 +90,8 @@ namespace PropertyGridSample
 
         public MainWindow()
         {
+            propertyGrid.CreateStyleEx = PropertyGridCreateStyleEx.AlwaysAllowFocus;
+
             Icon = ImageSet.FromUrlOrNull("embres:PropertyGridSample.Sample.ico");
             InitLogContextMenu();
 
@@ -113,7 +115,7 @@ namespace PropertyGridSample
             pane2.Name("pane2").Caption("Properties").Right().PaneBorder(false)
                 .CloseButton(false)
                 .TopDockable(false).BottomDockable(false).Movable(false).Floatable(false)
-                .BestSize(400, 200).CaptionVisible(false);
+                .BestSize(500, 200).CaptionVisible(false);
             propertyGrid.HasBorder = false;
             panel.Children.Add(propertyGrid);
             manager.AddPane(propertyGrid, pane2);
@@ -127,7 +129,7 @@ namespace PropertyGridSample
 
             // Notenook pane
             var pane5 = manager.CreatePaneInfo();
-            pane5.Name("pane5").CenterPane().PaneBorder(true);
+            pane5.Name("pane5").CenterPane().PaneBorder(false);
 
             controlPanel.HorizontalAlignment = HorizontalAlignment.Center;
             controlPanel.VerticalAlignment = VerticalAlignment.Center;
@@ -191,6 +193,13 @@ namespace PropertyGridSample
             propertyGrid.ColBeginDrag += PGColBeginDrag;
             propertyGrid.ColDragging += PGColDragging;
             propertyGrid.ColEndDrag += PGColEndDrag;
+
+            propertyGrid.AddActionTrigger(
+            PropertyGridKeyboardAction.ActionNextProperty,
+            Key.DownArrow,
+            ModifierKeys.Control);
+
+            propertyGrid.ApplyColors(PropertyGridColors.ColorSchemeWhite);
         }
 
         private void InitDefaultPropertyGrid()
@@ -434,6 +443,8 @@ namespace PropertyGridSample
                     case TypeCode.Object:
                         if(realType  == typeof(Color))
                         {
+                            propValue ??= Color.Black;
+
                             prop = propertyGrid.CreateColorProperty(
                                 propName,
                                 null,
@@ -465,47 +476,59 @@ namespace PropertyGridSample
                         setPropReadonly = true;
                         break;
                     case TypeCode.Boolean:
+                        propValue ??= false;
                         prop = propertyGrid.CreateBoolProperty(propName, null, (bool)propValue!);
                         break;
                     case TypeCode.SByte:
+                        propValue ??= 0;
                         prop = propertyGrid.CreateIntProperty(propName, null, (sbyte)propValue!);
                         break;
                     case TypeCode.Int16:
+                        propValue ??= 0;
                         prop = propertyGrid.CreateIntProperty(propName, null, (Int16)propValue!);
                         break;
                     case TypeCode.Int32:
+                        propValue ??= 0;
                         prop = propertyGrid.CreateIntProperty(propName, null, (int)propValue!);
                         break;
                     case TypeCode.Int64:
+                        propValue ??= 0;
                         prop = propertyGrid.CreateIntProperty(propName, null, (long)propValue!);
                         break;
                     case TypeCode.Byte:
+                        propValue ??= 0;
                         prop = propertyGrid.CreateUIntProperty(propName, null, (byte)propValue!);
                         break;
                     case TypeCode.UInt32:
+                        propValue ??= 0;
                         prop = propertyGrid.CreateUIntProperty(propName, null, (uint)propValue!);
                         break;
                     case TypeCode.UInt16:
+                        propValue ??= 0;
                         prop = propertyGrid.CreateUIntProperty(propName, null, (UInt16)propValue!);
                         break;
                     case TypeCode.UInt64:
+                        propValue ??= 0;
                         prop = propertyGrid.CreateUIntProperty(propName, null, (ulong)propValue!);
                         break;
 
                     case TypeCode.Single:
+                        propValue ??= (Single)0;
                         prop = propertyGrid.CreateFloatProperty(propName, null, (Single)propValue!);
                         break;
                     case TypeCode.Double:
+                        propValue ??= (double)0;
                         prop = propertyGrid.CreateFloatProperty(propName, null, (double)propValue!);
                         break;
                     case TypeCode.Decimal:
-                        decimal asDecimal = (decimal)propValue;
+                        propValue ??= (decimal)0;
+                        decimal asDecimal = (decimal)propValue!;
                         try
                         {
                             prop = propertyGrid.CreateUIntProperty(
                                 propName,
                                 null,
-                                (ulong)asDecimal);
+                                (ulong)asDecimal!);
                             break;
                         }
                         catch
@@ -513,6 +536,7 @@ namespace PropertyGridSample
                             return null;
                         }
                     case TypeCode.DateTime:
+                        propValue ??= DateTime.Now;
                         prop = propertyGrid.CreateDateProperty(
                             propName,
                             null,
@@ -698,8 +722,10 @@ namespace PropertyGridSample
                 {
                     if(instance == null)
                     {
-                        instance = (Control)Activator.CreateInstance(type);
-                        if (!Initializers.TryGetValue(instance.GetType(), out Action<Control> action))
+                        instance = (Control?)Activator.CreateInstance(type);
+                        if (!Initializers.TryGetValue(
+                            instance!.GetType(),
+                            out Action<Control>? action))
                             return instance;
                         action(instance);
                     }

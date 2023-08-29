@@ -99,5 +99,10 @@ namespace Alternet.UI
         /// even if <see cref="PropertyGrid"/> is not a standalone control.
         /// </summary>
         AlwaysAllowFocus = 0x00100000,
+
+        /// <summary>
+        /// Default style.
+        /// </summary>
+        DefaultStyle = AlwaysAllowFocus,
     }
 }

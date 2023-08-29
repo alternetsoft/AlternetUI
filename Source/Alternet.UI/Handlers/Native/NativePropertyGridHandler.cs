@@ -26,6 +26,19 @@ namespace Alternet.UI
             }
         }
 
+        public long CreateStyleEx
+        {
+            get
+            {
+                return NativeControl.CreateStyleEx;
+            }
+
+            set
+            {
+                NativeControl.CreateStyleEx = value;
+            }
+        }
+
         public override IEnumerable<Control> AllChildrenIncludedInLayout
             => Enumerable.Empty<Control>();
 

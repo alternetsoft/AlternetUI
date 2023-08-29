@@ -7,31 +7,31 @@ using Alternet.Drawing;
 
 namespace NativeApi.Api
 {
-	//https://docs.wxwidgets.org/3.2/overview_propgrid.html
-	//https://docs.wxwidgets.org/3.2/classwx_property_grid.html
-	public partial class PropertyGrid : Control
-	{
+    //https://docs.wxwidgets.org/3.2/overview_propgrid.html
+    //https://docs.wxwidgets.org/3.2/classwx_property_grid.html
+    public partial class PropertyGrid : Control
+    {
         public int EventValidationFailureBehavior { get; set; }
-        public int EventColumn { get;}
-        public IntPtr EventProperty { get;}
+        public int EventColumn { get; }
+        public IntPtr EventProperty { get; }
         public string EventPropertyName { get; }
         public string EventValidationFailureMessage { get; set; }
 
         public event EventHandler? Selected;
-        
+
         public event EventHandler? Changed;
 
         [NativeEvent(cancellable: true)]
         public event EventHandler? Changing;
-        
+
         public event EventHandler? Highlighted;
-        
+
         public event EventHandler? RightClick;
-        
+
         public event EventHandler? DoubleClick;
-        
+
         public event EventHandler? ItemCollapsed;
-        
+
         public event EventHandler? ItemExpanded;
 
         [NativeEvent(cancellable: true)]
@@ -42,9 +42,9 @@ namespace NativeApi.Api
 
         [NativeEvent(cancellable: true)]
         public event EventHandler? ColBeginDrag;
-        
+
         public event EventHandler? ColDragging;
-        
+
         public event EventHandler? ColEndDrag;
 
         public static string NameAsLabel { get; }
@@ -54,150 +54,149 @@ namespace NativeApi.Api
 
         public long CreateStyle { get; set; }
 
-        /*
-    public void eeAddActionTrigger(int action, int keycode, int modifiers = 0);
+        public long CreateStyleEx { get; set; }
 
-    public void eeDedicateKey(int keycode);
+        public void AddActionTrigger(int action, int keycode, int modifiers = 0)
+            => throw new Exception();
 
-    public static void eeAutoGetTranslation(bool enable);
+        public void DedicateKey(int keycode) => throw new Exception();
 
-    public void eeCenterSplitter(bool enableAutoResizing = false);
+        public static void AutoGetTranslation(bool enable) => throw new Exception();
 
-    public void eeClearActionTriggers(int action);
+        public void CenterSplitter(bool enableAutoResizing = false) => throw new Exception();
 
-    public bool eeCommitChangesFromEditor(wxUint32 flags = 0);
+        public void ClearActionTriggers(int action) => throw new Exception();
 
-    public void eeEditorsValueWasModified();
+        public bool CommitChangesFromEditor(UInt32 flags = 0) => throw new Exception();
 
-    public void eeEditorsValueWasNotModified();
+        public void EditorsValueWasModified() => throw new Exception();
 
-    public bool eeEnableCategories(bool enable);
+        public void EditorsValueWasNotModified() => throw new Exception();
 
-    public Size eeFitColumns();
+        public bool EnableCategories(bool enable) => throw new Exception();
 
-    public Color eeGetCaptionBackgroundColor();
+        public Size FitColumns() => throw new Exception();
 
-    public Color eeGetCaptionForegroundColor();
+        public Color GetCaptionBackgroundColor() => throw new Exception();
 
-    public Color eeGetCellBackgroundColor();
+        public Color GetCaptionForegroundColor() => throw new Exception();
 
-    public Color eeGetCellDisabledTextColor();
+        public Color GetCellBackgroundColor() => throw new Exception();
 
-    public Color eeGetCellTextColor();
+        public Color GetCellDisabledTextColor() => throw new Exception();
 
-    public uint eeGetColumnCount();
+        public Color GetCellTextColor() => throw new Exception();
 
-    public Color eeGetEmptySpaceColor();
+        public uint GetColumnCount() => throw new Exception();
 
-    public int eeGetFontHeight();
+        public Color GetEmptySpaceColor() => throw new Exception();
 
-    public Color eeGetLineColor();
+        public int GetFontHeight() => throw new Exception();
 
-    public Color eeGetMarginColor()
+        public Color GetLineColor() => throw new Exception();
 
-    public int eeGetMarginWidth(); 
+        public Color GetMarginColor() => throw new Exception();
 
-    public int eeGetRowHeight();
+        public int GetMarginWidth() => throw new Exception();
 
-    public Color eeGetSelectionBackgroundColor();
+        public int GetRowHeight() => throw new Exception();
 
-    public Color eeGetSelectionForegroundColor();
+        public Color GetSelectionBackgroundColor() => throw new Exception();
 
-    public int eeGetSplitterPosition(uint splitterIndex = 0);
+        public Color GetSelectionForegroundColor() => throw new Exception();
 
-    public int eeGetVerticalSpacing();
+        public int GetSplitterPosition(uint splitterIndex = 0) => throw new Exception();
 
-    public bool eeIsEditorFocused();
+        public int GetVerticalSpacing() => throw new Exception();
 
-    public bool eeIsEditorsValueModified();
+        public bool IsEditorFocused() => throw new Exception();
 
-    public bool eeIsAnyModified();
+        public bool IsEditorsValueModified() => throw new Exception();
 
-    public void eeResetColors();
+        public bool IsAnyModified() => throw new Exception();
 
-    public void eeResetColumnSizes(bool enableAutoResizing = false);
+        public void ResetColors() => throw new Exception();
 
-    public void eeMakeColumnEditable(uint column, bool editable = true);
+        public void ResetColumnSizes(bool enableAutoResizing = false) => throw new Exception();
 
-    public void eeBeginLabelEdit(uint column = 0);
+        public void MakeColumnEditable(uint column, bool editable = true) => throw new Exception();
 
-    public void eeEndLabelEdit(bool commit = true);
+        public void BeginLabelEdit(uint column = 0) => throw new Exception();
 
-    public void eeSetCaptionBackgroundColor(Color col);
+        public void EndLabelEdit(bool commit = true) => throw new Exception();
 
-    public void eeSetCaptionTextColor(Color col);
+        public void SetCaptionBackgroundColor(Color col) => throw new Exception();
 
-    public void eeSetCellBackgroundColor(Color col);
+        public void SetCaptionTextColor(Color col) => throw new Exception();
 
-    public void eeSetCellDisabledTextColor(Color col);
+        public void SetCellBackgroundColor(Color col) => throw new Exception();
 
-    public void eeSetCellTextColor(Color col);
+        public void SetCellDisabledTextColor(Color col) => throw new Exception();
 
-    public void eeSetColumnCount(int colCount);
+        public void SetCellTextColor(Color col) => throw new Exception();
 
-    public void eeSetEmptySpaceColor(Color col);
+        public void SetColumnCount(int colCount) => throw new Exception();
 
-    public void eeSetLineColor(Color col);
+        public void SetEmptySpaceColor(Color col) => throw new Exception();
 
-    public void eeSetMarginColor(Color col);
+        public void SetLineColor(Color col) => throw new Exception();
 
-    public void eeSetSelectionBackgroundColor(Color col);
+        public void SetMarginColor(Color col) => throw new Exception();
 
-    public void eeSetSelectionTextColor(Color col);
+        public void SetSelectionBackgroundColor(Color col) => throw new Exception();
 
-    public void eeSetSplitterPosition(int newXPos, int col = 0);
+        public void SetSelectionTextColor(Color col) => throw new Exception();
 
-    public string eeGetUnspecifiedValueText(int argFlags = 0);
+        public void SetSplitterPosition(int newXPos, int col = 0) => throw new Exception();
 
-    public void eeSetVirtualWidth(int width);
+        public string GetUnspecifiedValueText(int argFlags = 0) => throw new Exception();
 
-    public void eeSetSplitterLeft(bool privateChildrenToo = false);
+        public void SetVirtualWidth(int width) => throw new Exception();
 
-    public void eeSetVerticalSpacing(int vspacing);
+        public void SetSplitterLeft(bool privateChildrenToo = false) => throw new Exception();
 
-    public bool eeHasVirtualWidth();
+        public void SetVerticalSpacing(int vspacing) => throw new Exception();
 
-    public uint eeGetCommonValueCount();
+        public bool HasVirtualWidth() => throw new Exception();
 
-    public string eeGetCommonValueLabel(uint i);
+        public uint GetCommonValueCount() => throw new Exception();
 
-    public int eeGetUnspecifiedCommonValue();
+        public string GetCommonValueLabel(uint i) => throw new Exception();
 
-    public void eeSetUnspecifiedCommonValue(int index);
+        public int GetUnspecifiedCommonValue() => throw new Exception();
 
-    public static bool eeIsSmallScreen();
+        public void SetUnspecifiedCommonValue(int index) => throw new Exception();
 
-    public void eeRefreshEditor();
+        public static bool IsSmallScreen() => throw new Exception();
 
-    public bool eeWasValueChangedInEvent();
+        public void RefreshEditor() => throw new Exception();
 
-    public int eeGetSpacingY();
+        public bool WasValueChangedInEvent() => throw new Exception();
 
-    public void eeSetupTextCtrlValue(string text);
+        public int GetSpacingY() => throw new Exception();
 
-    public bool eeUnfocusEditor();
+        public void SetupTextCtrlValue(string text) => throw new Exception();
 
-    public IntPtr eeGetLastItem(int flags);
+        public bool UnfocusEditor() => throw new Exception();
 
-    public IntPtr eeGetRoot();
+        public IntPtr GetLastItem(int flags) => throw new Exception();
 
-    public IntPtr eeGetSelectedProperty();
+        public IntPtr GetRoot() => throw new Exception();
 
-    public void eeRefreshProperty(IntPtr p);
+        public IntPtr GetSelectedProperty() => throw new Exception();
 
-    public bool eeEnsureVisible(IntPtr propArg id);
+        public bool EnsureVisible(IntPtr propArg) => throw new Exception();
 
-    public bool eeSelectProperty(IntPtr propArg, bool focus = false);
+        public bool SelectProperty(IntPtr propArg, bool focus = false) => throw new Exception();
 
-    public bool eeAddToSelection(IntPtr propArg);
+        public bool AddToSelection(IntPtr propArg) => throw new Exception();
 
-    public bool eeRemoveFromSelection(IntPtr propArg);
+        public bool RemoveFromSelection(IntPtr propArg) => throw new Exception();
 
-    public void eeSetCurrentCategory(IntPtr propArg);
+        public void SetCurrentCategory(IntPtr propArg) => throw new Exception();
 
-    public Int32Rect eeGetImageRect(IntPtr p, int item);
+        public Int32Rect GetImageRect(IntPtr p, int item) => throw new Exception();
 
-    public Int32Size eeGetImageSize(IntPtr p = null, int item = -1);
-        */
+        public Int32Size GetImageSize(IntPtr p, int item) => throw new Exception();
     }
 }

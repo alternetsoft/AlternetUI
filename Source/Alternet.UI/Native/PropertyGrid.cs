@@ -131,88 +131,20 @@ namespace Alternet.UI.Native
             }
         }
         
-        public System.IntPtr GetPropertyCategory(System.IntPtr id)
+        public long CreateStyleEx
         {
-            CheckDisposed();
-            var n = NativeApi.PropertyGrid_GetPropertyCategory_(NativePointer, id);
-            return n;
-        }
-        
-        public System.IntPtr GetPropertyClientData(System.IntPtr id)
-        {
-            CheckDisposed();
-            var n = NativeApi.PropertyGrid_GetPropertyClientData_(NativePointer, id);
-            return n;
-        }
-        
-        public string GetPropertyHelpString(System.IntPtr id)
-        {
-            CheckDisposed();
-            var n = NativeApi.PropertyGrid_GetPropertyHelpString_(NativePointer, id);
-            return n;
-        }
-        
-        public System.IntPtr GetPropertyImage(System.IntPtr id)
-        {
-            CheckDisposed();
-            var n = NativeApi.PropertyGrid_GetPropertyImage_(NativePointer, id);
-            return n;
-        }
-        
-        public string GetPropertyLabel(System.IntPtr id)
-        {
-            CheckDisposed();
-            var n = NativeApi.PropertyGrid_GetPropertyLabel_(NativePointer, id);
-            return n;
-        }
-        
-        public System.IntPtr GetPropertyParent(System.IntPtr id)
-        {
-            CheckDisposed();
-            var n = NativeApi.PropertyGrid_GetPropertyParent_(NativePointer, id);
-            return n;
-        }
-        
-        public string GetPropertyValueAsString(System.IntPtr id)
-        {
-            CheckDisposed();
-            var n = NativeApi.PropertyGrid_GetPropertyValueAsString_(NativePointer, id);
-            return n;
-        }
-        
-        public long GetPropertyValueAsLong(System.IntPtr id)
-        {
-            CheckDisposed();
-            var n = NativeApi.PropertyGrid_GetPropertyValueAsLong_(NativePointer, id);
-            return n;
-        }
-        
-        public ulong GetPropertyValueAsULong(System.IntPtr id)
-        {
-            CheckDisposed();
-            var n = NativeApi.PropertyGrid_GetPropertyValueAsULong_(NativePointer, id);
-            return n;
-        }
-        
-        public int GetPropertyValueAsInt(System.IntPtr id)
-        {
-            CheckDisposed();
-            var n = NativeApi.PropertyGrid_GetPropertyValueAsInt_(NativePointer, id);
-            return n;
-        }
-        
-        public bool GetPropertyValueAsBool(System.IntPtr id)
-        {
-            CheckDisposed();
-            var n = NativeApi.PropertyGrid_GetPropertyValueAsBool_(NativePointer, id);
-            return n;
-        }
-        
-        public double GetPropertyValueAsDouble(System.IntPtr id)
-        {
-            CheckDisposed();
-            var n = NativeApi.PropertyGrid_GetPropertyValueAsDouble_(NativePointer, id);
-            return n;
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.PropertyGrid_GetCreateStyleEx_(NativePointer);
+                return n;
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.PropertyGrid_SetCreateStyleEx_(NativePointer, value);
+            }
         }
         
         public DateTime GetPropertyValueAsDateTime(System.IntPtr id)
@@ -434,9 +366,182 @@ namespace Alternet.UI.Native
             return n;
         }
         
-        public static System.IntPtr CreateEx(long styles)
+        public void SetSelectionTextColor(Alternet.Drawing.Color col)
         {
-            var n = NativeApi.PropertyGrid_CreateEx_(styles);
+            CheckDisposed();
+            NativeApi.PropertyGrid_SetSelectionTextColor_(NativePointer, col);
+        }
+        
+        public void SetSplitterPosition(int newXPos, int col)
+        {
+            CheckDisposed();
+            NativeApi.PropertyGrid_SetSplitterPosition_(NativePointer, newXPos, col);
+        }
+        
+        public string GetUnspecifiedValueText(int argFlags)
+        {
+            CheckDisposed();
+            var n = NativeApi.PropertyGrid_GetUnspecifiedValueText_(NativePointer, argFlags);
+            return n;
+        }
+        
+        public void SetVirtualWidth(int width)
+        {
+            CheckDisposed();
+            NativeApi.PropertyGrid_SetVirtualWidth_(NativePointer, width);
+        }
+        
+        public void SetSplitterLeft(bool privateChildrenToo)
+        {
+            CheckDisposed();
+            NativeApi.PropertyGrid_SetSplitterLeft_(NativePointer, privateChildrenToo);
+        }
+        
+        public void SetVerticalSpacing(int vspacing)
+        {
+            CheckDisposed();
+            NativeApi.PropertyGrid_SetVerticalSpacing_(NativePointer, vspacing);
+        }
+        
+        public bool HasVirtualWidth()
+        {
+            CheckDisposed();
+            var n = NativeApi.PropertyGrid_HasVirtualWidth_(NativePointer);
+            return n;
+        }
+        
+        public uint GetCommonValueCount()
+        {
+            CheckDisposed();
+            var n = NativeApi.PropertyGrid_GetCommonValueCount_(NativePointer);
+            return n;
+        }
+        
+        public string GetCommonValueLabel(uint i)
+        {
+            CheckDisposed();
+            var n = NativeApi.PropertyGrid_GetCommonValueLabel_(NativePointer, i);
+            return n;
+        }
+        
+        public int GetUnspecifiedCommonValue()
+        {
+            CheckDisposed();
+            var n = NativeApi.PropertyGrid_GetUnspecifiedCommonValue_(NativePointer);
+            return n;
+        }
+        
+        public void SetUnspecifiedCommonValue(int index)
+        {
+            CheckDisposed();
+            NativeApi.PropertyGrid_SetUnspecifiedCommonValue_(NativePointer, index);
+        }
+        
+        public static bool IsSmallScreen()
+        {
+            var n = NativeApi.PropertyGrid_IsSmallScreen_();
+            return n;
+        }
+        
+        public void RefreshEditor()
+        {
+            CheckDisposed();
+            NativeApi.PropertyGrid_RefreshEditor_(NativePointer);
+        }
+        
+        public bool WasValueChangedInEvent()
+        {
+            CheckDisposed();
+            var n = NativeApi.PropertyGrid_WasValueChangedInEvent_(NativePointer);
+            return n;
+        }
+        
+        public int GetSpacingY()
+        {
+            CheckDisposed();
+            var n = NativeApi.PropertyGrid_GetSpacingY_(NativePointer);
+            return n;
+        }
+        
+        public void SetupTextCtrlValue(string text)
+        {
+            CheckDisposed();
+            NativeApi.PropertyGrid_SetupTextCtrlValue_(NativePointer, text);
+        }
+        
+        public bool UnfocusEditor()
+        {
+            CheckDisposed();
+            var n = NativeApi.PropertyGrid_UnfocusEditor_(NativePointer);
+            return n;
+        }
+        
+        public System.IntPtr GetLastItem(int flags)
+        {
+            CheckDisposed();
+            var n = NativeApi.PropertyGrid_GetLastItem_(NativePointer, flags);
+            return n;
+        }
+        
+        public System.IntPtr GetRoot()
+        {
+            CheckDisposed();
+            var n = NativeApi.PropertyGrid_GetRoot_(NativePointer);
+            return n;
+        }
+        
+        public System.IntPtr GetSelectedProperty()
+        {
+            CheckDisposed();
+            var n = NativeApi.PropertyGrid_GetSelectedProperty_(NativePointer);
+            return n;
+        }
+        
+        public bool EnsureVisible(System.IntPtr propArg)
+        {
+            CheckDisposed();
+            var n = NativeApi.PropertyGrid_EnsureVisible_(NativePointer, propArg);
+            return n;
+        }
+        
+        public bool SelectProperty(System.IntPtr propArg, bool focus)
+        {
+            CheckDisposed();
+            var n = NativeApi.PropertyGrid_SelectProperty_(NativePointer, propArg, focus);
+            return n;
+        }
+        
+        public bool AddToSelection(System.IntPtr propArg)
+        {
+            CheckDisposed();
+            var n = NativeApi.PropertyGrid_AddToSelection_(NativePointer, propArg);
+            return n;
+        }
+        
+        public bool RemoveFromSelection(System.IntPtr propArg)
+        {
+            CheckDisposed();
+            var n = NativeApi.PropertyGrid_RemoveFromSelection_(NativePointer, propArg);
+            return n;
+        }
+        
+        public void SetCurrentCategory(System.IntPtr propArg)
+        {
+            CheckDisposed();
+            NativeApi.PropertyGrid_SetCurrentCategory_(NativePointer, propArg);
+        }
+        
+        public Alternet.Drawing.Int32Rect GetImageRect(System.IntPtr p, int item)
+        {
+            CheckDisposed();
+            var n = NativeApi.PropertyGrid_GetImageRect_(NativePointer, p, item);
+            return n;
+        }
+        
+        public Alternet.Drawing.Int32Size GetImageSize(System.IntPtr p, int item)
+        {
+            CheckDisposed();
+            var n = NativeApi.PropertyGrid_GetImageSize_(NativePointer, p, item);
             return n;
         }
         
@@ -747,6 +852,381 @@ namespace Alternet.UI.Native
             return n;
         }
         
+        public System.IntPtr GetPropertyCategory(System.IntPtr id)
+        {
+            CheckDisposed();
+            var n = NativeApi.PropertyGrid_GetPropertyCategory_(NativePointer, id);
+            return n;
+        }
+        
+        public System.IntPtr GetPropertyClientData(System.IntPtr id)
+        {
+            CheckDisposed();
+            var n = NativeApi.PropertyGrid_GetPropertyClientData_(NativePointer, id);
+            return n;
+        }
+        
+        public string GetPropertyHelpString(System.IntPtr id)
+        {
+            CheckDisposed();
+            var n = NativeApi.PropertyGrid_GetPropertyHelpString_(NativePointer, id);
+            return n;
+        }
+        
+        public System.IntPtr GetPropertyImage(System.IntPtr id)
+        {
+            CheckDisposed();
+            var n = NativeApi.PropertyGrid_GetPropertyImage_(NativePointer, id);
+            return n;
+        }
+        
+        public string GetPropertyLabel(System.IntPtr id)
+        {
+            CheckDisposed();
+            var n = NativeApi.PropertyGrid_GetPropertyLabel_(NativePointer, id);
+            return n;
+        }
+        
+        public System.IntPtr GetPropertyParent(System.IntPtr id)
+        {
+            CheckDisposed();
+            var n = NativeApi.PropertyGrid_GetPropertyParent_(NativePointer, id);
+            return n;
+        }
+        
+        public string GetPropertyValueAsString(System.IntPtr id)
+        {
+            CheckDisposed();
+            var n = NativeApi.PropertyGrid_GetPropertyValueAsString_(NativePointer, id);
+            return n;
+        }
+        
+        public long GetPropertyValueAsLong(System.IntPtr id)
+        {
+            CheckDisposed();
+            var n = NativeApi.PropertyGrid_GetPropertyValueAsLong_(NativePointer, id);
+            return n;
+        }
+        
+        public ulong GetPropertyValueAsULong(System.IntPtr id)
+        {
+            CheckDisposed();
+            var n = NativeApi.PropertyGrid_GetPropertyValueAsULong_(NativePointer, id);
+            return n;
+        }
+        
+        public int GetPropertyValueAsInt(System.IntPtr id)
+        {
+            CheckDisposed();
+            var n = NativeApi.PropertyGrid_GetPropertyValueAsInt_(NativePointer, id);
+            return n;
+        }
+        
+        public bool GetPropertyValueAsBool(System.IntPtr id)
+        {
+            CheckDisposed();
+            var n = NativeApi.PropertyGrid_GetPropertyValueAsBool_(NativePointer, id);
+            return n;
+        }
+        
+        public double GetPropertyValueAsDouble(System.IntPtr id)
+        {
+            CheckDisposed();
+            var n = NativeApi.PropertyGrid_GetPropertyValueAsDouble_(NativePointer, id);
+            return n;
+        }
+        
+        public static System.IntPtr CreateEx(long styles)
+        {
+            var n = NativeApi.PropertyGrid_CreateEx_(styles);
+            return n;
+        }
+        
+        public void AddActionTrigger(int action, int keycode, int modifiers)
+        {
+            CheckDisposed();
+            NativeApi.PropertyGrid_AddActionTrigger_(NativePointer, action, keycode, modifiers);
+        }
+        
+        public void DedicateKey(int keycode)
+        {
+            CheckDisposed();
+            NativeApi.PropertyGrid_DedicateKey_(NativePointer, keycode);
+        }
+        
+        public static void AutoGetTranslation(bool enable)
+        {
+            NativeApi.PropertyGrid_AutoGetTranslation_(enable);
+        }
+        
+        public void CenterSplitter(bool enableAutoResizing)
+        {
+            CheckDisposed();
+            NativeApi.PropertyGrid_CenterSplitter_(NativePointer, enableAutoResizing);
+        }
+        
+        public void ClearActionTriggers(int action)
+        {
+            CheckDisposed();
+            NativeApi.PropertyGrid_ClearActionTriggers_(NativePointer, action);
+        }
+        
+        public bool CommitChangesFromEditor(uint flags)
+        {
+            CheckDisposed();
+            var n = NativeApi.PropertyGrid_CommitChangesFromEditor_(NativePointer, flags);
+            return n;
+        }
+        
+        public void EditorsValueWasModified()
+        {
+            CheckDisposed();
+            NativeApi.PropertyGrid_EditorsValueWasModified_(NativePointer);
+        }
+        
+        public void EditorsValueWasNotModified()
+        {
+            CheckDisposed();
+            NativeApi.PropertyGrid_EditorsValueWasNotModified_(NativePointer);
+        }
+        
+        public bool EnableCategories(bool enable)
+        {
+            CheckDisposed();
+            var n = NativeApi.PropertyGrid_EnableCategories_(NativePointer, enable);
+            return n;
+        }
+        
+        public Alternet.Drawing.Size FitColumns()
+        {
+            CheckDisposed();
+            var n = NativeApi.PropertyGrid_FitColumns_(NativePointer);
+            return n;
+        }
+        
+        public Alternet.Drawing.Color GetCaptionBackgroundColor()
+        {
+            CheckDisposed();
+            var n = NativeApi.PropertyGrid_GetCaptionBackgroundColor_(NativePointer);
+            return n;
+        }
+        
+        public Alternet.Drawing.Color GetCaptionForegroundColor()
+        {
+            CheckDisposed();
+            var n = NativeApi.PropertyGrid_GetCaptionForegroundColor_(NativePointer);
+            return n;
+        }
+        
+        public Alternet.Drawing.Color GetCellBackgroundColor()
+        {
+            CheckDisposed();
+            var n = NativeApi.PropertyGrid_GetCellBackgroundColor_(NativePointer);
+            return n;
+        }
+        
+        public Alternet.Drawing.Color GetCellDisabledTextColor()
+        {
+            CheckDisposed();
+            var n = NativeApi.PropertyGrid_GetCellDisabledTextColor_(NativePointer);
+            return n;
+        }
+        
+        public Alternet.Drawing.Color GetCellTextColor()
+        {
+            CheckDisposed();
+            var n = NativeApi.PropertyGrid_GetCellTextColor_(NativePointer);
+            return n;
+        }
+        
+        public uint GetColumnCount()
+        {
+            CheckDisposed();
+            var n = NativeApi.PropertyGrid_GetColumnCount_(NativePointer);
+            return n;
+        }
+        
+        public Alternet.Drawing.Color GetEmptySpaceColor()
+        {
+            CheckDisposed();
+            var n = NativeApi.PropertyGrid_GetEmptySpaceColor_(NativePointer);
+            return n;
+        }
+        
+        public int GetFontHeight()
+        {
+            CheckDisposed();
+            var n = NativeApi.PropertyGrid_GetFontHeight_(NativePointer);
+            return n;
+        }
+        
+        public Alternet.Drawing.Color GetLineColor()
+        {
+            CheckDisposed();
+            var n = NativeApi.PropertyGrid_GetLineColor_(NativePointer);
+            return n;
+        }
+        
+        public Alternet.Drawing.Color GetMarginColor()
+        {
+            CheckDisposed();
+            var n = NativeApi.PropertyGrid_GetMarginColor_(NativePointer);
+            return n;
+        }
+        
+        public int GetMarginWidth()
+        {
+            CheckDisposed();
+            var n = NativeApi.PropertyGrid_GetMarginWidth_(NativePointer);
+            return n;
+        }
+        
+        public int GetRowHeight()
+        {
+            CheckDisposed();
+            var n = NativeApi.PropertyGrid_GetRowHeight_(NativePointer);
+            return n;
+        }
+        
+        public Alternet.Drawing.Color GetSelectionBackgroundColor()
+        {
+            CheckDisposed();
+            var n = NativeApi.PropertyGrid_GetSelectionBackgroundColor_(NativePointer);
+            return n;
+        }
+        
+        public Alternet.Drawing.Color GetSelectionForegroundColor()
+        {
+            CheckDisposed();
+            var n = NativeApi.PropertyGrid_GetSelectionForegroundColor_(NativePointer);
+            return n;
+        }
+        
+        public int GetSplitterPosition(uint splitterIndex)
+        {
+            CheckDisposed();
+            var n = NativeApi.PropertyGrid_GetSplitterPosition_(NativePointer, splitterIndex);
+            return n;
+        }
+        
+        public int GetVerticalSpacing()
+        {
+            CheckDisposed();
+            var n = NativeApi.PropertyGrid_GetVerticalSpacing_(NativePointer);
+            return n;
+        }
+        
+        public bool IsEditorFocused()
+        {
+            CheckDisposed();
+            var n = NativeApi.PropertyGrid_IsEditorFocused_(NativePointer);
+            return n;
+        }
+        
+        public bool IsEditorsValueModified()
+        {
+            CheckDisposed();
+            var n = NativeApi.PropertyGrid_IsEditorsValueModified_(NativePointer);
+            return n;
+        }
+        
+        public bool IsAnyModified()
+        {
+            CheckDisposed();
+            var n = NativeApi.PropertyGrid_IsAnyModified_(NativePointer);
+            return n;
+        }
+        
+        public void ResetColors()
+        {
+            CheckDisposed();
+            NativeApi.PropertyGrid_ResetColors_(NativePointer);
+        }
+        
+        public void ResetColumnSizes(bool enableAutoResizing)
+        {
+            CheckDisposed();
+            NativeApi.PropertyGrid_ResetColumnSizes_(NativePointer, enableAutoResizing);
+        }
+        
+        public void MakeColumnEditable(uint column, bool editable)
+        {
+            CheckDisposed();
+            NativeApi.PropertyGrid_MakeColumnEditable_(NativePointer, column, editable);
+        }
+        
+        public void BeginLabelEdit(uint column)
+        {
+            CheckDisposed();
+            NativeApi.PropertyGrid_BeginLabelEdit_(NativePointer, column);
+        }
+        
+        public void EndLabelEdit(bool commit)
+        {
+            CheckDisposed();
+            NativeApi.PropertyGrid_EndLabelEdit_(NativePointer, commit);
+        }
+        
+        public void SetCaptionBackgroundColor(Alternet.Drawing.Color col)
+        {
+            CheckDisposed();
+            NativeApi.PropertyGrid_SetCaptionBackgroundColor_(NativePointer, col);
+        }
+        
+        public void SetCaptionTextColor(Alternet.Drawing.Color col)
+        {
+            CheckDisposed();
+            NativeApi.PropertyGrid_SetCaptionTextColor_(NativePointer, col);
+        }
+        
+        public void SetCellBackgroundColor(Alternet.Drawing.Color col)
+        {
+            CheckDisposed();
+            NativeApi.PropertyGrid_SetCellBackgroundColor_(NativePointer, col);
+        }
+        
+        public void SetCellDisabledTextColor(Alternet.Drawing.Color col)
+        {
+            CheckDisposed();
+            NativeApi.PropertyGrid_SetCellDisabledTextColor_(NativePointer, col);
+        }
+        
+        public void SetCellTextColor(Alternet.Drawing.Color col)
+        {
+            CheckDisposed();
+            NativeApi.PropertyGrid_SetCellTextColor_(NativePointer, col);
+        }
+        
+        public void SetColumnCount(int colCount)
+        {
+            CheckDisposed();
+            NativeApi.PropertyGrid_SetColumnCount_(NativePointer, colCount);
+        }
+        
+        public void SetEmptySpaceColor(Alternet.Drawing.Color col)
+        {
+            CheckDisposed();
+            NativeApi.PropertyGrid_SetEmptySpaceColor_(NativePointer, col);
+        }
+        
+        public void SetLineColor(Alternet.Drawing.Color col)
+        {
+            CheckDisposed();
+            NativeApi.PropertyGrid_SetLineColor_(NativePointer, col);
+        }
+        
+        public void SetMarginColor(Alternet.Drawing.Color col)
+        {
+            CheckDisposed();
+            NativeApi.PropertyGrid_SetMarginColor_(NativePointer, col);
+        }
+        
+        public void SetSelectionBackgroundColor(Alternet.Drawing.Color col)
+        {
+            CheckDisposed();
+            NativeApi.PropertyGrid_SetSelectionBackgroundColor_(NativePointer, col);
+        }
+        
         static GCHandle eventCallbackGCHandle;
         
         static void SetEventCallback()
@@ -924,40 +1404,10 @@ namespace Alternet.UI.Native
             public static extern void PropertyGrid_SetCreateStyle_(IntPtr obj, long value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr PropertyGrid_GetPropertyCategory_(IntPtr obj, System.IntPtr id);
+            public static extern long PropertyGrid_GetCreateStyleEx_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr PropertyGrid_GetPropertyClientData_(IntPtr obj, System.IntPtr id);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern string PropertyGrid_GetPropertyHelpString_(IntPtr obj, System.IntPtr id);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr PropertyGrid_GetPropertyImage_(IntPtr obj, System.IntPtr id);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern string PropertyGrid_GetPropertyLabel_(IntPtr obj, System.IntPtr id);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr PropertyGrid_GetPropertyParent_(IntPtr obj, System.IntPtr id);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern string PropertyGrid_GetPropertyValueAsString_(IntPtr obj, System.IntPtr id);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern long PropertyGrid_GetPropertyValueAsLong_(IntPtr obj, System.IntPtr id);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern ulong PropertyGrid_GetPropertyValueAsULong_(IntPtr obj, System.IntPtr id);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int PropertyGrid_GetPropertyValueAsInt_(IntPtr obj, System.IntPtr id);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool PropertyGrid_GetPropertyValueAsBool_(IntPtr obj, System.IntPtr id);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern double PropertyGrid_GetPropertyValueAsDouble_(IntPtr obj, System.IntPtr id);
+            public static extern void PropertyGrid_SetCreateStyleEx_(IntPtr obj, long value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern NativeApiTypes.DateTime PropertyGrid_GetPropertyValueAsDateTime_(IntPtr obj, System.IntPtr id);
@@ -1062,7 +1512,85 @@ namespace Alternet.UI.Native
             public static extern System.IntPtr PropertyGrid_GetEditorByName_(string editorName);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr PropertyGrid_CreateEx_(long styles);
+            public static extern void PropertyGrid_SetSelectionTextColor_(IntPtr obj, NativeApiTypes.Color col);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void PropertyGrid_SetSplitterPosition_(IntPtr obj, int newXPos, int col);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern string PropertyGrid_GetUnspecifiedValueText_(IntPtr obj, int argFlags);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void PropertyGrid_SetVirtualWidth_(IntPtr obj, int width);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void PropertyGrid_SetSplitterLeft_(IntPtr obj, bool privateChildrenToo);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void PropertyGrid_SetVerticalSpacing_(IntPtr obj, int vspacing);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool PropertyGrid_HasVirtualWidth_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern uint PropertyGrid_GetCommonValueCount_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern string PropertyGrid_GetCommonValueLabel_(IntPtr obj, uint i);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int PropertyGrid_GetUnspecifiedCommonValue_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void PropertyGrid_SetUnspecifiedCommonValue_(IntPtr obj, int index);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool PropertyGrid_IsSmallScreen_();
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void PropertyGrid_RefreshEditor_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool PropertyGrid_WasValueChangedInEvent_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int PropertyGrid_GetSpacingY_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void PropertyGrid_SetupTextCtrlValue_(IntPtr obj, string text);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool PropertyGrid_UnfocusEditor_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr PropertyGrid_GetLastItem_(IntPtr obj, int flags);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr PropertyGrid_GetRoot_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr PropertyGrid_GetSelectedProperty_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool PropertyGrid_EnsureVisible_(IntPtr obj, System.IntPtr propArg);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool PropertyGrid_SelectProperty_(IntPtr obj, System.IntPtr propArg, bool focus);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool PropertyGrid_AddToSelection_(IntPtr obj, System.IntPtr propArg);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool PropertyGrid_RemoveFromSelection_(IntPtr obj, System.IntPtr propArg);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void PropertyGrid_SetCurrentCategory_(IntPtr obj, System.IntPtr propArg);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern Alternet.Drawing.Int32Rect PropertyGrid_GetImageRect_(IntPtr obj, System.IntPtr p, int item);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern Alternet.Drawing.Int32Size PropertyGrid_GetImageSize_(IntPtr obj, System.IntPtr p, int item);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern System.IntPtr PropertyGrid_CreateStringProperty_(IntPtr obj, string label, string name, string value);
@@ -1201,6 +1729,177 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern System.IntPtr PropertyGrid_GetFirstChild_(IntPtr obj, System.IntPtr id);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr PropertyGrid_GetPropertyCategory_(IntPtr obj, System.IntPtr id);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr PropertyGrid_GetPropertyClientData_(IntPtr obj, System.IntPtr id);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern string PropertyGrid_GetPropertyHelpString_(IntPtr obj, System.IntPtr id);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr PropertyGrid_GetPropertyImage_(IntPtr obj, System.IntPtr id);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern string PropertyGrid_GetPropertyLabel_(IntPtr obj, System.IntPtr id);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr PropertyGrid_GetPropertyParent_(IntPtr obj, System.IntPtr id);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern string PropertyGrid_GetPropertyValueAsString_(IntPtr obj, System.IntPtr id);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern long PropertyGrid_GetPropertyValueAsLong_(IntPtr obj, System.IntPtr id);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern ulong PropertyGrid_GetPropertyValueAsULong_(IntPtr obj, System.IntPtr id);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int PropertyGrid_GetPropertyValueAsInt_(IntPtr obj, System.IntPtr id);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool PropertyGrid_GetPropertyValueAsBool_(IntPtr obj, System.IntPtr id);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern double PropertyGrid_GetPropertyValueAsDouble_(IntPtr obj, System.IntPtr id);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr PropertyGrid_CreateEx_(long styles);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void PropertyGrid_AddActionTrigger_(IntPtr obj, int action, int keycode, int modifiers);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void PropertyGrid_DedicateKey_(IntPtr obj, int keycode);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void PropertyGrid_AutoGetTranslation_(bool enable);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void PropertyGrid_CenterSplitter_(IntPtr obj, bool enableAutoResizing);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void PropertyGrid_ClearActionTriggers_(IntPtr obj, int action);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool PropertyGrid_CommitChangesFromEditor_(IntPtr obj, uint flags);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void PropertyGrid_EditorsValueWasModified_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void PropertyGrid_EditorsValueWasNotModified_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool PropertyGrid_EnableCategories_(IntPtr obj, bool enable);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern Alternet.Drawing.Size PropertyGrid_FitColumns_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern NativeApiTypes.Color PropertyGrid_GetCaptionBackgroundColor_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern NativeApiTypes.Color PropertyGrid_GetCaptionForegroundColor_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern NativeApiTypes.Color PropertyGrid_GetCellBackgroundColor_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern NativeApiTypes.Color PropertyGrid_GetCellDisabledTextColor_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern NativeApiTypes.Color PropertyGrid_GetCellTextColor_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern uint PropertyGrid_GetColumnCount_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern NativeApiTypes.Color PropertyGrid_GetEmptySpaceColor_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int PropertyGrid_GetFontHeight_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern NativeApiTypes.Color PropertyGrid_GetLineColor_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern NativeApiTypes.Color PropertyGrid_GetMarginColor_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int PropertyGrid_GetMarginWidth_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int PropertyGrid_GetRowHeight_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern NativeApiTypes.Color PropertyGrid_GetSelectionBackgroundColor_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern NativeApiTypes.Color PropertyGrid_GetSelectionForegroundColor_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int PropertyGrid_GetSplitterPosition_(IntPtr obj, uint splitterIndex);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int PropertyGrid_GetVerticalSpacing_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool PropertyGrid_IsEditorFocused_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool PropertyGrid_IsEditorsValueModified_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool PropertyGrid_IsAnyModified_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void PropertyGrid_ResetColors_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void PropertyGrid_ResetColumnSizes_(IntPtr obj, bool enableAutoResizing);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void PropertyGrid_MakeColumnEditable_(IntPtr obj, uint column, bool editable);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void PropertyGrid_BeginLabelEdit_(IntPtr obj, uint column);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void PropertyGrid_EndLabelEdit_(IntPtr obj, bool commit);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void PropertyGrid_SetCaptionBackgroundColor_(IntPtr obj, NativeApiTypes.Color col);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void PropertyGrid_SetCaptionTextColor_(IntPtr obj, NativeApiTypes.Color col);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void PropertyGrid_SetCellBackgroundColor_(IntPtr obj, NativeApiTypes.Color col);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void PropertyGrid_SetCellDisabledTextColor_(IntPtr obj, NativeApiTypes.Color col);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void PropertyGrid_SetCellTextColor_(IntPtr obj, NativeApiTypes.Color col);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void PropertyGrid_SetColumnCount_(IntPtr obj, int colCount);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void PropertyGrid_SetEmptySpaceColor_(IntPtr obj, NativeApiTypes.Color col);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void PropertyGrid_SetLineColor_(IntPtr obj, NativeApiTypes.Color col);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void PropertyGrid_SetMarginColor_(IntPtr obj, NativeApiTypes.Color col);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void PropertyGrid_SetSelectionBackgroundColor_(IntPtr obj, NativeApiTypes.Color col);
             
         }
     }
