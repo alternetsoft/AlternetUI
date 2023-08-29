@@ -15,21 +15,35 @@ namespace Alternet.UI
             nativeKeyboard.TextInput += NativeKeyboard_TextInput;
         }
 
-        private void NativeKeyboard_TextInput(object? sender, Native.NativeEventArgs<Native.TextInputEventData> e)
+        private void NativeKeyboard_TextInput(
+            object? sender,
+            Native.NativeEventArgs<Native.TextInputEventData> e)
         {
             InputManager.Current.ReportTextInput(e.Data.timestamp, e.Data.keyChar, out var handled);
             e.Handled = handled;
         }
 
-        private void NativeKeyboard_KeyDown(object? sender, Native.NativeEventArgs<Native.KeyEventData> e)
+        private void NativeKeyboard_KeyDown(
+            object? sender,
+            Native.NativeEventArgs<Native.KeyEventData> e)
         {
-            InputManager.Current.ReportKeyDown(e.Data.timestamp, (Key)e.Data.key, e.Data.isRepeat, out var handled);
+            InputManager.Current.ReportKeyDown(
+                e.Data.timestamp,
+                (Key)e.Data.key,
+                e.Data.isRepeat,
+                out var handled);
             e.Handled = handled;
         }
 
-        private void NativeKeyboard_KeyUp(object? sender, Native.NativeEventArgs<Native.KeyEventData> e)
+        private void NativeKeyboard_KeyUp(
+            object? sender,
+            Native.NativeEventArgs<Native.KeyEventData> e)
         {
-            InputManager.Current.ReportKeyUp(e.Data.timestamp, (Key)e.Data.key, e.Data.isRepeat, out var handled);
+            InputManager.Current.ReportKeyUp(
+                e.Data.timestamp,
+                (Key)e.Data.key,
+                e.Data.isRepeat,
+                out var handled);
             e.Handled = handled;
         }
 
