@@ -13,7 +13,7 @@ namespace Alternet::UI
         void OnKeyUp(wxKeyEvent& e, bool& handled);
         void OnChar(wxKeyEvent& e, bool& handled);
 
-        int KeyToWxKey(Key value);
+        static int KeyToWxKey(Key value);
 
         wxAcceleratorEntryFlags ModifierKeysToAcceleratorFlags(ModifierKeys modifierKeys);
 
