@@ -121,6 +121,41 @@ ALTERNET_UI_API void PropertyGrid_SetCreateStyleEx_(PropertyGrid* obj, int64_t v
         });
 }
 
+ALTERNET_UI_API char16_t* PropertyGrid_GetPropertyValueAsString_(PropertyGrid* obj, void* id)
+{
+    return MarshalExceptions<char16_t*>([&](){
+            return AllocPInvokeReturnString(obj->GetPropertyValueAsString(id));
+        });
+}
+
+ALTERNET_UI_API int64_t PropertyGrid_GetPropertyValueAsLong_(PropertyGrid* obj, void* id)
+{
+    return MarshalExceptions<int64_t>([&](){
+            return obj->GetPropertyValueAsLong(id);
+        });
+}
+
+ALTERNET_UI_API uint64_t PropertyGrid_GetPropertyValueAsULong_(PropertyGrid* obj, void* id)
+{
+    return MarshalExceptions<uint64_t>([&](){
+            return obj->GetPropertyValueAsULong(id);
+        });
+}
+
+ALTERNET_UI_API int PropertyGrid_GetPropertyValueAsInt_(PropertyGrid* obj, void* id)
+{
+    return MarshalExceptions<int>([&](){
+            return obj->GetPropertyValueAsInt(id);
+        });
+}
+
+ALTERNET_UI_API c_bool PropertyGrid_GetPropertyValueAsBool_(PropertyGrid* obj, void* id)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return obj->GetPropertyValueAsBool(id);
+        });
+}
+
 ALTERNET_UI_API double PropertyGrid_GetPropertyValueAsDouble_(PropertyGrid* obj, void* id)
 {
     return MarshalExceptions<double>([&](){
@@ -335,6 +370,13 @@ ALTERNET_UI_API void PropertyGrid_SetPropertyValueAsStr_(PropertyGrid* obj, void
 {
     MarshalExceptions<void>([&](){
             obj->SetPropertyValueAsStr(id, value);
+        });
+}
+
+ALTERNET_UI_API void PropertyGrid_SetPropertyValueAsVariant_(PropertyGrid* obj, void* id, void* variant)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetPropertyValueAsVariant(id, variant);
         });
 }
 
@@ -594,6 +636,41 @@ ALTERNET_UI_API void* PropertyGrid_CreateStringProperty_(PropertyGrid* obj, cons
 {
     return MarshalExceptions<void*>([&](){
             return obj->CreateStringProperty(label, name, value);
+        });
+}
+
+ALTERNET_UI_API void* PropertyGrid_CreateFilenameProperty_(PropertyGrid* obj, const char16_t* label, const char16_t* name, const char16_t* value)
+{
+    return MarshalExceptions<void*>([&](){
+            return obj->CreateFilenameProperty(label, name, value);
+        });
+}
+
+ALTERNET_UI_API void* PropertyGrid_CreateDirProperty_(PropertyGrid* obj, const char16_t* label, const char16_t* name, const char16_t* value)
+{
+    return MarshalExceptions<void*>([&](){
+            return obj->CreateDirProperty(label, name, value);
+        });
+}
+
+ALTERNET_UI_API void* PropertyGrid_CreateImageFilenameProperty_(PropertyGrid* obj, const char16_t* label, const char16_t* name, const char16_t* value)
+{
+    return MarshalExceptions<void*>([&](){
+            return obj->CreateImageFilenameProperty(label, name, value);
+        });
+}
+
+ALTERNET_UI_API void* PropertyGrid_CreateSystemColorProperty_(PropertyGrid* obj, const char16_t* label, const char16_t* name, Color value)
+{
+    return MarshalExceptions<void*>([&](){
+            return obj->CreateSystemColorProperty(label, name, value);
+        });
+}
+
+ALTERNET_UI_API void* PropertyGrid_CreateCursorProperty_(PropertyGrid* obj, const char16_t* label, const char16_t* name, int value)
+{
+    return MarshalExceptions<void*>([&](){
+            return obj->CreateCursorProperty(label, name, value);
         });
 }
 
@@ -951,41 +1028,6 @@ ALTERNET_UI_API void* PropertyGrid_GetPropertyParent_(PropertyGrid* obj, void* i
 {
     return MarshalExceptions<void*>([&](){
             return obj->GetPropertyParent(id);
-        });
-}
-
-ALTERNET_UI_API char16_t* PropertyGrid_GetPropertyValueAsString_(PropertyGrid* obj, void* id)
-{
-    return MarshalExceptions<char16_t*>([&](){
-            return AllocPInvokeReturnString(obj->GetPropertyValueAsString(id));
-        });
-}
-
-ALTERNET_UI_API int64_t PropertyGrid_GetPropertyValueAsLong_(PropertyGrid* obj, void* id)
-{
-    return MarshalExceptions<int64_t>([&](){
-            return obj->GetPropertyValueAsLong(id);
-        });
-}
-
-ALTERNET_UI_API uint64_t PropertyGrid_GetPropertyValueAsULong_(PropertyGrid* obj, void* id)
-{
-    return MarshalExceptions<uint64_t>([&](){
-            return obj->GetPropertyValueAsULong(id);
-        });
-}
-
-ALTERNET_UI_API int PropertyGrid_GetPropertyValueAsInt_(PropertyGrid* obj, void* id)
-{
-    return MarshalExceptions<int>([&](){
-            return obj->GetPropertyValueAsInt(id);
-        });
-}
-
-ALTERNET_UI_API c_bool PropertyGrid_GetPropertyValueAsBool_(PropertyGrid* obj, void* id)
-{
-    return MarshalExceptions<c_bool>([&](){
-            return obj->GetPropertyValueAsBool(id);
         });
 }
 

@@ -7,7 +7,7 @@ using Alternet.Drawing;
 
 namespace Alternet.UI
 {
-    internal class PropertyGridVariant : IDisposable
+    internal class PropertyGridVariant : IDisposable, IPropertyGridVariant
     {
         private const string TypeNameNull = "null";
         private const string TypeNameBool = "bool";
@@ -17,6 +17,7 @@ namespace Alternet.UI
         private const string TypeNameDouble = "double";
         private const string TypeNameString = "string";
         private const string TypeNameColor = "wxColour";
+        private const string TypeNameColor2 = "wxColourPropertyValue";
 
         private IntPtr handle;
         private bool ownHandle;
@@ -61,7 +62,7 @@ namespace Alternet.UI
                     return AsString;
                 if (type == TypeNameLong || type == TypeNameLongLong)
                     return AsLong;
-                if (type == TypeNameColor)
+                if (type == TypeNameColor || type == TypeNameColor2)
                     return AsColor;
                 return null;
             }
@@ -224,7 +225,7 @@ namespace Alternet.UI
 
         public bool IsType(string type) => Native.PropertyGridVariant.IsType(handle, type);
 
-        public string MakeString() => Native.PropertyGridVariant.MakeString(handle);
+        public override string ToString() => Native.PropertyGridVariant.MakeString(handle);
 
         /// <inheritdoc cref="IDisposable.Dispose"/>
         public void Dispose()

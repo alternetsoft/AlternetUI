@@ -212,11 +212,10 @@ namespace PropertyGridSample
                 propertyGrid.Add(prop);
 
                 prop = propertyGrid.CreateBoolProperty("Bool");
-                propertyGrid.SetPropertyAttribute(
-                    prop,
-                    PropertyGridItemAttrId.UseCheckbox.ToString(),
-                    true);
+                propertyGrid.Add(prop);
 
+                prop = propertyGrid.CreateBoolProperty("Bool 2");
+                propertyGrid.SetPropertyKnownAttribute(prop, PropertyGridItemAttrId.UseCheckbox, true);
                 propertyGrid.Add(prop);
 
                 prop = propertyGrid.CreateIntProperty("Int");
@@ -253,6 +252,10 @@ namespace PropertyGridSample
                 prop = propertyGrid.CreateColorProperty("Color", null, Color.Red);
                 propertyGrid.Add(prop);
 
+                prop = propertyGrid.CreateColorProperty("Color with alpha", null, Color.Yellow);
+                propertyGrid.SetPropertyKnownAttribute(prop, PropertyGridItemAttrId.HasAlpha, true);
+                propertyGrid.Add(prop);
+
                 prop = propertyGrid.CreateStringProperty(
                     "Readonly prop",
                     null,
@@ -279,6 +282,39 @@ namespace PropertyGridSample
                                     "Error if changed",
                                     null,
                                     "Some Text");
+                propertyGrid.Add(prop);
+
+                prop = propertyGrid.CreateFilenameProperty(
+                    "Filename",
+                    null,
+                    PathUtils.GetAppFolder());
+                propertyGrid.SetPropertyKnownAttribute(
+                    prop,
+                    PropertyGridItemAttrId.Wildcard,
+                    "Text Files (*.txt)|*.txt");
+                propertyGrid.SetPropertyKnownAttribute(
+                    prop,
+                    PropertyGridItemAttrId.DialogTitle,
+                    "Custom File Dialog Title");
+                propertyGrid.SetPropertyKnownAttribute(
+                    prop,
+                    PropertyGridItemAttrId.ShowFullPath,
+                    false);
+                propertyGrid.Add(prop);
+
+                prop = propertyGrid.CreateDirProperty("Dir", null, PathUtils.GetAppFolder());
+                propertyGrid.Add(prop);
+
+                prop = propertyGrid.CreateImageFilenameProperty(
+                    "Image Filename",
+                    null,
+                    PathUtils.GetAppFolder());
+                propertyGrid.Add(prop);
+
+                prop = propertyGrid.CreateSystemColorProperty(
+                    "System color",
+                    null,
+                    Color.FromKnownColor(KnownColor.Window));
                 propertyGrid.Add(prop);
 
             }

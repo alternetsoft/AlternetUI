@@ -71,8 +71,19 @@ namespace Alternet::UI
 		if (value.IsNull())
 			return Color();
 		wxColour result;
-		result << value;
-		return result;
+		if (value.GetType() == "wxColor")
+		{
+			result << value;
+			return result;
+		}
+		if (value.GetType() == "wxColourPropertyValue")
+		{
+			wxAny any = value;
+			wxColourPropertyValue cpv = any.As<wxColourPropertyValue>();
+			result = cpv.m_colour;
+			return result;
+		}
+		return Color();
 	}
 
 	void PropertyGridVariant::SetColor(void* handle, const Color& val) 

@@ -128,23 +128,6 @@ namespace Alternet.UI
         public static PropertyGridCreateStyleEx DefaultCreateStyleEx { get; set; }
             = PropertyGridCreateStyleEx.DefaultStyle;
 
-        internal static void CreateTestVariant()
-        {
-#pragma warning disable
-            PropertyGridVariant variant = new();
-#pragma warning restore
-
-            variant.AsBool = true;
-
-            variant.AsLong = 150;
-
-            variant.AsDateTime = DateTime.Now;
-
-            variant.AsDouble = 18;
-
-            variant.AsString = "hello";
-        }
-
         /// <summary>
         /// Gets property value used in the event handler.
         /// </summary>
@@ -152,9 +135,20 @@ namespace Alternet.UI
         {
             get
             {
+                return EventPropValueAsVariant.AsObject;
+            }
+        }
+
+        /// <summary>
+        /// Gets property value used in the event handler as <see cref="IPropertyGridVariant"/>.
+        /// </summary>
+        public IPropertyGridVariant EventPropValueAsVariant
+        {
+            get
+            {
                 IntPtr handle = NativeControl.EventPropValue;
                 PropertyGridVariant propValue = new(handle);
-                return propValue.AsObject;
+                return propValue;
             }
         }
 
@@ -324,6 +318,114 @@ namespace Alternet.UI
         public static void SetBoolChoices(string trueChoice, string falseChoice)
         {
             Native.PropertyGrid.SetBoolChoices(trueChoice, falseChoice);
+        }
+
+        /// <summary>
+        /// Creates <see cref="string"/> property with ellipsis button which opens
+        /// <see cref="FileDialog"/> when pressed.
+        /// </summary>
+        /// <param name="label">Property label.</param>
+        /// <param name="name">Property name.</param>
+        /// <param name="value">Default property value.</param>
+        /// <returns>Property declaration for use with <see cref="PropertyGrid.Add"/>.</returns>
+        /// <remarks>
+        /// In order to setup filename and attached <see cref="FileDialog"/>, you can use
+        /// <see cref="PropertyGrid.SetPropertyKnownAttribute"/> for
+        /// <see cref="PropertyGridItemAttrId.DialogTitle"/>,
+        /// <see cref="PropertyGridItemAttrId.InitialPath"/>,
+        /// <see cref="PropertyGridItemAttrId.ShowFullPath"/>,
+        /// <see cref="PropertyGridItemAttrId.Wildcard"/> attributes.
+        /// </remarks>
+        public IPropertyGridItem CreateFilenameProperty(
+            string label,
+            string? name = null,
+            string? value = null)
+        {
+            value ??= string.Empty;
+            var handle = NativeControl.CreateFilenameProperty(label, CorrectPropName(name), value!);
+            var result = new PropertyGridItem(handle, label, name, value);
+            OnPropertyCreated(result);
+            return result;
+        }
+
+        /// <summary>
+        /// Creates <see cref="string"/> property with ellipsis button which opens
+        /// <see cref="SelectDirectoryDialog"/> when pressed.
+        /// </summary>
+        /// <param name="label">Property label.</param>
+        /// <param name="name">Property name.</param>
+        /// <param name="value">Default property value.</param>
+        /// <returns>Property declaration for use with <see cref="PropertyGrid.Add"/>.</returns>
+        /// <remarks>
+        /// In order to setup folder name and attached <see cref="SelectDirectoryDialog"/>,
+        /// you can use
+        /// <see cref="PropertyGrid.SetPropertyKnownAttribute"/> for
+        /// <see cref="PropertyGridItemAttrId.DialogTitle"/>,
+        /// <see cref="PropertyGridItemAttrId.InitialPath"/>,
+        /// <see cref="PropertyGridItemAttrId.ShowFullPath"/> attributes.
+        /// </remarks>
+        public IPropertyGridItem CreateDirProperty(
+            string label,
+            string? name = null,
+            string? value = null)
+        {
+            value ??= string.Empty;
+            var handle = NativeControl.CreateDirProperty(label, CorrectPropName(name), value!);
+            var result = new PropertyGridItem(handle, label, name, value);
+            OnPropertyCreated(result);
+            return result;
+        }
+
+        /// <summary>
+        /// Creates <see cref="string"/> property with ellipsis button which opens
+        /// <see cref="FileDialog"/> when pressed.
+        /// </summary>
+        /// <param name="label">Property label.</param>
+        /// <param name="name">Property name.</param>
+        /// <param name="value">Default property value.</param>
+        /// <returns>Property declaration for use with <see cref="PropertyGrid.Add"/>.</returns>
+        /// <remarks>
+        /// In order to setup filename and attached <see cref="FileDialog"/>, you can use
+        /// <see cref="PropertyGrid.SetPropertyKnownAttribute"/> for
+        /// <see cref="PropertyGridItemAttrId.DialogTitle"/>,
+        /// <see cref="PropertyGridItemAttrId.InitialPath"/>,
+        /// <see cref="PropertyGridItemAttrId.ShowFullPath"/> attributes.
+        /// </remarks>
+        /// <remarks>
+        /// This function is similar to <see cref="CreateFilenameProperty"/> but wildcards
+        /// are limited to supported image file extensions.
+        /// </remarks>
+        public IPropertyGridItem CreateImageFilenameProperty(
+            string label,
+            string? name = null,
+            string? value = null)
+        {
+            value ??= string.Empty;
+            var handle = NativeControl.CreateImageFilenameProperty(
+                label,
+                CorrectPropName(name),
+                value!);
+            var result = new PropertyGridItem(handle, label, name, value);
+            OnPropertyCreated(result);
+            return result;
+        }
+
+        /// <summary>
+        /// Creates <see cref="Color"/> property with system colors.
+        /// </summary>
+        /// <param name="label">Property label.</param>
+        /// <param name="name">Property name.</param>
+        /// <param name="value">Default property value.</param>
+        /// <returns>Property declaration for use with <see cref="PropertyGrid.Add"/>.</returns>
+        public IPropertyGridItem CreateSystemColorProperty(
+            string label,
+            string? name,
+            Color value)
+        {
+            var handle = NativeControl.CreateSystemColorProperty(label, CorrectPropName(name), value);
+            var result = new PropertyGridItem(handle, label, name, value);
+            OnPropertyCreated(result);
+            return result;
         }
 
         /// <summary>
@@ -1354,6 +1456,23 @@ namespace Alternet.UI
             return Native.PropertyGrid.GetEditorByName(editorName);
         }
 
+        internal static void CreateTestVariant()
+        {
+#pragma warning disable
+            PropertyGridVariant variant = new();
+#pragma warning restore
+
+            variant.AsBool = true;
+
+            variant.AsLong = 150;
+
+            variant.AsDateTime = DateTime.Now;
+
+            variant.AsDouble = 18;
+
+            variant.AsString = "hello";
+        }
+
         internal IntPtr GetPropertyImage(IPropertyGridItem prop)
         {
             return NativeControl.GetPropertyImage(prop.Handle);
@@ -1488,6 +1607,17 @@ namespace Alternet.UI
             ColDragging?.Invoke(this, e);
         }
 
+        internal IPropertyGridItem CreateCursorProperty(
+           string label,
+           string? name = null,
+           int value = 0)
+        {
+            var handle = NativeControl.CreateCursorProperty(label, CorrectPropName(name), value);
+            var result = new PropertyGridItem(handle, label, name, value);
+            OnPropertyCreated(result);
+            return result;
+        }
+
         internal void RaiseColBeginDrag(CancelEventArgs e)
         {
             OnColBeginDrag(e);
@@ -1535,7 +1665,7 @@ namespace Alternet.UI
                 (int)argFlags);
         }
 
-        public void SetPropertyAttribute(
+        public void SetPropertyKnownAttribute(
             IPropertyGridItem id,
             PropertyGridItemAttrId attrName,
             object value,

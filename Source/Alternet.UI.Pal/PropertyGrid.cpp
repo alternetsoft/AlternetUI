@@ -363,6 +363,36 @@ namespace Alternet::UI
 		return new wxEnumProperty(wxStr(label), wxStr(name), pgc->choices, value);
 	}
 
+	void* PropertyGrid::CreateFilenameProperty(const string& label, const string& name,
+		const string& value)
+	{
+		return new wxFileProperty(wxStr(label), wxStr(name), wxStr(value));
+	}
+
+	void* PropertyGrid::CreateDirProperty(const string& label, const string& name,
+		const string& value)
+	{
+		return new wxDirProperty(wxStr(label), wxStr(name), wxStr(value));
+	}
+
+	void* PropertyGrid::CreateImageFilenameProperty(const string& label, const string& name,
+		const string& value)
+	{
+		return new wxImageFileProperty(wxStr(label), wxStr(name), wxStr(value));
+	}
+
+	void* PropertyGrid::CreateSystemColorProperty(const string& label, const string& name,
+		const Color& value)
+	{
+		wxColor wxc = value;
+		return new wxSystemColourProperty(wxStr(label), wxStr(name), wxc);
+	}
+
+	void* PropertyGrid::CreateCursorProperty(const string& label, const string& name, int value)
+	{
+		return new wxCursorProperty(wxStr(label), wxStr(name), value);
+	}
+
 	void* PropertyGrid::CreateColorProperty(const string& label, const string& name,
 		const Color& value)
 	{
@@ -1228,6 +1258,13 @@ namespace Alternet::UI
 		ToPropArg(id);
 		wxVariant v = PropertyGridVariant::ToVar(variant);
 		GetPropGrid()->SetPropertyAttribute(_propArg, wxStr(attrName), v, argFlags);
+	}
+
+	void PropertyGrid::SetPropertyValueAsVariant(void* id, void* variant)
+	{
+		ToPropArg(id);
+		wxVariant v = PropertyGridVariant::ToVar(variant);
+		GetPropGrid()->SetPropertyValue(_propArg, v);
 	}
 
 	void PropertyGrid::SetPropertyAttributeAll(const string& attrName, void* variant)

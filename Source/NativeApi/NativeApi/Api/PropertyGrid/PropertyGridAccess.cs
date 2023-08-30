@@ -14,6 +14,22 @@ namespace NativeApi.Api
         public IntPtr CreateStringProperty(string label, string name, string value) =>
             throw new Exception();
 
+
+        public IntPtr CreateFilenameProperty(string label, string name, string value) =>
+            throw new Exception();
+
+        public IntPtr CreateDirProperty(string label, string name, string value) =>
+            throw new Exception();
+
+        public IntPtr CreateImageFilenameProperty(string label, string name, string value) =>
+            throw new Exception();
+
+        public IntPtr CreateSystemColorProperty(string label, string name, Color value) =>
+            throw new Exception();
+
+        public IntPtr CreateCursorProperty(string label, string name, int value) =>
+            throw new Exception();
+
         public IntPtr CreateBoolProperty(string label, string name, bool value = false) =>
             throw new Exception();
 
@@ -229,6 +245,9 @@ namespace NativeApi.Api
             throw new Exception();
 
         public void SetPropertyValueAsStr(IntPtr id, string value) =>
+            throw new Exception();
+
+        public void SetPropertyValueAsVariant(IntPtr id, IntPtr variant) =>
             throw new Exception();
 
         public void SetPropertyValueAsDateTime(IntPtr id, Alternet.UI.DateTime value) =>
