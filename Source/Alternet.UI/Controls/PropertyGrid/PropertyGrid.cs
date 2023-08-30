@@ -129,6 +129,11 @@ namespace Alternet.UI
             = PropertyGridCreateStyleEx.DefaultStyle;
 
         /// <summary>
+        /// Gets or sets whether boolean properties will be shown as checkboxes.
+        /// </summary>
+        public bool BoolAsCheckBox { get; set; } = true;
+
+        /// <summary>
         /// Gets property value used in the event handler.
         /// </summary>
         public object? EventPropValue
@@ -344,6 +349,7 @@ namespace Alternet.UI
             value ??= string.Empty;
             var handle = NativeControl.CreateFilenameProperty(label, CorrectPropName(name), value!);
             var result = new PropertyGridItem(handle, label, name, value);
+            result.PropertyEditorKind = "Filename";
             OnPropertyCreated(result);
             return result;
         }
@@ -372,6 +378,7 @@ namespace Alternet.UI
             value ??= string.Empty;
             var handle = NativeControl.CreateDirProperty(label, CorrectPropName(name), value!);
             var result = new PropertyGridItem(handle, label, name, value);
+            result.PropertyEditorKind = "Dir";
             OnPropertyCreated(result);
             return result;
         }
@@ -406,6 +413,7 @@ namespace Alternet.UI
                 CorrectPropName(name),
                 value!);
             var result = new PropertyGridItem(handle, label, name, value);
+            result.PropertyEditorKind = "ImageFilename";
             OnPropertyCreated(result);
             return result;
         }
@@ -424,6 +432,7 @@ namespace Alternet.UI
         {
             var handle = NativeControl.CreateSystemColorProperty(label, CorrectPropName(name), value);
             var result = new PropertyGridItem(handle, label, name, value);
+            result.PropertyEditorKind = "SystemColor";
             OnPropertyCreated(result);
             return result;
         }
@@ -443,6 +452,7 @@ namespace Alternet.UI
             value ??= string.Empty;
             var handle = NativeControl.CreateStringProperty(label, CorrectPropName(name), value!);
             var result = new PropertyGridItem(handle, label, name, value);
+            result.PropertyEditorKind = "String";
             OnPropertyCreated(result);
             return result;
         }
@@ -461,6 +471,7 @@ namespace Alternet.UI
         {
             var handle = NativeControl.CreateBoolProperty(label, CorrectPropName(name), value);
             var result = new PropertyGridItem(handle, label, name, value);
+            result.PropertyEditorKind = "Bool";
             OnPropertyCreated(result);
             return result;
         }
@@ -479,6 +490,7 @@ namespace Alternet.UI
         {
             var handle = NativeControl.CreateIntProperty(label, CorrectPropName(name), value);
             var result = new PropertyGridItem(handle, label, name, value);
+            result.PropertyEditorKind = "Int";
             OnPropertyCreated(result);
             return result;
         }
@@ -497,6 +509,7 @@ namespace Alternet.UI
         {
             var handle = NativeControl.CreateFloatProperty(label, CorrectPropName(name), value);
             var result = new PropertyGridItem(handle, label, name, value);
+            result.PropertyEditorKind = "Float";
             OnPropertyCreated(result);
             return result;
         }
@@ -515,6 +528,7 @@ namespace Alternet.UI
         {
             var handle = NativeControl.CreateColorProperty(label, CorrectPropName(name), value);
             var result = new PropertyGridItem(handle, label, name, value);
+            result.PropertyEditorKind = "Color";
             OnPropertyCreated(result);
             return result;
         }
@@ -533,6 +547,7 @@ namespace Alternet.UI
         {
             var handle = NativeControl.CreateUIntProperty(label, CorrectPropName(name), value);
             var result = new PropertyGridItem(handle, label, name, value);
+            result.PropertyEditorKind = "UInt";
             OnPropertyCreated(result);
             return result;
         }
@@ -556,6 +571,7 @@ namespace Alternet.UI
                 CorrectPropName(name),
                 value);
             var result = new PropertyGridItem(handle, label, name, value);
+            result.PropertyEditorKind = "LongString";
             OnPropertyCreated(result);
             return result;
         }
@@ -584,6 +600,7 @@ namespace Alternet.UI
                 CorrectPropName(name),
                 dt);
             var result = new PropertyGridItem(handle, label, name, value);
+            result.PropertyEditorKind = "Date";
             OnPropertyCreated(result);
             return result;
         }
@@ -609,6 +626,7 @@ namespace Alternet.UI
                 choices.Handle,
                 (int)value);
             var result = new PropertyGridItem(handle, label, name, value);
+            result.PropertyEditorKind = "Enum";
             OnPropertyCreated(result);
             return result;
         }
@@ -634,6 +652,7 @@ namespace Alternet.UI
                 choices.Handle,
                 (int)value);
             var result = new PropertyGridItem(handle, label, name, value);
+            result.PropertyEditorKind = "Flags";
             OnPropertyCreated(result);
             return result;
         }
@@ -706,21 +725,37 @@ namespace Alternet.UI
         /// Adds item to the property grid.
         /// </summary>
         /// <param name="prop">Item to add.</param>
-        public void Add(IPropertyGridItem prop)
+        /// <param name="parent">Parent item or null.</param>
+        public void Add(IPropertyGridItem prop, IPropertyGridItem? parent = null)
         {
             if (prop == null)
                 return;
-            NativeControl.Append(prop.Handle);
+            SetAsCheckBox(prop);
+            if (parent == null)
+                NativeControl.Append(prop.Handle);
+            else
+                NativeControl.AppendIn(parent.Handle, prop.Handle);
+
             items.Add(prop.Handle, prop);
-            if (!prop.HasChildren)
-                return;
-            foreach (IPropertyGridItem child in prop.Children)
+            if (prop.HasChildren)
             {
-                items.Add(child.Handle, child);
-                AppendIn(prop, child);
+                foreach (IPropertyGridItem child in prop.Children)
+                {
+                    Add(child, prop);
+                }
+
+                Collapse(prop);
             }
 
-            Collapse(prop);
+            void SetAsCheckBox(IPropertyGridItem p)
+            {
+                var kind = p.PropertyEditorKind;
+
+                if (BoolAsCheckBox && (kind == "Bool" || kind == "Flags"))
+                {
+                    SetPropertyKnownAttribute(p, PropertyGridItemAttrId.UseCheckbox, true);
+                }
+            }
         }
 
         /// <summary>

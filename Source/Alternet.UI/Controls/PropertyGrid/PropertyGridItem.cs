@@ -29,6 +29,8 @@ namespace Alternet.UI
                 this.defaultName = name;
         }
 
+        public string PropertyEditorKind { get; set; }
+
         public bool HasChildren
         {
             get

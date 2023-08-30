@@ -213,10 +213,14 @@ namespace PropertyGridSample
 
                 prop = propertyGrid.CreateBoolProperty("Bool");
                 propertyGrid.Add(prop);
+                propertyGrid.SetPropertyKnownAttribute(
+                    prop,
+                    PropertyGridItemAttrId.UseCheckbox,
+                    false);
 
                 prop = propertyGrid.CreateBoolProperty("Bool 2");
-                propertyGrid.SetPropertyKnownAttribute(prop, PropertyGridItemAttrId.UseCheckbox, true);
                 propertyGrid.Add(prop);
+                propertyGrid.SetPropertyKnownAttribute(prop, PropertyGridItemAttrId.UseCheckbox, true);
 
                 prop = propertyGrid.CreateIntProperty("Int");
                 propertyGrid.Add(prop);
@@ -284,6 +288,7 @@ namespace PropertyGridSample
                                     "Some Text");
                 propertyGrid.Add(prop);
 
+                // Filename
                 prop = propertyGrid.CreateFilenameProperty(
                     "Filename",
                     null,
@@ -302,21 +307,33 @@ namespace PropertyGridSample
                     false);
                 propertyGrid.Add(prop);
 
+                // Dir
                 prop = propertyGrid.CreateDirProperty("Dir", null, PathUtils.GetAppFolder());
+                propertyGrid.SetPropertyKnownAttribute(
+                    prop,
+                    PropertyGridItemAttrId.DialogTitle,
+                    "This is a custom dir dialog title");
                 propertyGrid.Add(prop);
 
+                // Image filename
                 prop = propertyGrid.CreateImageFilenameProperty(
                     "Image Filename",
                     null,
                     PathUtils.GetAppFolder());
                 propertyGrid.Add(prop);
 
+                // System color
                 prop = propertyGrid.CreateSystemColorProperty(
                     "System color",
                     null,
                     Color.FromKnownColor(KnownColor.Window));
                 propertyGrid.Add(prop);
 
+                // Password
+                prop = propertyGrid.CreateStringProperty("Password");
+                propertyGrid.Add(prop);
+                // Password attribute must be set after adding property to PropertyGrid
+                propertyGrid.SetPropertyKnownAttribute(prop, PropertyGridItemAttrId.Password, true);
             }
             finally
             {

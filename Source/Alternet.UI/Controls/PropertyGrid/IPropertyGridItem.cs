@@ -43,6 +43,11 @@ namespace Alternet.UI
         bool HasChildren { get; }
 
         /// <summary>
+        /// Gets type of the property editor.
+        /// </summary>
+        string PropertyEditorKind { get; }
+
+        /// <summary>
         /// Item handle.
         /// </summary>
         IntPtr Handle { get; }
