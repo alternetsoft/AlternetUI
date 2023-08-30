@@ -5,6 +5,9 @@ int GetEventValidationFailureBehavior();
 void SetEventValidationFailureBehavior(int value);
 
 
+void* GetEventPropValue();
+
+
 int GetEventColumn();
 
 
@@ -32,6 +35,7 @@ void SetCreateStyle(int64_t value);
 int64_t GetCreateStyleEx();
 void SetCreateStyleEx(int64_t value);
 
+double GetPropertyValueAsDouble(void* id);
 DateTime GetPropertyValueAsDateTime(void* id);
 bool HideProperty(void* id, bool hide, int flags);
 void* Insert(void* priorThis, void* newproperty);
@@ -70,6 +74,7 @@ bool ChangePropertyValue(void* id, void* variant);
 void SetPropertyImage(void* id, ImageSet* bmp);
 void SetPropertyAttribute(void* id, const string& attrName, void* variant, int64_t argFlags);
 void SetPropertyAttributeAll(const string& attrName, void* variant);
+void SetSelectionBackgroundColor(const Color& col);
 void SetSelectionTextColor(const Color& col);
 void SetSplitterPosition(int newXPos, int col);
 string GetUnspecifiedValueText(int argFlags);
@@ -154,7 +159,6 @@ int64_t GetPropertyValueAsLong(void* id);
 uint64_t GetPropertyValueAsULong(void* id);
 int GetPropertyValueAsInt(void* id);
 bool GetPropertyValueAsBool(void* id);
-double GetPropertyValueAsDouble(void* id);
 static void* CreateEx(int64_t styles);
 void AddActionTrigger(int action, int keycode, int modifiers);
 void DedicateKey(int keycode);
@@ -199,7 +203,6 @@ void SetColumnCount(int colCount);
 void SetEmptySpaceColor(const Color& col);
 void SetLineColor(const Color& col);
 void SetMarginColor(const Color& col);
-void SetSelectionBackgroundColor(const Color& col);
 public:
 enum class PropertyGridEvent
 {

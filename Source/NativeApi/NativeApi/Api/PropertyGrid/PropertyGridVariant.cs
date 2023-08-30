@@ -22,12 +22,14 @@ namespace NativeApi.Api
         public static bool IsType(IntPtr handle, string type) => throw new Exception();
         public static string MakeString(IntPtr handle) => throw new Exception();
 
+        public static Color GetColor(IntPtr handle) => throw new Exception();
         public static double GetDouble(IntPtr handle) => throw new Exception();
         public static bool GetBool(IntPtr handle) => throw new Exception();
         public static long GetLong(IntPtr handle) => throw new Exception();
         public static Alternet.UI.DateTime GetDateTime(IntPtr handle) => throw new Exception();
         public static string GetString(IntPtr handle) => throw new Exception();
 
+        public static void SetColor(IntPtr handle, Color val) => throw new Exception();
         public static void SetDouble(IntPtr handle, double val) => throw new Exception();
         public static void SetBool(IntPtr handle, bool val) => throw new Exception();
         public static void SetLong(IntPtr handle, long val) => throw new Exception();

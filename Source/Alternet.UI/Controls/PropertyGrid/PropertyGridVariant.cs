@@ -3,11 +3,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Alternet.Drawing;
 
 namespace Alternet.UI
 {
     internal class PropertyGridVariant : IDisposable
     {
+        private const string TypeNameNull = "null";
+        private const string TypeNameBool = "bool";
+        private const string TypeNameLongLong = "longlong";
+        private const string TypeNameLong = "long";
+        private const string TypeNameDateTime = "datetime";
+        private const string TypeNameDouble = "double";
+        private const string TypeNameString = "string";
+        private const string TypeNameColor = "wxColour";
+
         private IntPtr handle;
         private bool ownHandle;
 
@@ -33,22 +43,27 @@ namespace Alternet.UI
 
         public IntPtr Handle => handle;
 
-        /// <inheritdoc cref="IDisposable.Dispose"/>
-        public void Dispose()
-        {
-            if (handle != IntPtr.Zero)
-            {
-                if(ownHandle)
-                    Native.PropertyGridVariant.Delete(handle);
-                handle = IntPtr.Zero;
-            }
-        }
-
         public object? AsObject
         {
             get
             {
-                return string.Empty;
+                var type = GetValueType();
+
+                if (type == TypeNameNull)
+                    return null;
+                if (type == TypeNameBool)
+                    return AsBool;
+                if (type == TypeNameDateTime)
+                    return AsDateTime;
+                if (type == TypeNameDouble)
+                    return AsDouble;
+                if (type == TypeNameString)
+                    return AsString;
+                if (type == TypeNameLong || type == TypeNameLongLong)
+                    return AsLong;
+                if (type == TypeNameColor)
+                    return AsColor;
+                return null;
             }
 
             set
@@ -168,6 +183,19 @@ namespace Alternet.UI
             }
         }
 
+        public Color AsColor
+        {
+            get
+            {
+                return Native.PropertyGridVariant.GetColor(handle);
+            }
+
+            set
+            {
+                Native.PropertyGridVariant.SetColor(handle, value);
+            }
+        }
+
         public string AsString
         {
             get
@@ -197,5 +225,16 @@ namespace Alternet.UI
         public bool IsType(string type) => Native.PropertyGridVariant.IsType(handle, type);
 
         public string MakeString() => Native.PropertyGridVariant.MakeString(handle);
+
+        /// <inheritdoc cref="IDisposable.Dispose"/>
+        public void Dispose()
+        {
+            if (handle != IntPtr.Zero)
+            {
+                if (ownHandle)
+                    Native.PropertyGridVariant.Delete(handle);
+                handle = IntPtr.Zero;
+            }
+        }
     }
 }

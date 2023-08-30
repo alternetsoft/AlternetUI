@@ -25,10 +25,10 @@ namespace Alternet::UI
         PropertyGrid(long styles);
         wxPGPropArgCls _propArg = wxPGPropArgCls(0);
         void ToPropArg(void* id);
-        //wxVariant ToVariant(void* variant);
     private:
         bool _hasBorder = true;
         long _createStyle = wxPG_DEFAULT_STYLE;
+        PropertyGridVariant* _eventValue = new PropertyGridVariant();
         int _eventValidationFailureBehavior = 0;
         int _eventColumn = 0;
         void* _eventProperty = nullptr;

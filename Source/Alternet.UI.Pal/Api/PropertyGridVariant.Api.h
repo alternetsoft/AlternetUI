@@ -78,6 +78,13 @@ ALTERNET_UI_API char16_t* PropertyGridVariant_MakeString_(void* handle)
         });
 }
 
+ALTERNET_UI_API Color_C PropertyGridVariant_GetColor_(void* handle)
+{
+    return MarshalExceptions<Color_C>([&](){
+            return PropertyGridVariant::GetColor(handle);
+        });
+}
+
 ALTERNET_UI_API double PropertyGridVariant_GetDouble_(void* handle)
 {
     return MarshalExceptions<double>([&](){
@@ -110,6 +117,13 @@ ALTERNET_UI_API char16_t* PropertyGridVariant_GetString_(void* handle)
 {
     return MarshalExceptions<char16_t*>([&](){
             return AllocPInvokeReturnString(PropertyGridVariant::GetString(handle));
+        });
+}
+
+ALTERNET_UI_API void PropertyGridVariant_SetColor_(void* handle, Color val)
+{
+    MarshalExceptions<void>([&](){
+            PropertyGridVariant::SetColor(handle, val);
         });
 }
 

@@ -223,6 +223,11 @@ namespace Alternet::UI
 		}
 	}
 
+	void* PropertyGrid::GetEventPropValue()
+	{
+		return _eventValue;
+	}
+
 	void PropertyGrid::FromEventData(PropertyGridEvent evType, wxPropertyGridEvent& event)
 	{
 		if (evType == PropertyGridEvent::Changing)
@@ -233,6 +238,7 @@ namespace Alternet::UI
 		_eventColumn = event.GetColumn();
 		_eventProperty = event.GetProperty();
 		_eventPropertyName = wxStr(event.GetPropertyName());
+		_eventValue->variant = event.GetPropertyValue();
 	}
 
 	PropertyGrid::PropertyGrid()
@@ -252,6 +258,7 @@ namespace Alternet::UI
 
 	PropertyGrid::~PropertyGrid()
 	{
+		PropertyGridVariant::Delete(_eventValue);
 		if (IsWxWindowCreated())
 		{
 			auto window = GetWxWindow();

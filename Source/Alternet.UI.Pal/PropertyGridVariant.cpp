@@ -65,6 +65,24 @@ namespace Alternet::UI
 		return wxStr(ToVar(handle).MakeString());
 	}
 
+	Color PropertyGridVariant::GetColor(void* handle)
+	{
+		wxVariant value = ToVar(handle);
+		if (value.IsNull())
+			return Color();
+		wxColour result;
+		result << value;
+		return result;
+	}
+
+	void PropertyGridVariant::SetColor(void* handle, const Color& val) 
+	{
+		wxColor color = val;
+		wxVariant v;
+		v << color;
+		FromVariant(handle, v);
+	}
+
 	double PropertyGridVariant::GetDouble(void* handle) 
 	{
 		return ToVar(handle).GetDouble();

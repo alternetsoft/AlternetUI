@@ -26,7 +26,6 @@ namespace PropertyGridSample
         private readonly ContextMenu contextMenu2 = new();
         private readonly StackPanel controlPanel = new();
 
-
         static MainWindow()
         {
             WebBrowser.CrtSetDbgFlag(0);
@@ -636,7 +635,9 @@ namespace PropertyGridSample
 
         private void LogEvent(string name)
         {
-            string s = $"Event: {name}. PropName: <{propertyGrid.EventPropName}>";
+            var propValue = propertyGrid.EventPropValue;
+            string propName = propertyGrid.EventPropName;
+            string s = $"Event: {name}. PropName: <{propName}>. Value: <{propValue}>";
             if(logListBox.LastItem?.ToString() != s)
                 Log(s);
         }

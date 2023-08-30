@@ -12,6 +12,7 @@ namespace NativeApi.Api
     public partial class PropertyGrid : Control
     {
         public int EventValidationFailureBehavior { get; set; }
+        public IntPtr EventPropValue { get; }
         public int EventColumn { get; }
         public IntPtr EventProperty { get; }
         public string EventPropertyName { get; }

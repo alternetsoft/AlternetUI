@@ -74,6 +74,12 @@ namespace Alternet.UI.Native
             return n;
         }
         
+        public static Alternet.Drawing.Color GetColor(System.IntPtr handle)
+        {
+            var n = NativeApi.PropertyGridVariant_GetColor_(handle);
+            return n;
+        }
+        
         public static double GetDouble(System.IntPtr handle)
         {
             var n = NativeApi.PropertyGridVariant_GetDouble_(handle);
@@ -102,6 +108,11 @@ namespace Alternet.UI.Native
         {
             var n = NativeApi.PropertyGridVariant_GetString_(handle);
             return n;
+        }
+        
+        public static void SetColor(System.IntPtr handle, Alternet.Drawing.Color val)
+        {
+            NativeApi.PropertyGridVariant_SetColor_(handle, val);
         }
         
         public static void SetDouble(System.IntPtr handle, double val)
@@ -176,6 +187,9 @@ namespace Alternet.UI.Native
             public static extern string PropertyGridVariant_MakeString_(System.IntPtr handle);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern NativeApiTypes.Color PropertyGridVariant_GetColor_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern double PropertyGridVariant_GetDouble_(System.IntPtr handle);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
@@ -189,6 +203,9 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern string PropertyGridVariant_GetString_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void PropertyGridVariant_SetColor_(System.IntPtr handle, NativeApiTypes.Color val);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void PropertyGridVariant_SetDouble_(System.IntPtr handle, double val);

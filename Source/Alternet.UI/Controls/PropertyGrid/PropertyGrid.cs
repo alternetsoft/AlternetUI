@@ -24,8 +24,12 @@ namespace Alternet.UI
         private const int PGRECURSE = 0x00000020;
         private const int PGSORTTOPLEVELONLY = 0x00000200;
         private static Dictionary<Type, IPropertyGridChoices>? choicesCache = null;
-        private Dictionary<IntPtr, IPropertyGridItem> items = new();
-        PropertyGridVariant variant = new();
+        private readonly Dictionary<IntPtr, IPropertyGridItem> items = new();
+        private readonly PropertyGridVariant variant = new();
+
+        static PropertyGrid()
+        {
+        }
 
         /// <summary>
         /// Occurs when a property selection has been changed, either by user action
@@ -124,12 +128,39 @@ namespace Alternet.UI
         public static PropertyGridCreateStyleEx DefaultCreateStyleEx { get; set; }
             = PropertyGridCreateStyleEx.DefaultStyle;
 
+        internal static void CreateTestVariant()
+        {
+#pragma warning disable
+            PropertyGridVariant variant = new();
+#pragma warning restore
+
+            variant.AsBool = true;
+
+            variant.AsLong = 150;
+
+            variant.AsDateTime = DateTime.Now;
+
+            variant.AsDouble = 18;
+
+            variant.AsString = "hello";
+        }
+
+        /// <summary>
+        /// Gets property value used in the event handler.
+        /// </summary>
+        public object? EventPropValue
+        {
+            get
+            {
+                IntPtr handle = NativeControl.EventPropValue;
+                PropertyGridVariant propValue = new(handle);
+                return propValue.AsObject;
+            }
+        }
+
         /// <summary>
         /// Gets or sets validation failure behavior flags used in the event handler.
         /// </summary>
-        /// <remarks>
-        /// Use it in the event handlers.
-        /// </remarks>
         [Browsable(false)]
         public PropertyGridValidationFailure EventValidationFailureBehavior
         {
@@ -162,9 +193,6 @@ namespace Alternet.UI
         /// <summary>
         /// Gets property used in the event handler.
         /// </summary>
-        /// <remarks>
-        /// Use it in the event handlers.
-        /// </remarks>
         [Browsable(false)]
         public IPropertyGridItem? EventProperty
         {
@@ -177,9 +205,6 @@ namespace Alternet.UI
         /// <summary>
         /// Gets property name used in the event handler.
         /// </summary>
-        /// <remarks>
-        /// Use it in the event handlers.
-        /// </remarks>
         [Browsable(false)]
         public string EventPropName
         {
@@ -192,9 +217,6 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets validation failure message used in the event handler.
         /// </summary>
-        /// <remarks>
-        /// Use it in the event handlers.
-        /// </remarks>
         [Browsable(false)]
         public string EventValidationFailureMessage
         {
@@ -1511,6 +1533,15 @@ namespace Alternet.UI
                 attrName,
                 ToVariant(value).Handle,
                 (int)argFlags);
+        }
+
+        public void SetPropertyAttribute(
+            IPropertyGridItem id,
+            PropertyGridItemAttrId attrName,
+            object value,
+            PropertyGridItemValueFlags argFlags = 0)
+        {
+            SetPropertyAttribute(id, attrName.ToString(), value, argFlags);
         }
 
         public void SetPropertyAttributeAll(string attrName, object value)

@@ -30,6 +30,13 @@ ALTERNET_UI_API void PropertyGrid_SetEventValidationFailureBehavior_(PropertyGri
         });
 }
 
+ALTERNET_UI_API void* PropertyGrid_GetEventPropValue_(PropertyGrid* obj)
+{
+    return MarshalExceptions<void*>([&](){
+            return obj->GetEventPropValue();
+        });
+}
+
 ALTERNET_UI_API int PropertyGrid_GetEventColumn_(PropertyGrid* obj)
 {
     return MarshalExceptions<int>([&](){
@@ -111,6 +118,13 @@ ALTERNET_UI_API void PropertyGrid_SetCreateStyleEx_(PropertyGrid* obj, int64_t v
 {
     MarshalExceptions<void>([&](){
             obj->SetCreateStyleEx(value);
+        });
+}
+
+ALTERNET_UI_API double PropertyGrid_GetPropertyValueAsDouble_(PropertyGrid* obj, void* id)
+{
+    return MarshalExceptions<double>([&](){
+            return obj->GetPropertyValueAsDouble(id);
         });
 }
 
@@ -377,6 +391,13 @@ ALTERNET_UI_API void PropertyGrid_SetPropertyAttributeAll_(PropertyGrid* obj, co
 {
     MarshalExceptions<void>([&](){
             obj->SetPropertyAttributeAll(attrName, variant);
+        });
+}
+
+ALTERNET_UI_API void PropertyGrid_SetSelectionBackgroundColor_(PropertyGrid* obj, Color col)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetSelectionBackgroundColor(col);
         });
 }
 
@@ -968,13 +989,6 @@ ALTERNET_UI_API c_bool PropertyGrid_GetPropertyValueAsBool_(PropertyGrid* obj, v
         });
 }
 
-ALTERNET_UI_API double PropertyGrid_GetPropertyValueAsDouble_(PropertyGrid* obj, void* id)
-{
-    return MarshalExceptions<double>([&](){
-            return obj->GetPropertyValueAsDouble(id);
-        });
-}
-
 ALTERNET_UI_API void* PropertyGrid_CreateEx_(int64_t styles)
 {
     return MarshalExceptions<void*>([&](){
@@ -1280,13 +1294,6 @@ ALTERNET_UI_API void PropertyGrid_SetMarginColor_(PropertyGrid* obj, Color col)
 {
     MarshalExceptions<void>([&](){
             obj->SetMarginColor(col);
-        });
-}
-
-ALTERNET_UI_API void PropertyGrid_SetSelectionBackgroundColor_(PropertyGrid* obj, Color col)
-{
-    MarshalExceptions<void>([&](){
-            obj->SetSelectionBackgroundColor(col);
         });
 }
 
