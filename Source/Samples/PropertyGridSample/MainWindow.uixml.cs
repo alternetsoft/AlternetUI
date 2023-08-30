@@ -28,6 +28,8 @@ namespace PropertyGridSample
 
         static MainWindow()
         {
+            TestLong();
+
             WebBrowser.CrtSetDbgFlag(0);
 
             Initializers.Add(typeof(Label), (c) => { (c as Label)!.Text = "Label"; });
@@ -428,6 +430,25 @@ namespace PropertyGridSample
             result.Children.Add(itemIsStrikethrough!);
             result.Children.Add(itemIsUnderlined!);
             return result;
+        }
+
+        private static void TestLong()
+        {
+            IPropertyGridVariant variant = PropertyGrid.CreateVariant();
+
+            long minLong = long.MinValue;
+            long maxLong = long.MaxValue;
+            ulong minULong = ulong.MinValue;
+            ulong maxULong = ulong.MaxValue;
+
+            variant.AsLong = minLong;
+            long minLong2 = variant.AsLong;
+
+            variant.AsLong = maxLong;
+            long maxLong2 = variant.AsLong;
+
+
+
         }
 
         public IPropertyGridItem CreateBrushProperty(

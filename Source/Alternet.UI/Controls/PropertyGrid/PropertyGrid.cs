@@ -744,6 +744,14 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Creates new variant instance for use with <see cref="PropertyGrid"/>
+        /// </summary>
+        public static IPropertyGridVariant CreateVariant()
+        {
+            return new PropertyGridVariant();
+        }
+
+        /// <summary>
         /// Creates property choices list for the given enumeration type or returns it from
         /// the internal cache if it was previously created.
         /// </summary>

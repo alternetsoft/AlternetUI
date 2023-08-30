@@ -14,6 +14,52 @@ namespace Alternet.UI
     public static class AssemblyUtils
     {
         /// <summary>
+        /// Gets minimal possible variable value for the given <see cref="TypeCode"/>.
+        /// </summary>
+        public static object? GetMinValue(TypeCode code)
+        {
+            return code switch
+            {
+                TypeCode.SByte => sbyte.MinValue,
+                TypeCode.Byte => byte.MinValue,
+                TypeCode.Int16 => short.MinValue,
+                TypeCode.UInt16 => ushort.MinValue,
+                TypeCode.Int32 => int.MinValue,
+                TypeCode.UInt32 => uint.MinValue,
+                TypeCode.Int64 => long.MinValue,
+                TypeCode.UInt64 => ulong.MinValue,
+                TypeCode.Single => float.MinValue,
+                TypeCode.Double => double.MinValue,
+                TypeCode.Decimal => decimal.MinValue,
+                TypeCode.DateTime => DateTime.MinValue,
+                _ => null,
+            };
+        }
+
+        /// <summary>
+        /// Gets maximal possible variable value for the given <see cref="TypeCode"/>.
+        /// </summary>
+        public static object? GetMaxValue(TypeCode code)
+        {
+            return code switch
+            {
+                TypeCode.SByte => sbyte.MaxValue,
+                TypeCode.Byte => byte.MaxValue,
+                TypeCode.Int16 => short.MaxValue,
+                TypeCode.UInt16 => ushort.MaxValue,
+                TypeCode.Int32 => int.MaxValue,
+                TypeCode.UInt32 => uint.MaxValue,
+                TypeCode.Int64 => long.MaxValue,
+                TypeCode.UInt64 => ulong.MaxValue,
+                TypeCode.Single => float.MaxValue,
+                TypeCode.Double => double.MaxValue,
+                TypeCode.Decimal => decimal.MaxValue,
+                TypeCode.DateTime => DateTime.MaxValue,
+                _ => null,
+            };
+        }
+
+        /// <summary>
         /// Returns whether property is browsable.
         /// </summary>
         /// <param name="p">Property info.</param>
