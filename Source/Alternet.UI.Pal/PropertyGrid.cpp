@@ -380,6 +380,14 @@ namespace Alternet::UI
 		return GetPropGrid()->ExpandAll(expand);
 	}
 
+	void* PropertyGrid::CreateEditEnumProperty(const string& label, const string& name,
+		void* choices, const string& value)
+	{
+		auto pgc = (PropertyGridChoices*)choices;
+
+		return new wxEditEnumProperty(wxStr(label), wxStr(name), pgc->choices, wxStr(value));
+	}
+
 	void* PropertyGrid::CreateEnumProperty(const string& label, const string& name,
 		void* choices, int value)
 	{

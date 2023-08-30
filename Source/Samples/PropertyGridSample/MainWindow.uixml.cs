@@ -140,6 +140,9 @@ namespace PropertyGridSample
 
             ControlListBoxItem item;
 
+            item = new(typeof(SampleProps));
+            controlsListBox.Add(item);
+
             Type[] badTypes = new Type[] 
             {
               typeof(WebBrowser),
@@ -163,6 +166,7 @@ namespace PropertyGridSample
               typeof(TabControl),
               typeof(Window),
               typeof(ToolbarItem),
+              typeof(SampleProps),
             };
 
             IEnumerable<Type> result = AssemblyUtils.GetTypeDescendants(typeof(Control));
@@ -353,15 +357,47 @@ namespace PropertyGridSample
                 // Password attribute must be set after adding property to PropertyGrid
                 propertyGrid.SetPropertyKnownAttribute(prop, PropertyGridItemAttrId.Password, true);
 
+                // String with button
                 prop = propertyGrid.CreateStringProperty("Str and button");
                 propertyGrid.SetPropertyEditorByName(prop, "TextCtrlAndButton");
                 propertyGrid.Add(prop);
 
+                // Editable enum. Can have values which are not in choices.
+                var choices = PropertyGrid.CreateChoices();
+                choices.Add("Item 1");
+                choices.Add("Item 2");
+                choices.Add("Item 3");
+                prop = propertyGrid.CreateEditEnumProperty("Editable enum", null, choices, "Item 2");
+                propertyGrid.Add(prop);
+
+                //Font Name
+                choices = FontNameChoices;
+                prop = propertyGrid.CreateEnumProperty(
+                    "Font name", 
+                    null, 
+                    choices, 
+                    choices.GetValue(Font.Default.Name));
+                propertyGrid.Add(prop);
             }
             finally
             {
                 propertyGrid.EndUpdate();
             }
+        }
+
+        private static IPropertyGridChoices? fontNameChoices;
+
+        public static IPropertyGridChoices FontNameChoices
+        { 
+            get 
+            {
+                if (fontNameChoices != null)
+                    return fontNameChoices;
+                fontNameChoices = PropertyGrid.CreateChoices();
+                string[] names = FontFamily.FamiliesNamesAscending;
+                fontNameChoices.AddRange(names);
+                return fontNameChoices;
+            } 
         }
 
         public IPropertyGridItem CreateFontProperty(
@@ -675,11 +711,19 @@ namespace PropertyGridSample
 
         private void ControlsListBox_SelectionChanged(object? sender, EventArgs e)
         {
+            controlPanel.Children.Clear();
             var item = controlsListBox.SelectedItem as ControlListBoxItem;
+            var type = item?.ControlType;
+
+            if(type == typeof(SampleProps))
+            {
+                InitDefaultPropertyGrid();
+                return;
+            }
+
             var control = item?.ControlInstance;
             if(control != null)
             {
-                controlPanel.Children.Clear();
                 controlPanel.Padding = new(25, 100, 25, 100);
                 if (control.Parent == null)
                     controlPanel.Children.Add(control);
@@ -790,6 +834,10 @@ namespace PropertyGridSample
         private void PropertyGrid_ButtonClick(object sender, EventArgs e)
         {
             LogEvent("ButtonClick");
+        }
+
+        public class SampleProps : Control
+        {
         }
 
         private class ControlListBoxItem

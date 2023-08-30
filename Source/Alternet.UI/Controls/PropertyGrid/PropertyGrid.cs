@@ -367,8 +367,10 @@ namespace Alternet.UI
         {
             value ??= string.Empty;
             var handle = NativeControl.CreateFilenameProperty(label, CorrectPropName(name), value!);
-            var result = new PropertyGridItem(handle, label, name, value);
-            result.PropertyEditorKind = "Filename";
+            var result = new PropertyGridItem(handle, label, name, value)
+            {
+                PropertyEditorKind = "Filename",
+            };
             OnPropertyCreated(result);
             return result;
         }
@@ -396,8 +398,10 @@ namespace Alternet.UI
         {
             value ??= string.Empty;
             var handle = NativeControl.CreateDirProperty(label, CorrectPropName(name), value!);
-            var result = new PropertyGridItem(handle, label, name, value);
-            result.PropertyEditorKind = "Dir";
+            var result = new PropertyGridItem(handle, label, name, value)
+            {
+                PropertyEditorKind = "Dir",
+            };
             OnPropertyCreated(result);
             return result;
         }
@@ -431,8 +435,10 @@ namespace Alternet.UI
                 label,
                 CorrectPropName(name),
                 value!);
-            var result = new PropertyGridItem(handle, label, name, value);
-            result.PropertyEditorKind = "ImageFilename";
+            var result = new PropertyGridItem(handle, label, name, value)
+            {
+                PropertyEditorKind = "ImageFilename",
+            };
             OnPropertyCreated(result);
             return result;
         }
@@ -450,8 +456,10 @@ namespace Alternet.UI
             Color value)
         {
             var handle = NativeControl.CreateSystemColorProperty(label, CorrectPropName(name), value);
-            var result = new PropertyGridItem(handle, label, name, value);
-            result.PropertyEditorKind = "SystemColor";
+            var result = new PropertyGridItem(handle, label, name, value)
+            {
+                PropertyEditorKind = "SystemColor",
+            };
             OnPropertyCreated(result);
             return result;
         }
@@ -470,8 +478,10 @@ namespace Alternet.UI
         {
             value ??= string.Empty;
             var handle = NativeControl.CreateStringProperty(label, CorrectPropName(name), value!);
-            var result = new PropertyGridItem(handle, label, name, value);
-            result.PropertyEditorKind = "String";
+            var result = new PropertyGridItem(handle, label, name, value)
+            {
+                PropertyEditorKind = "String",
+            };
             OnPropertyCreated(result);
             return result;
         }
@@ -489,8 +499,10 @@ namespace Alternet.UI
             bool value = false)
         {
             var handle = NativeControl.CreateBoolProperty(label, CorrectPropName(name), value);
-            var result = new PropertyGridItem(handle, label, name, value);
-            result.PropertyEditorKind = "Bool";
+            var result = new PropertyGridItem(handle, label, name, value)
+            {
+                PropertyEditorKind = "Bool",
+            };
             OnPropertyCreated(result);
             return result;
         }
@@ -508,8 +520,10 @@ namespace Alternet.UI
             long value = 0)
         {
             var handle = NativeControl.CreateIntProperty(label, CorrectPropName(name), value);
-            var result = new PropertyGridItem(handle, label, name, value);
-            result.PropertyEditorKind = "Int";
+            var result = new PropertyGridItem(handle, label, name, value)
+            {
+                PropertyEditorKind = "Int",
+            };
             OnPropertyCreated(result);
             return result;
         }
@@ -524,11 +538,13 @@ namespace Alternet.UI
         public IPropertyGridItem CreateFloatProperty(
             string label,
             string? name = null,
-            double value = 0.0)
+            double value = default(double))
         {
             var handle = NativeControl.CreateFloatProperty(label, CorrectPropName(name), value);
-            var result = new PropertyGridItem(handle, label, name, value);
-            result.PropertyEditorKind = "Float";
+            var result = new PropertyGridItem(handle, label, name, value)
+            {
+                PropertyEditorKind = "Float",
+            };
             OnPropertyCreated(result);
             return result;
         }
@@ -546,8 +562,10 @@ namespace Alternet.UI
             Color value)
         {
             var handle = NativeControl.CreateColorProperty(label, CorrectPropName(name), value);
-            var result = new PropertyGridItem(handle, label, name, value);
-            result.PropertyEditorKind = "Color";
+            var result = new PropertyGridItem(handle, label, name, value)
+            {
+                PropertyEditorKind = "Color",
+            };
             OnPropertyCreated(result);
             return result;
         }
@@ -565,8 +583,10 @@ namespace Alternet.UI
             ulong value = 0)
         {
             var handle = NativeControl.CreateUIntProperty(label, CorrectPropName(name), value);
-            var result = new PropertyGridItem(handle, label, name, value);
-            result.PropertyEditorKind = "UInt";
+            var result = new PropertyGridItem(handle, label, name, value)
+            {
+                PropertyEditorKind = "UInt",
+            };
             OnPropertyCreated(result);
             return result;
         }
@@ -589,8 +609,10 @@ namespace Alternet.UI
                 label,
                 CorrectPropName(name),
                 value);
-            var result = new PropertyGridItem(handle, label, name, value);
-            result.PropertyEditorKind = "LongString";
+            var result = new PropertyGridItem(handle, label, name, value)
+            {
+                PropertyEditorKind = "LongString",
+            };
             OnPropertyCreated(result);
             return result;
         }
@@ -618,8 +640,10 @@ namespace Alternet.UI
                 label,
                 CorrectPropName(name),
                 dt);
-            var result = new PropertyGridItem(handle, label, name, value);
-            result.PropertyEditorKind = "Date";
+            var result = new PropertyGridItem(handle, label, name, value)
+            {
+                PropertyEditorKind = "Date",
+            };
             OnPropertyCreated(result);
             return result;
         }
@@ -644,8 +668,38 @@ namespace Alternet.UI
                 CorrectPropName(name),
                 choices.Handle,
                 (int)value);
-            var result = new PropertyGridItem(handle, label, name, value);
-            result.PropertyEditorKind = "Enum";
+            var result = new PropertyGridItem(handle, label, name, value)
+            {
+                PropertyEditorKind = "Enum",
+            };
+            OnPropertyCreated(result);
+            return result;
+        }
+
+        /// <summary>
+        /// Creates editable enumeration property.
+        /// </summary>
+        /// <param name="label">Property label.</param>
+        /// <param name="name">Property name.</param>
+        /// <param name="choices">Enumeration elements.</param>
+        /// <param name="value">Default property value.</param>
+        /// <returns>Property declaration for use with <see cref="PropertyGrid.Add"/>.</returns>
+        public IPropertyGridItem CreateEditEnumProperty(
+            string label,
+            string? name,
+            IPropertyGridChoices choices,
+            string? value = null)
+        {
+            value ??= string.Empty;
+            var handle = NativeControl.CreateEditEnumProperty(
+                label,
+                CorrectPropName(name),
+                choices.Handle,
+                value);
+            var result = new PropertyGridItem(handle, label, name, value)
+            {
+                PropertyEditorKind = "EditEnum",
+            };
             OnPropertyCreated(result);
             return result;
         }
@@ -670,8 +724,10 @@ namespace Alternet.UI
                 CorrectPropName(name),
                 choices.Handle,
                 (int)value);
-            var result = new PropertyGridItem(handle, label, name, value);
-            result.PropertyEditorKind = "Flags";
+            var result = new PropertyGridItem(handle, label, name, value)
+            {
+                PropertyEditorKind = "Flags",
+            };
             OnPropertyCreated(result);
             return result;
         }
@@ -681,7 +737,7 @@ namespace Alternet.UI
         /// <see cref="CreateEnumProperty"/>.
         /// </summary>
 #pragma warning disable
-        public IPropertyGridChoices CreateChoices()
+        public static IPropertyGridChoices CreateChoices()
 #pragma warning restore
         {
             return new PropertyGridChoices();

@@ -52,6 +52,12 @@ namespace NativeApi.Api
 
         public IntPtr Append(IntPtr property) => throw new Exception();
 
+        public IntPtr CreateEditEnumProperty(
+            string label,
+            string name,
+            IntPtr choices,
+            string value) => throw new Exception();
+
         public IntPtr CreateEnumProperty(
             string label,
             string name,

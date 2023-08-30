@@ -121,6 +121,13 @@ ALTERNET_UI_API void PropertyGrid_SetCreateStyleEx_(PropertyGrid* obj, int64_t v
         });
 }
 
+ALTERNET_UI_API void* PropertyGrid_GetPropertyImage_(PropertyGrid* obj, void* id)
+{
+    return MarshalExceptions<void*>([&](){
+            return obj->GetPropertyImage(id);
+        });
+}
+
 ALTERNET_UI_API char16_t* PropertyGrid_GetPropertyLabel_(PropertyGrid* obj, void* id)
 {
     return MarshalExceptions<char16_t*>([&](){
@@ -758,6 +765,13 @@ ALTERNET_UI_API void* PropertyGrid_Append_(PropertyGrid* obj, void* property)
         });
 }
 
+ALTERNET_UI_API void* PropertyGrid_CreateEditEnumProperty_(PropertyGrid* obj, const char16_t* label, const char16_t* name, void* choices, const char16_t* value)
+{
+    return MarshalExceptions<void*>([&](){
+            return obj->CreateEditEnumProperty(label, name, choices, value);
+        });
+}
+
 ALTERNET_UI_API void* PropertyGrid_CreateEnumProperty_(PropertyGrid* obj, const char16_t* label, const char16_t* name, void* choices, int value)
 {
     return MarshalExceptions<void*>([&](){
@@ -1035,13 +1049,6 @@ ALTERNET_UI_API char16_t* PropertyGrid_GetPropertyHelpString_(PropertyGrid* obj,
 {
     return MarshalExceptions<char16_t*>([&](){
             return AllocPInvokeReturnString(obj->GetPropertyHelpString(id));
-        });
-}
-
-ALTERNET_UI_API void* PropertyGrid_GetPropertyImage_(PropertyGrid* obj, void* id)
-{
-    return MarshalExceptions<void*>([&](){
-            return obj->GetPropertyImage(id);
         });
 }
 

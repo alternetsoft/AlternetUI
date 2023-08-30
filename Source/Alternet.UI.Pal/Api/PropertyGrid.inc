@@ -35,6 +35,7 @@ void SetCreateStyle(int64_t value);
 int64_t GetCreateStyleEx();
 void SetCreateStyleEx(int64_t value);
 
+void* GetPropertyImage(void* id);
 string GetPropertyLabel(void* id);
 void* GetPropertyParent(void* id);
 string GetPropertyValueAsString(void* id);
@@ -126,6 +127,7 @@ void* CreateLongStringProperty(const string& label, const string& name, const st
 void* CreateDateProperty(const string& label, const string& name, const DateTime& value);
 void Clear();
 void* Append(void* property);
+void* CreateEditEnumProperty(const string& label, const string& name, void* choices, const string& value);
 void* CreateEnumProperty(const string& label, const string& name, void* choices, int value);
 void* CreateFlagsProperty(const string& label, const string& name, void* choices, int value);
 bool ClearSelection(bool validation);
@@ -166,7 +168,6 @@ void* GetFirstChild(void* id);
 void* GetPropertyCategory(void* id);
 void* GetPropertyClientData(void* id);
 string GetPropertyHelpString(void* id);
-void* GetPropertyImage(void* id);
 static void* CreateEx(int64_t styles);
 void AddActionTrigger(int action, int keycode, int modifiers);
 void DedicateKey(int keycode);

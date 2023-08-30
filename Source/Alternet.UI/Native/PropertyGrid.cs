@@ -158,6 +158,13 @@ namespace Alternet.UI.Native
             }
         }
         
+        public System.IntPtr GetPropertyImage(System.IntPtr id)
+        {
+            CheckDisposed();
+            var n = NativeApi.PropertyGrid_GetPropertyImage_(NativePointer, id);
+            return n;
+        }
+        
         public string GetPropertyLabel(System.IntPtr id)
         {
             CheckDisposed();
@@ -758,6 +765,13 @@ namespace Alternet.UI.Native
             return n;
         }
         
+        public System.IntPtr CreateEditEnumProperty(string label, string name, System.IntPtr choices, string value)
+        {
+            CheckDisposed();
+            var n = NativeApi.PropertyGrid_CreateEditEnumProperty_(NativePointer, label, name, choices, value);
+            return n;
+        }
+        
         public System.IntPtr CreateEnumProperty(string label, string name, System.IntPtr choices, int value)
         {
             CheckDisposed();
@@ -1021,13 +1035,6 @@ namespace Alternet.UI.Native
         {
             CheckDisposed();
             var n = NativeApi.PropertyGrid_GetPropertyHelpString_(NativePointer, id);
-            return n;
-        }
-        
-        public System.IntPtr GetPropertyImage(System.IntPtr id)
-        {
-            CheckDisposed();
-            var n = NativeApi.PropertyGrid_GetPropertyImage_(NativePointer, id);
             return n;
         }
         
@@ -1496,6 +1503,9 @@ namespace Alternet.UI.Native
             public static extern void PropertyGrid_SetCreateStyleEx_(IntPtr obj, long value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr PropertyGrid_GetPropertyImage_(IntPtr obj, System.IntPtr id);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern string PropertyGrid_GetPropertyLabel_(IntPtr obj, System.IntPtr id);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
@@ -1769,6 +1779,9 @@ namespace Alternet.UI.Native
             public static extern System.IntPtr PropertyGrid_Append_(IntPtr obj, System.IntPtr property);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr PropertyGrid_CreateEditEnumProperty_(IntPtr obj, string label, string name, System.IntPtr choices, string value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern System.IntPtr PropertyGrid_CreateEnumProperty_(IntPtr obj, string label, string name, System.IntPtr choices, int value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
@@ -1887,9 +1900,6 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern string PropertyGrid_GetPropertyHelpString_(IntPtr obj, System.IntPtr id);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr PropertyGrid_GetPropertyImage_(IntPtr obj, System.IntPtr id);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern System.IntPtr PropertyGrid_CreateEx_(long styles);
