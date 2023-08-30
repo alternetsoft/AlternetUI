@@ -259,12 +259,12 @@ namespace PropertyGridSample
                 prop = propertyGrid.CreatePropCategory("Category 2");
                 propertyGrid.Add(prop);
 
-                var choices1 = propertyGrid.CreateChoicesOnce(typeof(PropertyGridCreateStyle));
+                var choices1 = PropertyGrid.CreateChoicesOnce(typeof(PropertyGridCreateStyle));
                 prop = propertyGrid.CreateFlagsProperty("Flags", null, choices1,
                     PropertyGrid.DefaultCreateStyle);
                 propertyGrid.Add(prop);
 
-                var choices2 = propertyGrid.CreateChoicesOnce(typeof(HorizontalAlignment));
+                var choices2 = PropertyGrid.CreateChoicesOnce(typeof(HorizontalAlignment));
                 prop = propertyGrid.CreateEnumProperty("Enum", null, choices2,
                     HorizontalAlignment.Center);
                 propertyGrid.Add(prop);
@@ -553,7 +553,7 @@ namespace PropertyGridSample
             if (propType.IsEnum)
             {
                 var flagsAttr = propType.GetCustomAttribute(typeof(FlagsAttribute));
-                var choices = propertyGrid.CreateChoicesOnce(propType);
+                var choices = PropertyGrid.CreateChoicesOnce(propType);
                 if (flagsAttr == null)
                 {
                     prop = propertyGrid.CreateEnumProperty(

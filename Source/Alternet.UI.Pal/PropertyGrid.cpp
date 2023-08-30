@@ -1049,7 +1049,7 @@ namespace Alternet::UI
 
 	void PropertyGrid::DedicateKey(int keycode)
 	{
-		GetPropGrid()->DedicateKey(keycode);
+		GetPropGrid()->DedicateKey(Keyboard::KeyToWxKey((Key)keycode));
 	}
 
 	/*static*/ void PropertyGrid::AutoGetTranslation(bool enable)
