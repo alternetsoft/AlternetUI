@@ -192,6 +192,7 @@ namespace PropertyGridSample
             propertyGrid.ColBeginDrag += PGColBeginDrag;
             propertyGrid.ColDragging += PGColDragging;
             propertyGrid.ColEndDrag += PGColEndDrag;
+            propertyGrid.ButtonClick += PropertyGrid_ButtonClick;
 
             propertyGrid.AddActionTrigger(
             PropertyGridKeyboardAction.ActionNextProperty,
@@ -237,9 +238,18 @@ namespace PropertyGridSample
                 prop = propertyGrid.CreateLongStringProperty("Long string");
                 propertyGrid.Add(prop);
 
+                // Date
                 prop = propertyGrid.CreateDateProperty("Date");
                 propertyGrid.Add(prop);
+                // If none Date is selected (if checkbox next to date editor is unchecked)
+                // DateTime.MinValue is returned.
+                propertyGrid.SetPropertyKnownAttribute(
+                    prop,
+                    PropertyGridItemAttrId.PickerStyle,
+                    (int)(DatePickerStyleFlags.DropDown | DatePickerStyleFlags.ShowCentury
+                    | DatePickerStyleFlags.AllowNone));
 
+                // Category 2
                 prop = propertyGrid.CreatePropCategory("Category 2");
                 propertyGrid.Add(prop);
 
@@ -329,11 +339,24 @@ namespace PropertyGridSample
                     Color.FromKnownColor(KnownColor.Window));
                 propertyGrid.Add(prop);
 
+                // Color with ComboBox
+                prop = propertyGrid.CreateColorProperty(
+                    "Color with ComboBox",
+                    null,
+                    Color.Black);
+                propertyGrid.SetPropertyEditorByName(prop, "ComboBox");
+                propertyGrid.Add(prop);
+
                 // Password
                 prop = propertyGrid.CreateStringProperty("Password");
                 propertyGrid.Add(prop);
                 // Password attribute must be set after adding property to PropertyGrid
                 propertyGrid.SetPropertyKnownAttribute(prop, PropertyGridItemAttrId.Password, true);
+
+                prop = propertyGrid.CreateStringProperty("Str and button");
+                propertyGrid.SetPropertyEditorByName(prop, "TextCtrlAndButton");
+                propertyGrid.Add(prop);
+
             }
             finally
             {
@@ -689,6 +712,8 @@ namespace PropertyGridSample
         private void LogEvent(string name)
         {
             var propValue = propertyGrid.EventPropValue;
+            if (propValue is null)
+                propValue = "NULL";
             string propName = propertyGrid.EventPropName;
             string s = $"Event: {name}. PropName: <{propName}>. Value: <{propValue}>";
             if(logListBox.LastItem?.ToString() != s)
@@ -760,6 +785,11 @@ namespace PropertyGridSample
         private void PGColEndDrag(object? sender, EventArgs e)
         {
             LogEvent("ColEndDrag");
+        }
+
+        private void PropertyGrid_ButtonClick(object sender, EventArgs e)
+        {
+            LogEvent("ButtonClick");
         }
 
         private class ControlListBoxItem

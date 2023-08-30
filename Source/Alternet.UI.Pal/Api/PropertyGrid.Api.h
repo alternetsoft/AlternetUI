@@ -121,6 +121,20 @@ ALTERNET_UI_API void PropertyGrid_SetCreateStyleEx_(PropertyGrid* obj, int64_t v
         });
 }
 
+ALTERNET_UI_API char16_t* PropertyGrid_GetPropertyLabel_(PropertyGrid* obj, void* id)
+{
+    return MarshalExceptions<char16_t*>([&](){
+            return AllocPInvokeReturnString(obj->GetPropertyLabel(id));
+        });
+}
+
+ALTERNET_UI_API void* PropertyGrid_GetPropertyParent_(PropertyGrid* obj, void* id)
+{
+    return MarshalExceptions<void*>([&](){
+            return obj->GetPropertyParent(id);
+        });
+}
+
 ALTERNET_UI_API char16_t* PropertyGrid_GetPropertyValueAsString_(PropertyGrid* obj, void* id)
 {
     return MarshalExceptions<char16_t*>([&](){
@@ -433,6 +447,20 @@ ALTERNET_UI_API void PropertyGrid_SetPropertyAttributeAll_(PropertyGrid* obj, co
 {
     MarshalExceptions<void>([&](){
             obj->SetPropertyAttributeAll(attrName, variant);
+        });
+}
+
+ALTERNET_UI_API void PropertyGrid_SetLineColor_(PropertyGrid* obj, Color col)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetLineColor(col);
+        });
+}
+
+ALTERNET_UI_API void PropertyGrid_SetMarginColor_(PropertyGrid* obj, Color col)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetMarginColor(col);
         });
 }
 
@@ -1017,20 +1045,6 @@ ALTERNET_UI_API void* PropertyGrid_GetPropertyImage_(PropertyGrid* obj, void* id
         });
 }
 
-ALTERNET_UI_API char16_t* PropertyGrid_GetPropertyLabel_(PropertyGrid* obj, void* id)
-{
-    return MarshalExceptions<char16_t*>([&](){
-            return AllocPInvokeReturnString(obj->GetPropertyLabel(id));
-        });
-}
-
-ALTERNET_UI_API void* PropertyGrid_GetPropertyParent_(PropertyGrid* obj, void* id)
-{
-    return MarshalExceptions<void*>([&](){
-            return obj->GetPropertyParent(id);
-        });
-}
-
 ALTERNET_UI_API void* PropertyGrid_CreateEx_(int64_t styles)
 {
     return MarshalExceptions<void*>([&](){
@@ -1322,20 +1336,6 @@ ALTERNET_UI_API void PropertyGrid_SetEmptySpaceColor_(PropertyGrid* obj, Color c
 {
     MarshalExceptions<void>([&](){
             obj->SetEmptySpaceColor(col);
-        });
-}
-
-ALTERNET_UI_API void PropertyGrid_SetLineColor_(PropertyGrid* obj, Color col)
-{
-    MarshalExceptions<void>([&](){
-            obj->SetLineColor(col);
-        });
-}
-
-ALTERNET_UI_API void PropertyGrid_SetMarginColor_(PropertyGrid* obj, Color col)
-{
-    MarshalExceptions<void>([&](){
-            obj->SetMarginColor(col);
         });
 }
 

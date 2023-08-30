@@ -8,6 +8,13 @@ using Alternet.Drawing;
 
 namespace Alternet.UI
 {
+    /*
+    - multibuttons in prop editor
+    https://docs.wxwidgets.org/3.2/classwx_p_g_multi_button.html
+ 
+
+     */
+
     /// <summary>
     /// Specialized grid for editing properties - in other words name = value pairs.
     /// </summary>
@@ -19,6 +26,13 @@ namespace Alternet.UI
     /// </remarks>
     public class PropertyGrid : Control
     {
+        internal const string PropEditClassNameCheckBox = "CheckBox";
+        internal const string PropEditClassNameChoice = "Choice";
+        internal const string PropEditClassNameTextCtrl = "TextCtrl";
+        internal const string PropEditClassNameChoiceAndButton = "ChoiceAndButton";
+        internal const string PropEditClassNameComboBox = "ComboBox";
+        internal const string PropEditClassNameSpinCtrl = "SpinCtrl";
+        internal const string PropEditClassNameTextCtrlAndButton = "TextCtrlAndButton";
         internal static readonly string NameAsLabel = Native.PropertyGrid.NameAsLabel;
         private const int PGDONTRECURSE = 0x00000000;
         private const int PGRECURSE = 0x00000020;
@@ -45,6 +59,11 @@ namespace Alternet.UI
         /// Occurs when property value has been changed by the user.
         /// </summary>
         public event EventHandler? PropertyChanged;
+
+        /// <summary>
+        /// Occurs when button is clicked in the property editor.
+        /// </summary>
+        public event EventHandler? ButtonClick;
 
         /// <summary>
         /// Occurs when property value is about to be changed by the user.
@@ -1636,6 +1655,12 @@ namespace Alternet.UI
             ColEndDrag?.Invoke(this, e);
         }
 
+        internal void RaiseButtonClick(EventArgs e)
+        {
+            OnButtonClick(e);
+            ButtonClick?.Invoke(this, e);
+        }
+
         internal void RaiseColDragging(EventArgs e)
         {
             OnColDragging(e);
@@ -1756,6 +1781,15 @@ namespace Alternet.UI
         /// <param name="e">An <see cref="EventArgs"/> that contains
         /// the event data.</param>
         protected virtual void OnColEndDrag(EventArgs e)
+        {
+        }
+
+        /// <summary>
+        /// Called when button is clicked in the property editor and it is not processed by default.
+        /// </summary>
+        /// <param name="e">An <see cref="EventArgs"/> that contains
+        /// the event data.</param>
+        protected virtual void OnButtonClick(EventArgs e)
         {
         }
 

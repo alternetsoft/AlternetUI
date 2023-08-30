@@ -94,8 +94,32 @@ namespace Alternet::UI
 		result->Bind(wxEVT_PG_COL_BEGIN_DRAG, &PropertyGrid::OnColBeginDrag, this);
 		result->Bind(wxEVT_PG_COL_DRAGGING, &PropertyGrid::OnColDragging, this);
 		result->Bind(wxEVT_PG_COL_END_DRAG, &PropertyGrid::OnColEndDrag, this);
+		result->Bind(wxEVT_BUTTON, &PropertyGrid::OnButton, this);
 
 		return result;
+	}
+
+	void PropertyGrid::OnButton(wxCommandEvent& event)
+	{
+		auto id = event.GetId();
+		_eventColumn = 1;
+
+		auto prop = GetPropGrid()->GetSelection();
+		_eventProperty = prop;
+
+		if (prop == nullptr)
+		{
+			_eventPropertyName = wxStr(wxEmptyString);
+			_eventValue->variant = wxVariant();
+		}
+		else
+		{
+			_eventPropertyName = wxStr(prop->GetName());
+			_eventValue->variant = prop->GetValue();
+		}
+
+		RaiseEvent(PropertyGridEvent::ButtonClick);
+		event.Skip();
 	}
 
 	void PropertyGrid::OnSelected(wxPropertyGridEvent& event)
@@ -264,6 +288,7 @@ namespace Alternet::UI
 			auto window = GetWxWindow();
 			if (window != nullptr)
 			{
+				window->Unbind(wxEVT_BUTTON, &PropertyGrid::OnButton, this);
 				window->Unbind(wxEVT_PG_SELECTED, &PropertyGrid::OnSelected, this);
 				window->Unbind(wxEVT_PG_CHANGED, &PropertyGrid::OnChanged, this);
 				window->Unbind(wxEVT_PG_CHANGING, &PropertyGrid::OnChanging, this);

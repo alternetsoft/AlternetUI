@@ -35,6 +35,7 @@ namespace Alternet::UI
         string _eventPropertyName = wxStr(wxEmptyString);
         string _eventValidationFailureMessage = wxStr(wxEmptyString);
 
+        void OnButton(wxCommandEvent& event);
         void FromEventData(PropertyGridEvent evType, wxPropertyGridEvent& event);
         void ToEventData(PropertyGridEvent evType, wxPropertyGridEvent& event);
         void OnSelected(wxPropertyGridEvent& event);

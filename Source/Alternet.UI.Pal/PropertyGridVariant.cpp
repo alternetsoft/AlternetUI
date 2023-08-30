@@ -71,12 +71,13 @@ namespace Alternet::UI
 		if (value.IsNull())
 			return Color();
 		wxColour result;
-		if (value.GetType() == "wxColor")
+		auto vtype = value.GetType();
+		if (vtype == "wxColour")
 		{
 			result << value;
 			return result;
 		}
-		if (value.GetType() == "wxColourPropertyValue")
+		if (vtype == "wxColourPropertyValue")
 		{
 			wxAny any = value;
 			wxColourPropertyValue cpv = any.As<wxColourPropertyValue>();
@@ -111,7 +112,16 @@ namespace Alternet::UI
 
 	DateTime PropertyGridVariant::GetDateTime(void* handle) 
 	{
-		return ToVar(handle).GetDateTime();
+		wxVariant value = ToVar(handle);
+		if (value.IsNull())
+			return DateTime();
+
+		wxDateTime dt = value.GetDateTime();
+		if(dt.IsValid())
+			return dt;
+		DateTime dt2 = DateTime();
+		dt2.Reset();
+		return dt2;
 	}
 
 	string PropertyGridVariant::GetString(void* handle) 

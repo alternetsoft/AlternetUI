@@ -158,6 +158,20 @@ namespace Alternet.UI.Native
             }
         }
         
+        public string GetPropertyLabel(System.IntPtr id)
+        {
+            CheckDisposed();
+            var n = NativeApi.PropertyGrid_GetPropertyLabel_(NativePointer, id);
+            return n;
+        }
+        
+        public System.IntPtr GetPropertyParent(System.IntPtr id)
+        {
+            CheckDisposed();
+            var n = NativeApi.PropertyGrid_GetPropertyParent_(NativePointer, id);
+            return n;
+        }
+        
         public string GetPropertyValueAsString(System.IntPtr id)
         {
             CheckDisposed();
@@ -448,6 +462,18 @@ namespace Alternet.UI.Native
         {
             CheckDisposed();
             NativeApi.PropertyGrid_SetPropertyAttributeAll_(NativePointer, attrName, variant);
+        }
+        
+        public void SetLineColor(Alternet.Drawing.Color col)
+        {
+            CheckDisposed();
+            NativeApi.PropertyGrid_SetLineColor_(NativePointer, col);
+        }
+        
+        public void SetMarginColor(Alternet.Drawing.Color col)
+        {
+            CheckDisposed();
+            NativeApi.PropertyGrid_SetMarginColor_(NativePointer, col);
         }
         
         public void SetSelectionBackgroundColor(Alternet.Drawing.Color col)
@@ -1005,20 +1031,6 @@ namespace Alternet.UI.Native
             return n;
         }
         
-        public string GetPropertyLabel(System.IntPtr id)
-        {
-            CheckDisposed();
-            var n = NativeApi.PropertyGrid_GetPropertyLabel_(NativePointer, id);
-            return n;
-        }
-        
-        public System.IntPtr GetPropertyParent(System.IntPtr id)
-        {
-            CheckDisposed();
-            var n = NativeApi.PropertyGrid_GetPropertyParent_(NativePointer, id);
-            return n;
-        }
-        
         public static System.IntPtr CreateEx(long styles)
         {
             var n = NativeApi.PropertyGrid_CreateEx_(styles);
@@ -1292,18 +1304,6 @@ namespace Alternet.UI.Native
             NativeApi.PropertyGrid_SetEmptySpaceColor_(NativePointer, col);
         }
         
-        public void SetLineColor(Alternet.Drawing.Color col)
-        {
-            CheckDisposed();
-            NativeApi.PropertyGrid_SetLineColor_(NativePointer, col);
-        }
-        
-        public void SetMarginColor(Alternet.Drawing.Color col)
-        {
-            CheckDisposed();
-            NativeApi.PropertyGrid_SetMarginColor_(NativePointer, col);
-        }
-        
         static GCHandle eventCallbackGCHandle;
         
         static void SetEventCallback()
@@ -1346,6 +1346,10 @@ namespace Alternet.UI.Native
                 case NativeApi.PropertyGridEvent.Highlighted:
                 {
                     Highlighted?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                }
+                case NativeApi.PropertyGridEvent.ButtonClick:
+                {
+                    ButtonClick?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
                 }
                 case NativeApi.PropertyGridEvent.RightClick:
                 {
@@ -1403,6 +1407,7 @@ namespace Alternet.UI.Native
         public event EventHandler? Changed;
         public event EventHandler<CancelEventArgs>? Changing;
         public event EventHandler? Highlighted;
+        public event EventHandler? ButtonClick;
         public event EventHandler? RightClick;
         public event EventHandler? DoubleClick;
         public event EventHandler? ItemCollapsed;
@@ -1427,6 +1432,7 @@ namespace Alternet.UI.Native
                 Changed,
                 Changing,
                 Highlighted,
+                ButtonClick,
                 RightClick,
                 DoubleClick,
                 ItemCollapsed,
@@ -1488,6 +1494,12 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void PropertyGrid_SetCreateStyleEx_(IntPtr obj, long value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern string PropertyGrid_GetPropertyLabel_(IntPtr obj, System.IntPtr id);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr PropertyGrid_GetPropertyParent_(IntPtr obj, System.IntPtr id);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern string PropertyGrid_GetPropertyValueAsString_(IntPtr obj, System.IntPtr id);
@@ -1623,6 +1635,12 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void PropertyGrid_SetPropertyAttributeAll_(IntPtr obj, string attrName, System.IntPtr variant);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void PropertyGrid_SetLineColor_(IntPtr obj, NativeApiTypes.Color col);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void PropertyGrid_SetMarginColor_(IntPtr obj, NativeApiTypes.Color col);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void PropertyGrid_SetSelectionBackgroundColor_(IntPtr obj, NativeApiTypes.Color col);
@@ -1874,12 +1892,6 @@ namespace Alternet.UI.Native
             public static extern System.IntPtr PropertyGrid_GetPropertyImage_(IntPtr obj, System.IntPtr id);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern string PropertyGrid_GetPropertyLabel_(IntPtr obj, System.IntPtr id);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr PropertyGrid_GetPropertyParent_(IntPtr obj, System.IntPtr id);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern System.IntPtr PropertyGrid_CreateEx_(long styles);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
@@ -2004,12 +2016,6 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void PropertyGrid_SetEmptySpaceColor_(IntPtr obj, NativeApiTypes.Color col);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void PropertyGrid_SetLineColor_(IntPtr obj, NativeApiTypes.Color col);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void PropertyGrid_SetMarginColor_(IntPtr obj, NativeApiTypes.Color col);
             
         }
     }

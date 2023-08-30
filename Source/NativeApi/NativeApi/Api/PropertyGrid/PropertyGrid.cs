@@ -27,6 +27,8 @@ namespace NativeApi.Api
 
         public event EventHandler? Highlighted;
 
+        public event EventHandler? ButtonClick;
+
         public event EventHandler? RightClick;
 
         public event EventHandler? DoubleClick;

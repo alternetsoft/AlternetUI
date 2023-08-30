@@ -260,6 +260,17 @@ namespace Alternet::UI
             Millisecond = cc.msec;
         }
 
+        void Reset()
+        {
+            Year = 0;
+            Month = 0;
+            Day = 0;
+            Hour = 0;
+            Minute = 0;
+            Second = 0;
+            Millisecond = 0;
+        }
+
         operator DateTime_C() { 
             return DateTime_C{ Year, Month, // was (uint8_t)(Month + 1)
                 Day, Hour, Minute, Second, Millisecond }; }

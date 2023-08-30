@@ -57,6 +57,7 @@ namespace Alternet.UI
         protected override void OnDetach()
         {
             base.OnDetach();
+            NativeControl.ButtonClick -= NativeControl_ButtonClick;
             NativeControl.Selected -= NativeControl_Selected;
             NativeControl.Changed -= NativeControl_Changed;
             NativeControl.Changing -= NativeControl_Changing;
@@ -76,6 +77,7 @@ namespace Alternet.UI
         {
             base.OnAttach();
 
+            NativeControl.ButtonClick += NativeControl_ButtonClick;
             NativeControl.Selected += NativeControl_Selected;
             NativeControl.Changed += NativeControl_Changed;
             NativeControl.Changing += NativeControl_Changing;
@@ -89,6 +91,11 @@ namespace Alternet.UI
             NativeControl.ColBeginDrag += NativeControl_ColBeginDrag;
             NativeControl.ColDragging += NativeControl_ColDragging;
             NativeControl.ColEndDrag += NativeControl_ColEndDrag;
+        }
+
+        private void NativeControl_ButtonClick(object sender, EventArgs e)
+        {
+            Control.RaiseButtonClick(e);
         }
 
         private void NativeControl_ColEndDrag(object? sender, EventArgs e)
