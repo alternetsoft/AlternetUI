@@ -53,32 +53,21 @@ namespace Alternet.Base.Collections
         }
 
         /// <summary>
-        /// Inserts an item into the collection at the specified index.
-        /// </summary>
-        /// <param name="index">The zero-based index at which <c>item</c> should be inserted.</param>
-        /// <param name="item">The object to insert.</param>
-        protected override void InsertItem(int index, T item)
-        {
-            if (ThrowOnNullItemAddition && item is null)
-                throw new ArgumentNullException(nameof(item), "Adding null to the collection is not allowed.");
-
-            base.InsertItem(index, item);
-
-            OnItemInserted(new CollectionChangeEventArgs<T>(index, item));
-        }
-
-        /// <summary>
-        /// Adds the elements of the specified <see cref="IEnumerable{T}"/> to the end of the collection.
+        /// Adds the elements of the specified <see cref="IEnumerable{T}"/> to the end
+        /// of the collection.
         /// </summary>
         /// <param name="collection">
-        /// The <see cref="IEnumerable{T}"/> whose elements should be added to the end of the collection.
-        /// The value itself cannot be <c>null</c>, but it can contain elements that are <c>null</c>, if type <c>T</c> is a reference type.
+        /// The <see cref="IEnumerable{T}"/> whose elements should be added to the end
+        /// of the collection.
+        /// The value itself cannot be <c>null</c>, but it can contain elements that are
+        /// <c>null</c>, if type <c>T</c> is a reference type.
         /// </param>
         /// <exception cref="NullReferenceException">
         /// <c>collection</c> is <c>null</c>.
         /// </exception>
         /// <remarks>
-        /// The order of the elements in the <see cref="IEnumerable{T}"/> is preserved in the collection.
+        /// The order of the elements in the <see cref="IEnumerable{T}"/> is preserved
+        /// in the collection.
         /// </remarks>
         public void AddRange(IEnumerable<T> collection)
         {
@@ -98,6 +87,21 @@ namespace Alternet.Base.Collections
                 RangeOperationInProgress = false;
                 OnItemRangeAdditionFinished(new RangeAdditionFinishedEventArgs<T>(index, collection));
             }
+        }
+
+        /// <summary>
+        /// Inserts an item into the collection at the specified index.
+        /// </summary>
+        /// <param name="index">The zero-based index at which <c>item</c> should be inserted.</param>
+        /// <param name="item">The object to insert.</param>
+        protected override void InsertItem(int index, T item)
+        {
+            if (ThrowOnNullItemAddition && item is null)
+                throw new ArgumentNullException(nameof(item));
+
+            base.InsertItem(index, item);
+
+            OnItemInserted(new CollectionChangeEventArgs<T>(index, item));
         }
 
         /// <summary>
@@ -128,18 +132,21 @@ namespace Alternet.Base.Collections
         /// Raises the <see cref="ItemRangeAdditionFinished"/> event with the provided arguments.
         /// </summary>
         /// <param name="e">Arguments of the event being raised.</param>
-        protected virtual void OnItemRangeAdditionFinished(RangeAdditionFinishedEventArgs<T> e) => ItemRangeAdditionFinished?.Invoke(this, e);
+        protected virtual void OnItemRangeAdditionFinished(RangeAdditionFinishedEventArgs<T> e) =>
+            ItemRangeAdditionFinished?.Invoke(this, e);
 
         /// <summary>
         /// Raises the <see cref="ItemInserted"/> event with the provided arguments.
         /// </summary>
         /// <param name="e">Arguments of the event being raised.</param>
-        protected virtual void OnItemInserted(CollectionChangeEventArgs<T> e) => ItemInserted?.Invoke(this, e);
+        protected virtual void OnItemInserted(CollectionChangeEventArgs<T> e) =>
+            ItemInserted?.Invoke(this, e);
 
         /// <summary>
         /// Raises the <see cref="ItemRemoved"/> event with the provided arguments.
         /// </summary>
         /// <param name="e">Arguments of the event being raised.</param>
-        protected virtual void OnItemRemoved(CollectionChangeEventArgs<T> e) => ItemRemoved?.Invoke(this, e);
+        protected virtual void OnItemRemoved(CollectionChangeEventArgs<T> e) =>
+            ItemRemoved?.Invoke(this, e);
     }
 }

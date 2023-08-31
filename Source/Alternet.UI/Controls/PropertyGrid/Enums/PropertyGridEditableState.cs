@@ -11,7 +11,6 @@ namespace Alternet.UI
     /// <see cref="PropertyGrid.RestoreEditableState"/>.
     /// </summary>
     public enum PropertyGridEditableState
-
     {
         /// <summary>
         /// Include selected property.
