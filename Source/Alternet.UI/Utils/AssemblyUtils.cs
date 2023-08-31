@@ -14,6 +14,33 @@ namespace Alternet.UI
     public static class AssemblyUtils
     {
         /// <summary>
+        /// Gets real type, using <see cref="Nullable.GetUnderlyingType"/>.
+        /// </summary>
+        /// <param name="type">Type.</param>
+        /// <returns><see cref="Nullable.GetUnderlyingType"/> if its not null or
+        /// <paramref name="type"/> value.</returns>
+        public static Type GetRealType(Type type)
+        {
+            var underlyingType = Nullable.GetUnderlyingType(type);
+            var realType = underlyingType ?? type;
+            return realType;
+        }
+
+        /// <summary>
+        /// Gets property info.
+        /// </summary>
+        /// <param name="instance">Object instance.</param>
+        /// <param name="name">Property name.</param>
+        public static PropertyInfo? GetPropInfo(object instance, string name)
+        {
+            if (instance == null || string.IsNullOrEmpty(name))
+                return null;
+            var type = instance.GetType();
+            var propInfo = type.GetProperty(name);
+            return propInfo;
+        }
+
+        /// <summary>
         /// Gets minimal possible variable value for the given <see cref="TypeCode"/>.
         /// </summary>
         public static object? GetMinValue(TypeCode code)
