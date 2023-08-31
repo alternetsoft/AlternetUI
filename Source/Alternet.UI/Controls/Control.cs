@@ -264,6 +264,7 @@ namespace Alternet.UI
         /// A common use for the <see cref="Tag"/> property is to store data that
         /// is closely associated with the control.
         /// </remarks>
+        [Browsable(false)]
         public object? Tag { get; set; }
 
         /// <summary>
@@ -800,6 +801,7 @@ namespace Alternet.UI
         /// </summary>
         /// <value><c>true</c> if drag-and-drop operations are allowed in the
         /// control; otherwise, <c>false</c>. The default is <c>false</c>.</value>
+        [Browsable(false)]
         public bool AllowDrop
         {
             get

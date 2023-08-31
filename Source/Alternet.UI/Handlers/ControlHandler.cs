@@ -1095,6 +1095,9 @@ namespace Alternet.UI
         private void Control_FontChanged(object? sender, EventArgs e)
         {
             ApplyFont();
+            RaiseLayoutChanged();
+            PerformLayout();
+            Invalidate();
         }
 
         private void NativeControl_GotFocus(object? sender, EventArgs e)
@@ -1252,11 +1255,9 @@ namespace Alternet.UI
 
         private Color GetBrushColor(Brush? brush)
         {
-            var solidBrush = brush as SolidBrush;
-            if (solidBrush == null)
+            if (brush == null)
                 return Color.Empty;
-
-            return solidBrush.Color;
+            return brush.BrushColor;
         }
 
         private void ApplyBackgroundColor()

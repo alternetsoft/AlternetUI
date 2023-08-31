@@ -809,9 +809,12 @@ namespace Alternet::UI
 
     void Control::SetFont(Font* value)
     {
-        if (value == nullptr)
-            return;
         auto w = GetWxWindow();
+        if (value == nullptr)
+        {
+            w->SetFont(wxNullFont);
+            return;
+        }
         w->SetFont(value->GetWxFont());
     }
 
