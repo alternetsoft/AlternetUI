@@ -109,6 +109,11 @@ namespace Alternet::UI
 	{
 		return ToVar(handle).GetLongLong().GetValue();
 	}
+	
+	uint64_t PropertyGridVariant::GetULong(void* handle)
+	{
+		return ToVar(handle).GetULongLong().GetValue();
+	}
 
 	DateTime PropertyGridVariant::GetDateTime(void* handle) 
 	{
@@ -141,7 +146,13 @@ namespace Alternet::UI
 		FromVariant(handle, v);
 	}
 
-	void PropertyGridVariant::SetLong(void* handle, int64_t val) 
+	void PropertyGridVariant::SetULong(void* handle, uint64_t val)
+	{
+		wxVariant v = wxULongLong(val);
+		FromVariant(handle, v);
+	}
+
+	void PropertyGridVariant::SetLong(void* handle, int64_t val)
 	{
 		wxVariant v = wxLongLong(val);
 		FromVariant(handle, v);

@@ -13,6 +13,8 @@ namespace Alternet.UI
         private const string TypeNameBool = "bool";
         private const string TypeNameLongLong = "longlong";
         private const string TypeNameLong = "long";
+        private const string TypeNameULongLong = "ulonglong";
+        private const string TypeNameULong = "ulong";
         private const string TypeNameDateTime = "datetime";
         private const string TypeNameDouble = "double";
         private const string TypeNameString = "string";
@@ -62,6 +64,8 @@ namespace Alternet.UI
                     return AsString;
                 if (type == TypeNameLong || type == TypeNameLongLong)
                     return AsLong;
+                if (type == TypeNameULong || type == TypeNameULongLong)
+                    return AsULong;
                 if (type == TypeNameColor || type == TypeNameColor2)
                     return AsColor;
                 return null;
@@ -101,16 +105,16 @@ namespace Alternet.UI
                         AsLong = (long)value;
                         break;
                     case TypeCode.Byte:
-                        AsLong = (byte)value;
+                        AsULong = (byte)value;
                         break;
                     case TypeCode.UInt32:
                         AsLong = (uint)value;
                         break;
                     case TypeCode.UInt16:
-                        AsLong = (ushort)value;
+                        AsULong = (ushort)value;
                         break;
                     case TypeCode.UInt64:
-                        AsLong = Convert.ToInt64((ulong)value);
+                        AsULong = (ulong)value;
                         break;
                     case TypeCode.Single:
                         AsDouble = (float)value;
@@ -119,7 +123,7 @@ namespace Alternet.UI
                         AsDouble = (double)value;
                         break;
                     case TypeCode.Decimal:
-                        AsLong = Convert.ToInt64((decimal)value);
+                        AsDouble = Convert.ToDouble((decimal)value);
                         break;
                     case TypeCode.DateTime:
                         AsDateTime = (DateTime)value;
@@ -168,6 +172,19 @@ namespace Alternet.UI
             set
             {
                 Native.PropertyGridVariant.SetLong(handle, value);
+            }
+        }
+
+        public ulong AsULong
+        {
+            get
+            {
+                return Native.PropertyGridVariant.GetULong(handle);
+            }
+
+            set
+            {
+                Native.PropertyGridVariant.SetULong(handle, value);
             }
         }
 

@@ -26,6 +26,7 @@ namespace NativeApi.Api
         public static double GetDouble(IntPtr handle) => throw new Exception();
         public static bool GetBool(IntPtr handle) => throw new Exception();
         public static long GetLong(IntPtr handle) => throw new Exception();
+        public static ulong GetULong(IntPtr handle) => throw new Exception();
         public static Alternet.UI.DateTime GetDateTime(IntPtr handle) => throw new Exception();
         public static string GetString(IntPtr handle) => throw new Exception();
 
@@ -33,6 +34,7 @@ namespace NativeApi.Api
         public static void SetDouble(IntPtr handle, double val) => throw new Exception();
         public static void SetBool(IntPtr handle, bool val) => throw new Exception();
         public static void SetLong(IntPtr handle, long val) => throw new Exception();
+        public static void SetULong(IntPtr handle, ulong val) => throw new Exception();
         public static void SetInt(IntPtr handle, int val) => throw new Exception();
         public static void SetShort(IntPtr handle, short val) => throw new Exception();
         public static void SetDateTime(IntPtr handle, Alternet.UI.DateTime val) =>

@@ -10,7 +10,8 @@ namespace Alternet.UI
     /// Flags for <see cref="PropertyGrid.SaveEditableState"/> and
     /// <see cref="PropertyGrid.RestoreEditableState"/>.
     /// </summary>
-    public enum PropertyGridEditableStateFlags
+    public enum PropertyGridEditableState
+
     {
         /// <summary>
         /// Include selected property.

@@ -33,6 +33,11 @@ namespace Alternet.UI
         long AsLong { get; set; }
 
         /// <summary>
+        /// Gets or sets variasnt value as <see cref="ulong"/>.
+        /// </summary>
+        ulong AsULong { get; set; }
+
+        /// <summary>
         /// Gets or sets variasnt value as <see cref="DateTime"/>.
         /// </summary>
         DateTime AsDateTime { get; set; }

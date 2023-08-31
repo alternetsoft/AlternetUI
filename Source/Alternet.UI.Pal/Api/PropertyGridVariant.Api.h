@@ -106,6 +106,13 @@ ALTERNET_UI_API int64_t PropertyGridVariant_GetLong_(void* handle)
         });
 }
 
+ALTERNET_UI_API uint64_t PropertyGridVariant_GetULong_(void* handle)
+{
+    return MarshalExceptions<uint64_t>([&](){
+            return PropertyGridVariant::GetULong(handle);
+        });
+}
+
 ALTERNET_UI_API DateTime_C PropertyGridVariant_GetDateTime_(void* handle)
 {
     return MarshalExceptions<DateTime_C>([&](){
@@ -145,6 +152,13 @@ ALTERNET_UI_API void PropertyGridVariant_SetLong_(void* handle, int64_t val)
 {
     MarshalExceptions<void>([&](){
             PropertyGridVariant::SetLong(handle, val);
+        });
+}
+
+ALTERNET_UI_API void PropertyGridVariant_SetULong_(void* handle, uint64_t val)
+{
+    MarshalExceptions<void>([&](){
+            PropertyGridVariant::SetULong(handle, val);
         });
 }
 

@@ -28,8 +28,6 @@ namespace PropertyGridSample
 
         static MainWindow()
         {
-            TestLong();
-
             WebBrowser.CrtSetDbgFlag(0);
 
             Initializers.Add(typeof(Label), (c) => { (c as Label)!.Text = "Label"; });
@@ -432,7 +430,7 @@ namespace PropertyGridSample
             return result;
         }
 
-        private static void TestLong()
+        private void TestLong()
         {
             IPropertyGridVariant variant = PropertyGrid.CreateVariant();
 
@@ -447,8 +445,16 @@ namespace PropertyGridSample
             variant.AsLong = maxLong;
             long maxLong2 = variant.AsLong;
 
+            variant.AsULong = minULong;
+            ulong minULong2 = variant.AsULong;
 
+            variant.AsULong = maxULong;
+            ulong maxULong2 = variant.AsULong;
 
+            Log($"{minLong} - {minLong2}");
+            Log($"{maxLong} - {maxLong2}");
+            Log($"{minULong} - {minULong2}");
+            Log($"{maxULong} - {maxULong2}");
         }
 
         public IPropertyGridItem CreateBrushProperty(
@@ -515,6 +521,15 @@ namespace PropertyGridSample
             result.Children.Add(itemLineJoin!);
             result.Children.Add(itemWidth!);
 
+            return result;
+        }
+
+        public IPropertyGridItem CreateDecimalProperty(
+            string label,
+            string? name = null,
+            decimal value = default(decimal))
+        {
+            var result = propertyGrid.CreateStringProperty(label, name, value.ToString());
             return result;
         }
 
@@ -658,19 +673,11 @@ namespace PropertyGridSample
                         break;
                     case TypeCode.Decimal:
                         propValue ??= (decimal)0;
-                        Int64 asDecimal = Convert.ToInt64((decimal)propValue);
-                        try
-                        {
-                            prop = propertyGrid.CreateIntProperty(
-                                propName,
-                                null,
-                                (long)asDecimal!);
-                            break;
-                        }
-                        catch
-                        {
-                            return null;
-                        }
+                        prop = CreateDecimalProperty(
+                            propName,
+                            null,
+                            (decimal)propValue!);
+                        break;
                     case TypeCode.DateTime:
                         propValue ??= DateTime.Now;
                         prop = propertyGrid.CreateDateProperty(
@@ -852,7 +859,7 @@ namespace PropertyGridSample
             LogEvent("ColEndDrag");
         }
 
-        private void PropertyGrid_ButtonClick(object sender, EventArgs e)
+        private void PropertyGrid_ButtonClick(object? sender, EventArgs e)
         {
             LogEvent("ButtonClick");
         }

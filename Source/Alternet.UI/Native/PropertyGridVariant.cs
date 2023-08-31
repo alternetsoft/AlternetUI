@@ -98,6 +98,12 @@ namespace Alternet.UI.Native
             return n;
         }
         
+        public static ulong GetULong(System.IntPtr handle)
+        {
+            var n = NativeApi.PropertyGridVariant_GetULong_(handle);
+            return n;
+        }
+        
         public static DateTime GetDateTime(System.IntPtr handle)
         {
             var n = NativeApi.PropertyGridVariant_GetDateTime_(handle);
@@ -128,6 +134,11 @@ namespace Alternet.UI.Native
         public static void SetLong(System.IntPtr handle, long val)
         {
             NativeApi.PropertyGridVariant_SetLong_(handle, val);
+        }
+        
+        public static void SetULong(System.IntPtr handle, ulong val)
+        {
+            NativeApi.PropertyGridVariant_SetULong_(handle, val);
         }
         
         public static void SetInt(System.IntPtr handle, int val)
@@ -199,6 +210,9 @@ namespace Alternet.UI.Native
             public static extern long PropertyGridVariant_GetLong_(System.IntPtr handle);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern ulong PropertyGridVariant_GetULong_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern NativeApiTypes.DateTime PropertyGridVariant_GetDateTime_(System.IntPtr handle);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
@@ -215,6 +229,9 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void PropertyGridVariant_SetLong_(System.IntPtr handle, long val);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void PropertyGridVariant_SetULong_(System.IntPtr handle, ulong val);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void PropertyGridVariant_SetInt_(System.IntPtr handle, int val);

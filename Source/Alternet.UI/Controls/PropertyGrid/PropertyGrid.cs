@@ -9,10 +9,11 @@ using Alternet.Drawing;
 namespace Alternet.UI
 {
     /*
-    - multibuttons in prop editor
-    https://docs.wxwidgets.org/3.2/classwx_p_g_multi_button.html
- 
-
+    - multibuttons in prop editor   https://docs.wxwidgets.org/3.2/classwx_p_g_multi_button.html
+    - How to make cells bigger in height? So DateEdit will look ok?
+    - How to make cell spacing vertical?
+    - How to hide lines? (set their color to bk color)
+    - ClickButton event in property intf
      */
 
     /// <summary>
@@ -316,6 +317,14 @@ namespace Alternet.UI
         }
 
         internal Native.PropertyGrid NativeControl => Handler.NativeControl;
+
+        /// <summary>
+        /// Checks system screen design used for laying out various dialogs.
+        /// </summary>
+        public static bool IsSmallScreen()
+        {
+            return Native.PropertyGrid.IsSmallScreen();
+        }
 
         /// <summary>
         /// Creates property choices list for use with <see cref="CreateFlagsProperty"/> and
@@ -1162,16 +1171,35 @@ namespace Alternet.UI
             return NativeControl.IsPropertyValueUnspecified(prop.Handle);
         }
 
+        /// <summary>
+        /// Disables (limit = true) or enables (limit = false) text editor of a property,
+        /// if it is not the sole mean to edit the value.
+        /// </summary>
+        /// <param name="prop">Property item.</param>
+        /// <param name="limit"><c>true</c> to disable text editor, <c>false</c>< otherwise./param>
         public void LimitPropertyEditing(IPropertyGridItem prop, bool limit = true)
         {
             NativeControl.LimitPropertyEditing(prop.Handle, limit);
         }
 
+        /// <summary>
+        /// Replaces existing property with newly created property.
+        /// </summary>
+        /// <param name="prop">Property item to be replaced.</param>
+        /// <param name="newProp">New property item.</param>
         public void ReplaceProperty(IPropertyGridItem prop, IPropertyGridItem newProp)
         {
             NativeControl.ReplaceProperty(prop.Handle, newProp.Handle);
         }
 
+        /// <summary>
+        /// Sets background colour of a property.
+        /// </summary>
+        /// <param name="prop">Property item.</param>
+        /// <param name="color">New background color.</param>
+        /// <param name="recurse"><c>true</c> causes color to be set recursively,
+        /// <c>false</c> only sets color for the property in question and not
+        /// any of its children.</param>
         public void SetPropertyBackgroundColor(
             IPropertyGridItem prop,
             Color color,
@@ -1181,21 +1209,36 @@ namespace Alternet.UI
             NativeControl.SetPropertyBackgroundColor(prop.Handle, color, flags);
         }
 
+        /// <summary>
+        /// Resets text and background colors of a property.
+        /// </summary>
+        /// <param name="prop">Property item.</param>
+        /// <param name="recurse"><c>true</c> causes color to be reset recursively,
+        /// <c>false</c> only resets color for the property in question and not
+        /// any of its children.</param>
         public void SetPropertyColorsToDefault(IPropertyGridItem prop, bool recurse = true)
         {
             var flags = recurse ? PGRECURSE : PGDONTRECURSE;
             NativeControl.SetPropertyColorsToDefault(prop.Handle, flags);
         }
 
-        public void SetPropertyTextColor(IPropertyGridItem prop, Color col, bool recurse = true)
+        /// <summary>
+        /// Sets text colour of a property.
+        /// </summary>
+        /// <param name="prop">Property item.</param>
+        /// <param name="color">New text color.</param>
+        /// <param name="recurse"><c>true</c> causes color to be set recursively,
+        /// <c>false</c> only sets color for the property in question and not
+        /// any of its children.</param>
+        public void SetPropertyTextColor(IPropertyGridItem prop, Color color, bool recurse = true)
         {
             var flags = recurse ? PGRECURSE : PGDONTRECURSE;
-            NativeControl.SetPropertyTextColor(prop.Handle, col, flags);
+            NativeControl.SetPropertyTextColor(prop.Handle, color, flags);
         }
 
         public bool RestoreEditableState(
             string src,
-            PropertyGridEditableStateFlags restoreStates = PropertyGridEditableStateFlags.AllStates)
+            PropertyGridEditableState restoreStates = PropertyGridEditableState.AllStates)
         {
             return NativeControl.RestoreEditableState(src, (int)restoreStates);
         }
@@ -1206,8 +1249,8 @@ namespace Alternet.UI
         }
 
         public string SaveEditableState(
-            PropertyGridEditableStateFlags includedStates =
-                PropertyGridEditableStateFlags.AllStates)
+            PropertyGridEditableState includedStates =
+                PropertyGridEditableState.AllStates)
         {
             return NativeControl.SaveEditableState((int)includedStates);
         }
@@ -1383,11 +1426,6 @@ namespace Alternet.UI
             NativeControl.CenterSplitter(enableAutoResizing);
         }
 
-        internal bool CommitChangesFromEditor()
-        {
-            return NativeControl.CommitChangesFromEditor(0);
-        }
-
         public void EditorsValueWasModified()
         {
             NativeControl.EditorsValueWasModified();
@@ -1533,11 +1571,6 @@ namespace Alternet.UI
             NativeControl.SetUnspecifiedCommonValue(index);
         }
 
-        public static bool IsSmallScreen()
-        {
-            return Native.PropertyGrid.IsSmallScreen();
-        }
-
         public void RefreshEditor()
         {
             NativeControl.RefreshEditor();
@@ -1650,6 +1683,23 @@ namespace Alternet.UI
             return NativeControl.GetImageSize(prop.Handle, item);
         }
 
+        internal static void CreateTestVariant()
+        {
+#pragma warning disable
+            PropertyGridVariant variant = new();
+#pragma warning restore
+
+            variant.AsBool = true;
+
+            variant.AsLong = 150;
+
+            variant.AsDateTime = DateTime.Now;
+
+            variant.AsDouble = 18;
+
+            variant.AsString = "hello";
+        }
+
         internal static IntPtr GetEditorByName(string editorName)
         {
             return Native.PropertyGrid.GetEditorByName(editorName);
@@ -1705,21 +1755,9 @@ namespace Alternet.UI
             return NativeControl.GetCellTextColor();
         }
 
-        internal static void CreateTestVariant()
+        internal bool CommitChangesFromEditor()
         {
-#pragma warning disable
-            PropertyGridVariant variant = new();
-#pragma warning restore
-
-            variant.AsBool = true;
-
-            variant.AsLong = 150;
-
-            variant.AsDateTime = DateTime.Now;
-
-            variant.AsDouble = 18;
-
-            variant.AsString = "hello";
+            return NativeControl.CommitChangesFromEditor(0);
         }
 
         internal IntPtr GetPropertyImage(IPropertyGridItem prop)
