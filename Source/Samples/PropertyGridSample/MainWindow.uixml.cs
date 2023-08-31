@@ -230,7 +230,7 @@ namespace PropertyGridSample
                 prop = propertyGrid.CreateIntProperty("Int");
                 propertyGrid.Add(prop);
 
-                prop = propertyGrid.CreateFloatProperty("Float");
+                prop = propertyGrid.CreateDoubleProperty("Float");
                 propertyGrid.Add(prop);
 
                 prop = propertyGrid.CreateUIntProperty("UInt");
@@ -263,7 +263,7 @@ namespace PropertyGridSample
                 propertyGrid.Add(prop);
 
                 var choices2 = PropertyGrid.CreateChoicesOnce(typeof(HorizontalAlignment));
-                prop = propertyGrid.CreateEnumProperty("Enum", null, choices2,
+                prop = propertyGrid.CreateChoicesProperty("Enum", null, choices2,
                     HorizontalAlignment.Center);
                 propertyGrid.Add(prop);
 
@@ -371,8 +371,8 @@ namespace PropertyGridSample
                 propertyGrid.Add(prop);
 
                 //Font Name
-                choices = FontNameChoices;
-                prop = propertyGrid.CreateEnumProperty(
+                choices = PropertyGridAdapterFont.FontNameChoices;
+                prop = propertyGrid.CreateChoicesProperty(
                     "Font name", 
                     null, 
                     choices, 
@@ -383,21 +383,6 @@ namespace PropertyGridSample
             {
                 propertyGrid.EndUpdate();
             }
-        }
-
-        private static IPropertyGridChoices? fontNameChoices;
-
-        public static IPropertyGridChoices FontNameChoices
-        { 
-            get 
-            {
-                if (fontNameChoices != null)
-                    return fontNameChoices;
-                fontNameChoices = PropertyGrid.CreateChoices();
-                string[] names = FontFamily.FamiliesNamesAscending;
-                fontNameChoices.AddRange(names);
-                return fontNameChoices;
-            } 
         }
 
         public IPropertyGridItem CreateFontProperty(
@@ -414,7 +399,16 @@ namespace PropertyGridSample
             var result = propertyGrid.CreateStringProperty(label, name, "(Font)");
             propertyGrid.SetPropertyReadOnly(result, true, false);
 
-            var itemName = CreateProperty(adapter, "Name");
+            var choices = PropertyGridAdapterFont.FontNameChoices;
+
+            //var itemName = CreateProperty(adapter, "Name");
+
+            var itemName = propertyGrid.CreateChoicesProperty(
+                "Name",
+                null,
+                choices,
+                choices.GetValue(adapter.Name));
+
             var itemSizeInPoints = CreateProperty(adapter, "SizeInPoints");
             var itemIsBold = CreateProperty(adapter, "IsBold");
             var itemIsItalic = CreateProperty(adapter, "IsItalic");
@@ -430,7 +424,7 @@ namespace PropertyGridSample
             return result;
         }
 
-        private void TestLong()
+        internal void TestLong()
         {
             IPropertyGridVariant variant = PropertyGrid.CreateVariant();
 
@@ -527,7 +521,7 @@ namespace PropertyGridSample
         public IPropertyGridItem CreateDecimalProperty(
             string label,
             string? name = null,
-            decimal value = default(decimal))
+            decimal value = default)
         {
             var result = propertyGrid.CreateStringProperty(label, name, value.ToString());
             return result;
@@ -562,30 +556,11 @@ namespace PropertyGridSample
             IPropertyGridItem? prop = null;
 
             var underlyingType = Nullable.GetUnderlyingType(propType);
-            var isNullable = underlyingType != null;
+            /*var isNullable = underlyingType != null;*/
             var realType = underlyingType ?? propType;
 
             if (propType.IsEnum)
-            {
-                var flagsAttr = propType.GetCustomAttribute(typeof(FlagsAttribute));
-                var choices = PropertyGrid.CreateChoicesOnce(propType);
-                if (flagsAttr == null)
-                {
-                    prop = propertyGrid.CreateEnumProperty(
-                        propName,
-                        null,
-                        choices,
-                        propValue!);
-                }
-                else
-                {
-                    prop = propertyGrid.CreateFlagsProperty(
-                        propName,
-                        null,
-                        choices,
-                        propValue!);
-                }
-            }
+                prop = propertyGrid.CreatePropertyAsEnum(null, null, instance, p);
             else
                 switch (typeCode)
                 {
@@ -593,14 +568,9 @@ namespace PropertyGridSample
                     case TypeCode.DBNull:
                         return null;
                     case TypeCode.Object:
-                        if(realType  == typeof(Color))
+                        if (realType == typeof(Color))
                         {
-                            propValue ??= Color.Black;
-
-                            prop = propertyGrid.CreateColorProperty(
-                                propName,
-                                null,
-                                (Color)propValue);
+                            prop = propertyGrid.CreatePropertyAsColor(propName, null, instance, p);
                             break;
                         }
                         if (realType == typeof(Font))
@@ -617,7 +587,7 @@ namespace PropertyGridSample
                         }
                         if (realType == typeof(Pen))
                         {
-                            prop = CreatePenProperty(propName,null, instance, p);
+                            prop = CreatePenProperty(propName, null, instance, p);
                             setPropReadonly = true;
                             break;
                         }
@@ -669,7 +639,7 @@ namespace PropertyGridSample
                         break;
                     case TypeCode.Double:
                         propValue ??= (double)0;
-                        prop = propertyGrid.CreateFloatProperty(propName, null, (double)propValue!);
+                        prop = propertyGrid.CreateDoubleProperty(propName, null, (double)propValue!);
                         break;
                     case TypeCode.Decimal:
                         propValue ??= (decimal)0;
@@ -784,8 +754,7 @@ namespace PropertyGridSample
         private void LogEvent(string name)
         {
             var propValue = propertyGrid.EventPropValue;
-            if (propValue is null)
-                propValue = "NULL";
+            propValue ??= "NULL";
             string propName = propertyGrid.EventPropName;
             string s = $"Event: {name}. PropName: <{propName}>. Value: <{propValue}>";
             if(logListBox.LastItem?.ToString() != s)

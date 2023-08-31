@@ -21,8 +21,8 @@ namespace Alternet.UI
         private const string TypeNameColor = "wxColour";
         private const string TypeNameColor2 = "wxColourPropertyValue";
 
+        private readonly bool ownHandle;
         private IntPtr handle;
-        private bool ownHandle;
 
         public PropertyGridVariant()
         {

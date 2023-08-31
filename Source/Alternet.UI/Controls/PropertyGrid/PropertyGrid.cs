@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Alternet.Drawing;
@@ -328,7 +329,7 @@ namespace Alternet.UI
 
         /// <summary>
         /// Creates property choices list for use with <see cref="CreateFlagsProperty"/> and
-        /// <see cref="CreateEnumProperty"/>.
+        /// <see cref="CreateChoicesProperty"/>.
         /// </summary>
         public static IPropertyGridChoices CreateChoices()
         {
@@ -349,7 +350,7 @@ namespace Alternet.UI
         /// </summary>
         /// <remarks>
         /// Result can be used in <see cref="CreateFlagsProperty"/> and
-        /// <see cref="CreateEnumProperty"/>.
+        /// <see cref="CreateChoicesProperty"/>.
         /// </remarks>
         public static IPropertyGridChoices CreateChoicesOnce(Type enumType)
         {
@@ -366,7 +367,7 @@ namespace Alternet.UI
         /// </summary>
         /// <remarks>
         /// Result can be used in <see cref="CreateFlagsProperty"/> and
-        /// <see cref="CreateEnumProperty"/>.
+        /// <see cref="CreateChoicesProperty/>.
         /// </remarks>
         public static IPropertyGridChoices CreateChoices(Type enumType)
         {
@@ -385,6 +386,17 @@ namespace Alternet.UI
             }
 
             return result;
+        }
+
+        /// <summary>
+        /// Enables or disables automatic translation for enum list labels and
+        /// flags child property labels.
+        /// </summary>
+        /// <param name="enable"><c>true</c> enables automatic translation, <c>false</c>
+        /// disables it.</param>
+        public static void AutoGetTranslation(bool enable)
+        {
+            Native.PropertyGrid.AutoGetTranslation(enable);
         }
 
         /// <summary>
@@ -605,10 +617,31 @@ namespace Alternet.UI
         /// <param name="name">Property name.</param>
         /// <param name="value">Default property value.</param>
         /// <returns>Property declaration for use with <see cref="PropertyGrid.Add"/>.</returns>
+        public IPropertyGridItem CreateDoubleProperty(
+            string label,
+            string? name = null,
+            double value = default)
+        {
+            var handle = NativeControl.CreateFloatProperty(label, CorrectPropName(name), value);
+            var result = new PropertyGridItem(handle, label, name, value)
+            {
+                PropertyEditorKind = "Double",
+            };
+            OnPropertyCreated(result);
+            return result;
+        }
+
+        /// <summary>
+        /// Creates <see cref="float"/> property.
+        /// </summary>
+        /// <param name="label">Property label.</param>
+        /// <param name="name">Property name.</param>
+        /// <param name="value">Default property value.</param>
+        /// <returns>Property declaration for use with <see cref="PropertyGrid.Add"/>.</returns>
         public IPropertyGridItem CreateFloatProperty(
             string label,
             string? name = null,
-            double value = default(double))
+            double value = default)
         {
             var handle = NativeControl.CreateFloatProperty(label, CorrectPropName(name), value);
             var result = new PropertyGridItem(handle, label, name, value)
@@ -719,6 +752,80 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Creates <see cref="Color"/> property.
+        /// </summary>
+        /// <param name="label">Property label.</param>
+        /// <param name="name">Property name.</param>
+        /// <param name="instance">Object instance which contains the property.</param>
+        /// <param name="p">Property information.</param>
+        /// <returns>Property declaration for use with <see cref="PropertyGrid.Add"/>.</returns>
+        /// <remarks>
+        /// If <paramref name="label"/> or <paramref name="name"/> is null,
+        /// <paramref name="p"/> is used to get them.
+        /// </remarks>
+        public IPropertyGridItem CreatePropertyAsColor(
+            string? label,
+            string? name,
+            object instance,
+            PropertyInfo p)
+        {
+            IPropertyGridItem prop;
+            string propName = p.Name;
+            label ??= propName;
+            object? propValue = p.GetValue(instance, null);
+            propValue ??= Color.Black;
+            prop = CreateColorProperty(label, name, (Color)propValue);
+            OnPropertyCreated(prop, instance, p);
+            return prop;
+        }
+
+        /// <summary>
+        /// Creates enumeration property.
+        /// </summary>
+        /// <param name="label">Property label.</param>
+        /// <param name="name">Property name.</param>
+        /// <param name="instance">Object instance which contains the property.</param>
+        /// <param name="p">Property information.</param>
+        /// <returns>Property declaration for use with <see cref="PropertyGrid.Add"/>.</returns>
+        /// <remarks>
+        /// If <paramref name="label"/> or <paramref name="name"/> is null,
+        /// <paramref name="p"/> is used to get them.
+        /// </remarks>
+        public IPropertyGridItem CreatePropertyAsEnum(
+            string? label,
+            string? name,
+            object instance,
+            PropertyInfo p)
+        {
+            IPropertyGridItem prop;
+            var propType = p.PropertyType;
+            string propName = p.Name;
+            label ??= propName;
+            object? propValue = p.GetValue(instance, null);
+            var flagsAttr = propType.GetCustomAttribute(typeof(FlagsAttribute));
+            var choices = PropertyGrid.CreateChoicesOnce(propType);
+            if (flagsAttr == null)
+            {
+                prop = CreateChoicesProperty(
+                    label,
+                    name,
+                    choices,
+                    propValue!);
+            }
+            else
+            {
+                prop = CreateFlagsProperty(
+                    label,
+                    name,
+                    choices,
+                    propValue!);
+            }
+
+            OnPropertyCreated(prop, instance, p);
+            return prop;
+        }
+
+        /// <summary>
         /// Creates enumeration property.
         /// </summary>
         /// <param name="label">Property label.</param>
@@ -726,7 +833,7 @@ namespace Alternet.UI
         /// <param name="choices">Enumeration elements.</param>
         /// <param name="value">Default property value.</param>
         /// <returns>Property declaration for use with <see cref="PropertyGrid.Add"/>.</returns>
-        public IPropertyGridItem CreateEnumProperty(
+        public IPropertyGridItem CreateChoicesProperty(
             string label,
             string? name,
             IPropertyGridChoices choices,
@@ -1236,6 +1343,18 @@ namespace Alternet.UI
             NativeControl.SetPropertyTextColor(prop.Handle, color, flags);
         }
 
+        /// <summary>
+        /// Restores user-editable state.
+        /// </summary>
+        /// <param name="src">String generated by <see cref="SaveEditableState"/>.</param>
+        /// <param name="restoreStates">Which parts to restore from source string.</param>
+        /// <returns><c>true</c> if there were no problems during reading the state,
+        /// <c>false</c> otherwise.</returns>
+        /// <remarks>
+        /// If some parts of state (such as scrolled or splitter position) fail to restore
+        /// correctly, please make sure that you call this function after
+        /// <see cref="PropertyGrid"/> size has been set.
+        /// </remarks>
         public bool RestoreEditableState(
             string src,
             PropertyGridEditableState restoreStates = PropertyGridEditableState.AllStates)
@@ -1243,11 +1362,27 @@ namespace Alternet.UI
             return NativeControl.RestoreEditableState(src, (int)restoreStates);
         }
 
+        /// <summary>
+        /// Redraws given property.
+        /// </summary>
+        /// <param name="p">Property item.</param>
+        /// <remarks>
+        /// This function reselects the property and may cause excess flicker.
+        /// </remarks>
         public void RefreshProperty(IPropertyGridItem p)
         {
             NativeControl.RefreshProperty(p.Handle);
         }
 
+        /// <summary>
+        /// Used to acquire user-editable state (selected property,
+        /// expanded properties, scrolled position, splitter positions).
+        /// </summary>
+        /// <param name="includedStates">Which parts of state to include.</param>
+        /// <returns></returns>
+        /// <remarks>
+        /// Use <see cref="RestoreEditableState"/> to read state back to <see cref="PropertyGrid"/>.
+        /// </remarks>
         public string SaveEditableState(
             PropertyGridEditableState includedStates =
                 PropertyGridEditableState.AllStates)
@@ -1255,87 +1390,188 @@ namespace Alternet.UI
             return NativeControl.SaveEditableState((int)includedStates);
         }
 
+        /// <summary>
+        /// Sets proportion of an auto-stretchable column.
+        /// </summary>
+        /// <param name="column">Column index.</param>
+        /// <param name="proportion"></param>
+        /// <returns><c>true</c> on success, <c>false</c> on failure.</returns>
+        /// <remarks>
+        /// <see cref="PropertyGridCreateStyle.SplitterAutoCenter"/> style needs to be used
+        /// to indicate that columns are auto-resizable.
+        /// </remarks>
         public bool SetColumnProportion(uint column, int proportion)
         {
             return NativeControl.SetColumnProportion(column, proportion);
         }
 
+        /// <summary>
+        /// Gets auto-resize proportion of the given column.
+        /// </summary>
+        /// <param name="column">Column index.</param>
         public int GetColumnProportion(uint column)
         {
             return NativeControl.GetColumnProportion(column);
         }
 
+        /// <summary>
+        /// Gets background color of first cell of a property.
+        /// </summary>
+        /// <param name="prop">Property item.</param>
         public Color GetPropertyBackgroundColor(IPropertyGridItem prop)
         {
             return NativeControl.GetPropertyBackgroundColor(prop.Handle);
         }
 
+        /// <summary>
+        /// Returns text color of first cell of a property.
+        /// </summary>
+        /// <param name="prop">Property item.</param>
         public Color GetPropertyTextColor(IPropertyGridItem prop)
         {
             return NativeControl.GetPropertyTextColor(prop.Handle);
         }
 
+        /// <summary>
+        /// Sets client data of a property.
+        /// </summary>
+        /// <param name="prop">Property item.</param>
+        /// <param name="clientData">Client data associated with the property.</param>
         public void SetPropertyClientData(IPropertyGridItem prop, IntPtr clientData)
         {
             NativeControl.SetPropertyClientData(prop.Handle, clientData);
         }
 
+        /// <summary>
+        /// Sets label of a property.
+        /// </summary>
+        /// <param name="prop">Property item.</param>
+        /// <param name="newproplabel">New property label.</param>
+        /// <remarks>
+        /// Properties under same parent may have same labels. However, property
+        /// names must still remain unique.
+        /// </remarks>
         public void SetPropertyLabel(IPropertyGridItem prop, string newproplabel)
         {
             NativeControl.SetPropertyLabel(prop.Handle, newproplabel);
         }
 
+        /// <summary>
+        /// Sets help string of a property.
+        /// </summary>
+        /// <param name="prop">Property item.</param>
+        /// <param name="helpString">Help string associated with the property.</param>
         public void SetPropertyHelpString(IPropertyGridItem prop, string helpString)
         {
             NativeControl.SetPropertyHelpString(prop.Handle, helpString);
         }
 
+        /// <summary>
+        /// Sets maximum length of text in property text editor.
+        /// </summary>
+        /// <param name="prop">Property item.</param>
+        /// <param name="maxLen">Maximum number of characters of the text the user can enter
+        /// in the text editor. If it is 0, the length is not limited and the text can be
+        /// as long as it is supported by the underlying native text control widget.</param>
+        /// <returns><c>true</c> if maximum length was set, <c>false</c> otherwise.</returns>
         public bool SetPropertyMaxLength(IPropertyGridItem prop, int maxLen)
         {
             return NativeControl.SetPropertyMaxLength(prop.Handle, maxLen);
         }
 
+        /// <summary>
+        /// Sets property value as <see cref="long"/>.
+        /// </summary>
+        /// <param name="prop">Property item.</param>
+        /// <param name="value">New property value.</param>
         public void SetPropertyValueAsLong(IPropertyGridItem prop, long value)
         {
             NativeControl.SetPropertyValueAsLong(prop.Handle, value);
         }
 
+        /// <summary>
+        /// Sets property value as <see cref="int"/>.
+        /// </summary>
+        /// <param name="prop">Property item.</param>
+        /// <param name="value">New property value.</param>
         public void SetPropertyValueAsInt(IPropertyGridItem prop, int value)
         {
             NativeControl.SetPropertyValueAsInt(prop.Handle, value);
         }
 
+        /// <summary>
+        /// Sets property value as <see cref="double"/>.
+        /// </summary>
+        /// <param name="prop">Property item.</param>
+        /// <param name="value">New property value.</param>
         public void SetPropertyValueAsDouble(IPropertyGridItem prop, double value)
         {
             NativeControl.SetPropertyValueAsDouble(prop.Handle, value);
         }
 
+        /// <summary>
+        /// Sets property value as <see cref="bool"/>.
+        /// </summary>
+        /// <param name="prop">Property item.</param>
+        /// <param name="value">New property value.</param>
         public void SetPropertyValueAsBool(IPropertyGridItem prop, bool value)
         {
             NativeControl.SetPropertyValueAsBool(prop.Handle, value);
         }
 
+        /// <summary>
+        /// Sets property value as <see cref="string"/>.
+        /// </summary>
+        /// <param name="prop">Property item.</param>
+        /// <param name="value">New property value.</param>
         public void SetPropertyValueAsStr(IPropertyGridItem prop, string value)
         {
             NativeControl.SetPropertyValueAsStr(prop.Handle, value);
         }
 
+        /// <summary>
+        /// Sets property value as <see cref="DateTime"/>.
+        /// </summary>
+        /// <param name="prop">Property item.</param>
+        /// <param name="value">New property value.</param>
         public void SetPropertyValueAsDateTime(IPropertyGridItem prop, DateTime value)
         {
             NativeControl.SetPropertyValueAsDateTime(prop.Handle, value);
         }
 
+        /// <summary>
+        /// Adjusts how <see cref="PropertyGrid"/> behaves when invalid value is
+        /// entered in a property.
+        /// </summary>
+        /// <param name="vfbFlags">Validation failure flags.</param>
         public void SetValidationFailureBehavior(PropertyGridValidationFailure vfbFlags)
         {
             NativeControl.SetValidationFailureBehavior((int)vfbFlags);
         }
 
+        /// <summary>
+        /// Sorts children of a property.
+        /// </summary>
+        /// <param name="prop">Property item.</param>
+        /// <param name="recurse"><c>true</c> to perform recursive sorting, <c>false</c>
+        /// otherwise.</param>
         public void SortChildren(IPropertyGridItem prop, bool recurse = false)
         {
             var flags = recurse ? PGRECURSE : PGDONTRECURSE;
             NativeControl.SortChildren(prop.Handle, flags);
         }
 
+        /// <summary>
+        /// Sets editor control of a property usinbg its name.
+        /// </summary>
+        /// <param name="prop">Property Item.</param>
+        /// <param name="editorName">Name of the editor.</param>
+        /// <remarks>
+        /// Names of built-in editors are: TextCtrl, Choice, ComboBox, CheckBox,
+        /// TextCtrlAndButton, and ChoiceAndButton. Additional editors include
+        /// SpinCtrl and DatePickerCtrl, but using them requires
+        /// calling <see cref="RegisterAdditionalEditors"/> prior use.
+        /// </remarks>
         public void SetPropertyEditorByName(IPropertyGridItem prop, string editorName)
         {
             NativeControl.SetPropertyEditorByName(prop.Handle, editorName);
@@ -1411,86 +1647,166 @@ namespace Alternet.UI
             NativeControl.ClearActionTriggers((int)action);
         }
 
+        /// <summary>
+        /// Dedicates a specific keycode to <see cref="PropertyGrid"/>. This means that
+        /// such key presses will not be redirected to editor controls.
+        /// </summary>
+        /// <param name="keycode"></param>
+        /// <remarks>
+        /// Using this function allows, for example, navigation between properties using
+        /// arrow keys even when the focus is in the editor control.
+        /// </remarks>
         public void DedicateKey(Key keycode)
         {
             NativeControl.DedicateKey((int)keycode);
         }
 
-        public static void AutoGetTranslation(bool enable)
-        {
-            Native.PropertyGrid.AutoGetTranslation(enable);
-        }
-
+        /// <summary>
+        /// Centers the splitter.
+        /// </summary>
+        /// <param name="enableAutoResizing">If <c>true</c>, automatic column resizing is
+        /// enabled (only applicable if window style
+        /// <see cref="PropertyGridCreateStyle.SplitterAutoCenter"/> is used).</param>
         public void CenterSplitter(bool enableAutoResizing = false)
         {
             NativeControl.CenterSplitter(enableAutoResizing);
         }
 
+        /// <summary>
+        /// Call when editor widget's contents is modified.
+        /// </summary>
+        /// <remarks>
+        /// For example, this is called when changes text in <see cref="TextBox"/>
+        /// (used in string or int property).
+        /// </remarks>
         public void EditorsValueWasModified()
         {
             NativeControl.EditorsValueWasModified();
         }
 
+        /// <summary>
+        /// Reverse of <see cref="EditorsValueWasModified"/>.
+        /// </summary>
+        /// <remarks>
+        /// This function should only be called by custom properties.
+        /// </remarks>
         public void EditorsValueWasNotModified()
         {
             NativeControl.EditorsValueWasNotModified();
         }
 
+        /// <summary>
+        /// Enables or disables (shows/hides) categories according to parameter enable.
+        /// </summary>
+        /// <param name="enable"></param>
+        /// <returns><c>true</c> if operation successful, <c>false</c> otherwise.</returns>
+        /// <remarks>
+        /// This functions deselects selected property, if any. Validation failure
+        /// option <see cref="PropertyGridValidationFailure.StayInProperty"/> is not
+        /// respected, i.e.selection is cleared even if editor had invalid value.
+        /// </remarks>
         public bool EnableCategories(bool enable)
         {
             return NativeControl.EnableCategories(enable);
         }
 
+        /// <summary>
+        /// Reduces column sizes to minimum possible, while still retaining fully
+        /// visible grid contents (labels, images).
+        /// </summary>
+        /// <returns>Minimum size for the grid to still display everything.</returns>
+        /// <remarks>
+        /// Does not work well with <see cref="PropertyGridCreateStyle.SplitterAutoCenter"/>
+        /// window style. This function only works properly if grid size prior to call
+        /// was already fairly large.
+        /// </remarks>
         public Size FitColumns()
         {
             return NativeControl.FitColumns();
         }
 
+        /// <summary>
+        /// Gets number of columns currently on grid.
+        /// </summary>
         public uint GetColumnCount()
         {
             return NativeControl.GetColumnCount();
         }
 
+        /// <summary>
+        /// Gets height of highest characters of used font.
+        /// </summary>
         public int GetFontHeight()
         {
             return NativeControl.GetFontHeight();
         }
 
+        /// <summary>
+        /// Gets margin width.
+        /// </summary>
         public int GetMarginWidth()
         {
             return NativeControl.GetMarginWidth();
         }
 
+        /// <summary>
+        /// Gets height of a single grid row (in pixels).
+        /// </summary>
         public int GetRowHeight()
         {
             return NativeControl.GetRowHeight();
         }
 
+        /// <summary>
+        /// Gets current splitter x position.
+        /// </summary>
+        /// <param name="splitterIndex">Splitter index (starting from 0).</param>
         public int GetSplitterPosition(uint splitterIndex = 0)
         {
             return NativeControl.GetSplitterPosition(splitterIndex);
         }
 
+        /// <summary>
+        /// Gets current vertical spacing.
+        /// </summary>
         public int GetVerticalSpacing()
         {
             return NativeControl.GetVerticalSpacing();
         }
 
+        /// <summary>
+        /// Gets whether a property editor control has focus.
+        /// </summary>
+        /// <returns><c>true</c> if a property editor control has focus, <c>false</c>
+        /// otherwise.</returns>
         public bool IsEditorFocused()
         {
             return NativeControl.IsEditorFocused();
         }
 
+        /// <summary>
+        /// Gets whether editor's value was marked modified.
+        /// </summary>
+        /// <returns><c>true</c> if editor's value was marked modified, <c>false</c>
+        /// otherwise.</returns>
         public bool IsEditorsValueModified()
         {
             return NativeControl.IsEditorsValueModified();
         }
 
+        /// <summary>
+        /// Gets whether any property has been modified by the user.
+        /// </summary>
+        /// <returns><c>true</c> if any property has been modified by the user, <c>false</c>
+        /// otherwise.</returns>
         public bool IsAnyModified()
         {
             return NativeControl.IsAnyModified();
         }
 
+        /// <summary>
+        /// Resets all colors used in <see cref="PropertyGrid" to default values.
+        /// </summary>
         public void ResetColors()
         {
             NativeControl.ResetColors();
@@ -1768,6 +2084,17 @@ namespace Alternet.UI
         internal void SetPropertyEditor(IPropertyGridItem prop, IntPtr editor)
         {
             NativeControl.SetPropertyEditor(prop.Handle, editor);
+        }
+
+        internal virtual void OnPropertyCreated(
+            IPropertyGridItem item,
+            object instance,
+            PropertyInfo p)
+        {
+            if (!p.CanWrite)
+                SetPropertyReadOnly(item, true);
+            if (AssemblyUtils.GetNullable(p))
+                SetPropertyValueUnspecified(item);
         }
 
         internal virtual void OnPropertyCreated(IPropertyGridItem item)

@@ -12,9 +12,26 @@ namespace Alternet.UI
     /// </summary>
     public class PropertyGridAdapterFont : PropertyGridAdapterGeneric
     {
+        private static IPropertyGridChoices? fontNameChoices;
         private double sizeInPoints = Font.Default.SizeInPoints;
         private string name = Font.Default.Name;
         private FontStyle style = FontStyle.Regular;
+
+        /// <summary>
+        /// Gets all installed <see cref="Font"/> names as <see cref="IPropertyGridChoices"/>
+        /// </summary>
+        public static IPropertyGridChoices FontNameChoices
+        {
+            get
+            {
+                if (fontNameChoices != null)
+                    return fontNameChoices;
+                fontNameChoices = PropertyGrid.CreateChoices();
+                string[] names = FontFamily.FamiliesNamesAscending;
+                fontNameChoices.AddRange(names);
+                return fontNameChoices;
+            }
+        }
 
         /// <summary>
         /// Returns <see cref="PropertyGridAdapterGeneric.Value"/> as <see cref="Font"/>.

@@ -60,6 +60,19 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Returns whether property is nullable (for example byte?).
+        /// </summary>
+        /// <param name="p">Property info.</param>
+        /// <returns><c>true</c> if property is nullable, <c>false</c> otherwise.</returns>
+        public static bool GetNullable(PropertyInfo p)
+        {
+            var propType = p.PropertyType;
+            var underlyingType = Nullable.GetUnderlyingType(propType);
+            var isNullable = underlyingType != null;
+            return isNullable;
+        }
+
+        /// <summary>
         /// Returns whether property is browsable.
         /// </summary>
         /// <param name="p">Property info.</param>

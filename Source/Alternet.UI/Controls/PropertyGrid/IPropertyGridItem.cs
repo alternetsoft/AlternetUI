@@ -38,6 +38,11 @@ namespace Alternet.UI
         IList<IPropertyGridItem> Children { get; }
 
         /// <summary>
+        /// Gets parent property.
+        /// </summary>
+        IPropertyGridItem? Parent { get; }
+
+        /// <summary>
         /// Gets whether <see cref="Children"/> has items.
         /// </summary>
         bool HasChildren { get; }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using Alternet.Base.Collections;
 
 namespace Alternet.UI
 {
@@ -16,7 +17,8 @@ namespace Alternet.UI
         private bool isCategory = false;
         private object? instance;
         private PropertyInfo? propInfo;
-        private IList<IPropertyGridItem>? children;
+        private Collection<IPropertyGridItem>? children;
+        private IPropertyGridItem? parent;
 
         public PropertyGridItem(IntPtr handle, string label, string? name, object? defaultValue)
         {
@@ -29,7 +31,9 @@ namespace Alternet.UI
                 this.defaultName = name;
         }
 
-        public string PropertyEditorKind { get; set; }
+        public string PropertyEditorKind { get; set; } = "Other";
+
+        public IPropertyGridItem? Parent => parent;
 
         public bool HasChildren
         {
@@ -43,7 +47,13 @@ namespace Alternet.UI
         {
             get
             {
-                children ??= new List<IPropertyGridItem>();
+                if(children == null)
+                {
+                    children = new Collection<IPropertyGridItem>();
+                    children.ItemInserted += Children_ItemInserted;
+                    children.ItemRemoved += Children_ItemRemoved;
+                }
+
                 return children;
             }
         }
@@ -72,6 +82,24 @@ namespace Alternet.UI
         {
             get => isCategory;
             set => isCategory = value;
+        }
+
+        private void Children_ItemRemoved(
+            object sender,
+            CollectionChangeEventArgs<IPropertyGridItem> e)
+        {
+            if (e.Item is not PropertyGridItem item)
+                return;
+            item.parent = null;
+        }
+
+        private void Children_ItemInserted(
+            object sender,
+            CollectionChangeEventArgs<IPropertyGridItem> e)
+        {
+            if (e.Item is not PropertyGridItem item)
+                return;
+            item.parent = this;
         }
     }
 }
