@@ -142,6 +142,14 @@ namespace Alternet.Drawing
         internal new UI.Native.LinearGradientBrush NativeBrush =>
             (UI.Native.LinearGradientBrush)base.NativeBrush;
 
+        internal static GradientStop[] GetGradientStopsFromEdgeColors(
+            Color startColor,
+            Color endColor) => new[]
+            {
+                new GradientStop(startColor, 0),
+                new GradientStop(endColor, 1),
+            };
+
         private protected override bool EqualsCore(Brush other)
         {
             var o = other as LinearGradientBrush;
@@ -176,14 +184,6 @@ namespace Alternet.Drawing
                 return $"LinearGradientBrush";
             }
         }
-
-        private static GradientStop[] GetGradientStopsFromEdgeColors(
-            Color startColor,
-            Color endColor) => new[]
-            {
-                new GradientStop(startColor, 0),
-                new GradientStop(endColor, 1),
-            };
 
         private void ReinitializeNativeBrush()
         {
