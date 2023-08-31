@@ -131,5 +131,15 @@ namespace Alternet.UI
             var type = instance.GetType();
             propInfo = type.GetProperty(propName);
         }
+
+        public virtual void OnPropertyChanged(object? sender, EventArgs e)
+        {
+            UpdateInstanceProperty();
+        }
+
+        /// <summary>
+        /// Updates instance property value.
+        /// </summary>
+        protected abstract void UpdateInstanceProperty();
     }
 }

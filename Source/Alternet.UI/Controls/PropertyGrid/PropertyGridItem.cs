@@ -31,6 +31,8 @@ namespace Alternet.UI
                 this.defaultName = name;
         }
 
+        public event EventHandler? PropertyChanged;
+
         public string PropertyEditorKind { get; set; } = "Other";
 
         public IPropertyGridItem? Parent => parent;
@@ -61,13 +63,13 @@ namespace Alternet.UI
         public object? Instance
         {
             get => instance;
-            internal set => instance = value;
+            set => instance = value;
         }
 
         public PropertyInfo? PropInfo
         {
             get => propInfo;
-            internal set => propInfo = value;
+            set => propInfo = value;
         }
 
         public IntPtr Handle => handle;
@@ -82,6 +84,11 @@ namespace Alternet.UI
         {
             get => isCategory;
             set => isCategory = value;
+        }
+
+        public void RaisePropertyChanged(object? sender, EventArgs e)
+        {
+            PropertyChanged?.Invoke(sender, e);
         }
 
         private void Children_ItemRemoved(

@@ -1999,23 +1999,6 @@ namespace Alternet.UI
             return NativeControl.GetImageSize(prop.Handle, item);
         }
 
-        internal static void CreateTestVariant()
-        {
-#pragma warning disable
-            PropertyGridVariant variant = new();
-#pragma warning restore
-
-            variant.AsBool = true;
-
-            variant.AsLong = 150;
-
-            variant.AsDateTime = DateTime.Now;
-
-            variant.AsDouble = 18;
-
-            variant.AsString = "hello";
-        }
-
         internal static IntPtr GetEditorByName(string editorName)
         {
             return Native.PropertyGrid.GetEditorByName(editorName);

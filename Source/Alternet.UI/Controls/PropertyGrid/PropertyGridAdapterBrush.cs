@@ -12,14 +12,16 @@ namespace Alternet.UI
     /// </summary>
     public class PropertyGridAdapterBrush : PropertyGridAdapterGeneric
     {
-        private BrushType brushType = BrushType.Solid;
+        private BrushType brushType = BrushType.None;
         private Color color = Color.Black;
         private Point linearGradientStart;
-        private Point linearGradientEnd;
-        private Point radialGradientCenter;
+        private Point linearGradientEnd = new Point(1, 1);
+        private Point radialGradientCenter = Point.Empty;
         private Point radialGradientOrigin;
-        private double radialGradientRadius;
+        private Color endColor = Color.White;
+        private double radialGradientRadius = 10;
         private BrushHatchStyle hatchStyle;
+        private bool loaded = false;
 
         // (Color color, double offset)
         private GradientStop[] gradientStops = Array.Empty<GradientStop>();
@@ -50,15 +52,14 @@ namespace Alternet.UI
                     return BrushType.LinearGradient;
                 if (Brush is RadialGradientBrush)
                     return BrushType.RadialGradient;
-                return BrushType.Solid;
+                return brushType;
             }
 
             set
             {
-                if (BrushType == value)
-                    return;
+                LoadFromBrush();
                 brushType = value;
-                OnInstancePropertyChanged();
+                UpdateInstanceProperty();
             }
         }
 
@@ -76,10 +77,35 @@ namespace Alternet.UI
 
             set
             {
-                if (Color == value)
-                    return;
+                LoadFromBrush();
                 color = value;
-                OnInstancePropertyChanged();
+                UpdateInstanceProperty();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets gradient brush end color.
+        /// </summary>
+        public Color EndColor
+        {
+            get
+            {
+                if(Brush != null)
+                {
+                    if (GradientStops.Length > 0)
+                        return GradientStops[GradientStops.Length - 1].Color;
+                    else
+                        return Color.White;
+                }
+
+                return endColor;
+            }
+
+            set
+            {
+                LoadFromBrush();
+                endColor = value;
+                UpdateInstanceProperty();
             }
         }
 
@@ -95,10 +121,9 @@ namespace Alternet.UI
 
             set
             {
-                if (LinearGradientStart == value)
-                    return;
+                LoadFromBrush();
                 linearGradientStart = value;
-                OnInstancePropertyChanged();
+                UpdateInstanceProperty();
             }
         }
 
@@ -114,10 +139,9 @@ namespace Alternet.UI
 
             set
             {
-                if (LinearGradientEnd == value)
-                    return;
+                LoadFromBrush();
                 linearGradientEnd = value;
-                OnInstancePropertyChanged();
+                UpdateInstanceProperty();
             }
         }
 
@@ -133,10 +157,9 @@ namespace Alternet.UI
 
             set
             {
-                if (RadialGradientCenter == value)
-                    return;
+                LoadFromBrush();
                 radialGradientCenter = value;
-                OnInstancePropertyChanged();
+                UpdateInstanceProperty();
             }
         }
 
@@ -152,10 +175,9 @@ namespace Alternet.UI
 
             set
             {
-                if (RadialGradientOrigin == value)
-                    return;
+                LoadFromBrush();
                 radialGradientOrigin = value;
-                OnInstancePropertyChanged();
+                UpdateInstanceProperty();
             }
         }
 
@@ -171,10 +193,9 @@ namespace Alternet.UI
 
             set
             {
-                if (RadialGradientRadius == value)
-                    return;
+                LoadFromBrush();
                 radialGradientRadius = value;
-                OnInstancePropertyChanged();
+                UpdateInstanceProperty();
             }
         }
 
@@ -192,10 +213,9 @@ namespace Alternet.UI
 
             set
             {
-                if (GradientStops == value)
-                    return;
+                LoadFromBrush();
                 gradientStops = value;
-                OnInstancePropertyChanged();
+                UpdateInstanceProperty();
             }
         }
 
@@ -211,15 +231,89 @@ namespace Alternet.UI
 
             set
             {
-                if (HatchStyle == value)
-                    return;
+                LoadFromBrush();
                 hatchStyle = value;
-                OnInstancePropertyChanged();
+                UpdateInstanceProperty();
             }
         }
 
-        private void OnInstancePropertyChanged()
+        /// <inheritdoc/>
+        protected override void UpdateInstanceProperty()
         {
+            Brush CreateRadialGradientBrush()
+            {
+                if (gradientStops != null && gradientStops.Length > 0)
+                {
+                    return new RadialGradientBrush(
+                        radialGradientCenter,
+                        radialGradientRadius,
+                        radialGradientOrigin,
+                        gradientStops);
+                }
+                else
+                {
+                    return new RadialGradientBrush(
+                        radialGradientCenter,
+                        radialGradientRadius,
+                        radialGradientOrigin,
+                        LinearGradientBrush.GetGradientStopsFromEdgeColors(color, endColor));
+                }
+            }
+
+            Brush CreateLinearGradientBrush()
+            {
+                if (gradientStops != null && gradientStops.Length > 0)
+                {
+                    return new LinearGradientBrush(
+                        linearGradientStart,
+                        linearGradientEnd,
+                        gradientStops);
+                }
+                else
+                {
+                    return new LinearGradientBrush(
+                        linearGradientStart,
+                        linearGradientEnd,
+                        LinearGradientBrush.GetGradientStopsFromEdgeColors(color, endColor));
+                }
+            }
+
+            switch (brushType)
+            {
+                case BrushType.None:
+                    Brush = null;
+                    break;
+                case BrushType.Solid:
+                    Brush = new SolidBrush(color);
+                    break;
+                case BrushType.Hatch:
+                    Brush = new HatchBrush(hatchStyle, color);
+                    break;
+                case BrushType.LinearGradient:
+                    Brush = CreateLinearGradientBrush();
+                    break;
+                case BrushType.RadialGradient:
+                    Brush = CreateRadialGradientBrush();
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private void LoadFromBrush()
+        {
+            if (loaded)
+                return;
+            color = Color;
+            endColor = EndColor;
+            linearGradientStart = LinearGradientStart;
+            linearGradientEnd = LinearGradientEnd;
+            radialGradientCenter = RadialGradientCenter;
+            radialGradientOrigin = RadialGradientOrigin;
+            radialGradientRadius = RadialGradientRadius;
+            gradientStops = GradientStops;
+            hatchStyle = HatchStyle;
+            loaded = true;
         }
     }
 }

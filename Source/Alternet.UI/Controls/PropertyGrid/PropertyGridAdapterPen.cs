@@ -39,10 +39,8 @@ namespace Alternet.UI
 
             set
             {
-                if (Color == value)
-                    return;
                 color = value;
-                OnInstancePropertyChanged();
+                UpdateInstanceProperty();
             }
         }
 
@@ -58,10 +56,8 @@ namespace Alternet.UI
 
             set
             {
-                if (DashStyle == value)
-                    return;
                 dashStyle = value;
-                OnInstancePropertyChanged();
+                UpdateInstanceProperty();
             }
         }
 
@@ -77,10 +73,8 @@ namespace Alternet.UI
 
             set
             {
-                if (LineCap == value)
-                    return;
                 lineCap = value;
-                OnInstancePropertyChanged();
+                UpdateInstanceProperty();
             }
         }
 
@@ -96,10 +90,8 @@ namespace Alternet.UI
 
             set
             {
-                if (LineJoin == value)
-                    return;
                 lineJoin = value;
-                OnInstancePropertyChanged();
+                UpdateInstanceProperty();
             }
         }
 
@@ -117,16 +109,15 @@ namespace Alternet.UI
             {
                 if (value < 0)
                     value = 1;
-                if (Width == value)
-                    return;
                 width = value;
-                OnInstancePropertyChanged();
+                UpdateInstanceProperty();
             }
         }
 
-        private void OnInstancePropertyChanged()
+        /// <inheritdoc/>
+        protected override void UpdateInstanceProperty()
         {
-            Pen = new(Color, Width, DashStyle, LineCap, LineJoin);
+            Pen = new(color, width, dashStyle, lineCap, lineJoin);
         }
     }
 }

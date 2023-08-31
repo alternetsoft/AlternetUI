@@ -54,10 +54,8 @@ namespace Alternet.UI
 
             set
             {
-                if (SizeInPoints == value)
-                    return;
                 sizeInPoints = value;
-                OnInstancePropertyChanged();
+                UpdateInstanceProperty();
             }
         }
 
@@ -73,15 +71,38 @@ namespace Alternet.UI
 
             set
             {
-                if (Name == value)
-                    return;
                 name = value;
-                OnInstancePropertyChanged();
+                UpdateInstanceProperty();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets font name as index in <see cref="FontNameChoices"/>.
+        /// </summary>
+        public int? NameAsIndex
+        {
+            get
+            {
+                return FontNameChoices.GetValue(Name);
+            }
+
+            set
+            {
+                if (value == null)
+                    Name = Font.Default.Name;
+                else
+                {
+                    var newName = FontNameChoices.GetText((int)value);
+                    if (newName == null)
+                        Name = Font.Default.Name;
+                    else
+                        Name = newName;
+                }
             }
         }
 
         /// <inheritdoc cref="Font.IsBold"/>
-        public bool IsBold
+        public bool Bold
         {
             get => (Style & FontStyle.Bold) != 0;
             set
@@ -91,7 +112,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc cref="Font.IsItalic"/>
-        public bool IsItalic
+        public bool Italic
         {
             get => (Style & FontStyle.Italic) != 0;
             set
@@ -101,7 +122,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc cref="Font.IsStrikethrough"/>
-        public bool IsStrikethrough
+        public bool Strikethrough
         {
             get => (Style & FontStyle.Strikethrough) != 0;
             set
@@ -111,7 +132,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc cref="Font.IsUnderlined"/>
-        public bool IsUnderlined
+        public bool Underlined
         {
             get => (Style & FontStyle.Underlined) != 0;
             set
@@ -132,16 +153,15 @@ namespace Alternet.UI
 
             set
             {
-                if (Style == value)
-                    return;
                 style = value;
-                OnInstancePropertyChanged();
+                UpdateInstanceProperty();
             }
         }
 
-        private void OnInstancePropertyChanged()
+        /// <inheritdoc/>
+        protected override void UpdateInstanceProperty()
         {
-            Font = new(Name, SizeInPoints, Style);
+            Font = new(name, sizeInPoints, style);
         }
     }
 }

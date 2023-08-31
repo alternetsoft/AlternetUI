@@ -13,12 +13,17 @@ namespace Alternet.UI
     public interface IPropertyGridItem
     {
         /// <summary>
+        /// Occurs when property value has been changed.
+        /// </summary>
+        event EventHandler? PropertyChanged;
+
+        /// <summary>
         /// Gets objects instance in which property is contained.
         /// </summary>
         /// <remarks>
         /// This is used when object properties are added to <see cref="PropertyGrid"/>.
         /// </remarks>
-        object? Instance { get; }
+        object? Instance { get; set; }
 
         /// <summary>
         /// Gets property information.
@@ -26,7 +31,7 @@ namespace Alternet.UI
         /// <remarks>
         /// This is used when object properties are added to <see cref="PropertyGrid"/>.
         /// </remarks>
-        PropertyInfo? PropInfo { get; }
+        PropertyInfo? PropInfo { get; set; }
 
         /// <summary>
         /// Gets list of children properties.
@@ -76,5 +81,7 @@ namespace Alternet.UI
         /// Item is category.
         /// </summary>
         bool IsCategory { get; }
+
+        void RaisePropertyChanged(object? sender, EventArgs e);
     }
 }

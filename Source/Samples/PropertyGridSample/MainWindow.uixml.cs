@@ -114,7 +114,7 @@ namespace PropertyGridSample
             pane2.Name("pane2").Caption("Properties").Right().PaneBorder(false)
                 .CloseButton(false)
                 .TopDockable(false).BottomDockable(false).Movable(false).Floatable(false)
-                .BestSize(500, 200).CaptionVisible(false);
+                .BestSize(350, 200).CaptionVisible(false).MinSize(350, 200);
             propertyGrid.HasBorder = false;
             panel.Children.Add(propertyGrid);
             manager.AddPane(propertyGrid, pane2);
@@ -204,6 +204,7 @@ namespace PropertyGridSample
             ModifierKeys.Control);
 
             propertyGrid.ApplyColors(PropertyGridColors.ColorSchemeWhite);
+            propertyGrid.CenterSplitter();
         }
 
         private void InitDefaultPropertyGrid()
@@ -385,7 +386,7 @@ namespace PropertyGridSample
             }
         }
 
-        public IPropertyGridItem CreateFontProperty(
+        public IPropertyGridItem CreatePropertyAsFont(
             string label,
             string? name,
             object instance,
@@ -401,20 +402,20 @@ namespace PropertyGridSample
 
             var choices = PropertyGridAdapterFont.FontNameChoices;
 
-            //var itemName = CreateProperty(adapter, "Name");
-
             var itemName = propertyGrid.CreateChoicesProperty(
                 "Name",
                 null,
                 choices,
-                choices.GetValue(adapter.Name));
+                adapter.NameAsIndex);
+            itemName.Instance = adapter;
+            itemName.PropInfo = AssemblyUtils.GetPropInfo(adapter, "NameAsIndex");
 
-            var itemSizeInPoints = CreateProperty(adapter, "SizeInPoints");
-            var itemIsBold = CreateProperty(adapter, "IsBold");
-            var itemIsItalic = CreateProperty(adapter, "IsItalic");
-            var itemIsStrikethrough = CreateProperty(adapter, "IsStrikethrough");
-            var itemIsUnderlined = CreateProperty(adapter, "IsUnderlined");
-        
+            var itemSizeInPoints = CreateProperty(adapter, "SizeInPoints")!;
+            var itemIsBold = CreateProperty(adapter, "Bold")!;
+            var itemIsItalic = CreateProperty(adapter, "Italic")!;
+            var itemIsStrikethrough = CreateProperty(adapter, "Strikethrough")!;
+            var itemIsUnderlined = CreateProperty(adapter, "Underlined")!;
+
             result.Children.Add(itemName!);
             result.Children.Add(itemSizeInPoints!);
             result.Children.Add(itemIsBold!);
@@ -449,9 +450,19 @@ namespace PropertyGridSample
             Log($"{maxLong} - {maxLong2}");
             Log($"{minULong} - {minULong2}");
             Log($"{maxULong} - {maxULong2}");
+
+            variant.AsBool = true;
+
+            variant.AsLong = 150;
+
+            variant.AsDateTime = DateTime.Now;
+
+            variant.AsDouble = 18;
+
+            variant.AsString = "hello";
         }
 
-        public IPropertyGridItem CreateBrushProperty(
+        public IPropertyGridItem CreatePropertyAsBrush(
             string label,
             string? name,
             object instance,
@@ -465,15 +476,15 @@ namespace PropertyGridSample
             var result = propertyGrid.CreateStringProperty(label, name, "(Brush)");
             propertyGrid.SetPropertyReadOnly(result, true, false);
 
-            var itemBrushType = CreateProperty(adapter, "BrushType");
-            var itemColor = CreateProperty(adapter, "Color");
-            var itemLinearGradientStart = CreateProperty(adapter, "LinearGradientStart");
-            var itemLinearGradientEnd = CreateProperty(adapter, "LinearGradientEnd");
-            var itemRadialGradientCenter = CreateProperty(adapter, "RadialGradientCenter");
-            var itemRadialGradientOrigin = CreateProperty(adapter, "RadialGradientOrigin");
-            var itemRadialGradientRadius = CreateProperty(adapter, "RadialGradientRadius");
-            var itemGradientStops = CreateProperty(adapter, "GradientStops");
-            var itemHatchStyle = CreateProperty(adapter, "HatchStyle");
+            var itemBrushType = CreateProperty(adapter, "BrushType")!;
+            var itemColor = CreateProperty(adapter, "Color")!;
+            var itemLinearGradientStart = CreateProperty(adapter, "LinearGradientStart")!;
+            var itemLinearGradientEnd = CreateProperty(adapter, "LinearGradientEnd")!;
+            var itemRadialGradientCenter = CreateProperty(adapter, "RadialGradientCenter")!;
+            var itemRadialGradientOrigin = CreateProperty(adapter, "RadialGradientOrigin")!;
+            var itemRadialGradientRadius = CreateProperty(adapter, "RadialGradientRadius")!;
+            var itemGradientStops = CreateProperty(adapter, "GradientStops")!;
+            var itemHatchStyle = CreateProperty(adapter, "HatchStyle")!;
 
             result.Children.Add(itemBrushType!);
             result.Children.Add(itemColor!);
@@ -488,7 +499,7 @@ namespace PropertyGridSample
             return result;
         }
 
-        public IPropertyGridItem CreatePenProperty(
+        public IPropertyGridItem CreatePropertyAsPen(
             string label,
             string? name,
             object instance,
@@ -503,11 +514,11 @@ namespace PropertyGridSample
                 propertyGrid.CreateStringProperty(label, name, "(Pen)");
             propertyGrid.SetPropertyReadOnly(result, true, false);
 
-            var itemColor = CreateProperty(adapter, "Color");
-            var itemDashStyle = CreateProperty(adapter, "DashStyle");
-            var itemLineCap = CreateProperty(adapter, "LineCap");
-            var itemLineJoin = CreateProperty(adapter, "LineJoin");
-            var itemWidth = CreateProperty(adapter, "Width");
+            var itemColor = CreateProperty(adapter, "Color")!;
+            var itemDashStyle = CreateProperty(adapter, "DashStyle")!;
+            var itemLineCap = CreateProperty(adapter, "LineCap")!;
+            var itemLineJoin = CreateProperty(adapter, "LineJoin")!;
+            var itemWidth = CreateProperty(adapter, "Width")!;
 
             result.Children.Add(itemColor!);
             result.Children.Add(itemDashStyle!);
@@ -552,12 +563,10 @@ namespace PropertyGridSample
             string propName = p.Name;
             var propType = p.PropertyType;
             object? propValue = p.GetValue(instance, null);
-            TypeCode typeCode = Type.GetTypeCode(propType);
             IPropertyGridItem? prop = null;
 
-            var underlyingType = Nullable.GetUnderlyingType(propType);
-            /*var isNullable = underlyingType != null;*/
-            var realType = underlyingType ?? propType;
+            var realType = AssemblyUtils.GetRealType(propType);
+            TypeCode typeCode = Type.GetTypeCode(realType);
 
             if (propType.IsEnum)
                 prop = propertyGrid.CreatePropertyAsEnum(null, null, instance, p);
@@ -575,19 +584,19 @@ namespace PropertyGridSample
                         }
                         if (realType == typeof(Font))
                         {
-                            prop = CreateFontProperty(propName, null, instance, p);
+                            prop = CreatePropertyAsFont(propName, null, instance, p);
                             setPropReadonly = true;
                             break;
                         }
                         if (realType == typeof(Brush))
                         {
-                            prop = CreateBrushProperty(propName, null, instance, p);
+                            prop = CreatePropertyAsBrush(propName, null, instance, p);
                             setPropReadonly = true;
                             break;
                         }
                         if (realType == typeof(Pen))
                         {
-                            prop = CreatePenProperty(propName, null, instance, p);
+                            prop = CreatePropertyAsPen(propName, null, instance, p);
                             setPropReadonly = true;
                             break;
                         }
@@ -666,6 +675,8 @@ namespace PropertyGridSample
 
             if (!p.CanWrite || setPropReadonly)
                 propertyGrid.SetPropertyReadOnly(prop!, true);
+            prop!.Instance = instance;
+            prop!.PropInfo = p;
             return prop;
         }
 
@@ -769,6 +780,19 @@ namespace PropertyGridSample
         private void PGPropertyChanged(object? sender, EventArgs e)
         {
             LogEvent("PropertyChanged");
+
+            var prop = propertyGrid.EventProperty;
+            if (prop == null)
+                return;
+            if(prop.Instance != null && prop.PropInfo != null)
+            {
+                var variant = propertyGrid.EventPropValueAsVariant;
+                var newValue = variant.GetCompatibleValue(prop.PropInfo);
+
+                prop.PropInfo.SetValue(prop.Instance, newValue);
+            }
+
+            prop.RaisePropertyChanged(null, e);
         }
 
         private void PGPropertyChanging(object? sender, CancelEventArgs e)

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Alternet.Drawing;
@@ -243,6 +244,66 @@ namespace Alternet.UI
         public bool IsType(string type) => Native.PropertyGridVariant.IsType(handle, type);
 
         public override string ToString() => Native.PropertyGridVariant.MakeString(handle);
+
+        public object? GetCompatibleValue(PropertyInfo p)
+        {
+            if (IsNull())
+                return null;
+
+            var type = AssemblyUtils.GetRealType(p.PropertyType);
+            TypeCode typeCode = Type.GetTypeCode(type);
+            var nullable = AssemblyUtils.GetNullable(p);
+
+            switch (typeCode)
+            {
+                case TypeCode.Empty:
+                    return null;
+                case TypeCode.Object:
+                    return AsObject;
+                case TypeCode.DBNull:
+                    return null;
+                case TypeCode.Boolean:
+                    return AsBool;
+                case TypeCode.Char:
+                    var s = AsString;
+                    if (s.Length < 1)
+                    {
+                        if (nullable)
+                            return null;
+                        return 0;
+                    }
+
+                    return s[0];
+                case TypeCode.SByte:
+                    return (sbyte)AsLong;
+                case TypeCode.Byte:
+                    return (byte)AsULong;
+                case TypeCode.Int16:
+                    return (short)AsLong;
+                case TypeCode.UInt16:
+                    return (ushort)AsULong;
+                case TypeCode.Int32:
+                    return (int)AsLong;
+                case TypeCode.UInt32:
+                    return (uint)AsULong;
+                case TypeCode.Int64:
+                    return AsLong;
+                case TypeCode.UInt64:
+                    return AsULong;
+                case TypeCode.Single:
+                    return (float)AsDouble;
+                case TypeCode.Double:
+                    return AsDouble;
+                case TypeCode.Decimal:
+                    return default(decimal);
+                case TypeCode.DateTime:
+                    return AsDateTime;
+                case TypeCode.String:
+                    return AsString;
+                default:
+                    return null;
+            }
+        }
 
         /// <inheritdoc cref="IDisposable.Dispose"/>
         public void Dispose()
