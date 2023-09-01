@@ -141,7 +141,7 @@ namespace PropertyGridSample
 
             ControlListBoxItem item;
 
-            item = new(typeof(SampleProps));
+            item = new(typeof(WelcomeControl));
             controlsListBox.Add(item);
 
             Type[] badTypes = new Type[] 
@@ -167,7 +167,7 @@ namespace PropertyGridSample
               typeof(TabControl),
               typeof(Window),
               typeof(ToolbarItem),
-              typeof(SampleProps),
+              typeof(WelcomeControl),
             };
 
             IEnumerable<Type> result = AssemblyUtils.GetTypeDescendants(typeof(Control));
@@ -178,8 +178,6 @@ namespace PropertyGridSample
                 item = new(type);
                 controlsListBox.Add(item);
             }
-
-            InitDefaultPropertyGrid();
 
             logListBox.MouseRightButtonUp += Log_MouseRightButtonUp;
             controlsListBox.SelectionChanged += ControlsListBox_SelectionChanged;
@@ -207,6 +205,8 @@ namespace PropertyGridSample
             propertyGrid.ApplyColors(PropertyGridColors.ColorSchemeWhite);
             propertyGrid.CenterSplitter();
             propertyGrid.SetVerticalSpacing();
+
+            controlsListBox.SelectedIndex = 0;
         }
 
         private void InitDefaultPropertyGrid()
@@ -433,12 +433,6 @@ namespace PropertyGridSample
                 var item = controlsListBox.SelectedItem as ControlListBoxItem;
                 var type = item?.ControlType;
 
-                if (type == typeof(SampleProps))
-                {
-                    InitDefaultPropertyGrid();
-                    return;
-                }
-
                 var control = item?.ControlInstance;
                 if (control != null)
                 {
@@ -447,7 +441,10 @@ namespace PropertyGridSample
                         controlPanel.Children.Add(control);
                 }
 
-                propertyGrid.SetProps(control);
+                if (type == typeof(WelcomeControl))
+                    InitDefaultPropertyGrid();
+                else
+                    propertyGrid.SetProps(control);
             }
 
             controlPanel.SuspendLayout();
@@ -576,10 +573,6 @@ namespace PropertyGridSample
         private void PropertyGrid_ButtonClick(object? sender, EventArgs e)
         {
             LogEvent("ButtonClick");
-        }
-
-        public class SampleProps : Control
-        {
         }
 
         private class ControlListBoxItem
