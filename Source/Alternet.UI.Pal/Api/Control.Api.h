@@ -11,6 +11,76 @@
 
 using namespace Alternet::UI;
 
+ALTERNET_UI_API void* Control_GetHandle_(Control* obj)
+{
+    return MarshalExceptions<void*>([&](){
+            return obj->GetHandle();
+        });
+}
+
+ALTERNET_UI_API void* Control_GetWxWidget_(Control* obj)
+{
+    return MarshalExceptions<void*>([&](){
+            return obj->GetWxWidget();
+        });
+}
+
+ALTERNET_UI_API c_bool Control_GetIsScrollable_(Control* obj)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return obj->GetIsScrollable();
+        });
+}
+
+ALTERNET_UI_API void Control_SetIsScrollable_(Control* obj, c_bool value)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetIsScrollable(value);
+        });
+}
+
+ALTERNET_UI_API c_bool Control_GetIsMouseCaptured_(Control* obj)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return obj->GetIsMouseCaptured();
+        });
+}
+
+ALTERNET_UI_API c_bool Control_GetTabStop_(Control* obj)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return obj->GetTabStop();
+        });
+}
+
+ALTERNET_UI_API void Control_SetTabStop_(Control* obj, c_bool value)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetTabStop(value);
+        });
+}
+
+ALTERNET_UI_API c_bool Control_GetIsFocused_(Control* obj)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return obj->GetIsFocused();
+        });
+}
+
+ALTERNET_UI_API c_bool Control_GetIsFocusable_(Control* obj)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return obj->GetIsFocusable();
+        });
+}
+
+ALTERNET_UI_API c_bool Control_GetCanAcceptFocus_(Control* obj)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return obj->GetCanAcceptFocus();
+        });
+}
+
 ALTERNET_UI_API Control* Control_GetParentRefCounted_(Control* obj)
 {
     return MarshalExceptions<Control*>([&](){
@@ -214,73 +284,66 @@ ALTERNET_UI_API void Control_SetFont_(Control* obj, Font* value)
         });
 }
 
-ALTERNET_UI_API c_bool Control_GetIsMouseCaptured_(Control* obj)
-{
-    return MarshalExceptions<c_bool>([&](){
-            return obj->GetIsMouseCaptured();
-        });
-}
-
-ALTERNET_UI_API c_bool Control_GetTabStop_(Control* obj)
-{
-    return MarshalExceptions<c_bool>([&](){
-            return obj->GetTabStop();
-        });
-}
-
-ALTERNET_UI_API void Control_SetTabStop_(Control* obj, c_bool value)
+ALTERNET_UI_API void Control_BeginUpdate_(Control* obj)
 {
     MarshalExceptions<void>([&](){
-            obj->SetTabStop(value);
+            obj->BeginUpdate();
         });
 }
 
-ALTERNET_UI_API c_bool Control_GetIsFocused_(Control* obj)
-{
-    return MarshalExceptions<c_bool>([&](){
-            return obj->GetIsFocused();
-        });
-}
-
-ALTERNET_UI_API c_bool Control_GetIsFocusable_(Control* obj)
-{
-    return MarshalExceptions<c_bool>([&](){
-            return obj->GetIsFocusable();
-        });
-}
-
-ALTERNET_UI_API c_bool Control_GetCanAcceptFocus_(Control* obj)
-{
-    return MarshalExceptions<c_bool>([&](){
-            return obj->GetCanAcceptFocus();
-        });
-}
-
-ALTERNET_UI_API void* Control_GetHandle_(Control* obj)
-{
-    return MarshalExceptions<void*>([&](){
-            return obj->GetHandle();
-        });
-}
-
-ALTERNET_UI_API void* Control_GetWxWidget_(Control* obj)
-{
-    return MarshalExceptions<void*>([&](){
-            return obj->GetWxWidget();
-        });
-}
-
-ALTERNET_UI_API c_bool Control_GetIsScrollable_(Control* obj)
-{
-    return MarshalExceptions<c_bool>([&](){
-            return obj->GetIsScrollable();
-        });
-}
-
-ALTERNET_UI_API void Control_SetIsScrollable_(Control* obj, c_bool value)
+ALTERNET_UI_API void Control_EndUpdate_(Control* obj)
 {
     MarshalExceptions<void>([&](){
-            obj->SetIsScrollable(value);
+            obj->EndUpdate();
+        });
+}
+
+ALTERNET_UI_API void Control_RecreateWindow_(Control* obj)
+{
+    MarshalExceptions<void>([&](){
+            obj->RecreateWindow();
+        });
+}
+
+ALTERNET_UI_API Point_C Control_ClientToScreen_(Control* obj, Point point)
+{
+    return MarshalExceptions<Point_C>([&](){
+            return obj->ClientToScreen(point);
+        });
+}
+
+ALTERNET_UI_API Point_C Control_ScreenToClient_(Control* obj, Point point)
+{
+    return MarshalExceptions<Point_C>([&](){
+            return obj->ScreenToClient(point);
+        });
+}
+
+ALTERNET_UI_API Int32Point_C Control_ScreenToDevice_(Control* obj, Point point)
+{
+    return MarshalExceptions<Int32Point_C>([&](){
+            return obj->ScreenToDevice(point);
+        });
+}
+
+ALTERNET_UI_API Point_C Control_DeviceToScreen_(Control* obj, Int32Point point)
+{
+    return MarshalExceptions<Point_C>([&](){
+            return obj->DeviceToScreen(point);
+        });
+}
+
+ALTERNET_UI_API c_bool Control_SetFocus_(Control* obj)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return obj->SetFocus();
+        });
+}
+
+ALTERNET_UI_API void Control_FocusNextControl_(Control* obj, c_bool forward, c_bool nested)
+{
+    MarshalExceptions<void>([&](){
+            obj->FocusNextControl(forward, nested);
         });
 }
 
@@ -396,6 +459,27 @@ ALTERNET_UI_API int Control_GetScrollBarMaximum_(Control* obj, ScrollBarOrientat
         });
 }
 
+ALTERNET_UI_API Control* Control_HitTest_(Point screenPoint)
+{
+    return MarshalExceptions<Control*>([&](){
+            return Control::HitTest(screenPoint);
+        });
+}
+
+ALTERNET_UI_API Control* Control_GetFocusedControl_()
+{
+    return MarshalExceptions<Control*>([&](){
+            return Control::GetFocusedControl();
+        });
+}
+
+ALTERNET_UI_API void Control_NotifyCaptureLost_()
+{
+    MarshalExceptions<void>([&](){
+            Control::NotifyCaptureLost();
+        });
+}
+
 ALTERNET_UI_API void Control_Freeze_(Control* obj)
 {
     MarshalExceptions<void>([&](){
@@ -407,13 +491,6 @@ ALTERNET_UI_API void Control_Thaw_(Control* obj)
 {
     MarshalExceptions<void>([&](){
             obj->Thaw();
-        });
-}
-
-ALTERNET_UI_API void Control_NotifyCaptureLost_()
-{
-    MarshalExceptions<void>([&](){
-            Control::NotifyCaptureLost();
         });
 }
 
@@ -505,83 +582,6 @@ ALTERNET_UI_API DrawingContext* Control_OpenClientDrawingContext_(Control* obj)
 {
     return MarshalExceptions<DrawingContext*>([&](){
             return obj->OpenClientDrawingContext();
-        });
-}
-
-ALTERNET_UI_API void Control_BeginUpdate_(Control* obj)
-{
-    MarshalExceptions<void>([&](){
-            obj->BeginUpdate();
-        });
-}
-
-ALTERNET_UI_API void Control_EndUpdate_(Control* obj)
-{
-    MarshalExceptions<void>([&](){
-            obj->EndUpdate();
-        });
-}
-
-ALTERNET_UI_API void Control_RecreateWindow_(Control* obj)
-{
-    MarshalExceptions<void>([&](){
-            obj->RecreateWindow();
-        });
-}
-
-ALTERNET_UI_API Control* Control_HitTest_(Point screenPoint)
-{
-    return MarshalExceptions<Control*>([&](){
-            return Control::HitTest(screenPoint);
-        });
-}
-
-ALTERNET_UI_API Point_C Control_ClientToScreen_(Control* obj, Point point)
-{
-    return MarshalExceptions<Point_C>([&](){
-            return obj->ClientToScreen(point);
-        });
-}
-
-ALTERNET_UI_API Point_C Control_ScreenToClient_(Control* obj, Point point)
-{
-    return MarshalExceptions<Point_C>([&](){
-            return obj->ScreenToClient(point);
-        });
-}
-
-ALTERNET_UI_API Int32Point_C Control_ScreenToDevice_(Control* obj, Point point)
-{
-    return MarshalExceptions<Int32Point_C>([&](){
-            return obj->ScreenToDevice(point);
-        });
-}
-
-ALTERNET_UI_API Point_C Control_DeviceToScreen_(Control* obj, Int32Point point)
-{
-    return MarshalExceptions<Point_C>([&](){
-            return obj->DeviceToScreen(point);
-        });
-}
-
-ALTERNET_UI_API Control* Control_GetFocusedControl_()
-{
-    return MarshalExceptions<Control*>([&](){
-            return Control::GetFocusedControl();
-        });
-}
-
-ALTERNET_UI_API c_bool Control_SetFocus_(Control* obj)
-{
-    return MarshalExceptions<c_bool>([&](){
-            return obj->SetFocus();
-        });
-}
-
-ALTERNET_UI_API void Control_FocusNextControl_(Control* obj, c_bool forward, c_bool nested)
-{
-    MarshalExceptions<void>([&](){
-            obj->FocusNextControl(forward, nested);
         });
 }
 

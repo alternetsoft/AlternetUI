@@ -24,6 +24,104 @@ namespace Alternet.UI.Native
         {
         }
         
+        public System.IntPtr Handle
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.Control_GetHandle_(NativePointer);
+                return n;
+            }
+            
+        }
+        
+        public System.IntPtr WxWidget
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.Control_GetWxWidget_(NativePointer);
+                return n;
+            }
+            
+        }
+        
+        public bool IsScrollable
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.Control_GetIsScrollable_(NativePointer);
+                return n;
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.Control_SetIsScrollable_(NativePointer, value);
+            }
+        }
+        
+        public bool IsMouseCaptured
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.Control_GetIsMouseCaptured_(NativePointer);
+                return n;
+            }
+            
+        }
+        
+        public bool TabStop
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.Control_GetTabStop_(NativePointer);
+                return n;
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.Control_SetTabStop_(NativePointer, value);
+            }
+        }
+        
+        public bool IsFocused
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.Control_GetIsFocused_(NativePointer);
+                return n;
+            }
+            
+        }
+        
+        public bool IsFocusable
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.Control_GetIsFocusable_(NativePointer);
+                return n;
+            }
+            
+        }
+        
+        public bool CanAcceptFocus
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.Control_GetCanAcceptFocus_(NativePointer);
+                return n;
+            }
+            
+        }
+        
         public Control? ParentRefCounted
         {
             get
@@ -275,102 +373,63 @@ namespace Alternet.UI.Native
             }
         }
         
-        public bool IsMouseCaptured
+        public void BeginUpdate()
         {
-            get
-            {
-                CheckDisposed();
-                var n = NativeApi.Control_GetIsMouseCaptured_(NativePointer);
-                return n;
-            }
-            
+            CheckDisposed();
+            NativeApi.Control_BeginUpdate_(NativePointer);
         }
         
-        public bool TabStop
+        public void EndUpdate()
         {
-            get
-            {
-                CheckDisposed();
-                var n = NativeApi.Control_GetTabStop_(NativePointer);
-                return n;
-            }
-            
-            set
-            {
-                CheckDisposed();
-                NativeApi.Control_SetTabStop_(NativePointer, value);
-            }
+            CheckDisposed();
+            NativeApi.Control_EndUpdate_(NativePointer);
         }
         
-        public bool IsFocused
+        public void RecreateWindow()
         {
-            get
-            {
-                CheckDisposed();
-                var n = NativeApi.Control_GetIsFocused_(NativePointer);
-                return n;
-            }
-            
+            CheckDisposed();
+            NativeApi.Control_RecreateWindow_(NativePointer);
         }
         
-        public bool IsFocusable
+        public Alternet.Drawing.Point ClientToScreen(Alternet.Drawing.Point point)
         {
-            get
-            {
-                CheckDisposed();
-                var n = NativeApi.Control_GetIsFocusable_(NativePointer);
-                return n;
-            }
-            
+            CheckDisposed();
+            var n = NativeApi.Control_ClientToScreen_(NativePointer, point);
+            return n;
         }
         
-        public bool CanAcceptFocus
+        public Alternet.Drawing.Point ScreenToClient(Alternet.Drawing.Point point)
         {
-            get
-            {
-                CheckDisposed();
-                var n = NativeApi.Control_GetCanAcceptFocus_(NativePointer);
-                return n;
-            }
-            
+            CheckDisposed();
+            var n = NativeApi.Control_ScreenToClient_(NativePointer, point);
+            return n;
         }
         
-        public System.IntPtr Handle
+        public Alternet.Drawing.Int32Point ScreenToDevice(Alternet.Drawing.Point point)
         {
-            get
-            {
-                CheckDisposed();
-                var n = NativeApi.Control_GetHandle_(NativePointer);
-                return n;
-            }
-            
+            CheckDisposed();
+            var n = NativeApi.Control_ScreenToDevice_(NativePointer, point);
+            return n;
         }
         
-        public System.IntPtr WxWidget
+        public Alternet.Drawing.Point DeviceToScreen(Alternet.Drawing.Int32Point point)
         {
-            get
-            {
-                CheckDisposed();
-                var n = NativeApi.Control_GetWxWidget_(NativePointer);
-                return n;
-            }
-            
+            CheckDisposed();
+            var n = NativeApi.Control_DeviceToScreen_(NativePointer, point);
+            return n;
         }
         
-        public bool IsScrollable
+        public bool SetFocus()
         {
-            get
-            {
-                CheckDisposed();
-                var n = NativeApi.Control_GetIsScrollable_(NativePointer);
-                return n;
-            }
-            
-            set
-            {
-                CheckDisposed();
-                NativeApi.Control_SetIsScrollable_(NativePointer, value);
-            }
+            CheckDisposed();
+            var n = NativeApi.Control_SetFocus_(NativePointer);
+            return n;
+        }
+        
+        public void FocusNextControl(bool forward, bool nested)
+        {
+            CheckDisposed();
+            NativeApi.Control_FocusNextControl_(NativePointer, forward, nested);
         }
         
         public void BeginInit()
@@ -475,6 +534,27 @@ namespace Alternet.UI.Native
             return n;
         }
         
+        public static Control? HitTest(Alternet.Drawing.Point screenPoint)
+        {
+            var n = NativeApi.Control_HitTest_(screenPoint);
+            var m = NativeObject.GetFromNativePointer<Control>(n, null);
+            ReleaseNativeObjectPointer(n);
+            return m;
+        }
+        
+        public static Control? GetFocusedControl()
+        {
+            var n = NativeApi.Control_GetFocusedControl_();
+            var m = NativeObject.GetFromNativePointer<Control>(n, null);
+            ReleaseNativeObjectPointer(n);
+            return m;
+        }
+        
+        public static void NotifyCaptureLost()
+        {
+            NativeApi.Control_NotifyCaptureLost_();
+        }
+        
         public void Freeze()
         {
             CheckDisposed();
@@ -485,11 +565,6 @@ namespace Alternet.UI.Native
         {
             CheckDisposed();
             NativeApi.Control_Thaw_(NativePointer);
-        }
-        
-        public static void NotifyCaptureLost()
-        {
-            NativeApi.Control_NotifyCaptureLost_();
         }
         
         public void ShowPopupMenu(System.IntPtr menu, int x, int y)
@@ -579,81 +654,6 @@ namespace Alternet.UI.Native
             return m;
         }
         
-        public void BeginUpdate()
-        {
-            CheckDisposed();
-            NativeApi.Control_BeginUpdate_(NativePointer);
-        }
-        
-        public void EndUpdate()
-        {
-            CheckDisposed();
-            NativeApi.Control_EndUpdate_(NativePointer);
-        }
-        
-        public void RecreateWindow()
-        {
-            CheckDisposed();
-            NativeApi.Control_RecreateWindow_(NativePointer);
-        }
-        
-        public static Control? HitTest(Alternet.Drawing.Point screenPoint)
-        {
-            var n = NativeApi.Control_HitTest_(screenPoint);
-            var m = NativeObject.GetFromNativePointer<Control>(n, null);
-            ReleaseNativeObjectPointer(n);
-            return m;
-        }
-        
-        public Alternet.Drawing.Point ClientToScreen(Alternet.Drawing.Point point)
-        {
-            CheckDisposed();
-            var n = NativeApi.Control_ClientToScreen_(NativePointer, point);
-            return n;
-        }
-        
-        public Alternet.Drawing.Point ScreenToClient(Alternet.Drawing.Point point)
-        {
-            CheckDisposed();
-            var n = NativeApi.Control_ScreenToClient_(NativePointer, point);
-            return n;
-        }
-        
-        public Alternet.Drawing.Int32Point ScreenToDevice(Alternet.Drawing.Point point)
-        {
-            CheckDisposed();
-            var n = NativeApi.Control_ScreenToDevice_(NativePointer, point);
-            return n;
-        }
-        
-        public Alternet.Drawing.Point DeviceToScreen(Alternet.Drawing.Int32Point point)
-        {
-            CheckDisposed();
-            var n = NativeApi.Control_DeviceToScreen_(NativePointer, point);
-            return n;
-        }
-        
-        public static Control? GetFocusedControl()
-        {
-            var n = NativeApi.Control_GetFocusedControl_();
-            var m = NativeObject.GetFromNativePointer<Control>(n, null);
-            ReleaseNativeObjectPointer(n);
-            return m;
-        }
-        
-        public bool SetFocus()
-        {
-            CheckDisposed();
-            var n = NativeApi.Control_SetFocus_(NativePointer);
-            return n;
-        }
-        
-        public void FocusNextControl(bool forward, bool nested)
-        {
-            CheckDisposed();
-            NativeApi.Control_FocusNextControl_(NativePointer, forward, nested);
-        }
-        
         static GCHandle eventCallbackGCHandle;
         
         static void SetEventCallback()
@@ -705,6 +705,18 @@ namespace Alternet.UI.Native
                 {
                     Destroyed?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
                 }
+                case NativeApi.ControlEvent.GotFocus:
+                {
+                    GotFocus?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                }
+                case NativeApi.ControlEvent.LostFocus:
+                {
+                    LostFocus?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                }
+                case NativeApi.ControlEvent.DragLeave:
+                {
+                    DragLeave?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                }
                 case NativeApi.ControlEvent.DragDrop:
                 {
                     var ea = new NativeEventArgs<DragEventData>(MarshalEx.PtrToStructure<DragEventData>(parameter));
@@ -719,18 +731,6 @@ namespace Alternet.UI.Native
                 {
                     var ea = new NativeEventArgs<DragEventData>(MarshalEx.PtrToStructure<DragEventData>(parameter));
                     DragEnter?.Invoke(this, ea); return ea.Result;
-                }
-                case NativeApi.ControlEvent.DragLeave:
-                {
-                    DragLeave?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
-                }
-                case NativeApi.ControlEvent.GotFocus:
-                {
-                    GotFocus?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
-                }
-                case NativeApi.ControlEvent.LostFocus:
-                {
-                    LostFocus?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
                 }
                 case NativeApi.ControlEvent.VerticalScrollBarValueChanged:
                 {
@@ -751,12 +751,12 @@ namespace Alternet.UI.Native
         public event EventHandler? VisibleChanged;
         public event EventHandler? MouseCaptureLost;
         public event EventHandler? Destroyed;
+        public event EventHandler? GotFocus;
+        public event EventHandler? LostFocus;
+        public event EventHandler? DragLeave;
         public event NativeEventHandler<DragEventData>? DragDrop;
         public event NativeEventHandler<DragEventData>? DragOver;
         public event NativeEventHandler<DragEventData>? DragEnter;
-        public event EventHandler? DragLeave;
-        public event EventHandler? GotFocus;
-        public event EventHandler? LostFocus;
         public event EventHandler? VerticalScrollBarValueChanged;
         public event EventHandler? HorizontalScrollBarValueChanged;
         
@@ -777,18 +777,48 @@ namespace Alternet.UI.Native
                 VisibleChanged,
                 MouseCaptureLost,
                 Destroyed,
+                GotFocus,
+                LostFocus,
+                DragLeave,
                 DragDrop,
                 DragOver,
                 DragEnter,
-                DragLeave,
-                GotFocus,
-                LostFocus,
                 VerticalScrollBarValueChanged,
                 HorizontalScrollBarValueChanged,
             }
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Control_SetEventCallback_(ControlEventCallbackType callback);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr Control_GetHandle_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr Control_GetWxWidget_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool Control_GetIsScrollable_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Control_SetIsScrollable_(IntPtr obj, bool value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool Control_GetIsMouseCaptured_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool Control_GetTabStop_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Control_SetTabStop_(IntPtr obj, bool value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool Control_GetIsFocused_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool Control_GetIsFocusable_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool Control_GetCanAcceptFocus_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern IntPtr Control_GetParentRefCounted_(IntPtr obj);
@@ -878,34 +908,31 @@ namespace Alternet.UI.Native
             public static extern void Control_SetFont_(IntPtr obj, IntPtr value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool Control_GetIsMouseCaptured_(IntPtr obj);
+            public static extern void Control_BeginUpdate_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool Control_GetTabStop_(IntPtr obj);
+            public static extern void Control_EndUpdate_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Control_SetTabStop_(IntPtr obj, bool value);
+            public static extern void Control_RecreateWindow_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool Control_GetIsFocused_(IntPtr obj);
+            public static extern Alternet.Drawing.Point Control_ClientToScreen_(IntPtr obj, Alternet.Drawing.Point point);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool Control_GetIsFocusable_(IntPtr obj);
+            public static extern Alternet.Drawing.Point Control_ScreenToClient_(IntPtr obj, Alternet.Drawing.Point point);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool Control_GetCanAcceptFocus_(IntPtr obj);
+            public static extern Alternet.Drawing.Int32Point Control_ScreenToDevice_(IntPtr obj, Alternet.Drawing.Point point);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr Control_GetHandle_(IntPtr obj);
+            public static extern Alternet.Drawing.Point Control_DeviceToScreen_(IntPtr obj, Alternet.Drawing.Int32Point point);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr Control_GetWxWidget_(IntPtr obj);
+            public static extern bool Control_SetFocus_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool Control_GetIsScrollable_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Control_SetIsScrollable_(IntPtr obj, bool value);
+            public static extern void Control_FocusNextControl_(IntPtr obj, bool forward, bool nested);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Control_BeginInit_(IntPtr obj);
@@ -956,13 +983,19 @@ namespace Alternet.UI.Native
             public static extern int Control_GetScrollBarMaximum_(IntPtr obj, ScrollBarOrientation orientation);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern IntPtr Control_HitTest_(Alternet.Drawing.Point screenPoint);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern IntPtr Control_GetFocusedControl_();
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Control_NotifyCaptureLost_();
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Control_Freeze_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Control_Thaw_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Control_NotifyCaptureLost_();
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Control_ShowPopupMenu_(IntPtr obj, System.IntPtr menu, int x, int y);
@@ -1002,39 +1035,6 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern IntPtr Control_OpenClientDrawingContext_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Control_BeginUpdate_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Control_EndUpdate_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Control_RecreateWindow_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern IntPtr Control_HitTest_(Alternet.Drawing.Point screenPoint);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.Point Control_ClientToScreen_(IntPtr obj, Alternet.Drawing.Point point);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.Point Control_ScreenToClient_(IntPtr obj, Alternet.Drawing.Point point);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.Int32Point Control_ScreenToDevice_(IntPtr obj, Alternet.Drawing.Point point);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.Point Control_DeviceToScreen_(IntPtr obj, Alternet.Drawing.Int32Point point);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern IntPtr Control_GetFocusedControl_();
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool Control_SetFocus_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Control_FocusNextControl_(IntPtr obj, bool forward, bool nested);
             
         }
     }
