@@ -5,6 +5,28 @@ using System.Collections.ObjectModel;
 namespace Alternet.Base.Collections
 {
     /// <summary>
+    /// Represents the method that will handle an event when collection is changed.
+    /// </summary>
+    /// <typeparam name="T">The type of the item.</typeparam>
+    /// <param name="sender">The source of the event.</param>
+    /// <param name="index">The index where the change occurred.</param>
+    /// <param name="item">The item affected by the change.</param>
+    public delegate void CollectionItemChangedHandler<T>(object? sender, int index, T item);
+
+    /// <summary>
+    /// Represents the method that will handle an event when multiple item in the
+    /// collection were changed.
+    /// </summary>
+    /// <typeparam name="T">The type of the item.</typeparam>
+    /// <param name="sender">The source of the event.</param>
+    /// <param name="index">The index where the change occurred.</param>
+    /// <param name="items">The items being affected.</param>
+    public delegate void CollectionItemRangeChangedHandler<T>(
+        object? sender,
+        int index,
+        IEnumerable<T> items);
+
+    /// <summary>
     /// Represents a dynamic data collection that provides notifications when items get added,
     /// removed, or when the whole list is refreshed.
     /// In addition to the functionality available in <see cref="ObservableCollection{T}"/>,
@@ -13,6 +35,21 @@ namespace Alternet.Base.Collections
     /// <typeparam name="T">The type of elements in the collection.</typeparam>
     public class Collection<T> : ObservableCollection<T>
     {
+        /// <summary>
+        /// Occurs when an item is inserted in the collection.
+        /// </summary>
+        public event CollectionItemChangedHandler<T>? ItemInsertedFast;
+
+        /// <summary>
+        /// Occurs when an item is removed from the collection.
+        /// </summary>
+        public event CollectionItemChangedHandler<T>? ItemRemovedFast;
+
+        /// <summary>
+        /// Occurs when an item range addition is finished in the collection.
+        /// </summary>
+        public event CollectionItemRangeChangedHandler<T>? ItemRangeAdditionFinishedFast;
+
         /// <summary>
         /// Occurs when an item is inserted in the collection.
         /// </summary>
@@ -85,7 +122,7 @@ namespace Alternet.Base.Collections
             finally
             {
                 RangeOperationInProgress = false;
-                OnItemRangeAdditionFinished(new RangeAdditionFinishedEventArgs<T>(index, collection));
+                OnItemRangeAdditionFinished(index, collection);
             }
         }
 
@@ -100,8 +137,7 @@ namespace Alternet.Base.Collections
                 throw new ArgumentNullException(nameof(item));
 
             base.InsertItem(index, item);
-
-            OnItemInserted(new CollectionChangeEventArgs<T>(index, item));
+            OnItemInserted(index, item);
         }
 
         /// <summary>
@@ -112,8 +148,7 @@ namespace Alternet.Base.Collections
         {
             var item = this[index];
             base.RemoveItem(index);
-
-            OnItemRemoved(new CollectionChangeEventArgs<T>(index, item));
+            OnItemRemoved(index, item);
         }
 
         /// <summary>
@@ -123,7 +158,7 @@ namespace Alternet.Base.Collections
         protected override void ClearItems()
         {
             for (int i = Count - 1; i >= 0; i--)
-                OnItemRemoved(new CollectionChangeEventArgs<T>(i, this[i]));
+                OnItemRemoved(i, this[i]);
 
             base.ClearItems();
         }
@@ -131,22 +166,49 @@ namespace Alternet.Base.Collections
         /// <summary>
         /// Raises the <see cref="ItemRangeAdditionFinished"/> event with the provided arguments.
         /// </summary>
-        /// <param name="e">Arguments of the event being raised.</param>
-        protected virtual void OnItemRangeAdditionFinished(RangeAdditionFinishedEventArgs<T> e) =>
-            ItemRangeAdditionFinished?.Invoke(this, e);
+        /// <param name="insertionIndex">The index to insert the <paramref name="items"/> at.</param>
+        /// <param name="items">The items being inserted.</param>
+        protected virtual void OnItemRangeAdditionFinished(int insertionIndex, IEnumerable<T> items)
+        {
+            if(ItemRangeAdditionFinished is null)
+                ItemRangeAdditionFinishedFast?.Invoke(this, insertionIndex, items);
+            else
+            {
+                RangeAdditionFinishedEventArgs<T> e = new(insertionIndex, items);
+                ItemRangeAdditionFinished.Invoke(this, e);
+            }
+        }
 
         /// <summary>
         /// Raises the <see cref="ItemInserted"/> event with the provided arguments.
         /// </summary>
-        /// <param name="e">Arguments of the event being raised.</param>
-        protected virtual void OnItemInserted(CollectionChangeEventArgs<T> e) =>
-            ItemInserted?.Invoke(this, e);
+        /// <param name="index">The index where the change occurred.</param>
+        /// <param name="item">The item affected by the change.</param>
+        protected virtual void OnItemInserted(int index, T item)
+        {
+            if(ItemInserted is null)
+                ItemInsertedFast?.Invoke(this, index, item);
+            else
+            {
+                CollectionChangeEventArgs<T> e = new(index, item);
+                ItemInserted.Invoke(this, e);
+            }
+        }
 
         /// <summary>
         /// Raises the <see cref="ItemRemoved"/> event with the provided arguments.
         /// </summary>
-        /// <param name="e">Arguments of the event being raised.</param>
-        protected virtual void OnItemRemoved(CollectionChangeEventArgs<T> e) =>
-            ItemRemoved?.Invoke(this, e);
+        /// <param name="index">The index where the change occurred.</param>
+        /// <param name="item">The item affected by the change.</param>
+        protected virtual void OnItemRemoved(int index, T item)
+        {
+            if(ItemRemoved is null)
+                ItemRemovedFast?.Invoke(this, index, item);
+            else
+            {
+                CollectionChangeEventArgs<T> e = new(index, item);
+                ItemRemoved.Invoke(this, e);
+            }
+        }
     }
 }
