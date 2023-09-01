@@ -18,8 +18,29 @@ namespace Alternet.UI
     /// </remarks>
     public class LayoutPanel : Control
     {
+        LayoutPanelKind layout;
+
         /// <inheritdoc/>
         public override ControlId ControlKind => ControlId.LayoutPanel;
+
+        /// <summary>
+        /// Gets or sets layout style of the child controls.
+        /// </summary>
+        public LayoutPanelKind Layout
+        {
+            get
+            {
+                return layout;
+            }
+
+            set
+            {
+                if (layout == value)
+                    return;
+                layout = value;
+                PerformLayout();
+            }
+        }
 
         internal new NativeLayoutPanelHandler Handler =>
             (NativeLayoutPanelHandler)base.Handler;

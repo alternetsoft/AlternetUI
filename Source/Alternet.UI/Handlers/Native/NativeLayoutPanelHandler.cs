@@ -6,6 +6,8 @@ namespace Alternet.UI
 {
     internal class NativeLayoutPanelHandler : ControlHandler
     {
+        new public LayoutPanel Control => (LayoutPanel)base.Control;
+
         public new Native.Panel NativeControl =>
             (Native.Panel)base.NativeControl!;
 
@@ -14,7 +16,8 @@ namespace Alternet.UI
 
         public override void OnLayout()
         {
-            DefaultLayout.Layout(Control);
+            if(Control.Layout == LayoutPanelKind.Default)
+                DefaultLayout.Layout(Control);
         }
 
         internal override Native.Control CreateNativeControl()

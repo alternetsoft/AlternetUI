@@ -96,6 +96,7 @@ namespace PropertyGridSample
 
             InitializeComponent();
 
+            panel.Layout = LayoutPanelKind.Native;
             Children.Add(panel);
 
             manager.SetFlags(AuiManagerOption.Default);
