@@ -3,6 +3,11 @@
 - Added AuiManager, AuiToolbar, AuiNotebook controls.
 - Added AuiManager sample.
 - Added PropertyGrid control and sample.
+- Add Control: CanAcceptFocus, IsFocusable, BackgroundColor, ForegroundColor.
+- Improved Brush and Font handling in Control.
+- Fixed bugs in ComboBox.
+- Improved Font, Brush (and its descendants).
+- Collection class speedup.
 
 # 0.9.300 (2023 August 9)
 
