@@ -14,6 +14,11 @@ namespace Alternet.UI
     public interface IPropertyGridVariant
     {
         /// <summary>
+        /// Gets instance handle.
+        /// </summary>
+        IntPtr Handle { get; }
+
+        /// <summary>
         /// Gets or sets variant value as <see cref="object"/>.
         /// </summary>
         /// <remarks>

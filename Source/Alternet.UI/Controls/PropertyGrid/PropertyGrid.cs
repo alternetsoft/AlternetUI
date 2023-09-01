@@ -12,7 +12,7 @@ namespace Alternet.UI
     /*
     - multibuttons in prop editor   https://docs.wxwidgets.org/3.2/classwx_p_g_multi_button.html
     - How to make cells bigger in height? So DateEdit will look ok?
-    - How to make cell spacing vertical?
+    - How to make cell spacing vertical? SetVerticalSpacing
     - How to hide lines? (set their color to bk color)
     - ClickButton event in property intf
      */
@@ -850,6 +850,7 @@ namespace Alternet.UI
 
             var itemBrushType = CreateProperty(adapter, "BrushType")!;
             var itemColor = CreateProperty(adapter, "Color")!;
+            var itemEndColor = CreateProperty(adapter, "EndColor")!;
             var itemLinearGradientStart = CreateProperty(adapter, "LinearGradientStart")!;
             var itemLinearGradientEnd = CreateProperty(adapter, "LinearGradientEnd")!;
             var itemRadialGradientCenter = CreateProperty(adapter, "RadialGradientCenter")!;
@@ -860,6 +861,7 @@ namespace Alternet.UI
 
             result.Children.Add(itemBrushType!);
             result.Children.Add(itemColor!);
+            result.Children.Add(itemEndColor!);
             result.Children.Add(itemLinearGradientStart!);
             result.Children.Add(itemLinearGradientEnd!);
             result.Children.Add(itemRadialGradientCenter!);
@@ -1161,35 +1163,35 @@ namespace Alternet.UI
                         prop = CreateBoolProperty(label!, propName, (bool)propValue!);
                         break;
                     case TypeCode.SByte:
-                        propValue ??= 0;
+                        propValue ??= default(sbyte);
                         prop = CreateSByteProperty(label!, propName, (sbyte)propValue!);
                         break;
                     case TypeCode.Int16:
-                        propValue ??= 0;
+                        propValue ??= default(short);
                         prop = CreateInt16Property(label!, propName, (short)propValue!);
                         break;
                     case TypeCode.Int32:
-                        propValue ??= 0;
+                        propValue ??= default(int);
                         prop = CreateIntProperty(label!, propName, (int)propValue!);
                         break;
                     case TypeCode.Int64:
-                        propValue ??= 0;
+                        propValue ??= default(long);
                         prop = CreateLongProperty(label!, propName, (long)propValue!);
                         break;
                     case TypeCode.Byte:
-                        propValue ??= 0;
+                        propValue ??= default(byte);
                         prop = CreateByteProperty(label!, propName, (byte)propValue!);
                         break;
                     case TypeCode.UInt32:
-                        propValue ??= 0;
+                        propValue ??= default(uint);
                         prop = CreateUIntProperty(label!, propName, (uint)propValue!);
                         break;
                     case TypeCode.UInt16:
-                        propValue ??= 0;
+                        propValue ??= default(ushort);
                         prop = CreateUInt16Property(label!, propName, (ushort)propValue!);
                         break;
                     case TypeCode.UInt64:
-                        propValue ??= 0;
+                        propValue ??= default(ulong);
                         prop = CreateULongProperty(label!, propName, (ulong)propValue!);
                         break;
                     case TypeCode.Single:
@@ -2373,191 +2375,497 @@ namespace Alternet.UI
             NativeControl.ResetColors();
         }
 
+        /// <summary>
+        /// Resets column sizes and splitter positions, based on proportions.
+        /// </summary>
+        /// <param name="enableAutoResizing">If <c>true</c>, automatic column resizing
+        /// is enabled (only applicable if control style
+        /// <see cref="PropertyGridCreateStyle.SplitterAutoCenter"/> is used).</param>
         public virtual void ResetColumnSizes(bool enableAutoResizing = false)
         {
             NativeControl.ResetColumnSizes(enableAutoResizing);
         }
 
+        /// <summary>
+        /// Makes given column editable by user.
+        /// </summary>
+        /// <param name="column">The index of the column to make editable.</param>
+        /// <param name="editable">Using <c>false</c> here will disable column
+        /// from being editable.</param>
         public virtual void MakeColumnEditable(uint column, bool editable = true)
         {
             NativeControl.MakeColumnEditable(column, editable);
         }
 
+        /// <summary>
+        /// Creates label editor for given column, for property that is currently selected.
+        /// </summary>
+        /// <param name="column">Which column's label to edit. Note that you should not use
+        /// value 1, which is reserved for property value column.</param>
+        /// <remarks>
+        /// When multiple selection is enabled, this applies to all selected properties.
+        /// </remarks>
         public virtual void BeginLabelEdit(uint column = 0)
         {
             NativeControl.BeginLabelEdit(column);
         }
 
+        /// <summary>
+        /// Ends label editing, if any.
+        /// </summary>
+        /// <param name="commit">Use <c>true</c> (default) to store edited label text in
+        /// property cell data.</param>
         public virtual void EndLabelEdit(bool commit = true)
         {
             NativeControl.EndLabelEdit(commit);
         }
 
+        /// <summary>
+        /// Sets number of columns (2 or more).
+        /// </summary>
+        /// <param name="colCount">Number of columns.</param>
         public virtual void SetColumnCount(int colCount)
         {
             NativeControl.SetColumnCount(colCount);
         }
 
+        /// <summary>
+        /// Sets x coordinate of the splitter.
+        /// </summary>
+        /// <param name="newXPos">Splitter position.</param>
+        /// <param name="col">Column index.</param>
+        /// <remarks>
+        /// Splitter position cannot exceed grid size, and therefore setting it during
+        /// form creation may fail as initial grid size is often smaller than desired
+        /// splitter position, especially when advanced sizers are being used.
+        /// </remarks>
         public virtual void SetSplitterPosition(int newXPos, int col = 0)
         {
             NativeControl.SetSplitterPosition(newXPos, col);
         }
 
+        /// <summary>
+        /// Returns (visual) text representation of the unspecified property value.
+        /// </summary>
         public virtual string GetUnspecifiedValueText()
         {
             return NativeControl.GetUnspecifiedValueText(0);
         }
 
+        /// <summary>
+        /// Set virtual width for this particular page.
+        /// </summary>
+        /// <param name="width">New virtual width.</param>
+        /// <remarks>
+        /// Width -1 indicates that the virtual width should be disabled.
+        /// </remarks>
         public virtual void SetVirtualWidth(int width)
         {
             NativeControl.SetVirtualWidth(width);
         }
 
+        /// <summary>
+        /// Moves splitter as left as possible, while still allowing all labels to be shown in full.
+        /// </summary>
+        /// <param name="privateChildrenToo">If <c>false</c>, will still allow private children
+        /// to be cropped.</param>
         public virtual void SetSplitterLeft(bool privateChildrenToo = false)
         {
             NativeControl.SetSplitterLeft(privateChildrenToo);
         }
 
-        public virtual void SetVerticalSpacing(int vspacing)
+        /// <summary>
+        /// Sets vertical spacing.
+        /// </summary>
+        /// <param name="vspacing">Vertical spacing.</param>
+        /// <remarks>
+        /// Can be 1, 2, or 3 - a value relative to font height. Value of 2 should be
+        /// default on most platforms.
+        /// </remarks>
+        /// <remarks>
+        /// If <paramref name="vspacing"/> is null,
+        /// <see cref="PlatformDefaults.PropertyGridVerticalSpacing"/> is used.
+        /// </remarks>
+        public virtual void SetVerticalSpacing(int? vspacing = null)
         {
-            NativeControl.SetVerticalSpacing(vspacing);
+            int v;
+            if (vspacing is null)
+                v = AllPlatformDefaults.PlatformCurrent.PropertyGridVerticalSpacing;
+            else
+                v = (int)vspacing;
+
+            v = Math.Min(v, 3);
+            v = Math.Max(v, 1);
+
+            NativeControl.SetVerticalSpacing(v);
         }
 
+        /// <summary>
+        /// Gets whether control has virtual width specified with
+        /// <see cref="SetVirtualWidth"/>.
+        /// </summary>
         public virtual bool HasVirtualWidth()
         {
             return NativeControl.HasVirtualWidth();
         }
 
+        /// <summary>
+        /// Gets number of common values.
+        /// </summary>
         public virtual uint GetCommonValueCount()
         {
             return NativeControl.GetCommonValueCount();
         }
 
+        /// <summary>
+        /// Gets label of given common value.
+        /// </summary>
+        /// <param name="i">Index of the commo nvalue.</param>
         public virtual string GetCommonValueLabel(uint i)
         {
             return NativeControl.GetCommonValueLabel(i);
         }
 
+        /// <summary>
+        /// Gets index of common value that will truly change value to unspecified.
+        /// </summary>
         public virtual int GetUnspecifiedCommonValue()
         {
             return NativeControl.GetUnspecifiedCommonValue();
         }
 
+        /// <summary>
+        /// Sets index of common value that will truly change value to unspecified.
+        /// </summary>
+        /// <param name="index">Index of the common value.</param>
+        /// <remarks>
+        /// Using -1 will set none to have such effect. Default is 0.
+        /// </remarks>
         public virtual void SetUnspecifiedCommonValue(int index)
         {
             NativeControl.SetUnspecifiedCommonValue(index);
         }
 
+        /// <summary>
+        /// Refreshes any active editor control.
+        /// </summary>
         public virtual void RefreshEditor()
         {
             NativeControl.RefreshEditor();
         }
 
+        /// <summary>
+        /// You can use this function, for instance, to detect in events if property's
+        /// SetValueInEvent was already called in editor's event handler.
+        /// </summary>
+        /// <remarks>
+        /// It really only detects if was value was changed using property's SetValueInEvent(),
+        /// which is usually used when a 'picker' dialog is displayed. If value was written by
+        /// "normal means" in property's StringToValue() or IntToValue(), then this function
+        /// will return false (on the other hand, property's event handler is not even
+        /// called in those cases).
+        /// </remarks>
         public virtual bool WasValueChangedInEvent()
         {
             return NativeControl.WasValueChangedInEvent();
         }
 
+        /// <summary>
+        /// Gets current Y spacing.
+        /// </summary>
         public virtual int GetSpacingY()
         {
             return NativeControl.GetSpacingY();
         }
 
-        public virtual void SetupTextCtrlValue(string text)
-        {
-            NativeControl.SetupTextCtrlValue(text);
-        }
-
+        /// <summary>
+        /// Unfocuses or closes editor if one was open, but does not deselect property.
+        /// </summary>
         public virtual bool UnfocusEditor()
         {
             return NativeControl.UnfocusEditor();
         }
 
+        /// <summary>
+        /// Returns last item which could be iterated using given flags.
+        /// </summary>
+        /// <param name="flags">Flags to limit returned properties.</param>
+        /// <returns></returns>
         public virtual IPropertyGridItem? GetLastItem(PropertyGridIteratorFlags flags)
         {
             return PtrToItem(NativeControl.GetLastItem((int)flags));
         }
 
+        /// <summary>
+        /// Returns "root property".
+        /// </summary>
+        /// <remarks>
+        /// Root property does not have name, etc. and it is not visible.
+        /// It is only useful for accessing its children.
+        /// </remarks>
         public virtual IPropertyGridItem? GetRoot()
         {
             return PtrToItem(NativeControl.GetRoot());
         }
 
+        /// <summary>
+        /// Gets currently selected property.
+        /// </summary>
         public virtual IPropertyGridItem? GetSelectedProperty()
         {
             return PtrToItem(NativeControl.GetSelectedProperty());
         }
 
-        public virtual bool ChangePropertyValue(IPropertyGridItem id, object value)
+        /// <summary>
+        /// Changes value of a property, as if from an editor.
+        /// </summary>
+        /// <param name="prop">Property item.</param>
+        /// <param name="value">Property value.</param>
+        /// <remarks>
+        /// Use this instead of <see cref="SetPropertyValueAsVariant"/> if you need the value to
+        /// run through validation process, and also send <see cref="PropertyChanged"/>
+        /// event.
+        /// </remarks>
+        /// <remarks>
+        /// Since this function sends <see cref = "PropertyChanged"/> event, it should not
+        /// be called from <see cref = "PropertyChanged"/> event handler.
+        /// </remarks>
+        /// <returns>
+        /// <c>true</c> if value was successfully changed.
+        /// </returns>
+        public virtual bool ChangePropertyValue(IPropertyGridItem prop, object value)
         {
-            return NativeControl.ChangePropertyValue(id.Handle, ToVariant(value).Handle);
+            return NativeControl.ChangePropertyValue(prop.Handle, ToVariant(value).Handle);
         }
 
-        public virtual void SetPropertyImage(IPropertyGridItem id, ImageSet? bmp)
+        /// <summary>
+        /// Changes value of a property, as if from an editor.
+        /// </summary>
+        /// <param name="prop">Property item.</param>
+        /// <param name="value">Property value.</param>
+        /// <remarks>See <see cref="ChangePropertyValue"/> for more details.</remarks>
+        public virtual bool ChangePropertyValueAsVariant(
+            IPropertyGridItem prop,
+            IPropertyGridVariant value)
         {
-            NativeControl.SetPropertyImage(id.Handle, bmp?.NativeImageSet);
+            return NativeControl.ChangePropertyValue(prop.Handle, value.Handle);
         }
 
+        /// <summary>
+        /// Sets property value as variant.
+        /// </summary>
+        /// <param name="prop">Property item.</param>
+        /// <param name="value">New property value.</param>
+        public void SetPropertyValueAsVariant(IPropertyGridItem prop, IPropertyGridVariant value)
+        {
+            NativeControl.SetPropertyValueAsVariant(prop.Handle, value.Handle);
+        }
+
+        /// <summary>
+        /// Sets image associated with the property.
+        /// </summary>
+        /// <param name="prop">Property item.</param>
+        /// <param name="bmp">Image.</param>
+        public virtual void SetPropertyImage(IPropertyGridItem prop, ImageSet? bmp)
+        {
+            NativeControl.SetPropertyImage(prop.Handle, bmp?.NativeImageSet);
+        }
+
+        /// <summary>
+        /// Sets an attribute for the property.
+        /// </summary>
+        /// <param name="prop"></param>
+        /// <param name="attrName">Text identifier of attribute. See
+        /// <see cref="PropertyGridItemAttrId"/> for the known attribute names.</param>
+        /// <param name="value">Value of attribute.</param>
+        /// <param name="argFlags">Optional. Use
+        /// <see cref="PropertyGridItemValueFlags.Recurse"/> to set the attribute to child
+        /// properties recursively.</param>
+        /// <remarks>
+        /// Setting attribute's value to <c>null</c> will simply remove it from property's
+        /// set of attributes.
+        /// </remarks>
+        /// <remarks>
+        /// Property is refreshed with new settings after calling this method.
+        /// </remarks>
         public virtual void SetPropertyAttribute(
-            IPropertyGridItem id,
+            IPropertyGridItem prop,
             string attrName,
-            object value,
+            object? value = null,
             PropertyGridItemValueFlags argFlags = 0)
         {
             NativeControl.SetPropertyAttribute(
-                id.Handle,
+                prop.Handle,
                 attrName,
                 ToVariant(value).Handle,
                 (int)argFlags);
         }
 
-        public virtual void SetPropertyKnownAttribute(
-            IPropertyGridItem id,
-            PropertyGridItemAttrId attrName,
-            object value,
+        /// <summary>
+        /// Sets an attribute for the property.
+        /// </summary>
+        /// <param name="prop"></param>
+        /// <param name="attrName">Text identifier of attribute. See
+        /// <see cref="PropertyGridItemAttrId"/> for the known attribute names.</param>
+        /// <param name="value">Value of attribute.</param>
+        /// <param name="argFlags">Optional. Use
+        /// <see cref="PropertyGridItemValueFlags.Recurse"/> to set the attribute to child
+        /// properties recursively.</param>
+        /// <remarks>
+        /// Property is refreshed with new settings after calling this method.
+        /// </remarks>
+        public virtual void SetPropertyAttributeAsVariant(
+            IPropertyGridItem prop,
+            string attrName,
+            IPropertyGridVariant value,
             PropertyGridItemValueFlags argFlags = 0)
         {
-            SetPropertyAttribute(id, attrName.ToString(), value, argFlags);
+            NativeControl.SetPropertyAttribute(
+                prop.Handle,
+                attrName,
+                value.Handle,
+                (int)argFlags);
         }
 
+        /// <summary>
+        /// Sets known attribute for the property.
+        /// </summary>
+        /// <param name="prop"></param>
+        /// <param name="attrName">Attribute identified.</param>
+        /// <param name="value">Value of attribute.</param>
+        /// <param name="argFlags">Optional. Use
+        /// <see cref="PropertyGridItemValueFlags.Recurse"/> to set the attribute to child
+        /// properties recursively.</param>
+        /// <remarks>See <see cref="SetPropertyAttribute"/> for the details.</remarks>
+        public virtual void SetPropertyKnownAttribute(
+            IPropertyGridItem prop,
+            PropertyGridItemAttrId attrName,
+            object? value,
+            PropertyGridItemValueFlags argFlags = 0)
+        {
+            SetPropertyAttribute(prop, attrName.ToString(), value, argFlags);
+        }
+
+        /// <summary>
+        /// Sets an attribute for all the properties.
+        /// </summary>
+        /// <param name="attrName">Text identifier of attribute. See
+        /// <see cref="PropertyGridItemAttrId"/> for the known attribute names.</param>
+        /// <param name="value">Value of attribute.</param>
         public virtual void SetPropertyAttributeAll(string attrName, object value)
         {
             NativeControl.SetPropertyAttributeAll(attrName, ToVariant(value).Handle);
         }
 
+        /// <summary>
+        /// Sets an attribute for all the properties.
+        /// </summary>
+        /// <param name="attrName">Text identifier of attribute. See
+        /// <see cref="PropertyGridItemAttrId"/> for the known attribute names.</param>
+        /// <param name="value">Value of attribute.</param>
+        public virtual void SetPropertyAttributeAll(string attrName, IPropertyGridVariant value)
+        {
+            NativeControl.SetPropertyAttributeAll(attrName, value.Handle);
+        }
+
+        /// <summary>
+        /// Scrolls and/or expands items to ensure that the given item is visible.
+        /// </summary>
+        /// <param name="prop">Property item.</param>
+        /// <returns><c>true</c> if something was actually done.</returns>
         public virtual bool EnsureVisible(IPropertyGridItem prop)
         {
             return NativeControl.EnsureVisible(prop.Handle);
         }
 
+        /// <summary>
+        /// Selects a property.
+        /// </summary>
+        /// <param name="prop">Property item.</param>
+        /// <param name="focus">If <c>true</c>, move keyboard focus to the created
+        /// editor right away.</param>
+        /// <returns><c>true</c> if selection finished successfully. Usually only fails
+        /// if current value in editor is not valid.</returns>
+        /// <remarks>
+        /// Editor widget is automatically created, but not focused unless focus is true.
+        /// </remarks>
+        /// <remarks>
+        /// This function doesn't send <see cref="PropertySelected"/> event. It also clears
+        /// any previous selection.
+        /// </remarks>
         public virtual bool SelectProperty(IPropertyGridItem prop, bool focus = false)
         {
             return NativeControl.SelectProperty(prop.Handle, focus);
         }
 
+        /// <summary>
+        /// Adds given property into selection.
+        /// </summary>
+        /// <param name="prop">Property item.</param>
+        /// <returns></returns>
+        /// <remarks>
+        /// Multiple selection is not supported for categories. This means that if you have
+        /// properties selected, you cannot add category to selection, and also if
+        /// you have category selected, you cannot add other properties to
+        /// selection. This function will fail silently in these cases, even returning true.
+        /// </remarks>
+        /// <remarks>
+        /// If <see cref="PropertyGridCreateStyleEx.MultipleSelection"/> extra style is not used,
+        /// then this has same effect as calling <see cref="SelectProperty"/>.
+        /// </remarks>
         public virtual bool AddToSelection(IPropertyGridItem prop)
         {
             return NativeControl.AddToSelection(prop.Handle);
         }
 
+        /// <summary>
+        /// Removes given property from selection.
+        /// </summary>
+        /// <param name="prop">Property item.</param>
+        /// <remarks>
+        /// If property is not selected, an assertion failure will occur.
+        /// </remarks>
         public virtual bool RemoveFromSelection(IPropertyGridItem prop)
         {
             return NativeControl.RemoveFromSelection(prop.Handle);
         }
 
+        /// <summary>
+        /// Sets the 'current' category - <see cref="Add"/> will add non-category
+        /// properties under it.
+        /// </summary>
+        /// <param name="prop">Property category item.</param>
         public virtual void SetCurrentCategory(IPropertyGridItem prop)
         {
             NativeControl.SetCurrentCategory(prop.Handle);
         }
 
+        /// <summary>
+        /// Returns rectangle of custom paint image.
+        /// </summary>
+        /// <param name="prop">Return image rectangle for this property.</param>
+        /// <param name="item">Which choice of property to use (each choice may
+        /// have different image).</param>
         public virtual Int32Rect GetImageRect(IPropertyGridItem prop, int item)
         {
             return NativeControl.GetImageRect(prop.Handle, item);
         }
 
-        public virtual Int32Size GetImageSize(IPropertyGridItem prop, int item)
+        /// <summary>
+        /// Returns size of the custom paint image in front of property.
+        /// </summary>
+        /// <param name="prop">Return image rectangle for this property. If this argument
+        /// is <c>null</c>, then preferred size is returned.</param>
+        /// <param name="item">Which choice of property to use (each choice may have
+        /// different image).</param>
+        public virtual Int32Size GetImageSize(IPropertyGridItem? prop, int item)
         {
-            return NativeControl.GetImageSize(prop.Handle, item);
+            IntPtr ptr;
+            if (prop is null)
+                ptr = default;
+            else
+                ptr = prop.Handle;
+            return NativeControl.GetImageSize(ptr, item);
         }
 
         internal static IntPtr GetEditorByName(string editorName)
@@ -2717,6 +3025,11 @@ namespace Alternet.UI
             PropertyChanged?.Invoke(this, e);
         }
 
+        internal void SetupTextCtrlValue(string text)
+        {
+            NativeControl.SetupTextCtrlValue(text);
+        }
+
         internal void RaisePropertyChanging(CancelEventArgs e)
         {
             OnPropertyChanging(e);
@@ -2855,7 +3168,7 @@ namespace Alternet.UI
             LabelEditBegin?.Invoke(this, e);
         }
 
-        internal PropertyGridVariant ToVariant(object value)
+        internal PropertyGridVariant ToVariant(object? value)
         {
             variant.AsObject = value;
             return variant;

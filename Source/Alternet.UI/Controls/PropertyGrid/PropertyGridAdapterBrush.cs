@@ -15,7 +15,7 @@ namespace Alternet.UI
         private BrushType brushType = BrushType.None;
         private Color color = Color.Black;
         private Point linearGradientStart;
-        private Point linearGradientEnd = new Point(1, 1);
+        private Point linearGradientEnd = new(1, 1);
         private Point radialGradientCenter = Point.Empty;
         private Point radialGradientOrigin;
         private Color endColor = Color.White;
@@ -93,7 +93,9 @@ namespace Alternet.UI
                 if(Brush != null)
                 {
                     if (GradientStops.Length > 0)
+#pragma warning disable
                         return GradientStops[GradientStops.Length - 1].Color;
+#pragma warning restore
                     else
                         return Color.White;
                 }

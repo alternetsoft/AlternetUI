@@ -121,6 +121,16 @@ namespace Alternet.UI
             return Value?.ToString();
         }
 
+        internal virtual void OnPropertyChanged(object? sender, EventArgs e)
+        {
+            UpdateInstanceProperty();
+        }
+
+        /// <summary>
+        /// Updates instance property value.
+        /// </summary>
+        protected abstract void UpdateInstanceProperty();
+
         private void OnValueSourceChanged()
         {
             simpleValue = null;
@@ -131,15 +141,5 @@ namespace Alternet.UI
             var type = instance.GetType();
             propInfo = type.GetProperty(propName);
         }
-
-        public virtual void OnPropertyChanged(object? sender, EventArgs e)
-        {
-            UpdateInstanceProperty();
-        }
-
-        /// <summary>
-        /// Updates instance property value.
-        /// </summary>
-        protected abstract void UpdateInstanceProperty();
     }
 }

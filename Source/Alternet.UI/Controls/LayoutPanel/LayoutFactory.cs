@@ -39,7 +39,7 @@ namespace Alternet.UI
             FindTextEditors(container);
             if (comboBox == null)
                 return;
-            AdjustTextBoxesHeight(container, comboBox, textBox);
+            AdjustTextBoxesHeightInternal(container, comboBox, textBox);
 
             void FindTextEditors(Control container)
             {
@@ -84,7 +84,7 @@ namespace Alternet.UI
             SetParentBackground(control, Brushes.Yellow);
         }
 
-        internal static void AdjustTextBoxesHeight(
+        internal static void AdjustTextBoxesHeightInternal(
             Control container,
             Control comboBox,
             Control? textBox)

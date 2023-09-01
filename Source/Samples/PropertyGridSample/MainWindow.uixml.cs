@@ -205,6 +205,7 @@ namespace PropertyGridSample
 
             propertyGrid.ApplyColors(PropertyGridColors.ColorSchemeWhite);
             propertyGrid.CenterSplitter();
+            propertyGrid.SetVerticalSpacing();
         }
 
         private void InitDefaultPropertyGrid()
@@ -425,25 +426,38 @@ namespace PropertyGridSample
 
         private void ControlsListBox_SelectionChanged(object? sender, EventArgs e)
         {
-            controlPanel.Children.Clear();
-            var item = controlsListBox.SelectedItem as ControlListBoxItem;
-            var type = item?.ControlType;
-
-            if(type == typeof(SampleProps))
+            void DoAction()
             {
-                InitDefaultPropertyGrid();
-                return;
+                controlPanel.Children.Clear();
+                var item = controlsListBox.SelectedItem as ControlListBoxItem;
+                var type = item?.ControlType;
+
+                if (type == typeof(SampleProps))
+                {
+                    InitDefaultPropertyGrid();
+                    return;
+                }
+
+                var control = item?.ControlInstance;
+                if (control != null)
+                {
+                    controlPanel.Padding = new(25, 100, 25, 100);
+                    if (control.Parent == null)
+                        controlPanel.Children.Add(control);
+                }
+
+                propertyGrid.SetProps(control);
             }
 
-            var control = item?.ControlInstance;
-            if(control != null)
+            controlPanel.SuspendLayout();
+            try
             {
-                controlPanel.Padding = new(25, 100, 25, 100);
-                if (control.Parent == null)
-                    controlPanel.Children.Add(control);
+                DoAction();
             }
-
-            propertyGrid.SetProps(control);
+            finally
+            {
+                controlPanel.ResumeLayout();
+            }
         }
 
         private void Log_MouseRightButtonUp(object? sender, MouseButtonEventArgs e)

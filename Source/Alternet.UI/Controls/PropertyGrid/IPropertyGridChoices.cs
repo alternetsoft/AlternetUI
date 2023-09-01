@@ -17,10 +17,15 @@ namespace Alternet.UI
         IntPtr Handle { get; }
 
         /// <summary>
+        /// Gets the number of elements actually contained in the <see cref="IPropertyGridChoices"/>.
+        /// </summary>
+        public int Count { get; }
+
+        /// <summary>
         /// Adds new item.
         /// </summary>
         /// <param name="text">Item title.</param>
-        /// <param name="value">Item value or id.</param>
+        /// <param name="value">Item value (id).</param>
         /// <param name="bitmap">Item image.</param>
         public void Add(string text, int value, ImageSet? bitmap = null);
 
@@ -43,10 +48,16 @@ namespace Alternet.UI
         /// <param name="items">The collection whose elements should be added to the end.</param>
         public void AddRange(IEnumerable<object> items);
 
+        /// <summary>
+        /// Searches for the specified item by it's title and returns value (id) of the item.
+        /// </summary>
+        /// <param name="text">Item title.</param>
         public int? GetValue(string text);
 
+        /// <summary>
+        /// Searches for the specified item by it's value and returns title of the item.
+        /// </summary>
+        /// <param name="value">Item value (id).</param>
         public string? GetText(int value);
-
-        public int Count { get; }
     }
 }
