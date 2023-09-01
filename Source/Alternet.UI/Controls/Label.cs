@@ -101,6 +101,17 @@ namespace Alternet.UI
             OnTextChanged(e);
         }
 
+        /// <summary>
+        /// Wraps <see cref="Text"/> so that each of its lines becomes at most width
+        /// pixels wide if possible (the lines are broken at words boundaries so it
+        /// might not be the case if words are too long).
+        /// </summary>
+        /// <param name="value">Width in pixels.</param>
+        /// <remarks>
+        /// If width is negative, no wrapping is done. Note that this width is not
+        /// necessarily the total width of the control, since a few pixels for the
+        /// border (depending on the controls border style) may be added.
+        /// </remarks>
         public void Wrap(double? value = null)
         {
             double v;
