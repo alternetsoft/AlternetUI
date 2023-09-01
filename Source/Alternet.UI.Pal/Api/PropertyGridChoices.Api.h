@@ -37,3 +37,66 @@ ALTERNET_UI_API void PropertyGridChoices_Add_(void* handle, const char16_t* text
         });
 }
 
+ALTERNET_UI_API char16_t* PropertyGridChoices_GetLabel_(void* handle, uint32_t ind)
+{
+    return MarshalExceptions<char16_t*>([&](){
+            return AllocPInvokeReturnString(PropertyGridChoices::GetLabel(handle, ind));
+        });
+}
+
+ALTERNET_UI_API uint32_t PropertyGridChoices_GetCount_(void* handle)
+{
+    return MarshalExceptions<uint32_t>([&](){
+            return PropertyGridChoices::GetCount(handle);
+        });
+}
+
+ALTERNET_UI_API int PropertyGridChoices_GetValue_(void* handle, uint32_t ind)
+{
+    return MarshalExceptions<int>([&](){
+            return PropertyGridChoices::GetValue(handle, ind);
+        });
+}
+
+ALTERNET_UI_API int PropertyGridChoices_GetLabelIndex_(void* handle, const char16_t* str)
+{
+    return MarshalExceptions<int>([&](){
+            return PropertyGridChoices::GetLabelIndex(handle, str);
+        });
+}
+
+ALTERNET_UI_API int PropertyGridChoices_GetValueIndex_(void* handle, int val)
+{
+    return MarshalExceptions<int>([&](){
+            return PropertyGridChoices::GetValueIndex(handle, val);
+        });
+}
+
+ALTERNET_UI_API void PropertyGridChoices_Insert_(void* handle, int index, const char16_t* text, int value, ImageSet* bitmapBundle)
+{
+    MarshalExceptions<void>([&](){
+            PropertyGridChoices::Insert(handle, index, text, value, bitmapBundle);
+        });
+}
+
+ALTERNET_UI_API c_bool PropertyGridChoices_IsOk_(void* handle)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return PropertyGridChoices::IsOk(handle);
+        });
+}
+
+ALTERNET_UI_API void PropertyGridChoices_RemoveAt_(void* handle, uint64_t nIndex, uint64_t count)
+{
+    MarshalExceptions<void>([&](){
+            PropertyGridChoices::RemoveAt(handle, nIndex, count);
+        });
+}
+
+ALTERNET_UI_API void PropertyGridChoices_Clear_(void* handle)
+{
+    MarshalExceptions<void>([&](){
+            PropertyGridChoices::Clear(handle);
+        });
+}
+

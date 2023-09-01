@@ -52,12 +52,37 @@ namespace Alternet.UI
         /// Searches for the specified item by it's title and returns value (id) of the item.
         /// </summary>
         /// <param name="text">Item title.</param>
-        public int? GetValue(string text);
+        public int? GetValueFromLabel(string text);
 
         /// <summary>
         /// Searches for the specified item by it's value and returns title of the item.
         /// </summary>
         /// <param name="value">Item value (id).</param>
-        public string? GetText(int value);
+        public string? GetLabelFromValue(int value);
+
+        // Returns index of item with given label.
+        public int GetLabelIndex(string str);
+
+        // Returns index of item with given value (id).
+        public int GetValueIndex(int val);
+
+        // Inserts a single item.
+        public void Insert(int index, string text, int value, ImageSet? bitmapBundle);
+
+        // Returns false if this is a constant empty set of choices,
+        // which should not be modified.
+        public bool IsOk();
+
+        // Returns label of item at specified index.
+        public string GetLabel(int index);
+
+        // Returns value of item at specified index.
+        public int GetValue(int index);
+
+        // Removes count items starting at specified index.
+        public void RemoveAt(int index, int count = 1);
+
+        // Delete all choices.
+        public void Clear();
     }
 }

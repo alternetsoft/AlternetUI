@@ -83,7 +83,7 @@ namespace Alternet.UI
         {
             get
             {
-                return FontNameChoices.GetValue(Name);
+                return FontNameChoices.GetValueFromLabel(Name);
             }
 
             set
@@ -92,7 +92,7 @@ namespace Alternet.UI
                     Name = Font.Default.Name;
                 else
                 {
-                    var newName = FontNameChoices.GetText((int)value);
+                    var newName = FontNameChoices.GetLabelFromValue((int)value);
                     if (newName == null)
                         Name = Font.Default.Name;
                     else

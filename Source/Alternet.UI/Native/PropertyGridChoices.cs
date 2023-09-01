@@ -39,6 +39,57 @@ namespace Alternet.UI.Native
             NativeApi.PropertyGridChoices_Add_(handle, text, value, bitmapBundle?.NativePointer ?? IntPtr.Zero);
         }
         
+        public static string GetLabel(System.IntPtr handle, uint ind)
+        {
+            var n = NativeApi.PropertyGridChoices_GetLabel_(handle, ind);
+            return n;
+        }
+        
+        public static uint GetCount(System.IntPtr handle)
+        {
+            var n = NativeApi.PropertyGridChoices_GetCount_(handle);
+            return n;
+        }
+        
+        public static int GetValue(System.IntPtr handle, uint ind)
+        {
+            var n = NativeApi.PropertyGridChoices_GetValue_(handle, ind);
+            return n;
+        }
+        
+        public static int GetLabelIndex(System.IntPtr handle, string str)
+        {
+            var n = NativeApi.PropertyGridChoices_GetLabelIndex_(handle, str);
+            return n;
+        }
+        
+        public static int GetValueIndex(System.IntPtr handle, int val)
+        {
+            var n = NativeApi.PropertyGridChoices_GetValueIndex_(handle, val);
+            return n;
+        }
+        
+        public static void Insert(System.IntPtr handle, int index, string text, int value, ImageSet? bitmapBundle)
+        {
+            NativeApi.PropertyGridChoices_Insert_(handle, index, text, value, bitmapBundle?.NativePointer ?? IntPtr.Zero);
+        }
+        
+        public static bool IsOk(System.IntPtr handle)
+        {
+            var n = NativeApi.PropertyGridChoices_IsOk_(handle);
+            return n;
+        }
+        
+        public static void RemoveAt(System.IntPtr handle, ulong nIndex, ulong count)
+        {
+            NativeApi.PropertyGridChoices_RemoveAt_(handle, nIndex, count);
+        }
+        
+        public static void Clear(System.IntPtr handle)
+        {
+            NativeApi.PropertyGridChoices_Clear_(handle);
+        }
+        
         
         [SuppressUnmanagedCodeSecurity]
         public class NativeApi : NativeApiProvider
@@ -56,6 +107,33 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void PropertyGridChoices_Add_(System.IntPtr handle, string text, int value, IntPtr bitmapBundle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern string PropertyGridChoices_GetLabel_(System.IntPtr handle, uint ind);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern uint PropertyGridChoices_GetCount_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int PropertyGridChoices_GetValue_(System.IntPtr handle, uint ind);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int PropertyGridChoices_GetLabelIndex_(System.IntPtr handle, string str);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int PropertyGridChoices_GetValueIndex_(System.IntPtr handle, int val);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void PropertyGridChoices_Insert_(System.IntPtr handle, int index, string text, int value, IntPtr bitmapBundle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool PropertyGridChoices_IsOk_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void PropertyGridChoices_RemoveAt_(System.IntPtr handle, ulong nIndex, ulong count);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void PropertyGridChoices_Clear_(System.IntPtr handle);
             
         }
     }

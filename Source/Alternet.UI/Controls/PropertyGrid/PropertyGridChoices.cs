@@ -11,7 +11,6 @@ namespace Alternet.UI
     {
         private readonly IntPtr handle;
         private int newItemId;
-        private List<KeyValuePair<int, string>> items = new();
 
         public PropertyGridChoices(IntPtr handle)
         {
@@ -23,9 +22,9 @@ namespace Alternet.UI
             handle = Native.PropertyGridChoices.CreatePropertyGridChoices();
         }
 
-        public IntPtr Handle => handle;
+        public int Count => (int)Native.PropertyGridChoices.GetCount(handle);
 
-        public int Count => items.Count;
+        public IntPtr Handle => handle;
 
         public int Add(string text)
         {
@@ -34,37 +33,78 @@ namespace Alternet.UI
             return id;
         }
 
-        public string? GetText(int value)
+        public int? GetValueFromLabel(string text)
         {
-            foreach(var item in items)
-            {
-                if (item.Key == value)
-                    return item.Value;
-            }
-
-            return null;
+            int labelIndex = GetLabelIndex(text);
+            if (labelIndex < 0)
+                return null;
+            int result = GetValue(labelIndex);
+            return result;
         }
 
-        public int? GetValue(string text)
+        public string? GetLabelFromValue(int value)
         {
-            foreach (var item in items)
-            {
-                if (item.Value == text)
-                    return item.Key;
-            }
+            int valueIndex = GetValueIndex(value);
+            if (valueIndex < 0)
+                return null;
+            string result = GetLabel(valueIndex);
+            return result;
+        }
 
-            return null;
+        public string GetLabel(int ind)
+        {
+            return Native.PropertyGridChoices.GetLabel(handle, (uint)ind);
+        }
+
+        public int GetValue(int ind)
+        {
+            return Native.PropertyGridChoices.GetValue(handle, (uint)ind);
+        }
+
+        public int GetLabelIndex(string str)
+        {
+            return Native.PropertyGridChoices.GetLabelIndex(handle, str);
+        }
+
+        public int GetValueIndex(int val)
+        {
+            return Native.PropertyGridChoices.GetValueIndex(handle, val);
+        }
+
+        public bool IsOk()
+        {
+            return Native.PropertyGridChoices.IsOk(handle);
+        }
+
+        public void RemoveAt(int nIndex, int count = 1)
+        {
+            Native.PropertyGridChoices.RemoveAt(handle, (uint)nIndex, (uint)count);
+        }
+
+        public void Clear()
+        {
+            Native.PropertyGridChoices.Clear(handle);
         }
 
         public void Add(string? text, int value, ImageSet? bitmap = null)
         {
             text ??= string.Empty;
-            items.Add(new(value, text));
+            /*items.Add(new(value, text));*/
             Native.PropertyGridChoices.Add(
                 handle,
                 text,
                 value,
                 bitmap?.NativeImageSet);
+        }
+
+        public void Insert(int index, string text, int value, ImageSet? bitmapBundle)
+        {
+            Native.PropertyGridChoices.Insert(
+                handle,
+                index,
+                text,
+                value,
+                bitmapBundle?.NativeImageSet);
         }
 
         public void AddRange(IEnumerable<string> items)
@@ -83,7 +123,9 @@ namespace Alternet.UI
             {
                 if (item == null)
                     continue;
-                Add(item.ToString());
+                var s = item.ToString();
+                if(s != null)
+                    Add(s);
             }
         }
 

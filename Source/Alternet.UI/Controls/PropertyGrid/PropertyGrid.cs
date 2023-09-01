@@ -11,10 +11,8 @@ namespace Alternet.UI
 {
     /*
     - multibuttons in prop editor   https://docs.wxwidgets.org/3.2/classwx_p_g_multi_button.html
-    - How to make cells bigger in height? So DateEdit will look ok?
-    - How to make cell spacing vertical? SetVerticalSpacing
     - How to hide lines? (set their color to bk color)
-    - ClickButton event in property intf
+    - propgrid MakeAsPanel() also color scheme
      */
 
     /// <summary>
@@ -1265,11 +1263,13 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Adds all public properties of the specified object.
+        /// Creates <see cref="IPropertyGridItem"/> array from all public properties of
+        /// the specified object.
         /// </summary>
         /// <param name="instance">Object instance which properties will be added.</param>
-        public virtual void AddProps(object instance)
+        public virtual IEnumerable<IPropertyGridItem> CreateProps(object instance)
         {
+            List<IPropertyGridItem> result = new();
             Type myType = instance.GetType();
             BindingFlags bindingFlags = BindingFlags.Instance | BindingFlags.Public;
 
@@ -1285,8 +1285,28 @@ namespace Alternet.UI
                 IPropertyGridItem? prop = CreateProperty(instance, p);
                 if (prop == null)
                     continue;
-                Add(prop!);
+                result.Add(prop!);
                 addedNames.Add(p.Name, p);
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Adds all public properties of the specified object.
+        /// </summary>
+        /// <param name="instance">Object instance which properties will be added.</param>
+        /// <param name="parent">Optional. Parent item to which properties are added.</param>
+        /// <remarks>
+        /// If <paramref name="parent"/> is <c>null</c> (default) properties are
+        /// added on the root level.
+        /// </remarks>
+        public virtual void AddProps(object instance, IPropertyGridItem? parent = null)
+        {
+            var props = CreateProps(instance);
+            foreach(var item in props)
+            {
+                Add(item, parent);
             }
         }
 

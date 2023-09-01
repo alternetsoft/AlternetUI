@@ -218,6 +218,10 @@ namespace PropertyGridSample
 
                 var prop = propertyGrid.CreatePropCategory("Category 1");
                 propertyGrid.Add(prop);
+                propertyGrid.AddProps(WelcomeProps.Default);
+
+                prop = propertyGrid.CreatePropCategory("Category 2");
+                propertyGrid.Add(prop);
 
                 prop = propertyGrid.CreateBoolProperty("Bool");
                 propertyGrid.Add(prop);
@@ -257,7 +261,7 @@ namespace PropertyGridSample
                     | DatePickerStyleFlags.AllowNone));
 
                 // Category 2
-                prop = propertyGrid.CreatePropCategory("Category 2");
+                prop = propertyGrid.CreatePropCategory("Category 3");
                 propertyGrid.Add(prop);
 
                 var choices1 = PropertyGrid.CreateChoicesOnce(typeof(PropertyGridCreateStyle));
@@ -379,7 +383,7 @@ namespace PropertyGridSample
                     "Font name", 
                     null, 
                     choices, 
-                    choices.GetValue(Font.Default.Name));
+                    choices.GetValueFromLabel(Font.Default.Name));
                 propertyGrid.Add(prop);
             }
             finally
@@ -436,7 +440,7 @@ namespace PropertyGridSample
                 var control = item?.ControlInstance;
                 if (control != null)
                 {
-                    controlPanel.Padding = new(25, 100, 25, 100);
+                    controlPanel.Padding = new(25, 25, 25, 25);
                     if (control.Parent == null)
                         controlPanel.Children.Add(control);
                 }
