@@ -101,6 +101,18 @@ namespace Alternet.UI
             OnTextChanged(e);
         }
 
+        public void Wrap(double? value = null)
+        {
+            double v;
+            if (value == null)
+                v = Bounds.Width - Padding.Horizontal;
+            else
+                v = (int)value;
+
+            Native.Label label = (Native.Label)(Handler.NativeControl!);
+            label?.Wrap((int)v);
+        }
+
         /// <summary>
         /// Called when content in this Control changes.
         /// Raises the TextChanged event.
