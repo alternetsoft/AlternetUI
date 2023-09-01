@@ -228,13 +228,13 @@ namespace PropertyGridSample
                 propertyGrid.Add(prop);
                 propertyGrid.SetPropertyKnownAttribute(prop, PropertyGridItemAttrId.UseCheckbox, true);
 
-                prop = propertyGrid.CreateIntProperty("Int");
+                prop = propertyGrid.CreateLongProperty("Int");
                 propertyGrid.Add(prop);
 
                 prop = propertyGrid.CreateDoubleProperty("Float");
                 propertyGrid.Add(prop);
 
-                prop = propertyGrid.CreateUIntProperty("UInt");
+                prop = propertyGrid.CreateULongProperty("UInt");
                 propertyGrid.Add(prop);
 
                 prop = propertyGrid.CreateStringProperty("String");
@@ -282,19 +282,19 @@ namespace PropertyGridSample
                 propertyGrid.SetPropertyReadOnly(prop, true, false);
                 propertyGrid.Add(prop);
 
-                prop = CreateProperty(new Border(), "BorderColor");
+                prop = propertyGrid.CreateProperty(new Border(), "BorderColor");
                 propertyGrid.Add(prop!);
 
-                prop = CreateProperty(this, "DecimalValue");
+                prop = propertyGrid.CreateProperty(this, "DecimalValue");
                 propertyGrid.Add(prop!);
 
-                prop = CreateProperty(this, "FontValue");
+                prop = propertyGrid.CreateProperty(this, "FontValue");
                 propertyGrid.Add(prop!);
 
-                prop = CreateProperty(this, "BrushValue");
+                prop = propertyGrid.CreateProperty(this, "BrushValue");
                 propertyGrid.Add(prop!);
 
-                prop = CreateProperty(this, "PenValue");
+                prop = propertyGrid.CreateProperty(this, "PenValue");
                 propertyGrid.Add(prop!);
 
                 prop = propertyGrid.CreateStringProperty(
@@ -386,45 +386,6 @@ namespace PropertyGridSample
             }
         }
 
-        public IPropertyGridItem CreatePropertyAsFont(
-            string label,
-            string? name,
-            object instance,
-            PropertyInfo p)
-        {
-            PropertyGridAdapterFont adapter = new()
-            {
-                Instance = instance,
-                PropInfo = p
-            };
-            var result = propertyGrid.CreateStringProperty(label, name, "(Font)");
-            propertyGrid.SetPropertyReadOnly(result, true, false);
-
-            var choices = PropertyGridAdapterFont.FontNameChoices;
-
-            var itemName = propertyGrid.CreateChoicesProperty(
-                "Name",
-                null,
-                choices,
-                adapter.NameAsIndex);
-            itemName.Instance = adapter;
-            itemName.PropInfo = AssemblyUtils.GetPropInfo(adapter, "NameAsIndex");
-
-            var itemSizeInPoints = CreateProperty(adapter, "SizeInPoints")!;
-            var itemIsBold = CreateProperty(adapter, "Bold")!;
-            var itemIsItalic = CreateProperty(adapter, "Italic")!;
-            var itemIsStrikethrough = CreateProperty(adapter, "Strikethrough")!;
-            var itemIsUnderlined = CreateProperty(adapter, "Underlined")!;
-
-            result.Children.Add(itemName!);
-            result.Children.Add(itemSizeInPoints!);
-            result.Children.Add(itemIsBold!);
-            result.Children.Add(itemIsItalic!);
-            result.Children.Add(itemIsStrikethrough!);
-            result.Children.Add(itemIsUnderlined!);
-            return result;
-        }
-
         internal void TestLong()
         {
             IPropertyGridVariant variant = PropertyGrid.CreateVariant();
@@ -462,262 +423,6 @@ namespace PropertyGridSample
             variant.AsString = "hello";
         }
 
-        public IPropertyGridItem CreatePropertyAsBrush(
-            string label,
-            string? name,
-            object instance,
-            PropertyInfo p)
-        {
-            PropertyGridAdapterBrush adapter = new()
-            {
-                Instance = instance,
-                PropInfo = p
-            };
-            var result = propertyGrid.CreateStringProperty(label, name, "(Brush)");
-            propertyGrid.SetPropertyReadOnly(result, true, false);
-
-            var itemBrushType = CreateProperty(adapter, "BrushType")!;
-            var itemColor = CreateProperty(adapter, "Color")!;
-            var itemLinearGradientStart = CreateProperty(adapter, "LinearGradientStart")!;
-            var itemLinearGradientEnd = CreateProperty(adapter, "LinearGradientEnd")!;
-            var itemRadialGradientCenter = CreateProperty(adapter, "RadialGradientCenter")!;
-            var itemRadialGradientOrigin = CreateProperty(adapter, "RadialGradientOrigin")!;
-            var itemRadialGradientRadius = CreateProperty(adapter, "RadialGradientRadius")!;
-            var itemGradientStops = CreateProperty(adapter, "GradientStops")!;
-            var itemHatchStyle = CreateProperty(adapter, "HatchStyle")!;
-
-            result.Children.Add(itemBrushType!);
-            result.Children.Add(itemColor!);
-            result.Children.Add(itemLinearGradientStart!);
-            result.Children.Add(itemLinearGradientEnd!);
-            result.Children.Add(itemRadialGradientCenter!);
-            result.Children.Add(itemRadialGradientOrigin!);
-            result.Children.Add(itemRadialGradientRadius!);
-            result.Children.Add(itemGradientStops!);
-            result.Children.Add(itemHatchStyle!);
-
-            return result;
-        }
-
-        public IPropertyGridItem CreatePropertyAsPen(
-            string label,
-            string? name,
-            object instance,
-            PropertyInfo p)
-        {
-            PropertyGridAdapterPen adapter = new()
-            {
-                Instance = instance,
-                PropInfo = p
-            };
-            IPropertyGridItem result =
-                propertyGrid.CreateStringProperty(label, name, "(Pen)");
-            propertyGrid.SetPropertyReadOnly(result, true, false);
-
-            var itemColor = CreateProperty(adapter, "Color")!;
-            var itemDashStyle = CreateProperty(adapter, "DashStyle")!;
-            var itemLineCap = CreateProperty(adapter, "LineCap")!;
-            var itemLineJoin = CreateProperty(adapter, "LineJoin")!;
-            var itemWidth = CreateProperty(adapter, "Width")!;
-
-            result.Children.Add(itemColor!);
-            result.Children.Add(itemDashStyle!);
-            result.Children.Add(itemLineCap!);
-            result.Children.Add(itemLineJoin!);
-            result.Children.Add(itemWidth!);
-
-            return result;
-        }
-
-        public IPropertyGridItem CreateDecimalProperty(
-            string label,
-            string? name = null,
-            decimal value = default)
-        {
-            var result = propertyGrid.CreateStringProperty(label, name, value.ToString());
-            return result;
-        }
-
-        public IPropertyGridItem? CreateProperty(object instance, string name)
-        {
-            if (instance == null)
-                return null;
-            var type = instance.GetType();
-            var propInfo = type.GetProperty(name);
-            if (propInfo == null)
-                return null;
-            return CreateProperty(instance, propInfo);
-        }
-
-        public IPropertyGridItem? CreateProperty(object instance, PropertyInfo p)
-        {
-            if (!p.CanRead)
-                return null;
-            ParameterInfo[] paramInfo = p.GetIndexParameters();
-            if (paramInfo.Length > 0)
-                return null;
-            if (!AssemblyUtils.GetBrowsable(p))
-                return null;
-
-            var setPropReadonly = false;
-            string propName = p.Name;
-            var propType = p.PropertyType;
-            object? propValue = p.GetValue(instance, null);
-            IPropertyGridItem? prop = null;
-
-            var realType = AssemblyUtils.GetRealType(propType);
-            TypeCode typeCode = Type.GetTypeCode(realType);
-
-            if (propType.IsEnum)
-                prop = propertyGrid.CreatePropertyAsEnum(null, null, instance, p);
-            else
-                switch (typeCode)
-                {
-                    case TypeCode.Empty:
-                    case TypeCode.DBNull:
-                        return null;
-                    case TypeCode.Object:
-                        if (realType == typeof(Color))
-                        {
-                            prop = propertyGrid.CreatePropertyAsColor(propName, null, instance, p);
-                            break;
-                        }
-                        if (realType == typeof(Font))
-                        {
-                            prop = CreatePropertyAsFont(propName, null, instance, p);
-                            setPropReadonly = true;
-                            break;
-                        }
-                        if (realType == typeof(Brush))
-                        {
-                            prop = CreatePropertyAsBrush(propName, null, instance, p);
-                            setPropReadonly = true;
-                            break;
-                        }
-                        if (realType == typeof(Pen))
-                        {
-                            prop = CreatePropertyAsPen(propName, null, instance, p);
-                            setPropReadonly = true;
-                            break;
-                        }
-                        prop = propertyGrid.CreateStringProperty(
-                            propName,
-                            null,
-                            propValue?.ToString());
-                        setPropReadonly = true;
-                        break;
-                    case TypeCode.Boolean:
-                        propValue ??= false;
-                        prop = propertyGrid.CreateBoolProperty(propName, null, (bool)propValue!);
-                        break;
-                    case TypeCode.SByte:
-                        propValue ??= 0;
-                        prop = propertyGrid.CreateIntProperty(propName, null, (sbyte)propValue!);
-                        break;
-                    case TypeCode.Int16:
-                        propValue ??= 0;
-                        prop = propertyGrid.CreateIntProperty(propName, null, (Int16)propValue!);
-                        break;
-                    case TypeCode.Int32:
-                        propValue ??= 0;
-                        prop = propertyGrid.CreateIntProperty(propName, null, (int)propValue!);
-                        break;
-                    case TypeCode.Int64:
-                        propValue ??= 0;
-                        prop = propertyGrid.CreateIntProperty(propName, null, (long)propValue!);
-                        break;
-                    case TypeCode.Byte:
-                        propValue ??= 0;
-                        prop = propertyGrid.CreateUIntProperty(propName, null, (byte)propValue!);
-                        break;
-                    case TypeCode.UInt32:
-                        propValue ??= 0;
-                        prop = propertyGrid.CreateUIntProperty(propName, null, (uint)propValue!);
-                        break;
-                    case TypeCode.UInt16:
-                        propValue ??= 0;
-                        prop = propertyGrid.CreateUIntProperty(propName, null, (ushort)propValue!);
-                        break;
-                    case TypeCode.UInt64:
-                        propValue ??= 0;
-                        prop = propertyGrid.CreateUIntProperty(propName, null, (ulong)propValue!);
-                        break;
-                    case TypeCode.Single:
-                        propValue ??= (float)0;
-                        prop = propertyGrid.CreateFloatProperty(propName, null, (float)propValue!);
-                        break;
-                    case TypeCode.Double:
-                        propValue ??= (double)0;
-                        prop = propertyGrid.CreateDoubleProperty(propName, null, (double)propValue!);
-                        break;
-                    case TypeCode.Decimal:
-                        propValue ??= (decimal)0;
-                        prop = CreateDecimalProperty(
-                            propName,
-                            null,
-                            (decimal)propValue!);
-                        break;
-                    case TypeCode.DateTime:
-                        propValue ??= DateTime.Now;
-                        prop = propertyGrid.CreateDateProperty(
-                            propName,
-                            null,
-                            (DateTime)propValue);
-                        break;
-                    case TypeCode.Char:
-                    case TypeCode.String:
-                        prop = propertyGrid.CreateStringProperty(
-                            propName,
-                            null,
-                            propValue?.ToString());
-                        break;
-                }
-
-            if (!p.CanWrite || setPropReadonly)
-                propertyGrid.SetPropertyReadOnly(prop!, true);
-            prop!.Instance = instance;
-            prop!.PropInfo = p;
-            return prop;
-        }
-
-        public void AddProps(object instance)
-        {
-            Type myType = instance.GetType();
-            BindingFlags bindingFlags = BindingFlags.Instance | BindingFlags.Public;
-
-            IList<PropertyInfo> props =
-                new List<PropertyInfo>(myType.GetProperties(bindingFlags));
-
-            SortedList<string, PropertyInfo> addedNames = new();
-
-            foreach (PropertyInfo p in props)
-            {
-                if (addedNames.ContainsKey(p.Name))
-                    continue;
-                IPropertyGridItem? prop = CreateProperty(instance, p);
-                if (prop == null)
-                    continue;
-                propertyGrid.Add(prop!);
-                addedNames.Add(p.Name, p);
-            }
-        }
-
-        public void SetProps(object? instance)
-        {
-            propertyGrid.BeginUpdate();
-            try
-            {
-                propertyGrid.Clear();
-                if (instance == null)
-                    return;
-                AddProps(instance);
-            }
-            finally
-            {
-                propertyGrid.EndUpdate();
-            }
-        }
-
         private void ControlsListBox_SelectionChanged(object? sender, EventArgs e)
         {
             controlPanel.Children.Clear();
@@ -737,7 +442,8 @@ namespace PropertyGridSample
                 if (control.Parent == null)
                     controlPanel.Children.Add(control);
             }
-            SetProps(control);
+
+            propertyGrid.SetProps(control);
         }
 
         private void Log_MouseRightButtonUp(object? sender, MouseButtonEventArgs e)
@@ -792,7 +498,7 @@ namespace PropertyGridSample
                 prop.PropInfo.SetValue(prop.Instance, newValue);
             }
 
-            prop.RaisePropertyChanged(null, e);
+            prop.RaisePropertyChanged();
         }
 
         private void PGPropertyChanging(object? sender, CancelEventArgs e)

@@ -367,7 +367,7 @@ namespace Alternet.UI
         /// </summary>
         /// <remarks>
         /// Result can be used in <see cref="CreateFlagsProperty"/> and
-        /// <see cref="CreateChoicesProperty/>.
+        /// <see cref="CreateChoicesProperty"/>.
         /// </remarks>
         public static IPropertyGridChoices CreateChoices(Type enumType)
         {
@@ -442,7 +442,7 @@ namespace Alternet.UI
         /// <see cref="PropertyGridItemAttrId.ShowFullPath"/>,
         /// <see cref="PropertyGridItemAttrId.Wildcard"/> attributes.
         /// </remarks>
-        public IPropertyGridItem CreateFilenameProperty(
+        public virtual IPropertyGridItem CreateFilenameProperty(
             string label,
             string? name = null,
             string? value = null)
@@ -451,7 +451,7 @@ namespace Alternet.UI
             var handle = NativeControl.CreateFilenameProperty(label, CorrectPropName(name), value!);
             var result = new PropertyGridItem(handle, label, name, value)
             {
-                PropertyEditorKind = "Filename",
+                PropertyEditorKind = TypeCode.String.ToString() + ".Filename",
             };
             OnPropertyCreated(result);
             return result;
@@ -473,7 +473,7 @@ namespace Alternet.UI
         /// <see cref="PropertyGridItemAttrId.InitialPath"/>,
         /// <see cref="PropertyGridItemAttrId.ShowFullPath"/> attributes.
         /// </remarks>
-        public IPropertyGridItem CreateDirProperty(
+        public virtual IPropertyGridItem CreateDirProperty(
             string label,
             string? name = null,
             string? value = null)
@@ -482,7 +482,7 @@ namespace Alternet.UI
             var handle = NativeControl.CreateDirProperty(label, CorrectPropName(name), value!);
             var result = new PropertyGridItem(handle, label, name, value)
             {
-                PropertyEditorKind = "Dir",
+                PropertyEditorKind = TypeCode.String.ToString() + ".Dir",
             };
             OnPropertyCreated(result);
             return result;
@@ -507,7 +507,7 @@ namespace Alternet.UI
         /// This function is similar to <see cref="CreateFilenameProperty"/> but wildcards
         /// are limited to supported image file extensions.
         /// </remarks>
-        public IPropertyGridItem CreateImageFilenameProperty(
+        public virtual IPropertyGridItem CreateImageFilenameProperty(
             string label,
             string? name = null,
             string? value = null)
@@ -519,7 +519,7 @@ namespace Alternet.UI
                 value!);
             var result = new PropertyGridItem(handle, label, name, value)
             {
-                PropertyEditorKind = "ImageFilename",
+                PropertyEditorKind = TypeCode.String.ToString() + ".ImageFilename",
             };
             OnPropertyCreated(result);
             return result;
@@ -532,7 +532,7 @@ namespace Alternet.UI
         /// <param name="name">Property name.</param>
         /// <param name="value">Default property value.</param>
         /// <returns>Property declaration for use with <see cref="PropertyGrid.Add"/>.</returns>
-        public IPropertyGridItem CreateSystemColorProperty(
+        public virtual IPropertyGridItem CreateSystemColorProperty(
             string label,
             string? name,
             Color value)
@@ -540,7 +540,7 @@ namespace Alternet.UI
             var handle = NativeControl.CreateSystemColorProperty(label, CorrectPropName(name), value);
             var result = new PropertyGridItem(handle, label, name, value)
             {
-                PropertyEditorKind = "SystemColor",
+                PropertyEditorKind = "Color.System",
             };
             OnPropertyCreated(result);
             return result;
@@ -553,7 +553,7 @@ namespace Alternet.UI
         /// <param name="name">Property name.</param>
         /// <param name="value">Default property value.</param>
         /// <returns>Property declaration for use with <see cref="PropertyGrid.Add"/>.</returns>
-        public IPropertyGridItem CreateStringProperty(
+        public virtual IPropertyGridItem CreateStringProperty(
             string label,
             string? name = null,
             string? value = null)
@@ -562,9 +562,27 @@ namespace Alternet.UI
             var handle = NativeControl.CreateStringProperty(label, CorrectPropName(name), value!);
             var result = new PropertyGridItem(handle, label, name, value)
             {
-                PropertyEditorKind = "String",
+                PropertyEditorKind = TypeCode.String.ToString(),
             };
             OnPropertyCreated(result);
+            return result;
+        }
+
+        /// <summary>
+        /// Creates <see cref="char"/> property.
+        /// </summary>
+        /// <param name="label">Property label.</param>
+        /// <param name="name">Property name.</param>
+        /// <param name="value">Default property value.</param>
+        /// <returns>Property declaration for use with <see cref="PropertyGrid.Add"/>.</returns>
+        public virtual IPropertyGridItem CreateCharProperty(
+            string label,
+            string? name = null,
+            string? value = null)
+        {
+            if (!string.IsNullOrEmpty(value))
+                value = value![0].ToString();
+            var result = CreateStringProperty(label, name, value);
             return result;
         }
 
@@ -575,7 +593,7 @@ namespace Alternet.UI
         /// <param name="name">Property name.</param>
         /// <param name="value">Default property value.</param>
         /// <returns>Property declaration for use with <see cref="PropertyGrid.Add"/>.</returns>
-        public IPropertyGridItem CreateBoolProperty(
+        public virtual IPropertyGridItem CreateBoolProperty(
             string label,
             string? name = null,
             bool value = false)
@@ -583,20 +601,20 @@ namespace Alternet.UI
             var handle = NativeControl.CreateBoolProperty(label, CorrectPropName(name), value);
             var result = new PropertyGridItem(handle, label, name, value)
             {
-                PropertyEditorKind = "Bool",
+                PropertyEditorKind = TypeCode.Boolean.ToString(),
             };
             OnPropertyCreated(result);
             return result;
         }
 
         /// <summary>
-        /// Creates <see cref="int"/> property. Supports also <see cref="long"/> values.
+        /// Creates <see cref="long"/> property.
         /// </summary>
         /// <param name="label">Property label.</param>
         /// <param name="name">Property name.</param>
         /// <param name="value">Default property value.</param>
         /// <returns>Property declaration for use with <see cref="PropertyGrid.Add"/>.</returns>
-        public IPropertyGridItem CreateIntProperty(
+        public virtual IPropertyGridItem CreateLongProperty(
             string label,
             string? name = null,
             long value = 0)
@@ -604,7 +622,7 @@ namespace Alternet.UI
             var handle = NativeControl.CreateIntProperty(label, CorrectPropName(name), value);
             var result = new PropertyGridItem(handle, label, name, value)
             {
-                PropertyEditorKind = "Int",
+                PropertyEditorKind = TypeCode.Int64.ToString(),
             };
             OnPropertyCreated(result);
             return result;
@@ -617,7 +635,7 @@ namespace Alternet.UI
         /// <param name="name">Property name.</param>
         /// <param name="value">Default property value.</param>
         /// <returns>Property declaration for use with <see cref="PropertyGrid.Add"/>.</returns>
-        public IPropertyGridItem CreateDoubleProperty(
+        public virtual IPropertyGridItem CreateDoubleProperty(
             string label,
             string? name = null,
             double value = default)
@@ -625,8 +643,9 @@ namespace Alternet.UI
             var handle = NativeControl.CreateFloatProperty(label, CorrectPropName(name), value);
             var result = new PropertyGridItem(handle, label, name, value)
             {
-                PropertyEditorKind = "Double",
+                PropertyEditorKind = TypeCode.Double.ToString(),
             };
+            SetPropertyMinMax(result, TypeCode.Double);
             OnPropertyCreated(result);
             return result;
         }
@@ -638,7 +657,7 @@ namespace Alternet.UI
         /// <param name="name">Property name.</param>
         /// <param name="value">Default property value.</param>
         /// <returns>Property declaration for use with <see cref="PropertyGrid.Add"/>.</returns>
-        public IPropertyGridItem CreateFloatProperty(
+        public virtual IPropertyGridItem CreateFloatProperty(
             string label,
             string? name = null,
             double value = default)
@@ -646,8 +665,9 @@ namespace Alternet.UI
             var handle = NativeControl.CreateFloatProperty(label, CorrectPropName(name), value);
             var result = new PropertyGridItem(handle, label, name, value)
             {
-                PropertyEditorKind = "Float",
+                PropertyEditorKind = TypeCode.Single.ToString(),
             };
+            SetPropertyMinMax(result, TypeCode.Single);
             OnPropertyCreated(result);
             return result;
         }
@@ -659,7 +679,7 @@ namespace Alternet.UI
         /// <param name="name">Property name.</param>
         /// <param name="value">Default property value.</param>
         /// <returns>Property declaration for use with <see cref="PropertyGrid.Add"/>.</returns>
-        public IPropertyGridItem CreateColorProperty(
+        public virtual IPropertyGridItem CreateColorProperty(
             string label,
             string? name,
             Color value)
@@ -674,13 +694,13 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Creates <see cref="uint"/> property. Supports also <see cref="ulong"/> values.
+        /// Creates <see cref="ulong"/> property.
         /// </summary>
         /// <param name="label">Property label.</param>
         /// <param name="name">Property name.</param>
         /// <param name="value">Default property value.</param>
         /// <returns>Property declaration for use with <see cref="PropertyGrid.Add"/>.</returns>
-        public IPropertyGridItem CreateUIntProperty(
+        public virtual IPropertyGridItem CreateULongProperty(
             string label,
             string? name = null,
             ulong value = 0)
@@ -688,7 +708,7 @@ namespace Alternet.UI
             var handle = NativeControl.CreateUIntProperty(label, CorrectPropName(name), value);
             var result = new PropertyGridItem(handle, label, name, value)
             {
-                PropertyEditorKind = "UInt",
+                PropertyEditorKind = TypeCode.UInt64.ToString(),
             };
             OnPropertyCreated(result);
             return result;
@@ -702,7 +722,7 @@ namespace Alternet.UI
         /// <param name="name">Property name.</param>
         /// <param name="value">Default property value.</param>
         /// <returns>Property declaration for use with <see cref="PropertyGrid.Add"/>.</returns>
-        public IPropertyGridItem CreateLongStringProperty(
+        public virtual IPropertyGridItem CreateLongStringProperty(
             string label,
             string? name = null,
             string? value = null)
@@ -714,7 +734,7 @@ namespace Alternet.UI
                 value);
             var result = new PropertyGridItem(handle, label, name, value)
             {
-                PropertyEditorKind = "LongString",
+                PropertyEditorKind = TypeCode.String.ToString() + ".Long",
             };
             OnPropertyCreated(result);
             return result;
@@ -727,7 +747,7 @@ namespace Alternet.UI
         /// <param name="name">Property name.</param>
         /// <param name="value">Default property value.</param>
         /// <returns>Property declaration for use with <see cref="PropertyGrid.Add"/>.</returns>
-        public IPropertyGridItem CreateDateProperty(
+        public virtual IPropertyGridItem CreateDateProperty(
             string label,
             string? name = null,
             DateTime? value = null)
@@ -745,10 +765,547 @@ namespace Alternet.UI
                 dt);
             var result = new PropertyGridItem(handle, label, name, value)
             {
-                PropertyEditorKind = "Date",
+                PropertyEditorKind = TypeCode.DateTime.ToString() + ".Date",
             };
             OnPropertyCreated(result);
             return result;
+        }
+
+        /// <summary>
+        /// Creates <see cref="Font"/> property.
+        /// </summary>
+        /// <param name="label">Property label.</param>
+        /// <param name="name">Property name.</param>
+        /// <param name="instance">Object instance which contains the property.</param>
+        /// <param name="p">Property information.</param>
+        /// <returns>Property declaration for use with <see cref="PropertyGrid.Add"/>.</returns>
+        /// <remarks>
+        /// If <paramref name="label"/> or <paramref name="name"/> is null,
+        /// <paramref name="p"/> is used to get them.
+        /// </remarks>
+        public virtual IPropertyGridItem CreatePropertyAsFont(
+            string label,
+            string? name,
+            object instance,
+            PropertyInfo p)
+        {
+            PropertyGridAdapterFont adapter = new()
+            {
+                Instance = instance,
+                PropInfo = p,
+            };
+            var result = CreateStringProperty(label, name, "(Font)");
+            SetPropertyReadOnly(result, true, false);
+
+            var choices = PropertyGridAdapterFont.FontNameChoices;
+
+            var itemName = CreateChoicesProperty(
+                "Name",
+                null,
+                choices,
+                adapter.NameAsIndex);
+            itemName.Instance = adapter;
+            itemName.PropInfo = AssemblyUtils.GetPropInfo(adapter, "NameAsIndex");
+
+            var itemSizeInPoints = CreateProperty(adapter, "SizeInPoints")!;
+            var itemIsBold = CreateProperty(adapter, "Bold")!;
+            var itemIsItalic = CreateProperty(adapter, "Italic")!;
+            var itemIsStrikethrough = CreateProperty(adapter, "Strikethrough")!;
+            var itemIsUnderlined = CreateProperty(adapter, "Underlined")!;
+
+            result.Children.Add(itemName!);
+            result.Children.Add(itemSizeInPoints!);
+            result.Children.Add(itemIsBold!);
+            result.Children.Add(itemIsItalic!);
+            result.Children.Add(itemIsStrikethrough!);
+            result.Children.Add(itemIsUnderlined!);
+            return result;
+        }
+
+        /// <summary>
+        /// Creates <see cref="Brush"/> property.
+        /// </summary>
+        /// <param name="label">Property label.</param>
+        /// <param name="name">Property name.</param>
+        /// <param name="instance">Object instance which contains the property.</param>
+        /// <param name="p">Property information.</param>
+        /// <returns>Property declaration for use with <see cref="PropertyGrid.Add"/>.</returns>
+        /// <remarks>
+        /// If <paramref name="label"/> or <paramref name="name"/> is null,
+        /// <paramref name="p"/> is used to get them.
+        /// </remarks>
+        public virtual IPropertyGridItem CreatePropertyAsBrush(
+            string label,
+            string? name,
+            object instance,
+            PropertyInfo p)
+        {
+            PropertyGridAdapterBrush adapter = new()
+            {
+                Instance = instance,
+                PropInfo = p,
+            };
+            var result = CreateStringProperty(label, name, "(Brush)");
+            SetPropertyReadOnly(result, true, false);
+
+            var itemBrushType = CreateProperty(adapter, "BrushType")!;
+            var itemColor = CreateProperty(adapter, "Color")!;
+            var itemLinearGradientStart = CreateProperty(adapter, "LinearGradientStart")!;
+            var itemLinearGradientEnd = CreateProperty(adapter, "LinearGradientEnd")!;
+            var itemRadialGradientCenter = CreateProperty(adapter, "RadialGradientCenter")!;
+            var itemRadialGradientOrigin = CreateProperty(adapter, "RadialGradientOrigin")!;
+            var itemRadialGradientRadius = CreateProperty(adapter, "RadialGradientRadius")!;
+            var itemGradientStops = CreateProperty(adapter, "GradientStops")!;
+            var itemHatchStyle = CreateProperty(adapter, "HatchStyle")!;
+
+            result.Children.Add(itemBrushType!);
+            result.Children.Add(itemColor!);
+            result.Children.Add(itemLinearGradientStart!);
+            result.Children.Add(itemLinearGradientEnd!);
+            result.Children.Add(itemRadialGradientCenter!);
+            result.Children.Add(itemRadialGradientOrigin!);
+            result.Children.Add(itemRadialGradientRadius!);
+            result.Children.Add(itemGradientStops!);
+            result.Children.Add(itemHatchStyle!);
+
+            return result;
+        }
+
+        /// <summary>
+        /// Creates <see cref="Pen"/> property.
+        /// </summary>
+        /// <param name="label">Property label.</param>
+        /// <param name="name">Property name.</param>
+        /// <param name="instance">Object instance which contains the property.</param>
+        /// <param name="p">Property information.</param>
+        /// <returns>Property declaration for use with <see cref="PropertyGrid.Add"/>.</returns>
+        /// <remarks>
+        /// If <paramref name="label"/> or <paramref name="name"/> is null,
+        /// <paramref name="p"/> is used to get them.
+        /// </remarks>
+        public virtual IPropertyGridItem CreatePropertyAsPen(
+            string label,
+            string? name,
+            object instance,
+            PropertyInfo p)
+        {
+            PropertyGridAdapterPen adapter = new()
+            {
+                Instance = instance,
+                PropInfo = p,
+            };
+            IPropertyGridItem result =
+                CreateStringProperty(label, name, "(Pen)");
+            SetPropertyReadOnly(result, true, false);
+
+            var itemColor = CreateProperty(adapter, "Color")!;
+            var itemDashStyle = CreateProperty(adapter, "DashStyle")!;
+            var itemLineCap = CreateProperty(adapter, "LineCap")!;
+            var itemLineJoin = CreateProperty(adapter, "LineJoin")!;
+            var itemWidth = CreateProperty(adapter, "Width")!;
+
+            result.Children.Add(itemColor!);
+            result.Children.Add(itemDashStyle!);
+            result.Children.Add(itemLineCap!);
+            result.Children.Add(itemLineJoin!);
+            result.Children.Add(itemWidth!);
+
+            return result;
+        }
+
+        /// <summary>
+        /// Creates <see cref="decimal"/> property.
+        /// </summary>
+        /// <param name="label">Property label.</param>
+        /// <param name="name">Property name.</param>
+        /// <param name="value">Default property value.</param>
+        /// <returns>Property declaration for use with <see cref="PropertyGrid.Add"/>.</returns>
+        public virtual IPropertyGridItem CreateDecimalProperty(
+            string label,
+            string? name = null,
+            decimal value = default)
+        {
+            var result = CreateStringProperty(label, name, value.ToString());
+            return result;
+        }
+
+        /// <summary>
+        /// Creates <see cref="sbyte"/> property.
+        /// </summary>
+        /// <param name="label">Property label.</param>
+        /// <param name="name">Property name.</param>
+        /// <param name="value">Default property value.</param>
+        /// <returns>Property declaration for use with <see cref="PropertyGrid.Add"/>.</returns>
+        public virtual IPropertyGridItem CreateSByteProperty(
+            string label,
+            string? name = null,
+            sbyte value = 0)
+        {
+            var result = CreateLongProperty(label, name, value);
+            SetPropertyMinMax(result, TypeCode.SByte);
+            result.PropertyEditorKind = TypeCode.SByte.ToString();
+            return result;
+        }
+
+        /// <summary>
+        /// Sets minimal and maximal values of the numeric property.
+        /// </summary>
+        /// <param name="prop">Property item.</param>
+        /// <param name="code">Object type from which min and max values will be applied.</param>
+        public virtual void SetPropertyMinMax(IPropertyGridItem prop, TypeCode code)
+        {
+            var min = AssemblyUtils.GetMinValue(code);
+            var max = AssemblyUtils.GetMinValue(code);
+            SetPropertyMinMax(prop, min, max);
+        }
+
+        /// <summary>
+        /// Sets minimal and maximal values of the numeric property.
+        /// </summary>
+        /// <param name="prop">Property item.</param>
+        /// <param name="min">Minimal property value.</param>
+        /// <param name="max">Maximal property value.</param>
+        /// <remarks>
+        /// If <c>null</c> is passed in the <paramref name="max"/> or <paramref name="min"/>
+        /// parameter, limit is not set.
+        /// </remarks>
+        public virtual void SetPropertyMinMax(IPropertyGridItem prop, object? min, object? max = null)
+        {
+            if (min is not null)
+                SetPropertyKnownAttribute(prop, PropertyGridItemAttrId.Min, min);
+            if (max is not null)
+                SetPropertyKnownAttribute(prop, PropertyGridItemAttrId.Max, max);
+        }
+
+        /// <summary>
+        /// Creates <see cref="short"/> property.
+        /// </summary>
+        /// <param name="label">Property label.</param>
+        /// <param name="name">Property name.</param>
+        /// <param name="value">Default property value.</param>
+        /// <returns>Property declaration for use with <see cref="PropertyGrid.Add"/>.</returns>
+        public virtual IPropertyGridItem CreateInt16Property(
+            string label,
+            string? name = null,
+            short value = 0)
+        {
+            var result = CreateLongProperty(label, name, value);
+            SetPropertyMinMax(result, TypeCode.Int16);
+            result.PropertyEditorKind = TypeCode.Int16.ToString();
+            return result;
+        }
+
+        /// <summary>
+        /// Creates <see cref="int"/> property.
+        /// </summary>
+        /// <param name="label">Property label.</param>
+        /// <param name="name">Property name.</param>
+        /// <param name="value">Default property value.</param>
+        /// <returns>Property declaration for use with <see cref="PropertyGrid.Add"/>.</returns>
+        public virtual IPropertyGridItem CreateIntProperty(
+            string label,
+            string? name = null,
+            int value = 0)
+        {
+            var result = CreateLongProperty(label, name, value);
+            SetPropertyMinMax(result, TypeCode.Int32);
+            result.PropertyEditorKind = TypeCode.Int32.ToString();
+            return result;
+        }
+
+        /// <summary>
+        /// Creates <see cref="byte"/> property.
+        /// </summary>
+        /// <param name="label">Property label.</param>
+        /// <param name="name">Property name.</param>
+        /// <param name="value">Default property value.</param>
+        /// <returns>Property declaration for use with <see cref="PropertyGrid.Add"/>.</returns>
+        public virtual IPropertyGridItem CreateByteProperty(
+            string label,
+            string? name = null,
+            byte value = 0)
+        {
+            var result = CreateULongProperty(label, name, value);
+            SetPropertyMinMax(result, TypeCode.Byte);
+            result.PropertyEditorKind = TypeCode.Byte.ToString();
+            return result;
+        }
+
+        /// <summary>
+        /// Creates <see cref="uint"/> property.
+        /// </summary>
+        /// <param name="label">Property label.</param>
+        /// <param name="name">Property name.</param>
+        /// <param name="value">Default property value.</param>
+        /// <returns>Property declaration for use with <see cref="PropertyGrid.Add"/>.</returns>
+        public virtual IPropertyGridItem CreateUIntProperty(
+            string label,
+            string? name = null,
+            uint value = 0)
+        {
+            var result = CreateULongProperty(label, name, value);
+            SetPropertyMinMax(result, TypeCode.UInt32);
+            result.PropertyEditorKind = TypeCode.UInt32.ToString();
+            return result;
+        }
+
+        /// <summary>
+        /// Creates <see cref="ushort"/> property.
+        /// </summary>
+        /// <param name="label">Property label.</param>
+        /// <param name="name">Property name.</param>
+        /// <param name="value">Default property value.</param>
+        /// <returns>Property declaration for use with <see cref="PropertyGrid.Add"/>.</returns>
+        public virtual IPropertyGridItem CreateUInt16Property(
+            string label,
+            string? name = null,
+            ushort value = 0)
+        {
+            var result = CreateULongProperty(label, name, value);
+            SetPropertyMinMax(result, TypeCode.UInt16);
+            result.PropertyEditorKind = TypeCode.UInt16.ToString();
+            return result;
+        }
+
+        /// <summary>
+        /// Creates property using another object's property.
+        /// </summary>
+        /// <param name="label">Property label.</param>
+        /// <param name="name">Property name in <see cref="PropertyGrid"/>.</param>
+        /// <param name="instance">Object instance which contains the property.</param>
+        /// <param name="nameInInstance">Property name in <paramref name="instance"/>.</param>
+        /// <returns></returns>
+        public virtual IPropertyGridItem? CreateProperty(
+            string? label,
+            string? name,
+            object instance,
+            string nameInInstance)
+        {
+            if (instance == null)
+                return null;
+            var type = instance.GetType();
+            var propInfo = type.GetProperty(nameInInstance);
+            if (propInfo == null)
+                return null;
+            return CreateProperty(label, name, instance, propInfo);
+        }
+
+        /// <summary>
+        /// Creates property using another object's property.
+        /// </summary>
+        /// <param name="instance">Object instance which contains the property.</param>
+        /// <param name="nameInInstance">Property name in <paramref name="instance"/>.</param>
+        /// <returns></returns>
+        public IPropertyGridItem? CreateProperty(object instance, string nameInInstance)
+        {
+            return CreateProperty(null, null, instance, nameInInstance);
+        }
+
+        /// <summary>
+        /// Creates property using another object's property.
+        /// </summary>
+        /// <param name="instance">Object instance which contains the property.</param>
+        /// <param name="p">Property information.</param>
+        /// <returns>Property declaration for use with <see cref="PropertyGrid.Add"/>.</returns>
+        public IPropertyGridItem? CreateProperty(object instance, PropertyInfo p)
+        {
+            return CreateProperty(null, null, instance, p);
+        }
+
+        /// <summary>
+        /// Creates property using another object's property.
+        /// </summary>
+        /// <param name="label">Property label.</param>
+        /// <param name="propName">Property name in <see cref="PropertyGrid"/>.</param>
+        /// <param name="instance">Object instance which contains the property.</param>
+        /// <param name="p">Property information.</param>
+        /// <returns>Property declaration for use with <see cref="PropertyGrid.Add"/>.</returns>
+        public virtual IPropertyGridItem? CreateProperty(
+            string? label,
+            string? propName,
+            object instance,
+            PropertyInfo p)
+        {
+            if (!p.CanRead)
+                return null;
+            ParameterInfo[] paramInfo = p.GetIndexParameters();
+            if (paramInfo.Length > 0)
+                return null;
+            if (!AssemblyUtils.GetBrowsable(p))
+                return null;
+
+            var setPropReadonly = false;
+            propName ??= p.Name;
+            label ??= propName;
+            var propType = p.PropertyType;
+            object? propValue = p.GetValue(instance, null);
+            IPropertyGridItem? prop = null;
+
+            var realType = AssemblyUtils.GetRealType(propType);
+            TypeCode typeCode = Type.GetTypeCode(realType);
+
+            if (propType.IsEnum)
+                prop = CreatePropertyAsEnum(label, propName, instance, p);
+            else
+            {
+                switch (typeCode)
+                {
+                    case TypeCode.Empty:
+                    case TypeCode.DBNull:
+                        return null;
+                    case TypeCode.Object:
+                        prop = CreateAsClass();
+                        break;
+                    case TypeCode.Boolean:
+                        propValue ??= false;
+                        prop = CreateBoolProperty(label!, propName, (bool)propValue!);
+                        break;
+                    case TypeCode.SByte:
+                        propValue ??= 0;
+                        prop = CreateSByteProperty(label!, propName, (sbyte)propValue!);
+                        break;
+                    case TypeCode.Int16:
+                        propValue ??= 0;
+                        prop = CreateInt16Property(label!, propName, (short)propValue!);
+                        break;
+                    case TypeCode.Int32:
+                        propValue ??= 0;
+                        prop = CreateIntProperty(label!, propName, (int)propValue!);
+                        break;
+                    case TypeCode.Int64:
+                        propValue ??= 0;
+                        prop = CreateLongProperty(label!, propName, (long)propValue!);
+                        break;
+                    case TypeCode.Byte:
+                        propValue ??= 0;
+                        prop = CreateByteProperty(label!, propName, (byte)propValue!);
+                        break;
+                    case TypeCode.UInt32:
+                        propValue ??= 0;
+                        prop = CreateUIntProperty(label!, propName, (uint)propValue!);
+                        break;
+                    case TypeCode.UInt16:
+                        propValue ??= 0;
+                        prop = CreateUInt16Property(label!, propName, (ushort)propValue!);
+                        break;
+                    case TypeCode.UInt64:
+                        propValue ??= 0;
+                        prop = CreateULongProperty(label!, propName, (ulong)propValue!);
+                        break;
+                    case TypeCode.Single:
+                        propValue ??= 0F;
+                        prop = CreateFloatProperty(label!, propName, (float)propValue!);
+                        break;
+                    case TypeCode.Double:
+                        propValue ??= 0D;
+                        prop = CreateDoubleProperty(label!, propName, (double)propValue!);
+                        break;
+                    case TypeCode.Decimal:
+                        propValue ??= 0M;
+                        prop = CreateDecimalProperty(label!, propName, (decimal)propValue!);
+                        break;
+                    case TypeCode.DateTime:
+                        propValue ??= DateTime.Now;
+                        prop = CreateDateProperty(label!, propName, (DateTime)propValue);
+                        break;
+                    case TypeCode.Char:
+                        prop = CreateCharProperty(label!, propName, propValue?.ToString());
+                        break;
+                    case TypeCode.String:
+                        prop = CreateStringProperty(label!, propName, propValue?.ToString());
+                        break;
+                }
+            }
+
+            if (!p.CanWrite || setPropReadonly)
+                SetPropertyReadOnly(prop!, true);
+            prop!.Instance = instance;
+            prop!.PropInfo = p;
+            return prop;
+
+            IPropertyGridItem? CreateAsClass()
+            {
+                IPropertyGridItem? result;
+                if (realType == typeof(Color))
+                {
+                    result = CreatePropertyAsColor(label, propName, instance, p);
+                    return result;
+                }
+
+                if (realType == typeof(Font))
+                {
+                    result = CreatePropertyAsFont(label!, propName, instance, p);
+                    setPropReadonly = true;
+                    return result;
+                }
+
+                if (realType == typeof(Brush))
+                {
+                    result = CreatePropertyAsBrush(label!, propName, instance, p);
+                    setPropReadonly = true;
+                    return result;
+                }
+
+                if (realType == typeof(Pen))
+                {
+                    result = CreatePropertyAsPen(label!, propName, instance, p);
+                    setPropReadonly = true;
+                    return result;
+                }
+
+                result = CreateStringProperty(
+                    label!,
+                    propName,
+                    propValue?.ToString());
+                setPropReadonly = true;
+                return result;
+            }
+        }
+
+        /// <summary>
+        /// Adds all public properties of the specified object.
+        /// </summary>
+        /// <param name="instance">Object instance which properties will be added.</param>
+        public virtual void AddProps(object instance)
+        {
+            Type myType = instance.GetType();
+            BindingFlags bindingFlags = BindingFlags.Instance | BindingFlags.Public;
+
+            IList<PropertyInfo> props =
+                new List<PropertyInfo>(myType.GetProperties(bindingFlags));
+
+            SortedList<string, PropertyInfo> addedNames = new();
+
+            foreach (PropertyInfo p in props)
+            {
+                if (addedNames.ContainsKey(p.Name))
+                    continue;
+                IPropertyGridItem? prop = CreateProperty(instance, p);
+                if (prop == null)
+                    continue;
+                Add(prop!);
+                addedNames.Add(p.Name, p);
+            }
+        }
+
+        /// <summary>
+        /// Clears properties and calls <see cref="AddProps"/> afterwards.
+        /// </summary>
+        /// <param name="instance">Object instance which properties will be added.</param>
+        public virtual void SetProps(object? instance)
+        {
+            BeginUpdate();
+            try
+            {
+                Clear();
+                if (instance == null)
+                    return;
+                AddProps(instance);
+            }
+            finally
+            {
+                EndUpdate();
+            }
         }
 
         /// <summary>
@@ -763,7 +1320,7 @@ namespace Alternet.UI
         /// If <paramref name="label"/> or <paramref name="name"/> is null,
         /// <paramref name="p"/> is used to get them.
         /// </remarks>
-        public IPropertyGridItem CreatePropertyAsColor(
+        public virtual IPropertyGridItem CreatePropertyAsColor(
             string? label,
             string? name,
             object instance,
@@ -775,6 +1332,7 @@ namespace Alternet.UI
             object? propValue = p.GetValue(instance, null);
             propValue ??= Color.Black;
             prop = CreateColorProperty(label, name, (Color)propValue);
+            SetPropertyKnownAttribute(prop, PropertyGridItemAttrId.HasAlpha, true);
             OnPropertyCreated(prop, instance, p);
             return prop;
         }
@@ -791,7 +1349,7 @@ namespace Alternet.UI
         /// If <paramref name="label"/> or <paramref name="name"/> is null,
         /// <paramref name="p"/> is used to get them.
         /// </remarks>
-        public IPropertyGridItem CreatePropertyAsEnum(
+        public virtual IPropertyGridItem CreatePropertyAsEnum(
             string? label,
             string? name,
             object instance,
@@ -833,7 +1391,7 @@ namespace Alternet.UI
         /// <param name="choices">Enumeration elements.</param>
         /// <param name="value">Default property value.</param>
         /// <returns>Property declaration for use with <see cref="PropertyGrid.Add"/>.</returns>
-        public IPropertyGridItem CreateChoicesProperty(
+        public virtual IPropertyGridItem CreateChoicesProperty(
             string label,
             string? name,
             IPropertyGridChoices choices,
@@ -861,7 +1419,7 @@ namespace Alternet.UI
         /// <param name="choices">Enumeration elements.</param>
         /// <param name="value">Default property value.</param>
         /// <returns>Property declaration for use with <see cref="PropertyGrid.Add"/>.</returns>
-        public IPropertyGridItem CreateEditEnumProperty(
+        public virtual IPropertyGridItem CreateEditEnumProperty(
             string label,
             string? name,
             IPropertyGridChoices choices,
@@ -875,7 +1433,7 @@ namespace Alternet.UI
                 value);
             var result = new PropertyGridItem(handle, label, name, value)
             {
-                PropertyEditorKind = "EditEnum",
+                PropertyEditorKind = "Enum.Edit",
             };
             OnPropertyCreated(result);
             return result;
@@ -889,7 +1447,7 @@ namespace Alternet.UI
         /// <param name="choices">Elements.</param>
         /// <param name="value">Default property value.</param>
         /// <returns>Property declaration for use with <see cref="PropertyGrid.Add"/>.</returns>
-        public IPropertyGridItem CreateFlagsProperty(
+        public virtual IPropertyGridItem CreateFlagsProperty(
             string label,
             string? name,
             IPropertyGridChoices choices,
@@ -903,7 +1461,7 @@ namespace Alternet.UI
                 (int)value);
             var result = new PropertyGridItem(handle, label, name, value)
             {
-                PropertyEditorKind = "Flags",
+                PropertyEditorKind = "Enum.Flags",
             };
             OnPropertyCreated(result);
             return result;
@@ -912,7 +1470,7 @@ namespace Alternet.UI
         /// <summary>
         /// Deletes all items from the property grid.
         /// </summary>
-        public void Clear()
+        public virtual void Clear()
         {
             items.Clear();
             NativeControl.Clear();
@@ -923,7 +1481,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="prop">Item to add.</param>
         /// <param name="parent">Parent item or null.</param>
-        public void Add(IPropertyGridItem prop, IPropertyGridItem? parent = null)
+        public virtual void Add(IPropertyGridItem prop, IPropertyGridItem? parent = null)
         {
             if (prop == null)
                 return;
@@ -948,7 +1506,7 @@ namespace Alternet.UI
             {
                 var kind = p.PropertyEditorKind;
 
-                if (BoolAsCheckBox && (kind == "Bool" || kind == "Flags"))
+                if (BoolAsCheckBox && (kind == TypeCode.Boolean.ToString() || kind == "Enum.Flags"))
                 {
                     SetPropertyKnownAttribute(p, PropertyGridItemAttrId.UseCheckbox, true);
                 }
@@ -961,7 +1519,7 @@ namespace Alternet.UI
         /// <param name="label">Category label.</param>
         /// <param name="name">Category name.</param>
         /// <returns>Category declaration for use with <see cref="PropertyGrid.Add"/>.</returns>
-        public IPropertyGridItem CreatePropCategory(string label, string? name = null)
+        public virtual IPropertyGridItem CreatePropCategory(string label, string? name = null)
         {
             var handle = NativeControl.CreatePropCategory(
                 label,
@@ -1026,7 +1584,7 @@ namespace Alternet.UI
         /// It is better to fill <see cref="IPropertyGridItem.Children"/> and
         /// to add property using <see cref="Add"/>.
         /// </remarks>
-        public void AppendIn(IPropertyGridItem prop, IPropertyGridItem newproperty)
+        public virtual void AppendIn(IPropertyGridItem prop, IPropertyGridItem newproperty)
         {
             NativeControl.AppendIn(prop.Handle, newproperty.Handle);
         }
@@ -1036,7 +1594,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="prop">Property item to collapse.</param>
         /// <returns><c>true</c> if operation was successful, <c>false</c> otherwise.</returns>
-        public bool Collapse(IPropertyGridItem prop)
+        public virtual bool Collapse(IPropertyGridItem prop)
         {
             return NativeControl.Collapse(prop.Handle);
         }
@@ -1045,7 +1603,7 @@ namespace Alternet.UI
         /// Removes property from the <see cref="PropertyGrid"/>.
         /// </summary>
         /// <param name="prop">Property item to remove.</param>
-        public void RemoveProperty(IPropertyGridItem prop)
+        public virtual void RemoveProperty(IPropertyGridItem prop)
         {
             NativeControl.RemoveProperty(prop.Handle);
             items.Remove(prop.Handle);
@@ -1056,7 +1614,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="prop">Property item to disable.</param>
         /// <returns><c>true</c> if operation was successful, <c>false</c> otherwise.</returns>
-        public bool DisableProperty(IPropertyGridItem prop)
+        public virtual bool DisableProperty(IPropertyGridItem prop)
         {
             return NativeControl.DisableProperty(prop.Handle);
         }
@@ -1067,7 +1625,7 @@ namespace Alternet.UI
         /// <param name="prop">Property item.</param>
         /// <param name="enable">New enabled state value.</param>
         /// <returns><c>true</c> if operation was successful, <c>false</c> otherwise.</returns>
-        public bool EnableProperty(IPropertyGridItem prop, bool enable = true)
+        public virtual bool EnableProperty(IPropertyGridItem prop, bool enable = true)
         {
             return NativeControl.EnableProperty(prop.Handle, enable);
         }
@@ -1077,7 +1635,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="prop">Property item to expand.</param>
         /// <returns><c>true</c> if operation was successful, <c>false</c> otherwise.</returns>
-        public bool Expand(IPropertyGridItem prop)
+        public virtual bool Expand(IPropertyGridItem prop)
         {
             return NativeControl.Expand(prop.Handle);
         }
@@ -1086,7 +1644,7 @@ namespace Alternet.UI
         /// Gets client data associated with the property.
         /// </summary>
         /// <param name="prop">Property item.</param>
-        public IntPtr GetPropertyClientData(IPropertyGridItem prop)
+        public virtual IntPtr GetPropertyClientData(IPropertyGridItem prop)
         {
             return NativeControl.GetPropertyClientData(prop.Handle);
         }
@@ -1095,7 +1653,7 @@ namespace Alternet.UI
         /// Gets help string associated with the property.
         /// </summary>
         /// <param name="prop">Property item.</param>
-        public string GetPropertyHelpString(IPropertyGridItem prop)
+        public virtual string GetPropertyHelpString(IPropertyGridItem prop)
         {
             return NativeControl.GetPropertyHelpString(prop.Handle);
         }
@@ -1104,7 +1662,7 @@ namespace Alternet.UI
         /// Gets label associated with the property.
         /// </summary>
         /// <param name="prop">Property item.</param>
-        public string GetPropertyLabel(IPropertyGridItem prop)
+        public virtual string GetPropertyLabel(IPropertyGridItem prop)
         {
             return NativeControl.GetPropertyLabel(prop.Handle);
         }
@@ -1113,7 +1671,7 @@ namespace Alternet.UI
         /// Gets property value as <see cref="string"/>.
         /// </summary>
         /// <param name="prop">Property item.</param>
-        public string GetPropertyValueAsString(IPropertyGridItem prop)
+        public virtual string GetPropertyValueAsString(IPropertyGridItem prop)
         {
             return NativeControl.GetPropertyValueAsString(prop.Handle);
         }
@@ -1122,7 +1680,7 @@ namespace Alternet.UI
         /// Gets property value as <see cref="long"/>.
         /// </summary>
         /// <param name="prop">Property item.</param>
-        public long GetPropertyValueAsLong(IPropertyGridItem prop)
+        public virtual long GetPropertyValueAsLong(IPropertyGridItem prop)
         {
             return NativeControl.GetPropertyValueAsLong(prop.Handle);
         }
@@ -1131,7 +1689,7 @@ namespace Alternet.UI
         /// Gets property value as <see cref="ulong"/>.
         /// </summary>
         /// <param name="prop">Property item.</param>
-        public ulong GetPropertyValueAsULong(IPropertyGridItem prop)
+        public virtual ulong GetPropertyValueAsULong(IPropertyGridItem prop)
         {
             return NativeControl.GetPropertyValueAsULong(prop.Handle);
         }
@@ -1140,7 +1698,7 @@ namespace Alternet.UI
         /// Gets property value as <see cref="int"/>.
         /// </summary>
         /// <param name="prop">Property item.</param>
-        public int GetPropertyValueAsInt(IPropertyGridItem prop)
+        public virtual int GetPropertyValueAsInt(IPropertyGridItem prop)
         {
             return NativeControl.GetPropertyValueAsInt(prop.Handle);
         }
@@ -1149,7 +1707,7 @@ namespace Alternet.UI
         /// Gets property value as <see cref="bool"/>.
         /// </summary>
         /// <param name="prop">Property item.</param>
-        public bool GetPropertyValueAsBool(IPropertyGridItem prop)
+        public virtual bool GetPropertyValueAsBool(IPropertyGridItem prop)
         {
             return NativeControl.GetPropertyValueAsBool(prop.Handle);
         }
@@ -1158,7 +1716,7 @@ namespace Alternet.UI
         /// Gets property value as <see cref="double"/>.
         /// </summary>
         /// <param name="prop">Property item.</param>
-        public double GetPropertyValueAsDouble(IPropertyGridItem prop)
+        public virtual double GetPropertyValueAsDouble(IPropertyGridItem prop)
         {
             return NativeControl.GetPropertyValueAsDouble(prop.Handle);
         }
@@ -1167,7 +1725,7 @@ namespace Alternet.UI
         /// Gets property value as <see cref="DateTime"/>.
         /// </summary>
         /// <param name="prop">Property item.</param>
-        public DateTime GetPropertyValueAsDateTime(IPropertyGridItem prop)
+        public virtual DateTime GetPropertyValueAsDateTime(IPropertyGridItem prop)
         {
             return NativeControl.GetPropertyValueAsDateTime(prop.Handle);
         }
@@ -1180,7 +1738,7 @@ namespace Alternet.UI
         /// the property.</param>
         /// <param name="recurse">Perform operation recursively for the child items.</param>
         /// <returns><c>true</c> if operation was successful, <c>false</c> otherwise.</returns>
-        public bool HideProperty(IPropertyGridItem prop, bool hide, bool recurse = true)
+        public virtual bool HideProperty(IPropertyGridItem prop, bool hide, bool recurse = true)
         {
             var flags = recurse ? PGRECURSE : PGDONTRECURSE;
             return NativeControl.HideProperty(prop.Handle, hide, flags);
@@ -1192,7 +1750,7 @@ namespace Alternet.UI
         /// <param name="priorThis">Property item before which other property
         /// will be inserted.</param>
         /// <param name="newproperty">Property item to insert.</param>
-        public void Insert(IPropertyGridItem priorThis, IPropertyGridItem newproperty)
+        public virtual void Insert(IPropertyGridItem priorThis, IPropertyGridItem newproperty)
         {
             NativeControl.Insert(priorThis.Handle, newproperty.Handle);
         }
@@ -1203,7 +1761,7 @@ namespace Alternet.UI
         /// <param name="parent">Parent property item.</param>
         /// <param name="index">Insert position.</param>
         /// <param name="newproperty">Property item to insert.</param>
-        public void Insert(IPropertyGridItem parent, int index, IPropertyGridItem newproperty)
+        public virtual void Insert(IPropertyGridItem parent, int index, IPropertyGridItem newproperty)
         {
             NativeControl.InsertByIndex(parent.Handle, index, newproperty.Handle);
         }
@@ -1213,7 +1771,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="prop">Property item.</param>
         /// <returns><c>true</c> if property is category, <c>false</c> otherwise.</returns>
-        public bool IsPropertyCategory(IPropertyGridItem prop)
+        public virtual bool IsPropertyCategory(IPropertyGridItem prop)
         {
             return NativeControl.IsPropertyCategory(prop.Handle);
         }
@@ -1223,7 +1781,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="prop">Property item.</param>
         /// <returns><c>true</c> if property is enabled, <c>false</c> otherwise.</returns>
-        public bool IsPropertyEnabled(IPropertyGridItem prop)
+        public virtual bool IsPropertyEnabled(IPropertyGridItem prop)
         {
             return NativeControl.IsPropertyEnabled(prop.Handle);
         }
@@ -1233,7 +1791,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="prop">Property item.</param>
         /// <returns><c>true</c> if property is expanded, <c>false</c> otherwise.</returns>
-        public bool IsPropertyExpanded(IPropertyGridItem prop)
+        public virtual bool IsPropertyExpanded(IPropertyGridItem prop)
         {
             return NativeControl.IsPropertyExpanded(prop.Handle);
         }
@@ -1243,7 +1801,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="prop">Property item.</param>
         /// <returns><c>true</c> if property is modified, <c>false</c> otherwise.</returns>
-        public bool IsPropertyModified(IPropertyGridItem prop)
+        public virtual bool IsPropertyModified(IPropertyGridItem prop)
         {
             return NativeControl.IsPropertyModified(prop.Handle);
         }
@@ -1253,7 +1811,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="prop">Property item.</param>
         /// <returns><c>true</c> if property is selected, <c>false</c> otherwise.</returns>
-        public bool IsPropertySelected(IPropertyGridItem prop)
+        public virtual bool IsPropertySelected(IPropertyGridItem prop)
         {
             return NativeControl.IsPropertySelected(prop.Handle);
         }
@@ -1263,7 +1821,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="prop">Property item.</param>
         /// <returns><c>true</c> if property is shown, <c>false</c> otherwise.</returns>
-        public bool IsPropertyShown(IPropertyGridItem prop)
+        public virtual bool IsPropertyShown(IPropertyGridItem prop)
         {
             return NativeControl.IsPropertyShown(prop.Handle);
         }
@@ -1273,7 +1831,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="prop">Property item.</param>
         /// <returns><c>true</c> if property value is unspecified, <c>false</c> otherwise.</returns>
-        public bool IsPropertyValueUnspecified(IPropertyGridItem prop)
+        public virtual bool IsPropertyValueUnspecified(IPropertyGridItem prop)
         {
             return NativeControl.IsPropertyValueUnspecified(prop.Handle);
         }
@@ -1283,8 +1841,8 @@ namespace Alternet.UI
         /// if it is not the sole mean to edit the value.
         /// </summary>
         /// <param name="prop">Property item.</param>
-        /// <param name="limit"><c>true</c> to disable text editor, <c>false</c>< otherwise./param>
-        public void LimitPropertyEditing(IPropertyGridItem prop, bool limit = true)
+        /// <param name="limit"><c>true</c> to disable text editor, <c>false</c> otherwise.</param>
+        public virtual void LimitPropertyEditing(IPropertyGridItem prop, bool limit = true)
         {
             NativeControl.LimitPropertyEditing(prop.Handle, limit);
         }
@@ -1294,7 +1852,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="prop">Property item to be replaced.</param>
         /// <param name="newProp">New property item.</param>
-        public void ReplaceProperty(IPropertyGridItem prop, IPropertyGridItem newProp)
+        public virtual void ReplaceProperty(IPropertyGridItem prop, IPropertyGridItem newProp)
         {
             NativeControl.ReplaceProperty(prop.Handle, newProp.Handle);
         }
@@ -1307,7 +1865,7 @@ namespace Alternet.UI
         /// <param name="recurse"><c>true</c> causes color to be set recursively,
         /// <c>false</c> only sets color for the property in question and not
         /// any of its children.</param>
-        public void SetPropertyBackgroundColor(
+        public virtual void SetPropertyBackgroundColor(
             IPropertyGridItem prop,
             Color color,
             bool recurse = true)
@@ -1323,7 +1881,7 @@ namespace Alternet.UI
         /// <param name="recurse"><c>true</c> causes color to be reset recursively,
         /// <c>false</c> only resets color for the property in question and not
         /// any of its children.</param>
-        public void SetPropertyColorsToDefault(IPropertyGridItem prop, bool recurse = true)
+        public virtual void SetPropertyColorsToDefault(IPropertyGridItem prop, bool recurse = true)
         {
             var flags = recurse ? PGRECURSE : PGDONTRECURSE;
             NativeControl.SetPropertyColorsToDefault(prop.Handle, flags);
@@ -1337,7 +1895,10 @@ namespace Alternet.UI
         /// <param name="recurse"><c>true</c> causes color to be set recursively,
         /// <c>false</c> only sets color for the property in question and not
         /// any of its children.</param>
-        public void SetPropertyTextColor(IPropertyGridItem prop, Color color, bool recurse = true)
+        public virtual void SetPropertyTextColor(
+            IPropertyGridItem prop,
+            Color color,
+            bool recurse = true)
         {
             var flags = recurse ? PGRECURSE : PGDONTRECURSE;
             NativeControl.SetPropertyTextColor(prop.Handle, color, flags);
@@ -1355,7 +1916,7 @@ namespace Alternet.UI
         /// correctly, please make sure that you call this function after
         /// <see cref="PropertyGrid"/> size has been set.
         /// </remarks>
-        public bool RestoreEditableState(
+        public virtual bool RestoreEditableState(
             string src,
             PropertyGridEditableState restoreStates = PropertyGridEditableState.AllStates)
         {
@@ -1369,7 +1930,7 @@ namespace Alternet.UI
         /// <remarks>
         /// This function reselects the property and may cause excess flicker.
         /// </remarks>
-        public void RefreshProperty(IPropertyGridItem p)
+        public virtual void RefreshProperty(IPropertyGridItem p)
         {
             NativeControl.RefreshProperty(p.Handle);
         }
@@ -1383,7 +1944,7 @@ namespace Alternet.UI
         /// <remarks>
         /// Use <see cref="RestoreEditableState"/> to read state back to <see cref="PropertyGrid"/>.
         /// </remarks>
-        public string SaveEditableState(
+        public virtual string SaveEditableState(
             PropertyGridEditableState includedStates =
                 PropertyGridEditableState.AllStates)
         {
@@ -1400,7 +1961,7 @@ namespace Alternet.UI
         /// <see cref="PropertyGridCreateStyle.SplitterAutoCenter"/> style needs to be used
         /// to indicate that columns are auto-resizable.
         /// </remarks>
-        public bool SetColumnProportion(uint column, int proportion)
+        public virtual bool SetColumnProportion(uint column, int proportion)
         {
             return NativeControl.SetColumnProportion(column, proportion);
         }
@@ -1409,7 +1970,7 @@ namespace Alternet.UI
         /// Gets auto-resize proportion of the given column.
         /// </summary>
         /// <param name="column">Column index.</param>
-        public int GetColumnProportion(uint column)
+        public virtual int GetColumnProportion(uint column)
         {
             return NativeControl.GetColumnProportion(column);
         }
@@ -1418,7 +1979,7 @@ namespace Alternet.UI
         /// Gets background color of first cell of a property.
         /// </summary>
         /// <param name="prop">Property item.</param>
-        public Color GetPropertyBackgroundColor(IPropertyGridItem prop)
+        public virtual Color GetPropertyBackgroundColor(IPropertyGridItem prop)
         {
             return NativeControl.GetPropertyBackgroundColor(prop.Handle);
         }
@@ -1427,7 +1988,7 @@ namespace Alternet.UI
         /// Returns text color of first cell of a property.
         /// </summary>
         /// <param name="prop">Property item.</param>
-        public Color GetPropertyTextColor(IPropertyGridItem prop)
+        public virtual Color GetPropertyTextColor(IPropertyGridItem prop)
         {
             return NativeControl.GetPropertyTextColor(prop.Handle);
         }
@@ -1437,7 +1998,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="prop">Property item.</param>
         /// <param name="clientData">Client data associated with the property.</param>
-        public void SetPropertyClientData(IPropertyGridItem prop, IntPtr clientData)
+        public virtual void SetPropertyClientData(IPropertyGridItem prop, IntPtr clientData)
         {
             NativeControl.SetPropertyClientData(prop.Handle, clientData);
         }
@@ -1451,7 +2012,7 @@ namespace Alternet.UI
         /// Properties under same parent may have same labels. However, property
         /// names must still remain unique.
         /// </remarks>
-        public void SetPropertyLabel(IPropertyGridItem prop, string newproplabel)
+        public virtual void SetPropertyLabel(IPropertyGridItem prop, string newproplabel)
         {
             NativeControl.SetPropertyLabel(prop.Handle, newproplabel);
         }
@@ -1461,7 +2022,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="prop">Property item.</param>
         /// <param name="helpString">Help string associated with the property.</param>
-        public void SetPropertyHelpString(IPropertyGridItem prop, string helpString)
+        public virtual void SetPropertyHelpString(IPropertyGridItem prop, string helpString)
         {
             NativeControl.SetPropertyHelpString(prop.Handle, helpString);
         }
@@ -1474,7 +2035,7 @@ namespace Alternet.UI
         /// in the text editor. If it is 0, the length is not limited and the text can be
         /// as long as it is supported by the underlying native text control widget.</param>
         /// <returns><c>true</c> if maximum length was set, <c>false</c> otherwise.</returns>
-        public bool SetPropertyMaxLength(IPropertyGridItem prop, int maxLen)
+        public virtual bool SetPropertyMaxLength(IPropertyGridItem prop, int maxLen)
         {
             return NativeControl.SetPropertyMaxLength(prop.Handle, maxLen);
         }
@@ -1484,7 +2045,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="prop">Property item.</param>
         /// <param name="value">New property value.</param>
-        public void SetPropertyValueAsLong(IPropertyGridItem prop, long value)
+        public virtual void SetPropertyValueAsLong(IPropertyGridItem prop, long value)
         {
             NativeControl.SetPropertyValueAsLong(prop.Handle, value);
         }
@@ -1494,7 +2055,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="prop">Property item.</param>
         /// <param name="value">New property value.</param>
-        public void SetPropertyValueAsInt(IPropertyGridItem prop, int value)
+        public virtual void SetPropertyValueAsInt(IPropertyGridItem prop, int value)
         {
             NativeControl.SetPropertyValueAsInt(prop.Handle, value);
         }
@@ -1504,7 +2065,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="prop">Property item.</param>
         /// <param name="value">New property value.</param>
-        public void SetPropertyValueAsDouble(IPropertyGridItem prop, double value)
+        public virtual void SetPropertyValueAsDouble(IPropertyGridItem prop, double value)
         {
             NativeControl.SetPropertyValueAsDouble(prop.Handle, value);
         }
@@ -1514,7 +2075,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="prop">Property item.</param>
         /// <param name="value">New property value.</param>
-        public void SetPropertyValueAsBool(IPropertyGridItem prop, bool value)
+        public virtual void SetPropertyValueAsBool(IPropertyGridItem prop, bool value)
         {
             NativeControl.SetPropertyValueAsBool(prop.Handle, value);
         }
@@ -1524,7 +2085,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="prop">Property item.</param>
         /// <param name="value">New property value.</param>
-        public void SetPropertyValueAsStr(IPropertyGridItem prop, string value)
+        public virtual void SetPropertyValueAsStr(IPropertyGridItem prop, string value)
         {
             NativeControl.SetPropertyValueAsStr(prop.Handle, value);
         }
@@ -1534,7 +2095,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="prop">Property item.</param>
         /// <param name="value">New property value.</param>
-        public void SetPropertyValueAsDateTime(IPropertyGridItem prop, DateTime value)
+        public virtual void SetPropertyValueAsDateTime(IPropertyGridItem prop, DateTime value)
         {
             NativeControl.SetPropertyValueAsDateTime(prop.Handle, value);
         }
@@ -1544,7 +2105,7 @@ namespace Alternet.UI
         /// entered in a property.
         /// </summary>
         /// <param name="vfbFlags">Validation failure flags.</param>
-        public void SetValidationFailureBehavior(PropertyGridValidationFailure vfbFlags)
+        public virtual void SetValidationFailureBehavior(PropertyGridValidationFailure vfbFlags)
         {
             NativeControl.SetValidationFailureBehavior((int)vfbFlags);
         }
@@ -1555,7 +2116,7 @@ namespace Alternet.UI
         /// <param name="prop">Property item.</param>
         /// <param name="recurse"><c>true</c> to perform recursive sorting, <c>false</c>
         /// otherwise.</param>
-        public void SortChildren(IPropertyGridItem prop, bool recurse = false)
+        public virtual void SortChildren(IPropertyGridItem prop, bool recurse = false)
         {
             var flags = recurse ? PGRECURSE : PGDONTRECURSE;
             NativeControl.SortChildren(prop.Handle, flags);
@@ -1572,7 +2133,7 @@ namespace Alternet.UI
         /// SpinCtrl and DatePickerCtrl, but using them requires
         /// calling <see cref="RegisterAdditionalEditors"/> prior use.
         /// </remarks>
-        public void SetPropertyEditorByName(IPropertyGridItem prop, string editorName)
+        public virtual void SetPropertyEditorByName(IPropertyGridItem prop, string editorName)
         {
             NativeControl.SetPropertyEditorByName(prop.Handle, editorName);
         }
@@ -1581,7 +2142,7 @@ namespace Alternet.UI
         /// Sets all <see cref="PropertyGrid"/> colors.
         /// </summary>
         /// <param name="colors">New color settings.</param>
-        public void ApplyColors(PropertyGridColors? colors = null)
+        public virtual void ApplyColors(PropertyGridColors? colors = null)
         {
             if(colors == null)
             {
@@ -1629,7 +2190,7 @@ namespace Alternet.UI
         /// will be added.</param>
         /// <param name="keycode">Key code.</param>
         /// <param name="modifiers">Key mnodifiers (Ctrl, Shift, Alt) of the key.</param>
-        public void AddActionTrigger(
+        public virtual void AddActionTrigger(
             PropertyGridKeyboardAction action,
             Key keycode,
             ModifierKeys modifiers = 0)
@@ -1642,7 +2203,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="action">Action for which triggers (keyboard key associations) will
         /// be removed.</param>
-        public void ClearActionTriggers(PropertyGridKeyboardAction action)
+        public virtual void ClearActionTriggers(PropertyGridKeyboardAction action)
         {
             NativeControl.ClearActionTriggers((int)action);
         }
@@ -1656,7 +2217,7 @@ namespace Alternet.UI
         /// Using this function allows, for example, navigation between properties using
         /// arrow keys even when the focus is in the editor control.
         /// </remarks>
-        public void DedicateKey(Key keycode)
+        public virtual void DedicateKey(Key keycode)
         {
             NativeControl.DedicateKey((int)keycode);
         }
@@ -1667,7 +2228,7 @@ namespace Alternet.UI
         /// <param name="enableAutoResizing">If <c>true</c>, automatic column resizing is
         /// enabled (only applicable if window style
         /// <see cref="PropertyGridCreateStyle.SplitterAutoCenter"/> is used).</param>
-        public void CenterSplitter(bool enableAutoResizing = false)
+        public virtual void CenterSplitter(bool enableAutoResizing = false)
         {
             NativeControl.CenterSplitter(enableAutoResizing);
         }
@@ -1679,7 +2240,7 @@ namespace Alternet.UI
         /// For example, this is called when changes text in <see cref="TextBox"/>
         /// (used in string or int property).
         /// </remarks>
-        public void EditorsValueWasModified()
+        public virtual void EditorsValueWasModified()
         {
             NativeControl.EditorsValueWasModified();
         }
@@ -1690,7 +2251,7 @@ namespace Alternet.UI
         /// <remarks>
         /// This function should only be called by custom properties.
         /// </remarks>
-        public void EditorsValueWasNotModified()
+        public virtual void EditorsValueWasNotModified()
         {
             NativeControl.EditorsValueWasNotModified();
         }
@@ -1705,7 +2266,7 @@ namespace Alternet.UI
         /// option <see cref="PropertyGridValidationFailure.StayInProperty"/> is not
         /// respected, i.e.selection is cleared even if editor had invalid value.
         /// </remarks>
-        public bool EnableCategories(bool enable)
+        public virtual bool EnableCategories(bool enable)
         {
             return NativeControl.EnableCategories(enable);
         }
@@ -1720,7 +2281,7 @@ namespace Alternet.UI
         /// window style. This function only works properly if grid size prior to call
         /// was already fairly large.
         /// </remarks>
-        public Size FitColumns()
+        public virtual Size FitColumns()
         {
             return NativeControl.FitColumns();
         }
@@ -1728,7 +2289,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets number of columns currently on grid.
         /// </summary>
-        public uint GetColumnCount()
+        public virtual uint GetColumnCount()
         {
             return NativeControl.GetColumnCount();
         }
@@ -1736,7 +2297,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets height of highest characters of used font.
         /// </summary>
-        public int GetFontHeight()
+        public virtual int GetFontHeight()
         {
             return NativeControl.GetFontHeight();
         }
@@ -1744,7 +2305,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets margin width.
         /// </summary>
-        public int GetMarginWidth()
+        public virtual int GetMarginWidth()
         {
             return NativeControl.GetMarginWidth();
         }
@@ -1752,7 +2313,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets height of a single grid row (in pixels).
         /// </summary>
-        public int GetRowHeight()
+        public virtual int GetRowHeight()
         {
             return NativeControl.GetRowHeight();
         }
@@ -1761,7 +2322,7 @@ namespace Alternet.UI
         /// Gets current splitter x position.
         /// </summary>
         /// <param name="splitterIndex">Splitter index (starting from 0).</param>
-        public int GetSplitterPosition(uint splitterIndex = 0)
+        public virtual int GetSplitterPosition(uint splitterIndex = 0)
         {
             return NativeControl.GetSplitterPosition(splitterIndex);
         }
@@ -1769,7 +2330,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets current vertical spacing.
         /// </summary>
-        public int GetVerticalSpacing()
+        public virtual int GetVerticalSpacing()
         {
             return NativeControl.GetVerticalSpacing();
         }
@@ -1779,7 +2340,7 @@ namespace Alternet.UI
         /// </summary>
         /// <returns><c>true</c> if a property editor control has focus, <c>false</c>
         /// otherwise.</returns>
-        public bool IsEditorFocused()
+        public virtual bool IsEditorFocused()
         {
             return NativeControl.IsEditorFocused();
         }
@@ -1789,7 +2350,7 @@ namespace Alternet.UI
         /// </summary>
         /// <returns><c>true</c> if editor's value was marked modified, <c>false</c>
         /// otherwise.</returns>
-        public bool IsEditorsValueModified()
+        public virtual bool IsEditorsValueModified()
         {
             return NativeControl.IsEditorsValueModified();
         }
@@ -1799,145 +2360,145 @@ namespace Alternet.UI
         /// </summary>
         /// <returns><c>true</c> if any property has been modified by the user, <c>false</c>
         /// otherwise.</returns>
-        public bool IsAnyModified()
+        public virtual bool IsAnyModified()
         {
             return NativeControl.IsAnyModified();
         }
 
         /// <summary>
-        /// Resets all colors used in <see cref="PropertyGrid" to default values.
+        /// Resets all colors used in <see cref="PropertyGrid"/> to default values.
         /// </summary>
-        public void ResetColors()
+        public virtual void ResetColors()
         {
             NativeControl.ResetColors();
         }
 
-        public void ResetColumnSizes(bool enableAutoResizing = false)
+        public virtual void ResetColumnSizes(bool enableAutoResizing = false)
         {
             NativeControl.ResetColumnSizes(enableAutoResizing);
         }
 
-        public void MakeColumnEditable(uint column, bool editable = true)
+        public virtual void MakeColumnEditable(uint column, bool editable = true)
         {
             NativeControl.MakeColumnEditable(column, editable);
         }
 
-        public void BeginLabelEdit(uint column = 0)
+        public virtual void BeginLabelEdit(uint column = 0)
         {
             NativeControl.BeginLabelEdit(column);
         }
 
-        public void EndLabelEdit(bool commit = true)
+        public virtual void EndLabelEdit(bool commit = true)
         {
             NativeControl.EndLabelEdit(commit);
         }
 
-        public void SetColumnCount(int colCount)
+        public virtual void SetColumnCount(int colCount)
         {
             NativeControl.SetColumnCount(colCount);
         }
 
-        public void SetSplitterPosition(int newXPos, int col = 0)
+        public virtual void SetSplitterPosition(int newXPos, int col = 0)
         {
             NativeControl.SetSplitterPosition(newXPos, col);
         }
 
-        public string GetUnspecifiedValueText()
+        public virtual string GetUnspecifiedValueText()
         {
             return NativeControl.GetUnspecifiedValueText(0);
         }
 
-        public void SetVirtualWidth(int width)
+        public virtual void SetVirtualWidth(int width)
         {
             NativeControl.SetVirtualWidth(width);
         }
 
-        public void SetSplitterLeft(bool privateChildrenToo = false)
+        public virtual void SetSplitterLeft(bool privateChildrenToo = false)
         {
             NativeControl.SetSplitterLeft(privateChildrenToo);
         }
 
-        public void SetVerticalSpacing(int vspacing)
+        public virtual void SetVerticalSpacing(int vspacing)
         {
             NativeControl.SetVerticalSpacing(vspacing);
         }
 
-        public bool HasVirtualWidth()
+        public virtual bool HasVirtualWidth()
         {
             return NativeControl.HasVirtualWidth();
         }
 
-        public uint GetCommonValueCount()
+        public virtual uint GetCommonValueCount()
         {
             return NativeControl.GetCommonValueCount();
         }
 
-        public string GetCommonValueLabel(uint i)
+        public virtual string GetCommonValueLabel(uint i)
         {
             return NativeControl.GetCommonValueLabel(i);
         }
 
-        public int GetUnspecifiedCommonValue()
+        public virtual int GetUnspecifiedCommonValue()
         {
             return NativeControl.GetUnspecifiedCommonValue();
         }
 
-        public void SetUnspecifiedCommonValue(int index)
+        public virtual void SetUnspecifiedCommonValue(int index)
         {
             NativeControl.SetUnspecifiedCommonValue(index);
         }
 
-        public void RefreshEditor()
+        public virtual void RefreshEditor()
         {
             NativeControl.RefreshEditor();
         }
 
-        public bool WasValueChangedInEvent()
+        public virtual bool WasValueChangedInEvent()
         {
             return NativeControl.WasValueChangedInEvent();
         }
 
-        public int GetSpacingY()
+        public virtual int GetSpacingY()
         {
             return NativeControl.GetSpacingY();
         }
 
-        public void SetupTextCtrlValue(string text)
+        public virtual void SetupTextCtrlValue(string text)
         {
             NativeControl.SetupTextCtrlValue(text);
         }
 
-        public bool UnfocusEditor()
+        public virtual bool UnfocusEditor()
         {
             return NativeControl.UnfocusEditor();
         }
 
-        public IPropertyGridItem? GetLastItem(PropertyGridIteratorFlags flags)
+        public virtual IPropertyGridItem? GetLastItem(PropertyGridIteratorFlags flags)
         {
             return PtrToItem(NativeControl.GetLastItem((int)flags));
         }
 
-        public IPropertyGridItem? GetRoot()
+        public virtual IPropertyGridItem? GetRoot()
         {
             return PtrToItem(NativeControl.GetRoot());
         }
 
-        public IPropertyGridItem? GetSelectedProperty()
+        public virtual IPropertyGridItem? GetSelectedProperty()
         {
             return PtrToItem(NativeControl.GetSelectedProperty());
         }
 
-        public bool ChangePropertyValue(IPropertyGridItem id, object value)
+        public virtual bool ChangePropertyValue(IPropertyGridItem id, object value)
         {
             return NativeControl.ChangePropertyValue(id.Handle, ToVariant(value).Handle);
         }
 
-        public void SetPropertyImage(IPropertyGridItem id, ImageSet? bmp)
+        public virtual void SetPropertyImage(IPropertyGridItem id, ImageSet? bmp)
         {
             NativeControl.SetPropertyImage(id.Handle, bmp?.NativeImageSet);
         }
 
-        public void SetPropertyAttribute(
+        public virtual void SetPropertyAttribute(
             IPropertyGridItem id,
             string attrName,
             object value,
@@ -1950,7 +2511,7 @@ namespace Alternet.UI
                 (int)argFlags);
         }
 
-        public void SetPropertyKnownAttribute(
+        public virtual void SetPropertyKnownAttribute(
             IPropertyGridItem id,
             PropertyGridItemAttrId attrName,
             object value,
@@ -1959,42 +2520,42 @@ namespace Alternet.UI
             SetPropertyAttribute(id, attrName.ToString(), value, argFlags);
         }
 
-        public void SetPropertyAttributeAll(string attrName, object value)
+        public virtual void SetPropertyAttributeAll(string attrName, object value)
         {
             NativeControl.SetPropertyAttributeAll(attrName, ToVariant(value).Handle);
         }
 
-        public bool EnsureVisible(IPropertyGridItem prop)
+        public virtual bool EnsureVisible(IPropertyGridItem prop)
         {
             return NativeControl.EnsureVisible(prop.Handle);
         }
 
-        public bool SelectProperty(IPropertyGridItem prop, bool focus = false)
+        public virtual bool SelectProperty(IPropertyGridItem prop, bool focus = false)
         {
             return NativeControl.SelectProperty(prop.Handle, focus);
         }
 
-        public bool AddToSelection(IPropertyGridItem prop)
+        public virtual bool AddToSelection(IPropertyGridItem prop)
         {
             return NativeControl.AddToSelection(prop.Handle);
         }
 
-        public bool RemoveFromSelection(IPropertyGridItem prop)
+        public virtual bool RemoveFromSelection(IPropertyGridItem prop)
         {
             return NativeControl.RemoveFromSelection(prop.Handle);
         }
 
-        public void SetCurrentCategory(IPropertyGridItem prop)
+        public virtual void SetCurrentCategory(IPropertyGridItem prop)
         {
             NativeControl.SetCurrentCategory(prop.Handle);
         }
 
-        public Int32Rect GetImageRect(IPropertyGridItem prop, int item)
+        public virtual Int32Rect GetImageRect(IPropertyGridItem prop, int item)
         {
             return NativeControl.GetImageRect(prop.Handle, item);
         }
 
-        public Int32Size GetImageSize(IPropertyGridItem prop, int item)
+        public virtual Int32Size GetImageSize(IPropertyGridItem prop, int item)
         {
             return NativeControl.GetImageSize(prop.Handle, item);
         }
@@ -2300,7 +2861,7 @@ namespace Alternet.UI
             return variant;
         }
 
-       /// <summary>
+        /// <summary>
         /// Called when user is about to begin editing a property label.
         /// </summary>
         /// <param name="e">An <see cref="EventArgs"/> that contains

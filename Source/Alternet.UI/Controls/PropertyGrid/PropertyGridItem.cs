@@ -86,13 +86,13 @@ namespace Alternet.UI
             set => isCategory = value;
         }
 
-        public void RaisePropertyChanged(object? sender, EventArgs e)
+        public void RaisePropertyChanged()
         {
-            PropertyChanged?.Invoke(sender, e);
+            PropertyChanged?.Invoke(this, EventArgs.Empty);
         }
 
         private void Children_ItemRemoved(
-            object sender,
+            object? sender,
             CollectionChangeEventArgs<IPropertyGridItem> e)
         {
             if (e.Item is not PropertyGridItem item)
@@ -101,7 +101,7 @@ namespace Alternet.UI
         }
 
         private void Children_ItemInserted(
-            object sender,
+            object? sender,
             CollectionChangeEventArgs<IPropertyGridItem> e)
         {
             if (e.Item is not PropertyGridItem item)

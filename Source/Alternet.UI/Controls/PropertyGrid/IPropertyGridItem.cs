@@ -55,7 +55,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets type of the property editor.
         /// </summary>
-        string PropertyEditorKind { get; }
+        string PropertyEditorKind { get; set; }
 
         /// <summary>
         /// Item handle.
@@ -82,6 +82,9 @@ namespace Alternet.UI
         /// </summary>
         bool IsCategory { get; }
 
-        void RaisePropertyChanged(object? sender, EventArgs e);
+        /// <summary>
+        /// Raises <see cref="PropertyChanged"/> event.
+        /// </summary>
+        void RaisePropertyChanged();
     }
 }
