@@ -685,8 +685,59 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets the background color for the control.
+        /// </summary>
+        public Color BackgroundColor
+        {
+            get
+            {
+                if (Handler.NativeControl is null)
+                    return Color.Empty;
+                else
+                    return Handler.NativeControl.BackgroundColor;
+            }
+
+            set
+            {
+                if (Handler.NativeControl is not null)
+                {
+                    if (Handler.NativeControl.BackgroundColor == value)
+                        return;
+                    Handler.NativeControl.BackgroundColor = value;
+                    Invalidate();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the foreground color for the control.
+        /// </summary>
+        public Color ForegroundColor
+        {
+            get
+            {
+                if (Handler.NativeControl is null)
+                    return Color.Black;
+                else
+                    return Handler.NativeControl.ForegroundColor;
+            }
+
+            set
+            {
+                if (Handler.NativeControl is not null)
+                {
+                    if (Handler.NativeControl.ForegroundColor == value)
+                        return;
+                    Handler.NativeControl.ForegroundColor = value;
+                    Invalidate();
+                }
+            }
+        }
+
+        /// <summary>
         /// Gets or sets the background brush for the control.
         /// </summary>
+        [Browsable(false)]
         public Brush? Background
         {
             get => background;
@@ -703,6 +754,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the foreground brush for the control.
         /// </summary>
+        [Browsable(false)]
         public Brush? Foreground
         {
             get => foreground;

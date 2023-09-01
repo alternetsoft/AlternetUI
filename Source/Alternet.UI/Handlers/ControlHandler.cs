@@ -48,12 +48,12 @@ namespace Alternet.UI
         /// <summary>
         /// <inheritdoc cref="Control.IsFocusable"/>
         /// </summary>
-        public bool IsFocusable => NativeControl != null ? NativeControl.IsFocusable : false;
+        public bool IsFocusable => NativeControl != null && NativeControl.IsFocusable;
 
         /// <summary>
         /// <inheritdoc cref="Control.CanAcceptFocus"/>
         /// </summary>
-        public bool CanAcceptFocus => NativeControl != null ? NativeControl.CanAcceptFocus : false;
+        public bool CanAcceptFocus => NativeControl != null && NativeControl.CanAcceptFocus;
 
         /// <summary>
         /// Gets or sets the <see cref="Control"/> bounds relative to the parent, in

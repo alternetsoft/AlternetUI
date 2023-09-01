@@ -8,6 +8,19 @@ namespace NativeApi.Api
 {
     public abstract class Control
     {
+        public event EventHandler? Paint;
+        public event EventHandler? MouseEnter;
+        public event EventHandler? MouseLeave;
+        public event EventHandler? MouseClick;
+        public event EventHandler? VisibleChanged;
+        public event EventHandler? MouseCaptureLost;
+        public event EventHandler? Destroyed;
+        public event NativeEventHandler<DragEventData>? DragDrop;
+        public event NativeEventHandler<DragEventData>? DragOver;
+        public event NativeEventHandler<DragEventData>? DragEnter;
+        public event EventHandler? DragLeave;
+
+
         public void Freeze() { }
         public void Thaw() { }
 
@@ -18,24 +31,6 @@ namespace NativeApi.Api
         public void EndIgnoreRecreate() {}
         public Size GetDPI() => throw new Exception();
 
-        public event EventHandler? Paint;
-
-        public event EventHandler? MouseEnter;
-
-        public event EventHandler? MouseLeave;
-
-        public event EventHandler? MouseClick;
-
-        public event EventHandler? VisibleChanged;
-
-        public event EventHandler? MouseCaptureLost;
-
-        public event EventHandler? Destroyed;
-
-        public event NativeEventHandler<DragEventData>? DragDrop;
-        public event NativeEventHandler<DragEventData>? DragOver;
-        public event NativeEventHandler<DragEventData>? DragEnter;
-        public event EventHandler? DragLeave;
 
         public void SetMouseCapture(bool value) => throw new Exception();
 
