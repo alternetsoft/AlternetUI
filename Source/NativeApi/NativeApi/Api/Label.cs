@@ -1,14 +1,15 @@
-﻿using ApiCommon;
+﻿#pragma warning disable
+using ApiCommon;
 using System;
 
 namespace NativeApi.Api
 {
     public class Label : Control
     {
-        public string Text { get => throw new Exception(); set => throw new Exception(); }
+        public string Text { get; set; }
 
-        public bool IsEllipsized() => throw new Exception();
+        public bool IsEllipsized() => false;
 
-        public void Wrap(int width) => throw new Exception();
+        public void Wrap(int width) { }
     }
 }
