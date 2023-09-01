@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using Alternet.Drawing;
+using Alternet.UI.Extensions;
 
 namespace Alternet.UI
 {
@@ -24,7 +25,8 @@ namespace Alternet.UI
     /// </remarks>
     public class ListBox : ListControl
     {
-        private readonly HashSet<int> selectedIndices = new ();
+        private readonly HashSet<int> selectedIndices = new();
+        private int ignoreSelectEvents = 0;
 
         private ListBoxSelectionMode selectionMode = ListBoxSelectionMode.Single;
 
@@ -205,20 +207,37 @@ namespace Alternet.UI
         {
             get
             {
-                CheckDisposed();
-                return selectedIndices.FirstOrDefault();
+                if (selectedIndices.Count == 0)
+                    return null;
+                else
+                    return selectedIndices.First();
             }
 
             set
             {
                 CheckDisposed();
 
+                var oldSelected = SelectedIndex;
+                var oldCount = selectedIndices.Count;
+
+                if (oldSelected == value && oldCount <= 1)
+                    return;
+
                 if (value != null && (value < 0 || value >= Items.Count))
                     throw new ArgumentOutOfRangeException(nameof(value));
 
-                ClearSelected();
-                if (value != null)
-                    SetSelected(value.Value, true);
+                ignoreSelectEvents++;
+                try
+                {
+                    ClearSelected();
+                    if (value != null)
+                        SetSelected(value.Value, true);
+                }
+                finally
+                {
+                    ignoreSelectEvents--;
+                    RaiseSelectionChanged(EventArgs.Empty);
+                }
             }
         }
 
@@ -467,7 +486,7 @@ namespace Alternet.UI
         /// </remarks>
         /// <exception cref="ArgumentOutOfRangeException">The specified index
         /// was outside the range of valid values.</exception>
-        public void SetSelected(int index, bool value)
+        public bool SetSelected(int index, bool value)
         {
             if (index < 0 || index >= Items.Count)
                 throw new ArgumentOutOfRangeException(nameof(value));
@@ -478,6 +497,8 @@ namespace Alternet.UI
 
             if (changed)
                 RaiseSelectionChanged(EventArgs.Empty);
+
+            return changed;
         }
 
         /// <summary>
@@ -488,6 +509,8 @@ namespace Alternet.UI
         /// data.</param>
         public void RaiseSelectionChanged(EventArgs e)
         {
+            if (ignoreSelectEvents > 0)
+                return;
             OnSelectionChanged(e);
             SelectionChanged?.Invoke(this, e);
         }
