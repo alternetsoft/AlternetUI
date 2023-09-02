@@ -223,28 +223,19 @@ namespace PropertyGridSample
                 prop = propertyGrid.CreatePropCategory("Category 2");
                 propertyGrid.Add(prop);
 
-                prop = propertyGrid.CreateBoolProperty("Bool");
+                prop = propertyGrid.CreateBoolProperty("Bool 2");
                 propertyGrid.Add(prop);
                 propertyGrid.SetPropertyKnownAttribute(
                     prop,
                     PropertyGridItemAttrId.UseCheckbox,
                     false);
 
-                prop = propertyGrid.CreateBoolProperty("Bool 2");
+                prop = propertyGrid.CreateBoolProperty("Bool 3");
                 propertyGrid.Add(prop);
-                propertyGrid.SetPropertyKnownAttribute(prop, PropertyGridItemAttrId.UseCheckbox, true);
-
-                prop = propertyGrid.CreateLongProperty("Int");
-                propertyGrid.Add(prop);
-
-                prop = propertyGrid.CreateDoubleProperty("Float");
-                propertyGrid.Add(prop);
-
-                prop = propertyGrid.CreateULongProperty("UInt");
-                propertyGrid.Add(prop);
-
-                prop = propertyGrid.CreateStringProperty("String");
-                propertyGrid.Add(prop);
+                propertyGrid.SetPropertyKnownAttribute(
+                    prop,
+                    PropertyGridItemAttrId.UseCheckbox,
+                    true);
 
                 prop = propertyGrid.CreateLongStringProperty("Long string");
                 propertyGrid.Add(prop);
@@ -252,7 +243,7 @@ namespace PropertyGridSample
                 // Date
                 prop = propertyGrid.CreateDateProperty("Date");
                 propertyGrid.Add(prop);
-                // If none Date is selected (if checkbox next to date editor is unchecked)
+                // If none Date is selected (checkbox next to date editor is unchecked)
                 // DateTime.MinValue is returned.
                 propertyGrid.SetPropertyKnownAttribute(
                     prop,

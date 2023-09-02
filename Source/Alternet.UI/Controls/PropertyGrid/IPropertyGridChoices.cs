@@ -60,29 +60,57 @@ namespace Alternet.UI
         /// <param name="value">Item value (id).</param>
         public string? GetLabelFromValue(int value);
 
-        // Returns index of item with given label.
+        /// <summary>
+        /// Returns index of item with given label.
+        /// </summary>
+        /// <param name="str">Item label.</param>
+        /// <returns></returns>
         public int GetLabelIndex(string str);
 
-        // Returns index of item with given value (id).
+        /// <summary>
+        /// Returns index of item with given value (id).
+        /// </summary>
+        /// <param name="val">Item value.</param>
+        /// <returns></returns>
         public int GetValueIndex(int val);
 
-        // Inserts a single item.
-        public void Insert(int index, string text, int value, ImageSet? bitmapBundle);
+        /// <summary>
+        /// Inserts a single item.
+        /// </summary>
+        /// <param name="index">Index in list where item will be inserted.</param>
+        /// <param name="text">Item title.</param>
+        /// <param name="value">Item value (id).</param>
+        /// <param name="bitmap">Item image.</param>
+        public void Insert(int index, string text, int value, ImageSet? bitmap);
 
-        // Returns false if this is a constant empty set of choices,
-        // which should not be modified.
+        /// <summary>
+        /// Returns false if this is a constant empty set of choices,
+        /// which should not be modified.
+        /// </summary>
         public bool IsOk();
 
-        // Returns label of item at specified index.
+        /// <summary>
+        /// Returns label of item at specified index.
+        /// </summary>
+        /// <param name="index">Item index.</param>
         public string GetLabel(int index);
 
-        // Returns value of item at specified index.
+        /// <summary>
+        /// Returns value of item at specified index.
+        /// </summary>
+        /// <param name="index">Item index.</param>
         public int GetValue(int index);
 
-        // Removes count items starting at specified index.
+        /// <summary>
+        /// Removes items starting at specified index.
+        /// </summary>
+        /// <param name="index">The zero-based index of the item(s) to remove.</param>
+        /// <param name="count">Number of items to remove.</param>
         public void RemoveAt(int index, int count = 1);
 
-        // Delete all choices.
+        /// <summary>
+        /// Delete all choices.
+        /// </summary>
         public void Clear();
     }
 }
