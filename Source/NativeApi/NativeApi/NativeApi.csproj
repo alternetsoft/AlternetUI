@@ -10,4 +10,8 @@
     <ProjectReference Include="..\NativeApi.Common\NativeApi.Common.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Api\Validator\" />
+  </ItemGroup>
+
 </Project>
