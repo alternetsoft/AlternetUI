@@ -12,6 +12,7 @@ namespace NativeApi.Api
     {
         //public static void DeleteValidatorNumericProperty(IntPtr handle) { }
         //public static IntPtr CreateValidatorNumericProperty() => default;
+
     }
 }
 

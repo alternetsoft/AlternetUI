@@ -12,6 +12,7 @@ namespace NativeApi.Api
     {
         public static void DeleteValidatorText(IntPtr handle) { }
         public static IntPtr CreateValidatorText(long style) => default;
+
     }
 }
 

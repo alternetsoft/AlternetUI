@@ -10,6 +10,7 @@ namespace NativeApi.Api
     //https://docs.wxwidgets.org/3.2/classwx_num_validator.html
     public class ValidatorNumeric : Validator
     {
+
     }
 }
 
