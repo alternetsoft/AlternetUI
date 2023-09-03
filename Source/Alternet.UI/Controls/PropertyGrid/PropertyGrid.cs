@@ -2913,6 +2913,21 @@ namespace Alternet.UI
             return Native.PropertyGrid.GetEditorByName(editorName);
         }
 
+        internal IntPtr GetPropertyValidator(IPropertyGridItem prop)
+        {
+            return NativeControl.GetPropertyValidator(prop.Handle);
+        }
+
+        /// <summary>
+        /// Sets validator of a property.
+        /// </summary>
+        /// <param name="prop">Property item.</param>
+        /// <param name="validator">Value validator.</param>
+        internal void SetPropertyValidator(IPropertyGridItem prop, IValueValidator validator)
+        {
+            NativeControl.SetPropertyValidator(prop.Handle, validator.Handle);
+        }
+
         internal Color GetCaptionBackgroundColor()
         {
             return NativeControl.GetCaptionBackgroundColor();

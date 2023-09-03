@@ -35,6 +35,8 @@ void SetCreateStyle(int64_t value);
 int64_t GetCreateStyleEx();
 void SetCreateStyleEx(int64_t value);
 
+void* GetPropertyClientData(void* id);
+string GetPropertyHelpString(void* id);
 void* GetPropertyImage(void* id);
 string GetPropertyLabel(void* id);
 void* GetPropertyParent(void* id);
@@ -83,6 +85,8 @@ bool ChangePropertyValue(void* id, void* variant);
 void SetPropertyImage(void* id, ImageSet* bmp);
 void SetPropertyAttribute(void* id, const string& attrName, void* variant, int64_t argFlags);
 void SetPropertyAttributeAll(const string& attrName, void* variant);
+void SetColumnCount(int colCount);
+void SetEmptySpaceColor(const Color& col);
 void SetLineColor(const Color& col);
 void SetMarginColor(const Color& col);
 void SetSelectionBackgroundColor(const Color& col);
@@ -166,8 +170,8 @@ void EndAddChildren(void* id);
 bool Expand(void* id);
 void* GetFirstChild(void* id);
 void* GetPropertyCategory(void* id);
-void* GetPropertyClientData(void* id);
-string GetPropertyHelpString(void* id);
+void* GetPropertyValidator(void* prop);
+void SetPropertyValidator(void* prop, void* validator);
 static void* CreateEx(int64_t styles);
 void AddActionTrigger(int action, int keycode, int modifiers);
 void DedicateKey(int keycode);
@@ -208,8 +212,6 @@ void SetCaptionTextColor(const Color& col);
 void SetCellBackgroundColor(const Color& col);
 void SetCellDisabledTextColor(const Color& col);
 void SetCellTextColor(const Color& col);
-void SetColumnCount(int colCount);
-void SetEmptySpaceColor(const Color& col);
 public:
 enum class PropertyGridEvent
 {

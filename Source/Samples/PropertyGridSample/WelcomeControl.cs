@@ -25,7 +25,7 @@ namespace PropertyGridSample
         private readonly Label desc = new()
         {
             Text = descText,
-            Margin = new(0,5,0,5),
+            Margin = new(0,5,0,15),
         };
         private readonly PropertyGrid propertyGrid = new()
         {

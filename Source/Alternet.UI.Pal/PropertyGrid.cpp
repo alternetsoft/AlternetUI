@@ -1305,4 +1305,17 @@ namespace Alternet::UI
 		wxVariant v = PropertyGridVariant::ToVar(variant);
 		GetPropGrid()->SetPropertyAttributeAll(wxStr(attrName), v);
 	}
+
+	void* PropertyGrid::GetPropertyValidator(void* prop)
+	{
+		ToPropArg(prop);
+		auto validator = GetPropGrid()->GetPropertyValidator(_propArg);
+		return validator;
+	}
+
+	void PropertyGrid::SetPropertyValidator(void* prop, void* validator)
+	{
+		ToPropArg(prop);
+		GetPropGrid()->SetPropertyValidator(_propArg, *(wxValidator*)validator);
+	}
 }

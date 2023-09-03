@@ -11,6 +11,12 @@ namespace NativeApi.Api
     //https://docs.wxwidgets.org/3.2/classwx_property_grid.html
     public partial class PropertyGrid : Control
     {
+        // Returns validator of a property, which you can pass SetPropertyValidator.
+        public IntPtr GetPropertyValidator(IntPtr prop) => default;
+
+        // Sets validator of a property.
+        public void SetPropertyValidator(IntPtr prop, IntPtr validator) { }
+
         public int EventValidationFailureBehavior { get; set; }
         public IntPtr EventPropValue { get; }
         public int EventColumn { get; }
@@ -53,16 +59,15 @@ namespace NativeApi.Api
         public static string NameAsLabel { get; }
         public bool HasBorder { get; set; }
 
-        public static IntPtr CreateEx(long styles) => throw new Exception();
+        public static IntPtr CreateEx(long styles) => default;
 
         public long CreateStyle { get; set; }
 
         public long CreateStyleEx { get; set; }
 
-        public void AddActionTrigger(int action, int keycode, int modifiers = 0)
-            => throw new Exception();
+        public void AddActionTrigger(int action, int keycode, int modifiers = 0) { }
 
-        public void DedicateKey(int keycode) => throw new Exception();
+        public void DedicateKey(int keycode) { }
 
         public static void AutoGetTranslation(bool enable) => throw new Exception();
 
@@ -104,11 +109,11 @@ namespace NativeApi.Api
 
         public int GetRowHeight() => throw new Exception();
 
-        public Color GetSelectionBackgroundColor() => throw new Exception();
+        public Color GetSelectionBackgroundColor() => default;
 
-        public Color GetSelectionForegroundColor() => throw new Exception();
+        public Color GetSelectionForegroundColor() => default;
 
-        public int GetSplitterPosition(uint splitterIndex = 0) => throw new Exception();
+        public int GetSplitterPosition(uint splitterIndex = 0) => default;
 
         public int GetVerticalSpacing() => throw new Exception();
 

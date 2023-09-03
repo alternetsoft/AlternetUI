@@ -121,6 +121,20 @@ ALTERNET_UI_API void PropertyGrid_SetCreateStyleEx_(PropertyGrid* obj, int64_t v
         });
 }
 
+ALTERNET_UI_API void* PropertyGrid_GetPropertyClientData_(PropertyGrid* obj, void* id)
+{
+    return MarshalExceptions<void*>([&](){
+            return obj->GetPropertyClientData(id);
+        });
+}
+
+ALTERNET_UI_API char16_t* PropertyGrid_GetPropertyHelpString_(PropertyGrid* obj, void* id)
+{
+    return MarshalExceptions<char16_t*>([&](){
+            return AllocPInvokeReturnString(obj->GetPropertyHelpString(id));
+        });
+}
+
 ALTERNET_UI_API void* PropertyGrid_GetPropertyImage_(PropertyGrid* obj, void* id)
 {
     return MarshalExceptions<void*>([&](){
@@ -454,6 +468,20 @@ ALTERNET_UI_API void PropertyGrid_SetPropertyAttributeAll_(PropertyGrid* obj, co
 {
     MarshalExceptions<void>([&](){
             obj->SetPropertyAttributeAll(attrName, variant);
+        });
+}
+
+ALTERNET_UI_API void PropertyGrid_SetColumnCount_(PropertyGrid* obj, int colCount)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetColumnCount(colCount);
+        });
+}
+
+ALTERNET_UI_API void PropertyGrid_SetEmptySpaceColor_(PropertyGrid* obj, Color col)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetEmptySpaceColor(col);
         });
 }
 
@@ -1038,17 +1066,17 @@ ALTERNET_UI_API void* PropertyGrid_GetPropertyCategory_(PropertyGrid* obj, void*
         });
 }
 
-ALTERNET_UI_API void* PropertyGrid_GetPropertyClientData_(PropertyGrid* obj, void* id)
+ALTERNET_UI_API void* PropertyGrid_GetPropertyValidator_(PropertyGrid* obj, void* prop)
 {
     return MarshalExceptions<void*>([&](){
-            return obj->GetPropertyClientData(id);
+            return obj->GetPropertyValidator(prop);
         });
 }
 
-ALTERNET_UI_API char16_t* PropertyGrid_GetPropertyHelpString_(PropertyGrid* obj, void* id)
+ALTERNET_UI_API void PropertyGrid_SetPropertyValidator_(PropertyGrid* obj, void* prop, void* validator)
 {
-    return MarshalExceptions<char16_t*>([&](){
-            return AllocPInvokeReturnString(obj->GetPropertyHelpString(id));
+    MarshalExceptions<void>([&](){
+            obj->SetPropertyValidator(prop, validator);
         });
 }
 
@@ -1329,20 +1357,6 @@ ALTERNET_UI_API void PropertyGrid_SetCellTextColor_(PropertyGrid* obj, Color col
 {
     MarshalExceptions<void>([&](){
             obj->SetCellTextColor(col);
-        });
-}
-
-ALTERNET_UI_API void PropertyGrid_SetColumnCount_(PropertyGrid* obj, int colCount)
-{
-    MarshalExceptions<void>([&](){
-            obj->SetColumnCount(colCount);
-        });
-}
-
-ALTERNET_UI_API void PropertyGrid_SetEmptySpaceColor_(PropertyGrid* obj, Color col)
-{
-    MarshalExceptions<void>([&](){
-            obj->SetEmptySpaceColor(col);
         });
 }
 
