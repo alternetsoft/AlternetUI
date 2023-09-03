@@ -75,6 +75,8 @@ namespace Alternet.UI
         {
         }
 
-        protected abstract void DisposeUnmanagedResources();
+        protected virtual void DisposeUnmanagedResources()
+        {
+        }
     }
 }
