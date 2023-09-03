@@ -11,7 +11,7 @@ namespace Alternet.UI
     /// <summary>
     /// Container for the property values in the <see cref="PropertyGrid"/>.
     /// </summary>
-    public interface IPropertyGridVariant
+    public interface IPropertyGridVariant : IDisposable
     {
         /// <summary>
         /// Gets instance handle.

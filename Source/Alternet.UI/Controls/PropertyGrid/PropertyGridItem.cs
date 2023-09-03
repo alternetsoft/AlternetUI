@@ -14,14 +14,21 @@ namespace Alternet.UI
         private readonly string defaultName;
         private readonly string defaultLabel;
         private readonly object? defaultValue;
+        private readonly PropertyGrid owner;
         private bool isCategory = false;
         private object? instance;
         private PropertyInfo? propInfo;
         private Collection<IPropertyGridItem>? children;
         private IPropertyGridItem? parent;
 
-        public PropertyGridItem(IntPtr handle, string label, string? name, object? defaultValue)
+        public PropertyGridItem(
+            PropertyGrid owner,
+            IntPtr handle,
+            string label,
+            string? name,
+            object? defaultValue)
         {
+            this.owner = owner;
             this.handle = handle;
             this.defaultLabel = label;
             this.defaultValue = defaultValue;
@@ -32,6 +39,10 @@ namespace Alternet.UI
         }
 
         public event EventHandler? PropertyChanged;
+
+        public object? UserData { get; set; }
+
+        public object Owner { get => owner; }
 
         public string PropertyEditorKind { get; set; } = "Other";
 

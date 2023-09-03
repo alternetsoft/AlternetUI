@@ -13,6 +13,7 @@ namespace Alternet.UI
     - multibuttons in prop editor   https://docs.wxwidgets.org/3.2/classwx_p_g_multi_button.html
     - How to hide lines? (set their color to bk color)
     - propgrid MakeAsPanel() also color scheme
+    - PropertyGridItem Dispose item? when?
      */
 
     /// <summary>
@@ -139,13 +140,6 @@ namespace Alternet.UI
         /// </summary>
         public static PropertyGridCreateStyle DefaultCreateStyle { get; set; }
             = PropertyGridCreateStyle.DefaultStyle;
-
-        /// <summary>
-        /// Defines default extended style for the newly created
-        /// <see cref="PropertyGrid"/> controls.
-        /// </summary>
-        public static PropertyGridCreateStyleEx DefaultCreateStyleEx { get; set; }
-            = PropertyGridCreateStyleEx.DefaultStyle;
 
         /// <summary>
         /// Gets or sets whether boolean properties will be shown as checkboxes.
@@ -313,6 +307,13 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override ControlId ControlKind => ControlId.PropertyGrid;
 
+        /// <summary>
+        /// Defines default extended style for the newly created
+        /// <see cref="PropertyGrid"/> controls.
+        /// </summary>
+        internal static PropertyGridCreateStyleEx DefaultCreateStyleEx { get; set; }
+            = PropertyGridCreateStyleEx.DefaultStyle;
+
         internal new NativePropertyGridHandler Handler
         {
             get
@@ -454,7 +455,7 @@ namespace Alternet.UI
         {
             value ??= string.Empty;
             var handle = NativeControl.CreateFilenameProperty(label, CorrectPropName(name), value!);
-            var result = new PropertyGridItem(handle, label, name, value)
+            var result = new PropertyGridItem(this, handle, label, name, value)
             {
                 PropertyEditorKind = TypeCode.String.ToString() + ".Filename",
             };
@@ -485,7 +486,7 @@ namespace Alternet.UI
         {
             value ??= string.Empty;
             var handle = NativeControl.CreateDirProperty(label, CorrectPropName(name), value!);
-            var result = new PropertyGridItem(handle, label, name, value)
+            var result = new PropertyGridItem(this, handle, label, name, value)
             {
                 PropertyEditorKind = TypeCode.String.ToString() + ".Dir",
             };
@@ -522,7 +523,7 @@ namespace Alternet.UI
                 label,
                 CorrectPropName(name),
                 value!);
-            var result = new PropertyGridItem(handle, label, name, value)
+            var result = new PropertyGridItem(this, handle, label, name, value)
             {
                 PropertyEditorKind = TypeCode.String.ToString() + ".ImageFilename",
             };
@@ -543,7 +544,7 @@ namespace Alternet.UI
             Color value)
         {
             var handle = NativeControl.CreateSystemColorProperty(label, CorrectPropName(name), value);
-            var result = new PropertyGridItem(handle, label, name, value)
+            var result = new PropertyGridItem(this, handle, label, name, value)
             {
                 PropertyEditorKind = "Color.System",
             };
@@ -565,7 +566,7 @@ namespace Alternet.UI
         {
             value ??= string.Empty;
             var handle = NativeControl.CreateStringProperty(label, CorrectPropName(name), value!);
-            var result = new PropertyGridItem(handle, label, name, value)
+            var result = new PropertyGridItem(this, handle, label, name, value)
             {
                 PropertyEditorKind = TypeCode.String.ToString(),
             };
@@ -604,7 +605,7 @@ namespace Alternet.UI
             bool value = false)
         {
             var handle = NativeControl.CreateBoolProperty(label, CorrectPropName(name), value);
-            var result = new PropertyGridItem(handle, label, name, value)
+            var result = new PropertyGridItem(this, handle, label, name, value)
             {
                 PropertyEditorKind = TypeCode.Boolean.ToString(),
             };
@@ -625,7 +626,7 @@ namespace Alternet.UI
             long value = 0)
         {
             var handle = NativeControl.CreateIntProperty(label, CorrectPropName(name), value);
-            var result = new PropertyGridItem(handle, label, name, value)
+            var result = new PropertyGridItem(this, handle, label, name, value)
             {
                 PropertyEditorKind = TypeCode.Int64.ToString(),
             };
@@ -646,7 +647,7 @@ namespace Alternet.UI
             double value = default)
         {
             var handle = NativeControl.CreateFloatProperty(label, CorrectPropName(name), value);
-            var result = new PropertyGridItem(handle, label, name, value)
+            var result = new PropertyGridItem(this, handle, label, name, value)
             {
                 PropertyEditorKind = TypeCode.Double.ToString(),
             };
@@ -668,7 +669,7 @@ namespace Alternet.UI
             double value = default)
         {
             var handle = NativeControl.CreateFloatProperty(label, CorrectPropName(name), value);
-            var result = new PropertyGridItem(handle, label, name, value)
+            var result = new PropertyGridItem(this, handle, label, name, value)
             {
                 PropertyEditorKind = TypeCode.Single.ToString(),
             };
@@ -690,7 +691,7 @@ namespace Alternet.UI
             Color value)
         {
             var handle = NativeControl.CreateColorProperty(label, CorrectPropName(name), value);
-            var result = new PropertyGridItem(handle, label, name, value)
+            var result = new PropertyGridItem(this, handle, label, name, value)
             {
                 PropertyEditorKind = "Color",
             };
@@ -711,7 +712,7 @@ namespace Alternet.UI
             ulong value = 0)
         {
             var handle = NativeControl.CreateUIntProperty(label, CorrectPropName(name), value);
-            var result = new PropertyGridItem(handle, label, name, value)
+            var result = new PropertyGridItem(this, handle, label, name, value)
             {
                 PropertyEditorKind = TypeCode.UInt64.ToString(),
             };
@@ -737,7 +738,7 @@ namespace Alternet.UI
                 label,
                 CorrectPropName(name),
                 value);
-            var result = new PropertyGridItem(handle, label, name, value)
+            var result = new PropertyGridItem(this, handle, label, name, value)
             {
                 PropertyEditorKind = TypeCode.String.ToString() + ".Long",
             };
@@ -768,7 +769,7 @@ namespace Alternet.UI
                 label,
                 CorrectPropName(name),
                 dt);
-            var result = new PropertyGridItem(handle, label, name, value)
+            var result = new PropertyGridItem(this, handle, label, name, value)
             {
                 PropertyEditorKind = TypeCode.DateTime.ToString() + ".Date",
             };
@@ -1432,7 +1433,7 @@ namespace Alternet.UI
                 CorrectPropName(name),
                 choices.Handle,
                 (int)value);
-            var result = new PropertyGridItem(handle, label, name, value)
+            var result = new PropertyGridItem(this, handle, label, name, value)
             {
                 PropertyEditorKind = "Enum",
             };
@@ -1460,7 +1461,7 @@ namespace Alternet.UI
                 CorrectPropName(name),
                 choices.Handle,
                 value);
-            var result = new PropertyGridItem(handle, label, name, value)
+            var result = new PropertyGridItem(this, handle, label, name, value)
             {
                 PropertyEditorKind = "Enum.Edit",
             };
@@ -1488,7 +1489,7 @@ namespace Alternet.UI
                 CorrectPropName(name),
                 choices.Handle,
                 (int)value);
-            var result = new PropertyGridItem(handle, label, name, value)
+            var result = new PropertyGridItem(this, handle, label, name, value)
             {
                 PropertyEditorKind = "Enum.Flags",
             };
@@ -1553,7 +1554,7 @@ namespace Alternet.UI
             var handle = NativeControl.CreatePropCategory(
                 label,
                 CorrectPropName(name));
-            var result = new PropertyGridItem(handle, label, name, null)
+            var result = new PropertyGridItem(this, handle, label, name, null)
             {
                 IsCategory = true,
             };
@@ -3184,7 +3185,7 @@ namespace Alternet.UI
            int value = 0)
         {
             var handle = NativeControl.CreateCursorProperty(label, CorrectPropName(name), value);
-            var result = new PropertyGridItem(handle, label, name, value);
+            var result = new PropertyGridItem(this, handle, label, name, value);
             OnPropertyCreated(result);
             return result;
         }

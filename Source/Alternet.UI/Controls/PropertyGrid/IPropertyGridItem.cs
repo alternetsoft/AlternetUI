@@ -18,6 +18,16 @@ namespace Alternet.UI
         event EventHandler? PropertyChanged;
 
         /// <summary>
+        /// Gets <see cref="PropertyGrid"/> instance which owns this property.
+        /// </summary>
+        public object Owner { get; }
+
+        /// <summary>
+        /// Gets or sets user data associated with this <see cref="IPropertyGridItem"/>.
+        /// </summary>
+        public object? UserData { get; set; }
+
+        /// <summary>
         /// Gets objects instance in which property is contained.
         /// </summary>
         /// <remarks>

@@ -314,6 +314,8 @@ namespace Alternet.UI
                     Native.PropertyGridVariant.Delete(handle);
                 handle = IntPtr.Zero;
             }
+
+            GC.SuppressFinalize(this);
         }
     }
 }

@@ -47,7 +47,7 @@ namespace PropertyGridSample
             propertyGrid.LayoutUpdated += PropertyGrid_LayoutUpdated;
         }
 
-        private void PropertyGrid_LayoutUpdated(object sender, EventArgs e)
+        private void PropertyGrid_LayoutUpdated(object? sender, EventArgs e)
         {
             propertyGrid.CenterSplitter();
         }
