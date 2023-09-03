@@ -477,8 +477,6 @@ namespace Alternet.UI
                 : base()
             {
                 var validator = control.Validator;
-                validator ??= TextBox.DefaultValidator;
-
                 IntPtr ptr = default;
                 if (validator != null)
                     ptr = validator.Handle;
