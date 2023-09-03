@@ -14,10 +14,12 @@ namespace Alternet::UI
         void OnTextEnter(wxCommandEvent& event);
         void OnTextUrl(wxTextUrlEvent& event);
         void OnTextMaxLength(wxCommandEvent& event);
+        TextBox(void* validator);
     protected:
 
     private:
         bool _editControlOnly = false;
+        void* _validator = nullptr;
         bool _readOnly = false;
         bool _multiline = false;
         bool _isRichEdit = false;
@@ -59,7 +61,8 @@ namespace Alternet::UI
 
             virtual bool AcceptsFocusFromKeyboard() const override
             {
-                return wxTextCtrl::AcceptsFocusFromKeyboard() && wxControl::AcceptsFocusFromKeyboard();
+                return wxTextCtrl::AcceptsFocusFromKeyboard()
+                    && wxControl::AcceptsFocusFromKeyboard();
             }
         };
     };

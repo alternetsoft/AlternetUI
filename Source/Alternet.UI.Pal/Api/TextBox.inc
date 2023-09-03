@@ -76,6 +76,7 @@ void SetAutoUrl(bool value);
 bool GetHideVertScrollbar();
 void SetHideVertScrollbar(bool value);
 
+static void* CreateTextBox(void* validator);
 int GetLineLength(int64_t lineNo);
 string GetLineText(int64_t lineNo);
 int GetNumberOfLines();

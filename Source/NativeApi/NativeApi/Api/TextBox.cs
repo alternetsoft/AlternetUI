@@ -7,6 +7,8 @@ namespace NativeApi.Api
 {
     public class TextBox : Control
     {
+        public static IntPtr CreateTextBox(IntPtr validator) => default;
+
         public event EventHandler? TextChanged;
         public event EventHandler? TextEnter;
         public event EventHandler? TextUrl;

@@ -320,6 +320,12 @@ namespace Alternet.UI.Native
             }
         }
         
+        public static System.IntPtr CreateTextBox(System.IntPtr validator)
+        {
+            var n = NativeApi.TextBox_CreateTextBox_(validator);
+            return n;
+        }
+        
         public int GetLineLength(long lineNo)
         {
             CheckDisposed();
@@ -718,6 +724,9 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void TextBox_SetHideVertScrollbar_(IntPtr obj, bool value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr TextBox_CreateTextBox_(System.IntPtr validator);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern int TextBox_GetLineLength_(IntPtr obj, long lineNo);

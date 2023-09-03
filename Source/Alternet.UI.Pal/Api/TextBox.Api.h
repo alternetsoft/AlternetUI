@@ -253,6 +253,13 @@ ALTERNET_UI_API void TextBox_SetHideVertScrollbar_(TextBox* obj, c_bool value)
         });
 }
 
+ALTERNET_UI_API void* TextBox_CreateTextBox_(void* validator)
+{
+    return MarshalExceptions<void*>([&](){
+            return TextBox::CreateTextBox(validator);
+        });
+}
+
 ALTERNET_UI_API int TextBox_GetLineLength_(TextBox* obj, int64_t lineNo)
 {
     return MarshalExceptions<int>([&](){

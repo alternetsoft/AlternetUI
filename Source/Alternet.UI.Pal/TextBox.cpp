@@ -34,13 +34,25 @@ namespace Alternet::UI
         _text.Set(value);
     }
 
+    TextBox::TextBox(void* validator) : TextBox()
+    {
+        _validator = validator;
+    }
+
+    void* TextBox::CreateTextBox(void* validator)
+    {
+        return new TextBox(validator);
+    }
+
     wxWindow* TextBox::CreateWxWindowCore(wxWindow* parent)
     {
         long style = GetCreateStyle() | GetBorderStyle();
 
+        auto& validator = wxDefaultValidator;
+
         auto textCtrl = new TextCtrlEx(
             parent, wxID_ANY, wxEmptyString, wxDefaultPosition, 
-            wxDefaultSize, style);
+            wxDefaultSize, style, validator);
 
 #ifdef __WXOSX__
         // todo: port all platforms to the latest wx version, and then the ifdef
