@@ -2892,6 +2892,19 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Sets validator of a property.
+        /// </summary>
+        /// <param name="prop">Property item.</param>
+        /// <param name="validator">Value validator.</param>
+        public void SetPropertyValidator(IPropertyGridItem prop, IValueValidator validator)
+        {
+            IntPtr ptr = default;
+            if (validator != null)
+                ptr = validator.Handle;
+            NativeControl.SetPropertyValidator(prop.Handle, ptr);
+        }
+
+        /// <summary>
         /// Returns size of the custom paint image in front of property.
         /// </summary>
         /// <param name="prop">Return image rectangle for this property. If this argument
@@ -2916,16 +2929,6 @@ namespace Alternet.UI
         internal IntPtr GetPropertyValidator(IPropertyGridItem prop)
         {
             return NativeControl.GetPropertyValidator(prop.Handle);
-        }
-
-        /// <summary>
-        /// Sets validator of a property.
-        /// </summary>
-        /// <param name="prop">Property item.</param>
-        /// <param name="validator">Value validator.</param>
-        internal void SetPropertyValidator(IPropertyGridItem prop, IValueValidator validator)
-        {
-            NativeControl.SetPropertyValidator(prop.Handle, validator.Handle);
         }
 
         internal Color GetCaptionBackgroundColor()

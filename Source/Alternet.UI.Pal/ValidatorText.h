@@ -11,7 +11,7 @@ namespace Alternet::UI
     {
 #include "Api/ValidatorText.inc"
     public:
-    
+        static wxTextValidator* ToTextValidator(void* handle);
     private:
     
     };

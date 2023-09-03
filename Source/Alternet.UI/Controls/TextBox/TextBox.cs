@@ -98,11 +98,6 @@ namespace Alternet.UI
         public event EventHandler? HasBorderChanged;
 
         /// <summary>
-        /// Gets or sets default validator for the <see cref="TextBox"/> controls.
-        /// </summary>
-        public static IValueValidator? DefaultValidator { get; set; }
-
-        /// <summary>
         /// Gets or sets validator for the <see cref="TextBox"/> control.
         /// </summary>
         public IValueValidator? Validator { get; set; }

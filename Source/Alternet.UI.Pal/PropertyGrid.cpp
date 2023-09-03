@@ -1316,6 +1316,9 @@ namespace Alternet::UI
 	void PropertyGrid::SetPropertyValidator(void* prop, void* validator)
 	{
 		ToPropArg(prop);
-		GetPropGrid()->SetPropertyValidator(_propArg, *(wxValidator*)validator);
+		if(validator == nullptr)
+			GetPropGrid()->SetPropertyValidator(_propArg, wxDefaultValidator);
+		else
+			GetPropGrid()->SetPropertyValidator(_propArg, *(wxValidator*)validator);
 	}
 }
