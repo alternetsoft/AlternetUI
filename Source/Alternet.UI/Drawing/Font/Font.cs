@@ -61,7 +61,11 @@ namespace Alternet.Drawing
             FontStyle style = FontStyle.Regular)
         {
             if (emSize <= 0 || double.IsInfinity(emSize) || double.IsNaN(emSize))
-                throw new ArgumentException(nameof(emSize));
+            {
+                throw new ArgumentException(
+                    Alternet.UI.ErrorMessages.InvalidParameter,
+                    nameof(emSize));
+            }
 
             NativeFont = new UI.Native.Font();
             NativeFont.Initialize(
@@ -124,7 +128,6 @@ namespace Alternet.Drawing
                 return asUnderlined;
             }
         }
-
 
         /// <summary>
         /// Gets style information for this <see cref="Font"/>.
