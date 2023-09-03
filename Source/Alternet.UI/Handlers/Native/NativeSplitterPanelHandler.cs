@@ -175,7 +175,7 @@ namespace Alternet.UI
         {
             base.OnAttach();
 
-            NativeControl.SplitterSashPosChanging +=   NativeControl_SplitterSashPosChanging;
+            NativeControl.SplitterSashPosChanging += NativeControl_SplitterSashPosChanging;
             NativeControl.SplitterSashPosChanged +=
                 NativeControl_SplitterSashPosChanged;
             NativeControl.Unsplit += NativeControl_Unsplit;
