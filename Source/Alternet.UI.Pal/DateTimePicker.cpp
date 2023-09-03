@@ -55,8 +55,10 @@ namespace Alternet::UI
             auto window = GetWxWindow();
             if (window != nullptr)
             {
-                window->Unbind(wxEVT_DATE_CHANGED, &DateTimePicker::OnDateTimePickerValueChanged, this);
-                window->Unbind(wxEVT_TIME_CHANGED, &DateTimePicker::OnDateTimePickerValueChanged, this);
+                window->Unbind(wxEVT_DATE_CHANGED, 
+                    &DateTimePicker::OnDateTimePickerValueChanged, this);
+                window->Unbind(wxEVT_TIME_CHANGED,
+                    &DateTimePicker::OnDateTimePickerValueChanged, this);
             }
         }
     }
@@ -73,7 +75,7 @@ namespace Alternet::UI
 
     bool DateTimePicker::IsTimePicker() 
     {
-        return (_valueKind == 1);
+        return GetTimePickerCtrl() != nullptr; // (_valueKind == 1);
     }
 
     class wxTimePickerCtrl2 : public wxTimePickerCtrl, public wxWidgetExtender
@@ -118,7 +120,7 @@ namespace Alternet::UI
         wxDateTime v = _value.GetDelayed();
         wxWindow* value = nullptr;
 
-        if (IsTimePicker()) 
+        if (_valueKind == 1)
         {
             style = style | wxTP_DEFAULT;
             value = new wxTimePickerCtrl2(parent,
