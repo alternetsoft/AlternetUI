@@ -14,7 +14,7 @@ namespace PropertyGridSample
         {
             Padding = new(10),
             VerticalAlignment = VerticalAlignment.Top,
-            HorizontalAlignment = HorizontalAlignment.Left,
+            HorizontalAlignment = HorizontalAlignment.Stretch,
         };
         private const string descText = "Specialized grid for editing properties.";
         private readonly Label header = new()
@@ -30,8 +30,7 @@ namespace PropertyGridSample
         private readonly PropertyGrid propertyGrid = new()
         {
             Height = 350,
-            Width = 300,
-            HasBorder = false,
+            HorizontalAlignment = HorizontalAlignment.Stretch,
         };
 
         public WelcomeControl()
@@ -41,8 +40,16 @@ namespace PropertyGridSample
             Children.Add(stackPanel);
             stackPanel.Children.Add(header);
             stackPanel.Children.Add(desc);
-            propertyGrid.Visible = false;
             stackPanel.Children.Add(propertyGrid);
+
+            propertyGrid.SetVerticalSpacing();
+            propertyGrid.SetProps(PropertyGridSettings.Default);
+            propertyGrid.LayoutUpdated += PropertyGrid_LayoutUpdated;
+        }
+
+        private void PropertyGrid_LayoutUpdated(object sender, EventArgs e)
+        {
+            propertyGrid.CenterSplitter();
         }
     }
 }

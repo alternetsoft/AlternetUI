@@ -177,6 +177,13 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets flags used when property value
+        /// is applied back to object instance in default <see cref="PropertyChanged"/>
+        /// event handler.
+        /// </summary>
+        public PropertyGridApplyFlags ApplyFlags { get; set; } = PropertyGridApplyFlags.Default;
+
+        /// <summary>
         /// Gets or sets validation failure behavior flags used in the event handler.
         /// </summary>
         [Browsable(false)]
@@ -2163,8 +2170,20 @@ namespace Alternet.UI
         /// <summary>
         /// Sets all <see cref="PropertyGrid"/> colors.
         /// </summary>
+        /// <param name="colors">New known color settings.</param>
+        public virtual void ApplyKnownColors(PropertyGridKnownColors colors)
+        {
+            if (colors == PropertyGridKnownColors.Default)
+                ApplyColors();
+            else
+                ApplyColors(PropertyGridColors.CreateColors(colors));
+        }
+
+        /// <summary>
+        /// Sets all <see cref="PropertyGrid"/> colors.
+        /// </summary>
         /// <param name="colors">New color settings.</param>
-        public virtual void ApplyColors(PropertyGridColors? colors = null)
+        public virtual void ApplyColors(IPropertyGridColors? colors = null)
         {
             if(colors == null)
             {
@@ -3309,6 +3328,24 @@ namespace Alternet.UI
         /// the event data.</param>
         protected virtual void OnPropertyChanged(EventArgs e)
         {
+            var prop = EventProperty;
+            if (prop == null)
+                return;
+
+            var setValue = ApplyFlags.HasFlag(PropertyGridApplyFlags.PropInfoSetValue);
+
+            var propEvent = ApplyFlags.HasFlag(PropertyGridApplyFlags.PropEvent);
+
+            if (setValue && prop.Instance != null && prop.PropInfo != null)
+            {
+                var variant = EventPropValueAsVariant;
+                var newValue = variant.GetCompatibleValue(prop.PropInfo);
+
+                prop.PropInfo.SetValue(prop.Instance, newValue);
+            }
+
+            if(propEvent)
+                prop.RaisePropertyChanged();
         }
 
         /// <summary>

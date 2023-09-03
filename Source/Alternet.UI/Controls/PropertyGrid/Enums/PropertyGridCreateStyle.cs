@@ -76,6 +76,7 @@ namespace Alternet.UI
         /// </summary>
         LimitedEditing = 0x00000800,
 
+        /*
         /// <summary>
         /// PropertyGridManager only: Show toolbar for mode and page selection.
         /// </summary>
@@ -92,10 +93,11 @@ namespace Alternet.UI
         /// property grid. Recommended if you use a header.
         /// </summary>
         InternalBorder = 0x00004000,
+        */
 
         /// <summary>
         /// Default style of the property grid.
         /// </summary>
-        DefaultStyle = BoldModified | Tooltips,
+        DefaultStyle = Tooltips,
     }
 }

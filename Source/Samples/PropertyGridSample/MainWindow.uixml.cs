@@ -21,10 +21,14 @@ namespace PropertyGridSample
         private readonly AuiManager manager = new();
         private readonly LayoutPanel panel = new();
         private readonly ListBox controlsListBox;
-        private readonly PropertyGrid propertyGrid = new();
         private readonly ListBox logListBox;
         private readonly ContextMenu contextMenu2 = new();
-        private readonly StackPanel controlPanel = new();
+        private readonly StackPanel controlPanel = new()
+        {
+            Padding = new(15, 15, 15, 15),
+        };
+
+        internal readonly PropertyGrid propertyGrid = new();
 
         static MainWindow()
         {
@@ -89,6 +93,7 @@ namespace PropertyGridSample
 
         public MainWindow()
         {
+            PropertyGridSettings.Default = new(this);
             propertyGrid.CreateStyleEx = PropertyGridCreateStyleEx.AlwaysAllowFocus;
 
             Icon = ImageSet.FromUrlOrNull("embres:PropertyGridSample.Sample.ico");
@@ -202,7 +207,7 @@ namespace PropertyGridSample
             Key.DownArrow,
             ModifierKeys.Control);
 
-            propertyGrid.ApplyColors(PropertyGridColors.ColorSchemeWhite);
+            propertyGrid.ApplyKnownColors(PropertyGridSettings.Default.ColorScheme);
             propertyGrid.CenterSplitter();
             propertyGrid.SetVerticalSpacing();
 
@@ -422,6 +427,11 @@ namespace PropertyGridSample
 
         private void ControlsListBox_SelectionChanged(object? sender, EventArgs e)
         {
+            UpdatePropertyGrid();
+        }
+
+        internal void UpdatePropertyGrid()
+        {
             void DoAction()
             {
                 controlPanel.Children.Clear();
@@ -431,7 +441,6 @@ namespace PropertyGridSample
                 var control = item?.ControlInstance;
                 if (control != null)
                 {
-                    controlPanel.Padding = new(25, 25, 25, 25);
                     if (control.Parent == null)
                         controlPanel.Children.Add(control);
                 }
@@ -493,19 +502,6 @@ namespace PropertyGridSample
         private void PGPropertyChanged(object? sender, EventArgs e)
         {
             LogEvent("PropertyChanged");
-
-            var prop = propertyGrid.EventProperty;
-            if (prop == null)
-                return;
-            if(prop.Instance != null && prop.PropInfo != null)
-            {
-                var variant = propertyGrid.EventPropValueAsVariant;
-                var newValue = variant.GetCompatibleValue(prop.PropInfo);
-
-                prop.PropInfo.SetValue(prop.Instance, newValue);
-            }
-
-            prop.RaisePropertyChanged();
         }
 
         private void PGPropertyChanging(object? sender, CancelEventArgs e)
