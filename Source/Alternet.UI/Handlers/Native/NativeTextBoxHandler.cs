@@ -152,8 +152,8 @@ namespace Alternet.UI
             {
                 return NativeControl.CanUndo;
             }
-
         }
+
         public bool IsEmpty
         {
             get
@@ -365,10 +365,24 @@ namespace Alternet.UI
 
         internal override Native.Control CreateNativeControl()
         {
-            return new Native.TextBox() {
+            return new NativeTextBox(Control)
+            {
                 Text = Control.Text,
                 EditControlOnly = !Control.HasBorder,
             };
+        }
+
+        protected override void OnDetach()
+        {
+            base.OnDetach();
+            Control.TextChanged -= Control_TextChanged;
+            NativeControl.TextChanged -= NativeControl_TextChanged;
+            Control.HasBorderChanged -= Control_HasBorderChanged;
+            Control.MultilineChanged -= Control_MultilineChanged;
+            Control.ReadOnlyChanged -= Control_ReadOnlyChanged;
+            NativeControl.TextEnter -= NativeControl_TextEnter;
+            NativeControl.TextUrl -= NativeControl_TextUrl;
+            NativeControl.TextMaxLength -= NativeControl_TextMaxLength;
         }
 
         protected override void OnAttach()
@@ -389,17 +403,17 @@ namespace Alternet.UI
             NativeControl.TextMaxLength += NativeControl_TextMaxLength;
         }
 
-        private void NativeControl_TextMaxLength(object sender, EventArgs e)
+        private void NativeControl_TextMaxLength(object? sender, EventArgs e)
         {
             Control.OnTextMaxLength(e);
         }
 
-        private void NativeControl_TextUrl(object sender, EventArgs e)
+        private void NativeControl_TextUrl(object? sender, EventArgs e)
         {
             Control.OnTextUrl(e);
         }
 
-        private void NativeControl_TextEnter(object sender, EventArgs e)
+        private void NativeControl_TextEnter(object? sender, EventArgs e)
         {
             Control.OnEnterPressed(e);
         }
@@ -429,19 +443,6 @@ namespace Alternet.UI
             NativeControl.EditControlOnly = !Control.HasBorder;
         }
 
-        protected override void OnDetach()
-        {
-            base.OnDetach();
-            Control.TextChanged -= Control_TextChanged;
-            NativeControl.TextChanged -= NativeControl_TextChanged;
-            Control.HasBorderChanged -= Control_HasBorderChanged;
-            Control.MultilineChanged -= Control_MultilineChanged;
-            Control.ReadOnlyChanged -= Control_ReadOnlyChanged;
-            NativeControl.TextEnter -= NativeControl_TextEnter;
-            NativeControl.TextUrl -= NativeControl_TextUrl;
-            NativeControl.TextMaxLength -= NativeControl_TextMaxLength;
-        }
-
         private void NativeControl_TextChanged(object? sender, System.EventArgs? e)
         {
             if (e is null)
@@ -467,6 +468,22 @@ namespace Alternet.UI
             {
                 if (NativeControl.Text != Control.Text)
                     NativeControl.Text = Control.Text;
+            }
+        }
+
+        internal class NativeTextBox : Native.TextBox
+        {
+            public NativeTextBox(TextBox control)
+                : base()
+            {
+                var validator = control.Validator;
+                validator ??= TextBox.DefaultValidator;
+
+                IntPtr ptr = default;
+                if (validator != null)
+                    ptr = validator.Handle;
+
+                SetNativePointer(NativeApi.TextBox_CreateTextBox_(ptr));
             }
         }
     }

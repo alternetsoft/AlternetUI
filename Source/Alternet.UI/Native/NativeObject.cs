@@ -7,6 +7,9 @@ namespace Alternet.UI.Native
 {
     internal class NativeObject : IDisposable
     {
+        private static readonly Dictionary<IntPtr, NativeObject>
+            InstancesByNativePointers = new();
+
         protected NativeObject()
         {
         }
@@ -15,9 +18,6 @@ namespace Alternet.UI.Native
         {
             SetNativePointer(nativePointer);
         }
-
-        private static readonly Dictionary<IntPtr, NativeObject>
-            instancesByNativePointers = new ();
 
         ~NativeObject()
         {
@@ -40,7 +40,7 @@ namespace Alternet.UI.Native
             if (pointer == IntPtr.Zero)
                 return null;
 
-            if (!instancesByNativePointers.TryGetValue(pointer, out var w))
+            if (!InstancesByNativePointers.TryGetValue(pointer, out var w))
             {
                 if (fromPointerFactory != null)
                 {
@@ -76,12 +76,12 @@ namespace Alternet.UI.Native
         protected void SetNativePointer(IntPtr value)
         {
             if (value == IntPtr.Zero)
-                instancesByNativePointers.Remove(NativePointer);
+                InstancesByNativePointers.Remove(NativePointer);
 
             NativePointer = value;
 
             if (value != IntPtr.Zero)
-                instancesByNativePointers.Add(NativePointer, this);
+                InstancesByNativePointers.Add(NativePointer, this);
         }
 
         protected virtual void Dispose(bool disposing)
