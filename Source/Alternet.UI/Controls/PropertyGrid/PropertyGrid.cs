@@ -143,8 +143,15 @@ namespace Alternet.UI
 
         /// <summary>
         /// Gets or sets whether boolean properties will be shown as checkboxes.
+        /// Default is <c>true</c>.
         /// </summary>
         public bool BoolAsCheckBox { get; set; } = true;
+
+        /// <summary>
+        /// Gets or sets whether <see cref="Color"/> properties have alpha chanel.
+        /// Default is <c>true</c>.
+        /// </summary>
+        public bool ColorHasAlpha { get; set; } = true;
 
         /// <summary>
         /// Gets property value used in the event handler.
@@ -934,6 +941,7 @@ namespace Alternet.UI
             decimal value = default)
         {
             var result = CreateStringProperty(label, name, value.ToString());
+            SetPropertyValidator(result, ValueValidatorFactory.DecimalValidator);
             return result;
         }
 
@@ -1362,7 +1370,8 @@ namespace Alternet.UI
             object? propValue = p.GetValue(instance, null);
             propValue ??= Color.Black;
             prop = CreateColorProperty(label, name, (Color)propValue);
-            SetPropertyKnownAttribute(prop, PropertyGridItemAttrId.HasAlpha, true);
+            if(ColorHasAlpha)
+                SetPropertyKnownAttribute(prop, PropertyGridItemAttrId.HasAlpha, true);
             OnPropertyCreated(prop, instance, p);
             return prop;
         }

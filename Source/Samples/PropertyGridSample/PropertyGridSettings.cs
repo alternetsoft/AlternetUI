@@ -35,6 +35,20 @@ namespace PropertyGridSample
             }
         }
 
+        public bool ColorHasAlpha
+        {
+            get
+            {
+                return propertyGrid.ColorHasAlpha;
+            }
+
+            set
+            {
+                propertyGrid.ColorHasAlpha = value;
+                mainWindow.UpdatePropertyGrid();
+            }
+        }
+
         public PropertyGridKnownColors ColorScheme
         {
             get
