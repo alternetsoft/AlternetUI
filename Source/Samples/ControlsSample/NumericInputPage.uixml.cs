@@ -12,7 +12,7 @@ namespace ControlsSample
         {
             InitializeComponent();
 
-            NumericUpDown edit1 = numberUpDown1;
+            //NumericUpDown edit1 = numberUpDown1;
         }
 
         public IPageSite? Site
