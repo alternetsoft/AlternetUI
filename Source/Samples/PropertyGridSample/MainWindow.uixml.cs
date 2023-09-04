@@ -270,34 +270,12 @@ namespace PropertyGridSample
                     HorizontalAlignment.Center);
                 propertyGrid.Add(prop);
 
-                prop = propertyGrid.CreateColorProperty("Color", null, Color.Red);
-                propertyGrid.Add(prop);
-
-                prop = propertyGrid.CreateColorProperty("Color with alpha", null, Color.Yellow);
-                propertyGrid.SetPropertyKnownAttribute(prop, PropertyGridItemAttrId.HasAlpha, true);
-                propertyGrid.Add(prop);
-
                 prop = propertyGrid.CreateStringProperty(
-                    "Readonly prop",
+                    "Readonly",
                     null,
                     "Some Text");
                 propertyGrid.SetPropertyReadOnly(prop, true, false);
                 propertyGrid.Add(prop);
-
-                prop = propertyGrid.CreateProperty(new Border(), "BorderColor");
-                propertyGrid.Add(prop!);
-
-                prop = propertyGrid.CreateProperty(this, "DecimalValue");
-                propertyGrid.Add(prop!);
-
-                prop = propertyGrid.CreateProperty(this, "FontValue");
-                propertyGrid.Add(prop!);
-
-                prop = propertyGrid.CreateProperty(this, "BrushValue");
-                propertyGrid.Add(prop!);
-
-                prop = propertyGrid.CreateProperty(this, "PenValue");
-                propertyGrid.Add(prop!);
 
                 prop = propertyGrid.CreateStringProperty(
                                     "Error if changed",
