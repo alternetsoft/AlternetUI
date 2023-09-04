@@ -97,6 +97,11 @@ namespace Alternet.UI
             set => isCategory = value;
         }
 
+        public static int CompareByLabel(IPropertyGridItem x, IPropertyGridItem y)
+        {
+            return string.Compare(x.DefaultLabel, y.DefaultLabel);
+        }
+
         public void RaisePropertyChanged()
         {
             PropertyChanged?.Invoke(this, EventArgs.Empty);

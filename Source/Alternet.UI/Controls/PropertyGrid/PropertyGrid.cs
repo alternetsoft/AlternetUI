@@ -18,6 +18,26 @@ namespace Alternet.UI
      */
 
     /// <summary>
+    /// Represents the method that will handle creation of the property.
+    /// </summary>
+    /// <param name="sender"><see cref="PropertyGrid"/> instance.</param>
+    /// <param name="label">Property label.</param>
+    /// <param name="name">Property name.</param>
+    /// <param name="instance">Object instance which contains the property.</param>
+    /// <param name="propInfo">Property information.</param>
+    /// <returns>Property declaration for use with <see cref="PropertyGrid.Add"/>.</returns>
+    /// <remarks>
+    /// If <paramref name="label"/> or <paramref name="name"/> is null,
+    /// <paramref name="propInfo"/> is used to get them.
+    /// </remarks>
+    public delegate IPropertyGridItem PropertyGridItemCreate(
+            object sender,
+            string label,
+            string? name,
+            object instance,
+            PropertyInfo propInfo);
+
+    /// <summary>
     /// Specialized grid for editing properties - in other words name = value pairs.
     /// </summary>
     /// <remarks>
@@ -39,6 +59,7 @@ namespace Alternet.UI
         private const int PGDONTRECURSE = 0x00000000;
         private const int PGRECURSE = 0x00000020;
         private const int PGSORTTOPLEVELONLY = 0x00000200;
+        private static readonly AdvDictionary<Type, IPropertyGridTypeRegistry> TypeRegistry = new();
         private static AdvDictionary<Type, IPropertyGridChoices>? choicesCache = null;
 
         private readonly AdvDictionary<IntPtr, IPropertyGridItem> items = new();
@@ -47,6 +68,10 @@ namespace Alternet.UI
 
         static PropertyGrid()
         {
+            RegisterPropCreateFunc(typeof(Color), FuncCreatePropertyAsColor);
+            RegisterPropCreateFunc(typeof(Font), FuncCreatePropertyAsFont);
+            RegisterPropCreateFunc(typeof(Brush), FuncCreatePropertyAsBrush);
+            RegisterPropCreateFunc(typeof(Pen), FuncCreatePropertyAsPen);
         }
 
         /// <summary>
@@ -349,6 +374,29 @@ namespace Alternet.UI
         }
 
         internal Native.PropertyGrid NativeControl => Handler.NativeControl;
+
+        /// <summary>
+        /// Registers <see cref="IPropertyGridItem"/> create function for specific <see cref="Type"/>.
+        /// </summary>
+        /// <param name="type">Type value.</param>
+        /// <param name="func">Create function.</param>
+        public static void RegisterPropCreateFunc(Type type, PropertyGridItemCreate func)
+        {
+            var registry = GetTypeRegistry(type);
+            registry.CreateFunc = func;
+        }
+
+        /// <summary>
+        /// Gets <see cref="IPropertyGridTypeRegistry"/> for the given <see cref="Type"/>.
+        /// </summary>
+        /// <param name="type">Type value.</param>
+        public static IPropertyGridTypeRegistry GetTypeRegistry(Type type)
+        {
+            return TypeRegistry.GetOrCreate(type, () =>
+            {
+                return new PropertyGridTypeRegistry();
+            });
+        }
 
         /// <summary>
         /// Checks system screen design used for laying out various dialogs.
@@ -1261,6 +1309,17 @@ namespace Alternet.UI
             IPropertyGridItem? CreateAsClass()
             {
                 IPropertyGridItem? result;
+
+                var registry = GetTypeRegistry(realType);
+                var createFunc = registry.CreateFunc;
+
+                if (createFunc != null)
+                {
+                    result = createFunc(this, label, propName, instance, p);
+                    return result;
+                }
+
+                /*
                 if (realType == typeof(Color))
                 {
                     result = CreatePropertyAsColor(label, propName, instance, p);
@@ -1286,6 +1345,11 @@ namespace Alternet.UI
                     result = CreatePropertyAsPen(label!, propName, instance, p);
                     setPropReadonly = true;
                     return result;
+                }*/
+
+                if (realType.IsValueType)
+                {
+
                 }
 
                 result = CreateStringProperty(
@@ -1302,7 +1366,9 @@ namespace Alternet.UI
         /// the specified object.
         /// </summary>
         /// <param name="instance">Object instance which properties will be added.</param>
-        public virtual IEnumerable<IPropertyGridItem> CreateProps(object instance)
+        /// <param name="sort">Optional. Equals <c>false</c> by default. If <c>true</c>,
+        /// properties will be sorted ascending dy name.</param>
+        public virtual IEnumerable<IPropertyGridItem> CreateProps(object instance, bool sort = false)
         {
             List<IPropertyGridItem> result = new();
             Type myType = instance.GetType();
@@ -1327,6 +1393,8 @@ namespace Alternet.UI
                 addedNames.Add(propName, p);
             }
 
+            if(sort)
+                result.Sort(PropertyGridItem.CompareByLabel);
             return result;
         }
 
@@ -1335,13 +1403,18 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="instance">Object instance which properties will be added.</param>
         /// <param name="parent">Optional. Parent item to which properties are added.</param>
+        /// <param name="sort">Optional. Equals <c>false</c> by default. If <c>true</c>,
+        /// properties will be sorted ascending dy name.</param>
         /// <remarks>
         /// If <paramref name="parent"/> is <c>null</c> (default) properties are
         /// added on the root level.
         /// </remarks>
-        public virtual void AddProps(object instance, IPropertyGridItem? parent = null)
+        public virtual void AddProps(
+            object instance,
+            IPropertyGridItem? parent = null,
+            bool sort = false)
         {
-            var props = CreateProps(instance);
+            var props = CreateProps(instance, sort);
             foreach (var item in props)
             {
                 Add(item, parent);
@@ -1352,7 +1425,9 @@ namespace Alternet.UI
         /// Clears properties and calls <see cref="AddProps"/> afterwards.
         /// </summary>
         /// <param name="instance">Object instance which properties will be added.</param>
-        public virtual void SetProps(object? instance)
+        /// <param name="sort">Optional. Equals <c>false</c> by default. If <c>true</c>,
+        /// properties will be sorted ascending dy name.</param>
+        public virtual void SetProps(object? instance, bool sort = false)
         {
             BeginUpdate();
             try
@@ -1360,7 +1435,7 @@ namespace Alternet.UI
                 Clear();
                 if (instance == null)
                     return;
-                AddProps(instance);
+                AddProps(instance, null, sort);
             }
             finally
             {
@@ -1535,6 +1610,19 @@ namespace Alternet.UI
         {
             items.Clear();
             NativeControl.Clear();
+        }
+
+        /// <summary>
+        /// Adds items to the property grid.
+        /// </summary>
+        /// <param name="props">Items to add.</param>
+        /// <param name="parent">Parent item or null.</param>
+        public virtual void AddRange(
+            IEnumerable<IPropertyGridItem> props,
+            IPropertyGridItem? parent = null)
+        {
+            foreach (var prop in props)
+                Add(prop, parent);
         }
 
         /// <summary>
@@ -3459,13 +3547,16 @@ namespace Alternet.UI
 
             var setValue = ApplyFlags.HasFlag(PropertyGridApplyFlags.PropInfoSetValue);
 
-            if (setValue && prop.Instance != null && prop.PropInfo != null)
+            var propInfo = prop.PropInfo;
+            var instance = prop.Instance;
+
+            if (setValue && instance != null && propInfo != null && propInfo.CanWrite)
             {
                 AvoidException(() =>
                 {
                     var variant = EventPropValueAsVariant;
-                    var newValue = variant.GetCompatibleValue(prop.PropInfo);
-                    prop.PropInfo.SetValue(prop.Instance, newValue);
+                    var newValue = variant.GetCompatibleValue(propInfo);
+                    propInfo.SetValue(instance, newValue);
                  });
 
                 AvoidException(() =>
@@ -3477,7 +3568,7 @@ namespace Alternet.UI
                         ReloadValues();
                     else
                         if (reload)
-                        ReloadValues(prop.Instance, prop.PropInfo);
+                        ReloadValues(instance, propInfo);
                 });
             }
 
@@ -3531,6 +3622,46 @@ namespace Alternet.UI
         protected override ControlHandler CreateHandler()
         {
             return GetEffectiveControlHandlerHactory().CreatePropertyGridHandler(this);
+        }
+
+        private static IPropertyGridItem FuncCreatePropertyAsColor(
+            object sender,
+            string label,
+            string? name,
+            object instance,
+            PropertyInfo propInfo)
+        {
+            return (sender as PropertyGrid)!.CreatePropertyAsColor(label, name, instance, propInfo);
+        }
+
+        private static IPropertyGridItem FuncCreatePropertyAsFont(
+            object sender,
+            string label,
+            string? name,
+            object instance,
+            PropertyInfo propInfo)
+        {
+            return (sender as PropertyGrid)!.CreatePropertyAsFont(label, name, instance, propInfo);
+        }
+
+        private static IPropertyGridItem FuncCreatePropertyAsBrush(
+            object sender,
+            string label,
+            string? name,
+            object instance,
+            PropertyInfo propInfo)
+        {
+            return (sender as PropertyGrid)!.CreatePropertyAsBrush(label, name, instance, propInfo);
+        }
+
+        private static IPropertyGridItem FuncCreatePropertyAsPen(
+            object sender,
+            string label,
+            string? name,
+            object instance,
+            PropertyInfo propInfo)
+        {
+            return (sender as PropertyGrid)!.CreatePropertyAsPen(label, name, instance, propInfo);
         }
 
         private static string CorrectPropName(string? name)

@@ -398,7 +398,7 @@ namespace PropertyGridSample
 
                 var prop = propertyGrid.CreatePropCategory("Properties");
                 propertyGrid.Add(prop);
-                propertyGrid.AddProps(WelcomeProps.Default);
+                propertyGrid.AddProps(WelcomeProps.Default, null, true);
 
                 // New category
                 prop = propertyGrid.CreatePropCategory("Properties 2");

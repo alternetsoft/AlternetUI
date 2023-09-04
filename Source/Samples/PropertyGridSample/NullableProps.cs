@@ -11,30 +11,37 @@ namespace PropertyGridSample
     internal class NullableProps
     {
         public static NullableProps Default = new();
+        public static NullableProps DefaultWithValues = new(true);
 
-        byte? asByte = 15;
-        bool? asBool = true;
-        char? asChar = 'A';
-        sbyte? asSByte = 25;
-        short? asInt16 = -150;
-        ushort? asUInt16 = 215;
-        int? asInt32 = 81;
-        uint? asUInt32 = 105;
-        long? asInt64 = 12;
-        ulong? asUInt64 = 315;
-        float? asSingle = 15.26F;
-        double? asDouble = 25.27D;
-        decimal? asDecimal = 34.66M;
-        DateTime? asDateTime = DateTime.Now;
-        string? asString = "hello";
-        Color? asColor = Color.Red;
-        Font? asFont = Font.Default;
-        Brush? asBrush = Brush.Default;
-        Pen? asPen = Pen.Default;
-        Size? asSize = new Size(26, 30);
-        Thickness? asThickness = new Thickness(126, 50, 80, 24);
-        Rect? asRect = new Rect(51, 82, 354, 40);
-        Point? asPoint = new Point(50, 85);
+        byte? asByte;
+        bool? asBool;
+        char? asChar;
+        sbyte? asSByte;
+        short? asInt16;
+        ushort? asUInt16;
+        int? asInt32;
+        uint? asUInt32;
+        long? asInt64;
+        ulong? asUInt64;
+        float? asSingle;
+        double? asDouble;
+        decimal? asDecimal;
+        DateTime? asDateTime;
+        string? asString;
+        Color? asColor;
+        Font? asFont;
+        Brush? asBrush;
+        Pen? asPen;
+        Size? asSize;
+        Thickness? asThickness;
+        Rect? asRect;
+        Point? asPoint;
+
+        public NullableProps(bool setDefaults = false)
+        {
+            if (setDefaults)
+                SetDefaults();
+        }
 
         public byte? AsByteN
         {
@@ -171,6 +178,33 @@ namespace PropertyGridSample
         {
             get => asPoint;
             set => asPoint = value;
+        }
+
+        internal void SetDefaults()
+        {
+            asByte = 15;
+            asBool = true;
+            asChar = 'A';
+            asSByte = 25;
+            asInt16 = -150;
+            asUInt16 = 215;
+            asInt32 = 81;
+            asUInt32 = 105;
+            asInt64 = 12;
+            asUInt64 = 315;
+            asSingle = 15.26F;
+            asDouble = 25.27D;
+            asDecimal = 34.66M;
+            asDateTime = DateTime.Now;
+            asString = "hello";
+            asColor = Color.Red;
+            asFont = Font.Default;
+            asBrush = Brush.Default;
+            asPen = Pen.Default;
+            asSize = new Size(26, 30);
+            asThickness = new Thickness(126, 50, 80, 24);
+            asRect = new Rect(51, 82, 354, 40);
+            asPoint = new Point(50, 85);
         }
     }
 }
