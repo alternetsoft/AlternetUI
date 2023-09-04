@@ -23,6 +23,17 @@ namespace Alternet.UI.Native
         {
         }
         
+        public static void DeleteValidatorNumericProperty(System.IntPtr handle)
+        {
+            NativeApi.ValidatorNumericProperty_DeleteValidatorNumericProperty_(handle);
+        }
+        
+        public static System.IntPtr CreateValidatorNumericProperty(int numericType, int valBase)
+        {
+            var n = NativeApi.ValidatorNumericProperty_CreateValidatorNumericProperty_(numericType, valBase);
+            return n;
+        }
+        
         
         [SuppressUnmanagedCodeSecurity]
         public class NativeApi : NativeApiProvider
@@ -31,6 +42,12 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern IntPtr ValidatorNumericProperty_Create_();
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void ValidatorNumericProperty_DeleteValidatorNumericProperty_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr ValidatorNumericProperty_CreateValidatorNumericProperty_(int numericType, int valBase);
             
         }
     }

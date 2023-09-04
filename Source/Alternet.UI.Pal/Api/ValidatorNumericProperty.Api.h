@@ -15,3 +15,17 @@ ALTERNET_UI_API ValidatorNumericProperty* ValidatorNumericProperty_Create_()
         });
 }
 
+ALTERNET_UI_API void ValidatorNumericProperty_DeleteValidatorNumericProperty_(void* handle)
+{
+    MarshalExceptions<void>([&](){
+            ValidatorNumericProperty::DeleteValidatorNumericProperty(handle);
+        });
+}
+
+ALTERNET_UI_API void* ValidatorNumericProperty_CreateValidatorNumericProperty_(int numericType, int valBase)
+{
+    return MarshalExceptions<void*>([&](){
+            return ValidatorNumericProperty::CreateValidatorNumericProperty(numericType, valBase);
+        });
+}
+

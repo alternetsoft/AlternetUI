@@ -9,6 +9,7 @@ namespace Alternet.UI
     /// <summary>
     /// Styles used by <see cref="IValueValidatorText"/>.
     /// </summary>
+    [Flags]
     public enum ValueValidatorTextStyle
     {
         /// <summary>

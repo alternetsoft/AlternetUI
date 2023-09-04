@@ -8,5 +8,9 @@ namespace Alternet.UI
 {
     internal class ValueValidator : DisposableObject, IValueValidator
     {
+        public ValueValidator(IntPtr handle = default, bool disposeHandle = true)
+            : base(handle, disposeHandle)
+        {
+        }
     }
 }

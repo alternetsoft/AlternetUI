@@ -10,13 +10,7 @@ namespace NativeApi.Api
     //https://docs.wxwidgets.org/3.2/classwx_numeric_property_validator.html
     public class ValidatorNumericProperty : ValidatorText
     {
-        //public static void DeleteValidatorNumericProperty(IntPtr handle) { }
-        //public static IntPtr CreateValidatorNumericProperty() => default;
-
+        public static void DeleteValidatorNumericProperty(IntPtr handle) { }
+        public static IntPtr CreateValidatorNumericProperty(int numericType, int valBase) => default;
     }
 }
-
-
-/*
-
- */
