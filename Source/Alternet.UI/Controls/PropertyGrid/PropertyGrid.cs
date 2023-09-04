@@ -14,6 +14,7 @@ namespace Alternet.UI
     - How to hide lines? (set their color to bk color)
     - propgrid MakeAsPanel() also color scheme
     - PropertyGridItem Dispose item? when?
+    - Time, DateTime
      */
 
     /// <summary>
@@ -39,8 +40,10 @@ namespace Alternet.UI
         private const int PGRECURSE = 0x00000020;
         private const int PGSORTTOPLEVELONLY = 0x00000200;
         private static Dictionary<Type, IPropertyGridChoices>? choicesCache = null;
+
         private readonly Dictionary<IntPtr, IPropertyGridItem> items = new();
         private readonly PropertyGridVariant variant = new();
+        private readonly HashSet<string> ignorePropNames = new();
 
         static PropertyGrid()
         {
@@ -140,6 +143,11 @@ namespace Alternet.UI
         /// </summary>
         public static PropertyGridCreateStyle DefaultCreateStyle { get; set; }
             = PropertyGridCreateStyle.DefaultStyle;
+
+        /// <summary>
+        /// Contains list of property names to ignore in <see cref="AddProps"/>.
+        /// </summary>
+        public ICollection<string> IgnorePropNames => ignorePropNames;
 
         /// <summary>
         /// Gets or sets whether boolean properties will be shown as checkboxes.
@@ -971,7 +979,7 @@ namespace Alternet.UI
         public virtual void SetPropertyMinMax(IPropertyGridItem prop, TypeCode code)
         {
             var min = AssemblyUtils.GetMinValue(code);
-            var max = AssemblyUtils.GetMinValue(code);
+            var max = AssemblyUtils.GetMaxValue(code);
             SetPropertyMinMax(prop, min, max);
         }
 
@@ -1296,13 +1304,16 @@ namespace Alternet.UI
 
             foreach (PropertyInfo p in props)
             {
-                if (addedNames.ContainsKey(p.Name))
+                var propName = p.Name;
+                if (addedNames.ContainsKey(propName))
+                    continue;
+                if (ignorePropNames.Contains(propName))
                     continue;
                 IPropertyGridItem? prop = CreateProperty(instance, p);
                 if (prop == null)
                     continue;
                 result.Add(prop!);
-                addedNames.Add(p.Name, p);
+                addedNames.Add(propName, p);
             }
 
             return result;

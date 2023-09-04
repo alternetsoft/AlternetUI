@@ -6,6 +6,7 @@ using System.IO;
 using System.Reflection;
 using Alternet.Drawing;
 using Alternet.UI;
+using Alternet.Base.Collections;
 
 namespace PropertyGridSample
 {
@@ -18,6 +19,8 @@ namespace PropertyGridSample
         private static readonly Image DefaultImage = Image.FromUrl(ResPrefixImage);
 
         private static readonly Dictionary<Type, Action<Control>> Initializers = new();
+        private static int newItemIndex = 0;
+
         private readonly AuiManager manager = new();
         private readonly LayoutPanel panel = new();
         private readonly ListBox controlsListBox;
@@ -33,6 +36,8 @@ namespace PropertyGridSample
         static MainWindow()
         {
             WebBrowser.CrtSetDbgFlag(0);
+
+            const int defaultListHeight = 300;
 
             Initializers.Add(typeof(Label), (c) => { (c as Label)!.Text = "Label"; });
 
@@ -51,6 +56,40 @@ namespace PropertyGridSample
             Initializers.Add(typeof(RadioButton), (c) =>
             {
                 (c as RadioButton)!.Text = "RadioButton";
+            });
+
+            Initializers.Add(typeof(TreeView), (c) =>
+            {
+                TreeView treeView = (c as TreeView)!;
+                treeView.Height = defaultListHeight;
+                InitTreeView(treeView);
+            });
+
+            Initializers.Add(typeof(ListView), (c) =>
+            {
+                ListView listView = (c as ListView)!;
+                listView.Height = defaultListHeight;
+                InitListView(listView);
+            });
+
+            Initializers.Add(typeof(ListBox), (c) =>
+            {
+                ListBox listBox = (c as ListBox)!;
+                listBox.Height = defaultListHeight;
+                AddTenItems(listBox.Items);
+            });
+
+            Initializers.Add(typeof(ComboBox), (c) =>
+            {
+                ComboBox comboBox = (c as ComboBox)!;
+                AddTenItems(comboBox.Items);
+            });
+
+            Initializers.Add(typeof(CheckListBox), (c) =>
+            {
+                CheckListBox checkListBox = (c as CheckListBox)!;
+                checkListBox.Height = defaultListHeight;
+                AddTenItems(checkListBox.Items);
             });
 
             Initializers.Add(typeof(LinkLabel), (c) =>
@@ -74,10 +113,22 @@ namespace PropertyGridSample
             });
         }
 
-        public Decimal DecimalValue { get; set; }
-        public Font FontValue { get; set; } = Font.Default;
         public Brush BrushValue { get; set; } = Brush.Default;
         public Pen PenValue { get; set; } = Pen.Default;
+
+        private static void AddTenItems(Collection<object> items)
+        {
+            items.Add("One");
+            items.Add("Two");
+            items.Add("Three");
+            items.Add("Four");
+            items.Add("Five");
+            items.Add("Six");
+            items.Add("Seven");
+            items.Add("Eight");
+            items.Add("Nine");
+            items.Add("Ten");
+        }
 
         private ListBox CreateListBox(Control? parent = null)
         {
@@ -91,8 +142,115 @@ namespace PropertyGridSample
             return listBox;
         }
 
+        public static void InitListView(ListView listView)
+        {
+            AddDefaultItems();
+
+            void InitializeColumns()
+            {
+                listView?.Columns.Add(new ListViewColumn("Column 1"));
+                listView?.Columns.Add(new ListViewColumn("Column 2"));
+            }
+
+            void AddDefaultItems()
+            {
+                InitializeColumns();
+                AddItems(50);
+                foreach (var column in listView!.Columns)
+                    column.WidthMode = ListViewColumnWidthMode.AutoSize;
+            }
+
+            void AddItems(int count)
+            {
+                if (listView == null)
+                    return;
+
+                listView.BeginUpdate();
+                try
+                {
+                    for (int i = 0; i < count; i++)
+                    {
+                        var ix = GenItemIndex();
+                        listView.Items.Add(
+                            new ListViewItem(new[] {
+                            "Item " + ix,
+                            "Some Info " + ix
+                            }, i % 4));
+                    }
+                }
+                finally
+                {
+                    listView.EndUpdate();
+                }
+            }
+
+
+        }
+
+        public static void InitTreeView(TreeView control)
+        {
+            AddItems(control, 10);
+        }
+
+        private static int GenItemIndex()
+        {
+            newItemIndex++;
+            return newItemIndex;
+        }
+
+        private static void AddItems(TreeView treeView, int count)
+        {
+            treeView.BeginUpdate();
+            try
+            {
+                for (int i = 0; i < count; i++)
+                {
+                    int imageIndex = i % 4;
+                    var item = new TreeViewItem(
+                        "Item " + GenItemIndex(),
+                        imageIndex);
+                    for (int j = 0; j < 3; j++)
+                    {
+                        var childItem = new TreeViewItem(
+                            item.Text + "." + j,
+                            imageIndex);
+                        item.Items.Add(childItem);
+
+                        if (i < 5)
+                        {
+                            for (int k = 0; k < 2; k++)
+                            {
+                                childItem.Items.Add(
+                                    new TreeViewItem(
+                                        item.Text + "." + k,
+                                        imageIndex));
+                            }
+                        }
+                    }
+
+                    treeView.Items.Add(item);
+                }
+            }
+            finally
+            {
+                treeView.EndUpdate();
+            }
+        }
+
         public MainWindow()
         {
+            propertyGrid.IgnorePropNames.Add("Width");
+            propertyGrid.IgnorePropNames.Add("Height");
+            propertyGrid.IgnorePropNames.Add("Left");
+            propertyGrid.IgnorePropNames.Add("Top");
+            propertyGrid.IgnorePropNames.Add("SelectedItem");
+            propertyGrid.IgnorePropNames.Add("ImageList");
+            propertyGrid.IgnorePropNames.Add("SmallImageList");
+            propertyGrid.IgnorePropNames.Add("LargeImageList");
+            propertyGrid.IgnorePropNames.Add("Items");
+            propertyGrid.IgnorePropNames.Add("Columns");
+            propertyGrid.IgnorePropNames.Add("Image");
+
             PropertyGridSettings.Default = new(this);
             propertyGrid.CreateStyleEx = PropertyGridCreateStyleEx.AlwaysAllowFocus;
 
@@ -166,7 +324,11 @@ namespace PropertyGridSample
               typeof(LayoutPanel),
               typeof(MenuItem),
               typeof(UserPaintControl),
+              typeof(MainMenu),
               typeof(StatusBar),
+              typeof(ContextMenu),
+              typeof(Popup),
+              typeof(PropertyGrid),
               typeof(Toolbar),
               typeof(TabPage),
               typeof(TabControl),
