@@ -8,8 +8,7 @@ namespace NativeApi.Api
     {
         public bool HasBorder { get; set; }
 
-        public event EventHandler? ValueChanged { 
-            add => throw new Exception(); remove => throw new Exception(); }
+        public event EventHandler? ValueChanged;
 
         public int Minimum { get; set; }
         public int Maximum { get; set; }

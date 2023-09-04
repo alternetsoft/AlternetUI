@@ -21,50 +21,18 @@ namespace Alternet.UI
         public static readonly DependencyProperty ValueProperty =
             DependencyProperty.Register(
                     "Value",
-                    typeof(decimal),
+                    typeof(int),
                     typeof(NumericUpDown),
                     new FrameworkPropertyMetadata(
-                            0m,
+                            0,
                             FrameworkPropertyMetadataOptions.BindsTwoWayByDefault | FrameworkPropertyMetadataOptions.AffectsPaint,
                             new PropertyChangedCallback(OnValuePropertyChanged),
                             new CoerceValueCallback(CoerceValue),
                             isAnimationProhibited: true,
                             UpdateSourceTrigger.PropertyChanged));
 
-        /*/// <summary>
-        /// Identifies the <see cref="Minimum"/> dependency property.
-        /// </summary>
-        public static readonly DependencyProperty MinimumProperty =
-            DependencyProperty.Register(
-                    "Minimum",
-                    typeof(decimal),
-                    typeof(NumericUpDown),
-                    new FrameworkPropertyMetadata(
-                            0m,
-                            FrameworkPropertyMetadataOptions.AffectsPaint,
-                            new PropertyChangedCallback(OnMinimumPropertyChanged),
-                            coerceValueCallback: null,
-                            isAnimationProhibited: true,
-                            UpdateSourceTrigger.PropertyChanged));*/
-
-        /*/// <summary>
-        /// Identifies the <see cref="Maximum"/> dependency property.
-        /// </summary>
-        public static readonly DependencyProperty MaximumProperty =
-            DependencyProperty.Register(
-                    "Maximum",
-                    typeof(decimal),
-                    typeof(NumericUpDown),
-                    new FrameworkPropertyMetadata( // Property metadata
-                            100m,
-                            FrameworkPropertyMetadataOptions.AffectsPaint,
-                            new PropertyChangedCallback(OnMaximumPropertyChanged),
-                            coerceValueCallback: CoerceMaximum,
-                            isAnimationProhibited: true,
-                            UpdateSourceTrigger.PropertyChanged));*/
-
-        private decimal minimum = 0m;
-        private decimal maximum = 100m;
+        private int minimum = 0;
+        private int maximum = 100;
 
         /// <summary>
         /// Occurs when the <see cref="Value"/> property has been changed in some way.
@@ -100,11 +68,11 @@ namespace Alternet.UI
         /// <see cref="Maximum"/> property or the value specified is
         /// less than the value of the <see cref="Minimum"/> property.
         /// </exception>
-        public decimal Value
+        public int Value
         {
             get
             {
-                return (decimal)GetValue(ValueProperty);
+                return (int)GetValue(ValueProperty);
             }
 
             set
@@ -132,7 +100,7 @@ namespace Alternet.UI
         /// <see cref="Minimum"/> value, the <see cref="Value"/> property
         /// is also set equal to the <see cref="Minimum"/> value.
         /// </remarks>
-        public decimal Minimum
+        public int Minimum
         {
             get
             {
@@ -165,7 +133,7 @@ namespace Alternet.UI
         ///  <see cref="Maximum"/> value, the <see cref="Value"/> property
         ///  value is set equal to the <see cref="Maximum"/> value.
         /// </remarks>
-        public decimal Maximum
+        public int Maximum
         {
             get
             {
@@ -218,9 +186,9 @@ namespace Alternet.UI
         /// Increments or decrements value.
         /// </summary>
         /// <param name="incValue">Delta to add to the value.</param>
-        public void IncrementValue(decimal incValue = 1)
+        public void IncrementValue(int incValue = 1)
         {
-            decimal newValue = Value + incValue;
+            var newValue = Value + incValue;
 
             if (newValue < Minimum)
                 Value = Minimum;
@@ -265,24 +233,11 @@ namespace Alternet.UI
                 CreateNumericUpDownHandler(this);
         }
 
-        /*private static object CoerceMaximum(DependencyObject d, object value)
-        {
-            var o = (NumericUpDown)d;
-
-            decimal min = o.Minimum;
-            if ((decimal)value < min)
-            {
-                return min;
-            }
-
-            return value;
-        }*/
-
         private static object CoerceValue(DependencyObject d, object value)
         {
             var o = (NumericUpDown)d;
 
-            var intValue = (decimal)value;
+            var intValue = (int)value;
             if (intValue < o.Minimum)
                 return o.Minimum;
 
@@ -292,28 +247,6 @@ namespace Alternet.UI
             return value;
         }
 
-        /*/// <summary>
-        /// Callback for changes to the Maximum property
-        /// </summary>
-        private static void OnMaximumPropertyChanged(
-            DependencyObject d,
-            DependencyPropertyChangedEventArgs e)
-        {
-            NumericUpDown control = (NumericUpDown)d;
-            control.OnMaximumPropertyChanged((decimal)e.OldValue, (decimal)e.NewValue);
-        }*/
-
-        /*/// <summary>
-        /// Callback for changes to the Minimum property
-        /// </summary>
-        private static void OnMinimumPropertyChanged(
-            DependencyObject d,
-            DependencyPropertyChangedEventArgs e)
-        {
-            NumericUpDown control = (NumericUpDown)d;
-            control.OnMinimumPropertyChanged((decimal)e.OldValue, (decimal)e.NewValue);
-        }*/
-
         /// <summary>
         /// Callback for changes to the Value property
         /// </summary>
@@ -322,12 +255,12 @@ namespace Alternet.UI
             DependencyPropertyChangedEventArgs e)
         {
             NumericUpDown control = (NumericUpDown)d;
-            control.OnValuePropertyChanged((decimal)e.OldValue, (decimal)e.NewValue);
+            control.OnValuePropertyChanged((int)e.OldValue, (int)e.NewValue);
         }
 
-#pragma warning disable IDE0060 // Remove unused parameter
-        private void OnValuePropertyChanged(decimal oldValue, decimal newValue)
-#pragma warning restore IDE0060 // Remove unused parameter
+#pragma warning disable
+        private void OnValuePropertyChanged(int oldValue, int newValue)
+#pragma warning restore
         {
             RaiseValueChanged(EventArgs.Empty);
         }
@@ -347,11 +280,6 @@ namespace Alternet.UI
             MinimumChanged?.Invoke(this, e);
         }
 
-        /*private void OnMinimumPropertyChanged(decimal oldValue, decimal newValue)
-        {
-            RaiseMinimumChanged(EventArgs.Empty);
-        }*/
-
         /// <summary>
         /// Raises the <see cref="MaximumChanged"/> event and calls
         /// <see cref="OnMaximumChanged(EventArgs)"/>.
@@ -366,10 +294,5 @@ namespace Alternet.UI
             OnMaximumChanged(e);
             MaximumChanged?.Invoke(this, e);
         }
-
-        /*private void OnMaximumPropertyChanged(decimal oldValue, decimal newValue)
-        {
-            RaiseMaximumChanged(EventArgs.Empty);
-        }*/
     }
 }
