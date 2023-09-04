@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -20,9 +21,23 @@ namespace Alternet.UI
             exception = errorException ?? throw new ArgumentNullException(nameof(errorException));
         }
 
-        /// <summary>Gets the <see cref="Exception" /> that occurred.</summary>
+        /// <summary>
+        /// Gets the <see cref="Exception" /> that occurred.
+        /// </summary>
         /// <returns>The <see cref="Exception" /> that occurred.</returns>
         public Exception ErrorException => exception;
+
+        /// <summary>
+        /// Gets the inner exception of <see cref="ErrorException"/> or
+        /// <see cref="ErrorException"/> itself.
+        /// </summary>
+        public Exception InnerException
+        {
+            get
+            {
+                return exception.InnerException ?? exception;
+            }
+        }
 
         /// <summary>
         /// Gets or sets whether to throw an exception after event handler executed.

@@ -3466,7 +3466,10 @@ namespace Alternet.UI
                     var variant = EventPropValueAsVariant;
                     var newValue = variant.GetCompatibleValue(prop.PropInfo);
                     prop.PropInfo.SetValue(prop.Instance, newValue);
+                 });
 
+                AvoidException(() =>
+                {
                     var reload = ApplyFlags.HasFlag(PropertyGridApplyFlags.ReloadAfterSetValue);
                     var reloadAll = ApplyFlags.HasFlag(PropertyGridApplyFlags.ReloadAllAfterSetValue);
 

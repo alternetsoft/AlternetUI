@@ -386,7 +386,7 @@ namespace PropertyGridSample
 
         private void PropertyGrid_ProcessException(object? sender, PropertyGridExceptionEventArgs e)
         {
-            Log("Exception: " + e.ErrorException.Message);
+            Log("Exception: " + e.InnerException.Message);
         }
 
         private void InitDefaultPropertyGrid()
