@@ -12,7 +12,7 @@ namespace ControlsSample
         public ProgressBarPage()
         {
             InitializeComponent();
-			VerticalProgressBarsGroupBox.Visible = WebBrowser.GetBackendOS() !=WebBrowserBackendOS.MacOS;
+			VerticalProgressBarsGroupBox.Visible = !Application.IsMacOs;
         }
 
         public IPageSite? Site
@@ -36,7 +36,11 @@ namespace ControlsSample
 
         private IEnumerable<ProgressBar> GetAllProgressBars()
         {
-            return new Control[] { verticalProgressBarsGrid, horizontalProgressBarsPanel }.SelectMany(x => x.Children.OfType<ProgressBar>());
+            return new Control[]
+            {
+                verticalProgressBarsGrid,
+                horizontalProgressBarsPanel
+            }.SelectMany(x => x.Children.OfType<ProgressBar>());
         }
 
         private void IndeterminateCheckBox_CheckedChanged(object sender, System.EventArgs e)

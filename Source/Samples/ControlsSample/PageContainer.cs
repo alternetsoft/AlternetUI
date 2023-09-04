@@ -3,6 +3,8 @@ using Alternet.UI;
 
 namespace ControlsSample
 {
+    public delegate Control CreateControlAction();
+
     public class PageContainer : Control
     {
         private readonly TreeView pagesControl;
@@ -61,24 +63,40 @@ namespace ControlsSample
         private void SetActivePageControl()
         {
             activePageHolder.SuspendLayout();
-            activePageHolder.Children.Clear();
+            try
+            {
+                activePageHolder.Children.Clear();
 
-            if (SelectedIndex != null)
-                activePageHolder.Children.Add(Pages[SelectedIndex.Value].Control);
-            activePageHolder.ResumeLayout();
+                if (SelectedIndex != null)
+                    activePageHolder.Children.Add(Pages[SelectedIndex.Value].Control);
+            }
+            finally
+            {
+                activePageHolder.ResumeLayout();
+            }
         }
 
         public class Page
         {
-            public Page(string title, Control control)
+            private readonly CreateControlAction action;
+            private Control? control;
+
+            public Page(string title, CreateControlAction action)
             {
                 Title = title;
-                Control = control;
+                this.action = action;
             }
 
             public string Title { get; }
 
-            public Control Control { get; }
+            public Control Control
+            {
+                get
+                {
+                    control ??= action();
+                    return control;
+                }
+            }
         }
     }
 }
