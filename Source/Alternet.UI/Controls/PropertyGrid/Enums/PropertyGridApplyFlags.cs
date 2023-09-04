@@ -28,6 +28,18 @@ namespace Alternet.UI
         PropInfoSetValue = 0x02,
 
         /// <summary>
+        /// Reload property value again after set value (<see cref="PropInfoSetValue"/>)
+        /// and updates <see cref="PropertyGrid"/>.
+        /// </summary>
+        ReloadAfterSetValue = 0x04,
+
+        /// <summary>
+        /// Reload all property value again after set value (<see cref="PropInfoSetValue"/>)
+        /// and updates <see cref="PropertyGrid"/>.
+        /// </summary>
+        ReloadAllAfterSetValue = 0x08,
+
+        /// <summary>
         /// Default value for the <see cref="PropertyGrid.ApplyFlags"/> property.
         /// </summary>
         Default = PropInfoSetValue | PropEvent,

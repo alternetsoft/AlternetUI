@@ -237,21 +237,28 @@ namespace PropertyGridSample
             }
         }
 
+        private static void InitIgnorePropNames(ICollection<string> items)
+        {
+            items.Add("Width");
+            items.Add("Height");
+            items.Add("Left");
+            items.Add("Top");
+            items.Add("SelectedItem");
+            items.Add("ImageList");
+            items.Add("SmallImageList");
+            items.Add("LargeImageList");
+            items.Add("Items");
+            items.Add("Columns");
+            items.Add("Image");
+        }
+
         public MainWindow()
         {
-            propertyGrid.IgnorePropNames.Add("Width");
-            propertyGrid.IgnorePropNames.Add("Height");
-            propertyGrid.IgnorePropNames.Add("Left");
-            propertyGrid.IgnorePropNames.Add("Top");
-            propertyGrid.IgnorePropNames.Add("SelectedItem");
-            propertyGrid.IgnorePropNames.Add("ImageList");
-            propertyGrid.IgnorePropNames.Add("SmallImageList");
-            propertyGrid.IgnorePropNames.Add("LargeImageList");
-            propertyGrid.IgnorePropNames.Add("Items");
-            propertyGrid.IgnorePropNames.Add("Columns");
-            propertyGrid.IgnorePropNames.Add("Image");
-
             PropertyGridSettings.Default = new(this);
+            propertyGrid.ProcessException += PropertyGrid_ProcessException;
+
+            InitIgnorePropNames(propertyGrid.IgnorePropNames);
+
             propertyGrid.CreateStyleEx = PropertyGridCreateStyleEx.AlwaysAllowFocus;
 
             Icon = ImageSet.FromUrlOrNull("embres:PropertyGridSample.Sample.ico");
@@ -271,6 +278,7 @@ namespace PropertyGridSample
                 .TopDockable(false).BottomDockable(false).Movable(false).Floatable(false)
                 .CaptionVisible(false);
             controlsListBox = CreateListBox();
+            controlsListBox.SetBounds(0, 0, 150, 100, BoundsSpecified.Size);
             manager.AddPane(controlsListBox, pane1);
 
             // Right Pane
@@ -376,6 +384,11 @@ namespace PropertyGridSample
             controlsListBox.SelectedIndex = 0;
         }
 
+        private void PropertyGrid_ProcessException(object? sender, PropertyGridExceptionEventArgs e)
+        {
+            Log("Exception: " + e.ErrorException.Message);
+        }
+
         private void InitDefaultPropertyGrid()
         {
             propertyGrid.BeginUpdate();
@@ -383,11 +396,12 @@ namespace PropertyGridSample
             {
                 propertyGrid.Clear();
 
-                var prop = propertyGrid.CreatePropCategory("Category 1");
+                var prop = propertyGrid.CreatePropCategory("Properties");
                 propertyGrid.Add(prop);
                 propertyGrid.AddProps(WelcomeProps.Default);
 
-                prop = propertyGrid.CreatePropCategory("Category 2");
+                // New category
+                prop = propertyGrid.CreatePropCategory("Properties 2");
                 propertyGrid.Add(prop);
 
                 prop = propertyGrid.CreateBoolProperty("Bool 2");
@@ -418,8 +432,8 @@ namespace PropertyGridSample
                     (int)(DatePickerStyleFlags.DropDown | DatePickerStyleFlags.ShowCentury
                     | DatePickerStyleFlags.AllowNone));
 
-                // Category 2
-                prop = propertyGrid.CreatePropCategory("Category 3");
+                // New category
+                prop = propertyGrid.CreatePropCategory("Properties 3");
                 propertyGrid.Add(prop);
 
                 var choices1 = PropertyGrid.CreateChoicesOnce(typeof(PropertyGridCreateStyle));
@@ -521,6 +535,11 @@ namespace PropertyGridSample
                     choices, 
                     choices.GetValueFromLabel(Font.Default.Name));
                 propertyGrid.Add(prop);
+
+                prop = propertyGrid.CreatePropCategory("Nullable Properties");
+                propertyGrid.Add(prop);
+                propertyGrid.AddProps(NullableProps.Default);
+
             }
             finally
             {
@@ -636,74 +655,88 @@ namespace PropertyGridSample
 
         private void PGPropertySelected(object? sender, EventArgs e)
         { 
-            LogEvent("PropertySelected"); 
+            if(PropertyGridSettings.Default!.LogPropertySelected)
+                LogEvent("PropertySelected"); 
         }
 
         private void PGPropertyChanged(object? sender, EventArgs e)
         {
-            LogEvent("PropertyChanged");
+            if (PropertyGridSettings.Default!.LogPropertyChanged)
+                LogEvent("PropertyChanged");
         }
 
         private void PGPropertyChanging(object? sender, CancelEventArgs e)
         {
-            LogEvent("PropertyChanging");
+            if (PropertyGridSettings.Default!.LogPropertyChanging)
+                LogEvent("PropertyChanging");
             if(propertyGrid.EventPropName == "Error if changed")
                 e.Cancel = true;
         }
 
         private void PGPropertyHighlighted(object? sender, EventArgs e)
         {
-            /*LogEvent("PropertyHighlighted");*/
+            if (PropertyGridSettings.Default!.LogPropertyHighlighted)
+                LogEvent("PropertyHighlighted");
         }
 
         private void PGPropertyRightClick(object? sender, EventArgs e)
         {
-            LogEvent("PropertyRightClick");
+            if (PropertyGridSettings.Default!.LogPropertyRightClick)
+                LogEvent("PropertyRightClick");
         }
 
         private void PGPropertyDoubleClick(object? sender, EventArgs e)
         {
-            LogEvent("PropertyDoubleClick");
+            if (PropertyGridSettings.Default!.LogPropertyDoubleClick)
+                LogEvent("PropertyDoubleClick");
         }
 
         private void PGItemCollapsed(object? sender, EventArgs e)
         {
-            LogEvent("ItemCollapsed");
+            if (PropertyGridSettings.Default!.LogItemCollapsed)
+                LogEvent("ItemCollapsed");
         }
 
         private void PGItemExpanded(object? sender, EventArgs e)
         {
-            LogEvent("ItemExpanded");
+            if (PropertyGridSettings.Default!.LogItemExpanded)
+                LogEvent("ItemExpanded");
         }
 
         private void PGLabelEditBegin(object? sender, CancelEventArgs e)
         {
-            LogEvent("LabelEditBegin");
+            if (PropertyGridSettings.Default!.LogLabelEditBegin)
+                LogEvent("LabelEditBegin");
         }
 
         private void PGLabelEditEnding(object? sender, CancelEventArgs e)
         {
-            LogEvent("LabelEditEnding");
+            if (PropertyGridSettings.Default!.LogLabelEditEnding)
+                LogEvent("LabelEditEnding");
         }
 
         private void PGColBeginDrag(object? sender, CancelEventArgs e)
         {
-            LogEvent("ColBeginDrag");
+            if (PropertyGridSettings.Default!.LogColBeginDrag)
+                LogEvent("ColBeginDrag");
         }
 
         private void PGColDragging(object? sender, EventArgs e)
         {
-            LogEvent("ColDragging");
+            if (PropertyGridSettings.Default!.LogColDragging)
+                LogEvent("ColDragging");
         }
 
         private void PGColEndDrag(object? sender, EventArgs e)
         {
-            LogEvent("ColEndDrag");
+            if (PropertyGridSettings.Default!.LogColEndDrag)
+                LogEvent("ColEndDrag");
         }
 
         private void PropertyGrid_ButtonClick(object? sender, EventArgs e)
         {
-            LogEvent("ButtonClick");
+            if (PropertyGridSettings.Default!.LogButtonClick)
+                LogEvent("ButtonClick");
         }
 
         private class ControlListBoxItem
@@ -738,6 +771,8 @@ namespace PropertyGridSample
 
             public override string ToString()
             {
+                if (type.Name == nameof(WelcomeControl))
+                    return "Welcome Page";
                 return type.Name;
             }
         }

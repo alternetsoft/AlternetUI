@@ -39,15 +39,20 @@ namespace Alternet.UI
         private const int PGDONTRECURSE = 0x00000000;
         private const int PGRECURSE = 0x00000020;
         private const int PGSORTTOPLEVELONLY = 0x00000200;
-        private static Dictionary<Type, IPropertyGridChoices>? choicesCache = null;
+        private static AdvDictionary<Type, IPropertyGridChoices>? choicesCache = null;
 
-        private readonly Dictionary<IntPtr, IPropertyGridItem> items = new();
+        private readonly AdvDictionary<IntPtr, IPropertyGridItem> items = new();
         private readonly PropertyGridVariant variant = new();
         private readonly HashSet<string> ignorePropNames = new();
 
         static PropertyGrid()
         {
         }
+
+        /// <summary>
+        /// Occurs when exception is raised.
+        /// </summary>
+        public event EventHandler<PropertyGridExceptionEventArgs>? ProcessException;
 
         /// <summary>
         /// Occurs when a property selection has been changed, either by user action
@@ -143,6 +148,11 @@ namespace Alternet.UI
         /// </summary>
         public static PropertyGridCreateStyle DefaultCreateStyle { get; set; }
             = PropertyGridCreateStyle.DefaultStyle;
+
+        /// <summary>
+        /// Gets list of <see cref="IPropertyGridItem"/> added to this control.
+        /// </summary>
+        public IEnumerable<IPropertyGridItem> Items => items.Values;
 
         /// <summary>
         /// Contains list of property names to ignore in <see cref="AddProps"/>.
@@ -604,6 +614,7 @@ namespace Alternet.UI
             if (!string.IsNullOrEmpty(value))
                 value = value![0].ToString();
             var result = CreateStringProperty(label, name, value);
+            SetPropertyMaxLength(result, 1);
             return result;
         }
 
@@ -1331,7 +1342,7 @@ namespace Alternet.UI
         public virtual void AddProps(object instance, IPropertyGridItem? parent = null)
         {
             var props = CreateProps(instance);
-            foreach(var item in props)
+            foreach (var item in props)
             {
                 Add(item, parent);
             }
@@ -1381,7 +1392,7 @@ namespace Alternet.UI
             object? propValue = p.GetValue(instance, null);
             propValue ??= Color.Black;
             prop = CreateColorProperty(label, name, (Color)propValue);
-            if(ColorHasAlpha)
+            if (ColorHasAlpha)
                 SetPropertyKnownAttribute(prop, PropertyGridItemAttrId.HasAlpha, true);
             OnPropertyCreated(prop, instance, p);
             return prop;
@@ -2206,7 +2217,7 @@ namespace Alternet.UI
         /// <param name="colors">New color settings.</param>
         public virtual void ApplyColors(IPropertyGridColors? colors = null)
         {
-            if(colors == null)
+            if (colors == null)
             {
                 ResetColors();
                 return;
@@ -2941,6 +2952,75 @@ namespace Alternet.UI
             return NativeControl.GetImageSize(ptr, item);
         }
 
+        /// <summary>
+        /// Gets <see cref="IPropertyGridItem"/> added to the control filtered by
+        /// <see cref="IPropertyGridItem.Instance"/> (<paramref name="instance"/> param) and
+        /// <see cref="IPropertyGridItem.PropInfo"/> (<paramref name="propInfo"/> param).
+        /// </summary>
+        /// <param name="instance">Instance filter parameter. Ignored if <c>null</c>.</param>
+        /// <param name="propInfo">Property information filter parameter.
+        /// Ignored if <c>null</c></param>
+        public IEnumerable<IPropertyGridItem> GetItemsFiltered(
+            object? instance = null,
+            PropertyInfo? propInfo = null)
+        {
+            var allItems = Items;
+            if (instance == null && propInfo == null)
+                return allItems;
+
+            List<IPropertyGridItem> result = new();
+
+            foreach (var item in allItems)
+            {
+                var instanceOk = instance == null || instance == item.Instance;
+                var propInfoOk = propInfo == null || propInfo == item.PropInfo;
+
+                if (instanceOk && propInfoOk)
+                    result.Add(item);
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Reloads values of all <see cref="IPropertyGridItem"/> items collected with
+        /// <see cref="GetItemsFiltered"/>.
+        /// </summary>
+        /// <param name="instance">Instance filter parameter. Ignored if <c>null</c>.</param>
+        /// <param name="propInfo">Property information filter parameter.
+        /// Ignored if <c>null</c></param>
+        public virtual void ReloadValues(object? instance = null, PropertyInfo? propInfo = null)
+        {
+            IPropertyGridVariant variant = CreateVariant();
+
+            var filteredItems = GetItemsFiltered(instance, propInfo);
+            if (filteredItems.First() == null)
+                return;
+            BeginUpdate();
+            try
+            {
+                foreach (var item in filteredItems)
+                {
+                    ReloadItem(item);
+                }
+            }
+            finally
+            {
+                EndUpdate();
+            }
+
+            void ReloadItem(IPropertyGridItem item)
+            {
+                var p = item.PropInfo;
+                var instance = item.Instance;
+                if (instance == null || p == null)
+                    return;
+                object? propValue = p.GetValue(instance, null);
+                variant.AsObject = propValue;
+                SetPropertyValueAsVariant(item, variant);
+            }
+        }
+
         internal static IntPtr GetEditorByName(string editorName)
         {
             return Native.PropertyGrid.GetEditorByName(editorName);
@@ -3089,6 +3169,12 @@ namespace Alternet.UI
         {
             NativeControl.DeleteProperty(prop.Handle);
             items.Remove(prop.Handle);
+        }
+
+        internal void RaiseProcessException(PropertyGridExceptionEventArgs e)
+        {
+            OnProcessException(e);
+            ProcessException?.Invoke(this, e);
         }
 
         internal void RaisePropertySelected(EventArgs e)
@@ -3373,18 +3459,59 @@ namespace Alternet.UI
 
             var setValue = ApplyFlags.HasFlag(PropertyGridApplyFlags.PropInfoSetValue);
 
-            var propEvent = ApplyFlags.HasFlag(PropertyGridApplyFlags.PropEvent);
-
             if (setValue && prop.Instance != null && prop.PropInfo != null)
             {
-                var variant = EventPropValueAsVariant;
-                var newValue = variant.GetCompatibleValue(prop.PropInfo);
+                AvoidException(() =>
+                {
+                    var variant = EventPropValueAsVariant;
+                    var newValue = variant.GetCompatibleValue(prop.PropInfo);
+                    prop.PropInfo.SetValue(prop.Instance, newValue);
 
-                prop.PropInfo.SetValue(prop.Instance, newValue);
+                    var reload = ApplyFlags.HasFlag(PropertyGridApplyFlags.ReloadAfterSetValue);
+                    var reloadAll = ApplyFlags.HasFlag(PropertyGridApplyFlags.ReloadAllAfterSetValue);
+
+                    if (reloadAll)
+                        ReloadValues();
+                    else
+                        if (reload)
+                        ReloadValues(prop.Instance, prop.PropInfo);
+                });
             }
 
-            if(propEvent)
-                prop.RaisePropertyChanged();
+            var propEvent = ApplyFlags.HasFlag(PropertyGridApplyFlags.PropEvent);
+            if (propEvent)
+            {
+                AvoidException(() => { prop.RaisePropertyChanged(); });
+            }
+        }
+
+        /// <summary>
+        /// Executes <see cref="Action"/> and calls <see cref="ProcessException"/>
+        /// event if exception was raised during execution.
+        /// </summary>
+        /// <param name="action"></param>
+        protected virtual void AvoidException(Action action)
+        {
+            try
+            {
+                action();
+            }
+            catch (Exception exception)
+            {
+                PropertyGridExceptionEventArgs data = new(exception);
+                RaiseProcessException(data);
+                if (data.ThrowIt)
+                    throw;
+            }
+        }
+
+        /// <summary>
+        /// Called when an exception need to be processed.
+        /// </summary>
+        /// <param name="e">An <see cref="PropertyGridExceptionEventArgs"/> that contains
+        /// the event data.</param>
+        protected virtual void OnProcessException(PropertyGridExceptionEventArgs e)
+        {
         }
 
         /// <summary>

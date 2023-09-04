@@ -8,170 +8,169 @@ using Alternet.UI;
 
 namespace PropertyGridSample
 {
-    internal class WelcomeProps
+    internal class NullableProps
     {
-        public static WelcomeProps Default = new();
+        public static NullableProps Default = new();
 
-        byte asByte = 15;
-        bool asBool = true;
-        char asChar = 'A';
-        sbyte asSByte = 25;
-        short asInt16 = -150;
-        ushort asUInt16 = 215;
-        int asInt32 = 81;
-        uint asUInt32 = 105;
-        long asInt64 = 12;
-        ulong asUInt64 = 315;
-        float asSingle = 15.26F;
-        double asDouble = 25.27D;
-        decimal asDecimal = 34.66M;
-        DateTime asDateTime = DateTime.Now;
-        string asString = "hello";
-        Color asColor = Color.Red;
-        Font asFont = Font.Default;
-        Brush asBrush = Brush.Default;
-        Pen asPen = Pen.Default;
-        Size asSize = new(26, 30);
-        Thickness asThickness = new(126, 50, 80, 24);
-        Rect asRect = new(51, 82, 354, 40);
-        Point asPoint = new(50, 85);
+        byte? asByte = 15;
+        bool? asBool = true;
+        char? asChar = 'A';
+        sbyte? asSByte = 25;
+        short? asInt16 = -150;
+        ushort? asUInt16 = 215;
+        int? asInt32 = 81;
+        uint? asUInt32 = 105;
+        long? asInt64 = 12;
+        ulong? asUInt64 = 315;
+        float? asSingle = 15.26F;
+        double? asDouble = 25.27D;
+        decimal? asDecimal = 34.66M;
+        DateTime? asDateTime = DateTime.Now;
+        string? asString = "hello";
+        Color? asColor = Color.Red;
+        Font? asFont = Font.Default;
+        Brush? asBrush = Brush.Default;
+        Pen? asPen = Pen.Default;
+        Size? asSize = new Size(26, 30);
+        Thickness? asThickness = new Thickness(126, 50, 80, 24);
+        Rect? asRect = new Rect(51, 82, 354, 40);
+        Point? asPoint = new Point(50, 85);
 
-        public byte AsByte
+        public byte? AsByteN
         {
             get => asByte;
             set => asByte = value;
         }
 
-        public bool AsBool
+        public bool? AsBoolN
         {
             get => asBool;
             set => asBool = value;
         }
 
-        public char AsChar
+        public char? AsCharN
         {
             get => asChar;
             set => asChar = value;
         }
-        public sbyte AsSByte
+        public sbyte? AsSByteN
         {
             get => asSByte;
             set => asSByte = value;
         }
 
-        public short AsInt16
+        public short? AsInt16N
         {
             get => asInt16;
             set => asInt16 = value;
         }
 
-        public ushort AsUInt16
+        public ushort? AsUInt16N
         {
             get => asUInt16;
             set => asUInt16 = value;
         }
 
-        public int AsInt32
+        public int? AsInt32N
         {
             get => asInt32;
             set => asInt32 = value;
         }
 
-        public uint AsUInt32
+        public uint? AsUInt32N
         {
             get => asUInt32;
             set => asUInt32 = value;
         }
 
-        public long AsInt64
+        public long? AsInt64N
         {
             get => asInt64;
             set => asInt64 = value;
         }
 
-        public ulong AsUInt64
+        public ulong? AsUInt64N
         {
             get => asUInt64;
             set => asUInt64 = value;
         }
-        
-        public float AsSingle
+
+        public float? AsSingleN
         {
             get => asSingle;
             set => asSingle = value;
         }
-        
-        public double AsDouble
+
+        public double? AsDoubleN
         {
             get => asDouble;
             set => asDouble = value;
         }
-        
-        public decimal AsDecimal
+
+        public decimal? AsDecimalN
         {
             get => asDecimal;
             set => asDecimal = value;
         }
-        
-        public DateTime AsDateTime
+
+        public DateTime? AsDateTimeN
         {
             get => asDateTime;
             set => asDateTime = value;
         }
 
-        public string AsString
+        public string? AsStringN
         {
             get => asString;
             set => asString = value;
         }
 
-        public Color AsColor
+        public Color? AsColorN
         {
             get => asColor;
             set => asColor = value;
         }
-        
-        public Font AsFont
+
+        public Font? AsFontN
         {
             get => asFont;
             set => asFont = value;
         }
-        
-        public Brush AsBrush
+
+        public Brush? AsBrushN
         {
             get => asBrush;
             set => asBrush = value;
         }
 
-        public Pen AsPen
+        public Pen? AsPenN
         {
             get => asPen;
             set => asPen = value;
         }
 
-        public Size AsSize
+        public Size? AsSizeN
         {
             get => asSize;
             set => asSize = value;
         }
-        
-        public Thickness AsThickness
+
+        public Thickness? AsThicknessN
         {
             get => asThickness;
             set => asThickness = value;
         }
-        
-        public Rect AsRect
+
+        public Rect? AsRectN
         {
             get => asRect;
             set => asRect = value;
         }
-        
-        public Point AsPoint
+
+        public Point? AsPointN
         {
             get => asPoint;
             set => asPoint = value;
         }
     }
 }
-

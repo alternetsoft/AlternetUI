@@ -64,5 +64,20 @@ namespace PropertyGridSample
                 propertyGrid.ApplyKnownColors(colorScheme);
             }
         }
+
+        public bool LogPropertySelected { get; set; } = false;
+        public bool LogPropertyChanged { get; set; } = true;
+        public bool LogPropertyChanging { get; set; } = false;
+        public bool LogPropertyHighlighted { get; set; } = false;
+        public bool LogPropertyRightClick { get; set; } = false;
+        public bool LogPropertyDoubleClick { get; set; } = false;
+        public bool LogItemCollapsed { get; set; } = false;
+        public bool LogItemExpanded { get; set; } = false;
+        public bool LogLabelEditBegin { get; set; } = false;
+        public bool LogLabelEditEnding { get; set; } = false;
+        public bool LogColBeginDrag { get; set; } = false;
+        public bool LogColDragging { get; set; } = false;
+        public bool LogColEndDrag { get; set; } = false;
+        public bool LogButtonClick { get; set; } = true;
     }
 }
