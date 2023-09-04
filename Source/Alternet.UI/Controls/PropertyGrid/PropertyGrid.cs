@@ -852,6 +852,34 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Creates property for structures.
+        /// </summary>
+        /// <param name="label">Property label.</param>
+        /// <param name="name">Property name.</param>
+        /// <param name="instance">Object instance which contains the property.</param>
+        /// <param name="propInfo">Property information.</param>
+        /// <returns>Property declaration for use with <see cref="PropertyGrid.Add"/>.</returns>
+        /// <remarks>
+        /// If <paramref name="label"/> or <paramref name="name"/> is null,
+        /// <paramref name="propInfo"/> is used to get them.
+        /// </remarks>
+        public virtual IPropertyGridItem CreatePropertyAsStruct(
+            string label,
+            string? name,
+            object instance,
+            PropertyInfo propInfo)
+        {
+            string? asString = instance?.ToString();
+
+            if (string.IsNullOrEmpty(asString))
+                asString = $"({propInfo.PropertyType})";
+
+            var result = CreateStringProperty(label, name, asString);
+            SetPropertyReadOnly(result, true, false);
+            return result;
+        }
+
+        /// <summary>
         /// Creates <see cref="Font"/> property.
         /// </summary>
         /// <param name="label">Property label.</param>
@@ -1221,11 +1249,19 @@ namespace Alternet.UI
             propName ??= p.Name;
             label ??= propName;
             var propType = p.PropertyType;
-            object? propValue = p.GetValue(instance, null);
             IPropertyGridItem? prop = null;
 
             var realType = AssemblyUtils.GetRealType(propType);
             TypeCode typeCode = Type.GetTypeCode(realType);
+
+            object PropValue(object defValue)
+            {
+                object? result = p.GetValue(instance, null);
+                if (result == null)
+                    return defValue;
+                else
+                    return result;
+            }
 
             if (propType.IsEnum)
                 prop = CreatePropertyAsEnum(label, propName, instance, p);
@@ -1240,62 +1276,49 @@ namespace Alternet.UI
                         prop = CreateAsClass();
                         break;
                     case TypeCode.Boolean:
-                        propValue ??= false;
-                        prop = CreateBoolProperty(label!, propName, (bool)propValue!);
+                        prop = CreatePropertyAsBool(label, propName, instance, p);
                         break;
                     case TypeCode.SByte:
-                        propValue ??= default(sbyte);
-                        prop = CreateSByteProperty(label!, propName, (sbyte)propValue!);
+                        prop = CreatePropertyAsSByte(label, propName, instance, p);
                         break;
                     case TypeCode.Int16:
-                        propValue ??= default(short);
-                        prop = CreateInt16Property(label!, propName, (short)propValue!);
+                        prop = CreatePropertyAsInt16(label, propName, instance, p);
                         break;
                     case TypeCode.Int32:
-                        propValue ??= default(int);
-                        prop = CreateIntProperty(label!, propName, (int)propValue!);
+                        prop = CreatePropertyAsInt(label, propName, instance, p);
                         break;
                     case TypeCode.Int64:
-                        propValue ??= default(long);
-                        prop = CreateLongProperty(label!, propName, (long)propValue!);
+                        prop = CreatePropertyAsLong(label, propName, instance, p);
                         break;
                     case TypeCode.Byte:
-                        propValue ??= default(byte);
-                        prop = CreateByteProperty(label!, propName, (byte)propValue!);
+                        prop = CreatePropertyAsByte(label, propName, instance, p);
                         break;
                     case TypeCode.UInt32:
-                        propValue ??= default(uint);
-                        prop = CreateUIntProperty(label!, propName, (uint)propValue!);
+                        prop = CreatePropertyAsUInt(label, propName, instance, p);
                         break;
                     case TypeCode.UInt16:
-                        propValue ??= default(ushort);
-                        prop = CreateUInt16Property(label!, propName, (ushort)propValue!);
+                        prop = CreatePropertyAsUInt16(label, propName, instance, p);
                         break;
                     case TypeCode.UInt64:
-                        propValue ??= default(ulong);
-                        prop = CreateULongProperty(label!, propName, (ulong)propValue!);
+                        prop = CreatePropertyAsULong(label, propName, instance, p);
                         break;
                     case TypeCode.Single:
-                        propValue ??= 0F;
-                        prop = CreateFloatProperty(label!, propName, (float)propValue!);
+                        prop = CreatePropertyAsFloat(label, propName, instance, p);
                         break;
                     case TypeCode.Double:
-                        propValue ??= 0D;
-                        prop = CreateDoubleProperty(label!, propName, (double)propValue!);
+                        prop = CreatePropertyAsDouble(label, propName, instance, p);
                         break;
                     case TypeCode.Decimal:
-                        propValue ??= 0M;
-                        prop = CreateDecimalProperty(label!, propName, (decimal)propValue!);
+                        prop = CreatePropertyAsDecimal(label, propName, instance, p);
                         break;
                     case TypeCode.DateTime:
-                        propValue ??= DateTime.Now;
-                        prop = CreateDateProperty(label!, propName, (DateTime)propValue);
+                        prop = CreatePropertyAsDate(label, propName, instance, p);
                         break;
                     case TypeCode.Char:
-                        prop = CreateCharProperty(label!, propName, propValue?.ToString());
+                        prop = CreatePropertyAsChar(label, propName, instance, p);
                         break;
                     case TypeCode.String:
-                        prop = CreateStringProperty(label!, propName, propValue?.ToString());
+                        prop = CreatePropertyAsString(label, propName, instance, p);
                         break;
                 }
             }
@@ -1319,46 +1342,197 @@ namespace Alternet.UI
                     return result;
                 }
 
-                /*
-                if (realType == typeof(Color))
-                {
-                    result = CreatePropertyAsColor(label, propName, instance, p);
-                    return result;
-                }
-
-                if (realType == typeof(Font))
-                {
-                    result = CreatePropertyAsFont(label!, propName, instance, p);
-                    setPropReadonly = true;
-                    return result;
-                }
-
-                if (realType == typeof(Brush))
-                {
-                    result = CreatePropertyAsBrush(label!, propName, instance, p);
-                    setPropReadonly = true;
-                    return result;
-                }
-
-                if (realType == typeof(Pen))
-                {
-                    result = CreatePropertyAsPen(label!, propName, instance, p);
-                    setPropReadonly = true;
-                    return result;
-                }*/
-
                 if (realType.IsValueType)
                 {
-
+                    result = CreatePropertyAsStruct(label!, propName, instance, p);
+                    return result;
                 }
 
                 result = CreateStringProperty(
                     label!,
                     propName,
-                    propValue?.ToString());
+                    PropValue(string.Empty).ToString());
                 setPropReadonly = true;
                 return result;
             }
+        }
+
+        public virtual IPropertyGridItem CreatePropertyAsBool(
+                    string label,
+                    string? name,
+                    object instance,
+                    PropertyInfo p)
+        {
+            var value = (bool)AssemblyUtils.GetPropValue(instance, p, false);
+            var prop = CreateBoolProperty(label, name, value);
+            return prop;
+        }
+
+        public virtual IPropertyGridItem CreatePropertyAsSByte(
+                    string label,
+                    string? name,
+                    object instance,
+                    PropertyInfo p)
+        {
+            var value = (sbyte)AssemblyUtils.GetPropValue(instance, p, default(sbyte));
+            var prop = CreateSByteProperty(label, name, value);
+            return prop;
+        }
+
+        public virtual IPropertyGridItem CreatePropertyAsInt16(
+                    string label,
+                    string? name,
+                    object instance,
+                    PropertyInfo p)
+        {
+            prop = CreateInt16Property(
+                label!,
+                propName,
+                (short)PropValue(default(short)));
+        }
+
+        public virtual IPropertyGridItem CreatePropertyAsInt(
+                    string label,
+                    string? name,
+                    object instance,
+                    PropertyInfo p)
+        {
+            prop = CreateIntProperty(
+                label!,
+                propName,
+                (int)PropValue(default(int)));
+        }
+
+        public virtual IPropertyGridItem CreatePropertyAsLong(
+                    string label,
+                    string name,
+                    object instance,
+                    PropertyInfo p)
+        {
+            prop = CreateLongProperty(
+                label!,
+                propName,
+                (long)PropValue(default(long)));
+        }
+
+        public virtual IPropertyGridItem CreatePropertyAsByte(
+                    string label,
+                    string? name,
+                    object instance,
+                    PropertyInfo p)
+        {
+            prop = CreateByteProperty(
+                label!,
+                propName,
+                (byte)PropValue(default(byte)));
+        }
+
+        public virtual IPropertyGridItem CreatePropertyAsUInt(
+                    string label,
+                    string? name,
+                    object instance,
+                    PropertyInfo p)
+        {
+            prop = CreateUIntProperty(
+                label!,
+                propName,
+                (uint)PropValue(default(uint)));
+        }
+
+        public virtual IPropertyGridItem CreatePropertyAsUInt16(
+                    string label,
+                    string? name,
+                    object instance,
+                    PropertyInfo p)
+        {
+            prop = CreateUInt16Property(
+                label!,
+                propName,
+                (ushort)PropValue(default(ushort)));
+        }
+
+        public virtual IPropertyGridItem CreatePropertyAsULong(
+                    string label,
+                    string? name,
+                    object instance,
+                    PropertyInfo p)
+        {
+            prop = CreateULongProperty(
+                label!,
+                propName,
+                (ulong)PropValue(default(ulong)));
+        }
+
+        public virtual IPropertyGridItem CreatePropertyAsFloat(
+                    string label,
+                    string? name,
+                    object instance,
+                    PropertyInfo p)
+        {
+            prop = CreateFloatProperty(
+                label!,
+                propName,
+                (float)PropValue(default(float)));
+        }
+
+        public virtual IPropertyGridItem CreatePropertyAsDouble(
+                    string label,
+                    string? name,
+                    object instance,
+                    PropertyInfo p)
+        {
+            prop = CreateDoubleProperty(
+                label!,
+                propName,
+                (double)PropValue(default(double)));
+        }
+
+        public virtual IPropertyGridItem CreatePropertyAsDecimal(
+                    string label,
+                    string? name,
+                    object instance,
+                    PropertyInfo p)
+        {
+            prop = CreateDecimalProperty(
+                label!,
+                propName,
+                (decimal)PropValue(default(decimal)));
+        }
+
+        public virtual IPropertyGridItem CreatePropertyAsDate(
+                    string label,
+                    string? name,
+                    object instance,
+                    PropertyInfo p)
+        {
+            prop = CreateDateProperty(
+                label!,
+                propName,
+                (DateTime)PropValue(DateTime.Now));
+        }
+
+        public virtual IPropertyGridItem CreatePropertyAsChar(
+                    string label,
+                    string? name,
+                    object instance,
+                    PropertyInfo p)
+        {
+            prop = CreateCharProperty(
+                label!,
+                propName,
+                PropValue(string.Empty).ToString());
+        }
+
+        public virtual IPropertyGridItem CreatePropertyAsString(
+                    string label,
+                    string? name,
+                    object instance,
+                    PropertyInfo p)
+        {
+            prop = CreateStringProperty(
+                label!,
+                propName,
+                PropValue(string.Empty).ToString());
         }
 
         /// <summary>
@@ -1393,7 +1567,7 @@ namespace Alternet.UI
                 addedNames.Add(propName, p);
             }
 
-            if(sort)
+            if (sort)
                 result.Sort(PropertyGridItem.CompareByLabel);
             return result;
         }
@@ -3557,7 +3731,7 @@ namespace Alternet.UI
                     var variant = EventPropValueAsVariant;
                     var newValue = variant.GetCompatibleValue(propInfo);
                     propInfo.SetValue(instance, newValue);
-                 });
+                });
 
                 AvoidException(() =>
                 {
