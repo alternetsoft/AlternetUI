@@ -14,6 +14,22 @@ namespace Alternet.UI
     public static class AssemblyUtils
     {
         /// <summary>
+        /// Gets property value.
+        /// </summary>
+        /// <param name="instance">Instance which contains the property.</param>
+        /// <param name="propInfo">Property info.</param>
+        /// <param name="defValue">Default property value (used if property value is null).</param>
+        /// <returns></returns>
+        public static object GetPropValue(object? instance, PropertyInfo propInfo, object defValue)
+        {
+            object? result = propInfo.GetValue(instance, null);
+            if (result == null)
+                return defValue;
+            else
+                return result;
+        }
+
+        /// <summary>
         /// Gets real type, using <see cref="Nullable.GetUnderlyingType"/>.
         /// </summary>
         /// <param name="type">Type.</param>
