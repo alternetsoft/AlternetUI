@@ -413,6 +413,7 @@ namespace Alternet.UI
         /// </summary>
         /// <value>A <see cref="TreeViewItem"/> that represents the first
         /// fully-visible tree item in the tree view control.</value>
+        [Browsable(false)]
         public TreeViewItem? TopItem => Handler.TopItem;
 
         /// <summary>

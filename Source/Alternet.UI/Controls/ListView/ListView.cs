@@ -134,6 +134,7 @@ namespace Alternet.UI
         /// Gets or sets the first fully-visible item in the list view control.
         /// </summary>
         /// <value>A <see cref="ListViewItem"/> that represents the first fully-visible item in the list view control.</value>
+        [Browsable(false)]
         public ListViewItem? TopItem { get => Handler.TopItem; }
 
         /// <summary>
