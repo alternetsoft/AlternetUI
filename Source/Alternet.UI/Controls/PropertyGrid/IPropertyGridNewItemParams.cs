@@ -6,6 +6,10 @@ using System.Threading.Tasks;
 
 namespace Alternet.UI
 {
+    /// <summary>
+    /// Defines customization parameters used when new <see cref="IPropertyGridItem"/>
+    /// instances are created in <see cref="PropertyGrid"/>.
+    /// </summary>
     public interface IPropertyGridNewItemParams
     {
     }

@@ -14,6 +14,11 @@ namespace Alternet.UI
             set => PropertyGrid.DefaultCreateStyle = value;
         }
 
+        public IPropertyGridNewItemParams CreateNewItemParams()
+        {
+            return PropertyGrid.CreateNewItemParams();
+        }
+
         public void AutoGetTranslation(bool enable)
         {
             PropertyGrid.AutoGetTranslation(enable);

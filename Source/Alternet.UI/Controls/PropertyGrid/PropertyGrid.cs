@@ -403,6 +403,14 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Creates new <see cref="IPropertyGridNewItemParams"/> instance.
+        /// </summary>
+        public static IPropertyGridNewItemParams CreateNewItemParams()
+        {
+            return new PropertyGridNewItemParams();
+        }
+
+        /// <summary>
         /// Registers <see cref="IPropertyGridItem"/> create function for specific <see cref="Type"/>.
         /// </summary>
         /// <param name="type">Type value.</param>
@@ -539,6 +547,7 @@ namespace Alternet.UI
         /// <param name="label">Property label.</param>
         /// <param name="name">Property name.</param>
         /// <param name="value">Default property value.</param>
+        /// <param name="prm">Property item create parameters.</param>
         /// <returns>Property declaration for use with <see cref="PropertyGrid.Add"/>.</returns>
         /// <remarks>
         /// In order to setup filename and attached <see cref="FileDialog"/>, you can use
@@ -571,6 +580,7 @@ namespace Alternet.UI
         /// <param name="label">Property label.</param>
         /// <param name="name">Property name.</param>
         /// <param name="value">Default property value.</param>
+        /// <param name="prm">Property item create parameters.</param>
         /// <returns>Property declaration for use with <see cref="PropertyGrid.Add"/>.</returns>
         /// <remarks>
         /// In order to setup folder name and attached <see cref="SelectDirectoryDialog"/>,
@@ -603,6 +613,7 @@ namespace Alternet.UI
         /// <param name="label">Property label.</param>
         /// <param name="name">Property name.</param>
         /// <param name="value">Default property value.</param>
+        /// <param name="prm">Property item create parameters.</param>
         /// <returns>Property declaration for use with <see cref="PropertyGrid.Add"/>.</returns>
         /// <remarks>
         /// In order to setup filename and attached <see cref="FileDialog"/>, you can use
@@ -640,6 +651,7 @@ namespace Alternet.UI
         /// <param name="label">Property label.</param>
         /// <param name="name">Property name.</param>
         /// <param name="value">Default property value.</param>
+        /// <param name="prm">Property item create parameters.</param>
         /// <returns>Property declaration for use with <see cref="PropertyGrid.Add"/>.</returns>
         public virtual IPropertyGridItem CreateSystemColorProperty(
             string label,
@@ -662,6 +674,7 @@ namespace Alternet.UI
         /// <param name="label">Property label.</param>
         /// <param name="name">Property name.</param>
         /// <param name="value">Default property value.</param>
+        /// <param name="prm">Property item create parameters.</param>
         /// <returns>Property declaration for use with <see cref="PropertyGrid.Add"/>.</returns>
         public virtual IPropertyGridItem CreateStringProperty(
             string label,
@@ -685,6 +698,7 @@ namespace Alternet.UI
         /// <param name="label">Property label.</param>
         /// <param name="name">Property name.</param>
         /// <param name="value">Default property value.</param>
+        /// <param name="prm">Property item create parameters.</param>
         /// <returns>Property declaration for use with <see cref="PropertyGrid.Add"/>.</returns>
         public virtual IPropertyGridItem CreateCharProperty(
             string label,
@@ -703,6 +717,7 @@ namespace Alternet.UI
         /// <param name="label">Property label.</param>
         /// <param name="name">Property name.</param>
         /// <param name="value">Default property value.</param>
+        /// <param name="prm">Property item create parameters.</param>
         /// <returns>Property declaration for use with <see cref="PropertyGrid.Add"/>.</returns>
         public virtual IPropertyGridItem CreateBoolProperty(
             string label,
@@ -725,6 +740,7 @@ namespace Alternet.UI
         /// <param name="label">Property label.</param>
         /// <param name="name">Property name.</param>
         /// <param name="value">Default property value.</param>
+        /// <param name="prm">Property item create parameters.</param>
         /// <returns>Property declaration for use with <see cref="PropertyGrid.Add"/>.</returns>
         public virtual IPropertyGridItem CreateLongProperty(
             string label,
@@ -747,6 +763,7 @@ namespace Alternet.UI
         /// <param name="label">Property label.</param>
         /// <param name="name">Property name.</param>
         /// <param name="value">Default property value.</param>
+        /// <param name="prm">Property item create parameters.</param>
         /// <returns>Property declaration for use with <see cref="PropertyGrid.Add"/>.</returns>
         public virtual IPropertyGridItem CreateDoubleProperty(
             string label,
@@ -770,6 +787,7 @@ namespace Alternet.UI
         /// <param name="label">Property label.</param>
         /// <param name="name">Property name.</param>
         /// <param name="value">Default property value.</param>
+        /// <param name="prm">Property item create parameters.</param>
         /// <returns>Property declaration for use with <see cref="PropertyGrid.Add"/>.</returns>
         public virtual IPropertyGridItem CreateFloatProperty(
             string label,
@@ -793,6 +811,7 @@ namespace Alternet.UI
         /// <param name="label">Property label.</param>
         /// <param name="name">Property name.</param>
         /// <param name="value">Default property value.</param>
+        /// <param name="prm">Property item create parameters.</param>
         /// <returns>Property declaration for use with <see cref="PropertyGrid.Add"/>.</returns>
         public virtual IPropertyGridItem CreateColorProperty(
             string label,
@@ -815,6 +834,7 @@ namespace Alternet.UI
         /// <param name="label">Property label.</param>
         /// <param name="name">Property name.</param>
         /// <param name="value">Default property value.</param>
+        /// <param name="prm">Property item create parameters.</param>
         /// <returns>Property declaration for use with <see cref="PropertyGrid.Add"/>.</returns>
         public virtual IPropertyGridItem CreateULongProperty(
             string label,
@@ -838,6 +858,7 @@ namespace Alternet.UI
         /// <param name="label">Property label.</param>
         /// <param name="name">Property name.</param>
         /// <param name="value">Default property value.</param>
+        /// <param name="prm">Property item create parameters.</param>
         /// <returns>Property declaration for use with <see cref="PropertyGrid.Add"/>.</returns>
         public virtual IPropertyGridItem CreateLongStringProperty(
             string label,
@@ -864,6 +885,7 @@ namespace Alternet.UI
         /// <param name="label">Property label.</param>
         /// <param name="name">Property name.</param>
         /// <param name="value">Default property value.</param>
+        /// <param name="prm">Property item create parameters.</param>
         /// <returns>Property declaration for use with <see cref="PropertyGrid.Add"/>.</returns>
         public virtual IPropertyGridItem CreateDateProperty(
             string label,
@@ -1035,6 +1057,7 @@ namespace Alternet.UI
         /// <param name="label">Property label.</param>
         /// <param name="name">Property name.</param>
         /// <param name="value">Default property value.</param>
+        /// <param name="prm">Property item create parameters.</param>
         /// <returns>Property declaration for use with <see cref="PropertyGrid.Add"/>.</returns>
         public virtual IPropertyGridItem CreateDecimalProperty(
             string label,
@@ -1053,6 +1076,7 @@ namespace Alternet.UI
         /// <param name="label">Property label.</param>
         /// <param name="name">Property name.</param>
         /// <param name="value">Default property value.</param>
+        /// <param name="prm">Property item create parameters.</param>
         /// <returns>Property declaration for use with <see cref="PropertyGrid.Add"/>.</returns>
         public virtual IPropertyGridItem CreateSByteProperty(
             string label,
@@ -1102,6 +1126,7 @@ namespace Alternet.UI
         /// <param name="label">Property label.</param>
         /// <param name="name">Property name.</param>
         /// <param name="value">Default property value.</param>
+        /// <param name="prm">Property item create parameters.</param>
         /// <returns>Property declaration for use with <see cref="PropertyGrid.Add"/>.</returns>
         public virtual IPropertyGridItem CreateInt16Property(
             string label,
@@ -1121,6 +1146,7 @@ namespace Alternet.UI
         /// <param name="label">Property label.</param>
         /// <param name="name">Property name.</param>
         /// <param name="value">Default property value.</param>
+        /// <param name="prm">Property item create parameters.</param>
         /// <returns>Property declaration for use with <see cref="PropertyGrid.Add"/>.</returns>
         public virtual IPropertyGridItem CreateIntProperty(
             string label,
@@ -1140,6 +1166,7 @@ namespace Alternet.UI
         /// <param name="label">Property label.</param>
         /// <param name="name">Property name.</param>
         /// <param name="value">Default property value.</param>
+        /// <param name="prm">Property item create parameters.</param>
         /// <returns>Property declaration for use with <see cref="PropertyGrid.Add"/>.</returns>
         public virtual IPropertyGridItem CreateByteProperty(
             string label,
@@ -1159,6 +1186,7 @@ namespace Alternet.UI
         /// <param name="label">Property label.</param>
         /// <param name="name">Property name.</param>
         /// <param name="value">Default property value.</param>
+        /// <param name="prm">Property item create parameters.</param>
         /// <returns>Property declaration for use with <see cref="PropertyGrid.Add"/>.</returns>
         public virtual IPropertyGridItem CreateUIntProperty(
             string label,
@@ -1178,6 +1206,7 @@ namespace Alternet.UI
         /// <param name="label">Property label.</param>
         /// <param name="name">Property name.</param>
         /// <param name="value">Default property value.</param>
+        /// <param name="prm">Property item create parameters.</param>
         /// <returns>Property declaration for use with <see cref="PropertyGrid.Add"/>.</returns>
         public virtual IPropertyGridItem CreateUInt16Property(
             string label,

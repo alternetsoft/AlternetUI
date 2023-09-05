@@ -19,6 +19,9 @@ namespace Alternet.UI
         /// <inheritdoc cref="PropertyGrid.RegisterPropCreateFunc"/>
         void RegisterPropCreateFunc(Type type, PropertyGridItemCreate func);
 
+        /// <inheritdoc cref="PropertyGrid.CreateNewItemParams"/>
+        IPropertyGridNewItemParams CreateNewItemParams();
+
         /// <inheritdoc cref="PropertyGrid.GetTypeRegistry"/>
         IPropertyGridTypeRegistry GetTypeRegistry(Type type);
 
