@@ -36,6 +36,7 @@ namespace PropertyGridSample
         public WelcomeControl()
         {
             propertyGrid.ApplyColors(PropertyGridColors.ColorSchemeWhite);
+            propertyGrid.LineColorAsBackground();
 
             Children.Add(stackPanel);
             stackPanel.Children.Add(header);

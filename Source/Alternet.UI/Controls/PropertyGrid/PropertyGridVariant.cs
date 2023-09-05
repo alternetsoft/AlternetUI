@@ -51,7 +51,7 @@ namespace Alternet.UI
         {
             get
             {
-                var type = GetValueType();
+                var type = ValueType;
 
                 if (type == TypeNameNull)
                     return null;
@@ -74,66 +74,7 @@ namespace Alternet.UI
 
             set
             {
-                if(value is null)
-                {
-                    Clear();
-                    return;
-                }
-
-                var type = value.GetType();
-                TypeCode typeCode = Type.GetTypeCode(type);
-
-                switch (typeCode)
-                {
-                    case TypeCode.Empty:
-                    case TypeCode.DBNull:
-                    case TypeCode.Object:
-                        Clear();
-                        return;
-                    case TypeCode.Boolean:
-                        AsBool = (bool)value;
-                        break;
-                    case TypeCode.SByte:
-                        AsLong = (sbyte)value;
-                        break;
-                    case TypeCode.Int16:
-                        AsLong = (short)value;
-                        break;
-                    case TypeCode.Int32:
-                        AsLong = (int)value;
-                        break;
-                    case TypeCode.Int64:
-                        AsLong = (long)value;
-                        break;
-                    case TypeCode.Byte:
-                        AsULong = (byte)value;
-                        break;
-                    case TypeCode.UInt32:
-                        AsLong = (uint)value;
-                        break;
-                    case TypeCode.UInt16:
-                        AsULong = (ushort)value;
-                        break;
-                    case TypeCode.UInt64:
-                        AsULong = (ulong)value;
-                        break;
-                    case TypeCode.Single:
-                        AsDouble = (float)value;
-                        break;
-                    case TypeCode.Double:
-                        AsDouble = (double)value;
-                        break;
-                    case TypeCode.Decimal:
-                        AsDouble = Convert.ToDouble((decimal)value);
-                        break;
-                    case TypeCode.DateTime:
-                        AsDateTime = (DateTime)value;
-                        break;
-                    case TypeCode.Char:
-                    case TypeCode.String:
-                        AsString = value.ToString()!;
-                        break;
-                }
+                SetAsObject(value);
             }
         }
 
@@ -147,6 +88,32 @@ namespace Alternet.UI
             set
             {
                 Native.PropertyGridVariant.SetDouble(handle, value);
+            }
+        }
+
+        public uint AsUInt
+        {
+            get
+            {
+                return Native.PropertyGridVariant.GetUInt(handle);
+            }
+
+            set
+            {
+                Native.PropertyGridVariant.SetUInt(handle, value);
+            }
+        }
+
+        public int AsInt
+        {
+            get
+            {
+                return Native.PropertyGridVariant.GetInt(handle);
+            }
+
+            set
+            {
+                Native.PropertyGridVariant.SetInt(handle, value);
             }
         }
 
@@ -228,26 +195,33 @@ namespace Alternet.UI
             }
         }
 
+        public bool IsNull => Native.PropertyGridVariant.IsNull(handle);
+
+        public string ValueType => Native.PropertyGridVariant.GetValueType(handle);
+
         public void Clear()
         {
             Native.PropertyGridVariant.Clear(handle);
         }
 
-        public bool IsNull() => Native.PropertyGridVariant.IsNull(handle);
-
         public bool Unshare() => Native.PropertyGridVariant.Unshare(handle);
 
         public void MakeNull() => Native.PropertyGridVariant.MakeNull(handle);
-
-        public string GetValueType() => Native.PropertyGridVariant.GetValueType(handle);
 
         public bool IsType(string type) => Native.PropertyGridVariant.IsType(handle, type);
 
         public override string ToString() => Native.PropertyGridVariant.MakeString(handle);
 
+        public void SetCompatibleValue(object? value, PropertyInfo p)
+        {
+            if (value is null)
+                Clear();
+            SetAsObject(value);
+        }
+
         public object? GetCompatibleValue(PropertyInfo p)
         {
-            if (IsNull())
+            if (IsNull)
                 return null;
 
             var type = AssemblyUtils.GetRealType(p.PropertyType);
@@ -316,6 +290,71 @@ namespace Alternet.UI
             }
 
             GC.SuppressFinalize(this);
+        }
+
+        private void SetAsObject(object? value)
+        {
+            if (value is null)
+            {
+                Clear();
+                return;
+            }
+
+            var type = value.GetType();
+            TypeCode typeCode = Type.GetTypeCode(type);
+
+            switch (typeCode)
+            {
+                case TypeCode.Empty:
+                case TypeCode.DBNull:
+                case TypeCode.Object:
+                    if (value is Color color)
+                        AsColor = color;
+                    return;
+                case TypeCode.Boolean:
+                    AsBool = (bool)value;
+                    break;
+                case TypeCode.SByte:
+                    AsInt = (sbyte)value;
+                    break;
+                case TypeCode.Int16:
+                    AsInt = (short)value;
+                    break;
+                case TypeCode.Int32:
+                    AsInt = (int)value;
+                    break;
+                case TypeCode.Int64:
+                    AsLong = (long)value;
+                    break;
+                case TypeCode.Byte:
+                    AsUInt = (byte)value;
+                    break;
+                case TypeCode.UInt32:
+                    AsUInt = (uint)value;
+                    break;
+                case TypeCode.UInt16:
+                    AsUInt = (ushort)value;
+                    break;
+                case TypeCode.UInt64:
+                    AsULong = (ulong)value;
+                    break;
+                case TypeCode.Single:
+                    AsDouble = (float)value;
+                    break;
+                case TypeCode.Double:
+                    AsDouble = (double)value;
+                    break;
+                case TypeCode.Decimal:
+                    AsDouble = Convert.ToDouble((decimal)value);
+                    break;
+                case TypeCode.DateTime:
+                    AsDateTime = (DateTime)value;
+                    break;
+                case TypeCode.Char:
+                case TypeCode.String:
+                    AsString = value.ToString()!;
+                    break;
+            }
         }
     }
 }

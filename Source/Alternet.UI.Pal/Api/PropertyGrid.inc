@@ -40,6 +40,7 @@ string GetPropertyHelpString(void* id);
 void* GetPropertyImage(void* id);
 string GetPropertyLabel(void* id);
 void* GetPropertyParent(void* id);
+void* GetPropertyValueAsVariant(void* id);
 string GetPropertyValueAsString(void* id);
 int64_t GetPropertyValueAsLong(void* id);
 uint64_t GetPropertyValueAsULong(void* id);

@@ -193,6 +193,13 @@ namespace Alternet.UI.Native
             return n;
         }
         
+        public System.IntPtr GetPropertyValueAsVariant(System.IntPtr id)
+        {
+            CheckDisposed();
+            var n = NativeApi.PropertyGrid_GetPropertyValueAsVariant_(NativePointer, id);
+            return n;
+        }
+        
         public string GetPropertyValueAsString(System.IntPtr id)
         {
             CheckDisposed();
@@ -1529,6 +1536,9 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern System.IntPtr PropertyGrid_GetPropertyParent_(IntPtr obj, System.IntPtr id);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr PropertyGrid_GetPropertyValueAsVariant_(IntPtr obj, System.IntPtr id);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern string PropertyGrid_GetPropertyValueAsString_(IntPtr obj, System.IntPtr id);

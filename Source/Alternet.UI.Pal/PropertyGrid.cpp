@@ -715,6 +715,15 @@ namespace Alternet::UI
 		return GetPropGrid()->GetPropertyParent(_propArg);
 	}
 
+	void* PropertyGrid::GetPropertyValueAsVariant(void* id)
+	{
+		ToPropArg(id);
+		auto variant = GetPropGrid()->GetPropertyValue(_propArg);
+
+		auto result = new PropertyGridVariant(variant);
+		return result;
+	}
+
 	string PropertyGrid::GetPropertyValueAsString(void* id)
 	{
 		ToPropArg(id);

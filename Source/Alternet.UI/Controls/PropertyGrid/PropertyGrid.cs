@@ -199,7 +199,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets property value used in the event handler.
         /// </summary>
-        public object? EventPropValue
+        public virtual object? EventPropValue
         {
             get
             {
@@ -210,7 +210,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets property value used in the event handler as <see cref="IPropertyGridVariant"/>.
         /// </summary>
-        public IPropertyGridVariant EventPropValueAsVariant
+        public virtual IPropertyGridVariant EventPropValueAsVariant
         {
             get
             {
@@ -231,7 +231,7 @@ namespace Alternet.UI
         /// Gets or sets validation failure behavior flags used in the event handler.
         /// </summary>
         [Browsable(false)]
-        public PropertyGridValidationFailure EventValidationFailureBehavior
+        public virtual PropertyGridValidationFailure EventValidationFailureBehavior
         {
             get
             {
@@ -287,7 +287,7 @@ namespace Alternet.UI
         /// Gets or sets validation failure message used in the event handler.
         /// </summary>
         [Browsable(false)]
-        public string EventValidationFailureMessage
+        public virtual string EventValidationFailureMessage
         {
             get
             {
@@ -657,11 +657,9 @@ namespace Alternet.UI
         public virtual IPropertyGridItem CreateCharProperty(
             string label,
             string? name = null,
-            string? value = null)
+            char? value = null)
         {
-            if (!string.IsNullOrEmpty(value))
-                value = value![0].ToString();
-            var result = CreateStringProperty(label, name, value);
+            var result = CreateStringProperty(label, name, value?.ToString());
             SetPropertyMaxLength(result, 1);
             return result;
         }
@@ -854,23 +852,14 @@ namespace Alternet.UI
         /// <summary>
         /// Creates property for structures.
         /// </summary>
-        /// <param name="label">Property label.</param>
-        /// <param name="name">Property name.</param>
-        /// <param name="instance">Object instance which contains the property.</param>
-        /// <param name="propInfo">Property information.</param>
-        /// <returns>Property declaration for use with <see cref="PropertyGrid.Add"/>.</returns>
-        /// <remarks>
-        /// If <paramref name="label"/> or <paramref name="name"/> is null,
-        /// <paramref name="propInfo"/> is used to get them.
-        /// </remarks>
+        /// <inheritdoc cref="CreatePropertyAsDummy"/>
         public virtual IPropertyGridItem CreatePropertyAsStruct(
             string label,
             string? name,
             object instance,
             PropertyInfo propInfo)
         {
-            string? asString = instance?.ToString();
-
+            var asString = propInfo.GetValue(instance, null)?.ToString();
             if (string.IsNullOrEmpty(asString))
                 asString = $"({propInfo.PropertyType})";
 
@@ -882,25 +871,17 @@ namespace Alternet.UI
         /// <summary>
         /// Creates <see cref="Font"/> property.
         /// </summary>
-        /// <param name="label">Property label.</param>
-        /// <param name="name">Property name.</param>
-        /// <param name="instance">Object instance which contains the property.</param>
-        /// <param name="p">Property information.</param>
-        /// <returns>Property declaration for use with <see cref="PropertyGrid.Add"/>.</returns>
-        /// <remarks>
-        /// If <paramref name="label"/> or <paramref name="name"/> is null,
-        /// <paramref name="p"/> is used to get them.
-        /// </remarks>
+        /// <inheritdoc cref="CreatePropertyAsDummy"/>
         public virtual IPropertyGridItem CreatePropertyAsFont(
             string label,
             string? name,
             object instance,
-            PropertyInfo p)
+            PropertyInfo propInfo)
         {
             PropertyGridAdapterFont adapter = new()
             {
                 Instance = instance,
-                PropInfo = p,
+                PropInfo = propInfo,
             };
             var result = CreateStringProperty(label, name, "(Font)");
             SetPropertyReadOnly(result, true, false);
@@ -933,25 +914,17 @@ namespace Alternet.UI
         /// <summary>
         /// Creates <see cref="Brush"/> property.
         /// </summary>
-        /// <param name="label">Property label.</param>
-        /// <param name="name">Property name.</param>
-        /// <param name="instance">Object instance which contains the property.</param>
-        /// <param name="p">Property information.</param>
-        /// <returns>Property declaration for use with <see cref="PropertyGrid.Add"/>.</returns>
-        /// <remarks>
-        /// If <paramref name="label"/> or <paramref name="name"/> is null,
-        /// <paramref name="p"/> is used to get them.
-        /// </remarks>
+        /// <inheritdoc cref="CreatePropertyAsDummy"/>
         public virtual IPropertyGridItem CreatePropertyAsBrush(
             string label,
             string? name,
             object instance,
-            PropertyInfo p)
+            PropertyInfo propInfo)
         {
             PropertyGridAdapterBrush adapter = new()
             {
                 Instance = instance,
-                PropInfo = p,
+                PropInfo = propInfo,
             };
             var result = CreateStringProperty(label, name, "(Brush)");
             SetPropertyReadOnly(result, true, false);
@@ -984,25 +957,17 @@ namespace Alternet.UI
         /// <summary>
         /// Creates <see cref="Pen"/> property.
         /// </summary>
-        /// <param name="label">Property label.</param>
-        /// <param name="name">Property name.</param>
-        /// <param name="instance">Object instance which contains the property.</param>
-        /// <param name="p">Property information.</param>
-        /// <returns>Property declaration for use with <see cref="PropertyGrid.Add"/>.</returns>
-        /// <remarks>
-        /// If <paramref name="label"/> or <paramref name="name"/> is null,
-        /// <paramref name="p"/> is used to get them.
-        /// </remarks>
+        /// <inheritdoc cref="CreatePropertyAsDummy"/>
         public virtual IPropertyGridItem CreatePropertyAsPen(
             string label,
             string? name,
             object instance,
-            PropertyInfo p)
+            PropertyInfo propInfo)
         {
             PropertyGridAdapterPen adapter = new()
             {
                 Instance = instance,
-                PropInfo = p,
+                PropInfo = propInfo,
             };
             IPropertyGridItem result =
                 CreateStringProperty(label, name, "(Pen)");
@@ -1207,7 +1172,7 @@ namespace Alternet.UI
         /// <param name="instance">Object instance which contains the property.</param>
         /// <param name="nameInInstance">Property name in <paramref name="instance"/>.</param>
         /// <returns></returns>
-        public IPropertyGridItem? CreateProperty(object instance, string nameInInstance)
+        public virtual IPropertyGridItem? CreateProperty(object instance, string nameInInstance)
         {
             return CreateProperty(null, null, instance, nameInInstance);
         }
@@ -1218,7 +1183,7 @@ namespace Alternet.UI
         /// <param name="instance">Object instance which contains the property.</param>
         /// <param name="p">Property information.</param>
         /// <returns>Property declaration for use with <see cref="PropertyGrid.Add"/>.</returns>
-        public IPropertyGridItem? CreateProperty(object instance, PropertyInfo p)
+        public virtual IPropertyGridItem? CreateProperty(object instance, PropertyInfo p)
         {
             return CreateProperty(null, null, instance, p);
         }
@@ -1357,182 +1322,264 @@ namespace Alternet.UI
             }
         }
 
+        /// <param name="label">Property label.</param>
+        /// <param name="name">Property name.</param>
+        /// <param name="instance">Object instance which contains the property.</param>
+        /// <param name="propInfo">Property information.</param>
+        /// <returns>Property declaration for use with <see cref="PropertyGrid.Add"/>.</returns>
+        /// <remarks>
+        /// If <paramref name="label"/> or <paramref name="name"/> is null,
+        /// <paramref name="propInfo"/> is used to get them.
+        /// </remarks>
+#pragma warning disable
+        private IPropertyGridItem CreatePropertyAsDummy(
+                    string label,
+                    string? name,
+                    object instance,
+                    PropertyInfo propInfo)
+        {
+            return null;
+        }
+#pragma warning enable
+
+        /// <summary>
+        /// Creates <see cref="bool"/> property.
+        /// </summary>
+        /// <inheritdoc cref="CreatePropertyAsDummy"/>
         public virtual IPropertyGridItem CreatePropertyAsBool(
                     string label,
                     string? name,
                     object instance,
-                    PropertyInfo p)
+                    PropertyInfo propInfo)
         {
-            var value = (bool)AssemblyUtils.GetPropValue(instance, p, false);
+            var value = (bool)AssemblyUtils.GetPropValue(instance, propInfo, false);
             var prop = CreateBoolProperty(label, name, value);
+            OnPropertyCreated(prop, instance, propInfo);
             return prop;
         }
 
+        /// <summary>
+        /// Creates <see cref="sbyte"/> property.
+        /// </summary>
+        /// <inheritdoc cref="CreatePropertyAsDummy"/>
         public virtual IPropertyGridItem CreatePropertyAsSByte(
                     string label,
                     string? name,
                     object instance,
-                    PropertyInfo p)
+                    PropertyInfo propInfo)
         {
-            var value = (sbyte)AssemblyUtils.GetPropValue(instance, p, default(sbyte));
+            var value = AssemblyUtils.GetPropValue<sbyte>(instance, propInfo, default);
             var prop = CreateSByteProperty(label, name, value);
+            OnPropertyCreated(prop, instance, propInfo);
             return prop;
         }
 
+        /// <summary>
+        /// Creates <see cref="short"/> property.
+        /// </summary>
+        /// <inheritdoc cref="CreatePropertyAsDummy"/>
         public virtual IPropertyGridItem CreatePropertyAsInt16(
                     string label,
                     string? name,
                     object instance,
-                    PropertyInfo p)
+                    PropertyInfo propInfo)
         {
-            prop = CreateInt16Property(
-                label!,
-                propName,
-                (short)PropValue(default(short)));
+            var value = AssemblyUtils.GetPropValue<short>(instance, propInfo, default);
+            var prop = CreateInt16Property(label, name, value);
+            OnPropertyCreated(prop, instance, propInfo);
+            return prop;
         }
 
+        /// <summary>
+        /// Creates <see cref="int"/> property.
+        /// </summary>
+        /// <inheritdoc cref="CreatePropertyAsDummy"/>
         public virtual IPropertyGridItem CreatePropertyAsInt(
                     string label,
                     string? name,
                     object instance,
-                    PropertyInfo p)
+                    PropertyInfo propInfo)
         {
-            prop = CreateIntProperty(
-                label!,
-                propName,
-                (int)PropValue(default(int)));
+            var value = AssemblyUtils.GetPropValue<int>(instance, propInfo, default);
+            var prop = CreateIntProperty(label, name, value);
+            OnPropertyCreated(prop, instance, propInfo);
+            return prop;
         }
 
+        /// <summary>
+        /// Creates <see cref="long"/> property.
+        /// </summary>
+        /// <inheritdoc cref="CreatePropertyAsDummy"/>
         public virtual IPropertyGridItem CreatePropertyAsLong(
                     string label,
                     string name,
                     object instance,
-                    PropertyInfo p)
+                    PropertyInfo propInfo)
         {
-            prop = CreateLongProperty(
-                label!,
-                propName,
-                (long)PropValue(default(long)));
+            var value = AssemblyUtils.GetPropValue<long>(instance, propInfo, default);
+            var prop = CreateLongProperty(label, name, value);
+            OnPropertyCreated(prop, instance, propInfo);
+            return prop;
         }
 
+        /// <summary>
+        /// Creates <see cref="byte"/> property.
+        /// </summary>
+        /// <inheritdoc cref="CreatePropertyAsDummy"/>
         public virtual IPropertyGridItem CreatePropertyAsByte(
                     string label,
                     string? name,
                     object instance,
-                    PropertyInfo p)
+                    PropertyInfo propInfo)
         {
-            prop = CreateByteProperty(
-                label!,
-                propName,
-                (byte)PropValue(default(byte)));
+            var value = AssemblyUtils.GetPropValue<byte>(instance, propInfo, default);
+            var prop = CreateByteProperty(label, name, value);
+            OnPropertyCreated(prop, instance, propInfo);
+            return prop;
         }
 
+        /// <summary>
+        /// Creates <see cref="uint"/> property.
+        /// </summary>
+        /// <inheritdoc cref="CreatePropertyAsDummy"/>
         public virtual IPropertyGridItem CreatePropertyAsUInt(
                     string label,
                     string? name,
                     object instance,
-                    PropertyInfo p)
+                    PropertyInfo propInfo)
         {
-            prop = CreateUIntProperty(
-                label!,
-                propName,
-                (uint)PropValue(default(uint)));
+            var value = AssemblyUtils.GetPropValue<uint>(instance, propInfo, default);
+            var prop = CreateUIntProperty(label, name, value);
+            OnPropertyCreated(prop, instance, propInfo);
+            return prop;
         }
 
+        /// <summary>
+        /// Creates <see cref="ushort"/> property.
+        /// </summary>
+        /// <inheritdoc cref="CreatePropertyAsDummy"/>
         public virtual IPropertyGridItem CreatePropertyAsUInt16(
                     string label,
                     string? name,
                     object instance,
-                    PropertyInfo p)
+                    PropertyInfo propInfo)
         {
-            prop = CreateUInt16Property(
-                label!,
-                propName,
-                (ushort)PropValue(default(ushort)));
+            var value = AssemblyUtils.GetPropValue<ushort>(instance, propInfo, default);
+            var prop = CreateUInt16Property(label, name, value);
+            OnPropertyCreated(prop, instance, propInfo);
+            return prop;
         }
 
+        /// <summary>
+        /// Creates <see cref="ulong"/> property.
+        /// </summary>
+        /// <inheritdoc cref="CreatePropertyAsDummy"/>
         public virtual IPropertyGridItem CreatePropertyAsULong(
                     string label,
                     string? name,
                     object instance,
-                    PropertyInfo p)
+                    PropertyInfo propInfo)
         {
-            prop = CreateULongProperty(
-                label!,
-                propName,
-                (ulong)PropValue(default(ulong)));
+            var value = AssemblyUtils.GetPropValue<ulong>(instance, propInfo, default);
+            var prop = CreateULongProperty(label, name, value);
+            OnPropertyCreated(prop, instance, propInfo);
+            return prop;
         }
 
+        /// <summary>
+        /// Creates <see cref="float"/> property.
+        /// </summary>
+        /// <inheritdoc cref="CreatePropertyAsDummy"/>
         public virtual IPropertyGridItem CreatePropertyAsFloat(
                     string label,
                     string? name,
                     object instance,
-                    PropertyInfo p)
+                    PropertyInfo propInfo)
         {
-            prop = CreateFloatProperty(
-                label!,
-                propName,
-                (float)PropValue(default(float)));
+            var value = AssemblyUtils.GetPropValue<float>(instance, propInfo, default);
+            var prop = CreateFloatProperty(label, name, value);
+            OnPropertyCreated(prop, instance, propInfo);
+            return prop;
         }
 
+        /// <summary>
+        /// Creates <see cref="double"/> property.
+        /// </summary>
+        /// <inheritdoc cref="CreatePropertyAsDummy"/>
         public virtual IPropertyGridItem CreatePropertyAsDouble(
                     string label,
                     string? name,
                     object instance,
-                    PropertyInfo p)
+                    PropertyInfo propInfo)
         {
-            prop = CreateDoubleProperty(
-                label!,
-                propName,
-                (double)PropValue(default(double)));
+            var value = AssemblyUtils.GetPropValue<double>(instance, propInfo, default);
+            var prop = CreateDoubleProperty(label, name, value);
+            OnPropertyCreated(prop, instance, propInfo);
+            return prop;
         }
 
+        /// <summary>
+        /// Creates <see cref="decimal"/> property.
+        /// </summary>
+        /// <inheritdoc cref="CreatePropertyAsDummy"/>
         public virtual IPropertyGridItem CreatePropertyAsDecimal(
                     string label,
                     string? name,
                     object instance,
-                    PropertyInfo p)
+                    PropertyInfo propInfo)
         {
-            prop = CreateDecimalProperty(
-                label!,
-                propName,
-                (decimal)PropValue(default(decimal)));
+            var value = AssemblyUtils.GetPropValue<decimal>(instance, propInfo, default);
+            var prop = CreateDecimalProperty(label, name, value);
+            OnPropertyCreated(prop, instance, propInfo);
+            return prop;
         }
 
+        /// <summary>
+        /// Creates <see cref="DateTime"/> property.
+        /// </summary>
+        /// <inheritdoc cref="CreatePropertyAsDummy"/>
         public virtual IPropertyGridItem CreatePropertyAsDate(
                     string label,
                     string? name,
                     object instance,
-                    PropertyInfo p)
+                    PropertyInfo propInfo)
         {
-            prop = CreateDateProperty(
-                label!,
-                propName,
-                (DateTime)PropValue(DateTime.Now));
+            var value = AssemblyUtils.GetPropValue<DateTime>(instance, propInfo, default);
+            var prop = CreateDateProperty(label, name, value);
+            OnPropertyCreated(prop, instance, propInfo);
+            return prop;
         }
 
+        /// <summary>
+        /// Creates <see cref="char"/> property.
+        /// </summary>
+        /// <inheritdoc cref="CreatePropertyAsDummy"/>
         public virtual IPropertyGridItem CreatePropertyAsChar(
                     string label,
                     string? name,
                     object instance,
-                    PropertyInfo p)
+                    PropertyInfo propInfo)
         {
-            prop = CreateCharProperty(
-                label!,
-                propName,
-                PropValue(string.Empty).ToString());
+            var value = AssemblyUtils.GetPropValue<char>(instance, propInfo, default);
+            var prop = CreateCharProperty(label, name, value);
+            OnPropertyCreated(prop, instance, propInfo);
+            return prop;
         }
 
+        /// <summary>
+        /// Creates <see cref="string"/> property.
+        /// </summary>
+        /// <inheritdoc cref="CreatePropertyAsDummy"/>
         public virtual IPropertyGridItem CreatePropertyAsString(
                     string label,
                     string? name,
                     object instance,
-                    PropertyInfo p)
+                    PropertyInfo propInfo)
         {
-            prop = CreateStringProperty(
-                label!,
-                propName,
-                PropValue(string.Empty).ToString());
+            var value = AssemblyUtils.GetPropValue<string>(instance, propInfo, string.Empty);
+            var prop = CreateStringProperty(label, name, value);
+            OnPropertyCreated(prop, instance, propInfo);
+            return prop;
         }
 
         /// <summary>
@@ -1620,56 +1667,40 @@ namespace Alternet.UI
         /// <summary>
         /// Creates <see cref="Color"/> property.
         /// </summary>
-        /// <param name="label">Property label.</param>
-        /// <param name="name">Property name.</param>
-        /// <param name="instance">Object instance which contains the property.</param>
-        /// <param name="p">Property information.</param>
-        /// <returns>Property declaration for use with <see cref="PropertyGrid.Add"/>.</returns>
-        /// <remarks>
-        /// If <paramref name="label"/> or <paramref name="name"/> is null,
-        /// <paramref name="p"/> is used to get them.
-        /// </remarks>
+        /// <inheritdoc cref="CreatePropertyAsDummy"/>
         public virtual IPropertyGridItem CreatePropertyAsColor(
             string? label,
             string? name,
             object instance,
-            PropertyInfo p)
+            PropertyInfo propInfo)
         {
             IPropertyGridItem prop;
-            string propName = p.Name;
+            string propName = propInfo.Name;
             label ??= propName;
-            object? propValue = p.GetValue(instance, null);
+            object? propValue = propInfo.GetValue(instance, null);
             propValue ??= Color.Black;
             prop = CreateColorProperty(label, name, (Color)propValue);
             if (ColorHasAlpha)
                 SetPropertyKnownAttribute(prop, PropertyGridItemAttrId.HasAlpha, true);
-            OnPropertyCreated(prop, instance, p);
+            OnPropertyCreated(prop, instance, propInfo);
             return prop;
         }
 
         /// <summary>
         /// Creates enumeration property.
         /// </summary>
-        /// <param name="label">Property label.</param>
-        /// <param name="name">Property name.</param>
-        /// <param name="instance">Object instance which contains the property.</param>
-        /// <param name="p">Property information.</param>
-        /// <returns>Property declaration for use with <see cref="PropertyGrid.Add"/>.</returns>
-        /// <remarks>
-        /// If <paramref name="label"/> or <paramref name="name"/> is null,
-        /// <paramref name="p"/> is used to get them.
-        /// </remarks>
+        /// <inheritdoc cref="CreatePropertyAsDummy"/>
         public virtual IPropertyGridItem CreatePropertyAsEnum(
             string? label,
             string? name,
             object instance,
-            PropertyInfo p)
+            PropertyInfo propInfo)
         {
             IPropertyGridItem prop;
-            var propType = p.PropertyType;
-            string propName = p.Name;
+            var propType = propInfo.PropertyType;
+            string propName = propInfo.Name;
             label ??= propName;
-            object? propValue = p.GetValue(instance, null);
+            object? propValue = propInfo.GetValue(instance, null);
             var flagsAttr = propType.GetCustomAttribute(typeof(FlagsAttribute));
             var choices = PropertyGrid.CreateChoicesOnce(propType);
             if (flagsAttr == null)
@@ -1689,7 +1720,7 @@ namespace Alternet.UI
                     propValue!);
             }
 
-            OnPropertyCreated(prop, instance, p);
+            OnPropertyCreated(prop, instance, propInfo);
             return prop;
         }
 
@@ -1859,7 +1890,7 @@ namespace Alternet.UI
         /// Gets property name of the <see cref="IPropertyGridItem"/>.
         /// </summary>
         /// <param name="property">Property Item.</param>
-        public string GetPropertyName(IPropertyGridItem property)
+        public virtual string GetPropertyName(IPropertyGridItem property)
         {
             return NativeControl.GetPropertyName(property.Handle);
         }
@@ -1869,7 +1900,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="topLevelOnly"><c>true</c> to sort only top level properties,
         /// <c>false</c> otherwise.</param>
-        public void Sort(bool topLevelOnly = false)
+        public virtual void Sort(bool topLevelOnly = false)
         {
             var flags = topLevelOnly ? PGSORTTOPLEVELONLY : 0;
             NativeControl.Sort(flags);
@@ -1882,7 +1913,10 @@ namespace Alternet.UI
         /// <param name="isSet">New Readonly flag value.</param>
         /// <param name="recurse"><c>true</c> to change readonly flag recursively
         /// for child propereties, <c>false</c> otherwise.</param>
-        public void SetPropertyReadOnly(IPropertyGridItem prop, bool isSet, bool recurse = true)
+        public virtual void SetPropertyReadOnly(
+            IPropertyGridItem prop,
+            bool isSet,
+            bool recurse = true)
         {
             var flags = recurse ? PGRECURSE : PGDONTRECURSE;
 
@@ -1893,7 +1927,7 @@ namespace Alternet.UI
         /// Allows property value to be unspecified.
         /// </summary>
         /// <param name="prop">Property item.</param>
-        public void SetPropertyValueUnspecified(IPropertyGridItem prop)
+        public virtual void SetPropertyValueUnspecified(IPropertyGridItem prop)
         {
             NativeControl.SetPropertyValueUnspecified(prop.Handle);
         }
@@ -2024,6 +2058,17 @@ namespace Alternet.UI
         public virtual int GetPropertyValueAsInt(IPropertyGridItem prop)
         {
             return NativeControl.GetPropertyValueAsInt(prop.Handle);
+        }
+
+        /// <summary>
+        /// Gets property value as <see cref="IPropertyGridVariant"/>.
+        /// </summary>
+        /// <param name="prop">Property item.</param>
+        public virtual IPropertyGridVariant GetPropertyValueAsVariant(IPropertyGridItem prop)
+        {
+            var handle = NativeControl.GetPropertyValueAsVariant(prop.Handle);
+            PropertyGridVariant propValue = new(handle);
+            return propValue;
         }
 
         /// <summary>
@@ -2471,6 +2516,14 @@ namespace Alternet.UI
                 ApplyColors();
             else
                 ApplyColors(PropertyGridColors.CreateColors(colors));
+        }
+
+        /// <summary>
+        /// Changes lines color to the cell background color;
+        /// </summary>
+        public virtual void LineColorAsBackground()
+        {
+            SetLineColor(GetCellBackgroundColor());
         }
 
         /// <summary>
@@ -2989,7 +3042,9 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="prop">Property item.</param>
         /// <param name="value">New property value.</param>
-        public void SetPropertyValueAsVariant(IPropertyGridItem prop, IPropertyGridVariant value)
+        public virtual void SetPropertyValueAsVariant(
+            IPropertyGridItem prop,
+            IPropertyGridVariant value)
         {
             NativeControl.SetPropertyValueAsVariant(prop.Handle, value.Handle);
         }
@@ -3189,7 +3244,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="prop">Property item.</param>
         /// <param name="validator">Value validator.</param>
-        public void SetPropertyValidator(IPropertyGridItem prop, IValueValidator validator)
+        public virtual void SetPropertyValidator(IPropertyGridItem prop, IValueValidator validator)
         {
             IntPtr ptr = default;
             if (validator != null)
@@ -3222,7 +3277,7 @@ namespace Alternet.UI
         /// <param name="instance">Instance filter parameter. Ignored if <c>null</c>.</param>
         /// <param name="propInfo">Property information filter parameter.
         /// Ignored if <c>null</c></param>
-        public IEnumerable<IPropertyGridItem> GetItemsFiltered(
+        public virtual IEnumerable<IPropertyGridItem> GetItemsFiltered(
             object? instance = null,
             PropertyInfo? propInfo = null)
         {
@@ -3253,8 +3308,6 @@ namespace Alternet.UI
         /// Ignored if <c>null</c></param>
         public virtual void ReloadValues(object? instance = null, PropertyInfo? propInfo = null)
         {
-            IPropertyGridVariant variant = CreateVariant();
-
             var filteredItems = GetItemsFiltered(instance, propInfo);
             if (filteredItems.First() == null)
                 return;
@@ -3278,7 +3331,10 @@ namespace Alternet.UI
                 if (instance == null || p == null)
                     return;
                 object? propValue = p.GetValue(instance, null);
-                variant.AsObject = propValue;
+
+                // var oldValue = GetPropertyValueAsVariant(item);
+
+                variant.SetCompatibleValue(propValue, p);
                 SetPropertyValueAsVariant(item, variant);
             }
         }
@@ -3356,21 +3412,6 @@ namespace Alternet.UI
         internal void SetPropertyEditor(IPropertyGridItem prop, IntPtr editor)
         {
             NativeControl.SetPropertyEditor(prop.Handle, editor);
-        }
-
-        internal virtual void OnPropertyCreated(
-            IPropertyGridItem item,
-            object instance,
-            PropertyInfo p)
-        {
-            if (!p.CanWrite)
-                SetPropertyReadOnly(item, true);
-            if (AssemblyUtils.GetNullable(p))
-                SetPropertyValueUnspecified(item);
-        }
-
-        internal virtual void OnPropertyCreated(IPropertyGridItem item)
-        {
         }
 
         internal IPropertyGridItem? GetPropertyParent(IPropertyGridItem prop)
@@ -3598,6 +3639,34 @@ namespace Alternet.UI
         {
             variant.AsObject = value;
             return variant;
+        }
+
+        /// <summary>
+        /// Called after <see cref="IPropertyGridItem"/> created for the
+        /// specified <paramref name="instance"/> and <paramref name="propInfo"/>.
+        /// </summary>
+        /// <param name="item">Property item.</param>
+        /// <param name="instance">Instance that contains the property.</param>
+        /// <param name="propInfo">Property info.</param>
+        protected virtual void OnPropertyCreated(
+            IPropertyGridItem item,
+            object instance,
+            PropertyInfo propInfo)
+        {
+            item.Instance = instance;
+            item.PropInfo = propInfo;
+            if (!propInfo.CanWrite)
+                SetPropertyReadOnly(item, true);
+            if (AssemblyUtils.GetNullable(propInfo))
+                SetPropertyValueUnspecified(item);
+        }
+
+        /// <summary>
+        /// Called after <see cref="IPropertyGridItem"/> created.
+        /// </summary>
+        /// <param name="item">Property item.</param>
+        protected virtual void OnPropertyCreated(IPropertyGridItem item)
+        {
         }
 
         /// <summary>

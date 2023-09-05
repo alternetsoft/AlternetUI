@@ -44,6 +44,16 @@ namespace Alternet.UI
         long AsLong { get; set; }
 
         /// <summary>
+        /// Gets or sets variant value as <see cref="uint"/>.
+        /// </summary>
+        uint AsUInt { get; set; }
+
+        /// <summary>
+        /// Gets or sets variant value as <see cref="int"/>.
+        /// </summary>
+        int AsInt { get; set; }
+
+        /// <summary>
         /// Gets or sets variant value as <see cref="ulong"/>.
         /// </summary>
         ulong AsULong { get; set; }
@@ -64,14 +74,19 @@ namespace Alternet.UI
         string AsString { get; set; }
 
         /// <summary>
-        /// Clears variant.
+        /// Returns value type as <see cref="string"/>.
         /// </summary>
-        void Clear();
+        string ValueType { get; }
 
         /// <summary>
         /// Gets whether value is null.
         /// </summary>
-        bool IsNull();
+        bool IsNull { get; }
+
+        /// <summary>
+        /// Clears variant.
+        /// </summary>
+        void Clear();
 
         /// <summary>
         /// Gets value in the compatible format which can be assigned to the property
@@ -81,9 +96,11 @@ namespace Alternet.UI
         public object? GetCompatibleValue(PropertyInfo p);
 
         /// <summary>
-        /// Returns value type as <see cref="string"/>.
+        /// Sets value in the compatible format.
         /// </summary>
-        string GetValueType();
+        /// <param name="value">New variant value.</param>
+        /// <param name="p">Property information.</param>
+        public void SetCompatibleValue(object? value, PropertyInfo p);
 
         /// <summary>
         /// Returns value as string for any type of variant.

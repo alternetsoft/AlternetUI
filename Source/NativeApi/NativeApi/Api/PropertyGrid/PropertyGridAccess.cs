@@ -160,6 +160,8 @@ namespace NativeApi.Api
 
         public IntPtr GetPropertyParent(IntPtr id) => throw new Exception();
 
+        public IntPtr GetPropertyValueAsVariant(IntPtr id) => throw new Exception();
+
         public string GetPropertyValueAsString(IntPtr id) => throw new Exception();
 
         public long GetPropertyValueAsLong(IntPtr id) => throw new Exception();

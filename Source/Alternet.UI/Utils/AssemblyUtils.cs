@@ -19,14 +19,14 @@ namespace Alternet.UI
         /// <param name="instance">Instance which contains the property.</param>
         /// <param name="propInfo">Property info.</param>
         /// <param name="defValue">Default property value (used if property value is null).</param>
-        /// <returns></returns>
-        public static object GetPropValue(object? instance, PropertyInfo propInfo, object defValue)
+        /// <typeparam name="T">Type of result.</typeparam>
+        public static T GetPropValue<T>(object? instance, PropertyInfo propInfo, T defValue)
         {
             object? result = propInfo.GetValue(instance, null);
             if (result == null)
                 return defValue;
             else
-                return result;
+                return (T)result;
         }
 
         /// <summary>

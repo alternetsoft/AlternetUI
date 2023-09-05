@@ -11,7 +11,12 @@ namespace Alternet::UI
 	{
 		return new PropertyGridVariant();
 	}
-	
+
+	PropertyGridVariant::PropertyGridVariant(wxVariant value)
+	{
+		variant = value;
+	}
+
 	PropertyGridVariant::PropertyGridVariant()
 	{
 	}
@@ -144,6 +149,23 @@ namespace Alternet::UI
 	{
 		wxVariant v = val;
 		FromVariant(handle, v);
+	}
+
+	void PropertyGridVariant::SetUInt(void* handle, uint32_t val)
+	{
+		wxAny any = val;
+		wxVariant v = any;
+		FromVariant(handle, v);
+	}
+
+	int PropertyGridVariant::GetInt(void* handle)
+	{
+		return ToVar(handle).GetInteger();
+	}
+
+	uint32_t PropertyGridVariant::GetUInt(void* handle)
+	{
+		return (uint32_t)ToVar(handle).GetInteger();
 	}
 
 	void PropertyGridVariant::SetULong(void* handle, uint64_t val)

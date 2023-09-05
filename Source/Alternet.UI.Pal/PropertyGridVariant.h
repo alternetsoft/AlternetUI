@@ -15,6 +15,8 @@ namespace Alternet::UI
 
         static wxVariant& ToVar(void* handle);
         static void FromVariant(void* handle, wxVariant& value);
+
+        PropertyGridVariant(wxVariant value);
     private:
     
     };

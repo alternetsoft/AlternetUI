@@ -92,6 +92,18 @@ namespace Alternet.UI.Native
             return n;
         }
         
+        public static int GetInt(System.IntPtr handle)
+        {
+            var n = NativeApi.PropertyGridVariant_GetInt_(handle);
+            return n;
+        }
+        
+        public static uint GetUInt(System.IntPtr handle)
+        {
+            var n = NativeApi.PropertyGridVariant_GetUInt_(handle);
+            return n;
+        }
+        
         public static long GetLong(System.IntPtr handle)
         {
             var n = NativeApi.PropertyGridVariant_GetLong_(handle);
@@ -144,6 +156,11 @@ namespace Alternet.UI.Native
         public static void SetInt(System.IntPtr handle, int val)
         {
             NativeApi.PropertyGridVariant_SetInt_(handle, val);
+        }
+        
+        public static void SetUInt(System.IntPtr handle, uint val)
+        {
+            NativeApi.PropertyGridVariant_SetUInt_(handle, val);
         }
         
         public static void SetShort(System.IntPtr handle, short val)
@@ -207,6 +224,12 @@ namespace Alternet.UI.Native
             public static extern bool PropertyGridVariant_GetBool_(System.IntPtr handle);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int PropertyGridVariant_GetInt_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern uint PropertyGridVariant_GetUInt_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern long PropertyGridVariant_GetLong_(System.IntPtr handle);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
@@ -235,6 +258,9 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void PropertyGridVariant_SetInt_(System.IntPtr handle, int val);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void PropertyGridVariant_SetUInt_(System.IntPtr handle, uint val);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void PropertyGridVariant_SetShort_(System.IntPtr handle, short val);

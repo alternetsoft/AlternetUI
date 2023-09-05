@@ -156,6 +156,13 @@ ALTERNET_UI_API void* PropertyGrid_GetPropertyParent_(PropertyGrid* obj, void* i
         });
 }
 
+ALTERNET_UI_API void* PropertyGrid_GetPropertyValueAsVariant_(PropertyGrid* obj, void* id)
+{
+    return MarshalExceptions<void*>([&](){
+            return obj->GetPropertyValueAsVariant(id);
+        });
+}
+
 ALTERNET_UI_API char16_t* PropertyGrid_GetPropertyValueAsString_(PropertyGrid* obj, void* id)
 {
     return MarshalExceptions<char16_t*>([&](){
