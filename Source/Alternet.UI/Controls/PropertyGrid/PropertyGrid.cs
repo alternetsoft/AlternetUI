@@ -11,10 +11,11 @@ namespace Alternet.UI
 {
     /*
     - multibuttons in prop editor   https://docs.wxwidgets.org/3.2/classwx_p_g_multi_button.html
-    - How to hide lines? (set their color to bk color)
-    - propgrid MakeAsPanel() also color scheme
     - PropertyGridItem Dispose item? when?
     - Time, DateTime
+    - what number formats are
+    - string format, IFormatProvider provider
+
      */
 
     /// <summary>
@@ -46,7 +47,7 @@ namespace Alternet.UI
     /// set up a complete tree-hierarchy, add more than two columns, and set
     /// arbitrary per-property attributes.
     /// </remarks>
-    public class PropertyGrid : Control
+    public class PropertyGrid : Control, IPropertyGrid
     {
         internal const string PropEditClassNameCheckBox = "CheckBox";
         internal const string PropEditClassNameChoice = "Choice";
