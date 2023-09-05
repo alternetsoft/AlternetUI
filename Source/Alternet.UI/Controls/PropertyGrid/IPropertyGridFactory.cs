@@ -54,5 +54,9 @@ namespace Alternet.UI
 
         /// <inheritdoc cref="PropertyGrid.SetBoolChoices"/>
         void SetBoolChoices(string trueChoice, string falseChoice);
+
+        /// <inheritdoc cref="PropertyGrid.GetChoices"/>
+        IPropertyGridChoices GetChoices<T>()
+            where T : Enum;
     }
 }

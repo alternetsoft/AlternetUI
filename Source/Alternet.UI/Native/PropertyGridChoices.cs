@@ -39,6 +39,43 @@ namespace Alternet.UI.Native
             NativeApi.PropertyGridChoices_Add_(handle, text, value, bitmapBundle?.NativePointer ?? IntPtr.Zero);
         }
         
+        public static void SetLabel(System.IntPtr handle, uint ind, string value)
+        {
+            NativeApi.PropertyGridChoices_SetLabel_(handle, ind, value);
+        }
+        
+        public static void SetBitmap(System.IntPtr handle, uint ind, ImageSet? bitmap)
+        {
+            NativeApi.PropertyGridChoices_SetBitmap_(handle, ind, bitmap?.NativePointer ?? IntPtr.Zero);
+        }
+        
+        public static void SetFgCol(System.IntPtr handle, uint ind, Alternet.Drawing.Color color)
+        {
+            NativeApi.PropertyGridChoices_SetFgCol_(handle, ind, color);
+        }
+        
+        public static void SetFont(System.IntPtr handle, uint ind, System.IntPtr font)
+        {
+            NativeApi.PropertyGridChoices_SetFont_(handle, ind, font);
+        }
+        
+        public static void SetBgCol(System.IntPtr handle, uint ind, Alternet.Drawing.Color color)
+        {
+            NativeApi.PropertyGridChoices_SetBgCol_(handle, ind, color);
+        }
+        
+        public static Alternet.Drawing.Color GetFgCol(System.IntPtr handle, uint ind)
+        {
+            var n = NativeApi.PropertyGridChoices_GetFgCol_(handle, ind);
+            return n;
+        }
+        
+        public static Alternet.Drawing.Color GetBgCol(System.IntPtr handle, uint ind)
+        {
+            var n = NativeApi.PropertyGridChoices_GetBgCol_(handle, ind);
+            return n;
+        }
+        
         public static string GetLabel(System.IntPtr handle, uint ind)
         {
             var n = NativeApi.PropertyGridChoices_GetLabel_(handle, ind);
@@ -107,6 +144,27 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void PropertyGridChoices_Add_(System.IntPtr handle, string text, int value, IntPtr bitmapBundle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void PropertyGridChoices_SetLabel_(System.IntPtr handle, uint ind, string value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void PropertyGridChoices_SetBitmap_(System.IntPtr handle, uint ind, IntPtr bitmap);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void PropertyGridChoices_SetFgCol_(System.IntPtr handle, uint ind, NativeApiTypes.Color color);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void PropertyGridChoices_SetFont_(System.IntPtr handle, uint ind, System.IntPtr font);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void PropertyGridChoices_SetBgCol_(System.IntPtr handle, uint ind, NativeApiTypes.Color color);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern NativeApiTypes.Color PropertyGridChoices_GetFgCol_(System.IntPtr handle, uint ind);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern NativeApiTypes.Color PropertyGridChoices_GetBgCol_(System.IntPtr handle, uint ind);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern string PropertyGridChoices_GetLabel_(System.IntPtr handle, uint ind);

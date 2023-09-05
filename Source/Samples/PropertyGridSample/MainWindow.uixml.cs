@@ -37,6 +37,10 @@ namespace PropertyGridSample
 
         static MainWindow()
         {
+            var localizableEnum = PropertyGrid.GetChoices<BrushType>();
+            localizableEnum.SetLabelForValue<BrushType>(BrushType.LinearGradient, "Linear Gradient");
+            localizableEnum.SetLabelForValue<BrushType>(BrushType.RadialGradient, "Radial Gradient");
+
             WebBrowser.CrtSetDbgFlag(0);
 
             const int defaultListHeight = 300;

@@ -73,7 +73,7 @@ namespace Alternet.UI
         private const int PGRECURSE = 0x00000020;
         private const int PGSORTTOPLEVELONLY = 0x00000200;
         private static readonly AdvDictionary<Type, IPropertyGridTypeRegistry> TypeRegistry = new();
-        private static readonly IPropertyGridFactory factory = new PropertyGridFactory();
+        private static readonly IPropertyGridFactory DefaultFactory = new PropertyGridFactory();
         private static AdvDictionary<Type, IPropertyGridChoices>? choicesCache = null;
 
         private readonly AdvDictionary<IntPtr, IPropertyGridItem> items = new();
@@ -355,7 +355,7 @@ namespace Alternet.UI
         /// <summary>
         /// Returns <see cref="IPropertyGridFactory"/> instance.
         /// </summary>
-        public IPropertyGridFactory Factory => factory;
+        public IPropertyGridFactory Factory => DefaultFactory;
 
         /// <summary>
         /// Gets or sets a value indicating whether the control has a border.
@@ -456,6 +456,17 @@ namespace Alternet.UI
         public static IPropertyGridVariant CreateVariant()
         {
             return new PropertyGridVariant();
+        }
+
+        /// <summary>
+        /// Returns <see cref="IPropertyGridChoices"/> for the given enumeration type.
+        /// </summary>
+        /// <typeparam name="T">Type of the enumeration.</typeparam>
+        /// <returns></returns>
+        public static IPropertyGridChoices GetChoices<T>()
+            where T : Enum
+        {
+            return CreateChoicesOnce(typeof(T));
         }
 
         /// <summary>

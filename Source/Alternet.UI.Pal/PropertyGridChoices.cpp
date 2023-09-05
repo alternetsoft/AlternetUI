@@ -2,6 +2,55 @@
 
 namespace Alternet::UI
 {
+	wxPGChoiceEntry& PropertyGridChoices::Item(void* handle, uint32_t ind)
+	{
+		PropertyGridChoices* instance = Choices(handle);
+		wxPGChoiceEntry& item = instance->choices.Item(ind);
+		return item;
+	}
+
+	void PropertyGridChoices::SetLabel(void* handle, uint32_t ind, const string& value)
+	{
+		wxPGChoiceEntry& item = Item(handle, ind);
+		item.SetText(wxStr(value));
+	}
+	
+	void PropertyGridChoices::SetBitmap(void* handle, uint32_t ind, ImageSet* bitmap)
+	{
+		wxPGChoiceEntry& item = Item(handle, ind);
+		item.SetBitmap(ImageSet::BitmapBundle(bitmap));
+	}
+
+	void PropertyGridChoices::SetFgCol(void* handle, uint32_t ind, const Color& color)
+	{
+		wxPGChoiceEntry& item = Item(handle, ind);
+		item.SetFgCol(color);
+	}
+
+	void PropertyGridChoices::SetFont(void* handle, uint32_t ind, void* font)
+	{
+		wxPGChoiceEntry& item = Item(handle, ind);
+		//item.SetFont();
+	}
+
+	void PropertyGridChoices::SetBgCol(void* handle, uint32_t ind, const Color& color)
+	{
+		wxPGChoiceEntry& item = Item(handle, ind);
+		item.SetBgCol(color);
+	}
+
+	Color PropertyGridChoices::GetFgCol(void* handle, uint32_t ind)
+	{
+		wxPGChoiceEntry& item = Item(handle, ind);
+		return item.GetFgCol();
+	}
+
+	Color PropertyGridChoices::GetBgCol(void* handle, uint32_t ind)
+	{
+		wxPGChoiceEntry& item = Item(handle, ind);
+		return item.GetBgCol();
+	}
+
 	PropertyGridChoices::PropertyGridChoices()
 	{
 	}

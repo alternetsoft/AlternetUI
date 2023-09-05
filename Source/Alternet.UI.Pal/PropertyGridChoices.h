@@ -13,6 +13,7 @@ namespace Alternet::UI
     public:
         wxPGChoices choices = wxPGChoices();
 
+        static wxPGChoiceEntry& Item(void* handle, uint32_t ind);
         static PropertyGridChoices* Choices(void* handle);
     private:
     

@@ -37,6 +37,55 @@ ALTERNET_UI_API void PropertyGridChoices_Add_(void* handle, const char16_t* text
         });
 }
 
+ALTERNET_UI_API void PropertyGridChoices_SetLabel_(void* handle, uint32_t ind, const char16_t* value)
+{
+    MarshalExceptions<void>([&](){
+            PropertyGridChoices::SetLabel(handle, ind, value);
+        });
+}
+
+ALTERNET_UI_API void PropertyGridChoices_SetBitmap_(void* handle, uint32_t ind, ImageSet* bitmap)
+{
+    MarshalExceptions<void>([&](){
+            PropertyGridChoices::SetBitmap(handle, ind, bitmap);
+        });
+}
+
+ALTERNET_UI_API void PropertyGridChoices_SetFgCol_(void* handle, uint32_t ind, Color color)
+{
+    MarshalExceptions<void>([&](){
+            PropertyGridChoices::SetFgCol(handle, ind, color);
+        });
+}
+
+ALTERNET_UI_API void PropertyGridChoices_SetFont_(void* handle, uint32_t ind, void* font)
+{
+    MarshalExceptions<void>([&](){
+            PropertyGridChoices::SetFont(handle, ind, font);
+        });
+}
+
+ALTERNET_UI_API void PropertyGridChoices_SetBgCol_(void* handle, uint32_t ind, Color color)
+{
+    MarshalExceptions<void>([&](){
+            PropertyGridChoices::SetBgCol(handle, ind, color);
+        });
+}
+
+ALTERNET_UI_API Color_C PropertyGridChoices_GetFgCol_(void* handle, uint32_t ind)
+{
+    return MarshalExceptions<Color_C>([&](){
+            return PropertyGridChoices::GetFgCol(handle, ind);
+        });
+}
+
+ALTERNET_UI_API Color_C PropertyGridChoices_GetBgCol_(void* handle, uint32_t ind)
+{
+    return MarshalExceptions<Color_C>([&](){
+            return PropertyGridChoices::GetBgCol(handle, ind);
+        });
+}
+
 ALTERNET_UI_API char16_t* PropertyGridChoices_GetLabel_(void* handle, uint32_t ind)
 {
     return MarshalExceptions<char16_t*>([&](){

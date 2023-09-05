@@ -14,6 +14,12 @@ namespace Alternet.UI
             set => PropertyGrid.DefaultCreateStyle = value;
         }
 
+        public IPropertyGridChoices GetChoices<T>()
+            where T : Enum
+        {
+            return PropertyGrid.GetChoices<T>();
+        }
+
         public IPropertyGridNewItemParams CreateNewItemParams()
         {
             return PropertyGrid.CreateNewItemParams();

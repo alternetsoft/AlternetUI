@@ -51,6 +51,50 @@ namespace Alternet.UI
             return result;
         }
 
+        public void SetLabelForValue<T>(T value, string label)
+            where T : Enum
+        {
+            SetLabelForValue(Convert.ToInt32(value), label);
+        }
+
+        public void SetLabelForValue(int value, string label)
+        {
+            int valueIndex = GetValueIndex(value);
+            if (valueIndex < 0)
+                return;
+            SetLabel(valueIndex, label);
+        }
+
+        public void SetLabel(int index, string value)
+        {
+            Native.PropertyGridChoices.SetLabel(handle, (uint)index, value);
+        }
+
+        public void SetBitmap(int index, ImageSet? bitmap)
+        {
+            Native.PropertyGridChoices.SetBitmap(handle, (uint)index, bitmap?.NativeImageSet);
+        }
+
+        public void SetFgCol(int index, Color color)
+        {
+            Native.PropertyGridChoices.SetFgCol(handle, (uint)index, color);
+        }
+
+        public void SetBgCol(int index, Color color)
+        {
+            Native.PropertyGridChoices.SetBgCol(handle, (uint)index, color);
+        }
+
+        public Color GetFgCol(int index)
+        {
+            return Native.PropertyGridChoices.GetFgCol(handle, (uint)index);
+        }
+
+        public Color GetBgCol(int index)
+        {
+            return Native.PropertyGridChoices.GetBgCol(handle, (uint)index);
+        }
+
         public string GetLabel(int ind)
         {
             return Native.PropertyGridChoices.GetLabel(handle, (uint)ind);
@@ -89,7 +133,6 @@ namespace Alternet.UI
         public void Add(string? text, int value, ImageSet? bitmap = null)
         {
             text ??= string.Empty;
-            /*items.Add(new(value, text));*/
             Native.PropertyGridChoices.Add(
                 handle,
                 text,
@@ -127,6 +170,11 @@ namespace Alternet.UI
                 if(s != null)
                     Add(s);
             }
+        }
+
+        internal void SetFont(int index, IntPtr font)
+        {
+            Native.PropertyGridChoices.SetFont(handle, (uint)index, font);
         }
 
         private int GenItemIndex()

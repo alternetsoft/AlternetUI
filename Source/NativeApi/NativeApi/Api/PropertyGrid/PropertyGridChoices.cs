@@ -16,6 +16,14 @@ namespace NativeApi.Api
         public static void Add(IntPtr handle, string text, int value,
             ImageSet? bitmapBundle) {}
 
+        public static void SetLabel(IntPtr handle, uint ind, string value) { }
+        public static void SetBitmap(IntPtr handle, uint ind, ImageSet? bitmap) { }
+        public static void SetFgCol(IntPtr handle, uint ind, Color color){}
+        public static void SetFont(IntPtr handle, uint ind, IntPtr font){}
+        public static void SetBgCol(IntPtr handle, uint ind, Color color){}
+        public static Color GetFgCol(IntPtr handle, uint ind) => default;
+        public static Color GetBgCol(IntPtr handle, uint ind) => default;
+
         // Returns label of item.
         public static string GetLabel(IntPtr handle, uint ind) => default;
 
