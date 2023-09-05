@@ -235,7 +235,7 @@ namespace Alternet.UI
         /// connects control with the designer.
         /// </summary>
         [Browsable(false)]
-        public IComponentDesigner Designer { get; set; }
+        public IComponentDesigner? Designer { get; set; }
 
         /// <summary>
         /// Gets a value indicating whether the mouse is captured to this control.
