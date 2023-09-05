@@ -7,7 +7,12 @@ using Alternet.Drawing;
 
 namespace Alternet.UI
 {
-    // https://learn.microsoft.com/ru-ru/dotnet/api/system.idisposable?view=net-7.0
+    /*
+        - AuiManager setArt for toolbar/panels
+        - Study art no gradients / google web app style
+        - AuiNotebook separately from AuiManager
+        - Notebook tab userdata or id?
+     */
 
     /// <summary>
     /// The central class of the advanced docking and floating toolbars and
