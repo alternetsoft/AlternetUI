@@ -118,7 +118,7 @@ namespace Alternet.UI
             {
                 if (DropDownMenu != null)
                     return new[] { DropDownMenu };
-                return new FrameworkElement[0];
+                return Array.Empty<FrameworkElement>();
             }
         }
 

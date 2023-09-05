@@ -16,11 +16,11 @@ internal static partial class Interop
             ButtonFace = 0x0F,
             ButtonHighlight = 0x14,
             ButtonShadow = 0x10,
-            Control = 0x0F,
-            ControlDark = 0x10,
+            Control = ButtonFace,
+            ControlDark = ButtonShadow,
             ControlDarkDark = 0x15,
             ControlLight = 0x16,
-            ControlLightLight = 0x14,
+            ControlLightLight = ButtonHighlight,
             ControlText = 0x12,
             Desktop = 0x01,
             GradientActiveCaption = 0x1B,
@@ -41,7 +41,7 @@ internal static partial class Interop
             ScrollBar = 0x00,
             Window = 0x05,
             WindowFrame = 0x06,
-            WindowText = 0x08
+            WindowText = 0x08,
         }
     }
 }

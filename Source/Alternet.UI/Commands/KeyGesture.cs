@@ -277,10 +277,10 @@ namespace Alternet.UI
                 if (index >= 0)
                 {
                     // multiple gestures exist
-#pragma warning disable IDE0057 // Use range operator
+#pragma warning disable
                     keyGestureToken = keyGestures.Substring(0, index);
                     keyGestures = keyGestures.Substring(index + 1);
-#pragma warning restore IDE0057 // Use range operator
+#pragma warning restore
                 }
                 else
                 {
@@ -293,10 +293,10 @@ namespace Alternet.UI
                 if (index >= 0)
                 {
                     // multiple display strings exist
-#pragma warning disable IDE0057 // Use range operator
+#pragma warning disable
                     keyDisplayString = displayStrings.Substring(0, index);
                     displayStrings = displayStrings.Substring(index + 1);
-#pragma warning restore IDE0057 // Use range operator
+#pragma warning restore
                 }
                 else
                 {

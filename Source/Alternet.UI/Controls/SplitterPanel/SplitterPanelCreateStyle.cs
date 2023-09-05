@@ -20,10 +20,10 @@ namespace Alternet.UI
         /// <summary>
         /// Draws a thin splitter sash.
         /// </summary>
-        ThinSash = 0x0000,
+        ThinSash = NoBorder,
 
         /// <summary>
-        /// 
+        /// Draws no sash.
         /// </summary>
         NoSash = 0x0010,
 

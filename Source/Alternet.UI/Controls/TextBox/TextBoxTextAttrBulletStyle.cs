@@ -80,7 +80,7 @@ namespace Alternet.UI
         /// <summary>
         /// List bullet style flag "AlignLeft".
         /// </summary>
-        AlignLeft = 0x00000000,
+        AlignLeft = None,
 
         /// <summary>
         /// List bullet style flag "AlignRight".

@@ -1,14 +1,10 @@
 #nullable disable
-//
-//
-// Description: Manager for the CanExecuteChanged event in the "weak event listener"
-//              pattern.  See WeakEventTable.cs for an overview.
-//
-
-using Alternet.UI.Internal;
+// Manager for the CanExecuteChanged event in the "weak event listener"
+// pattern. See WeakEventTable.cs for an overview.
 using System;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;  // ConditionalWeakTable
+using System.Runtime.CompilerServices;
+using Alternet.UI.Internal;
 
 namespace Alternet.UI
 {
@@ -41,21 +37,22 @@ namespace Alternet.UI
         public static void AddHandler(ICommand source, EventHandler<EventArgs> handler)
         {
             if (source == null)
-                throw new ArgumentNullException("source");
+                throw new ArgumentNullException(nameof(source));
             if (handler == null)
-                throw new ArgumentNullException("handler");
+                throw new ArgumentNullException(nameof(handler));
 
             CurrentManager.PrivateAddHandler(source, handler);
         }
+
         /// <summary>
         /// Remove a handler for the given source's event.
         /// </summary>
         public static void RemoveHandler(ICommand source, EventHandler<EventArgs> handler)
         {
             if (source == null)
-                throw new ArgumentNullException("source");
+                throw new ArgumentNullException(nameof(source));
             if (handler == null)
-                throw new ArgumentNullException("handler");
+                throw new ArgumentNullException(nameof(handler));
 
             CurrentManager.PrivateRemoveHandler(source, handler);
         }

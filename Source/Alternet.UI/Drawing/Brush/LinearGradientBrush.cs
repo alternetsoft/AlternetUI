@@ -16,7 +16,7 @@ namespace Alternet.Drawing
         /// Initializes a new instance of the <see cref="LinearGradientBrush"/> class.
         /// </summary>
         public LinearGradientBrush()
-            : this(new GradientStop[0])
+            : this(Array.Empty<GradientStop>())
         {
         }
 

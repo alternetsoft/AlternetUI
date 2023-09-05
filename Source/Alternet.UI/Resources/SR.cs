@@ -8,6 +8,8 @@ namespace Alternet.UI
 {
     internal partial class SR
     {
+        private static ResourceManager ResourceManager => SRID.ResourceManager;
+
         public static string Get(string name)
         {
             return GetResourceString(name, null);
@@ -18,21 +20,16 @@ namespace Alternet.UI
             return Format(GetResourceString(name, null), args);
         }
 
-        private static ResourceManager ResourceManager => SRID.ResourceManager;
-
-        // This method is used to decide if we need to append the exception message parameters to the message when calling SR.Format.
-        // by default it returns false.
-        [MethodImpl(MethodImplOptions.NoInlining)]
-        private static bool UsingResourceKeys()
-        {
-            return false;
-        }
-
         internal static string GetResourceString(string resourceKey, string defaultString)
         {
             string resourceString = null;
-            try { resourceString = ResourceManager.GetString(resourceKey); }
-            catch (MissingManifestResourceException) { }
+            try
+            {
+                resourceString = ResourceManager.GetString(resourceKey);
+            }
+            catch (MissingManifestResourceException)
+            {
+            }
 
             if (defaultString != null && resourceKey.Equals(resourceString, StringComparison.Ordinal))
             {
@@ -85,6 +82,15 @@ namespace Alternet.UI
             }
 
             return string.Format(resourceFormat, p1, p2, p3);
+        }
+
+        // This method is used to decide if we need to append the exception message parameters
+        // to the message when calling SR.Format.
+        // by default it returns false.
+        [MethodImpl(MethodImplOptions.NoInlining)]
+        private static bool UsingResourceKeys()
+        {
+            return false;
         }
     }
 }
