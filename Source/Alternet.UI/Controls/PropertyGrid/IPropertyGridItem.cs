@@ -20,7 +20,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets <see cref="PropertyGrid"/> instance which owns this property.
         /// </summary>
-        public object Owner { get; }
+        public IPropertyGrid Owner { get; }
 
         /// <summary>
         /// Gets or sets user data associated with this <see cref="IPropertyGridItem"/>.

@@ -32,7 +32,7 @@ namespace Alternet.UI
     /// <paramref name="propInfo"/> is used to get them.
     /// </remarks>
     public delegate IPropertyGridItem PropertyGridItemCreate(
-            object sender,
+            IPropertyGrid sender,
             string label,
             string? name,
             object instance,
@@ -61,6 +61,7 @@ namespace Alternet.UI
         private const int PGRECURSE = 0x00000020;
         private const int PGSORTTOPLEVELONLY = 0x00000200;
         private static readonly AdvDictionary<Type, IPropertyGridTypeRegistry> TypeRegistry = new();
+        private static readonly IPropertyGridFactory factory = new PropertyGridFactory();
         private static AdvDictionary<Type, IPropertyGridChoices>? choicesCache = null;
 
         private readonly AdvDictionary<IntPtr, IPropertyGridItem> items = new();
@@ -340,6 +341,11 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Returns <see cref="IPropertyGridFactory"/> instance.
+        /// </summary>
+        public IPropertyGridFactory Factory => factory;
+
+        /// <summary>
         /// Gets or sets a value indicating whether the control has a border.
         /// </summary>
         public bool HasBorder
@@ -375,6 +381,14 @@ namespace Alternet.UI
         }
 
         internal Native.PropertyGrid NativeControl => Handler.NativeControl;
+
+        /// <summary>
+        /// Creates new <see cref="IPropertyGrid"/> instance.
+        /// </summary>
+        public static IPropertyGrid CreatePropertyGrid()
+        {
+            return new PropertyGrid();
+        }
 
         /// <summary>
         /// Registers <see cref="IPropertyGridItem"/> create function for specific <see cref="Type"/>.
@@ -2130,7 +2144,10 @@ namespace Alternet.UI
         /// <param name="parent">Parent property item.</param>
         /// <param name="index">Insert position.</param>
         /// <param name="newproperty">Property item to insert.</param>
-        public virtual void Insert(IPropertyGridItem parent, int index, IPropertyGridItem newproperty)
+        public virtual void InsertAt(
+            IPropertyGridItem parent,
+            int index,
+            IPropertyGridItem newproperty)
         {
             NativeControl.InsertByIndex(parent.Handle, index, newproperty.Handle);
         }
@@ -2522,7 +2539,7 @@ namespace Alternet.UI
         /// <summary>
         /// Changes lines color to the cell background color;
         /// </summary>
-        public virtual void LineColorAsBackground()
+        public virtual void BackgroundToLineColor()
         {
             SetLineColor(GetCellBackgroundColor());
         }
@@ -3307,7 +3324,9 @@ namespace Alternet.UI
         /// <param name="instance">Instance filter parameter. Ignored if <c>null</c>.</param>
         /// <param name="propInfo">Property information filter parameter.
         /// Ignored if <c>null</c></param>
-        public virtual void ReloadValues(object? instance = null, PropertyInfo? propInfo = null)
+        public virtual void ReloadPropertyValues(
+            object? instance = null,
+            PropertyInfo? propInfo = null)
         {
             var filteredItems = GetItemsFiltered(instance, propInfo);
             if (filteredItems.First() == null)
@@ -3317,7 +3336,7 @@ namespace Alternet.UI
             {
                 foreach (var item in filteredItems)
                 {
-                    ReloadItem(item);
+                    ReloadPropertyValue(item);
                 }
             }
             finally
@@ -3325,19 +3344,29 @@ namespace Alternet.UI
                 EndUpdate();
             }
 
-            void ReloadItem(IPropertyGridItem item)
+        }
+
+        /// <summary>
+        /// Reloads value of the <see cref="IPropertyGridItem"/> item if it is attached
+        /// to the external object (<see cref="IPropertyGridItem.Instance"/> and 
+        /// <see cref="IPropertyGridItem.PropInfo"/>) are not null.
+        /// </summary>
+        public void ReloadPropertyValue(IPropertyGridItem item)
+        {
+            var p = item.PropInfo;
+            var instance = item.Instance;
+            if (instance == null || p == null)
+                return;
+
+            AvoidException(() =>
             {
-                var p = item.PropInfo;
-                var instance = item.Instance;
-                if (instance == null || p == null)
-                    return;
                 object? propValue = p.GetValue(instance, null);
 
                 // var oldValue = GetPropertyValueAsVariant(item);
 
                 variant.SetCompatibleValue(propValue, p);
                 SetPropertyValueAsVariant(item, variant);
-            }
+            });
         }
 
         internal static IntPtr GetEditorByName(string editorName)
@@ -3809,10 +3838,10 @@ namespace Alternet.UI
                     var reloadAll = ApplyFlags.HasFlag(PropertyGridApplyFlags.ReloadAllAfterSetValue);
 
                     if (reloadAll)
-                        ReloadValues();
+                        ReloadPropertyValues();
                     else
                         if (reload)
-                        ReloadValues(instance, propInfo);
+                        ReloadPropertyValues(instance, propInfo);
                 });
             }
 
@@ -3869,43 +3898,43 @@ namespace Alternet.UI
         }
 
         private static IPropertyGridItem FuncCreatePropertyAsColor(
-            object sender,
+            IPropertyGrid sender,
             string label,
             string? name,
             object instance,
             PropertyInfo propInfo)
         {
-            return (sender as PropertyGrid)!.CreatePropertyAsColor(label, name, instance, propInfo);
+            return sender.CreatePropertyAsColor(label, name, instance, propInfo);
         }
 
         private static IPropertyGridItem FuncCreatePropertyAsFont(
-            object sender,
+            IPropertyGrid sender,
             string label,
             string? name,
             object instance,
             PropertyInfo propInfo)
         {
-            return (sender as PropertyGrid)!.CreatePropertyAsFont(label, name, instance, propInfo);
+            return sender.CreatePropertyAsFont(label, name, instance, propInfo);
         }
 
         private static IPropertyGridItem FuncCreatePropertyAsBrush(
-            object sender,
+            IPropertyGrid sender,
             string label,
             string? name,
             object instance,
             PropertyInfo propInfo)
         {
-            return (sender as PropertyGrid)!.CreatePropertyAsBrush(label, name, instance, propInfo);
+            return sender.CreatePropertyAsBrush(label, name, instance, propInfo);
         }
 
         private static IPropertyGridItem FuncCreatePropertyAsPen(
-            object sender,
+            IPropertyGrid sender,
             string label,
             string? name,
             object instance,
             PropertyInfo propInfo)
         {
-            return (sender as PropertyGrid)!.CreatePropertyAsPen(label, name, instance, propInfo);
+            return sender.CreatePropertyAsPen(label, name, instance, propInfo);
         }
 
         private static string CorrectPropName(string? name)

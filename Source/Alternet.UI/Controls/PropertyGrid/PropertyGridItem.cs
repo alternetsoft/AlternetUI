@@ -42,7 +42,7 @@ namespace Alternet.UI
 
         public object? UserData { get; set; }
 
-        public object Owner { get => owner; }
+        public IPropertyGrid Owner { get => owner; }
 
         public string PropertyEditorKind { get; set; } = "Other";
 

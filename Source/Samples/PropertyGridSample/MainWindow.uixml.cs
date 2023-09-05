@@ -353,6 +353,7 @@ namespace PropertyGridSample
                 item = new(type);
                 controlsListBox.Add(item);
             }
+            controlsListBox.Add(new ControlListBoxItem(typeof(Window), this.ParentWindow));
 
             logListBox.MouseRightButtonUp += Log_MouseRightButtonUp;
             controlsListBox.SelectionChanged += ControlsListBox_SelectionChanged;
@@ -744,9 +745,10 @@ namespace PropertyGridSample
             private Control? instance;
             private readonly Type type;
 
-            public ControlListBoxItem(Type type)
+            public ControlListBoxItem(Type type, Control? instance = null)
             {
                 this.type = type;
+                this.instance = instance;
             }
 
             public Type ControlType => type;
