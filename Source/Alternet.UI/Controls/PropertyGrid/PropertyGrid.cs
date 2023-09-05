@@ -15,7 +15,19 @@ namespace Alternet.UI
     - Time, DateTime
     - what number formats are
     - string format, IFormatProvider provider
-
+    - Setprops with categories
+    - OtherCategoryName
+    - Localization event to localize categories, values, etc.?
+        (registration for the enum elements, prop names)
+    - color edit with all values in combo
+    - How to set null to nullable props
+    - Check props on empty str 
+    - how to set errorstyle in propgrid in on exception event.
+    - Hook to events and update propgrid if prop related events were changed
+      Controls to have PropetyUpdate event fire when prop changed by visual
+    - public virtual ClearPropertyValue(IPropertyGridItem prop);
+    - public virtual ResetPropertyValue(IPropertyGridItem prop);
+    - PropertyCreateArgs Params
      */
 
     /// <summary>
@@ -539,7 +551,8 @@ namespace Alternet.UI
         public virtual IPropertyGridItem CreateFilenameProperty(
             string label,
             string? name = null,
-            string? value = null)
+            string? value = null,
+            IPropertyGridNewItemParams? prm = null)
         {
             value ??= string.Empty;
             var handle = NativeControl.CreateFilenameProperty(label, CorrectPropName(name), value!);
@@ -547,7 +560,7 @@ namespace Alternet.UI
             {
                 PropertyEditorKind = TypeCode.String.ToString() + ".Filename",
             };
-            OnPropertyCreated(result);
+            OnPropertyCreated(result, prm);
             return result;
         }
 
@@ -570,7 +583,8 @@ namespace Alternet.UI
         public virtual IPropertyGridItem CreateDirProperty(
             string label,
             string? name = null,
-            string? value = null)
+            string? value = null,
+            IPropertyGridNewItemParams? prm = null)
         {
             value ??= string.Empty;
             var handle = NativeControl.CreateDirProperty(label, CorrectPropName(name), value!);
@@ -578,7 +592,7 @@ namespace Alternet.UI
             {
                 PropertyEditorKind = TypeCode.String.ToString() + ".Dir",
             };
-            OnPropertyCreated(result);
+            OnPropertyCreated(result, prm);
             return result;
         }
 
@@ -604,7 +618,8 @@ namespace Alternet.UI
         public virtual IPropertyGridItem CreateImageFilenameProperty(
             string label,
             string? name = null,
-            string? value = null)
+            string? value = null,
+            IPropertyGridNewItemParams? prm = null)
         {
             value ??= string.Empty;
             var handle = NativeControl.CreateImageFilenameProperty(
@@ -615,7 +630,7 @@ namespace Alternet.UI
             {
                 PropertyEditorKind = TypeCode.String.ToString() + ".ImageFilename",
             };
-            OnPropertyCreated(result);
+            OnPropertyCreated(result, prm);
             return result;
         }
 
@@ -629,14 +644,15 @@ namespace Alternet.UI
         public virtual IPropertyGridItem CreateSystemColorProperty(
             string label,
             string? name,
-            Color value)
+            Color value,
+            IPropertyGridNewItemParams? prm = null)
         {
             var handle = NativeControl.CreateSystemColorProperty(label, CorrectPropName(name), value);
             var result = new PropertyGridItem(this, handle, label, name, value)
             {
                 PropertyEditorKind = "Color.System",
             };
-            OnPropertyCreated(result);
+            OnPropertyCreated(result, prm);
             return result;
         }
 
@@ -650,7 +666,8 @@ namespace Alternet.UI
         public virtual IPropertyGridItem CreateStringProperty(
             string label,
             string? name = null,
-            string? value = null)
+            string? value = null,
+            IPropertyGridNewItemParams? prm = null)
         {
             value ??= string.Empty;
             var handle = NativeControl.CreateStringProperty(label, CorrectPropName(name), value!);
@@ -658,7 +675,7 @@ namespace Alternet.UI
             {
                 PropertyEditorKind = TypeCode.String.ToString(),
             };
-            OnPropertyCreated(result);
+            OnPropertyCreated(result, prm);
             return result;
         }
 
@@ -672,9 +689,10 @@ namespace Alternet.UI
         public virtual IPropertyGridItem CreateCharProperty(
             string label,
             string? name = null,
-            char? value = null)
+            char? value = null,
+            IPropertyGridNewItemParams? prm = null)
         {
-            var result = CreateStringProperty(label, name, value?.ToString());
+            var result = CreateStringProperty(label, name, value?.ToString(), prm);
             SetPropertyMaxLength(result, 1);
             return result;
         }
@@ -689,14 +707,15 @@ namespace Alternet.UI
         public virtual IPropertyGridItem CreateBoolProperty(
             string label,
             string? name = null,
-            bool value = false)
+            bool value = false,
+            IPropertyGridNewItemParams? prm = null)
         {
             var handle = NativeControl.CreateBoolProperty(label, CorrectPropName(name), value);
             var result = new PropertyGridItem(this, handle, label, name, value)
             {
                 PropertyEditorKind = TypeCode.Boolean.ToString(),
             };
-            OnPropertyCreated(result);
+            OnPropertyCreated(result, prm);
             return result;
         }
 
@@ -710,14 +729,15 @@ namespace Alternet.UI
         public virtual IPropertyGridItem CreateLongProperty(
             string label,
             string? name = null,
-            long value = 0)
+            long value = 0,
+            IPropertyGridNewItemParams? prm = null)
         {
             var handle = NativeControl.CreateIntProperty(label, CorrectPropName(name), value);
             var result = new PropertyGridItem(this, handle, label, name, value)
             {
                 PropertyEditorKind = TypeCode.Int64.ToString(),
             };
-            OnPropertyCreated(result);
+            OnPropertyCreated(result, prm);
             return result;
         }
 
@@ -731,7 +751,8 @@ namespace Alternet.UI
         public virtual IPropertyGridItem CreateDoubleProperty(
             string label,
             string? name = null,
-            double value = default)
+            double value = default,
+            IPropertyGridNewItemParams? prm = null)
         {
             var handle = NativeControl.CreateFloatProperty(label, CorrectPropName(name), value);
             var result = new PropertyGridItem(this, handle, label, name, value)
@@ -739,7 +760,7 @@ namespace Alternet.UI
                 PropertyEditorKind = TypeCode.Double.ToString(),
             };
             SetPropertyMinMax(result, TypeCode.Double);
-            OnPropertyCreated(result);
+            OnPropertyCreated(result, prm);
             return result;
         }
 
@@ -753,7 +774,8 @@ namespace Alternet.UI
         public virtual IPropertyGridItem CreateFloatProperty(
             string label,
             string? name = null,
-            double value = default)
+            double value = default,
+            IPropertyGridNewItemParams? prm = null)
         {
             var handle = NativeControl.CreateFloatProperty(label, CorrectPropName(name), value);
             var result = new PropertyGridItem(this, handle, label, name, value)
@@ -761,7 +783,7 @@ namespace Alternet.UI
                 PropertyEditorKind = TypeCode.Single.ToString(),
             };
             SetPropertyMinMax(result, TypeCode.Single);
-            OnPropertyCreated(result);
+            OnPropertyCreated(result, prm);
             return result;
         }
 
@@ -775,14 +797,15 @@ namespace Alternet.UI
         public virtual IPropertyGridItem CreateColorProperty(
             string label,
             string? name,
-            Color value)
+            Color value,
+            IPropertyGridNewItemParams? prm = null)
         {
             var handle = NativeControl.CreateColorProperty(label, CorrectPropName(name), value);
             var result = new PropertyGridItem(this, handle, label, name, value)
             {
                 PropertyEditorKind = "Color",
             };
-            OnPropertyCreated(result);
+            OnPropertyCreated(result, prm);
             return result;
         }
 
@@ -796,14 +819,15 @@ namespace Alternet.UI
         public virtual IPropertyGridItem CreateULongProperty(
             string label,
             string? name = null,
-            ulong value = 0)
+            ulong value = 0,
+            IPropertyGridNewItemParams? prm = null)
         {
             var handle = NativeControl.CreateUIntProperty(label, CorrectPropName(name), value);
             var result = new PropertyGridItem(this, handle, label, name, value)
             {
                 PropertyEditorKind = TypeCode.UInt64.ToString(),
             };
-            OnPropertyCreated(result);
+            OnPropertyCreated(result, prm);
             return result;
         }
 
@@ -818,7 +842,8 @@ namespace Alternet.UI
         public virtual IPropertyGridItem CreateLongStringProperty(
             string label,
             string? name = null,
-            string? value = null)
+            string? value = null,
+            IPropertyGridNewItemParams? prm = null)
         {
             value ??= string.Empty;
             var handle = NativeControl.CreateLongStringProperty(
@@ -829,7 +854,7 @@ namespace Alternet.UI
             {
                 PropertyEditorKind = TypeCode.String.ToString() + ".Long",
             };
-            OnPropertyCreated(result);
+            OnPropertyCreated(result, prm);
             return result;
         }
 
@@ -843,7 +868,8 @@ namespace Alternet.UI
         public virtual IPropertyGridItem CreateDateProperty(
             string label,
             string? name = null,
-            DateTime? value = null)
+            DateTime? value = null,
+            IPropertyGridNewItemParams? prm = null)
         {
             DateTime dt;
 
@@ -860,7 +886,7 @@ namespace Alternet.UI
             {
                 PropertyEditorKind = TypeCode.DateTime.ToString() + ".Date",
             };
-            OnPropertyCreated(result);
+            OnPropertyCreated(result, prm);
             return result;
         }
 
@@ -1013,9 +1039,10 @@ namespace Alternet.UI
         public virtual IPropertyGridItem CreateDecimalProperty(
             string label,
             string? name = null,
-            decimal value = default)
+            decimal value = default,
+            IPropertyGridNewItemParams? prm = null)
         {
-            var result = CreateStringProperty(label, name, value.ToString());
+            var result = CreateStringProperty(label, name, value.ToString(), prm);
             SetPropertyValidator(result, ValueValidatorFactory.DecimalValidator);
             return result;
         }
@@ -1030,9 +1057,10 @@ namespace Alternet.UI
         public virtual IPropertyGridItem CreateSByteProperty(
             string label,
             string? name = null,
-            sbyte value = 0)
+            sbyte value = 0,
+            IPropertyGridNewItemParams? prm = null)
         {
-            var result = CreateLongProperty(label, name, value);
+            var result = CreateLongProperty(label, name, value, prm);
             SetPropertyMinMax(result, TypeCode.SByte);
             result.PropertyEditorKind = TypeCode.SByte.ToString();
             return result;
@@ -1078,9 +1106,10 @@ namespace Alternet.UI
         public virtual IPropertyGridItem CreateInt16Property(
             string label,
             string? name = null,
-            short value = 0)
+            short value = 0,
+            IPropertyGridNewItemParams? prm = null)
         {
-            var result = CreateLongProperty(label, name, value);
+            var result = CreateLongProperty(label, name, value, prm);
             SetPropertyMinMax(result, TypeCode.Int16);
             result.PropertyEditorKind = TypeCode.Int16.ToString();
             return result;
@@ -1096,9 +1125,10 @@ namespace Alternet.UI
         public virtual IPropertyGridItem CreateIntProperty(
             string label,
             string? name = null,
-            int value = 0)
+            int value = 0,
+            IPropertyGridNewItemParams? prm = null)
         {
-            var result = CreateLongProperty(label, name, value);
+            var result = CreateLongProperty(label, name, value, prm);
             SetPropertyMinMax(result, TypeCode.Int32);
             result.PropertyEditorKind = TypeCode.Int32.ToString();
             return result;
@@ -1114,9 +1144,10 @@ namespace Alternet.UI
         public virtual IPropertyGridItem CreateByteProperty(
             string label,
             string? name = null,
-            byte value = 0)
+            byte value = 0,
+            IPropertyGridNewItemParams? prm = null)
         {
-            var result = CreateULongProperty(label, name, value);
+            var result = CreateULongProperty(label, name, value, prm);
             SetPropertyMinMax(result, TypeCode.Byte);
             result.PropertyEditorKind = TypeCode.Byte.ToString();
             return result;
@@ -1132,9 +1163,10 @@ namespace Alternet.UI
         public virtual IPropertyGridItem CreateUIntProperty(
             string label,
             string? name = null,
-            uint value = 0)
+            uint value = 0,
+            IPropertyGridNewItemParams? prm = null)
         {
-            var result = CreateULongProperty(label, name, value);
+            var result = CreateULongProperty(label, name, value, prm);
             SetPropertyMinMax(result, TypeCode.UInt32);
             result.PropertyEditorKind = TypeCode.UInt32.ToString();
             return result;
@@ -1150,9 +1182,10 @@ namespace Alternet.UI
         public virtual IPropertyGridItem CreateUInt16Property(
             string label,
             string? name = null,
-            ushort value = 0)
+            ushort value = 0,
+            IPropertyGridNewItemParams? prm = null)
         {
-            var result = CreateULongProperty(label, name, value);
+            var result = CreateULongProperty(label, name, value, prm);
             SetPropertyMinMax(result, TypeCode.UInt16);
             result.PropertyEditorKind = TypeCode.UInt16.ToString();
             return result;
@@ -1751,7 +1784,8 @@ namespace Alternet.UI
             string label,
             string? name,
             IPropertyGridChoices choices,
-            object? value = null)
+            object? value = null,
+            IPropertyGridNewItemParams? prm = null)
         {
             value ??= 0;
             var handle = NativeControl.CreateEnumProperty(
@@ -1763,7 +1797,7 @@ namespace Alternet.UI
             {
                 PropertyEditorKind = "Enum",
             };
-            OnPropertyCreated(result);
+            OnPropertyCreated(result, prm);
             return result;
         }
 
@@ -1779,7 +1813,8 @@ namespace Alternet.UI
             string label,
             string? name,
             IPropertyGridChoices choices,
-            string? value = null)
+            string? value = null,
+            IPropertyGridNewItemParams? prm = null)
         {
             value ??= string.Empty;
             var handle = NativeControl.CreateEditEnumProperty(
@@ -1791,7 +1826,7 @@ namespace Alternet.UI
             {
                 PropertyEditorKind = "Enum.Edit",
             };
-            OnPropertyCreated(result);
+            OnPropertyCreated(result, prm);
             return result;
         }
 
@@ -1807,7 +1842,8 @@ namespace Alternet.UI
             string label,
             string? name,
             IPropertyGridChoices choices,
-            object? value = null)
+            object? value = null,
+            IPropertyGridNewItemParams? prm = null)
         {
             value ??= 0;
             var handle = NativeControl.CreateFlagsProperty(
@@ -1819,7 +1855,7 @@ namespace Alternet.UI
             {
                 PropertyEditorKind = "Enum.Flags",
             };
-            OnPropertyCreated(result);
+            OnPropertyCreated(result, prm);
             return result;
         }
 
@@ -1888,7 +1924,10 @@ namespace Alternet.UI
         /// <param name="label">Category label.</param>
         /// <param name="name">Category name.</param>
         /// <returns>Category declaration for use with <see cref="PropertyGrid.Add"/>.</returns>
-        public virtual IPropertyGridItem CreatePropCategory(string label, string? name = null)
+        public virtual IPropertyGridItem CreatePropCategory(
+            string label,
+            string? name = null,
+            IPropertyGridNewItemParams? prm = null)
         {
             var handle = NativeControl.CreatePropCategory(
                 label,
@@ -1897,7 +1936,7 @@ namespace Alternet.UI
             {
                 IsCategory = true,
             };
-            OnPropertyCreated(result);
+            OnPropertyCreated(result, prm);
             return result;
         }
 
@@ -3639,11 +3678,12 @@ namespace Alternet.UI
         internal IPropertyGridItem CreateCursorProperty(
            string label,
            string? name = null,
-           int value = 0)
+           int value = 0,
+           IPropertyGridNewItemParams? prm = null)
         {
             var handle = NativeControl.CreateCursorProperty(label, CorrectPropName(name), value);
             var result = new PropertyGridItem(this, handle, label, name, value);
-            OnPropertyCreated(result);
+            OnPropertyCreated(result, prm);
             return result;
         }
 
@@ -3695,7 +3735,9 @@ namespace Alternet.UI
         /// Called after <see cref="IPropertyGridItem"/> created.
         /// </summary>
         /// <param name="item">Property item.</param>
-        protected virtual void OnPropertyCreated(IPropertyGridItem item)
+        protected virtual void OnPropertyCreated(
+            IPropertyGridItem item,
+            IPropertyGridNewItemParams? prm)
         {
         }
 

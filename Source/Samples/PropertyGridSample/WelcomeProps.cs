@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,6 +11,13 @@ namespace PropertyGridSample
 {
     internal class WelcomeProps
     {
+        internal const string CategoryInt = "Int values";
+        internal const string CategoryFloat = "Float values";
+        internal const string CategoryOther = "Other values";
+        internal const string CategoryString = "String values";
+        internal const string CategoryStruct = "Struct values";
+        internal const string CategoryObject = "Object values";
+
         public static WelcomeProps Default = new();
 
         byte asByte = 15;
@@ -36,137 +44,161 @@ namespace PropertyGridSample
         Rect asRect = new(51, 82, 354, 40);
         Point asPoint = new(50, 85);
 
+        [Category(CategoryInt)]
         public byte AsByte
         {
             get => asByte;
             set => asByte = value;
         }
 
-        public bool AsBool
-        {
-            get => asBool;
-            set => asBool = value;
-        }
-
-        public char AsChar
-        {
-            get => asChar;
-            set => asChar = value;
-        }
+        [Category(CategoryInt)]
         public sbyte AsSByte
         {
             get => asSByte;
             set => asSByte = value;
         }
 
+        [Category(CategoryInt)]
         public short AsInt16
         {
             get => asInt16;
             set => asInt16 = value;
         }
 
+        [Category(CategoryInt)]
         public ushort AsUInt16
         {
             get => asUInt16;
             set => asUInt16 = value;
         }
 
+        [Category(CategoryInt)]
         public int AsInt32
         {
             get => asInt32;
             set => asInt32 = value;
         }
 
+        [Category(CategoryInt)]
         public uint AsUInt32
         {
             get => asUInt32;
             set => asUInt32 = value;
         }
 
+        [Category(CategoryInt)]
         public long AsInt64
         {
             get => asInt64;
             set => asInt64 = value;
         }
 
+        [Category(CategoryInt)]
         public ulong AsUInt64
         {
             get => asUInt64;
             set => asUInt64 = value;
         }
-        
+
+        [Category(CategoryFloat)]        
         public float AsSingle
         {
             get => asSingle;
             set => asSingle = value;
         }
-        
+
+        [Category(CategoryFloat)]
         public double AsDouble
         {
             get => asDouble;
             set => asDouble = value;
         }
-        
+
+        [Category(CategoryFloat)]
         public decimal AsDecimal
         {
             get => asDecimal;
             set => asDecimal = value;
         }
-        
-        public DateTime AsDateTime
+
+        [Category(CategoryOther)]
+        public bool AsBool
         {
-            get => asDateTime;
-            set => asDateTime = value;
+            get => asBool;
+            set => asBool = value;
         }
 
+        [Category(CategoryString)]
+        public char AsChar
+        {
+            get => asChar;
+            set => asChar = value;
+        }
+
+        [Category(CategoryString)]
         public string AsString
         {
             get => asString;
             set => asString = value;
         }
 
+        [Category(CategoryOther)]
+        public DateTime AsDateTime
+        {
+            get => asDateTime;
+            set => asDateTime = value;
+        }
+
+        [Category(CategoryOther)]
         public Color AsColor
         {
             get => asColor;
             set => asColor = value;
         }
-        
+
+        [Category(CategoryObject)]
         public Font AsFont
         {
             get => asFont;
             set => asFont = value;
         }
-        
+
+        [Category(CategoryObject)]
         public Brush AsBrush
         {
             get => asBrush;
             set => asBrush = value;
         }
 
+        [Category(CategoryObject)]
         public Pen AsPen
         {
             get => asPen;
             set => asPen = value;
         }
 
+        [Category(CategoryStruct)]
         public Size AsSize
         {
             get => asSize;
             set => asSize = value;
         }
-        
+
+        [Category(CategoryStruct)]
         public Thickness AsThickness
         {
             get => asThickness;
             set => asThickness = value;
         }
-        
+
+        [Category(CategoryStruct)]
         public Rect AsRect
         {
             get => asRect;
             set => asRect = value;
         }
-        
+
+        [Category(CategoryStruct)]
         public Point AsPoint
         {
             get => asPoint;

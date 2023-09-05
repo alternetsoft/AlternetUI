@@ -231,6 +231,13 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets <see cref="IComponentDesigner"/> instance which
+        /// connects control with the designer.
+        /// </summary>
+        [Browsable(false)]
+        public IComponentDesigner Designer { get; set; }
+
+        /// <summary>
         /// Gets a value indicating whether the mouse is captured to this control.
         /// </summary>
         [Browsable(false)]

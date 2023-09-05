@@ -10,7 +10,7 @@ using Alternet.Base.Collections;
 
 namespace PropertyGridSample
 {
-    public partial class MainWindow : Window
+    public partial class MainWindow : Window, IComponentDesigner
     {
         private const string ResPrefix =
             "embres:PropertyGridSample.Resources.";
@@ -32,6 +32,8 @@ namespace PropertyGridSample
         };
 
         internal readonly PropertyGrid propertyGrid = new();
+
+        private bool updatePropertyGrid = false;
 
         static MainWindow()
         {
@@ -383,6 +385,23 @@ namespace PropertyGridSample
             propertyGrid.SetVerticalSpacing();
 
             controlsListBox.SelectedIndex = 0;
+
+            Application.Current.Idle += ApplicationIdle;
+        }
+
+        private void ApplicationIdle(object sender, EventArgs e)
+        {
+            if (updatePropertyGrid)
+            {
+                updatePropertyGrid = false;
+                try
+                {
+                    UpdatePropertyGrid();
+                }
+                catch
+                {
+                }
+            }
         }
 
         private void PropertyGrid_ProcessException(object? sender, PropertyGridExceptionEventArgs e)
@@ -601,6 +620,7 @@ namespace PropertyGridSample
                 var control = item?.ControlInstance;
                 if (control != null)
                 {
+                    control.Designer = this;
                     if (control.Parent == null)
                         controlPanel.Children.Add(control);
                 }
@@ -738,6 +758,11 @@ namespace PropertyGridSample
         {
             if (PropertyGridSettings.Default!.LogButtonClick)
                 LogEvent("ButtonClick");
+        }
+
+        void IComponentDesigner.PropertyChanged(object? sender, string? propName)
+        {
+            updatePropertyGrid = true;
         }
 
         private class ControlListBoxItem

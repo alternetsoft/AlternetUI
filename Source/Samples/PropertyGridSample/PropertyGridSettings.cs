@@ -79,5 +79,33 @@ namespace PropertyGridSample
         public bool LogColDragging { get; set; } = false;
         public bool LogColEndDrag { get; set; } = false;
         public bool LogButtonClick { get; set; } = true;
+
+        public PropertyGridCreateStyle CreateStyle
+        {
+            get
+            {
+                return propertyGrid.CreateStyle;
+            }
+
+            set
+            {
+                propertyGrid.CreateStyle = value;
+                mainWindow.UpdatePropertyGrid();
+            }
+        }
+
+        public PropertyGridCreateStyleEx CreateStyleEx
+        {
+            get
+            {
+                return propertyGrid.CreateStyleEx;
+            }
+
+            set
+            {
+                propertyGrid.CreateStyleEx = value;
+                mainWindow.UpdatePropertyGrid();
+            }
+        }
     }
 }

@@ -109,85 +109,99 @@ namespace Alternet.UI
         IPropertyGridItem CreateFilenameProperty(
             string label,
             string? name = null,
-            string? value = null);
+            string? value = null,
+            IPropertyGridNewItemParams? prm = null);
 
         /// <inheritdoc cref="PropertyGrid.CreateDirProperty"/>
         IPropertyGridItem CreateDirProperty(
             string label,
             string? name = null,
-            string? value = null);
+            string? value = null,
+            IPropertyGridNewItemParams? prm = null);
 
         /// <inheritdoc cref="PropertyGrid.CreateImageFilenameProperty"/>
         IPropertyGridItem CreateImageFilenameProperty(
             string label,
             string? name = null,
-            string? value = null);
+            string? value = null,
+            IPropertyGridNewItemParams? prm = null);
 
         /// <inheritdoc cref="PropertyGrid.CreateSystemColorProperty"/>
         IPropertyGridItem CreateSystemColorProperty(
             string label,
             string? name,
-            Color value);
+            Color value,
+            IPropertyGridNewItemParams? prm = null);
 
         /// <inheritdoc cref="PropertyGrid.CreateStringProperty"/>
         IPropertyGridItem CreateStringProperty(
             string label,
             string? name = null,
-            string? value = null);
+            string? value = null,
+            IPropertyGridNewItemParams? prm = null);
 
         /// <inheritdoc cref="PropertyGrid.CreateCharProperty"/>
         IPropertyGridItem CreateCharProperty(
             string label,
             string? name = null,
-            char? value = null);
+            char? value = null,
+            IPropertyGridNewItemParams? prm = null);
 
         /// <inheritdoc cref="PropertyGrid.CreateBoolProperty"/>
         IPropertyGridItem CreateBoolProperty(
             string label,
             string? name = null,
-            bool value = false);
+            bool value = false,
+            IPropertyGridNewItemParams? prm = null);
 
         /// <inheritdoc cref="PropertyGrid.CreateLongProperty"/>
         IPropertyGridItem CreateLongProperty(
             string label,
             string? name = null,
-            long value = 0);
+            long value = 0,
+            IPropertyGridNewItemParams? prm = null);
 
         /// <inheritdoc cref="PropertyGrid.CreateDoubleProperty"/>
         IPropertyGridItem CreateDoubleProperty(
             string label,
             string? name = null,
-            double value = default);
+            double value = default,
+            IPropertyGridNewItemParams? prm = null);
 
         /// <inheritdoc cref="PropertyGrid.CreateFloatProperty"/>
         IPropertyGridItem CreateFloatProperty(
             string label,
             string? name = null,
-            double value = default);
+            double value = default,
+            IPropertyGridNewItemParams? prm = null);
 
         /// <inheritdoc cref="PropertyGrid.CreateColorProperty"/>
         IPropertyGridItem CreateColorProperty(
             string label,
             string? name,
-            Color value);
+            Color value,
+            IPropertyGridNewItemParams? prm = null);
 
         /// <inheritdoc cref="PropertyGrid.CreateULongProperty"/>
         IPropertyGridItem CreateULongProperty(
             string label,
             string? name = null,
-            ulong value = 0);
+            ulong value = 0,
+            IPropertyGridNewItemParams? prm = null);
 
         /// <inheritdoc cref="PropertyGrid.CreateLongStringProperty"/>
         IPropertyGridItem CreateLongStringProperty(
             string label,
             string? name = null,
-            string? value = null);
+            string? value = null,
+            IPropertyGridNewItemParams? prm = null);
 
         /// <inheritdoc cref="PropertyGrid.CreateDateProperty"/>
         IPropertyGridItem CreateDateProperty(
             string label,
             string? name = null,
-            DateTime? value = null);
+            DateTime? value = null,
+            IPropertyGridNewItemParams? prm = null);
 
         /// <inheritdoc cref="PropertyGrid.CreatePropertyAsStruct"/>
         IPropertyGridItem CreatePropertyAsStruct(
@@ -221,13 +235,15 @@ namespace Alternet.UI
         IPropertyGridItem CreateDecimalProperty(
             string label,
             string? name = null,
-            decimal value = default);
+            decimal value = default,
+            IPropertyGridNewItemParams? prm = null);
 
         /// <inheritdoc cref="PropertyGrid.CreateSByteProperty"/>
         IPropertyGridItem CreateSByteProperty(
             string label,
             string? name = null,
-            sbyte value = 0);
+            sbyte value = 0,
+            IPropertyGridNewItemParams? prm = null);
 
         /// <inheritdoc cref="PropertyGrid.SetPropertyMinMax(IPropertyGridItem, TypeCode)"/>
         void SetPropertyMinMax(IPropertyGridItem prop, TypeCode code);
@@ -239,31 +255,36 @@ namespace Alternet.UI
         IPropertyGridItem CreateInt16Property(
             string label,
             string? name = null,
-            short value = 0);
+            short value = 0,
+            IPropertyGridNewItemParams? prm = null);
 
         /// <inheritdoc cref="PropertyGrid.CreateIntProperty"/>
         IPropertyGridItem CreateIntProperty(
             string label,
             string? name = null,
-            int value = 0);
+            int value = 0,
+            IPropertyGridNewItemParams? prm = null);
 
         /// <inheritdoc cref="PropertyGrid.CreateByteProperty"/>
         IPropertyGridItem CreateByteProperty(
             string label,
             string? name = null,
-            byte value = 0);
+            byte value = 0,
+            IPropertyGridNewItemParams? prm = null);
 
         /// <inheritdoc cref="PropertyGrid.CreateUIntProperty"/>
         IPropertyGridItem CreateUIntProperty(
             string label,
             string? name = null,
-            uint value = 0);
+            uint value = 0,
+            IPropertyGridNewItemParams? prm = null);
 
         /// <inheritdoc cref="PropertyGrid.CreateUInt16Property"/>
         IPropertyGridItem CreateUInt16Property(
             string label,
             string? name = null,
-            ushort value = 0);
+            ushort value = 0,
+            IPropertyGridNewItemParams? prm = null);
 
         /// <inheritdoc cref="PropertyGrid.CreateProperty(string?, string?, object, string)"/>
         IPropertyGridItem? CreateProperty(
@@ -421,21 +442,24 @@ namespace Alternet.UI
             string label,
             string? name,
             IPropertyGridChoices choices,
-            object? value = null);
+            object? value = null,
+            IPropertyGridNewItemParams? prm = null);
 
         /// <inheritdoc cref="PropertyGrid.CreateEditEnumProperty"/>
         IPropertyGridItem CreateEditEnumProperty(
             string label,
             string? name,
             IPropertyGridChoices choices,
-            string? value = null);
+            string? value = null,
+            IPropertyGridNewItemParams? prm = null);
 
         /// <inheritdoc cref="PropertyGrid.CreateFlagsProperty"/>
         IPropertyGridItem CreateFlagsProperty(
             string label,
             string? name,
             IPropertyGridChoices choices,
-            object? value = null);
+            object? value = null,
+            IPropertyGridNewItemParams? prm = null);
 
         /// <inheritdoc cref="PropertyGrid.Clear"/>
         void Clear();
@@ -449,7 +473,10 @@ namespace Alternet.UI
         void Add(IPropertyGridItem prop, IPropertyGridItem? parent = null);
 
         /// <inheritdoc cref="PropertyGrid.CreatePropCategory"/>
-        IPropertyGridItem CreatePropCategory(string label, string? name = null);
+        IPropertyGridItem CreatePropCategory(
+            string label,
+            string? name = null,
+            IPropertyGridNewItemParams? prm = null);
 
         /// <inheritdoc cref="PropertyGrid.GetPropertyName"/>
         string GetPropertyName(IPropertyGridItem property);
