@@ -1,0 +1,7 @@
+- AuiManager setArt for toolbar/panels
+
+- Study art no gradients / google web app style
+
+- AuiNotebook separately from AuiManager
+
+- Notebook tab userdata or id?

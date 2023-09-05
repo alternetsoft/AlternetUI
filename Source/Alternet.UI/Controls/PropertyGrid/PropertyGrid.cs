@@ -9,27 +9,6 @@ using Alternet.Drawing;
 
 namespace Alternet.UI
 {
-    /*
-    - multibuttons in prop editor   https://docs.wxwidgets.org/3.2/classwx_p_g_multi_button.html
-    - PropertyGridItem Dispose item? when?
-    - Time, DateTime
-    - what number formats are
-    - string format, IFormatProvider provider
-    - Setprops with categories
-    - OtherCategoryName
-    - Localization event to localize categories, values, etc.?
-        (registration for the enum elements, prop names)
-    - color edit with all values in combo
-    - How to set null to nullable props
-    - Check props on empty str 
-    - how to set errorstyle in propgrid in on exception event.
-    - Hook to events and update propgrid if prop related events were changed
-      Controls to have PropetyUpdate event fire when prop changed by visual
-    - public virtual ClearPropertyValue(IPropertyGridItem prop);
-    - public virtual ResetPropertyValue(IPropertyGridItem prop);
-    - PropertyCreateArgs Params
-     */
-
     /// <summary>
     /// Represents the method that will handle creation of the property.
     /// </summary>
