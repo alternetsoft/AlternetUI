@@ -17,126 +17,71 @@ namespace Alternet.UI
     /// The slider can be displayed horizontally or vertically.
     /// </para>
     /// <para>
-    /// You can use this control to input numeric data obtained through the <see cref="Value"/> property.
+    /// You can use this control to input numeric data obtained through the
+    /// <see cref="Value"/> property.
     /// You can display this numeric data in a control or use it in code.
     /// </para>
     /// </remarks>
     public class Slider : Control
     {
         /// <summary>
-        /// Gets a <see cref="SliderHandler"/> associated with this class.
-        /// </summary>
-        [Browsable(false)]
-        public new SliderHandler Handler
-        {
-            get
-            {
-                CheckDisposed();
-                return (SliderHandler)base.Handler;
-            }
-        }
-
-        /// <inheritdoc/>
-        public override ControlId ControlKind => ControlId.Slider;
-
-        /// <summary>
-        /// Gets or sets a value indicating the horizontal or vertical orientation of the slider.
-        /// </summary>
-        /// <value>One of the <see cref="SliderOrientation"/> values.</value>
-        /// <remarks>
-        /// When the <see cref="Orientation"/> property is set to <see cref="SliderOrientation.Horizontal"/>, the scroll
-        /// box moves from left to right as the <see cref="Value"/> increases. When the <see cref="Orientation"/>
-        /// property is set to <see cref="SliderOrientation.Vertical"/>, the scroll box moves from bottom to top as the
-        /// <see cref="Value"/> increases.
-        /// </remarks>
-        public SliderOrientation Orientation { get => Handler.Orientation; set => Handler.Orientation = value; }
-
-        /// <summary>
-        /// Gets or sets a value indicating how to display the tick marks on the slider.
-        /// </summary>
-        /// <value>
-        /// One of the <see cref="SliderTickStyle"/> values. The default is <see cref="SliderTickStyle.BottomRight"/>.
-        /// </value>
-        public SliderTickStyle TickStyle { get => Handler.TickStyle; set => Handler.TickStyle = value; }
-
-        /// <summary>
         /// Identifies the <see cref="Value"/> dependency property.
         /// </summary>
         public static readonly DependencyProperty ValueProperty =
             DependencyProperty.Register(
-                    "Value", // Property name
-                    typeof(int), // Property type
-                    typeof(Slider), // Property owner
-                    new FrameworkPropertyMetadata( // Property metadata
-                            0, // default value
-                            FrameworkPropertyMetadataOptions.BindsTwoWayByDefault | // Flags
-                                FrameworkPropertyMetadataOptions.AffectsPaint,
-                            new PropertyChangedCallback(OnValuePropertyChanged),    // property changed callback
+                    "Value",
+                    typeof(int),
+                    typeof(Slider),
+                    new FrameworkPropertyMetadata(
+                            0,
+                            FrameworkPropertyMetadataOptions.BindsTwoWayByDefault | FrameworkPropertyMetadataOptions.AffectsPaint,
+                            new PropertyChangedCallback(OnValuePropertyChanged),
                             new CoerceValueCallback(CoerceValue),
-                            true, // IsAnimationProhibited
-                            UpdateSourceTrigger.PropertyChanged
-                            //UpdateSourceTrigger.LostFocus   // DefaultUpdateSourceTrigger
-                            ));
+                            true,
+                            UpdateSourceTrigger.PropertyChanged));
 
         /// <summary>
         /// Identifies the <see cref="Minimum"/> dependency property.
         /// </summary>
         public static readonly DependencyProperty MinimumProperty =
             DependencyProperty.Register(
-                    "Minimum", // Property name
-                    typeof(int), // Property type
-                    typeof(Slider), // Property owner
-                    new FrameworkPropertyMetadata( // Property metadata
-                            0, // default minimum
-                            FrameworkPropertyMetadataOptions.AffectsPaint, // Flags
-                            new PropertyChangedCallback(OnMinimumPropertyChanged),    // property changed callback
-                            null, // coerce callback
-                            true, // IsAnimationProhibited
-                            UpdateSourceTrigger.PropertyChanged
-                            //UpdateSourceTrigger.LostFocus   // DefaultUpdateSourceTrigger
-                            ));
+                    "Minimum",
+                    typeof(int),
+                    typeof(Slider),
+                    new FrameworkPropertyMetadata(
+                            0,
+                            FrameworkPropertyMetadataOptions.AffectsPaint,
+                            new PropertyChangedCallback(OnMinimumPropertyChanged),
+                            null,
+                            true,
+                            UpdateSourceTrigger.PropertyChanged));
 
         /// <summary>
         /// Identifies the <see cref="Maximum"/> dependency property.
         /// </summary>
         public static readonly DependencyProperty MaximumProperty =
             DependencyProperty.Register(
-                    "Maximum", // Property name
-                    typeof(int), // Property type
-                    typeof(Slider), // Property owner
-                    new FrameworkPropertyMetadata( // Property metadata
-                            10, // default maximum
-                            FrameworkPropertyMetadataOptions.AffectsPaint, // Flags
-                            new PropertyChangedCallback(OnMaximumPropertyChanged),    // property changed callback
-                            CoerceMaximum, // coerce callback
-                            true, // IsAnimationProhibited
-                            UpdateSourceTrigger.PropertyChanged
-                            //UpdateSourceTrigger.LostFocus   // DefaultUpdateSourceTrigger
-                            ));
-
-        private static object CoerceMaximum(DependencyObject d, object value)
-        {
-            var o = (Slider)d;
-
-            int min = o.Minimum;
-            if ((int)value < min)
-            {
-                return min;
-            }
-            return value;
-        }
+                    "Maximum",
+                    typeof(int),
+                    typeof(Slider),
+                    new FrameworkPropertyMetadata(
+                            10,
+                            FrameworkPropertyMetadataOptions.AffectsPaint,
+                            new PropertyChangedCallback(OnMaximumPropertyChanged),
+                            CoerceMaximum,
+                            true,
+                            UpdateSourceTrigger.PropertyChanged));
 
         private int smallChange = 1;
-
         private int largeChange = 5;
-
         private int tickFrequency = 1;
 
         /// <summary>
         /// Occurs when the <see cref="Value"/> property of a slider changes,
         /// either by movement of the scroll box or by manipulation in code.
         /// </summary>
-        /// <remarks>You can use this event to update other controls when the value represented in the slider changes.</remarks>
+        /// <remarks>You can use this event to update other controls when the value represented
+        /// in the slider changes.</remarks>
         public event EventHandler? ValueChanged;
 
         /// <summary>
@@ -165,10 +110,61 @@ namespace Alternet.UI
         public event EventHandler? TickFrequencyChanged;
 
         /// <summary>
-        /// Gets or sets a numeric value that represents the current position of the scroll box on the slider.
+        /// Gets a <see cref="SliderHandler"/> associated with this class.
         /// </summary>
-        /// <value>A numeric value that is within the <see cref="Minimum"/> and <see cref="Maximum"/> range. The default value is 0.</value>
-        /// <remarks>The <see cref="Value"/> property contains the number that represents the current position of the scroll box on the slider.</remarks>
+        [Browsable(false)]
+        public new SliderHandler Handler
+        {
+            get
+            {
+                CheckDisposed();
+                return (SliderHandler)base.Handler;
+            }
+        }
+
+        /// <inheritdoc/>
+        public override ControlId ControlKind => ControlId.Slider;
+
+        /// <summary>
+        /// Gets or sets a value indicating the horizontal or vertical orientation of the slider.
+        /// </summary>
+        /// <value>One of the <see cref="SliderOrientation"/> values.</value>
+        /// <remarks>
+        /// When the <see cref="Orientation"/> property is set to
+        /// <see cref="SliderOrientation.Horizontal"/>, the scroll
+        /// box moves from left to right as the <see cref="Value"/> increases. When the
+        /// <see cref="Orientation"/>
+        /// property is set to <see cref="SliderOrientation.Vertical"/>, the scroll box moves
+        /// from bottom to top as the
+        /// <see cref="Value"/> increases.
+        /// </remarks>
+        public SliderOrientation Orientation
+        {
+            get => Handler.Orientation;
+            set => Handler.Orientation = value;
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating how to display the tick marks on the slider.
+        /// </summary>
+        /// <value>
+        /// One of the <see cref="SliderTickStyle"/> values. The default is
+        /// <see cref="SliderTickStyle.BottomRight"/>.
+        /// </value>
+        public SliderTickStyle TickStyle
+        {
+            get => Handler.TickStyle;
+            set => Handler.TickStyle = value;
+        }
+
+        /// <summary>
+        /// Gets or sets a numeric value that represents the current position of the scroll box
+        /// on the slider.
+        /// </summary>
+        /// <value>A numeric value that is within the <see cref="Minimum"/> and
+        /// <see cref="Maximum"/> range. The default value is 0.</value>
+        /// <remarks>The <see cref="Value"/> property contains the number that represents
+        /// the current position of the scroll box on the slider.</remarks>
         public int Value
         {
             get { return (int)GetValue(ValueProperty); }
@@ -180,10 +176,13 @@ namespace Alternet.UI
         /// </summary>
         /// <value>The minimum value for the <see cref="Slider"/>. The default is 0.</value>
         /// <remarks>
-        /// The minimum and maximum values of the Value property are specified by the <see cref="Minimum"/> and <see cref="Maximum"/> properties.
-        /// If the new <see cref="Minimum"/> property value is greater than the <see cref="Maximum"/> property value,
+        /// The minimum and maximum values of the Value property are specified by the
+        /// <see cref="Minimum"/> and <see cref="Maximum"/> properties.
+        /// If the new <see cref="Minimum"/> property value is greater than the
+        /// <see cref="Maximum"/> property value,
         /// the <see cref="Maximum"/> value is set equal to the <see cref="Minimum"/> value.
-        /// If the <see cref="Value"/> is less than the new <see cref="Minimum"/> value, the <see cref="Value"/> property
+        /// If the <see cref="Value"/> is less than the new <see cref="Minimum"/> value,
+        /// the <see cref="Value"/> property
         /// is also set equal to the <see cref="Minimum"/> value.
         /// </remarks>
         public int Minimum
@@ -197,10 +196,13 @@ namespace Alternet.UI
         /// </summary>
         /// <value>The maximum value for the <see cref="Slider"/>. The default is 10.</value>
         /// <remarks>
-        /// The minimum and maximum values of the Value property are specified by the <see cref="Minimum"/> and <see cref="Maximum"/> properties.
-        /// If the new <see cref="Minimum"/> property value is greater than the <see cref="Maximum"/> property value,
+        /// The minimum and maximum values of the Value property are specified by the
+        /// <see cref="Minimum"/> and <see cref="Maximum"/> properties.
+        /// If the new <see cref="Minimum"/> property value is greater than the
+        /// <see cref="Maximum"/> property value,
         /// the <see cref="Maximum"/> value is set equal to the <see cref="Minimum"/> value.
-        /// If the <see cref="Value"/> is less than the new <see cref="Minimum"/> value, the <see cref="Value"/> property
+        /// If the <see cref="Value"/> is less than the new <see cref="Minimum"/> value, the
+        /// <see cref="Value"/> property
         /// is also set equal to the <see cref="Minimum"/> value.
         /// </remarks>
         public int Maximum
@@ -228,7 +230,7 @@ namespace Alternet.UI
                 CheckDisposed();
 
                 if (value < 0)
-                    throw new ArgumentException(nameof(value));
+                    throw new ArgumentException(nameof(SmallChange));
 
                 if (smallChange == value)
                     return;
@@ -257,7 +259,7 @@ namespace Alternet.UI
                 CheckDisposed();
 
                 if (value < 0)
-                    throw new ArgumentException(nameof(value));
+                    throw new ArgumentException(ErrorMessages.InvalidParameter, nameof(value));
 
                 if (largeChange == value)
                     return;
@@ -291,7 +293,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Raises the <see cref="ValueChanged"/> event and calls <see cref="OnValueChanged(EventArgs)"/>.
+        /// Raises the <see cref="ValueChanged"/> event and calls
+        /// <see cref="OnValueChanged(EventArgs)"/>.
         /// </summary>
         /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
         public void RaiseValueChanged(EventArgs e)
@@ -314,7 +317,9 @@ namespace Alternet.UI
         /// <summary>
         /// Callback for changes to the Value property
         /// </summary>
-        private static void OnValuePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private static void OnValuePropertyChanged(
+            DependencyObject d,
+            DependencyPropertyChangedEventArgs e)
         {
             Slider control = (Slider)d;
             control.OnValuePropertyChanged((int)e.OldValue, (int)e.NewValue);
@@ -334,9 +339,12 @@ namespace Alternet.UI
             return value;
         }
 
+#pragma warning disable
         private void OnValuePropertyChanged(int oldValue, int newValue)
+#pragma warning enable
         {
             RaiseValueChanged(EventArgs.Empty);
+            Designer?.PropertyChanged(this, nameof(Value));
         }
 
         /// <summary>
@@ -350,14 +358,17 @@ namespace Alternet.UI
         /// <summary>
         /// Callback for changes to the Minimum property
         /// </summary>
-        private static void OnMinimumPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private static void OnMinimumPropertyChanged(
+            DependencyObject d,
+            DependencyPropertyChangedEventArgs e)
         {
             Slider control = (Slider)d;
             control.OnMinimumPropertyChanged((int)e.OldValue, (int)e.NewValue);
         }
 
         /// <summary>
-        /// Raises the <see cref="MinimumChanged"/> event and calls <see cref="OnMinimumChanged(EventArgs)"/>.
+        /// Raises the <see cref="MinimumChanged"/> event and calls
+        /// <see cref="OnMinimumChanged(EventArgs)"/>.
         /// </summary>
         /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
         void RaiseMinimumChanged(EventArgs e)
@@ -385,14 +396,17 @@ namespace Alternet.UI
         /// <summary>
         /// Callback for changes to the Maximum property
         /// </summary>
-        private static void OnMaximumPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private static void OnMaximumPropertyChanged(
+            DependencyObject d,
+            DependencyPropertyChangedEventArgs e)
         {
             Slider control = (Slider)d;
             control.OnMaximumPropertyChanged((int)e.OldValue, (int)e.NewValue);
         }
 
         /// <summary>
-        /// Raises the <see cref="MaximumChanged"/> event and calls <see cref="OnMaximumChanged(EventArgs)"/>.
+        /// Raises the <see cref="MaximumChanged"/> event and calls
+        /// <see cref="OnMaximumChanged(EventArgs)"/>.
         /// </summary>
         /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
         private void RaiseMaximumChanged(EventArgs e)
@@ -415,5 +429,17 @@ namespace Alternet.UI
             return GetEffectiveControlHandlerHactory().CreateSliderHandler(this);
         }
 
+        private static object CoerceMaximum(DependencyObject d, object value)
+        {
+            var o = (Slider)d;
+
+            int min = o.Minimum;
+            if ((int)value < min)
+            {
+                return min;
+            }
+
+            return value;
+        }
     }
 }
