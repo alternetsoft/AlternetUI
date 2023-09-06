@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel;
 
 namespace Alternet.UI
 {
@@ -30,6 +31,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets a value indicating whether the object has been disposed of.
         /// </summary>
+        [Browsable(false)]
         public bool IsDisposed { get; private set; }
 
         private protected abstract string? TitleCore { get; set; }
@@ -63,18 +65,21 @@ namespace Alternet.UI
             return ShowModalCore(owner);
         }
 
-        private protected void CheckDisposed()
+        /// <summary>
+        /// Releases all resources used by the object.
+        /// </summary>
+        public void Dispose()
         {
-            if (IsDisposed)
-                throw new ObjectDisposedException(null);
+            Dispose(disposing: true);
+            GC.SuppressFinalize(this);
         }
 
-        private protected abstract ModalResult ShowModalCore(Window? owner);
-
         /// <summary>
-        /// Releases the unmanaged resources used by the object and optionally releases the managed resources.
+        /// Releases the unmanaged resources used by the object and optionally releases the
+        /// managed resources.
         /// </summary>
-        /// <param name="disposing"><c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.</param>
+        /// <param name="disposing"><c>true</c> to release both managed and unmanaged
+        /// resources; <c>false</c> to release only unmanaged resources.</param>
         protected virtual void Dispose(bool disposing)
         {
             if (!isDisposed)
@@ -87,13 +92,12 @@ namespace Alternet.UI
             }
         }
 
-        /// <summary>
-        /// Releases all resources used by the object.
-        /// </summary>
-        public void Dispose()
+        private protected void CheckDisposed()
         {
-            Dispose(disposing: true);
-            GC.SuppressFinalize(this);
+            if (IsDisposed)
+                throw new ObjectDisposedException(null);
         }
+
+        private protected abstract ModalResult ShowModalCore(Window? owner);
     }
 }

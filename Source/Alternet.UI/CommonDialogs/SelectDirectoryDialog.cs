@@ -15,11 +15,22 @@ namespace Alternet.UI
             nativeDialog = new Native.SelectDirectoryDialog();
         }
 
-        private protected override ModalResult ShowModalCore(Window? owner)
+        /// <summary>
+        /// Gets or sets a string containing the directory name selected in the file dialog window.
+        /// </summary>
+        public string? DirectoryName
         {
-            CheckDisposed();
-            var nativeOwner = owner == null ? null : ((NativeWindowHandler)owner.Handler).NativeControl;
-            return (ModalResult)nativeDialog.ShowModal(nativeOwner);
+            get
+            {
+                CheckDisposed();
+                return nativeDialog.DirectoryName;
+            }
+
+            set
+            {
+                CheckDisposed();
+                nativeDialog.DirectoryName = value;
+            }
         }
 
         /// <summary>
@@ -55,22 +66,12 @@ namespace Alternet.UI
             }
         }
 
-        /// <summary>
-        /// Gets or sets a string containing the directory name selected in the file dialog window.
-        /// </summary>
-        public string? DirectoryName
+        private protected override ModalResult ShowModalCore(Window? owner)
         {
-            get
-            {
-                CheckDisposed();
-                return nativeDialog.DirectoryName;
-            }
-
-            set
-            {
-                CheckDisposed();
-                nativeDialog.DirectoryName = value;
-            }
+            CheckDisposed();
+            var nativeOwner = owner == null ?
+                null : ((NativeWindowHandler)owner.Handler).NativeControl;
+            return (ModalResult)nativeDialog.ShowModal(nativeOwner);
         }
     }
 }
