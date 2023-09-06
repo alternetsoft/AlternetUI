@@ -1,0 +1,13 @@
+MaskedTextBox
+ MaskFormat CutCopyMaskFormat
+public string Mask
+public bool MaskCompleted => maskedTextProvider.MaskCompleted;
+ public char PromptChar
+bool MaskFull
+ public bool RejectInputOnFirstFailure
+ public MaskFormat TextMaskFormat
+ public bool UseSystemPasswordChar
+ public Type ValidatingType
+ public event EventHandler MaskChanged
+ public event MaskInputRejectedEventHandler MaskInputRejected
+ public event TypeValidationEventHandler TypeValidationCompleted

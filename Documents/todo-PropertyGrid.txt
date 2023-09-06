@@ -1,31 +1,43 @@
-    - multibuttons in prop editor   https://docs.wxwidgets.org/3.2/classwx_p_g_multi_button.html
+- Add more in prop item create params
 
-    - PropertyGridItem Dispose item? when?
+- PropertyGrid dialog
 
-    - Time, DateTime
+- PropertyGrid and TreeView dialog
 
-    - what number formats are
+- Prop notifier class
 
-    - string format, IFormatProvider provider
+- multibuttons in prop editor   https://docs.wxwidgets.org/3.2/classwx_p_g_multi_button.html
 
-    - Setprops with categories
+- check everything is localizable (property names, values, category names, etc.)
 
-    - OtherCategoryName
+- Static panel/splitter/panel grid/ add to prop grid demo but with defaults loaded.
+	
+- PropertyGridItem Dispose item? when?
 
-    - Localization event to localize categories, values, etc.?
-        (registration for the enum elements, prop names)
+- Time, DateTime
 
-    - color edit with all values in combo
+- what number formats are
 
-    - How to set null to nullable props
+- string format, IFormatProvider provider
 
-    - Check props on empty str 
+- Setprops with categories
 
-    - how to set errorstyle in propgrid in on exception event.
+- OtherCategoryName
 
-    - Hook to events and update propgrid if prop related events were changed
-      Controls to have PropetyUpdate event fire when prop changed by visual
+- Localization event to localize categories, values, etc.?
+    (registration for the enum elements, prop names)
 
-    - public virtual ClearPropertyValue(IPropertyGridItem prop);
+- color edit with all values in combo
 
-    - public virtual ResetPropertyValue(IPropertyGridItem prop);
+- How to set null to nullable props
+
+- Check props on empty str 
+
+- how to set errorstyle in propgrid in on exception event.
+
+- Hook to events and update propgrid if prop related events were changed
+  Controls to have PropetyUpdate event fire when prop changed by visual
+
+- public virtual ClearPropertyValue(IPropertyGridItem prop);
+
+- public virtual ResetPropertyValue(IPropertyGridItem prop);

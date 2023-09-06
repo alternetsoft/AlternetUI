@@ -1,0 +1,6 @@
+- toggle AllowDrop in Label and have an exception
+
+- WindowPropertiesSample 
+  Press Create modal window and close it with Cancel - application stack.
+
+- wxDebug assert to exception how?

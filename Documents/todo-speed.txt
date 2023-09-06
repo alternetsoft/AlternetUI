@@ -1,0 +1,11 @@
+- NativeObject.cs
+        private static readonly Dictionary<IntPtr, NativeObject> 
+		instancesByNativePointers = new Dictionary<IntPtr, NativeObject>();
+
+- RadialGradientBrush and other are initialized two times when created.
+
+- remove control events usage in ControlHandler (call handler directly without event)
+
+- Colllection use new events
+
+- 
