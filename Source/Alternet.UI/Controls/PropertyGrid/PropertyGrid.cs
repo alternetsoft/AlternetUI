@@ -1057,6 +1057,14 @@ namespace Alternet.UI
             return result;
         }
 
+        private object? GetStructPropertyValueForReload(object instance, PropertyInfo propInfo)
+        {
+            var asString = propInfo.GetValue(instance)?.ToString();
+            if (string.IsNullOrEmpty(asString))
+                asString = $"({propInfo.PropertyType})";
+            return asString;
+        }
+
         /// <summary>
         /// Creates property for structures.
         /// </summary>
@@ -1067,14 +1075,19 @@ namespace Alternet.UI
             object instance,
             PropertyInfo propInfo)
         {
-            var asString = propInfo.GetValue(instance, null)?.ToString();
-            if (string.IsNullOrEmpty(asString))
-                asString = $"({propInfo.PropertyType})";
-
+            var value = GetStructPropertyValueForReload(instance, propInfo);
             var prm = GetNewItemParamsOrNull(instance, propInfo);
-            var result = CreateStringProperty(label, name, asString, prm);
+            var result = CreateStringProperty(label, name, value?.ToString(), prm);
+            result.GetValueFuncForReload = GetStructPropertyValueForReload;
             SetPropertyReadOnly(result, true, false);
             OnPropertyCreated(result, instance, propInfo);
+            value = propInfo.GetValue(instance);
+            if (value != null)
+            {
+                var children = CreateProps(value, true);
+                result.AddChildren(children);
+            }
+
             return result;
         }
 
@@ -3607,13 +3620,23 @@ namespace Alternet.UI
 
             AvoidException(() =>
             {
-                object? propValue = p.GetValue(instance, null);
-
-                // var oldValue = GetPropertyValueAsVariant(item);
-
-                variant.SetCompatibleValue(propValue, p);
+                object? propValue;
+                var reloadFunc = item.GetValueFuncForReload;
+                if (reloadFunc == null)
+                {
+                    propValue = p.GetValue(instance);
+                    variant.SetCompatibleValue(propValue, p);
+                }
+                else
+                {
+                    propValue = reloadFunc(instance, p);
+                    variant.AsObject = propValue;
+                }
                 SetPropertyValueAsVariant(item, variant);
             });
+
+            if (item.Parent != null)
+                ReloadPropertyValue(item.Parent);
         }
 
         internal static IntPtr GetEditorByName(string editorName)
@@ -4083,6 +4106,7 @@ namespace Alternet.UI
                     var variant = EventPropValueAsVariant;
                     var newValue = variant.GetCompatibleValue(propInfo);
                     propInfo.SetValue(instance, newValue);
+                    UpdateStruct();
                 });
 
                 AvoidException(() =>
@@ -4102,6 +4126,19 @@ namespace Alternet.UI
             if (propEvent)
             {
                 AvoidException(() => { prop.RaisePropertyChanged(); });
+            }
+
+            void UpdateStruct()
+            {
+                var parent = prop.Parent;
+                if (parent == null)
+                    return;
+                var parentInstance = parent.Instance;
+                var parentPropInfo = parent.PropInfo;
+                var parentIsStruct = AssemblyUtils.IsStruct(parentPropInfo.PropertyType);
+                if (!parentIsStruct)
+                    return;
+                parentPropInfo.SetValue(parentInstance, instance);
             }
         }
 

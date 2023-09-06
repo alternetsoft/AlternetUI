@@ -62,6 +62,8 @@ namespace Alternet.UI
         /// </summary>
         bool HasChildren { get; }
 
+        Func<object, PropertyInfo, object?> GetValueFuncForReload { get; set; }
+
         /// <summary>
         /// Gets type of the property editor.
         /// </summary>
@@ -96,5 +98,7 @@ namespace Alternet.UI
         /// Raises <see cref="PropertyChanged"/> event.
         /// </summary>
         void RaisePropertyChanged();
+
+        void AddChildren(IEnumerable<IPropertyGridItem> children);
     }
 }

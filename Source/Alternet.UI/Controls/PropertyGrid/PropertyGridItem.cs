@@ -91,6 +91,8 @@ namespace Alternet.UI
 
         public object? DefaultValue => defaultValue;
 
+        public Func<object, PropertyInfo, object?> GetValueFuncForReload { get; set; }
+
         public bool IsCategory
         {
             get => isCategory;
@@ -105,6 +107,12 @@ namespace Alternet.UI
         public void RaisePropertyChanged()
         {
             PropertyChanged?.Invoke(this, EventArgs.Empty);
+        }
+
+        public void AddChildren(IEnumerable<IPropertyGridItem> children)
+        {
+            foreach (var item in children)
+                Children.Add(item);
         }
 
         private void Children_ItemRemoved(
