@@ -32,9 +32,6 @@ namespace PropertyGridSample
             localizableEnum.SetLabelForValue<BrushType>(BrushType.LinearGradient, "Linear Gradient");
             localizableEnum.SetLabelForValue<BrushType>(BrushType.RadialGradient, "Radial Gradient");
 
-            PropertyGrid.SetCustomLabel<NullableProps>("AsByteN","byte?");
-            PropertyGrid.SetCustomLabel<NullableProps>("AsBoolN", "bool?");
-
             WebBrowser.CrtSetDbgFlag(0);
         }
 
@@ -217,7 +214,7 @@ namespace PropertyGridSample
         private void AddDialog<T>()
             where T : CommonDialog
         {
-            var dialog = (T)Activator.CreateInstance(typeof(T));
+            var dialog = (T)Activator.CreateInstance(typeof(T))!;
             var button = new ShowDialogButton
             {
                 Dialog = dialog,
@@ -229,7 +226,7 @@ namespace PropertyGridSample
             controlsListBox.Add(item);
         }
 
-        private void ApplicationIdle(object sender, EventArgs e)
+        private void ApplicationIdle(object? sender, EventArgs e)
         {
             if (updatePropertyGrid)
             {
@@ -644,11 +641,11 @@ namespace PropertyGridSample
                         if (!ObjectInitializers.Actions.TryGetValue(
                             type,
                             out Action<Object>? action))
-                            return instance;
-                        action(instance);
+                            return instance!;
+                        action(instance!);
                     }
                     
-                    return instance;
+                    return instance!;
                 }
             }
 

@@ -8,6 +8,8 @@ namespace Alternet.UI
 {
     internal class PropertyGridNewItemParams : IPropertyGridNewItemParams
     {
+        public static readonly IPropertyGridNewItemParams Default = new PropertyGridNewItemParams();
+
         public string? Label { get; set; }
     }
 }

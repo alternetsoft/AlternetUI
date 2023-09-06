@@ -13,6 +13,11 @@ namespace Alternet.UI
 
         public PropertyGridItemCreate? CreateFunc { get; set; }
 
+        public IPropertyGridPropInfoRegistry? GetPropRegistryOrNull(PropertyInfo propInfo)
+        {
+            return registry.GetValueOrDefault(propInfo);
+        }
+
         public IPropertyGridPropInfoRegistry GetPropRegistry(PropertyInfo propInfo)
         {
             return registry.GetOrCreate(

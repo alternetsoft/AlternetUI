@@ -397,7 +397,7 @@ namespace Alternet.UI
         /// <summary>
         /// Registers <see cref="IPropertyGridItem"/> create function for specific <see cref="Type"/>.
         /// </summary>
-        /// <param name="type">Type value.</param>
+        /// <param name="type">Object type.</param>
         /// <param name="func">Create function.</param>
         public static void RegisterPropCreateFunc(Type type, PropertyGridItemCreate func)
         {
@@ -405,6 +405,13 @@ namespace Alternet.UI
             registry.CreateFunc = func;
         }
 
+        /// <summary>
+        /// Sets custom label for the property.
+        /// </summary>
+        /// <typeparam name="T">Object type.</typeparam>
+        /// <param name="propName">Property name.</param>
+        /// <param name="label">New custom label of the property.</param>
+        /// <returns></returns>
         public static bool SetCustomLabel<T>(string propName, string label)
             where T : class
         {
@@ -416,6 +423,12 @@ namespace Alternet.UI
             return true;
         }
 
+        /// <summary>
+        /// Gets <see cref="IPropertyGridNewItemParams"/> for the given
+        /// <see cref="Type"/> and <see cref="PropertyInfo"/>.
+        /// </summary>
+        /// <param name="type">Object type.</param>
+        /// <param name="propInfo">Property information.</param>
         public static IPropertyGridNewItemParams GetNewItemParams(Type type, PropertyInfo propInfo)
         {
             var registry = GetTypeRegistry(type);
@@ -423,6 +436,61 @@ namespace Alternet.UI
             return propRegistry.NewItemParams;
         }
 
+        /// Gets <see cref="IPropertyGridNewItemParams"/> for the given
+        /// object instance and <see cref="PropertyInfo"/>.
+        /// <param name="instance">Object instance.</param>
+        /// <param name="propInfo">Property information.</param>
+        public static IPropertyGridNewItemParams GetNewItemParams(
+            object instance,
+            PropertyInfo propInfo)
+        {
+            if (instance == null)
+                return PropertyGridNewItemParams.Default;
+            var type = instance.GetType();
+            return GetNewItemParams(type, propInfo);
+        }
+
+        /// Gets <see cref="IPropertyGridNewItemParams"/> for the given
+        /// <see cref="Type"/> and <see cref="PropertyInfo"/> if its available,
+        /// otherwise returns <c>null</c>.
+        /// <param name="type">Object type.</param>
+        /// <param name="propInfo">Property information.</param>
+        public static IPropertyGridNewItemParams? GetNewItemParamsOrNull(
+            Type type,
+            PropertyInfo propInfo)
+        {
+            var registry = GetTypeRegistryOrNull(type);
+            if (registry == null)
+                return null;
+            var propRegistry = registry.GetPropRegistryOrNull(propInfo);
+            if(propRegistry == null)
+                return null;
+            if(propRegistry.HasNewItemParams)
+                return propRegistry.NewItemParams;
+            return null;
+        }
+
+        /// Gets <see cref="IPropertyGridNewItemParams"/> for the given
+        /// object instance and <see cref="PropertyInfo"/> if its available,
+        /// otherwise returns <c>null</c>.
+        /// <param name="instance">Object instance.</param>
+        /// <param name="propInfo">Property information.</param>
+        public static IPropertyGridNewItemParams? GetNewItemParamsOrNull(
+            object instance,
+            PropertyInfo propInfo)
+        {
+            if (instance == null)
+                return null;
+            var type = instance.GetType();
+            return GetNewItemParamsOrNull(type, propInfo);
+        }
+
+        /// <summary>
+        /// Gets <see cref="IPropertyGridPropInfoRegistry"/> for the given
+        /// <see cref="Type"/> and <see cref="PropertyInfo"/>.
+        /// </summary>
+        /// <param name="type">Object type.</param>
+        /// <param name="propInfo">Property information.</param>
         public static IPropertyGridPropInfoRegistry GetPropRegistry(Type type, PropertyInfo propInfo)
         {
             var registry = GetTypeRegistry(type);
@@ -430,6 +498,12 @@ namespace Alternet.UI
             return propRegistry;
         }
 
+        /// <summary>
+        /// Gets custom label for the given
+        /// <see cref="Type"/> and <see cref="PropertyInfo"/>.
+        /// </summary>
+        /// <typeparam name="T">Object type.</typeparam>
+        /// <param name="propName">Property name.</param>
         public static string? GetCustomLabel<T>(string propName)
             where T : class
         {
@@ -451,6 +525,16 @@ namespace Alternet.UI
             {
                 return new PropertyGridTypeRegistry();
             });
+        }
+
+        /// <summary>
+        /// Gets <see cref="IPropertyGridTypeRegistry"/> for the given <see cref="Type"/>
+        /// if its available, othewise returns <c>null</c>.
+        /// </summary>
+        /// <param name="type">Type value.</param>
+        public static IPropertyGridTypeRegistry? GetTypeRegistryOrNull(Type type)
+        {
+            return TypeRegistry.GetValueOrDefaultCached(type);
         }
 
         /// <summary>
@@ -595,7 +679,10 @@ namespace Alternet.UI
             IPropertyGridNewItemParams? prm = null)
         {
             value ??= string.Empty;
-            var handle = NativeControl.CreateFilenameProperty(label, CorrectPropName(name), value!);
+            var handle = NativeControl.CreateFilenameProperty(
+                CorrectPropLabel(label, prm),
+                CorrectPropName(name),
+                value!);
             var result = new PropertyGridItem(this, handle, label, name, value)
             {
                 PropertyEditorKind = TypeCode.String.ToString() + ".Filename",
@@ -628,7 +715,10 @@ namespace Alternet.UI
             IPropertyGridNewItemParams? prm = null)
         {
             value ??= string.Empty;
-            var handle = NativeControl.CreateDirProperty(label, CorrectPropName(name), value!);
+            var handle = NativeControl.CreateDirProperty(
+                CorrectPropLabel(label, prm),
+                CorrectPropName(name),
+                value!);
             var result = new PropertyGridItem(this, handle, label, name, value)
             {
                 PropertyEditorKind = TypeCode.String.ToString() + ".Dir",
@@ -665,7 +755,7 @@ namespace Alternet.UI
         {
             value ??= string.Empty;
             var handle = NativeControl.CreateImageFilenameProperty(
-                label,
+                CorrectPropLabel(label, prm),
                 CorrectPropName(name),
                 value!);
             var result = new PropertyGridItem(this, handle, label, name, value)
@@ -690,7 +780,10 @@ namespace Alternet.UI
             Color value,
             IPropertyGridNewItemParams? prm = null)
         {
-            var handle = NativeControl.CreateSystemColorProperty(label, CorrectPropName(name), value);
+            var handle = NativeControl.CreateSystemColorProperty(
+                CorrectPropLabel(label, prm),
+                CorrectPropName(name),
+                value);
             var result = new PropertyGridItem(this, handle, label, name, value)
             {
                 PropertyEditorKind = "Color.System",
@@ -714,7 +807,10 @@ namespace Alternet.UI
             IPropertyGridNewItemParams? prm = null)
         {
             value ??= string.Empty;
-            var handle = NativeControl.CreateStringProperty(label, CorrectPropName(name), value!);
+            var handle = NativeControl.CreateStringProperty(
+                CorrectPropLabel(label, prm),
+                CorrectPropName(name),
+                value!);
             var result = new PropertyGridItem(this, handle, label, name, value)
             {
                 PropertyEditorKind = TypeCode.String.ToString(),
@@ -756,7 +852,10 @@ namespace Alternet.UI
             bool value = false,
             IPropertyGridNewItemParams? prm = null)
         {
-            var handle = NativeControl.CreateBoolProperty(label, CorrectPropName(name), value);
+            var handle = NativeControl.CreateBoolProperty(
+                CorrectPropLabel(label, prm),
+                CorrectPropName(name),
+                value);
             var result = new PropertyGridItem(this, handle, label, name, value)
             {
                 PropertyEditorKind = TypeCode.Boolean.ToString(),
@@ -779,7 +878,10 @@ namespace Alternet.UI
             long value = 0,
             IPropertyGridNewItemParams? prm = null)
         {
-            var handle = NativeControl.CreateIntProperty(label, CorrectPropName(name), value);
+            var handle = NativeControl.CreateIntProperty(
+                CorrectPropLabel(label, prm),
+                CorrectPropName(name),
+                value);
             var result = new PropertyGridItem(this, handle, label, name, value)
             {
                 PropertyEditorKind = TypeCode.Int64.ToString(),
@@ -802,7 +904,10 @@ namespace Alternet.UI
             double value = default,
             IPropertyGridNewItemParams? prm = null)
         {
-            var handle = NativeControl.CreateFloatProperty(label, CorrectPropName(name), value);
+            var handle = NativeControl.CreateFloatProperty(
+                CorrectPropLabel(label, prm),
+                CorrectPropName(name),
+                value);
             var result = new PropertyGridItem(this, handle, label, name, value)
             {
                 PropertyEditorKind = TypeCode.Double.ToString(),
@@ -826,7 +931,10 @@ namespace Alternet.UI
             double value = default,
             IPropertyGridNewItemParams? prm = null)
         {
-            var handle = NativeControl.CreateFloatProperty(label, CorrectPropName(name), value);
+            var handle = NativeControl.CreateFloatProperty(
+                CorrectPropLabel(label, prm),
+                CorrectPropName(name),
+                value);
             var result = new PropertyGridItem(this, handle, label, name, value)
             {
                 PropertyEditorKind = TypeCode.Single.ToString(),
@@ -850,7 +958,10 @@ namespace Alternet.UI
             Color value,
             IPropertyGridNewItemParams? prm = null)
         {
-            var handle = NativeControl.CreateColorProperty(label, CorrectPropName(name), value);
+            var handle = NativeControl.CreateColorProperty(
+                CorrectPropLabel(label, prm),
+                CorrectPropName(name),
+                value);
             var result = new PropertyGridItem(this, handle, label, name, value)
             {
                 PropertyEditorKind = "Color",
@@ -873,7 +984,10 @@ namespace Alternet.UI
             ulong value = 0,
             IPropertyGridNewItemParams? prm = null)
         {
-            var handle = NativeControl.CreateUIntProperty(label, CorrectPropName(name), value);
+            var handle = NativeControl.CreateUIntProperty(
+                CorrectPropLabel(label, prm),
+                CorrectPropName(name),
+                value);
             var result = new PropertyGridItem(this, handle, label, name, value)
             {
                 PropertyEditorKind = TypeCode.UInt64.ToString(),
@@ -899,7 +1013,7 @@ namespace Alternet.UI
         {
             value ??= string.Empty;
             var handle = NativeControl.CreateLongStringProperty(
-                label,
+                CorrectPropLabel(label, prm),
                 CorrectPropName(name),
                 value);
             var result = new PropertyGridItem(this, handle, label, name, value)
@@ -932,7 +1046,7 @@ namespace Alternet.UI
                 dt = value.Value;
 
             var handle = NativeControl.CreateDateProperty(
-                label,
+                CorrectPropLabel(label, prm),
                 CorrectPropName(name),
                 dt);
             var result = new PropertyGridItem(this, handle, label, name, value)
@@ -957,8 +1071,10 @@ namespace Alternet.UI
             if (string.IsNullOrEmpty(asString))
                 asString = $"({propInfo.PropertyType})";
 
-            var result = CreateStringProperty(label, name, asString);
+            var prm = GetNewItemParamsOrNull(instance, propInfo);
+            var result = CreateStringProperty(label, name, asString, prm);
             SetPropertyReadOnly(result, true, false);
+            OnPropertyCreated(result, instance, propInfo);
             return result;
         }
 
@@ -977,8 +1093,10 @@ namespace Alternet.UI
                 Instance = instance,
                 PropInfo = propInfo,
             };
-            var result = CreateStringProperty(label, name, "(Font)");
+            var prm = GetNewItemParamsOrNull(instance, propInfo);
+            var result = CreateStringProperty(label, name, "(Font)", prm);
             SetPropertyReadOnly(result, true, false);
+            OnPropertyCreated(result, instance, propInfo);
 
             var choices = PropertyGridAdapterFont.FontNameChoices;
 
@@ -986,7 +1104,8 @@ namespace Alternet.UI
                 "Name",
                 null,
                 choices,
-                adapter.NameAsIndex);
+                adapter.NameAsIndex,
+                null);
             itemName.Instance = adapter;
             itemName.PropInfo = AssemblyUtils.GetPropInfo(adapter, "NameAsIndex");
 
@@ -1020,8 +1139,10 @@ namespace Alternet.UI
                 Instance = instance,
                 PropInfo = propInfo,
             };
-            var result = CreateStringProperty(label, name, "(Brush)");
+            var prm = GetNewItemParamsOrNull(instance, propInfo);
+            var result = CreateStringProperty(label, name, "(Brush)", prm);
             SetPropertyReadOnly(result, true, false);
+            OnPropertyCreated(result, instance, propInfo);
 
             var itemBrushType = CreateProperty(adapter, "BrushType")!;
             var itemColor = CreateProperty(adapter, "Color")!;
@@ -1063,9 +1184,11 @@ namespace Alternet.UI
                 Instance = instance,
                 PropInfo = propInfo,
             };
-            IPropertyGridItem result =
-                CreateStringProperty(label, name, "(Pen)");
+            var prm = GetNewItemParamsOrNull(instance, propInfo);
+            var result =
+                CreateStringProperty(label, name, "(Pen)", prm);
             SetPropertyReadOnly(result, true, false);
+            OnPropertyCreated(result, instance, propInfo);
 
             var itemColor = CreateProperty(adapter, "Color")!;
             var itemDashStyle = CreateProperty(adapter, "DashStyle")!;
@@ -1320,12 +1443,11 @@ namespace Alternet.UI
 
             var setPropReadonly = false;
             propName ??= p.Name;
-            label ??= propName;
             var propType = p.PropertyType;
             IPropertyGridItem? prop = null;
-
             var realType = AssemblyUtils.GetRealType(propType);
             TypeCode typeCode = Type.GetTypeCode(realType);
+            label ??= propName;
 
             object PropValue(object defValue)
             {
@@ -1421,10 +1543,13 @@ namespace Alternet.UI
                     return result;
                 }
 
+                var prm = GetNewItemParamsOrNull(instance, p);
                 result = CreateStringProperty(
                     label!,
                     propName,
-                    PropValue(string.Empty).ToString());
+                    PropValue(string.Empty).ToString(),
+                    prm);
+                OnPropertyCreated(result, instance, p);
                 setPropReadonly = true;
                 return result;
             }
@@ -1461,7 +1586,8 @@ namespace Alternet.UI
                     PropertyInfo propInfo)
         {
             var value = (bool)AssemblyUtils.GetPropValue(instance, propInfo, false);
-            var prop = CreateBoolProperty(label, name, value);
+            var prm = GetNewItemParamsOrNull(instance, propInfo);
+            var prop = CreateBoolProperty(label, name, value, prm);
             OnPropertyCreated(prop, instance, propInfo);
             return prop;
         }
@@ -1477,7 +1603,8 @@ namespace Alternet.UI
                     PropertyInfo propInfo)
         {
             var value = AssemblyUtils.GetPropValue<sbyte>(instance, propInfo, default);
-            var prop = CreateSByteProperty(label, name, value);
+            var prm = GetNewItemParamsOrNull(instance, propInfo);
+            var prop = CreateSByteProperty(label, name, value, prm);
             OnPropertyCreated(prop, instance, propInfo);
             return prop;
         }
@@ -1493,7 +1620,8 @@ namespace Alternet.UI
                     PropertyInfo propInfo)
         {
             var value = AssemblyUtils.GetPropValue<short>(instance, propInfo, default);
-            var prop = CreateInt16Property(label, name, value);
+            var prm = GetNewItemParamsOrNull(instance, propInfo);
+            var prop = CreateInt16Property(label, name, value, prm);
             OnPropertyCreated(prop, instance, propInfo);
             return prop;
         }
@@ -1509,7 +1637,8 @@ namespace Alternet.UI
                     PropertyInfo propInfo)
         {
             var value = AssemblyUtils.GetPropValue<int>(instance, propInfo, default);
-            var prop = CreateIntProperty(label, name, value);
+            var prm = GetNewItemParamsOrNull(instance, propInfo);
+            var prop = CreateIntProperty(label, name, value, prm);
             OnPropertyCreated(prop, instance, propInfo);
             return prop;
         }
@@ -1525,7 +1654,8 @@ namespace Alternet.UI
                     PropertyInfo propInfo)
         {
             var value = AssemblyUtils.GetPropValue<long>(instance, propInfo, default);
-            var prop = CreateLongProperty(label, name, value);
+            var prm = GetNewItemParamsOrNull(instance, propInfo);
+            var prop = CreateLongProperty(label, name, value, prm);
             OnPropertyCreated(prop, instance, propInfo);
             return prop;
         }
@@ -1541,7 +1671,8 @@ namespace Alternet.UI
                     PropertyInfo propInfo)
         {
             var value = AssemblyUtils.GetPropValue<byte>(instance, propInfo, default);
-            var prop = CreateByteProperty(label, name, value);
+            var prm = GetNewItemParamsOrNull(instance, propInfo);
+            var prop = CreateByteProperty(label, name, value, prm);
             OnPropertyCreated(prop, instance, propInfo);
             return prop;
         }
@@ -1557,7 +1688,8 @@ namespace Alternet.UI
                     PropertyInfo propInfo)
         {
             var value = AssemblyUtils.GetPropValue<uint>(instance, propInfo, default);
-            var prop = CreateUIntProperty(label, name, value);
+            var prm = GetNewItemParamsOrNull(instance, propInfo);
+            var prop = CreateUIntProperty(label, name, value, prm);
             OnPropertyCreated(prop, instance, propInfo);
             return prop;
         }
@@ -1573,7 +1705,8 @@ namespace Alternet.UI
                     PropertyInfo propInfo)
         {
             var value = AssemblyUtils.GetPropValue<ushort>(instance, propInfo, default);
-            var prop = CreateUInt16Property(label, name, value);
+            var prm = GetNewItemParamsOrNull(instance, propInfo);
+            var prop = CreateUInt16Property(label, name, value, prm);
             OnPropertyCreated(prop, instance, propInfo);
             return prop;
         }
@@ -1589,7 +1722,8 @@ namespace Alternet.UI
                     PropertyInfo propInfo)
         {
             var value = AssemblyUtils.GetPropValue<ulong>(instance, propInfo, default);
-            var prop = CreateULongProperty(label, name, value);
+            var prm = GetNewItemParamsOrNull(instance, propInfo);
+            var prop = CreateULongProperty(label, name, value, prm);
             OnPropertyCreated(prop, instance, propInfo);
             return prop;
         }
@@ -1605,7 +1739,8 @@ namespace Alternet.UI
                     PropertyInfo propInfo)
         {
             var value = AssemblyUtils.GetPropValue<float>(instance, propInfo, default);
-            var prop = CreateFloatProperty(label, name, value);
+            var prm = GetNewItemParamsOrNull(instance, propInfo);
+            var prop = CreateFloatProperty(label, name, value, prm);
             OnPropertyCreated(prop, instance, propInfo);
             return prop;
         }
@@ -1621,7 +1756,8 @@ namespace Alternet.UI
                     PropertyInfo propInfo)
         {
             var value = AssemblyUtils.GetPropValue<double>(instance, propInfo, default);
-            var prop = CreateDoubleProperty(label, name, value);
+            var prm = GetNewItemParamsOrNull(instance, propInfo);
+            var prop = CreateDoubleProperty(label, name, value, prm);
             OnPropertyCreated(prop, instance, propInfo);
             return prop;
         }
@@ -1637,7 +1773,8 @@ namespace Alternet.UI
                     PropertyInfo propInfo)
         {
             var value = AssemblyUtils.GetPropValue<decimal>(instance, propInfo, default);
-            var prop = CreateDecimalProperty(label, name, value);
+            var prm = GetNewItemParamsOrNull(instance, propInfo);
+            var prop = CreateDecimalProperty(label, name, value, prm);
             OnPropertyCreated(prop, instance, propInfo);
             return prop;
         }
@@ -1653,7 +1790,8 @@ namespace Alternet.UI
                     PropertyInfo propInfo)
         {
             var value = AssemblyUtils.GetPropValue<DateTime>(instance, propInfo, default);
-            var prop = CreateDateProperty(label, name, value);
+            var prm = GetNewItemParamsOrNull(instance, propInfo);
+            var prop = CreateDateProperty(label, name, value, prm);
             OnPropertyCreated(prop, instance, propInfo);
             return prop;
         }
@@ -1669,7 +1807,8 @@ namespace Alternet.UI
                     PropertyInfo propInfo)
         {
             var value = AssemblyUtils.GetPropValue<char>(instance, propInfo, default);
-            var prop = CreateCharProperty(label, name, value);
+            var prm = GetNewItemParamsOrNull(instance, propInfo);
+            var prop = CreateCharProperty(label, name, value, prm);
             OnPropertyCreated(prop, instance, propInfo);
             return prop;
         }
@@ -1685,7 +1824,8 @@ namespace Alternet.UI
                     PropertyInfo propInfo)
         {
             var value = AssemblyUtils.GetPropValue<string>(instance, propInfo, string.Empty);
-            var prop = CreateStringProperty(label, name, value);
+            var prm = GetNewItemParamsOrNull(instance, propInfo);
+            var prop = CreateStringProperty(label, name, value, prm);
             OnPropertyCreated(prop, instance, propInfo);
             return prop;
         }
@@ -1787,7 +1927,12 @@ namespace Alternet.UI
             label ??= propName;
             object? propValue = propInfo.GetValue(instance, null);
             propValue ??= Color.Black;
-            prop = CreateColorProperty(label, name, (Color)propValue);
+            var prm = GetNewItemParamsOrNull(instance, propInfo);
+            prop = CreateColorProperty(
+                label,
+                name,
+                (Color)propValue,
+                prm);
             if (ColorHasAlpha)
                 SetPropertyKnownAttribute(prop, PropertyGridItemAttrId.HasAlpha, true);
             OnPropertyCreated(prop, instance, propInfo);
@@ -1811,13 +1956,15 @@ namespace Alternet.UI
             object? propValue = propInfo.GetValue(instance, null);
             var flagsAttr = propType.GetCustomAttribute(typeof(FlagsAttribute));
             var choices = PropertyGrid.CreateChoicesOnce(propType);
+            var prm = GetNewItemParamsOrNull(instance, propInfo);
             if (flagsAttr == null)
             {
                 prop = CreateChoicesProperty(
                     label,
                     name,
                     choices,
-                    propValue!);
+                    propValue!,
+                    prm);
             }
             else
             {
@@ -1825,7 +1972,8 @@ namespace Alternet.UI
                     label,
                     name,
                     choices,
-                    propValue!);
+                    propValue!,
+                    prm);
             }
 
             OnPropertyCreated(prop, instance, propInfo);
@@ -1849,7 +1997,7 @@ namespace Alternet.UI
         {
             value ??= 0;
             var handle = NativeControl.CreateEnumProperty(
-                label,
+                CorrectPropLabel(label, prm),
                 CorrectPropName(name),
                 choices.Handle,
                 (int)value);
@@ -1878,7 +2026,7 @@ namespace Alternet.UI
         {
             value ??= string.Empty;
             var handle = NativeControl.CreateEditEnumProperty(
-                label,
+                CorrectPropLabel(label, prm),
                 CorrectPropName(name),
                 choices.Handle,
                 value);
@@ -1907,7 +2055,7 @@ namespace Alternet.UI
         {
             value ??= 0;
             var handle = NativeControl.CreateFlagsProperty(
-                label,
+                CorrectPropLabel(label, prm),
                 CorrectPropName(name),
                 choices.Handle,
                 (int)value);
@@ -1990,7 +2138,7 @@ namespace Alternet.UI
             IPropertyGridNewItemParams? prm = null)
         {
             var handle = NativeControl.CreatePropCategory(
-                label,
+                CorrectPropLabel(label, prm),
                 CorrectPropName(name));
             var result = new PropertyGridItem(this, handle, label, name, null)
             {
@@ -3741,7 +3889,10 @@ namespace Alternet.UI
            int value = 0,
            IPropertyGridNewItemParams? prm = null)
         {
-            var handle = NativeControl.CreateCursorProperty(label, CorrectPropName(name), value);
+            var handle = NativeControl.CreateCursorProperty(
+                CorrectPropLabel(label, prm),
+                CorrectPropName(name),
+                value);
             var result = new PropertyGridItem(this, handle, label, name, value);
             OnPropertyCreated(result, prm);
             return result;
@@ -4037,6 +4188,20 @@ namespace Alternet.UI
             PropertyInfo propInfo)
         {
             return sender.CreatePropertyAsPen(label, name, instance, propInfo);
+        }
+
+        private static string CorrectPropLabel(string label, IPropertyGridNewItemParams? prm)
+        {
+            string fn(string s)
+            {
+                return s;
+            }
+
+            string? customLabel = prm?.Label;
+            if (customLabel == null)
+                return fn(label);
+            else
+                return fn(customLabel);
         }
 
         private static string CorrectPropName(string? name)

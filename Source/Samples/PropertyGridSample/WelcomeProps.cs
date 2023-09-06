@@ -44,6 +44,33 @@ namespace PropertyGridSample
         Rect asRect = new(51, 82, 354, 40);
         Point asPoint = new(50, 85);
 
+        static WelcomeProps()
+        {
+            PropertyGrid.SetCustomLabel<WelcomeProps>(nameof(AsByte), "byte");
+            PropertyGrid.SetCustomLabel<WelcomeProps>(nameof(AsBool), "bool");
+            PropertyGrid.SetCustomLabel<WelcomeProps>(nameof(AsChar), "char");
+            PropertyGrid.SetCustomLabel<WelcomeProps>(nameof(AsSByte), "sbyte");
+            PropertyGrid.SetCustomLabel<WelcomeProps>(nameof(AsInt16), "short");
+            PropertyGrid.SetCustomLabel<WelcomeProps>(nameof(AsUInt16), "ushort");
+            PropertyGrid.SetCustomLabel<WelcomeProps>(nameof(AsInt32), "int");
+            PropertyGrid.SetCustomLabel<WelcomeProps>(nameof(AsUInt32), "uint");
+            PropertyGrid.SetCustomLabel<WelcomeProps>(nameof(AsInt64), "long");
+            PropertyGrid.SetCustomLabel<WelcomeProps>(nameof(AsUInt64), "ulong");
+            PropertyGrid.SetCustomLabel<WelcomeProps>(nameof(AsSingle), "float");
+            PropertyGrid.SetCustomLabel<WelcomeProps>(nameof(AsDouble), "double");
+            PropertyGrid.SetCustomLabel<WelcomeProps>(nameof(AsDecimal), "decimal");
+            PropertyGrid.SetCustomLabel<WelcomeProps>(nameof(AsDateTime), "DateTime");
+            PropertyGrid.SetCustomLabel<WelcomeProps>(nameof(AsString), "string");
+            PropertyGrid.SetCustomLabel<WelcomeProps>(nameof(AsColor), "Color");
+            PropertyGrid.SetCustomLabel<WelcomeProps>(nameof(AsFont), "Font");
+            PropertyGrid.SetCustomLabel<WelcomeProps>(nameof(AsBrush), "Brush");
+            PropertyGrid.SetCustomLabel<WelcomeProps>(nameof(AsPen), "Pen");
+            PropertyGrid.SetCustomLabel<WelcomeProps>(nameof(AsSize), "Size");
+            PropertyGrid.SetCustomLabel<WelcomeProps>(nameof(AsThickness), "Thickness");
+            PropertyGrid.SetCustomLabel<WelcomeProps>(nameof(AsRect), "Rect");
+            PropertyGrid.SetCustomLabel<WelcomeProps>(nameof(AsPoint), "Point");
+        }
+
         [Category(CategoryInt)]
         public byte AsByte
         {

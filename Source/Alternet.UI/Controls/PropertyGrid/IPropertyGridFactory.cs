@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -15,6 +16,20 @@ namespace Alternet.UI
     {
         /// <inheritdoc cref="PropertyGrid.DefaultCreateStyle"/>
         PropertyGridCreateStyle DefaultCreateStyle { get; set; }
+
+        /// <inheritdoc cref="PropertyGrid.SetCustomLabel"/>
+        bool SetCustomLabel<T>(string propName, string label)
+            where T : class;
+
+        /// <inheritdoc cref="PropertyGrid.GetNewItemParams(Type, PropertyInfo)"/>
+        IPropertyGridNewItemParams GetNewItemParams(Type type, PropertyInfo propInfo);
+
+        /// <inheritdoc cref="PropertyGrid.GetPropRegistry"/>
+        IPropertyGridPropInfoRegistry GetPropRegistry(Type type, PropertyInfo propInfo);
+
+        /// <inheritdoc cref="PropertyGrid.GetCustomLabel"/>
+        string? GetCustomLabel<T>(string propName)
+            where T : class;
 
         /// <inheritdoc cref="PropertyGrid.RegisterPropCreateFunc"/>
         void RegisterPropCreateFunc(Type type, PropertyGridItemCreate func);

@@ -22,5 +22,12 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="propInfo">Property information.</param>
         IPropertyGridPropInfoRegistry GetPropRegistry(PropertyInfo propInfo);
+
+        /// <summary>
+        /// Gets <see cref="PropertyGrid"/> settings related to <see cref="PropertyInfo"/> if
+        /// its available, otherwise returns <c>null</c>.
+        /// </summary>
+        /// <param name="propInfo">Property information.</param>
+        IPropertyGridPropInfoRegistry? GetPropRegistryOrNull(PropertyInfo propInfo);
     }
 }
