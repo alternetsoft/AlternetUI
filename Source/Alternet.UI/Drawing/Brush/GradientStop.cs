@@ -85,7 +85,7 @@ namespace Alternet.Drawing
         /// <returns>A string that represents the current object.</returns>
         public override string ToString()
         {
-            return $"({Color}, {Offset})";
+            return $"{{{Color}, {Offset}}}";
         }
 
         /// <summary>

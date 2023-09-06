@@ -150,6 +150,19 @@ namespace Alternet.Drawing
                 new GradientStop(endColor, 1),
             };
 
+        internal static string GradientStopsToString(GradientStop[] stops)
+        {
+            string result = string.Empty;
+            foreach(var item in stops)
+            {
+                if (result.Length > 0)
+                    result += ", ";
+                result += item.ToString();
+            }
+
+            return result;
+        }
+
         private protected override bool EqualsCore(Brush other)
         {
             var o = other as LinearGradientBrush;
@@ -177,7 +190,8 @@ namespace Alternet.Drawing
         {
             try
             {
-                return $"LinearGradientBrush ({StartPoint}, {EndPoint}, {GradientStops})";
+                return $"LinearGradientBrush (StartPoint={StartPoint}, EndPoint={EndPoint}," +
+                    $" GradientStops=({GradientStopsToString(GradientStops)}))";
             }
             catch
             {

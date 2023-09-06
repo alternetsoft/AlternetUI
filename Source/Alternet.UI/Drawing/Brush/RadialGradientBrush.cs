@@ -192,7 +192,9 @@ namespace Alternet.Drawing
         {
             try
             {
-                return $"RadialGradientBrush ({Center}, {Radius}, {GradientOrigin}, {GradientStops})";
+                return $"RadialGradientBrush (Center={Center}, Radius={Radius}," +
+                    $" GradientOrigin={GradientOrigin}," +
+                    $" GradientStops=({LinearGradientBrush.GradientStopsToString(GradientStops)}))";
             }
             catch
             {
