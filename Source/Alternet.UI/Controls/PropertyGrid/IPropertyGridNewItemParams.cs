@@ -12,5 +12,13 @@ namespace Alternet.UI
     /// </summary>
     public interface IPropertyGridNewItemParams
     {
+        /// <summary>
+        /// Gets or sets property label.
+        /// </summary>
+        /// <remarks>
+        /// This setting is used to specify localized or user friendly property label
+        /// which will be used in <see cref="PropertyGrid"/> instead of property name.
+        /// </remarks>
+        string? Label { get; set; }
     }
 }

@@ -12,15 +12,6 @@ namespace PropertyGridSample
 {
     public partial class MainWindow : Window, IComponentDesigner
     {
-        private const string ResPrefix =
-            "embres:PropertyGridSample.Resources.";
-        private const string ResPrefixImage = $"{ResPrefix}logo-128x128.png";
-
-        private static readonly Image DefaultImage = Image.FromUrl(ResPrefixImage);
-
-        private static readonly Dictionary<Type, Action<Control>> Initializers = new();
-        private static int newItemIndex = 0;
-
         private readonly AuiManager manager = new();
         private readonly LayoutPanel panel = new();
         private readonly ListBox controlsListBox;
@@ -41,100 +32,14 @@ namespace PropertyGridSample
             localizableEnum.SetLabelForValue<BrushType>(BrushType.LinearGradient, "Linear Gradient");
             localizableEnum.SetLabelForValue<BrushType>(BrushType.RadialGradient, "Radial Gradient");
 
+            PropertyGrid.SetCustomLabel<NullableProps>("AsByteN","byte?");
+            PropertyGrid.SetCustomLabel<NullableProps>("AsBoolN", "bool?");
+
             WebBrowser.CrtSetDbgFlag(0);
-
-            const int defaultListHeight = 300;
-
-            Initializers.Add(typeof(Label), (c) => { (c as Label)!.Text = "Label"; });
-
-            Initializers.Add(typeof(Border), (c) => { c.Height = 150; });
-
-            Initializers.Add(typeof(Button), (c) => 
-            { 
-                (c as Button)!.Text = "Button"; 
-            });
-
-            Initializers.Add(typeof(CheckBox), (c) =>
-            {
-                (c as CheckBox)!.Text = "CheckBox";
-            });
-
-            Initializers.Add(typeof(RadioButton), (c) =>
-            {
-                (c as RadioButton)!.Text = "RadioButton";
-            });
-
-            Initializers.Add(typeof(TreeView), (c) =>
-            {
-                TreeView treeView = (c as TreeView)!;
-                treeView.Height = defaultListHeight;
-                InitTreeView(treeView);
-            });
-
-            Initializers.Add(typeof(ListView), (c) =>
-            {
-                ListView listView = (c as ListView)!;
-                listView.Height = defaultListHeight;
-                InitListView(listView);
-            });
-
-            Initializers.Add(typeof(ListBox), (c) =>
-            {
-                ListBox listBox = (c as ListBox)!;
-                listBox.Height = defaultListHeight;
-                AddTenItems(listBox.Items);
-            });
-
-            Initializers.Add(typeof(ComboBox), (c) =>
-            {
-                ComboBox comboBox = (c as ComboBox)!;
-                AddTenItems(comboBox.Items);
-            });
-
-            Initializers.Add(typeof(CheckListBox), (c) =>
-            {
-                CheckListBox checkListBox = (c as CheckListBox)!;
-                checkListBox.Height = defaultListHeight;
-                AddTenItems(checkListBox.Items);
-            });
-
-            Initializers.Add(typeof(LinkLabel), (c) =>
-            {
-                LinkLabel linkLabel = (c as LinkLabel)!;
-                linkLabel.Text = "LinkLabel";
-                linkLabel.Url = "https://www.google.com/";
-            });
-
-            Initializers.Add(typeof(GroupBox), (c) =>
-            {
-                GroupBox control = (c as GroupBox)!;
-                control.Title = "GroupBox";
-                control.Height = 150;
-            });
-
-            Initializers.Add(typeof(PictureBox), (c) =>
-            {
-                PictureBox control = (c as PictureBox)!;
-                control.Image = DefaultImage;
-            });
         }
 
         public Brush BrushValue { get; set; } = Brush.Default;
         public Pen PenValue { get; set; } = Pen.Default;
-
-        private static void AddTenItems(Collection<object> items)
-        {
-            items.Add("One");
-            items.Add("Two");
-            items.Add("Three");
-            items.Add("Four");
-            items.Add("Five");
-            items.Add("Six");
-            items.Add("Seven");
-            items.Add("Eight");
-            items.Add("Nine");
-            items.Add("Ten");
-        }
 
         private ListBox CreateListBox(Control? parent = null)
         {
@@ -146,101 +51,6 @@ namespace PropertyGridSample
             parent.Children.Add(listBox);
             listBox.SetBounds(0, 0, 200, 100, BoundsSpecified.Size);
             return listBox;
-        }
-
-        public static void InitListView(ListView listView)
-        {
-            AddDefaultItems();
-
-            void InitializeColumns()
-            {
-                listView?.Columns.Add(new ListViewColumn("Column 1"));
-                listView?.Columns.Add(new ListViewColumn("Column 2"));
-            }
-
-            void AddDefaultItems()
-            {
-                InitializeColumns();
-                AddItems(50);
-                foreach (var column in listView!.Columns)
-                    column.WidthMode = ListViewColumnWidthMode.AutoSize;
-            }
-
-            void AddItems(int count)
-            {
-                if (listView == null)
-                    return;
-
-                listView.BeginUpdate();
-                try
-                {
-                    for (int i = 0; i < count; i++)
-                    {
-                        var ix = GenItemIndex();
-                        listView.Items.Add(
-                            new ListViewItem(new[] {
-                            "Item " + ix,
-                            "Some Info " + ix
-                            }, i % 4));
-                    }
-                }
-                finally
-                {
-                    listView.EndUpdate();
-                }
-            }
-
-
-        }
-
-        public static void InitTreeView(TreeView control)
-        {
-            AddItems(control, 10);
-        }
-
-        private static int GenItemIndex()
-        {
-            newItemIndex++;
-            return newItemIndex;
-        }
-
-        private static void AddItems(TreeView treeView, int count)
-        {
-            treeView.BeginUpdate();
-            try
-            {
-                for (int i = 0; i < count; i++)
-                {
-                    int imageIndex = i % 4;
-                    var item = new TreeViewItem(
-                        "Item " + GenItemIndex(),
-                        imageIndex);
-                    for (int j = 0; j < 3; j++)
-                    {
-                        var childItem = new TreeViewItem(
-                            item.Text + "." + j,
-                            imageIndex);
-                        item.Items.Add(childItem);
-
-                        if (i < 5)
-                        {
-                            for (int k = 0; k < 2; k++)
-                            {
-                                childItem.Items.Add(
-                                    new TreeViewItem(
-                                        item.Text + "." + k,
-                                        imageIndex));
-                            }
-                        }
-                    }
-
-                    treeView.Items.Add(item);
-                }
-            }
-            finally
-            {
-                treeView.EndUpdate();
-            }
         }
 
         private static void InitIgnorePropNames(ICollection<string> items)
@@ -349,6 +159,7 @@ namespace PropertyGridSample
               typeof(Window),
               typeof(ToolbarItem),
               typeof(WelcomeControl),
+              typeof(ShowDialogButton),
             };
 
             IEnumerable<Type> result = AssemblyUtils.GetTypeDescendants(typeof(Control));
@@ -359,7 +170,12 @@ namespace PropertyGridSample
                 item = new(type);
                 controlsListBox.Add(item);
             }
-            controlsListBox.Add(new ControlListBoxItem(typeof(Window), this.ParentWindow));
+
+            AddDialog<ColorDialog>();
+            AddDialog<OpenFileDialog>();
+            AddDialog<SaveFileDialog>();
+            AddDialog<SelectDirectoryDialog>();
+            AddDialog<FontDialog>();
 
             logListBox.MouseRightButtonUp += Log_MouseRightButtonUp;
             controlsListBox.SelectionChanged += ControlsListBox_SelectionChanged;
@@ -391,6 +207,26 @@ namespace PropertyGridSample
             controlsListBox.SelectedIndex = 0;
 
             Application.Current.Idle += ApplicationIdle;
+        }
+
+        internal void AddMainWindow()
+        {
+            controlsListBox.Add(new ControlListBoxItem(typeof(Window), this.ParentWindow));
+        }
+
+        private void AddDialog<T>()
+            where T : CommonDialog
+        {
+            var dialog = (T)Activator.CreateInstance(typeof(T));
+            var button = new ShowDialogButton
+            {
+                Dialog = dialog,
+            };
+            var item = new ControlListBoxItem(typeof(T), button)
+            {
+                PropInstance = dialog,
+            };
+            controlsListBox.Add(item);
         }
 
         private void ApplicationIdle(object sender, EventArgs e)
@@ -619,9 +455,9 @@ namespace PropertyGridSample
             {
                 controlPanel.Children.Clear();
                 var item = controlsListBox.SelectedItem as ControlListBoxItem;
-                var type = item?.ControlType;
+                var type = item?.InstanceType;
 
-                var control = item?.ControlInstance;
+                var control = item?.Instance as Control;
                 if (control != null)
                 {
                     control.Designer = this;
@@ -632,7 +468,7 @@ namespace PropertyGridSample
                 if (type == typeof(WelcomeControl))
                     InitDefaultPropertyGrid();
                 else
-                    propertyGrid.SetProps(control);
+                    propertyGrid.SetProps(item?.PropInstance);
             }
 
             controlPanel.SuspendLayout();
@@ -771,27 +607,43 @@ namespace PropertyGridSample
 
         private class ControlListBoxItem
         {
-            private Control? instance;
+            private object? instance;
+            private object? propInstance;
             private readonly Type type;
 
-            public ControlListBoxItem(Type type, Control? instance = null)
+            public ControlListBoxItem(Type type, object? instance = null)
             {
                 this.type = type;
                 this.instance = instance;
             }
 
-            public Type ControlType => type;
+            public Type InstanceType => type;
 
-            public Control ControlInstance
+            public object? PropInstance
+            {
+                get
+                {
+                    if (propInstance == null)
+                        return Instance;
+                    return propInstance;
+                }
+
+                set
+                {
+                    propInstance = value;
+                }
+            }
+
+            public object Instance
             {
                 get
                 {
                     if(instance == null)
                     {
-                        instance = (Control?)Activator.CreateInstance(type);
-                        if (!Initializers.TryGetValue(
-                            instance!.GetType(),
-                            out Action<Control>? action))
+                        instance = Activator.CreateInstance(type);
+                        if (!ObjectInitializers.Actions.TryGetValue(
+                            type,
+                            out Action<Object>? action))
                             return instance;
                         action(instance);
                     }

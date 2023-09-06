@@ -47,12 +47,17 @@ namespace Alternet.UI
         internal const string PropEditClassNameComboBox = "ComboBox";
         internal const string PropEditClassNameSpinCtrl = "SpinCtrl";
         internal const string PropEditClassNameTextCtrlAndButton = "TextCtrlAndButton";
+
         internal static readonly string NameAsLabel = Native.PropertyGrid.NameAsLabel;
+
         private const int PGDONTRECURSE = 0x00000000;
         private const int PGRECURSE = 0x00000020;
         private const int PGSORTTOPLEVELONLY = 0x00000200;
-        private static readonly AdvDictionary<Type, IPropertyGridTypeRegistry> TypeRegistry = new();
+
         private static readonly IPropertyGridFactory DefaultFactory = new PropertyGridFactory();
+        private static readonly AdvDictionaryCached<Type, IPropertyGridTypeRegistry>
+            TypeRegistry = new();
+
         private static AdvDictionary<Type, IPropertyGridChoices>? choicesCache = null;
 
         private readonly AdvDictionary<IntPtr, IPropertyGridItem> items = new();
@@ -400,13 +405,49 @@ namespace Alternet.UI
             registry.CreateFunc = func;
         }
 
+        public static bool SetCustomLabel<T>(string propName, string label)
+            where T : class
+        {
+            var propInfo = typeof(T).GetProperty(propName);
+            if (propInfo == null)
+                return false;
+            var propRegistry = GetPropRegistry(typeof(T), propInfo);
+            propRegistry.NewItemParams.Label = label;
+            return true;
+        }
+
+        public static IPropertyGridNewItemParams GetNewItemParams(Type type, PropertyInfo propInfo)
+        {
+            var registry = GetTypeRegistry(type);
+            var propRegistry = registry.GetPropRegistry(propInfo);
+            return propRegistry.NewItemParams;
+        }
+
+        public static IPropertyGridPropInfoRegistry GetPropRegistry(Type type, PropertyInfo propInfo)
+        {
+            var registry = GetTypeRegistry(type);
+            var propRegistry = registry.GetPropRegistry(propInfo);
+            return propRegistry;
+        }
+
+        public static string? GetCustomLabel<T>(string propName)
+            where T : class
+        {
+            var propInfo = typeof(T).GetProperty(propName);
+            if (propInfo == null)
+                return null;
+
+            var propRegistry = GetPropRegistry(typeof(T), propInfo);
+            return propRegistry.NewItemParams.Label;
+        }
+
         /// <summary>
         /// Gets <see cref="IPropertyGridTypeRegistry"/> for the given <see cref="Type"/>.
         /// </summary>
         /// <param name="type">Type value.</param>
         public static IPropertyGridTypeRegistry GetTypeRegistry(Type type)
         {
-            return TypeRegistry.GetOrCreate(type, () =>
+            return TypeRegistry.GetOrCreateCached(type, () =>
             {
                 return new PropertyGridTypeRegistry();
             });

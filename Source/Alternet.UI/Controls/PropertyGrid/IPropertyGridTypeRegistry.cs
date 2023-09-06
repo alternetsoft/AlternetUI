@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -15,5 +16,11 @@ namespace Alternet.UI
         /// Gets or sets <see cref="IPropertyGridItem"/> create function.
         /// </summary>
         PropertyGridItemCreate? CreateFunc { get; set; }
+
+        /// <summary>
+        /// Gets <see cref="PropertyGrid"/> settings related to <see cref="PropertyInfo"/>.
+        /// </summary>
+        /// <param name="propInfo">Property information.</param>
+        IPropertyGridPropInfoRegistry GetPropRegistry(PropertyInfo propInfo);
     }
 }

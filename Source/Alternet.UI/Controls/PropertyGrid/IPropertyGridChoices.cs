@@ -62,9 +62,9 @@ namespace Alternet.UI
         string? GetLabelFromValue(int value);
 
         /// <summary>
-        /// Returns index of item with given label.
+        /// Returns index of item with given title.
         /// </summary>
-        /// <param name="str">Item label.</param>
+        /// <param name="str">Item title.</param>
         /// <returns></returns>
         int GetLabelIndex(string str);
 
@@ -90,21 +90,69 @@ namespace Alternet.UI
         /// </summary>
         bool IsOk();
 
+        /// <summary>
+        /// Sets item title for the given enum value.
+        /// </summary>
+        /// <typeparam name="T">Type of the item value.</typeparam>
+        /// <param name="value">Item value (id).</param>
+        /// <param name="label">New item title.</param>
+        /// <example>
+        /// <code>
+        /// var localizableEnum = PropertyGrid.GetChoices&#60;BrushType&#62;();
+        /// localizableEnum.SetLabelForValue&#60;BrushType&#62;(
+        ///     BrushType.LinearGradient, "Linear Gradient");
+        /// </code>
+        /// </example>
         public void SetLabelForValue<T>(T value, string label)
             where T : Enum;
 
+        /// <summary>
+        /// Sets item label.
+        /// </summary>
+        /// <param name="index">Item index.</param>
+        /// <param name="value">New item label.</param>
         void SetLabel(int index, string value);
 
+        /// <summary>
+        /// Sets item title for the given item value.
+        /// </summary>
+        /// <param name="value">Item value (id).</param>
+        /// <param name="label">New item title.</param>
         void SetLabelForValue(int value, string label);
 
+        /// <summary>
+        /// Sets item bitmap.
+        /// </summary>
+        /// <param name="index">Item index.</param>
+        /// <param name="bitmap">New item image.</param>
         void SetBitmap(int index, ImageSet? bitmap);
 
+        /// <summary>
+        /// Sets item foreground color.
+        /// </summary>
+        /// <param name="index">Item index.</param>
+        /// <param name="color">New item foreground color.</param>
         void SetFgCol(int index, Color color);
 
+        /// <summary>
+        /// Sets item background color.
+        /// </summary>
+        /// <param name="index">Item index.</param>
+        /// <param name="color">New item background color.</param>
         void SetBgCol(int index, Color color);
 
+        /// <summary>
+        /// Gets item foreground color.
+        /// </summary>
+        /// <param name="index">Item index.</param>
+        /// <returns></returns>
         Color GetFgCol(int index);
 
+        /// <summary>
+        /// Gets item background color.
+        /// </summary>
+        /// <param name="index">Item index.</param>
+        /// <returns></returns>
         Color GetBgCol(int index);
 
         /// <summary>
