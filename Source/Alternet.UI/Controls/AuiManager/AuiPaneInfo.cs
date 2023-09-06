@@ -33,6 +33,8 @@ namespace Alternet.UI
                 Native.AuiPaneInfo.Delete(handle);
                 handle = IntPtr.Zero;
             }
+
+            GC.SuppressFinalize(this);
         }
 
         public IntPtr Handle { get => handle; }

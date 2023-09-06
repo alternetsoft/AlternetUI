@@ -57,6 +57,8 @@ namespace Alternet.UI
                 Native.AuiManager.Delete(handle);
                 handle = IntPtr.Zero;
             }
+
+            GC.SuppressFinalize(this);
         }
 
         /// <summary>

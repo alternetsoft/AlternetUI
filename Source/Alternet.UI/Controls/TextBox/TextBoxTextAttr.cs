@@ -67,6 +67,8 @@ namespace Alternet.UI
                 Native.TextBoxTextAttr.Delete(handle);
                 handle = IntPtr.Zero;
             }
+
+            GC.SuppressFinalize(this);
         }
 
         public void Copy(ITextBoxTextAttr fromAttr)
