@@ -1060,8 +1060,6 @@ namespace Alternet.UI
         private object? GetStructPropertyValueForReload(object instance, PropertyInfo propInfo)
         {
             var asString = propInfo.GetValue(instance)?.ToString();
-            if (string.IsNullOrEmpty(asString))
-                asString = $"({propInfo.PropertyType})";
             return asString;
         }
 
@@ -1101,13 +1099,16 @@ namespace Alternet.UI
             object instance,
             PropertyInfo propInfo)
         {
+            var value = GetStructPropertyValueForReload(instance, propInfo);
+
             PropertyGridAdapterFont adapter = new()
             {
                 Instance = instance,
                 PropInfo = propInfo,
             };
             var prm = GetNewItemParamsOrNull(instance, propInfo);
-            var result = CreateStringProperty(label, name, "(Font)", prm);
+            var result = CreateStringProperty(label, name, value?.ToString(), prm);
+            result.GetValueFuncForReload = GetStructPropertyValueForReload;
             SetPropertyReadOnly(result, true, false);
             OnPropertyCreated(result, instance, propInfo);
 
@@ -1147,13 +1148,15 @@ namespace Alternet.UI
             object instance,
             PropertyInfo propInfo)
         {
+            var value = GetStructPropertyValueForReload(instance, propInfo);
             PropertyGridAdapterBrush adapter = new()
             {
                 Instance = instance,
                 PropInfo = propInfo,
             };
             var prm = GetNewItemParamsOrNull(instance, propInfo);
-            var result = CreateStringProperty(label, name, "(Brush)", prm);
+            var result = CreateStringProperty(label, name, value?.ToString(), prm);
+            result.GetValueFuncForReload = GetStructPropertyValueForReload;
             SetPropertyReadOnly(result, true, false);
             OnPropertyCreated(result, instance, propInfo);
 
@@ -1192,14 +1195,15 @@ namespace Alternet.UI
             object instance,
             PropertyInfo propInfo)
         {
+            var value = GetStructPropertyValueForReload(instance, propInfo);
             PropertyGridAdapterPen adapter = new()
             {
                 Instance = instance,
                 PropInfo = propInfo,
             };
             var prm = GetNewItemParamsOrNull(instance, propInfo);
-            var result =
-                CreateStringProperty(label, name, "(Pen)", prm);
+            var result = CreateStringProperty(label, name, value?.ToString(), prm);
+            result.GetValueFuncForReload = GetStructPropertyValueForReload;
             SetPropertyReadOnly(result, true, false);
             OnPropertyCreated(result, instance, propInfo);
 

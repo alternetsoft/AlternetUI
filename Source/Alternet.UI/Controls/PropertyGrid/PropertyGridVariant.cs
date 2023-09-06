@@ -307,9 +307,14 @@ namespace Alternet.UI
             {
                 case TypeCode.Empty:
                 case TypeCode.DBNull:
+                default:
+                    Clear();
+                    return;
                 case TypeCode.Object:
                     if (value is Color color)
                         AsColor = color;
+                    else
+                        AsString = value.ToString();
                     return;
                 case TypeCode.Boolean:
                     AsBool = (bool)value;
