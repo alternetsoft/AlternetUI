@@ -12,6 +12,13 @@ namespace Alternet.UI
         private TKey? lastKey;
         private TValue? lastValue;
 
+        public TValue GetValueOrDefaultCached(TKey key, TValue defaultValue = default!)
+        {
+            if (lastKey == key)
+                return lastValue!;
+            return GetValueOrDefault(key, defaultValue);
+        }
+
         public TValue GetOrCreateCached(TKey key, Func<TValue> func)
         {
             if (lastKey == key)
