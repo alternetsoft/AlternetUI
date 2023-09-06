@@ -13,6 +13,14 @@ namespace Alternet.UI
     /// </summary>
     public static class AssemblyUtils
     {
+        public static bool IsStruct(Type type)
+        {
+            var realType = AssemblyUtils.GetRealType(type);
+            TypeCode typeCode = Type.GetTypeCode(realType);
+            var result = (typeCode == TypeCode.Object) && realType.IsValueType && !realType.IsEnum;
+            return result;
+        }
+
         /// <summary>
         /// Gets property value.
         /// </summary>
