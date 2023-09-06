@@ -25,6 +25,8 @@ namespace Alternet.UI
             Dispose();
         }
 
+        public IntPtr Handle { get => handle; }
+
         /// <inheritdoc cref="IDisposable.Dispose"/>
         public void Dispose()
         {
@@ -36,8 +38,6 @@ namespace Alternet.UI
 
             GC.SuppressFinalize(this);
         }
-
-        public IntPtr Handle { get => handle; }
 
         public void SafeSet(IAuiPaneInfo source)
         {

@@ -15,7 +15,7 @@ namespace PropertyGridSample
             Click += ShowDialogButton_Click;
         }
 
-        private void ShowDialogButton_Click(object sender, EventArgs e)
+        private void ShowDialogButton_Click(object? sender, EventArgs e)
         {
             Dialog?.ShowModal();
         }

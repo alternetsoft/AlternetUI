@@ -223,7 +223,6 @@ namespace Alternet.UI
             fontInfo.FontFamily = new FontFamily(nativeDialog.ResultFontName);
 
             return result;
-
         }
     }
 }

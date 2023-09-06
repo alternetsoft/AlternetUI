@@ -7,13 +7,13 @@ namespace Alternet.UI
     /// </summary>
     public sealed class OpenFileDialog : FileDialog
     {
-        private protected override Native.FileDialogMode Mode => Native.FileDialogMode.Open;
-
         /// <summary>
-        /// Gets or sets a value indicating whether the dialog window allows multiple files to be selected.
+        /// Gets or sets a value indicating whether the dialog window allows multiple files
+        /// to be selected.
         /// </summary>
         /// <value>
-        /// <c>true</c> if the dialog window allows multiple files to be selected together or concurrently;
+        /// <c>true</c> if the dialog window allows multiple files to be selected together
+        /// or concurrently;
         /// otherwise, <c>false</c>. The default value is <c>false</c>.
         /// </value>
         public bool AllowMultipleSelection
@@ -42,5 +42,7 @@ namespace Alternet.UI
                 return NativeDialog.FileNames;
             }
         }
+
+        private protected override Native.FileDialogMode Mode => Native.FileDialogMode.Open;
     }
 }
