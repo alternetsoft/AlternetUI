@@ -124,8 +124,6 @@ namespace PropertyGridSample
             Type[] badTypes = new Type[] 
             {
               typeof(WebBrowser),
-              typeof(Panel),
-              typeof(Control),
               typeof(AuiNotebook),
               typeof(AuiToolbar),
               typeof(SplitterPanel),
@@ -142,21 +140,24 @@ namespace PropertyGridSample
               typeof(StatusBar),
               typeof(ContextMenu),
               typeof(Popup),
+              typeof(NonVisualControl),
               typeof(PropertyGrid),
               typeof(Toolbar),
               typeof(TabPage),
               typeof(TabControl),
               typeof(Window),
               typeof(ToolbarItem),
-              typeof(WelcomeControl),
-              typeof(ShowDialogButton),
-              typeof(ShowContextMenuButton),
+              //typeof(WelcomeControl),
+              //typeof(ShowDialogButton),
+              //typeof(ShowContextMenuButton),
             };
 
             IEnumerable<Type> result = AssemblyUtils.GetTypeDescendants(typeof(Control));
             foreach (Type type in result)
             {
                 if (Array.IndexOf(badTypes, type) >= 0)
+                    continue;
+                if (type.Assembly != typeof(Control).Assembly)
                     continue;
                 item = new(type);
                 controlsListBox.Add(item);
@@ -659,7 +660,7 @@ namespace PropertyGridSample
                     out Action<Object>? action))
                     return instance!;
                 action(instance!);
-                return instance;
+                return instance!;
             }
 
             public override string ToString()

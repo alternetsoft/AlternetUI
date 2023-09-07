@@ -610,10 +610,14 @@ namespace Alternet.UI
             var values = Enum.GetValues(enumType);
             var names = Enum.GetNames(enumType);
 
+            bool isFlags = AssemblyUtils.EnumIsFlags(enumType);
+
             for (int i = 0; i < values.Length; i++)
             {
-                var value = values.GetValue(i);
-                result.Add(names[i], (int)value!);
+                var value = (int)values.GetValue(i);
+                if (isFlags && value == 0)
+                    continue;
+                result.Add(names[i], value);
             }
 
             return result;
@@ -1965,10 +1969,11 @@ namespace Alternet.UI
             string propName = propInfo.Name;
             label ??= propName;
             object? propValue = propInfo.GetValue(instance, null);
-            var flagsAttr = propType.GetCustomAttribute(typeof(FlagsAttribute));
-            var choices = PropertyGrid.CreateChoicesOnce(propType);
+            var realType = AssemblyUtils.GetRealType(propType);
+            bool isFlags = AssemblyUtils.EnumIsFlags(realType);
+            var choices = PropertyGrid.CreateChoicesOnce(realType);
             var prm = GetNewItemParamsOrNull(instance, propInfo);
-            if (flagsAttr == null)
+            if (isFlags)
             {
                 prop = CreateChoicesProperty(
                     label,

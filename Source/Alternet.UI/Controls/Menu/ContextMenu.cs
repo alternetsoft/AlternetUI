@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel;
 using Alternet.Drawing;
 
 namespace Alternet.UI
@@ -31,6 +32,18 @@ namespace Alternet.UI
         public ContextMenu()
         {
         }
+
+        /// <inheritdoc cref="NonVisualControl.Left"/>
+        [Browsable(false)]
+        public override bool Visible { get => base.Visible; set => base.Visible = value; }
+
+        /// <inheritdoc cref="NonVisualControl.Left"/>
+        [Browsable(false)]
+        public override bool Enabled { get => base.Enabled; set => base.Enabled = value; }
+
+        /// <inheritdoc cref="NonVisualControl.Left"/>
+        [Browsable(false)]
+        public override string? ToolTip { get => base.ToolTip; set => base.ToolTip = value; }
 
         /// <inheritdoc/>
         public override ControlId ControlKind => ControlId.ContextMenu;

@@ -152,6 +152,19 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Returns whether enumeration has <see cref="FlagsAttribute"/>.
+        /// </summary>
+        /// <param name="type">Type of enumeration.</param>
+        /// <returns></returns>
+        public static bool EnumIsFlags(Type type)
+        {
+            var flags = type.GetCustomAttribute(typeof(FlagsAttribute)) as FlagsAttribute;
+            if (flags is not null)
+                return true;
+            return false;
+        }
+
+        /// <summary>
         /// Returns <c>true</c> if specified type is a descendant of another type.
         /// </summary>
         /// <remarks>This method checks all base types recursively not only

@@ -100,6 +100,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets validator for the <see cref="TextBox"/> control.
         /// </summary>
+        [Browsable(false)]
         public IValueValidator? Validator { get; set; }
 
         /// <summary>

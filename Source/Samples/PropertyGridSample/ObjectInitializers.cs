@@ -105,6 +105,17 @@ namespace PropertyGridSample
                 pictureBox.Image = DefaultImage;
             });
 
+            Actions.Add(typeof(Panel), (c) =>
+            {
+                Panel panel = (c as Panel)!;
+                panel.Height = 150;
+            });
+
+            Actions.Add(typeof(Control), (c) =>
+            {
+                Control control = (c as Control)!;
+                control.Height = 150;
+            });
         }
 
         private static void AddTenItems(Collection<object> items)
