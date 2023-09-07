@@ -62,6 +62,12 @@ namespace Alternet.UI
         /// </summary>
         bool HasChildren { get; }
 
+        /// <summary>
+        /// Gets or sets function used when property is reloaded.
+        /// </summary>
+        /// <remarks>
+        /// If it is not specified, default mechanism is used for reload.
+        /// </remarks>
         Func<object, PropertyInfo, object?> GetValueFuncForReload { get; set; }
 
         /// <summary>
@@ -99,6 +105,10 @@ namespace Alternet.UI
         /// </summary>
         void RaisePropertyChanged();
 
+        /// <summary>
+        /// Adds list of <see cref="IPropertyGridItem"/> to <see cref="Children"/>.
+        /// </summary>
+        /// <param name="children"></param>
         void AddChildren(IEnumerable<IPropertyGridItem> children);
     }
 }

@@ -454,8 +454,7 @@ namespace PropertyGridSample
                 var item = controlsListBox.SelectedItem as ControlListBoxItem;
                 var type = item?.InstanceType;
 
-                var control = item?.Instance as Control;
-                if (control != null)
+                if (item?.Instance is Control control)
                 {
                     control.Designer = this;
                     if (control.Parent == null)

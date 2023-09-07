@@ -64,6 +64,8 @@ namespace Alternet.UI
         private readonly PropertyGridVariant variant = new();
         private readonly HashSet<string> ignorePropNames = new();
 
+        private int supressIgnoreProps;
+
         static PropertyGrid()
         {
             RegisterPropCreateFunc(typeof(Color), FuncCreatePropertyAsColor);
@@ -1057,12 +1059,6 @@ namespace Alternet.UI
             return result;
         }
 
-        private object? GetStructPropertyValueForReload(object instance, PropertyInfo propInfo)
-        {
-            var asString = propInfo.GetValue(instance)?.ToString();
-            return asString;
-        }
-
         /// <summary>
         /// Creates property for structures.
         /// </summary>
@@ -1079,11 +1075,29 @@ namespace Alternet.UI
             result.GetValueFuncForReload = GetStructPropertyValueForReload;
             SetPropertyReadOnly(result, true, false);
             OnPropertyCreated(result, instance, propInfo);
+            var realType = AssemblyUtils.GetRealType(propInfo.PropertyType);
             value = propInfo.GetValue(instance);
+
+            try
+            {
+                value ??= Activator.CreateInstance(realType);
+            }
+            catch
+            {
+            }
+
             if (value != null)
             {
-                var children = CreateProps(value, true);
-                result.AddChildren(children);
+                supressIgnoreProps++;
+                try
+                {
+                    var children = CreateProps(value, true);
+                    result.AddChildren(children);
+                }
+                finally
+                {
+                    supressIgnoreProps--;
+                }
             }
 
             return result;
@@ -1870,7 +1884,7 @@ namespace Alternet.UI
                 var propName = p.Name;
                 if (addedNames.ContainsKey(propName))
                     continue;
-                if (ignorePropNames.Contains(propName))
+                if (supressIgnoreProps == 0 && ignorePropNames.Contains(propName))
                     continue;
                 IPropertyGridItem? prop = CreateProperty(instance, p);
                 if (prop == null)
@@ -4250,6 +4264,12 @@ namespace Alternet.UI
             if (name is null)
                 return NameAsLabel;
             return name;
+        }
+
+        private object? GetStructPropertyValueForReload(object instance, PropertyInfo propInfo)
+        {
+            var asString = propInfo.GetValue(instance)?.ToString();
+            return asString;
         }
 
         private IPropertyGridItem? PtrToItem(IntPtr ptr)

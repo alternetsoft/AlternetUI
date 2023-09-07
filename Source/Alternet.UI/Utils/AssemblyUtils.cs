@@ -15,6 +15,16 @@ namespace Alternet.UI
     public static class AssemblyUtils
     {
         /// <summary>
+        /// Gets whether <see cref="Type"/> has constructor without parameters.
+        /// </summary>
+        /// <param name="type">Object type.</param>
+        public static bool HasConstructorNoParams(Type type)
+        {
+            var result = type.GetConstructor(Type.EmptyTypes);
+            return result != null;
+        }
+
+        /// <summary>
         /// Gets whether <see cref="Type"/> is struct.
         /// </summary>
         /// <param name="type">Object type.</param>

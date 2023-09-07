@@ -41,3 +41,5 @@
 - public virtual ClearPropertyValue(IPropertyGridItem prop);
 
 - public virtual ResetPropertyValue(IPropertyGridItem prop);
+
+- ignorePropNames - on class level 
