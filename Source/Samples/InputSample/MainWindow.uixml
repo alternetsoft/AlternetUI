@@ -1,7 +1,7 @@
 <Window xmlns="http://schemas.alternetsoft.com/ui/2021"
         xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
         x:Class="InputSample.MainWindow"
-        Title="Input Sample"  StartLocation="CenterScreen">
+        Title="Alternet UI Input Sample"  StartLocation="CenterScreen">
 	<StackPanel Padding="10" >
 		<Button Text="Keyboard Input" Margin="0,0,0,10" Click="KeyboardInputButton_Click" />
 		<Button Text="Mouse Input" Margin="0,0,0,10" Click="MouseInputButton_Click" />
