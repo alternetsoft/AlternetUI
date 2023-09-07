@@ -131,8 +131,6 @@ namespace Alternet.UI
             set => Handler.DropDownMenu = value;
         }
 
-        internal override bool IsDummy => true;
-
         /// <summary>
         /// Gets or sets a boolean value indicating whether this toolbar
         /// item is checkable.
@@ -259,6 +257,8 @@ namespace Alternet.UI
             set { SetValue(CommandProperty, value); }
         }
 
+        internal override bool IsDummy => true;
+
         /// <inheritdoc />
         protected override IEnumerable<FrameworkElement> LogicalChildrenCollection
         {
@@ -274,6 +274,13 @@ namespace Alternet.UI
         {
             base.RaiseClick(e);
             CommandHelpers.ExecuteCommandSource(this);
+        }
+
+        /// <inheritdoc/>
+        protected override ControlHandler CreateHandler()
+        {
+            return GetEffectiveControlHandlerHactory().
+                CreateToolbarItemHandler(this);
         }
 
         /// <summary>
@@ -337,13 +344,6 @@ namespace Alternet.UI
         {
             if (Command != null)
                 Enabled = CommandHelpers.CanExecuteCommandSource(this);
-        }
-
-        /// <inheritdoc/>
-        protected override ControlHandler CreateHandler()
-        {
-            return GetEffectiveControlHandlerHactory().
-                CreateToolbarItemHandler(this);
         }
     }
 }

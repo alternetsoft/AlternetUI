@@ -21,7 +21,7 @@ namespace Alternet.UI
         /// Gets a collection of <see cref="StatusBarPanel"/> objects associated with the status bar.
         /// </summary>
         [Content]
-        public Collection<StatusBarPanel> Panels { get; } = new ();
+        public Collection<StatusBarPanel> Panels { get; } = new();
 
         /// <inheritdoc/>
         public override ControlId ControlKind => ControlId.StatusBar;
@@ -38,18 +38,29 @@ namespace Alternet.UI
             }
         }
 
-        internal override bool IsDummy => true;
-
         /// <summary>
-        /// Gets or sets a value indicating whether a sizing grip is displayed in the lower-right corner of the control.
+        /// Gets or sets a value indicating whether a sizing grip is displayed in the
+        /// lower-right corner of the control.
         /// </summary>
-        public bool SizingGripVisible { get => Handler.SizingGripVisible; set => Handler.SizingGripVisible = value; }
+        public bool SizingGripVisible
+        {
+            get => Handler.SizingGripVisible;
+            set => Handler.SizingGripVisible = value;
+        }
 
         /// <inheritdoc/>
         public override IReadOnlyList<FrameworkElement> ContentElements => Panels;
 
+        internal override bool IsDummy => true;
+
         /// <inheritdoc />
         protected override IEnumerable<FrameworkElement> LogicalChildrenCollection => Panels;
+
+        /// <inheritdoc/>
+        protected override ControlHandler CreateHandler()
+        {
+            return GetEffectiveControlHandlerHactory().CreateStatusBarHandler(this);
+        }
 
         private void Panels_ItemInserted(object? sender, CollectionChangeEventArgs<StatusBarPanel> e)
         {
@@ -64,12 +75,6 @@ namespace Alternet.UI
         {
             // Commented out as Children.Add(e.Item) was commented
             // Children.Remove(e.Item);
-        }
-
-        /// <inheritdoc/>
-        protected override ControlHandler CreateHandler()
-        {
-            return GetEffectiveControlHandlerHactory().CreateStatusBarHandler(this);
         }
     }
 }

@@ -21,11 +21,8 @@ namespace Alternet.UI
             toolbar = new()
             {
                 NoDivider = true,
-                HorizontalAlignment = HorizontalAlignment.Stretch,
-                VerticalAlignment = VerticalAlignment.Stretch,
             };
             Children.Add(toolbar);
-            //LayoutFactory.AddToolbarSizer(this, Toolbar);
         }
 
         /// <summary>

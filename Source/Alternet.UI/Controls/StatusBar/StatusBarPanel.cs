@@ -20,12 +20,18 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref='StatusBarPanel'/> class with the specified text for the status bar item.
+        /// Initializes a new instance of the <see cref='StatusBarPanel'/> class with the
+        /// specified text for the status bar item.
         /// </summary>
         public StatusBarPanel(string text)
         {
             Text = text;
         }
+
+        /// <summary>
+        /// Occurs when the <see cref="Text"/> property changes.
+        /// </summary>
+        public event EventHandler? TextChanged;
 
         /// <inheritdoc/>
         public override ControlId ControlKind => ControlId.StatusBarPanel;
@@ -41,8 +47,6 @@ namespace Alternet.UI
                 return (StatusBarPanelHandler)base.Handler;
             }
         }
-
-        internal override bool IsDummy => true;
 
         /// <summary>
         /// Gets or sets a value indicating the text displayed in the status bar panel.
@@ -67,10 +71,7 @@ namespace Alternet.UI
             }
         }
 
-        /// <summary>
-        /// Occurs when the <see cref="Text"/> property changes.
-        /// </summary>
-        public event EventHandler? TextChanged;
+        internal override bool IsDummy => true;
 
         /// <inheritdoc/>
         protected override ControlHandler CreateHandler()
