@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel;
 using System.Globalization;
 using System.Runtime.InteropServices;
 using Alternet.Drawing;
@@ -16,7 +17,7 @@ namespace Alternet.UI
     /// It contains four doubles each corresponding to a side:
     /// Left, Top, Right, Bottom.
     /// </summary>
-    [StructLayout(LayoutKind.Sequential, Pack = 1)]    
+    [StructLayout(LayoutKind.Sequential, Pack = 1)]
     public struct Thickness : IEquatable<Thickness>
     {
         /// <summary>
@@ -72,6 +73,7 @@ namespace Alternet.UI
         /// <summary>
         ///     Returns whether all values on every side are equal.
         /// </summary>
+        [Browsable(false)]
         public readonly bool IsUniform =>
             (left == right) && (top == bottom) && (left == top);
 
@@ -79,6 +81,7 @@ namespace Alternet.UI
         ///     Returns whether all values on every side are positive
         ///     (greater than 0).
         /// </summary>
+        [Browsable(false)]
         public readonly bool IsPositive =>
             (left > 0) && (right > 0) && (top > 0) && (bottom > 0);
 
@@ -94,6 +97,7 @@ namespace Alternet.UI
         /// and the <see cref="Vertical"/> property corresponds to the
         /// <see cref="Size.Height"/> property.
         /// </remarks>
+        [Browsable(false)]
         public readonly Size Size => new(Horizontal, Vertical);
 
         /// <summary>
@@ -101,6 +105,7 @@ namespace Alternet.UI
         /// </summary>
         /// <value>Gets the sum, of the <see cref="Left"/> and
         /// <see cref="Right"/> padding values.</value>
+        [Browsable(false)]
         public readonly double Horizontal => left + right;
 
         /// <summary>
@@ -108,6 +113,7 @@ namespace Alternet.UI
         /// </summary>
         /// <value>Gets the sum, of the <see cref="Top"/> and
         /// <see cref="Bottom"/> padding values.</value>
+        [Browsable(false)]
         public readonly double Vertical => top + bottom;
 
         /// <summary>

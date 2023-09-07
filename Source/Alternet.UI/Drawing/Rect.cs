@@ -182,6 +182,7 @@ namespace Alternet.Drawing
         /// TopLeft Property - This is a read-only alias for the Point which is at X, Y
         /// If this is the empty rectangle, the value will be positive infinity, positive infinity.
         /// </summary>
+        [Browsable(false)]
         public readonly Point TopLeft
         {
             get
@@ -194,6 +195,7 @@ namespace Alternet.Drawing
         /// TopRight Property - This is a read-only alias for the Point which is at X + Width, Y
         /// If this is the empty rectangle, the value will be negative infinity, positive infinity.
         /// </summary>
+        [Browsable(false)]
         public readonly Point TopRight
         {
             get
@@ -206,6 +208,7 @@ namespace Alternet.Drawing
         /// BottomLeft Property - This is a read-only alias for the Point which is at X, Y + Height
         /// If this is the empty rectangle, the value will be positive infinity, negative infinity.
         /// </summary>
+        [Browsable(false)]
         public readonly Point BottomLeft
         {
             get
@@ -219,6 +222,7 @@ namespace Alternet.Drawing
         /// which is at X + Width, Y + Height
         /// If this is the empty rectangle, the value will be negative infinity, negative infinity.
         /// </summary>
+        [Browsable(false)]
         public readonly Point BottomRight
         {
             get
@@ -230,6 +234,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets the center point of this <see cref="Rect"/>.
         /// </summary>
+        [Browsable(false)]
         public readonly Point Center => Location + (Size / 2);
 
         /* TODO: uncommment when Double System.Numerics is availble.
