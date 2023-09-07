@@ -49,7 +49,7 @@ namespace Alternet.UI
         /// <summary>
         ///     Alias to the Keyboard.PreviewTextInputEvent.
         /// </summary>
-        public static readonly RoutedEvent PreviewTextInputEvent = 
+        public static readonly RoutedEvent PreviewTextInputEvent =
             Keyboard.PreviewTextInputEvent.AddOwner(typeof(UIElement));
 
         /// <summary>
@@ -151,7 +151,7 @@ namespace Alternet.UI
         /// <summary>
         ///     Alias to the Mouse.PreviewMouseDownEvent.
         /// </summary>
-        public static readonly RoutedEvent PreviewMouseDownEvent = 
+        public static readonly RoutedEvent PreviewMouseDownEvent =
             Mouse.PreviewMouseDownEvent.AddOwner(typeof(UIElement));
 
         /// <summary>
@@ -313,7 +313,8 @@ namespace Alternet.UI
             EventManager.RegisterRoutedEvent(
                 "MouseLeftButtonDown",
                 RoutingStrategy.Direct,
-                typeof(MouseButtonEventHandler), typeof(UIElement));
+                typeof(MouseButtonEventHandler),
+                typeof(UIElement));
 
         /// <summary>
         ///     Event reporting the left mouse button was pressed
@@ -334,7 +335,7 @@ namespace Alternet.UI
         /// <summary>
         ///     Declaration of the routed event reporting the left mouse button was released
         /// </summary>
-        public static readonly RoutedEvent PreviewMouseLeftButtonUpEvent = 
+        public static readonly RoutedEvent PreviewMouseLeftButtonUpEvent =
             EventManager.RegisterRoutedEvent(
                 "PreviewMouseLeftButtonUp",
                 RoutingStrategy.Direct,
@@ -528,7 +529,7 @@ namespace Alternet.UI
         /// <summary>
         ///     Alias to the Mouse.PreviewMouseWheelEvent.
         /// </summary>
-        public static readonly RoutedEvent PreviewMouseWheelEvent = 
+        public static readonly RoutedEvent PreviewMouseWheelEvent =
             Mouse.PreviewMouseWheelEvent.AddOwner(typeof(UIElement));
 
         /// <summary>
@@ -802,7 +803,7 @@ namespace Alternet.UI
         /// <summary>
         ///     Alias to the Mouse.PreviewMouseMoveEvent.
         /// </summary>
-        public static readonly RoutedEvent PreviewMouseMoveEvent = 
+        public static readonly RoutedEvent PreviewMouseMoveEvent =
             Mouse.PreviewMouseMoveEvent.AddOwner(typeof(UIElement));
 
         /// <summary>
@@ -847,24 +848,14 @@ namespace Alternet.UI
         {
             Invariant.Assert(!e.Handled, ErrorMessages.Default.EventHasAlreadyBeenHandled);
 
-            var uie = sender as UIElement;
-
-            if (uie != null)
-            {
-                uie.OnPreviewMouseMove(e);
-            }
+            (sender as UIElement)?.OnPreviewMouseMove(e);
         }
 
         private static void OnMouseMoveThunk(object sender, MouseEventArgs e)
         {
             Invariant.Assert(!e.Handled, ErrorMessages.Default.EventHasAlreadyBeenHandled);
 
-            var uie = sender as UIElement;
-
-            if (uie != null)
-            {
-                uie.OnMouseMove(e);
-            }
+            (sender as UIElement)?.OnMouseMove(e);
         }
 
         private static void RegisterEvents(Type type)
@@ -887,7 +878,8 @@ namespace Alternet.UI
             EventManager.RegisterClassHandler(
                 type,
                 Mouse.MouseDownEvent,
-                new MouseButtonEventHandler(UIElement.OnMouseDownThunk), true);
+                new MouseButtonEventHandler(UIElement.OnMouseDownThunk),
+                true);
             EventManager.RegisterClassHandler(
                 type,
                 Mouse.PreviewMouseUpEvent,
@@ -1148,7 +1140,7 @@ namespace Alternet.UI
         }
 
         // Used by ContentElement
-        internal static readonly EventPrivateKey FocusableChangedKey = new (); 
+        internal static readonly EventPrivateKey FocusableChangedKey = new ();
 
         private static void OnFocusableChanged(
             DependencyObject d,
@@ -1537,7 +1529,6 @@ namespace Alternet.UI
                     }
 
                     // Invoke BuildRouteCore
-                    bool continuePastVisualTree = false;
                     if (uiElement != null)
                     {
                         /* yezo
@@ -1546,7 +1537,7 @@ namespace Alternet.UI
                         uiElement.AddSynchronizedInputPreOpportunityHandler(route, args);
                         */
 
-                        continuePastVisualTree = uiElement.BuildRouteCore(route, args);
+                        bool continuePastVisualTree = uiElement.BuildRouteCore(route, args);
 
                         // Add this element to route
                         uiElement.AddToEventRoute(route, args);
@@ -1674,7 +1665,9 @@ namespace Alternet.UI
             return null;
         }
 
+#pragma warning disable
         internal DependencyObject? GetUIParent(bool v)
+#pragma warning enable
         {
             return GetUIParentCore();
         }
