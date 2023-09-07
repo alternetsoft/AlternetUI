@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel;
 using Alternet.Drawing;
 
 namespace Alternet.UI
@@ -8,7 +9,7 @@ namespace Alternet.UI
     /// </summary>
     public sealed class FontDialog : CommonDialog
     {
-        private Native.FontDialog nativeDialog;
+        private readonly Native.FontDialog nativeDialog;
         private FontInfo fontInfo = Control.DefaultFont;
 
         /// <summary>
@@ -152,6 +153,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the font selected by the font dialog window.
         /// </summary>
+        [Browsable(false)]
         public FontInfo FontInfo
         {
             get

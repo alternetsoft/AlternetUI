@@ -14,16 +14,6 @@ namespace Alternet.Drawing
     /// </summary>
     public struct FontInfo
     {
-        /// <summary>
-        /// Gets or sets default font family for the <see cref="FontInfo"/> instances.
-        /// </summary>
-        public static FontFamily DefaultFontFamily = FontFamily.GenericDefault;
-
-        /// <summary>
-        /// Gets or sets default font size for the <see cref="FontInfo"/> instances.
-        /// </summary>
-        public static double DefaultSizeInPoints = Font.Default.SizeInPoints;
-
         private FontFamily fontFamily = DefaultFontFamily;
 
         /// <summary>
@@ -45,6 +35,16 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Gets or sets default font family for the <see cref="FontInfo"/> instances.
+        /// </summary>
+        public static FontFamily DefaultFontFamily { get; set; } = FontFamily.GenericDefault;
+
+        /// <summary>
+        /// Gets or sets default font size for the <see cref="FontInfo"/> instances.
+        /// </summary>
+        public static double DefaultSizeInPoints { get; set; } = Font.Default.SizeInPoints;
+
+        /// <summary>
         /// Gets the <see cref="FontFamily"/> name associated with the font.
         /// </summary>
         /// <value>
@@ -52,7 +52,7 @@ namespace Alternet.Drawing
         /// </value>
         public FontFamily FontFamily
         {
-            get
+            readonly get
             {
                 return fontFamily;
             }
@@ -97,11 +97,11 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        public override string ToString()
+        public override readonly string ToString()
         {
             return string.Format(
                 CultureInfo.CurrentCulture,
-                "[{0}: Name={1}, Size={2}, Style={3}]",
+                "[{0}: Name='{1}', Size={2}, Style={3}]",
                 GetType().Name,
                 FontFamily.Name,
                 SizeInPoints,
