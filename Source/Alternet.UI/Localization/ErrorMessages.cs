@@ -5,7 +5,7 @@ namespace Alternet.UI
         public static readonly ErrorMessages Default = new();
 
         public string CurrentApplicationIsNotSet { get; set; } =
-            "Current application instance is not set";
+            "Current application instance is not set.";
 
         public string CannotDisposeImmutableObject { get; set; } =
             "Cannot dispose an immutable object.";
@@ -16,6 +16,9 @@ namespace Alternet.UI
         public string CannotChangeImmutableObject { get; set; } =
             "Cannot change an immutable object.";
 
-        public string InvalidParameter { get; set; } = "Invalid Parameter";
+        public string InvalidParameter { get; set; } = "Invalid Parameter.";
+
+        public string EventHasAlreadyBeenHandled { get; set; } =
+            "Event has already been handled.";
     }
 }

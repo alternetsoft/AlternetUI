@@ -6,7 +6,8 @@ using Alternet.UI.Internal.KnownBoxes;
 namespace Alternet.UI
 {
     /// <summary>
-    /// <see cref="UIElement"/> is a base class for core level implementations building on elements and basic presentation characteristics.
+    /// <see cref="UIElement"/> is a base class for core level implementations building
+    /// on elements and basic presentation characteristics.
     /// </summary>
     public class UIElement : DependencyObject, IInputElement, IUIElement
     {
@@ -18,7 +19,8 @@ namespace Alternet.UI
         /// <summary>
         ///     Alias to the Keyboard.PreviewKeyDownEvent.
         /// </summary>
-        public static readonly RoutedEvent PreviewKeyDownEvent = Keyboard.PreviewKeyDownEvent.AddOwner(typeof(UIElement));
+        public static readonly RoutedEvent PreviewKeyDownEvent =
+            Keyboard.PreviewKeyDownEvent.AddOwner(typeof(UIElement));
 
         /// <summary>
         ///     Event reporting a key was pressed
@@ -32,7 +34,8 @@ namespace Alternet.UI
         /// <summary>
         ///     Alias to the Keyboard.KeyDownEvent.
         /// </summary>
-        public static readonly RoutedEvent KeyDownEvent = Keyboard.KeyDownEvent.AddOwner(typeof(UIElement));
+        public static readonly RoutedEvent KeyDownEvent =
+            Keyboard.KeyDownEvent.AddOwner(typeof(UIElement));
 
         /// <summary>
         ///     Event reporting a key was pressed
@@ -46,7 +49,8 @@ namespace Alternet.UI
         /// <summary>
         ///     Alias to the Keyboard.PreviewTextInputEvent.
         /// </summary>
-        public static readonly RoutedEvent PreviewTextInputEvent = Keyboard.PreviewTextInputEvent.AddOwner(typeof(UIElement));
+        public static readonly RoutedEvent PreviewTextInputEvent = 
+            Keyboard.PreviewTextInputEvent.AddOwner(typeof(UIElement));
 
         /// <summary>
         ///     Event reporting a key was pressed
@@ -60,7 +64,8 @@ namespace Alternet.UI
         /// <summary>
         ///     Alias to the Keyboard.TextInputEvent.
         /// </summary>
-        public static readonly RoutedEvent TextInputEvent = Keyboard.TextInputEvent.AddOwner(typeof(UIElement));
+        public static readonly RoutedEvent TextInputEvent =
+            Keyboard.TextInputEvent.AddOwner(typeof(UIElement));
 
         /// <summary>
         ///     Event reporting a key was pressed
@@ -74,7 +79,8 @@ namespace Alternet.UI
         /// <summary>
         ///     Alias to the Keyboard.PreviewKeyUpEvent.
         /// </summary>
-        public static readonly RoutedEvent PreviewKeyUpEvent = Keyboard.PreviewKeyUpEvent.AddOwner(typeof(UIElement));
+        public static readonly RoutedEvent PreviewKeyUpEvent =
+            Keyboard.PreviewKeyUpEvent.AddOwner(typeof(UIElement));
 
         /// <summary>
         ///     Event reporting a key was released
@@ -88,7 +94,8 @@ namespace Alternet.UI
         /// <summary>
         ///     Alias to the Keyboard.KeyUpEvent.
         /// </summary>
-        public static readonly RoutedEvent KeyUpEvent = Keyboard.KeyUpEvent.AddOwner(typeof(UIElement));
+        public static readonly RoutedEvent KeyUpEvent =
+            Keyboard.KeyUpEvent.AddOwner(typeof(UIElement));
 
         /// <summary>
         ///     Event reporting a key was released
@@ -102,37 +109,50 @@ namespace Alternet.UI
         /// <summary>
         ///     Virtual method reporting a key was pressed
         /// </summary>
-        protected virtual void OnKeyDown(KeyEventArgs e) { }
+        protected virtual void OnKeyDown(KeyEventArgs e)
+        {
+        }
 
         /// <summary>
         ///     Virtual method reporting a key was pressed
         /// </summary>
-        protected virtual void OnPreviewKeyDown(KeyEventArgs e) { }
+        protected virtual void OnPreviewKeyDown(KeyEventArgs e)
+        {
+        }
 
         /// <summary>
         ///     Virtual method reporting a key was pressed
         /// </summary>
-        protected virtual void OnTextInput(TextInputEventArgs e) { }
+        protected virtual void OnTextInput(TextInputEventArgs e)
+        {
+        }
 
         /// <summary>
         ///     Virtual method reporting a key was pressed
         /// </summary>
-        protected virtual void OnPreviewTextInput(TextInputEventArgs e) { }
+        protected virtual void OnPreviewTextInput(TextInputEventArgs e)
+        {
+        }
 
         /// <summary>
         ///     Virtual method reporting a key was released
         /// </summary>
-        protected virtual void OnPreviewKeyUp(KeyEventArgs e) { }
+        protected virtual void OnPreviewKeyUp(KeyEventArgs e)
+        {
+        }
 
         /// <summary>
         ///     Virtual method reporting a key was released
         /// </summary>
-        protected virtual void OnKeyUp(KeyEventArgs e) { }
+        protected virtual void OnKeyUp(KeyEventArgs e)
+        {
+        }
 
         /// <summary>
         ///     Alias to the Mouse.PreviewMouseDownEvent.
         /// </summary>
-        public static readonly RoutedEvent PreviewMouseDownEvent = Mouse.PreviewMouseDownEvent.AddOwner(typeof(UIElement));
+        public static readonly RoutedEvent PreviewMouseDownEvent = 
+            Mouse.PreviewMouseDownEvent.AddOwner(typeof(UIElement));
 
         /// <summary>
         ///     Event reporting the mouse button was pressed
@@ -146,12 +166,15 @@ namespace Alternet.UI
         /// <summary>
         ///     Virtual method reporting the mouse button was pressed
         /// </summary>
-        protected virtual void OnPreviewMouseDown(MouseButtonEventArgs e) { }
+        protected virtual void OnPreviewMouseDown(MouseButtonEventArgs e)
+        {
+        }
 
         /// <summary>
         ///     Alias to the Mouse.MouseDownEvent.
         /// </summary>
-        public static readonly RoutedEvent MouseDownEvent = Mouse.MouseDownEvent.AddOwner(typeof(UIElement));
+        public static readonly RoutedEvent MouseDownEvent =
+            Mouse.MouseDownEvent.AddOwner(typeof(UIElement));
 
         /// <summary>
         ///     Event reporting the mouse button was pressed
@@ -165,12 +188,15 @@ namespace Alternet.UI
         /// <summary>
         ///     Virtual method reporting the mouse button was pressed
         /// </summary>
-        protected virtual void OnMouseDown(MouseButtonEventArgs e) { }
+        protected virtual void OnMouseDown(MouseButtonEventArgs e)
+        {
+        }
 
         /// <summary>
         ///     Alias to the Mouse.PreviewMouseDoubleClickEvent.
         /// </summary>
-        public static readonly RoutedEvent PreviewMouseDoubleClickEvent = Mouse.PreviewMouseDoubleClickEvent.AddOwner(typeof(UIElement));
+        public static readonly RoutedEvent PreviewMouseDoubleClickEvent =
+            Mouse.PreviewMouseDoubleClickEvent.AddOwner(typeof(UIElement));
 
         /// <summary>
         ///     Event reporting the mouse button was pressed
@@ -184,12 +210,15 @@ namespace Alternet.UI
         /// <summary>
         ///     Virtual method reporting the mouse button was pressed
         /// </summary>
-        protected virtual void OnPreviewMouseDoubleClick(MouseButtonEventArgs e) { }
+        protected virtual void OnPreviewMouseDoubleClick(MouseButtonEventArgs e)
+        {
+        }
 
         /// <summary>
         ///     Alias to the Mouse.MouseDoubleClickEvent.
         /// </summary>
-        public static readonly RoutedEvent MouseDoubleClickEvent = Mouse.MouseDoubleClickEvent.AddOwner(typeof(UIElement));
+        public static readonly RoutedEvent MouseDoubleClickEvent =
+            Mouse.MouseDoubleClickEvent.AddOwner(typeof(UIElement));
 
         /// <summary>
         ///     Event reporting the mouse button was pressed
@@ -203,12 +232,15 @@ namespace Alternet.UI
         /// <summary>
         ///     Virtual method reporting the mouse button was pressed
         /// </summary>
-        protected virtual void OnMouseDoubleClick(MouseButtonEventArgs e) { }
+        protected virtual void OnMouseDoubleClick(MouseButtonEventArgs e)
+        {
+        }
 
         /// <summary>
         ///     Alias to the Mouse.PreviewMouseUpEvent.
         /// </summary>
-        public static readonly RoutedEvent PreviewMouseUpEvent = Mouse.PreviewMouseUpEvent.AddOwner(typeof(UIElement));
+        public static readonly RoutedEvent PreviewMouseUpEvent =
+            Mouse.PreviewMouseUpEvent.AddOwner(typeof(UIElement));
 
         /// <summary>
         ///     Event reporting the mouse button was released
@@ -222,12 +254,15 @@ namespace Alternet.UI
         /// <summary>
         ///     Virtual method reporting the mouse button was released
         /// </summary>
-        protected virtual void OnPreviewMouseUp(MouseButtonEventArgs e) { }
+        protected virtual void OnPreviewMouseUp(MouseButtonEventArgs e)
+        {
+        }
 
         /// <summary>
         ///     Alias to the Mouse.MouseUpEvent.
         /// </summary>
-        public static readonly RoutedEvent MouseUpEvent = Mouse.MouseUpEvent.AddOwner(typeof(UIElement));
+        public static readonly RoutedEvent MouseUpEvent =
+            Mouse.MouseUpEvent.AddOwner(typeof(UIElement));
 
         /// <summary>
         ///     Event reporting the mouse button was released
@@ -241,12 +276,19 @@ namespace Alternet.UI
         /// <summary>
         ///     Virtual method reporting the mouse button was released
         /// </summary>
-        protected virtual void OnMouseUp(MouseButtonEventArgs e) { }
+        protected virtual void OnMouseUp(MouseButtonEventArgs e)
+        {
+        }
 
         /// <summary>
         ///     Declaration of the routed event reporting the left mouse button was pressed
         /// </summary>
-        public static readonly RoutedEvent PreviewMouseLeftButtonDownEvent = EventManager.RegisterRoutedEvent("PreviewMouseLeftButtonDown", RoutingStrategy.Direct, typeof(MouseButtonEventHandler), typeof(UIElement));
+        public static readonly RoutedEvent PreviewMouseLeftButtonDownEvent =
+            EventManager.RegisterRoutedEvent(
+                "PreviewMouseLeftButtonDown",
+                RoutingStrategy.Direct,
+                typeof(MouseButtonEventHandler),
+                typeof(UIElement));
 
         /// <summary>
         ///     Event reporting the left mouse button was pressed
@@ -260,12 +302,18 @@ namespace Alternet.UI
         /// <summary>
         ///     Virtual method reporting the left mouse button was pressed
         /// </summary>
-        protected virtual void OnPreviewMouseLeftButtonDown(MouseButtonEventArgs e) { }
+        protected virtual void OnPreviewMouseLeftButtonDown(MouseButtonEventArgs e)
+        {
+        }
 
         /// <summary>
         ///     Declaration of the routed event reporting the left mouse button was pressed
         /// </summary>
-        public static readonly RoutedEvent MouseLeftButtonDownEvent = EventManager.RegisterRoutedEvent("MouseLeftButtonDown", RoutingStrategy.Direct, typeof(MouseButtonEventHandler), typeof(UIElement));
+        public static readonly RoutedEvent MouseLeftButtonDownEvent =
+            EventManager.RegisterRoutedEvent(
+                "MouseLeftButtonDown",
+                RoutingStrategy.Direct,
+                typeof(MouseButtonEventHandler), typeof(UIElement));
 
         /// <summary>
         ///     Event reporting the left mouse button was pressed
@@ -279,12 +327,19 @@ namespace Alternet.UI
         /// <summary>
         ///     Virtual method reporting the left mouse button was pressed
         /// </summary>
-        protected virtual void OnMouseLeftButtonDown(MouseButtonEventArgs e) { }
+        protected virtual void OnMouseLeftButtonDown(MouseButtonEventArgs e)
+        {
+        }
 
         /// <summary>
         ///     Declaration of the routed event reporting the left mouse button was released
         /// </summary>
-        public static readonly RoutedEvent PreviewMouseLeftButtonUpEvent = EventManager.RegisterRoutedEvent("PreviewMouseLeftButtonUp", RoutingStrategy.Direct, typeof(MouseButtonEventHandler), typeof(UIElement));
+        public static readonly RoutedEvent PreviewMouseLeftButtonUpEvent = 
+            EventManager.RegisterRoutedEvent(
+                "PreviewMouseLeftButtonUp",
+                RoutingStrategy.Direct,
+                typeof(MouseButtonEventHandler),
+                typeof(UIElement));
 
         /// <summary>
         ///     Event reporting the left mouse button was released
@@ -298,12 +353,19 @@ namespace Alternet.UI
         /// <summary>
         ///     Virtual method reporting the left mouse button was released
         /// </summary>
-        protected virtual void OnPreviewMouseLeftButtonUp(MouseButtonEventArgs e) { }
+        protected virtual void OnPreviewMouseLeftButtonUp(MouseButtonEventArgs e)
+        {
+        }
 
         /// <summary>
         ///     Declaration of the routed event reporting the left mouse button was released
         /// </summary>
-        public static readonly RoutedEvent MouseLeftButtonUpEvent = EventManager.RegisterRoutedEvent("MouseLeftButtonUp", RoutingStrategy.Direct, typeof(MouseButtonEventHandler), typeof(UIElement));
+        public static readonly RoutedEvent MouseLeftButtonUpEvent =
+            EventManager.RegisterRoutedEvent(
+                "MouseLeftButtonUp",
+                RoutingStrategy.Direct,
+                typeof(MouseButtonEventHandler),
+                typeof(UIElement));
 
         /// <summary>
         ///     Event reporting the left mouse button was released
@@ -317,12 +379,19 @@ namespace Alternet.UI
         /// <summary>
         ///     Virtual method reporting the left mouse button was released
         /// </summary>
-        protected virtual void OnMouseLeftButtonUp(MouseButtonEventArgs e) { }
+        protected virtual void OnMouseLeftButtonUp(MouseButtonEventArgs e)
+        {
+        }
 
         /// <summary>
         ///     Declaration of the routed event reporting the right mouse button was pressed
         /// </summary>
-        public static readonly RoutedEvent PreviewMouseRightButtonDownEvent = EventManager.RegisterRoutedEvent("PreviewMouseRightButtonDown", RoutingStrategy.Direct, typeof(MouseButtonEventHandler), typeof(UIElement));
+        public static readonly RoutedEvent PreviewMouseRightButtonDownEvent =
+            EventManager.RegisterRoutedEvent(
+                "PreviewMouseRightButtonDown",
+                RoutingStrategy.Direct,
+                typeof(MouseButtonEventHandler),
+                typeof(UIElement));
 
         /// <summary>
         ///     Event reporting the right mouse button was pressed
@@ -336,12 +405,19 @@ namespace Alternet.UI
         /// <summary>
         ///     Virtual method reporting the right mouse button was pressed
         /// </summary>
-        protected virtual void OnPreviewMouseRightButtonDown(MouseButtonEventArgs e) { }
+        protected virtual void OnPreviewMouseRightButtonDown(MouseButtonEventArgs e)
+        {
+        }
 
         /// <summary>
         ///     Declaration of the routed event reporting the right mouse button was pressed
         /// </summary>
-        public static readonly RoutedEvent MouseRightButtonDownEvent = EventManager.RegisterRoutedEvent("MouseRightButtonDown", RoutingStrategy.Direct, typeof(MouseButtonEventHandler), typeof(UIElement));
+        public static readonly RoutedEvent MouseRightButtonDownEvent =
+            EventManager.RegisterRoutedEvent(
+                "MouseRightButtonDown",
+                RoutingStrategy.Direct,
+                typeof(MouseButtonEventHandler),
+                typeof(UIElement));
 
         /// <summary>
         ///     Event reporting the right mouse button was pressed
@@ -355,12 +431,19 @@ namespace Alternet.UI
         /// <summary>
         ///     Virtual method reporting the right mouse button was pressed
         /// </summary>
-        protected virtual void OnMouseRightButtonDown(MouseButtonEventArgs e) { }
+        protected virtual void OnMouseRightButtonDown(MouseButtonEventArgs e)
+        {
+        }
 
         /// <summary>
         ///     Declaration of the routed event reporting the right mouse button was released
         /// </summary>
-        public static readonly RoutedEvent PreviewMouseRightButtonUpEvent = EventManager.RegisterRoutedEvent("PreviewMouseRightButtonUp", RoutingStrategy.Direct, typeof(MouseButtonEventHandler), typeof(UIElement));
+        public static readonly RoutedEvent PreviewMouseRightButtonUpEvent =
+            EventManager.RegisterRoutedEvent(
+                "PreviewMouseRightButtonUp",
+                RoutingStrategy.Direct,
+                typeof(MouseButtonEventHandler),
+                typeof(UIElement));
 
         /// <summary>
         ///     Event reporting the right mouse button was released
@@ -374,12 +457,19 @@ namespace Alternet.UI
         /// <summary>
         ///     Virtual method reporting the right mouse button was released
         /// </summary>
-        protected virtual void OnPreviewMouseRightButtonUp(MouseButtonEventArgs e) { }
+        protected virtual void OnPreviewMouseRightButtonUp(MouseButtonEventArgs e)
+        {
+        }
 
         /// <summary>
         ///     Declaration of the routed event reporting the right mouse button was released
         /// </summary>
-        public static readonly RoutedEvent MouseRightButtonUpEvent = EventManager.RegisterRoutedEvent("MouseRightButtonUp", RoutingStrategy.Direct, typeof(MouseButtonEventHandler), typeof(UIElement));
+        public static readonly RoutedEvent MouseRightButtonUpEvent =
+            EventManager.RegisterRoutedEvent(
+                "MouseRightButtonUp",
+                RoutingStrategy.Direct,
+                typeof(MouseButtonEventHandler),
+                typeof(UIElement));
 
         /// <summary>
         ///     Event reporting the right mouse button was released
@@ -393,8 +483,9 @@ namespace Alternet.UI
         /// <summary>
         ///     Virtual method reporting the right mouse button was released
         /// </summary>
-        protected virtual void OnMouseRightButtonUp(MouseButtonEventArgs e) { }
-
+        protected virtual void OnMouseRightButtonUp(MouseButtonEventArgs e)
+        {
+        }
 
         private static void OnPreviewKeyDownThunk(object sender, KeyEventArgs e)
         {
@@ -404,46 +495,41 @@ namespace Alternet.UI
 
         private static void OnKeyDownThunk(object sender, KeyEventArgs e)
         {
-            //CommandManager.TranslateInput((IInputElement)sender, e);
-
+            // CommandManager.TranslateInput((IInputElement)sender, e);
             if (!e.Handled)
             {
-                if (sender is UIElement uie)
-                    uie.OnKeyDown(e);
+                (sender as UIElement)?.OnKeyDown(e);
             }
         }
 
         private static void OnPreviewTextInputThunk(object sender, TextInputEventArgs e)
         {
-            if (sender is UIElement uie)
-                uie.OnPreviewTextInput(e);
+            (sender as UIElement)?.OnPreviewTextInput(e);
         }
 
         private static void OnTextInputThunk(object sender, TextInputEventArgs e)
         {
             if (!e.Handled)
             {
-                if (sender is UIElement uie)
-                    uie.OnTextInput(e);
+                (sender as UIElement)?.OnTextInput(e);
             }
         }
 
         private static void OnPreviewKeyUpThunk(object sender, KeyEventArgs e)
         {
-            if (sender is UIElement uie)
-                uie.OnPreviewKeyUp(e);
+            (sender as UIElement)?.OnPreviewKeyUp(e);
         }
 
         private static void OnKeyUpThunk(object sender, KeyEventArgs e)
         {
-            if (sender is UIElement uie)
-                uie.OnKeyUp(e);
+            (sender as UIElement)?.OnKeyUp(e);
         }
 
         /// <summary>
         ///     Alias to the Mouse.PreviewMouseWheelEvent.
         /// </summary>
-        public static readonly RoutedEvent PreviewMouseWheelEvent = Mouse.PreviewMouseWheelEvent.AddOwner(typeof(UIElement));
+        public static readonly RoutedEvent PreviewMouseWheelEvent = 
+            Mouse.PreviewMouseWheelEvent.AddOwner(typeof(UIElement));
 
         /// <summary>
         ///     Event reporting a mouse wheel rotation
@@ -457,12 +543,15 @@ namespace Alternet.UI
         /// <summary>
         ///     Virtual method reporting a mouse wheel rotation
         /// </summary>
-        protected virtual void OnPreviewMouseWheel(MouseWheelEventArgs e) { }
+        protected virtual void OnPreviewMouseWheel(MouseWheelEventArgs e)
+        {
+        }
 
         /// <summary>
         ///     Alias to the Mouse.MouseWheelEvent.
         /// </summary>
-        public static readonly RoutedEvent MouseWheelEvent = Mouse.MouseWheelEvent.AddOwner(typeof(UIElement));
+        public static readonly RoutedEvent MouseWheelEvent =
+            Mouse.MouseWheelEvent.AddOwner(typeof(UIElement));
 
         /// <summary>
         ///     Event reporting a mouse wheel rotation
@@ -476,9 +565,13 @@ namespace Alternet.UI
         /// <summary>
         ///     Virtual method reporting a mouse wheel rotation
         /// </summary>
-        protected virtual void OnMouseWheel(MouseWheelEventArgs e) { }
+        protected virtual void OnMouseWheel(MouseWheelEventArgs e)
+        {
+        }
 
-        private static void CrackMouseButtonEventAndReRaiseEvent(DependencyObject sender, MouseButtonEventArgs e)
+        private static void CrackMouseButtonEventAndReRaiseEvent(
+            DependencyObject sender,
+            MouseButtonEventArgs e)
         {
             var newEvent = CrackMouseButtonEvent(e);
             if (newEvent != null)
@@ -492,7 +585,10 @@ namespace Alternet.UI
         ///     Only used internally.  Added to support cracking generic MouseButtonDown/Up events
         ///     into MouseLeft/RightButtonDown/Up events.
         /// </remarks>
-        private static void ReRaiseEventAs(DependencyObject sender, RoutedEventArgs args, RoutedEvent newEvent)
+        private static void ReRaiseEventAs(
+            DependencyObject sender,
+            RoutedEventArgs args,
+            RoutedEvent newEvent)
         {
             // Preseve and change the RoutedEvent
             RoutedEvent preservedRoutedEvent = args.RoutedEvent;
@@ -526,9 +622,7 @@ namespace Alternet.UI
 
                 // Restore RoutedEvent
                 args.OverrideRoutedEvent(preservedRoutedEvent);
-
             }
-
             finally
             {
                 if (TraceRoutedEvent.IsEnabled)
@@ -577,234 +671,139 @@ namespace Alternet.UI
                     // No wrappers exposed for the other buttons.
                     break;
             }
+
             return newEvent;
         }
 
         private static void OnPreviewMouseDownThunk(object sender, MouseButtonEventArgs e)
         {
             if (!e.Handled)
-            {
-                var uie = sender as UIElement;
+                (sender as UIElement)?.OnPreviewMouseDown(e);
 
-                if (uie != null)
-                {
-                    uie.OnPreviewMouseDown(e);
-                }
-            }
-
-            // Always raise this "sub-event", but we pass along the handledness.
+            // Always raise this sub-event, but we pass along the handledness.
             UIElement.CrackMouseButtonEventAndReRaiseEvent((DependencyObject)sender, e);
         }
 
         private static void OnMouseDownThunk(object sender, MouseButtonEventArgs e)
         {
-            //if (!e.Handled)
-            //{
+            // if (!e.Handled)
+            // {
             //    CommandManager.TranslateInput((IInputElement)sender, e);
-            //}
-
+            // }
             if (!e.Handled)
-            {
-                var uie = sender as UIElement;
+                (sender as UIElement)?.OnMouseDown(e);
 
-                if (uie != null)
-                {
-                    uie.OnMouseDown(e);
-                }
-            }
-
-            // Always raise this "sub-event", but we pass along the handledness.
+            // Always raise this sub-event, but we pass along the handledness.
             UIElement.CrackMouseButtonEventAndReRaiseEvent((DependencyObject)sender, e);
         }
 
         private static void OnPreviewMouseDoubleClickThunk(object sender, MouseButtonEventArgs e)
         {
             if (!e.Handled)
-            {
-                var uie = sender as UIElement;
-
-                if (uie != null)
-                {
-                    uie.OnPreviewMouseDoubleClick(e);
-                }
-            }
+                (sender as UIElement)?.OnPreviewMouseDoubleClick(e);
         }
 
         private static void OnMouseDoubleClickThunk(object sender, MouseButtonEventArgs e)
         {
             if (!e.Handled)
-            {
-                var uie = sender as UIElement;
-
-                if (uie != null)
-                {
-                    uie.OnMouseDoubleClick(e);
-                }
-            }
+                (sender as UIElement)?.OnMouseDoubleClick(e);
         }
 
         private static void OnPreviewMouseUpThunk(object sender, MouseButtonEventArgs e)
         {
             if (!e.Handled)
-            {
-                var uie = sender as UIElement;
+                (sender as UIElement)?.OnPreviewMouseUp(e);
 
-                if (uie != null)
-                {
-                    uie.OnPreviewMouseUp(e);
-                }
-            }
-
-            // Always raise this "sub-event", but we pass along the handledness.
+            // Always raise this sub-event, but we pass along the handledness.
             UIElement.CrackMouseButtonEventAndReRaiseEvent((DependencyObject)sender, e);
         }
 
         private static void OnMouseUpThunk(object sender, MouseButtonEventArgs e)
         {
             if (!e.Handled)
-            {
-                var uie = sender as UIElement;
+                (sender as UIElement)?.OnMouseUp(e);
 
-                if (uie != null)
-                {
-                    uie.OnMouseUp(e);
-                }
-            }
-
-            // Always raise this "sub-event", but we pass along the handledness.
+            // Always raise this sub-event, but we pass along the handledness.
             UIElement.CrackMouseButtonEventAndReRaiseEvent((DependencyObject)sender, e);
         }
 
         private static void OnPreviewMouseLeftButtonDownThunk(object sender, MouseButtonEventArgs e)
         {
-            Invariant.Assert(!e.Handled, "Unexpected: Event has already been handled.");
+            Invariant.Assert(!e.Handled, ErrorMessages.Default.EventHasAlreadyBeenHandled);
 
-            var uie = sender as UIElement;
-
-            if (uie != null)
-            {
-                uie.OnPreviewMouseLeftButtonDown(e);
-            }
+            (sender as UIElement)?.OnPreviewMouseLeftButtonDown(e);
         }
 
         private static void OnMouseLeftButtonDownThunk(object sender, MouseButtonEventArgs e)
         {
-            Invariant.Assert(!e.Handled, "Unexpected: Event has already been handled.");
+            Invariant.Assert(!e.Handled, ErrorMessages.Default.EventHasAlreadyBeenHandled);
 
-            var uie = sender as UIElement;
-
-            if (uie != null)
-            {
-                uie.OnMouseLeftButtonDown(e);
-            }
+            (sender as UIElement)?.OnMouseLeftButtonDown(e);
         }
 
         private static void OnPreviewMouseLeftButtonUpThunk(object sender, MouseButtonEventArgs e)
         {
-            Invariant.Assert(!e.Handled, "Unexpected: Event has already been handled.");
+            Invariant.Assert(!e.Handled, ErrorMessages.Default.EventHasAlreadyBeenHandled);
 
-            var uie = sender as UIElement;
-
-            if (uie != null)
-            {
-                uie.OnPreviewMouseLeftButtonUp(e);
-            }
+            (sender as UIElement)?.OnPreviewMouseLeftButtonUp(e);
         }
 
         private static void OnMouseLeftButtonUpThunk(object sender, MouseButtonEventArgs e)
         {
-            Invariant.Assert(!e.Handled, "Unexpected: Event has already been handled.");
+            Invariant.Assert(!e.Handled, ErrorMessages.Default.EventHasAlreadyBeenHandled);
 
-            var uie = sender as UIElement;
-
-            if (uie != null)
-            {
-                uie.OnMouseLeftButtonUp(e);
-            }
+            (sender as UIElement)?.OnMouseLeftButtonUp(e);
         }
 
         private static void OnPreviewMouseRightButtonDownThunk(object sender, MouseButtonEventArgs e)
         {
-            Invariant.Assert(!e.Handled, "Unexpected: Event has already been handled.");
+            Invariant.Assert(!e.Handled, ErrorMessages.Default.EventHasAlreadyBeenHandled);
 
-            var uie = sender as UIElement;
-
-            if (uie != null)
-            {
-                uie.OnPreviewMouseRightButtonDown(e);
-            }
+            (sender as UIElement)?.OnPreviewMouseRightButtonDown(e);
         }
 
         private static void OnMouseRightButtonDownThunk(object sender, MouseButtonEventArgs e)
         {
-            Invariant.Assert(!e.Handled, "Unexpected: Event has already been handled.");
+            Invariant.Assert(!e.Handled, ErrorMessages.Default.EventHasAlreadyBeenHandled);
 
-            var uie = sender as UIElement;
-
-            if (uie != null)
-            {
-                uie.OnMouseRightButtonDown(e);
-            }
+            (sender as UIElement)?.OnMouseRightButtonDown(e);
         }
 
         private static void OnPreviewMouseRightButtonUpThunk(object sender, MouseButtonEventArgs e)
         {
-            Invariant.Assert(!e.Handled, "Unexpected: Event has already been handled.");
+            Invariant.Assert(!e.Handled, ErrorMessages.Default.EventHasAlreadyBeenHandled);
 
-            var uie = sender as UIElement;
-
-            if (uie != null)
-            {
-                uie.OnPreviewMouseRightButtonUp(e);
-            }
+            (sender as UIElement)?.OnPreviewMouseRightButtonUp(e);
         }
 
         private static void OnMouseRightButtonUpThunk(object sender, MouseButtonEventArgs e)
         {
-            Invariant.Assert(!e.Handled, "Unexpected: Event has already been handled.");
+            Invariant.Assert(!e.Handled, ErrorMessages.Default.EventHasAlreadyBeenHandled);
 
-            var uie = sender as UIElement;
-
-            if (uie != null)
-            {
-                uie.OnMouseRightButtonUp(e);
-            }
+            (sender as UIElement)?.OnMouseRightButtonUp(e);
         }
 
         private static void OnPreviewMouseWheelThunk(object sender, MouseWheelEventArgs e)
         {
-            Invariant.Assert(!e.Handled, "Unexpected: Event has already been handled.");
+            Invariant.Assert(!e.Handled, ErrorMessages.Default.EventHasAlreadyBeenHandled);
 
-            var uie = sender as UIElement;
-
-            if (uie != null)
-            {
-                uie.OnPreviewMouseWheel(e);
-            }
+            (sender as UIElement)?.OnPreviewMouseWheel(e);
         }
 
         private static void OnMouseWheelThunk(object sender, MouseWheelEventArgs e)
         {
-            Invariant.Assert(!e.Handled, "Unexpected: Event has already been handled.");
+            Invariant.Assert(!e.Handled, ErrorMessages.Default.EventHasAlreadyBeenHandled);
 
-            //CommandManager.TranslateInput((IInputElement)sender, e);
-
+            // CommandManager.TranslateInput((IInputElement)sender, e);
             if (!e.Handled)
-            {
-                var uie = sender as UIElement;
-
-                if (uie != null)
-                {
-                    uie.OnMouseWheel(e);
-                }
-            }
+                (sender as UIElement)?.OnMouseWheel(e);
         }
-
 
         /// <summary>
         ///     Alias to the Mouse.PreviewMouseMoveEvent.
         /// </summary>
-        public static readonly RoutedEvent PreviewMouseMoveEvent = Mouse.PreviewMouseMoveEvent.AddOwner(typeof(UIElement));
+        public static readonly RoutedEvent PreviewMouseMoveEvent = 
+            Mouse.PreviewMouseMoveEvent.AddOwner(typeof(UIElement));
 
         /// <summary>
         ///     Event reporting a mouse move
@@ -818,12 +817,15 @@ namespace Alternet.UI
         /// <summary>
         ///     Virtual method reporting a mouse move
         /// </summary>
-        protected virtual void OnPreviewMouseMove(MouseEventArgs e) { }
+        protected virtual void OnPreviewMouseMove(MouseEventArgs e)
+        {
+        }
 
         /// <summary>
         ///     Alias to the Mouse.MouseMoveEvent.
         /// </summary>
-        public static readonly RoutedEvent MouseMoveEvent = Mouse.MouseMoveEvent.AddOwner(typeof(UIElement));
+        public static readonly RoutedEvent MouseMoveEvent =
+            Mouse.MouseMoveEvent.AddOwner(typeof(UIElement));
 
         /// <summary>
         ///     Event reporting a mouse move
@@ -837,11 +839,13 @@ namespace Alternet.UI
         /// <summary>
         ///     Virtual method reporting a mouse move
         /// </summary>
-        protected virtual void OnMouseMove(MouseEventArgs e) { }
+        protected virtual void OnMouseMove(MouseEventArgs e)
+        {
+        }
 
         private static void OnPreviewMouseMoveThunk(object sender, MouseEventArgs e)
         {
-            Invariant.Assert(!e.Handled, "Unexpected: Event has already been handled.");
+            Invariant.Assert(!e.Handled, ErrorMessages.Default.EventHasAlreadyBeenHandled);
 
             var uie = sender as UIElement;
 
@@ -853,7 +857,7 @@ namespace Alternet.UI
 
         private static void OnMouseMoveThunk(object sender, MouseEventArgs e)
         {
-            Invariant.Assert(!e.Handled, "Unexpected: Event has already been handled.");
+            Invariant.Assert(!e.Handled, ErrorMessages.Default.EventHasAlreadyBeenHandled);
 
             var uie = sender as UIElement;
 
@@ -863,92 +867,252 @@ namespace Alternet.UI
             }
         }
 
-        static void RegisterEvents(Type type)
+        private static void RegisterEvents(Type type)
         {
-            EventManager.RegisterClassHandler(type, Mouse.PreviewMouseDoubleClickEvent, new MouseButtonEventHandler(UIElement.OnPreviewMouseDoubleClickThunk), true);
-            EventManager.RegisterClassHandler(type, Mouse.MouseDoubleClickEvent, new MouseButtonEventHandler(UIElement.OnMouseDoubleClickThunk), true);
-            EventManager.RegisterClassHandler(type, Mouse.PreviewMouseDownEvent, new MouseButtonEventHandler(UIElement.OnPreviewMouseDownThunk), true);
-            EventManager.RegisterClassHandler(type, Mouse.MouseDownEvent, new MouseButtonEventHandler(UIElement.OnMouseDownThunk), true);
-            EventManager.RegisterClassHandler(type, Mouse.PreviewMouseUpEvent, new MouseButtonEventHandler(UIElement.OnPreviewMouseUpThunk), true);
-            EventManager.RegisterClassHandler(type, Mouse.MouseUpEvent, new MouseButtonEventHandler(UIElement.OnMouseUpThunk), true);
-            EventManager.RegisterClassHandler(type, UIElement.PreviewMouseLeftButtonDownEvent, new MouseButtonEventHandler(UIElement.OnPreviewMouseLeftButtonDownThunk), false);
-            EventManager.RegisterClassHandler(type, UIElement.MouseLeftButtonDownEvent, new MouseButtonEventHandler(UIElement.OnMouseLeftButtonDownThunk), false);
-            EventManager.RegisterClassHandler(type, UIElement.PreviewMouseLeftButtonUpEvent, new MouseButtonEventHandler(UIElement.OnPreviewMouseLeftButtonUpThunk), false);
-            EventManager.RegisterClassHandler(type, UIElement.MouseLeftButtonUpEvent, new MouseButtonEventHandler(UIElement.OnMouseLeftButtonUpThunk), false);
-            EventManager.RegisterClassHandler(type, UIElement.PreviewMouseRightButtonDownEvent, new MouseButtonEventHandler(UIElement.OnPreviewMouseRightButtonDownThunk), false);
-            EventManager.RegisterClassHandler(type, UIElement.MouseRightButtonDownEvent, new MouseButtonEventHandler(UIElement.OnMouseRightButtonDownThunk), false);
-            EventManager.RegisterClassHandler(type, UIElement.PreviewMouseRightButtonUpEvent, new MouseButtonEventHandler(UIElement.OnPreviewMouseRightButtonUpThunk), false);
-            EventManager.RegisterClassHandler(type, UIElement.MouseRightButtonUpEvent, new MouseButtonEventHandler(UIElement.OnMouseRightButtonUpThunk), false);
-            EventManager.RegisterClassHandler(type, Mouse.PreviewMouseMoveEvent, new MouseEventHandler(UIElement.OnPreviewMouseMoveThunk), false);
-            EventManager.RegisterClassHandler(type, Mouse.MouseMoveEvent, new MouseEventHandler(UIElement.OnMouseMoveThunk), false);
-            EventManager.RegisterClassHandler(type, Mouse.PreviewMouseWheelEvent, new MouseWheelEventHandler(UIElement.OnPreviewMouseWheelThunk), false);
-            EventManager.RegisterClassHandler(type, Mouse.MouseWheelEvent, new MouseWheelEventHandler(UIElement.OnMouseWheelThunk), false);
-            //EventManager.RegisterClassHandler(type, Mouse.MouseEnterEvent, new MouseEventHandler(UIElement.OnMouseEnterThunk), false);
-            //EventManager.RegisterClassHandler(type, Mouse.MouseLeaveEvent, new MouseEventHandler(UIElement.OnMouseLeaveThunk), false);
-            //EventManager.RegisterClassHandler(type, Mouse.GotMouseCaptureEvent, new MouseEventHandler(UIElement.OnGotMouseCaptureThunk), false);
-            //EventManager.RegisterClassHandler(type, Mouse.LostMouseCaptureEvent, new MouseEventHandler(UIElement.OnLostMouseCaptureThunk), false);
-            //EventManager.RegisterClassHandler(type, Mouse.QueryCursorEvent, new QueryCursorEventHandler(UIElement.OnQueryCursorThunk), false);
-            //EventManager.RegisterClassHandler(type, Stylus.PreviewStylusDownEvent, new StylusDownEventHandler(UIElement.OnPreviewStylusDownThunk), false);
-            //EventManager.RegisterClassHandler(type, Stylus.StylusDownEvent, new StylusDownEventHandler(UIElement.OnStylusDownThunk), false);
-            //EventManager.RegisterClassHandler(type, Stylus.PreviewStylusUpEvent, new StylusEventHandler(UIElement.OnPreviewStylusUpThunk), false);
-            //EventManager.RegisterClassHandler(type, Stylus.StylusUpEvent, new StylusEventHandler(UIElement.OnStylusUpThunk), false);
-            //EventManager.RegisterClassHandler(type, Stylus.PreviewStylusMoveEvent, new StylusEventHandler(UIElement.OnPreviewStylusMoveThunk), false);
-            //EventManager.RegisterClassHandler(type, Stylus.StylusMoveEvent, new StylusEventHandler(UIElement.OnStylusMoveThunk), false);
-            //EventManager.RegisterClassHandler(type, Stylus.PreviewStylusInAirMoveEvent, new StylusEventHandler(UIElement.OnPreviewStylusInAirMoveThunk), false);
-            //EventManager.RegisterClassHandler(type, Stylus.StylusInAirMoveEvent, new StylusEventHandler(UIElement.OnStylusInAirMoveThunk), false);
-            //EventManager.RegisterClassHandler(type, Stylus.StylusEnterEvent, new StylusEventHandler(UIElement.OnStylusEnterThunk), false);
-            //EventManager.RegisterClassHandler(type, Stylus.StylusLeaveEvent, new StylusEventHandler(UIElement.OnStylusLeaveThunk), false);
-            //EventManager.RegisterClassHandler(type, Stylus.PreviewStylusInRangeEvent, new StylusEventHandler(UIElement.OnPreviewStylusInRangeThunk), false);
-            //EventManager.RegisterClassHandler(type, Stylus.StylusInRangeEvent, new StylusEventHandler(UIElement.OnStylusInRangeThunk), false);
-            //EventManager.RegisterClassHandler(type, Stylus.PreviewStylusOutOfRangeEvent, new StylusEventHandler(UIElement.OnPreviewStylusOutOfRangeThunk), false);
-            //EventManager.RegisterClassHandler(type, Stylus.StylusOutOfRangeEvent, new StylusEventHandler(UIElement.OnStylusOutOfRangeThunk), false);
-            //EventManager.RegisterClassHandler(type, Stylus.PreviewStylusSystemGestureEvent, new StylusSystemGestureEventHandler(UIElement.OnPreviewStylusSystemGestureThunk), false);
-            //EventManager.RegisterClassHandler(type, Stylus.StylusSystemGestureEvent, new StylusSystemGestureEventHandler(UIElement.OnStylusSystemGestureThunk), false);
-            //EventManager.RegisterClassHandler(type, Stylus.GotStylusCaptureEvent, new StylusEventHandler(UIElement.OnGotStylusCaptureThunk), false);
-            //EventManager.RegisterClassHandler(type, Stylus.LostStylusCaptureEvent, new StylusEventHandler(UIElement.OnLostStylusCaptureThunk), false);
-            //EventManager.RegisterClassHandler(type, Stylus.StylusButtonDownEvent, new StylusButtonEventHandler(UIElement.OnStylusButtonDownThunk), false);
-            //EventManager.RegisterClassHandler(type, Stylus.StylusButtonUpEvent, new StylusButtonEventHandler(UIElement.OnStylusButtonUpThunk), false);
-            //EventManager.RegisterClassHandler(type, Stylus.PreviewStylusButtonDownEvent, new StylusButtonEventHandler(UIElement.OnPreviewStylusButtonDownThunk), false);
-            //EventManager.RegisterClassHandler(type, Stylus.PreviewStylusButtonUpEvent, new StylusButtonEventHandler(UIElement.OnPreviewStylusButtonUpThunk), false);
-            EventManager.RegisterClassHandler(type, Keyboard.PreviewTextInputEvent, new TextInputEventHandler(UIElement.OnPreviewTextInputThunk), false);
-            EventManager.RegisterClassHandler(type, Keyboard.TextInputEvent, new TextInputEventHandler(UIElement.OnTextInputThunk), false);
-            EventManager.RegisterClassHandler(type, Keyboard.PreviewKeyDownEvent, new KeyEventHandler(UIElement.OnPreviewKeyDownThunk), false);
-            EventManager.RegisterClassHandler(type, Keyboard.KeyDownEvent, new KeyEventHandler(UIElement.OnKeyDownThunk), false);
-            EventManager.RegisterClassHandler(type, Keyboard.PreviewKeyUpEvent, new KeyEventHandler(UIElement.OnPreviewKeyUpThunk), false);
-            EventManager.RegisterClassHandler(type, Keyboard.KeyUpEvent, new KeyEventHandler(UIElement.OnKeyUpThunk), false);
-            // EventManager.RegisterClassHandler(type, Keyboard.PreviewGotKeyboardFocusEvent, new KeyboardFocusChangedEventHandler(UIElement.OnPreviewGotKeyboardFocusThunk), false);
-            // EventManager.RegisterClassHandler(type, Keyboard.GotKeyboardFocusEvent, new KeyboardFocusChangedEventHandler(UIElement.OnGotKeyboardFocusThunk), false);
-            // EventManager.RegisterClassHandler(type, Keyboard.PreviewLostKeyboardFocusEvent, new KeyboardFocusChangedEventHandler(UIElement.OnPreviewLostKeyboardFocusThunk), false);
-            // EventManager.RegisterClassHandler(type, Keyboard.LostKeyboardFocusEvent, new KeyboardFocusChangedEventHandler(UIElement.OnLostKeyboardFocusThunk), false);
-            // EventManager.RegisterClassHandler(type, TextCompositionManager.PreviewTextInputEvent, new TextCompositionEventHandler(UIElement.OnPreviewTextInputThunk), false);
-            // EventManager.RegisterClassHandler(type, TextCompositionManager.TextInputEvent, new TextCompositionEventHandler(UIElement.OnTextInputThunk), false);
-            // EventManager.RegisterClassHandler(type, CommandManager.PreviewExecutedEvent, new ExecutedRoutedEventHandler(UIElement.OnPreviewExecutedThunk), false);
-            // EventManager.RegisterClassHandler(type, CommandManager.ExecutedEvent, new ExecutedRoutedEventHandler(UIElement.OnExecutedThunk), false);
-            // EventManager.RegisterClassHandler(type, CommandManager.PreviewCanExecuteEvent, new CanExecuteRoutedEventHandler(UIElement.OnPreviewCanExecuteThunk), false);
-            // EventManager.RegisterClassHandler(type, CommandManager.CanExecuteEvent, new CanExecuteRoutedEventHandler(UIElement.OnCanExecuteThunk), false);
-            // EventManager.RegisterClassHandler(type, CommandDevice.CommandDeviceEvent, new CommandDeviceEventHandler(UIElement.OnCommandDeviceThunk), false);
-            // EventManager.RegisterClassHandler(type, DragDrop.PreviewQueryContinueDragEvent, new QueryContinueDragEventHandler(UIElement.OnPreviewQueryContinueDragThunk), false);
-            // EventManager.RegisterClassHandler(type, DragDrop.QueryContinueDragEvent, new QueryContinueDragEventHandler(UIElement.OnQueryContinueDragThunk), false);
-            // EventManager.RegisterClassHandler(type, DragDrop.PreviewGiveFeedbackEvent, new GiveFeedbackEventHandler(UIElement.OnPreviewGiveFeedbackThunk), false);
-            // EventManager.RegisterClassHandler(type, DragDrop.GiveFeedbackEvent, new GiveFeedbackEventHandler(UIElement.OnGiveFeedbackThunk), false);
-            // EventManager.RegisterClassHandler(type, DragDrop.PreviewDragEnterEvent, new DragEventHandler(UIElement.OnPreviewDragEnterThunk), false);
-            // EventManager.RegisterClassHandler(type, DragDrop.DragEnterEvent, new DragEventHandler(UIElement.OnDragEnterThunk), false);
-            // EventManager.RegisterClassHandler(type, DragDrop.PreviewDragOverEvent, new DragEventHandler(UIElement.OnPreviewDragOverThunk), false);
-            // EventManager.RegisterClassHandler(type, DragDrop.DragOverEvent, new DragEventHandler(UIElement.OnDragOverThunk), false);
-            // EventManager.RegisterClassHandler(type, DragDrop.PreviewDragLeaveEvent, new DragEventHandler(UIElement.OnPreviewDragLeaveThunk), false);
-            // EventManager.RegisterClassHandler(type, DragDrop.DragLeaveEvent, new DragEventHandler(UIElement.OnDragLeaveThunk), false);
-            // EventManager.RegisterClassHandler(type, DragDrop.PreviewDropEvent, new DragEventHandler(UIElement.OnPreviewDropThunk), false);
-            // EventManager.RegisterClassHandler(type, DragDrop.DropEvent, new DragEventHandler(UIElement.OnDropThunk), false);
-            // EventManager.RegisterClassHandler(type, Touch.PreviewTouchDownEvent, new EventHandler<TouchEventArgs>(UIElement.OnPreviewTouchDownThunk), false);
-            // EventManager.RegisterClassHandler(type, Touch.TouchDownEvent, new EventHandler<TouchEventArgs>(UIElement.OnTouchDownThunk), false);
-            // EventManager.RegisterClassHandler(type, Touch.PreviewTouchMoveEvent, new EventHandler<TouchEventArgs>(UIElement.OnPreviewTouchMoveThunk), false);
-            // EventManager.RegisterClassHandler(type, Touch.TouchMoveEvent, new EventHandler<TouchEventArgs>(UIElement.OnTouchMoveThunk), false);
-            // EventManager.RegisterClassHandler(type, Touch.PreviewTouchUpEvent, new EventHandler<TouchEventArgs>(UIElement.OnPreviewTouchUpThunk), false);
-            // EventManager.RegisterClassHandler(type, Touch.TouchUpEvent, new EventHandler<TouchEventArgs>(UIElement.OnTouchUpThunk), false);
-            // EventManager.RegisterClassHandler(type, Touch.GotTouchCaptureEvent, new EventHandler<TouchEventArgs>(UIElement.OnGotTouchCaptureThunk), false);
-            // EventManager.RegisterClassHandler(type, Touch.LostTouchCaptureEvent, new EventHandler<TouchEventArgs>(UIElement.OnLostTouchCaptureThunk), false);
-            // EventManager.RegisterClassHandler(type, Touch.TouchEnterEvent, new EventHandler<TouchEventArgs>(UIElement.OnTouchEnterThunk), false);
-            // EventManager.RegisterClassHandler(type, Touch.TouchLeaveEvent, new EventHandler<TouchEventArgs>(UIElement.OnTouchLeaveThunk), false);
+            EventManager.RegisterClassHandler(
+                type,
+                Mouse.PreviewMouseDoubleClickEvent,
+                new MouseButtonEventHandler(UIElement.OnPreviewMouseDoubleClickThunk),
+                true);
+            EventManager.RegisterClassHandler(
+                type,
+                Mouse.MouseDoubleClickEvent,
+                new MouseButtonEventHandler(UIElement.OnMouseDoubleClickThunk),
+                true);
+            EventManager.RegisterClassHandler(
+                type,
+                Mouse.PreviewMouseDownEvent,
+                new MouseButtonEventHandler(UIElement.OnPreviewMouseDownThunk),
+                true);
+            EventManager.RegisterClassHandler(
+                type,
+                Mouse.MouseDownEvent,
+                new MouseButtonEventHandler(UIElement.OnMouseDownThunk), true);
+            EventManager.RegisterClassHandler(
+                type,
+                Mouse.PreviewMouseUpEvent,
+                new MouseButtonEventHandler(UIElement.OnPreviewMouseUpThunk),
+                true);
+            EventManager.RegisterClassHandler(
+                type,
+                Mouse.MouseUpEvent,
+                new MouseButtonEventHandler(UIElement.OnMouseUpThunk),
+                true);
+            EventManager.RegisterClassHandler(
+                type,
+                UIElement.PreviewMouseLeftButtonDownEvent,
+                new MouseButtonEventHandler(UIElement.OnPreviewMouseLeftButtonDownThunk),
+                false);
+            EventManager.RegisterClassHandler(
+                type,
+                UIElement.MouseLeftButtonDownEvent,
+                new MouseButtonEventHandler(UIElement.OnMouseLeftButtonDownThunk),
+                false);
+            EventManager.RegisterClassHandler(
+                type,
+                UIElement.PreviewMouseLeftButtonUpEvent,
+                new MouseButtonEventHandler(UIElement.OnPreviewMouseLeftButtonUpThunk),
+                false);
+            EventManager.RegisterClassHandler(
+                type,
+                UIElement.MouseLeftButtonUpEvent,
+                new MouseButtonEventHandler(UIElement.OnMouseLeftButtonUpThunk),
+                false);
+            EventManager.RegisterClassHandler(
+                type,
+                UIElement.PreviewMouseRightButtonDownEvent,
+                new MouseButtonEventHandler(UIElement.OnPreviewMouseRightButtonDownThunk),
+                false);
+            EventManager.RegisterClassHandler(
+                type,
+                UIElement.MouseRightButtonDownEvent,
+                new MouseButtonEventHandler(UIElement.OnMouseRightButtonDownThunk),
+                false);
+            EventManager.RegisterClassHandler(
+                type,
+                UIElement.PreviewMouseRightButtonUpEvent,
+                new MouseButtonEventHandler(UIElement.OnPreviewMouseRightButtonUpThunk),
+                false);
+            EventManager.RegisterClassHandler(
+                type,
+                UIElement.MouseRightButtonUpEvent,
+                new MouseButtonEventHandler(UIElement.OnMouseRightButtonUpThunk),
+                false);
+            EventManager.RegisterClassHandler(
+                type,
+                Mouse.PreviewMouseMoveEvent,
+                new MouseEventHandler(UIElement.OnPreviewMouseMoveThunk),
+                false);
+            EventManager.RegisterClassHandler(
+                type,
+                Mouse.MouseMoveEvent,
+                new MouseEventHandler(UIElement.OnMouseMoveThunk),
+                false);
+            EventManager.RegisterClassHandler(
+                type,
+                Mouse.PreviewMouseWheelEvent,
+                new MouseWheelEventHandler(UIElement.OnPreviewMouseWheelThunk),
+                false);
+            EventManager.RegisterClassHandler(
+                type,
+                Mouse.MouseWheelEvent,
+                new MouseWheelEventHandler(UIElement.OnMouseWheelThunk),
+                false);
+
+            // EventManager.RegisterClassHandler(type, Mouse.MouseEnterEvent,
+            // new MouseEventHandler(UIElement.OnMouseEnterThunk), false);
+            // EventManager.RegisterClassHandler(type, Mouse.MouseLeaveEvent,
+            // new MouseEventHandler(UIElement.OnMouseLeaveThunk), false);
+            // EventManager.RegisterClassHandler(type, Mouse.GotMouseCaptureEvent,
+            // new MouseEventHandler(UIElement.OnGotMouseCaptureThunk), false);
+            // EventManager.RegisterClassHandler(type, Mouse.LostMouseCaptureEvent,
+            // new MouseEventHandler(UIElement.OnLostMouseCaptureThunk), false);
+            // EventManager.RegisterClassHandler(type, Mouse.QueryCursorEvent,
+            // new QueryCursorEventHandler(UIElement.OnQueryCursorThunk), false);
+            // EventManager.RegisterClassHandler(type, Stylus.PreviewStylusDownEvent,
+            // new StylusDownEventHandler(UIElement.OnPreviewStylusDownThunk), false);
+            // EventManager.RegisterClassHandler(type, Stylus.StylusDownEvent,
+            // new StylusDownEventHandler(UIElement.OnStylusDownThunk), false);
+            // EventManager.RegisterClassHandler(type, Stylus.PreviewStylusUpEvent,
+            // new StylusEventHandler(UIElement.OnPreviewStylusUpThunk), false);
+            // EventManager.RegisterClassHandler(type, Stylus.StylusUpEvent,
+            // new StylusEventHandler(UIElement.OnStylusUpThunk), false);
+            // EventManager.RegisterClassHandler(type, Stylus.PreviewStylusMoveEvent,
+            // new StylusEventHandler(UIElement.OnPreviewStylusMoveThunk), false);
+            // EventManager.RegisterClassHandler(type, Stylus.StylusMoveEvent,
+            // new StylusEventHandler(UIElement.OnStylusMoveThunk), false);
+            // EventManager.RegisterClassHandler(type, Stylus.PreviewStylusInAirMoveEvent,
+            // new StylusEventHandler(UIElement.OnPreviewStylusInAirMoveThunk), false);
+            // EventManager.RegisterClassHandler(type, Stylus.StylusInAirMoveEvent,
+            // new StylusEventHandler(UIElement.OnStylusInAirMoveThunk), false);
+            // EventManager.RegisterClassHandler(type, Stylus.StylusEnterEvent,
+            // new StylusEventHandler(UIElement.OnStylusEnterThunk), false);
+            // EventManager.RegisterClassHandler(type, Stylus.StylusLeaveEvent,
+            // new StylusEventHandler(UIElement.OnStylusLeaveThunk), false);
+            // EventManager.RegisterClassHandler(type, Stylus.PreviewStylusInRangeEvent,
+            // new StylusEventHandler(UIElement.OnPreviewStylusInRangeThunk), false);
+            // EventManager.RegisterClassHandler(type, Stylus.StylusInRangeEvent,
+            // new StylusEventHandler(UIElement.OnStylusInRangeThunk), false);
+            // EventManager.RegisterClassHandler(type, Stylus.PreviewStylusOutOfRangeEvent,
+            // new StylusEventHandler(UIElement.OnPreviewStylusOutOfRangeThunk), false);
+            // EventManager.RegisterClassHandler(type, Stylus.StylusOutOfRangeEvent,
+            // new StylusEventHandler(UIElement.OnStylusOutOfRangeThunk), false);
+            // EventManager.RegisterClassHandler(type, Stylus.PreviewStylusSystemGestureEvent,
+            // new StylusSystemGestureEventHandler(UIElement.OnPreviewStylusSystemGestureThunk),
+            // false);
+            // EventManager.RegisterClassHandler(type, Stylus.StylusSystemGestureEvent,
+            // new StylusSystemGestureEventHandler(UIElement.OnStylusSystemGestureThunk), false);
+            // EventManager.RegisterClassHandler(type, Stylus.GotStylusCaptureEvent,
+            // new StylusEventHandler(UIElement.OnGotStylusCaptureThunk), false);
+            // EventManager.RegisterClassHandler(type, Stylus.LostStylusCaptureEvent,
+            // new StylusEventHandler(UIElement.OnLostStylusCaptureThunk), false);
+            // EventManager.RegisterClassHandler(type, Stylus.StylusButtonDownEvent,
+            // new StylusButtonEventHandler(UIElement.OnStylusButtonDownThunk), false);
+            // EventManager.RegisterClassHandler(type, Stylus.StylusButtonUpEvent,
+            // new StylusButtonEventHandler(UIElement.OnStylusButtonUpThunk), false);
+            // EventManager.RegisterClassHandler(type, Stylus.PreviewStylusButtonDownEvent,
+            // new StylusButtonEventHandler(UIElement.OnPreviewStylusButtonDownThunk), false);
+            // EventManager.RegisterClassHandler(type, Stylus.PreviewStylusButtonUpEvent,
+            // new StylusButtonEventHandler(UIElement.OnPreviewStylusButtonUpThunk), false);
+            EventManager.RegisterClassHandler(
+                type,
+                Keyboard.PreviewTextInputEvent,
+                new TextInputEventHandler(UIElement.OnPreviewTextInputThunk),
+                false);
+            EventManager.RegisterClassHandler(
+                type,
+                Keyboard.TextInputEvent,
+                new TextInputEventHandler(UIElement.OnTextInputThunk),
+                false);
+            EventManager.RegisterClassHandler(
+                type,
+                Keyboard.PreviewKeyDownEvent,
+                new KeyEventHandler(UIElement.OnPreviewKeyDownThunk),
+                false);
+            EventManager.RegisterClassHandler(
+                type,
+                Keyboard.KeyDownEvent,
+                new KeyEventHandler(UIElement.OnKeyDownThunk),
+                false);
+            EventManager.RegisterClassHandler(
+                type,
+                Keyboard.PreviewKeyUpEvent,
+                new KeyEventHandler(UIElement.OnPreviewKeyUpThunk),
+                false);
+            EventManager.RegisterClassHandler(
+                type,
+                Keyboard.KeyUpEvent,
+                new KeyEventHandler(UIElement.OnKeyUpThunk),
+                false);
+
+            // EventManager.RegisterClassHandler(type, Keyboard.PreviewGotKeyboardFocusEvent,
+            // new KeyboardFocusChangedEventHandler(UIElement.OnPreviewGotKeyboardFocusThunk), false);
+            // EventManager.RegisterClassHandler(type, Keyboard.GotKeyboardFocusEvent,
+            // new KeyboardFocusChangedEventHandler(UIElement.OnGotKeyboardFocusThunk), false);
+            // EventManager.RegisterClassHandler(type, Keyboard.PreviewLostKeyboardFocusEvent,
+            // new KeyboardFocusChangedEventHandler(UIElement.OnPreviewLostKeyboardFocusThunk),
+            // false);
+            // EventManager.RegisterClassHandler(type, Keyboard.LostKeyboardFocusEvent,
+            // new KeyboardFocusChangedEventHandler(UIElement.OnLostKeyboardFocusThunk), false);
+            // EventManager.RegisterClassHandler(type,
+            // TextCompositionManager.PreviewTextInputEvent,
+            // new TextCompositionEventHandler(UIElement.OnPreviewTextInputThunk), false);
+            // EventManager.RegisterClassHandler(type, TextCompositionManager.TextInputEvent,
+            // new TextCompositionEventHandler(UIElement.OnTextInputThunk), false);
+            // EventManager.RegisterClassHandler(type, CommandManager.PreviewExecutedEvent,
+            // new ExecutedRoutedEventHandler(UIElement.OnPreviewExecutedThunk), false);
+            // EventManager.RegisterClassHandler(type, CommandManager.ExecutedEvent,
+            // new ExecutedRoutedEventHandler(UIElement.OnExecutedThunk), false);
+            // EventManager.RegisterClassHandler(type, CommandManager.PreviewCanExecuteEvent,
+            // new CanExecuteRoutedEventHandler(UIElement.OnPreviewCanExecuteThunk), false);
+            // EventManager.RegisterClassHandler(type, CommandManager.CanExecuteEvent,
+            // new CanExecuteRoutedEventHandler(UIElement.OnCanExecuteThunk), false);
+            // EventManager.RegisterClassHandler(type, CommandDevice.CommandDeviceEvent,
+            // new CommandDeviceEventHandler(UIElement.OnCommandDeviceThunk), false);
+            // EventManager.RegisterClassHandler(type, DragDrop.PreviewQueryContinueDragEvent,
+            // new QueryContinueDragEventHandler(UIElement.OnPreviewQueryContinueDragThunk), false);
+            // EventManager.RegisterClassHandler(type, DragDrop.QueryContinueDragEvent,
+            // new QueryContinueDragEventHandler(UIElement.OnQueryContinueDragThunk), false);
+            // EventManager.RegisterClassHandler(type, DragDrop.PreviewGiveFeedbackEvent,
+            // new GiveFeedbackEventHandler(UIElement.OnPreviewGiveFeedbackThunk), false);
+            // EventManager.RegisterClassHandler(type, DragDrop.GiveFeedbackEvent,
+            // new GiveFeedbackEventHandler(UIElement.OnGiveFeedbackThunk), false);
+            // EventManager.RegisterClassHandler(type, DragDrop.PreviewDragEnterEvent,
+            // new DragEventHandler(UIElement.OnPreviewDragEnterThunk), false);
+            // EventManager.RegisterClassHandler(type, DragDrop.DragEnterEvent,
+            // new DragEventHandler(UIElement.OnDragEnterThunk), false);
+            // EventManager.RegisterClassHandler(type, DragDrop.PreviewDragOverEvent,
+            // new DragEventHandler(UIElement.OnPreviewDragOverThunk), false);
+            // EventManager.RegisterClassHandler(type, DragDrop.DragOverEvent,
+            // new DragEventHandler(UIElement.OnDragOverThunk), false);
+            // EventManager.RegisterClassHandler(type, DragDrop.PreviewDragLeaveEvent,
+            // new DragEventHandler(UIElement.OnPreviewDragLeaveThunk), false);
+            // EventManager.RegisterClassHandler(type, DragDrop.DragLeaveEvent,
+            // new DragEventHandler(UIElement.OnDragLeaveThunk), false);
+            // EventManager.RegisterClassHandler(type, DragDrop.PreviewDropEvent,
+            // new DragEventHandler(UIElement.OnPreviewDropThunk), false);
+            // EventManager.RegisterClassHandler(type, DragDrop.DropEvent,
+            // new DragEventHandler(UIElement.OnDropThunk), false);
+            // EventManager.RegisterClassHandler(type, Touch.PreviewTouchDownEvent,
+            // new EventHandler<TouchEventArgs>(UIElement.OnPreviewTouchDownThunk), false);
+            // EventManager.RegisterClassHandler(type, Touch.TouchDownEvent,
+            // new EventHandler<TouchEventArgs>(UIElement.OnTouchDownThunk), false);
+            // EventManager.RegisterClassHandler(type, Touch.PreviewTouchMoveEvent,
+            // new EventHandler<TouchEventArgs>(UIElement.OnPreviewTouchMoveThunk), false);
+            // EventManager.RegisterClassHandler(type, Touch.TouchMoveEvent,
+            // new EventHandler<TouchEventArgs>(UIElement.OnTouchMoveThunk), false);
+            // EventManager.RegisterClassHandler(type, Touch.PreviewTouchUpEvent,
+            // new EventHandler<TouchEventArgs>(UIElement.OnPreviewTouchUpThunk), false);
+            // EventManager.RegisterClassHandler(type, Touch.TouchUpEvent,
+            // new EventHandler<TouchEventArgs>(UIElement.OnTouchUpThunk), false);
+            // EventManager.RegisterClassHandler(type, Touch.GotTouchCaptureEvent,
+            // new EventHandler<TouchEventArgs>(UIElement.OnGotTouchCaptureThunk), false);
+            // EventManager.RegisterClassHandler(type, Touch.LostTouchCaptureEvent,
+            // new EventHandler<TouchEventArgs>(UIElement.OnLostTouchCaptureThunk), false);
+            // EventManager.RegisterClassHandler(type, Touch.TouchEnterEvent,
+            // new EventHandler<TouchEventArgs>(UIElement.OnTouchEnterThunk), false);
+            // EventManager.RegisterClassHandler(type, Touch.TouchLeaveEvent,
+            // new EventHandler<TouchEventArgs>(UIElement.OnTouchLeaveThunk), false);
         }
 
         /// <summary>
@@ -982,9 +1146,13 @@ namespace Alternet.UI
             add { EventHandlersStoreAdd(FocusableChangedKey, value); }
             remove { EventHandlersStoreRemove(FocusableChangedKey, value); }
         }
-        internal static readonly EventPrivateKey FocusableChangedKey = new (); // Used by ContentElement
 
-        private static void OnFocusableChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        // Used by ContentElement
+        internal static readonly EventPrivateKey FocusableChangedKey = new (); 
+
+        private static void OnFocusableChanged(
+            DependencyObject d,
+            DependencyPropertyChangedEventArgs e)
         {
             UIElement uie = (UIElement)d;
 
@@ -1012,9 +1180,11 @@ namespace Alternet.UI
         public static readonly DependencyProperty IsFocusedProperty
             = IsFocusedPropertyKey.DependencyProperty;
 
-        private static void IsFocused_Changed(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private static void IsFocused_Changed(
+            DependencyObject d,
+            DependencyPropertyChangedEventArgs e)
         {
-            UIElement uiElement = ((UIElement)d);
+            UIElement uiElement = (UIElement)d;
 
             if ((bool)e.NewValue)
             {
@@ -1047,7 +1217,8 @@ namespace Alternet.UI
         /// <summary>
         ///     GotFocus event
         /// </summary>
-        public static readonly RoutedEvent GotFocusEvent = FocusManager.GotFocusEvent.AddOwner(typeof(UIElement));
+        public static readonly RoutedEvent GotFocusEvent =
+            FocusManager.GotFocusEvent.AddOwner(typeof(UIElement));
 
         /// <summary>
         ///     An event announcing that IsFocused changed to true.
@@ -1061,7 +1232,8 @@ namespace Alternet.UI
         /// <summary>
         ///     LostFocus event
         /// </summary>
-        public static readonly RoutedEvent LostFocusEvent = FocusManager.LostFocusEvent.AddOwner(typeof(UIElement));
+        public static readonly RoutedEvent LostFocusEvent =
+            FocusManager.LostFocusEvent.AddOwner(typeof(UIElement));
 
         /// <summary>
         ///     An event announcing that IsFocused changed to false.
@@ -1073,7 +1245,9 @@ namespace Alternet.UI
         }
 
         // Helper method to retrieve and fire Clr Event handlers for DependencyPropertyChanged event
-        private void RaiseDependencyPropertyChanged(EventPrivateKey key, DependencyPropertyChangedEventArgs args)
+        private void RaiseDependencyPropertyChanged(
+            EventPrivateKey key,
+            DependencyPropertyChangedEventArgs args)
         {
             var store = EventHandlersStore;
             if (store != null)
@@ -1121,11 +1295,14 @@ namespace Alternet.UI
         ///     Adds a handler for the given attached event
         /// </summary>
         [FriendAccessAllowed] // Built into Core, also used by Framework.
-        internal static void AddHandler(DependencyObject d, RoutedEvent routedEvent, Delegate handler)
+        internal static void AddHandler(
+            DependencyObject d,
+            RoutedEvent routedEvent,
+            Delegate handler)
         {
             if (d == null)
             {
-                throw new ArgumentNullException("d");
+                throw new ArgumentNullException(nameof(d));
             }
 
             if (routedEvent is null)
@@ -1133,14 +1310,14 @@ namespace Alternet.UI
                 throw new ArgumentNullException(nameof(routedEvent));
             }
 
-            var uiElement = d as UIElement;
-            if (uiElement != null)
+            if (d is UIElement uiElement)
             {
                 uiElement.AddHandler(routedEvent, handler);
             }
             else
                 throw new ArgumentException(SR.Get(SRID.Invalid_IInputElement, d.GetType()));
-            //{
+
+            // {
             //    ContentElement contentElement = d as ContentElement;
             //    if (contentElement != null)
             //    {
@@ -1155,21 +1332,25 @@ namespace Alternet.UI
             //        }
             //        else
             //        {
-            //            throw new ArgumentException(SR.Get(SRID.Invalid_IInputElement, d.GetType()));
+            //            throw new ArgumentException(SR.Get(SRID.Invalid_IInputElement,
+            //            d.GetType()));
             //        }
             //    }
-            //}
+            // }
         }
 
         /// <summary>
         ///     Removes a handler for the given attached event
         /// </summary>
         [FriendAccessAllowed] // Built into Core, also used by Framework.
-        internal static void RemoveHandler(DependencyObject d, RoutedEvent routedEvent, Delegate handler)
+        internal static void RemoveHandler(
+            DependencyObject d,
+            RoutedEvent routedEvent,
+            Delegate handler)
         {
             if (d == null)
             {
-                throw new ArgumentNullException("d");
+                throw new ArgumentNullException(nameof(d));
             }
 
             if (routedEvent is null)
@@ -1177,13 +1358,13 @@ namespace Alternet.UI
                 throw new ArgumentNullException(nameof(routedEvent));
             }
 
-            var uiElement = d as UIElement;
-            if (uiElement != null)
+            if (d is UIElement uiElement)
                 uiElement.RemoveHandler(routedEvent, handler);
             else
                 throw new ArgumentException(SR.Get(SRID.Invalid_IInputElement, d.GetType()));
-            //else
-            //{
+
+            // else
+            // {
             //    ContentElement contentElement = d as ContentElement;
             //    if (contentElement != null)
             //    {
@@ -1198,10 +1379,11 @@ namespace Alternet.UI
             //        }
             //        else
             //        {
-            //            throw new ArgumentException(SR.Get(SRID.Invalid_IInputElement, d.GetType()));
+            //            throw new ArgumentException(SR.Get(SRID.Invalid_IInputElement,
+            //            d.GetType()));
             //        }
             //    }
-            //}
+            // }
         }
 
         /// <summary>
@@ -1214,18 +1396,19 @@ namespace Alternet.UI
         /// </param>
         public void RaiseEvent(RoutedEventArgs e)
         {
-            // VerifyAccess();
+            /* VerifyAccess();*/
 
             if (e == null)
             {
-                throw new ArgumentNullException("e");
+                throw new ArgumentNullException(nameof(e));
             }
+
             e.ClearUserInitiated();
 
             UIElement.RaiseEventImpl(this, e);
         }
 
-        internal const int MAX_ELEMENTS_IN_ROUTE = 4096;
+        internal const int MAXELEMENTSINROUTE = 4096;
 
         /// <summary>
         ///     Add the event handlers for this element to the route.
@@ -1234,11 +1417,12 @@ namespace Alternet.UI
         {
             if (route == null)
             {
-                throw new ArgumentNullException("route");
+                throw new ArgumentNullException(nameof(route));
             }
+
             if (e == null)
             {
-                throw new ArgumentNullException("e");
+                throw new ArgumentNullException(nameof(e));
             }
 
             // Get class listeners for this UIElement
@@ -1250,25 +1434,30 @@ namespace Alternet.UI
             {
                 for (int i = 0; i < classListeners.Handlers.Length; i++)
                 {
-                    route.Add(this, classListeners.Handlers[i].Handler, classListeners.Handlers[i].InvokeHandledEventsToo);
+                    route.Add(
+                        this,
+                        classListeners.Handlers[i].Handler,
+                        classListeners.Handlers[i].InvokeHandledEventsToo);
                 }
 
                 classListeners = classListeners.Next;
             }
 
-            // Get instance listeners for this UIElement
-            FrugalObjectList<RoutedEventHandlerInfo>? instanceListeners = null;
             var store = EventHandlersStore;
             if (store != null)
             {
-                instanceListeners = store[e.RoutedEvent];
+                // Get instance listeners for this UIElement
+                FrugalObjectList<RoutedEventHandlerInfo>? instanceListeners = store[e.RoutedEvent];
 
                 // Add all instance listeners for this UIElement
                 if (instanceListeners != null)
                 {
                     for (int i = 0; i < instanceListeners.Count; i++)
                     {
-                        route.Add(this, instanceListeners[i].Handler, instanceListeners[i].InvokeHandledEventsToo);
+                        route.Add(
+                            this,
+                            instanceListeners[i].Handler,
+                            instanceListeners[i].InvokeHandledEventsToo);
                     }
                 }
             }
@@ -1285,16 +1474,19 @@ namespace Alternet.UI
         {
         }
 
-        internal static void BuildRouteHelper(DependencyObject? e, EventRoute route, RoutedEventArgs args)
+        internal static void BuildRouteHelper(
+            DependencyObject? e,
+            EventRoute route,
+            RoutedEventArgs args)
         {
             if (route == null)
             {
-                throw new ArgumentNullException("route");
+                throw new ArgumentNullException(nameof(route));
             }
 
             if (args == null)
             {
-                throw new ArgumentNullException("args");
+                throw new ArgumentNullException(nameof(args));
             }
 
             if (args.Source == null)
@@ -1310,10 +1502,8 @@ namespace Alternet.UI
             // Route via visual tree
             if (args.RoutedEvent.RoutingStrategy == RoutingStrategy.Direct)
             {
-                var uiElement = e as UIElement;
-
                 // Add this element to route
-                if (uiElement != null)
+                if (e is UIElement uiElement)
                 {
                     uiElement.AddToEventRoute(route, args);
                 }
@@ -1328,7 +1518,7 @@ namespace Alternet.UI
 
                     // Protect against infinite loops by limiting the number of elements
                     // that we will process.
-                    if (cElements++ > MAX_ELEMENTS_IN_ROUTE)
+                    if (cElements++ > MAXELEMENTSINROUTE)
                     {
                         throw new InvalidOperationException(SR.Get(SRID.TreeLoop));
                     }
@@ -1351,7 +1541,8 @@ namespace Alternet.UI
                     if (uiElement != null)
                     {
                         /* yezo
-                        //Add a Synchronized input pre-opportunity handler just before the class and instance handlers
+                        // Add a Synchronized input pre-opportunity handler just before the class
+                        // and instance handlers
                         uiElement.AddSynchronizedInputPreOpportunityHandler(route, args);
                         */
 
@@ -1361,7 +1552,8 @@ namespace Alternet.UI
                         uiElement.AddToEventRoute(route, args);
 
                         /* yezo
-                        //Add a Synchronized input post-opportunity handler just after class and instance handlers
+                        // Add a Synchronized input post-opportunity handler just after class
+                        // and instance handlers
                         uiElement.AddSynchronizedInputPostOpportunityHandler(route, args);*/
 
                         // Get element's visual parent
@@ -1460,7 +1652,6 @@ namespace Alternet.UI
                 // Reset Source to OriginalSource
                 args.Source = args.OriginalSource;
             }
-
             finally
             {
                 if (TraceRoutedEvent.IsEnabled)
@@ -1547,16 +1738,16 @@ namespace Alternet.UI
             Delegate handler,
             bool handledEventsToo)
         {
-            // VerifyAccess();
+            /* VerifyAccess();*/
 
             if (routedEvent == null)
             {
-                throw new ArgumentNullException("routedEvent");
+                throw new ArgumentNullException(nameof(routedEvent));
             }
 
             if (handler == null)
             {
-                throw new ArgumentNullException("handler");
+                throw new ArgumentNullException(nameof(handler));
             }
 
             if (!routedEvent.IsLegalHandler(handler))
@@ -1608,16 +1799,16 @@ namespace Alternet.UI
         /// </param>
         public void RemoveHandler(RoutedEvent routedEvent, Delegate handler)
         {
-            // VerifyAccess();
+            /* VerifyAccess();*/
 
             if (routedEvent == null)
             {
-                throw new ArgumentNullException("routedEvent");
+                throw new ArgumentNullException(nameof(routedEvent));
             }
 
             if (handler == null)
             {
-                throw new ArgumentNullException("handler");
+                throw new ArgumentNullException(nameof(handler));
             }
 
             if (!routedEvent.IsLegalHandler(handler))
@@ -1650,7 +1841,6 @@ namespace Alternet.UI
         {
         }
 
-
         /// <summary>
         ///     Ensures that EventHandlersStore will return
         ///     non-null when it is called.
@@ -1669,19 +1859,19 @@ namespace Alternet.UI
         {
             if (value)
             {
-                _flags |= field;
+                coreFlags |= field;
             }
             else
             {
-                _flags &= (~field);
+                coreFlags &= ~field;
             }
         }
 
-        private CoreFlags _flags;
+        private CoreFlags coreFlags;
 
         internal bool ReadFlag(CoreFlags field)
         {
-            return (_flags & field) != 0;
+            return (coreFlags & field) != 0;
         }
 
         /// <summary>
@@ -1701,6 +1891,7 @@ namespace Alternet.UI
                 {
                     return null;
                 }
+
                 return EventHandlersStoreField.GetValue(this);
             }
         }
@@ -1710,43 +1901,5 @@ namespace Alternet.UI
         private protected virtual bool GetIsEnabled() => false;
 
         internal static readonly UncommonField<EventHandlersStore> EventHandlersStoreField = new ();
-    }
-
-    [Flags]
-    internal enum CoreFlags : uint
-    {
-        None = 0x00000000,
-        SnapsToDevicePixelsCache = 0x00000001,
-        ClipToBoundsCache = 0x00000002,
-        MeasureDirty = 0x00000004,
-        ArrangeDirty = 0x00000008,
-        MeasureInProgress = 0x00000010,
-        ArrangeInProgress = 0x00000020,
-        NeverMeasured = 0x00000040,
-        NeverArranged = 0x00000080,
-        MeasureDuringArrange = 0x00000100,
-        IsCollapsed = 0x00000200,
-        IsKeyboardFocusWithinCache = 0x00000400,
-        IsKeyboardFocusWithinChanged = 0x00000800,
-        IsMouseOverCache = 0x00001000,
-        IsMouseOverChanged = 0x00002000,
-        IsMouseCaptureWithinCache = 0x00004000,
-        IsMouseCaptureWithinChanged = 0x00008000,
-        IsStylusOverCache = 0x00010000,
-        IsStylusOverChanged = 0x00020000,
-        IsStylusCaptureWithinCache = 0x00040000,
-        IsStylusCaptureWithinChanged = 0x00080000,
-        HasAutomationPeer = 0x00100000,
-        RenderingInvalidated = 0x00200000,
-        IsVisibleCache = 0x00400000,
-        AreTransformsClean = 0x00800000,
-        IsOpacitySuppressed = 0x01000000,
-        ExistsEventHandlersStore = 0x02000000,
-        TouchesOverCache = 0x04000000,
-        TouchesOverChanged = 0x08000000,
-        TouchesCapturedWithinCache = 0x10000000,
-        TouchesCapturedWithinChanged = 0x20000000,
-        TouchLeaveCache = 0x40000000,
-        TouchEnterCache = 0x80000000,
     }
 }

@@ -21,7 +21,7 @@ namespace Alternet.UI
     /// </summary>
     internal sealed class ContextLayoutManager : DispatcherObject
     {
-        internal static int s_LayoutRecursionLimit = UIElement.MAX_ELEMENTS_IN_ROUTE; //to keep these two constants in sync
+        internal static int s_LayoutRecursionLimit = UIElement.MAXELEMENTSINROUTE; //to keep these two constants in sync
 
 //        internal ContextLayoutManager()
 //        {
