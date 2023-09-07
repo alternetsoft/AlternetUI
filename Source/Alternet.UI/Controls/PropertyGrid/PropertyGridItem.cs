@@ -91,7 +91,8 @@ namespace Alternet.UI
 
         public object? DefaultValue => defaultValue;
 
-        public Func<object, PropertyInfo, object?> GetValueFuncForReload { get; set; }
+        public Func<IPropertyGridItem?, object, PropertyInfo, object?>? GetValueFuncForReload
+        { get; set; }
 
         public bool IsCategory
         {

@@ -68,7 +68,7 @@ namespace Alternet.UI
         /// <remarks>
         /// If it is not specified, default mechanism is used for reload.
         /// </remarks>
-        Func<object, PropertyInfo, object?> GetValueFuncForReload { get; set; }
+        Func<IPropertyGridItem?, object, PropertyInfo, object?>? GetValueFuncForReload { get; set; }
 
         /// <summary>
         /// Gets type of the property editor.

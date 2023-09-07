@@ -1081,7 +1081,7 @@ namespace Alternet.UI
             }
             else
             {
-                var value = GetStructPropertyValueForReload(instance, propInfo);
+                var value = GetStructPropertyValueForReload(null, instance, propInfo);
                 var prm = GetNewItemParamsOrNull(instance, propInfo);
                 result = CreateStringProperty(label, name, value?.ToString(), prm);
                 result.GetValueFuncForReload = GetStructPropertyValueForReload;
@@ -1133,7 +1133,7 @@ namespace Alternet.UI
             object instance,
             PropertyInfo propInfo)
         {
-            var value = GetStructPropertyValueForReload(instance, propInfo);
+            var value = GetStructPropertyValueForReload(null, instance, propInfo);
 
             PropertyGridAdapterFont adapter = new()
             {
@@ -1182,7 +1182,7 @@ namespace Alternet.UI
             object instance,
             PropertyInfo propInfo)
         {
-            var value = GetStructPropertyValueForReload(instance, propInfo);
+            var value = GetStructPropertyValueForReload(null, instance, propInfo);
             PropertyGridAdapterBrush adapter = new()
             {
                 Instance = instance,
@@ -1229,7 +1229,7 @@ namespace Alternet.UI
             object instance,
             PropertyInfo propInfo)
         {
-            var value = GetStructPropertyValueForReload(instance, propInfo);
+            var value = GetStructPropertyValueForReload(null, instance, propInfo);
             PropertyGridAdapterPen adapter = new()
             {
                 Instance = instance,
@@ -3604,6 +3604,25 @@ namespace Alternet.UI
 
         }
 
+        private object GetRealInstance(IPropertyGridItem item)
+        {
+            var parent = item.Parent;
+            var propInfo = item.PropInfo;
+
+            if (parent == null || propInfo == null) 
+                return item.Instance;
+            else
+            {
+                var parentInstance = GetRealInstance(parent);
+
+                if (parentInstance == null || parent.PropInfo == null)
+                    return item.Instance;
+
+                var result = parent.PropInfo.GetValue(parentInstance);
+                return result;
+            }
+        }
+
         /// <summary>
         /// Reloads value of the <see cref="IPropertyGridItem"/> item if it is attached
         /// to the external object (<see cref="IPropertyGridItem.Instance"/> and 
@@ -3620,14 +3639,15 @@ namespace Alternet.UI
             {
                 object? propValue;
                 var reloadFunc = item.GetValueFuncForReload;
+                var realInstance = GetRealInstance(item);
                 if (reloadFunc == null)
                 {
-                    propValue = p.GetValue(instance);
+                    propValue = p.GetValue(realInstance);
                     variant.SetCompatibleValue(propValue, p);
                 }
                 else
                 {
-                    propValue = reloadFunc(instance, p);
+                    propValue = reloadFunc(item, realInstance, p);
                     variant.AsObject = propValue;
                 }
                 SetPropertyValueAsVariant(item, variant);
@@ -4246,7 +4266,10 @@ namespace Alternet.UI
             return name;
         }
 
-        private object? GetStructPropertyValueForReload(object instance, PropertyInfo propInfo)
+        private object? GetStructPropertyValueForReload(
+            IPropertyGridItem? item,
+            object instance,
+            PropertyInfo propInfo)
         {
             var asString = propInfo.GetValue(instance)?.ToString();
             return asString;

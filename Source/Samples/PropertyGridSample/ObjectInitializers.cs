@@ -24,6 +24,8 @@ namespace PropertyGridSample
         {
             const int defaultListHeight = 300;
 
+            Actions.Add(typeof(ContextMenu), InitContextMenu);
+
             Actions.Add(typeof(Label), (c) =>
             { 
                 (c as Label)!.Text = "Label"; 
@@ -117,6 +119,26 @@ namespace PropertyGridSample
             items.Add("Eight");
             items.Add("Nine");
             items.Add("Ten");
+        }
+
+        public static void InitContextMenu(object control)
+        {
+            var contextMenu = (control as ContextMenu)!;
+
+            MenuItem menuItem1 = new()
+            {
+                Text = "Open...",
+            };
+            menuItem1.Click += (sender, e) => {  };
+
+            MenuItem menuItem2 = new()
+            {
+                Text = "Save...",
+            };
+            menuItem2.Click += (sender, e) => { };
+
+            contextMenu.Items.Add(menuItem1);
+            contextMenu.Items.Add(menuItem2);
         }
 
         public static void InitListView(ListView listView)

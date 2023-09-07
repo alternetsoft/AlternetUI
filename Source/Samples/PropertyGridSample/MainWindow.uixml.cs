@@ -56,13 +56,6 @@ namespace PropertyGridSample
             items.Add("Height");
             items.Add("Left");
             items.Add("Top");
-            items.Add("SelectedItem");
-            items.Add("ImageList");
-            items.Add("SmallImageList");
-            items.Add("LargeImageList");
-            items.Add("Items");
-            items.Add("Columns");
-            items.Add("Image");
         }
 
         public MainWindow()
@@ -157,6 +150,7 @@ namespace PropertyGridSample
               typeof(ToolbarItem),
               typeof(WelcomeControl),
               typeof(ShowDialogButton),
+              typeof(ShowContextMenuButton),
             };
 
             IEnumerable<Type> result = AssemblyUtils.GetTypeDescendants(typeof(Control));
@@ -173,6 +167,7 @@ namespace PropertyGridSample
             AddDialog<SaveFileDialog>();
             AddDialog<SelectDirectoryDialog>();
             AddDialog<FontDialog>();
+            AddContextMenu<ContextMenu>();
 
             logListBox.MouseRightButtonUp += Log_MouseRightButtonUp;
             controlsListBox.SelectionChanged += ControlsListBox_SelectionChanged;
@@ -214,7 +209,7 @@ namespace PropertyGridSample
         private void AddDialog<T>()
             where T : CommonDialog
         {
-            var dialog = (T)Activator.CreateInstance(typeof(T))!;
+            var dialog = (T)ControlListBoxItem.CreateInstance(typeof(T))!;
             var button = new ShowDialogButton
             {
                 Dialog = dialog,
@@ -222,6 +217,22 @@ namespace PropertyGridSample
             var item = new ControlListBoxItem(typeof(T), button)
             {
                 PropInstance = dialog,
+            };
+            controlsListBox.Add(item);
+        }
+
+        private void AddContextMenu<T>()
+            where T : ContextMenu
+        {
+            var menu = (T)ControlListBoxItem.CreateInstance(typeof(T))!;
+
+            var button = new ShowContextMenuButton
+            {
+                Menu = menu,
+            };
+            var item = new ControlListBoxItem(typeof(T), button)
+            {
+                PropInstance = menu,
             };
             controlsListBox.Add(item);
         }
@@ -634,18 +645,21 @@ namespace PropertyGridSample
             {
                 get
                 {
-                    if(instance == null)
-                    {
-                        instance = Activator.CreateInstance(type);
-                        if (!ObjectInitializers.Actions.TryGetValue(
-                            type,
-                            out Action<Object>? action))
-                            return instance!;
-                        action(instance!);
-                    }
+                    instance ??= CreateInstance(type);
                     
                     return instance!;
                 }
+            }
+
+            public static object CreateInstance(Type type)
+            {
+                var instance = Activator.CreateInstance(type);
+                if (!ObjectInitializers.Actions.TryGetValue(
+                    type,
+                    out Action<Object>? action))
+                    return instance!;
+                action(instance!);
+                return instance;
             }
 
             public override string ToString()
