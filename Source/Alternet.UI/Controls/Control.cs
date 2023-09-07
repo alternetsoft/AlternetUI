@@ -11,7 +11,9 @@ namespace Alternet.UI
     /// Defines the base class for controls, which are components with
     /// visual representation.
     /// </summary>
-    [System.ComponentModel.DesignerCategory("Code")]
+    [DesignerCategory("Code")]
+    [DefaultProperty("Text")]
+    [DefaultEvent("Click")]
     public class Control : FrameworkElement, ISupportInitialize, IDisposable,
         IControl
     {
@@ -20,15 +22,15 @@ namespace Alternet.UI
         /// </summary>
         public static readonly DependencyProperty ToolTipProperty =
         DependencyProperty.Register(
-                "ToolTip", // Property name
-                typeof(string), // Property type
-                typeof(Control), // Property owner
-                new FrameworkPropertyMetadata( // Property metadata
-                        null, // default value
+                nameof(ToolTip),
+                typeof(string),
+                typeof(Control),
+                new FrameworkPropertyMetadata(
+                        null,
                         FrameworkPropertyMetadataOptions.None,
                         new PropertyChangedCallback(OnToolTipPropertyChanged),
                         null,
-                        true, // IsAnimationProhibited
+                        true,
                         UpdateSourceTrigger.PropertyChanged));
 
         /// <summary>
@@ -224,7 +226,7 @@ namespace Alternet.UI
         /// device-independent units (1/96th inch per unit).
         /// </summary>
         [Browsable(false)]
-        public Size ClientSize
+        public virtual Size ClientSize
         {
             get => Handler.ClientSize;
             set => Handler.ClientSize = value;
@@ -241,13 +243,13 @@ namespace Alternet.UI
         /// Gets a value indicating whether the mouse is captured to this control.
         /// </summary>
         [Browsable(false)]
-        public bool IsMouseCaptured => Handler.IsMouseCaptured;
+        public virtual bool IsMouseCaptured => Handler.IsMouseCaptured;
 
         /// <summary>
         /// Gets whether this control itself can have focus.
         /// </summary>
         [Browsable(false)]
-        public bool IsFocusable => Handler.IsFocusable;
+        public virtual bool IsFocusable => Handler.IsFocusable;
 
         /// <summary>
         /// Gets whether this control can have focus right now.
@@ -258,7 +260,7 @@ namespace Alternet.UI
         /// this control accepts focus itself, use <see cref="IsFocusable"/>.
         /// </remarks>
         [Browsable(false)]
-        public bool CanAcceptFocus => Handler.CanAcceptFocus;
+        public virtual bool CanAcceptFocus => Handler.CanAcceptFocus;
 
         /// <summary>
         /// Gets or sets the object that contains data about the control.
@@ -280,7 +282,7 @@ namespace Alternet.UI
         /// </summary>
         [DefaultValue(null)]
         [Localizability(LocalizationCategory.ToolTip)]
-        public string? ToolTip
+        public virtual string? ToolTip
         {
             get { return (string?)GetValue(ToolTipProperty); }
             set { SetValue(ToolTipProperty, value); }
@@ -301,7 +303,7 @@ namespace Alternet.UI
         /// Gets or sets the distance between the left edge of the control
         /// and the left edge of its container's client area.
         /// </summary>
-        public double Left
+        public virtual double Left
         {
             get
             {
@@ -321,7 +323,7 @@ namespace Alternet.UI
         /// Gets or sets the distance between the top edge of the control
         /// and the top edge of its container's client area.
         /// </summary>
-        public double Top
+        public virtual double Top
         {
             get
             {
@@ -344,7 +346,7 @@ namespace Alternet.UI
         /// <value>The position of the control's upper-left corner, in logical
         /// units (1/96th of an inch).</value>
         [Browsable(false)]
-        public Point Location
+        public virtual Point Location
         {
             get
             {
@@ -363,7 +365,7 @@ namespace Alternet.UI
         /// </summary>
         /// <value><c>true</c> if the control and all its child controls are
         /// displayed; otherwise, <c>false</c>. The default is <c>true</c>.</value>
-        public bool Visible
+        public virtual bool Visible
         {
             get => visible;
 
@@ -392,7 +394,7 @@ namespace Alternet.UI
         /// You can also disable a control to restrict its use. For example, a
         /// button can be disabled to prevent the user from clicking it.
         /// </remarks>
-        public bool Enabled
+        public virtual bool Enabled
         {
             get { return (bool)GetValue(EnabledProperty); }
             set { SetValue(EnabledProperty, value); }
@@ -404,7 +406,7 @@ namespace Alternet.UI
         /// Gets or sets the border brush of the control.
         /// </summary>
         [Browsable(false)]
-        public Brush? BorderBrush
+        public virtual Brush? BorderBrush
         {
             get => borderBrush;
             set
@@ -421,7 +423,7 @@ namespace Alternet.UI
         /// Gets a <see cref="ControlHandler"/> associated with this class.
         /// </summary>
         [Browsable(false)]
-        public ControlHandler Handler
+        public virtual ControlHandler Handler
         {
             get
             {
@@ -434,7 +436,7 @@ namespace Alternet.UI
         /// Gets whether <see cref="Dispose(bool)"/> has been called.
         /// </summary>
         [Browsable(false)]
-        public bool IsDisposed { get; private set; }
+        public virtual bool IsDisposed { get; private set; }
 
         /// <summary>
         /// Gets the collection of child controls contained within the control.
@@ -461,7 +463,7 @@ namespace Alternet.UI
         /// </remarks>
         [Content]
         [Browsable(false)]
-        public Collection<Control> Children
+        public virtual Collection<Control> Children
         {
             get
             {
@@ -504,7 +506,7 @@ namespace Alternet.UI
         /// Gets the parent container of the control.
         /// </summary>
         [Browsable(false)]
-        public Control? Parent
+        public virtual Control? Parent
         {
             get => parent;
             internal set
@@ -518,7 +520,7 @@ namespace Alternet.UI
         /// Gets the parent window of the control).
         /// </summary>
         [Browsable(false)]
-        public Window? ParentWindow
+        public virtual Window? ParentWindow
         {
             get
             {
@@ -694,7 +696,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the background color for the control.
         /// </summary>
-        public Color BackgroundColor
+        public virtual Color BackgroundColor
         {
             get
             {
@@ -719,7 +721,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the foreground color for the control.
         /// </summary>
-        public Color ForegroundColor
+        public virtual Color ForegroundColor
         {
             get
             {
@@ -745,7 +747,7 @@ namespace Alternet.UI
         /// Gets or sets the background brush for the control.
         /// </summary>
         [Browsable(false)]
-        public Brush? Background
+        public virtual Brush? Background
         {
             get => background;
             set
@@ -762,7 +764,7 @@ namespace Alternet.UI
         /// Gets or sets the foreground brush for the control.
         /// </summary>
         [Browsable(false)]
-        public Brush? Foreground
+        public virtual Brush? Foreground
         {
             get => foreground;
             set
@@ -780,7 +782,7 @@ namespace Alternet.UI
         /// </summary>
         /// <value>The <see cref="Font"/> to apply to the text displayed by
         /// the control. The default is the value of <c>null</c>.</value>
-        public Font? Font
+        public virtual Font? Font
         {
             get => font;
             set
@@ -799,7 +801,7 @@ namespace Alternet.UI
         /// </summary>
         /// <value>A vertical alignment setting. The default is
         /// <see cref="VerticalAlignment.Stretch"/>.</value>
-        public VerticalAlignment VerticalAlignment
+        public virtual VerticalAlignment VerticalAlignment
         {
             get => verticalAlignment;
             set
@@ -818,7 +820,7 @@ namespace Alternet.UI
         /// </summary>
         /// <value>A horizontal alignment setting. The default is
         /// <see cref="HorizontalAlignment.Stretch"/>.</value>
-        public HorizontalAlignment HorizontalAlignment
+        public virtual HorizontalAlignment HorizontalAlignment
         {
             get => horizontalAlignment;
             set
@@ -834,7 +836,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets a value indicating whether the user can give the focus to this control using the TAB key.
         /// </summary>
-        public bool TabStop
+        public virtual bool TabStop
         {
             get => Handler.TabStop;
             set => Handler.TabStop = value;
@@ -861,7 +863,7 @@ namespace Alternet.UI
         /// <value><c>true</c> if drag-and-drop operations are allowed in the
         /// control; otherwise, <c>false</c>. The default is <c>false</c>.</value>
         [Browsable(false)]
-        public bool AllowDrop
+        public virtual bool AllowDrop
         {
             get
             {
@@ -878,7 +880,7 @@ namespace Alternet.UI
         /// Gets a value indicating whether the control has input focus.
         /// </summary>
         [Browsable(false)]
-        public bool IsFocused => Handler.IsFocused;
+        public virtual bool IsFocused => Handler.IsFocused;
 
         /// <summary>
         /// Returns control identifier.
