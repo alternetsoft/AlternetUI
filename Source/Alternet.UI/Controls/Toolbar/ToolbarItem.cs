@@ -11,7 +11,7 @@ namespace Alternet.UI
     /// Please use <see cref="AuiManager"/> and <see cref="AuiToolbar"/> instead of
     /// <see cref="Toolbar"/> as it is deprecated and has limited functionality.
     /// </remarks>
-    public class ToolbarItem : Control, ICommandSource
+    public class ToolbarItem : NonVisualControl, ICommandSource
     {
         /// <summary>
         /// Defines a <see cref="DependencyProperty"/> field for the
@@ -196,7 +196,7 @@ namespace Alternet.UI
         /// Gets or sets the disable image for the toolbar item.
         /// </summary>
         /// <value>
-        /// An <see cref="ImageSet"/> that represents the disabled image 
+        /// An <see cref="ImageSet"/> that represents the disabled image
         /// for the toolbar item.
         /// </value>
         public ImageSet? DisabledImage

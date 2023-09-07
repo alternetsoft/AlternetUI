@@ -7,7 +7,7 @@ namespace Alternet.UI
     /// <summary>
     /// Represents an individual item that is displayed within a status bar.
     /// </summary>
-    public class StatusBarPanel : Control
+    public class StatusBarPanel : NonVisualControl
     {
         private string text = string.Empty;
 

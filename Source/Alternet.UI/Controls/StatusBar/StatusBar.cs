@@ -6,7 +6,7 @@ namespace Alternet.UI
     /// <summary>
     /// Represents a status bar control.
     /// </summary>
-    public class StatusBar : Control
+    public class StatusBar : NonVisualControl
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="StatusBar"/> class.

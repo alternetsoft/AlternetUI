@@ -11,7 +11,7 @@ namespace Alternet.UI
     /// Please use <see cref="AuiManager"/> and <see cref="AuiToolbar"/> instead of
     /// <see cref="Toolbar"/> as it is deprecated and has limited functionality.
     /// </remarks>
-    public class Toolbar : Control
+    public class Toolbar : NonVisualControl
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="Toolbar"/> class.

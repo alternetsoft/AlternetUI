@@ -7,7 +7,7 @@ namespace Alternet.UI
     /// <summary>
     /// Represents the base functionality for all menus.
     /// </summary>
-    public abstract class Menu : Control
+    public abstract class Menu : NonVisualControl
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="Menu"/> class.
