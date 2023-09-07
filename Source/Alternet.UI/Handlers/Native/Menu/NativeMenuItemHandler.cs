@@ -1,13 +1,36 @@
-using Alternet.Base.Collections;
 using System;
+using Alternet.Base.Collections;
 
 namespace Alternet.UI
 {
     internal class NativeMenuItemHandler : NativeControlHandler<MenuItem, Native.MenuItem>
     {
+        internal Native.Menu EnsureNativeSubmenuCreated()
+        {
+            if (NativeControl.Submenu == null)
+                NativeControl.Submenu = new Native.Menu();
+
+            return NativeControl.Submenu;
+        }
+
         internal override Native.Control CreateNativeControl()
         {
             return new Native.MenuItem();
+        }
+
+        protected override void OnDetach()
+        {
+            base.OnDetach();
+
+            Control.CheckedChanged -= Control_CheckedChanged;
+            Control.TextChanged -= Control_TextChanged;
+            Control.ShortcutChanged -= Control_ShortcutChanged;
+            Control.RoleChanged -= Control_RoleChanged;
+
+            NativeControl.Click -= NativeControl_Click;
+
+            Control.Items.ItemInserted -= Items_ItemInserted;
+            Control.Items.ItemRemoved -= Items_ItemRemoved;
         }
 
         protected override void OnAttach()
@@ -88,21 +111,6 @@ namespace Alternet.UI
             NativeControl.Checked = Control.Checked;
         }
 
-        protected override void OnDetach()
-        {
-            base.OnDetach();
-
-            Control.CheckedChanged -= Control_CheckedChanged;
-            Control.TextChanged -= Control_TextChanged;
-            Control.ShortcutChanged -= Control_ShortcutChanged;
-            Control.RoleChanged -= Control_RoleChanged;
-
-            NativeControl.Click -= NativeControl_Click;
-
-            Control.Items.ItemInserted -= Items_ItemInserted;
-            Control.Items.ItemRemoved -= Items_ItemRemoved;
-        }
-
         private void Items_ItemInserted(object? sender, CollectionChangeEventArgs<MenuItem> e)
         {
             InsertItem(e.Item, e.Index);
@@ -113,21 +121,12 @@ namespace Alternet.UI
             (NativeControl.Submenu ?? throw new Exception()).RemoveItemAt(e.Index);
         }
 
-        void InsertItem(MenuItem item, int index)
+        private void InsertItem(MenuItem item, int index)
         {
-            var handler = item.Handler as NativeMenuItemHandler;
-            if (handler == null)
+            if (item.Handler is not NativeMenuItemHandler handler)
                 throw new InvalidOperationException();
 
             EnsureNativeSubmenuCreated().InsertItemAt(index, handler.NativeControl);
-        }
-
-        internal Native.Menu EnsureNativeSubmenuCreated()
-        {
-            if (NativeControl.Submenu == null)
-                NativeControl.Submenu = new Native.Menu();
-
-            return NativeControl.Submenu;
         }
 
         private void NativeControl_Click(object? sender, EventArgs? e)
