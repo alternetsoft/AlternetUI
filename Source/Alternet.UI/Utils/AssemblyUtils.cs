@@ -9,10 +9,15 @@ using System.Threading.Tasks;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Contains <see cref="Assembly"/> related static methods.
+    /// Contains <see cref="Assembly"/>, <see cref="PropertyInfo"/> and <see cref="Type"/>
+    /// related static methods.
     /// </summary>
     public static class AssemblyUtils
     {
+        /// <summary>
+        /// Gets whether <see cref="Type"/> is struct.
+        /// </summary>
+        /// <param name="type">Object type.</param>
         public static bool IsStruct(Type type)
         {
             var realType = AssemblyUtils.GetRealType(type);
