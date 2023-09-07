@@ -249,6 +249,7 @@ namespace Alternet.UI
         /// In addition, you can use the <see cref="SelectedIndices"/> property to obtain all the selected indexes in a multiple-selection <see cref="ListView"/>.
         /// </para>
         /// </remarks>
+        [Browsable(false)]
         public ListViewItem? SelectedItem
         {
             get

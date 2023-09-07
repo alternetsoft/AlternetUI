@@ -175,6 +175,7 @@ namespace Alternet.UI
         /// <see cref="SelectedItems"/> property.
         /// </para>
         /// </remarks>
+        [Browsable(false)]
         public TreeViewItem? SelectedItem
         {
             get

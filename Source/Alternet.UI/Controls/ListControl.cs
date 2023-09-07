@@ -19,6 +19,7 @@ namespace Alternet.UI
         /// </summary>
         /// <value>An object that represents the current selection in the
         /// control, or <c>null</c> if no item is selected.</value>
+        [Browsable(false)]
         public abstract object? SelectedItem { get; set; }
 
         /// <summary>

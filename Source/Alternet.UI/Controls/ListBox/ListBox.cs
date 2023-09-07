@@ -267,6 +267,7 @@ namespace Alternet.UI
         /// <see cref="ListBox"/>.
         /// </para>
         /// </remarks>
+        [Browsable(false)]
         public override object? SelectedItem
         {
             get
