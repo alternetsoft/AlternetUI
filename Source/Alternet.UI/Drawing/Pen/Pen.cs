@@ -94,7 +94,8 @@ namespace Alternet.Drawing
         public Pen(Brush brush)
             : this(brush as SolidBrush != null ?
                     ((SolidBrush)brush).Color :
-                    throw new ArgumentException(ErrorMessages.OnlySolidBrushInstancesSupported))
+                    throw new ArgumentException(
+                        ErrorMessages.Default.OnlySolidBrushInstancesSupported))
         {
         }
 
@@ -365,7 +366,10 @@ namespace Alternet.Drawing
             if (!isDisposed)
             {
                 if (immutable)
-                    throw new InvalidOperationException(ErrorMessages.CannotDisposeImmutableObject);
+                {
+                    throw new InvalidOperationException(
+                        ErrorMessages.Default.CannotDisposeImmutableObject);
+                }
 
                 if (disposing)
                 {

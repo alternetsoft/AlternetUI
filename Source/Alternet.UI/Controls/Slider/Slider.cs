@@ -259,7 +259,10 @@ namespace Alternet.UI
                 CheckDisposed();
 
                 if (value < 0)
-                    throw new ArgumentException(ErrorMessages.InvalidParameter, nameof(value));
+                {
+                    throw new ArgumentException(
+                        ErrorMessages.Default.InvalidParameter, nameof(LargeChange));
+                }
 
                 if (largeChange == value)
                     return;

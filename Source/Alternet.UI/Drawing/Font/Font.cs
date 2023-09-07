@@ -63,7 +63,7 @@ namespace Alternet.Drawing
             if (emSize <= 0 || double.IsInfinity(emSize) || double.IsNaN(emSize))
             {
                 throw new ArgumentException(
-                    Alternet.UI.ErrorMessages.InvalidParameter,
+                    Alternet.UI.ErrorMessages.Default.InvalidParameter,
                     nameof(emSize));
             }
 

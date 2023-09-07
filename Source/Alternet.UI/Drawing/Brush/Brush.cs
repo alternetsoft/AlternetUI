@@ -168,7 +168,10 @@ namespace Alternet.Drawing
             if (!isDisposed)
             {
                 if (immutable)
-                    throw new InvalidOperationException(ErrorMessages.CannotDisposeImmutableObject);
+                {
+                    throw new InvalidOperationException(
+                        ErrorMessages.Default.CannotDisposeImmutableObject);
+                }
 
                 if (disposing)
                 {

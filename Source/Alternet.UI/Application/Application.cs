@@ -161,7 +161,7 @@ namespace Alternet.UI
                 // todo: maybe make it thread static?
                 // todo: maybe move this to native?
                 return current ?? throw new InvalidOperationException(
-                    ErrorMessages.CurrentApplicationIsNotSet);
+                    ErrorMessages.Default.CurrentApplicationIsNotSet);
             }
         }
 
@@ -212,25 +212,6 @@ namespace Alternet.UI
             get => nativeApplication.Name;
             set => nativeApplication.Name = value;
         }
-
-        /// <summary>
-        /// Processes all pending events.
-        /// </summary>
-        public void ProcessPendingEvents()
-        {
-            nativeApplication.ProcessPendingEvents();
-        }
-
-        /// <summary>
-        /// Checks whether there are any pending events in the queue.
-        /// </summary>
-        /// <returns><c>true</c> if there are any pending events in the queue,
-        /// <c>false</c> otherwise.</returns>
-        public bool HasPendingEvents()
-        {
-            return nativeApplication.HasPendingEvents();
-        }
-
 
         /// <summary>
         /// Gets or sets the application display name.
@@ -319,6 +300,24 @@ namespace Alternet.UI
         public static void SetSystemOption(string name, int value)
         {
             Native.Application.SetSystemOptionInt(name, value);
+        }
+
+        /// <summary>
+        /// Processes all pending events.
+        /// </summary>
+        public void ProcessPendingEvents()
+        {
+            nativeApplication.ProcessPendingEvents();
+        }
+
+        /// <summary>
+        /// Checks whether there are any pending events in the queue.
+        /// </summary>
+        /// <returns><c>true</c> if there are any pending events in the queue,
+        /// <c>false</c> otherwise.</returns>
+        public bool HasPendingEvents()
+        {
+            return nativeApplication.HasPendingEvents();
         }
 
         /// <summary>
