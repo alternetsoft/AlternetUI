@@ -9,7 +9,15 @@ namespace Alternet.UI
 {
     internal class PropertyGridTypeRegistry : IPropertyGridTypeRegistry
     {
-        private AdvDictionary<PropertyInfo, IPropertyGridPropInfoRegistry> registry = new();
+        private readonly AdvDictionary<PropertyInfo, IPropertyGridPropInfoRegistry> registry = new();
+        private readonly Type type;
+
+        public PropertyGridTypeRegistry(Type type)
+        {
+            this.type = type;
+        }
+
+        public Type InstanceType => type;
 
         public PropertyGridItemCreate? CreateFunc { get; set; }
 
@@ -22,7 +30,7 @@ namespace Alternet.UI
         {
             return registry.GetOrCreate(
                 propInfo,
-                () => { return new PropertyGridPropInfoRegistry(); });
+                () => { return new PropertyGridPropInfoRegistry(propInfo); });
         }
     }
 }

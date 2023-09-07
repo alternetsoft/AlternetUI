@@ -23,5 +23,11 @@ namespace Alternet.UI
         /// the <see cref="NewItemParams"/> property.
         /// </summary>
         bool HasNewItemParams { get; }
+
+        /// <summary>
+        /// Gets <see cref="PropertyInfo"/> associated with this
+        /// <see cref="IPropertyGridPropInfoRegistry"/> instance.
+        /// </summary>
+        PropertyInfo PropInfo { get; }
     }
 }

@@ -60,6 +60,7 @@ namespace PropertyGridSample
 
         public MainWindow()
         {
+            propertyGrid.Features = PropertyGridFeature.QuestionCharInNullable;
             PropertyGridSettings.Default = new(this);
             propertyGrid.ProcessException += PropertyGrid_ProcessException;
 

@@ -43,9 +43,9 @@ namespace Alternet.UI
             return PropertyGrid.GetChoices<T>();
         }
 
-        public IPropertyGridNewItemParams CreateNewItemParams()
+        public IPropertyGridNewItemParams CreateNewItemParams(PropertyInfo? propInfo = null)
         {
-            return PropertyGrid.CreateNewItemParams();
+            return PropertyGrid.CreateNewItemParams(propInfo);
         }
 
         public void AutoGetTranslation(bool enable)

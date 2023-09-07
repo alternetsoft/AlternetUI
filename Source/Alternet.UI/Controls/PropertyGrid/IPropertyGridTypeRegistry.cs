@@ -18,6 +18,11 @@ namespace Alternet.UI
         PropertyGridItemCreate? CreateFunc { get; set; }
 
         /// <summary>
+        /// Gets <see cref="Type"/> associated with this <see cref="IPropertyGridTypeRegistry"/> item.
+        /// </summary>
+        Type InstanceType { get; }
+
+        /// <summary>
         /// Gets <see cref="PropertyGrid"/> settings related to <see cref="PropertyInfo"/>.
         /// </summary>
         /// <param name="propInfo">Property information.</param>
