@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,6 +14,9 @@ namespace PropertyGridSample
         public static NullableProps Default = new();
         public static NullableProps DefaultWithValues = new(true);
 
+        SampleClassWithProps classProp3 = new();
+        SampleClassWithProps? classProp2;
+        SampleClassWithProps classProp1 = new();
         byte? asByte;
         bool? asBool;
         char? asChar;
@@ -205,6 +209,43 @@ namespace PropertyGridSample
         {
             get => asPoint;
             set => asPoint = value;
+        }
+
+        [Browsable(false)]
+        public SampleClassWithProps ClassProp1
+        {
+            get
+            {
+                return classProp1;
+            }
+
+            set
+            {
+                classProp1 = value;
+            }
+        }
+
+        [Browsable(false)]
+        public SampleClassWithProps? ClassProp2
+        {
+            get
+            {
+                return classProp2;
+            }
+
+            set
+            {
+                classProp2 = value;
+            }
+        }
+
+        [Browsable(false)]
+        public SampleClassWithProps ClassProp3
+        {
+            get
+            {
+                return classProp3;
+            }
         }
 
         internal void SetDefaults()

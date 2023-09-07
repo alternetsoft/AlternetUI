@@ -1069,37 +1069,57 @@ namespace Alternet.UI
             object instance,
             PropertyInfo propInfo)
         {
-            var value = GetStructPropertyValueForReload(instance, propInfo);
-            var prm = GetNewItemParamsOrNull(instance, propInfo);
-            var result = CreateStringProperty(label, name, value?.ToString(), prm);
-            result.GetValueFuncForReload = GetStructPropertyValueForReload;
+            IPropertyGridItem? result;
+
+            var realType = AssemblyUtils.GetRealType(propInfo.PropertyType);
+            var registry = GetTypeRegistryOrNull(realType);
+            var createFunc = registry?.CreateFunc;
+
+            if (createFunc != null)
+            {
+                result = createFunc(this, label, name, instance, propInfo);
+            }
+            else
+            {
+                var value = GetStructPropertyValueForReload(instance, propInfo);
+                var prm = GetNewItemParamsOrNull(instance, propInfo);
+                result = CreateStringProperty(label, name, value?.ToString(), prm);
+                result.GetValueFuncForReload = GetStructPropertyValueForReload;
+
+                void AddChildren()
+                {
+                    value = propInfo.GetValue(instance);
+
+                    try
+                    {
+                        if (realType.IsValueType)
+                            value ??= Activator.CreateInstance(realType);
+                    }
+                    catch
+                    {
+                    }
+
+                    if (value != null)
+                    {
+                        supressIgnoreProps++;
+                        try
+                        {
+                            var children = CreateProps(value, true);
+                            result.AddChildren(children);
+                        }
+                        finally
+                        {
+                            supressIgnoreProps--;
+                        }
+                    }
+                }
+
+                if (realType.IsValueType)
+                    AddChildren();
+            }
+
             SetPropertyReadOnly(result, true, false);
             OnPropertyCreated(result, instance, propInfo);
-            var realType = AssemblyUtils.GetRealType(propInfo.PropertyType);
-            value = propInfo.GetValue(instance);
-
-            try
-            {
-                value ??= Activator.CreateInstance(realType);
-            }
-            catch
-            {
-            }
-
-            if (value != null)
-            {
-                supressIgnoreProps++;
-                try
-                {
-                    var children = CreateProps(value, true);
-                    result.AddChildren(children);
-                }
-                finally
-                {
-                    supressIgnoreProps--;
-                }
-            }
-
             return result;
         }
 
@@ -1472,22 +1492,12 @@ namespace Alternet.UI
             if (!AssemblyUtils.GetBrowsable(p))
                 return null;
 
-            var setPropReadonly = false;
             propName ??= p.Name;
             var propType = p.PropertyType;
             IPropertyGridItem? prop = null;
             var realType = AssemblyUtils.GetRealType(propType);
             TypeCode typeCode = Type.GetTypeCode(realType);
             label ??= propName;
-
-            object PropValue(object defValue)
-            {
-                object? result = p.GetValue(instance, null);
-                if (result == null)
-                    return defValue;
-                else
-                    return result;
-            }
 
             if (propType.IsEnum)
                 prop = CreatePropertyAsEnum(label, propName, instance, p);
@@ -1499,7 +1509,7 @@ namespace Alternet.UI
                     case TypeCode.DBNull:
                         return null;
                     case TypeCode.Object:
-                        prop = CreateAsClass();
+                        prop = CreatePropertyAsStruct(label, propName, instance, p);
                         break;
                     case TypeCode.Boolean:
                         prop = CreatePropertyAsBool(label, propName, instance, p);
@@ -1549,41 +1559,11 @@ namespace Alternet.UI
                 }
             }
 
-            if (!p.CanWrite || setPropReadonly)
+            if (!p.CanWrite)
                 SetPropertyReadOnly(prop!, true);
             prop!.Instance = instance;
             prop!.PropInfo = p;
             return prop;
-
-            IPropertyGridItem? CreateAsClass()
-            {
-                IPropertyGridItem? result;
-
-                var registry = GetTypeRegistry(realType);
-                var createFunc = registry.CreateFunc;
-
-                if (createFunc != null)
-                {
-                    result = createFunc(this, label, propName, instance, p);
-                    return result;
-                }
-
-                if (realType.IsValueType)
-                {
-                    result = CreatePropertyAsStruct(label!, propName, instance, p);
-                    return result;
-                }
-
-                var prm = GetNewItemParamsOrNull(instance, p);
-                result = CreateStringProperty(
-                    label!,
-                    propName,
-                    PropValue(string.Empty).ToString(),
-                    prm);
-                OnPropertyCreated(result, instance, p);
-                setPropReadonly = true;
-                return result;
-            }
         }
 
         /// <param name="label">Property label.</param>

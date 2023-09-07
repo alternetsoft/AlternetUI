@@ -43,3 +43,7 @@
 - public virtual ResetPropertyValue(IPropertyGridItem prop);
 
 - ignorePropNames - on class level 
+
+- Localizable ToString for Pen/Brush/Etc. Have IToStringProperties ? with list of properties used in ToString?
+
+- Color names localization
