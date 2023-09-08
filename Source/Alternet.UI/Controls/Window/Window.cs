@@ -255,6 +255,9 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets or sets whether system menu is visible for this window.
+        /// </summary>
         public bool HasSystemMenu
         {
             get
