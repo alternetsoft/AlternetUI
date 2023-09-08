@@ -31,6 +31,7 @@ namespace Alternet.UI
     /// </remarks>
     public class AuiManager : IDisposable
     {
+        private Control? managedControl;
         private IntPtr handle;
 
         /// <summary>
@@ -49,9 +50,21 @@ namespace Alternet.UI
             Dispose();
         }
 
+        /// <summary>
+        /// Gets container in which toolbars and sidebars will be created.
+        /// </summary>
+        /// <remarks>
+        /// Use <see cref="SetManagedWindow"/> to assign this property.
+        /// </remarks>
+        public Control? ManagedControl
+        {
+            get => managedControl;
+        }
+
         /// <inheritdoc cref="IDisposable.Dispose"/>
         public void Dispose()
         {
+            UnInit();
             if (handle != IntPtr.Zero)
             {
                 Native.AuiManager.Delete(handle);
@@ -72,6 +85,11 @@ namespace Alternet.UI
         /// </remarks>
         public void UnInit()
         {
+            if (managedControl == null)
+                return;
+            managedControl.Disposed -= ManagedWindow_Disposed;
+            managedControl = null;
+
             Native.AuiManager.UnInit(handle);
         }
 
@@ -259,7 +277,21 @@ namespace Alternet.UI
         /// <param name="managedWnd">Managed window or control.</param>
         public void SetManagedWindow(LayoutPanel managedWnd)
         {
+            if(managedWnd is null)
+                throw new ArgumentNullException(nameof(managedWnd));
+
+            if (managedControl != null)
+                throw new Exception(ErrorMessages.Default.ParameterIsAlreadySet);
+
+            managedControl = managedWnd;
+            managedControl.Disposed += ManagedWindow_Disposed;
+
             Native.AuiManager.SetManagedWindow(handle, ToHandle(managedWnd));
+        }
+
+        private void ManagedWindow_Disposed(object sender, EventArgs e)
+        {
+            UnInit();
         }
 
         /// <summary>
@@ -284,6 +316,16 @@ namespace Alternet.UI
         /// <returns></returns>
         public bool AddPane(Control control, IAuiPaneInfo paneInfo)
         {
+            if (control == null)
+                throw new ArgumentNullException(nameof(control));
+
+            CheckManagedControl();
+
+            if (control.Parent == null)
+            {
+                ManagedControl!.Children.Add(control);
+            }
+
             return Native.AuiManager.AddPane(
                 handle,
                 ToHandle(control),
@@ -460,17 +502,14 @@ namespace Alternet.UI
         {
             return window.Handler.NativeControl!.WxWidget;
         }
+
+        private void CheckManagedControl()
+        {
+            if (managedControl == null)
+            {
+                throw new Exception(string.Format(
+                    ErrorMessages.Default.PropertyIsNull, nameof(ManagedControl)));
+            }
+        }
     }
 }
-
-/*
-===========
-
-public void SetArtProvider(IntPtr artProvider) { }
-public IntPtr GetArtProvider(){};
-
-//public IntPtr[] GetAllPanes(){};
-
-public IntPtr CreateFloatingFrame(,
-    IntPtr parentWindow, IAuiPaneInfo paneInfo){};
-*/

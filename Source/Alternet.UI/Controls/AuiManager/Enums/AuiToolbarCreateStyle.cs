@@ -63,11 +63,6 @@ namespace Alternet.UI
         HorzText = HorzLayout | Text,
 
         /// <summary>
-        /// This mask is used to get toolbar orientation.
-        /// </summary>
-        OrientationMask = Vertical | Horizontal,
-
-        /// <summary>
         /// Default style of the toolbar.
         /// </summary>
         DefaultStyle = 0,
