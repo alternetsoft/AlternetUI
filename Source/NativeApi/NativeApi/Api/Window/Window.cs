@@ -1,4 +1,5 @@
-﻿using System;
+﻿#pragma warning disable
+using System;
 using Alternet.Drawing;
 using ApiCommon;
 
@@ -6,62 +7,48 @@ namespace NativeApi.Api
 {
     public class Window : Control
     {
-        public string Title { get => throw new Exception(); set => throw new Exception(); }
-
-        public WindowStartLocation WindowStartLocation { get => throw new Exception(); set => throw new Exception(); }
-
         [NativeEvent(cancellable: true)]
-        public event EventHandler? Closing { add => throw new Exception(); remove => throw new Exception(); }
+        public event EventHandler? Closing;
 
-        public event EventHandler SizeChanged { add => throw new Exception(); remove => throw new Exception(); }
-        public event EventHandler LocationChanged { add => throw new Exception(); remove => throw new Exception(); }
-        public event EventHandler Activated { add => throw new Exception(); remove => throw new Exception(); }
-        public event EventHandler Deactivated { add => throw new Exception(); remove => throw new Exception(); }
+        public event EventHandler StateChanged;
+        public event EventHandler SizeChanged;
+        public event NativeEventHandler<CommandEventData>? InputBindingCommandExecuted;
+        public event EventHandler LocationChanged;
+        public event EventHandler Activated;
+        public event EventHandler Deactivated;
 
-        public bool ShowInTaskbar { get => throw new Exception(); set => throw new Exception(); }
+        public string Title { get; set; }
+        public WindowStartLocation WindowStartLocation { get; set; }
+        public bool ShowInTaskbar {get; set;}
+        public bool MinimizeEnabled {get; set;}
+        public bool MaximizeEnabled {get; set;}
+        public bool CloseEnabled {get; set;}
+        public bool AlwaysOnTop {get; set;}
+        public bool IsToolWindow {get; set;}
+        public bool Resizable {get; set;}
+        public bool HasBorder {get; set;}
+        public bool HasTitleBar {get; set;}
+        public bool HasSystemMenu { get; set; }
+        public ModalResult ModalResult {get; set;}
+        public Size MinimumSize { get; set; }
+        public Size MaximumSize { get; set; }
+        public bool Modal => default;
 
-        public bool MinimizeEnabled { get => throw new Exception(); set => throw new Exception(); }
-        public bool MaximizeEnabled { get => throw new Exception(); set => throw new Exception(); }
-        public bool CloseEnabled { get => throw new Exception(); set => throw new Exception(); }
+        public void ShowModal() {}
+        public void Close() { }
 
-        public bool AlwaysOnTop { get => throw new Exception(); set => throw new Exception(); }
-        public bool IsToolWindow { get => throw new Exception(); set => throw new Exception(); }
-        public bool Resizable { get => throw new Exception(); set => throw new Exception(); }
-        public bool HasBorder { get => throw new Exception(); set => throw new Exception(); }
-        public bool HasTitleBar { get => throw new Exception(); set => throw new Exception(); }
-        
-        public ModalResult ModalResult { get => throw new Exception(); set => throw new Exception(); }
+        public bool IsActive { get; }
+        public void Activate() { }
+        public static Window ActiveWindow {get; }
+        public Window[] OwnedWindows {get; }
+        public WindowState State {get; set;}
+        public ImageSet? Icon {get; set;}
+        public MainMenu? Menu {get; set;}
+        public Toolbar? Toolbar {get; set;}
+        public StatusBar? StatusBar {get; set;}
 
-        public void ShowModal() => throw new Exception();
+        public void AddInputBinding(string managedCommandId, Key key, ModifierKeys modifiers) { }
+        public void RemoveInputBinding(string managedCommandId) { }
 
-        public Size MinimumSize { get => throw new Exception(); set => throw new Exception(); }
-        public Size MaximumSize { get => throw new Exception(); set => throw new Exception(); }
-
-        public bool Modal => throw new Exception();
-
-        public void Close() => throw new Exception();
-
-        public bool IsActive { get => throw new Exception(); }
-        public void Activate() => throw new Exception();
-        public static Window ActiveWindow { get => throw new Exception(); }
-
-        public Window[] OwnedWindows { get => throw new Exception(); }
-
-        public WindowState State { get => throw new Exception(); set => throw new Exception(); }
-
-        public event EventHandler StateChanged { add => throw new Exception(); remove => throw new Exception(); }
-
-        public ImageSet? Icon { get => throw new Exception(); set => throw new Exception(); }
-
-        public MainMenu? Menu { get => throw new Exception(); set => throw new Exception(); }
-
-        public Toolbar? Toolbar { get => throw new Exception(); set => throw new Exception(); }
-
-        public StatusBar? StatusBar { get => throw new Exception(); set => throw new Exception(); }
-
-        public void AddInputBinding(string managedCommandId, Key key, ModifierKeys modifiers) => throw new Exception();
-        public void RemoveInputBinding(string managedCommandId) => throw new Exception();
-
-        public event NativeEventHandler<CommandEventData>? InputBindingCommandExecuted { add => throw new Exception(); remove => throw new Exception(); }
     }
 }

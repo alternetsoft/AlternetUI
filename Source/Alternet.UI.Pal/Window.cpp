@@ -73,6 +73,7 @@ namespace Alternet::UI
     Window::Window():
         _flags(
             WindowFlags::ShowInTaskbar |
+            WindowFlags::SystemMenu |
             WindowFlags::CloseEnabled |
             WindowFlags::HasBorder |
             WindowFlags::HasTitleBar |
@@ -164,7 +165,8 @@ namespace Alternet::UI
         for (auto pair : _acceleratorsByCommandIds)
             entries.push_back(pair.second);
 
-        frame->SetAcceleratorTable(entries.empty() ? wxNullAcceleratorTable : wxAcceleratorTable(entries.size(), &entries[0]));
+        frame->SetAcceleratorTable(entries.empty() ?
+            wxNullAcceleratorTable : wxAcceleratorTable(entries.size(), &entries[0]));
     }
 
     void Window::OnCommand(wxCommandEvent& event)
@@ -495,7 +497,12 @@ namespace Alternet::UI
 
     long Window::GetWindowStyle()
     {
-        long style = wxSYSTEM_MENU | wxCLIP_CHILDREN;
+        long style = wxCLIP_CHILDREN;
+
+        style = style | wxFULL_REPAINT_ON_RESIZE;
+
+        if(GetHasSystemMenu())
+            style |= wxSYSTEM_MENU;
 
         if (GetMinimizeEnabled())
             style |= wxMINIMIZE_BOX;
@@ -530,8 +537,6 @@ namespace Alternet::UI
     wxWindow* Window::CreateWxWindowCore(wxWindow* parent)
     {
         auto style = GetWindowStyle();
-
-         style = style | wxFULL_REPAINT_ON_RESIZE;
 
         _frame = new Frame(this, style);
 
@@ -998,6 +1003,20 @@ namespace Alternet::UI
             return nullopt;
     }
     
+    bool Window::GetHasSystemMenu()
+    {
+        return _flags.IsSet(WindowFlags::SystemMenu);
+    }
+    
+    void Window::SetHasSystemMenu(bool value)
+    {
+        if (GetHasSystemMenu() == value)
+            return;
+
+        _flags.Set(WindowFlags::SystemMenu, value);
+        ScheduleRecreateWxWindow();
+    }
+
     bool Window::GetHasTitleBar()
     {
         return _flags.IsSet(WindowFlags::HasTitleBar);

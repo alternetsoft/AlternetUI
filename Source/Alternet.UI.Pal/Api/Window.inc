@@ -45,6 +45,10 @@ bool GetHasTitleBar();
 void SetHasTitleBar(bool value);
 
 
+bool GetHasSystemMenu();
+void SetHasSystemMenu(bool value);
+
+
 ModalResult GetModalResult();
 void SetModalResult(ModalResult value);
 
@@ -98,12 +102,12 @@ public:
 enum class WindowEvent
 {
     Closing,
+    StateChanged,
     SizeChanged,
+    InputBindingCommandExecuted,
     LocationChanged,
     Activated,
     Deactivated,
-    StateChanged,
-    InputBindingCommandExecuted,
 };
 typedef void* (*WindowEventCallbackType)(Window* obj, WindowEvent event, void* param);
 static void SetEventCallback(WindowEventCallbackType value) { eventCallback = value; }

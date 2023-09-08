@@ -1,7 +1,7 @@
-using Alternet.Drawing;
 using System;
 using System.ComponentModel;
 using System.Linq;
+using Alternet.Drawing;
 
 namespace Alternet.UI
 {
@@ -10,6 +10,16 @@ namespace Alternet.UI
         internal override Native.Control CreateNativeControl()
         {
             return new Native.Window();
+        }
+
+        /// <summary>
+        /// Opens a window and returns only when the newly opened window is closed.
+        /// User interaction with all other windows in the application is
+        /// disabled until the modal window is closed.
+        /// </summary>
+        public void ShowModal()
+        {
+            NativeControl.ShowModal();
         }
 
         public new Native.Window NativeControl => (Native.Window)base.NativeControl!;
@@ -29,6 +39,7 @@ namespace Alternet.UI
             ApplyResizable();
             ApplyHasBorder();
             ApplyHasTitleBar();
+            ApplyHasSystemMenu();
             ApplyState();
             ApplyIcon();
             ApplyMenu();
@@ -48,6 +59,7 @@ namespace Alternet.UI
             Control.ResizableChanged += Control_ResizableChanged;
             Control.HasBorderChanged += Control_HasBorderChanged;
             Control.HasTitleBarChanged += Control_HasTitleBarChanged;
+            Control.HasSystemMenuChanged += Control_HasSystemMenuChanged;
 
             Control.StateChanged += Control_StateChanged;
             Control.IconChanged += Control_IconChanged;
@@ -115,7 +127,10 @@ namespace Alternet.UI
         private void AddInputBinding(InputBinding value)
         {
             var keyBinding = (KeyBinding)value;
-            NativeControl.AddInputBinding(keyBinding.ManagedCommandId, (Native.Key)keyBinding.Key, (Native.ModifierKeys)keyBinding.Modifiers);
+            NativeControl.AddInputBinding(
+                keyBinding.ManagedCommandId,
+                (Native.Key)keyBinding.Key,
+                (Native.ModifierKeys)keyBinding.Modifiers);
         }
 
         private void InputBindings_ItemRemoved(
@@ -134,16 +149,6 @@ namespace Alternet.UI
         private void Control_MenuChanged(object? sender, EventArgs e)
         {
             ApplyMenu();
-        }
-
-        /// <summary>
-        /// Opens a window and returns only when the newly opened window is closed.
-        /// User interaction with all other windows in the application is
-        /// disabled until the modal window is closed.
-        /// </summary>
-        public void ShowModal()
-        {
-            NativeControl.ShowModal();
         }
 
         private void NativeControl_StateChanged(object? sender, EventArgs e)
@@ -307,20 +312,25 @@ namespace Alternet.UI
         {
             ApplyAlwaysOnTop();
         }
-        
+
         private void Control_IsToolWindowChanged(object? sender, EventArgs e)
         {
             ApplyIsToolWindow();
         }
-        
+
         private void Control_ResizableChanged(object? sender, EventArgs e)
         {
             ApplyResizable();
         }
-        
+
         private void Control_HasBorderChanged(object? sender, EventArgs e)
         {
             ApplyHasBorder();
+        }
+
+        private void Control_HasSystemMenuChanged(object? sender, EventArgs e)
+        {
+            ApplyHasSystemMenu();
         }
 
         private void Control_HasTitleBarChanged(object? sender, EventArgs e)
@@ -396,18 +406,27 @@ namespace Alternet.UI
         {
             NativeControl.AlwaysOnTop = Control.AlwaysOnTop;
         }
+
+        private void ApplyHasSystemMenu()
+        {
+            NativeControl.HasSystemMenu = Control.HasSystemMenu;
+        }
+
         private void ApplyIsToolWindow()
         {
             NativeControl.IsToolWindow = Control.IsToolWindow;
         }
+
         private void ApplyResizable()
         {
             NativeControl.Resizable = Control.Resizable;
         }
+
         private void ApplyHasBorder()
         {
             NativeControl.HasBorder = Control.HasBorder;
         }
+
         private void ApplyHasTitleBar()
         {
             NativeControl.HasTitleBar = Control.HasTitleBar;
@@ -463,6 +482,7 @@ namespace Alternet.UI
             Control.ResizableChanged -= Control_ResizableChanged;
             Control.HasBorderChanged -= Control_HasBorderChanged;
             Control.HasTitleBarChanged -= Control_HasTitleBarChanged;
+            Control.HasSystemMenuChanged -= Control_HasSystemMenuChanged;
             Control.StateChanged -= Control_StateChanged;
             Control.IconChanged -= Control_IconChanged;
             Control.MenuChanged -= Control_MenuChanged;
@@ -519,7 +539,8 @@ namespace Alternet.UI
             if (mode == WindowSizeToContentMode.None)
                 return;
 
-            var newSize = GetChildrenMaxPreferredSizePadded(new Size(double.PositiveInfinity, double.PositiveInfinity));
+            var newSize = GetChildrenMaxPreferredSizePadded(
+                new Size(double.PositiveInfinity, double.PositiveInfinity));
             if (newSize != Size.Empty)
             {
                 var currentSize = Control.ClientSize;

@@ -173,6 +173,20 @@ ALTERNET_UI_API void Window_SetHasTitleBar_(Window* obj, c_bool value)
         });
 }
 
+ALTERNET_UI_API c_bool Window_GetHasSystemMenu_(Window* obj)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return obj->GetHasSystemMenu();
+        });
+}
+
+ALTERNET_UI_API void Window_SetHasSystemMenu_(Window* obj, c_bool value)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetHasSystemMenu(value);
+        });
+}
+
 ALTERNET_UI_API ModalResult Window_GetModalResult_(Window* obj)
 {
     return MarshalExceptions<ModalResult>([&](){

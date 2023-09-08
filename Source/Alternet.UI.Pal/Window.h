@@ -145,7 +145,8 @@ namespace Alternet::UI
             Active = 1 << 9,
             Modal = 1 << 10,
             ModalLoopStopRequested = 1 << 11,
-            ShownOnce = 1 << 12
+            ShownOnce = 1 << 12,
+            SystemMenu = 1 << 13,
         };
 
         DelayedFlags<Window, DelayedWindowFlags> _delayedFlags;
