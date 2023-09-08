@@ -18,7 +18,11 @@ namespace Alternet.UI
 
         public string InvalidParameter { get; set; } = "Invalid Parameter.";
 
+        public string ParameterIsAlreadySet { get; set; } = "Parameter is already set.";
+
         public string EventHasAlreadyBeenHandled { get; set; } =
             "Event has already been handled.";
+
+        public string PropertyIsNull { get; set; } = "Property {0} is null";
     }
 }
