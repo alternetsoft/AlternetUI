@@ -235,6 +235,7 @@ namespace Alternet.UI
         /// <summary>
         /// Executes assigned action immediately.
         /// </summary>
+        [Browsable(false)]
         public virtual Action<Control>? InitAction
         {
             get
