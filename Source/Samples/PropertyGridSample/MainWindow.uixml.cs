@@ -273,6 +273,20 @@ namespace PropertyGridSample
                 propertyGrid.SetPropertyEditorByName(prop, "TextCtrlAndButton");
                 propertyGrid.Add(prop);
 
+                void AddCollectionProp(string label, string propName)
+                {
+                    prop = propertyGrid.CreateProperty(label, null, this, propName);
+                    if (prop != null)
+                    {
+                        propertyGrid.SetPropertyReadOnly(prop, false, false);
+                        propertyGrid.SetPropertyEditorByName(prop, "TextCtrlAndButton");
+                        propertyGrid.Add(prop);
+                    }
+                }
+
+                AddCollectionProp("Collection<string>", "ItemsString");
+                AddCollectionProp("Collection<object>", "ItemsObject");
+
                 prop = propertyGrid.CreateBoolProperty("Bool 2");
                 propertyGrid.Add(prop);
                 propertyGrid.SetPropertyKnownAttribute(
@@ -566,8 +580,25 @@ namespace PropertyGridSample
             if (PropertyGridSettings.Default!.LogButtonClick)
                 LogEvent("ButtonClick");
 
+            var prop = propertyGrid.EventProperty;
+            if (prop == null)
+                return;
+            var propInfo = prop.PropInfo;
+            var instance = prop.Instance;
+
+            if (propInfo == null || instance == null)
+                return;
+
+            var propType = AssemblyUtils.GetRealType(propInfo.PropertyType);
+
+            var value = propInfo.GetValue(instance);
+
+            if (value is not ICollection)
+                return;
+
             UIDialogCollectionEdit dialog = new();
-            dialog.ShowModal(this);
+            dialog.DataSource = value;
+            dialog.Show();
         }
 
         void IComponentDesigner.PropertyChanged(object? sender, string? propName)

@@ -4,11 +4,23 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Alternet.UI;
+using Alternet.Base.Collections;
 
 namespace PropertyGridSample
 {
     public partial class MainWindow
     {
+        public Collection<string> ItemsString { get; set; } = NewCollection<string>();
+        public Collection<object> ItemsObject { get; set; } = NewCollection<object>();
+
+        internal static Collection<T> NewCollection<T>()
+        {
+            var result = new Collection<T>();
+            ObjectInitializers.AddTenItems(result);
+
+            return result;
+        }
+
 #pragma warning disable
         internal void RunTests()
 #pragma warning restore

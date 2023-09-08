@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Alternet.UI;
 using Alternet.Base.Collections;
 using Alternet.Drawing;
+using System.Collections;
 
 namespace PropertyGridSample
 {
@@ -118,7 +119,7 @@ namespace PropertyGridSample
             });
         }
 
-        private static void AddTenItems(Collection<object> items)
+        internal static void AddTenItems(IList items)
         {
             items.Add("One");
             items.Add("Two");
