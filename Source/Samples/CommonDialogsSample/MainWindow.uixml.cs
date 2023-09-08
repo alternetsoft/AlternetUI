@@ -43,7 +43,7 @@ namespace CommonDialogsSample
             FileNotFoundException,
         }
 
-        void InitEnumComboBox<TEnum>(ComboBox comboBox)
+        private void InitEnumComboBox<TEnum>(ComboBox comboBox)
         {
             comboBox.Items.Clear();
 
@@ -53,7 +53,7 @@ namespace CommonDialogsSample
             comboBox.SelectedIndex = 0;
         }
 
-        string GetInitialDirectory()
+        private string GetInitialDirectory()
         {
             return Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
         }
