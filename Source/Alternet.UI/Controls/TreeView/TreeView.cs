@@ -62,8 +62,8 @@ namespace Alternet.UI
         /// </summary>
         public TreeView()
         {
-            Items.ItemInserted += Items_ItemInserted;
-            Items.ItemRemoved += Items_ItemRemoved;
+            Items.ItemInsertedFast += Items_ItemInsertedFast;
+            Items.ItemRemovedFast += Items_ItemRemovedFast;
         }
 
         /// <summary>
@@ -771,6 +771,64 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Removes selected items from the control.
+        /// </summary>
+        public void RemoveSelected()
+        {
+            BeginUpdate();
+            try
+            {
+                IReadOnlyList<TreeViewItem> items = SelectedItems;
+                ClearSelected();
+                foreach (var item in items)
+                    item.Remove();
+            }
+            finally
+            {
+                EndUpdate();
+            }
+        }
+
+        /// <summary>
+        /// Removed all items from the control.
+        /// </summary>
+        public void RemoveAll()
+        {
+            BeginUpdate();
+            try
+            {
+                ClearSelected();
+                Items.Clear();
+            }
+            finally
+            {
+                EndUpdate();
+            }
+        }
+
+        /// <summary>
+        /// Removes item and selects its sibling (next or previous on the same level).
+        /// </summary>
+        /// <param name="item"></param>
+        public void RemoveItemAndSelectSibling(TreeViewItem? item)
+        {
+            if (item == null)
+                return;
+            var newItem = item?.NextOrPrevSibling;
+
+            BeginUpdate();
+            try
+            {
+                item!.Remove();
+                SelectedItem = newItem;
+            }
+            finally
+            {
+                EndUpdate();
+            }
+        }
+
+        /// <summary>
         /// Changes visual style of the control to look like <see cref="ListBox"/>.
         /// </summary>
         public void MakeAsListBox()
@@ -937,18 +995,14 @@ namespace Alternet.UI
             return GetEffectiveControlHandlerHactory().CreateTreeViewHandler(this);
         }
 
-        private void Items_ItemRemoved(
-            object? sender,
-            CollectionChangeEventArgs<TreeViewItem> e)
+        private void Items_ItemRemovedFast(object? sender, int index, TreeViewItem item)
         {
-            TreeViewItem.OnChildItemRemoved(e.Item);
+            TreeViewItem.OnChildItemRemoved(item);
         }
 
-        private void Items_ItemInserted(
-            object? sender,
-            CollectionChangeEventArgs<TreeViewItem> e)
+        private void Items_ItemInsertedFast(object? sender, int index, TreeViewItem item)
         {
-            TreeViewItem.OnChildItemAdded(e.Item, null, this, e.Index);
+            TreeViewItem.OnChildItemAdded(item, null, this, index);
         }
 
         private void ClearSelectedCore()

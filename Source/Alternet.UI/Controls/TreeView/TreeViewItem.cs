@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel;
 using Alternet.Base.Collections;
 using Alternet.Drawing;
 
@@ -113,6 +114,7 @@ namespace Alternet.UI
         /// about the item, such as a unique identifier or the index position of
         /// the item's data in a database.
         /// </remarks>
+        [Browsable(false)]
         public object? Tag { get; set; }
 
         /// <summary>
@@ -122,6 +124,7 @@ namespace Alternet.UI
         /// the current tree item, or <c>null</c> if the item is a root.</value>
         /// <remarks>If the tree item is at the root level, the
         /// <see cref="Parent"/> property returns <c>null</c>.</remarks>
+        [Browsable(false)]
         public TreeViewItem? Parent { get; private set; }
 
         /// <summary>
@@ -132,6 +135,7 @@ namespace Alternet.UI
         /// the tree item is assigned to,
         /// or <c>null</c> if the item has not been assigned to a tree view.
         /// </value>
+        [Browsable(false)]
         public TreeView? TreeView
         {
             get => treeView;
@@ -172,12 +176,14 @@ namespace Alternet.UI
         /// </summary>
         /// <value><see langword="true"/> if the tree item is in the selected
         /// state; otherwise, <see langword="false"/>.</value>
+        [Browsable(false)]
         public bool IsSelected => RequiredTreeView.Handler.IsItemSelected(this);
 
         /// <summary>
         /// Gets or sets a value indicating whether the tree item is in the
         /// focused state.
         /// </summary>
+        [Browsable(false)]
         public bool IsFocused
         {
             get => RequiredTreeView.Handler.IsItemFocused(this);
@@ -194,6 +200,7 @@ namespace Alternet.UI
         /// An item can be contained in either <see cref="Items"/> or
         /// <see cref="TreeView.Items"/> collection.
         /// </value>
+        [Browsable(false)]
         public int? Index { get; private set; }
 
         /// <summary>
@@ -237,6 +244,7 @@ namespace Alternet.UI
         /// <see cref="TreeView.AfterExpand"/>,
         /// <see cref="TreeView.AfterCollapse"/> events.
         /// </remarks>
+        [Browsable(false)]
         public bool IsExpanded { get; set; }
 
         /// <summary>
@@ -249,6 +257,7 @@ namespace Alternet.UI
         /// Each of the tree items in the collection has an
         /// <see cref="Items"/> property that can contain its own item collection.
         /// </remarks>
+        [Browsable(false)]
         public Collection<TreeViewItem> Items
         {
             get
@@ -256,8 +265,8 @@ namespace Alternet.UI
                 if(items == null)
                 {
                     items = new() { ThrowOnNullItemAddition = true };
-                    items.ItemInserted += Items_ItemInserted;
-                    items.ItemRemoved += Items_ItemRemoved;
+                    items.ItemInsertedFast += Items_ItemInsertedFast;
+                    items.ItemRemovedFast += Items_ItemRemovedFast;
                 }
 
                 return items;
@@ -265,9 +274,58 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets items from the <see cref="TreeView"/> (if item is on root level)
+        /// or from the <see cref="Parent"/> (if item has parent).
+        /// </summary>
+        /// <remarks>
+        /// If item has no parent and is not attached to the <see cref="TreeView"/> this
+        /// property returns <c>null</c>.
+        /// </remarks>
+        [Browsable(false)]
+        public Collection<TreeViewItem>? ParentItems
+        {
+            get
+            {
+                Collection<TreeViewItem>? items;
+                if (Parent == null)
+                    items = TreeView?.Items;
+                else
+                    items = Parent.Items;
+                return items;
+            }
+        }
+
+        /// <summary>
         /// Gets whether there are any items in the <see cref="Items"/> list.
         /// </summary>
+        [Browsable(false)]
         public bool HasItems => items != null && items.Count > 0;
+
+        /// <summary>
+        /// Gets next sibling if item is not the last one, otherwise gets previous sibling.
+        /// </summary>
+        [Browsable(false)]
+        public TreeViewItem? NextOrPrevSibling
+        {
+            get
+            {
+                var items = ParentItems;
+                if (items == null)
+                    return null;
+
+                for (int i = 0; i < items.Count; i++)
+                {
+                    if (items[i] != this)
+                        continue;
+                    if (i == items.Count - 1)
+                        return items[i - 1];
+                    else
+                        return items[i + 1];
+                }
+
+                return null;
+            }
+        }
 
         private TreeView RequiredTreeView =>
             TreeView ?? throw new InvalidOperationException(
@@ -421,18 +479,14 @@ namespace Alternet.UI
             }
         }
 
-        private void Items_ItemInserted(
-            object? sender,
-            CollectionChangeEventArgs<TreeViewItem> e)
+        private void Items_ItemRemovedFast(object? sender, int index, TreeViewItem item)
         {
-            OnChildItemAdded(e.Item, this, TreeView, e.Index);
+            OnChildItemRemoved(item);
         }
 
-        private void Items_ItemRemoved(
-            object? sender,
-            CollectionChangeEventArgs<TreeViewItem> e)
+        private void Items_ItemInsertedFast(object? sender, int index, TreeViewItem item)
         {
-            OnChildItemRemoved(e.Item);
+            OnChildItemAdded(item, this, TreeView, index);
         }
     }
 }
