@@ -210,12 +210,7 @@ namespace ControlsSample
 
         private void RemoveItemButton_Click(object? sender, EventArgs e)
         {
-            treeView.BeginUpdate();
-            IReadOnlyList<TreeViewItem> items = treeView.SelectedItems;
-            treeView.ClearSelected();
-            foreach (var item in items)
-                item.Remove();
-            treeView.EndUpdate();
+            treeView.RemoveSelected();
         }
 
         private void AddItemButton_Click(object? sender, EventArgs e)

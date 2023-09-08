@@ -170,7 +170,7 @@ namespace AuiManagerSample
 
             manager.AddPane(toolbar4, pane4);
 
-            // Notenook pane
+            // Center pane
             var pane5 = manager.CreatePaneInfo();
             pane5.Name("pane5").CenterPane().PaneBorder(false);
             notebook5 = new AuiNotebook();
