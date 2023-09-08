@@ -233,6 +233,22 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Executes assigned action immediately.
+        /// </summary>
+        public virtual Action<Control>? InitAction
+        {
+            get
+            {
+                return null;
+            }
+
+            set
+            {
+                value?.Invoke(this);
+            }
+        }
+
+        /// <summary>
         /// Gets or sets <see cref="IComponentDesigner"/> instance which
         /// connects control with the designer.
         /// </summary>
@@ -591,7 +607,7 @@ namespace Alternet.UI
 
             set
             {
-                Size = new Size(value, Size.Height);
+                Size = new(value, Size.Height);
             }
         }
 
@@ -616,7 +632,7 @@ namespace Alternet.UI
 
             set
             {
-                Size = new Size(Size.Width, value);
+                Size = new(Size.Width, value);
             }
         }
 
@@ -834,7 +850,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether the user can give the focus to this control using the TAB key.
+        /// Gets or sets a value indicating whether the user can give the focus to this control
+        /// using the TAB key.
         /// </summary>
         public virtual bool TabStop
         {

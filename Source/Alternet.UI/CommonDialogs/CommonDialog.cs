@@ -11,7 +11,7 @@ namespace Alternet.UI
         private bool isDisposed;
 
         /// <summary>
-        /// Gets or sets the file dialog window title.
+        /// Gets or sets the dialog window title.
         /// </summary>
         public string? Title
         {
