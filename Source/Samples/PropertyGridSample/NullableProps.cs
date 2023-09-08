@@ -14,9 +14,9 @@ namespace PropertyGridSample
         public static NullableProps Default = new();
         public static NullableProps DefaultWithValues = new(true);
 
-        SampleClassWithProps classProp3 = new();
+        private readonly SampleClassWithProps classProp3 = new();
         SampleClassWithProps? classProp2;
-        SampleClassWithProps classProp1 = new();
+        private SampleClassWithProps classProp1 = new();
         byte? asByte;
         bool? asBool;
         char? asChar;

@@ -105,21 +105,17 @@ namespace PropertyGridSample
             logListBox = CreateListBox();
             manager.AddPane(logListBox, pane3);
 
-            // Notenook pane
+            // Center pane
             var pane5 = manager.CreatePaneInfo();
             pane5.Name("pane5").CenterPane().PaneBorder(false);
-
             controlPanel.HorizontalAlignment = HorizontalAlignment.Center;
             controlPanel.VerticalAlignment = VerticalAlignment.Center;
-
             panel.Children.Add(controlPanel);
             manager.AddPane(controlPanel, pane5);
 
             manager.Update();
 
-            ControlListBoxItem item;
-
-            item = new(typeof(WelcomeControl));
+            ControlListBoxItem item = new(typeof(WelcomeControl));
             controlsListBox.Add(item);
 
             Type[] badTypes = new Type[] 
@@ -148,9 +144,6 @@ namespace PropertyGridSample
               typeof(TabControl),
               typeof(Window),
               typeof(ToolbarItem),
-              //typeof(WelcomeControl),
-              //typeof(ShowDialogButton),
-              //typeof(ShowContextMenuButton),
             };
 
             IEnumerable<Type> result = AssemblyUtils.GetTypeDescendants(typeof(Control));
@@ -201,6 +194,7 @@ namespace PropertyGridSample
             controlsListBox.SelectedIndex = 0;
 
             Application.Current.Idle += ApplicationIdle;
+            RunTests();            
         }
 
         internal void AddMainWindow()
@@ -417,43 +411,6 @@ namespace PropertyGridSample
             }
         }
 
-        internal void TestLong()
-        {
-            IPropertyGridVariant variant = PropertyGrid.CreateVariant();
-
-            long minLong = long.MinValue;
-            long maxLong = long.MaxValue;
-            ulong minULong = ulong.MinValue;
-            ulong maxULong = ulong.MaxValue;
-
-            variant.AsLong = minLong;
-            long minLong2 = variant.AsLong;
-
-            variant.AsLong = maxLong;
-            long maxLong2 = variant.AsLong;
-
-            variant.AsULong = minULong;
-            ulong minULong2 = variant.AsULong;
-
-            variant.AsULong = maxULong;
-            ulong maxULong2 = variant.AsULong;
-
-            Log($"{minLong} - {minLong2}");
-            Log($"{maxLong} - {maxLong2}");
-            Log($"{minULong} - {minULong2}");
-            Log($"{maxULong} - {maxULong2}");
-
-            variant.AsBool = true;
-
-            variant.AsLong = 150;
-
-            variant.AsDateTime = DateTime.Now;
-
-            variant.AsDouble = 18;
-
-            variant.AsString = "hello";
-        }
-
         private void ControlsListBox_SelectionChanged(object? sender, EventArgs e)
         {
             UpdatePropertyGrid();
@@ -607,6 +564,9 @@ namespace PropertyGridSample
         {
             if (PropertyGridSettings.Default!.LogButtonClick)
                 LogEvent("ButtonClick");
+
+            UIDialogCommon dialog = new();
+            dialog.ShowModal(this);
         }
 
         void IComponentDesigner.PropertyChanged(object? sender, string? propName)
