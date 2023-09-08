@@ -150,6 +150,11 @@ namespace Alternet.UI
         public event EventHandler? MouseLeave;
 
         /// <summary>
+        /// Occurs when control is disposed.
+        /// </summary>
+        public event EventHandler? Disposed;
+
+        /// <summary>
         /// Occurs when the value of the <see cref="Enabled"/> property changes.
         /// </summary>
         public event EventHandler? EnabledChanged;
@@ -1838,6 +1843,8 @@ namespace Alternet.UI
         {
             if (!IsDisposed)
             {
+                Disposed?.Invoke(this, EventArgs.Empty);
+
                 if (disposing)
                 {
                     /*var children = Handler.AllChildren.ToArray();*/
