@@ -3,34 +3,49 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Alternet.Drawing;
 
 namespace Alternet.UI
 {
     /// <summary>
     /// Base class for dialog windows.
     /// </summary>
-    public class UIDialogWindow : Window
+    internal class UIDialogWindow : Window
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="UIDialogWindow"/> class.
         /// </summary>
         public UIDialogWindow()
         {
-            ShowInTaskbar = false;
-            MinimizeEnabled = false;
-            MaximizeEnabled = false;
-            StartLocation = WindowStartLocation.CenterScreen;
-            Size = new (600, 400);
+            this.SuspendLayout();
+            this.BeginIgnoreRecreate();
+            try
+            {
+                ShowInTaskbar = false;
+                MinimizeEnabled = false;
+                MaximizeEnabled = false;
+                StartLocation = WindowStartLocation.CenterScreen;
+            }
+            finally
+            {
+                this.EndIgnoreRecreate();
+            }
+
+            //Size = new (600, 400);
 
             ButtonPanel.Children.Add(OkButton);
             ButtonPanel.Children.Add(CancelButton);
             ButtonPanel.Children.Add(ApplyButton);
 
-            LayoutPanel.SetDock(ButtonPanel, DockStyle.Bottom);
-            LayoutPanel.SetDock(DataPanel, DockStyle.Fill);
-            Children.Add(MainPanel);
             MainPanel.Children.Add(DataPanel);
             MainPanel.Children.Add(ButtonPanel);
+
+            MainPanel.BackgroundColor = Color.White;
+            DataPanel.BackgroundColor = Color.Yellow;
+            ButtonPanel.BackgroundColor = Color.Red;
+
+            Children.Add(MainPanel);
+            this.ResumeLayout();
         }
 
         /// <summary>
@@ -40,10 +55,15 @@ namespace Alternet.UI
 
         public Panel DataPanel { get; } = new()
         {
+            Size = new(400, 300),
+            VerticalAlignment = VerticalAlignment.Stretch,
+            HorizontalAlignment = HorizontalAlignment.Stretch,
         };
 
-        public LayoutPanel MainPanel { get; } = new()
+        public VerticalStackPanel MainPanel { get; } = new()
         {
+            VerticalAlignment = VerticalAlignment.Stretch,
+            HorizontalAlignment = HorizontalAlignment.Stretch,
         };
 
         /// <summary>
@@ -80,6 +100,8 @@ namespace Alternet.UI
         /// </summary>
         public HorizontalStackPanel ButtonPanel { get; } = new()
         {
+            HorizontalAlignment = HorizontalAlignment.Right,
+            VerticalAlignment = VerticalAlignment.Bottom,
         };
     }
 }

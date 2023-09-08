@@ -3635,6 +3635,66 @@ namespace Alternet.UI
             }
         }
 
+        public IEnumerable<IPropertyGridItem> GetCategories()
+        {
+            List<IPropertyGridItem> result = new();
+            foreach (var item in Items)
+            {
+                if (item.IsCategory)
+                    result.Add(item);
+            }
+            return result;
+        }
+
+        public void DoActionOnProperties<T>(
+            IEnumerable<IPropertyGridItem> props,
+            Action<IPropertyGridItem, T> action, T prmValue, bool suspendUpdate = true)
+        {
+            if (suspendUpdate) BeginUpdate();
+            try
+            {
+                foreach (var item in props)
+                {
+                    action(item, prmValue);
+                }
+            }
+            finally
+            {
+                if (suspendUpdate) EndUpdate();
+            }
+        }
+
+        public void DoActionOnProperties<T1, T2>(
+            IEnumerable<IPropertyGridItem> props,
+            Action<IPropertyGridItem, T1, T2> action,
+            T1 prmValue1,
+            T2 prmValue2,
+            bool suspendUpdate = true)
+        {
+            if (suspendUpdate) BeginUpdate();
+            try
+            {
+                foreach (var item in props)
+                {
+                    action(item, prmValue1, prmValue2);
+                }
+            }
+            finally
+            {
+                if (suspendUpdate) EndUpdate();
+            }
+        }
+
+        public void SetCategoriesBackgroundColor(Color color)
+        {
+            SetPropertiesBackgroundColor(GetCategories(), color);
+        }
+
+        public void SetPropertiesBackgroundColor(IEnumerable<IPropertyGridItem> items, Color color)
+        {
+            DoActionOnProperties<Color, bool>(items, SetPropertyBackgroundColor, color, false);
+        }
+
         /// <summary>
         /// Reloads value of the <see cref="IPropertyGridItem"/> item if it is attached
         /// to the external object (<see cref="IPropertyGridItem.Instance"/> and 

@@ -268,6 +268,11 @@ namespace PropertyGridSample
                 prop = propertyGrid.CreatePropCategory("Properties 2");
                 propertyGrid.Add(prop);
 
+                // String with button
+                prop = propertyGrid.CreateStringProperty("Str and button");
+                propertyGrid.SetPropertyEditorByName(prop, "TextCtrlAndButton");
+                propertyGrid.Add(prop);
+
                 prop = propertyGrid.CreateBoolProperty("Bool 2");
                 propertyGrid.Add(prop);
                 propertyGrid.SetPropertyKnownAttribute(
@@ -378,11 +383,6 @@ namespace PropertyGridSample
                 // Password attribute must be set after adding property to PropertyGrid
                 propertyGrid.SetPropertyKnownAttribute(prop, PropertyGridItemAttrId.Password, true);
 
-                // String with button
-                prop = propertyGrid.CreateStringProperty("Str and button");
-                propertyGrid.SetPropertyEditorByName(prop, "TextCtrlAndButton");
-                propertyGrid.Add(prop);
-
                 // Editable enum. Can have values which are not in choices.
                 var choices = PropertyGrid.CreateChoices();
                 choices.Add("Item 1");
@@ -404,6 +404,7 @@ namespace PropertyGridSample
                 propertyGrid.Add(prop);
                 propertyGrid.AddProps(NullableProps.Default);
 
+                propertyGrid.SetCategoriesBackgroundColor(Color.LightGray);
             }
             finally
             {
@@ -565,7 +566,7 @@ namespace PropertyGridSample
             if (PropertyGridSettings.Default!.LogButtonClick)
                 LogEvent("ButtonClick");
 
-            UIDialogCommon dialog = new();
+            UIDialogCollectionEdit dialog = new();
             dialog.ShowModal(this);
         }
 
