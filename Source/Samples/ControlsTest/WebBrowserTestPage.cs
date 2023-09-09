@@ -149,16 +149,16 @@ namespace ControlsTest
 
             listBox1 = new()
             {
-                //Width = 180,
-                //Height = 400,
+                // Width = 180,
+                // Height = 400,
             };
             listBox1.MouseDoubleClick += ListBox1_MouseDoubleClick;
 
             webBrowser1 = new()
             {
-                //Width = 500,
-                //Height = 300,
-                //Margin = new(5, 0, 0, 0),
+                // Width = 500,
+                // Height = 300,
+                // Margin = new(5, 0, 0, 0),
             };
             webBrowser1.Navigated += WebBrowser1_Navigated;
             webBrowser1.Loaded += WebBrowser1_Loaded;
@@ -287,7 +287,6 @@ namespace ControlsTest
             webBrowserToolbarPanel.Children.Add(urlTextBox);
             webBrowserToolbarPanel.Children.Add(goButton);
             webBrowserGrid.Children.Add(webBrowserToolbarPanel);
-
         }
 
         public void AddFindPanel(int rowIndex)
