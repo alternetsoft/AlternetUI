@@ -314,7 +314,11 @@ namespace Alternet.UI
                     if (value is Color color)
                         AsColor = color;
                     else
-                        AsString = value.ToString();
+                    {
+                        var s = value.ToString();
+                        AsString = s!;
+                    }
+
                     return;
                 case TypeCode.Boolean:
                     AsBool = (bool)value;

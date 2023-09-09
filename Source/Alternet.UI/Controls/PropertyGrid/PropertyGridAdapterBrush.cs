@@ -21,7 +21,6 @@ namespace Alternet.UI
         private Color endColor = Color.White;
         private double radialGradientRadius = 10;
         private BrushHatchStyle hatchStyle;
-        private bool loaded = false;
 
         // (Color color, double offset)
         private GradientStop[] gradientStops = Array.Empty<GradientStop>();
@@ -42,24 +41,13 @@ namespace Alternet.UI
         {
             get
             {
-                if (Brush == null)
-                    return BrushType.None;
-                if (Brush is SolidBrush)
-                    return BrushType.Solid;
-                if (Brush is HatchBrush)
-                    return BrushType.Hatch;
-                if (Brush is LinearGradientBrush)
-                    return BrushType.LinearGradient;
-                if (Brush is RadialGradientBrush)
-                    return BrushType.RadialGradient;
                 return brushType;
             }
 
             set
             {
-                LoadFromBrush();
                 brushType = value;
-                UpdateInstanceProperty();
+                Save();
             }
         }
 
@@ -70,16 +58,13 @@ namespace Alternet.UI
         {
             get
             {
-                if (Brush is null)
-                    return color;
-                return Brush.BrushColor;
+                return color;
             }
 
             set
             {
-                LoadFromBrush();
                 color = value;
-                UpdateInstanceProperty();
+                Save();
             }
         }
 
@@ -90,24 +75,13 @@ namespace Alternet.UI
         {
             get
             {
-                if(Brush != null)
-                {
-                    if (GradientStops.Length > 0)
-#pragma warning disable
-                        return GradientStops[GradientStops.Length - 1].Color;
-#pragma warning restore
-                    else
-                        return Color.White;
-                }
-
                 return endColor;
             }
 
             set
             {
-                LoadFromBrush();
                 endColor = value;
-                UpdateInstanceProperty();
+                Save();
             }
         }
 
@@ -116,16 +90,13 @@ namespace Alternet.UI
         {
             get
             {
-                if (Brush is not LinearGradientBrush b)
-                    return linearGradientStart;
-                return b.StartPoint;
+                return linearGradientStart;
             }
 
             set
             {
-                LoadFromBrush();
                 linearGradientStart = value;
-                UpdateInstanceProperty();
+                Save();
             }
         }
 
@@ -134,16 +105,13 @@ namespace Alternet.UI
         {
             get
             {
-                if (Brush is not LinearGradientBrush b)
-                    return linearGradientEnd;
-                return b.EndPoint;
+                return linearGradientEnd;
             }
 
             set
             {
-                LoadFromBrush();
                 linearGradientEnd = value;
-                UpdateInstanceProperty();
+                Save();
             }
         }
 
@@ -152,16 +120,13 @@ namespace Alternet.UI
         {
             get
             {
-                if (Brush is not RadialGradientBrush b)
-                    return radialGradientCenter;
-                return b.Center;
+                return radialGradientCenter;
             }
 
             set
             {
-                LoadFromBrush();
                 radialGradientCenter = value;
-                UpdateInstanceProperty();
+                Save();
             }
         }
 
@@ -170,16 +135,13 @@ namespace Alternet.UI
         {
             get
             {
-                if (Brush is not RadialGradientBrush b)
-                    return radialGradientOrigin;
-                return b.GradientOrigin;
+                return radialGradientOrigin;
             }
 
             set
             {
-                LoadFromBrush();
                 radialGradientOrigin = value;
-                UpdateInstanceProperty();
+                Save();
             }
         }
 
@@ -188,16 +150,13 @@ namespace Alternet.UI
         {
             get
             {
-                if (Brush is not RadialGradientBrush b)
-                    return radialGradientRadius;
-                return b.Radius;
+                return radialGradientRadius;
             }
 
             set
             {
-                LoadFromBrush();
                 radialGradientRadius = value;
-                UpdateInstanceProperty();
+                Save();
             }
         }
 
@@ -206,18 +165,13 @@ namespace Alternet.UI
         {
             get
             {
-                if (Brush is RadialGradientBrush b1)
-                    return b1.GradientStops;
-                if (Brush is LinearGradientBrush b2)
-                    return b2.GradientStops;
                 return gradientStops;
             }
 
             set
             {
-                LoadFromBrush();
                 gradientStops = value;
-                UpdateInstanceProperty();
+                Save();
             }
         }
 
@@ -226,21 +180,18 @@ namespace Alternet.UI
         {
             get
             {
-                if (Brush is not HatchBrush b)
-                    return hatchStyle;
-                return b.HatchStyle;
+                return hatchStyle;
             }
 
             set
             {
-                LoadFromBrush();
                 hatchStyle = value;
-                UpdateInstanceProperty();
+                Save();
             }
         }
 
         /// <inheritdoc/>
-        protected override void UpdateInstanceProperty()
+        protected override void Save()
         {
             Brush CreateRadialGradientBrush()
             {
@@ -302,20 +253,39 @@ namespace Alternet.UI
             }
         }
 
-        private void LoadFromBrush()
+        /// <inheritdoc/>
+        protected override void Load()
         {
-            if (loaded)
+            if (Brush == null)
                 return;
-            color = Color;
-            endColor = EndColor;
-            linearGradientStart = LinearGradientStart;
-            linearGradientEnd = LinearGradientEnd;
-            radialGradientCenter = RadialGradientCenter;
-            radialGradientOrigin = RadialGradientOrigin;
-            radialGradientRadius = RadialGradientRadius;
-            gradientStops = GradientStops;
-            hatchStyle = HatchStyle;
-            loaded = true;
+
+            brushType = Brush.BrushType;
+            color = Brush.BrushColor;
+
+            if (GradientStops.Length > 0)
+#pragma warning disable
+                endColor = GradientStops[GradientStops.Length - 1].Color;
+#pragma warning restore
+            else
+                endColor = Color.White;
+
+            if (Brush is LinearGradientBrush b)
+            {
+                linearGradientStart = b.StartPoint;
+                linearGradientEnd = b.EndPoint;
+                gradientStops = b.GradientStops;
+            }
+            else
+            if (Brush is RadialGradientBrush b2)
+            {
+                radialGradientCenter = b2.Center;
+                radialGradientOrigin = b2.GradientOrigin;
+                radialGradientRadius = b2.Radius;
+                gradientStops = b2.GradientStops;
+            }
+            else
+            if (Brush is HatchBrush b3)
+                hatchStyle = b3.HatchStyle;
         }
     }
 }

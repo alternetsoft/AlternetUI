@@ -269,7 +269,7 @@ namespace PropertyGridSample
                 propertyGrid.Add(prop);
 
                 // String with button
-                prop = propertyGrid.CreateStringProperty("Str and button");
+                prop = propertyGrid.CreateStringItem("Str and button");
                 propertyGrid.SetPropertyEditorByName(prop, "TextCtrlAndButton");
                 propertyGrid.Add(prop);
 
@@ -287,25 +287,25 @@ namespace PropertyGridSample
                 AddCollectionProp("Collection<string>", "ItemsString");
                 AddCollectionProp("Collection<object>", "ItemsObject");
 
-                prop = propertyGrid.CreateBoolProperty("Bool 2");
+                prop = propertyGrid.CreateBoolItem("Bool 2");
                 propertyGrid.Add(prop);
                 propertyGrid.SetPropertyKnownAttribute(
                     prop,
                     PropertyGridItemAttrId.UseCheckbox,
                     false);
 
-                prop = propertyGrid.CreateBoolProperty("Bool 3");
+                prop = propertyGrid.CreateBoolItem("Bool 3");
                 propertyGrid.Add(prop);
                 propertyGrid.SetPropertyKnownAttribute(
                     prop,
                     PropertyGridItemAttrId.UseCheckbox,
                     true);
 
-                prop = propertyGrid.CreateLongStringProperty("Long string");
+                prop = propertyGrid.CreateLongStringItem("Long string");
                 propertyGrid.Add(prop);
 
                 // Date
-                prop = propertyGrid.CreateDateProperty("Date");
+                prop = propertyGrid.CreateDateItem("Date");
                 propertyGrid.Add(prop);
                 // If none Date is selected (checkbox next to date editor is unchecked)
                 // DateTime.MinValue is returned.
@@ -320,30 +320,30 @@ namespace PropertyGridSample
                 propertyGrid.Add(prop);
 
                 var choices1 = PropertyGrid.CreateChoicesOnce(typeof(PropertyGridCreateStyle));
-                prop = propertyGrid.CreateFlagsProperty("Flags", null, choices1,
+                prop = propertyGrid.CreateFlagsItem("Flags", null, choices1,
                     PropertyGrid.DefaultCreateStyle);
                 propertyGrid.Add(prop);
 
                 var choices2 = PropertyGrid.CreateChoicesOnce(typeof(HorizontalAlignment));
-                prop = propertyGrid.CreateChoicesProperty("Enum", null, choices2,
+                prop = propertyGrid.CreateChoicesItem("Enum", null, choices2,
                     HorizontalAlignment.Center);
                 propertyGrid.Add(prop);
 
-                prop = propertyGrid.CreateStringProperty(
+                prop = propertyGrid.CreateStringItem(
                     "Readonly",
                     null,
                     "Some Text");
                 propertyGrid.SetPropertyReadOnly(prop, true, false);
                 propertyGrid.Add(prop);
 
-                prop = propertyGrid.CreateStringProperty(
+                prop = propertyGrid.CreateStringItem(
                                     "Error if changed",
                                     null,
                                     "Some Text");
                 propertyGrid.Add(prop);
 
                 // Filename
-                prop = propertyGrid.CreateFilenameProperty(
+                prop = propertyGrid.CreateFilenameItem(
                     "Filename",
                     null,
                     PathUtils.GetAppFolder());
@@ -362,7 +362,7 @@ namespace PropertyGridSample
                 propertyGrid.Add(prop);
 
                 // Dir
-                prop = propertyGrid.CreateDirProperty("Dir", null, PathUtils.GetAppFolder());
+                prop = propertyGrid.CreateDirItem("Dir", null, PathUtils.GetAppFolder());
                 propertyGrid.SetPropertyKnownAttribute(
                     prop,
                     PropertyGridItemAttrId.DialogTitle,
@@ -370,21 +370,21 @@ namespace PropertyGridSample
                 propertyGrid.Add(prop);
 
                 // Image filename
-                prop = propertyGrid.CreateImageFilenameProperty(
+                prop = propertyGrid.CreateImageFilenameItem(
                     "Image Filename",
                     null,
                     PathUtils.GetAppFolder());
                 propertyGrid.Add(prop);
 
                 // System color
-                prop = propertyGrid.CreateSystemColorProperty(
+                prop = propertyGrid.CreateSystemColorItem(
                     "System color",
                     null,
                     Color.FromKnownColor(KnownColor.Window));
                 propertyGrid.Add(prop);
 
                 // Color with ComboBox
-                prop = propertyGrid.CreateColorProperty(
+                prop = propertyGrid.CreateColorItem(
                     "Color with ComboBox",
                     null,
                     Color.Black);
@@ -392,7 +392,7 @@ namespace PropertyGridSample
                 propertyGrid.Add(prop);
 
                 // Password
-                prop = propertyGrid.CreateStringProperty("Password");
+                prop = propertyGrid.CreateStringItem("Password");
                 propertyGrid.Add(prop);
                 // Password attribute must be set after adding property to PropertyGrid
                 propertyGrid.SetPropertyKnownAttribute(prop, PropertyGridItemAttrId.Password, true);
@@ -402,12 +402,12 @@ namespace PropertyGridSample
                 choices.Add("Item 1");
                 choices.Add("Item 2");
                 choices.Add("Item 3");
-                prop = propertyGrid.CreateEditEnumProperty("Editable enum", null, choices, "Item 2");
+                prop = propertyGrid.CreateEditEnumItem("Editable enum", null, choices, "Item 2");
                 propertyGrid.Add(prop);
 
                 //Font Name
                 choices = PropertyGridAdapterFont.FontNameChoices;
-                prop = propertyGrid.CreateChoicesProperty(
+                prop = propertyGrid.CreateChoicesItem(
                     "Font name", 
                     null, 
                     choices, 
@@ -596,8 +596,10 @@ namespace PropertyGridSample
             if (value is not ICollection)
                 return;
 
-            UIDialogCollectionEdit dialog = new();
-            dialog.DataSource = value;
+            UIDialogCollectionEdit dialog = new()
+            {
+                DataSource = value,
+            };
             dialog.Show();
         }
 

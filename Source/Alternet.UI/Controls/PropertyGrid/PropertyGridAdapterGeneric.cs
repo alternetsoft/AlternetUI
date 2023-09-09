@@ -123,23 +123,34 @@ namespace Alternet.UI
 
         internal virtual void OnPropertyChanged(object? sender, EventArgs e)
         {
-            UpdateInstanceProperty();
+            Save();
         }
 
         /// <summary>
         /// Updates instance property value.
         /// </summary>
-        protected abstract void UpdateInstanceProperty();
+        protected abstract void Save();
+
+        /// <summary>
+        /// Loads instance property value.
+        /// </summary>
+        protected abstract void Load();
 
         private void OnValueSourceChanged()
         {
-            simpleValue = null;
-            if (instance == null || propInfo != null)
-                return;
-            if (propName == null)
-                return;
-            var type = instance.GetType();
-            propInfo = type.GetProperty(propName);
+            void Fn()
+            {
+                simpleValue = null;
+                if (instance == null || propInfo != null)
+                    return;
+                if (propName == null)
+                    return;
+                var type = instance.GetType();
+                propInfo = type.GetProperty(propName);
+            }
+
+            Fn();
+            Load();
         }
     }
 }

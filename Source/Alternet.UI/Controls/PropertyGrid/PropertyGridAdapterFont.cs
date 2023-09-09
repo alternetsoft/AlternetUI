@@ -47,15 +47,13 @@ namespace Alternet.UI
         {
             get
             {
-                if (Font == null)
-                    return sizeInPoints;
-                return Font.SizeInPoints;
+                return sizeInPoints;
             }
 
             set
             {
                 sizeInPoints = value;
-                UpdateInstanceProperty();
+                Save();
             }
         }
 
@@ -64,15 +62,13 @@ namespace Alternet.UI
         {
             get
             {
-                if (Font == null)
-                    return name;
-                return Font.Name;
+                return name;
             }
 
             set
             {
                 name = value;
-                UpdateInstanceProperty();
+                Save();
             }
         }
 
@@ -146,22 +142,30 @@ namespace Alternet.UI
         {
             get
             {
-                if (Font == null)
-                    return style;
-                return Font.Style;
+                return style;
             }
 
             set
             {
                 style = value;
-                UpdateInstanceProperty();
+                Save();
             }
         }
 
         /// <inheritdoc/>
-        protected override void UpdateInstanceProperty()
+        protected override void Save()
         {
             Font = new(name, sizeInPoints, style);
+        }
+
+        /// <inheritdoc/>
+        protected override void Load()
+        {
+            if (Font == null)
+                return;
+            sizeInPoints = Font.SizeInPoints;
+            name = Font.Name;
+            style = Font.Style;
         }
     }
 }

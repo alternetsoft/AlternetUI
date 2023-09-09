@@ -45,16 +45,6 @@ namespace Alternet::UI
 		return ToVar(handle).Unshare();
 	}
 
-	void PropertyGridVariant::MakeNull(void* handle)
-	{
-		ToVar(handle).MakeNull();
-	}
-
-	void PropertyGridVariant::Clear(void* handle)
-	{
-		ToVar(handle).Clear();
-	}
-
 	string PropertyGridVariant::GetValueType(void* handle)
 	{
 		return wxStr(ToVar(handle).GetType());
@@ -97,6 +87,18 @@ namespace Alternet::UI
 		wxColor color = val;
 		wxVariant v;
 		v << color;
+		FromVariant(handle, v);
+	}
+
+	void PropertyGridVariant::MakeNull(void* handle)
+	{
+		wxVariant v = wxVariant();
+		FromVariant(handle, v);
+	}
+
+	void PropertyGridVariant::Clear(void* handle)
+	{
+		wxVariant v = wxVariant();
 		FromVariant(handle, v);
 	}
 

@@ -32,15 +32,13 @@ namespace Alternet.UI
         {
             get
             {
-                if(Pen == null)
-                    return color;
-                return Pen.Color;
+                return color;
             }
 
             set
             {
                 color = value;
-                UpdateInstanceProperty();
+                Save();
             }
         }
 
@@ -49,15 +47,13 @@ namespace Alternet.UI
         {
             get
             {
-                if (Pen == null)
-                    return dashStyle;
-                return Pen.DashStyle;
+                return dashStyle;
             }
 
             set
             {
                 dashStyle = value;
-                UpdateInstanceProperty();
+                Save();
             }
         }
 
@@ -66,15 +62,13 @@ namespace Alternet.UI
         {
             get
             {
-                if (Pen == null)
-                    return lineCap;
-                return Pen.LineCap;
+                return lineCap;
             }
 
             set
             {
                 lineCap = value;
-                UpdateInstanceProperty();
+                Save();
             }
         }
 
@@ -83,15 +77,13 @@ namespace Alternet.UI
         {
             get
             {
-                if (Pen == null)
-                    return lineJoin;
-                return Pen.LineJoin;
+                return lineJoin;
             }
 
             set
             {
                 lineJoin = value;
-                UpdateInstanceProperty();
+                Save();
             }
         }
 
@@ -100,9 +92,7 @@ namespace Alternet.UI
         {
             get
             {
-                if (Pen == null)
-                    return width;
-                return Pen.Width;
+                return width;
             }
 
             set
@@ -110,12 +100,24 @@ namespace Alternet.UI
                 if (value < 0)
                     value = 1;
                 width = value;
-                UpdateInstanceProperty();
+                Save();
             }
         }
 
         /// <inheritdoc/>
-        protected override void UpdateInstanceProperty()
+        protected override void Load()
+        {
+            if (Pen == null)
+                return;
+            color = Pen.Color;
+            dashStyle = Pen.DashStyle;
+            lineCap = Pen.LineCap;
+            lineJoin = Pen.LineJoin;
+            width = Pen.Width;
+        }
+
+        /// <inheritdoc/>
+        protected override void Save()
         {
             Pen = new(color, width, dashStyle, lineCap, lineJoin);
         }
