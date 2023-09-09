@@ -27,7 +27,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ImageSet"/> class from the specified data stream.
+        /// Initializes a new instance of the <see cref="ImageSet"/> class from the specified
+        /// data stream.
         /// </summary>
         /// <param name="stream">The data stream used to load the image.</param>
         public ImageSet(Stream stream)
@@ -36,6 +37,19 @@ namespace Alternet.UI
             using var inputStream = new UI.Native.InputStream(stream);
             NativeImageSet.LoadFromStream(inputStream);
         }
+
+        /// <summary>
+        /// Occurs when the image set is changed, i.e. an image is added to it or removed from it.
+        /// </summary>
+        public event EventHandler? Changed;
+
+        /// <summary>
+        /// Gets the <see cref="Image"/> collection for this image list.
+        /// </summary>
+        /// <value>The collection of images.</value>
+        public Collection<Image> Images { get; } = new Collection<Image>();
+
+        internal UI.Native.ImageSet NativeImageSet { get; private set; }
 
         /// <summary>
         /// Creates grayscaled <see cref="ImageSet"/> instance from
@@ -66,51 +80,6 @@ namespace Alternet.UI
             ImageSet result = new();
             result.Images.Add(image);
             return result;
-        }
-
-        private void Images_ItemInserted(
-            object? sender,
-            CollectionChangeEventArgs<Image> e)
-        {
-            NativeImageSet.AddImage(e.Item.NativeImage);
-            OnChanged();
-        }
-
-        private void Images_ItemRemoved(
-            object? sender,
-            CollectionChangeEventArgs<Image> e)
-        {
-            OnChanged();
-
-            // todo
-            throw new Exception();
-        }
-
-        private void OnChanged()
-        {
-            Changed?.Invoke(this, EventArgs.Empty);
-        }
-
-        /// <summary>
-        /// Occurs when the image set is changed, i.e. an image is added to it or removed from it.
-        /// </summary>
-        public event EventHandler? Changed;
-
-        /// <summary>
-        /// Gets the <see cref="Image"/> collection for this image list.
-        /// </summary>
-        /// <value>The collection of images.</value>
-        public Collection<Image> Images { get; } = new Collection<Image>();
-
-        internal UI.Native.ImageSet NativeImageSet { get; private set; }
-
-        /// <summary>
-        /// Releases all resources used by the <see cref="ImageList"/> object.
-        /// </summary>
-        public void Dispose()
-        {
-            Dispose(disposing: true);
-            GC.SuppressFinalize(this);
         }
 
         /// <summary>
@@ -146,14 +115,14 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref="ImageSet"/> class
         /// from the specified url.
         /// </summary>
-        /// <param name="url">The file or embedded resource url used to 
+        /// <param name="url">The file or embedded resource url used to
         /// load the image.
         /// </param>
         /// <remarks>
         /// Returns null if error occurs during image load.
         /// No exceptions are raised.
         /// </remarks>
-        public static ImageSet FromUrlOrNull(string url)
+        public static ImageSet? FromUrlOrNull(string url)
         {
             try
             {
@@ -167,7 +136,17 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Releases the unmanaged resources used by the <see cref="ImageList"/> and optionally releases the managed resources.
+        /// Releases all resources used by the <see cref="ImageList"/> object.
+        /// </summary>
+        public void Dispose()
+        {
+            Dispose(disposing: true);
+            GC.SuppressFinalize(this);
+        }
+
+        /// <summary>
+        /// Releases the unmanaged resources used by the <see cref="ImageList"/> and
+        /// optionally releases the managed resources.
         /// </summary>
         /// <param name="disposing"></param>
         protected virtual void Dispose(bool disposing)
@@ -182,6 +161,25 @@ namespace Alternet.UI
 
                 isDisposed = true;
             }
+        }
+
+        private void Images_ItemInserted(object? sender, int index, Image item)
+        {
+            NativeImageSet.AddImage(item.NativeImage);
+            OnChanged();
+        }
+
+        private void Images_ItemRemoved(object? sender, int index, Image item)
+        {
+            OnChanged();
+
+            // todo
+            throw new NotImplementedException();
+        }
+
+        private void OnChanged()
+        {
+            Changed?.Invoke(this, EventArgs.Empty);
         }
     }
 }

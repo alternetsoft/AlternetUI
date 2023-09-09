@@ -37,15 +37,15 @@ namespace Alternet.UI
         /// <inheritdoc />
         protected override IEnumerable<FrameworkElement> LogicalChildrenCollection => Items;
 
-        private void Items_ItemInserted(object? sender, CollectionChangeEventArgs<MenuItem> e)
+        private void Items_ItemInserted(object? sender, int index, MenuItem item)
         {
             // This is required for data binding inheritance.
-            Children.Add(e.Item);
+            Children.Add(item);
         }
 
-        private void Items_ItemRemoved(object? sender, CollectionChangeEventArgs<MenuItem> e)
+        private void Items_ItemRemoved(object? sender, int index, MenuItem item)
         {
-            Children.Remove(e.Item);
+            Children.Remove(item);
         }
     }
 }

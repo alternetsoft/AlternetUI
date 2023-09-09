@@ -1,10 +1,20 @@
 using System;
+using System.Collections.Generic;
 using Alternet.Base.Collections;
 
 namespace Alternet.UI
 {
     internal class NativeComboBoxHandler : ComboBoxHandler
     {
+        /// <inheritdoc/>
+        public override int TextSelectionStart => NativeControl.TextSelectionStart;
+
+        /// <inheritdoc/>
+        public override int TextSelectionLength => NativeControl.TextSelectionLength;
+
+        internal new Native.ComboBox NativeControl =>
+            (Native.ComboBox)base.NativeControl!;
+
         internal override bool HasBorder
         {
             get
@@ -17,15 +27,6 @@ namespace Alternet.UI
                 NativeControl.HasBorder = value;
             }
         }
-
-        /// <inheritdoc/>
-        public override int TextSelectionStart => NativeControl.TextSelectionStart;
-
-        /// <inheritdoc/>
-        public override int TextSelectionLength => NativeControl.TextSelectionLength;
-
-        internal new Native.ComboBox NativeControl =>
-            (Native.ComboBox)base.NativeControl!;
 
         /// <inheritdoc/>
         public override void SelectTextRange(int start, int length) =>
@@ -152,34 +153,31 @@ namespace Alternet.UI
             Control.Text = NativeControl.Text;
         }
 
-        private void Items_ItemInserted(
-            object? sender,
-            CollectionChangeEventArgs<object> e)
+        private void Items_ItemInserted(object? sender, int index, object item)
         {
             if (!Control.Items.RangeOperationInProgress)
-                NativeControl.InsertItem(e.Index, Control.GetItemText(e.Item));
+                NativeControl.InsertItem(index, Control.GetItemText(item));
         }
 
-        private void Items_ItemRemoved(
-            object? sender,
-            CollectionChangeEventArgs<object> e)
+        private void Items_ItemRemoved(object? sender, int index, object item)
         {
-            NativeControl.RemoveItemAt(e.Index);
+            NativeControl.RemoveItemAt(index);
         }
 
         private void Items_ItemRangeAdditionFinished(
             object? sender,
-            RangeAdditionFinishedEventArgs<object> e)
+            int index,
+            IEnumerable<object> items)
         {
             var insertion = NativeControl.CreateItemsInsertion();
-            foreach (var item in e.Items)
+            foreach (var item in items)
             {
                 NativeControl.AddItemToInsertion(
                     insertion,
                     Control.GetItemText(item));
             }
 
-            NativeControl.CommitItemsInsertion(insertion, e.InsertionIndex);
+            NativeControl.CommitItemsInsertion(insertion, index);
         }
     }
 }

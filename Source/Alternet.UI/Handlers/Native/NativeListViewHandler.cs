@@ -415,10 +415,10 @@ namespace Alternet.UI
             }
         }
 
-        private void Items_ItemInserted(object? sender, CollectionChangeEventArgs<ListViewItem> e)
+        private void Items_ItemInserted(object? sender, int index, ListViewItem item)
         {
-            InsertItem(e.Index, e.Item);
-            UpdateItemIndices(e.Index + 1);
+            InsertItem(index, item);
+            UpdateItemIndices(index + 1);
         }
 
         private void UpdateItemIndices(int startIndex)
@@ -427,16 +427,14 @@ namespace Alternet.UI
                 Control.Items[i].Index = i;
         }
 
-        private void Items_ItemRemoved(
-            object? sender,
-            CollectionChangeEventArgs<ListViewItem> e)
+        private void Items_ItemRemoved(object? sender, int index, ListViewItem item)
         {
             if (clearing == 0)
-                NativeControl.RemoveItemAt(e.Index);
-            e.Item.Index = null;
-            e.Item.ListView = null;
+                NativeControl.RemoveItemAt(index);
+            item.Index = null;
+            item.ListView = null;
 
-            UpdateItemIndices(e.Index);
+            UpdateItemIndices(index);
         }
 
         private void ApplyColumns()
@@ -452,37 +450,33 @@ namespace Alternet.UI
             }
         }
 
-        private void Columns_ItemInserted(
-            object? sender,
-            CollectionChangeEventArgs<ListViewColumn> e)
+        private void Columns_ItemInserted(object? sender, int index, ListViewColumn item)
         {
             if (clearing == 0)
             {
                 NativeControl.InsertColumnAt(
-                    e.Index,
-                    e.Item.Title,
-                    e.Item.Width,
-                    (Native.ListViewColumnWidthMode)e.Item.WidthMode);
+                    index,
+                    item.Title,
+                    item.Width,
+                    (Native.ListViewColumnWidthMode)item.WidthMode);
 
                 ApplyColumnsChangeToItems();
             }
 
-            e.Item.ListView = Control;
-            e.Item.Index = e.Index;
+            item.ListView = Control;
+            item.Index = index;
         }
 
-        private void Columns_ItemRemoved(
-            object? sender,
-            CollectionChangeEventArgs<ListViewColumn> e)
+        private void Columns_ItemRemoved(object? sender, int index, ListViewColumn item)
         {
             if (clearing == 0)
             {
-                NativeControl.RemoveColumnAt(e.Item.Index ?? throw new Exception());
+                NativeControl.RemoveColumnAt(item.Index ?? throw new Exception());
                 ApplyColumnsChangeToItems();
             }
 
-            e.Item.ListView = null;
-            e.Item.Index = null;
+            item.ListView = null;
+            item.Index = null;
         }
 
         private void ApplyColumnsChangeToItems()

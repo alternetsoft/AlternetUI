@@ -323,20 +323,16 @@ namespace Alternet.UI
                 Cells.Add(new ListViewItemCell());
         }
 
-        private void Cells_ItemInserted(
-            object? sender,
-            CollectionChangeEventArgs<ListViewItemCell> e)
+        private void Cells_ItemInserted(object? sender, int index, ListViewItemCell item)
         {
-            e.Item.ColumnIndex = e.Index;
-            e.Item.Item = this;
+            item.ColumnIndex = index;
+            item.Item = this;
         }
 
-        private void Cells_ItemRemoved(
-            object? sender,
-            CollectionChangeEventArgs<ListViewItemCell> e)
+        private void Cells_ItemRemoved(object? sender, int index, ListViewItemCell item)
         {
-            e.Item.ColumnIndex = null;
-            e.Item.Item = null;
+            item.ColumnIndex = null;
+            item.Item = null;
         }
     }
 }

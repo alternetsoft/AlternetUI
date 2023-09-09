@@ -1,5 +1,5 @@
-using Alternet.Base.Collections;
 using System;
+using Alternet.Base.Collections;
 
 namespace Alternet.UI
 {
@@ -20,16 +20,26 @@ namespace Alternet.UI
             Control.Items.ItemRemoved += Items_ItemRemoved;
         }
 
+        protected override void OnDetach()
+        {
+            base.OnDetach();
+
+            Control.Items.ItemInserted -= Items_ItemInserted;
+            Control.Items.ItemRemoved -= Items_ItemRemoved;
+
+            foreach (var item in Control.Items)
+                item.TextChanged -= Item_TextChanged;
+        }
+
         private void ApplyItems()
         {
             for (var i = 0; i < Control.Items.Count; i++)
                 InsertItem(Control.Items[i], i);
         }
 
-        void InsertItem(MenuItem item, int index)
+        private void InsertItem(MenuItem item, int index)
         {
-            var handler = item.Handler as NativeMenuItemHandler;
-            if (handler == null)
+            if (item.Handler is not NativeMenuItemHandler handler)
                 throw new InvalidOperationException();
 
             var submenu = handler.EnsureNativeSubmenuCreated() ?? throw new Exception();
@@ -45,26 +55,15 @@ namespace Alternet.UI
             NativeControl.SetItemText(Control.Items.IndexOf(item), item.Text);
         }
 
-        private void Items_ItemInserted(object? sender, CollectionChangeEventArgs<MenuItem> e)
+        private void Items_ItemInserted(object? sender, int index, MenuItem item)
         {
-            InsertItem(e.Item, e.Index);
+            InsertItem(item, index);
         }
 
-        private void Items_ItemRemoved(object? sender, CollectionChangeEventArgs<MenuItem> e)
+        private void Items_ItemRemoved(object? sender, int index, MenuItem item)
         {
-            e.Item.TextChanged -= Item_TextChanged;
-            NativeControl.RemoveItemAt(e.Index);
-        }
-
-        protected override void OnDetach()
-        {
-            base.OnDetach();
-
-            Control.Items.ItemInserted -= Items_ItemInserted;
-            Control.Items.ItemRemoved -= Items_ItemRemoved;
-
-            foreach (var item in Control.Items)
-                item.TextChanged -= Item_TextChanged;
+            item.TextChanged -= Item_TextChanged;
+            NativeControl.RemoveItemAt(index);
         }
     }
 }

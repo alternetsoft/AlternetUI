@@ -1181,25 +1181,21 @@ namespace Alternet.UI
                 RaiseChildInserted(Control.Children[i]);
         }
 
-        private void VisualChildren_ItemInserted(
-            object? sender,
-            CollectionChangeEventArgs<Control> e)
+        private void VisualChildren_ItemInserted(object? sender, int index, Control item)
         {
-            e.Item.Parent = Control;
-            e.Item.Handler.IsVisualChild = true;
+            item.SetParentInternal(Control);
+            item.Handler.IsVisualChild = true;
 
-            RaiseChildInserted(e.Item);
+            RaiseChildInserted(item);
             PerformLayout();
         }
 
-        private void VisualChildren_ItemRemoved(
-            object? sender,
-            CollectionChangeEventArgs<Control> e)
+        private void VisualChildren_ItemRemoved(object? sender, int index, Control item)
         {
-            e.Item.Parent = null;
-            e.Item.Handler.IsVisualChild = false;
+            item.SetParentInternal(null);
+            item.Handler.IsVisualChild = false;
 
-            RaiseChildRemoved(e.Item);
+            RaiseChildRemoved(item);
             PerformLayout();
         }
 
@@ -1383,18 +1379,16 @@ namespace Alternet.UI
             PerformLayout();
         }
 
-        private void Children_ItemInserted(
-            object? sender, CollectionChangeEventArgs<Control> e)
+        private void Children_ItemInserted(object? sender, int index, Control item)
         {
-            RaiseChildInserted(e.Item);
+            RaiseChildInserted(item);
             RaiseLayoutChanged();
             PerformLayout();
         }
 
-        private void Children_ItemRemoved(
-            object? sender, CollectionChangeEventArgs<Control> e)
+        private void Children_ItemRemoved(object? sender, int index, Control item)
         {
-            RaiseChildRemoved(e.Item);
+            RaiseChildRemoved(item);
             RaiseLayoutChanged();
             PerformLayout();
         }

@@ -62,8 +62,8 @@ namespace Alternet.UI
         /// </summary>
         public TreeView()
         {
-            Items.ItemInsertedFast += Items_ItemInsertedFast;
-            Items.ItemRemovedFast += Items_ItemRemovedFast;
+            Items.ItemInserted += Items_ItemInsertedFast;
+            Items.ItemRemoved += Items_ItemRemovedFast;
         }
 
         /// <summary>

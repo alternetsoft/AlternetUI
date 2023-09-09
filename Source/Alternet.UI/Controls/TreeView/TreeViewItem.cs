@@ -265,8 +265,8 @@ namespace Alternet.UI
                 if(items == null)
                 {
                     items = new() { ThrowOnNullItemAddition = true };
-                    items.ItemInsertedFast += Items_ItemInsertedFast;
-                    items.ItemRemovedFast += Items_ItemRemovedFast;
+                    items.ItemInserted += Items_ItemInserted;
+                    items.ItemRemoved += Items_ItemRemoved;
                 }
 
                 return items;
@@ -479,12 +479,12 @@ namespace Alternet.UI
             }
         }
 
-        private void Items_ItemRemovedFast(object? sender, int index, TreeViewItem item)
+        private void Items_ItemRemoved(object? sender, int index, TreeViewItem item)
         {
             OnChildItemRemoved(item);
         }
 
-        private void Items_ItemInsertedFast(object? sender, int index, TreeViewItem item)
+        private void Items_ItemInserted(object? sender, int index, TreeViewItem item)
         {
             OnChildItemAdded(item, this, TreeView, index);
         }

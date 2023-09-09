@@ -193,9 +193,7 @@ namespace Alternet.UI
             }
         }
 
-        private void Items_ItemInserted(
-            object? sender,
-            CollectionChangeEventArgs<object> e)
+        private void Items_ItemInserted(object? sender, int index, object item)
         {
             // Do not comment this or items will not be painted properly
             if (!recreateCalled)
@@ -204,14 +202,12 @@ namespace Alternet.UI
                 NativeControl.RecreateWindow();
             }
 
-            NativeControl.InsertItem(e.Index, Control.GetItemText(e.Item));
+            NativeControl.InsertItem(index, Control.GetItemText(item));
         }
 
-        private void Items_ItemRemoved(
-            object? sender,
-            CollectionChangeEventArgs<object> e)
+        private void Items_ItemRemoved(object? sender, int index, object item)
         {
-            NativeControl.RemoveItemAt(e.Index);
+            NativeControl.RemoveItemAt(index);
         }
      }
 }

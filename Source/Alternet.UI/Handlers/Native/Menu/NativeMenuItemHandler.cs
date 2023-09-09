@@ -111,14 +111,14 @@ namespace Alternet.UI
             NativeControl.Checked = Control.Checked;
         }
 
-        private void Items_ItemInserted(object? sender, CollectionChangeEventArgs<MenuItem> e)
+        private void Items_ItemInserted(object? sender, int index, MenuItem item)
         {
-            InsertItem(e.Item, e.Index);
+            InsertItem(item, index);
         }
 
-        private void Items_ItemRemoved(object? sender, CollectionChangeEventArgs<MenuItem> e)
+        private void Items_ItemRemoved(object? sender, int index, MenuItem item)
         {
-            (NativeControl.Submenu ?? throw new Exception()).RemoveItemAt(e.Index);
+            (NativeControl.Submenu ?? throw new Exception()).RemoveItemAt(index);
         }
 
         private void InsertItem(MenuItem item, int index)

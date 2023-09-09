@@ -62,16 +62,14 @@ namespace Alternet.UI
             return GetEffectiveControlHandlerHactory().CreateStatusBarHandler(this);
         }
 
-        private void Panels_ItemInserted(object? sender, CollectionChangeEventArgs<StatusBarPanel> e)
+        private void Panels_ItemInserted(object? sender, int index, StatusBarPanel item)
         {
             // This is required for data binding inheritance.
             // Commented out for same reason as in Toolbar
             // Children.Add(e.Item);
         }
 
-        private void Panels_ItemRemoved(
-            object? sender,
-            CollectionChangeEventArgs<StatusBarPanel> e)
+        private void Panels_ItemRemoved(object? sender, int index, StatusBarPanel item)
         {
             // Commented out as Children.Add(e.Item) was commented
             // Children.Remove(e.Item);

@@ -26,17 +26,6 @@ namespace Alternet.Drawing
             Images.ItemRemoved += Images_ItemRemoved;
         }
 
-        private void Images_ItemInserted(object? sender, CollectionChangeEventArgs<Image> e)
-        {
-            NativeImageList.AddImage(e.Item.NativeImage);
-        }
-
-        private void Images_ItemRemoved(object? sender, CollectionChangeEventArgs<Image> e)
-        {
-            // todo
-            throw new Exception();
-        }
-
         /// <summary>
         /// Gets the <see cref="Image"/> collection for this image list.
         /// </summary>
@@ -94,6 +83,17 @@ namespace Alternet.Drawing
 
                 isDisposed = true;
             }
+        }
+
+        private void Images_ItemInserted(object? sender, int index, Image item)
+        {
+            NativeImageList.AddImage(item.NativeImage);
+        }
+
+        private void Images_ItemRemoved(object? sender, int index, Image item)
+        {
+            // todo
+            throw new NotImplementedException();
         }
     }
 }

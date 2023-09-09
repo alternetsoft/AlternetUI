@@ -38,32 +38,34 @@ namespace Alternet.Base.Collections
         /// <summary>
         /// Occurs when an item is inserted in the collection.
         /// </summary>
-        public event CollectionItemChangedHandler<T>? ItemInsertedFast;
+        public event CollectionItemChangedHandler<T>? ItemInserted;
 
         /// <summary>
         /// Occurs when an item is removed from the collection.
         /// </summary>
-        public event CollectionItemChangedHandler<T>? ItemRemovedFast;
+        public event CollectionItemChangedHandler<T>? ItemRemoved;
 
         /// <summary>
         /// Occurs when an item range addition is finished in the collection.
         /// </summary>
-        public event CollectionItemRangeChangedHandler<T>? ItemRangeAdditionFinishedFast;
+        public event CollectionItemRangeChangedHandler<T>? ItemRangeAdditionFinished;
 
+        /*
         /// <summary>
         /// Occurs when an item is inserted in the collection.
         /// </summary>
-        public event EventHandler<CollectionChangeEventArgs<T>>? ItemInserted;
+        // public event EventHandler<CollectionChangeEventArgs<T>>? ItemInserted;
 
         /// <summary>
         /// Occurs when an item is removed from the collection.
         /// </summary>
-        public event EventHandler<CollectionChangeEventArgs<T>>? ItemRemoved;
+        // public event EventHandler<CollectionChangeEventArgs<T>>? ItemRemoved;
 
         /// <summary>
         /// Occurs when an item range addition is finished in the collection.
         /// </summary>
         public event EventHandler<RangeAdditionFinishedEventArgs<T>>? ItemRangeAdditionFinished;
+         */
 
         /// <summary>
         /// Returns <see langword="true"/> if <see cref="AddRange"/> is being executed at the moment.
@@ -170,13 +172,7 @@ namespace Alternet.Base.Collections
         /// <param name="items">The items being inserted.</param>
         protected virtual void OnItemRangeAdditionFinished(int insertionIndex, IEnumerable<T> items)
         {
-            if(ItemRangeAdditionFinished is null)
-                ItemRangeAdditionFinishedFast?.Invoke(this, insertionIndex, items);
-            else
-            {
-                RangeAdditionFinishedEventArgs<T> e = new(insertionIndex, items);
-                ItemRangeAdditionFinished.Invoke(this, e);
-            }
+            ItemRangeAdditionFinished?.Invoke(this, insertionIndex, items);
         }
 
         /// <summary>
@@ -186,13 +182,7 @@ namespace Alternet.Base.Collections
         /// <param name="item">The item affected by the change.</param>
         protected virtual void OnItemInserted(int index, T item)
         {
-            if(ItemInserted is null)
-                ItemInsertedFast?.Invoke(this, index, item);
-            else
-            {
-                CollectionChangeEventArgs<T> e = new(index, item);
-                ItemInserted.Invoke(this, e);
-            }
+            ItemInserted?.Invoke(this, index, item);
         }
 
         /// <summary>
@@ -202,13 +192,7 @@ namespace Alternet.Base.Collections
         /// <param name="item">The item affected by the change.</param>
         protected virtual void OnItemRemoved(int index, T item)
         {
-            if(ItemRemoved is null)
-                ItemRemovedFast?.Invoke(this, index, item);
-            else
-            {
-                CollectionChangeEventArgs<T> e = new(index, item);
-                ItemRemoved.Invoke(this, e);
-            }
+            ItemRemoved?.Invoke(this, index, item);
         }
     }
 }

@@ -286,18 +286,14 @@ namespace Alternet.UI
             return GetEffectiveControlHandlerHactory().CreateToolbarHandler(this);
         }
 
-        private void Items_ItemInserted(
-            object? sender,
-            CollectionChangeEventArgs<ToolbarItem> e)
+        private void Items_ItemInserted(object? sender, int index, ToolbarItem item)
         {
             // This is required for data binding inheritance. ???
             // This commented out as added additional dummy toolbar items
             // Children.Add(e.Item);
         }
 
-        private void Items_ItemRemoved(
-            object? sender,
-            CollectionChangeEventArgs<ToolbarItem> e)
+        private void Items_ItemRemoved(object? sender, int index, ToolbarItem item)
         {
             // Commented out as Children.Add(e.Item) was commented
             // Children.Remove(e.Item);

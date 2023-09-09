@@ -1,18 +1,30 @@
-using Alternet.Base.Collections;
 using System;
+using Alternet.Base.Collections;
 
 namespace Alternet.UI
 {
     internal class NativeStatusBarHandler : StatusBarHandler
     {
+        public new Native.StatusBar NativeControl => (Native.StatusBar)base.NativeControl!;
+
+        public override bool SizingGripVisible
+        {
+            get => NativeControl.SizingGripVisible;
+            set => NativeControl.SizingGripVisible = value;
+        }
+
         internal override Native.Control CreateNativeControl()
         {
             return new Native.StatusBar();
         }
 
-        public new Native.StatusBar NativeControl => (Native.StatusBar)base.NativeControl!;
+        protected override void OnDetach()
+        {
+            base.OnDetach();
 
-        public override bool SizingGripVisible { get => NativeControl.SizingGripVisible; set => NativeControl.SizingGripVisible = value; }
+            Control.Panels.ItemInserted -= Items_ItemInserted;
+            Control.Panels.ItemRemoved -= Items_ItemRemoved;
+        }
 
         protected override void OnAttach()
         {
@@ -30,31 +42,22 @@ namespace Alternet.UI
                 InsertItem(Control.Panels[i], i);
         }
 
-        void InsertItem(StatusBarPanel item, int index)
+        private void InsertItem(StatusBarPanel item, int index)
         {
-            var handler = item.Handler as NativeStatusBarPanelHandler;
-            if (handler == null)
+            if (item.Handler is not NativeStatusBarPanelHandler handler)
                 throw new InvalidOperationException();
 
             NativeControl.InsertPanelAt(index, handler.NativeControl);
         }
 
-        private void Items_ItemInserted(object? sender, CollectionChangeEventArgs<StatusBarPanel> e)
+        private void Items_ItemInserted(object? sender, int index, StatusBarPanel item)
         {
-            InsertItem(e.Item, e.Index);
+            InsertItem(item, index);
         }
 
-        private void Items_ItemRemoved(object? sender, CollectionChangeEventArgs<StatusBarPanel> e)
+        private void Items_ItemRemoved(object? sender, int index, StatusBarPanel item)
         {
-            NativeControl.RemovePanelAt(e.Index);
-        }
-
-        protected override void OnDetach()
-        {
-            base.OnDetach();
-
-            Control.Panels.ItemInserted -= Items_ItemInserted;
-            Control.Panels.ItemRemoved -= Items_ItemRemoved;
+            NativeControl.RemovePanelAt(index);
         }
     }
 }

@@ -555,11 +555,8 @@ namespace Alternet.UI
                 var oldValue = statusBar;
                 statusBar = value;
 
-                if (oldValue != null)
-                    oldValue.Parent = null;
-
-                if (statusBar != null)
-                    statusBar.Parent = this;
+                oldValue?.SetParentInternal(null);
+                statusBar?.SetParentInternal(this);
 
                 OnStatusBarChanged(EventArgs.Empty);
                 StatusBarChanged?.Invoke(this, EventArgs.Empty);
@@ -587,11 +584,8 @@ namespace Alternet.UI
                 var oldValue = menu;
                 menu = value;
 
-                if (oldValue != null)
-                    oldValue.Parent = null;
-
-                if (menu != null)
-                    menu.Parent = this;
+                oldValue?.SetParentInternal(null);
+                menu?.SetParentInternal(this);
 
                 OnMenuChanged(EventArgs.Empty);
                 MenuChanged?.Invoke(this, EventArgs.Empty);
@@ -679,11 +673,8 @@ namespace Alternet.UI
                 var oldValue = toolbar;
                 toolbar = value;
 
-                if (oldValue != null)
-                    oldValue.Parent = null;
-
-                if (toolbar != null)
-                    toolbar.Parent = this;
+                oldValue?.SetParentInternal(null);
+                toolbar?.SetParentInternal(this);
 
                 OnToolbarChanged(EventArgs.Empty);
                 ToolbarChanged?.Invoke(this, EventArgs.Empty);

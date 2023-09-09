@@ -531,11 +531,6 @@ namespace Alternet.UI
         public virtual Control? Parent
         {
             get => parent;
-            internal set
-            {
-                parent = value;
-                LogicalParent = value;
-            }
         }
 
         /// <summary>
@@ -1673,6 +1668,12 @@ namespace Alternet.UI
             Paint?.Invoke(this, e);
         }
 
+        internal void SetParentInternal(Control? value)
+        {
+            parent = value;
+            LogicalParent = value;
+        }
+
         internal void RaiseDragDrop(DragEventArgs e) => OnDragDrop(e);
 
         internal void RaiseDragOver(DragEventArgs e) => OnDragOver(e);
@@ -1994,23 +1995,19 @@ namespace Alternet.UI
             OnHandlerAttached(EventArgs.Empty);
         }
 
-        private void Children_ItemInserted(
-            object? sender,
-            CollectionChangeEventArgs<Control> e)
+        private void Children_ItemInserted(object? sender, int index, Control item)
         {
-            e.Item.Parent = this;
+            item.SetParentInternal(this);
         }
 
-        private void Children_ItemRemoved(
-            object? sender,
-            CollectionChangeEventArgs<Control> e)
+        private void Children_ItemRemoved(object? sender, int index, Control item)
         {
-            e.Item.Parent = null;
+            item.SetParentInternal(null);
         }
 
-#pragma warning disable IDE0060 // Remove unused parameter
+#pragma warning disable
         private void OnToolTipPropertyChanged(string oldToolTip, string newToolTip)
-#pragma warning restore IDE0060 // Remove unused parameter
+#pragma warning restore
         {
             OnToolTipChanged(EventArgs.Empty);
         }
