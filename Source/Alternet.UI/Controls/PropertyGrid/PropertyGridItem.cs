@@ -116,22 +116,18 @@ namespace Alternet.UI
                 Children.Add(item);
         }
 
-        private void Children_ItemRemoved(
-            object? sender,
-            CollectionChangeEventArgs<IPropertyGridItem> e)
+        private void Children_ItemRemoved(object? sender, int index, IPropertyGridItem item)
         {
-            if (e.Item is not PropertyGridItem item)
+            if (item is not PropertyGridItem sitem)
                 return;
-            item.parent = null;
+            sitem.parent = null;
         }
 
-        private void Children_ItemInserted(
-            object? sender,
-            CollectionChangeEventArgs<IPropertyGridItem> e)
+        private void Children_ItemInserted(object? sender, int index, IPropertyGridItem item)
         {
-            if (e.Item is not PropertyGridItem item)
+            if (item is not PropertyGridItem sitem)
                 return;
-            item.parent = this;
+            sitem.parent = this;
         }
     }
 }

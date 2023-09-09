@@ -24,5 +24,9 @@ namespace Alternet.UI
         public string? Label { get; set; }
 
         public bool? IsNullable { get; set; }
+
+        public PropertyGridEditKindColor? EditKindColor { get; set; }
+
+        public PropertyGridEditKindString? EditKindString { get; set; }
     }
 }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using Alternet.Drawing;
 
 namespace Alternet.UI
 {
@@ -32,5 +33,15 @@ namespace Alternet.UI
         /// <see cref="IPropertyGridNewItemParams"/> instance.
         /// </summary>
         PropertyInfo? PropInfo { get; set; }
+
+        /// <summary>
+        /// Gets or sets kind of the <see cref="Color"/> editor.
+        /// </summary>
+        PropertyGridEditKindColor? EditKindColor { get; set; }
+
+        /// <summary>
+        /// Gets or sets kind of the <see cref="string"/> editor.
+        /// </summary>
+        PropertyGridEditKindString? EditKindString { get; set; }
     }
 }
