@@ -53,67 +53,6 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Parse - returns an instance converted from the provided string using
-        /// the culture "en-US"
-        /// <param name="source"> string with Point data </param>
-        /// </summary>
-        public static Point Parse(string source)
-        {
-            IFormatProvider formatProvider = TypeConverterHelper.InvariantEnglishUS;
-
-            TokenizerHelper th = new(source, formatProvider);
-
-            Point value;
-
-            string firstToken = th.NextTokenRequired();
-
-            value = new Point(
-                Convert.ToDouble(firstToken, formatProvider),
-                Convert.ToDouble(th.NextTokenRequired(), formatProvider));
-
-            // There should be no more tokens in this string.
-            th.LastTokenRequired();
-
-            return value;
-        }
-
-        /// <summary>
-        /// Creates a string representation of this object based on the format string
-        /// and IFormatProvider passed in.
-        /// If the provider is null, the CurrentCulture is used.
-        /// See the documentation for IFormattable for more information.
-        /// </summary>
-        /// <returns>
-        /// A string representation of this object.
-        /// </returns>
-        internal readonly string ConvertToString(string format, IFormatProvider provider)
-        {
-            // Helper to get the numeric list separator for a given culture.
-            char separator = TokenizerHelper.GetNumericListSeparator(provider);
-            return string.Format(
-                provider,
-                "{1:" + format + "}{0}{2:" + format + "}",
-                separator,
-                X,
-                Y);
-        }
-
-        /* TODO: uncommment when Double System.Numerics is availble.
-         * See https://github.com/dotnet/runtime/issues/24168
-        /// <summary>
-        /// Creates a new <see cref="System.Numerics.Vector2"/> from
-        /// this <see cref="System.Drawing.PointF"/>.
-        /// </summary>
-        public Vector2 ToVector2() => new Vector2(x, y);
-
-
-        /// <summary>
-        /// Converts the specified <see cref="Drawing.Point"/> to a
-        /// <see cref="System.Numerics.Vector2"/>.
-        /// </summary>
-        public static explicit operator Vector2(Point point) => point.ToVector2();*/
-
-        /// <summary>
         /// Gets a value indicating whether this <see cref='Drawing.Point'/> is empty.
         /// </summary>
         [Browsable(false)]
@@ -137,11 +76,25 @@ namespace Alternet.Drawing
             set => y = value;
         }
 
+        /* TODO: uncommment when Double System.Numerics is availble.
+         * See https://github.com/dotnet/runtime/issues/24168
+        /// <summary>
+        /// Creates a new <see cref="System.Numerics.Vector2"/> from
+        /// this <see cref="System.Drawing.PointF"/>.
+        /// </summary>
+        public Vector2 ToVector2() => new Vector2(x, y);
+
+        /// <summary>
+        /// Converts the specified <see cref="Drawing.Point"/> to a
+        /// <see cref="System.Numerics.Vector2"/>.
+        /// </summary>
+        public static explicit operator Vector2(Point point) => point.ToVector2();*/
+
         /// <summary>
         /// Converts the specified <see cref="System.Numerics.Vector2"/> to a
         /// <see cref="Drawing.Point"/>.
         /// </summary>
-        public static explicit operator Point(Vector2 vector) => new Point(vector);
+        public static explicit operator Point(Vector2 vector) => new(vector);
 
         /// <summary>
         /// Translates a <see cref='Drawing.Point'/> by a given <see cref='Drawing.Int32Size'/> .
@@ -197,7 +150,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Translates a <see cref='Drawing.Point'/> by a given <see cref='Drawing.Size'/> .
         /// </summary>
-        public static Point Add(Point pt, Size sz) => new Point(pt.X + sz.Width, pt.Y + sz.Height);
+        public static Point Add(Point pt, Size sz) => new(pt.X + sz.Width, pt.Y + sz.Height);
 
         /// <summary>
         /// Translates a <see cref='Drawing.Point'/> by the negative of a given
@@ -206,13 +159,38 @@ namespace Alternet.Drawing
         public static Point Subtract(Point pt, Size sz) => new(pt.X - sz.Width, pt.Y - sz.Height);
 
         /// <summary>
+        /// Parse - returns an instance converted from the provided string using
+        /// the culture "en-US"
+        /// <param name="source"> string with Point data </param>
+        /// </summary>
+        public static Point Parse(string source)
+        {
+            IFormatProvider formatProvider = TypeConverterHelper.InvariantEnglishUS;
+
+            TokenizerHelper th = new(source, formatProvider);
+
+            Point value;
+
+            string firstToken = th.NextTokenRequired();
+
+            value = new Point(
+                Convert.ToDouble(firstToken, formatProvider),
+                Convert.ToDouble(th.NextTokenRequired(), formatProvider));
+
+            // There should be no more tokens in this string.
+            th.LastTokenRequired();
+
+            return value;
+        }
+
+        /// <summary>
         /// Determines whether the specified object is equal to the current object.
         /// </summary>
         /// <param name="obj">The object to compare with the current object.</param>
         /// <returns><c>true</c> if the specified object is equal to the current object;
         /// otherwise, <c>false</c>.</returns>
         public override readonly bool Equals([NotNullWhen(true)] object? obj) =>
-            obj is Point && Equals((Point)obj);
+            obj is Point point && Equals(point);
 
         /// <summary>
         /// Indicates whether the current object is equal to another object of the same type.
@@ -233,6 +211,33 @@ namespace Alternet.Drawing
         /// Returns a string that represents the current object.
         /// </summary>
         /// <returns>A string that represents the current object.</returns>
-        public override readonly string ToString() => $"{{X={x}, Y={y}}}";
+        public override readonly string ToString()
+        {
+            string[] names = { PropNameStrings.Default.X, PropNameStrings.Default.Y };
+            double[] values = { x, y };
+
+            return StringUtils.ToString<double>(names, values);
+        }
+
+        /// <summary>
+        /// Creates a string representation of this object based on the format string
+        /// and IFormatProvider passed in.
+        /// If the provider is null, the CurrentCulture is used.
+        /// See the documentation for IFormattable for more information.
+        /// </summary>
+        /// <returns>
+        /// A string representation of this object.
+        /// </returns>
+        internal readonly string ConvertToString(string format, IFormatProvider provider)
+        {
+            // Helper to get the numeric list separator for a given culture.
+            char separator = TokenizerHelper.GetNumericListSeparator(provider);
+            return string.Format(
+                provider,
+                "{1:" + format + "}{0}{2:" + format + "}",
+                separator,
+                X,
+                Y);
+        }
     }
 }

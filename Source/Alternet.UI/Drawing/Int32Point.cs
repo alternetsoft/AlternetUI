@@ -5,6 +5,7 @@ using System;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
+using Alternet.UI;
 
 namespace Alternet.Drawing
 {
@@ -211,7 +212,13 @@ namespace Alternet.Drawing
         /// <summary>
         /// Converts this <see cref='Drawing.Int32Point'/> to a human readable string.
         /// </summary>
-        public override readonly string ToString() => $"{{X={X},Y={Y}}}";
+        public override readonly string ToString()
+        {
+            string[] names = { PropNameStrings.Default.X, PropNameStrings.Default.Y };
+            int[] values = { x, y };
+
+            return StringUtils.ToString<int>(names, values);
+        }
 
         private static short HighInt16(int n) =>
             unchecked((short)((n >> 16) & 0xffff));

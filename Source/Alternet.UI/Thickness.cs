@@ -305,7 +305,17 @@ namespace Alternet.UI
         /// <returns>String conversion.</returns>
         public override readonly string ToString()
         {
-            return $"({left}, {top}, {right}, {bottom})";
+            string[] names =
+            {
+                PropNameStrings.Default.Left,
+                PropNameStrings.Default.Top,
+                PropNameStrings.Default.Right,
+                PropNameStrings.Default.Bottom,
+            };
+
+            double[] values = { left, top, right, bottom };
+
+            return StringUtils.ToString<double>(names, values);
         }
 
         /// <summary>

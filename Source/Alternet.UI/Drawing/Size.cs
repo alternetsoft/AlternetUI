@@ -23,7 +23,7 @@ namespace Alternet.Drawing
     [Serializable]
     [StructLayout(LayoutKind.Sequential, Pack = 1)]
     /* [System.Runtime.CompilerServices.TypeForwardedFrom(
-       "System.Drawing, Version=4.0.0.0, Culture=neutral, 
+       "System.Drawing, Version=4.0.0.0, Culture=neutral,
             PublicKeyToken=b03f5f7f11d50a3a")]
      [TypeConverter("System.Drawing.SizeFConverter, System.Drawing, Version=4.0.0.0,
         Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]*/
@@ -80,6 +80,30 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Tests whether this <see cref='Drawing.Size'/> has zero width and height.
+        /// </summary>
+        [Browsable(false)]
+        public readonly bool IsEmpty => width == 0 && height == 0;
+
+        /// <summary>
+        /// Represents the horizontal component of this <see cref='Drawing.Size'/>.
+        /// </summary>
+        public double Width
+        {
+            readonly get => width;
+            set => width = value;
+        }
+
+        /// <summary>
+        /// Represents the vertical component of this <see cref='Drawing.Size'/>.
+        /// </summary>
+        public double Height
+        {
+            readonly get => height;
+            set => height = value;
+        }
+
+        /// <summary>
         /// Converts the specified <see cref='Drawing.Size'/> to a
         /// <see cref='Drawing.Point'/>.
         /// </summary>
@@ -115,7 +139,7 @@ namespace Alternet.Drawing
         /// Subtracts a <see cref='Drawing.Size'/> by another
         /// <see cref='Drawing.Size'/>
         /// </summary>
-        public static Size operator -(Size sz1, Size sz2) => Subtract(sz1, sz2);    
+        public static Size operator -(Size sz1, Size sz2) => Subtract(sz1, sz2);
 
         /// <summary>
         /// Multiplies <see cref="Size"/> by a <see cref="double"/> producing
@@ -145,7 +169,7 @@ namespace Alternet.Drawing
         /// <param name="right">Divisor of type <see cref="int"/>.</param>
         /// <returns>Result of type <see cref="Size"/>.</returns>
         public static Size operator /(Size left, double right)
-            => new Size(left.width / right, left.height / right);
+            => new(left.width / right, left.height / right);
 
         /// <summary>
         /// Tests whether two <see cref='Drawing.Size'/> objects are identical.
@@ -157,30 +181,6 @@ namespace Alternet.Drawing
         /// Tests whether two <see cref='Drawing.Size'/> objects are different.
         /// </summary>
         public static bool operator !=(Size sz1, Size sz2) => !(sz1 == sz2);
-
-        /// <summary>
-        /// Tests whether this <see cref='Drawing.Size'/> has zero width and height.
-        /// </summary>
-        [Browsable(false)]
-        public readonly bool IsEmpty => width == 0 && height == 0;
-
-        /// <summary>
-        /// Represents the horizontal component of this <see cref='Drawing.Size'/>.
-        /// </summary>
-        public double Width
-        {
-            readonly get => width;
-            set => width = value;
-        }
-
-        /// <summary>
-        /// Represents the vertical component of this <see cref='Drawing.Size'/>.
-        /// </summary>
-        public double Height
-        {
-            readonly get => height;
-            set => height = value;
-        }
 
         /// <summary>
         /// Parse - returns an instance converted from the provided string using
@@ -235,7 +235,7 @@ namespace Alternet.Drawing
         /// as this <see cref='Drawing.Size'/>.
         /// </summary>
         public override readonly bool Equals([NotNullWhen(true)] object? obj) =>
-            obj is Size && Equals((Size)obj);
+            obj is Size size && Equals(size);
 
         /// <summary>
         /// Indicates whether the current object is equal to another object of the same type.
@@ -272,8 +272,13 @@ namespace Alternet.Drawing
         /// Creates a human-readable string that represents this
         /// <see cref='Drawing.Size'/>.
         /// </summary>
-        public override readonly string ToString() =>
-            $"{{Width={width}, Height={height}}}";
+        public override readonly string ToString()
+        {
+            string[] names = { PropNameStrings.Default.Width, PropNameStrings.Default.Height };
+            double[] values = { width, height };
+
+            return StringUtils.ToString<double>(names, values);
+        }
 
         /// <summary>
         /// Creates a string representation of this object based on the format string

@@ -5,6 +5,7 @@ using System;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
+using Alternet.UI;
 
 namespace Alternet.Drawing
 {
@@ -241,8 +242,13 @@ namespace Alternet.Drawing
         /// Creates a human-readable string that represents this
         /// <see cref='Drawing.Int32Size'/>.
         /// </summary>
-        public override readonly string ToString() =>
-            $"{{Width={width}, Height={height}}}";
+        public override readonly string ToString()
+        {
+            string[] names = { PropNameStrings.Default.Width, PropNameStrings.Default.Height };
+            int[] values = { width, height };
+
+            return StringUtils.ToString<int>(names, values);
+        }
 
         /// <summary>
         /// Multiplies <see cref="Int32Size"/> by an <see cref="int"/>

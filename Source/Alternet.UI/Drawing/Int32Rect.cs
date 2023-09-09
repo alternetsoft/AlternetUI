@@ -20,7 +20,6 @@ namespace Alternet.Drawing
     /// </summary>
     [Serializable]
     [StructLayout(LayoutKind.Sequential, Pack = 1)]
-    // [TypeConverter("System.Drawing.RectangleConverter, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
     public struct Int32Rect : IEquatable<Int32Rect>
     {
         /// <summary>
@@ -34,7 +33,8 @@ namespace Alternet.Drawing
         private int height; // Do not rename (binary serialization)
 
         /// <summary>
-        /// Initializes a new instance of the <see cref='Drawing.Int32Rect'/> class with the specified location
+        /// Initializes a new instance of the <see cref='Drawing.Int32Rect'/> class with the
+        /// specified location
         /// and size.
         /// </summary>
         public Int32Rect(int x, int y, int width, int height)
@@ -57,83 +57,14 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Creates a new <see cref='Drawing.Int32Rect'/> with the specified location and size.
-        /// </summary>
-        public static Int32Rect FromLTRB(int left, int top, int right, int bottom) =>
-            new(left, top, unchecked(right - left), unchecked(bottom - top));
-
-        /// <summary>
-        /// Parse - returns an instance converted from the provided string using
-        /// the culture "en-US"
-        /// <param name="source"> string with Int32Rect data </param>
-        /// </summary>
-        public static Int32Rect Parse(string source)
-        {
-            IFormatProvider formatProvider = TypeConverterHelper.InvariantEnglishUS;
-
-            TokenizerHelper th = new TokenizerHelper(source, formatProvider);
-
-            Int32Rect value;
-
-            String firstToken = th.NextTokenRequired();
-
-            // The token will already have had whitespace trimmed so we can do a
-            // simple string compare.
-            if (firstToken == "Empty")
-            {
-                value = Empty;
-            }
-            else
-            {
-                value = new Int32Rect(
-                    Convert.ToInt32(firstToken, formatProvider),
-                    Convert.ToInt32(th.NextTokenRequired(), formatProvider),
-                    Convert.ToInt32(th.NextTokenRequired(), formatProvider),
-                    Convert.ToInt32(th.NextTokenRequired(), formatProvider));
-            }
-
-            // There should be no more tokens in this string.
-            th.LastTokenRequired();
-
-            return value;
-        }
-
-        /// <summary>
-        /// Creates a string representation of this object based on the format string
-        /// and IFormatProvider passed in.
-        /// If the provider is null, the CurrentCulture is used.
-        /// See the documentation for IFormattable for more information.
-        /// </summary>
-        /// <returns>
-        /// A string representation of this object.
-        /// </returns>
-        internal string ConvertToString(string format, IFormatProvider provider)
-        {
-            if (IsEmpty)
-            {
-                return "Empty";
-            }
-
-            // Helper to get the numeric list separator for a given culture.
-            char separator = TokenizerHelper.GetNumericListSeparator(provider);
-            return String.Format(provider,
-                                 "{1:" + format + "}{0}{2:" + format + "}{0}{3:" + format + "}{0}{4:" + format + "}",
-                                 separator,
-                                 X,
-                                 Y,
-                                 Width,
-                                 Height);
-        }
-
-
-        /// <summary>
-        /// Gets or sets the coordinates of the upper-left corner of the rectangular region represented by this
+        /// Gets or sets the coordinates of the upper-left corner of the rectangular
+        /// region represented by this
         /// <see cref='Drawing.Int32Rect'/>.
         /// </summary>
         [Browsable(false)]
         public Int32Point Location
         {
-            readonly get => new Int32Point(X, Y);
+            readonly get => new(X, Y);
             set
             {
                 X = value.X;
@@ -147,7 +78,7 @@ namespace Alternet.Drawing
         [Browsable(false)]
         public Int32Size Size
         {
-            readonly get => new Int32Size(Width, Height);
+            readonly get => new(Width, Height);
             set
             {
                 Width = value.Width;
@@ -156,7 +87,8 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Gets or sets the x-coordinate of the upper-left corner of the rectangular region defined by this
+        /// Gets or sets the x-coordinate of the upper-left corner of the rectangular region
+        /// defined by this
         /// <see cref='Drawing.Int32Rect'/>.
         /// </summary>
         public int X
@@ -166,7 +98,8 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Gets or sets the y-coordinate of the upper-left corner of the rectangular region defined by this
+        /// Gets or sets the y-coordinate of the upper-left corner of the rectangular region
+        /// defined by this
         /// <see cref='Drawing.Int32Rect'/>.
         /// </summary>
         public int Y
@@ -176,7 +109,8 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Gets or sets the width of the rectangular region defined by this <see cref='Drawing.Int32Rect'/>.
+        /// Gets or sets the width of the rectangular region defined by this
+        /// <see cref='Drawing.Int32Rect'/>.
         /// </summary>
         public int Width
         {
@@ -185,7 +119,8 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Gets or sets the width of the rectangular region defined by this <see cref='Drawing.Int32Rect'/>.
+        /// Gets or sets the width of the rectangular region defined by this
+        /// <see cref='Drawing.Int32Rect'/>.
         /// </summary>
         public int Height
         {
@@ -222,30 +157,19 @@ namespace Alternet.Drawing
         public readonly int Bottom => unchecked(Y + Height);
 
         /// <summary>
-        /// Tests whether this <see cref='Drawing.Int32Rect'/> has a <see cref='Drawing.Int32Rect.Width'/>
+        /// Tests whether this <see cref='Drawing.Int32Rect'/> has
+        /// a <see cref='Drawing.Int32Rect.Width'/>
         /// or a <see cref='Drawing.Int32Rect.Height'/> of 0.
         /// </summary>
         [Browsable(false)]
         public readonly bool IsEmpty => height == 0 && width == 0 && x == 0 && y == 0;
 
         /// <summary>
-        /// Tests whether <paramref name="obj"/> is a <see cref='Drawing.Int32Rect'/> with the same location
-        /// and size of this Rectangle.
-        /// </summary>
-        public override readonly bool Equals([NotNullWhen(true)] object? obj) => obj is Int32Rect && Equals((Int32Rect)obj);
-
-        /// <summary>
-        /// Indicates whether the current object is equal to another object of the same type.
-        /// </summary>
-        /// <param name="other">An object to compare with this object.</param>
-        /// <returns><c>true</c> if the current object is equal to other; otherwise, <c>false</c>.</returns>
-        public readonly bool Equals(Int32Rect other) => this == other;
-
-        /// <summary>
         /// Tests whether two <see cref='Drawing.Int32Rect'/> objects have equal location and size.
         /// </summary>
         public static bool operator ==(Int32Rect left, Int32Rect right) =>
-            left.X == right.X && left.Y == right.Y && left.Width == right.Width && left.Height == right.Height;
+            left.X == right.X && left.Y == right.Y && left.Width == right.Width
+            && left.Height == right.Height;
 
         /// <summary>
         /// Tests whether two <see cref='Drawing.Int32Rect'/> objects differ in location or size.
@@ -253,7 +177,50 @@ namespace Alternet.Drawing
         public static bool operator !=(Int32Rect left, Int32Rect right) => !(left == right);
 
         /// <summary>
-        /// Converts a RectangleF to a Rectangle by performing a ceiling operation on all the coordinates.
+        /// Creates a new <see cref='Drawing.Int32Rect'/> with the specified location and size.
+        /// </summary>
+        public static Int32Rect FromLTRB(int left, int top, int right, int bottom) =>
+            new(left, top, unchecked(right - left), unchecked(bottom - top));
+
+        /// <summary>
+        /// Parse - returns an instance converted from the provided string using
+        /// the culture "en-US"
+        /// <param name="source"> string with Int32Rect data </param>
+        /// </summary>
+        public static Int32Rect Parse(string source)
+        {
+            IFormatProvider formatProvider = TypeConverterHelper.InvariantEnglishUS;
+
+            TokenizerHelper th = new(source, formatProvider);
+
+            Int32Rect value;
+
+            string firstToken = th.NextTokenRequired();
+
+            // The token will already have had whitespace trimmed so we can do a
+            // simple string compare.
+            if (firstToken == "Empty")
+            {
+                value = Empty;
+            }
+            else
+            {
+                value = new Int32Rect(
+                    Convert.ToInt32(firstToken, formatProvider),
+                    Convert.ToInt32(th.NextTokenRequired(), formatProvider),
+                    Convert.ToInt32(th.NextTokenRequired(), formatProvider),
+                    Convert.ToInt32(th.NextTokenRequired(), formatProvider));
+            }
+
+            // There should be no more tokens in this string.
+            th.LastTokenRequired();
+
+            return value;
+        }
+
+        /// <summary>
+        /// Converts a RectangleF to a Rectangle by performing a ceiling operation on all
+        /// the coordinates.
         /// </summary>
         public static Int32Rect Ceiling(Rect value)
         {
@@ -268,7 +235,8 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Converts a RectangleF to a Rectangle by performing a truncate operation on all the coordinates.
+        /// Converts a RectangleF to a Rectangle by performing a truncate operation on all
+        /// the coordinates.
         /// </summary>
         public static Int32Rect Truncate(Rect value)
         {
@@ -283,7 +251,51 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Converts a RectangleF to a Rectangle by performing a round operation on all the coordinates.
+        /// Creates a rectangle that represents the intersection between a and b. If there is
+        /// no intersection, an
+        /// empty rectangle is returned.
+        /// </summary>
+        public static Int32Rect Intersect(Int32Rect a, Int32Rect b)
+        {
+            int x1 = Math.Max(a.X, b.X);
+            int x2 = Math.Min(a.X + a.Width, b.X + b.Width);
+            int y1 = Math.Max(a.Y, b.Y);
+            int y2 = Math.Min(a.Y + a.Height, b.Y + b.Height);
+
+            if (x2 >= x1 && y2 >= y1)
+            {
+                return new Int32Rect(x1, y1, x2 - x1, y2 - y1);
+            }
+
+            return Empty;
+        }
+
+        /// <summary>
+        /// Creates a rectangle that represents the union between a and b.
+        /// </summary>
+        public static Int32Rect Union(Int32Rect a, Int32Rect b)
+        {
+            int x1 = Math.Min(a.X, b.X);
+            int x2 = Math.Max(a.X + a.Width, b.X + b.Width);
+            int y1 = Math.Min(a.Y, b.Y);
+            int y2 = Math.Max(a.Y + a.Height, b.Y + b.Height);
+
+            return new Int32Rect(x1, y1, x2 - x1, y2 - y1);
+        }
+
+        /// <summary>
+        /// Creates a <see cref='Drawing.Int32Rect'/> that is inflated by the specified amount.
+        /// </summary>
+        public static Int32Rect Inflate(Int32Rect rect, int x, int y)
+        {
+            Int32Rect r = rect;
+            r.Inflate(x, y);
+            return r;
+        }
+
+        /// <summary>
+        /// Converts a RectangleF to a Rectangle by performing a round operation on all
+        /// the coordinates.
         /// </summary>
         public static Int32Rect Round(Rect value)
         {
@@ -298,19 +310,39 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Determines if the specified point is contained within the rectangular region defined by this
-        /// <see cref='Drawing.Int32Rect'/> .
+        /// Tests whether <paramref name="obj"/> is a <see cref='Drawing.Int32Rect'/> with
+        /// the same location
+        /// and size of this Rectangle.
         /// </summary>
-        public readonly bool Contains(int x, int y) => X <= x && x < X + Width && Y <= y && y < Y + Height;
+        public override readonly bool Equals([NotNullWhen(true)] object? obj) =>
+            obj is Int32Rect rect && Equals(rect);
 
         /// <summary>
-        /// Determines if the specified point is contained within the rectangular region defined by this
+        /// Indicates whether the current object is equal to another object of the same type.
+        /// </summary>
+        /// <param name="other">An object to compare with this object.</param>
+        /// <returns><c>true</c> if the current object is equal to other; otherwise,
+        /// <c>false</c>.</returns>
+        public readonly bool Equals(Int32Rect other) => this == other;
+
+        /// <summary>
+        /// Determines if the specified point is contained within the rectangular region
+        /// defined by this
+        /// <see cref='Drawing.Int32Rect'/> .
+        /// </summary>
+        public readonly bool Contains(int x, int y) => X <= x && x < X + Width
+            && Y <= y && y < Y + Height;
+
+        /// <summary>
+        /// Determines if the specified point is contained within the rectangular region defined
+        /// by this
         /// <see cref='Drawing.Int32Rect'/> .
         /// </summary>
         public readonly bool Contains(Int32Point pt) => Contains(pt.X, pt.Y);
 
         /// <summary>
-        /// Determines if the rectangular region represented by <paramref name="rect"/> is entirely contained within the
+        /// Determines if the rectangular region represented by <paramref name="rect"/> is
+        /// entirely contained within the
         /// rectangular region represented by this <see cref='Drawing.Int32Rect'/> .
         /// </summary>
         public readonly bool Contains(Int32Rect rect) =>
@@ -344,16 +376,6 @@ namespace Alternet.Drawing
         public void Inflate(Int32Size size) => Inflate(size.Width, size.Height);
 
         /// <summary>
-        /// Creates a <see cref='Drawing.Int32Rect'/> that is inflated by the specified amount.
-        /// </summary>
-        public static Int32Rect Inflate(Int32Rect rect, int x, int y)
-        {
-            Int32Rect r = rect;
-            r.Inflate(x, y);
-            return r;
-        }
-
-        /// <summary>
         /// Creates a Rectangle that represents the intersection between this Rectangle and rect.
         /// </summary>
         public void Intersect(Int32Rect rect)
@@ -367,43 +389,11 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Creates a rectangle that represents the intersection between a and b. If there is no intersection, an
-        /// empty rectangle is returned.
-        /// </summary>
-        public static Int32Rect Intersect(Int32Rect a, Int32Rect b)
-        {
-            int x1 = Math.Max(a.X, b.X);
-            int x2 = Math.Min(a.X + a.Width, b.X + b.Width);
-            int y1 = Math.Max(a.Y, b.Y);
-            int y2 = Math.Min(a.Y + a.Height, b.Y + b.Height);
-
-            if (x2 >= x1 && y2 >= y1)
-            {
-                return new Int32Rect(x1, y1, x2 - x1, y2 - y1);
-            }
-
-            return Empty;
-        }
-
-        /// <summary>
         /// Determines if this rectangle intersects with rect.
         /// </summary>
         public readonly bool IntersectsWith(Int32Rect rect) =>
             (rect.X < X + Width) && (X < rect.X + rect.Width) &&
             (rect.Y < Y + Height) && (Y < rect.Y + rect.Height);
-
-        /// <summary>
-        /// Creates a rectangle that represents the union between a and b.
-        /// </summary>
-        public static Int32Rect Union(Int32Rect a, Int32Rect b)
-        {
-            int x1 = Math.Min(a.X, b.X);
-            int x2 = Math.Max(a.X + a.Width, b.X + b.Width);
-            int y1 = Math.Min(a.Y, b.Y);
-            int y2 = Math.Max(a.Y + a.Height, b.Y + b.Height);
-
-            return new Int32Rect(x1, y1, x2 - x1, y2 - y1);
-        }
 
         /// <summary>
         /// Adjusts the location of this rectangle by the specified amount.
@@ -423,8 +413,50 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Converts the attributes of this <see cref='Drawing.Int32Rect'/> to a human readable string.
+        /// Converts the attributes of this <see cref='Drawing.Int32Rect'/> to a human
+        /// readable string.
         /// </summary>
-        public override readonly string ToString() => $"{{X={X},Y={Y},Width={Width},Height={Height}}}";
+        public override readonly string ToString()
+        {
+            string[] names =
+            {
+                PropNameStrings.Default.X,
+                PropNameStrings.Default.Y,
+                PropNameStrings.Default.Width,
+                PropNameStrings.Default.Height,
+            };
+
+            int[] values = { x, y, width, height };
+
+            return StringUtils.ToString<int>(names, values);
+        }
+
+        /// <summary>
+        /// Creates a string representation of this object based on the format string
+        /// and IFormatProvider passed in.
+        /// If the provider is null, the CurrentCulture is used.
+        /// See the documentation for IFormattable for more information.
+        /// </summary>
+        /// <returns>
+        /// A string representation of this object.
+        /// </returns>
+        internal readonly string ConvertToString(string format, IFormatProvider provider)
+        {
+            if (IsEmpty)
+            {
+                return "Empty";
+            }
+
+            // Helper to get the numeric list separator for a given culture.
+            char separator = TokenizerHelper.GetNumericListSeparator(provider);
+            return string.Format(
+                provider,
+                "{1:" + format + "}{0}{2:" + format + "}{0}{3:" + format + "}{0}{4:" + format + "}",
+                separator,
+                X,
+                Y,
+                Width,
+                Height);
+        }
     }
 }

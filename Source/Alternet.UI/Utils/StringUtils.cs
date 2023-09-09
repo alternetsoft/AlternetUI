@@ -27,6 +27,32 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Combines name and value pairs to string.
+        /// </summary>
+        /// <param name="names">Names.</param>
+        /// <param name="values">Values.</param>
+        /// <returns></returns>
+        public static string ToString<T>(string[] names, T[] values)
+        {
+            var result = new StringBuilder();
+            result.Append('{');
+
+            for (int i = 0; i < names.Length; i++)
+            {
+                var name = names[i];
+                var value = values[i]?.ToString();
+                var item = $"{name}={value}";
+
+                if (i > 0)
+                    result.Append(", ");
+                result.Append(item);
+            }
+
+            result.Append('}');
+            return result.ToString();
+        }
+
         private class ComparerUsingToString<T> : IComparer<T>
             where T : class
         {

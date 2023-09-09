@@ -508,8 +508,20 @@ namespace Alternet.Drawing
         /// Converts the <see cref='Drawing.Rect.Location'/> and <see cref='Drawing.Rect.Size'/>
         /// of this <see cref='Drawing.Rect'/> to a human-readable string.
         /// </summary>
-        public override readonly string ToString() =>
-            $"{{X={X},Y={Y},Width={Width},Height={Height}}}";
+        public override readonly string ToString()
+        {
+            string[] names =
+            {
+                PropNameStrings.Default.X,
+                PropNameStrings.Default.Y,
+                PropNameStrings.Default.Width,
+                PropNameStrings.Default.Height,
+            };
+
+            double[] values = { x, y, width, height };
+
+            return StringUtils.ToString<double>(names, values);
+        }
 
         /// <summary>
         /// Creates a string representation of this object based on the format string
