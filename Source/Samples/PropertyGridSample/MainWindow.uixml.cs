@@ -636,7 +636,7 @@ namespace PropertyGridSample
             if (propInfo == null || instance == null)
                 return;
 
-            var propType = AssemblyUtils.GetRealType(propInfo.PropertyType);
+            /*var propType = AssemblyUtils.GetRealType(propInfo.PropertyType);*/
 
             var value = propInfo.GetValue(instance);
 

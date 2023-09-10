@@ -37,6 +37,9 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets kind of the <see cref="Color"/> editor.
         /// </summary>
+        /// <remarks>
+        /// Used in <see cref="PropertyGrid.CreateColorItemWithKind"/>.
+        /// </remarks>
         PropertyGridEditKindColor? EditKindColor { get; set; }
 
         /// <summary>
