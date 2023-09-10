@@ -196,7 +196,7 @@ namespace Alternet.Drawing
 
         public static string KnownColorToName(KnownColor color)
         {
-            Debug.Assert(color > 0 && color <= KnownColor.RebeccaPurple);
+            Debug.Assert(color > 0 && color <= KnownColor.RebeccaPurple, nameof(KnownColorToName));
             return ColorNameTable[unchecked((int)color) - 1];
         }
     }

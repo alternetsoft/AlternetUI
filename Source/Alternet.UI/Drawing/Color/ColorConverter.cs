@@ -111,8 +111,7 @@ namespace Alternet.Drawing
             CultureInfo? culture,
             object value)
         {
-            string? text = value as string;
-            if (text != null)
+            if (value is string text)
             {
                 object? obj;
                 string text2 = text.Trim();
@@ -131,12 +130,18 @@ namespace Alternet.Drawing
                         bool flag = true;
                         TypeConverter converter =
                             TypeDescriptor.GetConverter(typeof(int));
+#pragma warning disable
                         if (text2.IndexOf(c) == -1)
+#pragma warning restore
                         {
+#pragma warning disable
                             if (text2.Length >= 2 && (text2[0] == '\'' ||
                                 text2[0] == '"') && text2[0] == text2[text2.Length - 1])
+#pragma warning restore
                             {
+#pragma warning disable
                                 string name = text2.Substring(1, text2.Length - 2);
+#pragma warning restore
                                 obj = Color.FromName(name);
                                 flag = false;
                             }
@@ -247,11 +252,11 @@ namespace Alternet.Drawing
                 throw new ArgumentNullException(nameof(destinationType));
             }
 
-            if (value is Color)
+            if (value is Color color1)
             {
                 if (destinationType == typeof(string))
                 {
-                    Color left = (Color)value;
+                    Color left = color1;
                     if (left == Color.Empty)
                     {
                         return string.Empty;
@@ -295,7 +300,7 @@ namespace Alternet.Drawing
                 else if (destinationType == typeof(InstanceDescriptor))
                 {
                     object[]? arguments = null;
-                    Color color = (Color)value;
+                    Color color = color1;
                     MemberInfo? memberInfo;
                     if (color.IsEmpty)
                     {

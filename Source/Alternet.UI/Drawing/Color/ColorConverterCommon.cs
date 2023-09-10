@@ -35,11 +35,15 @@ namespace Alternet.Drawing
             if (!text.Contains(new string(sep, 1)))
             {
                 // text can be '' (empty quoted string)
+#pragma warning disable
                 if (text.Length >= 2 && (text[0] == '\'' || text[0] == '"')
                     && text[0] == text[text.Length - 1])
+#pragma warning restore
                 {
                     // In quotes means a named value
+#pragma warning disable
                     string colorName = text.Substring(1, text.Length - 2);
+#pragma warning restore
                     return Color.FromName(colorName);
                 }
                 else if ((text.Length == 7 && text[0] == '#') ||
@@ -89,6 +93,7 @@ namespace Alternet.Drawing
                     return c;
                 }
             }
+
             return color;
         }
 
@@ -103,12 +108,16 @@ namespace Alternet.Drawing
             {
                 if (text[0] == '#')
                 {
+#pragma warning disable
                     return IntFromString(text.Substring(1), 16);
+#pragma warning restore
                 }
                 else if (text.StartsWith("0x", StringComparison.OrdinalIgnoreCase)
                          || text.StartsWith("&h", StringComparison.OrdinalIgnoreCase))
                 {
+#pragma warning disable
                     return IntFromString(text.Substring(2), 16);
+#pragma warning restore
                 }
                 else
                 {

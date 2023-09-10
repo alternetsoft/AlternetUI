@@ -13,26 +13,20 @@ namespace Alternet.Drawing
     public static class ColorTranslator
     {
         // COLORREF is 0x00BBGGRR
-        internal const int COLORREF_RedShift = 0;
-        internal const int COLORREF_GreenShift = 8;
-        internal const int COLORREF_BlueShift = 16;
+        internal const int COLORREFRedShift = 0;
+        internal const int COLORREFGreenShift = 8;
+        internal const int COLORREFBlueShift = 16;
 
         private const int OleSystemColorFlag = unchecked((int)0x80000000);
 
-        private static Dictionary<string, Color>? s_htmlSysColorTable;
-
-        internal static uint COLORREFToARGB(uint value)
-            => ((value >> COLORREF_RedShift) & 0xFF) << Color.ARGBRedShift
-                | ((value >> COLORREF_GreenShift) & 0xFF) << Color.ARGBGreenShift
-                | ((value >> COLORREF_BlueShift) & 0xFF) << Color.ARGBBlueShift
-                | Color.ARGBAlphaMask; // COLORREF's are always fully opaque
+        private static Dictionary<string, Color>? htmlSysColorTable;
 
         /// <summary>
         /// Translates the specified <see cref='Color'/> to a Win32 color.
         /// </summary>
         public static int ToWin32(Color c)
         {
-            return c.R << COLORREF_RedShift | c.G << COLORREF_GreenShift | c.B << COLORREF_BlueShift;
+            return c.R << COLORREFRedShift | c.G << COLORREFGreenShift | c.B << COLORREFBlueShift;
         }
 
         /// <summary>
@@ -40,12 +34,11 @@ namespace Alternet.Drawing
         /// </summary>
         public static int ToOle(Color c)
         {
-            // IMPORTANT: This signature is invoked directly by the runtime marshaler and cannot change without
+            // IMPORTANT: This signature is invoked directly by the runtime marshaler and
+            // cannot change without
             // also updating the runtime.
-
             // This method converts Color to an OLE_COLOR.
             // https://docs.microsoft.com/openspecs/office_file_formats/ms-oforms/4b8f4be0-3fff-4e42-9fc1-b9fd00251e8e
-
             if (c.IsKnownColor && c.IsSystemColor)
             {
                 // Unfortunately KnownColor didn't keep the same ordering as the various GetSysColor()
@@ -129,9 +122,9 @@ namespace Alternet.Drawing
         /// </summary>
         public static Color FromOle(int oleColor)
         {
-            // IMPORTANT: This signature is invoked directly by the runtime marshaler and cannot change without
+            // IMPORTANT: This signature is invoked directly by the runtime marshaler and
+            // cannot change without
             // also updating the runtime.
-
             if ((oleColor & OleSystemColorFlag) != 0)
             {
                 switch (oleColor)
@@ -228,9 +221,10 @@ namespace Alternet.Drawing
             {
                 if (htmlColor.Length == 7)
                 {
-                    c = Color.FromArgb(Convert.ToInt32(htmlColor.Substring(1, 2), 16),
-                                       Convert.ToInt32(htmlColor.Substring(3, 2), 16),
-                                       Convert.ToInt32(htmlColor.Substring(5, 2), 16));
+                    c = Color.FromArgb(
+                        Convert.ToInt32(htmlColor.Substring(1, 2), 16),
+                        Convert.ToInt32(htmlColor.Substring(3, 2), 16),
+                        Convert.ToInt32(htmlColor.Substring(5, 2), 16));
                 }
                 else
                 {
@@ -238,14 +232,16 @@ namespace Alternet.Drawing
                     string g = char.ToString(htmlColor[2]);
                     string b = char.ToString(htmlColor[3]);
 
-                    c = Color.FromArgb(Convert.ToInt32(r + r, 16),
-                                       Convert.ToInt32(g + g, 16),
-                                       Convert.ToInt32(b + b, 16));
+                    c = Color.FromArgb(
+                        Convert.ToInt32(r + r, 16),
+                        Convert.ToInt32(g + g, 16),
+                        Convert.ToInt32(b + b, 16));
                 }
             }
 
             // special case. Html requires LightGrey, but .NET uses LightGray
-            if (c.IsEmpty && string.Equals(htmlColor, "LightGrey", StringComparison.OrdinalIgnoreCase))
+            if (c.IsEmpty
+                && string.Equals(htmlColor, "LightGrey", StringComparison.OrdinalIgnoreCase))
             {
                 c = Color.LightGray;
             }
@@ -253,12 +249,12 @@ namespace Alternet.Drawing
             // System color
             if (c.IsEmpty)
             {
-                if (s_htmlSysColorTable == null)
+                if (htmlSysColorTable == null)
                 {
                     InitializeHtmlSysColorTable();
                 }
 
-                s_htmlSysColorTable!.TryGetValue(htmlColor.ToLowerInvariant(), out c);
+                htmlSysColorTable!.TryGetValue(htmlColor.ToLowerInvariant(), out c);
             }
 
             // resort to type converter which will handle named colors
@@ -391,9 +387,15 @@ namespace Alternet.Drawing
             return colorString;
         }
 
+        internal static uint COLORREFToARGB(uint value)
+            => ((value >> COLORREFRedShift) & 0xFF) << Color.ARGBRedShift
+                | ((value >> COLORREFGreenShift) & 0xFF) << Color.ARGBGreenShift
+                | ((value >> COLORREFBlueShift) & 0xFF) << Color.ARGBBlueShift
+                | Color.ARGBAlphaMask; // COLORREF's are always fully opaque
+
         private static void InitializeHtmlSysColorTable()
         {
-            s_htmlSysColorTable = new Dictionary<string, Color>(27)
+            htmlSysColorTable = new Dictionary<string, Color>(27)
             {
                 ["activeborder"] = Color.FromKnownColor(KnownColor.ActiveBorder),
                 ["activecaption"] = Color.FromKnownColor(KnownColor.ActiveCaption),
@@ -421,7 +423,7 @@ namespace Alternet.Drawing
                 ["threedlightshadow"] = Color.FromKnownColor(KnownColor.ControlLightLight),
                 ["window"] = Color.FromKnownColor(KnownColor.Window),
                 ["windowframe"] = Color.FromKnownColor(KnownColor.WindowFrame),
-                ["windowtext"] = Color.FromKnownColor(KnownColor.WindowText)
+                ["windowtext"] = Color.FromKnownColor(KnownColor.WindowText),
             };
         }
     }

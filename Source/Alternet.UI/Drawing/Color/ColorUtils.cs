@@ -13,77 +13,43 @@ namespace Alternet.Drawing
     {
         internal static WxSystemColour Convert(KnownColor color)
         {
-            switch (color)
+            return color switch
             {
-                case KnownColor.ActiveBorder:
-                    return (WxSystemColour)0x0A;
-                case KnownColor.ActiveCaption:
-                    return (WxSystemColour)0x02;
-                case KnownColor.ActiveCaptionText:
-                    return (WxSystemColour)0x09;
-                case KnownColor.AppWorkspace:
-                    return (WxSystemColour)0x0C;
-                case KnownColor.ButtonFace:
-                    return (WxSystemColour)0x0F;
-                case KnownColor.ButtonHighlight:
-                    return (WxSystemColour)0x14;
-                case KnownColor.ButtonShadow:
-                    return (WxSystemColour)0x10;
-                case KnownColor.Control:
-                    return (WxSystemColour)0x0F;
-                case KnownColor.ControlDark:
-                    return (WxSystemColour)0x10;
-                case KnownColor.ControlDarkDark:
-                    return (WxSystemColour)0x15;
-                case KnownColor.ControlLight:
-                    return (WxSystemColour)0x16;
-                case KnownColor.ControlLightLight:
-                    return (WxSystemColour)0x14;
-                case KnownColor.ControlText:
-                    return (WxSystemColour)0x12;
-                case KnownColor.Desktop:
-                    return (WxSystemColour)0x01;
-                case KnownColor.GradientActiveCaption:
-                    return (WxSystemColour)0x1B;
-                case KnownColor.GradientInactiveCaption:
-                    return (WxSystemColour)0x1C;
-                case KnownColor.GrayText:
-                    return (WxSystemColour)0x11;
-                case KnownColor.Highlight:
-                    return (WxSystemColour)0x0D;
-                case KnownColor.HighlightText:
-                    return (WxSystemColour)0x0E;
-                case KnownColor.HotTrack:
-                    return (WxSystemColour)0x1A;
-                case KnownColor.InactiveBorder:
-                    return (WxSystemColour)0x0B;
-                case KnownColor.InactiveCaption:
-                    return (WxSystemColour)0x03;
-                case KnownColor.InactiveCaptionText:
-                    return (WxSystemColour)0x13;
-                case KnownColor.Info:
-                    return (WxSystemColour)0x18;
-                case KnownColor.InfoText:
-                    return (WxSystemColour)0x17;
-                case KnownColor.Menu:
-                    return (WxSystemColour)0x04;
-                case KnownColor.MenuBar:
-                    return (WxSystemColour)0x1E;
-                case KnownColor.MenuHighlight:
-                    return (WxSystemColour)0x1D;
-                case KnownColor.MenuText:
-                    return (WxSystemColour)0x07;
-                case KnownColor.ScrollBar:
-                    return (WxSystemColour)0x00;
-                case KnownColor.Window:
-                    return (WxSystemColour)0x05;
-                case KnownColor.WindowFrame:
-                    return (WxSystemColour)0x06;
-                case KnownColor.WindowText:
-                    return (WxSystemColour)0x08;
-                default:
-                    return WxSystemColour.SYS_COLOUR_MAX;
-            }
+                KnownColor.ActiveBorder => (WxSystemColour)0x0A,
+                KnownColor.ActiveCaption => (WxSystemColour)0x02,
+                KnownColor.ActiveCaptionText => (WxSystemColour)0x09,
+                KnownColor.AppWorkspace => (WxSystemColour)0x0C,
+                KnownColor.ButtonFace => (WxSystemColour)0x0F,
+                KnownColor.ButtonHighlight => (WxSystemColour)0x14,
+                KnownColor.ButtonShadow => (WxSystemColour)0x10,
+                KnownColor.Control => (WxSystemColour)0x0F,
+                KnownColor.ControlDark => (WxSystemColour)0x10,
+                KnownColor.ControlDarkDark => (WxSystemColour)0x15,
+                KnownColor.ControlLight => (WxSystemColour)0x16,
+                KnownColor.ControlLightLight => (WxSystemColour)0x14,
+                KnownColor.ControlText => (WxSystemColour)0x12,
+                KnownColor.Desktop => (WxSystemColour)0x01,
+                KnownColor.GradientActiveCaption => (WxSystemColour)0x1B,
+                KnownColor.GradientInactiveCaption => (WxSystemColour)0x1C,
+                KnownColor.GrayText => (WxSystemColour)0x11,
+                KnownColor.Highlight => (WxSystemColour)0x0D,
+                KnownColor.HighlightText => (WxSystemColour)0x0E,
+                KnownColor.HotTrack => (WxSystemColour)0x1A,
+                KnownColor.InactiveBorder => (WxSystemColour)0x0B,
+                KnownColor.InactiveCaption => (WxSystemColour)0x03,
+                KnownColor.InactiveCaptionText => (WxSystemColour)0x13,
+                KnownColor.Info => (WxSystemColour)0x18,
+                KnownColor.InfoText => (WxSystemColour)0x17,
+                KnownColor.Menu => (WxSystemColour)0x04,
+                KnownColor.MenuBar => (WxSystemColour)0x1E,
+                KnownColor.MenuHighlight => (WxSystemColour)0x1D,
+                KnownColor.MenuText => (WxSystemColour)0x07,
+                KnownColor.ScrollBar => (WxSystemColour)0x00,
+                KnownColor.Window => (WxSystemColour)0x05,
+                KnownColor.WindowFrame => (WxSystemColour)0x06,
+                KnownColor.WindowText => (WxSystemColour)0x08,
+                _ => WxSystemColour.SYS_COLOUR_MAX,
+            };
         }
     }
 }

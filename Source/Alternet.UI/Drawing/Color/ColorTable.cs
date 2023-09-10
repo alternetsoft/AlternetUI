@@ -14,6 +14,11 @@ namespace Alternet.Drawing
 
         internal static Dictionary<string, Color> Colors => ColorConstants.Value;
 
+        internal static bool TryGetNamedColor(string name, out Color result) =>
+            Colors.TryGetValue(name, out result);
+
+        internal static bool IsKnownNamedColor(string name) => Colors.TryGetValue(name, out _);
+
         private static Dictionary<string, Color> GetColors()
         {
             var colors = new Dictionary<string, Color>(StringComparer.OrdinalIgnoreCase);
@@ -33,10 +38,5 @@ namespace Alternet.Drawing
                     dictionary[prop.Name] = (Color)prop.GetValue(null, null)!;
             }
         }
-
-        internal static bool TryGetNamedColor(string name, out Color result) =>
-            Colors.TryGetValue(name, out result);
-
-        internal static bool IsKnownNamedColor(string name) => Colors.TryGetValue(name, out _);
     }
 }
