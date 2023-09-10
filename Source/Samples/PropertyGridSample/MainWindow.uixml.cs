@@ -320,7 +320,9 @@ namespace PropertyGridSample
                 if (prop != null)
                 {
                     propertyGrid.SetPropertyReadOnly(prop, false, false);
-                    propertyGrid.SetPropertyEditorByName(prop, "TextCtrlAndButton");
+                    propertyGrid.SetPropertyEditorByKnownName(
+                        prop,
+                        PropertyGridKnownEditors.TextCtrlAndButton);
                     propertyGrid.Add(prop);
                 }
             }
@@ -334,9 +336,18 @@ namespace PropertyGridSample
             var prm = PropertyGrid.CreateNewItemParams();
             propertyGrid.AddPropCategory("Color");
 
-            // System color
-            prm.EditKindColor = PropertyGridEditKindColor.SystemColorComboBox;
+            // Default color editor
+            prm.EditKindColor = PropertyGridEditKindColor.Default;
             var prop = propertyGrid.CreateColorItemWithKind(
+                "Color (Default)",
+                null,
+                Color.Green,
+                prm);
+            propertyGrid.Add(prop);
+
+            // System color editor
+            prm.EditKindColor = PropertyGridEditKindColor.SystemColors;
+            prop = propertyGrid.CreateColorItemWithKind(
                 "Color (System)",
                 null,
                 Color.FromKnownColor(KnownColor.ButtonFace),
@@ -358,6 +369,24 @@ namespace PropertyGridSample
                 "Color (Dialog)",
                 null,
                 Color.Red,
+                prm);
+            propertyGrid.Add(prop);
+
+            // Color with Choice
+            prm.EditKindColor = PropertyGridEditKindColor.Choice;
+            prop = propertyGrid.CreateColorItemWithKind(
+                "Color (Choice)",
+                null,
+                Color.Navy,
+                prm);
+            propertyGrid.Add(prop);
+
+            // Color with Choice and Button
+            prm.EditKindColor = PropertyGridEditKindColor.ChoiceAndButton;
+            prop = propertyGrid.CreateColorItemWithKind(
+                "Color (Choice and btn)",
+                null,
+                Color.Navy,
                 prm);
             propertyGrid.Add(prop);
         }

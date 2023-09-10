@@ -59,6 +59,8 @@ namespace Alternet.UI
             TypeRegistry = new();
 
         private static AdvDictionary<Type, IPropertyGridChoices>? choicesCache = null;
+        private static PropertyGridEditKindColor defaultEditKindColor =
+            PropertyGridEditKindColor.ComboBox;
 
         private readonly AdvDictionary<IntPtr, IPropertyGridItem> items = new();
         private readonly PropertyGridVariant variant = new();
@@ -173,6 +175,24 @@ namespace Alternet.UI
         /// </summary>
         public static PropertyGridCreateStyle DefaultCreateStyle { get; set; }
             = PropertyGridCreateStyle.DefaultStyle;
+
+        /// <summary>
+        /// Gets or sets default editor for <see cref="Color"/>.
+        /// </summary>
+        public static PropertyGridEditKindColor DefaultEditKindColor
+        {
+            get
+            {
+                return defaultEditKindColor;
+            }
+
+            set
+            {
+                if (value == PropertyGridEditKindColor.Default)
+                    return;
+                defaultEditKindColor = value;
+            }
+        }
 
         /// <summary>
         /// Gets list of <see cref="IPropertyGridItem"/> added to this control.
@@ -1054,19 +1074,41 @@ namespace Alternet.UI
                 IPropertyGridItem CreateComboBox()
                 {
                     var result = CreateColorItem(label, name, value, prm);
-                    SetPropertyEditorByName(result, PropEditClassComboBox);
+                    SetPropertyEditorByKnownName(result, PropertyGridKnownEditors.ComboBox);
                     return result;
                 }
 
-                if (prm == null || prm.EditKindColor == null)
-                    return CreateDefault();
-
-                return prm.EditKindColor.Value switch
+                IPropertyGridItem CreateChoice()
                 {
+                    var result = CreateColorItem(label, name, value, prm);
+                    SetPropertyEditorByKnownName(result, PropertyGridKnownEditors.Choice);
+                    return result;
+                }
+
+                IPropertyGridItem CreateChoiceAndButton()
+                {
+                    var result = CreateColorItem(label, name, value, prm);
+                    SetPropertyEditorByKnownName(result, PropertyGridKnownEditors.ChoiceAndButton);
+                    return result;
+                }
+
+                PropertyGridEditKindColor kind = DefaultEditKindColor;
+
+                if (prm != null && prm.EditKindColor != null)
+                    kind = prm.EditKindColor.Value;
+
+                if(kind == PropertyGridEditKindColor.Default)
+                    kind = DefaultEditKindColor;
+
+                return kind switch
+                {
+                    PropertyGridEditKindColor.Default => CreateDefault(),
                     PropertyGridEditKindColor.Dialog => CreateColorItem(label, name, value, prm),
-                    PropertyGridEditKindColor.SystemColorComboBox =>
+                    PropertyGridEditKindColor.SystemColors =>
                         CreateSystemColorItem(label, name, value, prm),
                     PropertyGridEditKindColor.ComboBox => CreateComboBox(),
+                    PropertyGridEditKindColor.Choice => CreateChoice(),
+                    PropertyGridEditKindColor.ChoiceAndButton => CreateChoiceAndButton(),
                     _ => CreateDefault(),
                 };
             }
