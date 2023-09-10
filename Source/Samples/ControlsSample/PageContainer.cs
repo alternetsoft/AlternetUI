@@ -55,9 +55,9 @@ namespace ControlsSample
             SetActivePageControl();
         }
 
-        private void Pages_ItemInserted(object? sender, CollectionChangeEventArgs<Page> e)
+        private void Pages_ItemInserted(object? sender, int index, Page item)
         {
-            pagesControl.Items.Insert(e.Index, new TreeViewItem(e.Item.Title));
+            pagesControl.Items.Insert(index, new TreeViewItem(item.Title));
         }
 
         private void SetActivePageControl()

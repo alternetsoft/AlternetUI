@@ -45,9 +45,9 @@ namespace ControlsTest
             SetActivePageControl();
         }
 
-        private void Pages_ItemInserted(object? sender, CollectionChangeEventArgs<Page> e)
+        private void Pages_ItemInserted(object? sender, int index, Page item)
         {
-            pagesListBox.Items.Insert(e.Index, e.Item.Title);
+            pagesListBox.Items.Insert(index, item.Title);
         }
 
         private void SetActivePageControl()

@@ -9,7 +9,7 @@ namespace PaintSample
 {
     public partial class Toolbar : Control
     {
-        private List<ToolButton> toolButtons = new List<ToolButton>();
+        private List<ToolButton> toolButtons = new();
 
         private Tools? tools;
 
@@ -22,16 +22,16 @@ namespace PaintSample
             CommandButtons.ItemRemoved += CommandButtons_ItemRemoved;
         }
 
-        private void CommandButtons_ItemRemoved(object? sender, CollectionChangeEventArgs<CommandButton> e)
+        private void CommandButtons_ItemRemoved(object? sender, int index, CommandButton item)
         {
-            commandButtonsContainer.Children.Remove(e.Item);
+            commandButtonsContainer.Children.Remove(item);
         }
 
-        private void CommandButtons_ItemInserted(object? sender, CollectionChangeEventArgs<CommandButton> e)
+        private void CommandButtons_ItemInserted(object? sender, int index, CommandButton item)
         {
-            e.Item.Margin = new Thickness(0, 0, 5, 0);
-            e.Item.HorizontalAlignment = HorizontalAlignment.Center;
-            commandButtonsContainer.Children.Add(e.Item);
+            item.Margin = new Thickness(0, 0, 5, 0);
+            item.HorizontalAlignment = HorizontalAlignment.Center;
+            commandButtonsContainer.Children.Add(item);
         }
 
         public void SetTools(Tools tools)

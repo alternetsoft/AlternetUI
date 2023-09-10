@@ -418,14 +418,12 @@ namespace ControlsSample
             listView.ColumnHeaderVisible = columnHeaderVisibleCheckBox.IsChecked;
         }
 
-        private void Items_ItemRemoved(object? sender,
-            CollectionChangeEventArgs<ListViewItem> e)
+        private void Items_ItemRemoved(object? sender, int index, ListViewItem item)
         {
             UpdateSlowRecreate();
         }
 
-        private void Items_ItemInserted(object? sender,
-            CollectionChangeEventArgs<ListViewItem> e)
+        private void Items_ItemInserted(object? sender, int index, ListViewItem item)
         {
             UpdateSlowRecreate();
         }

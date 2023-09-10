@@ -19,14 +19,14 @@ namespace ControlsTest
             if (WebBrowser.IsBackendAvailable(WebBrowserBackend.Edge))
             {
                 WebBrowserTestPage.UseBackend = WebBrowserBackend.Edge;
-                AddWebBrowserPage("Web Browser Edge1");
-                //AddWebBrowserPage("Web Browser Edge2");
+                AddWebBrowserPage("Web Browser Edge");
+                /*AddWebBrowserPage("Web Browser Edge2");*/
             }
 
             if (WebBrowser.IsBackendAvailable(WebBrowserBackend.WebKit))
             {
                 WebBrowserTestPage.UseBackend = WebBrowserBackend.WebKit;
-                AddWebBrowserPage("Web Browser WebKit1");
+                AddWebBrowserPage("Web Browser WebKit");
                 AddWebBrowserPage("Web Browser WebKit2");
             }
 
@@ -34,14 +34,13 @@ namespace ControlsTest
                 !WebBrowser.IsBackendAvailable(WebBrowserBackend.Edge))
             {
                 WebBrowserTestPage.UseBackend = WebBrowserBackend.IELatest;
-                AddWebBrowserPage("Web Browser IE1");
+                AddWebBrowserPage("Web Browser IE");
                 AddWebBrowserPage("Web Browser IE2");
             }
 
             pageContainer.Pages.Add(new PageContainer.Page(
                 "Custom Draw Test",
-                new CustomDrawTestPage { Site = this}));
-
+                new CustomDrawTestPage { Site = this }));
 
             Grid.SetRow(eventsListBox, 1);
 

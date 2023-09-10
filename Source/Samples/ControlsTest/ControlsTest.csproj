@@ -10,14 +10,6 @@
       <ApplicationIcon>../CommonData/Sample.ico</ApplicationIcon>
     </PropertyGroup>
 
-    <PropertyGroup Condition="$([MSBuild]::IsOsPlatform('Windows'))">
-        <TargetFrameworks>net6.0;net7.0</TargetFrameworks>
-    </PropertyGroup>
-
-    <PropertyGroup Condition="!$([MSBuild]::IsOsPlatform('Windows'))">
-        <TargetFrameworks>net6.0</TargetFrameworks>
-    </PropertyGroup>
-
     <ItemGroup>
       <Compile Remove="build\**" />
       <EmbeddedResource Remove="build\**" />

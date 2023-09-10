@@ -338,14 +338,12 @@ namespace ControlsSample
             treeView.HasBorder = !treeView.HasBorder;
         }
 
-        private void Items_ItemRemoved(object? sender, 
-            CollectionChangeEventArgs<TreeViewItem> e)
+        private void Items_ItemRemoved(object? sender, int index, TreeViewItem item)
         {
             UpdateSlowRecreate();
         }
 
-        private void Items_ItemInserted(object? sender, 
-            CollectionChangeEventArgs<TreeViewItem> e)
+        private void Items_ItemInserted(object? sender, int index, TreeViewItem item)
         {
             UpdateSlowRecreate();
         }
