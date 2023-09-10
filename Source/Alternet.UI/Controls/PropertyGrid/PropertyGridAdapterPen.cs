@@ -105,6 +105,20 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        public override IEnumerable<IPropertyGridItem> CreateProps(IPropertyGrid propGrid)
+        {
+            List<IPropertyGridItem> list = new()
+            {
+                propGrid.CreateProperty(this, nameof(Color))!,
+                propGrid.CreateProperty(this, nameof(DashStyle))!,
+                propGrid.CreateProperty(this, nameof(LineCap))!,
+                propGrid.CreateProperty(this, nameof(LineJoin))!,
+                propGrid.CreateProperty(this, nameof(Width))!,
+            };
+            return list;
+        }
+
+        /// <inheritdoc/>
         protected override void Load()
         {
             if (Pen == null)

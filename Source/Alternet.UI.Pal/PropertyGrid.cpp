@@ -415,10 +415,11 @@ namespace Alternet::UI
 	}
 
 	void* PropertyGrid::CreateSystemColorProperty(const string& label, const string& name,
-		const Color& value)
+		const Color& value, uint32_t kind)
 	{
 		wxColor wxc = value;
-		return new wxSystemColourProperty(wxStr(label), wxStr(name), wxc);
+		wxColourPropertyValue wxProp = wxColourPropertyValue(kind, wxc);
+		return new wxSystemColourProperty(wxStr(label), wxStr(name), wxProp);
 	}
 
 	void* PropertyGrid::CreateCursorProperty(const string& label, const string& name, int value)

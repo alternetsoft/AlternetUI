@@ -24,8 +24,8 @@ namespace NativeApi.Api
         public IntPtr CreateImageFilenameProperty(string label, string name, string value) =>
             throw new Exception();
 
-        public IntPtr CreateSystemColorProperty(string label, string name, Color value) =>
-            throw new Exception();
+        public IntPtr CreateSystemColorProperty(string label, string name,
+            Color value, uint kind) => default;
 
         public IntPtr CreateCursorProperty(string label, string name, int value) =>
             throw new Exception();

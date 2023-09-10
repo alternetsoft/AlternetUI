@@ -42,6 +42,9 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets kind of the <see cref="string"/> editor.
         /// </summary>
+        /// <remarks>
+        /// Used in <see cref="PropertyGrid.CreateStringItemWithKind"/>.
+        /// </remarks>
         PropertyGridEditKindString? EditKindString { get; set; }
     }
 }

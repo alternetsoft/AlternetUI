@@ -730,10 +730,10 @@ ALTERNET_UI_API void* PropertyGrid_CreateImageFilenameProperty_(PropertyGrid* ob
         });
 }
 
-ALTERNET_UI_API void* PropertyGrid_CreateSystemColorProperty_(PropertyGrid* obj, const char16_t* label, const char16_t* name, Color value)
+ALTERNET_UI_API void* PropertyGrid_CreateSystemColorProperty_(PropertyGrid* obj, const char16_t* label, const char16_t* name, Color value, uint32_t kind)
 {
     return MarshalExceptions<void*>([&](){
-            return obj->CreateSystemColorProperty(label, name, value);
+            return obj->CreateSystemColorProperty(label, name, value, kind);
         });
 }
 

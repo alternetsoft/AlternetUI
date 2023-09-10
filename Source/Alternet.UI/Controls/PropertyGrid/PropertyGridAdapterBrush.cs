@@ -191,6 +191,25 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        public override IEnumerable<IPropertyGridItem> CreateProps(IPropertyGrid propGrid)
+        {
+            List<IPropertyGridItem> list = new()
+            {
+                propGrid.CreateProperty(this, nameof(BrushType))!,
+                propGrid.CreateProperty(this, nameof(Color))!,
+                propGrid.CreateProperty(this, nameof(EndColor))!,
+                propGrid.CreateProperty(this, nameof(LinearGradientStart))!,
+                propGrid.CreateProperty(this, nameof(LinearGradientEnd))!,
+                propGrid.CreateProperty(this, nameof(RadialGradientCenter))!,
+                propGrid.CreateProperty(this, nameof(RadialGradientOrigin))!,
+                propGrid.CreateProperty(this, nameof(RadialGradientRadius))!,
+                propGrid.CreateProperty(this, nameof(GradientStops))!,
+                propGrid.CreateProperty(this, nameof(HatchStyle))!,
+            };
+            return list;
+        }
+
+        /// <inheritdoc/>
         protected override void Save()
         {
             Brush CreateRadialGradientBrush()

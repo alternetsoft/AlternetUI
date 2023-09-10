@@ -40,13 +40,13 @@ namespace Alternet.UI
     /// </remarks>
     public class PropertyGrid : Control, IPropertyGrid
     {
-        internal const string PropEditClassNameCheckBox = "CheckBox";
-        internal const string PropEditClassNameChoice = "Choice";
-        internal const string PropEditClassNameTextCtrl = "TextCtrl";
-        internal const string PropEditClassNameChoiceAndButton = "ChoiceAndButton";
-        internal const string PropEditClassNameComboBox = "ComboBox";
-        internal const string PropEditClassNameSpinCtrl = "SpinCtrl";
-        internal const string PropEditClassNameTextCtrlAndButton = "TextCtrlAndButton";
+        internal const string PropEditClassCheckBox = "CheckBox";
+        internal const string PropEditClassChoice = "Choice";
+        internal const string PropEditClassTextCtrl = "TextCtrl";
+        internal const string PropEditClassChoiceAndButton = "ChoiceAndButton";
+        internal const string PropEditClassComboBox = "ComboBox";
+        internal const string PropEditClassSpinCtrl = "SpinCtrl";
+        internal const string PropEditClassTextCtrlAndButton = "TextCtrlAndButton";
 
         internal static readonly string NameAsLabel = Native.PropertyGrid.NameAsLabel;
 
@@ -805,6 +805,44 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// <inheritdoc cref="CreateStringItem"/>
+        /// </summary>
+        /// <remarks>
+        /// This function uses <see cref="IPropertyGridNewItemParams.EditKindString"/> to
+        /// select appropriate property editor.
+        /// </remarks>
+        public virtual IPropertyGridItem CreateStringItemWithKind(
+            string label,
+            string? name,
+            string? value,
+            IPropertyGridNewItemParams? prm)
+        {
+            IPropertyGridItem CreateDefault() => CreateStringItem(label, name, value, prm);
+
+            if (prm == null || prm.EditKindString == null)
+                return CreateDefault();
+            switch (prm.EditKindString.Value)
+            {
+                case PropertyGridEditKindString.Simple:
+                    return CreateStringItem(label, name, value, prm);
+                case PropertyGridEditKindString.LongString:
+                    return CreateLongStringItem(label, name, value, prm);
+                case PropertyGridEditKindString.Ellipsis:
+                    var result = CreateDefault();
+                    SetPropertyEditorByName(result, PropEditClassTextCtrlAndButton);
+                    return result;
+                case PropertyGridEditKindString.FileName:
+                    return CreateFilenameItem(label, name, value, prm);
+                case PropertyGridEditKindString.ImageFileName:
+                    return CreateImageFilenameItem(label, name, value, prm);
+                case PropertyGridEditKindString.Directory:
+                    return CreateDirItem(label, name, value, prm);
+                default:
+                    return CreateDefault();
+            }
+        }
+
+        /// <summary>
         /// Creates <see cref="char"/> property.
         /// </summary>
         /// <param name="label">Property label.</param>
@@ -818,7 +856,7 @@ namespace Alternet.UI
             char? value = null,
             IPropertyGridNewItemParams? prm = null)
         {
-            var result = CreateStringItem(label, name, value?.ToString(), prm);
+            var result = CreateStringItemWithKind(label, name, value?.ToString(), prm);
             SetPropertyMaxLength(result, 1);
             return result;
         }
@@ -943,10 +981,22 @@ namespace Alternet.UI
             Color value,
             IPropertyGridNewItemParams? prm = null)
         {
+            const uint PG_COLOUR_CUSTOM = 0xFFFFFF;
+            uint kind = PG_COLOUR_CUSTOM;
+
+            if (value.IsKnownColor)
+            {
+                KnownColor knownColor = value.ToKnownColor();
+                WxSystemColour converted = ColorUtils.Convert(knownColor);
+                if (converted != WxSystemColour.SYS_COLOUR_MAX)
+                    kind = (uint)converted;
+            }
+
             var handle = NativeControl.CreateSystemColorProperty(
                 CorrectPropLabel(label, prm),
                 CorrectPropName(name),
-                value);
+                value,
+                kind);
             var result = new PropertyGridItem(this, handle, label, name, value)
             {
                 PropertyEditorKind = "Color.System",
@@ -978,6 +1028,54 @@ namespace Alternet.UI
                 PropertyEditorKind = "Color",
             };
             OnPropertyCreated(result, prm);
+            return result;
+        }
+
+        /// <summary>
+        /// <inheritdoc cref="CreateColorItem"/>
+        /// </summary>
+        /// <remarks>
+        /// This function uses <see cref="IPropertyGridNewItemParams.EditKindColor"/> to
+        /// select appropriate property editor.
+        /// </remarks>
+        public virtual IPropertyGridItem CreateColorItemWithKind(
+            string label,
+            string? name,
+            Color value,
+            IPropertyGridNewItemParams? prm)
+        {
+            IPropertyGridItem Fn()
+            {
+                IPropertyGridItem CreateDefault()
+                {
+                    return CreateComboBox();
+                }
+
+                IPropertyGridItem CreateComboBox()
+                {
+                    var result = CreateColorItem(label, name, value, prm);
+                    SetPropertyEditorByName(result, PropEditClassComboBox);
+                    return result;
+                }
+
+                if (prm == null || prm.EditKindColor == null)
+                    return CreateDefault();
+
+                return prm.EditKindColor.Value switch
+                {
+                    PropertyGridEditKindColor.Dialog => CreateColorItem(label, name, value, prm),
+                    PropertyGridEditKindColor.SystemColorComboBox =>
+                        CreateSystemColorItem(label, name, value, prm),
+                    PropertyGridEditKindColor.ComboBox => CreateComboBox(),
+                    _ => CreateDefault(),
+                };
+            }
+
+            var result = Fn();
+
+            if (ColorHasAlpha)
+                SetPropertyKnownAttribute(result, PropertyGridItemAttrId.HasAlpha, true);
+
             return result;
         }
 
@@ -1092,8 +1190,9 @@ namespace Alternet.UI
             {
                 var value = GetStructPropertyValueForReload(null, instance, propInfo);
                 var prm = GetNewItemParams(instance, propInfo);
-                result = CreateStringItem(label, name, value?.ToString(), prm);
+                result = CreateStringItemWithKind(label, name, value?.ToString(), prm);
                 result.GetValueFuncForReload = GetStructPropertyValueForReload;
+                SetPropertyReadOnly(result, true, false);
 
                 void AddChildren()
                 {
@@ -1127,7 +1226,6 @@ namespace Alternet.UI
                     AddChildren();
             }
 
-            SetPropertyReadOnly(result, true, false);
             OnPropertyCreated(result, instance, propInfo);
             return result;
         }
@@ -1142,40 +1240,57 @@ namespace Alternet.UI
             object instance,
             PropertyInfo propInfo)
         {
-            var value = GetStructPropertyValueForReload(null, instance, propInfo);
-
             PropertyGridAdapterFont adapter = new()
             {
                 Instance = instance,
                 PropInfo = propInfo,
             };
+            var result = CreatePropertyWithAdapter(label, name, adapter);
+            return result;
+        }
+
+        /// <summary>
+        /// Create complex property with sub-properties using
+        /// <see cref="PropertyGridAdapterGeneric"/> instance as child properties
+        /// provider.
+        /// </summary>
+        /// <param name="adapter">Complex properties provider.</param>
+        /// <param name="label">Property label.</param>
+        /// <param name="name">Property name.</param>
+        /// <returns>Property declaration for use with <see cref="PropertyGrid.Add"/>.</returns>
+        /// <exception cref="ArgumentNullException">
+        /// If <see cref="PropertyGridAdapterGeneric.Instance"/> or
+        /// <see cref="PropertyGridAdapterGeneric.PropInfo"/> is null.
+        /// </exception>
+        public virtual IPropertyGridItem CreatePropertyWithAdapter(
+            string label,
+            string? name,
+            PropertyGridAdapterGeneric adapter)
+        {
+            var propInfo = adapter.PropInfo!;
+            var instance = adapter.Instance!;
+
+            if (propInfo == null)
+            {
+                throw new ArgumentNullException(
+                    nameof(adapter),
+                    string.Format(ErrorMessages.Default.PropertyIsNull, "PropInfo"));
+            }
+
+            if (instance == null)
+            {
+                throw new ArgumentNullException(
+                    nameof(adapter),
+                    string.Format(ErrorMessages.Default.PropertyIsNull, "Instance"));
+            }
+
+            var value = GetStructPropertyValueForReload(null, instance, propInfo);
             var prm = GetNewItemParams(instance, propInfo);
-            var result = CreateStringItem(label, name, value?.ToString(), prm);
+            var result = CreateStringItemWithKind(label, name, value?.ToString(), prm);
             result.GetValueFuncForReload = GetStructPropertyValueForReload;
             SetPropertyReadOnly(result, true, false);
             OnPropertyCreated(result, instance, propInfo);
-
-            var choices = PropertyGridAdapterFont.FontNameChoices;
-
-            var itemName = CreateChoicesItem(
-                "Name",
-                null,
-                choices,
-                adapter.NameAsIndex,
-                null);
-            itemName.Instance = adapter;
-            itemName.PropInfo = AssemblyUtils.GetPropInfo(adapter, "NameAsIndex");
-
-            List<IPropertyGridItem> list = new()
-            {
-                itemName,
-                CreateProperty(adapter, "SizeInPoints")!,
-                CreateProperty(adapter, "Bold")!,
-                CreateProperty(adapter, "Italic")!,
-                CreateProperty(adapter, "Strikethrough")!,
-                CreateProperty(adapter, "Underlined")!,
-            };
-
+            var list = adapter.CreateProps(this);
             result.AddChildren(list);
             return result;
         }
@@ -1190,33 +1305,12 @@ namespace Alternet.UI
             object instance,
             PropertyInfo propInfo)
         {
-            var value = GetStructPropertyValueForReload(null, instance, propInfo);
             PropertyGridAdapterBrush adapter = new()
             {
                 Instance = instance,
                 PropInfo = propInfo,
             };
-            var prm = GetNewItemParams(instance, propInfo);
-            var result = CreateStringItem(label, name, value?.ToString(), prm);
-            result.GetValueFuncForReload = GetStructPropertyValueForReload;
-            SetPropertyReadOnly(result, true, false);
-            OnPropertyCreated(result, instance, propInfo);
-
-            List<IPropertyGridItem> list = new()
-            {
-                CreateProperty(adapter, "BrushType")!,
-                CreateProperty(adapter, "Color")!,
-                CreateProperty(adapter, "EndColor")!,
-                CreateProperty(adapter, "LinearGradientStart")!,
-                CreateProperty(adapter, "LinearGradientEnd")!,
-                CreateProperty(adapter, "RadialGradientCenter")!,
-                CreateProperty(adapter, "RadialGradientOrigin")!,
-                CreateProperty(adapter, "RadialGradientRadius")!,
-                CreateProperty(adapter, "GradientStops")!,
-                CreateProperty(adapter, "HatchStyle")!,
-            };
-
-            result.AddChildren(list);
+            var result = CreatePropertyWithAdapter(label, name, adapter);
             return result;
         }
 
@@ -1230,28 +1324,12 @@ namespace Alternet.UI
             object instance,
             PropertyInfo propInfo)
         {
-            var value = GetStructPropertyValueForReload(null, instance, propInfo);
             PropertyGridAdapterPen adapter = new()
             {
                 Instance = instance,
                 PropInfo = propInfo,
             };
-            var prm = GetNewItemParams(instance, propInfo);
-            var result = CreateStringItem(label, name, value?.ToString(), prm);
-            result.GetValueFuncForReload = GetStructPropertyValueForReload;
-            SetPropertyReadOnly(result, true, false);
-            OnPropertyCreated(result, instance, propInfo);
-
-            List<IPropertyGridItem> list = new()
-            {
-                CreateProperty(adapter, "Color")!,
-                CreateProperty(adapter, "DashStyle")!,
-                CreateProperty(adapter, "LineCap")!,
-                CreateProperty(adapter, "LineJoin")!,
-                CreateProperty(adapter, "Width")!,
-            };
-
-            result.AddChildren(list);
+            var result = CreatePropertyWithAdapter(label, name, adapter);
             return result;
         }
 
@@ -1269,7 +1347,7 @@ namespace Alternet.UI
             decimal value = default,
             IPropertyGridNewItemParams? prm = null)
         {
-            var result = CreateStringItem(label, name, value.ToString(), prm);
+            var result = CreateStringItemWithKind(label, name, value.ToString(), prm);
             SetPropertyValidator(result, ValueValidatorFactory.DecimalValidator);
             return result;
         }
@@ -1835,7 +1913,7 @@ namespace Alternet.UI
         {
             var value = AssemblyUtils.GetPropValue<string>(instance, propInfo, string.Empty);
             var prm = GetNewItemParams(instance, propInfo);
-            var prop = CreateStringItem(label, name, value, prm);
+            var prop = CreateStringItemWithKind(label, name, value, prm);
             OnPropertyCreated(prop, instance, propInfo);
             return prop;
         }
@@ -1939,9 +2017,7 @@ namespace Alternet.UI
             propValue ??= Color.Black;
             var prm = GetNewItemParams(instance, propInfo);
             var value = (Color)propValue;
-            prop = CreateColorItem(label, name, value, prm);
-            if (ColorHasAlpha)
-                SetPropertyKnownAttribute(prop, PropertyGridItemAttrId.HasAlpha, true);
+            prop = CreateColorItemWithKind(label, name, value, prm);
             OnPropertyCreated(prop, instance, propInfo);
             return prop;
         }
@@ -2139,7 +2215,8 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="label">Category label.</param>
         /// <param name="name">Category name.</param>
-        /// <returns>Category declaration for use with <see cref="PropertyGrid.Add"/>.</returns>
+        /// <param name="prm">Item create params.</param>
+        /// <returns>Category property for use with <see cref="PropertyGrid.Add"/>.</returns>
         public virtual IPropertyGridItem CreatePropCategory(
             string label,
             string? name = null,
@@ -2153,6 +2230,25 @@ namespace Alternet.UI
                 IsCategory = true,
             };
             OnPropertyCreated(result, prm);
+            return result;
+        }
+
+        /// <summary>
+        /// Creates and adds properties category.
+        /// </summary>
+        /// <remarks>
+        /// Same as <see cref="CreatePropCategory"/> but additionally calls <see cref="Add"/>.
+        /// </remarks>
+        /// <param name="label">Category label.</param>
+        /// <param name="name">Category name.</param>
+        /// <param name="prm">Item create params.</param>
+        public virtual IPropertyGridItem AddPropCategory(
+            string label,
+            string? name = null,
+            IPropertyGridNewItemParams? prm = null)
+        {
+            var result = CreatePropCategory(label, name, prm);
+            Add(result);
             return result;
         }
 
@@ -2764,19 +2860,29 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Sets editor control of a property usinbg its name.
+        /// Sets editor control of a property using its name.
         /// </summary>
         /// <param name="prop">Property Item.</param>
         /// <param name="editorName">Name of the editor.</param>
         /// <remarks>
         /// Names of built-in editors are: TextCtrl, Choice, ComboBox, CheckBox,
-        /// TextCtrlAndButton, and ChoiceAndButton. Additional editors include
-        /// SpinCtrl and DatePickerCtrl, but using them requires
-        /// calling <see cref="RegisterAdditionalEditors"/> prior use.
+        /// TextCtrlAndButton, ChoiceAndButton, SpinCtrl and DatePickerCtrl.
         /// </remarks>
         public virtual void SetPropertyEditorByName(IPropertyGridItem prop, string editorName)
         {
             NativeControl.SetPropertyEditorByName(prop.Handle, editorName);
+        }
+
+        /// <summary>
+        /// Sets editor control of a property using its known name.
+        /// </summary>
+        /// <param name="prop">Property Item.</param>
+        /// <param name="editorName">Knwon name of the editor.</param>
+        public virtual void SetPropertyEditorByKnownName(
+            IPropertyGridItem prop,
+            PropertyGridKnownEditors editorName)
+        {
+            SetPropertyEditorByName(prop, editorName.ToString());
         }
 
         /// <summary>

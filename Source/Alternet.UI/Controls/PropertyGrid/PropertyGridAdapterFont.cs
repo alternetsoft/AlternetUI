@@ -153,6 +153,33 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        public override IEnumerable<IPropertyGridItem> CreateProps(IPropertyGrid propGrid)
+        {
+            var choices = PropertyGridAdapterFont.FontNameChoices;
+
+            var item = propGrid.CreateChoicesItem(
+                nameof(Name),
+                null,
+                choices,
+                NameAsIndex,
+                null);
+            item.Instance = this;
+            item.PropInfo = AssemblyUtils.GetPropInfo(this, nameof(NameAsIndex));
+
+            List<IPropertyGridItem> list = new()
+            {
+                item,
+                propGrid.CreateProperty(this, nameof(SizeInPoints))!,
+                propGrid.CreateProperty(this, nameof(Bold))!,
+                propGrid.CreateProperty(this, nameof(Italic))!,
+                propGrid.CreateProperty(this, nameof(Strikethrough))!,
+                propGrid.CreateProperty(this, nameof(Underlined))!,
+            };
+
+            return list;
+        }
+
+        /// <inheritdoc/>
         protected override void Save()
         {
             Font = new(name, sizeInPoints, style);

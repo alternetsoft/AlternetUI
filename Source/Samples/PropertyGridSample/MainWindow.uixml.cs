@@ -260,162 +260,16 @@ namespace PropertyGridSample
             {
                 propertyGrid.Clear();
 
-                var prop = propertyGrid.CreatePropCategory("Properties");
-                propertyGrid.Add(prop);
+                propertyGrid.AddPropCategory("Properties");
                 propertyGrid.AddProps(WelcomeProps.Default, null, true);
 
-                // New category
-                prop = propertyGrid.CreatePropCategory("Properties 2");
-                propertyGrid.Add(prop);
+                CreateCollectionProperties();
+                CreateStringProperties();
+                CreateColorProperties();
+                CreateEnumProperties();
+                CreateOtherProperties();
 
-                // String with button
-                prop = propertyGrid.CreateStringItem("Str and button");
-                propertyGrid.SetPropertyEditorByName(prop, "TextCtrlAndButton");
-                propertyGrid.Add(prop);
-
-                void AddCollectionProp(string label, string propName)
-                {
-                    prop = propertyGrid.CreateProperty(label, null, this, propName);
-                    if (prop != null)
-                    {
-                        propertyGrid.SetPropertyReadOnly(prop, false, false);
-                        propertyGrid.SetPropertyEditorByName(prop, "TextCtrlAndButton");
-                        propertyGrid.Add(prop);
-                    }
-                }
-
-                AddCollectionProp("Collection<string>", "ItemsString");
-                AddCollectionProp("Collection<object>", "ItemsObject");
-
-                prop = propertyGrid.CreateBoolItem("Bool 2");
-                propertyGrid.Add(prop);
-                propertyGrid.SetPropertyKnownAttribute(
-                    prop,
-                    PropertyGridItemAttrId.UseCheckbox,
-                    false);
-
-                prop = propertyGrid.CreateBoolItem("Bool 3");
-                propertyGrid.Add(prop);
-                propertyGrid.SetPropertyKnownAttribute(
-                    prop,
-                    PropertyGridItemAttrId.UseCheckbox,
-                    true);
-
-                prop = propertyGrid.CreateLongStringItem("Long string");
-                propertyGrid.Add(prop);
-
-                // Date
-                prop = propertyGrid.CreateDateItem("Date");
-                propertyGrid.Add(prop);
-                // If none Date is selected (checkbox next to date editor is unchecked)
-                // DateTime.MinValue is returned.
-                propertyGrid.SetPropertyKnownAttribute(
-                    prop,
-                    PropertyGridItemAttrId.PickerStyle,
-                    (int)(DatePickerStyleFlags.DropDown | DatePickerStyleFlags.ShowCentury
-                    | DatePickerStyleFlags.AllowNone));
-
-                // New category
-                prop = propertyGrid.CreatePropCategory("Properties 3");
-                propertyGrid.Add(prop);
-
-                var choices1 = PropertyGrid.CreateChoicesOnce(typeof(PropertyGridCreateStyle));
-                prop = propertyGrid.CreateFlagsItem("Flags", null, choices1,
-                    PropertyGrid.DefaultCreateStyle);
-                propertyGrid.Add(prop);
-
-                var choices2 = PropertyGrid.CreateChoicesOnce(typeof(HorizontalAlignment));
-                prop = propertyGrid.CreateChoicesItem("Enum", null, choices2,
-                    HorizontalAlignment.Center);
-                propertyGrid.Add(prop);
-
-                prop = propertyGrid.CreateStringItem(
-                    "Readonly",
-                    null,
-                    "Some Text");
-                propertyGrid.SetPropertyReadOnly(prop, true, false);
-                propertyGrid.Add(prop);
-
-                prop = propertyGrid.CreateStringItem(
-                                    "Error if changed",
-                                    null,
-                                    "Some Text");
-                propertyGrid.Add(prop);
-
-                // Filename
-                prop = propertyGrid.CreateFilenameItem(
-                    "Filename",
-                    null,
-                    PathUtils.GetAppFolder());
-                propertyGrid.SetPropertyKnownAttribute(
-                    prop,
-                    PropertyGridItemAttrId.Wildcard,
-                    "Text Files (*.txt)|*.txt");
-                propertyGrid.SetPropertyKnownAttribute(
-                    prop,
-                    PropertyGridItemAttrId.DialogTitle,
-                    "Custom File Dialog Title");
-                propertyGrid.SetPropertyKnownAttribute(
-                    prop,
-                    PropertyGridItemAttrId.ShowFullPath,
-                    false);
-                propertyGrid.Add(prop);
-
-                // Dir
-                prop = propertyGrid.CreateDirItem("Dir", null, PathUtils.GetAppFolder());
-                propertyGrid.SetPropertyKnownAttribute(
-                    prop,
-                    PropertyGridItemAttrId.DialogTitle,
-                    "This is a custom dir dialog title");
-                propertyGrid.Add(prop);
-
-                // Image filename
-                prop = propertyGrid.CreateImageFilenameItem(
-                    "Image Filename",
-                    null,
-                    PathUtils.GetAppFolder());
-                propertyGrid.Add(prop);
-
-                // System color
-                prop = propertyGrid.CreateSystemColorItem(
-                    "System color",
-                    null,
-                    Color.FromKnownColor(KnownColor.Window));
-                propertyGrid.Add(prop);
-
-                // Color with ComboBox
-                prop = propertyGrid.CreateColorItem(
-                    "Color with ComboBox",
-                    null,
-                    Color.Black);
-                propertyGrid.SetPropertyEditorByName(prop, "ComboBox");
-                propertyGrid.Add(prop);
-
-                // Password
-                prop = propertyGrid.CreateStringItem("Password");
-                propertyGrid.Add(prop);
-                // Password attribute must be set after adding property to PropertyGrid
-                propertyGrid.SetPropertyKnownAttribute(prop, PropertyGridItemAttrId.Password, true);
-
-                // Editable enum. Can have values which are not in choices.
-                var choices = PropertyGrid.CreateChoices();
-                choices.Add("Item 1");
-                choices.Add("Item 2");
-                choices.Add("Item 3");
-                prop = propertyGrid.CreateEditEnumItem("Editable enum", null, choices, "Item 2");
-                propertyGrid.Add(prop);
-
-                //Font Name
-                choices = PropertyGridAdapterFont.FontNameChoices;
-                prop = propertyGrid.CreateChoicesItem(
-                    "Font name", 
-                    null, 
-                    choices, 
-                    choices.GetValueFromLabel(Font.Default.Name));
-                propertyGrid.Add(prop);
-
-                prop = propertyGrid.CreatePropCategory("Nullable Properties");
-                propertyGrid.Add(prop);
+                propertyGrid.AddPropCategory("Nullable");
                 propertyGrid.AddProps(NullableProps.Default);
 
                 propertyGrid.SetCategoriesBackgroundColor(Color.LightGray);
@@ -424,6 +278,199 @@ namespace PropertyGridSample
             {
                 propertyGrid.EndUpdate();
             }
+        }
+
+        void CreateOtherProperties()
+        {
+            propertyGrid.AddPropCategory("Other");
+
+            // Date
+            var prop = propertyGrid.CreateDateItem("Date");
+            propertyGrid.Add(prop);
+            // If none Date is selected (checkbox next to date editor is unchecked)
+            // DateTime.MinValue is returned.
+            propertyGrid.SetPropertyKnownAttribute(
+                prop,
+                PropertyGridItemAttrId.PickerStyle,
+                (int)(DatePickerStyleFlags.DropDown | DatePickerStyleFlags.ShowCentury
+                | DatePickerStyleFlags.AllowNone));
+
+            prop = propertyGrid.CreateBoolItem("Bool 2");
+            propertyGrid.Add(prop);
+            propertyGrid.SetPropertyKnownAttribute(
+                prop,
+                PropertyGridItemAttrId.UseCheckbox,
+                false);
+
+            prop = propertyGrid.CreateBoolItem("Bool 3");
+            propertyGrid.Add(prop);
+            propertyGrid.SetPropertyKnownAttribute(
+                prop,
+                PropertyGridItemAttrId.UseCheckbox,
+                true);
+        }
+
+        void CreateCollectionProperties()
+        {
+            propertyGrid.AddPropCategory("Collection");
+
+            void AddCollectionProp(string label, string propName)
+            {
+                var prop = propertyGrid.CreateProperty(label, null, this, propName);
+                if (prop != null)
+                {
+                    propertyGrid.SetPropertyReadOnly(prop, false, false);
+                    propertyGrid.SetPropertyEditorByName(prop, "TextCtrlAndButton");
+                    propertyGrid.Add(prop);
+                }
+            }
+
+            AddCollectionProp("Collection<string>", "ItemsString");
+            AddCollectionProp("Collection<object>", "ItemsObject");
+        }
+
+        void CreateColorProperties()
+        {
+            var prm = PropertyGrid.CreateNewItemParams();
+            propertyGrid.AddPropCategory("Color");
+
+            // System color
+            prm.EditKindColor = PropertyGridEditKindColor.SystemColorComboBox;
+            var prop = propertyGrid.CreateColorItemWithKind(
+                "Color (System)",
+                null,
+                Color.FromKnownColor(KnownColor.ButtonFace),
+                prm);
+            propertyGrid.Add(prop);
+
+            // Color with ComboBox
+            prm.EditKindColor = PropertyGridEditKindColor.ComboBox;
+            prop = propertyGrid.CreateColorItemWithKind(
+                "Color (ComboBox)",
+                null,
+                Color.Yellow,
+                prm);
+            propertyGrid.Add(prop);
+
+            // Color with Dialog
+            prm.EditKindColor = PropertyGridEditKindColor.Dialog;
+            prop = propertyGrid.CreateColorItemWithKind(
+                "Color (Dialog)",
+                null,
+                Color.Red,
+                prm);
+            propertyGrid.Add(prop);
+        }
+
+        void CreateEnumProperties()
+        {
+            propertyGrid.AddPropCategory("Flags and Enum");
+
+            var choices1 = PropertyGrid.CreateChoicesOnce(typeof(PropertyGridCreateStyle));
+            var prop = propertyGrid.CreateFlagsItem("Flags", null, choices1,
+                PropertyGrid.DefaultCreateStyle);
+            propertyGrid.Add(prop);
+
+            var choices2 = PropertyGrid.CreateChoicesOnce(typeof(HorizontalAlignment));
+            prop = propertyGrid.CreateChoicesItem("Enum", null, choices2,
+                HorizontalAlignment.Center);
+            propertyGrid.Add(prop);
+
+            // Editable enum. Can have values which are not in choices.
+            var choices = PropertyGrid.CreateChoices();
+            choices.Add("Item 1");
+            choices.Add("Item 2");
+            choices.Add("Item 3");
+            prop = propertyGrid.CreateEditEnumItem("Enum (editable)", null, choices, "Item 2");
+            propertyGrid.Add(prop);
+
+            //Font Name
+            choices = PropertyGridAdapterFont.FontNameChoices;
+            prop = propertyGrid.CreateChoicesItem(
+                "Font name",
+                null,
+                choices,
+                choices.GetValueFromLabel(Font.Default.Name));
+            propertyGrid.Add(prop);
+        }
+
+        void CreateStringProperties()
+        {
+            propertyGrid.AddPropCategory("String");
+            var prm = PropertyGrid.CreateNewItemParams();
+
+            var prop = propertyGrid.CreateStringItem("Str");
+            propertyGrid.Add(prop);
+
+            prm.EditKindString = PropertyGridEditKindString.Ellipsis;
+            prop = propertyGrid.CreateStringItemWithKind("Str (Ellipsis)", null, null, prm);
+            propertyGrid.Add(prop);
+
+            prm.EditKindString = PropertyGridEditKindString.LongString;
+            prop = propertyGrid.CreateStringItemWithKind("Str (Long Edit)", null, null, prm);
+            propertyGrid.Add(prop);
+
+            // Password
+            prop = propertyGrid.CreateStringItem("Str (Password)");
+            propertyGrid.Add(prop);
+            // Password attribute must be set after adding property to PropertyGrid
+            propertyGrid.SetPropertyKnownAttribute(prop, PropertyGridItemAttrId.Password, true);
+
+            prop = propertyGrid.CreateStringItem(
+                "Str (Readonly)",
+                null,
+                "Some Text");
+            propertyGrid.SetPropertyReadOnly(prop, true, false);
+            propertyGrid.Add(prop);
+
+            prop = propertyGrid.CreateStringItem(
+                                "Error",
+                                null,
+                                "Shows error if Enter pressed");
+            propertyGrid.Add(prop);
+
+            // Filename
+            prm.EditKindString = PropertyGridEditKindString.FileName;
+            prop = propertyGrid.CreateStringItemWithKind(
+                "Str (Filename)",
+                null,
+                PathUtils.GetAppFolder(),
+                prm);
+            propertyGrid.SetPropertyKnownAttribute(
+                prop,
+                PropertyGridItemAttrId.Wildcard,
+                "Text Files (*.txt)|*.txt");
+            propertyGrid.SetPropertyKnownAttribute(
+                prop,
+                PropertyGridItemAttrId.DialogTitle,
+                "Custom File Dialog Title");
+            propertyGrid.SetPropertyKnownAttribute(
+                prop,
+                PropertyGridItemAttrId.ShowFullPath,
+                false);
+            propertyGrid.Add(prop);
+
+            // Dir
+            prm.EditKindString = PropertyGridEditKindString.Directory;
+            prop = propertyGrid.CreateStringItemWithKind(
+                "Str (Directory)",
+                null,
+                PathUtils.GetAppFolder(),
+                prm);
+            propertyGrid.SetPropertyKnownAttribute(
+                prop,
+                PropertyGridItemAttrId.DialogTitle,
+                "This is a custom dir dialog title");
+            propertyGrid.Add(prop);
+
+            // Image filename
+            prm.EditKindString = PropertyGridEditKindString.ImageFileName;
+            prop = propertyGrid.CreateStringItemWithKind(
+                "Str (Image Filename)",
+                null,
+                PathUtils.GetAppFolder(),
+                prm);
+            propertyGrid.Add(prop);
         }
 
         private void ControlsListBox_SelectionChanged(object? sender, EventArgs e)

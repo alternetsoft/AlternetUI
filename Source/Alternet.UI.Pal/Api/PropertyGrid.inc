@@ -122,7 +122,7 @@ void* CreateStringProperty(const string& label, const string& name, const string
 void* CreateFilenameProperty(const string& label, const string& name, const string& value);
 void* CreateDirProperty(const string& label, const string& name, const string& value);
 void* CreateImageFilenameProperty(const string& label, const string& name, const string& value);
-void* CreateSystemColorProperty(const string& label, const string& name, const Color& value);
+void* CreateSystemColorProperty(const string& label, const string& name, const Color& value, uint32_t kind);
 void* CreateCursorProperty(const string& label, const string& name, int value);
 void* CreateBoolProperty(const string& label, const string& name, bool value);
 void* CreateIntProperty(const string& label, const string& name, int64_t value);

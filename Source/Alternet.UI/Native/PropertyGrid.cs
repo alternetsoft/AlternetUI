@@ -729,10 +729,10 @@ namespace Alternet.UI.Native
             return n;
         }
         
-        public System.IntPtr CreateSystemColorProperty(string label, string name, Alternet.Drawing.Color value)
+        public System.IntPtr CreateSystemColorProperty(string label, string name, Alternet.Drawing.Color value, uint kind)
         {
             CheckDisposed();
-            var n = NativeApi.PropertyGrid_CreateSystemColorProperty_(NativePointer, label, name, value);
+            var n = NativeApi.PropertyGrid_CreateSystemColorProperty_(NativePointer, label, name, value, kind);
             return n;
         }
         
@@ -1784,7 +1784,7 @@ namespace Alternet.UI.Native
             public static extern System.IntPtr PropertyGrid_CreateImageFilenameProperty_(IntPtr obj, string label, string name, string value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr PropertyGrid_CreateSystemColorProperty_(IntPtr obj, string label, string name, NativeApiTypes.Color value);
+            public static extern System.IntPtr PropertyGrid_CreateSystemColorProperty_(IntPtr obj, string label, string name, NativeApiTypes.Color value, uint kind);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern System.IntPtr PropertyGrid_CreateCursorProperty_(IntPtr obj, string label, string name, int value);

@@ -115,6 +115,14 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Creates properties to show in <see cref="PropertyGrid"/>.
+        /// </summary>
+        /// <param name="propGrid">Use this <see cref="PropertyGrid"/> instance
+        /// to create properties.</param>
+        /// <returns>List of created properties.</returns>
+        public abstract IEnumerable<IPropertyGridItem> CreateProps(IPropertyGrid propGrid);
+
         /// <inheritdoc/>
         public override string? ToString()
         {
