@@ -31,11 +31,7 @@ namespace Alternet.UI
                 this.EndIgnoreRecreate();
             }
 
-            //Size = new (600, 400);
-
-            ButtonPanel.Children.Add(OkButton);
-            ButtonPanel.Children.Add(CancelButton);
-            ButtonPanel.Children.Add(ApplyButton);
+            /* Size = new (600, 400);*/
 
             MainPanel.Children.Add(DataPanel);
             MainPanel.Children.Add(ButtonPanel);
@@ -47,11 +43,6 @@ namespace Alternet.UI
             Children.Add(MainPanel);
             this.ResumeLayout();
         }
-
-        /// <summary>
-        /// Gets or sets default button margin for the Ok, Cancel and Apply buttons.
-        /// </summary>
-        public static Thickness DefaultButtonMargin { get; set; } = new(5);
 
         public Panel DataPanel { get; } = new()
         {
@@ -67,38 +58,9 @@ namespace Alternet.UI
         };
 
         /// <summary>
-        /// Gets Ok button.
-        /// </summary>
-        public Button OkButton { get; } = new()
-        {
-            Text = CommonStrings.Default.ButtonOk,
-            Margin = DefaultButtonMargin,
-            IsDefault = true,
-        };
-
-        /// <summary>
-        /// Gets Cancel button.
-        /// </summary>
-        public Button CancelButton { get; } = new()
-        {
-            Text = CommonStrings.Default.ButtonCancel,
-            Margin = DefaultButtonMargin,
-            IsCancel = true,
-        };
-
-        /// <summary>
-        /// Gets Apply button.
-        /// </summary>
-        public Button ApplyButton { get; } = new()
-        {
-            Margin = DefaultButtonMargin,
-            Text = CommonStrings.Default.ButtonApply,
-        };
-
-        /// <summary>
         /// Gets panel with Ok, Cancel and Apply buttons.
         /// </summary>
-        public HorizontalStackPanel ButtonPanel { get; } = new()
+        public PanelOkCancelButtons ButtonPanel { get; } = new()
         {
             HorizontalAlignment = HorizontalAlignment.Right,
             VerticalAlignment = VerticalAlignment.Bottom,
