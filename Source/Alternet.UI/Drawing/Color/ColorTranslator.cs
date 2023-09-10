@@ -50,7 +50,6 @@ namespace Alternet.Drawing
             {
                 // Unfortunately KnownColor didn't keep the same ordering as the various GetSysColor()
                 // COLOR_ * values, otherwise this could be greatly simplified.
-
                 switch (c.ToKnownColor())
                 {
                     case KnownColor.ActiveBorder:

@@ -7,8 +7,8 @@ namespace Alternet.Drawing
 {
     internal static class KnownColorNames
     {
-        //  Names of all colors (in order of definition in the KnownColor enum).
-        private static readonly string[] s_colorNameTable = new string[]
+        // Names of all colors (in order of definition in the KnownColor enum).
+        private static readonly string[] ColorNameTable = new string[]
         {
             // "System" colors, Part 1
             "ActiveBorder",
@@ -197,7 +197,7 @@ namespace Alternet.Drawing
         public static string KnownColorToName(KnownColor color)
         {
             Debug.Assert(color > 0 && color <= KnownColor.RebeccaPurple);
-            return s_colorNameTable[unchecked((int)color) - 1];
+            return ColorNameTable[unchecked((int)color) - 1];
         }
     }
 }

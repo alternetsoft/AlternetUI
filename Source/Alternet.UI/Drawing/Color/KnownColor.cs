@@ -9,19 +9,16 @@ namespace Alternet.Drawing
     public enum KnownColor
     {
         // This enum is order dependent!!!
-        //
         // The value of these known colors are indexes into a color array.
         // Do not modify this enum without updating KnownColorTable.
-
         // 0 - reserved for "not a known color"
-
         // "System" colors, Part 1
 
         /// <summary>
         /// The system-defined color of the active window's border.
         /// </summary>
         ActiveBorder = 1,
-        
+
         /// <summary>
         /// The system-defined color of the background of the active window's title bar.
         /// </summary>
@@ -33,7 +30,8 @@ namespace Alternet.Drawing
         ActiveCaptionText,
 
         /// <summary>
-        /// The system-defined color of the application workspace. The application workspace is the area in a multiple-document view that is not being occupied by documents.
+        /// The system-defined color of the application workspace. The application workspace
+        /// is the area in a multiple-document view that is not being occupied by documents.
         /// </summary>
         AppWorkspace,
 
@@ -43,22 +41,26 @@ namespace Alternet.Drawing
         Control,
 
         /// <summary>
-        /// The system-defined shadow color of a 3-D element. The shadow color is applied to parts of a 3-D element that face away from the light source.
+        /// The system-defined shadow color of a 3-D element. The shadow color is applied
+        /// to parts of a 3-D element that face away from the light source.
         /// </summary>
         ControlDark,
 
         /// <summary>
-        /// The system-defined color that is the dark shadow color of a 3-D element. The dark shadow color is applied to the parts of a 3-D element that are the darkest color.
+        /// The system-defined color that is the dark shadow color of a 3-D element. The
+        /// dark shadow color is applied to the parts of a 3-D element that are the darkest color.
         /// </summary>
         ControlDarkDark,
 
         /// <summary>
-        /// The system-defined color that is the light color of a 3-D element. The light color is applied to parts of a 3-D element that face the light source.
+        /// The system-defined color that is the light color of a 3-D element. The light
+        /// color is applied to parts of a 3-D element that face the light source.
         /// </summary>
         ControlLight,
 
         /// <summary>
-        /// The system-defined highlight color of a 3-D element. The highlight color is applied to the parts of a 3-D element that are the lightest color.
+        /// The system-defined highlight color of a 3-D element. The highlight color is
+        /// applied to the parts of a 3-D element that are the lightest color.
         /// </summary>
         ControlLightLight,
 
@@ -73,7 +75,8 @@ namespace Alternet.Drawing
         Desktop,
 
         /// <summary>
-        /// The system-defined color of dimmed text. Items in a list that are disabled are displayed in dimmed text.
+        /// The system-defined color of dimmed text. Items in a list that are disabled
+        /// are displayed in dimmed text.
         /// </summary>
         GrayText,
 
@@ -88,7 +91,8 @@ namespace Alternet.Drawing
         HighlightText,
 
         /// <summary>
-        /// The system-defined color used to designate a hot-tracked item. Single-clicking a hot-tracked item executes the item.
+        /// The system-defined color used to designate a hot-tracked item.
+        /// Single-clicking a hot-tracked item executes the item.
         /// </summary>
         HotTrack,
 
@@ -870,22 +874,27 @@ namespace Alternet.Drawing
         ButtonFace,
 
         /// <summary>
-        /// The system-defined color that is the highlight color of a 3-D element. This color is applied to parts of a 3-D element that face the light source.
+        /// The system-defined color that is the highlight color of a 3-D element.
+        /// This color is applied to parts of a 3-D element that face the light source.
         /// </summary>
         ButtonHighlight,
 
         /// <summary>
-        /// The system-defined color that is the shadow color of a 3-D element. This color is applied to parts of a 3-D element that face away from the light source.
+        /// The system-defined color that is the shadow color of a 3-D element.
+        /// This color is applied to parts of a 3-D element that face away from the
+        /// light source.
         /// </summary>
         ButtonShadow,
 
         /// <summary>
-        /// The system-defined color of the lightest color in the color gradient of an active window's title bar.
+        /// The system-defined color of the lightest color in the color gradient
+        /// of an active window's title bar.
         /// </summary>
         GradientActiveCaption,
 
         /// <summary>
-        /// The system-defined color of the lightest color in the color gradient of an inactive window's title bar.
+        /// The system-defined color of the lightest color in the color gradient
+        /// of an inactive window's title bar.
         /// </summary>
         GradientInactiveCaption,
 
@@ -895,7 +904,8 @@ namespace Alternet.Drawing
         MenuBar,
 
         /// <summary>
-        /// The system-defined color used to highlight menu items when the menu appears as a flat menu.
+        /// The system-defined color used to highlight menu items when the menu appears
+        /// as a flat menu.
         /// </summary>
         MenuHighlight,
 

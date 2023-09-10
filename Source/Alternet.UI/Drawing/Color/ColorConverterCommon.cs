@@ -22,25 +22,21 @@ namespace Alternet.Drawing
                 return Color.Empty;
             }
 
+            // First, check to see if this is a standard name.
+            if (ColorTable.TryGetNamedColor(text, out Color c))
             {
-                Color c;
-                // First, check to see if this is a standard name.
-                //
-                if (ColorTable.TryGetNamedColor(text, out c))
-                {
-                    return c;
-                }
+                return c;
             }
 
             char sep = culture.TextInfo.ListSeparator[0];
 
             // If the value is a 6 digit hex number only, then
             // we want to treat the Alpha as 255, not 0
-            //
             if (!text.Contains(new string(sep, 1)))
             {
                 // text can be '' (empty quoted string)
-                if (text.Length >= 2 && (text[0] == '\'' || text[0] == '"') && text[0] == text[text.Length - 1])
+                if (text.Length >= 2 && (text[0] == '\'' || text[0] == '"')
+                    && text[0] == text[text.Length - 1])
                 {
                     // In quotes means a named value
                     string colorName = text.Substring(1, text.Length - 2);
@@ -51,12 +47,12 @@ namespace Alternet.Drawing
                          (text.Length == 8 && (text.StartsWith("&h") || text.StartsWith("&H"))))
                 {
                     // Note: int.Parse will raise exception if value cannot be converted.
-                    return PossibleKnownColor(Color.FromArgb(unchecked((int)(0xFF000000 | (uint)IntFromString(text, culture)))));
+                    return PossibleKnownColor(Color.FromArgb(
+                        unchecked((int)(0xFF000000 | (uint)IntFromString(text, culture)))));
                 }
             }
 
             // Nope. Parse the RGBA from the text.
-            //
             string[] tokens = text.Split(sep);
             int[] values = new int[tokens.Length];
             for (int i = 0; i < values.Length; i++)
@@ -70,7 +66,6 @@ namespace Alternet.Drawing
             // 1 -- full ARGB encoded
             // 3 -- RGB
             // 4 -- ARGB
-            //
             return values.Length switch
             {
                 1 => PossibleKnownColor(Color.FromArgb(values[0])),
@@ -85,7 +80,6 @@ namespace Alternet.Drawing
             // Now check to see if this color matches one of our known colors.
             // If it does, then substitute it. We can only do this for "Colors"
             // because system colors morph with user settings.
-            //
             int targetARGB = color.ToArgb();
 
             foreach (Color c in ColorTable.Colors.Values)
@@ -124,7 +118,12 @@ namespace Alternet.Drawing
             }
             catch (Exception e)
             {
-                throw new ArgumentException(string.Format("ConvertInvalidPrimitive={0} is not a valid value for {1}.", text, nameof(Int32)), e);
+                throw new ArgumentException(
+                    string.Format(
+                        "ConvertInvalidPrimitive={0} is not a valid value for {1}.",
+                        text,
+                        nameof(Int32)),
+                    e);
             }
         }
 

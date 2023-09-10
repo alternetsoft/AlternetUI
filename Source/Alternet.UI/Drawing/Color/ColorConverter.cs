@@ -7,20 +7,16 @@ using System.Reflection;
 
 namespace Alternet.Drawing
 {
-    /// <summary>Converts colors from one data type to another. Access this class through the <see cref="T:System.ComponentModel.TypeDescriptor" />.</summary>
+    /// <summary>Converts colors from one data type to another. Access this class through the
+    /// <see cref="TypeDescriptor" />.</summary>
     public class ColorConverter : TypeConverter
     {
         private static readonly string ColorConstantsLock = "colorConstants";
-
-        private static Hashtable? colorConstants;
-
-        private static readonly string SystemColorConstantsLock =
-            "systemColorConstants";
-
-        private static Hashtable? systemColorConstants;
-
+        private static readonly string SystemColorConstantsLock = "systemColorConstants";
         private static readonly string ValuesLock = "values";
 
+        private static Hashtable? colorConstants;
+        private static Hashtable? systemColorConstants;
         private static TypeConverter.StandardValuesCollection? values;
 
         private static Hashtable Colors
@@ -68,21 +64,29 @@ namespace Alternet.Drawing
             }
         }
 
-        /// <summary>Determines if this converter can convert an object in the given source type to the native type of the converter.</summary>
-        /// <param name="context">An <see cref="T:System.ComponentModel.ITypeDescriptorContext" /> that provides a format context. You can use this object to get additional information about the environment from which this converter is being invoked. </param>
+        /// <summary>Determines if this converter can convert an object in the given source type
+        /// to the native type of the converter.</summary>
+        /// <param name="context">An <see cref="ITypeDescriptorContext" /> that provides a
+        /// format context. You can use this object to get additional information about
+        /// the environment from which this converter is being invoked. </param>
         /// <param name="sourceType">The type from which you want to convert. </param>
         /// <returns>
-        ///     <see langword="true" /> if this object can perform the conversion; otherwise, <see langword="false" />.</returns>
+        ///     <see langword="true" /> if this object can perform the conversion; otherwise,
+        ///     <see langword="false" />.</returns>
         public override bool CanConvertFrom(ITypeDescriptorContext? context, Type sourceType)
         {
             return sourceType == typeof(string) || base.CanConvertFrom(context, sourceType);
         }
 
-        /// <summary>Returns a value indicating whether this converter can convert an object to the given destination type using the context.</summary>
-        /// <param name="context">An <see cref="T:System.ComponentModel.ITypeDescriptorContext" /> that provides a format context. </param>
-        /// <param name="destinationType">A <see cref="T:System.Type" /> that represents the type to which you want to convert. </param>
+        /// <summary>Returns a value indicating whether this converter can convert an object to
+        /// the given destination type using the context.</summary>
+        /// <param name="context">An <see cref="ITypeDescriptorContext" /> that provides a
+        /// format context. </param>
+        /// <param name="destinationType">A <see cref="T:System.Type" /> that represents the
+        /// type to which you want to convert. </param>
         /// <returns>
-        ///     <see langword="true" /> if this converter can perform the operation; otherwise, <see langword="false" />.</returns>
+        ///     <see langword="true" /> if this converter can perform the operation; otherwise,
+        ///     <see langword="false" />.</returns>
         public override bool CanConvertTo(
             ITypeDescriptorContext? context,
             Type? destinationType)
@@ -92,12 +96,20 @@ namespace Alternet.Drawing
         }
 
         /// <summary>Converts the given object to the converter's native type.</summary>
-        /// <param name="context">A <see cref="T:System.ComponentModel.TypeDescriptor" /> that provides a format context. You can use this object to get additional information about the environment from which this converter is being invoked. </param>
-        /// <param name="culture">A <see cref="T:System.Globalization.CultureInfo" /> that specifies the culture to represent the color. </param>
+        /// <param name="context">A <see cref="TypeDescriptor" /> that provides a format context.
+        /// You can use this object to get additional information about the environment from
+        /// which this converter is being invoked. </param>
+        /// <param name="culture">A <see cref="T:System.Globalization.CultureInfo" /> that
+        /// specifies the culture to represent the color. </param>
         /// <param name="value">The object to convert. </param>
-        /// <returns>An <see cref="T:System.Object" /> representing the converted value.</returns>
-        /// <exception cref="T:System.ArgumentException">The conversion cannot be performed.</exception>
-        public override object? ConvertFrom(ITypeDescriptorContext? context, CultureInfo? culture, object value)
+        /// <returns>An <see cref="T:System.Object" /> representing the converted
+        /// value.</returns>
+        /// <exception cref="T:System.ArgumentException">The conversion cannot be
+        /// performed.</exception>
+        public override object? ConvertFrom(
+            ITypeDescriptorContext? context,
+            CultureInfo? culture,
+            object value)
         {
             string? text = value as string;
             if (text != null)
@@ -211,14 +223,19 @@ namespace Alternet.Drawing
         }
 
         /// <summary>Converts the specified object to another type. </summary>
-        /// <param name="context">A formatter context. Use this object to extract additional information about the environment from which this converter is being invoked. Always check whether this value is <see langword="null" />. Also, properties on the context object may return <see langword="null" />. </param>
-        /// <param name="culture">A <see cref="T:System.Globalization.CultureInfo" /> that specifies the culture to represent the color. </param>
+        /// <param name="context">A formatter context. Use this object to extract
+        /// additional information about the environment from which this converter is being invoked.
+        /// Always check whether this value is <see langword="null" />. Also, properties on
+        /// the context object may return <see langword="null" />. </param>
+        /// <param name="culture">A <see cref="T:System.Globalization.CultureInfo" /> that
+        /// specifies the culture to represent the color. </param>
         /// <param name="value">The object to convert. </param>
         /// <param name="destinationType">The type to convert the object to. </param>
         /// <returns>An <see cref="T:System.Object" /> representing the converted value.</returns>
         /// <exception cref="T:System.ArgumentNullException">
         ///         <paramref name="destinationType" /> is <see langword="null" />.</exception>
-        /// <exception cref="T:System.NotSupportedException">The conversion cannot be performed.</exception>
+        /// <exception cref="T:System.NotSupportedException">The conversion cannot be
+        /// performed.</exception>
         public override object? ConvertTo(
             ITypeDescriptorContext? context,
             CultureInfo? culture,
@@ -355,10 +372,18 @@ namespace Alternet.Drawing
             return base.ConvertTo(context, culture, value, destinationType);
         }
 
-        /// <summary>Retrieves a collection containing a set of standard values for the data type for which this validator is designed. This will return <see langword="null" /> if the data type does not support a standard set of values.</summary>
-        /// <param name="context">A formatter context. Use this object to extract additional information about the environment from which this converter is being invoked. Always check whether this value is <see langword="null" />. Also, properties on the context object may return <see langword="null" />. </param>
-        /// <returns>A collection containing <see langword="null" /> or a standard set of valid values. The default implementation always returns <see langword="null" />.</returns>
-        public override TypeConverter.StandardValuesCollection GetStandardValues(ITypeDescriptorContext? context)
+        /// <summary>Retrieves a collection containing a set of standard values for the data
+        /// type for which this validator is designed. This will return <see langword="null" />
+        /// if the data type does not support a standard set of values.</summary>
+        /// <param name="context">A formatter context. Use this object to extract
+        /// additional information about the environment from which this converter is being invoked.
+        /// Always check whether this value is <see langword="null" />. Also, properties
+        /// on the context object may return <see langword="null" />. </param>
+        /// <returns>A collection containing <see langword="null" /> or a standard set
+        /// of valid values. The default implementation always returns
+        /// <see langword="null" />.</returns>
+        public override TypeConverter.StandardValuesCollection GetStandardValues(
+            ITypeDescriptorContext? context)
         {
             if (ColorConverter.values == null)
             {
@@ -385,7 +410,8 @@ namespace Alternet.Drawing
                         }
 
                         arrayList.Sort(0, arrayList.Count, new ColorConverter.ColorComparer());
-                        ColorConverter.values = new TypeConverter.StandardValuesCollection(arrayList.ToArray());
+                        ColorConverter.values =
+                            new TypeConverter.StandardValuesCollection(arrayList.ToArray());
                     }
                 }
             }
@@ -393,10 +419,15 @@ namespace Alternet.Drawing
             return ColorConverter.values;
         }
 
-        /// <summary>Determines if this object supports a standard set of values that can be chosen from a list.</summary>
-        /// <param name="context">A <see cref="T:System.ComponentModel.TypeDescriptor" /> through which additional context can be provided. </param>
+        /// <summary>Determines if this object supports a standard set of values that can be
+        /// chosen from a list.</summary>
+        /// <param name="context">A <see cref="TypeDescriptor" /> through which additional
+        /// context can be provided. </param>
         /// <returns>
-        ///     <see langword="true" /> if <see cref="Alternet.Drawing.ColorConverter.GetStandardValues" /> must be called to find a common set of values the object supports; otherwise, <see langword="false" />.</returns>
+        ///     <see langword="true" /> if
+        ///     <see cref="ColorConverter.GetStandardValues" /> must be called to find
+        ///     a common set of values the object supports; otherwise,
+        ///     <see langword="false" />.</returns>
         public override bool GetStandardValuesSupported(
             ITypeDescriptorContext? context)
         {
@@ -437,8 +468,10 @@ namespace Alternet.Drawing
         {
             public int Compare(object? left, object? right)
             {
-                if (left == null || right == null)
-                    throw new ArgumentNullException();
+                if (left == null)
+                    throw new ArgumentNullException(nameof(left));
+                if (right == null)
+                    throw new ArgumentNullException(nameof(right));
 
                 Color color = (Color)left;
                 Color color2 = (Color)right;

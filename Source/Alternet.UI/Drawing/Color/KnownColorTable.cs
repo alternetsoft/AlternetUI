@@ -12,10 +12,11 @@ namespace Alternet.Drawing
         public const byte KnownColorKindUnknown = 2;
 
         // All known color values (in order of definition in the KnownColor enum).
-        public static readonly uint[] s_colorValueTable = new uint[]
+        public static readonly uint[] ColorValueTable = new uint[]
         {
             // "not a known color"
             0,
+
             // "System" colors, Part 1
 #if FEATURE_WINDOWS_SYSTEM_COLORS
             (uint)(byte)Interop.User32.Win32SystemColors.ActiveBorder,
@@ -73,6 +74,7 @@ namespace Alternet.Drawing
             0xFF000000,     // WindowFrame
             0xFF000000,     // WindowText
 #endif
+
             // "Web" Colors, Part 1
             0x00FFFFFF,     // Transparent
             0xFFF0F8FF,     // AliceBlue
@@ -233,6 +235,7 @@ namespace Alternet.Drawing
             0xFFF0F0F0,     // MenuBar
             0xFF3399FF,     // MenuHighlight
 #endif
+
             // "Web" colors, Part 2
             0xFF663399,     // RebeccaPurple
         };
@@ -242,6 +245,7 @@ namespace Alternet.Drawing
         {
             // "not a known color"
             KnownColorKindUnknown,
+
             // "System" colors, Part 1
 #if FEATURE_WINDOWS_SYSTEM_COLORS
             KnownColorKindSystem,       // ActiveBorder
@@ -299,6 +303,7 @@ namespace Alternet.Drawing
             KnownColorKindSystem,       // WindowFrame
             KnownColorKindSystem,       // WindowText
 #endif
+
             // "Web" Colors, Part 1
             KnownColorKindWeb,      // Transparent
             KnownColorKindWeb,      // AliceBlue
@@ -459,42 +464,27 @@ namespace Alternet.Drawing
             KnownColorKindSystem,       // MenuBar
             KnownColorKindSystem,       // MenuHighlight
 #endif
+
             // "Web" colors, Part 2
             KnownColorKindWeb,      // RebeccaPurple
         };
 
-        internal static Color ArgbToKnownColor(uint argb)
-        {
-            Debug.Assert((argb & Color.ARGBAlphaMask) == Color.ARGBAlphaMask);
-            Debug.Assert(s_colorValueTable.Length == ColorKindTable.Length);
-
-            for (int index = 1; index < s_colorValueTable.Length; ++index)
-            {
-                if (ColorKindTable[index] == KnownColorKindWeb && s_colorValueTable[index] == argb)
-                {
-                    return Color.FromKnownColor((KnownColor)index);
-                }
-            }
-
-            // Not a known color
-            return Color.FromArgb((int)argb);
-        }
-
         public static uint KnownColorToArgb(KnownColor color)
         {
-            Debug.Assert(color > 0 && color <= KnownColor.RebeccaPurple);
+            Debug.Assert(color > 0 && color <= KnownColor.RebeccaPurple, nameof(KnownColorToArgb));
 
             return ColorKindTable[(int)color] == KnownColorKindSystem
                  ? GetSystemColorArgb(color)
-                 : s_colorValueTable[(int)color];
+                 : ColorValueTable[(int)color];
         }
 
 #if FEATURE_WINDOWS_SYSTEM_COLORS
         public static uint GetSystemColorArgb(KnownColor color)
         {
-            Debug.Assert(Color.IsKnownColorSystem(color));
+            Debug.Assert(Color.IsKnownColorSystem(color), nameof(GetSystemColorArgb));
 
-            return ColorTranslator.COLORREFToARGB(Interop.User32.GetSysColor((byte)s_colorValueTable[(int)color]));
+            return ColorTranslator.COLORREFToARGB(
+                Interop.User32.GetSysColor((byte)ColorValueTable[(int)color]));
         }
 #else
         public static uint GetSystemColorArgb(KnownColor color)
@@ -504,5 +494,24 @@ namespace Alternet.Drawing
             return s_colorValueTable[(int)color];
         }
 #endif
+
+        internal static Color ArgbToKnownColor(uint argb)
+        {
+            Debug.Assert(
+                (argb & Color.ARGBAlphaMask) == Color.ARGBAlphaMask,
+                nameof(ArgbToKnownColor));
+            Debug.Assert(ColorValueTable.Length == ColorKindTable.Length, nameof(ArgbToKnownColor));
+
+            for (int index = 1; index < ColorValueTable.Length; ++index)
+            {
+                if (ColorKindTable[index] == KnownColorKindWeb && ColorValueTable[index] == argb)
+                {
+                    return Color.FromKnownColor((KnownColor)index);
+                }
+            }
+
+            // Not a known color
+            return Color.FromArgb((int)argb);
+        }
     }
 }
