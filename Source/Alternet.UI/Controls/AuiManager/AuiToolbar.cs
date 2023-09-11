@@ -273,8 +273,8 @@ namespace Alternet.UI
         /// in subsequent operations.</returns>
         public int AddTool(
             string label,
-            ImageSet? bitmap,
-            string? shortHelpString,
+            ImageSet? bitmap = null,
+            string? shortHelpString = null,
             AuiToolbarItemKind itemKind = AuiToolbarItemKind.Normal,
             ImageSet? disabledBitmap = null,
             string? longHelpString = null)
