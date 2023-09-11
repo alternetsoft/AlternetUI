@@ -1,0 +1,9 @@
+- In Grid Layout Props edit two last combobox values
+grid grows without limits, seen on Linux, but also could be on other OS
+
+- Tab not working properly Linux
+Check first on windows 
+TabOrder?
+FocusWIndowSample in LayoutControlDmeo
+Smth strange with focus, 3rd time press TAB where is focus
+

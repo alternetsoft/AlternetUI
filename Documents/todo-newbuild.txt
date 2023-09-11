@@ -1,3 +1,30 @@
-- Calendar
+- LayoutFactory.AdjustTextBoxesHeight(Control container);
+test auimanager demo under linux
+? First need to import control methods related to sizing
 
-- DataGrid
+- CONTROL: Calendar
+
+- CONTROL: DataGrid
+
+- Check mouse move events are really coming (as i disabled them)
+
+- PROPERTY: Direction or TextAlign in TextEdit, Label, LinkLabel, Numeric, DateTime, CheckBox, RadioButton
+
+- We need log() in cpp and ui
+
+- BUG: Printpreview maxpage 32000 why?
+See in cpp
+https://docs.wxwidgets.org/3.0/classwx_print_preview.html
+wxPrintDialogData
+
+- CONTROL: AdvLabel as label is limited
+
+- PROPERTY: Control.ContextMenu
+
+- BUG: redo listview setselected (raises twice selected event)
+
+- CheckListBox with events
+Auto hook to events and output to log
+Implement LogUtils
+
+- DOCS: Examples for PropertyGrid, LayoutPanel, AuiManager, AuiToolbar, AuiNotebook 

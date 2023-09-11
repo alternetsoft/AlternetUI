@@ -1,0 +1,9 @@
+- check all todo in source files prior to 0.9 build 
+
+- Set Label tabstop=false by default ??
+
+- Get all events
+Get Binding props 
+Get routed events
+Improve Bindings / RoutedEvents
+

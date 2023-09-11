@@ -1,3 +1,5 @@
+- add full color list and make color names localizable
+
 - Use IPropertyGridItemInfo
 
 - Use more options in NewItem (see demo)
@@ -5,8 +7,6 @@
 - AddStringItemWithKind, AddStringItem
 
 - study TypeConverter
-
-- Add more in prop item create params
 
 - PropertyGrid dialog
 
