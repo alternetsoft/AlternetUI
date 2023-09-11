@@ -438,7 +438,7 @@ namespace Alternet.UI
         /// <typeparam name="T">Object type.</typeparam>
         /// <param name="propName">Property name.</param>
         /// <param name="label">New custom label of the property.</param>
-        /// <returns></returns>
+        /// <returns><c>true</c> if operation successfull, <c>false</c> otherwise.</returns>
         public static bool SetCustomLabel<T>(string propName, string label)
             where T : class
         {
@@ -593,7 +593,6 @@ namespace Alternet.UI
         /// Returns <see cref="IPropertyGridChoices"/> for the given enumeration type.
         /// </summary>
         /// <typeparam name="T">Type of the enumeration.</typeparam>
-        /// <returns></returns>
         public static IPropertyGridChoices GetChoices<T>()
             where T : Enum
         {
