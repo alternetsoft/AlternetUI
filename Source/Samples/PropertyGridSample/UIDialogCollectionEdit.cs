@@ -15,7 +15,7 @@ namespace PropertyGridSample
         private readonly AuiManager manager = new();
         private readonly LayoutPanel panel = new();
         private readonly AuiToolbar toolbar = new();
-        private readonly AuiNotebook notebook5 = new();
+        private readonly StatusBar statusbar = new();
         
         private readonly TreeView treeView = new()
         {
@@ -47,6 +47,8 @@ namespace PropertyGridSample
                 this.EndIgnoreRecreate();
             }
 
+            this.StatusBar = statusbar;
+
             treeView.MakeAsListBox();
             treeView.SelectionChanged += TreeView_SelectionChanged;
 
@@ -56,7 +58,7 @@ namespace PropertyGridSample
 
             // Right Pane
             var rightPane = manager.CreatePaneInfo();
-            rightPane.Name("rightPane").Caption("Properties").Right().PaneBorder(false)
+            rightPane.Name(nameof(rightPane)).Caption("Properties").Right().PaneBorder(false)
                 .TopDockable(false).BottomDockable(false).BestSize(300,300).MinSize(300, 300)
                 .CaptionVisible(false);
             propertyGrid.Width = 300;
@@ -64,22 +66,22 @@ namespace PropertyGridSample
 
             // Toolbar pane
             var toolbarPane = manager.CreatePaneInfo();
-            toolbarPane.Name("toolbarPane").Top().ToolbarPane().PaneBorder(false).Movable(false)
-                .Floatable(false).Resizable(false);
+            toolbarPane.Name(nameof(toolbarPane)).Top().ToolbarPane().PaneBorder(false)
+                .Movable(false).Floatable(false).Resizable(false);
 
             toolbar.CreateStyle =
                 AuiToolbarCreateStyle.PlainBackground | AuiToolbarCreateStyle.HorzLayout |
                 AuiToolbarCreateStyle.Text |
                 AuiToolbarCreateStyle.DefaultStyle;
-            var addButtonId = toolbar.AddTool("Add", null, "Add item");
-            var removeButtonId = toolbar.AddTool("Remove", null, "Remove item");
+            var addButtonId = toolbar.AddTool(CommonStrings.Default.ButtonAdd, null);
+            var removeButtonId = toolbar.AddTool(CommonStrings.Default.ButtonRemove, null);
 
             toolbar.Realize();
             manager.AddPane(toolbar, toolbarPane);
 
             // Center pane
             var centerPane = manager.CreatePaneInfo();
-            centerPane.Name("centerPane").CenterPane().PaneBorder(false);
+            centerPane.Name(nameof(centerPane)).CenterPane().PaneBorder(false);
 
             manager.AddPane(treeView, centerPane);
 
