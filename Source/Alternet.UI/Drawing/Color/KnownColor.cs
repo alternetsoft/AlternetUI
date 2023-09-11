@@ -81,7 +81,8 @@ namespace Alternet.Drawing
         GrayText,
 
         /// <summary>
-        /// The system-defined color of the background of selected items. This includes selected menu items as well as selected text.
+        /// The system-defined color of the background of selected items. This includes selected
+        /// menu items as well as selected text.
         /// </summary>
         Highlight,
 
@@ -464,10 +465,6 @@ namespace Alternet.Drawing
         /// <summary>
         /// A system-defined color.
         /// </summary>
-
-        /// <summary>
-        /// A system-defined color.
-        /// </summary>
         LawnGreen,
 
         /// <summary>
@@ -738,10 +735,6 @@ namespace Alternet.Drawing
         /// <summary>
         /// A system-defined color.
         /// </summary>
-
-        /// <summary>
-        /// A system-defined color.
-        /// </summary>
         RoyalBlue,
 
         /// <summary>
@@ -778,10 +771,6 @@ namespace Alternet.Drawing
         /// A system-defined color.
         /// </summary>
         Silver,
-
-        /// <summary>
-        /// A system-defined color.
-        /// </summary>
 
         /// <summary>
         /// A system-defined color.

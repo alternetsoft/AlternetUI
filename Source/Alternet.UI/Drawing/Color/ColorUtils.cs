@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Alternet.UI; 
 
 namespace Alternet.Drawing
 {
@@ -11,45 +12,290 @@ namespace Alternet.Drawing
     /// </summary>
     public static class ColorUtils
     {
-        internal static WxSystemColour Convert(KnownColor color)
+        private static AdvDictionary<KnownColor, IKnownColorInfo>? knownColorItems;
+
+        private static AdvDictionary<KnownColor, IKnownColorInfo> KnownColorItems
+        {
+            get
+            {
+                if (knownColorItems == null)
+                {
+                    knownColorItems = new();
+                    RegisterKnownColors();
+                }
+
+                return knownColorItems;
+            }
+        }
+
+        /// <summary>
+        /// Converts <see cref="KnownColor"/> to <see cref="WxSystemColor"/>.
+        /// </summary>
+        /// <param name="color"></param>
+        /// <returns></returns>
+        public static WxSystemColor Convert(KnownColor color)
         {
             return color switch
             {
-                KnownColor.ActiveBorder => (WxSystemColour)0x0A,
-                KnownColor.ActiveCaption => (WxSystemColour)0x02,
-                KnownColor.ActiveCaptionText => (WxSystemColour)0x09,
-                KnownColor.AppWorkspace => (WxSystemColour)0x0C,
-                KnownColor.ButtonFace => (WxSystemColour)0x0F,
-                KnownColor.ButtonHighlight => (WxSystemColour)0x14,
-                KnownColor.ButtonShadow => (WxSystemColour)0x10,
-                KnownColor.Control => (WxSystemColour)0x0F,
-                KnownColor.ControlDark => (WxSystemColour)0x10,
-                KnownColor.ControlDarkDark => (WxSystemColour)0x15,
-                KnownColor.ControlLight => (WxSystemColour)0x16,
-                KnownColor.ControlLightLight => (WxSystemColour)0x14,
-                KnownColor.ControlText => (WxSystemColour)0x12,
-                KnownColor.Desktop => (WxSystemColour)0x01,
-                KnownColor.GradientActiveCaption => (WxSystemColour)0x1B,
-                KnownColor.GradientInactiveCaption => (WxSystemColour)0x1C,
-                KnownColor.GrayText => (WxSystemColour)0x11,
-                KnownColor.Highlight => (WxSystemColour)0x0D,
-                KnownColor.HighlightText => (WxSystemColour)0x0E,
-                KnownColor.HotTrack => (WxSystemColour)0x1A,
-                KnownColor.InactiveBorder => (WxSystemColour)0x0B,
-                KnownColor.InactiveCaption => (WxSystemColour)0x03,
-                KnownColor.InactiveCaptionText => (WxSystemColour)0x13,
-                KnownColor.Info => (WxSystemColour)0x18,
-                KnownColor.InfoText => (WxSystemColour)0x17,
-                KnownColor.Menu => (WxSystemColour)0x04,
-                KnownColor.MenuBar => (WxSystemColour)0x1E,
-                KnownColor.MenuHighlight => (WxSystemColour)0x1D,
-                KnownColor.MenuText => (WxSystemColour)0x07,
-                KnownColor.ScrollBar => (WxSystemColour)0x00,
-                KnownColor.Window => (WxSystemColour)0x05,
-                KnownColor.WindowFrame => (WxSystemColour)0x06,
-                KnownColor.WindowText => (WxSystemColour)0x08,
-                _ => WxSystemColour.SYS_COLOUR_MAX,
+                KnownColor.ActiveBorder => (WxSystemColor)0x0A,
+                KnownColor.ActiveCaption => (WxSystemColor)0x02,
+                KnownColor.ActiveCaptionText => (WxSystemColor)0x09,
+                KnownColor.AppWorkspace => (WxSystemColor)0x0C,
+                KnownColor.ButtonFace => (WxSystemColor)0x0F,
+                KnownColor.ButtonHighlight => (WxSystemColor)0x14,
+                KnownColor.ButtonShadow => (WxSystemColor)0x10,
+                KnownColor.Control => (WxSystemColor)0x0F,
+                KnownColor.ControlDark => (WxSystemColor)0x10,
+                KnownColor.ControlDarkDark => (WxSystemColor)0x15,
+                KnownColor.ControlLight => (WxSystemColor)0x16,
+                KnownColor.ControlLightLight => (WxSystemColor)0x14,
+                KnownColor.ControlText => (WxSystemColor)0x12,
+                KnownColor.Desktop => (WxSystemColor)0x01,
+                KnownColor.GradientActiveCaption => (WxSystemColor)0x1B,
+                KnownColor.GradientInactiveCaption => (WxSystemColor)0x1C,
+                KnownColor.GrayText => (WxSystemColor)0x11,
+                KnownColor.Highlight => (WxSystemColor)0x0D,
+                KnownColor.HighlightText => (WxSystemColor)0x0E,
+                KnownColor.HotTrack => (WxSystemColor)0x1A,
+                KnownColor.InactiveBorder => (WxSystemColor)0x0B,
+                KnownColor.InactiveCaption => (WxSystemColor)0x03,
+                KnownColor.InactiveCaptionText => (WxSystemColor)0x13,
+                KnownColor.Info => (WxSystemColor)0x18,
+                KnownColor.InfoText => (WxSystemColor)0x17,
+                KnownColor.Menu => (WxSystemColor)0x04,
+                KnownColor.MenuBar => (WxSystemColor)0x1E,
+                KnownColor.MenuHighlight => (WxSystemColor)0x1D,
+                KnownColor.MenuText => (WxSystemColor)0x07,
+                KnownColor.ScrollBar => (WxSystemColor)0x00,
+                KnownColor.Window => (WxSystemColor)0x05,
+                KnownColor.WindowFrame => (WxSystemColor)0x06,
+                KnownColor.WindowText => (WxSystemColor)0x08,
+                _ => WxSystemColor.Max,
             };
         }
-    }
+
+        /// <summary>
+        /// Sets localized label registered for the <see cref="KnownColor"/>.
+        /// </summary>
+        /// <param name="color">Known color.</param>
+        /// <param name="label">Localized label.</param>
+        public static void SetLabelLocalized(KnownColor color, string label)
+        {
+            GetColorInfo(color).LabelLocalized = label;
+        }
+
+        /// <summary>
+        /// Gets all registered <see cref="IKnownColorInfo"/> items.
+        /// </summary>
+        public static IEnumerable<IKnownColorInfo> GetColorInfos()
+        {
+            return KnownColorItems.Values;
+        }
+
+        /// <summary>
+        /// Gets <see cref="IKnownColorInfo"/> for <see cref="KnownColor"/>.
+        /// </summary>
+        /// <param name="color">Known color.</param>
+        public static IKnownColorInfo GetColorInfo(KnownColor color)
+        {
+            var result = KnownColorItems.GetOrCreate(
+                color,
+                () => { return new KnownColorInfo(color); });
+            return result;
+        }
+
+        private static void RegisterKnownColors()
+        {
+            if (KnownColorItems.Count > 0)
+                return;
+
+            static void RegisterKnownColor(KnownColor color, KnownColorCategory cat)
+            {
+                var item = new KnownColorInfo(color)
+                {
+                    Category = cat,
+                };
+                KnownColorItems.Add(color, item);
+            }
+
+            RegisterKnownColor(KnownColor.ActiveBorder, KnownColorCategory.System);
+            RegisterKnownColor(KnownColor.ActiveCaption, KnownColorCategory.System);
+            RegisterKnownColor(KnownColor.ActiveCaptionText, KnownColorCategory.System);
+            RegisterKnownColor(KnownColor.AppWorkspace, KnownColorCategory.System);
+            RegisterKnownColor(KnownColor.Control, KnownColorCategory.System);
+            RegisterKnownColor(KnownColor.ControlDark, KnownColorCategory.System);
+            RegisterKnownColor(KnownColor.ControlDarkDark, KnownColorCategory.System);
+            RegisterKnownColor(KnownColor.ControlLight, KnownColorCategory.System);
+            RegisterKnownColor(KnownColor.ControlLightLight, KnownColorCategory.System);
+            RegisterKnownColor(KnownColor.ControlText, KnownColorCategory.System);
+            RegisterKnownColor(KnownColor.Desktop, KnownColorCategory.System);
+            RegisterKnownColor(KnownColor.GrayText, KnownColorCategory.System);
+            RegisterKnownColor(KnownColor.Highlight, KnownColorCategory.System);
+            RegisterKnownColor(KnownColor.HighlightText, KnownColorCategory.System);
+            RegisterKnownColor(KnownColor.HotTrack, KnownColorCategory.System);
+            RegisterKnownColor(KnownColor.InactiveBorder, KnownColorCategory.System);
+            RegisterKnownColor(KnownColor.InactiveCaption, KnownColorCategory.System);
+            RegisterKnownColor(KnownColor.InactiveCaptionText, KnownColorCategory.System);
+            RegisterKnownColor(KnownColor.Info, KnownColorCategory.System);
+            RegisterKnownColor(KnownColor.InfoText, KnownColorCategory.System);
+            RegisterKnownColor(KnownColor.Menu, KnownColorCategory.System);
+            RegisterKnownColor(KnownColor.MenuText, KnownColorCategory.System);
+            RegisterKnownColor(KnownColor.ScrollBar, KnownColorCategory.System);
+            RegisterKnownColor(KnownColor.Window, KnownColorCategory.System);
+            RegisterKnownColor(KnownColor.WindowFrame, KnownColorCategory.System);
+            RegisterKnownColor(KnownColor.WindowText, KnownColorCategory.System);
+            RegisterKnownColor(KnownColor.Transparent, KnownColorCategory.System);
+
+            RegisterKnownColor(KnownColor.AliceBlue, KnownColorCategory.Web);
+            RegisterKnownColor(KnownColor.AntiqueWhite, KnownColorCategory.Web);
+            RegisterKnownColor(KnownColor.Aqua, KnownColorCategory.Standard);
+            RegisterKnownColor(KnownColor.Aquamarine, KnownColorCategory.Web);
+            RegisterKnownColor(KnownColor.Azure, KnownColorCategory.Web);
+            RegisterKnownColor(KnownColor.Beige, KnownColorCategory.Web);
+            RegisterKnownColor(KnownColor.Bisque, KnownColorCategory.Web);
+            RegisterKnownColor(KnownColor.Black, KnownColorCategory.Standard);
+            RegisterKnownColor(KnownColor.BlanchedAlmond, KnownColorCategory.Web);
+            RegisterKnownColor(KnownColor.Blue, KnownColorCategory.Standard);
+            RegisterKnownColor(KnownColor.BlueViolet, KnownColorCategory.Web);
+            RegisterKnownColor(KnownColor.Brown, KnownColorCategory.Standard);
+            RegisterKnownColor(KnownColor.BurlyWood, KnownColorCategory.Web);
+            RegisterKnownColor(KnownColor.CadetBlue, KnownColorCategory.Web);
+            RegisterKnownColor(KnownColor.Chartreuse, KnownColorCategory.Web);
+            RegisterKnownColor(KnownColor.Chocolate, KnownColorCategory.Web);
+            RegisterKnownColor(KnownColor.Coral, KnownColorCategory.Web);
+            RegisterKnownColor(KnownColor.CornflowerBlue, KnownColorCategory.Web);
+            RegisterKnownColor(KnownColor.Cornsilk, KnownColorCategory.Web);
+            RegisterKnownColor(KnownColor.Crimson, KnownColorCategory.Web);
+            RegisterKnownColor(KnownColor.Cyan, KnownColorCategory.Web);
+            RegisterKnownColor(KnownColor.DarkBlue, KnownColorCategory.Web);
+            RegisterKnownColor(KnownColor.DarkCyan, KnownColorCategory.Web);
+            RegisterKnownColor(KnownColor.DarkGoldenrod, KnownColorCategory.Web);
+            RegisterKnownColor(KnownColor.DarkGray, KnownColorCategory.Web);
+            RegisterKnownColor(KnownColor.DarkGreen, KnownColorCategory.Web);
+            RegisterKnownColor(KnownColor.DarkKhaki, KnownColorCategory.Web);
+            RegisterKnownColor(KnownColor.DarkMagenta, KnownColorCategory.Web);
+            RegisterKnownColor(KnownColor.DarkOliveGreen, KnownColorCategory.Web);
+            RegisterKnownColor(KnownColor.DarkOrange, KnownColorCategory.Web);
+            RegisterKnownColor(KnownColor.DarkOrchid, KnownColorCategory.Web);
+            RegisterKnownColor(KnownColor.DarkRed, KnownColorCategory.Web);
+            RegisterKnownColor(KnownColor.DarkSalmon, KnownColorCategory.Web);
+            RegisterKnownColor(KnownColor.DarkSeaGreen, KnownColorCategory.Web);
+            RegisterKnownColor(KnownColor.DarkSlateBlue, KnownColorCategory.Web);
+            RegisterKnownColor(KnownColor.DarkSlateGray, KnownColorCategory.Web);
+            RegisterKnownColor(KnownColor.DarkTurquoise, KnownColorCategory.Web);
+            RegisterKnownColor(KnownColor.DarkViolet, KnownColorCategory.Web);
+            RegisterKnownColor(KnownColor.DeepPink, KnownColorCategory.Web);
+            RegisterKnownColor(KnownColor.DeepSkyBlue, KnownColorCategory.Web);
+            RegisterKnownColor(KnownColor.DimGray, KnownColorCategory.Web);
+            RegisterKnownColor(KnownColor.DodgerBlue, KnownColorCategory.Web);
+            RegisterKnownColor(KnownColor.Firebrick, KnownColorCategory.Web);
+            RegisterKnownColor(KnownColor.FloralWhite, KnownColorCategory.Web);
+            RegisterKnownColor(KnownColor.ForestGreen, KnownColorCategory.Web);
+            RegisterKnownColor(KnownColor.Fuchsia, KnownColorCategory.Standard);
+            RegisterKnownColor(KnownColor.Gainsboro, KnownColorCategory.Web);
+            RegisterKnownColor(KnownColor.GhostWhite, KnownColorCategory.Web);
+            RegisterKnownColor(KnownColor.Gold, KnownColorCategory.Web);
+            RegisterKnownColor(KnownColor.Goldenrod, KnownColorCategory.Web);
+            RegisterKnownColor(KnownColor.Gray, KnownColorCategory.Standard);
+            RegisterKnownColor(KnownColor.Green, KnownColorCategory.Standard);
+            RegisterKnownColor(KnownColor.GreenYellow, KnownColorCategory.Web);
+            RegisterKnownColor(KnownColor.Honeydew, KnownColorCategory.Web);
+            RegisterKnownColor(KnownColor.HotPink, KnownColorCategory.Web);
+            RegisterKnownColor(KnownColor.IndianRed, KnownColorCategory.Web);
+            RegisterKnownColor(KnownColor.Indigo, KnownColorCategory.Web);
+            RegisterKnownColor(KnownColor.Ivory, KnownColorCategory.Web);
+            RegisterKnownColor(KnownColor.Khaki, KnownColorCategory.Web);
+            RegisterKnownColor(KnownColor.Lavender, KnownColorCategory.Web);
+            RegisterKnownColor(KnownColor.LavenderBlush, KnownColorCategory.Web);
+            RegisterKnownColor(KnownColor.LawnGreen, KnownColorCategory.Web);
+            RegisterKnownColor(KnownColor.LemonChiffon, KnownColorCategory.Web);
+            RegisterKnownColor(KnownColor.LightBlue, KnownColorCategory.Web);
+            RegisterKnownColor(KnownColor.LightCoral, KnownColorCategory.Web);
+            RegisterKnownColor(KnownColor.LightCyan, KnownColorCategory.Web);
+            RegisterKnownColor(KnownColor.LightGoldenrodYellow, KnownColorCategory.Web);
+            RegisterKnownColor(KnownColor.LightGray, KnownColorCategory.Web);
+            RegisterKnownColor(KnownColor.LightGreen, KnownColorCategory.Web);
+            RegisterKnownColor(KnownColor.LightPink, KnownColorCategory.Web);
+            RegisterKnownColor(KnownColor.LightSalmon, KnownColorCategory.Web);
+            RegisterKnownColor(KnownColor.LightSeaGreen, KnownColorCategory.Web);
+            RegisterKnownColor(KnownColor.LightSkyBlue, KnownColorCategory.Web);
+            RegisterKnownColor(KnownColor.LightSlateGray, KnownColorCategory.Web);
+            RegisterKnownColor(KnownColor.LightSteelBlue, KnownColorCategory.Web);
+            RegisterKnownColor(KnownColor.LightYellow, KnownColorCategory.Web);
+            RegisterKnownColor(KnownColor.Lime, KnownColorCategory.Standard);
+            RegisterKnownColor(KnownColor.LimeGreen, KnownColorCategory.Web);
+            RegisterKnownColor(KnownColor.Linen, KnownColorCategory.Web);
+            RegisterKnownColor(KnownColor.Magenta, KnownColorCategory.Web);
+            RegisterKnownColor(KnownColor.Maroon, KnownColorCategory.Standard);
+            RegisterKnownColor(KnownColor.MediumAquamarine, KnownColorCategory.Web);
+            RegisterKnownColor(KnownColor.MediumBlue, KnownColorCategory.Web);
+            RegisterKnownColor(KnownColor.MediumOrchid, KnownColorCategory.Web);
+            RegisterKnownColor(KnownColor.MediumPurple, KnownColorCategory.Web);
+            RegisterKnownColor(KnownColor.MediumSeaGreen, KnownColorCategory.Web);
+            RegisterKnownColor(KnownColor.MediumSlateBlue, KnownColorCategory.Web);
+            RegisterKnownColor(KnownColor.MediumSpringGreen, KnownColorCategory.Web);
+            RegisterKnownColor(KnownColor.MediumTurquoise, KnownColorCategory.Web);
+            RegisterKnownColor(KnownColor.MediumVioletRed, KnownColorCategory.Web);
+            RegisterKnownColor(KnownColor.MidnightBlue, KnownColorCategory.Web);
+            RegisterKnownColor(KnownColor.MintCream, KnownColorCategory.Web);
+            RegisterKnownColor(KnownColor.MistyRose, KnownColorCategory.Web);
+            RegisterKnownColor(KnownColor.Moccasin, KnownColorCategory.Web);
+            RegisterKnownColor(KnownColor.NavajoWhite, KnownColorCategory.Web);
+            RegisterKnownColor(KnownColor.Navy, KnownColorCategory.Standard);
+            RegisterKnownColor(KnownColor.OldLace, KnownColorCategory.Web);
+            RegisterKnownColor(KnownColor.Olive, KnownColorCategory.Standard);
+            RegisterKnownColor(KnownColor.OliveDrab, KnownColorCategory.Web);
+            RegisterKnownColor(KnownColor.Orange, KnownColorCategory.Standard);
+            RegisterKnownColor(KnownColor.OrangeRed, KnownColorCategory.Web);
+            RegisterKnownColor(KnownColor.Orchid, KnownColorCategory.Web);
+            RegisterKnownColor(KnownColor.PaleGoldenrod, KnownColorCategory.Web);
+            RegisterKnownColor(KnownColor.PaleGreen, KnownColorCategory.Web);
+            RegisterKnownColor(KnownColor.PaleTurquoise, KnownColorCategory.Web);
+            RegisterKnownColor(KnownColor.PaleVioletRed, KnownColorCategory.Web);
+            RegisterKnownColor(KnownColor.PapayaWhip, KnownColorCategory.Web);
+            RegisterKnownColor(KnownColor.PeachPuff, KnownColorCategory.Web);
+            RegisterKnownColor(KnownColor.Peru, KnownColorCategory.Web);
+            RegisterKnownColor(KnownColor.Pink, KnownColorCategory.Web);
+            RegisterKnownColor(KnownColor.Plum, KnownColorCategory.Web);
+            RegisterKnownColor(KnownColor.PowderBlue, KnownColorCategory.Web);
+            RegisterKnownColor(KnownColor.Purple, KnownColorCategory.Standard);
+            RegisterKnownColor(KnownColor.Red, KnownColorCategory.Standard);
+            RegisterKnownColor(KnownColor.RosyBrown, KnownColorCategory.Web);
+            RegisterKnownColor(KnownColor.RoyalBlue, KnownColorCategory.Web);
+            RegisterKnownColor(KnownColor.SaddleBrown, KnownColorCategory.Web);
+            RegisterKnownColor(KnownColor.Salmon, KnownColorCategory.Web);
+            RegisterKnownColor(KnownColor.SandyBrown, KnownColorCategory.Web);
+            RegisterKnownColor(KnownColor.SeaGreen, KnownColorCategory.Web);
+            RegisterKnownColor(KnownColor.SeaShell, KnownColorCategory.Web);
+            RegisterKnownColor(KnownColor.Sienna, KnownColorCategory.Web);
+            RegisterKnownColor(KnownColor.Silver, KnownColorCategory.Standard);
+            RegisterKnownColor(KnownColor.SkyBlue, KnownColorCategory.Web);
+            RegisterKnownColor(KnownColor.SlateBlue, KnownColorCategory.Web);
+            RegisterKnownColor(KnownColor.SlateGray, KnownColorCategory.Web);
+            RegisterKnownColor(KnownColor.Snow, KnownColorCategory.Web);
+            RegisterKnownColor(KnownColor.SpringGreen, KnownColorCategory.Web);
+            RegisterKnownColor(KnownColor.SteelBlue, KnownColorCategory.Web);
+            RegisterKnownColor(KnownColor.Tan, KnownColorCategory.Web);
+            RegisterKnownColor(KnownColor.Teal, KnownColorCategory.Standard);
+            RegisterKnownColor(KnownColor.Thistle, KnownColorCategory.Web);
+            RegisterKnownColor(KnownColor.Tomato, KnownColorCategory.Web);
+            RegisterKnownColor(KnownColor.Turquoise, KnownColorCategory.Web);
+            RegisterKnownColor(KnownColor.Violet, KnownColorCategory.Web);
+            RegisterKnownColor(KnownColor.Wheat, KnownColorCategory.Web);
+            RegisterKnownColor(KnownColor.White, KnownColorCategory.Standard);
+            RegisterKnownColor(KnownColor.WhiteSmoke, KnownColorCategory.Web);
+            RegisterKnownColor(KnownColor.Yellow, KnownColorCategory.Standard);
+            RegisterKnownColor(KnownColor.YellowGreen, KnownColorCategory.Web);
+
+            RegisterKnownColor(KnownColor.ButtonFace, KnownColorCategory.System);
+            RegisterKnownColor(KnownColor.ButtonHighlight, KnownColorCategory.System);
+            RegisterKnownColor(KnownColor.ButtonShadow, KnownColorCategory.System);
+            RegisterKnownColor(KnownColor.GradientActiveCaption, KnownColorCategory.System);
+            RegisterKnownColor(KnownColor.GradientInactiveCaption, KnownColorCategory.System);
+            RegisterKnownColor(KnownColor.MenuBar, KnownColorCategory.System);
+            RegisterKnownColor(KnownColor.MenuHighlight, KnownColorCategory.System);
+
+            RegisterKnownColor(KnownColor.RebeccaPurple, KnownColorCategory.Web);
+        }
+   }
 }
