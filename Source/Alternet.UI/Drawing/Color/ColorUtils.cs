@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Alternet.UI; 
+using Alternet.UI;
 
 namespace Alternet.Drawing
 {
@@ -29,10 +29,57 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Converts <see cref="WxSystemColor"/> to <see cref="KnownColor"/>.
+        /// </summary>
+        /// <param name="color">Color value.</param>
+        /// <returns>Converted color value.</returns>
+        public static KnownColor Convert(WxSystemColor color)
+        {
+            KnownColor[] table = new KnownColor[]
+            {
+                /*0x00*/KnownColor.ScrollBar,
+                /*0x01*/KnownColor.Desktop,
+                /*0x02*/KnownColor.ActiveCaption,
+                /*0x03*/KnownColor.InactiveCaption,
+                /*0x04*/KnownColor.Menu,
+                /*0x05*/KnownColor.Window,
+                /*0x06*/KnownColor.WindowFrame,
+                /*0x07*/KnownColor.MenuText,
+                /*0x08*/KnownColor.WindowText,
+                /*0x09*/KnownColor.ActiveCaptionText,
+                /*0x0A*/KnownColor.ActiveBorder,
+                /*0x0B*/KnownColor.InactiveBorder,
+                /*0x0C*/KnownColor.AppWorkspace,
+                /*0x0D*/KnownColor.Highlight,
+                /*0x0E*/KnownColor.HighlightText,
+                /*0x0F*/KnownColor.ButtonFace,
+                /*0x10*/KnownColor.ButtonShadow,
+                /*0x11*/KnownColor.GrayText,
+                /*0x12*/KnownColor.ControlText,
+                /*0x13*/KnownColor.InactiveCaptionText,
+                /*0x14*/KnownColor.ButtonHighlight,
+                /*0x15*/KnownColor.ControlDarkDark,
+                /*0x16*/KnownColor.ControlLight,
+                /*0x17*/KnownColor.InfoText,
+                /*0x18*/KnownColor.Info,
+                /*0x19*/0,
+                /*0x1A*/KnownColor.HotTrack,
+                /*0x1B*/KnownColor.GradientActiveCaption,
+                /*0x1C*/KnownColor.GradientInactiveCaption,
+                /*0x1D*/KnownColor.MenuHighlight,
+                /*0x1E*/KnownColor.MenuBar,
+            };
+
+            if (color >= 0 && (int)color <= 0x1E)
+                return table[(int)color];
+            return 0;
+        }
+
+        /// <summary>
         /// Converts <see cref="KnownColor"/> to <see cref="WxSystemColor"/>.
         /// </summary>
-        /// <param name="color"></param>
-        /// <returns></returns>
+        /// <param name="color">Color value.</param>
+        /// <returns>Converted color value.</returns>
         public static WxSystemColor Convert(KnownColor color)
         {
             return color switch
@@ -297,5 +344,5 @@ namespace Alternet.Drawing
 
             RegisterKnownColor(KnownColor.RebeccaPurple, KnownColorCategory.Web);
         }
-   }
+    }
 }
