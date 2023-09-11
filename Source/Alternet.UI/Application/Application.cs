@@ -29,6 +29,11 @@ namespace Alternet.UI
         private ThreadExceptionEventHandler? threadExceptionHandler;
         private bool inOnThreadException;
 
+        static Application()
+        {
+            WebBrowser.CrtSetDbgFlag(0);
+        }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="Application"/> class.
         /// </summary>
