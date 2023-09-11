@@ -26,5 +26,11 @@ namespace Alternet.UI
 
         /// <inheritdoc cref="ButtonOk"/>
         public string ButtonApply { get; set; } = "Apply";
+
+        /// <inheritdoc cref="ButtonOk"/>
+        public string ButtonAdd { get; set; } = "Add";
+
+        /// <inheritdoc cref="ButtonOk"/>
+        public string ButtonRemove { get; set; } = "Remove";
     }
 }
