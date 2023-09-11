@@ -14,7 +14,37 @@ namespace Alternet::UI
 		wxPGChoiceEntry& item = Item(handle, ind);
 		item.SetText(wxStr(value));
 	}
+
+	void* PropertyGridChoices::GetFont(void* handle, uint32_t ind)
+	{
+		return nullptr;
+	}
+
+	void PropertyGridChoices::SetBitmapFromItem(void* handle, uint32_t ind,
+		void* handle2, uint32_t ind2)
+	{
+		wxPGChoiceEntry& item = Item(handle, ind);
+		wxPGChoiceEntry& item2 = Item(handle2, ind2);
+		item.SetBitmap(item2.GetBitmap());
+	}
 	
+	void PropertyGridChoices::SetFontFromItem(void* handle, uint32_t ind,
+		void* handle2, uint32_t ind2)
+	{
+		wxPGChoiceEntry& item = Item(handle, ind);
+		wxPGChoiceEntry& item2 = Item(handle2, ind2);
+		item.SetFont(item2.GetFont());
+	}
+
+	void PropertyGridChoices::SetFont(void* handle, uint32_t ind, void* font)
+	{
+	}
+
+	void* PropertyGridChoices::GetBitmap(void* handle, uint32_t ind)
+	{
+		return nullptr;
+	}
+
 	void PropertyGridChoices::SetBitmap(void* handle, uint32_t ind, ImageSet* bitmap)
 	{
 		wxPGChoiceEntry& item = Item(handle, ind);
@@ -25,12 +55,6 @@ namespace Alternet::UI
 	{
 		wxPGChoiceEntry& item = Item(handle, ind);
 		item.SetFgCol(color);
-	}
-
-	void PropertyGridChoices::SetFont(void* handle, uint32_t ind, void* font)
-	{
-		wxPGChoiceEntry& item = Item(handle, ind);
-		//item.SetFont();
 	}
 
 	void PropertyGridChoices::SetBgCol(void* handle, uint32_t ind, const Color& color)

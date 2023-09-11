@@ -24,6 +24,12 @@ namespace NativeApi.Api
         public static Color GetFgCol(IntPtr handle, uint ind) => default;
         public static Color GetBgCol(IntPtr handle, uint ind) => default;
 
+        public static IntPtr GetFont(IntPtr handle, uint ind) => default;
+        public static IntPtr GetBitmap(IntPtr handle, uint ind) => default;
+
+        public static void SetBitmapFromItem(IntPtr handle, uint ind, IntPtr handle2, uint ind2) { }
+        public static void SetFontFromItem(IntPtr handle, uint ind, IntPtr handle2, uint ind2) { }
+
         // Returns label of item.
         public static string GetLabel(IntPtr handle, uint ind) => default;
 

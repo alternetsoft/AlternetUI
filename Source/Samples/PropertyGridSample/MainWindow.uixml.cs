@@ -60,6 +60,9 @@ namespace PropertyGridSample
 
         public MainWindow()
         {
+            propertyGrid.ApplyFlags |= PropertyGridApplyFlags.PropInfoSetValue
+                | PropertyGridApplyFlags.ReloadAfterSetValue;
+
             propertyGrid.Features = PropertyGridFeature.QuestionCharInNullable;
             PropertyGridSettings.Default = new(this);
             propertyGrid.ProcessException += PropertyGrid_ProcessException;
@@ -407,9 +410,9 @@ namespace PropertyGridSample
 
             // Editable enum. Can have values which are not in choices.
             var choices = PropertyGrid.CreateChoices();
-            choices.Add("Item 1");
-            choices.Add("Item 2");
-            choices.Add("Item 3");
+            choices.Add("Item 1", 1);
+            choices.Add("Item 2", 2);
+            choices.Add("Item 3", 3);
             prop = propertyGrid.CreateEditEnumItem("Enum (editable)", null, choices, "Item 2");
             propertyGrid.Add(prop);
 

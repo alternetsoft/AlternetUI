@@ -40,6 +40,8 @@ namespace PropertyGridSample
         Thickness? asThickness;
         Rect? asRect;
         Point? asPoint;
+        FontStyle? asFontStyleN;
+        VerticalAlignment? asVerticalAlignmnentN;
 
         static NullableProps()
         {
@@ -66,6 +68,11 @@ namespace PropertyGridSample
             PropertyGrid.SetCustomLabel<NullableProps>(nameof(AsThicknessN), "Thickness");
             PropertyGrid.SetCustomLabel<NullableProps>(nameof(AsRectN), "Rect");
             PropertyGrid.SetCustomLabel<NullableProps>(nameof(AsPointN), "Point");
+
+            PropertyGrid.SetCustomLabel<NullableProps>(nameof(AsFontStyleN), "FontStyle");
+            PropertyGrid.SetCustomLabel<NullableProps>(
+                nameof(AsVerticalAlignmnentN),
+                "VerticalAlignmnent");
         }
 
         public NullableProps(bool setDefaults = false)
@@ -209,6 +216,18 @@ namespace PropertyGridSample
         {
             get => asPoint;
             set => asPoint = value;
+        }
+
+        public FontStyle? AsFontStyleN
+        {
+            get => asFontStyleN;
+            set => asFontStyleN = value;
+        }
+
+        public VerticalAlignment? AsVerticalAlignmnentN
+        {
+            get => asVerticalAlignmnentN;
+            set => asVerticalAlignmnentN = value;
         }
 
         [Browsable(false)]

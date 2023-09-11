@@ -42,6 +42,6 @@ namespace Alternet.UI
         /// <summary>
         /// Default value for the <see cref="PropertyGrid.ApplyFlags"/> property.
         /// </summary>
-        Default = PropInfoSetValue | PropEvent | ReloadAfterSetValue,
+        Default = PropertyGridApplyFlags.PropEvent,
     }
 }

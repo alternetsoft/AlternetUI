@@ -76,6 +76,28 @@ namespace Alternet.UI.Native
             return n;
         }
         
+        public static System.IntPtr GetFont(System.IntPtr handle, uint ind)
+        {
+            var n = NativeApi.PropertyGridChoices_GetFont_(handle, ind);
+            return n;
+        }
+        
+        public static System.IntPtr GetBitmap(System.IntPtr handle, uint ind)
+        {
+            var n = NativeApi.PropertyGridChoices_GetBitmap_(handle, ind);
+            return n;
+        }
+        
+        public static void SetBitmapFromItem(System.IntPtr handle, uint ind, System.IntPtr handle2, uint ind2)
+        {
+            NativeApi.PropertyGridChoices_SetBitmapFromItem_(handle, ind, handle2, ind2);
+        }
+        
+        public static void SetFontFromItem(System.IntPtr handle, uint ind, System.IntPtr handle2, uint ind2)
+        {
+            NativeApi.PropertyGridChoices_SetFontFromItem_(handle, ind, handle2, ind2);
+        }
+        
         public static string GetLabel(System.IntPtr handle, uint ind)
         {
             var n = NativeApi.PropertyGridChoices_GetLabel_(handle, ind);
@@ -165,6 +187,18 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern NativeApiTypes.Color PropertyGridChoices_GetBgCol_(System.IntPtr handle, uint ind);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr PropertyGridChoices_GetFont_(System.IntPtr handle, uint ind);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr PropertyGridChoices_GetBitmap_(System.IntPtr handle, uint ind);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void PropertyGridChoices_SetBitmapFromItem_(System.IntPtr handle, uint ind, System.IntPtr handle2, uint ind2);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void PropertyGridChoices_SetFontFromItem_(System.IntPtr handle, uint ind, System.IntPtr handle2, uint ind2);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern string PropertyGridChoices_GetLabel_(System.IntPtr handle, uint ind);

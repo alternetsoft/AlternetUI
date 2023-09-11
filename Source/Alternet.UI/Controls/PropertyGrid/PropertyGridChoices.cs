@@ -11,6 +11,13 @@ namespace Alternet.UI
     {
         private readonly IntPtr handle;
         private int newItemId;
+        private bool isNullable;
+        private IPropertyGridChoices? nullableChoices;
+        private int nullableValue = int.MaxValue;
+        private bool hasCustomFonts = false;
+        private bool hasBitmaps = false;
+        private bool hasCustomFgColors = false;
+        private bool hasCustomBgColors = false;
 
         public PropertyGridChoices(IntPtr handle)
         {
@@ -22,15 +29,64 @@ namespace Alternet.UI
             handle = Native.PropertyGridChoices.CreatePropertyGridChoices();
         }
 
+        public bool HasCustomFonts => hasCustomFonts;
+
+        public bool HasBitmaps => hasBitmaps;
+
+        public bool HasCustomFgColors => hasCustomFgColors;
+
+        public bool HasCustomBgColors => hasCustomBgColors;
+
+        public int NullableValue
+        {
+            get
+            {
+                return nullableValue;
+            }
+
+            set
+            {
+                if (nullableValue == value)
+                    return;
+                nullableValue = value;
+                ChoicesChanged();
+            }
+        }
+
+        public IPropertyGridChoices NullableChoices
+        {
+            get
+            {
+                if (isNullable)
+                    return this;
+                if(nullableChoices == null)
+                {
+                    var nullable = new PropertyGridChoices();
+                    nullable.isNullable = true;
+                    nullableChoices = nullable;
+                }
+
+                if (nullableChoices.Count == 0)
+                {
+                    nullableChoices.Add(string.Empty, NullableValue);
+                    nullableChoices.AddRange(this);
+                }
+
+                return nullableChoices;
+            }
+        }
+
+        public bool IsNullable { get => isNullable; }
+
         public int Count => (int)Native.PropertyGridChoices.GetCount(handle);
 
         public IntPtr Handle => handle;
 
-        public int Add(string text)
+        public void Add(string text, out int value)
         {
             int id = GenItemIndex();
             Add(text, id);
-            return id;
+            value = id;
         }
 
         public int? GetValueFromLabel(string text)
@@ -68,29 +124,36 @@ namespace Alternet.UI
         public void SetLabel(int index, string value)
         {
             Native.PropertyGridChoices.SetLabel(handle, (uint)index, value);
+            ChoicesChanged();
         }
 
         public void SetBitmap(int index, ImageSet? bitmap)
         {
+            hasBitmaps = true;
             Native.PropertyGridChoices.SetBitmap(handle, (uint)index, bitmap?.NativeImageSet);
+            ChoicesChanged();
         }
 
-        public void SetFgCol(int index, Color color)
+        public void SetFgColor(int index, Color color)
         {
+            hasCustomFgColors = true;
             Native.PropertyGridChoices.SetFgCol(handle, (uint)index, color);
+            ChoicesChanged();
         }
 
-        public void SetBgCol(int index, Color color)
+        public void SetBgColor(int index, Color color)
         {
+            hasCustomBgColors = true;
             Native.PropertyGridChoices.SetBgCol(handle, (uint)index, color);
+            ChoicesChanged();
         }
 
-        public Color GetFgCol(int index)
+        public Color GetFgColor(int index)
         {
             return Native.PropertyGridChoices.GetFgCol(handle, (uint)index);
         }
 
-        public Color GetBgCol(int index)
+        public Color GetBgColor(int index)
         {
             return Native.PropertyGridChoices.GetBgCol(handle, (uint)index);
         }
@@ -123,31 +186,46 @@ namespace Alternet.UI
         public void RemoveAt(int nIndex, int count = 1)
         {
             Native.PropertyGridChoices.RemoveAt(handle, (uint)nIndex, (uint)count);
+            ChoicesChanged();
         }
 
         public void Clear()
         {
+            hasBitmaps = false;
+            hasCustomFgColors = false;
+            hasCustomBgColors = false;
+            hasCustomFonts = false;
+            newItemId = 0;
             Native.PropertyGridChoices.Clear(handle);
+            ChoicesChanged();
         }
 
-        public void Add(string? text, int value, ImageSet? bitmap = null)
+        public int Add(string? text, int value, ImageSet? bitmap = null)
         {
+            if(bitmap != null)
+                hasBitmaps = true;
+
             text ??= string.Empty;
             Native.PropertyGridChoices.Add(
                 handle,
                 text,
                 value,
                 bitmap?.NativeImageSet);
+            ChoicesChanged();
+            return Count - 1;
         }
 
-        public void Insert(int index, string text, int value, ImageSet? bitmapBundle)
+        public void Insert(int index, string text, int value, ImageSet? bitmap)
         {
+            if (bitmap != null)
+                hasBitmaps = true;
             Native.PropertyGridChoices.Insert(
                 handle,
                 index,
                 text,
                 value,
-                bitmapBundle?.NativeImageSet);
+                bitmap?.NativeImageSet);
+            ChoicesChanged();
         }
 
         public void AddRange(IEnumerable<string> items)
@@ -155,7 +233,7 @@ namespace Alternet.UI
             if (items == null)
                 return;
             foreach (var item in items)
-                Add(item);
+                Add(item, out _);
         }
 
         public void AddRange(IEnumerable<object> items)
@@ -168,13 +246,51 @@ namespace Alternet.UI
                     continue;
                 var s = item.ToString();
                 if(s != null)
-                    Add(s);
+                    Add(s, out _);
+            }
+        }
+
+        public void AddRange(IPropertyGridChoices choices)
+        {
+            for (int i = 0; i < choices.Count; i++)
+            {
+                string label = choices.GetLabel(i);
+                int value = choices.GetValue(i);
+
+                int index = Add(label, value);
+
+                if (choices.HasBitmaps)
+                {
+                    Native.PropertyGridChoices.SetBitmapFromItem(
+                        Handle,
+                        (uint)index,
+                        choices.Handle,
+                        (uint)i);
+                }
+
+                if (choices.HasCustomFgColors)
+                {
+                    Color fgColor = choices.GetFgColor(i);
+                    SetFgColor(index, fgColor);
+                }
+
+                if (choices.HasCustomBgColors)
+                {
+                    Color bgColor = choices.GetBgColor(i);
+                    SetBgColor(index, bgColor);
+                }
             }
         }
 
         internal void SetFont(int index, IntPtr font)
         {
+            hasCustomFonts = true;
             Native.PropertyGridChoices.SetFont(handle, (uint)index, font);
+        }
+
+        private void ChoicesChanged()
+        {
+            nullableChoices?.Clear();
         }
 
         private int GenItemIndex()

@@ -1618,7 +1618,7 @@ namespace Alternet.UI
             TypeCode typeCode = Type.GetTypeCode(realType);
             label ??= propName;
 
-            if (propType.IsEnum)
+            if (realType.IsEnum)
                 prop = CreatePropertyAsEnum(label, propName, instance, p);
             else
             {
@@ -2082,6 +2082,7 @@ namespace Alternet.UI
             var realType = AssemblyUtils.GetRealType(propType);
             bool isFlags = AssemblyUtils.EnumIsFlags(realType);
             var choices = PropertyGrid.CreateChoicesOnce(realType);
+            bool isNullable = AssemblyUtils.GetNullable(propInfo);
             var prm = GetNewItemParams(instance, propInfo);
             if (isFlags)
             {
@@ -2094,6 +2095,8 @@ namespace Alternet.UI
             }
             else
             {
+                if (isNullable)
+                    choices = choices.NullableChoices;
                 prop = CreateChoicesItem(
                     label,
                     name,
