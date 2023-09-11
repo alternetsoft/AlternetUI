@@ -364,7 +364,7 @@ namespace PropertyGridSample
             propertyGrid.Add(prop);
 
             // Color with Dialog
-            prm.EditKindColor = PropertyGridEditKindColor.Dialog;
+            prm.EditKindColor = PropertyGridEditKindColor.TextBoxAndButton;
             prop = propertyGrid.CreateColorItemWithKind(
                 "Color (Dialog)",
                 null,

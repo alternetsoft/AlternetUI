@@ -1007,8 +1007,8 @@ namespace Alternet.UI
             if (value.IsKnownColor)
             {
                 KnownColor knownColor = value.ToKnownColor();
-                WxSystemColour converted = ColorUtils.Convert(knownColor);
-                if (converted != WxSystemColour.SYS_COLOUR_MAX)
+                WxSystemColor converted = ColorUtils.Convert(knownColor);
+                if (converted != WxSystemColor.Max)
                     kind = (uint)converted;
             }
 
@@ -1103,7 +1103,7 @@ namespace Alternet.UI
                 return kind switch
                 {
                     PropertyGridEditKindColor.Default => CreateDefault(),
-                    PropertyGridEditKindColor.Dialog => CreateColorItem(label, name, value, prm),
+                    PropertyGridEditKindColor.TextBoxAndButton => CreateColorItem(label, name, value, prm),
                     PropertyGridEditKindColor.SystemColors =>
                         CreateSystemColorItem(label, name, value, prm),
                     PropertyGridEditKindColor.ComboBox => CreateComboBox(),
