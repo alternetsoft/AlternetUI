@@ -68,8 +68,19 @@ namespace Alternet::UI
             return;
 
         auto itemsCount = _items.size();
-        if (sb->GetFieldsCount() != itemsCount)
-            sb->SetFieldsCount(itemsCount);
+
+        auto panesCount = sb->GetFieldsCount();
+
+        if (panesCount != itemsCount)
+        {
+            auto newCount = itemsCount;
+            if (newCount < 1)
+                newCount = 1;
+            sb->SetFieldsCount(newCount);
+        }
+
+        if (itemsCount == 0)
+            return;
 
         for (size_t i = startIndex;
             i < itemsCount && ((!count.has_value()) || i < startIndex + count.value());
