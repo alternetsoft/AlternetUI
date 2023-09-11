@@ -2,8 +2,6 @@
 
 namespace Alternet::UI
 {
-	// Replace text. From:  \)\;  To: ) \n{\n}\n
-
 	class wxPropertyGrid2 : public wxPropertyGrid, public wxWidgetExtender
 	{
 	public:
