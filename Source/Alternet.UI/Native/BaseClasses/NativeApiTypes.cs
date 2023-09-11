@@ -17,6 +17,15 @@ namespace Alternet.UI.Native
             public byte A;
             private readonly byte state;
 
+            public Color(Alternet.Drawing.Color color)
+            {
+                if (!color.IsEmpty)
+                {
+                    color.GetArgbValues(out A, out R, out G, out B);
+                    state = 1;
+                }
+            }
+
             public Color(byte r, byte g, byte b, byte a)
             {
                 R = r;
@@ -38,10 +47,7 @@ namespace Alternet.UI.Native
 
             public static implicit operator Color(Alternet.Drawing.Color color)
             {
-                if (color.IsEmpty)
-                    return Color.Empty;
-                else
-                    return new Color(color.R, color.G, color.B, color.A);
+                return new(color);
             }
         }
 

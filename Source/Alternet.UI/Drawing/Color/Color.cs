@@ -1224,6 +1224,23 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Returns ARGB values of the <see cref="Color"/>
+        /// </summary>
+        /// <param name="a">Value of <see cref="A"/>.</param>
+        /// <param name="r">Value of <see cref="R"/>.</param>
+        /// <param name="g">Value of <see cref="G"/>.</param>
+        /// <param name="b">Value of <see cref="B"/>.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void GetArgbValues(out byte a, out byte r, out byte g, out byte b)
+        {
+            var value = Value;
+            r = unchecked((byte)(value >> ARGBRedShift));
+            g = unchecked((byte)(value >> ARGBGreenShift));
+            b = unchecked((byte)(value >> ARGBBlueShift));
+            a = unchecked((byte)(value >> ARGBAlphaShift));
+        }
+
+        /// <summary>
         /// Gets the 32-bit ARGB value of this <see cref="Color"/> structure.
         /// </summary>
         /// <returns>The 32-bit ARGB value of this <see cref="Color"/>.</returns>
@@ -1376,6 +1393,12 @@ namespace Alternet.Drawing
             }
         }
 
+        /// <summary>
+        /// Returns RGB values of the <see cref="Color"/>
+        /// </summary>
+        /// <param name="r">Value of <see cref="R"/>.</param>
+        /// <param name="g">Value of <see cref="G"/>.</param>
+        /// <param name="b">Value of <see cref="B"/>.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private void GetRgbValues(out int r, out int g, out int b)
         {
