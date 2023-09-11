@@ -1,5 +1,6 @@
 ﻿using Alternet.UI;
 using Alternet.Drawing;
+using System;
 
 namespace ControlsSample
 {
@@ -105,6 +106,8 @@ namespace ControlsSample
             mainGridParent.Padding = 10;
             mainGridParent.Children.Add(mainGrid);
             Children.Add(mainGridParent);
+
+            LogEvent("Net Version = " + Environment.Version.ToString());
         }
 
         Control CreateTreeViewPage() => new TreeViewPage() { Site = this };

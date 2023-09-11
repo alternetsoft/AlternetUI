@@ -219,6 +219,8 @@ namespace AuiManagerSample
             toolbar4.ToolRightClick += Toolbar4_ToolRightClick;
 
             listBox3.MouseRightButtonUp += Log_MouseRightButtonUp;
+
+            Log("Net Version = " + Environment.Version.ToString());
         }
 
         private void Log_MouseRightButtonUp(object? sender, MouseButtonEventArgs e)

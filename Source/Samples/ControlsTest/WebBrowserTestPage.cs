@@ -7,7 +7,6 @@ using System.Runtime.InteropServices;
 using System.Threading;
 using Alternet.Drawing;
 using Alternet.UI;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace ControlsTest
 {
@@ -30,7 +29,6 @@ namespace ControlsTest
 
         private StackPanel webBrowserToolbarPanel;
 
-        /*private ToolbarPanel toolbar;*/
         private Button zoomInButton;
         private Button zoomOutButton;
         private Button backButton;
@@ -61,7 +59,7 @@ namespace ControlsTest
         private bool scriptMessageHandlerAdded = false;
         private ITestPageSite? site;
         private WebBrowser webBrowser1;
-        private Label HeaderLabel;
+        private Label headerLabel;
         private Grid webBrowserGrid;
 
         static WebBrowserTestPage()
@@ -124,15 +122,14 @@ namespace ControlsTest
 
             Children.Add(webBrowserGrid);
 
-            HeaderLabel = new()
+            headerLabel = new()
             {
                 Text = "Web Browser Control",
                 Margin = 5,
                 VerticalAlignment = VerticalAlignment.Center,
             };
-            webBrowserGrid.Children.Add(HeaderLabel);
+            webBrowserGrid.Children.Add(headerLabel);
 
-            AddNewToolbar(1);
             AddToolbar(2);
             AddMainPanel(3);
             AddFindPanel(4);
@@ -176,53 +173,6 @@ namespace ControlsTest
             mainPanel.SplitVertical(webBrowser1, listBox1, 650);
 
             webBrowserGrid.Children.Add(mainPanel);
-        }
-
-        public void AddNewToolbar(int rowIndex)
-        {
-            /*ToolbarItem Add(
-                string text,
-                EventHandler? onClick,
-                string imageUrl)
-            {
-                var resultImage =
-                    Image.FromUrl(imageUrl);
-                var result = new ToolbarItem(text, onClick)
-                {
-                    ToolTip = text,
-                    Image = ImageSet.FromImage(resultImage),
-                    DisabledImage = ImageSet.FromImageGrayScale(resultImage),
-                };
-                toolbar.Toolbar.Items.Add(result);
-                return result;
-            }
-
-            string ImgName(string s)
-            {
-                return $"{ResPrefix}{s}-{ImageSize}.png";
-            }
-
-            toolbar = new();
-            toolbar.Margin = new Thickness(5, 5, 0, 5);
-
-            toolbar.Toolbar.ItemTextVisible = false;
-            toolbar.Toolbar.ImageToTextDisplayMode =
-                ToolbarItemImageToTextDisplayMode.Vertical;
-
-            backBtn = Add("Back", BackButton_Click, ImgName("arrow-left"));
-            forwardBtn = Add("Forward", ForwardBtn_Click, ImgName("arrow-right"));
-            zoomInBtn = Add("Zoom in", ZoomInButton_Click, ImgName("plus"));
-            zoomOutBtn = Add("Zoom out", ZoomOutButton_Click, ImgName("minus"));
-            var goButton = Add("Go", GoButton_Click, ImgName("caret-right"));
-
-            Grid.SetRowColumn(toolbar, rowIndex, 0);
-            webBrowserGrid.Children.Add(toolbar);*/
-
-            /*
-            urlTextBox = new()
-                Width = 300,
-            urlTextBox.KeyDown += TextBox_KeyDown;
-             */
         }
 
         public void AddToolbar(int rowIndex)
@@ -390,7 +340,7 @@ namespace ControlsTest
 
             set
             {
-                headerText = HeaderLabel.Text;
+                headerText = headerLabel.Text;
                 webBrowser1.ZoomType = WebBrowserZoomType.Layout;
                 scriptMessageHandlerAdded = webBrowser1.AddScriptMessageHandler("wx_msg");
                 if (!scriptMessageHandlerAdded)
@@ -595,7 +545,10 @@ namespace ControlsTest
             if (!mappingSet)
             {
                 mappingSet = true;
-                webBrowser1.SetVirtualHostNameToFolderMapping("assets.example", "Html", WebBrowserHostResourceAccessKind.DenyCors);
+                webBrowser1.SetVirtualHostNameToFolderMapping(
+                    "assets.example",
+                    "Html",
+                    WebBrowserHostResourceAccessKind.DenyCors);
             }
 
             webBrowser1.LoadURL("https://assets.example/SampleArchive/Html/page1.html");
@@ -616,7 +569,9 @@ namespace ControlsTest
             HandleException(e.Exception);
         }
 
-        private static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
+        private static void CurrentDomain_UnhandledException(
+            object? sender,
+            UnhandledExceptionEventArgs e)
         {
             if (!insideUnhandledException)
             {
@@ -846,7 +801,7 @@ namespace ControlsTest
             AssemblyName thisAssemblyName = thisAssembly.GetName();
             Version? ver = thisAssemblyName.Version;
 
-            HeaderLabel.Text = $"{headerText} {ver} : {e.Text} : {backendVersion}";
+            headerLabel.Text = $"{headerText} {ver} : {e.Text} : {backendVersion}";
         }
 
         private void GoButton_Click(object? sender, EventArgs e)
@@ -956,7 +911,7 @@ namespace ControlsTest
             LogProp(webBrowser1, "ZoomType", "WebBrowser");
             LogProp(webBrowser1, "ZoomFactor", "WebBrowser");
 
-            //Log("GetDefaultImageSize = " + Toolbar.GetDefaultImageSize());
+            // Log("GetDefaultImageSize = " + Toolbar.GetDefaultImageSize());
             Log("DPI = " + webBrowser1.GetDPI().ToString());
             Log("isDebug = " + WebBrowser.DoCommandGlobal("IsDebug"));
             Log("os = " + WebBrowser.GetBackendOS().ToString());
@@ -967,6 +922,8 @@ namespace ControlsTest
             Log("IE = " + WebBrowser.IsBackendAvailable(WebBrowserBackend.IE));
             Log("Edge = " + WebBrowser.IsBackendAvailable(WebBrowserBackend.Edge));
             Log("WebKit = " + WebBrowser.IsBackendAvailable(WebBrowserBackend.WebKit));
+            Log("Net Version = " + Environment.Version.ToString());
+
             Log("GetUsefulDefines" + WebBrowser.DoCommandGlobal("GetUsefulDefines"));
 
             if (WebBrowser.IsBackendAvailable(WebBrowserBackend.Edge))
@@ -974,9 +931,16 @@ namespace ControlsTest
             if (WebBrowser.IsBackendAvailable(WebBrowserBackend.IE))
                 Log("IE version = " + WebBrowser.GetBackendVersionString(WebBrowserBackend.IE));
             if (WebBrowser.IsBackendAvailable(WebBrowserBackend.WebKit))
-                Log("Webkit version = " + WebBrowser.GetBackendVersionString(WebBrowserBackend.WebKit));
+            {
+                Log("Webkit version = "
+                    + WebBrowser.GetBackendVersionString(WebBrowserBackend.WebKit));
+            }
+
             if (WebBrowser.IsBackendAvailable(WebBrowserBackend.Default))
-                Log("Default browser version = " + WebBrowser.GetBackendVersionString(WebBrowserBackend.Default));
+            {
+                Log("Default browser version = "
+                    + WebBrowser.GetBackendVersionString(WebBrowserBackend.Default));
+            }
 
             Log("=======");
         }
@@ -1023,9 +987,9 @@ namespace ControlsTest
 
         private void ListBox1_MouseDoubleClick(object? sender, MouseButtonEventArgs e)
         {
-            var listBox = (ListBox)sender;
+            var listBox = sender as ListBox;
 
-            int? index = listBox.SelectedIndex;
+            int? index = listBox!.SelectedIndex;
             if (index == null)
                 return;
 
