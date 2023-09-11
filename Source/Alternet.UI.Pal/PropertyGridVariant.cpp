@@ -77,7 +77,7 @@ namespace Alternet::UI
 			wxAny any = value;
 			wxColourPropertyValue cpv = any.As<wxColourPropertyValue>();
 			result = cpv.m_colour;
-			return result;
+			return Color(result, cpv.m_type);
 		}
 		return Color();
 	}

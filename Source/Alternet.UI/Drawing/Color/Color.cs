@@ -1040,6 +1040,18 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// <inheritdoc cref="FromArgb(int,int,int,int)"/>
+        /// </summary>
+        public static Color FromArgb(byte alpha, byte red, byte green, byte blue)
+        {
+            return FromArgb(
+                (uint)alpha << ARGBAlphaShift |
+                (uint)red << ARGBRedShift |
+                (uint)green << ARGBGreenShift |
+                (uint)blue << ARGBBlueShift);
+        }
+
+        /// <summary>
         /// Creates a <see cref="Color"/> structure from the specified
         /// <see cref="Color"/> structure, but with the new specified alpha value.
         /// Although this method allows a 32-bit value to be passed for the

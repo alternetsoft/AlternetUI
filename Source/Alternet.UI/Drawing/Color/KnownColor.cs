@@ -12,6 +12,7 @@ namespace Alternet.Drawing
         // The value of these known colors are indexes into a color array.
         // Do not modify this enum without updating KnownColorTable.
         // 0 - reserved for "not a known color"
+
         // "System" colors, Part 1
 
         /// <summary>
@@ -22,885 +23,891 @@ namespace Alternet.Drawing
         /// <summary>
         /// The system-defined color of the background of the active window's title bar.
         /// </summary>
-        ActiveCaption,
+        ActiveCaption = 2,
 
         /// <summary>
         /// The system-defined color of the text in the active window's title bar.
         /// </summary>
-        ActiveCaptionText,
+        ActiveCaptionText = 3,
 
         /// <summary>
         /// The system-defined color of the application workspace. The application workspace
         /// is the area in a multiple-document view that is not being occupied by documents.
         /// </summary>
-        AppWorkspace,
+        AppWorkspace = 4,
 
         /// <summary>
         /// The system-defined face color of a 3-D element.
         /// </summary>
-        Control,
+        Control = 5,
 
         /// <summary>
         /// The system-defined shadow color of a 3-D element. The shadow color is applied
         /// to parts of a 3-D element that face away from the light source.
         /// </summary>
-        ControlDark,
+        ControlDark = 6,
 
         /// <summary>
         /// The system-defined color that is the dark shadow color of a 3-D element. The
         /// dark shadow color is applied to the parts of a 3-D element that are the darkest color.
         /// </summary>
-        ControlDarkDark,
+        ControlDarkDark = 7,
 
         /// <summary>
         /// The system-defined color that is the light color of a 3-D element. The light
         /// color is applied to parts of a 3-D element that face the light source.
         /// </summary>
-        ControlLight,
+        ControlLight = 8,
 
         /// <summary>
         /// The system-defined highlight color of a 3-D element. The highlight color is
         /// applied to the parts of a 3-D element that are the lightest color.
         /// </summary>
-        ControlLightLight,
+        ControlLightLight = 9,
 
         /// <summary>
         /// The system-defined color of text in a 3-D element.
         /// </summary>
-        ControlText,
+        ControlText = 10,
 
         /// <summary>
         /// The system-defined color of the desktop.
         /// </summary>
-        Desktop,
+        Desktop = 11,
 
         /// <summary>
         /// The system-defined color of dimmed text. Items in a list that are disabled
         /// are displayed in dimmed text.
         /// </summary>
-        GrayText,
+        GrayText = 12,
 
         /// <summary>
         /// The system-defined color of the background of selected items. This includes selected
         /// menu items as well as selected text.
         /// </summary>
-        Highlight,
+        Highlight = 13,
 
         /// <summary>
         /// The system-defined color of the text of selected items.
         /// </summary>
-        HighlightText,
+        HighlightText = 14,
 
         /// <summary>
         /// The system-defined color used to designate a hot-tracked item.
         /// Single-clicking a hot-tracked item executes the item.
         /// </summary>
-        HotTrack,
+        HotTrack = 15,
 
         /// <summary>
         /// The system-defined color of an inactive window's border.
         /// </summary>
-        InactiveBorder,
+        InactiveBorder = 16,
 
         /// <summary>
         /// The system-defined color of the background of an inactive window's title bar.
         /// </summary>
-        InactiveCaption,
+        InactiveCaption = 17,
 
         /// <summary>
         /// The system-defined color of the text in an inactive window's title bar.
         /// </summary>
-        InactiveCaptionText,
+        InactiveCaptionText = 18,
 
         /// <summary>
         /// The system-defined color of the background of a ToolTip.
         /// </summary>
-        Info,
+        Info = 19,
 
         /// <summary>
         /// The system-defined color of the text of a ToolTip.
         /// </summary>
-        InfoText,
+        InfoText = 20,
 
         /// <summary>
         /// The system-defined color of a menu's background.
         /// </summary>
-        Menu,
+        Menu = 21,
 
         /// <summary>
         /// The system-defined color of a menu's text.
         /// </summary>
-        MenuText,
+        MenuText = 22,
 
         /// <summary>
         /// The system-defined color of the background of a scroll bar.
         /// </summary>
-        ScrollBar,
+        ScrollBar = 23,
 
         /// <summary>
         /// The system-defined color of the background in the client area of a window.
         /// </summary>
-        Window,
+        Window = 24,
 
         /// <summary>
         /// The system-defined color of a window frame.
         /// </summary>
-        WindowFrame,
+        WindowFrame = 25,
 
         /// <summary>
         /// The system-defined color of the text in the client area of a window.
         /// </summary>
-        WindowText,
+        WindowText = 26,
 
+        // "Web" Colors, Part 1
+
         /// <summary>
         /// A system-defined color.
         /// </summary>
-        Transparent,
+        Transparent = 27,
 
         /// <summary>
         /// A system-defined color.
         /// </summary>
-        AliceBlue,
+        AliceBlue = 28,
 
         /// <summary>
         /// A system-defined color.
         /// </summary>
-        AntiqueWhite,
+        AntiqueWhite = 29,
 
         /// <summary>
         /// A system-defined color.
         /// </summary>
-        Aqua,
+        Aqua = 30,
 
         /// <summary>
         /// A system-defined color.
         /// </summary>
-        Aquamarine,
+        Aquamarine = 31,
 
         /// <summary>
         /// A system-defined color.
         /// </summary>
-        Azure,
+        Azure = 32,
 
         /// <summary>
         /// A system-defined color.
         /// </summary>
-        Beige,
+        Beige = 33,
 
         /// <summary>
         /// A system-defined color.
         /// </summary>
-        Bisque,
+        Bisque = 34,
 
         /// <summary>
         /// A system-defined color.
         /// </summary>
-        Black,
+        Black = 35,
 
         /// <summary>
         /// A system-defined color.
         /// </summary>
-        BlanchedAlmond,
+        BlanchedAlmond = 36,
 
         /// <summary>
         /// A system-defined color.
         /// </summary>
-        Blue,
+        Blue = 37,
 
         /// <summary>
         /// A system-defined color.
         /// </summary>
-        BlueViolet,
+        BlueViolet = 38,
 
         /// <summary>
         /// A system-defined color.
         /// </summary>
-        Brown,
+        Brown = 39,
 
         /// <summary>
         /// A system-defined color.
         /// </summary>
-        BurlyWood,
+        BurlyWood = 40,
 
         /// <summary>
         /// A system-defined color.
         /// </summary>
-        CadetBlue,
+        CadetBlue = 41,
 
         /// <summary>
         /// A system-defined color.
         /// </summary>
-        Chartreuse,
+        Chartreuse = 42,
 
         /// <summary>
         /// A system-defined color.
         /// </summary>
-        Chocolate,
+        Chocolate = 43,
 
         /// <summary>
         /// A system-defined color.
         /// </summary>
-        Coral,
+        Coral = 44,
 
         /// <summary>
         /// A system-defined color.
         /// </summary>
-        CornflowerBlue,
+        CornflowerBlue = 45,
 
         /// <summary>
         /// A system-defined color.
         /// </summary>
-        Cornsilk,
+        Cornsilk = 46,
 
         /// <summary>
         /// A system-defined color.
         /// </summary>
-        Crimson,
+        Crimson = 47,
 
         /// <summary>
         /// A system-defined color.
         /// </summary>
-        Cyan,
+        Cyan = 48,
 
         /// <summary>
         /// A system-defined color.
         /// </summary>
-        DarkBlue,
+        DarkBlue = 49,
 
         /// <summary>
         /// A system-defined color.
         /// </summary>
-        DarkCyan,
+        DarkCyan = 50,
 
         /// <summary>
         /// A system-defined color.
         /// </summary>
-        DarkGoldenrod,
+        DarkGoldenrod = 51,
 
         /// <summary>
         /// A system-defined color.
         /// </summary>
-        DarkGray,
+        DarkGray = 52,
 
         /// <summary>
         /// A system-defined color.
         /// </summary>
-        DarkGreen,
+        DarkGreen = 53,
 
         /// <summary>
         /// A system-defined color.
         /// </summary>
-        DarkKhaki,
+        DarkKhaki = 54,
 
         /// <summary>
         /// A system-defined color.
         /// </summary>
-        DarkMagenta,
+        DarkMagenta = 55,
 
         /// <summary>
         /// A system-defined color.
         /// </summary>
-        DarkOliveGreen,
+        DarkOliveGreen = 56,
 
         /// <summary>
         /// A system-defined color.
         /// </summary>
-        DarkOrange,
+        DarkOrange = 57,
 
         /// <summary>
         /// A system-defined color.
         /// </summary>
-        DarkOrchid,
+        DarkOrchid = 58,
 
         /// <summary>
         /// A system-defined color.
         /// </summary>
-        DarkRed,
+        DarkRed = 59,
 
         /// <summary>
         /// A system-defined color.
         /// </summary>
-        DarkSalmon,
+        DarkSalmon = 60,
 
         /// <summary>
         /// A system-defined color.
         /// </summary>
-        DarkSeaGreen,
+        DarkSeaGreen = 61,
 
         /// <summary>
         /// A system-defined color.
         /// </summary>
-        DarkSlateBlue,
+        DarkSlateBlue = 62,
 
         /// <summary>
         /// A system-defined color.
         /// </summary>
-        DarkSlateGray,
+        DarkSlateGray = 63,
 
         /// <summary>
         /// A system-defined color.
         /// </summary>
-        DarkTurquoise,
+        DarkTurquoise = 64,
 
         /// <summary>
         /// A system-defined color.
         /// </summary>
-        DarkViolet,
+        DarkViolet = 65,
 
         /// <summary>
         /// A system-defined color.
         /// </summary>
-        DeepPink,
+        DeepPink = 66,
 
         /// <summary>
         /// A system-defined color.
         /// </summary>
-        DeepSkyBlue,
+        DeepSkyBlue = 67,
 
         /// <summary>
         /// A system-defined color.
         /// </summary>
-        DimGray,
+        DimGray = 68,
 
         /// <summary>
         /// A system-defined color.
         /// </summary>
-        DodgerBlue,
+        DodgerBlue = 69,
 
         /// <summary>
         /// A system-defined color.
         /// </summary>
-        Firebrick,
+        Firebrick = 70,
 
         /// <summary>
         /// A system-defined color.
         /// </summary>
-        FloralWhite,
+        FloralWhite = 71,
 
         /// <summary>
         /// A system-defined color.
         /// </summary>
-        ForestGreen,
+        ForestGreen = 72,
 
         /// <summary>
         /// A system-defined color.
         /// </summary>
-        Fuchsia,
+        Fuchsia = 73,
 
         /// <summary>
         /// A system-defined color.
         /// </summary>
-        Gainsboro,
+        Gainsboro = 74,
 
         /// <summary>
         /// A system-defined color.
         /// </summary>
-        GhostWhite,
+        GhostWhite = 75,
 
         /// <summary>
         /// A system-defined color.
         /// </summary>
-        Gold,
+        Gold = 76,
 
         /// <summary>
         /// A system-defined color.
         /// </summary>
-        Goldenrod,
+        Goldenrod = 77,
 
         /// <summary>
         /// A system-defined color.
         /// </summary>
-        Gray,
+        Gray = 78,
 
         /// <summary>
         /// A system-defined color.
         /// </summary>
-        Green,
+        Green = 79,
 
         /// <summary>
         /// A system-defined color.
         /// </summary>
-        GreenYellow,
+        GreenYellow = 80,
 
         /// <summary>
         /// A system-defined color.
         /// </summary>
-        Honeydew,
+        Honeydew = 81,
 
         /// <summary>
         /// A system-defined color.
         /// </summary>
-        HotPink,
+        HotPink = 82,
 
         /// <summary>
         /// A system-defined color.
         /// </summary>
-        IndianRed,
+        IndianRed = 83,
 
         /// <summary>
         /// A system-defined color.
         /// </summary>
-        Indigo,
+        Indigo = 84,
 
         /// <summary>
         /// A system-defined color.
         /// </summary>
-        Ivory,
+        Ivory = 85,
 
         /// <summary>
         /// A system-defined color.
         /// </summary>
-        Khaki,
+        Khaki = 86,
 
         /// <summary>
         /// A system-defined color.
         /// </summary>
-        Lavender,
+        Lavender = 87,
 
         /// <summary>
         /// A system-defined color.
         /// </summary>
-        LavenderBlush,
+        LavenderBlush = 88,
 
         /// <summary>
         /// A system-defined color.
         /// </summary>
-        LawnGreen,
+        LawnGreen = 89,
 
         /// <summary>
         /// A system-defined color.
         /// </summary>
-        LemonChiffon,
+        LemonChiffon = 90,
 
         /// <summary>
         /// A system-defined color.
         /// </summary>
-        LightBlue,
+        LightBlue = 91,
 
         /// <summary>
         /// A system-defined color.
         /// </summary>
-        LightCoral,
+        LightCoral = 92,
 
         /// <summary>
         /// A system-defined color.
         /// </summary>
-        LightCyan,
+        LightCyan = 93,
 
         /// <summary>
         /// A system-defined color.
         /// </summary>
-        LightGoldenrodYellow,
+        LightGoldenrodYellow = 94,
 
         /// <summary>
         /// A system-defined color.
         /// </summary>
-        LightGray,
+        LightGray = 95,
 
         /// <summary>
         /// A system-defined color.
         /// </summary>
-        LightGreen,
+        LightGreen = 96,
 
         /// <summary>
         /// A system-defined color.
         /// </summary>
-        LightPink,
+        LightPink = 97,
 
         /// <summary>
         /// A system-defined color.
         /// </summary>
-        LightSalmon,
+        LightSalmon = 98,
 
         /// <summary>
         /// A system-defined color.
         /// </summary>
-        LightSeaGreen,
+        LightSeaGreen = 99,
 
         /// <summary>
         /// A system-defined color.
         /// </summary>
-        LightSkyBlue,
+        LightSkyBlue = 100,
 
         /// <summary>
         /// A system-defined color.
         /// </summary>
-        LightSlateGray,
+        LightSlateGray = 101,
 
         /// <summary>
         /// A system-defined color.
         /// </summary>
-        LightSteelBlue,
+        LightSteelBlue = 102,
 
         /// <summary>
         /// A system-defined color.
         /// </summary>
-        LightYellow,
+        LightYellow = 103,
 
         /// <summary>
         /// A system-defined color.
         /// </summary>
-        Lime,
+        Lime = 104,
 
         /// <summary>
         /// A system-defined color.
         /// </summary>
-        LimeGreen,
+        LimeGreen = 105,
 
         /// <summary>
         /// A system-defined color.
         /// </summary>
-        Linen,
+        Linen = 106,
 
         /// <summary>
         /// A system-defined color.
         /// </summary>
-        Magenta,
+        Magenta = 107,
 
         /// <summary>
         /// A system-defined color.
         /// </summary>
-        Maroon,
+        Maroon = 108,
 
         /// <summary>
         /// A system-defined color.
         /// </summary>
-        MediumAquamarine,
+        MediumAquamarine = 109,
 
         /// <summary>
         /// A system-defined color.
         /// </summary>
-        MediumBlue,
+        MediumBlue = 110,
 
         /// <summary>
         /// A system-defined color.
         /// </summary>
-        MediumOrchid,
+        MediumOrchid = 111,
 
         /// <summary>
         /// A system-defined color.
         /// </summary>
-        MediumPurple,
+        MediumPurple = 112,
 
         /// <summary>
         /// A system-defined color.
         /// </summary>
-        MediumSeaGreen,
+        MediumSeaGreen = 113,
 
         /// <summary>
         /// A system-defined color.
         /// </summary>
-        MediumSlateBlue,
+        MediumSlateBlue = 114,
 
         /// <summary>
         /// A system-defined color.
         /// </summary>
-        MediumSpringGreen,
+        MediumSpringGreen = 115,
 
         /// <summary>
         /// A system-defined color.
         /// </summary>
-        MediumTurquoise,
+        MediumTurquoise = 116,
 
         /// <summary>
         /// A system-defined color.
         /// </summary>
-        MediumVioletRed,
+        MediumVioletRed = 117,
 
         /// <summary>
         /// A system-defined color.
         /// </summary>
-        MidnightBlue,
+        MidnightBlue = 118,
 
         /// <summary>
         /// A system-defined color.
         /// </summary>
-        MintCream,
+        MintCream = 119,
 
         /// <summary>
         /// A system-defined color.
         /// </summary>
-        MistyRose,
+        MistyRose = 120,
 
         /// <summary>
         /// A system-defined color.
         /// </summary>
-        Moccasin,
+        Moccasin = 121,
 
         /// <summary>
         /// A system-defined color.
         /// </summary>
-        NavajoWhite,
+        NavajoWhite = 122,
 
         /// <summary>
         /// A system-defined color.
         /// </summary>
-        Navy,
+        Navy = 123,
 
         /// <summary>
         /// A system-defined color.
         /// </summary>
-        OldLace,
+        OldLace = 124,
 
         /// <summary>
         /// A system-defined color.
         /// </summary>
-        Olive,
+        Olive = 125,
 
         /// <summary>
         /// A system-defined color.
         /// </summary>
-        OliveDrab,
+        OliveDrab = 126,
 
         /// <summary>
         /// A system-defined color.
         /// </summary>
-        Orange,
+        Orange = 127,
 
         /// <summary>
         /// A system-defined color.
         /// </summary>
-        OrangeRed,
+        OrangeRed = 128,
 
         /// <summary>
         /// A system-defined color.
         /// </summary>
-        Orchid,
+        Orchid = 129,
 
         /// <summary>
         /// A system-defined color.
         /// </summary>
-        PaleGoldenrod,
+        PaleGoldenrod = 130,
 
         /// <summary>
         /// A system-defined color.
         /// </summary>
-        PaleGreen,
+        PaleGreen = 131,
 
         /// <summary>
         /// A system-defined color.
         /// </summary>
-        PaleTurquoise,
+        PaleTurquoise = 132,
 
         /// <summary>
         /// A system-defined color.
         /// </summary>
-        PaleVioletRed,
+        PaleVioletRed = 133,
 
         /// <summary>
         /// A system-defined color.
         /// </summary>
-        PapayaWhip,
+        PapayaWhip = 134,
 
         /// <summary>
         /// A system-defined color.
         /// </summary>
-        PeachPuff,
+        PeachPuff = 135,
 
         /// <summary>
         /// A system-defined color.
         /// </summary>
-        Peru,
+        Peru = 136,
 
         /// <summary>
         /// A system-defined color.
         /// </summary>
-        Pink,
+        Pink = 137,
 
         /// <summary>
         /// A system-defined color.
         /// </summary>
-        Plum,
+        Plum = 138,
 
         /// <summary>
         /// A system-defined color.
         /// </summary>
-        PowderBlue,
+        PowderBlue = 139,
 
         /// <summary>
         /// A system-defined color.
         /// </summary>
-        Purple,
+        Purple = 140,
 
         /// <summary>
         /// A system-defined color.
         /// </summary>
-        Red,
+        Red = 141,
 
         /// <summary>
         /// A system-defined color.
         /// </summary>
-        RosyBrown,
+        RosyBrown = 142,
 
         /// <summary>
         /// A system-defined color.
         /// </summary>
-        RoyalBlue,
+        RoyalBlue = 143,
 
         /// <summary>
         /// A system-defined color.
         /// </summary>
-        SaddleBrown,
+        SaddleBrown = 144,
 
         /// <summary>
         /// A system-defined color.
         /// </summary>
-        Salmon,
+        Salmon = 145,
 
         /// <summary>
         /// A system-defined color.
         /// </summary>
-        SandyBrown,
+        SandyBrown = 146,
 
         /// <summary>
         /// A system-defined color.
         /// </summary>
-        SeaGreen,
+        SeaGreen = 147,
 
         /// <summary>
         /// A system-defined color.
         /// </summary>
-        SeaShell,
+        SeaShell = 148,
 
         /// <summary>
         /// A system-defined color.
         /// </summary>
-        Sienna,
+        Sienna = 149,
 
         /// <summary>
         /// A system-defined color.
         /// </summary>
-        Silver,
+        Silver = 150,
 
         /// <summary>
         /// A system-defined color.
         /// </summary>
-        SkyBlue,
+        SkyBlue = 151,
 
         /// <summary>
         /// A system-defined color.
         /// </summary>
-        SlateBlue,
+        SlateBlue = 152,
 
         /// <summary>
         /// A system-defined color.
         /// </summary>
-        SlateGray,
+        SlateGray = 153,
 
         /// <summary>
         /// A system-defined color.
         /// </summary>
-        Snow,
+        Snow = 154,
 
         /// <summary>
         /// A system-defined color.
         /// </summary>
-        SpringGreen,
+        SpringGreen = 155,
 
         /// <summary>
         /// A system-defined color.
         /// </summary>
-        SteelBlue,
+        SteelBlue = 156,
 
         /// <summary>
         /// A system-defined color.
         /// </summary>
-        Tan,
+        Tan = 157,
 
         /// <summary>
         /// A system-defined color.
         /// </summary>
-        Teal,
+        Teal = 158,
 
         /// <summary>
         /// A system-defined color.
         /// </summary>
-        Thistle,
+        Thistle = 159,
 
         /// <summary>
         /// A system-defined color.
         /// </summary>
-        Tomato,
+        Tomato = 160,
 
         /// <summary>
         /// A system-defined color.
         /// </summary>
-        Turquoise,
+        Turquoise = 161,
 
         /// <summary>
         /// A system-defined color.
         /// </summary>
-        Violet,
+        Violet = 162,
 
         /// <summary>
         /// A system-defined color.
         /// </summary>
-        Wheat,
+        Wheat = 163,
 
         /// <summary>
         /// A system-defined color.
         /// </summary>
-        White,
+        White = 164,
 
         /// <summary>
         /// A system-defined color.
         /// </summary>
-        WhiteSmoke,
+        WhiteSmoke = 165,
 
         /// <summary>
         /// A system-defined color.
         /// </summary>
-        Yellow,
+        Yellow = 166,
 
         /// <summary>
         /// A system-defined color.
         /// </summary>
-        YellowGreen,
+        YellowGreen = 167,
+
+        // "System" colors, Part 2
 
         /// <summary>
         /// The system-defined face color of a 3-D element.
         /// </summary>
-        ButtonFace,
+        ButtonFace = 168,
 
         /// <summary>
         /// The system-defined color that is the highlight color of a 3-D element.
         /// This color is applied to parts of a 3-D element that face the light source.
         /// </summary>
-        ButtonHighlight,
+        ButtonHighlight = 169,
 
         /// <summary>
         /// The system-defined color that is the shadow color of a 3-D element.
         /// This color is applied to parts of a 3-D element that face away from the
         /// light source.
         /// </summary>
-        ButtonShadow,
+        ButtonShadow = 170,
 
         /// <summary>
         /// The system-defined color of the lightest color in the color gradient
         /// of an active window's title bar.
         /// </summary>
-        GradientActiveCaption,
+        GradientActiveCaption = 171,
 
         /// <summary>
         /// The system-defined color of the lightest color in the color gradient
         /// of an inactive window's title bar.
         /// </summary>
-        GradientInactiveCaption,
+        GradientInactiveCaption = 172,
 
         /// <summary>
         /// The system-defined color of the background of a menu bar.
         /// </summary>
-        MenuBar,
+        MenuBar = 173,
 
         /// <summary>
         /// The system-defined color used to highlight menu items when the menu appears
         /// as a flat menu.
         /// </summary>
-        MenuHighlight,
+        MenuHighlight = 174,
+
+        // "Web" colors, Part 2
 
         /// <summary>
         /// A system-defined color.
         /// </summary>
-        RebeccaPurple,
+        RebeccaPurple = 175,
     }
 }

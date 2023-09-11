@@ -478,22 +478,17 @@ namespace Alternet.Drawing
                  : ColorValueTable[(int)color];
         }
 
-#if FEATURE_WINDOWS_SYSTEM_COLORS
         public static uint GetSystemColorArgb(KnownColor color)
         {
             Debug.Assert(Color.IsKnownColorSystem(color), nameof(GetSystemColorArgb));
 
+#if FEATURE_WINDOWS_SYSTEM_COLORS
             return ColorTranslator.COLORREFToARGB(
                 Interop.User32.GetSysColor((byte)ColorValueTable[(int)color]));
-        }
 #else
-        public static uint GetSystemColorArgb(KnownColor color)
-        {
-            Debug.Assert(Color.IsKnownColorSystem(color));
-
             return s_colorValueTable[(int)color];
-        }
 #endif
+        }
 
         internal static Color ArgbToKnownColor(uint argb)
         {

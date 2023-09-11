@@ -192,11 +192,13 @@ namespace Alternet::UI
 
         Thickness() {}
 
-        Thickness(double left, double top, double right, double bottom) : Left(left), Top(top), Right(right), Bottom(bottom) {}
+        Thickness(double left, double top, double right, double bottom)
+            : Left(left), Top(top), Right(right), Bottom(bottom) {}
 
         operator Thickness_C() { return Thickness_C{ Left, Top, Right, Bottom }; }
 
-        bool operator==(const Thickness& rhs) { return Left == rhs.Left && Top == rhs.Top && Right == rhs.Right && Bottom == rhs.Bottom; }
+        bool operator==(const Thickness& rhs) { return Left == rhs.Left
+            && Top == rhs.Top && Right == rhs.Right && Bottom == rhs.Bottom; }
         bool operator!=(const Thickness& rhs) { return !(*this == rhs); }
     };   
 
@@ -219,12 +221,19 @@ namespace Alternet::UI
         {
         }
 
+        Color(const wxColor& c, wxUint32 typ) : Color(c)
+        {
+            if (typ == 0xFFFFFF)
+                return;
+
+        }
+
         Color(const wxColor& c) : R(c.Red()), G(c.Green()), B(c.Blue()), 
             A(c.Alpha()), state(1)
         {
         }
 
-        operator Color_C() { return Color_C{ R, G, B, A, state }; }
+        operator Color_C() { return Color_C{ R, G, B, A, state}; }
 
         bool operator==(const Color& rhs) 
         { 
@@ -234,7 +243,13 @@ namespace Alternet::UI
 
         bool operator!=(const struct Color& rhs) { return !(*this == rhs); }
 
-        operator wxColor() const { return IsEmpty()? wxColor() : wxColor(R, G, B, A); }
+        operator wxColor() const
+        {
+            if (IsEmpty())
+                return wxColor();
+            else
+                return wxColor(R, G, B, A);
+        }
     };
 
     struct DateTime
