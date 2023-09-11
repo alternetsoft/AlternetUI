@@ -31,7 +31,6 @@ namespace Alternet.UI
 
         static Application()
         {
-            WebBrowser.CrtSetDbgFlag(0);
         }
 
         /// <summary>
@@ -54,6 +53,10 @@ namespace Alternet.UI
 
             if (SupressDiagnostics)
                 Native.Application.SuppressDiagnostics(-1);
+
+#if DEBUG
+            WebBrowser.CrtSetDbgFlag(0);
+#endif
         }
 
         /// <summary>
