@@ -537,4 +537,45 @@ namespace Alternet::UI
             toDip(value.m_x, window),
             toDip(value.m_y, window));
     };  
+
+    enum KnownSystemColor
+    {
+        // 0 - reserved for "not a known color"
+
+        KnownSystemColor_ActiveBorder = 1,
+        KnownSystemColor_ActiveCaption = 2,
+        KnownSystemColor_ActiveCaptionText = 3,
+        KnownSystemColor_AppWorkspace = 4,
+        KnownSystemColor_Control = 5,
+        KnownSystemColor_ControlDark = 6,
+        KnownSystemColor_ControlDarkDark = 7,
+        KnownSystemColor_ControlLight = 8,
+        KnownSystemColor_ControlLightLight = 9,
+        KnownSystemColor_ControlText = 10,
+        KnownSystemColor_Desktop = 11,
+        KnownSystemColor_GrayText = 12,
+        KnownSystemColor_Highlight = 13,
+        KnownSystemColor_HighlightText = 14,
+        KnownSystemColor_HotTrack = 15,
+        KnownSystemColor_InactiveBorder = 16,
+        KnownSystemColor_InactiveCaption = 17,
+        KnownSystemColor_InactiveCaptionText = 18,
+        KnownSystemColor_Info = 19,
+        KnownSystemColor_InfoText = 20,
+        KnownSystemColor_Menu = 21,
+        KnownSystemColor_MenuText = 22,
+        KnownSystemColor_ScrollBar = 23,
+        KnownSystemColor_Window = 24,
+        KnownSystemColor_WindowFrame = 25,
+        KnownSystemColor_WindowText = 26,
+        KnownSystemColor_Transparent = 27,
+
+        KnownSystemColor_ButtonFace = 168,
+        KnownSystemColor_ButtonHighlight = 169,
+        KnownSystemColor_ButtonShadow = 170,
+        KnownSystemColor_GradientActiveCaption = 171,
+        KnownSystemColor_GradientInactiveCaption = 172,
+        KnownSystemColor_MenuBar = 173,
+        KnownSystemColor_MenuHighlight = 174,
+    };
 }
