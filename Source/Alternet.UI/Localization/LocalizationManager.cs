@@ -79,5 +79,32 @@ namespace Alternet.UI
                 ErrorMessages.Default = value;
             }
         }
+
+        /// <summary>
+        /// Returns <see cref="IPropertyGridChoices"/> for the given enumeration type.
+        /// </summary>
+        /// <typeparam name="T">Type of the enumeration.</typeparam>
+        /// <remarks>
+        /// You can use <see cref="IPropertyGridChoices.SetLabelForValue{T}(T, string)"/>
+        /// to set localized label for the enumeration member.
+        /// </remarks>
+        public static IPropertyGridChoices GetEnumChoices<T>()
+            where T : Enum
+        {
+            return PropertyGrid.CreateChoicesOnce(typeof(T));
+        }
+
+        /// <summary>
+        /// Sets localized label for the property.
+        /// </summary>
+        /// <typeparam name="T">Object type.</typeparam>
+        /// <param name="propName">Property name.</param>
+        /// <param name="label">New custom label of the property.</param>
+        /// <returns><c>true</c> if operation successfull, <c>false</c> otherwise.</returns>
+        public static bool SetPropertyLabel<T>(string propName, string label)
+            where T : class
+        {
+            return PropertyGrid.SetCustomLabel<T>(propName, label);
+        }
     }
 }
