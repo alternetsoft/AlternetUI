@@ -155,7 +155,7 @@ namespace Alternet.UI
 
         private void Items_ItemInserted(object? sender, int index, object item)
         {
-            if (!Control.Items.RangeOperationInProgress)
+            if (!Control.Items.RangeOpInProgress)
                 NativeControl.InsertItem(index, Control.GetItemText(item));
         }
 

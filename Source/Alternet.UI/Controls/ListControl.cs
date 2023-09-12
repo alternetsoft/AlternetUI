@@ -41,7 +41,7 @@ namespace Alternet.UI
         /// a count of the items in the collection.</remarks>
         [Content]
         public Collection<object> Items { get; } =
-            new Collection<object> { ThrowOnNullItemAddition = true };
+            new Collection<object> { ThrowOnNullAdd = true };
 
         /// <summary>
         /// Gets the number of elements actually contained in the <see cref="Items"/>

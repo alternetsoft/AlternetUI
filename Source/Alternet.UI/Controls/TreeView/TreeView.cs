@@ -23,11 +23,11 @@ namespace Alternet.UI
     /// </para>
     /// <para>
     /// You can display images next to the tree items by assigning an
-    /// <see cref="ImageList"/> to the <see cref="TreeView.ImageList"/> property and
+    /// <see cref="Drawing.ImageList"/> to the <see cref="ImageList"/> property and
     /// referencing the index value of an <see cref="Image"/> in the
     /// <see cref="ImageList"/> to assign that <see cref="Image"/>.
-    /// Set the <see cref="TreeView.ImageIndex"/> property to the index value of
-    /// the <see cref="Image"/> that you want to display for all items by default.
+    /// Set the <see cref="ImageIndex"/> property to the index value of
+    /// the <see cref="Drawing.Image"/> that you want to display for all items by default.
     /// Individual items can override the default images by setting the
     /// <see cref="TreeViewItem.ImageIndex"/> property.
     /// </para>
@@ -497,7 +497,7 @@ namespace Alternet.UI
         /// that can contain its own child items collection.
         /// </remarks>
         public Collection<TreeViewItem> Items { get; } =
-            new Collection<TreeViewItem> { ThrowOnNullItemAddition = true };
+            new Collection<TreeViewItem> { ThrowOnNullAdd = true };
 
         /// <summary>
         /// Gets or sets the <see cref="ImageList"/> to use when displaying item

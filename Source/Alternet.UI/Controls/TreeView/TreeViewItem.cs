@@ -264,7 +264,7 @@ namespace Alternet.UI
             {
                 if(items == null)
                 {
-                    items = new() { ThrowOnNullItemAddition = true };
+                    items = new() { ThrowOnNullAdd = true };
                     items.ItemInserted += Items_ItemInserted;
                     items.ItemRemoved += Items_ItemRemoved;
                 }

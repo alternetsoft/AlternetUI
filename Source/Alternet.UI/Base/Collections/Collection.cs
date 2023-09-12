@@ -50,34 +50,17 @@ namespace Alternet.Base.Collections
         /// </summary>
         public event CollectionItemRangeChangedHandler<T>? ItemRangeAdditionFinished;
 
-        /*
-        /// <summary>
-        /// Occurs when an item is inserted in the collection.
-        /// </summary>
-        // public event EventHandler<CollectionChangeEventArgs<T>>? ItemInserted;
-
-        /// <summary>
-        /// Occurs when an item is removed from the collection.
-        /// </summary>
-        // public event EventHandler<CollectionChangeEventArgs<T>>? ItemRemoved;
-
-        /// <summary>
-        /// Occurs when an item range addition is finished in the collection.
-        /// </summary>
-        public event EventHandler<RangeAdditionFinishedEventArgs<T>>? ItemRangeAdditionFinished;
-         */
-
         /// <summary>
         /// Returns <see langword="true"/> if <see cref="AddRange"/> is being executed at the moment.
         /// </summary>
-        public bool RangeOperationInProgress { get; private set; }
+        public bool RangeOpInProgress { get; private set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether an
         /// <see cref="ArgumentNullException"/> should be thrown
         /// on an attempt to add a <c>null</c> value to the collection.
         /// </summary>
-        public bool ThrowOnNullItemAddition { get; set; }
+        public bool ThrowOnNullAdd { get; set; }
 
         /// <summary>
         /// Gets or sets the element at the specified index.
@@ -113,7 +96,7 @@ namespace Alternet.Base.Collections
             if (collection is null)
                 throw new ArgumentNullException(nameof(collection));
 
-            RangeOperationInProgress = true;
+            RangeOpInProgress = true;
 
             int index = Count;
             try
@@ -123,7 +106,7 @@ namespace Alternet.Base.Collections
             }
             finally
             {
-                RangeOperationInProgress = false;
+                RangeOpInProgress = false;
                 OnItemRangeAdditionFinished(index, collection);
             }
         }
@@ -135,7 +118,7 @@ namespace Alternet.Base.Collections
         /// <param name="item">The object to insert.</param>
         protected override void InsertItem(int index, T item)
         {
-            if (ThrowOnNullItemAddition && item is null)
+            if (ThrowOnNullAdd && item is null)
                 throw new ArgumentNullException(nameof(item));
 
             base.InsertItem(index, item);

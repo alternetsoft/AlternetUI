@@ -267,7 +267,7 @@ namespace Alternet.UI
         /// <remarks>Using the <see cref="Cells"/> property, you can add column cells,
         /// remove column cells, and obtain a count of column cells.</remarks>
         public Collection<ListViewItemCell> Cells { get; } =
-            new Collection<ListViewItemCell> { ThrowOnNullItemAddition = true };
+            new Collection<ListViewItemCell> { ThrowOnNullAdd = true };
 
         private long RequiredIndex
         {

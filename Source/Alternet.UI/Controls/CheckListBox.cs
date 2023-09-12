@@ -89,7 +89,7 @@ namespace Alternet.UI
         /// collection and iterate through it.</remarks>
         [Browsable(false)]
         public Collection<object> CheckedItems { get; } =
-            new Collection<object> { ThrowOnNullItemAddition = true };
+            new Collection<object> { ThrowOnNullAdd = true };
 
         /// <summary>
         /// Gets or sets a value indicating whether the check box should be
