@@ -4,7 +4,7 @@ using System.Threading;
 
 namespace Alternet.UI.Native
 {
-    class NativeExceptionsMarshal
+    internal class NativeExceptionsMarshal
     {
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Unicode)]
         public delegate void NativeExceptionCallbackType(
@@ -23,10 +23,15 @@ namespace Alternet.UI.Native
             ArgumentException,
         }
 
-        public static void OnUnhandledNativeException(ExceptionType exceptionType, string message, int errorCode) =>
-            throw GetException(exceptionType, message, errorCode);
+        public static void OnUnhandledNativeException(
+            ExceptionType exceptionType,
+            string message,
+            int errorCode) => throw GetException(exceptionType, message, errorCode);
 
-        public static void OnCaughtNativeException(ExceptionType exceptionType, string message, int errorCode) =>
+        public static void OnCaughtNativeException(
+            ExceptionType exceptionType,
+            string message,
+            int errorCode) =>
             UI.Application.Current.OnThreadException(GetException(exceptionType, message, errorCode));
 
         public static ExceptionType GetExceptionType(Exception exception) =>
@@ -40,7 +45,10 @@ namespace Alternet.UI.Native
                 _ => ExceptionType.ExternalException
             };
 
-        static Exception GetException(ExceptionType exceptionType, string message, int errorCode) =>
+        private static Exception GetException(
+            ExceptionType exceptionType,
+            string message,
+            int errorCode) =>
             exceptionType switch
             {
                 ExceptionType.ExternalException => new ExternalException(message, errorCode),
