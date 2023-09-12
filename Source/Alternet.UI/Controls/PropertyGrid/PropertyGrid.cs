@@ -2082,6 +2082,10 @@ namespace Alternet.UI
             bool isFlags = AssemblyUtils.EnumIsFlags(realType);
             var choices = PropertyGrid.CreateChoicesOnce(realType);
             bool isNullable = AssemblyUtils.GetNullable(propInfo);
+            if (propValue is null)
+            {
+                propValue = 0;
+            }
             var prm = GetNewItemParams(instance, propInfo);
             if (isFlags)
             {
@@ -4177,7 +4181,7 @@ namespace Alternet.UI
             item.PropInfo = propInfo;
             if (!propInfo.CanWrite)
                 SetPropertyReadOnly(item, true);
-            if (AssemblyUtils.GetNullable(propInfo))
+            if (AssemblyUtils.GetNullable(propInfo) && item.PropertyEditorKind != "Enum.Flags")
                 SetPropertyValueUnspecified(item);
         }
 

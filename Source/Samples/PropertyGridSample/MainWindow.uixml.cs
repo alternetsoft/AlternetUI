@@ -31,8 +31,6 @@ namespace PropertyGridSample
             var localizableEnum = PropertyGrid.GetChoices<BrushType>();
             localizableEnum.SetLabelForValue<BrushType>(BrushType.LinearGradient, "Linear Gradient");
             localizableEnum.SetLabelForValue<BrushType>(BrushType.RadialGradient, "Radial Gradient");
-
-            WebBrowser.CrtSetDbgFlag(0);
         }
 
         public Brush BrushValue { get; set; } = Brush.Default;

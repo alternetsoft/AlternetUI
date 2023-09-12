@@ -22,18 +22,43 @@ namespace Alternet.UI
         /// </summary>
         int Count { get; }
 
+        /// <summary>
+        /// Gets copy of this instance with additional empty element.
+        /// </summary>
+        /// <remarks>
+        /// This is useful for editing nullable properties.
+        /// </remarks>
         IPropertyGridChoices NullableChoices { get; }
 
+        /// <summary>
+        /// Gets or sets "nullable" value which is changed to <c>null</c> when is set back to
+        /// object property. By default it is <see cref="int.MaxValue"/>.
+        /// </summary>
         int NullableValue { get; set; }
 
+        /// <summary>
+        /// Gets whether this instance is obtained from <see cref="NullableChoices"/>.
+        /// </summary>
         bool IsNullable { get; }
 
+        /// <summary>
+        /// Gets whether fonts where specified for items.
+        /// </summary>
         bool HasCustomFonts { get; }
 
+        /// <summary>
+        /// Gets whether bitmaps where specified for items.
+        /// </summary>
         bool HasBitmaps { get; }
 
+        /// <summary>
+        /// Gets whether foreground colors where specified for items.
+        /// </summary>
         bool HasCustomFgColors { get; }
 
+        /// <summary>
+        /// Gets whether background colors where specified for items.
+        /// </summary>
         bool HasCustomBgColors { get; }
 
         /// <summary>
