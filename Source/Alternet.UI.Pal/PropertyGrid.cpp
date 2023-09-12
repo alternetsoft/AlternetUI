@@ -15,7 +15,12 @@ namespace Alternet::UI
 		}
 	};
 
-	PropertyGrid::PropertyGrid(long styles)
+	PropertyGrid::PropertyGrid()
+	{
+		bindScrollEvents = false;
+	}
+
+	PropertyGrid::PropertyGrid(long styles) : PropertyGrid()
 	{
 		_createStyle = styles;
 		bindScrollEvents = false;
@@ -261,11 +266,6 @@ namespace Alternet::UI
 		_eventProperty = event.GetProperty();
 		_eventPropertyName = wxStr(event.GetPropertyName());
 		_eventValue->variant = event.GetPropertyValue();
-	}
-
-	PropertyGrid::PropertyGrid()
-	{
-		bindScrollEvents = false;
 	}
 
 	wxPropertyGridInterface* PropertyGrid::GetPropGridInterface()
@@ -1319,6 +1319,13 @@ namespace Alternet::UI
 		ToPropArg(prop);
 		auto validator = GetPropGrid()->GetPropertyValidator(_propArg);
 		return validator;
+	}
+
+	void PropertyGrid::SetPropertyFlag(void* prop, int flag, bool value)
+	{
+		wxPGProperty* pg = (wxPGProperty*)prop;
+		
+		pg->ChangeFlag((wxPGPropertyFlags)flag, value);
 	}
 
 	void PropertyGrid::SetPropertyValidator(void* prop, void* validator)

@@ -121,6 +121,13 @@ ALTERNET_UI_API void PropertyGrid_SetCreateStyleEx_(PropertyGrid* obj, int64_t v
         });
 }
 
+ALTERNET_UI_API void* PropertyGrid_GetPropertyCategory_(PropertyGrid* obj, void* id)
+{
+    return MarshalExceptions<void*>([&](){
+            return obj->GetPropertyCategory(id);
+        });
+}
+
 ALTERNET_UI_API void* PropertyGrid_GetPropertyClientData_(PropertyGrid* obj, void* id)
 {
     return MarshalExceptions<void*>([&](){
@@ -475,6 +482,13 @@ ALTERNET_UI_API void PropertyGrid_SetPropertyAttributeAll_(PropertyGrid* obj, co
 {
     MarshalExceptions<void>([&](){
             obj->SetPropertyAttributeAll(attrName, variant);
+        });
+}
+
+ALTERNET_UI_API void PropertyGrid_SetCellTextColor_(PropertyGrid* obj, Color col)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetCellTextColor(col);
         });
 }
 
@@ -1066,13 +1080,6 @@ ALTERNET_UI_API void* PropertyGrid_GetFirstChild_(PropertyGrid* obj, void* id)
         });
 }
 
-ALTERNET_UI_API void* PropertyGrid_GetPropertyCategory_(PropertyGrid* obj, void* id)
-{
-    return MarshalExceptions<void*>([&](){
-            return obj->GetPropertyCategory(id);
-        });
-}
-
 ALTERNET_UI_API void* PropertyGrid_GetPropertyValidator_(PropertyGrid* obj, void* prop)
 {
     return MarshalExceptions<void*>([&](){
@@ -1084,6 +1091,13 @@ ALTERNET_UI_API void PropertyGrid_SetPropertyValidator_(PropertyGrid* obj, void*
 {
     MarshalExceptions<void>([&](){
             obj->SetPropertyValidator(prop, validator);
+        });
+}
+
+ALTERNET_UI_API void PropertyGrid_SetPropertyFlag_(PropertyGrid* obj, void* prop, int flag, c_bool value)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetPropertyFlag(prop, flag, value);
         });
 }
 
@@ -1357,13 +1371,6 @@ ALTERNET_UI_API void PropertyGrid_SetCellDisabledTextColor_(PropertyGrid* obj, C
 {
     MarshalExceptions<void>([&](){
             obj->SetCellDisabledTextColor(col);
-        });
-}
-
-ALTERNET_UI_API void PropertyGrid_SetCellTextColor_(PropertyGrid* obj, Color col)
-{
-    MarshalExceptions<void>([&](){
-            obj->SetCellTextColor(col);
         });
 }
 

@@ -26,6 +26,11 @@ namespace Alternet.UI
             return registry.GetValueOrDefault(propInfo);
         }
 
+        public IPropertyGridPropInfoRegistry GetPropRegistry(string propName)
+        {
+            return GetPropRegistry(type.GetProperty(propName)!);
+        }
+
         public IPropertyGridPropInfoRegistry GetPropRegistry(PropertyInfo propInfo)
         {
             return registry.GetOrCreate(

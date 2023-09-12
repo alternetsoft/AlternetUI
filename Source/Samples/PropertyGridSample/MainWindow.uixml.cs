@@ -28,6 +28,8 @@ namespace PropertyGridSample
 
         static MainWindow()
         {
+            PropertyGrid.RegisterCollectionEditors();
+
             var localizableEnum = PropertyGrid.GetChoices<BrushType>();
             localizableEnum.SetLabelForValue<BrushType>(BrushType.LinearGradient, "Linear Gradient");
             localizableEnum.SetLabelForValue<BrushType>(BrushType.RadialGradient, "Radial Gradient");
@@ -264,7 +266,7 @@ namespace PropertyGridSample
                 propertyGrid.AddPropCategory("Properties");
                 propertyGrid.AddProps(WelcomeProps.Default, null, true);
 
-                CreateCollectionProperties();
+                CreateCollectionProperties(false);
                 CreateStringProperties();
                 CreateColorProperties();
                 CreateEnumProperties();
@@ -281,8 +283,10 @@ namespace PropertyGridSample
             }
         }
 
-        void CreateOtherProperties()
+        void CreateOtherProperties(bool add = true)
         {
+            if (!add)
+                return;
             propertyGrid.AddPropCategory("Other");
 
             // Date
@@ -311,8 +315,11 @@ namespace PropertyGridSample
                 true);
         }
 
-        void CreateCollectionProperties()
+        void CreateCollectionProperties(bool add)
         {
+            if (!add)
+                return;
+
             propertyGrid.AddPropCategory("Collection");
 
             void AddCollectionProp(string label, string propName)
@@ -456,7 +463,7 @@ namespace PropertyGridSample
             prop = propertyGrid.CreateStringItem(
                                 "Error",
                                 null,
-                                "Shows error if Enter pressed");
+                                "Error if changed and Enter pressed");
             propertyGrid.Add(prop);
 
             // Filename
@@ -501,6 +508,16 @@ namespace PropertyGridSample
                 PathUtils.GetAppFolder(),
                 prm);
             propertyGrid.Add(prop);
+
+            // Readonly text and ellipsis
+            prm.EditKindString = PropertyGridEditKindString.Ellipsis;
+            prm.TextReadOnly = true;
+            prop = propertyGrid.CreateStringItemWithKind(
+                "Str (Readonly + Ellipsis)",
+                null,
+                null,
+                prm);
+            propertyGrid.Add(prop);
         }
 
         private void ControlsListBox_SelectionChanged(object? sender, EventArgs e)
@@ -526,7 +543,7 @@ namespace PropertyGridSample
                 if (type == typeof(WelcomeControl))
                     InitDefaultPropertyGrid();
                 else
-                    propertyGrid.SetProps(item?.PropInstance);
+                    propertyGrid.SetProps(item?.PropInstance, true);
             }
 
             controlPanel.SuspendLayout();
@@ -562,13 +579,13 @@ namespace PropertyGridSample
             contextMenu2.Items.Add(menuItem1);
         }
 
-        private void LogEvent(string name)
+        private void LogEvent(string name, bool logAlways = false)
         {
             var propValue = propertyGrid.EventPropValue;
             propValue ??= "NULL";
             string propName = propertyGrid.EventPropName;
             string s = $"Event: {name}. PropName: <{propName}>. Value: <{propValue}>";
-            if(logListBox.LastItem?.ToString() != s)
+            if(logAlways || logListBox.LastItem?.ToString() != s)
                 Log(s);
         }
 
@@ -588,7 +605,7 @@ namespace PropertyGridSample
         {
             if (PropertyGridSettings.Default!.LogPropertyChanging)
                 LogEvent("PropertyChanging");
-            if(propertyGrid.EventPropName == "Error if changed")
+            if(propertyGrid.EventPropName == "Error")
                 e.Cancel = true;
         }
 
@@ -655,7 +672,7 @@ namespace PropertyGridSample
         private void PropertyGrid_ButtonClick(object? sender, EventArgs e)
         {
             if (PropertyGridSettings.Default!.LogButtonClick)
-                LogEvent("ButtonClick");
+                LogEvent("ButtonClick", true);
 
             var prop = propertyGrid.EventProperty;
             if (prop == null)

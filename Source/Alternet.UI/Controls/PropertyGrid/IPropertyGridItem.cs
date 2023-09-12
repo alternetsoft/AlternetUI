@@ -17,6 +17,8 @@ namespace Alternet.UI
         /// </summary>
         event EventHandler? PropertyChanged;
 
+        public bool CanHaveCustomEllipsis { get;}
+
         /// <summary>
         /// Gets <see cref="PropertyGrid"/> instance which owns this property.
         /// </summary>

@@ -58,6 +58,7 @@ namespace Alternet.UI
         private static readonly AdvDictionaryCached<Type, IPropertyGridTypeRegistry>
             TypeRegistry = new();
 
+        private static StaticStateFlags staticStateFlags;
         private static AdvDictionary<Type, IPropertyGridChoices>? choicesCache = null;
         private static PropertyGridEditKindColor defaultEditKindColor =
             PropertyGridEditKindColor.ComboBox;
@@ -422,6 +423,42 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Register collection editors for all controls.
+        /// </summary>
+        public static void RegisterCollectionEditors()
+        {
+            if (staticStateFlags.HasFlag(StaticStateFlags.CollectionEditorsRegistered))
+                return;
+            staticStateFlags |= StaticStateFlags.CollectionEditorsRegistered;
+            RegisterCollectionEditor(typeof(TreeView), nameof(TreeView.Items));
+            RegisterCollectionEditor(typeof(ListView), nameof(ListView.Items));
+            RegisterCollectionEditor(typeof(ListView), nameof(ListView.Columns));
+            RegisterCollectionEditor(typeof(ListBox), nameof(ListBox.Items));
+            RegisterCollectionEditor(typeof(CheckListBox), nameof(CheckListBox.Items));
+            RegisterCollectionEditor(typeof(ComboBox), nameof(ComboBox.Items));
+            RegisterCollectionEditor(typeof(StatusBar), nameof(StatusBar.Panels));
+            RegisterCollectionEditor(typeof(TabControl), nameof(TabControl.Pages));
+            RegisterCollectionEditor(typeof(Toolbar), nameof(Toolbar.Items));
+            RegisterCollectionEditor(typeof(Menu), nameof(Menu.Items));
+        }
+
+        public static IPropertyGridPropInfoRegistry ShowEllipsisButton(Type type, string propName)
+        {
+            var typeRegistry = PropertyGrid.GetTypeRegistry(type);
+            var propRegistry = typeRegistry.GetPropRegistry(propName);
+            propRegistry.NewItemParams.HasEllipsis = true;
+            return propRegistry;
+        }
+
+        public static IPropertyGridPropInfoRegistry RegisterCollectionEditor(
+            Type type,
+            string propName)
+        {
+            var propRegistry = ShowEllipsisButton(type, propName);
+            return propRegistry;
+        }
+
+        /// <summary>
         /// Registers <see cref="IPropertyGridItem"/> create function for specific <see cref="Type"/>.
         /// </summary>
         /// <param name="type">Object type.</param>
@@ -716,6 +753,7 @@ namespace Alternet.UI
             var result = new PropertyGridItem(this, handle, label, name, value)
             {
                 PropertyEditorKind = PropertyGridEditKindAll.StringFilename,
+                CanHaveCustomEllipsis = false,
             };
             OnPropertyCreated(result, prm);
             return result;
@@ -752,6 +790,7 @@ namespace Alternet.UI
             var result = new PropertyGridItem(this, handle, label, name, value)
             {
                 PropertyEditorKind = PropertyGridEditKindAll.StringDirectory,
+                CanHaveCustomEllipsis = false,
             };
             OnPropertyCreated(result, prm);
             return result;
@@ -791,6 +830,7 @@ namespace Alternet.UI
             var result = new PropertyGridItem(this, handle, label, name, value)
             {
                 PropertyEditorKind = PropertyGridEditKindAll.StringImageFilename,
+                CanHaveCustomEllipsis = false,
             };
             OnPropertyCreated(result, prm);
             return result;
@@ -1019,6 +1059,7 @@ namespace Alternet.UI
             var result = new PropertyGridItem(this, handle, label, name, value)
             {
                 PropertyEditorKind = PropertyGridEditKindAll.ColorSystem,
+                CanHaveCustomEllipsis = false,
             };
             OnPropertyCreated(result, prm);
             return result;
@@ -1045,6 +1086,7 @@ namespace Alternet.UI
             var result = new PropertyGridItem(this, handle, label, name, value)
             {
                 PropertyEditorKind = PropertyGridEditKindAll.Color,
+                CanHaveCustomEllipsis = false,
             };
             OnPropertyCreated(result, prm);
             return result;
@@ -1169,6 +1211,7 @@ namespace Alternet.UI
             var result = new PropertyGridItem(this, handle, label, name, value)
             {
                 PropertyEditorKind = PropertyGridEditKindAll.StringLong,
+                CanHaveCustomEllipsis = false,
             };
             OnPropertyCreated(result, prm);
             return result;
@@ -1202,6 +1245,7 @@ namespace Alternet.UI
             var result = new PropertyGridItem(this, handle, label, name, value)
             {
                 PropertyEditorKind = PropertyGridEditKindAll.Date,
+                CanHaveCustomEllipsis = false,
             };
             OnPropertyCreated(result, prm);
             return result;
@@ -1231,9 +1275,9 @@ namespace Alternet.UI
             {
                 var value = GetStructPropertyValueForReload(null, instance, propInfo);
                 var prm = GetNewItemParams(instance, propInfo);
+                prm.TextReadOnly = true;
                 result = CreateStringItemWithKind(label, name, value?.ToString(), prm);
                 result.GetValueFuncForReload = GetStructPropertyValueForReload;
-                SetPropertyReadOnly(result, true, false);
 
                 void AddChildren()
                 {
@@ -3683,6 +3727,13 @@ namespace Alternet.UI
             NativeControl.SetPropertyValidator(prop.Handle, ptr);
         }
 
+        public virtual void SetPropertyFlag(
+            IPropertyGridItem prop,
+            PropertyGridItemFlags flag, bool value)
+        {
+            NativeControl.SetPropertyFlag(prop.Handle, (int)flag, value);
+        }
+
         /// <summary>
         /// Returns size of the custom paint image in front of property.
         /// </summary>
@@ -4197,6 +4248,27 @@ namespace Alternet.UI
             IPropertyGridItem item,
             IPropertyGridNewItemParams? prm)
         {
+            if (prm is null)
+                return;
+
+            if (prm.TextReadOnly is not null && prm.TextReadOnly.Value)
+                SetPropertyFlag(item, PropertyGridItemFlags.NoEditor, true);
+
+            EnableEllipsis();
+
+            void EnableEllipsis()
+            {
+                if (!item.CanHaveCustomEllipsis)
+                    return;
+
+                if (prm.HasEllipsis is null)
+                    return;
+
+                if (prm.HasEllipsis.Value)
+                {
+                    SetPropertyEditorByName(item, PropEditClassTextCtrlAndButton);
+                }
+            }
         }
 
         /// <summary>
@@ -4528,6 +4600,12 @@ namespace Alternet.UI
             }
             else
                 return instance;
+        }
+
+        [Flags]
+        private enum StaticStateFlags
+        {
+            CollectionEditorsRegistered = 1,
         }
     }
 }

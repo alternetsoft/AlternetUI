@@ -28,5 +28,9 @@ namespace Alternet.UI
         public PropertyGridEditKindColor? EditKindColor { get; set; }
 
         public PropertyGridEditKindString? EditKindString { get; set; }
+
+        public bool? HasEllipsis { get; set; }
+
+        public bool? TextReadOnly { get; set; }
     }
 }

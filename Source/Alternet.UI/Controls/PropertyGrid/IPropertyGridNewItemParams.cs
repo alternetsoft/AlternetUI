@@ -49,5 +49,9 @@ namespace Alternet.UI
         /// Used in <see cref="PropertyGrid.CreateStringItemWithKind"/>.
         /// </remarks>
         PropertyGridEditKindString? EditKindString { get; set; }
+
+        bool? HasEllipsis { get; set; }
+
+        bool? TextReadOnly { get; set; }
     }
 }

@@ -11,6 +11,7 @@
 #include "wx/propgrid/advprops.h"
 #include "wx/propgrid/property.h"
 #include "wx/variant.h"
+#include "wx/propgrid/editors.h"
 #include "PropertyGridVariant.h"
 
 namespace Alternet::UI

@@ -46,6 +46,8 @@ namespace Alternet.UI
 
         public IPropertyGrid Owner { get => owner; }
 
+        public bool CanHaveCustomEllipsis { get; set; } = true;
+
         public PropertyGridEditKindAll PropertyEditorKind { get; set; } =
             PropertyGridEditKindAll.Other;
 
