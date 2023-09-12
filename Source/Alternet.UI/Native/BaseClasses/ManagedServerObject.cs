@@ -5,7 +5,7 @@ namespace Alternet.UI.Native
 {
     internal abstract class ManagedServerObject : IDisposable
     {
-        GCHandle handle;
+        private GCHandle handle;
 
         protected ManagedServerObject()
         {
