@@ -436,7 +436,7 @@ namespace PropertyGridSample
             prop = propertyGrid.CreateStringItemWithKind("Str (Ellipsis)", null, null, prm);
             propertyGrid.Add(prop);
 
-            prm.EditKindString = PropertyGridEditKindString.LongString;
+            prm.EditKindString = PropertyGridEditKindString.Long;
             prop = propertyGrid.CreateStringItemWithKind("Str (Long Edit)", null, null, prm);
             propertyGrid.Add(prop);
 

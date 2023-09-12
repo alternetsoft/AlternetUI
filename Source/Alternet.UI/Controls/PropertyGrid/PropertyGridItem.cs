@@ -38,13 +38,18 @@ namespace Alternet.UI
                 this.defaultName = name;
         }
 
+        public IPropertyGridChoices? Choices { get; set; }
+
         public event EventHandler? PropertyChanged;
 
         public object? UserData { get; set; }
 
         public IPropertyGrid Owner { get => owner; }
 
-        public string PropertyEditorKind { get; set; } = "Other";
+        public PropertyGridEditKindAll PropertyEditorKind { get; set; } =
+            PropertyGridEditKindAll.Other;
+
+        public bool IsFlags => PropertyEditorKind == PropertyGridEditKindAll.EnumFlags;
 
         public IPropertyGridItem? Parent => parent;
 

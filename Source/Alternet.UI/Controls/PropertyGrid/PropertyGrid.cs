@@ -715,7 +715,7 @@ namespace Alternet.UI
                 value!);
             var result = new PropertyGridItem(this, handle, label, name, value)
             {
-                PropertyEditorKind = TypeCode.String.ToString() + ".Filename",
+                PropertyEditorKind = PropertyGridEditKindAll.StringFilename,
             };
             OnPropertyCreated(result, prm);
             return result;
@@ -751,7 +751,7 @@ namespace Alternet.UI
                 value!);
             var result = new PropertyGridItem(this, handle, label, name, value)
             {
-                PropertyEditorKind = TypeCode.String.ToString() + ".Dir",
+                PropertyEditorKind = PropertyGridEditKindAll.StringDirectory,
             };
             OnPropertyCreated(result, prm);
             return result;
@@ -790,7 +790,7 @@ namespace Alternet.UI
                 value!);
             var result = new PropertyGridItem(this, handle, label, name, value)
             {
-                PropertyEditorKind = TypeCode.String.ToString() + ".ImageFilename",
+                PropertyEditorKind = PropertyGridEditKindAll.StringImageFilename,
             };
             OnPropertyCreated(result, prm);
             return result;
@@ -817,7 +817,7 @@ namespace Alternet.UI
                 value!);
             var result = new PropertyGridItem(this, handle, label, name, value)
             {
-                PropertyEditorKind = TypeCode.String.ToString(),
+                PropertyEditorKind = PropertyGridEditKindAll.String,
             };
             OnPropertyCreated(result, prm);
             return result;
@@ -844,7 +844,7 @@ namespace Alternet.UI
             {
                 case PropertyGridEditKindString.Simple:
                     return CreateStringItem(label, name, value, prm);
-                case PropertyGridEditKindString.LongString:
+                case PropertyGridEditKindString.Long:
                     return CreateLongStringItem(label, name, value, prm);
                 case PropertyGridEditKindString.Ellipsis:
                     var result = CreateDefault();
@@ -900,7 +900,7 @@ namespace Alternet.UI
                 value);
             var result = new PropertyGridItem(this, handle, label, name, value)
             {
-                PropertyEditorKind = TypeCode.Boolean.ToString(),
+                PropertyEditorKind = PropertyGridEditKindAll.Bool,
             };
             OnPropertyCreated(result, prm);
             return result;
@@ -926,7 +926,7 @@ namespace Alternet.UI
                 value);
             var result = new PropertyGridItem(this, handle, label, name, value)
             {
-                PropertyEditorKind = TypeCode.Int64.ToString(),
+                PropertyEditorKind = PropertyGridEditKindAll.Int64,
             };
             OnPropertyCreated(result, prm);
             return result;
@@ -952,7 +952,7 @@ namespace Alternet.UI
                 value);
             var result = new PropertyGridItem(this, handle, label, name, value)
             {
-                PropertyEditorKind = TypeCode.Double.ToString(),
+                PropertyEditorKind = PropertyGridEditKindAll.Double,
             };
             SetPropertyMinMax(result, TypeCode.Double);
             OnPropertyCreated(result, prm);
@@ -979,7 +979,7 @@ namespace Alternet.UI
                 value);
             var result = new PropertyGridItem(this, handle, label, name, value)
             {
-                PropertyEditorKind = TypeCode.Single.ToString(),
+                PropertyEditorKind = PropertyGridEditKindAll.Single,
             };
             SetPropertyMinMax(result, TypeCode.Single);
             OnPropertyCreated(result, prm);
@@ -1018,7 +1018,7 @@ namespace Alternet.UI
                 kind);
             var result = new PropertyGridItem(this, handle, label, name, value)
             {
-                PropertyEditorKind = "Color.System",
+                PropertyEditorKind = PropertyGridEditKindAll.ColorSystem,
             };
             OnPropertyCreated(result, prm);
             return result;
@@ -1044,7 +1044,7 @@ namespace Alternet.UI
                 value);
             var result = new PropertyGridItem(this, handle, label, name, value)
             {
-                PropertyEditorKind = "Color",
+                PropertyEditorKind = PropertyGridEditKindAll.Color,
             };
             OnPropertyCreated(result, prm);
             return result;
@@ -1140,7 +1140,7 @@ namespace Alternet.UI
                 value);
             var result = new PropertyGridItem(this, handle, label, name, value)
             {
-                PropertyEditorKind = TypeCode.UInt64.ToString(),
+                PropertyEditorKind = PropertyGridEditKindAll.UInt64,
             };
             OnPropertyCreated(result, prm);
             return result;
@@ -1168,7 +1168,7 @@ namespace Alternet.UI
                 value);
             var result = new PropertyGridItem(this, handle, label, name, value)
             {
-                PropertyEditorKind = TypeCode.String.ToString() + ".Long",
+                PropertyEditorKind = PropertyGridEditKindAll.StringLong,
             };
             OnPropertyCreated(result, prm);
             return result;
@@ -1201,7 +1201,7 @@ namespace Alternet.UI
                 dt);
             var result = new PropertyGridItem(this, handle, label, name, value)
             {
-                PropertyEditorKind = TypeCode.DateTime.ToString() + ".Date",
+                PropertyEditorKind = PropertyGridEditKindAll.Date,
             };
             OnPropertyCreated(result, prm);
             return result;
@@ -1409,7 +1409,7 @@ namespace Alternet.UI
         {
             var result = CreateLongItem(label, name, value, prm);
             SetPropertyMinMax(result, TypeCode.SByte);
-            result.PropertyEditorKind = TypeCode.SByte.ToString();
+            result.PropertyEditorKind = PropertyGridEditKindAll.SByte;
             return result;
         }
 
@@ -1459,7 +1459,7 @@ namespace Alternet.UI
         {
             var result = CreateLongItem(label, name, value, prm);
             SetPropertyMinMax(result, TypeCode.Int16);
-            result.PropertyEditorKind = TypeCode.Int16.ToString();
+            result.PropertyEditorKind = PropertyGridEditKindAll.Int16;
             return result;
         }
 
@@ -1479,7 +1479,7 @@ namespace Alternet.UI
         {
             var result = CreateLongItem(label, name, value, prm);
             SetPropertyMinMax(result, TypeCode.Int32);
-            result.PropertyEditorKind = TypeCode.Int32.ToString();
+            result.PropertyEditorKind = PropertyGridEditKindAll.Int32;
             return result;
         }
 
@@ -1499,7 +1499,7 @@ namespace Alternet.UI
         {
             var result = CreateULongItem(label, name, value, prm);
             SetPropertyMinMax(result, TypeCode.Byte);
-            result.PropertyEditorKind = TypeCode.Byte.ToString();
+            result.PropertyEditorKind = PropertyGridEditKindAll.Byte;
             return result;
         }
 
@@ -1519,7 +1519,7 @@ namespace Alternet.UI
         {
             var result = CreateULongItem(label, name, value, prm);
             SetPropertyMinMax(result, TypeCode.UInt32);
-            result.PropertyEditorKind = TypeCode.UInt32.ToString();
+            result.PropertyEditorKind = PropertyGridEditKindAll.UInt32;
             return result;
         }
 
@@ -1539,7 +1539,7 @@ namespace Alternet.UI
         {
             var result = CreateULongItem(label, name, value, prm);
             SetPropertyMinMax(result, TypeCode.UInt16);
-            result.PropertyEditorKind = TypeCode.UInt16.ToString();
+            result.PropertyEditorKind = PropertyGridEditKindAll.UInt16;
             return result;
         }
 
@@ -2135,7 +2135,8 @@ namespace Alternet.UI
                 (int)value);
             var result = new PropertyGridItem(this, handle, label, name, value)
             {
-                PropertyEditorKind = "Enum",
+                PropertyEditorKind = PropertyGridEditKindAll.Enum,
+                Choices = choices,
             };
             OnPropertyCreated(result, prm);
             return result;
@@ -2164,7 +2165,8 @@ namespace Alternet.UI
                 value);
             var result = new PropertyGridItem(this, handle, label, name, value)
             {
-                PropertyEditorKind = "Enum.Edit",
+                PropertyEditorKind = PropertyGridEditKindAll.EnumEditable,
+                Choices = choices,
             };
             OnPropertyCreated(result, prm);
             return result;
@@ -2193,7 +2195,8 @@ namespace Alternet.UI
                 (int)value);
             var result = new PropertyGridItem(this, handle, label, name, value)
             {
-                PropertyEditorKind = "Enum.Flags",
+                PropertyEditorKind = PropertyGridEditKindAll.EnumFlags,
+                Choices = choices,
             };
             OnPropertyCreated(result, prm);
             return result;
@@ -2250,8 +2253,9 @@ namespace Alternet.UI
             void SetAsCheckBox(IPropertyGridItem p)
             {
                 var kind = p.PropertyEditorKind;
+                var kindIsOk = (kind == PropertyGridEditKindAll.Bool || p.IsFlags);
 
-                if (BoolAsCheckBox && (kind == TypeCode.Boolean.ToString() || kind == "Enum.Flags"))
+                if (BoolAsCheckBox && kindIsOk)
                 {
                     SetPropertyKnownAttribute(p, PropertyGridItemAttrId.UseCheckbox, true);
                 }
@@ -4181,7 +4185,7 @@ namespace Alternet.UI
             item.PropInfo = propInfo;
             if (!propInfo.CanWrite)
                 SetPropertyReadOnly(item, true);
-            if (AssemblyUtils.GetNullable(propInfo) && item.PropertyEditorKind != "Enum.Flags")
+            if (AssemblyUtils.GetNullable(propInfo) && !item.IsFlags)
                 SetPropertyValueUnspecified(item);
         }
 
@@ -4324,7 +4328,7 @@ namespace Alternet.UI
                 AvoidException(() =>
                 {
                     var variant = EventPropValueAsVariant;
-                    var newValue = variant.GetCompatibleValue(propInfo);
+                    var newValue = variant.GetCompatibleValue(prop);
                     propInfo.SetValue(instance, newValue);
                     UpdateStruct();
                 });

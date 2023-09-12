@@ -89,11 +89,10 @@ namespace Alternet.UI
         void Clear();
 
         /// <summary>
-        /// Gets value in the compatible format which can be assigned to the property
-        /// using <see cref="PropertyInfo.SetValue(object, object)"/>.
+        /// Gets value in the compatible format for use with <see cref="IPropertyGridItem"/>.
         /// </summary>
-        /// <param name="p">Property information.</param>
-        public object? GetCompatibleValue(PropertyInfo p);
+        /// <param name="item">Property information.</param>
+        public object? GetCompatibleValue(IPropertyGridItem item);
 
         /// <summary>
         /// Sets value in the compatible format.

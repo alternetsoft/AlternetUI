@@ -44,6 +44,14 @@ namespace Alternet.UI
         PropertyInfo? PropInfo { get; set; }
 
         /// <summary>
+        /// Gets <see cref="IPropertyGridChoices"/> used in the item editor.
+        /// </summary>
+        /// <remarks>
+        /// This property can be null. It is assigned for Enum and Flags item.
+        /// </remarks>
+        IPropertyGridChoices? Choices { get; }
+
+        /// <summary>
         /// Gets list of children properties.
         /// </summary>
         /// <remarks>
@@ -73,7 +81,12 @@ namespace Alternet.UI
         /// <summary>
         /// Gets type of the property editor.
         /// </summary>
-        string PropertyEditorKind { get; set; }
+        PropertyGridEditKindAll PropertyEditorKind { get; set; }
+
+        /// <summary>
+        /// Gets whether property editor is <see cref="PropertyGridEditKindAll.EnumFlags"/>.
+        /// </summary>
+        bool IsFlags { get; }
 
         /// <summary>
         /// Item handle.

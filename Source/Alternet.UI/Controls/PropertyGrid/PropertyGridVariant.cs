@@ -219,14 +219,38 @@ namespace Alternet.UI
             SetAsObject(value);
         }
 
-        public object? GetCompatibleValue(PropertyInfo p)
+        public object? GetCompatibleValue(IPropertyGridItem item)
         {
             if (IsNull)
                 return null;
 
+            PropertyInfo p = item.PropInfo!;
+
+            if (p == null)
+                return AsObject;
+
             var type = AssemblyUtils.GetRealType(p.PropertyType);
             TypeCode typeCode = Type.GetTypeCode(type);
             var nullable = AssemblyUtils.GetNullable(p);
+
+            if (type.IsEnum)
+            {
+                if (nullable)
+                {
+                    var kind = item.PropertyEditorKind;
+                    var kindisEnum = kind == PropertyGridEditKindAll.Enum
+                        || kind == PropertyGridEditKindAll.EnumEditable;
+                    var choices = item.Choices;
+                    if(choices != null && kindisEnum)
+                    {
+                        var value = AsLong;
+                        if (value == choices.NullableValue)
+                            return null;
+                    }
+                }
+
+                return Enum.ToObject(type, AsLong);
+            }
 
             switch (typeCode)
             {

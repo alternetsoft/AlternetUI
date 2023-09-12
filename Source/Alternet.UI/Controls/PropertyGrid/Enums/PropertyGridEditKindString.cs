@@ -19,7 +19,7 @@ namespace Alternet.UI
         /// <summary>
         /// Uses <see cref="TextBox"/> with dialog which allows to edit long string values.
         /// </summary>
-        LongString,
+        Long,
 
         /// <summary>
         /// Uses <see cref="TextBox"/> with ellipsis button. Use

@@ -9,11 +9,12 @@ namespace Alternet.UI
 {
     internal class PropertyGridChoices : IPropertyGridChoices
     {
+        public const int DefaultNullableValue = int.MaxValue - 1;
         private readonly IntPtr handle;
         private int newItemId;
         private bool isNullable;
         private IPropertyGridChoices? nullableChoices;
-        private int nullableValue = int.MaxValue;
+        private int nullableValue = DefaultNullableValue;
         private bool hasCustomFonts = false;
         private bool hasBitmaps = false;
         private bool hasCustomFgColors = false;
