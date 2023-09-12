@@ -50,8 +50,29 @@ namespace Alternet.UI
         /// </remarks>
         PropertyGridEditKindString? EditKindString { get; set; }
 
+        /// <summary>
+        /// Gets or sets whether property editor has ellipsis button.
+        /// </summary>
         bool? HasEllipsis { get; set; }
 
+        /// <summary>
+        /// Gets or sets whether property editor is readonly.
+        /// </summary>
+        /// <remarks>
+        /// This doesn't change readonly status of ellipsis button. If you need to
+        /// change readonly status of all parts of property editor, use
+        /// <see cref="PropertyGrid.SetPropertyReadOnly"/>.
+        /// </remarks>
         bool? TextReadOnly { get; set; }
+
+        /// <summary>
+        /// Gets or sets whether to make ellipsis button readonly if
+        /// property is not writable.
+        /// </summary>
+        /// <remarks>
+        /// If <c>true</c>, only text editor part is set readonly
+        /// when property specified in <see cref="PropInfo"/> is not writable.
+        /// </remarks>
+        bool? OnlyTextReadOnly { get; set; }
     }
 }

@@ -32,5 +32,7 @@ namespace Alternet.UI
         public bool? HasEllipsis { get; set; }
 
         public bool? TextReadOnly { get; set; }
+
+        public bool? OnlyTextReadOnly { get; set; }
     }
 }
