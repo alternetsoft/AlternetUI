@@ -4,7 +4,8 @@ using System.IO;
 namespace Alternet.Drawing
 {
     /// <summary>
-    /// Encapsulates a bitmap, which consists of the pixel data for a graphics image and its attributes.
+    /// Encapsulates a bitmap, which consists of the pixel data for a graphics image and
+    /// its attributes.
     /// A <see cref="Bitmap"/> is an object used to work with images defined by pixel data.
     /// </summary>
     public class Bitmap : Image
@@ -13,23 +14,26 @@ namespace Alternet.Drawing
         /// Initializes a new instance of the <see cref="Bitmap"/> class.
         /// </summary>
         public Bitmap()
-            : this(new Size())
+            : base(Size.Empty)
         {
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Bitmap"/> class with the specified size.
         /// </summary>
-        /// <param name="size">The size, in device independent units, of the new <see cref="Bitmap"/>.</param>
+        /// <param name="size">The size, in device independent units, of the new
+        /// <see cref="Bitmap"/>.</param>
         public Bitmap(Size size)
             : base(size)
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Bitmap"/> class from the specified existing image.
+        /// Initializes a new instance of the <see cref="Bitmap"/> class from the specified
+        /// existing image.
         /// </summary>
-        /// <param name="image">The <see cref="Image"/> from which to create the new <see cref="Bitmap"/>.</param>
+        /// <param name="image">The <see cref="Image"/> from which to create the
+        /// new <see cref="Bitmap"/>.</param>
         public Bitmap(Image image)
             : base()
         {
@@ -37,7 +41,8 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Bitmap"/> class from the specified data stream.
+        /// Initializes a new instance of the <see cref="Bitmap"/> class from the specified
+        /// data stream.
         /// </summary>
         /// <param name="stream">The data stream used to load the bitmap.</param>
         public Bitmap(Stream stream)
