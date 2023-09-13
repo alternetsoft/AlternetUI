@@ -11,7 +11,8 @@ namespace NativeApi.Api
     //https://docs.wxwidgets.org/3.2/classwx_validator.html
     public class Validator
     {
-
+        public static void SuppressBellOnError(bool suppress) { }
+        public static bool IsSilent() => default;
     }
 }
 

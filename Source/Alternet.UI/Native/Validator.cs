@@ -23,6 +23,17 @@ namespace Alternet.UI.Native
         {
         }
         
+        public static void SuppressBellOnError(bool suppress)
+        {
+            NativeApi.Validator_SuppressBellOnError_(suppress);
+        }
+        
+        public static bool IsSilent()
+        {
+            var n = NativeApi.Validator_IsSilent_();
+            return n;
+        }
+        
         
         [SuppressUnmanagedCodeSecurity]
         public class NativeApi : NativeApiProvider
@@ -31,6 +42,12 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern IntPtr Validator_Create_();
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Validator_SuppressBellOnError_(bool suppress);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool Validator_IsSilent_();
             
         }
     }

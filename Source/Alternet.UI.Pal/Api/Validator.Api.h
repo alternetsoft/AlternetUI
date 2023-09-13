@@ -15,3 +15,17 @@ ALTERNET_UI_API Validator* Validator_Create_()
         });
 }
 
+ALTERNET_UI_API void Validator_SuppressBellOnError_(c_bool suppress)
+{
+    MarshalExceptions<void>([&](){
+            Validator::SuppressBellOnError(suppress);
+        });
+}
+
+ALTERNET_UI_API c_bool Validator_IsSilent_()
+{
+    return MarshalExceptions<c_bool>([&](){
+            return Validator::IsSilent();
+        });
+}
+
