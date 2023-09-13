@@ -431,6 +431,8 @@ namespace Alternet.UI
             if (staticStateFlags.HasFlag(StaticStateFlags.CollectionEditorsRegistered))
                 return;
             staticStateFlags |= StaticStateFlags.CollectionEditorsRegistered;
+            RegisterCollectionEditor(typeof(ImageList), nameof(ImageList.Images));
+            RegisterCollectionEditor(typeof(ImageSet), nameof(ImageSet.Images));
             RegisterCollectionEditor(typeof(TreeView), nameof(TreeView.Items));
             RegisterCollectionEditor(typeof(ListView), nameof(ListView.Items));
             RegisterCollectionEditor(typeof(ListView), nameof(ListView.Columns));
