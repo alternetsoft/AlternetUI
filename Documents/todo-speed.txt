@@ -9,3 +9,6 @@
 - Colllection use new events
 
 - TreeView OnChildItemAdded do not create eventArgs if no events attached (check other controls)
+
+- Color and SystemColors static colors must be allocated in memory only once like brushes
+(now create each time)
