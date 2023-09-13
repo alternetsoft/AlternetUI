@@ -34,15 +34,19 @@ namespace PropertyGridSample
         {
             Color Fn(Color color)
             {
+                void DebugWriteColor(string label, Color c)
+                {
+                    Debug.WriteLine(label+" " + c.NameAndARGBValue);
+                }
+
                 var variant = PropertyGrid.CreateVariant();
                 variant.AsColor = color;
                 var result = variant.AsColor;
 
                 Debug.WriteLine("====");
-                Debug.WriteLine("Color: " + color.ToString());
-                Debug.WriteLine("Variant: " + variant.ToString());
+                DebugWriteColor("Color", color);
                 Debug.WriteLine("Variant ValueType: " + variant.ValueType);
-                Debug.WriteLine("Result: " + result.ToString());
+                DebugWriteColor("Result", result);
                 Debug.WriteLine("====");
 
                 return result;

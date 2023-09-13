@@ -3923,21 +3923,27 @@ namespace Alternet.UI
 
         internal static Color SetColorKind(Color value, uint kind)
         {
-            const uint PG_COLOUR_CUSTOM = 0xFFFFFF;
-
-            if (kind == PG_COLOUR_CUSTOM)
-                return value;
-            else
+            Color Fn()
             {
-                KnownColor knownColor = ColorUtils.Convert((WxSystemColor)kind);
-                if (knownColor == 0)
-                {
-                    //public static Color KnownColorTable.ArgbToKnownColor(uint argb)
+                const uint PG_COLOUR_CUSTOM = 0xFFFFFF;
+
+                if (kind == PG_COLOUR_CUSTOM)
                     return value;
+                else
+                {
+                    KnownColor knownColor = ColorUtils.Convert((WxSystemColor)kind);
+                    if (knownColor == 0)
+                        return value;
+                    Color result = Color.FromKnownColor(knownColor);
+                    return result;
                 }
-                Color result = Color.FromKnownColor(knownColor);
-                return result;
             }
+
+            var result = Fn();
+            if (result.IsKnownColor)
+                return result;
+            var knownResult = KnownColorTable.ArgbToKnownColor(result.AsUInt());
+            return knownResult;
         }
 
         internal static uint GetColorKind(Color value)
