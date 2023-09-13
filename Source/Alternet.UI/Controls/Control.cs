@@ -296,7 +296,11 @@ namespace Alternet.UI
         /// is closely associated with the control.
         /// </remarks>
         [Browsable(false)]
-        public object? Tag { get; set; }
+        public object? Tag
+        {
+            get;
+            set;
+        }
 
         /// <summary>
         /// Gets or sets the tool-tip object that is displayed for this element
@@ -491,7 +495,7 @@ namespace Alternet.UI
             {
                 if(children == null)
                 {
-                    children = new Collection<Control>();
+                    children = new Collection<Control>() { ThrowOnNullAdd = true };
                     children.ItemInserted += Children_ItemInserted;
                     children.ItemRemoved += Children_ItemRemoved;
                 }
@@ -525,12 +529,19 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets the parent container of the control.
+        /// Gets or sets the parent container of the control.
         /// </summary>
         [Browsable(false)]
         public virtual Control? Parent
         {
             get => parent;
+            set
+            {
+                if (parent == value)
+                    return;
+                parent?.Children.Remove(this);
+                value?.Children.Add(this);
+            }
         }
 
         /// <summary>
