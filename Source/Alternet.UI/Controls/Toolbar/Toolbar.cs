@@ -223,7 +223,7 @@ namespace Alternet.UI
         /// with the menu.
         /// </summary>
         [Content]
-        public Collection<ToolbarItem> Items { get; } = new Collection<ToolbarItem>();
+        public Collection<ToolbarItem> Items { get; } = new() { ThrowOnNullAdd = true };
 
         /// <inheritdoc/>
         public override IReadOnlyList<FrameworkElement> ContentElements => Items;
