@@ -1,3 +1,5 @@
+- ImageSet cpp redo related to icon bundle so it won’t be added by default.
+
 - NativeObject.cs
         private static readonly Dictionary<IntPtr, NativeObject> 
 		instancesByNativePointers = new Dictionary<IntPtr, NativeObject>();
