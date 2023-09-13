@@ -16,26 +16,16 @@ namespace Alternet.UI
         private const string ResTemplate =
             "embres:Alternet.UI.Resources.Svg.{0}.svg?assembly=Alternet.UI";
 
+        /// <summary>
+        /// Gets or sets url used to load "plus" svg image used in "Add" toolbar buttons.
+        /// </summary>
         public static string UrlImagePlus { get; set; } =
             string.Format(ResTemplate, "plus");
 
+        /// <summary>
+        /// Gets or sets url used to load "minus" svg image used in "Remove" toolbar buttons.
+        /// </summary>
         public static string UrlImageMinus { get; set; } =
             string.Format(ResTemplate, "minus");
-
-        public static ImageSet GetToolbarImageSet(string url, Control control)
-        {
-            var image = GetToolbarImage(url, control);
-            var result = new ImageSet(image);
-            return result;
-        }
-
-        public static Image GetToolbarImage(string url, Control control)
-        {
-            Size deviceDpi = control.GetDPI();
-            var width = Toolbar.GetDefaultImageSize(deviceDpi.Width);
-            var height = Toolbar.GetDefaultImageSize(deviceDpi.Height);
-            var result = Image.FromSvgUrl(url, width, height);
-            return result;
-        }
     }
 }

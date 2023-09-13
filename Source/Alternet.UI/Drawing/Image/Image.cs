@@ -148,10 +148,41 @@ namespace Alternet.Drawing
         /// button1.Image = Bitmap.FromSvgUrl(url, imageSize, imageSize);
         /// </code>
         /// </example>
+        /// <remarks>
+        /// <paramref name="url"/> can include assembly name. Example:
+        /// "embres:Alternet.UI.Resources.Svg.ImageName.svg?assembly=Alternet.UI"
+        /// </remarks>
+        /// <returns>Image instance with dimensions specified in <paramref name="width"/>
+        /// and <paramref name="height"/> and data loaded from the specified
+        /// <paramref name="url"/>. </returns>
         public static Image FromSvgUrl(string url, int width, int height)
         {
             using var stream = ResourceLoader.StreamFromUrl(url);
             var result = FromSvgStream(stream, width, height);
+            return result;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Image"/> class
+        /// from the specified url which points to svg file or resource.
+        /// </summary>
+        /// <remarks>
+        /// This is similar to <see cref="Image.FromSvgUrl"/> but uses
+        /// <see cref="Control.GetDPI"/> and <see cref="Toolbar.GetDefaultImageSize(double)"/>
+        /// to get appropriate image size which is best suitable for toolbars.
+        /// </remarks>
+        /// <param name="url">The file or embedded resource url with Svg data used
+        /// to load the image.</param>
+        /// <param name="control">Control which <see cref="Control.GetDPI"/> method
+        /// is used to get DPI.</param>
+        /// <returns><see cref="Image"/> instance loaded from Svg data for use
+        /// on the toolbars.</returns>
+        public static Image FromSvgUrlForToolbar(string url, Control control)
+        {
+            Size deviceDpi = control.GetDPI();
+            var width = Toolbar.GetDefaultImageSize(deviceDpi.Width);
+            var height = Toolbar.GetDefaultImageSize(deviceDpi.Height);
+            var result = Image.FromSvgUrl(url, width, height);
             return result;
         }
 

@@ -19,11 +19,8 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref="ImageSet"/> with default values.
         /// </summary>
         public ImageSet()
+            : this(new UI.Native.ImageSet())
         {
-            NativeImageSet = new UI.Native.ImageSet();
-
-            Images.ItemInserted += Images_ItemInserted;
-            Images.ItemRemoved += Images_ItemRemoved;
         }
 
         /// <summary>
@@ -48,6 +45,14 @@ namespace Alternet.UI
             NativeImageSet.LoadFromStream(inputStream);
         }
 
+        internal ImageSet(UI.Native.ImageSet imageSet)
+        {
+            NativeImageSet = imageSet;
+
+            Images.ItemInserted += Images_ItemInserted;
+            Images.ItemRemoved += Images_ItemRemoved;
+        }
+
         /// <summary>
         /// Occurs when the image set is changed, i.e. an image is added to it or removed from it.
         /// </summary>
@@ -58,6 +63,17 @@ namespace Alternet.UI
         /// </summary>
         /// <value>The collection of images.</value>
         public Collection<Image> Images { get; } = new() { ThrowOnNullAdd = true };
+
+        /// <summary>
+        /// Gets whether this <see cref="ImageSet"/> instance is valid and contains image(s).
+        /// </summary>
+        public bool IsOk => NativeImageSet.IsOk;
+
+        /// <summary>
+        /// Gets whether this <see cref="ImageSet"/> instance is readonly (no further
+        /// add or load operations are allowed).
+        /// </summary>
+        public bool IsReadOnly => NativeImageSet.IsReadOnly;
 
         internal UI.Native.ImageSet NativeImageSet { get; private set; }
 
@@ -103,9 +119,14 @@ namespace Alternet.UI
         /// var ImageSize = 16;
         /// var ResPrefix = $"embres:ControlsTest.Resources.Png._{ImageSize}.";
         /// var url = $"{ResPrefix}arrow-left-{ImageSize}.png";
-        /// ImageSet imageSet = ImageSet.FromUrl(url);
+        /// ImageSet imageSet = ImageSet.FromUrl(url); // can raise an exception
+        /// ImageSet imageSet2 = ImageSet.FromUrlOrNull(url); // return null instead of exception
         /// </code>
         /// </example>
+        /// <remarks>
+        /// <paramref name="url"/> can include assembly name. Example:
+        /// "embres:Alternet.UI.Resources.Svg.ImageName.png?assembly=Alternet.UI"
+        /// </remarks>
         public static ImageSet FromUrl(string url)
         {
             using var stream = ResourceLoader.StreamFromUrl(url);
@@ -114,11 +135,69 @@ namespace Alternet.UI
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ImageSet"/> class
-        /// from the specified url.
+        /// from the specified url which points to svg file or resource.
         /// </summary>
-        /// <param name="url">The file or embedded resource url used to
-        /// load the image.
+        /// <remarks>
+        /// This is similar to <see cref="Image.FromSvgUrl"/> but uses
+        /// <see cref="Control.GetDPI"/> and <see cref="Toolbar.GetDefaultImageSize(double)"/>
+        /// to get appropriate image size which is best suitable for toolbars.
+        /// </remarks>
+        /// <param name="url">The file or embedded resource url with Svg data used
+        /// to load the image.</param>
+        /// <param name="control">Control which <see cref="Control.GetDPI"/> method
+        /// is used to get DPI.</param>
+        /// <returns><see cref="ImageSet"/> instance loaded from Svg data for use
+        /// on the toolbars.</returns>
+        public static ImageSet FromSvgUrlForToolbar(string url, Control control)
+        {
+            Size deviceDpi = control.GetDPI();
+            var width = Toolbar.GetDefaultImageSize(deviceDpi.Width);
+            var height = Toolbar.GetDefaultImageSize(deviceDpi.Height);
+            var result = ImageSet.FromSvgUrl(url, width, height);
+            return result;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ImageSet"/> class
+        /// from the specified url which points to svg file or resource.
+        /// </summary>
+        /// <param name="url">The file or embedded resource url with Svg data used
+        /// to load the image.
         /// </param>
+        /// <param name="width">Image width.</param>
+        /// <param name="height">Image height.</param>
+        /// <remarks>
+        /// <paramref name="url"/> can include assembly name. Example:
+        /// "embres:Alternet.UI.Resources.Svg.ImageName.svg?assembly=Alternet.UI"
+        /// </remarks>
+        /// <returns><see cref="ImageSet"/> instance with svg data loaded from the specified
+        /// <paramref name="url"/>. </returns>
+        public static ImageSet FromSvgUrl(string url, int width, int height)
+        {
+            using var stream = ResourceLoader.StreamFromUrl(url);
+            var result = FromSvgStream(stream, width, height);
+            return result;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ImageSet"/> class
+        /// from the specified <see cref="Stream"/> which contains svg data.
+        /// </summary>
+        /// <param name="stream">Stream with Svg data.</param>
+        /// <param name="width">Image width.</param>
+        /// <param name="height">Image height.</param>
+        /// <returns><see cref="ImageSet"/> instance with svg data loaded from
+        /// <paramref name="stream"/>. </returns>
+        public static ImageSet FromSvgStream(Stream stream, int width, int height)
+        {
+            var nativeImage = new UI.Native.ImageSet();
+            using var inputStream = new UI.Native.InputStream(stream);
+            nativeImage.LoadSvgFromStream(inputStream, width, height);
+            var result = new ImageSet(nativeImage);
+            return result;
+        }
+
+        /// <inheritdoc cref="FromUrl"/>
         /// <remarks>
         /// Returns null if error occurs during image load.
         /// No exceptions are raised.

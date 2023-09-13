@@ -63,6 +63,10 @@ namespace Alternet.UI
         /// return new Bitmap(stream);
         /// </code>
         /// </example>
+        /// <remarks>
+        /// <paramref name="url"/> can include assembly name. Example:
+        /// "embres:Alternet.UI.Resources.Svg.ImageName.svg?assembly=Alternet.UI"
+        /// </remarks>
         public static Stream StreamFromUrl(string url)
         {
             var s = url;

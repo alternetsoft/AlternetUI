@@ -23,6 +23,28 @@ namespace Alternet.UI.Native
         {
         }
         
+        public bool IsOk
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.ImageSet_GetIsOk_(NativePointer);
+                return n;
+            }
+            
+        }
+        
+        public bool IsReadOnly
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.ImageSet_GetIsReadOnly_(NativePointer);
+                return n;
+            }
+            
+        }
+        
         public void LoadFromStream(InputStream stream)
         {
             CheckDisposed();
@@ -35,6 +57,18 @@ namespace Alternet.UI.Native
             NativeApi.ImageSet_AddImage_(NativePointer, image.NativePointer);
         }
         
+        public void Clear()
+        {
+            CheckDisposed();
+            NativeApi.ImageSet_Clear_(NativePointer);
+        }
+        
+        public void LoadSvgFromStream(InputStream stream, int width, int height)
+        {
+            CheckDisposed();
+            NativeApi.ImageSet_LoadSvgFromStream_(NativePointer, stream.NativePointer, width, height);
+        }
+        
         
         [SuppressUnmanagedCodeSecurity]
         public class NativeApi : NativeApiProvider
@@ -45,10 +79,22 @@ namespace Alternet.UI.Native
             public static extern IntPtr ImageSet_Create_();
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool ImageSet_GetIsOk_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool ImageSet_GetIsReadOnly_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void ImageSet_LoadFromStream_(IntPtr obj, IntPtr stream);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void ImageSet_AddImage_(IntPtr obj, IntPtr image);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void ImageSet_Clear_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void ImageSet_LoadSvgFromStream_(IntPtr obj, IntPtr stream, int width, int height);
             
         }
     }

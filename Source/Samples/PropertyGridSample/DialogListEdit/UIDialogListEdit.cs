@@ -63,15 +63,21 @@ namespace Alternet.UI
             // Toolbar pane
             var toolbarPane = manager.CreatePaneInfo();
             toolbarPane.Name(nameof(toolbarPane)).Top().ToolbarPane().PaneBorder(false)
-                .Movable(false).Floatable(false).Resizable(false);
+                .Movable(false).Floatable(false).Resizable(false).Gripper(false).Fixed().DockFixed();
 
-            toolbar.CreateStyle =
-                AuiToolbarCreateStyle.PlainBackground | AuiToolbarCreateStyle.HorzLayout |
-                /*AuiToolbarCreateStyle.Text | */AuiToolbarCreateStyle.NoTooltips |
+            var toolbarStyle =
+                AuiToolbarCreateStyle.PlainBackground | 
+                /*AuiToolbarCreateStyle.HorzLayout |*/
+                /*AuiToolbarCreateStyle.Text | */
+                AuiToolbarCreateStyle.NoTooltips |
                 AuiToolbarCreateStyle.DefaultStyle;
 
-            var addImage = SvgUtils.GetToolbarImageSet(SvgUtils.UrlImagePlus, this);
-            var removeImage = SvgUtils.GetToolbarImageSet(SvgUtils.UrlImageMinus, this);
+            toolbarStyle &= ~AuiToolbarCreateStyle.Gripper;
+
+            toolbar.CreateStyle = toolbarStyle;
+
+            var addImage = ImageSet.FromSvgUrlForToolbar(SvgUtils.UrlImagePlus, this);
+            var removeImage = ImageSet.FromSvgUrlForToolbar(SvgUtils.UrlImageMinus, this);
 
             var addButtonId = toolbar.AddTool(
                 CommonStrings.Default.ButtonAdd,

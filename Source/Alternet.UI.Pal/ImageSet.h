@@ -22,6 +22,7 @@ namespace Alternet::UI
     private:
         wxIconBundle _iconBundle;
         
+        bool _readOnly = false;
         bool _bitmapBundleValid = false;
         wxBitmapBundle _bitmapBundle;
         

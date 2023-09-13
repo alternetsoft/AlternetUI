@@ -17,6 +17,20 @@ ALTERNET_UI_API ImageSet* ImageSet_Create_()
         });
 }
 
+ALTERNET_UI_API c_bool ImageSet_GetIsOk_(ImageSet* obj)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return obj->GetIsOk();
+        });
+}
+
+ALTERNET_UI_API c_bool ImageSet_GetIsReadOnly_(ImageSet* obj)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return obj->GetIsReadOnly();
+        });
+}
+
 ALTERNET_UI_API void ImageSet_LoadFromStream_(ImageSet* obj, void* stream)
 {
     MarshalExceptions<void>([&](){
@@ -28,6 +42,20 @@ ALTERNET_UI_API void ImageSet_AddImage_(ImageSet* obj, Image* image)
 {
     MarshalExceptions<void>([&](){
             obj->AddImage(image);
+        });
+}
+
+ALTERNET_UI_API void ImageSet_Clear_(ImageSet* obj)
+{
+    MarshalExceptions<void>([&](){
+            obj->Clear();
+        });
+}
+
+ALTERNET_UI_API void ImageSet_LoadSvgFromStream_(ImageSet* obj, void* stream, int width, int height)
+{
+    MarshalExceptions<void>([&](){
+            obj->LoadSvgFromStream(stream, width, height);
         });
 }
 

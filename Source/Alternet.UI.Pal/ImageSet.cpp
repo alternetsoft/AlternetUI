@@ -16,6 +16,8 @@ namespace Alternet::UI
 
 	void ImageSet::AddImage(Image* image)
 	{
+		if (_readOnly)
+			return;
 		wxIcon icon;
 		icon.CopyFromBitmap(image->GetBitmap());
 		_iconBundle.AddIcon(icon);
@@ -25,20 +27,45 @@ namespace Alternet::UI
 
 	void ImageSet::LoadFromStream(void* stream)
 	{
+		if (_readOnly)
+			return;
 		InputStream inputStream(stream);
 		ManagedInputStream managedInputStream(&inputStream);
 
-		static bool imageHandlersInitialized = false;
-		if (!imageHandlersInitialized)
-		{
-			Image::wxInitAllImageHandlersV2();
-			imageHandlersInitialized = true;
-		}
+		Image::EnsureImageHandlersInitialized();
 
+		managedInputStream.SeekI(0);
 		_iconBundle.AddIcon(managedInputStream);
 		managedInputStream.SeekI(0);
 		_bitmaps.push_back(wxBitmap(managedInputStream));
 		InvalidateBitmapBundle();
+	}
+
+	bool ImageSet::GetIsOk()
+	{
+		return GetBitmapBundle().IsOk();
+	}
+
+	bool ImageSet::GetIsReadOnly()
+	{
+		return _readOnly;
+	}
+
+	void ImageSet::Clear()
+	{
+		if (_readOnly || _bitmaps.empty())
+			return;
+		_bitmaps.clear();
+		_iconBundle = wxIconBundle();
+		InvalidateBitmapBundle();
+	}
+
+	void ImageSet::LoadSvgFromStream(void* stream, int width, int height)
+	{
+		Clear();
+		_bitmapBundleValid = true;
+		_readOnly = true;
+		_bitmapBundle = Image::CreateFromSvgStream(stream, width, height);
 	}
 
 	wxIconBundle* ImageSet::GetIconBundle()
@@ -50,6 +77,8 @@ namespace Alternet::UI
 	{
 		if (!_bitmapBundleValid)
 		{
+			if (_readOnly)
+				return _bitmapBundle;
 			_bitmapBundle = wxBitmapBundle::FromBitmaps(_bitmaps);
 			_bitmapBundleValid = true;
 		}

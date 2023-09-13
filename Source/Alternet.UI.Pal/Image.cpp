@@ -59,10 +59,11 @@ namespace Alternet::UI
     {
     }
 
-    void Image::LoadSvgFromStream(void* stream, int width, int height)
+    wxBitmapBundle Image::CreateFromSvgStream(void* stream, int width, int height)
     {
         InputStream inputStream(stream);
         ManagedInputStream managedInputStream(&inputStream);
+        managedInputStream.SeekI(0);
 
         const size_t len = static_cast<size_t>(managedInputStream.GetLength());
         wxCharBuffer buf(len);
@@ -72,7 +73,20 @@ namespace Alternet::UI
         {
             auto size = wxSize(width, height);
             auto bitmapBundle = wxBitmapBundle::FromSVG(ptr, size);
-            _bitmap = bitmapBundle.GetBitmap(size);
+            return bitmapBundle;
+        }
+        else
+            return wxBitmapBundle();
+    }
+
+    void Image::LoadSvgFromStream(void* stream, int width, int height)
+    {
+        auto bundle = CreateFromSvgStream(stream, width, height);
+
+        if (bundle.IsOk())
+        {
+            auto size = wxSize(width, height);
+            _bitmap = bundle.GetBitmap(size);
         }
         else
             _bitmap = wxBitmap();
