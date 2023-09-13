@@ -67,10 +67,20 @@ namespace Alternet.UI
 
             toolbar.CreateStyle =
                 AuiToolbarCreateStyle.PlainBackground | AuiToolbarCreateStyle.HorzLayout |
-                AuiToolbarCreateStyle.Text |
+                /*AuiToolbarCreateStyle.Text | */AuiToolbarCreateStyle.NoTooltips |
                 AuiToolbarCreateStyle.DefaultStyle;
-            var addButtonId = toolbar.AddTool(CommonStrings.Default.ButtonAdd, null);
-            var removeButtonId = toolbar.AddTool(CommonStrings.Default.ButtonRemove, null);
+
+            var addImage = SvgUtils.GetToolbarImageSet(SvgUtils.UrlImagePlus, this);
+            var removeImage = SvgUtils.GetToolbarImageSet(SvgUtils.UrlImageMinus, this);
+
+            var addButtonId = toolbar.AddTool(
+                CommonStrings.Default.ButtonAdd,
+                addImage,
+                CommonStrings.Default.ButtonAdd);
+            var removeButtonId = toolbar.AddTool(
+                CommonStrings.Default.ButtonRemove,
+                removeImage,
+                CommonStrings.Default.ButtonRemove);
 
             toolbar.Realize();
             manager.AddPane(toolbar, toolbarPane);
@@ -100,8 +110,10 @@ namespace Alternet.UI
 
         private void AddButton_Click(object? sender, EventArgs e)
         {
-            var item = new TreeViewItem();
-            item.Text = "item";
+            var item = new TreeViewItem
+            {
+                Text = "item"
+            };
             treeView.Items.Add(item);
             treeView.SelectedItem = item;
             item.IsFocused = true;
@@ -153,8 +165,10 @@ namespace Alternet.UI
                 if (string.IsNullOrWhiteSpace(s))
                     s = "item";
 
-                var treeItem = new TreeViewItem(s);
-                treeItem.Tag = item;
+                var treeItem = new TreeViewItem(s)
+                {
+                    Tag = item
+                };
 
                 treeView.Items.Add(treeItem);
             }

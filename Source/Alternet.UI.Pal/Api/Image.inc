@@ -7,6 +7,7 @@ Size GetSize();
 Int32Size GetPixelSize();
 
 void LoadFromStream(void* stream);
+void LoadSvgFromStream(void* stream, int width, int height);
 void Initialize(const Size& size);
 void CopyFrom(Image* otherImage);
 void SaveToStream(void* stream, const string& format);

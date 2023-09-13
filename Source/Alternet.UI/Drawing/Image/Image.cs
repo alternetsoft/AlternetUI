@@ -120,8 +120,8 @@ namespace Alternet.Drawing
         /// <example>
         /// <code>
         /// var ImageSize = 16;
-        /// var ResPrefix = $"embres:ControlsTest.resources.Png._{ImageSize}.";
-        /// var url = $"{ResPrefix}arrow-left-{ImageSize}.png"
+        /// var ResPrefix = $"embres:ControlsTest.Resources.Png._{ImageSize}.";
+        /// var url = $"{ResPrefix}arrow-left-{ImageSize}.png";
         /// button1.Image = Bitmap.FromUrl(url);
         /// </code>
         /// </example>
@@ -129,6 +129,48 @@ namespace Alternet.Drawing
         {
             using var stream = ResourceLoader.StreamFromUrl(url);
             return new Bitmap(stream);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Image"/> class
+        /// from the specified url which points to svg file or resource.
+        /// </summary>
+        /// <param name="url">The file or embedded resource url with Svg data used
+        /// to load the image.
+        /// </param>
+        /// <param name="width">Image width.</param>
+        /// <param name="height">Image height.</param>
+        /// <example>
+        /// <code>
+        /// var imageSize = 16;
+        /// var resPrefix = "embres:ControlsTest.Resources.Svg.";
+        /// var url = $"{resPrefix}plus.svg";
+        /// button1.Image = Bitmap.FromSvgUrl(url, imageSize, imageSize);
+        /// </code>
+        /// </example>
+        public static Image FromSvgUrl(string url, int width, int height)
+        {
+            using var stream = ResourceLoader.StreamFromUrl(url);
+            var result = FromSvgStream(stream, width, height);
+            return result;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Image"/> class
+        /// from the specified <see cref="Stream"/> which contains svg data.
+        /// </summary>
+        /// <param name="stream">Stream with Svg data.</param>
+        /// <param name="width">Image width.</param>
+        /// <param name="height">Image height.</param>
+        /// <returns>Image instance with dimensions specified in <paramref name="width"/>
+        /// and <paramref name="height"/> and data loaded from <paramref name="stream"/>. </returns>
+        public static Image FromSvgStream(Stream stream, int width, int height)
+        {
+            var nativeImage = new UI.Native.Image();
+            using var inputStream = new UI.Native.InputStream(stream);
+            nativeImage.LoadSvgFromStream(inputStream, width, height);
+            var result = new Bitmap(nativeImage);
+            return result;
         }
 
         /// <summary>

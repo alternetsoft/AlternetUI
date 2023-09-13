@@ -38,6 +38,13 @@ ALTERNET_UI_API void Image_LoadFromStream_(Image* obj, void* stream)
         });
 }
 
+ALTERNET_UI_API void Image_LoadSvgFromStream_(Image* obj, void* stream, int width, int height)
+{
+    MarshalExceptions<void>([&](){
+            obj->LoadSvgFromStream(stream, width, height);
+        });
+}
+
 ALTERNET_UI_API void Image_Initialize_(Image* obj, Size size)
 {
     MarshalExceptions<void>([&](){
