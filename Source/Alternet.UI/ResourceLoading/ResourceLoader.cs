@@ -81,6 +81,50 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets all assets of a folder and subfolders that match specified uri.
+        /// </summary>
+        /// <param name="uri">The URI.</param>
+        /// <param name="baseUri">Base URI that is used if <paramref name="uri"/> is relative.</param>
+        /// <returns>All matching assets as a tuple of the absolute path to the asset and the
+        /// assembly containing the asset</returns>
+        public static IEnumerable<Uri> GetAssets(Uri uri, Uri? baseUri)
+        {
+            if (uri.IsAbsoluteEmbres())
+            {
+                var assembly = GetAssembly(uri);
+
+                return assembly?.Resources?
+                           .Where(x => x.Key.Contains(uri.GetUnescapeAbsolutePath()))
+                           .Select(x => new Uri($"embres:{x.Key}?assembly={assembly.Name}")) ??
+                       Enumerable.Empty<Uri>();
+            }
+
+            uri = uri.EnsureAbsolute(baseUri);
+            if (uri.IsUires())
+            {
+                var (asm, path) = GetResAsmAndPath(uri);
+                if (asm == null)
+                {
+                    throw new ArgumentException("Assembly is not specified");
+                }
+
+                if (asm.UIResources == null)
+                    return Enumerable.Empty<Uri>();
+
+#pragma warning disable
+                if (path[path.Length - 1] != '/')
+                    path += '/';
+#pragma warning restore
+
+                return asm.UIResources
+                    .Where(r => r.Key.StartsWith(path, StringComparison.Ordinal))
+                    .Select(x => new Uri($"uires://{asm.Name}{x.Key}"));
+            }
+
+            return Enumerable.Empty<Uri>();
+        }
+
+        /// <summary>
         /// Sets the default assembly from which to load assets for which no assembly is specified.
         /// </summary>
         /// <param name="assembly">The default assembly.</param>
@@ -113,7 +157,7 @@ namespace Alternet.UI
         /// <exception cref="FileNotFoundException">
         /// The asset could not be found.
         /// </exception>
-        public Stream Open(Uri uri, Uri? baseUri = null) => OpenAndGetAssembly(uri, baseUri).Item1;
+        public Stream Open(Uri uri, Uri? baseUri = null) => OpenAndGetAssembly(uri, baseUri).stream;
 
         /// <summary>
         /// Opens the asset with the requested URI and returns the asset stream and the
@@ -134,52 +178,6 @@ namespace Alternet.UI
             var asset = GetAsset(uri, baseUri)
                 ?? throw new FileNotFoundException($"The resource {uri} could not be found.");
             return (asset.GetStream(), asset.Assembly);
-        }
-
-        /// <summary>
-        /// Gets all assets of a folder and subfolders that match specified uri.
-        /// </summary>
-        /// <param name="uri">The URI.</param>
-        /// <param name="baseUri">Base URI that is used if <paramref name="uri"/> is relative.</param>
-        /// <returns>All matching assets as a tuple of the absolute path to the asset and the
-        /// assembly containing the asset</returns>
-        public IEnumerable<Uri> GetAssets(Uri uri, Uri? baseUri)
-        {
-            if (uri.IsAbsoluteEmbres())
-            {
-                var assembly = GetAssembly(uri);
-
-                return assembly?.Resources?
-                           .Where(x => x.Key.IndexOf(
-                               uri.GetUnescapeAbsolutePath(),
-                               StringComparison.Ordinal) >= 0)
-                           .Select(x => new Uri($"embres:{x.Key}?assembly={assembly.Name}")) ??
-                       Enumerable.Empty<Uri>();
-            }
-
-            uri = uri.EnsureAbsolute(baseUri);
-            if (uri.IsUires())
-            {
-                var (asm, path) = GetResAsmAndPath(uri);
-                if (asm == null)
-                {
-                    throw new ArgumentException("Assembly is not specified");
-                }
-
-                if (asm.UIResources == null)
-                    return Enumerable.Empty<Uri>();
-
-#pragma warning disable
-                if (path[path.Length - 1] != '/')
-                    path += '/';
-#pragma warning restore
-
-                return asm.UIResources
-                    .Where(r => r.Key.StartsWith(path, StringComparison.Ordinal))
-                    .Select(x => new Uri($"uires://{asm.Name}{x.Key}"));
-            }
-
-            return Enumerable.Empty<Uri>();
         }
 
         /// <remarks>
@@ -204,24 +202,45 @@ namespace Alternet.UI
             }
         }
 
-        internal Assembly? GetAssembly(Uri uri, Uri? baseUri)
+        internal static Assembly? GetAssembly(Uri uri, Uri? baseUri)
         {
             if (!uri.IsAbsoluteUri && baseUri != null)
                 uri = new Uri(baseUri, uri);
             return GetAssembly(uri)?.Assembly;
         }
 
+        private static (IAssemblyDescriptor asm, string path) GetResAsmAndPath(Uri uri)
+        {
+            var asm = assemblyDescriptorResolver.GetAssembly(uri.Authority);
+            return (asm, uri.GetUnescapeAbsolutePath());
+        }
+
+        private static IAssemblyDescriptor? GetAssembly(Uri? uri)
+        {
+            if (uri != null)
+            {
+                if (!uri.IsAbsoluteUri)
+                    return null;
+                if (uri.IsUires())
+                    return GetResAsmAndPath(uri).asm;
+
+                if (uri.IsEmbres())
+                {
+                    var assemblyName = uri.GetAssemblyNameFromQuery();
+                    if (assemblyName.Length > 0)
+                        return assemblyDescriptorResolver.GetAssembly(assemblyName);
+                }
+            }
+
+            return null;
+        }
+
         private IAssetDescriptor? GetAsset(Uri uri, Uri? baseUri)
         {
             if (uri.IsAbsoluteEmbres())
             {
-                var asm = GetAssembly(uri) ?? GetAssembly(baseUri) ?? defaultEmbresAssembly;
-
-                if (asm == null)
-                {
-                    throw new ArgumentException("Assembly is not specified");
-                }
-
+                var asm = (GetAssembly(uri) ?? GetAssembly(baseUri) ?? defaultEmbresAssembly)
+                    ?? throw new ArgumentException("Assembly is not specified");
                 var resourceKey = uri.AbsolutePath;
                 IAssetDescriptor? rv = null;
                 asm.Resources?.TryGetValue(resourceKey, out rv);
@@ -240,32 +259,6 @@ namespace Alternet.UI
             }
 
             throw new ArgumentException($"Unsupported url type: " + uri.Scheme, nameof(uri));
-        }
-
-        private (IAssemblyDescriptor asm, string path) GetResAsmAndPath(Uri uri)
-        {
-            var asm = assemblyDescriptorResolver.GetAssembly(uri.Authority);
-            return (asm, uri.GetUnescapeAbsolutePath());
-        }
-
-        private IAssemblyDescriptor? GetAssembly(Uri? uri)
-        {
-            if (uri != null)
-            {
-                if (!uri.IsAbsoluteUri)
-                    return null;
-                if (uri.IsUires())
-                    return GetResAsmAndPath(uri).asm;
-
-                if (uri.IsEmbres())
-                {
-                    var assemblyName = uri.GetAssemblyNameFromQuery();
-                    if (assemblyName.Length > 0)
-                        return assemblyDescriptorResolver.GetAssembly(assemblyName);
-                }
-            }
-
-            return null;
         }
     }
 }
