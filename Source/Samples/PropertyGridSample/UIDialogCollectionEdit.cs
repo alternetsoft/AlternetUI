@@ -31,6 +31,10 @@ namespace PropertyGridSample
 
         public UIDialogCollectionEdit()
         {
+            propertyGrid.ApplyFlags |= PropertyGridApplyFlags.PropInfoSetValue
+                | PropertyGridApplyFlags.ReloadAfterSetValue;
+            propertyGrid.Features = PropertyGridFeature.QuestionCharInNullable;
+
             this.BeginIgnoreRecreate();
             try
             {
@@ -89,6 +93,10 @@ namespace PropertyGridSample
 
             toolbar.AddToolOnClick(addButtonId, AddButton_Click);
             toolbar.AddToolOnClick(removeButtonId, RemoveButton_Click);
+
+            propertyGrid.ApplyKnownColors(PropertyGridKnownColors.White);
+            propertyGrid.CenterSplitter();
+            propertyGrid.SetVerticalSpacing();
         }
 
         private void AddButton_Click(object? sender, EventArgs e)
