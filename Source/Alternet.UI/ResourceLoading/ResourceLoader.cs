@@ -12,15 +12,11 @@ namespace Alternet.UI
     /// </summary>
     public class ResourceLoader
     {
-        private static IAssemblyDescriptorResolver s_assemblyDescriptorResolver = new AssemblyDescriptorResolver();
+        private static ResourceLoader? defaultLoader;
+        private static IAssemblyDescriptorResolver assemblyDescriptorResolver =
+            new AssemblyDescriptorResolver();
 
-        private AssemblyDescriptor? _defaultEmbresAssembly;
-
-        /// <remarks>
-        /// Introduced for tests.
-        /// </remarks>
-        internal static void SetAssemblyDescriptorResolver(IAssemblyDescriptorResolver resolver) =>
-            s_assemblyDescriptorResolver = resolver;
+        private AssemblyDescriptor? defaultEmbresAssembly;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ResourceLoader"/> class.
@@ -33,7 +29,55 @@ namespace Alternet.UI
             if (assembly == null)
                 assembly = Assembly.GetEntryAssembly();
             if (assembly != null)
-                _defaultEmbresAssembly = new AssemblyDescriptor(assembly);
+                defaultEmbresAssembly = new AssemblyDescriptor(assembly);
+        }
+
+        /// <summary>
+        /// Gets or sets default <see cref="ResourceLoader"/>.
+        /// </summary>
+        public static ResourceLoader Default
+        {
+            get
+            {
+                defaultLoader ??= new();
+                return defaultLoader;
+            }
+
+            set
+            {
+                defaultLoader = value;
+            }
+        }
+
+        /// <summary>
+        /// Loads <see cref="Stream"/> from the specified url.
+        /// </summary>
+        /// <param name="url">The file or embedded resource url used to load the image.
+        /// </param>
+        /// <example>
+        /// <code>
+        /// var ImageSize = 16;
+        /// var ResPrefix = $"embres:ControlsTest.resources.Png._{ImageSize}.";
+        /// var url = $"{ResPrefix}arrow-left-{ImageSize}.png"
+        /// using var stream = ResourceLoader.StreamFromUrl(url);
+        /// return new Bitmap(stream);
+        /// </code>
+        /// </example>
+        public static Stream StreamFromUrl(string url)
+        {
+            var s = url;
+            var uri = s.StartsWith("/")
+                ? new Uri(s, UriKind.Relative)
+                : new Uri(s, UriKind.RelativeOrAbsolute);
+
+            if (uri.IsAbsoluteUri && uri.IsFile)
+            {
+                var stream = File.OpenRead(uri.LocalPath);
+                return stream;
+            }
+
+            var result = ResourceLoader.Default.Open(uri);
+            return result;
         }
 
         /// <summary>
@@ -42,7 +86,7 @@ namespace Alternet.UI
         /// <param name="assembly">The default assembly.</param>
         public void SetDefaultAssembly(Assembly assembly)
         {
-            _defaultEmbresAssembly = new AssemblyDescriptor(assembly);
+            defaultEmbresAssembly = new AssemblyDescriptor(assembly);
         }
 
         /// <summary>
@@ -87,21 +131,9 @@ namespace Alternet.UI
         /// </exception>
         public (Stream stream, Assembly assembly) OpenAndGetAssembly(Uri uri, Uri? baseUri = null)
         {
-            var asset = GetAsset(uri, baseUri);
-
-            if (asset == null)
-            {
-                throw new FileNotFoundException($"The resource {uri} could not be found.");
-            }
-
+            var asset = GetAsset(uri, baseUri)
+                ?? throw new FileNotFoundException($"The resource {uri} could not be found.");
             return (asset.GetStream(), asset.Assembly);
-        }
-
-        internal Assembly? GetAssembly(Uri uri, Uri? baseUri)
-        {
-            if (!uri.IsAbsoluteUri && baseUri != null)
-                uri = new Uri(baseUri, uri);
-            return GetAssembly(uri)?.Assembly;
         }
 
         /// <summary>
@@ -109,7 +141,8 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="uri">The URI.</param>
         /// <param name="baseUri">Base URI that is used if <paramref name="uri"/> is relative.</param>
-        /// <returns>All matching assets as a tuple of the absolute path to the asset and the assembly containing the asset</returns>
+        /// <returns>All matching assets as a tuple of the absolute path to the asset and the
+        /// assembly containing the asset</returns>
         public IEnumerable<Uri> GetAssets(Uri uri, Uri? baseUri)
         {
             if (uri.IsAbsoluteEmbres())
@@ -117,7 +150,9 @@ namespace Alternet.UI
                 var assembly = GetAssembly(uri);
 
                 return assembly?.Resources?
-                           .Where(x => x.Key.IndexOf(uri.GetUnescapeAbsolutePath(), StringComparison.Ordinal) >= 0)
+                           .Where(x => x.Key.IndexOf(
+                               uri.GetUnescapeAbsolutePath(),
+                               StringComparison.Ordinal) >= 0)
                            .Select(x => new Uri($"embres:{x.Key}?assembly={assembly.Name}")) ??
                        Enumerable.Empty<Uri>();
             }
@@ -128,16 +163,16 @@ namespace Alternet.UI
                 var (asm, path) = GetResAsmAndPath(uri);
                 if (asm == null)
                 {
-                    throw new ArgumentException(
-                        "No default assembly, entry assembly or explicit assembly specified; " +
-                        "don't know where to look up for the resource, try specifying assembly explicitly.");
+                    throw new ArgumentException("Assembly is not specified");
                 }
 
                 if (asm.UIResources == null)
                     return Enumerable.Empty<Uri>();
 
+#pragma warning disable
                 if (path[path.Length - 1] != '/')
                     path += '/';
+#pragma warning restore
 
                 return asm.UIResources
                     .Where(r => r.Key.StartsWith(path, StringComparison.Ordinal))
@@ -147,17 +182,44 @@ namespace Alternet.UI
             return Enumerable.Empty<Uri>();
         }
 
+        /// <remarks>
+        /// Introduced for tests.
+        /// </remarks>
+        internal static void SetAssemblyDescriptorResolver(IAssemblyDescriptorResolver resolver) =>
+            assemblyDescriptorResolver = resolver;
+
+        internal static void RegisterResUriParsers()
+        {
+            if (!UriParser.IsKnownScheme("uires"))
+            {
+                UriParser.Register(
+                    new GenericUriParser(
+                        GenericUriParserOptions.GenericAuthority |
+                        GenericUriParserOptions.NoUserInfo |
+                        GenericUriParserOptions.NoPort |
+                        GenericUriParserOptions.NoQuery |
+                        GenericUriParserOptions.NoFragment),
+                    "uires",
+                    -1);
+            }
+        }
+
+        internal Assembly? GetAssembly(Uri uri, Uri? baseUri)
+        {
+            if (!uri.IsAbsoluteUri && baseUri != null)
+                uri = new Uri(baseUri, uri);
+            return GetAssembly(uri)?.Assembly;
+        }
+
         private IAssetDescriptor? GetAsset(Uri uri, Uri? baseUri)
         {
             if (uri.IsAbsoluteEmbres())
             {
-                var asm = GetAssembly(uri) ?? GetAssembly(baseUri) ?? _defaultEmbresAssembly;
+                var asm = GetAssembly(uri) ?? GetAssembly(baseUri) ?? defaultEmbresAssembly;
 
                 if (asm == null)
                 {
-                    throw new ArgumentException(
-                        "No default assembly, entry assembly or explicit assembly specified; " +
-                        "don't know where to look up for the resource, try specifying assembly explicitly.");
+                    throw new ArgumentException("Assembly is not specified");
                 }
 
                 var resourceKey = uri.AbsolutePath;
@@ -182,7 +244,7 @@ namespace Alternet.UI
 
         private (IAssemblyDescriptor asm, string path) GetResAsmAndPath(Uri uri)
         {
-            var asm = s_assemblyDescriptorResolver.GetAssembly(uri.Authority);
+            var asm = assemblyDescriptorResolver.GetAssembly(uri.Authority);
             return (asm, uri.GetUnescapeAbsolutePath());
         }
 
@@ -199,22 +261,11 @@ namespace Alternet.UI
                 {
                     var assemblyName = uri.GetAssemblyNameFromQuery();
                     if (assemblyName.Length > 0)
-                        return s_assemblyDescriptorResolver.GetAssembly(assemblyName);
+                        return assemblyDescriptorResolver.GetAssembly(assemblyName);
                 }
             }
 
             return null;
-        }
-
-        internal static void RegisterResUriParsers()
-        {
-            if (!UriParser.IsKnownScheme("uires"))
-                UriParser.Register(new GenericUriParser(
-                    GenericUriParserOptions.GenericAuthority |
-                    GenericUriParserOptions.NoUserInfo |
-                    GenericUriParserOptions.NoPort |
-                    GenericUriParserOptions.NoQuery |
-                    GenericUriParserOptions.NoFragment), "uires", -1);
         }
     }
 }

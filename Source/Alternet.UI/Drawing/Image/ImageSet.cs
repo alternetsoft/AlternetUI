@@ -89,26 +89,17 @@ namespace Alternet.UI
         /// <param name="url">The file or embedded resource url used to load the image.
         /// </param>
         /// <example>
-        /// int ImageSize = 16;
-        /// string ResPrefix =
-        ///     $"embres:ControlsTest.resources.Png._{ImageSize}.";
-        /// ImageSet imageSet = ImageSet.FromUrl($"{ResPrefix}arrow-left-{ImageSize}.png");
+        /// <code>
+        /// var ImageSize = 16;
+        /// var ResPrefix = $"embres:ControlsTest.resources.Png._{ImageSize}.";
+        /// var url = $"{ResPrefix}arrow-left-{ImageSize}.png"
+        /// ImageSet imageSet = ImageSet.FromUrl(url);
+        /// </code>
         /// </example>
         public static ImageSet FromUrl(string url)
         {
-                var s = (string)url;
-                var uri = s.StartsWith("/")
-                    ? new Uri(s, UriKind.Relative)
-                    : new Uri(s, UriKind.RelativeOrAbsolute);
-
-                if (uri.IsAbsoluteUri && uri.IsFile)
-                {
-                    using var stream = File.OpenRead(uri.LocalPath);
-                    return new ImageSet(stream);
-                }
-
-                var assets = new UI.ResourceLoader();
-                return new ImageSet(assets.Open(uri));
+            using var stream = ResourceLoader.StreamFromUrl(url);
+            return new ImageSet(stream);
         }
 
         /// <summary>

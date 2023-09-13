@@ -1,6 +1,7 @@
 using System;
 using System.ComponentModel;
 using System.IO;
+using Alternet.UI;
 
 namespace Alternet.Drawing
 {
@@ -117,26 +118,17 @@ namespace Alternet.Drawing
         /// to load the image.
         /// </param>
         /// <example>
-        /// int ImageSize = 16;
-        /// string ResPrefix =
-        ///     $"embres:ControlsTest.resources.Png._{ImageSize}.";
-        /// button1.Image = Bitmap.FromUrl($"{ResPrefix}arrow-left-{ImageSize}.png");
+        /// <code>
+        /// var ImageSize = 16;
+        /// var ResPrefix = $"embres:ControlsTest.resources.Png._{ImageSize}.";
+        /// var url = $"{ResPrefix}arrow-left-{ImageSize}.png"
+        /// button1.Image = Bitmap.FromUrl(url);
+        /// </code>
         /// </example>
         public static Image FromUrl(string url)
         {
-            var s = url;
-            var uri = s.StartsWith("/")
-                ? new Uri(s, UriKind.Relative)
-                : new Uri(s, UriKind.RelativeOrAbsolute);
-
-            if (uri.IsAbsoluteUri && uri.IsFile)
-            {
-                using var stream = File.OpenRead(uri.LocalPath);
-                return new Bitmap(stream);
-            }
-
-            var assets = new Alternet.UI.ResourceLoader();
-            return new Bitmap(assets.Open(uri));
+            using var stream = ResourceLoader.StreamFromUrl(url);
+            return new Bitmap(stream);
         }
 
         /// <summary>
