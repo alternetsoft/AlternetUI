@@ -27,6 +27,16 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="ImageSet"/> with <see cref="Image"/>.
+        /// </summary>
+        /// <param name="image">This image will be added to <see cref="Images"/>.</param>
+        public ImageSet(Image image)
+            : this()
+        {
+            Images.Add(image);
+        }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="ImageSet"/> class from the specified
         /// data stream.
         /// </summary>
@@ -47,7 +57,7 @@ namespace Alternet.UI
         /// Gets the <see cref="Image"/> collection for this image list.
         /// </summary>
         /// <value>The collection of images.</value>
-        public Collection<Image> Images { get; } = new Collection<Image>();
+        public Collection<Image> Images { get; } = new() { ThrowOnNullAdd = true };
 
         internal UI.Native.ImageSet NativeImageSet { get; private set; }
 
@@ -91,8 +101,8 @@ namespace Alternet.UI
         /// <example>
         /// <code>
         /// var ImageSize = 16;
-        /// var ResPrefix = $"embres:ControlsTest.resources.Png._{ImageSize}.";
-        /// var url = $"{ResPrefix}arrow-left-{ImageSize}.png"
+        /// var ResPrefix = $"embres:ControlsTest.Resources.Png._{ImageSize}.";
+        /// var url = $"{ResPrefix}arrow-left-{ImageSize}.png";
         /// ImageSet imageSet = ImageSet.FromUrl(url);
         /// </code>
         /// </example>
