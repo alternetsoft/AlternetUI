@@ -55,3 +55,5 @@
 - Localizable ToString for Pen/Brush/Etc. Have IToStringProperties ? with list of properties used in ToString?
 
 - Color names localization
+
+- Add imagelist/ImageSet components to demo
