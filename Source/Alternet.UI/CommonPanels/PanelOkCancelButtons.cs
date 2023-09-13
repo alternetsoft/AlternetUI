@@ -20,9 +20,11 @@ namespace Alternet.UI
             SuspendLayout();
             try
             {
-                Children.Add(OkButton);
-                Children.Add(CancelButton);
-                Children.Add(ApplyButton);
+                Orientation = StackPanelOrientation.Horizontal;
+                HorizontalAlignment = HorizontalAlignment.Right;
+                OkButton.Parent = this;
+                CancelButton.Parent = this;
+                ApplyButton.Parent = this;
             }
             finally
             {
