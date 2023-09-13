@@ -6,11 +6,11 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Alternet.UI;
+using Alternet.Drawing;
 
-namespace PropertyGridSample
+namespace Alternet.UI
 {
-    internal class UIDialogCollectionEdit : Window
+    internal class UIDialogListEdit : UIDialogWindow
     {
         private readonly AuiManager manager = new();
         private readonly LayoutPanel panel = new();
@@ -29,7 +29,7 @@ namespace PropertyGridSample
 
         private object? dataSource;
 
-        public UIDialogCollectionEdit()
+        public UIDialogListEdit()
         {
             propertyGrid.ApplyFlags |= PropertyGridApplyFlags.PropInfoSetValue
                 | PropertyGridApplyFlags.ReloadAfterSetValue;

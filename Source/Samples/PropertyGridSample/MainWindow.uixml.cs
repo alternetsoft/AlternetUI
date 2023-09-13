@@ -690,7 +690,7 @@ namespace PropertyGridSample
             if (value is not ICollection)
                 return;
 
-            UIDialogCollectionEdit dialog = new()
+            UIDialogListEdit dialog = new()
             {
                 DataSource = value,
             };
