@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Alternet.UI;
 using Alternet.Base.Collections;
+using Alternet.Drawing;
+using System.Diagnostics;
 
 namespace PropertyGridSample
 {
@@ -25,6 +27,30 @@ namespace PropertyGridSample
         internal void RunTests()
 #pragma warning restore
         {
+            TestColorVariant();
+        }
+
+        internal static void TestColorVariant()
+        {
+            Color Fn(Color color)
+            {
+                var variant = PropertyGrid.CreateVariant();
+                variant.AsColor = color;
+                var result = variant.AsColor;
+
+                Debug.WriteLine("====");
+                Debug.WriteLine("Color: " + color.ToString());
+                Debug.WriteLine("Variant: " + variant.ToString());
+                Debug.WriteLine("Variant ValueType: " + variant.ValueType);
+                Debug.WriteLine("Result: " + result.ToString());
+                Debug.WriteLine("====");
+
+                return result;
+            }
+
+            Fn(Color.Red);
+            Fn(SystemColors.ButtonFace);
+            Fn(Color.FloralWhite);            
         }
 
         internal static void TestIsNullableClass()

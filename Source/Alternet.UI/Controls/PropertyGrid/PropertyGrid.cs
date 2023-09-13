@@ -224,7 +224,8 @@ namespace Alternet.UI
         {
             get
             {
-                return EventPropValueAsVariant.AsObject;
+                var result = EventPropValueAsVariant.AsObject;
+                return result;
             }
         }
 
@@ -1059,16 +1060,7 @@ namespace Alternet.UI
             Color value,
             IPropertyGridNewItemParams? prm = null)
         {
-            const uint PG_COLOUR_CUSTOM = 0xFFFFFF;
-            uint kind = PG_COLOUR_CUSTOM;
-
-            if (value.IsKnownColor)
-            {
-                KnownColor knownColor = value.ToKnownColor();
-                WxSystemColor converted = ColorUtils.Convert(knownColor);
-                if (converted != WxSystemColor.Max)
-                    kind = (uint)converted;
-            }
+            uint kind = GetColorKind(value);
 
             var handle = NativeControl.CreateSystemColorProperty(
                 CorrectPropLabel(label, prm),
@@ -3927,6 +3919,41 @@ namespace Alternet.UI
         internal static IntPtr GetEditorByName(string editorName)
         {
             return Native.PropertyGrid.GetEditorByName(editorName);
+        }
+
+        internal static Color SetColorKind(Color value, uint kind)
+        {
+            const uint PG_COLOUR_CUSTOM = 0xFFFFFF;
+
+            if (kind == PG_COLOUR_CUSTOM)
+                return value;
+            else
+            {
+                KnownColor knownColor = ColorUtils.Convert((WxSystemColor)kind);
+                if (knownColor == 0)
+                {
+                    //public static Color KnownColorTable.ArgbToKnownColor(uint argb)
+                    return value;
+                }
+                Color result = Color.FromKnownColor(knownColor);
+                return result;
+            }
+        }
+
+        internal static uint GetColorKind(Color value)
+        {
+            const uint PG_COLOUR_CUSTOM = 0xFFFFFF;
+            uint kind = PG_COLOUR_CUSTOM;
+
+            if (value.IsKnownColor)
+            {
+                KnownColor knownColor = value.ToKnownColor();
+                WxSystemColor converted = ColorUtils.Convert(knownColor);
+                if (converted != WxSystemColor.Max)
+                    kind = (uint)converted;
+            }
+
+            return kind;
         }
 
         internal IntPtr GetPropertyValidator(IPropertyGridItem prop)

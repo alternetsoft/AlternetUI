@@ -128,9 +128,9 @@ namespace Alternet.UI.Native
             return n;
         }
         
-        public static void SetColor(System.IntPtr handle, Alternet.Drawing.Color val)
+        public static void SetColor(System.IntPtr handle, Alternet.Drawing.Color val, uint kind)
         {
-            NativeApi.PropertyGridVariant_SetColor_(handle, val);
+            NativeApi.PropertyGridVariant_SetColor_(handle, val, kind);
         }
         
         public static void SetDouble(System.IntPtr handle, double val)
@@ -176,6 +176,12 @@ namespace Alternet.UI.Native
         public static void SetString(System.IntPtr handle, string value)
         {
             NativeApi.PropertyGridVariant_SetString_(handle, value);
+        }
+        
+        public static uint GetLastColorKind()
+        {
+            var n = NativeApi.PropertyGridVariant_GetLastColorKind_();
+            return n;
         }
         
         
@@ -242,7 +248,7 @@ namespace Alternet.UI.Native
             public static extern string PropertyGridVariant_GetString_(System.IntPtr handle);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void PropertyGridVariant_SetColor_(System.IntPtr handle, NativeApiTypes.Color val);
+            public static extern void PropertyGridVariant_SetColor_(System.IntPtr handle, NativeApiTypes.Color val, uint kind);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void PropertyGridVariant_SetDouble_(System.IntPtr handle, double val);
@@ -270,6 +276,9 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void PropertyGridVariant_SetString_(System.IntPtr handle, string value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern uint PropertyGridVariant_GetLastColorKind_();
             
         }
     }

@@ -60,6 +60,11 @@ namespace Alternet::UI
 		return wxStr(ToVar(handle).MakeString());
 	}
 
+	uint32_t PropertyGridVariant::GetLastColorKind()
+	{
+		return _lastColorKind;
+	}
+
 	Color PropertyGridVariant::GetColor(void* handle)
 	{
 		wxVariant value = ToVar(handle);
@@ -70,6 +75,7 @@ namespace Alternet::UI
 		if (vtype == "wxColour")
 		{
 			result << value;
+			_lastColorKind = wxPG_COLOUR_CUSTOM;
 			return result;
 		}
 		if (vtype == "wxColourPropertyValue")
@@ -77,16 +83,30 @@ namespace Alternet::UI
 			wxAny any = value;
 			wxColourPropertyValue cpv = any.As<wxColourPropertyValue>();
 			result = cpv.m_colour;
-			return Color(result, cpv.m_type);
+			_lastColorKind = cpv.m_type;
+			return Color(result);
 		}
 		return Color();
 	}
 
-	void PropertyGridVariant::SetColor(void* handle, const Color& val) 
+	uint32_t PropertyGridVariant::_lastColorKind = wxPG_COLOUR_CUSTOM;
+
+	void PropertyGridVariant::SetColor(void* handle, const Color& val, uint32_t kind)
 	{
+
 		wxColor color = val;
 		wxVariant v;
-		v << color;
+
+		if (kind == wxPG_COLOUR_CUSTOM)
+		{
+			v << color;
+		}
+		else
+		{
+			wxColourPropertyValue wxProp = wxColourPropertyValue(kind, color);
+			v << wxProp;
+		}
+
 		FromVariant(handle, v);
 	}
 

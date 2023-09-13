@@ -15,6 +15,7 @@ namespace Alternet::UI
 
         static wxVariant& ToVar(void* handle);
         static void FromVariant(void* handle, wxVariant& value);
+        static uint32_t _lastColorKind;
 
         PropertyGridVariant(wxVariant value);
     private:

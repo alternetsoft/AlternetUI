@@ -35,21 +35,13 @@ namespace PropertyGridSample
                 | PropertyGridApplyFlags.ReloadAfterSetValue;
             propertyGrid.Features = PropertyGridFeature.QuestionCharInNullable;
 
-            this.BeginIgnoreRecreate();
-            try
-            {
-                ShowInTaskbar = false;
-                MinimizeEnabled = false;
-                MaximizeEnabled = false;
-                AlwaysOnTop = true;
-                Size = new(600, 400);
-                Title = "Collection Editor";
-                StartLocation = WindowStartLocation.CenterScreen;
-            }
-            finally
-            {
-                this.EndIgnoreRecreate();
-            }
+            ShowInTaskbar = false;
+            MinimizeEnabled = false;
+            MaximizeEnabled = false;
+            AlwaysOnTop = true;
+            Size = new(600, 400);
+            Title = "Collection Editor";
+            StartLocation = WindowStartLocation.CenterScreen;
 
             this.StatusBar = statusbar;
 
@@ -97,6 +89,13 @@ namespace PropertyGridSample
             propertyGrid.ApplyKnownColors(PropertyGridKnownColors.White);
             propertyGrid.CenterSplitter();
             propertyGrid.SetVerticalSpacing();
+
+            this.Disposed += UIDialogCollectionEdit_Disposed;
+        }
+
+        private void UIDialogCollectionEdit_Disposed(object? sender, EventArgs e)
+        {
+            manager.UnInit();
         }
 
         private void AddButton_Click(object? sender, EventArgs e)

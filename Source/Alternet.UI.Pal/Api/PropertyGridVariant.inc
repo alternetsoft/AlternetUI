@@ -18,7 +18,7 @@ static int64_t GetLong(void* handle);
 static uint64_t GetULong(void* handle);
 static DateTime GetDateTime(void* handle);
 static string GetString(void* handle);
-static void SetColor(void* handle, const Color& val);
+static void SetColor(void* handle, const Color& val, uint32_t kind);
 static void SetDouble(void* handle, double val);
 static void SetBool(void* handle, bool val);
 static void SetLong(void* handle, int64_t val);
@@ -28,6 +28,7 @@ static void SetUInt(void* handle, uint32_t val);
 static void SetShort(void* handle, int16_t val);
 static void SetDateTime(void* handle, const DateTime& val);
 static void SetString(void* handle, const string& value);
+static uint32_t GetLastColorKind();
 public:
 PropertyGridVariant();
 protected:

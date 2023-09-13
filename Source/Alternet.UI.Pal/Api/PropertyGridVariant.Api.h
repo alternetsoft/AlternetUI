@@ -141,10 +141,10 @@ ALTERNET_UI_API char16_t* PropertyGridVariant_GetString_(void* handle)
         });
 }
 
-ALTERNET_UI_API void PropertyGridVariant_SetColor_(void* handle, Color val)
+ALTERNET_UI_API void PropertyGridVariant_SetColor_(void* handle, Color val, uint32_t kind)
 {
     MarshalExceptions<void>([&](){
-            PropertyGridVariant::SetColor(handle, val);
+            PropertyGridVariant::SetColor(handle, val, kind);
         });
 }
 
@@ -208,6 +208,13 @@ ALTERNET_UI_API void PropertyGridVariant_SetString_(void* handle, const char16_t
 {
     MarshalExceptions<void>([&](){
             PropertyGridVariant::SetString(handle, value);
+        });
+}
+
+ALTERNET_UI_API uint32_t PropertyGridVariant_GetLastColorKind_()
+{
+    return MarshalExceptions<uint32_t>([&](){
+            return PropertyGridVariant::GetLastColorKind();
         });
 }
 
