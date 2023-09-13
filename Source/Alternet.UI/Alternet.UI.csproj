@@ -56,11 +56,15 @@
     <None Remove="Application\ThreadException\Resources\ErrorImage.png" />
     <None Remove="Build.Result.Log" />
     <None Remove="Find.Not.Documented.log" />
+    <None Remove="Resources\Svg\minus.svg" />
+    <None Remove="Resources\Svg\plus.svg" />
     <None Remove="Xaml\.editorconfig" />
   </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Include="Application\ThreadException\Resources\ErrorImage.png" />
+    <EmbeddedResource Include="Resources\Svg\minus.svg" />
+    <EmbeddedResource Include="Resources\Svg\plus.svg" />
   </ItemGroup>
 
 
@@ -139,10 +143,6 @@
 
   <ItemGroup>
     <AdditionalFiles Include="..\stylecop.json" Link="stylecop.json" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Resources\Svg\" />
   </ItemGroup>
 
   <!-- ================================================= -->
