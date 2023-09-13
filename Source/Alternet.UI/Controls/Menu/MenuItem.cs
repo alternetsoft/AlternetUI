@@ -46,13 +46,13 @@ namespace Alternet.UI
         private string text = string.Empty;
         private MenuItemRole? role;
         private bool preCommandEnabledValue = true;
-        private bool @checked;
+        private bool isChecked;
 
         /// <summary>
         /// Initializes a new instance of the <see cref='MenuItem'/> class.
         /// </summary>
         public MenuItem()
-            : this(string.Empty)
+            : this(string.Empty, null, null)
         {
         }
 
@@ -89,8 +89,8 @@ namespace Alternet.UI
         /// </summary>
         public MenuItem(string text, EventHandler? onClick, KeyGesture? shortcut)
         {
-            Text = text;
-            Shortcut = shortcut;
+            this.text = text;
+            this.shortcut = shortcut;
             if (onClick != null)
                 Click += onClick;
         }
@@ -130,14 +130,11 @@ namespace Alternet.UI
         {
             get
             {
-                CheckDisposed();
                 return text;
             }
 
             set
             {
-                CheckDisposed();
-
                 if (value == text)
                     return;
 
@@ -154,14 +151,11 @@ namespace Alternet.UI
         {
             get
             {
-                CheckDisposed();
                 return shortcut;
             }
 
             set
             {
-                CheckDisposed();
-
                 if (shortcut == value)
                     return;
 
@@ -192,14 +186,11 @@ namespace Alternet.UI
         {
             get
             {
-                CheckDisposed();
                 return role;
             }
 
             set
             {
-                CheckDisposed();
-
                 if (role == value)
                     return;
 
@@ -216,18 +207,15 @@ namespace Alternet.UI
         {
             get
             {
-                CheckDisposed();
-                return @checked;
+                return isChecked;
             }
 
             set
             {
-                CheckDisposed();
-
-                if (@checked == value)
+                if (isChecked == value)
                     return;
 
-                @checked = value;
+                isChecked = value;
                 CheckedChanged?.Invoke(this, EventArgs.Empty);
             }
         }
@@ -264,6 +252,15 @@ namespace Alternet.UI
         public static implicit operator MenuItem(string s)
         {
             return new(s);
+        }
+
+        /// <inheritdoc/>
+        public override string ToString()
+        {
+            if (string.IsNullOrWhiteSpace(Text))
+                return base.ToString() ?? nameof(MenuItem);
+            else
+                return Text;
         }
 
         /// <inheritdoc />

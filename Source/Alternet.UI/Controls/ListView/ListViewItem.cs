@@ -44,9 +44,6 @@ namespace Alternet.UI
     /// </remarks>
     public class ListViewItem
     {
-        private const string ItemIsNotConnectedToListView =
-            "This list view item is not connected to list view.";
-
         private ListView? listView;
 
         /// <summary>
@@ -54,17 +51,7 @@ namespace Alternet.UI
         /// class with default values.
         /// </summary>
         public ListViewItem()
-            : this(string.Empty)
-        {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ListViewItem"/>
-        /// class with the specified item text.
-        /// </summary>
-        /// <param name="text">The text to display for the item.</param>
-        public ListViewItem(string text)
-            : this(text, null)
+            : this(new[] { string.Empty }, null)
         {
         }
 
@@ -76,20 +63,9 @@ namespace Alternet.UI
         /// <param name="text">The text to display for the item.</param>
         /// <param name="imageIndex">The zero-based index of the image within
         /// the <see cref="ImageList"/> associated with the <see cref="ListView"/>
-        /// that contains the item.</param>
-        public ListViewItem(string text, int? imageIndex)
+        /// that contains the item. Optional.</param>
+        public ListViewItem(string text, int? imageIndex = null)
             : this(new[] { text }, imageIndex)
-        {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ListViewItem"/> class
-        /// with an array of strings representing column cells.
-        /// </summary>
-        /// <param name="cells">An array of strings that represent the column
-        /// cells of the new item.</param>
-        public ListViewItem(string[] cells)
-            : this(cells, null)
         {
         }
 
@@ -103,7 +79,7 @@ namespace Alternet.UI
         /// <param name="imageIndex">The zero-based index of the image within
         /// the <see cref="ImageList"/> associated with the <see cref="ListView"/> that
         /// contains the item.</param>
-        public ListViewItem(string[] cells, int? imageIndex)
+        public ListViewItem(string[] cells, int? imageIndex = null)
         {
             Cells.ItemInserted += Cells_ItemInserted;
             Cells.ItemRemoved += Cells_ItemRemoved;
@@ -266,36 +242,43 @@ namespace Alternet.UI
         /// </summary>
         /// <remarks>Using the <see cref="Cells"/> property, you can add column cells,
         /// remove column cells, and obtain a count of column cells.</remarks>
-        public Collection<ListViewItemCell> Cells { get; } =
-            new Collection<ListViewItemCell> { ThrowOnNullAdd = true };
+        public Collection<ListViewItemCell> Cells { get; } = new() { ThrowOnNullAdd = true };
 
         private long RequiredIndex
         {
             get
             {
                 var index = Index;
-                return index == null ?
-                    throw new InvalidOperationException(ItemIsNotConnectedToListView)
-                    : index.Value;
+                return index ?? throw new InvalidOperationException(
+                    string.Format(ErrorMessages.Default.PropertyCannotBeNull, nameof(Index)));
             }
         }
 
         private ListView RequiredListView =>
             ListView ?? throw new InvalidOperationException(
-                "ListView property value cannot be null during this opeation.");
+                string.Format(ErrorMessages.Default.PropertyCannotBeNull, nameof(ListView)));
 
         /// <summary>
         /// Initiates the editing of the list view item label.
         /// </summary>
         public void BeginLabelEdit() =>
-            RequiredListView.Handler.BeginLabelEdit(RequiredIndex);
+            ListView?.Handler.BeginLabelEdit(RequiredIndex);
 
         /// <summary>
         /// Ensures that the item is visible within the control, scrolling the
         /// contents of the control, if necessary.
         /// </summary>
         public void EnsureVisible() =>
-            RequiredListView.Handler.EnsureItemVisible(RequiredIndex);
+            ListView?.Handler.EnsureItemVisible(RequiredIndex);
+
+        /// <inheritdoc/>
+        public override string ToString()
+        {
+            if (string.IsNullOrWhiteSpace(Text))
+                return base.ToString() ?? nameof(ListViewItem);
+            else
+                return Text;
+        }
 
         /// <summary>
         /// Retrieves the bounding rectangle for this item.

@@ -40,5 +40,8 @@ namespace Alternet.UI
 
         /// <see cref="CurrentApplicationIsNotSet"/>
         public string PropertyIsNull { get; set; } = "Property {0} is null";
+
+        /// <see cref="CurrentApplicationIsNotSet"/>
+        public string PropertyCannotBeNull { get; set; } = "Property {0} value cannot be null.";
     }
 }

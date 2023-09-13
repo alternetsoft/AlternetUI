@@ -54,10 +54,13 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets the location with the <see cref="ListView"/> control's <see cref="ListView.Columns"/> of this column.
+        /// Gets the location with the <see cref="ListView"/> control's
+        /// <see cref="ListView.Columns"/> of this column.
         /// </summary>
-        /// <value>The zero-based index of the column header within the <see cref="ListView.Columns"/> of the <see cref="ListView"/> control it is contained in.</value>
-        /// <remarks>If the <see cref="ListViewColumn"/> is not contained within a <see cref="ListView"/> control this property returns a value of <c>null</c>.</remarks>
+        /// <value>The zero-based index of the column header within the
+        /// <see cref="ListView.Columns"/> of the <see cref="ListView"/> control it is contained in.</value>
+        /// <remarks>If the <see cref="ListViewColumn"/> is not contained within a
+        /// <see cref="ListView"/> control this property returns a value of <c>null</c>.</remarks>
         public int? Index
         {
             get => index;
@@ -72,9 +75,11 @@ namespace Alternet.UI
         /// <summary>
         /// Gets the <see cref="ListView"/> control the <see cref="ListViewColumn"/> is located in.
         /// </summary>
-        /// <value>A <see cref="ListView"/> control that represents the control that contains the <see cref="ListViewColumn"/>.</value>
+        /// <value>A <see cref="ListView"/> control that represents the control that contains
+        /// the <see cref="ListViewColumn"/>.</value>
         /// <remarks>
-        /// You can use this property to determine which <see cref="ListView"/> control a specific <see cref="ListViewColumn"/> object is associated with.
+        /// You can use this property to determine which <see cref="ListView"/> control a
+        /// specific <see cref="ListViewColumn"/> object is associated with.
         /// </remarks>
         public ListView? ListView
         {
@@ -88,10 +93,12 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets the fixed width of the column, in device-independent units (1/96th inch per unit).
+        /// Gets or sets the fixed width of the column, in device-independent units (1/96th inch
+        /// per unit).
         /// </summary>
         /// <value>
-        /// The fixed width of the column, in device-independent units (1/96th inch per unit). Default value is 80.
+        /// The fixed width of the column, in device-independent units (1/96th inch per unit).
+        /// Default value is 80.
         /// </value>
         public double Width
         {
@@ -116,6 +123,15 @@ namespace Alternet.UI
                 widthMode = value;
                 ApplyWidth();
             }
+        }
+
+        /// <inheritdoc/>
+        public override string ToString()
+        {
+            if (string.IsNullOrWhiteSpace(Title))
+                return base.ToString() ?? nameof(ListViewColumn);
+            else
+                return Title;
         }
 
         private bool TryGetColumnIndex(

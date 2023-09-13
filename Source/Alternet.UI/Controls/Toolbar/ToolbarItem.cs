@@ -50,14 +50,14 @@ namespace Alternet.UI
         private string text = string.Empty;
         private ImageSet? image = null;
         private ImageSet? disabledImage = null;
-        private bool @checked;
+        private bool isChecked;
         private bool preCommandEnabledValue = true;
 
         /// <summary>
         /// Initializes a new instance of the <see cref='ToolbarItem'/> class.
         /// </summary>
         public ToolbarItem()
-            : this(string.Empty)
+            : this(string.Empty, null)
         {
         }
 
@@ -76,7 +76,7 @@ namespace Alternet.UI
         /// </summary>
         public ToolbarItem(string text, EventHandler? onClick)
         {
-            Text = text;
+            this.Text = text;
             if (onClick != null)
                 Click += onClick;
         }
@@ -153,14 +153,11 @@ namespace Alternet.UI
         {
             get
             {
-                CheckDisposed();
                 return text;
             }
 
             set
             {
-                CheckDisposed();
-
                 if (value == text)
                     return;
 
@@ -220,18 +217,15 @@ namespace Alternet.UI
         {
             get
             {
-                CheckDisposed();
-                return @checked;
+                return isChecked;
             }
 
             set
             {
-                CheckDisposed();
-
-                if (@checked == value)
+                if (isChecked == value)
                     return;
 
-                @checked = value;
+                isChecked = value;
                 CheckedChanged?.Invoke(this, EventArgs.Empty);
             }
         }
@@ -267,6 +261,15 @@ namespace Alternet.UI
                 if (DropDownMenu != null)
                     yield return DropDownMenu;
             }
+        }
+
+        /// <inheritdoc/>
+        public override string ToString()
+        {
+            if (string.IsNullOrWhiteSpace(Text))
+                return base.ToString() ?? nameof(ToolbarItem);
+            else
+                return Text;
         }
 
         /// <inheritdoc />

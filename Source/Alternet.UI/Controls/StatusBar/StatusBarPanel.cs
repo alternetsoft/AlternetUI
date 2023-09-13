@@ -55,14 +55,11 @@ namespace Alternet.UI
         {
             get
             {
-                CheckDisposed();
                 return text;
             }
 
             set
             {
-                CheckDisposed();
-
                 if (value == text)
                     return;
 
@@ -72,6 +69,15 @@ namespace Alternet.UI
         }
 
         internal override bool IsDummy => true;
+
+        /// <inheritdoc/>
+        public override string ToString()
+        {
+            if (string.IsNullOrWhiteSpace(Text))
+                return base.ToString() ?? nameof(StatusBarPanel);
+            else
+                return Text;
+        }
 
         /// <inheritdoc/>
         protected override ControlHandler CreateHandler()

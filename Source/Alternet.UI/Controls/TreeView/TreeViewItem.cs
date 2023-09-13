@@ -187,7 +187,7 @@ namespace Alternet.UI
         public bool IsFocused
         {
             get => RequiredTreeView.Handler.IsItemFocused(this);
-            set => RequiredTreeView.Handler.SetFocused(this, value);
+            set => TreeView?.Handler.SetFocused(this, value);
         }
 
         /// <summary>
@@ -329,12 +329,12 @@ namespace Alternet.UI
 
         private TreeView RequiredTreeView =>
             TreeView ?? throw new InvalidOperationException(
-                "TreeView property value cannot be null.");
+                string.Format(ErrorMessages.Default.PropertyCannotBeNull, nameof(TreeView)));
 
         /// <summary>
         /// Initiates the editing of the tree item label.
         /// </summary>
-        public void BeginLabelEdit() => RequiredTreeView.Handler.BeginLabelEdit(this);
+        public void BeginLabelEdit() => TreeView?.Handler.BeginLabelEdit(this);
 
         /// <summary>
         /// Ends the editing of the tree item label.
@@ -343,7 +343,7 @@ namespace Alternet.UI
         /// tree item label text was canceled without
         /// being saved; otherwise, <see langword="false"/>.</param>
         public void EndLabelEdit(bool cancel) =>
-            RequiredTreeView.Handler.EndLabelEdit(this, cancel);
+            TreeView?.Handler.EndLabelEdit(this, cancel);
 
         /// <summary>
         /// Expands this <see cref="TreeViewItem"/> and all the child tree items.
@@ -353,7 +353,7 @@ namespace Alternet.UI
         /// <see cref="TreeViewItem"/> and all the child tree items assigned
         /// to the <see cref="Items"/> collection.
         /// </remarks>
-        public void ExpandAll() => RequiredTreeView.Handler.ExpandAllChildren(this);
+        public void ExpandAll() => TreeView?.Handler.ExpandAllChildren(this);
 
         /// <summary>
         /// Collapses this <see cref="TreeViewItem"/> and all the child tree items.
@@ -364,7 +364,7 @@ namespace Alternet.UI
         /// the <see cref="Items"/> collection.
         /// </remarks>
         public void CollapseAll() =>
-            RequiredTreeView.Handler.CollapseAllChildren(this);
+            TreeView?.Handler.CollapseAllChildren(this);
 
         /// <summary>
         /// Ensures that the tree item is visible, expanding tree items and
@@ -380,12 +380,12 @@ namespace Alternet.UI
         /// the user can see and interact with the
         /// selected item.
         /// </remarks>
-        public void EnsureVisible() => RequiredTreeView.Handler.EnsureVisible(this);
+        public void EnsureVisible() => TreeView?.Handler.EnsureVisible(this);
 
         /// <summary>
         /// Scrolls the item into view.
         /// </summary>
-        public void ScrollIntoView() => RequiredTreeView.Handler.ScrollIntoView(this);
+        public void ScrollIntoView() => TreeView?.Handler.ScrollIntoView(this);
 
         /// <summary>
         /// Removes the current tree item from the tree view control.
@@ -399,9 +399,7 @@ namespace Alternet.UI
         public void Remove()
         {
             if (Parent == null)
-            {
                 TreeView?.Items.Remove(this);
-            }
             else
                 Parent.Items.Remove(this);
         }
@@ -442,6 +440,15 @@ namespace Alternet.UI
         public void Toggle()
         {
             IsExpanded = !IsExpanded;
+        }
+
+        /// <inheritdoc/>
+        public override string ToString()
+        {
+            if (string.IsNullOrWhiteSpace(Text))
+                return base.ToString() ?? nameof(TreeViewItem);
+            else
+                return Text;
         }
 
         internal static void OnChildItemAdded(
