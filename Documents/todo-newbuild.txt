@@ -1,3 +1,9 @@
+- wxBitmapComboBox https://docs.wxwidgets.org/3.2/classwx_bitmap_combo_box.html
+- wxComboCtrl https://docs.wxwidgets.org/3.2/classwx_combo_ctrl.html
+- wxRearrangeList (in checkListBox) https://docs.wxwidgets.org/3.2/classwx_rearrange_list.html
+- wxSashWindow (resizable bounds) https://docs.wxwidgets.org/3.2/classwx_sash_window.html
+- wxHtmlWindow https://docs.wxwidgets.org/3.2/classwx_html_window.html
+
 - LayoutFactory.AdjustTextBoxesHeight(Control container);
 test auimanager demo under linux
 ? First need to import control methods related to sizing
