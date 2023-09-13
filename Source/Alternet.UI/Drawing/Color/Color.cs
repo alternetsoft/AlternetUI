@@ -940,14 +940,13 @@ namespace Alternet.Drawing
             }
         }
 
-        // Used for the [DebuggerDisplay]. Inlining in the attribute is possible,
-        // but against best practices as the current project language parses the
-        // string with
-        // language specific heuristics.
-        private string NameAndARGBValue =>
+        /// <summary>
+        /// Gets color name and ARGB for the debug purposes.
+        /// </summary>
+        public string NameAndARGBValue =>
             $"{{Name={Name}, ARGB=({A}, {R}, {G}, {B})}}";
 
-        private long Value
+        internal long Value
         {
             get
             {
@@ -1265,6 +1264,12 @@ namespace Alternet.Drawing
         /// respectively.
         /// </remarks>
         public int ToArgb() => unchecked((int)Value);
+
+        /// <inheritdoc cref="ToArgb"/>
+        /// <remarks>
+        /// This is similar to <see cref="ToArgb"/> but returns color as <see cref="uint"/>.
+        /// </remarks>
+        public uint AsUInt() => unchecked((uint)Value);
 
         /// <summary>
         /// Gets the <see cref="KnownColor"/> value of this
