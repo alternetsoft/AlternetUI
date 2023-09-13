@@ -221,13 +221,6 @@ namespace Alternet::UI
         {
         }
 
-        Color(const wxColor& c, wxUint32 typ) : Color(c)
-        {
-            if (typ == 0xFFFFFF)
-                return;
-
-        }
-
         Color(const wxColor& c) : R(c.Red()), G(c.Green()), B(c.Blue()), 
             A(c.Alpha()), state(1)
         {
