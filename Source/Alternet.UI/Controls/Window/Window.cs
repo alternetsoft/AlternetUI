@@ -191,6 +191,7 @@ namespace Alternet.UI
         /// Gets a value indicating whether the window is the currently active window for
         /// this application.
         /// </summary>
+        [Browsable(false)]
         public bool IsActive => Handler.IsActive;
 
         /// <summary>
@@ -373,6 +374,7 @@ namespace Alternet.UI
         /// <remarks>
         /// When a window is owned by another window, it is closed or hidden with the owner window.
         /// </remarks>
+        [Browsable(false)]
         public Window? Owner
         {
             get => owner;
@@ -495,6 +497,7 @@ namespace Alternet.UI
         /// When a window is owned by another window, it is closed or hidden
         /// with the owner window.
         /// </remarks>
+        [Browsable(false)]
         public Window[] OwnedWindows { get => Handler.OwnedWindows; }
 
         /// <summary>
@@ -543,6 +546,7 @@ namespace Alternet.UI
         /// <remarks>
         /// You can use this property to switch between complete status bar sets at run time.
         /// </remarks>
+        [Browsable(false)]
         public StatusBar? StatusBar
         {
             get => statusBar;
@@ -595,6 +599,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets a value indicating whether this window is displayed modally.
         /// </summary>
+        [Browsable(false)]
         public bool Modal
         {
             get
@@ -661,6 +666,7 @@ namespace Alternet.UI
         /// <remarks>
         /// You can use this property to switch between complete toolbar sets at run time.
         /// </remarks>
+        [Browsable(false)]
         public Toolbar? Toolbar
         {
             get => toolbar;
