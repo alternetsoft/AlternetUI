@@ -180,7 +180,6 @@ namespace Alternet.UI
         {
             get
             {
-                CheckDisposed();
                 return selectedItems.FirstOrDefault();
             }
 
@@ -188,7 +187,7 @@ namespace Alternet.UI
             {
                 CheckDisposed();
 
-                ClearSelected();
+                ClearSelectedCore();
                 if (value != null)
                     selectedItems.Add(value);
                 RaiseSelectionChanged(EventArgs.Empty);
