@@ -1336,4 +1336,34 @@ namespace Alternet::UI
 		else
 			GetPropGrid()->SetPropertyValidator(_propArg, *(wxValidator*)validator);
 	}
+
+	void* PropertyGrid::ColorDatabaseCreate()
+	{
+		return new wxColourDatabase();
+	}
+
+	void PropertyGrid::ColorDatabaseDelete(void* handle)
+	{
+		delete (wxColourDatabase*)handle;
+	}
+
+	void PropertyGrid::ColorDatabaseSetGlobal(void* handle)
+	{
+		wxTheColourDatabase = (wxColourDatabase*)handle;
+	}
+
+	void PropertyGrid::ColorDatabaseAdd(void* handle, const string& name, const Color& color)
+	{
+		((wxColourDatabase*)handle)->AddColour(wxStr(name), color);
+	}
+
+	Color PropertyGrid::ColorDatabaseFind(void* handle, const string& name)
+	{
+		return ((wxColourDatabase*)handle)->Find(wxStr(name));
+	}
+
+	string PropertyGrid::ColorDatabaseFindName(void* handle, const Color& color)
+	{
+		return wxStr(((wxColourDatabase*)handle)->FindName(color));
+	}
 }

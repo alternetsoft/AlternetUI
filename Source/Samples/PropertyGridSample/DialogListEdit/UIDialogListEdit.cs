@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Alternet.Drawing;
+using Alternet.Base.Collections;
 
 namespace Alternet.UI
 {
@@ -27,10 +28,13 @@ namespace Alternet.UI
             HasBorder = false,
         };
 
-        private object? dataSource;
+        private IListEditSource? dataSource;
 
         public UIDialogListEdit()
         {
+            treeView.FullRowSelect = true;
+            treeView.ShowLines = false;
+
             propertyGrid.ApplyFlags |= PropertyGridApplyFlags.PropInfoSetValue
                 | PropertyGridApplyFlags.ReloadAfterSetValue;
             propertyGrid.Features = PropertyGridFeature.QuestionCharInNullable;
@@ -45,7 +49,6 @@ namespace Alternet.UI
 
             this.StatusBar = statusbar;
 
-            treeView.MakeAsListBox();
             treeView.SelectionChanged += TreeView_SelectionChanged;
 
             panel.Layout = LayoutPanelKind.Native;
@@ -107,6 +110,7 @@ namespace Alternet.UI
             propertyGrid.SetVerticalSpacing();
 
             this.Disposed += UIDialogCollectionEdit_Disposed;
+            propertyGrid.PropertyChanged += PropertyGrid_PropertyChanged;
         }
 
         private void UIDialogCollectionEdit_Disposed(object? sender, EventArgs e)
@@ -116,13 +120,14 @@ namespace Alternet.UI
 
         private void AddButton_Click(object? sender, EventArgs e)
         {
-            var item = new TreeViewItem
+            /*var item = new TreeViewItem
             {
                 Text = "item"
             };
             treeView.Items.Add(item);
             treeView.SelectedItem = item;
             item.IsFocused = true;
+            */
         }
 
         private void RemoveButton_Click(object? sender, EventArgs e)
@@ -139,10 +144,21 @@ namespace Alternet.UI
                 return;
             }
 
+            var tag = item.Tag;
+
+            if(tag == null)
+            {
+                propertyGrid.Clear();
+                return;
+            }
+
+            var propInstance = dataSource?.GetProperties(tag);
+
             propertyGrid.SetProps(item);
         }
 
-        public object? DataSource {
+        public IListEditSource? DataSource
+        {
             get
             {
                 return dataSource;
@@ -162,21 +178,55 @@ namespace Alternet.UI
         private void Load()
         {
             Clear();
-            var collection = AsList;
-            if (collection == null)
+            if (dataSource == null)
                 return;
-            foreach(var item in collection)
-            {
-                var s = item.ToString();
-                if (string.IsNullOrWhiteSpace(s))
-                    s = "item";
+            AddItems(treeView.Items, dataSource.RootItems);
+        }
 
-                var treeItem = new TreeViewItem(s)
+        private void PropertyGrid_PropertyChanged(object? sender, EventArgs e)
+        {
+            var eventProp = propertyGrid.EventProperty;
+            var eventInstance = eventProp?.Instance;
+            var itemInfo = GetItemInfo(eventInstance);
+            var selectedItem = treeView.SelectedItem;
+
+            if (selectedItem == null || selectedItem.Tag != eventInstance)
+                return;
+            if (itemInfo == null)
+                return;
+            selectedItem.ImageIndex = itemInfo.Value.ImageIndex;
+            selectedItem.Text = itemInfo.Value.Title;
+        }
+
+        private (string Title, int? ImageIndex)? GetItemInfo(object? item)
+        {
+            if (item == null)
+                return null;
+            var s = dataSource?.GetItemTitle(item);
+            int? imageIndex = dataSource?.GetItemImageIndex(item);
+            if (string.IsNullOrWhiteSpace(s))
+                s = "item";
+
+            return (s, imageIndex);
+        }
+
+        private void AddItems(Collection<TreeViewItem> treeItems, IEnumerable? data)
+        {
+            if (data == null)
+                return;
+            foreach (var item in data)
+            {
+                var itemInfo = GetItemInfo(item);
+                var treeItem = new TreeViewItem(itemInfo!.Value.Title, itemInfo!.Value.ImageIndex)
                 {
-                    Tag = item
+                    Tag = item,
                 };
 
-                treeView.Items.Add(treeItem);
+                var subItems = dataSource?.GetChildren(item);
+                if (subItems != null)
+                    AddItems(treeItem.Items, subItems);
+
+                treeItems.Add(treeItem);
             }
         }
 
@@ -186,63 +236,77 @@ namespace Alternet.UI
             treeView.RemoveAll();
         }
 
+/*
         private IList? AsList => dataSource as IList;
 
         private INotifyPropertyChanged? AsNotifyProperty => dataSource as INotifyPropertyChanged;
 
         private INotifyCollectionChanged? AsNotifyCollection =>
             dataSource as INotifyCollectionChanged;
-
+*/
         private void Bind()
         {
+            treeView.ImageList = dataSource?.ImageList;
+
             if (dataSource == null)
                 return;
-            var notifyProp = AsNotifyProperty;
-            var notifyCollection = AsNotifyCollection;
 
-            if(notifyProp!=null)
-                notifyProp.PropertyChanged += NotifyProp_PropertyChanged;
-            if(notifyCollection != null)
-                notifyCollection.CollectionChanged += NotifyCollection_CollectionChanged;
+            /*
+                        if (dataSource == null)
+                            return;
+                        var notifyProp = AsNotifyProperty;
+                        var notifyCollection = AsNotifyCollection;
+
+                        if(notifyProp!=null)
+                            notifyProp.PropertyChanged += NotifyProp_PropertyChanged;
+                        if(notifyCollection != null)
+                            notifyCollection.CollectionChanged += NotifyCollection_CollectionChanged;
+            */
         }
 
-        private void NotifyCollection_CollectionChanged(
-            object? sender,
-            NotifyCollectionChangedEventArgs e)
-        {
-            switch (e.Action)
-            {
-                case NotifyCollectionChangedAction.Add:
-                    break;
-                case NotifyCollectionChangedAction.Remove:
-                    break;
-                case NotifyCollectionChangedAction.Replace:
-                    break;
-                case NotifyCollectionChangedAction.Move:
-                    break;
-                case NotifyCollectionChangedAction.Reset:
-                    Clear();
-                    break;
-                default:
-                    break;
-            }
-        }
-
-        private void NotifyProp_PropertyChanged(object? sender, PropertyChangedEventArgs e)
-        {
-        }
-
+        /*
+                private void NotifyCollection_CollectionChanged(
+                    object? sender,
+                    NotifyCollectionChangedEventArgs e)
+                {
+                    switch (e.Action)
+                    {
+                        case NotifyCollectionChangedAction.Add:
+                            break;
+                        case NotifyCollectionChangedAction.Remove:
+                            break;
+                        case NotifyCollectionChangedAction.Replace:
+                            break;
+                        case NotifyCollectionChangedAction.Move:
+                            break;
+                        case NotifyCollectionChangedAction.Reset:
+                            Clear();
+                            break;
+                        default:
+                            break;
+                    }
+                }
+        */
+        /*
+                private void NotifyProp_PropertyChanged(object? sender, PropertyChangedEventArgs e)
+                {
+                }
+        */
         private void Unbind()
         {
-            if (dataSource == null)
-                return;
-            var notifyProp = AsNotifyProperty;
-            var notifyCollection = AsNotifyCollection;
+            treeView.ImageList = null;
+            
+/*
+                        if (dataSource == null)
+                            return;
+                        var notifyProp = AsNotifyProperty;
+                        var notifyCollection = AsNotifyCollection;
 
-            if (notifyProp != null)
-                notifyProp.PropertyChanged -= NotifyProp_PropertyChanged;
-            if (notifyCollection != null)
-                notifyCollection.CollectionChanged -= NotifyCollection_CollectionChanged;
+                        if (notifyProp != null)
+                            notifyProp.PropertyChanged -= NotifyProp_PropertyChanged;
+                        if (notifyCollection != null)
+                            notifyCollection.CollectionChanged -= NotifyCollection_CollectionChanged;
+            */
         }
     }
 }

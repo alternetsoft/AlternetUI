@@ -680,21 +680,15 @@ namespace PropertyGridSample
             var propInfo = prop.PropInfo;
             var instance = prop.Instance;
 
-            if (propInfo == null || instance == null)
-                return;
-
-            /*var propType = AssemblyUtils.GetRealType(propInfo.PropertyType);*/
-
-            var value = propInfo.GetValue(instance);
-
-            if (value is not ICollection)
+            var source = ListEditSource.CreateEditSource(instance, propInfo);
+            if (source == null)
                 return;
 
             UIDialogListEdit dialog = new()
             {
-                DataSource = value,
+                DataSource = source,
             };
-            dialog.Show();
+            dialog.ShowModal();
         }
 
         void IComponentDesigner.PropertyChanged(object? sender, string? propName)

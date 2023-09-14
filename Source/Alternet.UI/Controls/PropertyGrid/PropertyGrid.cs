@@ -4300,8 +4300,13 @@ namespace Alternet.UI
                 else
                     SetPropertyReadOnly(item, true);
             }
-            if (AssemblyUtils.GetNullable(propInfo) && !item.IsFlags)
-                SetPropertyValueUnspecified(item);
+            
+            if (!item.IsFlags && AssemblyUtils.GetNullable(propInfo))
+            {
+                var value = propInfo.GetValue(instance);
+                if(value is null)
+                    SetPropertyValueUnspecified(item);
+            }
         }
 
         /// <summary>

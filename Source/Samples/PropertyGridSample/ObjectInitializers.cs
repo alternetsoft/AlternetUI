@@ -7,11 +7,21 @@ using Alternet.UI;
 using Alternet.Base.Collections;
 using Alternet.Drawing;
 using System.Collections;
+using System.Reflection;
 
 namespace PropertyGridSample
 {
     internal class ObjectInitializers
     {
+        private static ImageLists? imageLists;
+
+        public static ImageLists LoadImageLists()
+        {
+            imageLists ??= LoadImageListsCore();
+
+            return imageLists;
+        }
+
         public static readonly Dictionary<Type, Action<Object>> Actions = new();
 
         private const string ResPrefix =
@@ -155,6 +165,10 @@ namespace PropertyGridSample
 
         public static void InitListView(ListView listView)
         {
+            var imageLists = LoadImageLists();
+            listView.SmallImageList = imageLists.Small;
+            listView.LargeImageList = imageLists.Large;
+
             AddDefaultItems();
 
             void InitializeColumns()
@@ -200,6 +214,7 @@ namespace PropertyGridSample
 
         public static void InitTreeView(TreeView control)
         {
+            control.ImageList = LoadImageLists().Small;
             AddItems(control, 10);
         }
 
@@ -246,6 +261,47 @@ namespace PropertyGridSample
             {
                 treeView.EndUpdate();
             }
+        }
+
+        private static ImageLists LoadImageListsCore()
+        {
+            var smallImageList = new ImageList();
+            var largeImageList = new ImageList() { ImageSize = new Size(32, 32) };
+
+            var assembly = Assembly.GetExecutingAssembly();
+            var allResourceNames = assembly.GetManifestResourceNames();
+            var allImageResourceNames =
+                allResourceNames.Where(x => x.StartsWith("PropertyGridSample.Resources.ImageListIcons."));
+            var smallImageResourceNames =
+                allImageResourceNames.Where(x => x.Contains(".Small.")).ToArray();
+            var largeImageResourceNames =
+                allImageResourceNames.Where(x => x.Contains(".Large.")).ToArray();
+            if (smallImageResourceNames.Length != largeImageResourceNames.Length)
+                throw new Exception();
+
+            Image LoadImage(string name) =>
+                new Bitmap(assembly.GetManifestResourceStream(name) ?? throw new Exception());
+
+            for (int i = 0; i < smallImageResourceNames.Length; i++)
+            {
+                smallImageList.Images.Add(LoadImage(smallImageResourceNames[i]));
+                largeImageList.Images.Add(LoadImage(largeImageResourceNames[i]));
+            }
+
+            return new ImageLists(smallImageList, largeImageList);
+        }
+
+        public class ImageLists
+        {
+            public ImageLists(ImageList small, ImageList large)
+            {
+                Small = small;
+                Large = large;
+            }
+
+            public ImageList Small { get; }
+
+            public ImageList Large { get; }
         }
     }
 }

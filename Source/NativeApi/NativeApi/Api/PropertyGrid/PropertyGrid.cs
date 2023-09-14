@@ -11,10 +11,15 @@ namespace NativeApi.Api
     //https://docs.wxwidgets.org/3.2/classwx_property_grid.html
     public partial class PropertyGrid : Control
     {
-        // Returns validator of a property, which you can pass SetPropertyValidator.
-        public IntPtr GetPropertyValidator(IntPtr prop) => default;
+        // https://docs.wxwidgets.org/3.2/classwx_colour_database.html
+        public static IntPtr ColorDatabaseCreate() => default;
+        public static void ColorDatabaseDelete(IntPtr handle) { }
+        public static void ColorDatabaseSetGlobal(IntPtr handle) { }
+        public static void ColorDatabaseAdd(IntPtr handle, string name, Color color) { }
+        public static Color ColorDatabaseFind(IntPtr handle, string name) => default;
+        public static string ColorDatabaseFindName(IntPtr handle, Color color) => default;
 
-        // Sets validator of a property.
+        public IntPtr GetPropertyValidator(IntPtr prop) => default;
         public void SetPropertyValidator(IntPtr prop, IntPtr validator) { }
 
         public void SetPropertyFlag(IntPtr prop, int flag, bool value) { }

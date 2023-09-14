@@ -121,6 +121,48 @@ ALTERNET_UI_API void PropertyGrid_SetCreateStyleEx_(PropertyGrid* obj, int64_t v
         });
 }
 
+ALTERNET_UI_API void* PropertyGrid_RemoveProperty_(PropertyGrid* obj, void* id)
+{
+    return MarshalExceptions<void*>([&](){
+            return obj->RemoveProperty(id);
+        });
+}
+
+ALTERNET_UI_API c_bool PropertyGrid_DisableProperty_(PropertyGrid* obj, void* id)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return obj->DisableProperty(id);
+        });
+}
+
+ALTERNET_UI_API c_bool PropertyGrid_EnableProperty_(PropertyGrid* obj, void* id, c_bool enable)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return obj->EnableProperty(id, enable);
+        });
+}
+
+ALTERNET_UI_API void PropertyGrid_EndAddChildren_(PropertyGrid* obj, void* id)
+{
+    MarshalExceptions<void>([&](){
+            obj->EndAddChildren(id);
+        });
+}
+
+ALTERNET_UI_API c_bool PropertyGrid_Expand_(PropertyGrid* obj, void* id)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return obj->Expand(id);
+        });
+}
+
+ALTERNET_UI_API void* PropertyGrid_GetFirstChild_(PropertyGrid* obj, void* id)
+{
+    return MarshalExceptions<void*>([&](){
+            return obj->GetFirstChild(id);
+        });
+}
+
 ALTERNET_UI_API void* PropertyGrid_GetPropertyCategory_(PropertyGrid* obj, void* id)
 {
     return MarshalExceptions<void*>([&](){
@@ -482,6 +524,48 @@ ALTERNET_UI_API void PropertyGrid_SetPropertyAttributeAll_(PropertyGrid* obj, co
 {
     MarshalExceptions<void>([&](){
             obj->SetPropertyAttributeAll(attrName, variant);
+        });
+}
+
+ALTERNET_UI_API void PropertyGrid_BeginLabelEdit_(PropertyGrid* obj, uint32_t column)
+{
+    MarshalExceptions<void>([&](){
+            obj->BeginLabelEdit(column);
+        });
+}
+
+ALTERNET_UI_API void PropertyGrid_EndLabelEdit_(PropertyGrid* obj, c_bool commit)
+{
+    MarshalExceptions<void>([&](){
+            obj->EndLabelEdit(commit);
+        });
+}
+
+ALTERNET_UI_API void PropertyGrid_SetCaptionBackgroundColor_(PropertyGrid* obj, Color col)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetCaptionBackgroundColor(col);
+        });
+}
+
+ALTERNET_UI_API void PropertyGrid_SetCaptionTextColor_(PropertyGrid* obj, Color col)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetCaptionTextColor(col);
+        });
+}
+
+ALTERNET_UI_API void PropertyGrid_SetCellBackgroundColor_(PropertyGrid* obj, Color col)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetCellBackgroundColor(col);
+        });
+}
+
+ALTERNET_UI_API void PropertyGrid_SetCellDisabledTextColor_(PropertyGrid* obj, Color col)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetCellDisabledTextColor(col);
         });
 }
 
@@ -1038,45 +1122,45 @@ ALTERNET_UI_API void PropertyGrid_DeleteProperty_(PropertyGrid* obj, void* id)
         });
 }
 
-ALTERNET_UI_API void* PropertyGrid_RemoveProperty_(PropertyGrid* obj, void* id)
+ALTERNET_UI_API void* PropertyGrid_ColorDatabaseCreate_()
 {
     return MarshalExceptions<void*>([&](){
-            return obj->RemoveProperty(id);
+            return PropertyGrid::ColorDatabaseCreate();
         });
 }
 
-ALTERNET_UI_API c_bool PropertyGrid_DisableProperty_(PropertyGrid* obj, void* id)
-{
-    return MarshalExceptions<c_bool>([&](){
-            return obj->DisableProperty(id);
-        });
-}
-
-ALTERNET_UI_API c_bool PropertyGrid_EnableProperty_(PropertyGrid* obj, void* id, c_bool enable)
-{
-    return MarshalExceptions<c_bool>([&](){
-            return obj->EnableProperty(id, enable);
-        });
-}
-
-ALTERNET_UI_API void PropertyGrid_EndAddChildren_(PropertyGrid* obj, void* id)
+ALTERNET_UI_API void PropertyGrid_ColorDatabaseDelete_(void* handle)
 {
     MarshalExceptions<void>([&](){
-            obj->EndAddChildren(id);
+            PropertyGrid::ColorDatabaseDelete(handle);
         });
 }
 
-ALTERNET_UI_API c_bool PropertyGrid_Expand_(PropertyGrid* obj, void* id)
+ALTERNET_UI_API void PropertyGrid_ColorDatabaseSetGlobal_(void* handle)
 {
-    return MarshalExceptions<c_bool>([&](){
-            return obj->Expand(id);
+    MarshalExceptions<void>([&](){
+            PropertyGrid::ColorDatabaseSetGlobal(handle);
         });
 }
 
-ALTERNET_UI_API void* PropertyGrid_GetFirstChild_(PropertyGrid* obj, void* id)
+ALTERNET_UI_API void PropertyGrid_ColorDatabaseAdd_(void* handle, const char16_t* name, Color color)
 {
-    return MarshalExceptions<void*>([&](){
-            return obj->GetFirstChild(id);
+    MarshalExceptions<void>([&](){
+            PropertyGrid::ColorDatabaseAdd(handle, name, color);
+        });
+}
+
+ALTERNET_UI_API Color_C PropertyGrid_ColorDatabaseFind_(void* handle, const char16_t* name)
+{
+    return MarshalExceptions<Color_C>([&](){
+            return PropertyGrid::ColorDatabaseFind(handle, name);
+        });
+}
+
+ALTERNET_UI_API char16_t* PropertyGrid_ColorDatabaseFindName_(void* handle, Color color)
+{
+    return MarshalExceptions<char16_t*>([&](){
+            return AllocPInvokeReturnString(PropertyGrid::ColorDatabaseFindName(handle, color));
         });
 }
 
@@ -1329,48 +1413,6 @@ ALTERNET_UI_API void PropertyGrid_MakeColumnEditable_(PropertyGrid* obj, uint32_
 {
     MarshalExceptions<void>([&](){
             obj->MakeColumnEditable(column, editable);
-        });
-}
-
-ALTERNET_UI_API void PropertyGrid_BeginLabelEdit_(PropertyGrid* obj, uint32_t column)
-{
-    MarshalExceptions<void>([&](){
-            obj->BeginLabelEdit(column);
-        });
-}
-
-ALTERNET_UI_API void PropertyGrid_EndLabelEdit_(PropertyGrid* obj, c_bool commit)
-{
-    MarshalExceptions<void>([&](){
-            obj->EndLabelEdit(commit);
-        });
-}
-
-ALTERNET_UI_API void PropertyGrid_SetCaptionBackgroundColor_(PropertyGrid* obj, Color col)
-{
-    MarshalExceptions<void>([&](){
-            obj->SetCaptionBackgroundColor(col);
-        });
-}
-
-ALTERNET_UI_API void PropertyGrid_SetCaptionTextColor_(PropertyGrid* obj, Color col)
-{
-    MarshalExceptions<void>([&](){
-            obj->SetCaptionTextColor(col);
-        });
-}
-
-ALTERNET_UI_API void PropertyGrid_SetCellBackgroundColor_(PropertyGrid* obj, Color col)
-{
-    MarshalExceptions<void>([&](){
-            obj->SetCellBackgroundColor(col);
-        });
-}
-
-ALTERNET_UI_API void PropertyGrid_SetCellDisabledTextColor_(PropertyGrid* obj, Color col)
-{
-    MarshalExceptions<void>([&](){
-            obj->SetCellDisabledTextColor(col);
         });
 }
 
