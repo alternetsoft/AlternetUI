@@ -570,13 +570,11 @@ namespace PropertyGridSample
 
         private void InitLogContextMenu()
         {
-            MenuItem menuItem1 = new()
-            {
-                Text = "Clear",
-            };
-            menuItem1.Click += (sender, e) => { logListBox.Items.Clear(); };
+            contextMenu2.Add(new("Clear", () => { logListBox.RemoveAll(); }));
 
-            contextMenu2.Items.Add(menuItem1);
+#if DEBUG
+            contextMenu2.Add(new("C++ Throw", () => { WebBrowser.DoCommandGlobal("CppThrow"); }));
+#endif
         }
 
         private void LogEvent(string name, bool logAlways = false)

@@ -154,7 +154,7 @@ namespace Alternet.UI
 
             var propInstance = dataSource?.GetProperties(tag);
 
-            propertyGrid.SetProps(item);
+            propertyGrid.SetProps(propInstance);
         }
 
         public IListEditSource? DataSource
@@ -195,10 +195,10 @@ namespace Alternet.UI
             if (itemInfo == null)
                 return;
             selectedItem.ImageIndex = itemInfo.Value.ImageIndex;
-            selectedItem.Text = itemInfo.Value.Title;
+            selectedItem.Text = itemInfo.Value.Title!;
         }
 
-        private (string Title, int? ImageIndex)? GetItemInfo(object? item)
+        private (string? Title, int? ImageIndex)? GetItemInfo(object? item)
         {
             if (item == null)
                 return null;
@@ -217,7 +217,7 @@ namespace Alternet.UI
             foreach (var item in data)
             {
                 var itemInfo = GetItemInfo(item);
-                var treeItem = new TreeViewItem(itemInfo!.Value.Title, itemInfo!.Value.ImageIndex)
+                var treeItem = new TreeViewItem(itemInfo!.Value.Title!, itemInfo!.Value.ImageIndex)
                 {
                     Tag = item,
                 };

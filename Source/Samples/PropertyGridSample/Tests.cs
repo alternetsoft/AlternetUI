@@ -27,14 +27,13 @@ namespace PropertyGridSample
         internal void RunTests()
 #pragma warning restore
         {
-            TestColorVariant();
         }
 
         internal static void TestColorVariant()
         {
-            Color Fn(Color color)
+            static Color Fn(Color color)
             {
-                void DebugWriteColor(string label, Color c)
+                static void DebugWriteColor(string label, Color c)
                 {
                     Debug.WriteLine(label+" " + c.NameAndARGBValue);
                 }

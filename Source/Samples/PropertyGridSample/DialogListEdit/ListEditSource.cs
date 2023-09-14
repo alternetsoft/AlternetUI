@@ -38,7 +38,9 @@ namespace Alternet.UI
             }
         }
 
+#pragma warning disable
         public static void RegisterListEditSource(Type type, string propName, Type editType)
+#pragma warning restore
         {
         }
 
