@@ -150,10 +150,8 @@ namespace Alternet.UI
         /// on the toolbars.</returns>
         public static ImageSet FromSvgUrlForToolbar(string url, Control control)
         {
-            Size deviceDpi = control.GetDPI();
-            var width = Toolbar.GetDefaultImageSize(deviceDpi.Width);
-            var height = Toolbar.GetDefaultImageSize(deviceDpi.Height);
-            var result = ImageSet.FromSvgUrl(url, width, height);
+            var imageSize = Toolbar.GetDefaultImageSize(control);
+            var result = ImageSet.FromSvgUrl(url, imageSize.Width, imageSize.Height);
             return result;
         }
 

@@ -242,6 +242,17 @@ namespace Alternet.UI
 
         internal Native.AuiToolBar NativeControl => Handler.NativeControl;
 
+        public ImageSet LoadSvgImage(string url, Int32Size imageSize)
+        {
+            var result = ImageSet.FromSvgUrl(url, imageSize.Width, imageSize.Height);
+            return result;
+        }
+
+        public ImageSet LoadSvgImage(string url, Control dpiControl)
+        {
+            return ImageSet.FromSvgUrlForToolbar(url, dpiControl);
+        }
+
         /// <summary>
         /// Adds a tool to the toolbar.
         /// </summary>
@@ -272,7 +283,7 @@ namespace Alternet.UI
         /// <returns>An <see cref="int"/> by which the tool may be identified
         /// in subsequent operations.</returns>
         public int AddTool(
-            string label,
+            string? label,
             ImageSet? bitmap = null,
             string? shortHelpString = null,
             AuiToolbarItemKind itemKind = AuiToolbarItemKind.Normal,
@@ -280,6 +291,7 @@ namespace Alternet.UI
             string? longHelpString = null)
         {
             int toolId = GenNewId();
+            label ??= string.Empty;
             shortHelpString ??= string.Empty;
             longHelpString ??= string.Empty;
             NativeControl.AddTool2(

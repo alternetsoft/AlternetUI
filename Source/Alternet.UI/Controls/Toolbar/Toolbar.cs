@@ -39,7 +39,7 @@ namespace Alternet.UI
         /// <remarks>
         /// Default property value is 16. Suggested values are 16, 24, 32, 48.
         /// </remarks>
-        public static int DefaultImageSize96dpi { get; set; } = 16;
+        public static int DefaultImageSize96dpi { get; set; } = 24;
 
         /// <summary>
         /// Defines the default size of toolbar images for displays
@@ -58,7 +58,7 @@ namespace Alternet.UI
         /// <remarks>
         /// Default property value is 24. Suggested values are 16, 24, 32, 48.
         /// </remarks>
-        public static int DefaultImageSize144dpi { get; set; } = 24;
+        public static int DefaultImageSize144dpi { get; set; } = 32;
 
         /// <summary>
         /// Defines the default size of toolbar images for displays
@@ -259,6 +259,20 @@ namespace Alternet.UI
             if (deviceDpiRatio < 3m)
                 return DefaultImageSize192dpi;
             return DefaultImageSize288dpi;
+        }
+
+        /// <inheritdoc cref="GetDefaultImageSize(double)"/>
+        public static Int32Size GetDefaultImageSize(Size deviceDpi)
+        {
+            var width = GetDefaultImageSize(deviceDpi.Width);
+            var height = GetDefaultImageSize(deviceDpi.Height);
+            return new(width, height);
+        }
+
+        public static Int32Size GetDefaultImageSize(Control control)
+        {
+            var result = GetDefaultImageSize(control.GetDPI());
+            return result;
         }
 
         /// <summary>

@@ -243,9 +243,21 @@ namespace Alternet.UI
             return this;
         }
 
+        public IAuiPaneInfo BestSize(double x, double y)
+        {
+            Native.AuiPaneInfo.BestSize(handle, (int)x, (int)y);
+            return this;
+        }
+
         public IAuiPaneInfo MinSize(int x, int y)
         {
             Native.AuiPaneInfo.MinSize(handle, x, y);
+            return this;
+        }
+
+        public IAuiPaneInfo MinSize(double width, double height)
+        {
+            Native.AuiPaneInfo.MinSize(handle, (int)width, (int)height);
             return this;
         }
 

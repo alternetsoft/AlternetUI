@@ -323,6 +323,9 @@ namespace Alternet.UI
         /// <returns>Returns this pane info instance.</returns>
         IAuiPaneInfo BestSize(int width, int height);
 
+        /// <inheritdoc cref="BestSize(int,int)"/>
+        IAuiPaneInfo BestSize(double width, double height);
+
         /// <summary>
         /// Sets the minimum size of the pane.
         /// </summary>
@@ -330,6 +333,9 @@ namespace Alternet.UI
         /// <param name="height">New minimal height.</param>
         /// <returns>Returns this pane info instance.</returns>
         IAuiPaneInfo MinSize(int width, int height);
+
+        /// <inheritdoc cref="MinSize(int,int)"/>
+        IAuiPaneInfo MinSize(double width, double height);
 
         /// <summary>
         /// Sets the maximum size of the pane.
