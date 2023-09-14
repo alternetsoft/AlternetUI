@@ -51,7 +51,9 @@ namespace ApiGenerator.Native
 
                     w.WriteLine("private:");
                     w.Indent++;
+#pragma warning disable
                     string typeName = types.GetTypeName(type.ToContextualType(), TypeUsage.Static);
+#pragma warning restore
                     w.WriteLine("void* objectHandle;");
                     w.WriteLine(
                         "inline static TTrampolineLocatorCallback trampolineLocatorCallback = nullptr;");

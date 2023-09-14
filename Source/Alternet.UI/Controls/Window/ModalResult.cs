@@ -1,7 +1,8 @@
 namespace Alternet.UI
 {
     /// <summary>
-    /// Specifies result of user interaction with a modal window shown with <see cref="Window.ShowModal()"/>.
+    /// Specifies result of user interaction with a modal window shown with
+    /// <see cref="Window.ShowModal()"/>.
     /// </summary>
     public enum ModalResult
     {
@@ -18,6 +19,6 @@ namespace Alternet.UI
         /// <summary>
         /// The activity was accepted.
         /// </summary>
-        Accepted
+        Accepted,
     }
 }

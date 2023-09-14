@@ -2,93 +2,87 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
-
 using System;
-using System.Security;              // SecurityCritical, TreatAsSafe
 using System.ComponentModel;
+using System.Security;
 using Alternet.UI.Internal;
 
 namespace Alternet.UI
 {
     /// <summary>
-    /// InputBinding - InputGesture and ICommand combination
-    ///                Used to specify the binding between Gesture and Command at Element level.
+    /// InputBinding - InputGesture and ICommand combination.
+    /// Used to specify the binding between Gesture and Command at Element level.
     /// </summary>
     public class InputBinding : DependencyObject, ICommandSource
     {
-        #region Constructor
+        /// <summary>
+        /// Dependency property for <see cref="CommandTarget"/>.
+        /// </summary>
+        public static readonly DependencyProperty CommandTargetProperty =
+            DependencyProperty.Register("CommandTarget", typeof(IInputElement), typeof(InputBinding));
 
         /// <summary>
-        ///     Default Constructor - needed to allow markup creation
+        /// Dependency property for <see cref="Command"/> property.
+        /// </summary>
+        public static readonly DependencyProperty CommandProperty =
+            DependencyProperty.Register(
+                "Command",
+                typeof(ICommand),
+                typeof(InputBinding),
+                new UIPropertyMetadata(null, new PropertyChangedCallback(OnCommandPropertyChanged)));
+
+        /// <summary>
+        /// Dependency property for <see cref="CommandParameter"/>.
+        /// </summary>
+        public static readonly DependencyProperty CommandParameterProperty =
+            DependencyProperty.Register("CommandParameter", typeof(object), typeof(InputBinding));
+
+        private static readonly object DataLock = new();
+
+        private InputGesture? gesture = null;
+
+        // Fields to implement DO's inheritance context
+        private DependencyObject? inheritanceContext = null;
+        private bool hasMultipleInheritanceContexts = false;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="InputBinding"/> class.
+        /// </summary>
+        /// <param name="command">Command.</param>
+        /// <param name="gesture">Input Gesture.</param>
+        public InputBinding(ICommand command, InputGesture gesture)
+        {
+            Command = command ?? throw new ArgumentNullException(nameof(command));
+            this.gesture = gesture ?? throw new ArgumentNullException(nameof(gesture));
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="InputBinding"/> class.
         /// </summary>
         protected InputBinding()
         {
         }
 
         /// <summary>
-        /// Constructor
-        /// </summary>
-        /// <param name="command">Command</param>
-        /// <param name="gesture">Input Gesture</param>
-        public InputBinding(ICommand command, InputGesture gesture)
-        {
-            if (command == null)
-                throw new ArgumentNullException("command");
-
-            if (gesture == null)
-                throw new ArgumentNullException("gesture");
-
-            Command = command;
-            _gesture = gesture;
-        }
-
-        #endregion Constructor
-        //------------------------------------------------------
-        //
-        //  Public Methods
-        //
-        //------------------------------------------------------
-        #region Public Methods       
-
-        internal string ManagedCommandId { get; } = Guid.NewGuid().ToString("N");
-
-        /// <summary>
-        ///     Dependency Property for Command property
-        /// </summary>
-        public static readonly DependencyProperty CommandProperty =
-            DependencyProperty.Register("Command", typeof(ICommand), typeof(InputBinding), new UIPropertyMetadata(null, new PropertyChangedCallback(OnCommandPropertyChanged)));
-
-        /// <summary>
         /// Command Object associated
         /// </summary>
-        [TypeConverter("System.Windows.Input.CommandConverter, PresentationFramework, Version=" + BuildInfo.WCP_VERSION + ", Culture=neutral, PublicKeyToken=" + BuildInfo.WCP_PUBLIC_KEY_TOKEN + ", Custom=null")]
-        [Localizability(LocalizationCategory.NeverLocalize)] // cannot be localized
+        [TypeConverter(
+            "System.Windows.Input.CommandConverter, PresentationFramework, Version="
+            + BuildInfo.WCP_VERSION + ", Culture=neutral, PublicKeyToken=" +
+            BuildInfo.WCP_PUBLIC_KEY_TOKEN + ", Custom=null")]
+        [Localizability(LocalizationCategory.NeverLocalize)]
         public ICommand Command
         {
             get
             {
                 return (ICommand)GetValue(CommandProperty);
             }
+
             set
             {
                 SetValue(CommandProperty, value);
             }
         }
-
-        /// <summary>
-        ///     Property changed callback for Command property
-        /// </summary>
-        private static void OnCommandPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-        }
-
-        /// <summary>
-        ///     Dependency Property for Command Parameter
-        /// </summary>
-        public static readonly DependencyProperty CommandParameterProperty =
-            DependencyProperty.Register("CommandParameter", typeof(object), typeof(InputBinding));
 
         /// <summary>
         ///     A parameter for the command.
@@ -99,6 +93,7 @@ namespace Alternet.UI
             {
                 return GetValue(CommandParameterProperty);
             }
+
             set
             {
                 SetValue(CommandParameterProperty, value);
@@ -106,13 +101,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        ///     Dependency property for command target
-        /// </summary>
-        public static readonly DependencyProperty CommandTargetProperty =
-            DependencyProperty.Register("CommandTarget", typeof(IInputElement), typeof(InputBinding));
-
-        /// <summary>
-        ///     Where the command should be raised.
+        /// Where the command should be raised.
         /// </summary>
         public IInputElement CommandTarget
         {
@@ -120,6 +109,7 @@ namespace Alternet.UI
             {
                 return (IInputElement)GetValue(CommandTargetProperty);
             }
+
             set
             {
                 SetValue(CommandTargetProperty, value);
@@ -127,7 +117,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// InputGesture associated with the Command
+        /// <see cref="InputGesture"/> associated with the <see cref="Command"/>.
         /// </summary>
         public virtual InputGesture? Gesture
         {
@@ -135,83 +125,68 @@ namespace Alternet.UI
             // in C#.  Luckily there is no security issue with leaving it virtual.
             get
             {
-                return _gesture;
+                return gesture;
             }
 
             set
             {
                 if (value == null)
-                    throw new ArgumentNullException("value");
+                    throw new ArgumentNullException(nameof(value));
 
-                lock (_dataLock)
+                lock (DataLock)
                 {
-                    _gesture = value;
+                    gesture = value;
                 }
             }
         }
-        #endregion Public Methods
-        //------------------------------------------------------
-        //
-        //  Internal Methods
-        //
-        //------------------------------------------------------
-
-        #region Inheirtance context
 
         /// <summary>
-        ///     Define the DO's inheritance context
+        /// Says if the current instance has multiple InheritanceContexts.
         /// </summary>
-        internal override DependencyObject? InheritanceContext
+        internal override bool HasMultipleInheritanceContexts => hasMultipleInheritanceContexts;
+
+        /// <summary>
+        /// Defines the DO's inheritance context.
+        /// </summary>
+        internal override DependencyObject? InheritanceContext => inheritanceContext;
+
+        internal string ManagedCommandId { get; } = Guid.NewGuid().ToString("N");
+
+        /// <summary>
+        /// Receives a new inheritance context.
+        /// </summary>
+        internal override void AddInheritanceContext(
+            DependencyObject context,
+            DependencyProperty property)
         {
-            get { return _inheritanceContext; }
+            InheritanceContextHelper.AddInheritanceContext(
+                context,
+                this,
+                ref hasMultipleInheritanceContexts,
+                ref inheritanceContext);
         }
 
         /// <summary>
-        ///     Receive a new inheritance context
+        /// Removes an inheritance context.
         /// </summary>
-        internal override void AddInheritanceContext(DependencyObject context, DependencyProperty property)
+        internal override void RemoveInheritanceContext(
+            DependencyObject context,
+            DependencyProperty property)
         {
-            InheritanceContextHelper.AddInheritanceContext(context,
-                                                           this,
-                                                           ref _hasMultipleInheritanceContexts,
-                                                           ref _inheritanceContext);
+            InheritanceContextHelper.RemoveInheritanceContext(
+                context,
+                this,
+                ref hasMultipleInheritanceContexts,
+                ref inheritanceContext);
         }
 
         /// <summary>
-        ///     Remove an inheritance context
+        ///     Property changed callback for Command property
         /// </summary>
-        internal override void RemoveInheritanceContext(DependencyObject context, DependencyProperty property)
+        private static void OnCommandPropertyChanged(
+            DependencyObject d,
+            DependencyPropertyChangedEventArgs e)
         {
-            InheritanceContextHelper.RemoveInheritanceContext(context,
-                                                              this,
-                                                              ref _hasMultipleInheritanceContexts,
-                                                              ref _inheritanceContext);
         }
-
-        /// <summary>
-        ///     Says if the current instance has multiple InheritanceContexts
-        /// </summary>
-        internal override bool HasMultipleInheritanceContexts
-        {
-            get { return _hasMultipleInheritanceContexts; }
-        }
-
-        #endregion
-
-        //------------------------------------------------------
-        //
-        //  Private Fields
-        //
-        //------------------------------------------------------
-
-        #region Private Fields
-        private InputGesture? _gesture = null;
-
-        internal static object _dataLock = new object();
-
-        // Fields to implement DO's inheritance context
-        private DependencyObject? _inheritanceContext = null;
-        private bool _hasMultipleInheritanceContexts = false;
-        #endregion Private Fields
     }
 }

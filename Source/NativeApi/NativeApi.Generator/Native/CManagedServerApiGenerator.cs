@@ -14,7 +14,9 @@ namespace ApiGenerator.Native
     {
         public static string Generate(ApiType apiType)
         {
+#pragma warning disable
             var type = apiType.Type;
+#pragma warning restore
             var codeWriter = new StringWriter();
             var w = new IndentedTextWriter(codeWriter);
 
