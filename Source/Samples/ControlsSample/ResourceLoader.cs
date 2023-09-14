@@ -26,7 +26,8 @@ namespace ControlsSample
             static Image LoadImage(string stateName) =>
                 new Bitmap(
                     Assembly.GetExecutingAssembly().GetManifestResourceStream(
-                        $"ControlsSample.Resources.ButtonImages.ButtonImage{stateName}.png") ?? throw new Exception());
+                        $"ControlsSample.Resources.ButtonImages.ButtonImage{stateName}.png")
+                    ?? throw new Exception());
 
             return new ControlStateImages
             {
@@ -44,13 +45,17 @@ namespace ControlsSample
 
             var assembly = Assembly.GetExecutingAssembly();
             var allResourceNames = assembly.GetManifestResourceNames();
-            var allImageResourceNames = allResourceNames.Where(x => x.StartsWith("ControlsSample.Resources.ImageListIcons."));
-            var smallImageResourceNames = allImageResourceNames.Where(x => x.Contains(".Small.")).ToArray();
-            var largeImageResourceNames = allImageResourceNames.Where(x => x.Contains(".Large.")).ToArray();
+            var allImageResourceNames =
+                allResourceNames.Where(x => x.StartsWith("ControlsSample.Resources.ImageListIcons."));
+            var smallImageResourceNames =
+                allImageResourceNames.Where(x => x.Contains(".Small.")).ToArray();
+            var largeImageResourceNames =
+                allImageResourceNames.Where(x => x.Contains(".Large.")).ToArray();
             if (smallImageResourceNames.Length != largeImageResourceNames.Length)
                 throw new Exception();
 
-            Image LoadImage(string name) => new Bitmap(assembly.GetManifestResourceStream(name) ?? throw new Exception());
+            Image LoadImage(string name) =>
+                new Bitmap(assembly.GetManifestResourceStream(name) ?? throw new Exception());
 
             for (int i = 0; i < smallImageResourceNames.Length; i++)
             {
