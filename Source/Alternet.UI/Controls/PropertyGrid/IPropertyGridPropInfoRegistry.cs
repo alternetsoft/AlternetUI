@@ -29,5 +29,7 @@ namespace Alternet.UI
         /// <see cref="IPropertyGridPropInfoRegistry"/> instance.
         /// </summary>
         PropertyInfo PropInfo { get; }
+
+        public Type? ListEditType { get; set; }
     }
 }

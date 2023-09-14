@@ -32,5 +32,7 @@ namespace Alternet.UI
         public override ImageList? ImageList => TreeView?.ImageList;
 
         public override int? GetItemImageIndex(object item) => (item as TreeViewItem)?.ImageIndex;
+
+        public override object? CreateNewItem() => new TreeViewItem();
     }
 }

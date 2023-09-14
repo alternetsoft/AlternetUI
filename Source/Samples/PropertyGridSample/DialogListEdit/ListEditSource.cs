@@ -38,10 +38,15 @@ namespace Alternet.UI
             }
         }
 
-#pragma warning disable
-        public static void RegisterListEditSource(Type type, string propName, Type editType)
-#pragma warning restore
+        public static IPropertyGridPropInfoRegistry RegisterListEditSource(
+            Type type,
+            string propName,
+            Type editType)
         {
+            var typeRegistry = PropertyGrid.GetTypeRegistry(type);
+            var propRegistry = typeRegistry.GetPropRegistry(propName);
+            propRegistry.ListEditType = editType;
+            return propRegistry;
         }
 
         public static void RegisterCreateFuncs()
@@ -71,28 +76,19 @@ namespace Alternet.UI
             if (value is not ICollection)
                 return null;
 
-            IListEditSource Fn(IListEditSource source)
-            {
-                source.Instance = instance;
-                source.PropInfo = propInfo;
-                return source;
-            }
+            var typeRegistry = PropertyGrid.GetTypeRegistryOrNull(instance.GetType());
+            var propRegistry = typeRegistry?.GetPropRegistryOrNull(propInfo);
+            var editType = propRegistry?.ListEditType;
 
-            if(instance is ListView)
-            {
-                if (propInfo.Name == nameof(ListView.Items))
-                    return Fn(new ListEditSourceListViewItem());
-                if (propInfo.Name == nameof(ListView.Columns))
-                    return Fn(new ListEditSourceListViewColumn());
-            }
+            if (editType == null)
+                return null;
 
-            if (instance is TreeView)
-            {
-                if (propInfo.Name == nameof(TreeView.Items))
-                    return Fn(new ListEditSourceTreeViewItem());
-            }
-
-            return null;
+            var result = (IListEditSource?)Activator.CreateInstance(editType);
+            if (result == null)
+                return null;
+            result.Instance = instance;
+            result.PropInfo = propInfo;
+            return result;                
         }
 
         public virtual string? GetItemTitle(object item) => item?.ToString();
@@ -106,5 +102,10 @@ namespace Alternet.UI
         public virtual ImageList? ImageList => null;
 
         public virtual int? GetItemImageIndex(object item) => null;
+
+        public virtual object? CreateNewItem() => null;
+
+        public virtual bool AllowAdd => true;
+        public virtual bool AllowDelete => true;
     }
 }

@@ -12,7 +12,9 @@ namespace Alternet.UI
     public interface IListEditSource
     {
         bool AllowSubItems { get; }
-        
+        bool AllowAdd { get; }
+        bool AllowDelete { get; }
+
         object? Instance { get; set; }
 
         public PropertyInfo? PropInfo { get; set; }
@@ -28,5 +30,7 @@ namespace Alternet.UI
         ImageList? ImageList { get; }
 
         int? GetItemImageIndex(object item);
+
+        object? CreateNewItem();
     }
 }

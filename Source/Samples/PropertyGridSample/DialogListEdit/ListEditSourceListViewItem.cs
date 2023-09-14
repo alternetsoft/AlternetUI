@@ -20,6 +20,8 @@ namespace Alternet.UI
             }
         }
 
+        public override object? CreateNewItem() => new ListViewItem();
+
         public override ImageList? ImageList => ListView?.SmallImageList;
 
         public override int? GetItemImageIndex(object item) => (item as ListViewItem)?.ImageIndex;

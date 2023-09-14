@@ -17,7 +17,9 @@ namespace Alternet.UI
         private readonly LayoutPanel panel = new();
         private readonly AuiToolbar toolbar = new();
         private readonly StatusBar statusbar = new();
-        
+        private readonly int buttonIdAdd;
+        private readonly int buttonIdRemove;
+
         private readonly TreeView treeView = new()
         {
             HasBorder = false,
@@ -42,9 +44,8 @@ namespace Alternet.UI
             ShowInTaskbar = false;
             MinimizeEnabled = false;
             MaximizeEnabled = false;
-            AlwaysOnTop = true;
             Size = new(600, 400);
-            Title = "Collection Editor";
+            Title = CommonStrings.Default.WindowTitleListEditor;
             StartLocation = WindowStartLocation.CenterScreen;
 
             this.StatusBar = statusbar;
@@ -82,11 +83,11 @@ namespace Alternet.UI
             var addImage = ImageSet.FromSvgUrlForToolbar(SvgUtils.UrlImagePlus, this);
             var removeImage = ImageSet.FromSvgUrlForToolbar(SvgUtils.UrlImageMinus, this);
 
-            var addButtonId = toolbar.AddTool(
+            buttonIdAdd = toolbar.AddTool(
                 CommonStrings.Default.ButtonAdd,
                 addImage,
                 CommonStrings.Default.ButtonAdd);
-            var removeButtonId = toolbar.AddTool(
+            buttonIdRemove = toolbar.AddTool(
                 CommonStrings.Default.ButtonRemove,
                 removeImage,
                 CommonStrings.Default.ButtonRemove);
@@ -102,8 +103,8 @@ namespace Alternet.UI
 
             manager.Update();
 
-            toolbar.AddToolOnClick(addButtonId, AddButton_Click);
-            toolbar.AddToolOnClick(removeButtonId, RemoveButton_Click);
+            toolbar.AddToolOnClick(buttonIdAdd, AddButton_Click);
+            toolbar.AddToolOnClick(buttonIdRemove, RemoveButton_Click);
 
             propertyGrid.ApplyKnownColors(PropertyGridKnownColors.White);
             propertyGrid.CenterSplitter();
@@ -120,23 +121,46 @@ namespace Alternet.UI
 
         private void AddButton_Click(object? sender, EventArgs e)
         {
-            /*var item = new TreeViewItem
-            {
-                Text = "item"
-            };
-            treeView.Items.Add(item);
-            treeView.SelectedItem = item;
-            item.IsFocused = true;
-            */
+            if (dataSource == null)
+                return;
+            
+            var item = dataSource.CreateNewItem();
+
+            if (item == null)
+                return;
+
+            var itemInfo = GetItemInfo(item);
+
+            var treeItem = new TreeViewItem(itemInfo!.Value.Title!, itemInfo.Value.ImageIndex);
+            treeView.Tag = item;
+            treeView.Items.Add(treeItem);
+            treeView.SelectedItem = treeItem;
+            treeItem.IsFocused = true;
+            UpdateButtons();
         }
 
         private void RemoveButton_Click(object? sender, EventArgs e)
         {
             treeView.RemoveItemAndSelectSibling(treeView.SelectedItem);
+            UpdateButtons();
+        }
+
+        private void UpdateButtons()
+        {
+            var canAdd = false;
+            var canRemove = false;
+            if (dataSource != null)
+            {
+                canAdd = dataSource.AllowAdd;
+                canRemove = (treeView.SelectedItem != null) && dataSource.AllowDelete;
+            }
+            toolbar.EnableTool(buttonIdAdd, canAdd);
+            toolbar.EnableTool(buttonIdRemove, canRemove);            
         }
 
         private void TreeView_SelectionChanged(object? sender, EventArgs e)
         {
+            UpdateButtons();
             var item = treeView.SelectedItem;
             if (item == null)
             {
@@ -172,6 +196,7 @@ namespace Alternet.UI
                 dataSource = value;
                 Load();
                 Bind();
+                UpdateButtons();
             }
         }
 

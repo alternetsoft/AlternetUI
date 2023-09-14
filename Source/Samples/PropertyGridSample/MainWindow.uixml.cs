@@ -29,6 +29,7 @@ namespace PropertyGridSample
         static MainWindow()
         {
             PropertyGrid.RegisterCollectionEditors();
+            ListEditSource.RegisterCreateFuncs();
 
             var localizableEnum = PropertyGrid.GetChoices<BrushType>();
             localizableEnum.SetLabelForValue<BrushType>(BrushType.LinearGradient, "Linear Gradient");

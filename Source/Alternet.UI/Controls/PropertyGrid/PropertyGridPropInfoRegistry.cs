@@ -34,5 +34,7 @@ namespace Alternet.UI
         }
 
         public bool HasNewItemParams => newItemParams != null;
+
+        public Type? ListEditType { get; set; }
     }
 }

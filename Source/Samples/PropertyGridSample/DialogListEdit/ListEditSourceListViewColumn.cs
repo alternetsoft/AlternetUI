@@ -17,5 +17,7 @@ namespace Alternet.UI
                 return ListView?.Columns;
             }
         }
+
+        public override object? CreateNewItem() => new ListViewColumn();
     }
 }
