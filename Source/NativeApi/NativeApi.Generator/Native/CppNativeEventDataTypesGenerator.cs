@@ -46,7 +46,10 @@ namespace ApiGenerator.Native
 
         private static void WriteField(IndentedTextWriter w, Types types, FieldInfo field)
         {
-            w.WriteLine(types.GetTypeName(field.FieldType.ToContextualType(), TypeUsage.Static) + " " + field.Name + ";");
+            w.WriteLine(
+                types.GetTypeName(
+                    field.FieldType.ToContextualType(),
+                    TypeUsage.Static) + " " + field.Name + ";");
         }
 
     }

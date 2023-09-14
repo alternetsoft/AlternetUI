@@ -12,6 +12,8 @@ namespace ApiGenerator.Native
 {
     internal static class CApiGenerator
     {
+        private static bool UseMarshalExceptionsScope = true;
+
         public static string Generate(ApiType apiType)
         {
             var type = apiType.Type;
@@ -117,6 +119,9 @@ namespace ApiGenerator.Native
             {
                 this.writer = writer;
 
+                if (!UseMarshalExceptionsScope)
+                    return;
+
                 if (returnTypeName != "void")
                     writer.Write("return ");
 
@@ -128,6 +133,9 @@ namespace ApiGenerator.Native
 
             public void Dispose()
             {
+                if (!UseMarshalExceptionsScope)
+                    return;
+
                 writer.Indent--;
                 writer.WriteLine("});");
                 writer.Indent--;

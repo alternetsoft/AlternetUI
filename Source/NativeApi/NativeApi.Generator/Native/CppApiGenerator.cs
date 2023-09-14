@@ -37,12 +37,15 @@ namespace ApiGenerator.Native
             WriteDestructor(w, types, type);
 
             w.WriteLine("private:");
-            w.WriteLine($"BYREF_ONLY({types.GetTypeName(type.ToContextualType(), TypeUsage.Static)});");
+
+            var aa = types.GetTypeName(type.ToContextualType(), TypeUsage.Static);
+            w.WriteLine($"BYREF_ONLY({aa});");
 
             return codeWriter.ToString();
         }
 
-        static string GetVisibility(MemberVisibility visibility) => visibility.ToString().ToLower() + ":";
+        static string GetVisibility(MemberVisibility visibility) =>
+            visibility.ToString().ToLower() + ":";
 
         private static void WriteProperty(IndentedTextWriter w, ApiProperty apiProperty, Types types)
         {
@@ -73,7 +76,9 @@ namespace ApiGenerator.Native
         {
             var method = apiMethod.Method;
             var name = method.Name;
-            var returnTypeName = types.GetTypeName(method.ReturnParameter.ToContextualParameter(), TypeUsage.Return);
+            var returnTypeName = types.GetTypeName(
+                method.ReturnParameter.ToContextualParameter(),
+                TypeUsage.Return);
 
             var signatureParameters = new StringBuilder();
             var parameters = method.GetParameters();
@@ -104,7 +109,9 @@ namespace ApiGenerator.Native
             if (events.Length == 0)
                 return;
 
-            var declaringTypeName = types.GetTypeName(events[0].DeclaringType!.ToContextualType(), TypeUsage.Static);
+            var declaringTypeName = types.GetTypeName(
+                events[0].DeclaringType!.ToContextualType(),
+                TypeUsage.Static);
             w.WriteLine("public:");
             w.WriteLine($"enum class {declaringTypeName}Event");
 

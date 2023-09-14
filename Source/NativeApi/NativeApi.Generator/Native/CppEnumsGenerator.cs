@@ -44,7 +44,8 @@ namespace ApiGenerator.Native
                 if (!TypeProvider.IsFlagsEnum(type))
                     continue;
                 var typeName = TypeProvider.GetNativeName(type);
-                w.WriteLine($"template<> struct enable_bitmask_operators<Alternet::UI::{typeName}> {{ static const bool enable = true; }};");
+                w.WriteLine(
+                    $"template<> struct enable_bitmask_operators<Alternet::UI::{typeName}> {{ static const bool enable = true; }};");
             }
 
             return codeWriter.ToString();

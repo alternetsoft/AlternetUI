@@ -40,7 +40,10 @@ namespace ApiGenerator.Native
                     foreach (var property in apiType.Methods)
                         WriteMethod(w, property, types);
 
-                    WriteTrampolineLocator(w, types, ManagedServerMemberProvider.GetTrampolineMembers(apiType));
+                    WriteTrampolineLocator(
+                        w,
+                        types,
+                        ManagedServerMemberProvider.GetTrampolineMembers(apiType));
 
                     WriteConstructor(w, types, type);
 
@@ -50,7 +53,8 @@ namespace ApiGenerator.Native
                     w.Indent++;
                     string typeName = types.GetTypeName(type.ToContextualType(), TypeUsage.Static);
                     w.WriteLine("void* objectHandle;");
-                    w.WriteLine("inline static TTrampolineLocatorCallback trampolineLocatorCallback = nullptr;");
+                    w.WriteLine(
+                        "inline static TTrampolineLocatorCallback trampolineLocatorCallback = nullptr;");
                     w.Indent--;
                 }
                 w.WriteLine(";");
@@ -73,7 +77,8 @@ namespace ApiGenerator.Native
                 using (new BlockIndent(w))
                 {
                     w.WriteLine($"if (trampolineLocatorCallback == nullptr) throwExInvalidOp;");
-                    w.WriteLine($"auto trampoline = (TGet{name})trampolineLocatorCallback(Trampoline::Get{name});");
+                    w.WriteLine(
+                        $"auto trampoline = (TGet{name})trampolineLocatorCallback(Trampoline::Get{name});");
                     w.Write($"return trampoline(");
                     if (!MemberProvider.IsStatic(property))
                         w.Write($"objectHandle");
@@ -93,7 +98,8 @@ namespace ApiGenerator.Native
                     using (new BlockIndent(w))
                     {
                         w.WriteLine($"if (trampolineLocatorCallback == nullptr) throwExInvalidOp;");
-                        w.WriteLine($"auto trampoline = (TSet{name})trampolineLocatorCallback(Trampoline::Set{name});");
+                        w.WriteLine(
+                            $"auto trampoline = (TSet{name})trampolineLocatorCallback(Trampoline::Set{name});");
                         w.Write($"trampoline(");
                         if (!MemberProvider.IsStatic(property))
                             w.Write($"objectHandle, ");
@@ -122,7 +128,9 @@ namespace ApiGenerator.Native
         {
             var method = apiMethod.Method;
             var name = method.Name;
-            var returnTypeName = types.GetTypeName(method.ReturnParameter.ToContextualParameter(), TypeUsage.Return);
+            var returnTypeName = types.GetTypeName(
+                method.ReturnParameter.ToContextualParameter(),
+                TypeUsage.Return);
 
             var signatureParameters = new StringBuilder();
             var callParameters = new StringBuilder();
@@ -155,7 +163,8 @@ namespace ApiGenerator.Native
             using (new BlockIndent(w))
             {
                 w.WriteLine($"if (trampolineLocatorCallback == nullptr) throwExInvalidOp;");
-                w.WriteLine($"auto trampoline = (T{name})trampolineLocatorCallback(Trampoline::{name});");
+                w.WriteLine(
+                    $"auto trampoline = (T{name})trampolineLocatorCallback(Trampoline::{name});");
                 if (returnTypeName != "void")
                     w.Write($"return ");
                 w.WriteLine($"trampoline({callParameters});");
@@ -171,12 +180,16 @@ namespace ApiGenerator.Native
             w.WriteLine($"{signatureParameters});");
         }
 
-        private static void WriteTrampolineLocator(IndentedTextWriter w, Types types, MemberInfo[] members)
+        private static void WriteTrampolineLocator(
+            IndentedTextWriter w,
+            Types types,
+            MemberInfo[] members)
         {
             if (members.Length == 0)
                 return;
 
-            var declaringTypeName = types.GetTypeName(members[0].DeclaringType!.ToContextualType(), TypeUsage.Static);
+            var declaringTypeName =
+                types.GetTypeName(members[0].DeclaringType!.ToContextualType(), TypeUsage.Static);
             w.WriteLine("public:");
             w.WriteLine($"enum class Trampoline");
 
@@ -199,7 +212,8 @@ namespace ApiGenerator.Native
         {
             var declaringTypeName = types.GetTypeName(type.ToContextualType(), TypeUsage.Static);
 
-            w.WriteLine($"{declaringTypeName}(void* objectHandle_) : objectHandle(objectHandle_) {{}}");
+            w.WriteLine(
+                $"{declaringTypeName}(void* objectHandle_) : objectHandle(objectHandle_) {{}}");
         }
     }
 }
