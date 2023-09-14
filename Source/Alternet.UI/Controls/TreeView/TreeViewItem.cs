@@ -318,7 +318,11 @@ namespace Alternet.UI
                     if (items[i] != this)
                         continue;
                     if (i == items.Count - 1)
-                        return items[i - 1];
+                    {
+                        if(i > 0)
+                            return items[i - 1];
+                        return null;
+                    }
                     else
                         return items[i + 1];
                 }
