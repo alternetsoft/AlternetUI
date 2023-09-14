@@ -374,6 +374,7 @@ namespace Alternet.UI
             }
         }
 
+
         /// <summary>
         /// Removes selected items from the <see cref="ListBox"/>.
         /// </summary>
@@ -469,6 +470,23 @@ namespace Alternet.UI
         {
             ClearSelectedCore();
             RaiseSelectionChanged(EventArgs.Empty);
+        }
+
+        /// <summary>
+        /// Removed all items from the control.
+        /// </summary>
+        public void RemoveAll()
+        {
+            BeginUpdate();
+            try
+            {
+                ClearSelected();
+                Items.Clear();
+            }
+            finally
+            {
+                EndUpdate();
+            }
         }
 
         /// <summary>
