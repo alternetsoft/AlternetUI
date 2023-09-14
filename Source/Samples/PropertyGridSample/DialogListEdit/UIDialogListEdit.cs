@@ -71,26 +71,48 @@ namespace Alternet.UI
 
             var toolbarStyle =
                 AuiToolbarCreateStyle.PlainBackground | 
-                /*AuiToolbarCreateStyle.HorzLayout |*/
-                /*AuiToolbarCreateStyle.Text | */
+                AuiToolbarCreateStyle.HorzLayout |
+                AuiToolbarCreateStyle.Text | 
                 AuiToolbarCreateStyle.NoTooltips |
                 AuiToolbarCreateStyle.DefaultStyle;
 
             toolbarStyle &= ~AuiToolbarCreateStyle.Gripper;
 
             toolbar.CreateStyle = toolbarStyle;
+            var imageSize = Toolbar.GetDefaultImageSize(this);
+            toolbar.ToolBitmapSize = imageSize;
 
-            var addImage = ImageSet.FromSvgUrlForToolbar(SvgUtils.UrlImagePlus, this);
-            var removeImage = ImageSet.FromSvgUrlForToolbar(SvgUtils.UrlImageMinus, this);
+            var imageAdd = toolbar.LoadSvgImage(SvgUtils.UrlImagePlus, imageSize);
+            var imageRemove = toolbar.LoadSvgImage(SvgUtils.UrlImageMinus, imageSize);
+            var imageOk = toolbar.LoadSvgImage(SvgUtils.UrlImageOk, imageSize);
+            var imageCancel = toolbar.LoadSvgImage(SvgUtils.UrlImageCancel, imageSize);
+            var imageAddChild = toolbar.LoadSvgImage(SvgUtils.UrlImageAddChild, imageSize);
+            var imageRemoveAll = toolbar.LoadSvgImage(SvgUtils.UrlImageRemoveAll, imageSize);
 
             buttonIdAdd = toolbar.AddTool(
                 CommonStrings.Default.ButtonAdd,
-                addImage,
+                imageAdd,
                 CommonStrings.Default.ButtonAdd);
+            var buttonIdAddChild = toolbar.AddTool(
+                CommonStrings.Default.ButtonAddChild,
+                imageAddChild,
+                CommonStrings.Default.ButtonAddChild);
             buttonIdRemove = toolbar.AddTool(
                 CommonStrings.Default.ButtonRemove,
-                removeImage,
+                imageRemove,
                 CommonStrings.Default.ButtonRemove);
+            var buttonIdRemoveAll = toolbar.AddTool(
+                CommonStrings.Default.ButtonClear,
+                imageRemoveAll,
+                CommonStrings.Default.ButtonClear);
+            var buttonIdOk = toolbar.AddTool(
+                CommonStrings.Default.ButtonOk,
+                imageOk,
+                CommonStrings.Default.ButtonOk);
+            var buttonIdCancel = toolbar.AddTool(
+                CommonStrings.Default.ButtonCancel,
+                imageCancel,
+                CommonStrings.Default.ButtonCancel);
 
             toolbar.Realize();
             manager.AddPane(toolbar, toolbarPane);
@@ -98,7 +120,6 @@ namespace Alternet.UI
             // Center pane
             var centerPane = manager.CreatePaneInfo();
             centerPane.Name(nameof(centerPane)).CenterPane().PaneBorder(false);
-
             manager.AddPane(treeView, centerPane);
 
             manager.Update();
@@ -131,8 +152,10 @@ namespace Alternet.UI
 
             var itemInfo = GetItemInfo(item);
 
-            var treeItem = new TreeViewItem(itemInfo!.Value.Title!, itemInfo.Value.ImageIndex);
-            treeView.Tag = item;
+            var treeItem = new TreeViewItem(itemInfo!.Value.Title!, itemInfo.Value.ImageIndex)
+            {
+                Tag = item
+            };
             treeView.Items.Add(treeItem);
             treeView.SelectedItem = treeItem;
             treeItem.IsFocused = true;
@@ -155,7 +178,8 @@ namespace Alternet.UI
                 canRemove = (treeView.SelectedItem != null) && dataSource.AllowDelete;
             }
             toolbar.EnableTool(buttonIdAdd, canAdd);
-            toolbar.EnableTool(buttonIdRemove, canRemove);            
+            toolbar.EnableTool(buttonIdRemove, canRemove);
+            toolbar.Invalidate();
         }
 
         private void TreeView_SelectionChanged(object? sender, EventArgs e)
