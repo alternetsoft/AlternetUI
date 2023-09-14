@@ -374,7 +374,6 @@ namespace Alternet.UI
             }
         }
 
-
         /// <summary>
         /// Removes selected items from the <see cref="ListBox"/>.
         /// </summary>
