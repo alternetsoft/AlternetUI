@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel;
 using System.Linq;
 using Alternet.Base.Collections;
 using Alternet.Drawing;
@@ -98,6 +99,7 @@ namespace Alternet.UI
         /// item is assigned to,
         /// or <c>null</c> if the item has not been assigned to a tree view.
         /// </value>
+        [Browsable(false)]
         public ListView? ListView
         {
             get => listView;
@@ -113,6 +115,7 @@ namespace Alternet.UI
         /// </summary>
         /// <value><see langword="true"/> if the item is in the selected
         /// state; otherwise, <see langword="false"/>.</value>
+        [Browsable(false)]
         public bool IsSelected
             => RequiredListView.SelectedIndices.Contains(RequiredIndex);
 
@@ -122,6 +125,7 @@ namespace Alternet.UI
         /// </summary>
         /// <value><see langword="true"/> if the item has focus; otherwise,
         /// <see langword="false"/>.</value>
+        [Browsable(false)]
         public bool IsFocused
         {
             get => RequiredListView.Handler.FocusedItemIndex == RequiredIndex;
@@ -134,6 +138,7 @@ namespace Alternet.UI
         /// or <see langword="null"/> if the item is not associated with a
         /// <see cref="ListView"/> control.
         /// </summary>
+        [Browsable(false)]
         public long? Index { get; internal set; }
 
         /// <summary>
@@ -149,6 +154,7 @@ namespace Alternet.UI
         /// about the item, such as a unique identifier or the index position
         /// of the item's data in a database.
         /// </remarks>
+        [Browsable(false)]
         public object? Tag { get; set; }
 
         /// <summary>
@@ -242,6 +248,7 @@ namespace Alternet.UI
         /// </summary>
         /// <remarks>Using the <see cref="Cells"/> property, you can add column cells,
         /// remove column cells, and obtain a count of column cells.</remarks>
+        [Browsable(false)]
         public Collection<ListViewItemCell> Cells { get; } = new() { ThrowOnNullAdd = true };
 
         private long RequiredIndex

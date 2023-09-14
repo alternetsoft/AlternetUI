@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 
 namespace Alternet.UI
@@ -61,6 +62,7 @@ namespace Alternet.UI
         /// <see cref="ListView.Columns"/> of the <see cref="ListView"/> control it is contained in.</value>
         /// <remarks>If the <see cref="ListViewColumn"/> is not contained within a
         /// <see cref="ListView"/> control this property returns a value of <c>null</c>.</remarks>
+        [Browsable(false)]
         public int? Index
         {
             get => index;
@@ -81,6 +83,7 @@ namespace Alternet.UI
         /// You can use this property to determine which <see cref="ListView"/> control a
         /// specific <see cref="ListViewColumn"/> object is associated with.
         /// </remarks>
+        [Browsable(false)]
         public ListView? ListView
         {
             get => listView;
