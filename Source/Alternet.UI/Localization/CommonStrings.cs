@@ -31,7 +31,16 @@ namespace Alternet.UI
         public string ButtonAdd { get; set; } = "Add";
 
         /// <inheritdoc cref="ButtonOk"/>
+        public string ButtonAddChild { get; set; } = "Add Child";
+
+        /// <inheritdoc cref="ButtonOk"/>
         public string ButtonRemove { get; set; } = "Remove";
+
+        /// <inheritdoc cref="ButtonOk"/>
+        public string ButtonRemoveAll { get; set; } = "Remove All";
+
+        /// <inheritdoc cref="ButtonOk"/>
+        public string ButtonClear { get; set; } = "Clear";
 
         /// <inheritdoc cref="ButtonOk"/>
         public string WindowTitleListEditor { get; set; } = "List Editor";
