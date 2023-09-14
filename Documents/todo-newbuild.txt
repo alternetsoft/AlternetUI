@@ -3,6 +3,8 @@
 - wxRearrangeList (in checkListBox) https://docs.wxwidgets.org/3.2/classwx_rearrange_list.html
 - wxSashWindow (resizable bounds) https://docs.wxwidgets.org/3.2/classwx_sash_window.html
 - wxHtmlWindow https://docs.wxwidgets.org/3.2/classwx_html_window.html
+- wxSingleChoiceDialog https://docs.wxwidgets.org/3.2/classwx_single_choice_dialog.html
+- wxTextEntryDialog https://docs.wxwidgets.org/3.2/classwx_text_entry_dialog.html
 
 - LayoutFactory.AdjustTextBoxesHeight(Control container);
 test auimanager demo under linux
