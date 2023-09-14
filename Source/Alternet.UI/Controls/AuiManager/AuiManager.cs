@@ -61,6 +61,20 @@ namespace Alternet.UI
             get => managedControl;
         }
 
+        /// <summary>
+        /// Returns true if live resize is always used on the current platform.
+        /// </summary>
+        /// <remarks>
+        /// If this function returns true, LiveResize flag is ignored and live
+        /// resize is always used, whether it's specified or not. Currently this
+        /// is the case for MacOs and Linux ports, as live resizing is the
+        /// only implemented method there.
+        /// </remarks>
+        public static bool AlwaysUsesLiveResize()
+        {
+            return Native.AuiManager.AlwaysUsesLiveResize();
+        }
+
         /// <inheritdoc cref="IDisposable.Dispose"/>
         public void Dispose()
         {
@@ -109,20 +123,6 @@ namespace Alternet.UI
         public AuiManagerOption GetFlags()
         {
             return (AuiManagerOption)Native.AuiManager.GetFlags(handle);
-        }
-
-        /// <summary>
-        /// Returns true if live resize is always used on the current platform.
-        /// </summary>
-        /// <remarks>
-        /// If this function returns true, LiveResize flag is ignored and live
-        /// resize is always used, whether it's specified or not. Currently this
-        /// is the case for MacOs and Linux ports, as live resizing is the
-        /// only implemented method there.
-        /// </remarks>
-        public bool AlwaysUsesLiveResize()
-        {
-            return Native.AuiManager.AlwaysUsesLiveResize();
         }
 
         /// <summary>
@@ -287,11 +287,6 @@ namespace Alternet.UI
             managedControl.Disposed += ManagedWindow_Disposed;
 
             Native.AuiManager.SetManagedWindow(handle, ToHandle(managedWnd));
-        }
-
-        private void ManagedWindow_Disposed(object sender, EventArgs e)
-        {
-            UnInit();
         }
 
         /// <summary>
@@ -483,7 +478,9 @@ namespace Alternet.UI
         /// Creates new pane for use with <see cref="AuiManager"/>.
         /// </summary>
         /// <returns><see cref="IAuiPaneInfo"/> instance with empty settings.</returns>
+#pragma warning disable
         public IAuiPaneInfo CreatePaneInfo()
+#pragma warning restore
         {
             return new AuiPaneInfo();
         }
@@ -510,6 +507,11 @@ namespace Alternet.UI
                 throw new Exception(string.Format(
                     ErrorMessages.Default.PropertyIsNull, nameof(ManagedControl)));
             }
+        }
+
+        private void ManagedWindow_Disposed(object? sender, EventArgs e)
+        {
+            UnInit();
         }
     }
 }

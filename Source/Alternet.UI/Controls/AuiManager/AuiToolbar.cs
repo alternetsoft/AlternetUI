@@ -242,13 +242,30 @@ namespace Alternet.UI
 
         internal Native.AuiToolBar NativeControl => Handler.NativeControl;
 
-        public ImageSet LoadSvgImage(string url, Int32Size imageSize)
+        /// <summary>
+        /// Creates <see cref="ImageSet"/> and loads Svg data from the specified
+        /// <paramref name="url"/>.
+        /// </summary>
+        /// <param name="url">File or resource url with Svg data.</param>
+        /// <param name="imageSize">Svg image width and height.</param>
+        public static ImageSet LoadSvgImage(string url, Int32Size imageSize)
         {
             var result = ImageSet.FromSvgUrl(url, imageSize.Width, imageSize.Height);
             return result;
         }
 
-        public ImageSet LoadSvgImage(string url, Control dpiControl)
+        /// <summary>
+        /// Creates <see cref="ImageSet"/> and loads Svg data from the specified
+        /// <paramref name="url"/>.
+        /// </summary>
+        /// <remarks>
+        /// Gets DPI settings from <paramref name="dpiControl"/> and selects appropriate
+        /// images size using <see cref="Toolbar.GetDefaultImageSize(Control)"/>.
+        /// </remarks>
+        /// <param name="url">File or resource url with Svg data.</param>
+        /// <param name="dpiControl">Control which <see cref="Control.GetDPI"/> method
+        /// is used to get DPI settings.</param>
+        public static ImageSet LoadSvgImage(string url, Control dpiControl)
         {
             return ImageSet.FromSvgUrlForToolbar(url, dpiControl);
         }
@@ -539,6 +556,8 @@ namespace Alternet.UI
         /// Some implementations will change the visible state of the
         /// tool to indicate that it is disabled.
         /// </remarks>
+        /// <remarks>You need to call <see cref="Control.Invalidate"/> after changing
+        /// enabled state of the tool.</remarks>
         public void EnableTool(int toolId, bool state)
         {
             NativeControl.EnableTool(toolId, state);
