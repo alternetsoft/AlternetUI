@@ -56,15 +56,25 @@
     <None Remove="Application\ThreadException\Resources\ErrorImage.png" />
     <None Remove="Build.Result.Log" />
     <None Remove="Find.Not.Documented.log" />
+    <None Remove="Resources\Svg\alternet-add-child.svg" />
+    <None Remove="Resources\Svg\check.svg" />
+    <None Remove="Resources\Svg\eraser.svg" />
     <None Remove="Resources\Svg\minus.svg" />
     <None Remove="Resources\Svg\plus.svg" />
+    <None Remove="Resources\Svg\square-check.svg" />
+    <None Remove="Resources\Svg\xmark.svg" />
     <None Remove="Xaml\.editorconfig" />
   </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Include="Application\ThreadException\Resources\ErrorImage.png" />
+    <EmbeddedResource Include="Resources\Svg\alternet-add-child.svg" />
+    <EmbeddedResource Include="Resources\Svg\check.svg" />
+    <EmbeddedResource Include="Resources\Svg\eraser.svg" />
     <EmbeddedResource Include="Resources\Svg\minus.svg" />
     <EmbeddedResource Include="Resources\Svg\plus.svg" />
+    <EmbeddedResource Include="Resources\Svg\square-check.svg" />
+    <EmbeddedResource Include="Resources\Svg\xmark.svg" />
   </ItemGroup>
 
 
