@@ -170,6 +170,11 @@ namespace Alternet.UI.Native
             
         }
         
+        public static void ThrowError(int value)
+        {
+            NativeApi.Application_ThrowError_(value);
+        }
+        
         public static void SetSystemOptionInt(string name, int value)
         {
             NativeApi.Application_SetSystemOptionInt_(name, value);
@@ -324,6 +329,9 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool Application_GetInvokeRequired_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Application_ThrowError_(int value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Application_SetSystemOptionInt_(string name, int value);

@@ -10,15 +10,11 @@ using namespace Alternet::UI;
 
 ALTERNET_UI_API Pen* Pen_Create_()
 {
-    return MarshalExceptions<Pen*>([&](){
-            return new Pen();
-        });
+    return new Pen();
 }
 
 ALTERNET_UI_API void Pen_Initialize_(Pen* obj, PenDashStyle style, Color color, double width, LineCap lineCap, LineJoin lineJoin)
 {
-    MarshalExceptions<void>([&](){
-            obj->Initialize(style, color, width, lineCap, lineJoin);
-        });
+    obj->Initialize(style, color, width, lineCap, lineJoin);
 }
 

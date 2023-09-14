@@ -10,106 +10,76 @@ using namespace Alternet::UI;
 
 ALTERNET_UI_API ValidatorText* ValidatorText_Create_()
 {
-    return MarshalExceptions<ValidatorText*>([&](){
-            return new ValidatorText();
-        });
+    return new ValidatorText();
 }
 
 ALTERNET_UI_API void ValidatorText_DeleteValidatorText_(void* handle)
 {
-    MarshalExceptions<void>([&](){
-            ValidatorText::DeleteValidatorText(handle);
-        });
+    ValidatorText::DeleteValidatorText(handle);
 }
 
 ALTERNET_UI_API void* ValidatorText_CreateValidatorText_(int64_t style)
 {
-    return MarshalExceptions<void*>([&](){
-            return ValidatorText::CreateValidatorText(style);
-        });
+    return ValidatorText::CreateValidatorText(style);
 }
 
 ALTERNET_UI_API int64_t ValidatorText_GetStyle_(void* handle)
 {
-    return MarshalExceptions<int64_t>([&](){
-            return ValidatorText::GetStyle(handle);
-        });
+    return ValidatorText::GetStyle(handle);
 }
 
 ALTERNET_UI_API void ValidatorText_SetStyle_(void* handle, int64_t style)
 {
-    MarshalExceptions<void>([&](){
-            ValidatorText::SetStyle(handle, style);
-        });
+    ValidatorText::SetStyle(handle, style);
 }
 
 ALTERNET_UI_API void ValidatorText_SetCharIncludes_(void* handle, const char16_t* chars)
 {
-    MarshalExceptions<void>([&](){
-            ValidatorText::SetCharIncludes(handle, chars);
-        });
+    ValidatorText::SetCharIncludes(handle, chars);
 }
 
 ALTERNET_UI_API void ValidatorText_AddCharIncludes_(void* handle, const char16_t* chars)
 {
-    MarshalExceptions<void>([&](){
-            ValidatorText::AddCharIncludes(handle, chars);
-        });
+    ValidatorText::AddCharIncludes(handle, chars);
 }
 
 ALTERNET_UI_API char16_t* ValidatorText_GetCharIncludes_(void* handle)
 {
-    return MarshalExceptions<char16_t*>([&](){
-            return AllocPInvokeReturnString(ValidatorText::GetCharIncludes(handle));
-        });
+    return AllocPInvokeReturnString(ValidatorText::GetCharIncludes(handle));
 }
 
 ALTERNET_UI_API void ValidatorText_AddInclude_(void* handle, const char16_t* include)
 {
-    MarshalExceptions<void>([&](){
-            ValidatorText::AddInclude(handle, include);
-        });
+    ValidatorText::AddInclude(handle, include);
 }
 
 ALTERNET_UI_API void ValidatorText_AddExclude_(void* handle, const char16_t* exclude)
 {
-    MarshalExceptions<void>([&](){
-            ValidatorText::AddExclude(handle, exclude);
-        });
+    ValidatorText::AddExclude(handle, exclude);
 }
 
 ALTERNET_UI_API void ValidatorText_SetCharExcludes_(void* handle, const char16_t* chars)
 {
-    MarshalExceptions<void>([&](){
-            ValidatorText::SetCharExcludes(handle, chars);
-        });
+    ValidatorText::SetCharExcludes(handle, chars);
 }
 
 ALTERNET_UI_API void ValidatorText_AddCharExcludes_(void* handle, const char16_t* chars)
 {
-    MarshalExceptions<void>([&](){
-            ValidatorText::AddCharExcludes(handle, chars);
-        });
+    ValidatorText::AddCharExcludes(handle, chars);
 }
 
 ALTERNET_UI_API char16_t* ValidatorText_GetCharExcludes_(void* handle)
 {
-    return MarshalExceptions<char16_t*>([&](){
-            return AllocPInvokeReturnString(ValidatorText::GetCharExcludes(handle));
-        });
+    return AllocPInvokeReturnString(ValidatorText::GetCharExcludes(handle));
 }
 
 ALTERNET_UI_API void ValidatorText_ClearExcludes_(void* handle)
 {
-    MarshalExceptions<void>([&](){
-            ValidatorText::ClearExcludes(handle);
-        });
+    ValidatorText::ClearExcludes(handle);
 }
 
 ALTERNET_UI_API void ValidatorText_ClearIncludes_(void* handle)
 {
-    MarshalExceptions<void>([&](){
-            ValidatorText::ClearIncludes(handle);
-        });
+    ValidatorText::ClearIncludes(handle);
 }
 

@@ -11,36 +11,26 @@ using namespace Alternet::UI;
 
 ALTERNET_UI_API MainMenu* MainMenu_Create_()
 {
-    return MarshalExceptions<MainMenu*>([&](){
-            return new MainMenu();
-        });
+    return new MainMenu();
 }
 
 ALTERNET_UI_API int MainMenu_GetItemsCount_(MainMenu* obj)
 {
-    return MarshalExceptions<int>([&](){
-            return obj->GetItemsCount();
-        });
+    return obj->GetItemsCount();
 }
 
 ALTERNET_UI_API void MainMenu_InsertItemAt_(MainMenu* obj, int index, Menu* menu, const char16_t* text)
 {
-    MarshalExceptions<void>([&](){
-            obj->InsertItemAt(index, menu, text);
-        });
+    obj->InsertItemAt(index, menu, text);
 }
 
 ALTERNET_UI_API void MainMenu_RemoveItemAt_(MainMenu* obj, int index)
 {
-    MarshalExceptions<void>([&](){
-            obj->RemoveItemAt(index);
-        });
+    obj->RemoveItemAt(index);
 }
 
 ALTERNET_UI_API void MainMenu_SetItemText_(MainMenu* obj, int index, const char16_t* text)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetItemText(index, text);
-        });
+    obj->SetItemText(index, text);
 }
 

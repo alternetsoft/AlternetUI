@@ -10,211 +10,151 @@ using namespace Alternet::UI;
 
 ALTERNET_UI_API PropertyGridVariant* PropertyGridVariant_Create_()
 {
-    return MarshalExceptions<PropertyGridVariant*>([&](){
-            return new PropertyGridVariant();
-        });
+    return new PropertyGridVariant();
 }
 
 ALTERNET_UI_API void PropertyGridVariant_Delete_(void* handle)
 {
-    MarshalExceptions<void>([&](){
-            PropertyGridVariant::Delete(handle);
-        });
+    PropertyGridVariant::Delete(handle);
 }
 
 ALTERNET_UI_API void* PropertyGridVariant_CreateVariant_()
 {
-    return MarshalExceptions<void*>([&](){
-            return PropertyGridVariant::CreateVariant();
-        });
+    return PropertyGridVariant::CreateVariant();
 }
 
 ALTERNET_UI_API c_bool PropertyGridVariant_IsNull_(void* handle)
 {
-    return MarshalExceptions<c_bool>([&](){
-            return PropertyGridVariant::IsNull(handle);
-        });
+    return PropertyGridVariant::IsNull(handle);
 }
 
 ALTERNET_UI_API c_bool PropertyGridVariant_Unshare_(void* handle)
 {
-    return MarshalExceptions<c_bool>([&](){
-            return PropertyGridVariant::Unshare(handle);
-        });
+    return PropertyGridVariant::Unshare(handle);
 }
 
 ALTERNET_UI_API void PropertyGridVariant_MakeNull_(void* handle)
 {
-    MarshalExceptions<void>([&](){
-            PropertyGridVariant::MakeNull(handle);
-        });
+    PropertyGridVariant::MakeNull(handle);
 }
 
 ALTERNET_UI_API void PropertyGridVariant_Clear_(void* handle)
 {
-    MarshalExceptions<void>([&](){
-            PropertyGridVariant::Clear(handle);
-        });
+    PropertyGridVariant::Clear(handle);
 }
 
 ALTERNET_UI_API char16_t* PropertyGridVariant_GetValueType_(void* handle)
 {
-    return MarshalExceptions<char16_t*>([&](){
-            return AllocPInvokeReturnString(PropertyGridVariant::GetValueType(handle));
-        });
+    return AllocPInvokeReturnString(PropertyGridVariant::GetValueType(handle));
 }
 
 ALTERNET_UI_API c_bool PropertyGridVariant_IsType_(void* handle, const char16_t* type)
 {
-    return MarshalExceptions<c_bool>([&](){
-            return PropertyGridVariant::IsType(handle, type);
-        });
+    return PropertyGridVariant::IsType(handle, type);
 }
 
 ALTERNET_UI_API char16_t* PropertyGridVariant_MakeString_(void* handle)
 {
-    return MarshalExceptions<char16_t*>([&](){
-            return AllocPInvokeReturnString(PropertyGridVariant::MakeString(handle));
-        });
+    return AllocPInvokeReturnString(PropertyGridVariant::MakeString(handle));
 }
 
 ALTERNET_UI_API Color_C PropertyGridVariant_GetColor_(void* handle)
 {
-    return MarshalExceptions<Color_C>([&](){
-            return PropertyGridVariant::GetColor(handle);
-        });
+    return PropertyGridVariant::GetColor(handle);
 }
 
 ALTERNET_UI_API double PropertyGridVariant_GetDouble_(void* handle)
 {
-    return MarshalExceptions<double>([&](){
-            return PropertyGridVariant::GetDouble(handle);
-        });
+    return PropertyGridVariant::GetDouble(handle);
 }
 
 ALTERNET_UI_API c_bool PropertyGridVariant_GetBool_(void* handle)
 {
-    return MarshalExceptions<c_bool>([&](){
-            return PropertyGridVariant::GetBool(handle);
-        });
+    return PropertyGridVariant::GetBool(handle);
 }
 
 ALTERNET_UI_API int PropertyGridVariant_GetInt_(void* handle)
 {
-    return MarshalExceptions<int>([&](){
-            return PropertyGridVariant::GetInt(handle);
-        });
+    return PropertyGridVariant::GetInt(handle);
 }
 
 ALTERNET_UI_API uint32_t PropertyGridVariant_GetUInt_(void* handle)
 {
-    return MarshalExceptions<uint32_t>([&](){
-            return PropertyGridVariant::GetUInt(handle);
-        });
+    return PropertyGridVariant::GetUInt(handle);
 }
 
 ALTERNET_UI_API int64_t PropertyGridVariant_GetLong_(void* handle)
 {
-    return MarshalExceptions<int64_t>([&](){
-            return PropertyGridVariant::GetLong(handle);
-        });
+    return PropertyGridVariant::GetLong(handle);
 }
 
 ALTERNET_UI_API uint64_t PropertyGridVariant_GetULong_(void* handle)
 {
-    return MarshalExceptions<uint64_t>([&](){
-            return PropertyGridVariant::GetULong(handle);
-        });
+    return PropertyGridVariant::GetULong(handle);
 }
 
 ALTERNET_UI_API DateTime_C PropertyGridVariant_GetDateTime_(void* handle)
 {
-    return MarshalExceptions<DateTime_C>([&](){
-            return PropertyGridVariant::GetDateTime(handle);
-        });
+    return PropertyGridVariant::GetDateTime(handle);
 }
 
 ALTERNET_UI_API char16_t* PropertyGridVariant_GetString_(void* handle)
 {
-    return MarshalExceptions<char16_t*>([&](){
-            return AllocPInvokeReturnString(PropertyGridVariant::GetString(handle));
-        });
+    return AllocPInvokeReturnString(PropertyGridVariant::GetString(handle));
 }
 
 ALTERNET_UI_API void PropertyGridVariant_SetColor_(void* handle, Color val, uint32_t kind)
 {
-    MarshalExceptions<void>([&](){
-            PropertyGridVariant::SetColor(handle, val, kind);
-        });
+    PropertyGridVariant::SetColor(handle, val, kind);
 }
 
 ALTERNET_UI_API void PropertyGridVariant_SetDouble_(void* handle, double val)
 {
-    MarshalExceptions<void>([&](){
-            PropertyGridVariant::SetDouble(handle, val);
-        });
+    PropertyGridVariant::SetDouble(handle, val);
 }
 
 ALTERNET_UI_API void PropertyGridVariant_SetBool_(void* handle, c_bool val)
 {
-    MarshalExceptions<void>([&](){
-            PropertyGridVariant::SetBool(handle, val);
-        });
+    PropertyGridVariant::SetBool(handle, val);
 }
 
 ALTERNET_UI_API void PropertyGridVariant_SetLong_(void* handle, int64_t val)
 {
-    MarshalExceptions<void>([&](){
-            PropertyGridVariant::SetLong(handle, val);
-        });
+    PropertyGridVariant::SetLong(handle, val);
 }
 
 ALTERNET_UI_API void PropertyGridVariant_SetULong_(void* handle, uint64_t val)
 {
-    MarshalExceptions<void>([&](){
-            PropertyGridVariant::SetULong(handle, val);
-        });
+    PropertyGridVariant::SetULong(handle, val);
 }
 
 ALTERNET_UI_API void PropertyGridVariant_SetInt_(void* handle, int val)
 {
-    MarshalExceptions<void>([&](){
-            PropertyGridVariant::SetInt(handle, val);
-        });
+    PropertyGridVariant::SetInt(handle, val);
 }
 
 ALTERNET_UI_API void PropertyGridVariant_SetUInt_(void* handle, uint32_t val)
 {
-    MarshalExceptions<void>([&](){
-            PropertyGridVariant::SetUInt(handle, val);
-        });
+    PropertyGridVariant::SetUInt(handle, val);
 }
 
 ALTERNET_UI_API void PropertyGridVariant_SetShort_(void* handle, int16_t val)
 {
-    MarshalExceptions<void>([&](){
-            PropertyGridVariant::SetShort(handle, val);
-        });
+    PropertyGridVariant::SetShort(handle, val);
 }
 
 ALTERNET_UI_API void PropertyGridVariant_SetDateTime_(void* handle, DateTime val)
 {
-    MarshalExceptions<void>([&](){
-            PropertyGridVariant::SetDateTime(handle, val);
-        });
+    PropertyGridVariant::SetDateTime(handle, val);
 }
 
 ALTERNET_UI_API void PropertyGridVariant_SetString_(void* handle, const char16_t* value)
 {
-    MarshalExceptions<void>([&](){
-            PropertyGridVariant::SetString(handle, value);
-        });
+    PropertyGridVariant::SetString(handle, value);
 }
 
 ALTERNET_UI_API uint32_t PropertyGridVariant_GetLastColorKind_()
 {
-    return MarshalExceptions<uint32_t>([&](){
-            return PropertyGridVariant::GetLastColorKind();
-        });
+    return PropertyGridVariant::GetLastColorKind();
 }
 

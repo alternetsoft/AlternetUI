@@ -10,22 +10,16 @@ using namespace Alternet::UI;
 
 ALTERNET_UI_API GroupBox* GroupBox_Create_()
 {
-    return MarshalExceptions<GroupBox*>([&](){
-            return new GroupBox();
-        });
+    return new GroupBox();
 }
 
 ALTERNET_UI_API char16_t* GroupBox_GetTitle_(GroupBox* obj)
 {
-    return MarshalExceptions<char16_t*>([&](){
-            return AllocPInvokeReturnString(obj->GetTitle());
-        });
+    return AllocPInvokeReturnString(obj->GetTitle());
 }
 
 ALTERNET_UI_API void GroupBox_SetTitle_(GroupBox* obj, const char16_t* value)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetTitle(ToOptional(value));
-        });
+    obj->SetTitle(ToOptional(value));
 }
 

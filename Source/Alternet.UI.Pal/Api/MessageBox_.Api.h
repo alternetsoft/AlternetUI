@@ -11,8 +11,6 @@ using namespace Alternet::UI;
 
 ALTERNET_UI_API MessageBoxResult MessageBox__Show_(Window* owner, const char16_t* text, const char16_t* caption, MessageBoxButtons buttons, MessageBoxIcon icon, MessageBoxDefaultButton defaultButton)
 {
-    return MarshalExceptions<MessageBoxResult>([&](){
-            return MessageBox_::Show(owner, text, ToOptional(caption), buttons, icon, defaultButton);
-        });
+    return MessageBox_::Show(owner, text, ToOptional(caption), buttons, icon, defaultButton);
 }
 

@@ -10,36 +10,26 @@ using namespace Alternet::UI;
 
 ALTERNET_UI_API Label* Label_Create_()
 {
-    return MarshalExceptions<Label*>([&](){
-            return new Label();
-        });
+    return new Label();
 }
 
 ALTERNET_UI_API char16_t* Label_GetText_(Label* obj)
 {
-    return MarshalExceptions<char16_t*>([&](){
-            return AllocPInvokeReturnString(obj->GetText());
-        });
+    return AllocPInvokeReturnString(obj->GetText());
 }
 
 ALTERNET_UI_API void Label_SetText_(Label* obj, const char16_t* value)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetText(value);
-        });
+    obj->SetText(value);
 }
 
 ALTERNET_UI_API c_bool Label_IsEllipsized_(Label* obj)
 {
-    return MarshalExceptions<c_bool>([&](){
-            return obj->IsEllipsized();
-        });
+    return obj->IsEllipsized();
 }
 
 ALTERNET_UI_API void Label_Wrap_(Label* obj, int width)
 {
-    MarshalExceptions<void>([&](){
-            obj->Wrap(width);
-        });
+    obj->Wrap(width);
 }
 

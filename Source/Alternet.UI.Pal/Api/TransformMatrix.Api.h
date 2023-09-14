@@ -10,176 +10,126 @@ using namespace Alternet::UI;
 
 ALTERNET_UI_API TransformMatrix* TransformMatrix_Create_()
 {
-    return MarshalExceptions<TransformMatrix*>([&](){
-            return new TransformMatrix();
-        });
+    return new TransformMatrix();
 }
 
 ALTERNET_UI_API double TransformMatrix_GetM11_(TransformMatrix* obj)
 {
-    return MarshalExceptions<double>([&](){
-            return obj->GetM11();
-        });
+    return obj->GetM11();
 }
 
 ALTERNET_UI_API void TransformMatrix_SetM11_(TransformMatrix* obj, double value)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetM11(value);
-        });
+    obj->SetM11(value);
 }
 
 ALTERNET_UI_API double TransformMatrix_GetM12_(TransformMatrix* obj)
 {
-    return MarshalExceptions<double>([&](){
-            return obj->GetM12();
-        });
+    return obj->GetM12();
 }
 
 ALTERNET_UI_API void TransformMatrix_SetM12_(TransformMatrix* obj, double value)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetM12(value);
-        });
+    obj->SetM12(value);
 }
 
 ALTERNET_UI_API double TransformMatrix_GetM21_(TransformMatrix* obj)
 {
-    return MarshalExceptions<double>([&](){
-            return obj->GetM21();
-        });
+    return obj->GetM21();
 }
 
 ALTERNET_UI_API void TransformMatrix_SetM21_(TransformMatrix* obj, double value)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetM21(value);
-        });
+    obj->SetM21(value);
 }
 
 ALTERNET_UI_API double TransformMatrix_GetM22_(TransformMatrix* obj)
 {
-    return MarshalExceptions<double>([&](){
-            return obj->GetM22();
-        });
+    return obj->GetM22();
 }
 
 ALTERNET_UI_API void TransformMatrix_SetM22_(TransformMatrix* obj, double value)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetM22(value);
-        });
+    obj->SetM22(value);
 }
 
 ALTERNET_UI_API double TransformMatrix_GetDX_(TransformMatrix* obj)
 {
-    return MarshalExceptions<double>([&](){
-            return obj->GetDX();
-        });
+    return obj->GetDX();
 }
 
 ALTERNET_UI_API void TransformMatrix_SetDX_(TransformMatrix* obj, double value)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetDX(value);
-        });
+    obj->SetDX(value);
 }
 
 ALTERNET_UI_API double TransformMatrix_GetDY_(TransformMatrix* obj)
 {
-    return MarshalExceptions<double>([&](){
-            return obj->GetDY();
-        });
+    return obj->GetDY();
 }
 
 ALTERNET_UI_API void TransformMatrix_SetDY_(TransformMatrix* obj, double value)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetDY(value);
-        });
+    obj->SetDY(value);
 }
 
 ALTERNET_UI_API c_bool TransformMatrix_GetIsIdentity_(TransformMatrix* obj)
 {
-    return MarshalExceptions<c_bool>([&](){
-            return obj->GetIsIdentity();
-        });
+    return obj->GetIsIdentity();
 }
 
 ALTERNET_UI_API void TransformMatrix_Initialize_(TransformMatrix* obj, double m11, double m12, double m21, double m22, double dx, double dy)
 {
-    MarshalExceptions<void>([&](){
-            obj->Initialize(m11, m12, m21, m22, dx, dy);
-        });
+    obj->Initialize(m11, m12, m21, m22, dx, dy);
 }
 
 ALTERNET_UI_API void TransformMatrix_Reset_(TransformMatrix* obj)
 {
-    MarshalExceptions<void>([&](){
-            obj->Reset();
-        });
+    obj->Reset();
 }
 
 ALTERNET_UI_API void TransformMatrix_Multiply_(TransformMatrix* obj, TransformMatrix* matrix)
 {
-    MarshalExceptions<void>([&](){
-            obj->Multiply(matrix);
-        });
+    obj->Multiply(matrix);
 }
 
 ALTERNET_UI_API void TransformMatrix_Translate_(TransformMatrix* obj, double offsetX, double offsetY)
 {
-    MarshalExceptions<void>([&](){
-            obj->Translate(offsetX, offsetY);
-        });
+    obj->Translate(offsetX, offsetY);
 }
 
 ALTERNET_UI_API void TransformMatrix_Scale_(TransformMatrix* obj, double scaleX, double scaleY)
 {
-    MarshalExceptions<void>([&](){
-            obj->Scale(scaleX, scaleY);
-        });
+    obj->Scale(scaleX, scaleY);
 }
 
 ALTERNET_UI_API void TransformMatrix_Rotate_(TransformMatrix* obj, double angle)
 {
-    MarshalExceptions<void>([&](){
-            obj->Rotate(angle);
-        });
+    obj->Rotate(angle);
 }
 
 ALTERNET_UI_API void TransformMatrix_Invert_(TransformMatrix* obj)
 {
-    MarshalExceptions<void>([&](){
-            obj->Invert();
-        });
+    obj->Invert();
 }
 
 ALTERNET_UI_API Point_C TransformMatrix_TransformPoint_(TransformMatrix* obj, Point point)
 {
-    return MarshalExceptions<Point_C>([&](){
-            return obj->TransformPoint(point);
-        });
+    return obj->TransformPoint(point);
 }
 
 ALTERNET_UI_API Size_C TransformMatrix_TransformSize_(TransformMatrix* obj, Size size)
 {
-    return MarshalExceptions<Size_C>([&](){
-            return obj->TransformSize(size);
-        });
+    return obj->TransformSize(size);
 }
 
 ALTERNET_UI_API c_bool TransformMatrix_IsEqualTo_(TransformMatrix* obj, TransformMatrix* other)
 {
-    return MarshalExceptions<c_bool>([&](){
-            return obj->IsEqualTo(other);
-        });
+    return obj->IsEqualTo(other);
 }
 
 ALTERNET_UI_API int TransformMatrix_GetHashCode__(TransformMatrix* obj)
 {
-    return MarshalExceptions<int>([&](){
-            return obj->GetHashCode_();
-        });
+    return obj->GetHashCode_();
 }
 

@@ -10,37 +10,27 @@ using namespace Alternet::UI;
 
 ALTERNET_UI_API RadioButton* RadioButton_Create_()
 {
-    return MarshalExceptions<RadioButton*>([&](){
-            return new RadioButton();
-        });
+    return new RadioButton();
 }
 
 ALTERNET_UI_API char16_t* RadioButton_GetText_(RadioButton* obj)
 {
-    return MarshalExceptions<char16_t*>([&](){
-            return AllocPInvokeReturnString(obj->GetText());
-        });
+    return AllocPInvokeReturnString(obj->GetText());
 }
 
 ALTERNET_UI_API void RadioButton_SetText_(RadioButton* obj, const char16_t* value)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetText(value);
-        });
+    obj->SetText(value);
 }
 
 ALTERNET_UI_API c_bool RadioButton_GetIsChecked_(RadioButton* obj)
 {
-    return MarshalExceptions<c_bool>([&](){
-            return obj->GetIsChecked();
-        });
+    return obj->GetIsChecked();
 }
 
 ALTERNET_UI_API void RadioButton_SetIsChecked_(RadioButton* obj, c_bool value)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetIsChecked(value);
-        });
+    obj->SetIsChecked(value);
 }
 
 ALTERNET_UI_API void RadioButton_SetEventCallback_(RadioButton::RadioButtonEventCallbackType callback)

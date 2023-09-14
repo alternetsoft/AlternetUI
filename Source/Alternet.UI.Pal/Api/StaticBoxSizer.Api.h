@@ -10,8 +10,6 @@ using namespace Alternet::UI;
 
 ALTERNET_UI_API StaticBoxSizer* StaticBoxSizer_Create_()
 {
-    return MarshalExceptions<StaticBoxSizer*>([&](){
-            return new StaticBoxSizer();
-        });
+    return new StaticBoxSizer();
 }
 

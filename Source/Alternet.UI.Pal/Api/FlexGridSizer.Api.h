@@ -10,8 +10,6 @@ using namespace Alternet::UI;
 
 ALTERNET_UI_API FlexGridSizer* FlexGridSizer_Create_()
 {
-    return MarshalExceptions<FlexGridSizer*>([&](){
-            return new FlexGridSizer();
-        });
+    return new FlexGridSizer();
 }
 

@@ -12,43 +12,31 @@ using namespace Alternet::UI;
 
 ALTERNET_UI_API Menu* Menu_Create_()
 {
-    return MarshalExceptions<Menu*>([&](){
-            return new Menu();
-        });
+    return new Menu();
 }
 
 ALTERNET_UI_API void* Menu_GetMenuHandle_(Menu* obj)
 {
-    return MarshalExceptions<void*>([&](){
-            return obj->GetMenuHandle();
-        });
+    return obj->GetMenuHandle();
 }
 
 ALTERNET_UI_API int Menu_GetItemsCount_(Menu* obj)
 {
-    return MarshalExceptions<int>([&](){
-            return obj->GetItemsCount();
-        });
+    return obj->GetItemsCount();
 }
 
 ALTERNET_UI_API void Menu_InsertItemAt_(Menu* obj, int index, MenuItem* item)
 {
-    MarshalExceptions<void>([&](){
-            obj->InsertItemAt(index, item);
-        });
+    obj->InsertItemAt(index, item);
 }
 
 ALTERNET_UI_API void Menu_RemoveItemAt_(Menu* obj, int index)
 {
-    MarshalExceptions<void>([&](){
-            obj->RemoveItemAt(index);
-        });
+    obj->RemoveItemAt(index);
 }
 
 ALTERNET_UI_API void Menu_ShowContextMenu_(Menu* obj, Control* control, Point position)
 {
-    MarshalExceptions<void>([&](){
-            obj->ShowContextMenu(control, position);
-        });
+    obj->ShowContextMenu(control, position);
 }
 

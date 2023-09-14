@@ -12,7 +12,7 @@ namespace ApiGenerator.Native
 {
     internal static class CApiGenerator
     {
-        private static bool UseMarshalExceptionsScope = true;
+        internal static bool UseMarshalExceptionsScope = false;
 
         public static string Generate(ApiType apiType)
         {

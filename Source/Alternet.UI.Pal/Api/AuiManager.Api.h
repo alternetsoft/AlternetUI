@@ -10,239 +10,171 @@ using namespace Alternet::UI;
 
 ALTERNET_UI_API AuiManager* AuiManager_Create_()
 {
-    return MarshalExceptions<AuiManager*>([&](){
-            return new AuiManager();
-        });
+    return new AuiManager();
 }
 
 ALTERNET_UI_API void AuiManager_Delete_(void* handle)
 {
-    MarshalExceptions<void>([&](){
-            AuiManager::Delete(handle);
-        });
+    AuiManager::Delete(handle);
 }
 
 ALTERNET_UI_API void* AuiManager_CreateAuiManager_()
 {
-    return MarshalExceptions<void*>([&](){
-            return AuiManager::CreateAuiManager();
-        });
+    return AuiManager::CreateAuiManager();
 }
 
 ALTERNET_UI_API void* AuiManager_CreateAuiManager2_(void* managedWnd, uint32_t flags)
 {
-    return MarshalExceptions<void*>([&](){
-            return AuiManager::CreateAuiManager2(managedWnd, flags);
-        });
+    return AuiManager::CreateAuiManager2(managedWnd, flags);
 }
 
 ALTERNET_UI_API void AuiManager_UnInit_(void* handle)
 {
-    MarshalExceptions<void>([&](){
-            AuiManager::UnInit(handle);
-        });
+    AuiManager::UnInit(handle);
 }
 
 ALTERNET_UI_API void AuiManager_SetFlags_(void* handle, uint32_t flags)
 {
-    MarshalExceptions<void>([&](){
-            AuiManager::SetFlags(handle, flags);
-        });
+    AuiManager::SetFlags(handle, flags);
 }
 
 ALTERNET_UI_API uint32_t AuiManager_GetFlags_(void* handle)
 {
-    return MarshalExceptions<uint32_t>([&](){
-            return AuiManager::GetFlags(handle);
-        });
+    return AuiManager::GetFlags(handle);
 }
 
 ALTERNET_UI_API c_bool AuiManager_AlwaysUsesLiveResize_()
 {
-    return MarshalExceptions<c_bool>([&](){
-            return AuiManager::AlwaysUsesLiveResize();
-        });
+    return AuiManager::AlwaysUsesLiveResize();
 }
 
 ALTERNET_UI_API c_bool AuiManager_HasLiveResize_(void* handle)
 {
-    return MarshalExceptions<c_bool>([&](){
-            return AuiManager::HasLiveResize(handle);
-        });
+    return AuiManager::HasLiveResize(handle);
 }
 
 ALTERNET_UI_API void AuiManager_SetManagedWindow_(void* handle, void* managedWnd)
 {
-    MarshalExceptions<void>([&](){
-            AuiManager::SetManagedWindow(handle, managedWnd);
-        });
+    AuiManager::SetManagedWindow(handle, managedWnd);
 }
 
 ALTERNET_UI_API void* AuiManager_GetManagedWindow_(void* handle)
 {
-    return MarshalExceptions<void*>([&](){
-            return AuiManager::GetManagedWindow(handle);
-        });
+    return AuiManager::GetManagedWindow(handle);
 }
 
 ALTERNET_UI_API void* AuiManager_GetManager_(void* window)
 {
-    return MarshalExceptions<void*>([&](){
-            return AuiManager::GetManager(window);
-        });
+    return AuiManager::GetManager(window);
 }
 
 ALTERNET_UI_API void AuiManager_SetArtProvider_(void* handle, void* artProvider)
 {
-    MarshalExceptions<void>([&](){
-            AuiManager::SetArtProvider(handle, artProvider);
-        });
+    AuiManager::SetArtProvider(handle, artProvider);
 }
 
 ALTERNET_UI_API void* AuiManager_GetArtProvider_(void* handle)
 {
-    return MarshalExceptions<void*>([&](){
-            return AuiManager::GetArtProvider(handle);
-        });
+    return AuiManager::GetArtProvider(handle);
 }
 
 ALTERNET_UI_API c_bool AuiManager_DetachPane_(void* handle, void* window)
 {
-    return MarshalExceptions<c_bool>([&](){
-            return AuiManager::DetachPane(handle, window);
-        });
+    return AuiManager::DetachPane(handle, window);
 }
 
 ALTERNET_UI_API void AuiManager_Update_(void* handle)
 {
-    MarshalExceptions<void>([&](){
-            AuiManager::Update(handle);
-        });
+    AuiManager::Update(handle);
 }
 
 ALTERNET_UI_API char16_t* AuiManager_SavePerspective_(void* handle)
 {
-    return MarshalExceptions<char16_t*>([&](){
-            return AllocPInvokeReturnString(AuiManager::SavePerspective(handle));
-        });
+    return AllocPInvokeReturnString(AuiManager::SavePerspective(handle));
 }
 
 ALTERNET_UI_API c_bool AuiManager_LoadPerspective_(void* handle, const char16_t* perspective, c_bool update)
 {
-    return MarshalExceptions<c_bool>([&](){
-            return AuiManager::LoadPerspective(handle, perspective, update);
-        });
+    return AuiManager::LoadPerspective(handle, perspective, update);
 }
 
 ALTERNET_UI_API void AuiManager_SetDockSizeConstraint_(void* handle, double widthPct, double heightPct)
 {
-    MarshalExceptions<void>([&](){
-            AuiManager::SetDockSizeConstraint(handle, widthPct, heightPct);
-        });
+    AuiManager::SetDockSizeConstraint(handle, widthPct, heightPct);
 }
 
 ALTERNET_UI_API void AuiManager_RestoreMaximizedPane_(void* handle)
 {
-    MarshalExceptions<void>([&](){
-            AuiManager::RestoreMaximizedPane(handle);
-        });
+    AuiManager::RestoreMaximizedPane(handle);
 }
 
 ALTERNET_UI_API void* AuiManager_GetPane_(void* handle, void* window)
 {
-    return MarshalExceptions<void*>([&](){
-            return AuiManager::GetPane(handle, window);
-        });
+    return AuiManager::GetPane(handle, window);
 }
 
 ALTERNET_UI_API void* AuiManager_GetPaneByName_(void* handle, const char16_t* name)
 {
-    return MarshalExceptions<void*>([&](){
-            return AuiManager::GetPaneByName(handle, name);
-        });
+    return AuiManager::GetPaneByName(handle, name);
 }
 
 ALTERNET_UI_API c_bool AuiManager_AddPane_(void* handle, void* window, void* paneInfo)
 {
-    return MarshalExceptions<c_bool>([&](){
-            return AuiManager::AddPane(handle, window, paneInfo);
-        });
+    return AuiManager::AddPane(handle, window, paneInfo);
 }
 
 ALTERNET_UI_API c_bool AuiManager_AddPane2_(void* handle, void* window, void* paneInfo, double dropPosX, double dropPosY)
 {
-    return MarshalExceptions<c_bool>([&](){
-            return AuiManager::AddPane2(handle, window, paneInfo, dropPosX, dropPosY);
-        });
+    return AuiManager::AddPane2(handle, window, paneInfo, dropPosX, dropPosY);
 }
 
 ALTERNET_UI_API c_bool AuiManager_AddPane3_(void* handle, void* window, int direction, const char16_t* caption)
 {
-    return MarshalExceptions<c_bool>([&](){
-            return AuiManager::AddPane3(handle, window, direction, caption);
-        });
+    return AuiManager::AddPane3(handle, window, direction, caption);
 }
 
 ALTERNET_UI_API c_bool AuiManager_InsertPane_(void* handle, void* window, void* insertLocPaneInfo, int insertLevel)
 {
-    return MarshalExceptions<c_bool>([&](){
-            return AuiManager::InsertPane(handle, window, insertLocPaneInfo, insertLevel);
-        });
+    return AuiManager::InsertPane(handle, window, insertLocPaneInfo, insertLevel);
 }
 
 ALTERNET_UI_API char16_t* AuiManager_SavePaneInfo_(void* handle, void* paneInfo)
 {
-    return MarshalExceptions<char16_t*>([&](){
-            return AllocPInvokeReturnString(AuiManager::SavePaneInfo(handle, paneInfo));
-        });
+    return AllocPInvokeReturnString(AuiManager::SavePaneInfo(handle, paneInfo));
 }
 
 ALTERNET_UI_API void AuiManager_LoadPaneInfo_(void* handle, const char16_t* panePart, void* paneInfo)
 {
-    MarshalExceptions<void>([&](){
-            AuiManager::LoadPaneInfo(handle, panePart, paneInfo);
-        });
+    AuiManager::LoadPaneInfo(handle, panePart, paneInfo);
 }
 
 ALTERNET_UI_API Size_C AuiManager_GetDockSizeConstraint_(void* handle)
 {
-    return MarshalExceptions<Size_C>([&](){
-            return AuiManager::GetDockSizeConstraint(handle);
-        });
+    return AuiManager::GetDockSizeConstraint(handle);
 }
 
 ALTERNET_UI_API void AuiManager_ClosePane_(void* handle, void* paneInfo)
 {
-    MarshalExceptions<void>([&](){
-            AuiManager::ClosePane(handle, paneInfo);
-        });
+    AuiManager::ClosePane(handle, paneInfo);
 }
 
 ALTERNET_UI_API void AuiManager_MaximizePane_(void* handle, void* paneInfo)
 {
-    MarshalExceptions<void>([&](){
-            AuiManager::MaximizePane(handle, paneInfo);
-        });
+    AuiManager::MaximizePane(handle, paneInfo);
 }
 
 ALTERNET_UI_API void AuiManager_RestorePane_(void* handle, void* paneInfo)
 {
-    MarshalExceptions<void>([&](){
-            AuiManager::RestorePane(handle, paneInfo);
-        });
+    AuiManager::RestorePane(handle, paneInfo);
 }
 
 ALTERNET_UI_API void* AuiManager_CreateFloatingFrame_(void* handle, void* parentWindow, void* paneInfo)
 {
-    return MarshalExceptions<void*>([&](){
-            return AuiManager::CreateFloatingFrame(handle, parentWindow, paneInfo);
-        });
+    return AuiManager::CreateFloatingFrame(handle, parentWindow, paneInfo);
 }
 
 ALTERNET_UI_API c_bool AuiManager_CanDockPanel_(void* handle, void* paneInfo)
 {
-    return MarshalExceptions<c_bool>([&](){
-            return AuiManager::CanDockPanel(handle, paneInfo);
-        });
+    return AuiManager::CanDockPanel(handle, paneInfo);
 }
 

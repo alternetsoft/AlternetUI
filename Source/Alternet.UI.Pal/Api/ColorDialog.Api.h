@@ -11,43 +11,31 @@ using namespace Alternet::UI;
 
 ALTERNET_UI_API ColorDialog* ColorDialog_Create_()
 {
-    return MarshalExceptions<ColorDialog*>([&](){
-            return new ColorDialog();
-        });
+    return new ColorDialog();
 }
 
 ALTERNET_UI_API Color_C ColorDialog_GetColor_(ColorDialog* obj)
 {
-    return MarshalExceptions<Color_C>([&](){
-            return obj->GetColor();
-        });
+    return obj->GetColor();
 }
 
 ALTERNET_UI_API void ColorDialog_SetColor_(ColorDialog* obj, Color value)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetColor(value);
-        });
+    obj->SetColor(value);
 }
 
 ALTERNET_UI_API char16_t* ColorDialog_GetTitle_(ColorDialog* obj)
 {
-    return MarshalExceptions<char16_t*>([&](){
-            return AllocPInvokeReturnString(obj->GetTitle());
-        });
+    return AllocPInvokeReturnString(obj->GetTitle());
 }
 
 ALTERNET_UI_API void ColorDialog_SetTitle_(ColorDialog* obj, const char16_t* value)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetTitle(ToOptional(value));
-        });
+    obj->SetTitle(ToOptional(value));
 }
 
 ALTERNET_UI_API ModalResult ColorDialog_ShowModal_(ColorDialog* obj, Window* owner)
 {
-    return MarshalExceptions<ModalResult>([&](){
-            return obj->ShowModal(owner);
-        });
+    return obj->ShowModal(owner);
 }
 

@@ -10,8 +10,6 @@ using namespace Alternet::UI;
 
 ALTERNET_UI_API AuiTabContainer* AuiTabContainer_Create_()
 {
-    return MarshalExceptions<AuiTabContainer*>([&](){
-            return new AuiTabContainer();
-        });
+    return new AuiTabContainer();
 }
 

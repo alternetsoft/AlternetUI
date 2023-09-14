@@ -10,100 +10,72 @@ using namespace Alternet::UI;
 
 ALTERNET_UI_API DateTimePicker* DateTimePicker_Create_()
 {
-    return MarshalExceptions<DateTimePicker*>([&](){
-            return new DateTimePicker();
-        });
+    return new DateTimePicker();
 }
 
 ALTERNET_UI_API c_bool DateTimePicker_GetHasBorder_(DateTimePicker* obj)
 {
-    return MarshalExceptions<c_bool>([&](){
-            return obj->GetHasBorder();
-        });
+    return obj->GetHasBorder();
 }
 
 ALTERNET_UI_API void DateTimePicker_SetHasBorder_(DateTimePicker* obj, c_bool value)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetHasBorder(value);
-        });
+    obj->SetHasBorder(value);
 }
 
 ALTERNET_UI_API DateTime_C DateTimePicker_GetValue_(DateTimePicker* obj)
 {
-    return MarshalExceptions<DateTime_C>([&](){
-            return obj->GetValue();
-        });
+    return obj->GetValue();
 }
 
 ALTERNET_UI_API void DateTimePicker_SetValue_(DateTimePicker* obj, DateTime value)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetValue(value);
-        });
+    obj->SetValue(value);
 }
 
 ALTERNET_UI_API DateTime_C DateTimePicker_GetMinValue_(DateTimePicker* obj)
 {
-    return MarshalExceptions<DateTime_C>([&](){
-            return obj->GetMinValue();
-        });
+    return obj->GetMinValue();
 }
 
 ALTERNET_UI_API void DateTimePicker_SetMinValue_(DateTimePicker* obj, DateTime value)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetMinValue(value);
-        });
+    obj->SetMinValue(value);
 }
 
 ALTERNET_UI_API DateTime_C DateTimePicker_GetMaxValue_(DateTimePicker* obj)
 {
-    return MarshalExceptions<DateTime_C>([&](){
-            return obj->GetMaxValue();
-        });
+    return obj->GetMaxValue();
 }
 
 ALTERNET_UI_API void DateTimePicker_SetMaxValue_(DateTimePicker* obj, DateTime value)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetMaxValue(value);
-        });
+    obj->SetMaxValue(value);
 }
 
 ALTERNET_UI_API int DateTimePicker_GetValueKind_(DateTimePicker* obj)
 {
-    return MarshalExceptions<int>([&](){
-            return obj->GetValueKind();
-        });
+    return obj->GetValueKind();
 }
 
 ALTERNET_UI_API void DateTimePicker_SetValueKind_(DateTimePicker* obj, int value)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetValueKind(value);
-        });
+    obj->SetValueKind(value);
 }
 
 ALTERNET_UI_API int DateTimePicker_GetPopupKind_(DateTimePicker* obj)
 {
-    return MarshalExceptions<int>([&](){
-            return obj->GetPopupKind();
-        });
+    return obj->GetPopupKind();
 }
 
 ALTERNET_UI_API void DateTimePicker_SetPopupKind_(DateTimePicker* obj, int value)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetPopupKind(value);
-        });
+    obj->SetPopupKind(value);
 }
 
 ALTERNET_UI_API void DateTimePicker_SetRange_(DateTimePicker* obj, c_bool useMinValue, c_bool useMaxValue)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetRange(useMinValue, useMaxValue);
-        });
+    obj->SetRange(useMinValue, useMaxValue);
 }
 
 ALTERNET_UI_API void DateTimePicker_SetEventCallback_(DateTimePicker::DateTimePickerEventCallbackType callback)

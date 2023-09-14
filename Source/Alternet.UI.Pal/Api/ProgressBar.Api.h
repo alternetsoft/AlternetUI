@@ -10,78 +10,56 @@ using namespace Alternet::UI;
 
 ALTERNET_UI_API ProgressBar* ProgressBar_Create_()
 {
-    return MarshalExceptions<ProgressBar*>([&](){
-            return new ProgressBar();
-        });
+    return new ProgressBar();
 }
 
 ALTERNET_UI_API int ProgressBar_GetMinimum_(ProgressBar* obj)
 {
-    return MarshalExceptions<int>([&](){
-            return obj->GetMinimum();
-        });
+    return obj->GetMinimum();
 }
 
 ALTERNET_UI_API void ProgressBar_SetMinimum_(ProgressBar* obj, int value)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetMinimum(value);
-        });
+    obj->SetMinimum(value);
 }
 
 ALTERNET_UI_API int ProgressBar_GetMaximum_(ProgressBar* obj)
 {
-    return MarshalExceptions<int>([&](){
-            return obj->GetMaximum();
-        });
+    return obj->GetMaximum();
 }
 
 ALTERNET_UI_API void ProgressBar_SetMaximum_(ProgressBar* obj, int value)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetMaximum(value);
-        });
+    obj->SetMaximum(value);
 }
 
 ALTERNET_UI_API int ProgressBar_GetValue_(ProgressBar* obj)
 {
-    return MarshalExceptions<int>([&](){
-            return obj->GetValue();
-        });
+    return obj->GetValue();
 }
 
 ALTERNET_UI_API void ProgressBar_SetValue_(ProgressBar* obj, int value)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetValue(value);
-        });
+    obj->SetValue(value);
 }
 
 ALTERNET_UI_API c_bool ProgressBar_GetIsIndeterminate_(ProgressBar* obj)
 {
-    return MarshalExceptions<c_bool>([&](){
-            return obj->GetIsIndeterminate();
-        });
+    return obj->GetIsIndeterminate();
 }
 
 ALTERNET_UI_API void ProgressBar_SetIsIndeterminate_(ProgressBar* obj, c_bool value)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetIsIndeterminate(value);
-        });
+    obj->SetIsIndeterminate(value);
 }
 
 ALTERNET_UI_API ProgressBarOrientation ProgressBar_GetOrientation_(ProgressBar* obj)
 {
-    return MarshalExceptions<ProgressBarOrientation>([&](){
-            return obj->GetOrientation();
-        });
+    return obj->GetOrientation();
 }
 
 ALTERNET_UI_API void ProgressBar_SetOrientation_(ProgressBar* obj, ProgressBarOrientation value)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetOrientation(value);
-        });
+    obj->SetOrientation(value);
 }
 

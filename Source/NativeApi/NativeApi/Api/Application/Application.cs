@@ -7,15 +7,17 @@ namespace NativeApi.Api
 {
     public class Application
     {
+        public static void ThrowError(int value) { }
+
         public static void SetSystemOptionInt(string name, int value) {}
 
         public Application() => throw new Exception();
 
         public string Name { get; set; }
 
-        public void Run(Window window) => throw new Exception();
+        public void Run(Window window) { }
 
-        public event EventHandler Idle { add => throw new Exception(); remove => throw new Exception(); }
+        public event EventHandler Idle;
 
         public Keyboard Keyboard { get; }
         public Mouse Mouse { get; }
@@ -27,19 +29,19 @@ namespace NativeApi.Api
 
         public bool InUixmlPreviewerMode { get; set; }
 
-        public void WakeUpIdle() => throw new Exception();
+        public void WakeUpIdle() { }
 
-        public void Exit() => throw new Exception();
+        public void Exit() { }
 
         public bool InvokeRequired { get; }
 
-        public static void SuppressDiagnostics(int flags) => throw new Exception();
+        public static void SuppressDiagnostics(int flags) { }
 
-        public void BeginInvoke([CallbackMarshal(freeAfterFirstCall: true)] Action action) => throw new Exception();
+        public void BeginInvoke([CallbackMarshal(freeAfterFirstCall: true)] Action action) { }
 
         public void ProcessPendingEvents() { }
 
-        public bool HasPendingEvents() => throw new Exception();
+        public bool HasPendingEvents() => default;
 
     }
 }

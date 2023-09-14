@@ -10,121 +10,87 @@ using namespace Alternet::UI;
 
 ALTERNET_UI_API Slider* Slider_Create_()
 {
-    return MarshalExceptions<Slider*>([&](){
-            return new Slider();
-        });
+    return new Slider();
 }
 
 ALTERNET_UI_API int Slider_GetMinimum_(Slider* obj)
 {
-    return MarshalExceptions<int>([&](){
-            return obj->GetMinimum();
-        });
+    return obj->GetMinimum();
 }
 
 ALTERNET_UI_API void Slider_SetMinimum_(Slider* obj, int value)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetMinimum(value);
-        });
+    obj->SetMinimum(value);
 }
 
 ALTERNET_UI_API int Slider_GetMaximum_(Slider* obj)
 {
-    return MarshalExceptions<int>([&](){
-            return obj->GetMaximum();
-        });
+    return obj->GetMaximum();
 }
 
 ALTERNET_UI_API void Slider_SetMaximum_(Slider* obj, int value)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetMaximum(value);
-        });
+    obj->SetMaximum(value);
 }
 
 ALTERNET_UI_API int Slider_GetValue_(Slider* obj)
 {
-    return MarshalExceptions<int>([&](){
-            return obj->GetValue();
-        });
+    return obj->GetValue();
 }
 
 ALTERNET_UI_API void Slider_SetValue_(Slider* obj, int value)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetValue(value);
-        });
+    obj->SetValue(value);
 }
 
 ALTERNET_UI_API int Slider_GetSmallChange_(Slider* obj)
 {
-    return MarshalExceptions<int>([&](){
-            return obj->GetSmallChange();
-        });
+    return obj->GetSmallChange();
 }
 
 ALTERNET_UI_API void Slider_SetSmallChange_(Slider* obj, int value)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetSmallChange(value);
-        });
+    obj->SetSmallChange(value);
 }
 
 ALTERNET_UI_API int Slider_GetLargeChange_(Slider* obj)
 {
-    return MarshalExceptions<int>([&](){
-            return obj->GetLargeChange();
-        });
+    return obj->GetLargeChange();
 }
 
 ALTERNET_UI_API void Slider_SetLargeChange_(Slider* obj, int value)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetLargeChange(value);
-        });
+    obj->SetLargeChange(value);
 }
 
 ALTERNET_UI_API int Slider_GetTickFrequency_(Slider* obj)
 {
-    return MarshalExceptions<int>([&](){
-            return obj->GetTickFrequency();
-        });
+    return obj->GetTickFrequency();
 }
 
 ALTERNET_UI_API void Slider_SetTickFrequency_(Slider* obj, int value)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetTickFrequency(value);
-        });
+    obj->SetTickFrequency(value);
 }
 
 ALTERNET_UI_API SliderOrientation Slider_GetOrientation_(Slider* obj)
 {
-    return MarshalExceptions<SliderOrientation>([&](){
-            return obj->GetOrientation();
-        });
+    return obj->GetOrientation();
 }
 
 ALTERNET_UI_API void Slider_SetOrientation_(Slider* obj, SliderOrientation value)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetOrientation(value);
-        });
+    obj->SetOrientation(value);
 }
 
 ALTERNET_UI_API SliderTickStyle Slider_GetTickStyle_(Slider* obj)
 {
-    return MarshalExceptions<SliderTickStyle>([&](){
-            return obj->GetTickStyle();
-        });
+    return obj->GetTickStyle();
 }
 
 ALTERNET_UI_API void Slider_SetTickStyle_(Slider* obj, SliderTickStyle value)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetTickStyle(value);
-        });
+    obj->SetTickStyle(value);
 }
 
 ALTERNET_UI_API void Slider_SetEventCallback_(Slider::SliderEventCallbackType callback)

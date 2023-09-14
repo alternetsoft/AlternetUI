@@ -10,8 +10,6 @@ using namespace Alternet::UI;
 
 ALTERNET_UI_API AuiManagerEvent* AuiManagerEvent_Create_()
 {
-    return MarshalExceptions<AuiManagerEvent*>([&](){
-            return new AuiManagerEvent();
-        });
+    return new AuiManagerEvent();
 }
 

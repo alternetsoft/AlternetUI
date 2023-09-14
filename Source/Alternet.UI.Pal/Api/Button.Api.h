@@ -11,205 +11,147 @@ using namespace Alternet::UI;
 
 ALTERNET_UI_API Button* Button_Create_()
 {
-    return MarshalExceptions<Button*>([&](){
-            return new Button();
-        });
+    return new Button();
 }
 
 ALTERNET_UI_API char16_t* Button_GetText_(Button* obj)
 {
-    return MarshalExceptions<char16_t*>([&](){
-            return AllocPInvokeReturnString(obj->GetText());
-        });
+    return AllocPInvokeReturnString(obj->GetText());
 }
 
 ALTERNET_UI_API void Button_SetText_(Button* obj, const char16_t* value)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetText(value);
-        });
+    obj->SetText(value);
 }
 
 ALTERNET_UI_API c_bool Button_GetIsDefault_(Button* obj)
 {
-    return MarshalExceptions<c_bool>([&](){
-            return obj->GetIsDefault();
-        });
+    return obj->GetIsDefault();
 }
 
 ALTERNET_UI_API void Button_SetIsDefault_(Button* obj, c_bool value)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetIsDefault(value);
-        });
+    obj->SetIsDefault(value);
 }
 
 ALTERNET_UI_API c_bool Button_GetHasBorder_(Button* obj)
 {
-    return MarshalExceptions<c_bool>([&](){
-            return obj->GetHasBorder();
-        });
+    return obj->GetHasBorder();
 }
 
 ALTERNET_UI_API void Button_SetHasBorder_(Button* obj, c_bool value)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetHasBorder(value);
-        });
+    obj->SetHasBorder(value);
 }
 
 ALTERNET_UI_API c_bool Button_GetIsCancel_(Button* obj)
 {
-    return MarshalExceptions<c_bool>([&](){
-            return obj->GetIsCancel();
-        });
+    return obj->GetIsCancel();
 }
 
 ALTERNET_UI_API void Button_SetIsCancel_(Button* obj, c_bool value)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetIsCancel(value);
-        });
+    obj->SetIsCancel(value);
 }
 
 ALTERNET_UI_API Image* Button_GetNormalImage_(Button* obj)
 {
-    return MarshalExceptions<Image*>([&](){
-            return obj->GetNormalImage();
-        });
+    return obj->GetNormalImage();
 }
 
 ALTERNET_UI_API void Button_SetNormalImage_(Button* obj, Image* value)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetNormalImage(value);
-        });
+    obj->SetNormalImage(value);
 }
 
 ALTERNET_UI_API Image* Button_GetHoveredImage_(Button* obj)
 {
-    return MarshalExceptions<Image*>([&](){
-            return obj->GetHoveredImage();
-        });
+    return obj->GetHoveredImage();
 }
 
 ALTERNET_UI_API void Button_SetHoveredImage_(Button* obj, Image* value)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetHoveredImage(value);
-        });
+    obj->SetHoveredImage(value);
 }
 
 ALTERNET_UI_API Image* Button_GetPressedImage_(Button* obj)
 {
-    return MarshalExceptions<Image*>([&](){
-            return obj->GetPressedImage();
-        });
+    return obj->GetPressedImage();
 }
 
 ALTERNET_UI_API void Button_SetPressedImage_(Button* obj, Image* value)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetPressedImage(value);
-        });
+    obj->SetPressedImage(value);
 }
 
 ALTERNET_UI_API Image* Button_GetDisabledImage_(Button* obj)
 {
-    return MarshalExceptions<Image*>([&](){
-            return obj->GetDisabledImage();
-        });
+    return obj->GetDisabledImage();
 }
 
 ALTERNET_UI_API void Button_SetDisabledImage_(Button* obj, Image* value)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetDisabledImage(value);
-        });
+    obj->SetDisabledImage(value);
 }
 
 ALTERNET_UI_API c_bool Button_GetAcceptsFocus_(Button* obj)
 {
-    return MarshalExceptions<c_bool>([&](){
-            return obj->GetAcceptsFocus();
-        });
+    return obj->GetAcceptsFocus();
 }
 
 ALTERNET_UI_API void Button_SetAcceptsFocus_(Button* obj, c_bool value)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetAcceptsFocus(value);
-        });
+    obj->SetAcceptsFocus(value);
 }
 
 ALTERNET_UI_API c_bool Button_GetAcceptsFocusFromKeyboard_(Button* obj)
 {
-    return MarshalExceptions<c_bool>([&](){
-            return obj->GetAcceptsFocusFromKeyboard();
-        });
+    return obj->GetAcceptsFocusFromKeyboard();
 }
 
 ALTERNET_UI_API void Button_SetAcceptsFocusFromKeyboard_(Button* obj, c_bool value)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetAcceptsFocusFromKeyboard(value);
-        });
+    obj->SetAcceptsFocusFromKeyboard(value);
 }
 
 ALTERNET_UI_API c_bool Button_GetAcceptsFocusRecursively_(Button* obj)
 {
-    return MarshalExceptions<c_bool>([&](){
-            return obj->GetAcceptsFocusRecursively();
-        });
+    return obj->GetAcceptsFocusRecursively();
 }
 
 ALTERNET_UI_API void Button_SetAcceptsFocusRecursively_(Button* obj, c_bool value)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetAcceptsFocusRecursively(value);
-        });
+    obj->SetAcceptsFocusRecursively(value);
 }
 
 ALTERNET_UI_API c_bool Button_GetTextVisible_(Button* obj)
 {
-    return MarshalExceptions<c_bool>([&](){
-            return obj->GetTextVisible();
-        });
+    return obj->GetTextVisible();
 }
 
 ALTERNET_UI_API void Button_SetTextVisible_(Button* obj, c_bool value)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetTextVisible(value);
-        });
+    obj->SetTextVisible(value);
 }
 
 ALTERNET_UI_API int Button_GetTextAlign_(Button* obj)
 {
-    return MarshalExceptions<int>([&](){
-            return obj->GetTextAlign();
-        });
+    return obj->GetTextAlign();
 }
 
 ALTERNET_UI_API void Button_SetTextAlign_(Button* obj, int value)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetTextAlign(value);
-        });
+    obj->SetTextAlign(value);
 }
 
 ALTERNET_UI_API void Button_SetImagePosition_(Button* obj, int dir)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetImagePosition(dir);
-        });
+    obj->SetImagePosition(dir);
 }
 
 ALTERNET_UI_API void Button_SetImageMargins_(Button* obj, double x, double y)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetImageMargins(x, y);
-        });
+    obj->SetImageMargins(x, y);
 }
 
 ALTERNET_UI_API void Button_SetEventCallback_(Button::ButtonEventCallbackType callback)

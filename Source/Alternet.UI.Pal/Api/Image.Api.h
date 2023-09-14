@@ -12,71 +12,51 @@ using namespace Alternet::UI;
 
 ALTERNET_UI_API Image* Image_Create_()
 {
-    return MarshalExceptions<Image*>([&](){
-            return new Image();
-        });
+    return new Image();
 }
 
 ALTERNET_UI_API Size_C Image_GetSize_(Image* obj)
 {
-    return MarshalExceptions<Size_C>([&](){
-            return obj->GetSize();
-        });
+    return obj->GetSize();
 }
 
 ALTERNET_UI_API Int32Size_C Image_GetPixelSize_(Image* obj)
 {
-    return MarshalExceptions<Int32Size_C>([&](){
-            return obj->GetPixelSize();
-        });
+    return obj->GetPixelSize();
 }
 
 ALTERNET_UI_API void Image_LoadFromStream_(Image* obj, void* stream)
 {
-    MarshalExceptions<void>([&](){
-            obj->LoadFromStream(stream);
-        });
+    obj->LoadFromStream(stream);
 }
 
 ALTERNET_UI_API void Image_LoadSvgFromStream_(Image* obj, void* stream, int width, int height)
 {
-    MarshalExceptions<void>([&](){
-            obj->LoadSvgFromStream(stream, width, height);
-        });
+    obj->LoadSvgFromStream(stream, width, height);
 }
 
 ALTERNET_UI_API void Image_Initialize_(Image* obj, Size size)
 {
-    MarshalExceptions<void>([&](){
-            obj->Initialize(size);
-        });
+    obj->Initialize(size);
 }
 
 ALTERNET_UI_API void Image_CopyFrom_(Image* obj, Image* otherImage)
 {
-    MarshalExceptions<void>([&](){
-            obj->CopyFrom(otherImage);
-        });
+    obj->CopyFrom(otherImage);
 }
 
 ALTERNET_UI_API void Image_SaveToStream_(Image* obj, void* stream, const char16_t* format)
 {
-    MarshalExceptions<void>([&](){
-            obj->SaveToStream(stream, format);
-        });
+    obj->SaveToStream(stream, format);
 }
 
 ALTERNET_UI_API void Image_SaveToFile_(Image* obj, const char16_t* fileName)
 {
-    MarshalExceptions<void>([&](){
-            obj->SaveToFile(fileName);
-        });
+    obj->SaveToFile(fileName);
 }
 
 ALTERNET_UI_API c_bool Image_GrayScale_(Image* obj)
 {
-    return MarshalExceptions<c_bool>([&](){
-            return obj->GrayScale();
-        });
+    return obj->GrayScale();
 }
 

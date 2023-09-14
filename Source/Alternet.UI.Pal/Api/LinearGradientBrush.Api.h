@@ -10,15 +10,11 @@ using namespace Alternet::UI;
 
 ALTERNET_UI_API LinearGradientBrush* LinearGradientBrush_Create_()
 {
-    return MarshalExceptions<LinearGradientBrush*>([&](){
-            return new LinearGradientBrush();
-        });
+    return new LinearGradientBrush();
 }
 
 ALTERNET_UI_API void LinearGradientBrush_Initialize_(LinearGradientBrush* obj, Point startPoint, Point endPoint, Color* gradientStopsColors, int gradientStopsColorsCount, double* gradientStopsOffsets, int gradientStopsOffsetsCount)
 {
-    MarshalExceptions<void>([&](){
-            obj->Initialize(startPoint, endPoint, gradientStopsColors, gradientStopsColorsCount, gradientStopsOffsets, gradientStopsOffsetsCount);
-        });
+    obj->Initialize(startPoint, endPoint, gradientStopsColors, gradientStopsColorsCount, gradientStopsOffsets, gradientStopsOffsetsCount);
 }
 

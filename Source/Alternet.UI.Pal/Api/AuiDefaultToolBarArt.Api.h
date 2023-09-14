@@ -10,8 +10,6 @@ using namespace Alternet::UI;
 
 ALTERNET_UI_API AuiDefaultToolBarArt* AuiDefaultToolBarArt_Create_()
 {
-    return MarshalExceptions<AuiDefaultToolBarArt*>([&](){
-            return new AuiDefaultToolBarArt();
-        });
+    return new AuiDefaultToolBarArt();
 }
 

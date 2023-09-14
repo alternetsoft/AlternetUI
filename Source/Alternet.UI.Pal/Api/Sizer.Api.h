@@ -10,22 +10,16 @@ using namespace Alternet::UI;
 
 ALTERNET_UI_API Sizer* Sizer_Create_()
 {
-    return MarshalExceptions<Sizer*>([&](){
-            return new Sizer();
-        });
+    return new Sizer();
 }
 
 ALTERNET_UI_API void* Sizer_GetHandle_(Sizer* obj)
 {
-    return MarshalExceptions<void*>([&](){
-            return obj->GetHandle();
-        });
+    return obj->GetHandle();
 }
 
 ALTERNET_UI_API void* Sizer_AddWindow_(Sizer* obj, void* window, int proportion, int flag, int border, void* userData)
 {
-    return MarshalExceptions<void*>([&](){
-            return obj->AddWindow(window, proportion, flag, border, userData);
-        });
+    return obj->AddWindow(window, proportion, flag, border, userData);
 }
 

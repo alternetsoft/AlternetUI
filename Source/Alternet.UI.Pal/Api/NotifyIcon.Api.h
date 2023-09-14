@@ -12,65 +12,47 @@ using namespace Alternet::UI;
 
 ALTERNET_UI_API NotifyIcon* NotifyIcon_Create_()
 {
-    return MarshalExceptions<NotifyIcon*>([&](){
-            return new NotifyIcon();
-        });
+    return new NotifyIcon();
 }
 
 ALTERNET_UI_API char16_t* NotifyIcon_GetText_(NotifyIcon* obj)
 {
-    return MarshalExceptions<char16_t*>([&](){
-            return AllocPInvokeReturnString(obj->GetText());
-        });
+    return AllocPInvokeReturnString(obj->GetText());
 }
 
 ALTERNET_UI_API void NotifyIcon_SetText_(NotifyIcon* obj, const char16_t* value)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetText(ToOptional(value));
-        });
+    obj->SetText(ToOptional(value));
 }
 
 ALTERNET_UI_API Image* NotifyIcon_GetIcon_(NotifyIcon* obj)
 {
-    return MarshalExceptions<Image*>([&](){
-            return obj->GetIcon();
-        });
+    return obj->GetIcon();
 }
 
 ALTERNET_UI_API void NotifyIcon_SetIcon_(NotifyIcon* obj, Image* value)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetIcon(value);
-        });
+    obj->SetIcon(value);
 }
 
 ALTERNET_UI_API Menu* NotifyIcon_GetMenu_(NotifyIcon* obj)
 {
-    return MarshalExceptions<Menu*>([&](){
-            return obj->GetMenu();
-        });
+    return obj->GetMenu();
 }
 
 ALTERNET_UI_API void NotifyIcon_SetMenu_(NotifyIcon* obj, Menu* value)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetMenu(value);
-        });
+    obj->SetMenu(value);
 }
 
 ALTERNET_UI_API c_bool NotifyIcon_GetVisible_(NotifyIcon* obj)
 {
-    return MarshalExceptions<c_bool>([&](){
-            return obj->GetVisible();
-        });
+    return obj->GetVisible();
 }
 
 ALTERNET_UI_API void NotifyIcon_SetVisible_(NotifyIcon* obj, c_bool value)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetVisible(value);
-        });
+    obj->SetVisible(value);
 }
 
 ALTERNET_UI_API void NotifyIcon_SetEventCallback_(NotifyIcon::NotifyIconEventCallbackType callback)

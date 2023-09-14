@@ -10,8 +10,6 @@ using namespace Alternet::UI;
 
 ALTERNET_UI_API ValidatorGeneric* ValidatorGeneric_Create_()
 {
-    return MarshalExceptions<ValidatorGeneric*>([&](){
-            return new ValidatorGeneric();
-        });
+    return new ValidatorGeneric();
 }
 

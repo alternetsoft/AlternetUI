@@ -12,113 +12,81 @@ using namespace Alternet::UI;
 
 ALTERNET_UI_API PageSetupDialog* PageSetupDialog_Create_()
 {
-    return MarshalExceptions<PageSetupDialog*>([&](){
-            return new PageSetupDialog();
-        });
+    return new PageSetupDialog();
 }
 
 ALTERNET_UI_API PrintDocument* PageSetupDialog_GetDocument_(PageSetupDialog* obj)
 {
-    return MarshalExceptions<PrintDocument*>([&](){
-            return obj->GetDocument();
-        });
+    return obj->GetDocument();
 }
 
 ALTERNET_UI_API void PageSetupDialog_SetDocument_(PageSetupDialog* obj, PrintDocument* value)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetDocument(value);
-        });
+    obj->SetDocument(value);
 }
 
 ALTERNET_UI_API Thickness_C PageSetupDialog_GetMinMargins_(PageSetupDialog* obj)
 {
-    return MarshalExceptions<Thickness_C>([&](){
-            return obj->GetMinMargins();
-        });
+    return obj->GetMinMargins();
 }
 
 ALTERNET_UI_API void PageSetupDialog_SetMinMargins_(PageSetupDialog* obj, Thickness value)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetMinMargins(value);
-        });
+    obj->SetMinMargins(value);
 }
 
 ALTERNET_UI_API c_bool PageSetupDialog_GetMinMarginsValueSet_(PageSetupDialog* obj)
 {
-    return MarshalExceptions<c_bool>([&](){
-            return obj->GetMinMarginsValueSet();
-        });
+    return obj->GetMinMarginsValueSet();
 }
 
 ALTERNET_UI_API void PageSetupDialog_SetMinMarginsValueSet_(PageSetupDialog* obj, c_bool value)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetMinMarginsValueSet(value);
-        });
+    obj->SetMinMarginsValueSet(value);
 }
 
 ALTERNET_UI_API c_bool PageSetupDialog_GetAllowMargins_(PageSetupDialog* obj)
 {
-    return MarshalExceptions<c_bool>([&](){
-            return obj->GetAllowMargins();
-        });
+    return obj->GetAllowMargins();
 }
 
 ALTERNET_UI_API void PageSetupDialog_SetAllowMargins_(PageSetupDialog* obj, c_bool value)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetAllowMargins(value);
-        });
+    obj->SetAllowMargins(value);
 }
 
 ALTERNET_UI_API c_bool PageSetupDialog_GetAllowOrientation_(PageSetupDialog* obj)
 {
-    return MarshalExceptions<c_bool>([&](){
-            return obj->GetAllowOrientation();
-        });
+    return obj->GetAllowOrientation();
 }
 
 ALTERNET_UI_API void PageSetupDialog_SetAllowOrientation_(PageSetupDialog* obj, c_bool value)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetAllowOrientation(value);
-        });
+    obj->SetAllowOrientation(value);
 }
 
 ALTERNET_UI_API c_bool PageSetupDialog_GetAllowPaper_(PageSetupDialog* obj)
 {
-    return MarshalExceptions<c_bool>([&](){
-            return obj->GetAllowPaper();
-        });
+    return obj->GetAllowPaper();
 }
 
 ALTERNET_UI_API void PageSetupDialog_SetAllowPaper_(PageSetupDialog* obj, c_bool value)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetAllowPaper(value);
-        });
+    obj->SetAllowPaper(value);
 }
 
 ALTERNET_UI_API c_bool PageSetupDialog_GetAllowPrinter_(PageSetupDialog* obj)
 {
-    return MarshalExceptions<c_bool>([&](){
-            return obj->GetAllowPrinter();
-        });
+    return obj->GetAllowPrinter();
 }
 
 ALTERNET_UI_API void PageSetupDialog_SetAllowPrinter_(PageSetupDialog* obj, c_bool value)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetAllowPrinter(value);
-        });
+    obj->SetAllowPrinter(value);
 }
 
 ALTERNET_UI_API ModalResult PageSetupDialog_ShowModal_(PageSetupDialog* obj, Window* owner)
 {
-    return MarshalExceptions<ModalResult>([&](){
-            return obj->ShowModal(owner);
-        });
+    return obj->ShowModal(owner);
 }
 

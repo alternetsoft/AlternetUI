@@ -10,15 +10,11 @@ using namespace Alternet::UI;
 
 ALTERNET_UI_API SolidBrush* SolidBrush_Create_()
 {
-    return MarshalExceptions<SolidBrush*>([&](){
-            return new SolidBrush();
-        });
+    return new SolidBrush();
 }
 
 ALTERNET_UI_API void SolidBrush_Initialize_(SolidBrush* obj, Color color)
 {
-    MarshalExceptions<void>([&](){
-            obj->Initialize(color);
-        });
+    obj->Initialize(color);
 }
 

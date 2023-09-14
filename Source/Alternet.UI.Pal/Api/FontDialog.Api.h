@@ -11,134 +11,96 @@ using namespace Alternet::UI;
 
 ALTERNET_UI_API FontDialog* FontDialog_Create_()
 {
-    return MarshalExceptions<FontDialog*>([&](){
-            return new FontDialog();
-        });
+    return new FontDialog();
 }
 
 ALTERNET_UI_API c_bool FontDialog_GetAllowSymbols_(FontDialog* obj)
 {
-    return MarshalExceptions<c_bool>([&](){
-            return obj->GetAllowSymbols();
-        });
+    return obj->GetAllowSymbols();
 }
 
 ALTERNET_UI_API void FontDialog_SetAllowSymbols_(FontDialog* obj, c_bool value)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetAllowSymbols(value);
-        });
+    obj->SetAllowSymbols(value);
 }
 
 ALTERNET_UI_API c_bool FontDialog_GetShowHelp_(FontDialog* obj)
 {
-    return MarshalExceptions<c_bool>([&](){
-            return obj->GetShowHelp();
-        });
+    return obj->GetShowHelp();
 }
 
 ALTERNET_UI_API void FontDialog_SetShowHelp_(FontDialog* obj, c_bool value)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetShowHelp(value);
-        });
+    obj->SetShowHelp(value);
 }
 
 ALTERNET_UI_API c_bool FontDialog_GetEnableEffects_(FontDialog* obj)
 {
-    return MarshalExceptions<c_bool>([&](){
-            return obj->GetEnableEffects();
-        });
+    return obj->GetEnableEffects();
 }
 
 ALTERNET_UI_API void FontDialog_SetEnableEffects_(FontDialog* obj, c_bool value)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetEnableEffects(value);
-        });
+    obj->SetEnableEffects(value);
 }
 
 ALTERNET_UI_API int FontDialog_GetRestrictSelection_(FontDialog* obj)
 {
-    return MarshalExceptions<int>([&](){
-            return obj->GetRestrictSelection();
-        });
+    return obj->GetRestrictSelection();
 }
 
 ALTERNET_UI_API void FontDialog_SetRestrictSelection_(FontDialog* obj, int value)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetRestrictSelection(value);
-        });
+    obj->SetRestrictSelection(value);
 }
 
 ALTERNET_UI_API Color_C FontDialog_GetColor_(FontDialog* obj)
 {
-    return MarshalExceptions<Color_C>([&](){
-            return obj->GetColor();
-        });
+    return obj->GetColor();
 }
 
 ALTERNET_UI_API void FontDialog_SetColor_(FontDialog* obj, Color value)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetColor(value);
-        });
+    obj->SetColor(value);
 }
 
 ALTERNET_UI_API char16_t* FontDialog_GetResultFontName_(FontDialog* obj)
 {
-    return MarshalExceptions<char16_t*>([&](){
-            return AllocPInvokeReturnString(obj->GetResultFontName());
-        });
+    return AllocPInvokeReturnString(obj->GetResultFontName());
 }
 
 ALTERNET_UI_API double FontDialog_GetResultFontSizeInPoints_(FontDialog* obj)
 {
-    return MarshalExceptions<double>([&](){
-            return obj->GetResultFontSizeInPoints();
-        });
+    return obj->GetResultFontSizeInPoints();
 }
 
 ALTERNET_UI_API FontStyle FontDialog_GetResultFontStyle_(FontDialog* obj)
 {
-    return MarshalExceptions<FontStyle>([&](){
-            return obj->GetResultFontStyle();
-        });
+    return obj->GetResultFontStyle();
 }
 
 ALTERNET_UI_API char16_t* FontDialog_GetTitle_(FontDialog* obj)
 {
-    return MarshalExceptions<char16_t*>([&](){
-            return AllocPInvokeReturnString(obj->GetTitle());
-        });
+    return AllocPInvokeReturnString(obj->GetTitle());
 }
 
 ALTERNET_UI_API void FontDialog_SetTitle_(FontDialog* obj, const char16_t* value)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetTitle(ToOptional(value));
-        });
+    obj->SetTitle(ToOptional(value));
 }
 
 ALTERNET_UI_API ModalResult FontDialog_ShowModal_(FontDialog* obj, Window* owner)
 {
-    return MarshalExceptions<ModalResult>([&](){
-            return obj->ShowModal(owner);
-        });
+    return obj->ShowModal(owner);
 }
 
 ALTERNET_UI_API void FontDialog_SetRange_(FontDialog* obj, int minRange, int maxRange)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetRange(minRange, maxRange);
-        });
+    obj->SetRange(minRange, maxRange);
 }
 
 ALTERNET_UI_API void FontDialog_SetInitialFont_(FontDialog* obj, GenericFontFamily genericFamily, const char16_t* familyName, double emSizeInPoints, FontStyle style)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetInitialFont(genericFamily, ToOptional(familyName), emSizeInPoints, style);
-        });
+    obj->SetInitialFont(genericFamily, ToOptional(familyName), emSizeInPoints, style);
 }
 

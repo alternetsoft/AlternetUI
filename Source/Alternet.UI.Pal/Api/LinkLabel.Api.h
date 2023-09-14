@@ -10,37 +10,27 @@ using namespace Alternet::UI;
 
 ALTERNET_UI_API LinkLabel* LinkLabel_Create_()
 {
-    return MarshalExceptions<LinkLabel*>([&](){
-            return new LinkLabel();
-        });
+    return new LinkLabel();
 }
 
 ALTERNET_UI_API char16_t* LinkLabel_GetText_(LinkLabel* obj)
 {
-    return MarshalExceptions<char16_t*>([&](){
-            return AllocPInvokeReturnString(obj->GetText());
-        });
+    return AllocPInvokeReturnString(obj->GetText());
 }
 
 ALTERNET_UI_API void LinkLabel_SetText_(LinkLabel* obj, const char16_t* value)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetText(value);
-        });
+    obj->SetText(value);
 }
 
 ALTERNET_UI_API char16_t* LinkLabel_GetUrl_(LinkLabel* obj)
 {
-    return MarshalExceptions<char16_t*>([&](){
-            return AllocPInvokeReturnString(obj->GetUrl());
-        });
+    return AllocPInvokeReturnString(obj->GetUrl());
 }
 
 ALTERNET_UI_API void LinkLabel_SetUrl_(LinkLabel* obj, const char16_t* value)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetUrl(value);
-        });
+    obj->SetUrl(value);
 }
 
 ALTERNET_UI_API void LinkLabel_SetEventCallback_(LinkLabel::LinkLabelEventCallbackType callback)

@@ -11,169 +11,121 @@ using namespace Alternet::UI;
 
 ALTERNET_UI_API PropertyGridChoices* PropertyGridChoices_Create_()
 {
-    return MarshalExceptions<PropertyGridChoices*>([&](){
-            return new PropertyGridChoices();
-        });
+    return new PropertyGridChoices();
 }
 
 ALTERNET_UI_API void* PropertyGridChoices_CreatePropertyGridChoices_()
 {
-    return MarshalExceptions<void*>([&](){
-            return PropertyGridChoices::CreatePropertyGridChoices();
-        });
+    return PropertyGridChoices::CreatePropertyGridChoices();
 }
 
 ALTERNET_UI_API void PropertyGridChoices_Delete_(void* handle)
 {
-    MarshalExceptions<void>([&](){
-            PropertyGridChoices::Delete(handle);
-        });
+    PropertyGridChoices::Delete(handle);
 }
 
 ALTERNET_UI_API void PropertyGridChoices_Add_(void* handle, const char16_t* text, int value, ImageSet* bitmapBundle)
 {
-    MarshalExceptions<void>([&](){
-            PropertyGridChoices::Add(handle, text, value, bitmapBundle);
-        });
+    PropertyGridChoices::Add(handle, text, value, bitmapBundle);
 }
 
 ALTERNET_UI_API void PropertyGridChoices_SetLabel_(void* handle, uint32_t ind, const char16_t* value)
 {
-    MarshalExceptions<void>([&](){
-            PropertyGridChoices::SetLabel(handle, ind, value);
-        });
+    PropertyGridChoices::SetLabel(handle, ind, value);
 }
 
 ALTERNET_UI_API void PropertyGridChoices_SetBitmap_(void* handle, uint32_t ind, ImageSet* bitmap)
 {
-    MarshalExceptions<void>([&](){
-            PropertyGridChoices::SetBitmap(handle, ind, bitmap);
-        });
+    PropertyGridChoices::SetBitmap(handle, ind, bitmap);
 }
 
 ALTERNET_UI_API void PropertyGridChoices_SetFgCol_(void* handle, uint32_t ind, Color color)
 {
-    MarshalExceptions<void>([&](){
-            PropertyGridChoices::SetFgCol(handle, ind, color);
-        });
+    PropertyGridChoices::SetFgCol(handle, ind, color);
 }
 
 ALTERNET_UI_API void PropertyGridChoices_SetFont_(void* handle, uint32_t ind, void* font)
 {
-    MarshalExceptions<void>([&](){
-            PropertyGridChoices::SetFont(handle, ind, font);
-        });
+    PropertyGridChoices::SetFont(handle, ind, font);
 }
 
 ALTERNET_UI_API void PropertyGridChoices_SetBgCol_(void* handle, uint32_t ind, Color color)
 {
-    MarshalExceptions<void>([&](){
-            PropertyGridChoices::SetBgCol(handle, ind, color);
-        });
+    PropertyGridChoices::SetBgCol(handle, ind, color);
 }
 
 ALTERNET_UI_API Color_C PropertyGridChoices_GetFgCol_(void* handle, uint32_t ind)
 {
-    return MarshalExceptions<Color_C>([&](){
-            return PropertyGridChoices::GetFgCol(handle, ind);
-        });
+    return PropertyGridChoices::GetFgCol(handle, ind);
 }
 
 ALTERNET_UI_API Color_C PropertyGridChoices_GetBgCol_(void* handle, uint32_t ind)
 {
-    return MarshalExceptions<Color_C>([&](){
-            return PropertyGridChoices::GetBgCol(handle, ind);
-        });
+    return PropertyGridChoices::GetBgCol(handle, ind);
 }
 
 ALTERNET_UI_API void* PropertyGridChoices_GetFont_(void* handle, uint32_t ind)
 {
-    return MarshalExceptions<void*>([&](){
-            return PropertyGridChoices::GetFont(handle, ind);
-        });
+    return PropertyGridChoices::GetFont(handle, ind);
 }
 
 ALTERNET_UI_API void* PropertyGridChoices_GetBitmap_(void* handle, uint32_t ind)
 {
-    return MarshalExceptions<void*>([&](){
-            return PropertyGridChoices::GetBitmap(handle, ind);
-        });
+    return PropertyGridChoices::GetBitmap(handle, ind);
 }
 
 ALTERNET_UI_API void PropertyGridChoices_SetBitmapFromItem_(void* handle, uint32_t ind, void* handle2, uint32_t ind2)
 {
-    MarshalExceptions<void>([&](){
-            PropertyGridChoices::SetBitmapFromItem(handle, ind, handle2, ind2);
-        });
+    PropertyGridChoices::SetBitmapFromItem(handle, ind, handle2, ind2);
 }
 
 ALTERNET_UI_API void PropertyGridChoices_SetFontFromItem_(void* handle, uint32_t ind, void* handle2, uint32_t ind2)
 {
-    MarshalExceptions<void>([&](){
-            PropertyGridChoices::SetFontFromItem(handle, ind, handle2, ind2);
-        });
+    PropertyGridChoices::SetFontFromItem(handle, ind, handle2, ind2);
 }
 
 ALTERNET_UI_API char16_t* PropertyGridChoices_GetLabel_(void* handle, uint32_t ind)
 {
-    return MarshalExceptions<char16_t*>([&](){
-            return AllocPInvokeReturnString(PropertyGridChoices::GetLabel(handle, ind));
-        });
+    return AllocPInvokeReturnString(PropertyGridChoices::GetLabel(handle, ind));
 }
 
 ALTERNET_UI_API uint32_t PropertyGridChoices_GetCount_(void* handle)
 {
-    return MarshalExceptions<uint32_t>([&](){
-            return PropertyGridChoices::GetCount(handle);
-        });
+    return PropertyGridChoices::GetCount(handle);
 }
 
 ALTERNET_UI_API int PropertyGridChoices_GetValue_(void* handle, uint32_t ind)
 {
-    return MarshalExceptions<int>([&](){
-            return PropertyGridChoices::GetValue(handle, ind);
-        });
+    return PropertyGridChoices::GetValue(handle, ind);
 }
 
 ALTERNET_UI_API int PropertyGridChoices_GetLabelIndex_(void* handle, const char16_t* str)
 {
-    return MarshalExceptions<int>([&](){
-            return PropertyGridChoices::GetLabelIndex(handle, str);
-        });
+    return PropertyGridChoices::GetLabelIndex(handle, str);
 }
 
 ALTERNET_UI_API int PropertyGridChoices_GetValueIndex_(void* handle, int val)
 {
-    return MarshalExceptions<int>([&](){
-            return PropertyGridChoices::GetValueIndex(handle, val);
-        });
+    return PropertyGridChoices::GetValueIndex(handle, val);
 }
 
 ALTERNET_UI_API void PropertyGridChoices_Insert_(void* handle, int index, const char16_t* text, int value, ImageSet* bitmapBundle)
 {
-    MarshalExceptions<void>([&](){
-            PropertyGridChoices::Insert(handle, index, text, value, bitmapBundle);
-        });
+    PropertyGridChoices::Insert(handle, index, text, value, bitmapBundle);
 }
 
 ALTERNET_UI_API c_bool PropertyGridChoices_IsOk_(void* handle)
 {
-    return MarshalExceptions<c_bool>([&](){
-            return PropertyGridChoices::IsOk(handle);
-        });
+    return PropertyGridChoices::IsOk(handle);
 }
 
 ALTERNET_UI_API void PropertyGridChoices_RemoveAt_(void* handle, uint64_t nIndex, uint64_t count)
 {
-    MarshalExceptions<void>([&](){
-            PropertyGridChoices::RemoveAt(handle, nIndex, count);
-        });
+    PropertyGridChoices::RemoveAt(handle, nIndex, count);
 }
 
 ALTERNET_UI_API void PropertyGridChoices_Clear_(void* handle)
 {
-    MarshalExceptions<void>([&](){
-            PropertyGridChoices::Clear(handle);
-        });
+    PropertyGridChoices::Clear(handle);
 }
 

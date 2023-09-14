@@ -10,8 +10,6 @@ using namespace Alternet::UI;
 
 ALTERNET_UI_API BoxSizer* BoxSizer_Create_()
 {
-    return MarshalExceptions<BoxSizer*>([&](){
-            return new BoxSizer();
-        });
+    return new BoxSizer();
 }
 

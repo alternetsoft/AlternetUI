@@ -72,16 +72,6 @@ namespace Alternet.UI
             }
         }
 
-        internal static Brush UixmlPreviewerBrush
-        {
-            get
-            {
-                if (uixmlPreviewerBrush == null)
-                    uixmlPreviewerBrush = Brushes.White;
-                return uixmlPreviewerBrush;
-            }
-        }
-
         /// <include file="Interfaces/IWebBrowser.xml" path='doc/StringFormatJs/*'/>
         public static string StringFormatJs
         {
@@ -101,7 +91,6 @@ namespace Alternet.UI
 
         /// <inheritdoc/>
         public override ControlId ControlKind => ControlId.WebBrowser;
-
 
         /// <include file="Interfaces/IWebBrowser.xml" path='doc/HasSelection/*'/>
         public virtual bool HasSelection
@@ -424,6 +413,16 @@ namespace Alternet.UI
         /// <include file="Interfaces/IWebBrowser.xml" path='doc/CanZoomOut/*'/>
         public virtual bool CanZoomOut { get => Zoom != WebBrowserZoom.Tiny; }
 
+        internal static Brush UixmlPreviewerBrush
+        {
+            get
+            {
+                if (uixmlPreviewerBrush == null)
+                    uixmlPreviewerBrush = Brushes.White;
+                return uixmlPreviewerBrush;
+            }
+        }
+
         internal new WebBrowserHandler Handler => (WebBrowserHandler)base.Handler;
 
         internal IWebBrowserLite Browser => (IWebBrowserLite)base.Handler;
@@ -502,6 +501,12 @@ namespace Alternet.UI
         /// <include file="Interfaces/IWebBrowser.xml" path='doc/DoCommandGlobal/*'/>
         public static string? DoCommandGlobal(string cmdName, params object?[] args)
         {
+            if(cmdName == "CppThrow")
+            {
+                Native.Application.ThrowError(1);
+                return string.Empty;
+            }
+
             if (cmdName == "Screenshot")
             {
                 string location = Assembly.GetExecutingAssembly().Location;

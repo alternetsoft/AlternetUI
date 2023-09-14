@@ -11,43 +11,31 @@ using namespace Alternet::UI;
 
 ALTERNET_UI_API StatusBar* StatusBar_Create_()
 {
-    return MarshalExceptions<StatusBar*>([&](){
-            return new StatusBar();
-        });
+    return new StatusBar();
 }
 
 ALTERNET_UI_API int StatusBar_GetPanelCount_(StatusBar* obj)
 {
-    return MarshalExceptions<int>([&](){
-            return obj->GetPanelCount();
-        });
+    return obj->GetPanelCount();
 }
 
 ALTERNET_UI_API c_bool StatusBar_GetSizingGripVisible_(StatusBar* obj)
 {
-    return MarshalExceptions<c_bool>([&](){
-            return obj->GetSizingGripVisible();
-        });
+    return obj->GetSizingGripVisible();
 }
 
 ALTERNET_UI_API void StatusBar_SetSizingGripVisible_(StatusBar* obj, c_bool value)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetSizingGripVisible(value);
-        });
+    obj->SetSizingGripVisible(value);
 }
 
 ALTERNET_UI_API void StatusBar_InsertPanelAt_(StatusBar* obj, int index, StatusBarPanel* item)
 {
-    MarshalExceptions<void>([&](){
-            obj->InsertPanelAt(index, item);
-        });
+    obj->InsertPanelAt(index, item);
 }
 
 ALTERNET_UI_API void StatusBar_RemovePanelAt_(StatusBar* obj, int index)
 {
-    MarshalExceptions<void>([&](){
-            obj->RemovePanelAt(index);
-        });
+    obj->RemovePanelAt(index);
 }
 

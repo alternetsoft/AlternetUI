@@ -11,422 +11,302 @@ using namespace Alternet::UI;
 
 ALTERNET_UI_API TreeView* TreeView_Create_()
 {
-    return MarshalExceptions<TreeView*>([&](){
-            return new TreeView();
-        });
+    return new TreeView();
 }
 
 ALTERNET_UI_API c_bool TreeView_GetHideRoot_(TreeView* obj)
 {
-    return MarshalExceptions<c_bool>([&](){
-            return obj->GetHideRoot();
-        });
+    return obj->GetHideRoot();
 }
 
 ALTERNET_UI_API void TreeView_SetHideRoot_(TreeView* obj, c_bool value)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetHideRoot(value);
-        });
+    obj->SetHideRoot(value);
 }
 
 ALTERNET_UI_API c_bool TreeView_GetVariableRowHeight_(TreeView* obj)
 {
-    return MarshalExceptions<c_bool>([&](){
-            return obj->GetVariableRowHeight();
-        });
+    return obj->GetVariableRowHeight();
 }
 
 ALTERNET_UI_API void TreeView_SetVariableRowHeight_(TreeView* obj, c_bool value)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetVariableRowHeight(value);
-        });
+    obj->SetVariableRowHeight(value);
 }
 
 ALTERNET_UI_API c_bool TreeView_GetTwistButtons_(TreeView* obj)
 {
-    return MarshalExceptions<c_bool>([&](){
-            return obj->GetTwistButtons();
-        });
+    return obj->GetTwistButtons();
 }
 
 ALTERNET_UI_API void TreeView_SetTwistButtons_(TreeView* obj, c_bool value)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetTwistButtons(value);
-        });
+    obj->SetTwistButtons(value);
 }
 
 ALTERNET_UI_API uint32_t TreeView_GetStateImageSpacing_(TreeView* obj)
 {
-    return MarshalExceptions<uint32_t>([&](){
-            return obj->GetStateImageSpacing();
-        });
+    return obj->GetStateImageSpacing();
 }
 
 ALTERNET_UI_API void TreeView_SetStateImageSpacing_(TreeView* obj, uint32_t value)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetStateImageSpacing(value);
-        });
+    obj->SetStateImageSpacing(value);
 }
 
 ALTERNET_UI_API uint32_t TreeView_GetIndentation_(TreeView* obj)
 {
-    return MarshalExceptions<uint32_t>([&](){
-            return obj->GetIndentation();
-        });
+    return obj->GetIndentation();
 }
 
 ALTERNET_UI_API void TreeView_SetIndentation_(TreeView* obj, uint32_t value)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetIndentation(value);
-        });
+    obj->SetIndentation(value);
 }
 
 ALTERNET_UI_API c_bool TreeView_GetRowLines_(TreeView* obj)
 {
-    return MarshalExceptions<c_bool>([&](){
-            return obj->GetRowLines();
-        });
+    return obj->GetRowLines();
 }
 
 ALTERNET_UI_API void TreeView_SetRowLines_(TreeView* obj, c_bool value)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetRowLines(value);
-        });
+    obj->SetRowLines(value);
 }
 
 ALTERNET_UI_API c_bool TreeView_GetHasBorder_(TreeView* obj)
 {
-    return MarshalExceptions<c_bool>([&](){
-            return obj->GetHasBorder();
-        });
+    return obj->GetHasBorder();
 }
 
 ALTERNET_UI_API void TreeView_SetHasBorder_(TreeView* obj, c_bool value)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetHasBorder(value);
-        });
+    obj->SetHasBorder(value);
 }
 
 ALTERNET_UI_API ImageList* TreeView_GetImageList_(TreeView* obj)
 {
-    return MarshalExceptions<ImageList*>([&](){
-            return obj->GetImageList();
-        });
+    return obj->GetImageList();
 }
 
 ALTERNET_UI_API void TreeView_SetImageList_(TreeView* obj, ImageList* value)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetImageList(value);
-        });
+    obj->SetImageList(value);
 }
 
 ALTERNET_UI_API void* TreeView_GetRootItem_(TreeView* obj)
 {
-    return MarshalExceptions<void*>([&](){
-            return obj->GetRootItem();
-        });
+    return obj->GetRootItem();
 }
 
 ALTERNET_UI_API TreeViewSelectionMode TreeView_GetSelectionMode_(TreeView* obj)
 {
-    return MarshalExceptions<TreeViewSelectionMode>([&](){
-            return obj->GetSelectionMode();
-        });
+    return obj->GetSelectionMode();
 }
 
 ALTERNET_UI_API void TreeView_SetSelectionMode_(TreeView* obj, TreeViewSelectionMode value)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetSelectionMode(value);
-        });
+    obj->SetSelectionMode(value);
 }
 
 ALTERNET_UI_API c_bool TreeView_GetShowLines_(TreeView* obj)
 {
-    return MarshalExceptions<c_bool>([&](){
-            return obj->GetShowLines();
-        });
+    return obj->GetShowLines();
 }
 
 ALTERNET_UI_API void TreeView_SetShowLines_(TreeView* obj, c_bool value)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetShowLines(value);
-        });
+    obj->SetShowLines(value);
 }
 
 ALTERNET_UI_API c_bool TreeView_GetShowRootLines_(TreeView* obj)
 {
-    return MarshalExceptions<c_bool>([&](){
-            return obj->GetShowRootLines();
-        });
+    return obj->GetShowRootLines();
 }
 
 ALTERNET_UI_API void TreeView_SetShowRootLines_(TreeView* obj, c_bool value)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetShowRootLines(value);
-        });
+    obj->SetShowRootLines(value);
 }
 
 ALTERNET_UI_API c_bool TreeView_GetShowExpandButtons_(TreeView* obj)
 {
-    return MarshalExceptions<c_bool>([&](){
-            return obj->GetShowExpandButtons();
-        });
+    return obj->GetShowExpandButtons();
 }
 
 ALTERNET_UI_API void TreeView_SetShowExpandButtons_(TreeView* obj, c_bool value)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetShowExpandButtons(value);
-        });
+    obj->SetShowExpandButtons(value);
 }
 
 ALTERNET_UI_API void* TreeView_GetTopItem_(TreeView* obj)
 {
-    return MarshalExceptions<void*>([&](){
-            return obj->GetTopItem();
-        });
+    return obj->GetTopItem();
 }
 
 ALTERNET_UI_API c_bool TreeView_GetFullRowSelect_(TreeView* obj)
 {
-    return MarshalExceptions<c_bool>([&](){
-            return obj->GetFullRowSelect();
-        });
+    return obj->GetFullRowSelect();
 }
 
 ALTERNET_UI_API void TreeView_SetFullRowSelect_(TreeView* obj, c_bool value)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetFullRowSelect(value);
-        });
+    obj->SetFullRowSelect(value);
 }
 
 ALTERNET_UI_API c_bool TreeView_GetAllowLabelEdit_(TreeView* obj)
 {
-    return MarshalExceptions<c_bool>([&](){
-            return obj->GetAllowLabelEdit();
-        });
+    return obj->GetAllowLabelEdit();
 }
 
 ALTERNET_UI_API void TreeView_SetAllowLabelEdit_(TreeView* obj, c_bool value)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetAllowLabelEdit(value);
-        });
+    obj->SetAllowLabelEdit(value);
 }
 
 ALTERNET_UI_API void* TreeView_OpenSelectedItemsArray_(TreeView* obj)
 {
-    return MarshalExceptions<void*>([&](){
-            return obj->OpenSelectedItemsArray();
-        });
+    return obj->OpenSelectedItemsArray();
 }
 
 ALTERNET_UI_API int TreeView_GetSelectedItemsItemCount_(TreeView* obj, void* array)
 {
-    return MarshalExceptions<int>([&](){
-            return obj->GetSelectedItemsItemCount(array);
-        });
+    return obj->GetSelectedItemsItemCount(array);
 }
 
 ALTERNET_UI_API void* TreeView_GetSelectedItemsItemAt_(TreeView* obj, void* array, int index)
 {
-    return MarshalExceptions<void*>([&](){
-            return obj->GetSelectedItemsItemAt(array, index);
-        });
+    return obj->GetSelectedItemsItemAt(array, index);
 }
 
 ALTERNET_UI_API void TreeView_CloseSelectedItemsArray_(TreeView* obj, void* array)
 {
-    MarshalExceptions<void>([&](){
-            obj->CloseSelectedItemsArray(array);
-        });
+    obj->CloseSelectedItemsArray(array);
 }
 
 ALTERNET_UI_API int TreeView_GetItemCount_(TreeView* obj, void* parentItem)
 {
-    return MarshalExceptions<int>([&](){
-            return obj->GetItemCount(parentItem);
-        });
+    return obj->GetItemCount(parentItem);
 }
 
 ALTERNET_UI_API void* TreeView_InsertItem_(TreeView* obj, void* parentItem, void* insertAfter, const char16_t* text, int imageIndex, c_bool parentIsExpanded)
 {
-    return MarshalExceptions<void*>([&](){
-            return obj->InsertItem(parentItem, insertAfter, text, imageIndex, parentIsExpanded);
-        });
+    return obj->InsertItem(parentItem, insertAfter, text, imageIndex, parentIsExpanded);
 }
 
 ALTERNET_UI_API void TreeView_RemoveItem_(TreeView* obj, void* item)
 {
-    MarshalExceptions<void>([&](){
-            obj->RemoveItem(item);
-        });
+    obj->RemoveItem(item);
 }
 
 ALTERNET_UI_API void TreeView_ClearItems_(TreeView* obj, void* parentItem)
 {
-    MarshalExceptions<void>([&](){
-            obj->ClearItems(parentItem);
-        });
+    obj->ClearItems(parentItem);
 }
 
 ALTERNET_UI_API void TreeView_ClearSelected_(TreeView* obj)
 {
-    MarshalExceptions<void>([&](){
-            obj->ClearSelected();
-        });
+    obj->ClearSelected();
 }
 
 ALTERNET_UI_API void TreeView_SetSelected_(TreeView* obj, void* item, c_bool value)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetSelected(item, value);
-        });
+    obj->SetSelected(item, value);
 }
 
 ALTERNET_UI_API void TreeView_ExpandAll_(TreeView* obj)
 {
-    MarshalExceptions<void>([&](){
-            obj->ExpandAll();
-        });
+    obj->ExpandAll();
 }
 
 ALTERNET_UI_API void TreeView_CollapseAll_(TreeView* obj)
 {
-    MarshalExceptions<void>([&](){
-            obj->CollapseAll();
-        });
+    obj->CollapseAll();
 }
 
 ALTERNET_UI_API void* TreeView_ItemHitTest_(TreeView* obj, Point point)
 {
-    return MarshalExceptions<void*>([&](){
-            return obj->ItemHitTest(point);
-        });
+    return obj->ItemHitTest(point);
 }
 
 ALTERNET_UI_API TreeViewHitTestLocations TreeView_GetHitTestResultLocations_(TreeView* obj, void* hitTestResult)
 {
-    return MarshalExceptions<TreeViewHitTestLocations>([&](){
-            return obj->GetHitTestResultLocations(hitTestResult);
-        });
+    return obj->GetHitTestResultLocations(hitTestResult);
 }
 
 ALTERNET_UI_API void* TreeView_GetHitTestResultItem_(TreeView* obj, void* hitTestResult)
 {
-    return MarshalExceptions<void*>([&](){
-            return obj->GetHitTestResultItem(hitTestResult);
-        });
+    return obj->GetHitTestResultItem(hitTestResult);
 }
 
 ALTERNET_UI_API void TreeView_FreeHitTestResult_(TreeView* obj, void* hitTestResult)
 {
-    MarshalExceptions<void>([&](){
-            obj->FreeHitTestResult(hitTestResult);
-        });
+    obj->FreeHitTestResult(hitTestResult);
 }
 
 ALTERNET_UI_API c_bool TreeView_IsItemSelected_(TreeView* obj, void* item)
 {
-    return MarshalExceptions<c_bool>([&](){
-            return obj->IsItemSelected(item);
-        });
+    return obj->IsItemSelected(item);
 }
 
 ALTERNET_UI_API void TreeView_SetFocused_(TreeView* obj, void* item, c_bool value)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetFocused(item, value);
-        });
+    obj->SetFocused(item, value);
 }
 
 ALTERNET_UI_API c_bool TreeView_IsItemFocused_(TreeView* obj, void* item)
 {
-    return MarshalExceptions<c_bool>([&](){
-            return obj->IsItemFocused(item);
-        });
+    return obj->IsItemFocused(item);
 }
 
 ALTERNET_UI_API void TreeView_SetItemText_(TreeView* obj, void* item, const char16_t* text)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetItemText(item, text);
-        });
+    obj->SetItemText(item, text);
 }
 
 ALTERNET_UI_API char16_t* TreeView_GetItemText_(TreeView* obj, void* item)
 {
-    return MarshalExceptions<char16_t*>([&](){
-            return AllocPInvokeReturnString(obj->GetItemText(item));
-        });
+    return AllocPInvokeReturnString(obj->GetItemText(item));
 }
 
 ALTERNET_UI_API void TreeView_SetItemImageIndex_(TreeView* obj, void* item, int imageIndex)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetItemImageIndex(item, imageIndex);
-        });
+    obj->SetItemImageIndex(item, imageIndex);
 }
 
 ALTERNET_UI_API int TreeView_GetItemImageIndex_(TreeView* obj, void* item)
 {
-    return MarshalExceptions<int>([&](){
-            return obj->GetItemImageIndex(item);
-        });
+    return obj->GetItemImageIndex(item);
 }
 
 ALTERNET_UI_API void TreeView_BeginLabelEdit_(TreeView* obj, void* item)
 {
-    MarshalExceptions<void>([&](){
-            obj->BeginLabelEdit(item);
-        });
+    obj->BeginLabelEdit(item);
 }
 
 ALTERNET_UI_API void TreeView_EndLabelEdit_(TreeView* obj, void* item, c_bool cancel)
 {
-    MarshalExceptions<void>([&](){
-            obj->EndLabelEdit(item, cancel);
-        });
+    obj->EndLabelEdit(item, cancel);
 }
 
 ALTERNET_UI_API void TreeView_ExpandAllChildren_(TreeView* obj, void* item)
 {
-    MarshalExceptions<void>([&](){
-            obj->ExpandAllChildren(item);
-        });
+    obj->ExpandAllChildren(item);
 }
 
 ALTERNET_UI_API void TreeView_CollapseAllChildren_(TreeView* obj, void* item)
 {
-    MarshalExceptions<void>([&](){
-            obj->CollapseAllChildren(item);
-        });
+    obj->CollapseAllChildren(item);
 }
 
 ALTERNET_UI_API void TreeView_EnsureVisible_(TreeView* obj, void* item)
 {
-    MarshalExceptions<void>([&](){
-            obj->EnsureVisible(item);
-        });
+    obj->EnsureVisible(item);
 }
 
 ALTERNET_UI_API void TreeView_ScrollIntoView_(TreeView* obj, void* item)
 {
-    MarshalExceptions<void>([&](){
-            obj->ScrollIntoView(item);
-        });
+    obj->ScrollIntoView(item);
 }
 
 ALTERNET_UI_API void TreeView_SetEventCallback_(TreeView::TreeViewEventCallbackType callback)

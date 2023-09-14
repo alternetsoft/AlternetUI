@@ -10,22 +10,16 @@ using namespace Alternet::UI;
 
 ALTERNET_UI_API StatusBarPanel* StatusBarPanel_Create_()
 {
-    return MarshalExceptions<StatusBarPanel*>([&](){
-            return new StatusBarPanel();
-        });
+    return new StatusBarPanel();
 }
 
 ALTERNET_UI_API char16_t* StatusBarPanel_GetText_(StatusBarPanel* obj)
 {
-    return MarshalExceptions<char16_t*>([&](){
-            return AllocPInvokeReturnString(obj->GetText());
-        });
+    return AllocPInvokeReturnString(obj->GetText());
 }
 
 ALTERNET_UI_API void StatusBarPanel_SetText_(StatusBarPanel* obj, const char16_t* value)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetText(value);
-        });
+    obj->SetText(value);
 }
 

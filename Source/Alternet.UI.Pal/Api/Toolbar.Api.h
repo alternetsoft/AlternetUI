@@ -11,141 +11,101 @@ using namespace Alternet::UI;
 
 ALTERNET_UI_API Toolbar* Toolbar_Create_()
 {
-    return MarshalExceptions<Toolbar*>([&](){
-            return new Toolbar();
-        });
+    return new Toolbar();
 }
 
 ALTERNET_UI_API int Toolbar_GetItemsCount_(Toolbar* obj)
 {
-    return MarshalExceptions<int>([&](){
-            return obj->GetItemsCount();
-        });
+    return obj->GetItemsCount();
 }
 
 ALTERNET_UI_API c_bool Toolbar_GetItemTextVisible_(Toolbar* obj)
 {
-    return MarshalExceptions<c_bool>([&](){
-            return obj->GetItemTextVisible();
-        });
+    return obj->GetItemTextVisible();
 }
 
 ALTERNET_UI_API void Toolbar_SetItemTextVisible_(Toolbar* obj, c_bool value)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetItemTextVisible(value);
-        });
+    obj->SetItemTextVisible(value);
 }
 
 ALTERNET_UI_API c_bool Toolbar_GetItemImagesVisible_(Toolbar* obj)
 {
-    return MarshalExceptions<c_bool>([&](){
-            return obj->GetItemImagesVisible();
-        });
+    return obj->GetItemImagesVisible();
 }
 
 ALTERNET_UI_API void Toolbar_SetItemImagesVisible_(Toolbar* obj, c_bool value)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetItemImagesVisible(value);
-        });
+    obj->SetItemImagesVisible(value);
 }
 
 ALTERNET_UI_API c_bool Toolbar_GetNoDivider_(Toolbar* obj)
 {
-    return MarshalExceptions<c_bool>([&](){
-            return obj->GetNoDivider();
-        });
+    return obj->GetNoDivider();
 }
 
 ALTERNET_UI_API void Toolbar_SetNoDivider_(Toolbar* obj, c_bool value)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetNoDivider(value);
-        });
+    obj->SetNoDivider(value);
 }
 
 ALTERNET_UI_API c_bool Toolbar_GetIsVertical_(Toolbar* obj)
 {
-    return MarshalExceptions<c_bool>([&](){
-            return obj->GetIsVertical();
-        });
+    return obj->GetIsVertical();
 }
 
 ALTERNET_UI_API void Toolbar_SetIsVertical_(Toolbar* obj, c_bool value)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetIsVertical(value);
-        });
+    obj->SetIsVertical(value);
 }
 
 ALTERNET_UI_API c_bool Toolbar_GetIsBottom_(Toolbar* obj)
 {
-    return MarshalExceptions<c_bool>([&](){
-            return obj->GetIsBottom();
-        });
+    return obj->GetIsBottom();
 }
 
 ALTERNET_UI_API void Toolbar_SetIsBottom_(Toolbar* obj, c_bool value)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetIsBottom(value);
-        });
+    obj->SetIsBottom(value);
 }
 
 ALTERNET_UI_API c_bool Toolbar_GetIsRight_(Toolbar* obj)
 {
-    return MarshalExceptions<c_bool>([&](){
-            return obj->GetIsRight();
-        });
+    return obj->GetIsRight();
 }
 
 ALTERNET_UI_API void Toolbar_SetIsRight_(Toolbar* obj, c_bool value)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetIsRight(value);
-        });
+    obj->SetIsRight(value);
 }
 
 ALTERNET_UI_API ToolbarItemImageToTextDisplayMode Toolbar_GetImageToTextDisplayMode_(Toolbar* obj)
 {
-    return MarshalExceptions<ToolbarItemImageToTextDisplayMode>([&](){
-            return obj->GetImageToTextDisplayMode();
-        });
+    return obj->GetImageToTextDisplayMode();
 }
 
 ALTERNET_UI_API void Toolbar_SetImageToTextDisplayMode_(Toolbar* obj, ToolbarItemImageToTextDisplayMode value)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetImageToTextDisplayMode(value);
-        });
+    obj->SetImageToTextDisplayMode(value);
 }
 
 ALTERNET_UI_API void* Toolbar_CreateEx_(c_bool mainToolbar)
 {
-    return MarshalExceptions<void*>([&](){
-            return Toolbar::CreateEx(mainToolbar);
-        });
+    return Toolbar::CreateEx(mainToolbar);
 }
 
 ALTERNET_UI_API void Toolbar_InsertItemAt_(Toolbar* obj, int index, ToolbarItem* item)
 {
-    MarshalExceptions<void>([&](){
-            obj->InsertItemAt(index, item);
-        });
+    obj->InsertItemAt(index, item);
 }
 
 ALTERNET_UI_API void Toolbar_RemoveItemAt_(Toolbar* obj, int index)
 {
-    MarshalExceptions<void>([&](){
-            obj->RemoveItemAt(index);
-        });
+    obj->RemoveItemAt(index);
 }
 
 ALTERNET_UI_API void Toolbar_Realize_(Toolbar* obj)
 {
-    MarshalExceptions<void>([&](){
-            obj->Realize();
-        });
+    obj->Realize();
 }
 

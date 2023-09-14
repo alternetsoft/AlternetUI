@@ -10,65 +10,47 @@ using namespace Alternet::UI;
 
 ALTERNET_UI_API NumericUpDown* NumericUpDown_Create_()
 {
-    return MarshalExceptions<NumericUpDown*>([&](){
-            return new NumericUpDown();
-        });
+    return new NumericUpDown();
 }
 
 ALTERNET_UI_API c_bool NumericUpDown_GetHasBorder_(NumericUpDown* obj)
 {
-    return MarshalExceptions<c_bool>([&](){
-            return obj->GetHasBorder();
-        });
+    return obj->GetHasBorder();
 }
 
 ALTERNET_UI_API void NumericUpDown_SetHasBorder_(NumericUpDown* obj, c_bool value)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetHasBorder(value);
-        });
+    obj->SetHasBorder(value);
 }
 
 ALTERNET_UI_API int NumericUpDown_GetMinimum_(NumericUpDown* obj)
 {
-    return MarshalExceptions<int>([&](){
-            return obj->GetMinimum();
-        });
+    return obj->GetMinimum();
 }
 
 ALTERNET_UI_API void NumericUpDown_SetMinimum_(NumericUpDown* obj, int value)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetMinimum(value);
-        });
+    obj->SetMinimum(value);
 }
 
 ALTERNET_UI_API int NumericUpDown_GetMaximum_(NumericUpDown* obj)
 {
-    return MarshalExceptions<int>([&](){
-            return obj->GetMaximum();
-        });
+    return obj->GetMaximum();
 }
 
 ALTERNET_UI_API void NumericUpDown_SetMaximum_(NumericUpDown* obj, int value)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetMaximum(value);
-        });
+    obj->SetMaximum(value);
 }
 
 ALTERNET_UI_API int NumericUpDown_GetValue_(NumericUpDown* obj)
 {
-    return MarshalExceptions<int>([&](){
-            return obj->GetValue();
-        });
+    return obj->GetValue();
 }
 
 ALTERNET_UI_API void NumericUpDown_SetValue_(NumericUpDown* obj, int value)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetValue(value);
-        });
+    obj->SetValue(value);
 }
 
 ALTERNET_UI_API void NumericUpDown_SetEventCallback_(NumericUpDown::NumericUpDownEventCallbackType callback)

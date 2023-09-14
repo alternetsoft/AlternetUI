@@ -10,58 +10,42 @@ using namespace Alternet::UI;
 
 ALTERNET_UI_API CheckListBox* CheckListBox_Create_()
 {
-    return MarshalExceptions<CheckListBox*>([&](){
-            return new CheckListBox();
-        });
+    return new CheckListBox();
 }
 
 ALTERNET_UI_API void* CheckListBox_OpenCheckedIndicesArray_(CheckListBox* obj)
 {
-    return MarshalExceptions<void*>([&](){
-            return obj->OpenCheckedIndicesArray();
-        });
+    return obj->OpenCheckedIndicesArray();
 }
 
 ALTERNET_UI_API int CheckListBox_GetCheckedIndicesItemCount_(CheckListBox* obj, void* array)
 {
-    return MarshalExceptions<int>([&](){
-            return obj->GetCheckedIndicesItemCount(array);
-        });
+    return obj->GetCheckedIndicesItemCount(array);
 }
 
 ALTERNET_UI_API int CheckListBox_GetCheckedIndicesItemAt_(CheckListBox* obj, void* array, int index)
 {
-    return MarshalExceptions<int>([&](){
-            return obj->GetCheckedIndicesItemAt(array, index);
-        });
+    return obj->GetCheckedIndicesItemAt(array, index);
 }
 
 ALTERNET_UI_API void CheckListBox_CloseCheckedIndicesArray_(CheckListBox* obj, void* array)
 {
-    MarshalExceptions<void>([&](){
-            obj->CloseCheckedIndicesArray(array);
-        });
+    obj->CloseCheckedIndicesArray(array);
 }
 
 ALTERNET_UI_API void CheckListBox_ClearChecked_(CheckListBox* obj)
 {
-    MarshalExceptions<void>([&](){
-            obj->ClearChecked();
-        });
+    obj->ClearChecked();
 }
 
 ALTERNET_UI_API void CheckListBox_SetChecked_(CheckListBox* obj, int index, c_bool value)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetChecked(index, value);
-        });
+    obj->SetChecked(index, value);
 }
 
 ALTERNET_UI_API c_bool CheckListBox_IsChecked_(CheckListBox* obj, int item)
 {
-    return MarshalExceptions<c_bool>([&](){
-            return obj->IsChecked(item);
-        });
+    return obj->IsChecked(item);
 }
 
 ALTERNET_UI_API void CheckListBox_SetEventCallback_(CheckListBox::CheckListBoxEventCallbackType callback)

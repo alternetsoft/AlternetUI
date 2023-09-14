@@ -10,23 +10,17 @@ using namespace Alternet::UI;
 
 ALTERNET_UI_API ColorPicker* ColorPicker_Create_()
 {
-    return MarshalExceptions<ColorPicker*>([&](){
-            return new ColorPicker();
-        });
+    return new ColorPicker();
 }
 
 ALTERNET_UI_API Color_C ColorPicker_GetValue_(ColorPicker* obj)
 {
-    return MarshalExceptions<Color_C>([&](){
-            return obj->GetValue();
-        });
+    return obj->GetValue();
 }
 
 ALTERNET_UI_API void ColorPicker_SetValue_(ColorPicker* obj, Color value)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetValue(value);
-        });
+    obj->SetValue(value);
 }
 
 ALTERNET_UI_API void ColorPicker_SetEventCallback_(ColorPicker::ColorPickerEventCallbackType callback)

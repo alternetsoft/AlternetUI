@@ -10,8 +10,6 @@ using namespace Alternet::UI;
 
 ALTERNET_UI_API GridSizer* GridSizer_Create_()
 {
-    return MarshalExceptions<GridSizer*>([&](){
-            return new GridSizer();
-        });
+    return new GridSizer();
 }
 

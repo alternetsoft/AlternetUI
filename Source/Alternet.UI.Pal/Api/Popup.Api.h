@@ -10,8 +10,6 @@ using namespace Alternet::UI;
 
 ALTERNET_UI_API Popup* Popup_Create_()
 {
-    return MarshalExceptions<Popup*>([&](){
-            return new Popup();
-        });
+    return new Popup();
 }
 

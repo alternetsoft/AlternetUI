@@ -11,86 +11,62 @@ using namespace Alternet::UI;
 
 ALTERNET_UI_API MenuItem* MenuItem_Create_()
 {
-    return MarshalExceptions<MenuItem*>([&](){
-            return new MenuItem();
-        });
+    return new MenuItem();
 }
 
 ALTERNET_UI_API char16_t* MenuItem_GetManagedCommandId_(MenuItem* obj)
 {
-    return MarshalExceptions<char16_t*>([&](){
-            return AllocPInvokeReturnString(obj->GetManagedCommandId());
-        });
+    return AllocPInvokeReturnString(obj->GetManagedCommandId());
 }
 
 ALTERNET_UI_API void MenuItem_SetManagedCommandId_(MenuItem* obj, const char16_t* value)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetManagedCommandId(value);
-        });
+    obj->SetManagedCommandId(value);
 }
 
 ALTERNET_UI_API char16_t* MenuItem_GetText_(MenuItem* obj)
 {
-    return MarshalExceptions<char16_t*>([&](){
-            return AllocPInvokeReturnString(obj->GetText());
-        });
+    return AllocPInvokeReturnString(obj->GetText());
 }
 
 ALTERNET_UI_API void MenuItem_SetText_(MenuItem* obj, const char16_t* value)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetText(value);
-        });
+    obj->SetText(value);
 }
 
 ALTERNET_UI_API char16_t* MenuItem_GetRole_(MenuItem* obj)
 {
-    return MarshalExceptions<char16_t*>([&](){
-            return AllocPInvokeReturnString(obj->GetRole());
-        });
+    return AllocPInvokeReturnString(obj->GetRole());
 }
 
 ALTERNET_UI_API void MenuItem_SetRole_(MenuItem* obj, const char16_t* value)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetRole(value);
-        });
+    obj->SetRole(value);
 }
 
 ALTERNET_UI_API c_bool MenuItem_GetChecked_(MenuItem* obj)
 {
-    return MarshalExceptions<c_bool>([&](){
-            return obj->GetChecked();
-        });
+    return obj->GetChecked();
 }
 
 ALTERNET_UI_API void MenuItem_SetChecked_(MenuItem* obj, c_bool value)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetChecked(value);
-        });
+    obj->SetChecked(value);
 }
 
 ALTERNET_UI_API Menu* MenuItem_GetSubmenu_(MenuItem* obj)
 {
-    return MarshalExceptions<Menu*>([&](){
-            return obj->GetSubmenu();
-        });
+    return obj->GetSubmenu();
 }
 
 ALTERNET_UI_API void MenuItem_SetSubmenu_(MenuItem* obj, Menu* value)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetSubmenu(value);
-        });
+    obj->SetSubmenu(value);
 }
 
 ALTERNET_UI_API void MenuItem_SetShortcut_(MenuItem* obj, Key key, ModifierKeys modifierKeys)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetShortcut(key, modifierKeys);
-        });
+    obj->SetShortcut(key, modifierKeys);
 }
 
 ALTERNET_UI_API void MenuItem_SetEventCallback_(MenuItem::MenuItemEventCallbackType callback)

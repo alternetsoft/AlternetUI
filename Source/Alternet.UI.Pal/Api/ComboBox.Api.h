@@ -10,142 +10,102 @@ using namespace Alternet::UI;
 
 ALTERNET_UI_API ComboBox* ComboBox_Create_()
 {
-    return MarshalExceptions<ComboBox*>([&](){
-            return new ComboBox();
-        });
+    return new ComboBox();
 }
 
 ALTERNET_UI_API c_bool ComboBox_GetHasBorder_(ComboBox* obj)
 {
-    return MarshalExceptions<c_bool>([&](){
-            return obj->GetHasBorder();
-        });
+    return obj->GetHasBorder();
 }
 
 ALTERNET_UI_API void ComboBox_SetHasBorder_(ComboBox* obj, c_bool value)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetHasBorder(value);
-        });
+    obj->SetHasBorder(value);
 }
 
 ALTERNET_UI_API int ComboBox_GetItemsCount_(ComboBox* obj)
 {
-    return MarshalExceptions<int>([&](){
-            return obj->GetItemsCount();
-        });
+    return obj->GetItemsCount();
 }
 
 ALTERNET_UI_API c_bool ComboBox_GetIsEditable_(ComboBox* obj)
 {
-    return MarshalExceptions<c_bool>([&](){
-            return obj->GetIsEditable();
-        });
+    return obj->GetIsEditable();
 }
 
 ALTERNET_UI_API void ComboBox_SetIsEditable_(ComboBox* obj, c_bool value)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetIsEditable(value);
-        });
+    obj->SetIsEditable(value);
 }
 
 ALTERNET_UI_API int ComboBox_GetSelectedIndex_(ComboBox* obj)
 {
-    return MarshalExceptions<int>([&](){
-            return obj->GetSelectedIndex();
-        });
+    return obj->GetSelectedIndex();
 }
 
 ALTERNET_UI_API void ComboBox_SetSelectedIndex_(ComboBox* obj, int value)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetSelectedIndex(value);
-        });
+    obj->SetSelectedIndex(value);
 }
 
 ALTERNET_UI_API char16_t* ComboBox_GetText_(ComboBox* obj)
 {
-    return MarshalExceptions<char16_t*>([&](){
-            return AllocPInvokeReturnString(obj->GetText());
-        });
+    return AllocPInvokeReturnString(obj->GetText());
 }
 
 ALTERNET_UI_API void ComboBox_SetText_(ComboBox* obj, const char16_t* value)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetText(value);
-        });
+    obj->SetText(value);
 }
 
 ALTERNET_UI_API int ComboBox_GetTextSelectionStart_(ComboBox* obj)
 {
-    return MarshalExceptions<int>([&](){
-            return obj->GetTextSelectionStart();
-        });
+    return obj->GetTextSelectionStart();
 }
 
 ALTERNET_UI_API int ComboBox_GetTextSelectionLength_(ComboBox* obj)
 {
-    return MarshalExceptions<int>([&](){
-            return obj->GetTextSelectionLength();
-        });
+    return obj->GetTextSelectionLength();
 }
 
 ALTERNET_UI_API void ComboBox_InsertItem_(ComboBox* obj, int index, const char16_t* value)
 {
-    MarshalExceptions<void>([&](){
-            obj->InsertItem(index, value);
-        });
+    obj->InsertItem(index, value);
 }
 
 ALTERNET_UI_API void* ComboBox_CreateItemsInsertion_(ComboBox* obj)
 {
-    return MarshalExceptions<void*>([&](){
-            return obj->CreateItemsInsertion();
-        });
+    return obj->CreateItemsInsertion();
 }
 
 ALTERNET_UI_API void ComboBox_AddItemToInsertion_(ComboBox* obj, void* insertion, const char16_t* item)
 {
-    MarshalExceptions<void>([&](){
-            obj->AddItemToInsertion(insertion, item);
-        });
+    obj->AddItemToInsertion(insertion, item);
 }
 
 ALTERNET_UI_API void ComboBox_CommitItemsInsertion_(ComboBox* obj, void* insertion, int index)
 {
-    MarshalExceptions<void>([&](){
-            obj->CommitItemsInsertion(insertion, index);
-        });
+    obj->CommitItemsInsertion(insertion, index);
 }
 
 ALTERNET_UI_API void ComboBox_RemoveItemAt_(ComboBox* obj, int index)
 {
-    MarshalExceptions<void>([&](){
-            obj->RemoveItemAt(index);
-        });
+    obj->RemoveItemAt(index);
 }
 
 ALTERNET_UI_API void ComboBox_ClearItems_(ComboBox* obj)
 {
-    MarshalExceptions<void>([&](){
-            obj->ClearItems();
-        });
+    obj->ClearItems();
 }
 
 ALTERNET_UI_API void ComboBox_SelectTextRange_(ComboBox* obj, int start, int length)
 {
-    MarshalExceptions<void>([&](){
-            obj->SelectTextRange(start, length);
-        });
+    obj->SelectTextRange(start, length);
 }
 
 ALTERNET_UI_API void ComboBox_SelectAllText_(ComboBox* obj)
 {
-    MarshalExceptions<void>([&](){
-            obj->SelectAllText();
-        });
+    obj->SelectAllText();
 }
 
 ALTERNET_UI_API void ComboBox_SetEventCallback_(ComboBox::ComboBoxEventCallbackType callback)

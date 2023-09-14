@@ -10,106 +10,76 @@ using namespace Alternet::UI;
 
 ALTERNET_UI_API Region* Region_Create_()
 {
-    return MarshalExceptions<Region*>([&](){
-            return new Region();
-        });
+    return new Region();
 }
 
 ALTERNET_UI_API void Region_InitializeWithRect_(Region* obj, Rect rect)
 {
-    MarshalExceptions<void>([&](){
-            obj->InitializeWithRect(rect);
-        });
+    obj->InitializeWithRect(rect);
 }
 
 ALTERNET_UI_API void Region_InitializeWithPolygon_(Region* obj, Point* points, int pointsCount, FillMode fillMode)
 {
-    MarshalExceptions<void>([&](){
-            obj->InitializeWithPolygon(points, pointsCount, fillMode);
-        });
+    obj->InitializeWithPolygon(points, pointsCount, fillMode);
 }
 
 ALTERNET_UI_API void Region_IntersectWithRect_(Region* obj, Rect rect)
 {
-    MarshalExceptions<void>([&](){
-            obj->IntersectWithRect(rect);
-        });
+    obj->IntersectWithRect(rect);
 }
 
 ALTERNET_UI_API void Region_IntersectWithRegion_(Region* obj, Region* region)
 {
-    MarshalExceptions<void>([&](){
-            obj->IntersectWithRegion(region);
-        });
+    obj->IntersectWithRegion(region);
 }
 
 ALTERNET_UI_API void Region_UnionWithRect_(Region* obj, Rect rect)
 {
-    MarshalExceptions<void>([&](){
-            obj->UnionWithRect(rect);
-        });
+    obj->UnionWithRect(rect);
 }
 
 ALTERNET_UI_API void Region_UnionWithRegion_(Region* obj, Region* region)
 {
-    MarshalExceptions<void>([&](){
-            obj->UnionWithRegion(region);
-        });
+    obj->UnionWithRegion(region);
 }
 
 ALTERNET_UI_API void Region_XorWithRect_(Region* obj, Rect rect)
 {
-    MarshalExceptions<void>([&](){
-            obj->XorWithRect(rect);
-        });
+    obj->XorWithRect(rect);
 }
 
 ALTERNET_UI_API void Region_XorWithRegion_(Region* obj, Region* region)
 {
-    MarshalExceptions<void>([&](){
-            obj->XorWithRegion(region);
-        });
+    obj->XorWithRegion(region);
 }
 
 ALTERNET_UI_API void Region_SubtractRect_(Region* obj, Rect rect)
 {
-    MarshalExceptions<void>([&](){
-            obj->SubtractRect(rect);
-        });
+    obj->SubtractRect(rect);
 }
 
 ALTERNET_UI_API void Region_SubtractRegion_(Region* obj, Region* region)
 {
-    MarshalExceptions<void>([&](){
-            obj->SubtractRegion(region);
-        });
+    obj->SubtractRegion(region);
 }
 
 ALTERNET_UI_API void Region_Translate_(Region* obj, double dx, double dy)
 {
-    MarshalExceptions<void>([&](){
-            obj->Translate(dx, dy);
-        });
+    obj->Translate(dx, dy);
 }
 
 ALTERNET_UI_API Rect_C Region_GetBounds_(Region* obj)
 {
-    return MarshalExceptions<Rect_C>([&](){
-            return obj->GetBounds();
-        });
+    return obj->GetBounds();
 }
 
 ALTERNET_UI_API c_bool Region_IsEqualTo_(Region* obj, Region* other)
 {
-    return MarshalExceptions<c_bool>([&](){
-            return obj->IsEqualTo(other);
-        });
+    return obj->IsEqualTo(other);
 }
 
 ALTERNET_UI_API int Region_GetHashCode__(Region* obj)
 {
-    return MarshalExceptions<int>([&](){
-            return obj->GetHashCode_();
-        });
+    return obj->GetHashCode_();
 }
 

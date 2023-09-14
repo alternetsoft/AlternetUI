@@ -10,8 +10,6 @@ using namespace Alternet::UI;
 
 ALTERNET_UI_API AuiDockArt* AuiDockArt_Create_()
 {
-    return MarshalExceptions<AuiDockArt*>([&](){
-            return new AuiDockArt();
-        });
+    return new AuiDockArt();
 }
 

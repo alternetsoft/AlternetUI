@@ -10,8 +10,6 @@ using namespace Alternet::UI;
 
 ALTERNET_UI_API AuiTabContainerButton* AuiTabContainerButton_Create_()
 {
-    return MarshalExceptions<AuiTabContainerButton*>([&](){
-            return new AuiTabContainerButton();
-        });
+    return new AuiTabContainerButton();
 }
 

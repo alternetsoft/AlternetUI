@@ -357,6 +357,11 @@ wxDEFINE_EVENT( wxEVT_HOTKEY, wxKeyEvent );
         return _app->HasPendingEvents();
     }
 
+    void Application::ThrowError(int value)
+    {
+        throw value;
+    }
+
     void Application::Run(Window* window)
     {
         verifyNonNull(window);

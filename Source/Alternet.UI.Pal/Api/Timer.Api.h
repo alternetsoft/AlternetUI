@@ -10,37 +10,27 @@ using namespace Alternet::UI;
 
 ALTERNET_UI_API Timer* Timer_Create_()
 {
-    return MarshalExceptions<Timer*>([&](){
-            return new Timer();
-        });
+    return new Timer();
 }
 
 ALTERNET_UI_API c_bool Timer_GetEnabled_(Timer* obj)
 {
-    return MarshalExceptions<c_bool>([&](){
-            return obj->GetEnabled();
-        });
+    return obj->GetEnabled();
 }
 
 ALTERNET_UI_API void Timer_SetEnabled_(Timer* obj, c_bool value)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetEnabled(value);
-        });
+    obj->SetEnabled(value);
 }
 
 ALTERNET_UI_API int Timer_GetInterval_(Timer* obj)
 {
-    return MarshalExceptions<int>([&](){
-            return obj->GetInterval();
-        });
+    return obj->GetInterval();
 }
 
 ALTERNET_UI_API void Timer_SetInterval_(Timer* obj, int value)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetInterval(value);
-        });
+    obj->SetInterval(value);
 }
 
 ALTERNET_UI_API void Timer_SetEventCallback_(Timer::TimerEventCallbackType callback)

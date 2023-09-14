@@ -13,114 +13,82 @@ using namespace Alternet::UI;
 
 ALTERNET_UI_API PrintDocument* PrintDocument_Create_()
 {
-    return MarshalExceptions<PrintDocument*>([&](){
-            return new PrintDocument();
-        });
+    return new PrintDocument();
 }
 
 ALTERNET_UI_API c_bool PrintDocument_GetOriginAtMargins_(PrintDocument* obj)
 {
-    return MarshalExceptions<c_bool>([&](){
-            return obj->GetOriginAtMargins();
-        });
+    return obj->GetOriginAtMargins();
 }
 
 ALTERNET_UI_API void PrintDocument_SetOriginAtMargins_(PrintDocument* obj, c_bool value)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetOriginAtMargins(value);
-        });
+    obj->SetOriginAtMargins(value);
 }
 
 ALTERNET_UI_API char16_t* PrintDocument_GetDocumentName_(PrintDocument* obj)
 {
-    return MarshalExceptions<char16_t*>([&](){
-            return AllocPInvokeReturnString(obj->GetDocumentName());
-        });
+    return AllocPInvokeReturnString(obj->GetDocumentName());
 }
 
 ALTERNET_UI_API void PrintDocument_SetDocumentName_(PrintDocument* obj, const char16_t* value)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetDocumentName(value);
-        });
+    obj->SetDocumentName(value);
 }
 
 ALTERNET_UI_API PrinterSettings* PrintDocument_GetPrinterSettings_(PrintDocument* obj)
 {
-    return MarshalExceptions<PrinterSettings*>([&](){
-            return obj->GetPrinterSettings();
-        });
+    return obj->GetPrinterSettings();
 }
 
 ALTERNET_UI_API PageSettings* PrintDocument_GetPageSettings_(PrintDocument* obj)
 {
-    return MarshalExceptions<PageSettings*>([&](){
-            return obj->GetPageSettings();
-        });
+    return obj->GetPageSettings();
 }
 
 ALTERNET_UI_API DrawingContext* PrintDocument_GetPrintPage_DrawingContext_(PrintDocument* obj)
 {
-    return MarshalExceptions<DrawingContext*>([&](){
-            return obj->GetPrintPage_DrawingContext();
-        });
+    return obj->GetPrintPage_DrawingContext();
 }
 
 ALTERNET_UI_API c_bool PrintDocument_GetPrintPage_HasMorePages_(PrintDocument* obj)
 {
-    return MarshalExceptions<c_bool>([&](){
-            return obj->GetPrintPage_HasMorePages();
-        });
+    return obj->GetPrintPage_HasMorePages();
 }
 
 ALTERNET_UI_API void PrintDocument_SetPrintPage_HasMorePages_(PrintDocument* obj, c_bool value)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetPrintPage_HasMorePages(value);
-        });
+    obj->SetPrintPage_HasMorePages(value);
 }
 
 ALTERNET_UI_API Rect_C PrintDocument_GetPrintPage_MarginBounds_(PrintDocument* obj)
 {
-    return MarshalExceptions<Rect_C>([&](){
-            return obj->GetPrintPage_MarginBounds();
-        });
+    return obj->GetPrintPage_MarginBounds();
 }
 
 ALTERNET_UI_API Rect_C PrintDocument_GetPrintPage_PhysicalPageBounds_(PrintDocument* obj)
 {
-    return MarshalExceptions<Rect_C>([&](){
-            return obj->GetPrintPage_PhysicalPageBounds();
-        });
+    return obj->GetPrintPage_PhysicalPageBounds();
 }
 
 ALTERNET_UI_API Rect_C PrintDocument_GetPrintPage_PageBounds_(PrintDocument* obj)
 {
-    return MarshalExceptions<Rect_C>([&](){
-            return obj->GetPrintPage_PageBounds();
-        });
+    return obj->GetPrintPage_PageBounds();
 }
 
 ALTERNET_UI_API Rect_C PrintDocument_GetPrintPage_PrintablePageBounds_(PrintDocument* obj)
 {
-    return MarshalExceptions<Rect_C>([&](){
-            return obj->GetPrintPage_PrintablePageBounds();
-        });
+    return obj->GetPrintPage_PrintablePageBounds();
 }
 
 ALTERNET_UI_API int PrintDocument_GetPrintPage_PageNumber_(PrintDocument* obj)
 {
-    return MarshalExceptions<int>([&](){
-            return obj->GetPrintPage_PageNumber();
-        });
+    return obj->GetPrintPage_PageNumber();
 }
 
 ALTERNET_UI_API void PrintDocument_Print_(PrintDocument* obj)
 {
-    MarshalExceptions<void>([&](){
-            obj->Print();
-        });
+    obj->Print();
 }
 
 ALTERNET_UI_API void PrintDocument_SetEventCallback_(PrintDocument::PrintDocumentEventCallbackType callback)

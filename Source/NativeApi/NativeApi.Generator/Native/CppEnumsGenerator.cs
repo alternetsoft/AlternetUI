@@ -27,9 +27,9 @@ namespace ApiGenerator.Native
                     w.WriteLine($"enum class {typeName}");
                     using (new BlockIndent(w, noNewlineAtEnd: true))
                     {
-                        foreach (var m in MemberProvider.GetEnumNamesAndValues(type))
+                        foreach (var (Name, Value) in MemberProvider.GetEnumNamesAndValues(type))
                         {
-                            w.WriteLine(m.Name + " = " + m.Value + ",");
+                            w.WriteLine(Name + " = " + Value + ",");
                         }
                     }
                     w.WriteLine(";");

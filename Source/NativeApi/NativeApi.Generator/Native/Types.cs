@@ -20,8 +20,7 @@ namespace ApiGenerator.Native
 
     internal abstract class Types
     {
-        private static readonly Dictionary<Type, string> primitiveTypes =
-            new Dictionary<Type, string>()
+        private static readonly Dictionary<Type, string> primitiveTypes = new ()
             {
                         { typeof(byte), "uint8_t" },
                         { typeof(sbyte), "int8_t" },
@@ -38,7 +37,7 @@ namespace ApiGenerator.Native
                         { typeof(IntPtr), "void*" }
             };
 
-        private HashSet<string> includes = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+        private readonly HashSet<string> includes = new(StringComparer.OrdinalIgnoreCase);
 
         public string GetIncludes() => string.Join("\r\n", includes.ToArray());
 

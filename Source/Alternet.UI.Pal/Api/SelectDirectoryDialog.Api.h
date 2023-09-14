@@ -11,57 +11,41 @@ using namespace Alternet::UI;
 
 ALTERNET_UI_API SelectDirectoryDialog* SelectDirectoryDialog_Create_()
 {
-    return MarshalExceptions<SelectDirectoryDialog*>([&](){
-            return new SelectDirectoryDialog();
-        });
+    return new SelectDirectoryDialog();
 }
 
 ALTERNET_UI_API char16_t* SelectDirectoryDialog_GetInitialDirectory_(SelectDirectoryDialog* obj)
 {
-    return MarshalExceptions<char16_t*>([&](){
-            return AllocPInvokeReturnString(obj->GetInitialDirectory());
-        });
+    return AllocPInvokeReturnString(obj->GetInitialDirectory());
 }
 
 ALTERNET_UI_API void SelectDirectoryDialog_SetInitialDirectory_(SelectDirectoryDialog* obj, const char16_t* value)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetInitialDirectory(ToOptional(value));
-        });
+    obj->SetInitialDirectory(ToOptional(value));
 }
 
 ALTERNET_UI_API char16_t* SelectDirectoryDialog_GetTitle_(SelectDirectoryDialog* obj)
 {
-    return MarshalExceptions<char16_t*>([&](){
-            return AllocPInvokeReturnString(obj->GetTitle());
-        });
+    return AllocPInvokeReturnString(obj->GetTitle());
 }
 
 ALTERNET_UI_API void SelectDirectoryDialog_SetTitle_(SelectDirectoryDialog* obj, const char16_t* value)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetTitle(ToOptional(value));
-        });
+    obj->SetTitle(ToOptional(value));
 }
 
 ALTERNET_UI_API char16_t* SelectDirectoryDialog_GetDirectoryName_(SelectDirectoryDialog* obj)
 {
-    return MarshalExceptions<char16_t*>([&](){
-            return AllocPInvokeReturnString(obj->GetDirectoryName());
-        });
+    return AllocPInvokeReturnString(obj->GetDirectoryName());
 }
 
 ALTERNET_UI_API void SelectDirectoryDialog_SetDirectoryName_(SelectDirectoryDialog* obj, const char16_t* value)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetDirectoryName(ToOptional(value));
-        });
+    obj->SetDirectoryName(ToOptional(value));
 }
 
 ALTERNET_UI_API ModalResult SelectDirectoryDialog_ShowModal_(SelectDirectoryDialog* obj, Window* owner)
 {
-    return MarshalExceptions<ModalResult>([&](){
-            return obj->ShowModal(owner);
-        });
+    return obj->ShowModal(owner);
 }
 

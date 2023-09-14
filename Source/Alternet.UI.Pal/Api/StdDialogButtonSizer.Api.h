@@ -10,8 +10,6 @@ using namespace Alternet::UI;
 
 ALTERNET_UI_API StdDialogButtonSizer* StdDialogButtonSizer_Create_()
 {
-    return MarshalExceptions<StdDialogButtonSizer*>([&](){
-            return new StdDialogButtonSizer();
-        });
+    return new StdDialogButtonSizer();
 }
 

@@ -10,8 +10,6 @@ using namespace Alternet::UI;
 
 ALTERNET_UI_API GridBagSizer* GridBagSizer_Create_()
 {
-    return MarshalExceptions<GridBagSizer*>([&](){
-            return new GridBagSizer();
-        });
+    return new GridBagSizer();
 }
 

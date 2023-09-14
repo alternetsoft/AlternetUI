@@ -10,8 +10,6 @@ using namespace Alternet::UI;
 
 ALTERNET_UI_API Panel* Panel_Create_()
 {
-    return MarshalExceptions<Panel*>([&](){
-            return new Panel();
-        });
+    return new Panel();
 }
 

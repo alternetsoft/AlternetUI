@@ -12,240 +12,172 @@ using namespace Alternet::UI;
 
 ALTERNET_UI_API AuiNotebook* AuiNotebook_Create_()
 {
-    return MarshalExceptions<AuiNotebook*>([&](){
-            return new AuiNotebook();
-        });
+    return new AuiNotebook();
 }
 
 ALTERNET_UI_API int AuiNotebook_GetEventSelection_(AuiNotebook* obj)
 {
-    return MarshalExceptions<int>([&](){
-            return obj->GetEventSelection();
-        });
+    return obj->GetEventSelection();
 }
 
 ALTERNET_UI_API int AuiNotebook_GetEventOldSelection_(AuiNotebook* obj)
 {
-    return MarshalExceptions<int>([&](){
-            return obj->GetEventOldSelection();
-        });
+    return obj->GetEventOldSelection();
 }
 
 ALTERNET_UI_API int64_t AuiNotebook_GetCreateStyle_(AuiNotebook* obj)
 {
-    return MarshalExceptions<int64_t>([&](){
-            return obj->GetCreateStyle();
-        });
+    return obj->GetCreateStyle();
 }
 
 ALTERNET_UI_API void AuiNotebook_SetCreateStyle_(AuiNotebook* obj, int64_t value)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetCreateStyle(value);
-        });
+    obj->SetCreateStyle(value);
 }
 
 ALTERNET_UI_API void* AuiNotebook_CreateEx_(int64_t styles)
 {
-    return MarshalExceptions<void*>([&](){
-            return AuiNotebook::CreateEx(styles);
-        });
+    return AuiNotebook::CreateEx(styles);
 }
 
 ALTERNET_UI_API void AuiNotebook_SetArtProvider_(AuiNotebook* obj, void* art)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetArtProvider(art);
-        });
+    obj->SetArtProvider(art);
 }
 
 ALTERNET_UI_API void* AuiNotebook_GetArtProvider_(AuiNotebook* obj)
 {
-    return MarshalExceptions<void*>([&](){
-            return obj->GetArtProvider();
-        });
+    return obj->GetArtProvider();
 }
 
 ALTERNET_UI_API void AuiNotebook_SetUniformBitmapSize_(AuiNotebook* obj, int width, int height)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetUniformBitmapSize(width, height);
-        });
+    obj->SetUniformBitmapSize(width, height);
 }
 
 ALTERNET_UI_API void AuiNotebook_SetTabCtrlHeight_(AuiNotebook* obj, int height)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetTabCtrlHeight(height);
-        });
+    obj->SetTabCtrlHeight(height);
 }
 
 ALTERNET_UI_API c_bool AuiNotebook_AddPage_(AuiNotebook* obj, void* page, const char16_t* caption, c_bool select, ImageSet* bitmap)
 {
-    return MarshalExceptions<c_bool>([&](){
-            return obj->AddPage(page, caption, select, bitmap);
-        });
+    return obj->AddPage(page, caption, select, bitmap);
 }
 
 ALTERNET_UI_API c_bool AuiNotebook_InsertPage_(AuiNotebook* obj, uint64_t pageIdx, void* page, const char16_t* caption, c_bool select, ImageSet* bitmap)
 {
-    return MarshalExceptions<c_bool>([&](){
-            return obj->InsertPage(pageIdx, page, caption, select, bitmap);
-        });
+    return obj->InsertPage(pageIdx, page, caption, select, bitmap);
 }
 
 ALTERNET_UI_API c_bool AuiNotebook_DeletePage_(AuiNotebook* obj, uint64_t page)
 {
-    return MarshalExceptions<c_bool>([&](){
-            return obj->DeletePage(page);
-        });
+    return obj->DeletePage(page);
 }
 
 ALTERNET_UI_API c_bool AuiNotebook_RemovePage_(AuiNotebook* obj, uint64_t page)
 {
-    return MarshalExceptions<c_bool>([&](){
-            return obj->RemovePage(page);
-        });
+    return obj->RemovePage(page);
 }
 
 ALTERNET_UI_API uint64_t AuiNotebook_GetPageCount_(AuiNotebook* obj)
 {
-    return MarshalExceptions<uint64_t>([&](){
-            return obj->GetPageCount();
-        });
+    return obj->GetPageCount();
 }
 
 ALTERNET_UI_API void* AuiNotebook_GetPage_(AuiNotebook* obj, uint64_t pageIdx)
 {
-    return MarshalExceptions<void*>([&](){
-            return obj->GetPage(pageIdx);
-        });
+    return obj->GetPage(pageIdx);
 }
 
 ALTERNET_UI_API int AuiNotebook_FindPage_(AuiNotebook* obj, void* page)
 {
-    return MarshalExceptions<int>([&](){
-            return obj->FindPage(page);
-        });
+    return obj->FindPage(page);
 }
 
 ALTERNET_UI_API c_bool AuiNotebook_SetPageText_(AuiNotebook* obj, uint64_t page, const char16_t* text)
 {
-    return MarshalExceptions<c_bool>([&](){
-            return obj->SetPageText(page, text);
-        });
+    return obj->SetPageText(page, text);
 }
 
 ALTERNET_UI_API char16_t* AuiNotebook_GetPageText_(AuiNotebook* obj, uint64_t pageIdx)
 {
-    return MarshalExceptions<char16_t*>([&](){
-            return AllocPInvokeReturnString(obj->GetPageText(pageIdx));
-        });
+    return AllocPInvokeReturnString(obj->GetPageText(pageIdx));
 }
 
 ALTERNET_UI_API c_bool AuiNotebook_SetPageToolTip_(AuiNotebook* obj, uint64_t page, const char16_t* text)
 {
-    return MarshalExceptions<c_bool>([&](){
-            return obj->SetPageToolTip(page, text);
-        });
+    return obj->SetPageToolTip(page, text);
 }
 
 ALTERNET_UI_API char16_t* AuiNotebook_GetPageToolTip_(AuiNotebook* obj, uint64_t pageIdx)
 {
-    return MarshalExceptions<char16_t*>([&](){
-            return AllocPInvokeReturnString(obj->GetPageToolTip(pageIdx));
-        });
+    return AllocPInvokeReturnString(obj->GetPageToolTip(pageIdx));
 }
 
 ALTERNET_UI_API c_bool AuiNotebook_SetPageBitmap_(AuiNotebook* obj, uint64_t page, ImageSet* bitmap)
 {
-    return MarshalExceptions<c_bool>([&](){
-            return obj->SetPageBitmap(page, bitmap);
-        });
+    return obj->SetPageBitmap(page, bitmap);
 }
 
 ALTERNET_UI_API int64_t AuiNotebook_SetSelection_(AuiNotebook* obj, uint64_t newPage)
 {
-    return MarshalExceptions<int64_t>([&](){
-            return obj->SetSelection(newPage);
-        });
+    return obj->SetSelection(newPage);
 }
 
 ALTERNET_UI_API int64_t AuiNotebook_GetSelection_(AuiNotebook* obj)
 {
-    return MarshalExceptions<int64_t>([&](){
-            return obj->GetSelection();
-        });
+    return obj->GetSelection();
 }
 
 ALTERNET_UI_API int64_t AuiNotebook_ChangeSelection_(AuiNotebook* obj, uint64_t newPage)
 {
-    return MarshalExceptions<int64_t>([&](){
-            return obj->ChangeSelection(newPage);
-        });
+    return obj->ChangeSelection(newPage);
 }
 
 ALTERNET_UI_API void AuiNotebook_AdvanceSelection_(AuiNotebook* obj, c_bool forward)
 {
-    MarshalExceptions<void>([&](){
-            obj->AdvanceSelection(forward);
-        });
+    obj->AdvanceSelection(forward);
 }
 
 ALTERNET_UI_API void AuiNotebook_SetMeasuringFont_(AuiNotebook* obj, Font* font)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetMeasuringFont(font);
-        });
+    obj->SetMeasuringFont(font);
 }
 
 ALTERNET_UI_API void AuiNotebook_SetNormalFont_(AuiNotebook* obj, Font* font)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetNormalFont(font);
-        });
+    obj->SetNormalFont(font);
 }
 
 ALTERNET_UI_API void AuiNotebook_SetSelectedFont_(AuiNotebook* obj, Font* font)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetSelectedFont(font);
-        });
+    obj->SetSelectedFont(font);
 }
 
 ALTERNET_UI_API void AuiNotebook_Split_(AuiNotebook* obj, uint64_t page, int direction)
 {
-    MarshalExceptions<void>([&](){
-            obj->Split(page, direction);
-        });
+    obj->Split(page, direction);
 }
 
 ALTERNET_UI_API int AuiNotebook_GetTabCtrlHeight_(AuiNotebook* obj)
 {
-    return MarshalExceptions<int>([&](){
-            return obj->GetTabCtrlHeight();
-        });
+    return obj->GetTabCtrlHeight();
 }
 
 ALTERNET_UI_API int AuiNotebook_GetHeightForPageHeight_(AuiNotebook* obj, int pageHeight)
 {
-    return MarshalExceptions<int>([&](){
-            return obj->GetHeightForPageHeight(pageHeight);
-        });
+    return obj->GetHeightForPageHeight(pageHeight);
 }
 
 ALTERNET_UI_API c_bool AuiNotebook_ShowWindowMenu_(AuiNotebook* obj)
 {
-    return MarshalExceptions<c_bool>([&](){
-            return obj->ShowWindowMenu();
-        });
+    return obj->ShowWindowMenu();
 }
 
 ALTERNET_UI_API c_bool AuiNotebook_DeleteAllPages_(AuiNotebook* obj)
 {
-    return MarshalExceptions<c_bool>([&](){
-            return obj->DeleteAllPages();
-        });
+    return obj->DeleteAllPages();
 }
 
 ALTERNET_UI_API void AuiNotebook_SetEventCallback_(AuiNotebook::AuiNotebookEventCallbackType callback)

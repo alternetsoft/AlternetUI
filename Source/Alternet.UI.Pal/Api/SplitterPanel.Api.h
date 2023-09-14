@@ -11,226 +11,162 @@ using namespace Alternet::UI;
 
 ALTERNET_UI_API SplitterPanel* SplitterPanel_Create_()
 {
-    return MarshalExceptions<SplitterPanel*>([&](){
-            return new SplitterPanel();
-        });
+    return new SplitterPanel();
 }
 
 ALTERNET_UI_API int64_t SplitterPanel_GetStyles_(SplitterPanel* obj)
 {
-    return MarshalExceptions<int64_t>([&](){
-            return obj->GetStyles();
-        });
+    return obj->GetStyles();
 }
 
 ALTERNET_UI_API void SplitterPanel_SetStyles_(SplitterPanel* obj, int64_t value)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetStyles(value);
-        });
+    obj->SetStyles(value);
 }
 
 ALTERNET_UI_API int SplitterPanel_GetMinimumPaneSize_(SplitterPanel* obj)
 {
-    return MarshalExceptions<int>([&](){
-            return obj->GetMinimumPaneSize();
-        });
+    return obj->GetMinimumPaneSize();
 }
 
 ALTERNET_UI_API void SplitterPanel_SetMinimumPaneSize_(SplitterPanel* obj, int value)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetMinimumPaneSize(value);
-        });
+    obj->SetMinimumPaneSize(value);
 }
 
 ALTERNET_UI_API double SplitterPanel_GetSashGravity_(SplitterPanel* obj)
 {
-    return MarshalExceptions<double>([&](){
-            return obj->GetSashGravity();
-        });
+    return obj->GetSashGravity();
 }
 
 ALTERNET_UI_API void SplitterPanel_SetSashGravity_(SplitterPanel* obj, double value)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetSashGravity(value);
-        });
+    obj->SetSashGravity(value);
 }
 
 ALTERNET_UI_API int SplitterPanel_GetSashSize_(SplitterPanel* obj)
 {
-    return MarshalExceptions<int>([&](){
-            return obj->GetSashSize();
-        });
+    return obj->GetSashSize();
 }
 
 ALTERNET_UI_API void SplitterPanel_SetSashSize_(SplitterPanel* obj, int value)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetSashSize(value);
-        });
+    obj->SetSashSize(value);
 }
 
 ALTERNET_UI_API int SplitterPanel_GetSplitMode_(SplitterPanel* obj)
 {
-    return MarshalExceptions<int>([&](){
-            return obj->GetSplitMode();
-        });
+    return obj->GetSplitMode();
 }
 
 ALTERNET_UI_API void SplitterPanel_SetSplitMode_(SplitterPanel* obj, int value)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetSplitMode(value);
-        });
+    obj->SetSplitMode(value);
 }
 
 ALTERNET_UI_API c_bool SplitterPanel_GetSashVisible_(SplitterPanel* obj)
 {
-    return MarshalExceptions<c_bool>([&](){
-            return obj->GetSashVisible();
-        });
+    return obj->GetSashVisible();
 }
 
 ALTERNET_UI_API void SplitterPanel_SetSashVisible_(SplitterPanel* obj, c_bool value)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetSashVisible(value);
-        });
+    obj->SetSashVisible(value);
 }
 
 ALTERNET_UI_API c_bool SplitterPanel_GetIsSplit_(SplitterPanel* obj)
 {
-    return MarshalExceptions<c_bool>([&](){
-            return obj->GetIsSplit();
-        });
+    return obj->GetIsSplit();
 }
 
 ALTERNET_UI_API c_bool SplitterPanel_GetCanDoubleClick_(SplitterPanel* obj)
 {
-    return MarshalExceptions<c_bool>([&](){
-            return obj->GetCanDoubleClick();
-        });
+    return obj->GetCanDoubleClick();
 }
 
 ALTERNET_UI_API void SplitterPanel_SetCanDoubleClick_(SplitterPanel* obj, c_bool value)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetCanDoubleClick(value);
-        });
+    obj->SetCanDoubleClick(value);
 }
 
 ALTERNET_UI_API c_bool SplitterPanel_GetCanMoveSplitter_(SplitterPanel* obj)
 {
-    return MarshalExceptions<c_bool>([&](){
-            return obj->GetCanMoveSplitter();
-        });
+    return obj->GetCanMoveSplitter();
 }
 
 ALTERNET_UI_API void SplitterPanel_SetCanMoveSplitter_(SplitterPanel* obj, c_bool value)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetCanMoveSplitter(value);
-        });
+    obj->SetCanMoveSplitter(value);
 }
 
 ALTERNET_UI_API int SplitterPanel_GetSashPosition_(SplitterPanel* obj)
 {
-    return MarshalExceptions<int>([&](){
-            return obj->GetSashPosition();
-        });
+    return obj->GetSashPosition();
 }
 
 ALTERNET_UI_API void SplitterPanel_SetSashPosition_(SplitterPanel* obj, int value)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetSashPosition(value);
-        });
+    obj->SetSashPosition(value);
 }
 
 ALTERNET_UI_API c_bool SplitterPanel_GetRedrawOnSashPosition_(SplitterPanel* obj)
 {
-    return MarshalExceptions<c_bool>([&](){
-            return obj->GetRedrawOnSashPosition();
-        });
+    return obj->GetRedrawOnSashPosition();
 }
 
 ALTERNET_UI_API void SplitterPanel_SetRedrawOnSashPosition_(SplitterPanel* obj, c_bool value)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetRedrawOnSashPosition(value);
-        });
+    obj->SetRedrawOnSashPosition(value);
 }
 
 ALTERNET_UI_API int SplitterPanel_GetDefaultSashSize_(SplitterPanel* obj)
 {
-    return MarshalExceptions<int>([&](){
-            return obj->GetDefaultSashSize();
-        });
+    return obj->GetDefaultSashSize();
 }
 
 ALTERNET_UI_API Control* SplitterPanel_GetControl1_(SplitterPanel* obj)
 {
-    return MarshalExceptions<Control*>([&](){
-            return obj->GetControl1();
-        });
+    return obj->GetControl1();
 }
 
 ALTERNET_UI_API Control* SplitterPanel_GetControl2_(SplitterPanel* obj)
 {
-    return MarshalExceptions<Control*>([&](){
-            return obj->GetControl2();
-        });
+    return obj->GetControl2();
 }
 
 ALTERNET_UI_API void* SplitterPanel_CreateEx_(int64_t styles)
 {
-    return MarshalExceptions<void*>([&](){
-            return SplitterPanel::CreateEx(styles);
-        });
+    return SplitterPanel::CreateEx(styles);
 }
 
 ALTERNET_UI_API void SplitterPanel_Initialize_(SplitterPanel* obj, Control* window)
 {
-    MarshalExceptions<void>([&](){
-            obj->Initialize(window);
-        });
+    obj->Initialize(window);
 }
 
 ALTERNET_UI_API c_bool SplitterPanel_Replace_(SplitterPanel* obj, Control* winOld, Control* winNew)
 {
-    return MarshalExceptions<c_bool>([&](){
-            return obj->Replace(winOld, winNew);
-        });
+    return obj->Replace(winOld, winNew);
 }
 
 ALTERNET_UI_API c_bool SplitterPanel_SplitHorizontally_(SplitterPanel* obj, Control* window1, Control* window2, int sashPosition)
 {
-    return MarshalExceptions<c_bool>([&](){
-            return obj->SplitHorizontally(window1, window2, sashPosition);
-        });
+    return obj->SplitHorizontally(window1, window2, sashPosition);
 }
 
 ALTERNET_UI_API c_bool SplitterPanel_SplitVertically_(SplitterPanel* obj, Control* window1, Control* window2, int sashPosition)
 {
-    return MarshalExceptions<c_bool>([&](){
-            return obj->SplitVertically(window1, window2, sashPosition);
-        });
+    return obj->SplitVertically(window1, window2, sashPosition);
 }
 
 ALTERNET_UI_API c_bool SplitterPanel_DoUnsplit_(SplitterPanel* obj, Control* toRemove)
 {
-    return MarshalExceptions<c_bool>([&](){
-            return obj->DoUnsplit(toRemove);
-        });
+    return obj->DoUnsplit(toRemove);
 }
 
 ALTERNET_UI_API void SplitterPanel_UpdateSize_(SplitterPanel* obj)
 {
-    MarshalExceptions<void>([&](){
-            obj->UpdateSize();
-        });
+    obj->UpdateSize();
 }
 
 ALTERNET_UI_API void SplitterPanel_SetEventCallback_(SplitterPanel::SplitterPanelEventCallbackType callback)

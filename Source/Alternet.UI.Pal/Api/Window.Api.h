@@ -14,373 +14,267 @@ using namespace Alternet::UI;
 
 ALTERNET_UI_API Window* Window_Create_()
 {
-    return MarshalExceptions<Window*>([&](){
-            return new Window();
-        });
+    return new Window();
 }
 
 ALTERNET_UI_API char16_t* Window_GetTitle_(Window* obj)
 {
-    return MarshalExceptions<char16_t*>([&](){
-            return AllocPInvokeReturnString(obj->GetTitle());
-        });
+    return AllocPInvokeReturnString(obj->GetTitle());
 }
 
 ALTERNET_UI_API void Window_SetTitle_(Window* obj, const char16_t* value)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetTitle(value);
-        });
+    obj->SetTitle(value);
 }
 
 ALTERNET_UI_API WindowStartLocation Window_GetWindowStartLocation_(Window* obj)
 {
-    return MarshalExceptions<WindowStartLocation>([&](){
-            return obj->GetWindowStartLocation();
-        });
+    return obj->GetWindowStartLocation();
 }
 
 ALTERNET_UI_API void Window_SetWindowStartLocation_(Window* obj, WindowStartLocation value)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetWindowStartLocation(value);
-        });
+    obj->SetWindowStartLocation(value);
 }
 
 ALTERNET_UI_API c_bool Window_GetShowInTaskbar_(Window* obj)
 {
-    return MarshalExceptions<c_bool>([&](){
-            return obj->GetShowInTaskbar();
-        });
+    return obj->GetShowInTaskbar();
 }
 
 ALTERNET_UI_API void Window_SetShowInTaskbar_(Window* obj, c_bool value)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetShowInTaskbar(value);
-        });
+    obj->SetShowInTaskbar(value);
 }
 
 ALTERNET_UI_API c_bool Window_GetMinimizeEnabled_(Window* obj)
 {
-    return MarshalExceptions<c_bool>([&](){
-            return obj->GetMinimizeEnabled();
-        });
+    return obj->GetMinimizeEnabled();
 }
 
 ALTERNET_UI_API void Window_SetMinimizeEnabled_(Window* obj, c_bool value)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetMinimizeEnabled(value);
-        });
+    obj->SetMinimizeEnabled(value);
 }
 
 ALTERNET_UI_API c_bool Window_GetMaximizeEnabled_(Window* obj)
 {
-    return MarshalExceptions<c_bool>([&](){
-            return obj->GetMaximizeEnabled();
-        });
+    return obj->GetMaximizeEnabled();
 }
 
 ALTERNET_UI_API void Window_SetMaximizeEnabled_(Window* obj, c_bool value)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetMaximizeEnabled(value);
-        });
+    obj->SetMaximizeEnabled(value);
 }
 
 ALTERNET_UI_API c_bool Window_GetCloseEnabled_(Window* obj)
 {
-    return MarshalExceptions<c_bool>([&](){
-            return obj->GetCloseEnabled();
-        });
+    return obj->GetCloseEnabled();
 }
 
 ALTERNET_UI_API void Window_SetCloseEnabled_(Window* obj, c_bool value)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetCloseEnabled(value);
-        });
+    obj->SetCloseEnabled(value);
 }
 
 ALTERNET_UI_API c_bool Window_GetAlwaysOnTop_(Window* obj)
 {
-    return MarshalExceptions<c_bool>([&](){
-            return obj->GetAlwaysOnTop();
-        });
+    return obj->GetAlwaysOnTop();
 }
 
 ALTERNET_UI_API void Window_SetAlwaysOnTop_(Window* obj, c_bool value)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetAlwaysOnTop(value);
-        });
+    obj->SetAlwaysOnTop(value);
 }
 
 ALTERNET_UI_API c_bool Window_GetIsToolWindow_(Window* obj)
 {
-    return MarshalExceptions<c_bool>([&](){
-            return obj->GetIsToolWindow();
-        });
+    return obj->GetIsToolWindow();
 }
 
 ALTERNET_UI_API void Window_SetIsToolWindow_(Window* obj, c_bool value)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetIsToolWindow(value);
-        });
+    obj->SetIsToolWindow(value);
 }
 
 ALTERNET_UI_API c_bool Window_GetResizable_(Window* obj)
 {
-    return MarshalExceptions<c_bool>([&](){
-            return obj->GetResizable();
-        });
+    return obj->GetResizable();
 }
 
 ALTERNET_UI_API void Window_SetResizable_(Window* obj, c_bool value)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetResizable(value);
-        });
+    obj->SetResizable(value);
 }
 
 ALTERNET_UI_API c_bool Window_GetHasBorder_(Window* obj)
 {
-    return MarshalExceptions<c_bool>([&](){
-            return obj->GetHasBorder();
-        });
+    return obj->GetHasBorder();
 }
 
 ALTERNET_UI_API void Window_SetHasBorder_(Window* obj, c_bool value)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetHasBorder(value);
-        });
+    obj->SetHasBorder(value);
 }
 
 ALTERNET_UI_API c_bool Window_GetHasTitleBar_(Window* obj)
 {
-    return MarshalExceptions<c_bool>([&](){
-            return obj->GetHasTitleBar();
-        });
+    return obj->GetHasTitleBar();
 }
 
 ALTERNET_UI_API void Window_SetHasTitleBar_(Window* obj, c_bool value)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetHasTitleBar(value);
-        });
+    obj->SetHasTitleBar(value);
 }
 
 ALTERNET_UI_API c_bool Window_GetHasSystemMenu_(Window* obj)
 {
-    return MarshalExceptions<c_bool>([&](){
-            return obj->GetHasSystemMenu();
-        });
+    return obj->GetHasSystemMenu();
 }
 
 ALTERNET_UI_API void Window_SetHasSystemMenu_(Window* obj, c_bool value)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetHasSystemMenu(value);
-        });
+    obj->SetHasSystemMenu(value);
 }
 
 ALTERNET_UI_API ModalResult Window_GetModalResult_(Window* obj)
 {
-    return MarshalExceptions<ModalResult>([&](){
-            return obj->GetModalResult();
-        });
+    return obj->GetModalResult();
 }
 
 ALTERNET_UI_API void Window_SetModalResult_(Window* obj, ModalResult value)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetModalResult(value);
-        });
+    obj->SetModalResult(value);
 }
 
 ALTERNET_UI_API Size_C Window_GetMinimumSize_(Window* obj)
 {
-    return MarshalExceptions<Size_C>([&](){
-            return obj->GetMinimumSize();
-        });
+    return obj->GetMinimumSize();
 }
 
 ALTERNET_UI_API void Window_SetMinimumSize_(Window* obj, Size value)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetMinimumSize(value);
-        });
+    obj->SetMinimumSize(value);
 }
 
 ALTERNET_UI_API Size_C Window_GetMaximumSize_(Window* obj)
 {
-    return MarshalExceptions<Size_C>([&](){
-            return obj->GetMaximumSize();
-        });
+    return obj->GetMaximumSize();
 }
 
 ALTERNET_UI_API void Window_SetMaximumSize_(Window* obj, Size value)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetMaximumSize(value);
-        });
+    obj->SetMaximumSize(value);
 }
 
 ALTERNET_UI_API c_bool Window_GetModal_(Window* obj)
 {
-    return MarshalExceptions<c_bool>([&](){
-            return obj->GetModal();
-        });
+    return obj->GetModal();
 }
 
 ALTERNET_UI_API c_bool Window_GetIsActive_(Window* obj)
 {
-    return MarshalExceptions<c_bool>([&](){
-            return obj->GetIsActive();
-        });
+    return obj->GetIsActive();
 }
 
 ALTERNET_UI_API Window* Window_GetActiveWindow_()
 {
-    return MarshalExceptions<Window*>([&](){
-            return Window::GetActiveWindow();
-        });
+    return Window::GetActiveWindow();
 }
 
 ALTERNET_UI_API WindowState Window_GetState_(Window* obj)
 {
-    return MarshalExceptions<WindowState>([&](){
-            return obj->GetState();
-        });
+    return obj->GetState();
 }
 
 ALTERNET_UI_API void Window_SetState_(Window* obj, WindowState value)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetState(value);
-        });
+    obj->SetState(value);
 }
 
 ALTERNET_UI_API ImageSet* Window_GetIcon_(Window* obj)
 {
-    return MarshalExceptions<ImageSet*>([&](){
-            return obj->GetIcon();
-        });
+    return obj->GetIcon();
 }
 
 ALTERNET_UI_API void Window_SetIcon_(Window* obj, ImageSet* value)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetIcon(value);
-        });
+    obj->SetIcon(value);
 }
 
 ALTERNET_UI_API MainMenu* Window_GetMenu_(Window* obj)
 {
-    return MarshalExceptions<MainMenu*>([&](){
-            return obj->GetMenu();
-        });
+    return obj->GetMenu();
 }
 
 ALTERNET_UI_API void Window_SetMenu_(Window* obj, MainMenu* value)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetMenu(value);
-        });
+    obj->SetMenu(value);
 }
 
 ALTERNET_UI_API Toolbar* Window_GetToolbar_(Window* obj)
 {
-    return MarshalExceptions<Toolbar*>([&](){
-            return obj->GetToolbar();
-        });
+    return obj->GetToolbar();
 }
 
 ALTERNET_UI_API void Window_SetToolbar_(Window* obj, Toolbar* value)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetToolbar(value);
-        });
+    obj->SetToolbar(value);
 }
 
 ALTERNET_UI_API StatusBar* Window_GetStatusBar_(Window* obj)
 {
-    return MarshalExceptions<StatusBar*>([&](){
-            return obj->GetStatusBar();
-        });
+    return obj->GetStatusBar();
 }
 
 ALTERNET_UI_API void Window_SetStatusBar_(Window* obj, StatusBar* value)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetStatusBar(value);
-        });
+    obj->SetStatusBar(value);
 }
 
 ALTERNET_UI_API void* Window_OpenOwnedWindowsArray_(Window* obj)
 {
-    return MarshalExceptions<void*>([&](){
-            return obj->OpenOwnedWindowsArray();
-        });
+    return obj->OpenOwnedWindowsArray();
 }
 
 ALTERNET_UI_API int Window_GetOwnedWindowsItemCount_(Window* obj, void* array)
 {
-    return MarshalExceptions<int>([&](){
-            return obj->GetOwnedWindowsItemCount(array);
-        });
+    return obj->GetOwnedWindowsItemCount(array);
 }
 
 ALTERNET_UI_API Window* Window_GetOwnedWindowsItemAt_(Window* obj, void* array, int index)
 {
-    return MarshalExceptions<Window*>([&](){
-            return obj->GetOwnedWindowsItemAt(array, index);
-        });
+    return obj->GetOwnedWindowsItemAt(array, index);
 }
 
 ALTERNET_UI_API void Window_CloseOwnedWindowsArray_(Window* obj, void* array)
 {
-    MarshalExceptions<void>([&](){
-            obj->CloseOwnedWindowsArray(array);
-        });
+    obj->CloseOwnedWindowsArray(array);
 }
 
 ALTERNET_UI_API void Window_ShowModal_(Window* obj)
 {
-    MarshalExceptions<void>([&](){
-            obj->ShowModal();
-        });
+    obj->ShowModal();
 }
 
 ALTERNET_UI_API void Window_Close_(Window* obj)
 {
-    MarshalExceptions<void>([&](){
-            obj->Close();
-        });
+    obj->Close();
 }
 
 ALTERNET_UI_API void Window_Activate_(Window* obj)
 {
-    MarshalExceptions<void>([&](){
-            obj->Activate();
-        });
+    obj->Activate();
 }
 
 ALTERNET_UI_API void Window_AddInputBinding_(Window* obj, const char16_t* managedCommandId, Key key, ModifierKeys modifiers)
 {
-    MarshalExceptions<void>([&](){
-            obj->AddInputBinding(managedCommandId, key, modifiers);
-        });
+    obj->AddInputBinding(managedCommandId, key, modifiers);
 }
 
 ALTERNET_UI_API void Window_RemoveInputBinding_(Window* obj, const char16_t* managedCommandId)
 {
-    MarshalExceptions<void>([&](){
-            obj->RemoveInputBinding(managedCommandId);
-        });
+    obj->RemoveInputBinding(managedCommandId);
 }
 
 ALTERNET_UI_API void Window_SetEventCallback_(Window::WindowEventCallbackType callback)
