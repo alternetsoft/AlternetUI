@@ -51,18 +51,18 @@ namespace Alternet.UI
             }
         }
 
-        /// <summary>
-        /// Adds item to <see cref="Items"/>.
-        /// </summary>
-        /// <param name="item">Menu item.</param>
-        public void Add(MenuItem item) => Items.Add(item);
-
         internal IntPtr MenuHandle => (Handler.NativeControl as Native.Menu)!.MenuHandle;
 
         internal override bool IsDummy => true;
 
         /// <inheritdoc />
         protected override IEnumerable<FrameworkElement> LogicalChildrenCollection => ContentElements;
+
+        /// <summary>
+        /// Adds item to <see cref="Items"/>.
+        /// </summary>
+        /// <param name="item">Menu item.</param>
+        public void Add(MenuItem item) => Items.Add(item);
 
         private void Items_ItemInserted(object? sender, int index, MenuItem item)
         {

@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel;
 
 namespace Alternet.UI
 {
@@ -47,6 +48,7 @@ namespace Alternet.UI
         private MenuItemRole? role;
         private bool preCommandEnabledValue = true;
         private bool isChecked;
+        private Action? action;
 
         /// <summary>
         /// Initializes a new instance of the <see cref='MenuItem'/> class.
@@ -58,16 +60,7 @@ namespace Alternet.UI
 
         /// <summary>
         /// Initializes a new instance of the <see cref='MenuItem'/> class with
-        /// the specified text for the menu item.
-        /// </summary>
-        public MenuItem(string text)
-            : this(text, null, null)
-        {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref='MenuItem'/> class with
-        /// the specified text for the menu item.
+        /// the specified <paramref name="text"/> and <paramref name="shortcut"/> for the menu item.
         /// </summary>
         public MenuItem(string text, KeyGesture shortcut)
             : this(text, null, shortcut)
@@ -76,23 +69,26 @@ namespace Alternet.UI
 
         /// <summary>
         /// Initializes a new instance of the <see cref='MenuItem'/> class with
-        /// the specified text and action for the menu item.
+        /// the specified <paramref name="text"/>, <paramref name="onClick"/> and
+        /// <paramref name="shortcut"/> for the menu item.
         /// </summary>
-        public MenuItem(string text, EventHandler onClick)
-            : this(text, onClick, null)
-        {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref='MenuItem'/> class with
-        /// a specified properties for the menu item.
-        /// </summary>
-        public MenuItem(string text, EventHandler? onClick, KeyGesture? shortcut)
+        public MenuItem(string text, EventHandler? onClick = null, KeyGesture? shortcut = null)
         {
             this.text = text;
             this.shortcut = shortcut;
             if (onClick != null)
                 Click += onClick;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref='MenuItem'/> class with
+        /// the specified <paramref name="text"/> and <paramref name="onClick"/>
+        /// for the menu item.
+        /// </summary>
+        public MenuItem(string text, Action? onClick)
+        {
+            this.text = text;
+            ClickAction = onClick;
         }
 
         /// <summary>
@@ -117,6 +113,24 @@ namespace Alternet.UI
 
         /// <inheritdoc/>
         public override ControlId ControlKind => ControlId.MenuItem;
+
+        /// <summary>
+        /// Gets or sets <see cref="Action"/> which will be executed when
+        /// this <see cref="MenuItem"/> is clicked by the user.
+        /// </summary>
+        [Browsable(false)]
+        public Action? ClickAction
+        {
+            get => action;
+            set
+            {
+                if (action != null)
+                    Click -= OnClickAction;
+                action = value;
+                if (action != null)
+                    Click += OnClickAction;
+            }
+        }
 
         /// <summary>
         /// Gets or sets a value indicating the caption of the menu item.
@@ -328,6 +342,11 @@ namespace Alternet.UI
         {
             if (Command != null)
                 Enabled = CommandHelpers.CanExecuteCommandSource(this);
+        }
+
+        private void OnClickAction(object? sender, EventArgs? e)
+        {
+            action?.Invoke();
         }
     }
 }
