@@ -30,6 +30,9 @@ namespace Alternet.UI
         /// </summary>
         PropertyInfo PropInfo { get; }
 
-        public Type? ListEditType { get; set; }
+        /// <summary>
+        /// Gets or sets type of the data source provider for the collection editor.
+        /// </summary>
+        public Type? ListEditSourceType { get; set; }
     }
 }

@@ -45,7 +45,7 @@ namespace Alternet.UI
         {
             var typeRegistry = PropertyGrid.GetTypeRegistry(type);
             var propRegistry = typeRegistry.GetPropRegistry(propName);
-            propRegistry.ListEditType = editType;
+            propRegistry.ListEditSourceType = editType;
             return propRegistry;
         }
 
@@ -78,7 +78,7 @@ namespace Alternet.UI
 
             var typeRegistry = PropertyGrid.GetTypeRegistryOrNull(instance.GetType());
             var propRegistry = typeRegistry?.GetPropRegistryOrNull(propInfo);
-            var editType = propRegistry?.ListEditType;
+            var editType = propRegistry?.ListEditSourceType;
 
             if (editType == null)
                 return null;

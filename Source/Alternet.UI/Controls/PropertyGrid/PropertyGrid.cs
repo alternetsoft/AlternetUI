@@ -443,6 +443,10 @@ namespace Alternet.UI
             RegisterCollectionEditor(typeof(TabControl), nameof(TabControl.Pages));
             RegisterCollectionEditor(typeof(Toolbar), nameof(Toolbar.Items));
             RegisterCollectionEditor(typeof(Menu), nameof(Menu.Items));
+            RegisterCollectionEditor(typeof(Window), nameof(Window.InputBindings));
+            RegisterCollectionEditor(
+                typeof(PropertyGridAdapterBrush),
+                nameof(PropertyGridAdapterBrush.GradientStops));
         }
 
         /// <summary>
