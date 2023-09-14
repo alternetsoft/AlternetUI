@@ -303,6 +303,7 @@ namespace Alternet.UI
 
         /// <summary>
         /// Gets next sibling if item is not the last one, otherwise gets previous sibling.
+        /// If item has no siblings, <see cref="Parent"/> is returned.
         /// </summary>
         [Browsable(false)]
         public TreeViewItem? NextOrPrevSibling
@@ -321,7 +322,7 @@ namespace Alternet.UI
                     {
                         if(i > 0)
                             return items[i - 1];
-                        return null;
+                        return Parent;
                     }
                     else
                         return items[i + 1];
