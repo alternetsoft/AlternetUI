@@ -51,6 +51,12 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Adds item to <see cref="Items"/>.
+        /// </summary>
+        /// <param name="item">Menu item.</param>
+        public void Add(MenuItem item) => Items.Add(item);
+
         internal IntPtr MenuHandle => (Handler.NativeControl as Native.Menu)!.MenuHandle;
 
         internal override bool IsDummy => true;
