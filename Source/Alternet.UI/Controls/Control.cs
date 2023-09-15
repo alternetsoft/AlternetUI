@@ -1166,6 +1166,19 @@ namespace Alternet.UI
             return Children[index];
         }
 
+        public void DoInsideUpdate(Action action)
+        {
+            BeginUpdate();
+            try
+            {
+                action();
+            }
+            finally
+            {
+                EndUpdate();
+            }
+        }
+
         /// <summary>
         /// Returns enumeration with the list of visible child controls.
         /// </summary>
