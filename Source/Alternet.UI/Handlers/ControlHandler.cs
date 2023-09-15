@@ -974,10 +974,10 @@ namespace Alternet.UI
             // todo: consider clearing the native control's children.
             Control.MarginChanged -= Control_MarginChanged;
             Control.PaddingChanged -= Control_PaddingChanged;
-            Control.BackgroundChanged -= Control_BackgroundChanged;
-            Control.ForegroundChanged -= Control_ForegroundChanged;
+            /*Control.BackgroundChanged -= Control_BackgroundChanged;*/
+            /*Control.ForegroundChanged -= Control_ForegroundChanged;*/
             Control.FontChanged -= Control_FontChanged;
-            Control.BorderBrushChanged -= Control_BorderBrushChanged;
+            /*Control.BorderBrushChanged -= Control_BorderBrushChanged;*/
             Control.VisibleChanged -= Control_VisibleChanged;
             Control.EnabledChanged -= Control_EnabledChanged;
             Control.VerticalAlignmentChanged -= Control_VerticalAlignmentChanged;
@@ -1012,19 +1012,23 @@ namespace Alternet.UI
         {
             ApplyVisible();
             ApplyEnabled();
+
+            /*
             ApplyBorderColor();
             ApplyBackgroundColor();
             ApplyForegroundColor();
             ApplyFont();
-            ApplyToolTip();
+            */
+
+            /*ApplyToolTip();*/
             ApplyChildren();
 
             Control.MarginChanged += Control_MarginChanged;
             Control.PaddingChanged += Control_PaddingChanged;
-            Control.BackgroundChanged += Control_BackgroundChanged;
-            Control.ForegroundChanged += Control_ForegroundChanged;
+            /*Control.BackgroundChanged += Control_BackgroundChanged;*/
+            /*Control.ForegroundChanged += Control_ForegroundChanged;*/
             Control.FontChanged += Control_FontChanged;
-            Control.BorderBrushChanged += Control_BorderBrushChanged;
+            /*Control.BorderBrushChanged += Control_BorderBrushChanged;*/
             Control.VisibleChanged += Control_VisibleChanged;
             Control.EnabledChanged += Control_EnabledChanged;
             Control.VerticalAlignmentChanged += Control_VerticalAlignmentChanged;
@@ -1222,7 +1226,7 @@ namespace Alternet.UI
             DisposeNativeControlCore(nativeControl);
         }
 
-        private void Control_BorderBrushChanged(object? sender, EventArgs? e)
+        /*private void Control_BorderBrushChanged(object? sender, EventArgs? e)
         {
             ApplyBorderColor();
         }
@@ -1235,7 +1239,7 @@ namespace Alternet.UI
         private void Control_ForegroundChanged(object? sender, EventArgs? e)
         {
             ApplyForegroundColor();
-        }
+        }*/
 
         private void Control_VisibleChanged(object? sender, EventArgs e)
         {
@@ -1249,19 +1253,19 @@ namespace Alternet.UI
             ApplyEnabled();
         }
 
-        private Color GetBrushColor(Brush? brush)
+        /*private Color GetBrushColor(Brush? brush)
         {
             if (brush == null)
                 return Color.Empty;
             return brush.BrushColor;
-        }
+        }*/
 
-        private void ApplyBackgroundColor()
+        /*private void ApplyBackgroundColor()
         {
             if (NativeControl != null)
                 NativeControl.BackgroundColor = GetBrushColor(Control.Background);
             Invalidate();
-        }
+        }*/
 
         private void ApplyVisible()
         {
@@ -1275,12 +1279,12 @@ namespace Alternet.UI
                 NativeControl.Enabled = Control.Enabled;
         }
 
-        private void ApplyForegroundColor()
+        /*private void ApplyForegroundColor()
         {
-            if (NativeControl != null)
+            if (NativeControl != null && Control.Foreground != null)
                 NativeControl.ForegroundColor = GetBrushColor(Control.Foreground);
             Invalidate();
-        }
+        }*/
 
         private void ApplyFont()
         {
@@ -1290,12 +1294,12 @@ namespace Alternet.UI
             Invalidate();
         }
 
-        private void ApplyBorderColor()
+        /*private void ApplyBorderColor()
         {
             // if (NativeControl != null)
             //    NativeControl.BorderColor = GetBrushColor(Control.BorderBrush);
             Invalidate();
-        }
+        }*/
 
         private void TryInsertNativeControl(Control childControl)
         {

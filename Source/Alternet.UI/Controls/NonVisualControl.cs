@@ -43,11 +43,11 @@ namespace Alternet.UI
 
         /// <inheritdoc cref="Left"/>
         [Browsable(false)]
-        public override Color BackgroundColor { get; set; }
+        public override Color? BackgroundColor { get; set; }
 
         /// <inheritdoc cref="Left"/>
         [Browsable(false)]
-        public override Color ForegroundColor { get; set; }
+        public override Color? ForegroundColor { get; set; }
 
         /// <inheritdoc cref="Left"/>
         [Browsable(false)]

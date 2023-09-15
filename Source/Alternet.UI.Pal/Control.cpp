@@ -1500,6 +1500,16 @@ namespace Alternet::UI
         GetWxWindow()->SetSizerAndFit((wxSizer*)sizer, deleteOld);
     }
 
+    void Control::ResetBackgroundColor()
+    {
+        GetWxWindow()->SetBackgroundColour(wxNullColour);
+    }
+
+    void Control::ResetForegroundColor()
+    {
+        GetWxWindow()->SetForegroundColour(wxNullColour);
+    }
+
     bool Control::SetFocus()
     {
         auto window = GetWxWindow();

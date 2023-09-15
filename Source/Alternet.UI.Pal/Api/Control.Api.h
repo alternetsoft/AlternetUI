@@ -221,6 +221,16 @@ ALTERNET_UI_API void Control_RecreateWindow_(Control* obj)
     obj->RecreateWindow();
 }
 
+ALTERNET_UI_API void Control_ResetBackgroundColor_(Control* obj)
+{
+    obj->ResetBackgroundColor();
+}
+
+ALTERNET_UI_API void Control_ResetForegroundColor_(Control* obj)
+{
+    obj->ResetForegroundColor();
+}
+
 ALTERNET_UI_API Point_C Control_ClientToScreen_(Control* obj, Point point)
 {
     return obj->ClientToScreen(point);

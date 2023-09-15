@@ -51,6 +51,8 @@ namespace Alternet.UI
 
         private static readonly Size DefaultSize = new(double.NaN, double.NaN);
 
+        private Color? backgroundColor;
+        private Color? foregroundColor;
         private Collection<Control>? children;
         private Size size = DefaultSize;
         private Thickness margin;
@@ -724,23 +726,25 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the background color for the control.
         /// </summary>
-        public virtual Color BackgroundColor
+        public virtual Color? BackgroundColor
         {
             get
             {
-                if (Handler.NativeControl is null)
-                    return Color.Empty;
-                else
-                    return Handler.NativeControl.BackgroundColor;
+                return backgroundColor;
             }
 
             set
             {
+                if (backgroundColor == value)
+                    return;
+                backgroundColor = value;
+
                 if (Handler.NativeControl is not null)
                 {
-                    if (Handler.NativeControl.BackgroundColor == value)
-                        return;
-                    Handler.NativeControl.BackgroundColor = value;
+                    if (backgroundColor is null)
+                        Handler.NativeControl.ResetBackgroundColor();
+                    else
+                        Handler.NativeControl.BackgroundColor = backgroundColor.Value;
                     Invalidate();
                 }
             }
@@ -749,23 +753,25 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the foreground color for the control.
         /// </summary>
-        public virtual Color ForegroundColor
+        public virtual Color? ForegroundColor
         {
             get
             {
-                if (Handler.NativeControl is null)
-                    return Color.Black;
-                else
-                    return Handler.NativeControl.ForegroundColor;
+                return foregroundColor;
             }
 
             set
             {
+                if (foregroundColor == value)
+                    return;
+                foregroundColor = value;
+
                 if (Handler.NativeControl is not null)
                 {
-                    if (Handler.NativeControl.ForegroundColor == value)
-                        return;
-                    Handler.NativeControl.ForegroundColor = value;
+                    if (foregroundColor is null)
+                        Handler.NativeControl.ResetForegroundColor();
+                    else
+                        Handler.NativeControl.ForegroundColor = foregroundColor.Value;
                     Invalidate();
                 }
             }

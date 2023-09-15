@@ -72,6 +72,8 @@ namespace NativeApi.Api
         public void BeginUpdate() { }
         public void EndUpdate() { }
         public void RecreateWindow() { }
+        public void ResetBackgroundColor() { }
+        public void ResetForegroundColor() { }
         public Point ClientToScreen(Point point) => default;
         public Point ScreenToClient(Point point) => default;
         public Int32Point ScreenToDevice(Point point) => default;

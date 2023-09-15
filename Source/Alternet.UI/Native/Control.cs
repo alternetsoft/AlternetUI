@@ -391,6 +391,18 @@ namespace Alternet.UI.Native
             NativeApi.Control_RecreateWindow_(NativePointer);
         }
         
+        public void ResetBackgroundColor()
+        {
+            CheckDisposed();
+            NativeApi.Control_ResetBackgroundColor_(NativePointer);
+        }
+        
+        public void ResetForegroundColor()
+        {
+            CheckDisposed();
+            NativeApi.Control_ResetForegroundColor_(NativePointer);
+        }
+        
         public Alternet.Drawing.Point ClientToScreen(Alternet.Drawing.Point point)
         {
             CheckDisposed();
@@ -915,6 +927,12 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Control_RecreateWindow_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Control_ResetBackgroundColor_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Control_ResetForegroundColor_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern Alternet.Drawing.Point Control_ClientToScreen_(IntPtr obj, Alternet.Drawing.Point point);

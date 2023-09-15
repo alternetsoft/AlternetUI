@@ -92,6 +92,8 @@ void SetFont(Font* value);
 void BeginUpdate();
 void EndUpdate();
 void RecreateWindow();
+void ResetBackgroundColor();
+void ResetForegroundColor();
 Point ClientToScreen(const Point& point);
 Point ScreenToClient(const Point& point);
 Int32Point ScreenToDevice(const Point& point);
