@@ -22,7 +22,19 @@ namespace Alternet.UI
 
         public override void ApplyData(IEnumerableTree tree)
         {
+            if (ListView == null)
+                return;
+            ListView listView = ListView;
 
+            listView.DoInsideUpdate(() =>
+            {
+                foreach (var srcItem in tree)
+                {
+                    if (tree.GetData(srcItem) is not ListViewColumn data)
+                        continue;
+
+                }
+            });
         }
     }
 }

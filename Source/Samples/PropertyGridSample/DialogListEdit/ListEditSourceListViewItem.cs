@@ -26,22 +26,17 @@ namespace Alternet.UI
                 return;
             ListView listView = ListView;
 
-            listView.BeginUpdate();
-            try
+            listView.DoInsideUpdate(() =>
             {
                 listView.RemoveAll();
-                foreach(var srcItem in tree)
+                foreach (var srcItem in tree)
                 {
                     if (tree.GetData(srcItem) is not ListViewItem data)
                         continue;
 
                     listView.Items.Add(data);
                 }
-            }
-            finally
-            {
-                listView.EndUpdate();
-            }
+            });
         }
     }
 }
