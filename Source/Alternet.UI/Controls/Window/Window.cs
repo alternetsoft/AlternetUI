@@ -918,14 +918,18 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override void Dispose(bool disposing)
         {
-            if (!IsDisposed)
-                Visible = false;
+            if (IsDisposed)
+                return;
+
+            Visible = false;
 
             base.Dispose(disposing);
 
             if (disposing)
             {
                 Application.Current.UnregisterWindow(this);
+                if (!Application.Current.VisibleWindows.Any())
+                    Application.Current.NativeApplication.ExitMainLoop();
             }
         }
 
