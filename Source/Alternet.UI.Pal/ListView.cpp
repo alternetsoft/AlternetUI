@@ -76,8 +76,8 @@ namespace Alternet::UI
     void ListView::InsertItemAt(int64_t index, const string& value, int64_t columnIndex,
         int imageIndex)
     {
-        if (IsWxWindowCreated()) 
-        {
+        //if (IsWxWindowCreated()) 
+        //{
             wxListItem item;
             item.SetText(wxStr(value));
             item.SetColumn(columnIndex);
@@ -85,7 +85,7 @@ namespace Alternet::UI
             item.SetImage(imageIndex);
             item.SetMask(wxLIST_MASK_TEXT | wxLIST_MASK_IMAGE);
             InsertItem(GetListView(), item);
-        }
+        //}
     }
 
     void ListView::InsertItem(wxListView* listView, wxListItem& item)
@@ -111,13 +111,13 @@ namespace Alternet::UI
 
     void ListView::RemoveItemAt(int64_t index)
     {
-        if (IsWxWindowCreated())
+        // if (IsWxWindowCreated())
             GetListView()->DeleteItem(index);
     }
 
     void ListView::ClearItems()
     {
-        if (IsWxWindowCreated())
+        // if (IsWxWindowCreated())
             GetListView()->DeleteAllItems();
     }
 
@@ -156,7 +156,7 @@ namespace Alternet::UI
         _smallImageList = value;
         if (_smallImageList != nullptr)
             _smallImageList->AddRef();
-        if (IsWxWindowCreated())
+        //if (IsWxWindowCreated())
             ApplySmallImageList(GetListView());
     }
 
@@ -174,7 +174,7 @@ namespace Alternet::UI
         _largeImageList = value;
         if (_largeImageList != nullptr)
             _largeImageList->AddRef();
-        if (IsWxWindowCreated())
+        //if (IsWxWindowCreated())
             ApplyLargeImageList(GetListView());
     }
 
@@ -506,7 +506,7 @@ namespace Alternet::UI
     void* ListView::OpenSelectedIndicesArray()
     {
         auto array = new std::vector<int64_t>();
-        if (IsWxWindowCreated())
+        //if (IsWxWindowCreated())
         {
             auto listView = GetListView();
             array->resize(listView->GetSelectedItemCount());
@@ -538,7 +538,7 @@ namespace Alternet::UI
 
     void ListView::ClearSelected()
     {
-        if (IsWxWindowCreated())
+        //if (IsWxWindowCreated())
             DeselectAll(GetListView());
     }
 
@@ -552,10 +552,10 @@ namespace Alternet::UI
 
     void ListView::SetSelected(int64_t index, bool value)
     {
-        if (IsWxWindowCreated())
-        {
+        //if (IsWxWindowCreated())
+        //{
             GetListView()->Select(index, value);
-        }
+        //}
     }
 
     ListViewSelectionMode ListView::GetSelectionMode()
@@ -590,10 +590,10 @@ namespace Alternet::UI
 
     int64_t ListView::GetItemsCount()
     {
-        if (IsWxWindowCreated())
+        //if (IsWxWindowCreated())
             return GetListView()->GetItemCount();
-        else
-            return 0;
+        //else
+            //return 0;
     }
 
     wxListView* ListView::GetListView()

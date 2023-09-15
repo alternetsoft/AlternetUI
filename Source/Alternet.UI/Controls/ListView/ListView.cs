@@ -209,6 +209,7 @@ namespace Alternet.UI
         /// </para>
         /// </remarks>
         /// <exception cref="ArgumentOutOfRangeException">The assigned value is less than 0 or greater than or equal to the item count.</exception>
+        [Browsable(false)]
         public long? SelectedIndex
         {
             get
@@ -344,15 +345,21 @@ namespace Alternet.UI
         /// <summary>
         /// Gets a collection containing all items in the control.
         /// </summary>
-        /// <value>A <see cref="Collection{ListViewItem}"/> that contains all the items in the <see cref="ListView"/> control.</value>
-        /// <remarks>Using the <see cref="Collection{ListViewItem}"/> returned by this property, you can add items, remove items, and obtain a count of items.</remarks>
-        public Collection<ListViewItem> Items { get; } = new Collection<ListViewItem> { ThrowOnNullAdd = true };
+        /// <value>A <see cref="Collection{ListViewItem}"/> that contains all the items in the
+        /// <see cref="ListView"/> control.</value>
+        /// <remarks>Using the <see cref="Collection{ListViewItem}"/> returned by this
+        /// property, you can add items, remove items, and obtain a count of items.</remarks>
+        public Collection<ListViewItem> Items { get; } =
+            new Collection<ListViewItem> { ThrowOnNullAdd = true };
 
         /// <summary>
-        /// Gets the collection of all columns that appear in the control in the <see cref="ListViewView.Details"/> <see cref="View"/>..
+        /// Gets the collection of all columns that appear in the control in the
+        /// <see cref="ListViewView.Details"/> <see cref="View"/>..
         /// </summary>
-        /// <value>A collection that represents the columns that appear when the <see cref="View"/> property is set to <see cref="ListViewView.Details"/>.</value>
-        public Collection<ListViewColumn> Columns { get; } = new Collection<ListViewColumn> { ThrowOnNullAdd = true };
+        /// <value>A collection that represents the columns that appear when the
+        /// <see cref="View"/> property is set to <see cref="ListViewView.Details"/>.</value>
+        public Collection<ListViewColumn> Columns { get; } =
+            new Collection<ListViewColumn> { ThrowOnNullAdd = true };
 
         /// <summary>
         /// Gets or sets how items are displayed in the control.
@@ -674,6 +681,23 @@ namespace Alternet.UI
         {
             OnAfterLabelEdit(e);
             AfterLabelEdit?.Invoke(this, e);
+        }
+
+        /// <summary>
+        /// Removed all items from the control.
+        /// </summary>
+        public void RemoveAll()
+        {
+            BeginUpdate();
+            try
+            {
+                ClearSelected();
+                Items.Clear();
+            }
+            finally
+            {
+                EndUpdate();
+            }
         }
 
         /// <summary>
