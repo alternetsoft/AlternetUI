@@ -18,8 +18,8 @@ namespace Alternet::UI
         App();
 
         bool OnInit() override;
-        int OnRun() override;
         int OnExit() override;
+        wxWindow* GetTopWindow() const override;
 
         void Run();
 
@@ -32,7 +32,7 @@ namespace Alternet::UI
 
         Application* _owner = nullptr;
 
-        BYREF_ONLY(App);
+       // BYREF_ONLY(App);
     };
 
     class Application : public Object

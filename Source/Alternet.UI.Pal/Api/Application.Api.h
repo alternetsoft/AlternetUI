@@ -112,6 +112,16 @@ ALTERNET_UI_API void Application_Run_(Application* obj, Window* window)
     obj->Run(window);
 }
 
+ALTERNET_UI_API void* Application_GetTopWindow_(Application* obj)
+{
+    return obj->GetTopWindow();
+}
+
+ALTERNET_UI_API void Application_ExitMainLoop_(Application* obj)
+{
+    obj->ExitMainLoop();
+}
+
 ALTERNET_UI_API void Application_WakeUpIdle_(Application* obj)
 {
     obj->WakeUpIdle();

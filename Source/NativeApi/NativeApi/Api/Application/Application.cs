@@ -29,6 +29,10 @@ namespace NativeApi.Api
 
         public bool InUixmlPreviewerMode { get; set; }
 
+        public IntPtr GetTopWindow() => default;
+
+        public void ExitMainLoop() { }
+
         public void WakeUpIdle() { }
 
         public void Exit() { }

@@ -186,6 +186,19 @@ namespace Alternet.UI.Native
             NativeApi.Application_Run_(NativePointer, window.NativePointer);
         }
         
+        public System.IntPtr GetTopWindow()
+        {
+            CheckDisposed();
+            var n = NativeApi.Application_GetTopWindow_(NativePointer);
+            return n;
+        }
+        
+        public void ExitMainLoop()
+        {
+            CheckDisposed();
+            NativeApi.Application_ExitMainLoop_(NativePointer);
+        }
+        
         public void WakeUpIdle()
         {
             CheckDisposed();
@@ -338,6 +351,12 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Application_Run_(IntPtr obj, IntPtr window);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr Application_GetTopWindow_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Application_ExitMainLoop_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Application_WakeUpIdle_(IntPtr obj);

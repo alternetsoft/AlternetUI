@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using System.Linq;
 using System.Threading;
 
 namespace Alternet.UI
@@ -181,6 +182,20 @@ namespace Alternet.UI
         public IReadOnlyList<Window> Windows => windows;
 
         /// <summary>
+        /// Gets all visible windows in an application.
+        /// </summary>
+        /// <value>A <see cref="IReadOnlyList{Window}"/> that contains
+        /// references to all visible window objects in the current application.</value>
+        public IEnumerable<Window>? VisibleWindows
+        {
+            get
+            {
+                var result = Windows.Where(x => x.Visible);
+                return result;
+            }
+        }
+
+        /// <summary>
         /// Gets whether <see cref="Dispose(bool)"/> has been called.
         /// </summary>
         public bool IsDisposed
@@ -289,6 +304,8 @@ namespace Alternet.UI
         internal Native.Clipboard NativeClipboard => nativeApplication.Clipboard;
 
         internal Native.Keyboard NativeKeyboard => nativeApplication.Keyboard;
+
+        internal Native.Application NativeApplication => nativeApplication;
 
         internal Native.Mouse NativeMouse => nativeApplication.Mouse;
 

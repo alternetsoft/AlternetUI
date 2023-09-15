@@ -39,6 +39,8 @@ bool GetInvokeRequired();
 static void ThrowError(int value);
 static void SetSystemOptionInt(const string& name, int value);
 void Run(Window* window);
+void* GetTopWindow();
+void ExitMainLoop();
 void WakeUpIdle();
 void Exit();
 static void SuppressDiagnostics(int flags);

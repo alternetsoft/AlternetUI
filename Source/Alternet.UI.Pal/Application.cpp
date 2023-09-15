@@ -14,17 +14,42 @@ namespace Alternet::UI
     {
     }
 
+    wxWindow* App::GetTopWindow() const
+    {
+        //return wxApp::GetTopWindow();
+        
+        wxWindow* window = m_topWindow;
+
+        // If there is no top window or it is about to be destroyed,
+        // we need to search for the first TLW which is not pending delete
+        if (!window || wxPendingDelete.Member(window))
+        {
+            window = NULL;
+            wxWindowList::compatibility_iterator node = wxTopLevelWindows.GetFirst();
+            while (node)
+            {
+                wxWindow* win = node->GetData();
+                if (!wxPendingDelete.Member(win))
+                {
+                    //if (win->IsShownOnScreen())
+                    {
+                        window = win;
+                        break;
+                    }
+                }
+                node = node->GetNext();
+            }
+        }
+
+        return window;
+    }
+
     bool App::OnInit()
     {
 #if defined(__WXGTK__)
         wxApp::GTKAllowDiagnosticsControl();
 #endif
         return wxApp::OnInit();
-    }
-
-    int App::OnRun()
-    {
-        return 0;
     }
 
     int App::OnExit()
@@ -227,6 +252,16 @@ wxDEFINE_EVENT( wxEVT_HOTKEY, wxKeyEvent );
     void Application::WakeUpIdle()
     {
         _app->WakeUpIdle();
+    }
+
+    void* Application::GetTopWindow()
+    {
+        return _app->GetTopWindow();
+    }
+
+    void Application::ExitMainLoop()
+    {
+        _app->ExitMainLoop();
     }
 
     void Application::Exit()
