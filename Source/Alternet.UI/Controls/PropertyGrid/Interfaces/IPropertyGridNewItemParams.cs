@@ -23,6 +23,10 @@ namespace Alternet.UI
         /// </remarks>
         string? Label { get; set; }
 
+        IPropertyGridPropInfoRegistry? Owner { get; }
+
+        IPropertyGridNewItemParams Constructed { get; }
+
         /// <summary>
         /// Gets or sets whether to configure <see cref="IPropertyGridItem"/> as nullable property.
         /// </summary>

@@ -124,30 +124,28 @@ namespace PropertyGridSample
 
             Type[] badTypes = new Type[] 
             {
+              typeof(ContextMenu), // added using other style
+              typeof(NonVisualControl), // has no sense to add
+              typeof(StatusBarPanel), // part of other control
+              typeof(MenuItem), // part of other control
+              typeof(TabPage), // part of other control
+              typeof(ToolbarItem), // part of other control
+
+              typeof(Toolbar), // can create some modal window? or add child window 
               typeof(WebBrowser),
+              typeof(Popup), // button with popup like ContextMenu
               typeof(AuiNotebook),
               typeof(AuiToolbar),
-              typeof(SplitterPanel),
-              typeof(Grid),
-              typeof(StackPanel),
-              typeof(HorizontalStackPanel),
-              typeof(VerticalStackPanel),
+              typeof(SplitterPanel),// know how
+              typeof(Grid),// know how
               typeof(ScrollViewer),
-              typeof(StatusBarPanel),
-              typeof(LayoutPanel),
-              typeof(MenuItem),
-              typeof(UserPaintControl),
-              typeof(MainMenu),
-              typeof(StatusBar),
-              typeof(ContextMenu),
-              typeof(Popup),
-              typeof(NonVisualControl),
+              typeof(LayoutPanel),// know how
+              typeof(UserPaintControl),// know how
+              typeof(MainMenu),// can create some modal window? or add child window 
+              typeof(StatusBar),// can create some modal window? or add child window 
               typeof(PropertyGrid),
-              typeof(Toolbar),
-              typeof(TabPage),
-              typeof(TabControl),
+              typeof(TabControl),// know how
               typeof(Window),
-              typeof(ToolbarItem),
             };
 
             IEnumerable<Type> result = AssemblyUtils.GetTypeDescendants(typeof(Control));
@@ -679,15 +677,7 @@ namespace PropertyGridSample
             var propInfo = prop.PropInfo;
             var instance = prop.Instance;
 
-            var source = ListEditSource.CreateEditSource(instance, propInfo);
-            if (source == null)
-                return;
-
-            UIDialogListEdit dialog = new()
-            {
-                DataSource = source,
-            };
-            dialog.ShowModal();
+            UIDialogListEdit.EditProperty(instance, propInfo);
         }
 
         void IComponentDesigner.PropertyChanged(object? sender, string? propName)

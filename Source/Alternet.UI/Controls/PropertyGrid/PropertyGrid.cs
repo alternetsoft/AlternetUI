@@ -418,9 +418,10 @@ namespace Alternet.UI
         /// <summary>
         /// Creates new <see cref="IPropertyGridNewItemParams"/> instance.
         /// </summary>
-        public static IPropertyGridNewItemParams CreateNewItemParams(PropertyInfo? propInfo = null)
+        public static IPropertyGridNewItemParams CreateNewItemParams(
+            PropertyInfo? propInfo = null)
         {
-            return new PropertyGridNewItemParams(propInfo);
+            return new PropertyGridNewItemParams(null, propInfo);
         }
 
         /// <summary>
@@ -447,6 +448,50 @@ namespace Alternet.UI
             RegisterCollectionEditor(
                 typeof(PropertyGridAdapterBrush),
                 nameof(PropertyGridAdapterBrush.GradientStops));
+        }
+
+        public static IPropertyGridPropInfoRegistry? GetValidBasePropRegistry(
+            Type? type,
+            PropertyInfo? propInfo,
+            Func<IPropertyGridPropInfoRegistry, bool> validatorFunc)
+        {
+            if (type == null || propInfo == null)
+                return null;
+            var registry = PropertyGrid.GetTypeRegistryOrNull(type);
+
+            while (true)
+            {
+                if (registry == null)
+                    return null;
+                var propRegistry = registry.GetPropRegistryOrNull(propInfo);
+                if (propRegistry == null)
+                {
+                    registry = registry.BaseTypeRegistry;
+                    continue;
+                }
+
+                var isOk = validatorFunc(propRegistry);
+                if (!isOk)
+                {
+                    registry = registry.BaseTypeRegistry;
+                    continue;
+                }
+
+                return propRegistry;
+            }
+        }
+
+        public static Type? GetListEditSourceType(Type? type, PropertyInfo? propInfo)
+        {
+            static bool ValidatorFunc(IPropertyGridPropInfoRegistry registry)
+            {
+                var result = registry.ListEditSourceType != null;
+                return result;
+            }
+
+            var registry = GetValidBasePropRegistry(type, propInfo, ValidatorFunc);
+            var result = registry?.ListEditSourceType;
+            return result;
         }
 
         /// <summary>
@@ -519,11 +564,31 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="type">Object type.</param>
         /// <param name="propInfo">Property information.</param>
-        public static IPropertyGridNewItemParams GetNewItemParams(Type type, PropertyInfo propInfo)
+        public static IPropertyGridNewItemParams GetNewItemParams(
+            Type type,
+            PropertyInfo propInfo)
         {
             var registry = GetTypeRegistry(type);
             var propRegistry = registry.GetPropRegistry(propInfo);
             return propRegistry.NewItemParams;
+        }
+
+        public static IPropertyGridNewItemParams ConstructNewItemParams(
+            Type type,
+            PropertyInfo propInfo)
+        {
+            var prm = GetNewItemParams(type, propInfo);
+            return prm.Constructed;
+        }
+
+        public static IPropertyGridNewItemParams ConstructNewItemParams(
+            object instance,
+            PropertyInfo propInfo)
+        {
+            if (instance == null)
+                return PropertyGridNewItemParams.Default;
+            var type = instance.GetType();
+            return ConstructNewItemParams(type, propInfo);
         }
 
         /// Gets <see cref="IPropertyGridNewItemParams"/> for the given
@@ -1291,7 +1356,7 @@ namespace Alternet.UI
             else
             {
                 var value = GetStructPropertyValueForReload(null, instance, propInfo);
-                var prm = GetNewItemParams(instance, propInfo);
+                var prm = ConstructNewItemParams(instance, propInfo);
                 prm.TextReadOnly = true;
                 result = CreateStringItemWithKind(label, name, value?.ToString(), prm);
                 result.GetValueFuncForReload = GetStructPropertyValueForReload;
@@ -1388,7 +1453,7 @@ namespace Alternet.UI
             }
 
             var value = GetStructPropertyValueForReload(null, instance, propInfo);
-            var prm = GetNewItemParams(instance, propInfo);
+            var prm = ConstructNewItemParams(instance, propInfo);
             var result = CreateStringItemWithKind(label, name, value?.ToString(), prm);
             result.GetValueFuncForReload = GetStructPropertyValueForReload;
             SetPropertyReadOnly(result, true, false);
@@ -1775,7 +1840,7 @@ namespace Alternet.UI
                     PropertyInfo propInfo)
         {
             var value = (bool)AssemblyUtils.GetPropValue(instance, propInfo, false);
-            var prm = GetNewItemParams(instance, propInfo);
+            var prm = ConstructNewItemParams(instance, propInfo);
             var prop = CreateBoolItem(label, name, value, prm);
             OnPropertyCreated(prop, instance, propInfo, prm);
             return prop;
@@ -1792,7 +1857,7 @@ namespace Alternet.UI
                     PropertyInfo propInfo)
         {
             var value = AssemblyUtils.GetPropValue<sbyte>(instance, propInfo, default);
-            var prm = GetNewItemParams(instance, propInfo);
+            var prm = ConstructNewItemParams(instance, propInfo);
             var prop = CreateSByteItem(label, name, value, prm);
             OnPropertyCreated(prop, instance, propInfo, prm);
             return prop;
@@ -1809,7 +1874,7 @@ namespace Alternet.UI
                     PropertyInfo propInfo)
         {
             var value = AssemblyUtils.GetPropValue<short>(instance, propInfo, default);
-            var prm = GetNewItemParams(instance, propInfo);
+            var prm = ConstructNewItemParams(instance, propInfo);
             var prop = CreateInt16Item(label, name, value, prm);
             OnPropertyCreated(prop, instance, propInfo, prm);
             return prop;
@@ -1826,7 +1891,7 @@ namespace Alternet.UI
                     PropertyInfo propInfo)
         {
             var value = AssemblyUtils.GetPropValue<int>(instance, propInfo, default);
-            var prm = GetNewItemParams(instance, propInfo);
+            var prm = ConstructNewItemParams(instance, propInfo);
             var prop = CreateIntItem(label, name, value, prm);
             OnPropertyCreated(prop, instance, propInfo, prm);
             return prop;
@@ -1843,7 +1908,7 @@ namespace Alternet.UI
                     PropertyInfo propInfo)
         {
             var value = AssemblyUtils.GetPropValue<long>(instance, propInfo, default);
-            var prm = GetNewItemParams(instance, propInfo);
+            var prm = ConstructNewItemParams(instance, propInfo);
             var prop = CreateLongItem(label, name, value, prm);
             OnPropertyCreated(prop, instance, propInfo, prm);
             return prop;
@@ -1860,7 +1925,7 @@ namespace Alternet.UI
                     PropertyInfo propInfo)
         {
             var value = AssemblyUtils.GetPropValue<byte>(instance, propInfo, default);
-            var prm = GetNewItemParams(instance, propInfo);
+            var prm = ConstructNewItemParams(instance, propInfo);
             var prop = CreateByteItem(label, name, value, prm);
             OnPropertyCreated(prop, instance, propInfo, prm);
             return prop;
@@ -1877,7 +1942,7 @@ namespace Alternet.UI
                     PropertyInfo propInfo)
         {
             var value = AssemblyUtils.GetPropValue<uint>(instance, propInfo, default);
-            var prm = GetNewItemParams(instance, propInfo);
+            var prm = ConstructNewItemParams(instance, propInfo);
             var prop = CreateUIntItem(label, name, value, prm);
             OnPropertyCreated(prop, instance, propInfo, prm);
             return prop;
@@ -1894,7 +1959,7 @@ namespace Alternet.UI
                     PropertyInfo propInfo)
         {
             var value = AssemblyUtils.GetPropValue<ushort>(instance, propInfo, default);
-            var prm = GetNewItemParams(instance, propInfo);
+            var prm = ConstructNewItemParams(instance, propInfo);
             var prop = CreateUInt16Item(label, name, value, prm);
             OnPropertyCreated(prop, instance, propInfo, prm);
             return prop;
@@ -1911,7 +1976,7 @@ namespace Alternet.UI
                     PropertyInfo propInfo)
         {
             var value = AssemblyUtils.GetPropValue<ulong>(instance, propInfo, default);
-            var prm = GetNewItemParams(instance, propInfo);
+            var prm = ConstructNewItemParams(instance, propInfo);
             var prop = CreateULongItem(label, name, value, prm);
             OnPropertyCreated(prop, instance, propInfo, prm);
             return prop;
@@ -1928,7 +1993,7 @@ namespace Alternet.UI
                     PropertyInfo propInfo)
         {
             var value = AssemblyUtils.GetPropValue<float>(instance, propInfo, default);
-            var prm = GetNewItemParams(instance, propInfo);
+            var prm = ConstructNewItemParams(instance, propInfo);
             var prop = CreateFloatItem(label, name, value, prm);
             OnPropertyCreated(prop, instance, propInfo, prm);
             return prop;
@@ -1945,7 +2010,7 @@ namespace Alternet.UI
                     PropertyInfo propInfo)
         {
             var value = AssemblyUtils.GetPropValue<double>(instance, propInfo, default);
-            var prm = GetNewItemParams(instance, propInfo);
+            var prm = ConstructNewItemParams(instance, propInfo);
             var prop = CreateDoubleItem(label, name, value, prm);
             OnPropertyCreated(prop, instance, propInfo, prm);
             return prop;
@@ -1962,7 +2027,7 @@ namespace Alternet.UI
                     PropertyInfo propInfo)
         {
             var value = AssemblyUtils.GetPropValue<decimal>(instance, propInfo, default);
-            var prm = GetNewItemParams(instance, propInfo);
+            var prm = ConstructNewItemParams(instance, propInfo);
             var prop = CreateDecimalItem(label, name, value, prm);
             OnPropertyCreated(prop, instance, propInfo, prm);
             return prop;
@@ -1979,7 +2044,7 @@ namespace Alternet.UI
                     PropertyInfo propInfo)
         {
             var value = AssemblyUtils.GetPropValue<DateTime>(instance, propInfo, default);
-            var prm = GetNewItemParams(instance, propInfo);
+            var prm = ConstructNewItemParams(instance, propInfo);
             var prop = CreateDateItem(label, name, value, prm);
             OnPropertyCreated(prop, instance, propInfo, prm);
             return prop;
@@ -1996,7 +2061,7 @@ namespace Alternet.UI
                     PropertyInfo propInfo)
         {
             var value = AssemblyUtils.GetPropValue<char>(instance, propInfo, default);
-            var prm = GetNewItemParams(instance, propInfo);
+            var prm = ConstructNewItemParams(instance, propInfo);
             var prop = CreateCharItem(label, name, value, prm);
             OnPropertyCreated(prop, instance, propInfo, prm);
             return prop;
@@ -2013,7 +2078,7 @@ namespace Alternet.UI
                     PropertyInfo propInfo)
         {
             var value = AssemblyUtils.GetPropValue<string>(instance, propInfo, string.Empty);
-            var prm = GetNewItemParams(instance, propInfo);
+            var prm = ConstructNewItemParams(instance, propInfo);
             var prop = CreateStringItemWithKind(label, name, value, prm);
             OnPropertyCreated(prop, instance, propInfo, prm);
             return prop;
@@ -2116,7 +2181,7 @@ namespace Alternet.UI
             label ??= propName;
             object? propValue = propInfo.GetValue(instance, null);
             propValue ??= Color.Black;
-            var prm = GetNewItemParams(instance, propInfo);
+            var prm = ConstructNewItemParams(instance, propInfo);
             var value = (Color)propValue;
             prop = CreateColorItemWithKind(label, name, value, prm);
             OnPropertyCreated(prop, instance, propInfo, prm);
@@ -2146,7 +2211,7 @@ namespace Alternet.UI
             {
                 propValue = 0;
             }
-            var prm = GetNewItemParams(instance, propInfo);
+            var prm = ConstructNewItemParams(instance, propInfo);
             if (isFlags)
             {
                 prop = CreateFlagsItem(
@@ -4159,6 +4224,12 @@ namespace Alternet.UI
         internal void SetCaptionTextColor(Color col)
         {
             NativeControl.SetCaptionTextColor(col);
+        }
+
+        internal static IPropertyGridNewItemParams CreateNewItemParams(
+           IPropertyGridPropInfoRegistry? owner, PropertyInfo? propInfo = null)
+        {
+            return new PropertyGridNewItemParams(owner, propInfo);
         }
 
         internal void SetCellBackgroundColor(Color col)

@@ -12,13 +12,7 @@ namespace Alternet.UI
     {
         public ListView? ListView => Instance as ListView;
 
-        public override IEnumerable? RootItems
-        {
-            get
-            {
-                return ListView?.Items;
-            }
-        }
+        public override IEnumerable? RootItems => ListView?.Items;
 
         public override object? CreateNewItem() => new ListViewItem();
 

@@ -42,6 +42,17 @@ namespace PropertyGridSample
                 (c as Label)!.Text = "Label"; 
             });
 
+            Actions.Add(typeof(ScrollViewer), InitScrollViewer);
+            Actions.Add(typeof(HorizontalStackPanel), InitStackPanel);
+            Actions.Add(typeof(VerticalStackPanel), InitStackPanel);
+            Actions.Add(typeof(StackPanel), InitStackPanel);
+
+            Actions.Add(typeof(StatusBar), (c) =>
+            {
+                (c as StatusBar)!.Panels.Add(new("text1"));
+                (c as StatusBar)!.Panels.Add(new("text2"));
+            });
+
             Actions.Add(typeof(Border), (c) =>
             {
                 (c as Border)!.Height = 150; 
@@ -141,6 +152,52 @@ namespace PropertyGridSample
             items.Add("Eight");
             items.Add("Nine");
             items.Add("Ten");
+        }
+
+        public static void InitScrollViewer(object control)
+        {
+            ScrollViewer? sv = control as ScrollViewer;
+            sv!.Height = 250;
+            StackPanel panel = new();
+            InitStackPanel(panel);
+            panel.Parent = sv;
+        }
+
+        public static void InitStackPanel(object control)
+        {
+            var parent = control as Control;
+            parent!.Height = 250;
+
+            Button OkButton = new()
+            {
+                Text = CommonStrings.Default.ButtonOk,
+                Margin = PanelOkCancelButtons.DefaultButtonMargin,
+                VerticalAlignment = VerticalAlignment.Center,
+                HorizontalAlignment = HorizontalAlignment.Right,
+                IsDefault = true,
+                Parent = parent,
+            };
+
+            Button CancelButton = new()
+            {
+                Text = CommonStrings.Default.ButtonCancel,
+                Margin = PanelOkCancelButtons.DefaultButtonMargin,
+                VerticalAlignment = VerticalAlignment.Center,
+                HorizontalAlignment = HorizontalAlignment.Right,
+                IsCancel = true,
+                Parent = parent,
+            };
+
+            Button ApplyButton = new()
+            {
+                Margin = PanelOkCancelButtons.DefaultButtonMargin,
+                Text = CommonStrings.Default.ButtonApply,
+                VerticalAlignment = VerticalAlignment.Center,
+                HorizontalAlignment = HorizontalAlignment.Right,
+                Visible = false,
+                Parent = parent,
+            };
+
         }
 
         public static void InitContextMenu(object control)

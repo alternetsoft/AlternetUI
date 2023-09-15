@@ -11,10 +11,31 @@ namespace Alternet.UI
     {
         private readonly AdvDictionary<PropertyInfo, IPropertyGridPropInfoRegistry> registry = new();
         private readonly Type type;
+        private IPropertyGridTypeRegistry? baseTypeRegistry;
 
         public PropertyGridTypeRegistry(Type type)
         {
             this.type = type;
+        }
+
+        public IPropertyGridTypeRegistry? BaseTypeRegistry
+        {
+            get
+            {
+                if(baseTypeRegistry == null)
+                {
+                    if (type == typeof(object))
+                        return null;
+                    Type? baseType = type.BaseType;
+                    if (baseType == null)
+                        return null;
+                    else
+                        baseTypeRegistry = PropertyGrid.GetTypeRegistry(baseType);
+                    return baseTypeRegistry;
+                }
+
+                return baseTypeRegistry;
+            }
         }
 
         public Type InstanceType => type;
@@ -36,6 +57,10 @@ namespace Alternet.UI
             return registry.GetOrCreate(
                 propInfo,
                 () => { return new PropertyGridPropInfoRegistry(propInfo); });
+        }
+
+        private class NullType
+        {
         }
     }
 }

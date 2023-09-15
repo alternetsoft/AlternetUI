@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Alternet.Drawing;
 using Alternet.Base.Collections;
+using System.Reflection;
 
 namespace Alternet.UI
 {
@@ -153,16 +154,14 @@ namespace Alternet.UI
         {
             if (Modal)
                 ModalResult = ModalResult.Canceled;
-            else
-                Close();
+            Close();
         }
 
         private void OkButton_Click(object? sender, EventArgs e)
         {
             if (Modal)
                 ModalResult = ModalResult.Accepted;
-            else
-                Close();
+            Close();
         }
 
         private void RemoveAllButton_Click(object? sender, EventArgs e)
@@ -272,6 +271,28 @@ namespace Alternet.UI
                 Bind();
                 UpdateButtons();
             }
+        }
+
+        public static void EditProperty(object? instance, PropertyInfo? propInfo)
+        {
+            var source = ListEditSource.CreateEditSource(instance, propInfo);
+            if (source == null)
+                return;
+
+            UIDialogListEdit dialog = new()
+            {
+                DataSource = source,
+            };
+            dialog.ShowModal();
+            if (dialog.ModalResult == ModalResult.Accepted)
+            {
+                dialog.Save();
+            }
+        }
+
+        public void Save()
+        {
+
         }
 
         private void Load()

@@ -23,6 +23,12 @@ namespace Alternet.UI
         Type InstanceType { get; }
 
         /// <summary>
+        /// Gets <see cref="PropertyGrid"/> settings related
+        /// to base type of <see cref="InstanceType"/>.
+        /// </summary>
+        IPropertyGridTypeRegistry? BaseTypeRegistry { get; }
+
+        /// <summary>
         /// Gets <see cref="PropertyGrid"/> settings related to <see cref="PropertyInfo"/>.
         /// </summary>
         /// <param name="propInfo">Property information.</param>

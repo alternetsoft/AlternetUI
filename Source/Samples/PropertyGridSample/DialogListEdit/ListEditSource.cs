@@ -69,18 +69,14 @@ namespace Alternet.UI
 
         public static IListEditSource? CreateEditSource(object? instance, PropertyInfo? propInfo)
         {
-            if (propInfo == null || instance == null)
+            if (propInfo == null)
                 return null;
-
-            var value = propInfo.GetValue(instance);
-            if (value is not ICollection)
-                return null;
-
-            var typeRegistry = PropertyGrid.GetTypeRegistryOrNull(instance.GetType());
-            var propRegistry = typeRegistry?.GetPropRegistryOrNull(propInfo);
-            var editType = propRegistry?.ListEditSourceType;
-
+            var editType = PropertyGrid.GetListEditSourceType(instance?.GetType(), propInfo);
             if (editType == null)
+                return null;
+
+            var value = propInfo?.GetValue(instance);
+            if (value is not ICollection)
                 return null;
 
             var result = (IListEditSource?)Activator.CreateInstance(editType);
@@ -93,7 +89,10 @@ namespace Alternet.UI
 
         public virtual string? GetItemTitle(object item) => item?.ToString();
 
-        public abstract IEnumerable? RootItems { get; }
+        public abstract IEnumerable? RootItems
+        {
+            get;
+        }
 
         public virtual IEnumerable? GetChildren(object item) => null;
 
