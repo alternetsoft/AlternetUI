@@ -19,5 +19,29 @@ namespace Alternet.UI
         public override ImageList? ImageList => ListView?.SmallImageList;
 
         public override int? GetItemImageIndex(object item) => (item as ListViewItem)?.ImageIndex;
+
+        public override void ApplyData(IEnumerableTree tree)
+        {
+            if (ListView == null)
+                return;
+            ListView listView = ListView;
+
+            listView.BeginUpdate();
+            try
+            {
+                listView.RemoveAll();
+                foreach(var srcItem in tree)
+                {
+                    if (tree.GetData(srcItem) is not ListViewItem data)
+                        continue;
+
+                    listView.Items.Add(data);
+                }
+            }
+            finally
+            {
+                listView.EndUpdate();
+            }
+        }
     }
 }

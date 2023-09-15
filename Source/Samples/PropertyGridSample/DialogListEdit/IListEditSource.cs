@@ -32,5 +32,7 @@ namespace Alternet.UI
         int? GetItemImageIndex(object item);
 
         object? CreateNewItem();
+
+        void ApplyData(IEnumerableTree tree);
     }
 }

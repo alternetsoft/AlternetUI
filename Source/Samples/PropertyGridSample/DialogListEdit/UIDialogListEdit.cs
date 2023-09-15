@@ -25,7 +25,7 @@ namespace Alternet.UI
         private readonly int buttonIdOk;
         private readonly int buttonIdCancel;
 
-        private readonly TreeView treeView = new()
+        private readonly TreeViewPlus treeView = new()
         {
             HasBorder = false,
         };
@@ -292,7 +292,9 @@ namespace Alternet.UI
 
         public void Save()
         {
-
+            if (dataSource is null)
+                return;
+            dataSource.ApplyData(treeView);
         }
 
         private void Load()
@@ -356,77 +358,48 @@ namespace Alternet.UI
             treeView.RemoveAll();
         }
 
-/*
-        private IList? AsList => dataSource as IList;
-
-        private INotifyPropertyChanged? AsNotifyProperty => dataSource as INotifyPropertyChanged;
-
-        private INotifyCollectionChanged? AsNotifyCollection =>
-            dataSource as INotifyCollectionChanged;
-*/
         private void Bind()
         {
             treeView.ImageList = dataSource?.ImageList;
-
-            if (dataSource == null)
-                return;
-
-            /*
-                        if (dataSource == null)
-                            return;
-                        var notifyProp = AsNotifyProperty;
-                        var notifyCollection = AsNotifyCollection;
-
-                        if(notifyProp!=null)
-                            notifyProp.PropertyChanged += NotifyProp_PropertyChanged;
-                        if(notifyCollection != null)
-                            notifyCollection.CollectionChanged += NotifyCollection_CollectionChanged;
-            */
         }
 
-        /*
-                private void NotifyCollection_CollectionChanged(
-                    object? sender,
-                    NotifyCollectionChangedEventArgs e)
-                {
-                    switch (e.Action)
-                    {
-                        case NotifyCollectionChangedAction.Add:
-                            break;
-                        case NotifyCollectionChangedAction.Remove:
-                            break;
-                        case NotifyCollectionChangedAction.Replace:
-                            break;
-                        case NotifyCollectionChangedAction.Move:
-                            break;
-                        case NotifyCollectionChangedAction.Reset:
-                            Clear();
-                            break;
-                        default:
-                            break;
-                    }
-                }
-        */
-        /*
-                private void NotifyProp_PropertyChanged(object? sender, PropertyChangedEventArgs e)
-                {
-                }
-        */
         private void Unbind()
         {
             treeView.ImageList = null;
-            
-/*
-                        if (dataSource == null)
-                            return;
-                        var notifyProp = AsNotifyProperty;
-                        var notifyCollection = AsNotifyCollection;
+        }
 
-                        if (notifyProp != null)
-                            notifyProp.PropertyChanged -= NotifyProp_PropertyChanged;
-                        if (notifyCollection != null)
-                            notifyCollection.CollectionChanged -= NotifyCollection_CollectionChanged;
-            */
+        public class TreeViewPlus : TreeView, IEnumerableTree<TreeViewItem>
+        {
+            IEnumerable<TreeViewItem>? IEnumerableTree<TreeViewItem>.GetChildren(TreeViewItem item)
+            {
+                if (item == null || !item.HasItems)
+                    return Array.Empty<TreeViewItem>();
+                return item.Items;
+            }
+
+            IEnumerable? IEnumerableTree.GetChildren(object item)
+            {
+                if (item is not TreeViewItem treeItem || !treeItem.HasItems)
+                    return Array.Empty<TreeViewItem>();
+                return treeItem.Items;
+            }
+
+            object? IEnumerableTree.GetData(object item)
+            {
+                if (item is not TreeViewItem treeItem)
+                    return null;
+                return treeItem.Tag;
+            }
+
+            IEnumerator<TreeViewItem> IEnumerable<TreeViewItem>.GetEnumerator()
+            {
+                return Items.GetEnumerator();
+            }
+
+            IEnumerator IEnumerable.GetEnumerator()
+            {
+                return Items.GetEnumerator();
+            }
         }
     }
 }

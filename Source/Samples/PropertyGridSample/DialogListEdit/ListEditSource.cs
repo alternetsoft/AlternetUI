@@ -94,6 +94,8 @@ namespace Alternet.UI
             get;
         }
 
+        public abstract void ApplyData(IEnumerableTree tree);
+
         public virtual IEnumerable? GetChildren(object item) => null;
 
         public virtual object? GetProperties(object item) => item;

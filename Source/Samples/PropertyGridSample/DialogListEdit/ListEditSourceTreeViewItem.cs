@@ -34,5 +34,10 @@ namespace Alternet.UI
         public override int? GetItemImageIndex(object item) => (item as TreeViewItem)?.ImageIndex;
 
         public override object? CreateNewItem() => new TreeViewItem();
+
+        public override void ApplyData(IEnumerableTree tree)
+        {
+
+        }
     }
 }

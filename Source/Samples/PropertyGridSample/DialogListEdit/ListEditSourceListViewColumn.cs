@@ -19,5 +19,10 @@ namespace Alternet.UI
         }
 
         public override object? CreateNewItem() => new ListViewColumn();
+
+        public override void ApplyData(IEnumerableTree tree)
+        {
+
+        }
     }
 }
