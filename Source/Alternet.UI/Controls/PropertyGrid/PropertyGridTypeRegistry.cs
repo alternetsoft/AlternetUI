@@ -52,11 +52,19 @@ namespace Alternet.UI
             return GetPropRegistry(type.GetProperty(propName)!);
         }
 
+        public IPropertyGridPropInfoRegistry? GetPropRegistryOrNull(string propName)
+        {
+            var propInfo = type.GetProperty(propName);
+            if (propInfo == null)
+                return null;
+            return GetPropRegistryOrNull(propInfo);
+        }
+
         public IPropertyGridPropInfoRegistry GetPropRegistry(PropertyInfo propInfo)
         {
             return registry.GetOrCreate(
                 propInfo,
-                () => { return new PropertyGridPropInfoRegistry(propInfo); });
+                () => { return new PropertyGridPropInfoRegistry(this, propInfo); });
         }
 
         private class NullType

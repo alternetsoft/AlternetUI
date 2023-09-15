@@ -10,14 +10,18 @@ namespace Alternet.UI
     internal class PropertyGridPropInfoRegistry : IPropertyGridPropInfoRegistry
     {
         private readonly PropertyInfo propInfo;
+        private readonly IPropertyGridTypeRegistry owner;
         private IPropertyGridNewItemParams? newItemParams;
 
-        public PropertyGridPropInfoRegistry(PropertyInfo propInfo)
+        public PropertyGridPropInfoRegistry(IPropertyGridTypeRegistry owner, PropertyInfo propInfo)
         {
             this.propInfo = propInfo;
+            this.owner = owner;
         }
 
         public PropertyInfo PropInfo => propInfo;
+
+        public IPropertyGridTypeRegistry Owner => owner;
 
         public IPropertyGridNewItemParams NewItemParams
         {

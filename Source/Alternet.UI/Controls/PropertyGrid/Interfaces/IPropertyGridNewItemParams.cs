@@ -23,8 +23,19 @@ namespace Alternet.UI
         /// </remarks>
         string? Label { get; set; }
 
+        /// <summary>
+        /// Gets <see cref="IPropertyGridPropInfoRegistry"/> instance which owns this object.
+        /// </summary>
         IPropertyGridPropInfoRegistry? Owner { get; }
 
+        /// <summary>
+        /// Gets "constructed" <see cref="IPropertyGridNewItemParams"/> for this object.
+        /// </summary>
+        /// <remarks>This property returns configuration settings filled using information
+        /// from all base types of the type to which belongs this
+        /// <see cref="IPropertyGridNewItemParams"/> item.</remarks>
+        /// <remarks>For example, if <see cref="HasEllipsis"/> or other property is null,
+        /// its "constructed" value is looked in 'Owner.Owner.BaseTypeRegistry'.</remarks>
         IPropertyGridNewItemParams Constructed { get; }
 
         /// <summary>

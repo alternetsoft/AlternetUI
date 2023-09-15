@@ -450,6 +450,18 @@ namespace Alternet.UI
                 nameof(PropertyGridAdapterBrush.GradientStops));
         }
 
+        /// <summary>
+        /// Gets <see cref="IPropertyGridPropInfoRegistry"/> item for the specified
+        /// <paramref name="type"/> and <paramref name="propInfo"/>. Uses validator
+        /// functions to check whether results is ok.
+        /// </summary>
+        /// <param name="type">Type which contains the property.</param>
+        /// <param name="propInfo">Property information.</param>
+        /// <param name="validatorFunc">Validator function.</param>
+        /// <remarks>
+        /// This method also searches for the result in all base types of
+        /// the <paramref name="type"/>.
+        /// </remarks>
         public static IPropertyGridPropInfoRegistry? GetValidBasePropRegistry(
             Type? type,
             PropertyInfo? propInfo,
@@ -457,13 +469,13 @@ namespace Alternet.UI
         {
             if (type == null || propInfo == null)
                 return null;
-            var registry = PropertyGrid.GetTypeRegistryOrNull(type);
+            var registry = PropertyGrid.GetTypeRegistry(type);
 
             while (true)
             {
                 if (registry == null)
                     return null;
-                var propRegistry = registry.GetPropRegistryOrNull(propInfo);
+                var propRegistry = registry.GetPropRegistryOrNull(propInfo.Name);
                 if (propRegistry == null)
                 {
                     registry = registry.BaseTypeRegistry;
@@ -481,6 +493,12 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets type of the registered list editor source for the specified <paramref name="type"/>
+        /// and <paramref name="propInfo"/>. This is used in list editor dialog.
+        /// </summary>
+        /// <param name="type">Type which contains the property.</param>
+        /// <param name="propInfo">Property information.</param>
         public static Type? GetListEditSourceType(Type? type, PropertyInfo? propInfo)
         {
             static bool ValidatorFunc(IPropertyGridPropInfoRegistry registry)
@@ -573,6 +591,15 @@ namespace Alternet.UI
             return propRegistry.NewItemParams;
         }
 
+        /// <summary>
+        /// Gets "constructed" <see cref="IPropertyGridNewItemParams"/> for the given
+        /// <see cref="Type"/> and <see cref="PropertyInfo"/>.
+        /// </summary>
+        /// <param name="type">Object type.</param>
+        /// <param name="propInfo">Property information.</param>
+        /// <remarks>
+        /// See <see cref="IPropertyGridNewItemParams.Constructed"/> for the details.
+        /// </remarks>
         public static IPropertyGridNewItemParams ConstructNewItemParams(
             Type type,
             PropertyInfo propInfo)
@@ -581,6 +608,13 @@ namespace Alternet.UI
             return prm.Constructed;
         }
 
+        /// Gets "constructed" <see cref="IPropertyGridNewItemParams"/> for the given
+        /// object instance and <see cref="PropertyInfo"/>.
+        /// <param name="instance">Object instance.</param>
+        /// <param name="propInfo">Property information.</param>
+        /// <remarks>
+        /// See <see cref="IPropertyGridNewItemParams.Constructed"/> for the details.
+        /// </remarks>
         public static IPropertyGridNewItemParams ConstructNewItemParams(
             object instance,
             PropertyInfo propInfo)

@@ -14,20 +14,7 @@ namespace Alternet.UI
 
         private readonly IPropertyGridPropInfoRegistry? owner;
         private PropertyInfo? propInfo;
-        private bool isConstructed;
         private IPropertyGridNewItemParams? constructed;
-
-        public PropertyGridNewItemParams(IPropertyGridNewItemParams prm)
-        {
-            propInfo = prm.PropInfo;
-            Label = prm.Label;
-            IsNullable = prm.IsNullable;
-            EditKindColor = prm.EditKindColor;
-            EditKindString = prm.EditKindString;
-            HasEllipsis = prm.HasEllipsis;
-            TextReadOnly = prm.TextReadOnly;
-            OnlyTextReadOnly = prm.OnlyTextReadOnly;
-        }
 
         public PropertyGridNewItemParams(IPropertyGridPropInfoRegistry? owner, PropertyInfo? propInfo)
         {
@@ -41,14 +28,8 @@ namespace Alternet.UI
             {
                 if (constructed != null)
                     return constructed;
-                if (isConstructed)
-                    return this;
-                PropertyGridNewItemParams created = new(this)
-                {
-                    isConstructed = true,
-                };
-                constructed = created;
-                return created;
+                constructed = new ConstructedParams(this);
+                return constructed;
             }
         }
 
@@ -69,5 +50,186 @@ namespace Alternet.UI
         public bool? TextReadOnly { get; set; }
 
         public bool? OnlyTextReadOnly { get; set; }
+
+        internal class ConstructedParams : IPropertyGridNewItemParams
+        {
+            private readonly IPropertyGridNewItemParams owner;
+
+            private string? constructedLabel;
+            private bool? constructedIsNullable;
+            private PropertyGridEditKindColor? constructedEditKindColor;
+            private PropertyGridEditKindString? constructedEditKindString;
+            private bool? constructedHasEllipsis;
+            private bool? constructedTextReadOnly;
+            private bool? constructedOnlyTextReadOnly;
+
+            private bool loadedLabel;
+            private bool loadedIsNullable;
+            private bool loadedEditKindColor;
+            private bool loadedEditKindString;
+            private bool loadedHasEllipsis;
+            private bool loadedTextReadOnly;
+            private bool loadedOnlyTextReadOnly;
+
+            public ConstructedParams(IPropertyGridNewItemParams owner)
+            {
+                this.owner = owner;
+            }
+
+            public IPropertyGridNewItemParams Constructed => this;
+
+            public IPropertyGridPropInfoRegistry? Owner => owner.Owner;
+
+            public IPropertyGridTypeRegistry? OwnerTypeRegistry => owner.Owner?.Owner;
+
+            public Type? OwnerInstanceType => OwnerTypeRegistry?.InstanceType;
+
+            public PropertyInfo? PropInfo
+            {
+                get => owner.PropInfo;
+                set { }
+            }
+
+            public T GetValidValue<T>(Func<IPropertyGridPropInfoRegistry?, T> func)
+            {
+                bool ValidatorFunc(IPropertyGridPropInfoRegistry registry)
+                {
+                    return registry.HasNewItemParams && func(registry) is not null;
+                }
+
+                var pr = PropertyGrid.GetValidBasePropRegistry(
+                            OwnerInstanceType,
+                            PropInfo,
+                            ValidatorFunc);
+                return func(pr);
+            }
+
+            public T GetConstructedValue<T>(
+                ref bool loaded,
+                ref T loadedValue,
+                Func<IPropertyGridPropInfoRegistry?, T> func)
+            {
+                var ownerValue = func(Owner);
+                if (ownerValue is not null)
+                    return ownerValue;
+                if (loaded)
+                    return loadedValue;
+                loaded = true;
+                loadedValue = GetValidValue<T>(func);
+                return loadedValue;
+            }
+
+            public string? Label
+            {
+                get
+                {
+                    var result = GetConstructedValue<string?>(
+                        ref loadedLabel,
+                        ref constructedLabel,
+                        (r) => r?.NewItemParams?.Label);
+                    return result;
+                }
+
+                set
+                {
+                }
+            }
+
+            public bool? IsNullable
+            {
+                get
+                {
+                    var result = GetConstructedValue<bool?>(
+                        ref loadedIsNullable,
+                        ref constructedIsNullable,
+                        (r) => r?.NewItemParams?.IsNullable);
+                    return result;
+                }
+
+                set
+                {
+                }
+            }
+
+            public PropertyGridEditKindColor? EditKindColor
+            {
+                get
+                {
+                    var result = GetConstructedValue<PropertyGridEditKindColor?>(
+                        ref loadedEditKindColor,
+                        ref constructedEditKindColor,
+                        (r) => r?.NewItemParams?.EditKindColor);
+                    return result;
+                }
+
+                set
+                {
+                }
+            }
+
+            public PropertyGridEditKindString? EditKindString
+            {
+                get
+                {
+                    var result = GetConstructedValue<PropertyGridEditKindString?>(
+                        ref loadedEditKindString,
+                        ref constructedEditKindString,
+                        (r) => r?.NewItemParams?.EditKindString);
+                    return result;
+                }
+
+                set
+                {
+                }
+            }
+
+            public bool? HasEllipsis
+            {
+                get
+                {
+                    var result = GetConstructedValue<bool?>(
+                        ref loadedHasEllipsis,
+                        ref constructedHasEllipsis,
+                        (r) => r?.NewItemParams?.HasEllipsis);
+                    return result;
+                }
+
+                set
+                {
+                }
+            }
+
+            public bool? TextReadOnly
+            {
+                get
+                {
+                    var result = GetConstructedValue<bool?>(
+                        ref loadedTextReadOnly,
+                        ref constructedTextReadOnly,
+                        (r) => r?.NewItemParams?.TextReadOnly);
+                    return result;
+                }
+
+                set
+                {
+                }
+            }
+
+            public bool? OnlyTextReadOnly
+            {
+                get
+                {
+                    var result = GetConstructedValue<bool?>(
+                        ref loadedOnlyTextReadOnly,
+                        ref constructedOnlyTextReadOnly,
+                        (r) => r?.NewItemParams?.OnlyTextReadOnly);
+                    return result;
+                }
+
+                set
+                {
+                }
+            }
+        }
     }
 }

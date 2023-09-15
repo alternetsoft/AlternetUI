@@ -19,6 +19,11 @@ namespace Alternet.UI
         IPropertyGridNewItemParams NewItemParams { get; set; }
 
         /// <summary>
+        /// Gets <see cref="IPropertyGridTypeRegistry"/> which owns this item.
+        /// </summary>
+        IPropertyGridTypeRegistry Owner { get; }
+
+        /// <summary>
         /// Gets whether customization parameters are specified in
         /// the <see cref="NewItemParams"/> property.
         /// </summary>
