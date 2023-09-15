@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.ComponentModel;
 using Alternet.Base.Collections;
 
 namespace Alternet.UI
@@ -29,6 +30,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets a <see cref="StatusBarHandler"/> associated with this class.
         /// </summary>
+        [Browsable(false)]
         public new StatusBarHandler Handler
         {
             get

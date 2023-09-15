@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,6 +24,7 @@ namespace Alternet.UI
         /// Gets a value that indicates the dimension by which child
         /// controls are stacked.
         /// </summary>
+        [Browsable(false)]
         public override StackPanelOrientation Orientation
         {
             get => StackPanelOrientation.Horizontal;
