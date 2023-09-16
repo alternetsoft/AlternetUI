@@ -47,11 +47,23 @@ namespace Alternet.UI
                 return;
             TreeView treeView = TreeView;
 
+            ForEachItem(
+                tree, 
+                (item) =>
+                {
+                    var data = tree.GetData(item);
+                    if (data is TreeViewItem treeItem)
+                    {
+                        treeItem.Items.Clear();
+                        var children = GetChildren<TreeViewItem>(tree, item);
+                        treeItem.Items.AddRange(children);
+                    }
+                });
+
             treeView.DoInsideUpdate(() =>
             {
                 treeView.RemoveAll();
-                var items = GetItems<TreeViewItem>(tree);
-                treeView.Items.AddRange(items);
+                treeView.Items.AddRange(GetItems<TreeViewItem>(tree));
             });
         }
     }

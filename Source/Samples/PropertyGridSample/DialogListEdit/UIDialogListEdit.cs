@@ -282,7 +282,7 @@ namespace Alternet.UI
             if (source == null)
                 return;
 
-            UIDialogListEdit dialog = new()
+            using UIDialogListEdit dialog = new()
             {
                 DataSource = source,
             };
@@ -291,6 +291,7 @@ namespace Alternet.UI
             {
                 dialog.Save();
             }
+            dialog.Clear();
         }
 
         public void Save()

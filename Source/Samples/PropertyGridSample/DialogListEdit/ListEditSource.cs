@@ -109,6 +109,33 @@ namespace Alternet.UI
             }
         }
 
+        public static IEnumerable<T> GetChildren<T>(IEnumerableTree tree, object item)
+        {
+            var children = tree.GetChildren(item);
+            if (children != null)
+                foreach (var srcItem in children)
+                {
+                    if (tree.GetData(srcItem) is T data)
+                        yield return data;
+                }
+        }
+
+        public static void ForEachItem(IEnumerableTree tree, Action<object> func)
+        {
+            void Fn(IEnumerable parent)
+            {
+                foreach (var item in parent)
+                {
+                    func(item);
+                    var childs = tree.GetChildren(item);
+                    if (childs != null)
+                        Fn(childs);
+                }
+            }
+
+            Fn(tree);
+        }
+
         public abstract void ApplyData(IEnumerableTree tree);
 
         public abstract object CloneItem(object item);
