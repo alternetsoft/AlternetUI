@@ -10,21 +10,11 @@ namespace Alternet.UI
 {
     internal class ListEditSourceListViewColumn : ListEditSourceListViewItem
     {
-        public override IEnumerable? RootItems
-        {
-            get
-            {
-                return ListView?.Columns;
-            }
-        }
+        public override IEnumerable? RootItems => ListView?.Columns;
 
         public override object? CreateNewItem() => new ListViewColumn();
 
-        public override object CloneItem(object item)
-        {
-            var result = ((ListViewColumn)item).Clone();
-            return result;
-        }
+        public override object CloneItem(object item) => ((ListViewColumn)item).Clone();
 
         public override void ApplyData(IEnumerableTree tree)
         {

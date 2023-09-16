@@ -437,6 +437,7 @@ namespace Alternet.UI
             RegisterCollectionEditor(typeof(TreeView), nameof(TreeView.Items));
             RegisterCollectionEditor(typeof(ListView), nameof(ListView.Items));
             RegisterCollectionEditor(typeof(ListView), nameof(ListView.Columns));
+            RegisterCollectionEditor(typeof(ListViewItem), nameof(ListViewItem.Cells));
             RegisterCollectionEditor(typeof(ListBox), nameof(ListBox.Items));
             RegisterCollectionEditor(typeof(CheckListBox), nameof(CheckListBox.Items));
             RegisterCollectionEditor(typeof(ComboBox), nameof(ComboBox.Items));
@@ -875,7 +876,7 @@ namespace Alternet.UI
                 CorrectPropLabel(label, prm),
                 CorrectPropName(name),
                 value!);
-            var result = new PropertyGridItem(this, handle, label, name, value)
+            var result = new PropertyGridItem(this, handle, label, name, value, prm)
             {
                 PropertyEditorKind = PropertyGridEditKindAll.StringFilename,
                 CanHaveCustomEllipsis = false,
@@ -912,7 +913,7 @@ namespace Alternet.UI
                 CorrectPropLabel(label, prm),
                 CorrectPropName(name),
                 value!);
-            var result = new PropertyGridItem(this, handle, label, name, value)
+            var result = new PropertyGridItem(this, handle, label, name, value, prm)
             {
                 PropertyEditorKind = PropertyGridEditKindAll.StringDirectory,
                 CanHaveCustomEllipsis = false,
@@ -952,7 +953,7 @@ namespace Alternet.UI
                 CorrectPropLabel(label, prm),
                 CorrectPropName(name),
                 value!);
-            var result = new PropertyGridItem(this, handle, label, name, value)
+            var result = new PropertyGridItem(this, handle, label, name, value, prm)
             {
                 PropertyEditorKind = PropertyGridEditKindAll.StringImageFilename,
                 CanHaveCustomEllipsis = false,
@@ -980,7 +981,7 @@ namespace Alternet.UI
                 CorrectPropLabel(label, prm),
                 CorrectPropName(name),
                 value!);
-            var result = new PropertyGridItem(this, handle, label, name, value)
+            var result = new PropertyGridItem(this, handle, label, name, value, prm)
             {
                 PropertyEditorKind = PropertyGridEditKindAll.String,
             };
@@ -1063,7 +1064,7 @@ namespace Alternet.UI
                 CorrectPropLabel(label, prm),
                 CorrectPropName(name),
                 value);
-            var result = new PropertyGridItem(this, handle, label, name, value)
+            var result = new PropertyGridItem(this, handle, label, name, value, prm)
             {
                 PropertyEditorKind = PropertyGridEditKindAll.Bool,
             };
@@ -1089,7 +1090,7 @@ namespace Alternet.UI
                 CorrectPropLabel(label, prm),
                 CorrectPropName(name),
                 value);
-            var result = new PropertyGridItem(this, handle, label, name, value)
+            var result = new PropertyGridItem(this, handle, label, name, value, prm)
             {
                 PropertyEditorKind = PropertyGridEditKindAll.Int64,
             };
@@ -1115,7 +1116,7 @@ namespace Alternet.UI
                 CorrectPropLabel(label, prm),
                 CorrectPropName(name),
                 value);
-            var result = new PropertyGridItem(this, handle, label, name, value)
+            var result = new PropertyGridItem(this, handle, label, name, value, prm)
             {
                 PropertyEditorKind = PropertyGridEditKindAll.Double,
             };
@@ -1142,7 +1143,7 @@ namespace Alternet.UI
                 CorrectPropLabel(label, prm),
                 CorrectPropName(name),
                 value);
-            var result = new PropertyGridItem(this, handle, label, name, value)
+            var result = new PropertyGridItem(this, handle, label, name, value, prm)
             {
                 PropertyEditorKind = PropertyGridEditKindAll.Single,
             };
@@ -1172,7 +1173,7 @@ namespace Alternet.UI
                 CorrectPropName(name),
                 value,
                 kind);
-            var result = new PropertyGridItem(this, handle, label, name, value)
+            var result = new PropertyGridItem(this, handle, label, name, value, prm)
             {
                 PropertyEditorKind = PropertyGridEditKindAll.ColorSystem,
                 CanHaveCustomEllipsis = false,
@@ -1199,7 +1200,7 @@ namespace Alternet.UI
                 CorrectPropLabel(label, prm),
                 CorrectPropName(name),
                 value);
-            var result = new PropertyGridItem(this, handle, label, name, value)
+            var result = new PropertyGridItem(this, handle, label, name, value, prm)
             {
                 PropertyEditorKind = PropertyGridEditKindAll.Color,
                 CanHaveCustomEllipsis = false,
@@ -1260,7 +1261,8 @@ namespace Alternet.UI
                 return kind switch
                 {
                     PropertyGridEditKindColor.Default => CreateDefault(),
-                    PropertyGridEditKindColor.TextBoxAndButton => CreateColorItem(label, name, value, prm),
+                    PropertyGridEditKindColor.TextBoxAndButton =>
+                        CreateColorItem(label, name, value, prm),
                     PropertyGridEditKindColor.SystemColors =>
                         CreateSystemColorItem(label, name, value, prm),
                     PropertyGridEditKindColor.ComboBox => CreateComboBox(),
@@ -1296,7 +1298,7 @@ namespace Alternet.UI
                 CorrectPropLabel(label, prm),
                 CorrectPropName(name),
                 value);
-            var result = new PropertyGridItem(this, handle, label, name, value)
+            var result = new PropertyGridItem(this, handle, label, name, value, prm)
             {
                 PropertyEditorKind = PropertyGridEditKindAll.UInt64,
             };
@@ -1324,7 +1326,7 @@ namespace Alternet.UI
                 CorrectPropLabel(label, prm),
                 CorrectPropName(name),
                 value);
-            var result = new PropertyGridItem(this, handle, label, name, value)
+            var result = new PropertyGridItem(this, handle, label, name, value, prm)
             {
                 PropertyEditorKind = PropertyGridEditKindAll.StringLong,
                 CanHaveCustomEllipsis = false,
@@ -1358,7 +1360,7 @@ namespace Alternet.UI
                 CorrectPropLabel(label, prm),
                 CorrectPropName(name),
                 dt);
-            var result = new PropertyGridItem(this, handle, label, name, value)
+            var result = new PropertyGridItem(this, handle, label, name, value, prm)
             {
                 PropertyEditorKind = PropertyGridEditKindAll.Date,
                 CanHaveCustomEllipsis = false,
@@ -2292,7 +2294,7 @@ namespace Alternet.UI
                 CorrectPropName(name),
                 choices.Handle,
                 (int)value);
-            var result = new PropertyGridItem(this, handle, label, name, value)
+            var result = new PropertyGridItem(this, handle, label, name, value, prm)
             {
                 PropertyEditorKind = PropertyGridEditKindAll.Enum,
                 Choices = choices,
@@ -2322,7 +2324,7 @@ namespace Alternet.UI
                 CorrectPropName(name),
                 choices.Handle,
                 value);
-            var result = new PropertyGridItem(this, handle, label, name, value)
+            var result = new PropertyGridItem(this, handle, label, name, value, prm)
             {
                 PropertyEditorKind = PropertyGridEditKindAll.EnumEditable,
                 Choices = choices,
@@ -2352,7 +2354,7 @@ namespace Alternet.UI
                 CorrectPropName(name),
                 choices.Handle,
                 (int)value);
-            var result = new PropertyGridItem(this, handle, label, name, value)
+            var result = new PropertyGridItem(this, handle, label, name, value, prm)
             {
                 PropertyEditorKind = PropertyGridEditKindAll.EnumFlags,
                 Choices = choices,
@@ -2436,7 +2438,7 @@ namespace Alternet.UI
             var handle = NativeControl.CreatePropCategory(
                 CorrectPropLabel(label, prm),
                 CorrectPropName(name));
-            var result = new PropertyGridItem(this, handle, label, name, null)
+            var result = new PropertyGridItem(this, handle, label, name, null, prm)
             {
                 IsCategory = true,
             };
@@ -4297,6 +4299,17 @@ namespace Alternet.UI
         {
             OnButtonClick(e);
             ButtonClick?.Invoke(this, e);
+
+            var prop = EventProperty;
+            if (prop == null)
+                return;
+            prop.RaiseButtonClick();
+
+            prop = EventProperty;
+            var prm = prop?.Params;
+            if (prm == null)
+                return;
+            prm.RaiseButtonClick(prop);
         }
 
         internal void RaiseColDragging(EventArgs e)
@@ -4353,7 +4366,7 @@ namespace Alternet.UI
                 CorrectPropLabel(label, prm),
                 CorrectPropName(name),
                 value);
-            var result = new PropertyGridItem(this, handle, label, name, value);
+            var result = new PropertyGridItem(this, handle, label, name, value, prm);
             OnPropertyCreated(result, prm);
             return result;
         }

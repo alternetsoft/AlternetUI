@@ -15,6 +15,11 @@ namespace Alternet.UI
     public interface IPropertyGridNewItemParams
     {
         /// <summary>
+        /// Occurs when button is clicked in the property editor.
+        /// </summary>
+        event EventHandler? ButtonClick;
+
+        /// <summary>
         /// Gets or sets property label.
         /// </summary>
         /// <remarks>
@@ -89,5 +94,10 @@ namespace Alternet.UI
         /// when property specified in <see cref="PropInfo"/> is not writable.
         /// </remarks>
         bool? OnlyTextReadOnly { get; set; }
+
+        /// <summary>
+        /// Raises <see cref="ButtonClick"/> event.
+        /// </summary>
+        void RaiseButtonClick(IPropertyGridItem item);
     }
 }

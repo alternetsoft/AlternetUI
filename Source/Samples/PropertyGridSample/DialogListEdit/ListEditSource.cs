@@ -46,7 +46,18 @@ namespace Alternet.UI
             var typeRegistry = PropertyGrid.GetTypeRegistry(type);
             var propRegistry = typeRegistry.GetPropRegistry(propName);
             propRegistry.ListEditSourceType = editType;
+            propRegistry.NewItemParams.ButtonClick += EditWithListEdit;
             return propRegistry;
+        }
+
+        private static void EditWithListEdit(object sender, EventArgs e)
+        {
+            if (sender is not IPropertyGridItem prop)
+                return;
+            var instance = prop.Instance;
+            var propInfo = prop.PropInfo;
+
+            UIDialogListEdit.EditProperty(instance, propInfo);
         }
 
         public static void RegisterCreateFuncs()
@@ -65,6 +76,11 @@ namespace Alternet.UI
                 typeof(TreeView),
                 nameof(TreeView.Items),
                 typeof(ListEditSourceTreeViewItem));
+
+            RegisterListEditSource(
+                typeof(ListViewItem),
+                nameof(ListViewItem.Cells),
+                typeof(ListEditSourceListViewCell));            
         }
 
         public static IListEditSource? CreateEditSource(object? instance, PropertyInfo? propInfo)

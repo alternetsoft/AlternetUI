@@ -22,6 +22,8 @@ namespace Alternet.UI
             this.owner = owner;
         }
 
+        public event EventHandler? ButtonClick;
+
         public IPropertyGridNewItemParams Constructed
         {
             get
@@ -51,6 +53,11 @@ namespace Alternet.UI
 
         public bool? OnlyTextReadOnly { get; set; }
 
+        public void RaiseButtonClick(IPropertyGridItem item)
+        {
+            ButtonClick?.Invoke(item, EventArgs.Empty);
+        }
+
         internal class ConstructedParams : IPropertyGridNewItemParams
         {
             private readonly IPropertyGridNewItemParams owner;
@@ -76,6 +83,19 @@ namespace Alternet.UI
                 this.owner = owner;
             }
 
+            public event EventHandler? ButtonClick
+            {
+                add
+                {
+                    owner.ButtonClick += value;
+                }
+
+                remove
+                {
+                    owner.ButtonClick -= value;
+                }
+            }
+
             public IPropertyGridNewItemParams Constructed => this;
 
             public IPropertyGridPropInfoRegistry? Owner => owner.Owner;
@@ -88,35 +108,6 @@ namespace Alternet.UI
             {
                 get => owner.PropInfo;
                 set { }
-            }
-
-            public T GetValidValue<T>(Func<IPropertyGridPropInfoRegistry?, T> func)
-            {
-                bool ValidatorFunc(IPropertyGridPropInfoRegistry registry)
-                {
-                    return registry.HasNewItemParams && func(registry) is not null;
-                }
-
-                var pr = PropertyGrid.GetValidBasePropRegistry(
-                            OwnerInstanceType,
-                            PropInfo,
-                            ValidatorFunc);
-                return func(pr);
-            }
-
-            public T GetConstructedValue<T>(
-                ref bool loaded,
-                ref T loadedValue,
-                Func<IPropertyGridPropInfoRegistry?, T> func)
-            {
-                var ownerValue = func(Owner);
-                if (ownerValue is not null)
-                    return ownerValue;
-                if (loaded)
-                    return loadedValue;
-                loaded = true;
-                loadedValue = GetValidValue<T>(func);
-                return loadedValue;
             }
 
             public string? Label
@@ -229,6 +220,40 @@ namespace Alternet.UI
                 set
                 {
                 }
+            }
+
+            public T GetValidValue<T>(Func<IPropertyGridPropInfoRegistry?, T> func)
+            {
+                bool ValidatorFunc(IPropertyGridPropInfoRegistry registry)
+                {
+                    return registry.HasNewItemParams && func(registry) is not null;
+                }
+
+                var pr = PropertyGrid.GetValidBasePropRegistry(
+                            OwnerInstanceType,
+                            PropInfo,
+                            ValidatorFunc);
+                return func(pr);
+            }
+
+            public T GetConstructedValue<T>(
+                ref bool loaded,
+                ref T loadedValue,
+                Func<IPropertyGridPropInfoRegistry?, T> func)
+            {
+                var ownerValue = func(Owner);
+                if (ownerValue is not null)
+                    return ownerValue;
+                if (loaded)
+                    return loadedValue;
+                loaded = true;
+                loadedValue = GetValidValue<T>(func);
+                return loadedValue;
+            }
+
+            public void RaiseButtonClick(IPropertyGridItem item)
+            {
+                owner.RaiseButtonClick(item);
             }
         }
     }

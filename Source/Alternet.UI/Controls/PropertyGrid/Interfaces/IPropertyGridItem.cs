@@ -18,19 +18,29 @@ namespace Alternet.UI
         event EventHandler? PropertyChanged;
 
         /// <summary>
+        /// Occurs when button is clicked in the property editor.
+        /// </summary>
+        event EventHandler? ButtonClick;
+
+        /// <summary>
         /// Gets whether property editor can have ellipsis button
         /// </summary>
-        public bool CanHaveCustomEllipsis { get; }
+        bool CanHaveCustomEllipsis { get; }
+
+        /// <summary>
+        /// Gets <see cref="IPropertyGridNewItemParams"/> used when this item was created.
+        /// </summary>
+        IPropertyGridNewItemParams? Params { get; }
 
         /// <summary>
         /// Gets <see cref="PropertyGrid"/> instance which owns this property.
         /// </summary>
-        public IPropertyGrid Owner { get; }
+        IPropertyGrid Owner { get; }
 
         /// <summary>
         /// Gets or sets user data associated with this <see cref="IPropertyGridItem"/>.
         /// </summary>
-        public object? UserData { get; set; }
+        object? UserData { get; set; }
 
         /// <summary>
         /// Gets objects instance in which property is contained.
@@ -122,6 +132,11 @@ namespace Alternet.UI
         /// Raises <see cref="PropertyChanged"/> event.
         /// </summary>
         void RaisePropertyChanged();
+
+        /// <summary>
+        /// Raises <see cref="ButtonClick"/> event.
+        /// </summary>
+        void RaiseButtonClick();
 
         /// <summary>
         /// Adds list of <see cref="IPropertyGridItem"/> to <see cref="Children"/>.

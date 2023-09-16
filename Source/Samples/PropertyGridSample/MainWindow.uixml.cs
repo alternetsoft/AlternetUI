@@ -670,14 +670,14 @@ namespace PropertyGridSample
         {
             if (PropertyGridSettings.Default!.LogButtonClick)
                 LogEvent("ButtonClick", true);
-
+            /*
             var prop = propertyGrid.EventProperty;
             if (prop == null)
                 return;
             var propInfo = prop.PropInfo;
             var instance = prop.Instance;
 
-            UIDialogListEdit.EditProperty(instance, propInfo);
+            UIDialogListEdit.EditProperty(instance, propInfo);*/
         }
 
         void IComponentDesigner.PropertyChanged(object? sender, string? propName)

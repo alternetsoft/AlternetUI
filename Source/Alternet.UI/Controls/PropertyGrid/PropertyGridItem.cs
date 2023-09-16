@@ -20,27 +20,34 @@ namespace Alternet.UI
         private PropertyInfo? propInfo;
         private Collection<IPropertyGridItem>? children;
         private IPropertyGridItem? parent;
+        private IPropertyGridNewItemParams? prm;
 
         public PropertyGridItem(
             PropertyGrid owner,
             IntPtr handle,
             string label,
             string? name,
-            object? defaultValue)
+            object? defaultValue,
+            IPropertyGridNewItemParams? prm)
         {
             this.owner = owner;
             this.handle = handle;
             this.defaultLabel = label;
             this.defaultValue = defaultValue;
+            this.prm = prm;
             if (name == PropertyGrid.NameAsLabel || name == null)
                 this.defaultName = label;
             else
                 this.defaultName = name;
         }
 
-        public IPropertyGridChoices? Choices { get; set; }
-
         public event EventHandler? PropertyChanged;
+
+        public event EventHandler? ButtonClick;
+
+        public IPropertyGridNewItemParams? Params => prm;
+
+        public IPropertyGridChoices? Choices { get; set; }
 
         public object? UserData { get; set; }
 
@@ -115,6 +122,11 @@ namespace Alternet.UI
         public void RaisePropertyChanged()
         {
             PropertyChanged?.Invoke(this, EventArgs.Empty);
+        }
+
+        public void RaiseButtonClick()
+        {
+            ButtonClick?.Invoke(this, EventArgs.Empty);
         }
 
         public void AddChildren(IEnumerable<IPropertyGridItem> children)

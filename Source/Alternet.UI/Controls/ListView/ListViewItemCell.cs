@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using Alternet.Drawing;
 
@@ -81,6 +82,7 @@ namespace Alternet.UI
         /// Gets the index the column associated to this cell. If the value is null, the
         /// cell is not associated with any column.
         /// </summary>
+        [Browsable(false)]
         public int? ColumnIndex
         {
             get => columnIndex;
@@ -96,6 +98,7 @@ namespace Alternet.UI
         /// Gets the list view item associated to this cell. If the value is null, the
         /// cell is not associated with any item.
         /// </summary>
+        [Browsable(false)]
         public ListViewItem? Item
         {
             get => item;
@@ -105,6 +108,15 @@ namespace Alternet.UI
                 item = value;
                 ApplyAll();
             }
+        }
+
+        /// <inheritdoc/>
+        public override string ToString()
+        {
+            if (string.IsNullOrWhiteSpace(Text))
+                return base.ToString() ?? nameof(ListViewItemCell);
+            else
+                return Text;
         }
 
         /// <summary>
