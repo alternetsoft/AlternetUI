@@ -32,7 +32,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ListViewColumn"/> class with the specified column title.
+        /// Initializes a new instance of the <see cref="ListViewColumn"/> class with the specified
+        /// column title.
         /// </summary>
         /// <param name="title">The text displayed in the column header.</param>
         public ListViewColumn(string title)
@@ -49,6 +50,8 @@ namespace Alternet.UI
             get => title;
             set
             {
+                if (title == value)
+                    return;
                 title = value;
                 ApplyTitle();
             }
@@ -59,7 +62,8 @@ namespace Alternet.UI
         /// <see cref="ListView.Columns"/> of this column.
         /// </summary>
         /// <value>The zero-based index of the column header within the
-        /// <see cref="ListView.Columns"/> of the <see cref="ListView"/> control it is contained in.</value>
+        /// <see cref="ListView.Columns"/> of the <see cref="ListView"/> control it is contained
+        /// in.</value>
         /// <remarks>If the <see cref="ListViewColumn"/> is not contained within a
         /// <see cref="ListView"/> control this property returns a value of <c>null</c>.</remarks>
         [Browsable(false)]
@@ -95,6 +99,10 @@ namespace Alternet.UI
             }
         }
 
+        /// <inheritdoc cref="ListViewItem.Tag"/>
+        [Browsable(false)]
+        public object? Tag { get; set; }
+
         /// <summary>
         /// Gets or sets the fixed width of the column, in device-independent units (1/96th inch
         /// per unit).
@@ -108,6 +116,8 @@ namespace Alternet.UI
             get => width;
             set
             {
+                if (width == value)
+                    return;
                 width = value;
                 ApplyWidth();
             }
@@ -123,7 +133,44 @@ namespace Alternet.UI
             get => widthMode;
             set
             {
+                if (widthMode == value)
+                    return;
                 widthMode = value;
+                ApplyWidth();
+            }
+        }
+
+        /// <summary>
+        /// Creates copy of this <see cref="ListViewColumn"/>.
+        /// </summary>
+        public ListViewColumn Clone()
+        {
+            var result = new ListViewColumn();
+            result.Assign(this);
+            return result;
+        }
+
+        /// <summary>
+        /// Assigns properties from another <see cref="ListViewColumn"/>.
+        /// </summary>
+        /// <param name="item">Source of the properties to assign.</param>
+        public void Assign(ListViewColumn item)
+        {
+            Tag = item.Tag;
+
+            bool applyWidth = (widthMode != item.WidthMode) || (width != item.Width);
+            bool applyTitle = title != item.Title;
+
+            if (applyTitle)
+            {
+                title = item.Title;
+                ApplyTitle();
+            }
+
+            if (applyWidth)
+            {
+                widthMode = item.WidthMode;
+                width = item.Width;
                 ApplyWidth();
             }
         }
@@ -161,8 +208,8 @@ namespace Alternet.UI
 
         private void ApplyAll()
         {
-            ApplyWidth();
             ApplyTitle();
+            ApplyWidth();
         }
     }
 }

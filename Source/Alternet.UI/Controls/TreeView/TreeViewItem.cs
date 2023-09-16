@@ -77,8 +77,8 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="text">The text to display for the item.</param>
         public TreeViewItem(string text)
-            : this(text, null)
         {
+            this.text = text;
         }
 
         /// <summary>
@@ -94,10 +94,9 @@ namespace Alternet.UI
         /// item.
         /// </param>
         public TreeViewItem(string text, int? imageIndex)
-            : this()
         {
-            Text = text;
-            ImageIndex = imageIndex;
+            this.text = text;
+            this.imageIndex = imageIndex;
         }
 
         /// <summary>
@@ -228,6 +227,8 @@ namespace Alternet.UI
             get => imageIndex;
             set
             {
+                if (imageIndex == value)
+                    return;
                 imageIndex = value;
                 treeView?.Handler.SetItemImageIndex(this, value);
             }
@@ -262,7 +263,7 @@ namespace Alternet.UI
         {
             get
             {
-                if(items == null)
+                if (items == null)
                 {
                     items = new() { ThrowOnNullAdd = true };
                     items.ItemInserted += Items_ItemInserted;
@@ -320,7 +321,7 @@ namespace Alternet.UI
                         continue;
                     if (i == items.Count - 1)
                     {
-                        if(i > 0)
+                        if (i > 0)
                             return items[i - 1];
                         return Parent;
                     }
@@ -420,6 +421,37 @@ namespace Alternet.UI
         public void Expand()
         {
             IsExpanded = true;
+        }
+
+        /// <summary>
+        /// Creates copy of this <see cref="TreeViewItem"/>.
+        /// </summary>
+        /// <param name="subItems">if <c>true</c>, <see cref="Items"/> are also cloned.</param>
+        public TreeViewItem Clone(bool subItems = true)
+        {
+            var result = new TreeViewItem();
+            result.Assign(this, subItems);
+            return result;
+        }
+
+        /// <summary>
+        /// Assigns properties from another <see cref="TreeViewItem"/>.
+        /// </summary>
+        /// <param name="item">Source of the properties to assign.</param>
+        /// <param name="subItems">if <c>true</c>, <see cref="Items"/> are also assigned.</param>
+        public void Assign(TreeViewItem item, bool subItems = true)
+        {
+            Tag = item.Tag;
+            Text = item.Text;
+            ImageIndex = item.ImageIndex;
+            Items.Clear();
+            if (!item.HasItems || !subItems)
+                return;
+            foreach(var childItem in item.Items)
+            {
+                var newItem = childItem.Clone();
+                Items.Add(newItem);
+            }
         }
 
         /// <summary>

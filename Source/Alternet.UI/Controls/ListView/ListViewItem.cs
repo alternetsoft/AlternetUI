@@ -45,6 +45,7 @@ namespace Alternet.UI
     /// </remarks>
     public class ListViewItem
     {
+        private readonly Collection<ListViewItemCell> cells = new() { ThrowOnNullAdd = true };
         private ListView? listView;
 
         /// <summary>
@@ -52,8 +53,9 @@ namespace Alternet.UI
         /// class with default values.
         /// </summary>
         public ListViewItem()
-            : this(new[] { string.Empty }, null)
         {
+            cells.ItemInserted += Cells_ItemInserted;
+            cells.ItemRemoved += Cells_ItemRemoved;
         }
 
         /// <summary>
@@ -66,8 +68,10 @@ namespace Alternet.UI
         /// the <see cref="ImageList"/> associated with the <see cref="ListView"/>
         /// that contains the item. Optional.</param>
         public ListViewItem(string text, int? imageIndex = null)
-            : this(new[] { text }, imageIndex)
+            : this()
         {
+            Text = text;
+            ImageIndex = imageIndex;
         }
 
         /// <summary>
@@ -75,17 +79,14 @@ namespace Alternet.UI
         /// with an array of strings representing column cells and
         /// the image index position of the item's icon.
         /// </summary>
-        /// <param name="cells">An array of strings that represent the column
+        /// <param name="cellText">An array of strings that represent the column
         /// cells of the new item.</param>
         /// <param name="imageIndex">The zero-based index of the image within
         /// the <see cref="ImageList"/> associated with the <see cref="ListView"/> that
         /// contains the item.</param>
-        public ListViewItem(string[] cells, int? imageIndex = null)
+        public ListViewItem(string[] cellText, int? imageIndex = null)
         {
-            Cells.ItemInserted += Cells_ItemInserted;
-            Cells.ItemRemoved += Cells_ItemRemoved;
-
-            foreach (var cell in cells)
+            foreach (var cell in cellText)
                 Cells.Add(new ListViewItemCell(cell));
 
             ImageIndex = imageIndex;
@@ -249,7 +250,7 @@ namespace Alternet.UI
         /// <remarks>Using the <see cref="Cells"/> property, you can add column cells,
         /// remove column cells, and obtain a count of column cells.</remarks>
         [Browsable(false)]
-        public Collection<ListViewItemCell> Cells { get; } = new() { ThrowOnNullAdd = true };
+        public Collection<ListViewItemCell> Cells => cells;
 
         private long RequiredIndex
         {
@@ -288,6 +289,29 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Creates copy of this <see cref="ListViewItem"/>.
+        /// </summary>
+        public ListViewItem Clone()
+        {
+            var result = new ListViewItem();
+            result.Assign(this);
+            return result;
+        }
+
+        /// <summary>
+        /// Assigns properties from another <see cref="ListViewItem"/>.
+        /// </summary>
+        /// <param name="item">Source of the properties to assign.</param>
+        public void Assign(ListViewItem item)
+        {
+            Tag = item.Tag;
+            var count = item.Cells.Count;
+            ResizeCells(count);
+            for (int i = 0; i < count; i++)
+                Cells[i].Assign(item.Cells[i]);
+        }
+
+        /// <summary>
         /// Retrieves the bounding rectangle for this item.
         /// </summary>
         /// <param name="portion">One of the
@@ -299,18 +323,16 @@ namespace Alternet.UI
             ListViewItemBoundsPortion portion = ListViewItemBoundsPortion.EntireItem)
                 => RequiredListView.GetItemBounds(RequiredIndex, portion);
 
+        internal void ResizeCells(int count)
+        {
+            Cells.SetCount(count, () => new ListViewItemCell());
+        }
+
         internal void ApplyColumns()
         {
             if (listView == null)
                 return;
-
-            int columnCount = listView.Columns.Count;
-
-            for (int i = Cells.Count - 1; i >= columnCount; i--)
-                Cells.RemoveAt(i);
-
-            for (int i = Cells.Count; i < columnCount; i++)
-                Cells.Add(new ListViewItemCell());
+            ResizeCells(listView.Columns.Count);
         }
 
         private void Cells_ItemInserted(object? sender, int index, ListViewItemCell item)
