@@ -112,6 +112,25 @@ namespace Alternet.Base.Collections
         }
 
         /// <summary>
+        /// Changes the number of elements in the collection.
+        /// </summary>
+        /// <param name="newCount">New </param>
+        /// <param name="createItem">Function which creates new item.</param>
+        /// <remarks>
+        /// If collection has more items than specified in <paramref name="newCount"/>,
+        /// these items are removed. If collection has less items, new items are created
+        /// using <paramref name="createItem"/> function.
+        /// </remarks>
+        public void SetCount(int newCount, Func<T> createItem)
+        {
+            for (int i = Count - 1; i >= newCount; i--)
+                RemoveAt(i);
+
+            for (int i = Count; i < newCount; i++)
+                Add(createItem());
+        }
+
+        /// <summary>
         /// Inserts an item into the collection at the specified index.
         /// </summary>
         /// <param name="index">The zero-based index at which <c>item</c> should be inserted.</param>
