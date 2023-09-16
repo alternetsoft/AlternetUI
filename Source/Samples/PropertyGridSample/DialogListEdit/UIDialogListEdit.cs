@@ -196,7 +196,7 @@ namespace Alternet.UI
 
             var treeItem = new TreeViewItem(itemInfo!.Value.Title!, itemInfo.Value.ImageIndex)
             {
-                Tag = item
+                Tag = item,
             };
             items.Add(treeItem);
             treeView.SelectedItem = treeItem;
@@ -216,6 +216,7 @@ namespace Alternet.UI
             var canAddChild = false;
             var canRemove = false;
             var canRemoveAll = false;
+            var canApply = false;
             if (dataSource != null)
             {
                 var itemSelected = treeView.SelectedItem != null;
@@ -223,11 +224,13 @@ namespace Alternet.UI
                 canAddChild = itemSelected && canAdd;
                 canRemove = itemSelected && dataSource.AllowDelete;
                 canRemoveAll = dataSource.AllowDelete && treeView.Items.Count > 0;
+                canApply = dataSource.AllowApplyData;
             }
             toolbar.EnableTool(buttonIdAdd, canAdd);
             toolbar.EnableTool(buttonIdRemove, canRemove);
             toolbar.EnableTool(buttonIdRemoveAll, canRemoveAll);
             toolbar.EnableTool(buttonIdAddChild, canAddChild);
+            toolbar.EnableTool(buttonIdOk, canApply);
             toolbar.Invalidate();
         }
 
@@ -341,7 +344,7 @@ namespace Alternet.UI
                 var itemInfo = GetItemInfo(item);
                 var treeItem = new TreeViewItem(itemInfo!.Value.Title!, itemInfo!.Value.ImageIndex)
                 {
-                    Tag = item,
+                    Tag = dataSource?.CloneItem(item),
                 };
 
                 var subItems = dataSource?.GetChildren(item);

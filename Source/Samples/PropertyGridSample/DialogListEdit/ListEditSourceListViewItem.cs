@@ -20,6 +20,12 @@ namespace Alternet.UI
 
         public override int? GetItemImageIndex(object item) => (item as ListViewItem)?.ImageIndex;
 
+        public override object CloneItem(object item)
+        {
+            var result = ((ListViewItem)item).Clone();
+            return result;
+        }
+
         public override void ApplyData(IEnumerableTree tree)
         {
             if (ListView == null)
@@ -29,13 +35,7 @@ namespace Alternet.UI
             listView.DoInsideUpdate(() =>
             {
                 listView.RemoveAll();
-                foreach (var srcItem in tree)
-                {
-                    if (tree.GetData(srcItem) is not ListViewItem data)
-                        continue;
-
-                    listView.Items.Add(data);
-                }
+                listView.Items.AddRange(GetItems<ListViewItem>(tree));
             });
         }
     }

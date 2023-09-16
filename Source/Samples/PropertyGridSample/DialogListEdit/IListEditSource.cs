@@ -12,8 +12,12 @@ namespace Alternet.UI
     public interface IListEditSource
     {
         bool AllowSubItems { get; }
+
         bool AllowAdd { get; }
+
         bool AllowDelete { get; }
+
+        bool AllowApplyData { get; }
 
         object? Instance { get; set; }
 
@@ -22,6 +26,8 @@ namespace Alternet.UI
         IEnumerable? RootItems { get; }
 
         IEnumerable? GetChildren(object item);
+
+        object CloneItem(object item);
 
         string? GetItemTitle(object item);
 

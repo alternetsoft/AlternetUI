@@ -20,6 +20,12 @@ namespace Alternet.UI
 
         public override object? CreateNewItem() => new ListViewColumn();
 
+        public override object CloneItem(object item)
+        {
+            var result = ((ListViewColumn)item).Clone();
+            return result;
+        }
+
         public override void ApplyData(IEnumerableTree tree)
         {
             if (ListView == null)
@@ -28,12 +34,11 @@ namespace Alternet.UI
 
             listView.DoInsideUpdate(() =>
             {
-                foreach (var srcItem in tree)
-                {
-                    if (tree.GetData(srcItem) is not ListViewColumn data)
-                        continue;
-
-                }
+                List<ListViewColumn> columns = new();
+                columns.AddRange(GetItems<ListViewColumn>(tree));
+                listView.Columns.SetCount(columns.Count, () => new ListViewColumn());
+                for (int i = 0; i < columns.Count; i++)
+                    listView.Columns[i].Assign(columns[i]);
             });
         }
     }

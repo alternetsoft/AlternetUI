@@ -94,7 +94,24 @@ namespace Alternet.UI
             get;
         }
 
+        public bool AllowApplyData => true;
+
+        public virtual bool AllowAdd => true;
+
+        public virtual bool AllowDelete => true;
+
+        public static IEnumerable<T> GetItems<T>(IEnumerableTree tree)
+        {
+            foreach (var srcItem in tree)
+            {
+                if (tree.GetData(srcItem) is T data)
+                    yield return data;
+            }
+        }
+
         public abstract void ApplyData(IEnumerableTree tree);
+
+        public abstract object CloneItem(object item);
 
         public virtual IEnumerable? GetChildren(object item) => null;
 
@@ -105,8 +122,5 @@ namespace Alternet.UI
         public virtual int? GetItemImageIndex(object item) => null;
 
         public virtual object? CreateNewItem() => null;
-
-        public virtual bool AllowAdd => true;
-        public virtual bool AllowDelete => true;
     }
 }

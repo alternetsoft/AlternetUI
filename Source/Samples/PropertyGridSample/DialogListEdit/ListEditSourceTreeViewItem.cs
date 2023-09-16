@@ -22,6 +22,12 @@ namespace Alternet.UI
             }
         }
 
+        public override object CloneItem(object item)
+        {
+            var result = ((TreeViewItem)item).Clone(false);
+            return result;
+        }
+
         public override IEnumerable? GetChildren(object item)
         {
             if (item is not TreeViewItem tvItem || !tvItem.HasItems)
@@ -37,7 +43,16 @@ namespace Alternet.UI
 
         public override void ApplyData(IEnumerableTree tree)
         {
+            if (TreeView == null)
+                return;
+            TreeView treeView = TreeView;
 
+            treeView.DoInsideUpdate(() =>
+            {
+                treeView.RemoveAll();
+                var items = GetItems<TreeViewItem>(tree);
+                treeView.Items.AddRange(items);
+            });
         }
     }
 }
