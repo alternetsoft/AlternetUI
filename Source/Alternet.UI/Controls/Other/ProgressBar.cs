@@ -22,6 +22,8 @@ namespace Alternet.UI
     /// the visually highlighted bar.
     /// </para>
     /// </remarks>
+    [DefaultProperty("Value")]
+    [DefaultBindingProperty("Value")]
     public class ProgressBar : Control
     {
         /// <summary>
@@ -64,7 +66,7 @@ namespace Alternet.UI
                     typeof(ProgressBar), // Property owner
                     new FrameworkPropertyMetadata( // Property metadata
                             0, // default value
-                            FrameworkPropertyMetadataOptions.AffectsPaint,
+                            PropMetadataOption.AffectsPaint,
                             new PropertyChangedCallback(OnValuePropertyChanged),    // property changed callback
                             new CoerceValueCallback(CoerceValue),
                             true, // IsAnimationProhibited

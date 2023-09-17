@@ -1,5 +1,6 @@
 using Alternet.Drawing;
 using System;
+using System.ComponentModel;
 
 namespace Alternet.UI
 {
@@ -9,6 +10,8 @@ namespace Alternet.UI
     /// <remarks>
     /// Set the <see cref="Image"/> property to the Image you want to display.
     /// </remarks>
+    [DefaultProperty("Image")]
+    [DefaultBindingProperty("Image")]
     public class PictureBox : Control
     {
         /// <summary>
@@ -21,7 +24,7 @@ namespace Alternet.UI
                     typeof(PictureBox),
                     new FrameworkPropertyMetadata(
                             null,
-                            FrameworkPropertyMetadataOptions.AffectsPaint | FrameworkPropertyMetadataOptions.AffectsLayout,
+                            PropMetadataOption.AffectsPaint | PropMetadataOption.AffectsLayout,
                             new PropertyChangedCallback(OnImagePropertyChanged),
                             new CoerceValueCallback(CoerceImage),
                             isAnimationProhibited: true,

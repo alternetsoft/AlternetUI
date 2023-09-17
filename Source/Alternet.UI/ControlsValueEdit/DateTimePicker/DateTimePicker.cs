@@ -12,6 +12,9 @@ namespace Alternet.UI
     /// <summary>
     /// Represents control that displays a selected date and allows to change it.
     /// </summary>
+    [DefaultProperty("Value")]
+    [DefaultEvent("ValueChanged")]
+    [DefaultBindingProperty("Value")]
     public class DateTimePicker : Control
     {
         /// <summary>Specifies the maximum date value of the
@@ -33,7 +36,7 @@ namespace Alternet.UI
                 typeof(DateTimePicker),
                 new FrameworkPropertyMetadata(
                     DateTime.Now, // default value
-                    FrameworkPropertyMetadataOptions.BindsTwoWayByDefault | FrameworkPropertyMetadataOptions.AffectsPaint,
+                    PropMetadataOption.BindsTwoWayByDefault | PropMetadataOption.AffectsPaint,
                     new PropertyChangedCallback(OnValuePropertyChanged),
                     null, // CoerseValueCallback
                     true, // IsAnimationProhibited

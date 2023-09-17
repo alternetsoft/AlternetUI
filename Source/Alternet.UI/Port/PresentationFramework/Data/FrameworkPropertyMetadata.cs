@@ -2,21 +2,16 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
-
-//
-//
-
-
 using System;
-using System.ComponentModel;    // InvalidEnumArgumentException
-      // UpdateSourceTrigger
+using System.ComponentModel;
 
 namespace Alternet.UI
 {
     /// <summary>
+    /// Defines options for the <see cref="DependencyProperty"/>.
     /// </summary>
     [Flags]
-    public enum FrameworkPropertyMetadataOptions: int
+    public enum PropMetadataOption: int
     {
         /// <summary>No flags</summary>
         None                            = 0x000,
@@ -27,7 +22,7 @@ namespace Alternet.UI
         /// <summary>This property affects rendering</summary>
         AffectsPaint                   = 0x002,
 
-        ///// <summary>This property affects measurement</summary>
+        /*///// <summary>This property affects measurement</summary>
         //AffectsMeasure                  = 0x001,
 
         ///// <summary>This property affects arragement</summary>
@@ -40,7 +35,7 @@ namespace Alternet.UI
         //AffectsParentArrange            = 0x008,
 
         ///// <summary>This property affects rendering</summary>
-        //AffectsRender                   = 0x010,
+        //AffectsRender                   = 0x010,*/
 
         /// <summary>This property inherits to children</summary>
         Inherits = 0x020,
@@ -57,8 +52,8 @@ namespace Alternet.UI
         /// <summary>Data bindings on this property default to two-way</summary>
         BindsTwoWayByDefault            = 0x100,
 
-        ///// <summary>This property should be saved/restored when journaling/navigating by URI</summary>
-        //Journal                         = 0x400,
+        /*///// <summary>This property should be saved/restored when journaling/navigating by URI</summary>
+        //Journal                         = 0x400,*/
 
         /// <summary>
         ///     This property's subproperties do not affect rendering.
@@ -153,7 +148,7 @@ namespace Alternet.UI
         /// <param name="defaultValue">Default value of property</param>
         /// <param name="flags">Metadata option flags</param>
         [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.NoInlining)]
-        public FrameworkPropertyMetadata(object defaultValue, FrameworkPropertyMetadataOptions flags) :
+        public FrameworkPropertyMetadata(object defaultValue, PropMetadataOption flags) :
             base(defaultValue)
         {
             TranslateFlags(flags);
@@ -167,7 +162,7 @@ namespace Alternet.UI
         /// <param name="propertyChangedCallback">Called when the property has been changed</param>
         [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.NoInlining)]
         public FrameworkPropertyMetadata(object defaultValue,
-                                         FrameworkPropertyMetadataOptions flags,
+                                         PropMetadataOption flags,
                                          PropertyChangedCallback propertyChangedCallback) :
             base(defaultValue, propertyChangedCallback)
         {
@@ -183,7 +178,7 @@ namespace Alternet.UI
         /// <param name="coerceValueCallback">Called on update of value</param>
         [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.NoInlining)]
         public FrameworkPropertyMetadata(object defaultValue,
-                                         FrameworkPropertyMetadataOptions flags,
+                                         PropMetadataOption flags,
                                          PropertyChangedCallback propertyChangedCallback,
                                          CoerceValueCallback coerceValueCallback) :
             base(defaultValue, propertyChangedCallback, coerceValueCallback)
@@ -201,7 +196,7 @@ namespace Alternet.UI
         /// <param name="isAnimationProhibited">Should animation of this property be prohibited?</param>
         [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.NoInlining)]
         public FrameworkPropertyMetadata(object defaultValue,
-                                         FrameworkPropertyMetadataOptions flags,
+                                         PropMetadataOption flags,
                                          PropertyChangedCallback propertyChangedCallback,
                                          CoerceValueCallback coerceValueCallback,
                                          bool isAnimationProhibited) :
@@ -221,7 +216,7 @@ namespace Alternet.UI
         /// <param name="defaultUpdateSourceTrigger">The UpdateSourceTrigger to use for bindings that have UpdateSourceTriger=Default.</param>
         [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.NoInlining)]
         public FrameworkPropertyMetadata(object defaultValue,
-                                         FrameworkPropertyMetadataOptions flags,
+                                         PropMetadataOption flags,
                                          PropertyChangedCallback propertyChangedCallback,
                                          CoerceValueCallback coerceValueCallback,
                                          bool isAnimationProhibited,
@@ -244,12 +239,12 @@ namespace Alternet.UI
             _flags = (MetadataFlags)(((uint)_flags & 0x3FFFFFFF) | ((uint) UpdateSourceTrigger.PropertyChanged) << 30);
         }
         
-        private static bool IsFlagSet(FrameworkPropertyMetadataOptions flag, FrameworkPropertyMetadataOptions flags)
+        private static bool IsFlagSet(PropMetadataOption flag, PropMetadataOption flags)
         {
             return (flags & flag) != 0;
         }
 
-        private void TranslateFlags(FrameworkPropertyMetadataOptions flags)
+        private void TranslateFlags(PropMetadataOption flags)
         {
             Initialize();
 
@@ -260,12 +255,12 @@ namespace Alternet.UI
             // This means that state is cumulative across base classes
             // on a merge where appropriate
 
-            if (IsFlagSet(FrameworkPropertyMetadataOptions.AffectsLayout, flags))
+            if (IsFlagSet(PropMetadataOption.AffectsLayout, flags))
             {
                 AffectsLayout = true;
             }
 
-            if (IsFlagSet(FrameworkPropertyMetadataOptions.AffectsPaint, flags))
+            if (IsFlagSet(PropMetadataOption.AffectsPaint, flags))
             {
                 AffectsPaint = true;
             }
@@ -295,22 +290,22 @@ namespace Alternet.UI
             //    AffectsRender = true;
             //}
 
-            if (IsFlagSet(FrameworkPropertyMetadataOptions.Inherits, flags))
+            if (IsFlagSet(PropMetadataOption.Inherits, flags))
             {
                 IsInherited = true;
             }
 
-            if (IsFlagSet(FrameworkPropertyMetadataOptions.OverridesInheritanceBehavior, flags))
+            if (IsFlagSet(PropMetadataOption.OverridesInheritanceBehavior, flags))
             {
                 OverridesInheritanceBehavior = true;
             }
 
-            if (IsFlagSet(FrameworkPropertyMetadataOptions.NotDataBindable, flags))
+            if (IsFlagSet(PropMetadataOption.NotDataBindable, flags))
             {
                 IsNotDataBindable = true;
             }
 
-            if (IsFlagSet(FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, flags))
+            if (IsFlagSet(PropMetadataOption.BindsTwoWayByDefault, flags))
             {
                 BindsTwoWayByDefault = true;
             }
@@ -320,7 +315,7 @@ namespace Alternet.UI
             //    Journal = true;
             //}
 
-            if (IsFlagSet(FrameworkPropertyMetadataOptions.SubPropertiesDoNotAffectRender, flags))
+            if (IsFlagSet(PropMetadataOption.SubPropertiesDoNotAffectRender, flags))
             {
                 SubPropertiesDoNotAffectRender = true;
             }

@@ -24,7 +24,7 @@ namespace Alternet.UI
                                 typeof(FrameworkElement),
                                 new FrameworkPropertyMetadata(
                                     null,
-                                    FrameworkPropertyMetadataOptions.Inherits));
+                                    PropMetadataOption.Inherits));
 
         /// <summary>
         /// Language can be specified in xaml at any point using the xml language attribute xml:lang.
@@ -38,7 +38,7 @@ namespace Alternet.UI
                                 typeof(FrameworkElement),
                                 new FrameworkPropertyMetadata(
                                         /*XmlLanguage.GetLanguage("en-US")*/"en-US",
-                                        FrameworkPropertyMetadataOptions.Inherits | FrameworkPropertyMetadataOptions.AffectsLayout));
+                                        PropMetadataOption.Inherits | PropMetadataOption.AffectsLayout));
 
         /// <summary>
         ///     DataContext DependencyProperty
@@ -49,7 +49,7 @@ namespace Alternet.UI
                                 typeof(object),
                                 typeof(FrameworkElement),
                                 new FrameworkPropertyMetadata(null,
-                                        FrameworkPropertyMetadataOptions.Inherits,
+                                        PropMetadataOption.Inherits,
                                         new PropertyChangedCallback(OnDataContextChanged)));
 
         /// <summary>

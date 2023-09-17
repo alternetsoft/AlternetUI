@@ -25,7 +25,7 @@ namespace Alternet.UI
                     typeof(NumericUpDown),
                     new FrameworkPropertyMetadata(
                             0,
-                            FrameworkPropertyMetadataOptions.BindsTwoWayByDefault | FrameworkPropertyMetadataOptions.AffectsPaint,
+                            PropMetadataOption.BindsTwoWayByDefault | PropMetadataOption.AffectsPaint,
                             new PropertyChangedCallback(OnValuePropertyChanged),
                             new CoerceValueCallback(CoerceValue),
                             isAnimationProhibited: true,

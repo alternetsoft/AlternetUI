@@ -18,7 +18,7 @@ namespace Alternet.UI
                     typeof(ColorPicker),
                     new FrameworkPropertyMetadata(
                             Color.Black,
-                            FrameworkPropertyMetadataOptions.BindsTwoWayByDefault | FrameworkPropertyMetadataOptions.AffectsPaint,
+                            PropMetadataOption.BindsTwoWayByDefault | PropMetadataOption.AffectsPaint,
                             new PropertyChangedCallback(OnValuePropertyChanged),
                             null,
                             isAnimationProhibited: true,

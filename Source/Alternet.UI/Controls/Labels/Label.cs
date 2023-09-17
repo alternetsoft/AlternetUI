@@ -24,6 +24,8 @@ namespace Alternet.UI
     /// you can add a <see cref="Label" /> control to a form to display the status
     /// of each file as a list of files is processed.
     /// </remarks>
+    [DefaultProperty("Text")]
+    [DefaultBindingProperty("Text")]
     public class Label : Control
     {
         /// <summary>
@@ -46,7 +48,7 @@ namespace Alternet.UI
                 typeof(Label),
                 new FrameworkPropertyMetadata(
                         string.Empty,
-                        FrameworkPropertyMetadataOptions.AffectsLayout | FrameworkPropertyMetadataOptions.AffectsPaint,
+                        PropMetadataOption.AffectsLayout | PropMetadataOption.AffectsPaint,
                         new PropertyChangedCallback(OnTextPropertyChanged),
                         new CoerceValueCallback(CoerceText)));
 

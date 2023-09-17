@@ -6,6 +6,8 @@ namespace Alternet.UI
     /// <summary>
     /// Represents a url label control.
     /// </summary>
+    [DefaultProperty("Text")]
+    [DefaultBindingProperty("Text")]
     public class LinkLabel : Control
     {
         /// <summary>
@@ -18,10 +20,9 @@ namespace Alternet.UI
                 typeof(LinkLabel),
                 new FrameworkPropertyMetadata(
                         string.Empty,
-                        FrameworkPropertyMetadataOptions.AffectsLayout | FrameworkPropertyMetadataOptions.AffectsPaint,
+                        PropMetadataOption.AffectsLayout | PropMetadataOption.AffectsPaint,
                         new PropertyChangedCallback(OnTextPropertyChanged),
-                        new CoerceValueCallback(CoerceText)
-                        ));
+                        new CoerceValueCallback(CoerceText)));
 
         /// <summary>
         /// Event for "Text has changed"

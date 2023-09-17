@@ -8,6 +8,8 @@ namespace Alternet.UI
     /// <summary>
     /// Represents a control that manages a related set of tab pages.
     /// </summary>
+    [DefaultProperty("Pages")]
+    [DefaultEvent("SelectedPageChanged")]
     public class TabControl : Control
     {
         /// <summary>
@@ -30,7 +32,7 @@ namespace Alternet.UI
                         typeof(TabControl),
                         new FrameworkPropertyMetadata(
                                 null,
-                                FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
+                                PropMetadataOption.BindsTwoWayByDefault,
                                 new PropertyChangedCallback(OnSelectedPageChanged),
                                 new CoerceValueCallback(CoerceSelectedPage)));
 

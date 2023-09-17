@@ -65,7 +65,7 @@ namespace Alternet.UI
                                     typeof(ReadOnlyObservableCollection<ValidationError>), typeof(Validation),
                                     new FrameworkPropertyMetadata(
                                             ValidationErrorCollection.Empty,
-                                            FrameworkPropertyMetadataOptions.NotDataBindable));
+                                            PropMetadataOption.NotDataBindable));
 
         /// <summary>
         ///     ValidationErrors DependencyProperty.
@@ -129,7 +129,7 @@ namespace Alternet.UI
                         typeof(bool), typeof(Validation),
                         new FrameworkPropertyMetadata(
                                 BooleanBoxes.FalseBox,
-                                FrameworkPropertyMetadataOptions.NotDataBindable,
+                                PropMetadataOption.NotDataBindable,
                                 OnHasErrorChanged));
 
 

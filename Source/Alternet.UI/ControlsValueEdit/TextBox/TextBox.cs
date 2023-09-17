@@ -12,6 +12,8 @@ namespace Alternet.UI
     /// With the <see cref="TextBox"/> control, the user can enter text in
     /// an application.
     /// </remarks>
+    [DefaultEvent("TextChanged")]
+    [DefaultBindingProperty("Text")]
     public class TextBox : Control
     {
         /// <summary>
@@ -24,7 +26,7 @@ namespace Alternet.UI
                 typeof(TextBox),
                 new FrameworkPropertyMetadata(
                         string.Empty,
-                        FrameworkPropertyMetadataOptions.BindsTwoWayByDefault | FrameworkPropertyMetadataOptions.AffectsPaint,
+                        PropMetadataOption.BindsTwoWayByDefault | PropMetadataOption.AffectsPaint,
                         new PropertyChangedCallback(OnTextPropertyChanged),
                         new CoerceValueCallback(CoerceText),
                         true, // IsAnimationProhibited

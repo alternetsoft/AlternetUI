@@ -2040,7 +2040,7 @@ namespace Alternet.UI
         /// </summary>
         internal static readonly DependencyProperty NoTargetProperty =
                 DependencyProperty.RegisterAttached("NoTarget", typeof(object), typeof(BindingExpressionBase),
-                                            new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.None));
+                                            new FrameworkPropertyMetadata(null, PropMetadataOption.None));
 
         //------------------------------------------------------
         //

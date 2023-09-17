@@ -29,7 +29,7 @@ namespace Alternet.UI
                     typeof(CheckBox),
                     new FrameworkPropertyMetadata(
                             false,
-                            FrameworkPropertyMetadataOptions.BindsTwoWayByDefault | FrameworkPropertyMetadataOptions.AffectsPaint,
+                            PropMetadataOption.BindsTwoWayByDefault | PropMetadataOption.AffectsPaint,
                             new PropertyChangedCallback(OnIsCheckedPropertyChanged),
                             new CoerceValueCallback(CoerceIsChecked),
                             isAnimationProhibited: true,

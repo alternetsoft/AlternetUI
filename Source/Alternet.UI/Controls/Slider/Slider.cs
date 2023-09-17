@@ -22,6 +22,9 @@ namespace Alternet.UI
     /// You can display this numeric data in a control or use it in code.
     /// </para>
     /// </remarks>
+    [DefaultProperty("Value")]
+    [DefaultEvent("ValueChanged")]
+    [DefaultBindingProperty("Value")]
     public class Slider : Control
     {
         /// <summary>
@@ -34,7 +37,7 @@ namespace Alternet.UI
                     typeof(Slider),
                     new FrameworkPropertyMetadata(
                             0,
-                            FrameworkPropertyMetadataOptions.BindsTwoWayByDefault | FrameworkPropertyMetadataOptions.AffectsPaint,
+                            PropMetadataOption.BindsTwoWayByDefault | PropMetadataOption.AffectsPaint,
                             new PropertyChangedCallback(OnValuePropertyChanged),
                             new CoerceValueCallback(CoerceValue),
                             true,
@@ -50,7 +53,7 @@ namespace Alternet.UI
                     typeof(Slider),
                     new FrameworkPropertyMetadata(
                             0,
-                            FrameworkPropertyMetadataOptions.AffectsPaint,
+                            PropMetadataOption.AffectsPaint,
                             new PropertyChangedCallback(OnMinimumPropertyChanged),
                             null,
                             true,
@@ -66,7 +69,7 @@ namespace Alternet.UI
                     typeof(Slider),
                     new FrameworkPropertyMetadata(
                             10,
-                            FrameworkPropertyMetadataOptions.AffectsPaint,
+                            PropMetadataOption.AffectsPaint,
                             new PropertyChangedCallback(OnMaximumPropertyChanged),
                             CoerceMaximum,
                             true,

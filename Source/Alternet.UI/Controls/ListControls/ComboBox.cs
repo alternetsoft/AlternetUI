@@ -57,7 +57,7 @@ namespace Alternet.UI
                 typeof(ComboBox),
                 new FrameworkPropertyMetadata(
                         null,
-                        FrameworkPropertyMetadataOptions.BindsTwoWayByDefault | FrameworkPropertyMetadataOptions.AffectsPaint,
+                        PropMetadataOption.BindsTwoWayByDefault | PropMetadataOption.AffectsPaint,
                         new PropertyChangedCallback(OnSelectedItemPropertyChanged),
                         new CoerceValueCallback(CoerceSelectedItem),
                         true, // IsAnimationProhibited

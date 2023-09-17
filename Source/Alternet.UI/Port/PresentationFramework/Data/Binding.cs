@@ -165,7 +165,7 @@ namespace Alternet.UI
         /// </summary>
         public static readonly DependencyProperty XmlNamespaceManagerProperty=
                 DependencyProperty.RegisterAttached("XmlNamespaceManager", typeof(object), typeof(Binding),
-                                            new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.Inherits),
+                                            new FrameworkPropertyMetadata(null, PropMetadataOption.Inherits),
                                             new ValidateValueCallback(IsValidXmlNamespaceManager));
 
         /// <summary> Static accessor for XmlNamespaceManager property </summary>
