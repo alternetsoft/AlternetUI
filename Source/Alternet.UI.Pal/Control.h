@@ -32,7 +32,12 @@ namespace Alternet::UI
             Create(parent, winid, pos, size, style, name);
         }
 
-        wxDummyPanel(wxString idstr);
+        wxDummyPanel(wxString idstr)
+        {
+#ifdef _DEBUG
+            SetName(idstr);
+#endif
+        }
     };
 
     class Window;

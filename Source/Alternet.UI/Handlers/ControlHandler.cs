@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using Alternet.Base.Collections;
 using Alternet.Drawing;
@@ -315,7 +316,6 @@ namespace Alternet.UI
                     if (NeedsNativeControl())
                     {
                         nativeControl = CreateNativeControl();
-                        /*handlersByNativeControls.Add(nativeControl, this);*/
                         nativeControl.handler = this;
                         OnNativeControlCreated();
                     }
@@ -1057,7 +1057,6 @@ namespace Alternet.UI
         {
             if (NativeControl == null)
                 throw new InvalidOperationException();
-
             var parent = Control.Parent;
             if (parent != null)
             {
@@ -1076,6 +1075,10 @@ namespace Alternet.UI
             NativeControl.DragDrop += NativeControl_DragDrop;
             NativeControl.GotFocus += NativeControl_GotFocus;
             NativeControl.LostFocus += NativeControl_LostFocus;
+
+#if DEBUG
+            /*Debug.WriteLine($"{GetType()} {NativeControl.Id} {NativeControl.Name}");*/
+#endif
         }
 
         private static void DisposeNativeControlCore(Native.Control nativeControl)

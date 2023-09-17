@@ -6,10 +6,6 @@
 
 namespace Alternet::UI
 {
-    wxDummyPanel::wxDummyPanel(wxString idstr) 
-    {
-    }
-
     /*static*/ Control::ControlsByWxWindowsMap Control::s_controlsByWxWindowsMap;
 
     Control::Control() :
@@ -45,6 +41,26 @@ namespace Alternet::UI
     void Control::ShowPopupMenu(void* menu, int x, int y)
     {
         GetWxWindow()->PopupMenu((wxMenu*)menu, x, y);
+    }
+
+    int Control::GetId()
+    {
+        return GetWxWindow()->GetId();
+    }
+
+    void Control::SetId(int value)
+    {
+        GetWxWindow()->SetId(value);
+    }
+
+    string Control::GetName()
+    {
+        return wxStr(GetWxWindow()->GetName());
+    }
+
+    void Control::SetName(const string& value)
+    {
+        GetWxWindow()->SetName(wxStr(value));
     }
 
     Control::~Control()

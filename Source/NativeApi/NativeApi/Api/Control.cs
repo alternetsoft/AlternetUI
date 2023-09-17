@@ -8,6 +8,8 @@ namespace NativeApi.Api
 {
     public abstract class Control
     {
+        public string Name { get; set; }
+        public int Id { get; set; }
         public event EventHandler? Paint;
         public event EventHandler? MouseEnter;
         public event EventHandler? MouseLeave;

@@ -27,7 +27,7 @@ namespace Alternet.UI
                 typeof(Control),
                 new FrameworkPropertyMetadata(
                         null,
-                        FrameworkPropertyMetadataOptions.None,
+                        PropMetadataOption.None,
                         new PropertyChangedCallback(OnToolTipPropertyChanged),
                         null,
                         true,
@@ -43,7 +43,7 @@ namespace Alternet.UI
                     typeof(Control),
                     new FrameworkPropertyMetadata(
                             true,
-                            FrameworkPropertyMetadataOptions.AffectsPaint,
+                            PropMetadataOption.AffectsPaint,
                             new PropertyChangedCallback(OnEnabledPropertyChanged),
                             null,
                             isAnimationProhibited: true,

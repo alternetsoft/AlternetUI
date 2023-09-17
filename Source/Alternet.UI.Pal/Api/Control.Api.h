@@ -11,6 +11,26 @@
 
 using namespace Alternet::UI;
 
+ALTERNET_UI_API char16_t* Control_GetName_(Control* obj)
+{
+    return AllocPInvokeReturnString(obj->GetName());
+}
+
+ALTERNET_UI_API void Control_SetName_(Control* obj, const char16_t* value)
+{
+    obj->SetName(value);
+}
+
+ALTERNET_UI_API int Control_GetId_(Control* obj)
+{
+    return obj->GetId();
+}
+
+ALTERNET_UI_API void Control_SetId_(Control* obj, int value)
+{
+    obj->SetId(value);
+}
+
 ALTERNET_UI_API void* Control_GetHandle_(Control* obj)
 {
     return obj->GetHandle();
@@ -204,6 +224,31 @@ ALTERNET_UI_API Font* Control_GetFont_(Control* obj)
 ALTERNET_UI_API void Control_SetFont_(Control* obj, Font* value)
 {
     obj->SetFont(value);
+}
+
+ALTERNET_UI_API void Control_Update_(Control* obj)
+{
+    obj->Update();
+}
+
+ALTERNET_UI_API Size_C Control_GetPreferredSize_(Control* obj, Size availableSize)
+{
+    return obj->GetPreferredSize(availableSize);
+}
+
+ALTERNET_UI_API DragDropEffects Control_DoDragDrop_(Control* obj, UnmanagedDataObject* data, DragDropEffects allowedEffects)
+{
+    return obj->DoDragDrop(data, allowedEffects);
+}
+
+ALTERNET_UI_API DrawingContext* Control_OpenPaintDrawingContext_(Control* obj)
+{
+    return obj->OpenPaintDrawingContext();
+}
+
+ALTERNET_UI_API DrawingContext* Control_OpenClientDrawingContext_(Control* obj)
+{
+    return obj->OpenClientDrawingContext();
 }
 
 ALTERNET_UI_API void Control_BeginUpdate_(Control* obj)
@@ -404,31 +449,6 @@ ALTERNET_UI_API void Control_RemoveChild_(Control* obj, Control* control)
 ALTERNET_UI_API void Control_Invalidate_(Control* obj)
 {
     obj->Invalidate();
-}
-
-ALTERNET_UI_API void Control_Update_(Control* obj)
-{
-    obj->Update();
-}
-
-ALTERNET_UI_API Size_C Control_GetPreferredSize_(Control* obj, Size availableSize)
-{
-    return obj->GetPreferredSize(availableSize);
-}
-
-ALTERNET_UI_API DragDropEffects Control_DoDragDrop_(Control* obj, UnmanagedDataObject* data, DragDropEffects allowedEffects)
-{
-    return obj->DoDragDrop(data, allowedEffects);
-}
-
-ALTERNET_UI_API DrawingContext* Control_OpenPaintDrawingContext_(Control* obj)
-{
-    return obj->OpenPaintDrawingContext();
-}
-
-ALTERNET_UI_API DrawingContext* Control_OpenClientDrawingContext_(Control* obj)
-{
-    return obj->OpenClientDrawingContext();
 }
 
 ALTERNET_UI_API void Control_SetEventCallback_(Control::ControlEventCallbackType callback)

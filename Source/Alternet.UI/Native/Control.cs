@@ -24,6 +24,38 @@ namespace Alternet.UI.Native
         {
         }
         
+        public string Name
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.Control_GetName_(NativePointer);
+                return n;
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.Control_SetName_(NativePointer, value);
+            }
+        }
+        
+        public int Id
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.Control_GetId_(NativePointer);
+                return n;
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.Control_SetId_(NativePointer, value);
+            }
+        }
+        
         public System.IntPtr Handle
         {
             get
@@ -373,6 +405,44 @@ namespace Alternet.UI.Native
             }
         }
         
+        public void Update()
+        {
+            CheckDisposed();
+            NativeApi.Control_Update_(NativePointer);
+        }
+        
+        public Alternet.Drawing.Size GetPreferredSize(Alternet.Drawing.Size availableSize)
+        {
+            CheckDisposed();
+            var n = NativeApi.Control_GetPreferredSize_(NativePointer, availableSize);
+            return n;
+        }
+        
+        public DragDropEffects DoDragDrop(UnmanagedDataObject data, DragDropEffects allowedEffects)
+        {
+            CheckDisposed();
+            var n = NativeApi.Control_DoDragDrop_(NativePointer, data.NativePointer, allowedEffects);
+            return n;
+        }
+        
+        public DrawingContext OpenPaintDrawingContext()
+        {
+            CheckDisposed();
+            var n = NativeApi.Control_OpenPaintDrawingContext_(NativePointer);
+            var m = NativeObject.GetFromNativePointer<DrawingContext>(n, p => new DrawingContext(p))!;
+            ReleaseNativeObjectPointer(n);
+            return m;
+        }
+        
+        public DrawingContext OpenClientDrawingContext()
+        {
+            CheckDisposed();
+            var n = NativeApi.Control_OpenClientDrawingContext_(NativePointer);
+            var m = NativeObject.GetFromNativePointer<DrawingContext>(n, p => new DrawingContext(p))!;
+            ReleaseNativeObjectPointer(n);
+            return m;
+        }
+        
         public void BeginUpdate()
         {
             CheckDisposed();
@@ -628,44 +698,6 @@ namespace Alternet.UI.Native
             NativeApi.Control_Invalidate_(NativePointer);
         }
         
-        public void Update()
-        {
-            CheckDisposed();
-            NativeApi.Control_Update_(NativePointer);
-        }
-        
-        public Alternet.Drawing.Size GetPreferredSize(Alternet.Drawing.Size availableSize)
-        {
-            CheckDisposed();
-            var n = NativeApi.Control_GetPreferredSize_(NativePointer, availableSize);
-            return n;
-        }
-        
-        public DragDropEffects DoDragDrop(UnmanagedDataObject data, DragDropEffects allowedEffects)
-        {
-            CheckDisposed();
-            var n = NativeApi.Control_DoDragDrop_(NativePointer, data.NativePointer, allowedEffects);
-            return n;
-        }
-        
-        public DrawingContext OpenPaintDrawingContext()
-        {
-            CheckDisposed();
-            var n = NativeApi.Control_OpenPaintDrawingContext_(NativePointer);
-            var m = NativeObject.GetFromNativePointer<DrawingContext>(n, p => new DrawingContext(p))!;
-            ReleaseNativeObjectPointer(n);
-            return m;
-        }
-        
-        public DrawingContext OpenClientDrawingContext()
-        {
-            CheckDisposed();
-            var n = NativeApi.Control_OpenClientDrawingContext_(NativePointer);
-            var m = NativeObject.GetFromNativePointer<DrawingContext>(n, p => new DrawingContext(p))!;
-            ReleaseNativeObjectPointer(n);
-            return m;
-        }
-        
         static GCHandle eventCallbackGCHandle;
         
         static void SetEventCallback()
@@ -803,6 +835,18 @@ namespace Alternet.UI.Native
             public static extern void Control_SetEventCallback_(ControlEventCallbackType callback);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern string Control_GetName_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Control_SetName_(IntPtr obj, string value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int Control_GetId_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Control_SetId_(IntPtr obj, int value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern System.IntPtr Control_GetHandle_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
@@ -918,6 +962,21 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Control_SetFont_(IntPtr obj, IntPtr value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Control_Update_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern Alternet.Drawing.Size Control_GetPreferredSize_(IntPtr obj, Alternet.Drawing.Size availableSize);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern DragDropEffects Control_DoDragDrop_(IntPtr obj, IntPtr data, DragDropEffects allowedEffects);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern IntPtr Control_OpenPaintDrawingContext_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern IntPtr Control_OpenClientDrawingContext_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Control_BeginUpdate_(IntPtr obj);
@@ -1038,21 +1097,6 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Control_Invalidate_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Control_Update_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.Size Control_GetPreferredSize_(IntPtr obj, Alternet.Drawing.Size availableSize);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern DragDropEffects Control_DoDragDrop_(IntPtr obj, IntPtr data, DragDropEffects allowedEffects);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern IntPtr Control_OpenPaintDrawingContext_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern IntPtr Control_OpenClientDrawingContext_(IntPtr obj);
             
         }
     }
