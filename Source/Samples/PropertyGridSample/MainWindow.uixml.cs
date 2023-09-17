@@ -10,7 +10,7 @@ using Alternet.Base.Collections;
 
 namespace PropertyGridSample
 {
-    public partial class MainWindow : Window, IComponentDesigner
+    public partial class MainWindow : Window
     {
         private readonly AuiManager manager = new();
         private readonly LayoutPanel panel = new();
@@ -196,7 +196,20 @@ namespace PropertyGridSample
             controlsListBox.SelectedIndex = 0;
 
             Application.Current.Idle += ApplicationIdle;
-            RunTests();            
+            RunTests();
+
+            ComponentDesigner.InitDefault();
+            ComponentDesigner.Default!.PropertyChanged += Default_PropertyChanged;
+        }
+
+        private void Default_PropertyChanged(object? sender, PropertyChangeEventArgs e)
+        {
+            var item = controlsListBox.SelectedItem as ControlListBoxItem;
+            var type = item?.InstanceType;
+            if (type == typeof(WelcomeControl))
+                return;
+            if(item?.Instance == e.Instance)
+                updatePropertyGrid = true;
         }
 
         internal void AddMainWindow()
@@ -534,7 +547,6 @@ namespace PropertyGridSample
 
                 if (item?.Instance is Control control)
                 {
-                    control.Designer = this;
                     if (control.Parent == null)
                         controlPanel.Children.Add(control);
                 }
@@ -670,19 +682,6 @@ namespace PropertyGridSample
         {
             if (PropertyGridSettings.Default!.LogButtonClick)
                 LogEvent("ButtonClick", true);
-            /*
-            var prop = propertyGrid.EventProperty;
-            if (prop == null)
-                return;
-            var propInfo = prop.PropInfo;
-            var instance = prop.Instance;
-
-            UIDialogListEdit.EditProperty(instance, propInfo);*/
-        }
-
-        void IComponentDesigner.PropertyChanged(object? sender, string? propName)
-        {
-            updatePropertyGrid = true;
         }
 
         private class ControlListBoxItem

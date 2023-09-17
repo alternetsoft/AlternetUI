@@ -12,11 +12,16 @@ namespace Alternet.UI
     public interface IComponentDesigner
     {
         /// <summary>
+        /// Occurs when the property value changes.
+        /// </summary>
+        event EventHandler<PropertyChangeEventArgs>? PropertyChanged;
+
+        /// <summary>
         /// Notifies designer about property change.
         /// </summary>
-        /// <param name="sender">Object instance which property was changed.</param>
+        /// <param name="instance">Object instance which property was changed.</param>
         /// <param name="propName">Property name. Optional. If <c>null</c>, more than one
         /// property were changed.</param>
-        void PropertyChanged(object? sender, string? propName);
+        void RaisePropertyChanged(object? instance, string? propName);
     }
 }

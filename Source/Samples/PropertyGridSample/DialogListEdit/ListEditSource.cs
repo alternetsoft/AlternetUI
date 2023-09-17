@@ -50,7 +50,7 @@ namespace Alternet.UI
             return propRegistry;
         }
 
-        private static void EditWithListEdit(object sender, EventArgs e)
+        private static void EditWithListEdit(object? sender, EventArgs e)
         {
             if (sender is not IPropertyGridItem prop)
                 return;
@@ -82,20 +82,20 @@ namespace Alternet.UI
                 nameof(ListViewItem.Cells),
                 typeof(ListEditSourceListViewCell));
 
-            /*RegisterListEditSource(
+            RegisterListEditSource(
                 typeof(ListBox),
                 nameof(ListBox.Items),
-                ListEditSourceListBox);
+                typeof(ListEditSourceListBox));
             
             RegisterListEditSource(
                 typeof(CheckListBox),
                 nameof(CheckListBox.Items),
-                ListEditSourceListBox);
+                typeof(ListEditSourceListBox));
             
             RegisterListEditSource(
                 typeof(ComboBox),
                 nameof(ComboBox.Items),
-                ListEditSourceListBox);*/
+                typeof(ListEditSourceListBox));
         }
 
         public static IListEditSource? CreateEditSource(object? instance, PropertyInfo? propInfo)

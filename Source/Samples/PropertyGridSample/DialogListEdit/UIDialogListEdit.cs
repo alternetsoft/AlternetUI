@@ -36,6 +36,7 @@ namespace Alternet.UI
         };
 
         private IListEditSource? dataSource;
+        private object? lastPropInstance;
 
         public UIDialogListEdit()
         {
@@ -51,7 +52,7 @@ namespace Alternet.UI
             MaximizeEnabled = false;
             Size = new(600, 400);
             MinimumSize = new(500, 300);
-            Title = CommonStrings.Default.WindowTitleListEditor;
+            Title = CommonStrings.Default.WindowTitleListEdit;
             StartLocation = WindowStartLocation.CenterScreen;
 
             this.StatusBar = statusbar;
@@ -143,10 +144,36 @@ namespace Alternet.UI
 
             this.Disposed += UIDialogCollectionEdit_Disposed;
             propertyGrid.PropertyChanged += PropertyGrid_PropertyChanged;
+
+            ComponentDesigner.InitDefault();
+            ComponentDesigner.Default!.PropertyChanged += OnDesignerPropertyChanged;
+        }
+
+        private void OnDesignerPropertyChanged(object? sender, PropertyChangeEventArgs e)
+        {
+            if (IsDisposed)
+                return;
+            if (lastPropInstance == null)
+                return;
+
+            if (e.Instance == lastPropInstance)
+                UpdatePropertyGrid(lastPropInstance);
+
+            var treeItem = treeView.SelectedItem;
+
+            if (treeItem != null && treeItem?.Tag == lastPropInstance)
+            {
+                var itemInfo = GetItemInfo(lastPropInstance);
+
+                treeItem.Text = itemInfo!.Value.Title
+                    ?? CommonStrings.Default.ListEditDefaultItemTitle;
+                treeItem.ImageIndex = itemInfo.Value.ImageIndex;
+            }
         }
 
         private void UIDialogCollectionEdit_Disposed(object? sender, EventArgs e)
         {
+            ComponentDesigner.Default!.PropertyChanged -= OnDesignerPropertyChanged;
             manager.UnInit();
         }
 
@@ -244,16 +271,19 @@ namespace Alternet.UI
                 return;
             }
 
-            var tag = item.Tag;
+            UpdatePropertyGrid(item.Tag);
+        }
 
-            if(tag == null)
+        private void UpdatePropertyGrid(object? instance)
+        {
+            lastPropInstance = instance;
+            if (instance == null)
             {
                 propertyGrid.Clear();
                 return;
             }
 
-            var propInstance = dataSource?.GetProperties(tag);
-
+            var propInstance = dataSource?.GetProperties(instance);
             propertyGrid.SetProps(propInstance);
         }
 
@@ -290,6 +320,7 @@ namespace Alternet.UI
             if (dialog.ModalResult == ModalResult.Accepted)
             {
                 dialog.Save();
+                dialog.Designer?.RaisePropertyChanged(instance, propInfo?.Name);
             }
             dialog.Clear();
         }
@@ -321,7 +352,7 @@ namespace Alternet.UI
             if (itemInfo == null)
                 return;
             selectedItem.ImageIndex = itemInfo.Value.ImageIndex;
-            selectedItem.Text = itemInfo.Value.Title!;
+            selectedItem.Text = itemInfo.Value.Title ?? CommonStrings.Default.ListEditDefaultItemTitle;
         }
 
         private (string? Title, int? ImageIndex)? GetItemInfo(object? item)
@@ -331,7 +362,7 @@ namespace Alternet.UI
             var s = dataSource?.GetItemTitle(item);
             int? imageIndex = dataSource?.GetItemImageIndex(item);
             if (string.IsNullOrWhiteSpace(s))
-                s = "item";
+                s = CommonStrings.Default.ListEditDefaultItemTitle;
 
             return (s, imageIndex);
         }
