@@ -61,18 +61,16 @@ namespace Alternet.UI
         /// </summary>
         public static readonly DependencyProperty ValueProperty =
             DependencyProperty.Register(
-                    "Value", // Property name
-                    typeof(int), // Property type
-                    typeof(ProgressBar), // Property owner
-                    new FrameworkPropertyMetadata( // Property metadata
-                            0, // default value
+                    "Value",
+                    typeof(int),
+                    typeof(ProgressBar),
+                    new FrameworkPropertyMetadata(
+                            0,
                             PropMetadataOption.AffectsPaint,
-                            new PropertyChangedCallback(OnValuePropertyChanged),    // property changed callback
+                            new PropertyChangedCallback(OnValuePropertyChanged),
                             new CoerceValueCallback(CoerceValue),
-                            true, // IsAnimationProhibited
-                            UpdateSourceTrigger.PropertyChanged
-                            //UpdateSourceTrigger.LostFocus   // DefaultUpdateSourceTrigger
-                            ));
+                            true,
+                            UpdateSourceTrigger.PropertyChanged));
 
         /// <summary>
         /// Callback for changes to the Value property
@@ -118,7 +116,9 @@ namespace Alternet.UI
             ValueChanged?.Invoke(this, e);
         }
 
+#pragma warning disable
         private void OnValuePropertyChanged(int oldValue, int newValue)
+#pragma warning restore
         {
             RaiseValueChanged(EventArgs.Empty);
         }
@@ -230,6 +230,5 @@ namespace Alternet.UI
             return GetEffectiveControlHandlerHactory().
                 CreateProgressBarHandler(this);
         }
-
     }
 }

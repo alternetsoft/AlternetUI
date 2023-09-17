@@ -1,6 +1,6 @@
-using Alternet.Drawing;
 using System;
 using System.ComponentModel;
+using Alternet.Drawing;
 
 namespace Alternet.UI
 {
@@ -28,8 +28,7 @@ namespace Alternet.UI
                             new PropertyChangedCallback(OnImagePropertyChanged),
                             new CoerceValueCallback(CoerceImage),
                             isAnimationProhibited: true,
-                            UpdateSourceTrigger.PropertyChanged
-                            ));
+                            UpdateSourceTrigger.PropertyChanged));
 
         /// <summary>
         /// Occurs when the <see cref="Image"/> property changes.

@@ -1117,9 +1117,11 @@ namespace Alternet.UI
             Control.RaiseEvent(new RoutedEventArgs(UIElement.LostFocusEvent));
         }
 
+#pragma warning disable
         private void RaiseDragAndDropEvent(
             Native.NativeEventArgs<Native.DragEventData> e,
             Action<DragEventArgs> raiseAction)
+#pragma warning restore
         {
             var data = e.Data;
             var ea = new DragEventArgs(
