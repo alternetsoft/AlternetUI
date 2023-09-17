@@ -8,16 +8,21 @@ using Alternet.Drawing;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Represents a list view control, which displays a collection of items that can be displayed using one of several different views.
+    /// Represents a list view control, which displays a collection of items that can be displayed
+    /// using one of several different views.
     /// </summary>
     /// <remarks>
-    /// A <see cref="ListView"/> control allows you to display a list of items with item text and, optionally, an icon to identify the type of item.
+    /// A <see cref="ListView"/> control allows you to display a list of items with item text
+    /// and, optionally, an icon to identify the type of item.
     /// The <see cref="ListViewItem"/> class represents an item within a ListView control.
     /// The items that are displayed in the list can be shown in one of several different views.
     /// Items can be displayed as large icons, as small icons, or as small icons in a vertical list.
-    /// Items can also be subdivided into columns in the <see cref="ListViewView.Details"/> view, which allows you to display the items
+    /// Items can also be subdivided into columns in the <see cref="ListViewView.Details"/> view,
+    /// which allows you to display the items
     /// in a grid with column headers. <see cref="ListView"/> supports single or multiple selection.
     /// </remarks>
+    [DefaultProperty("Items")]
+    [DefaultEvent("SelectionChanged")]
     public class ListView : Control
     {
         private HashSet<long>? selectedIndices = null;
@@ -35,19 +40,26 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Occurs when the <see cref="SelectedIndex"/> property or the <see cref="SelectedIndices"/> collection has changed.
+        /// Occurs when the <see cref="SelectedIndex"/> property or the
+        /// <see cref="SelectedIndices"/> collection has changed.
         /// </summary>
         /// <remarks>
-        /// You can create an event handler for this event to determine when the selected index in the <see cref="ListView"/> has been changed.
-        /// This can be useful when you need to display information in other controls based on the current selection in the <see cref="ListView"/>.
+        /// You can create an event handler for this event to determine when the selected index
+        /// in the <see cref="ListView"/> has been changed.
+        /// This can be useful when you need to display information in other controls based on
+        /// the current selection in the <see cref="ListView"/>.
         /// <para>
-        /// You can use the event handler for this event to load the information in the other controls. If the <see cref="SelectionMode"/> property
-        /// is set to <see cref="ListViewSelectionMode.Multiple"/>, any change to the <see cref="SelectedIndices"/> collection,
+        /// You can use the event handler for this event to load the information in the
+        /// other controls. If the <see cref="SelectionMode"/> property
+        /// is set to <see cref="ListViewSelectionMode.Multiple"/>, any change to the
+        /// <see cref="SelectedIndices"/> collection,
         /// including removing an item from the selection, will raise this event.
         /// </para>
         /// <para>
-        /// The <see cref="SelectedIndices"/> collection changes whenever an individual <see cref="ListViewItem"/> selection changes.
-        /// The property change can occur programmatically or when the user selects an item or clears the selection of an item.
+        /// The <see cref="SelectedIndices"/> collection changes whenever an individual
+        /// <see cref="ListViewItem"/> selection changes.
+        /// The property change can occur programmatically or when the user selects an
+        /// item or clears the selection of an item.
         /// </para>
         /// </remarks>
         public event EventHandler? SelectionChanged;

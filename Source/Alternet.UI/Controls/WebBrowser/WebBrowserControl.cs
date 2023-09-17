@@ -13,6 +13,8 @@ using Alternet.Drawing;
 namespace Alternet.UI
 {
     /// <include file="Interfaces/IWebBrowser.xml" path='doc/WebBrowser/*'/>
+    [DefaultProperty("Name")]
+    [DefaultEvent("Enter")]
     public partial class WebBrowser : Control, IWebBrowser
     {
         private static string stringFormatJs = "yyyy-MM-ddTHH:mm:ss.fffK";

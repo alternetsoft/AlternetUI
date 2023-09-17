@@ -49,6 +49,8 @@ namespace Alternet.UI
     /// alternate between the expanded and collapsed states.
     /// </para>
     /// </remarks>
+    [DefaultProperty("Items")]
+    [DefaultEvent("SelectionChanged")]
     public class TreeView : Control
     {
         private readonly HashSet<TreeViewItem> selectedItems = new();

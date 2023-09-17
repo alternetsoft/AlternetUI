@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace Alternet.UI
 {
@@ -22,6 +23,8 @@ namespace Alternet.UI
     /// You can add controls to the <see cref="GroupBox"/> by using the Add
     /// method of the <see cref="Control.Children"/> property.
     /// </remarks>
+    [DefaultEvent("Enter")]
+    [DefaultProperty("Text")]
     public class GroupBox : Control
     {
         private string? title = null;

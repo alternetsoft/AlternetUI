@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.ComponentModel;
 using Alternet.Base.Collections;
 using Alternet.Drawing;
 
@@ -11,6 +12,7 @@ namespace Alternet.UI
     /// Please use <see cref="AuiManager"/> and <see cref="AuiToolbar"/> instead of
     /// <see cref="Toolbar"/> as it is deprecated and has limited functionality.
     /// </remarks>
+    [DefaultProperty("Items")]
     public class Toolbar : NonVisualControl
     {
         /// <summary>
