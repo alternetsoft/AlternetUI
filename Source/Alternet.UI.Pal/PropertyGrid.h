@@ -13,6 +13,7 @@
 #include "wx/variant.h"
 #include "wx/propgrid/editors.h"
 #include "PropertyGridVariant.h"
+#include "WxAlternet/wxAlternetColourProperty.h"
 
 namespace Alternet::UI
 {

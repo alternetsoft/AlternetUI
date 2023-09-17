@@ -429,7 +429,7 @@ namespace Alternet::UI
 		const Color& value)
 	{
 		wxColor wxc = value;
-		return new wxColourProperty(wxStr(label), wxStr(name), wxc);
+		return new wxAlternetColourProperty(wxStr(label), wxStr(name), wxc);
 	}
 
 	void* PropertyGrid::CreateFlagsProperty(const string& label, const string& name,
