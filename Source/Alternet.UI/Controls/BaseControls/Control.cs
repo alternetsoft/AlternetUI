@@ -51,6 +51,7 @@ namespace Alternet.UI
 
         private static readonly Size DefaultSize = new(double.NaN, double.NaN);
 
+        private IComponentDesigner? designer;
         private Color? backgroundColor;
         private Color? foregroundColor;
         private Collection<Control>? children;
@@ -261,7 +262,18 @@ namespace Alternet.UI
         /// connects control with the designer.
         /// </summary>
         [Browsable(false)]
-        public IComponentDesigner? Designer { get; set; }
+        public IComponentDesigner? Designer
+        {
+            get
+            {
+                return designer ?? ComponentDesigner.Default;
+            }
+
+            set
+            {
+                designer = value;
+            }
+        }
 
         /// <summary>
         /// Gets a value indicating whether the mouse is captured to this control.
@@ -1166,6 +1178,11 @@ namespace Alternet.UI
             return Children[index];
         }
 
+        /// <summary>
+        /// Executes <paramref name="action"/> between calls to <see cref="BeginUpdate"/>
+        /// and <see cref="EndUpdate"/>.
+        /// </summary>
+        /// <param name="action">Action that will be executed.</param>
         public void DoInsideUpdate(Action action)
         {
             BeginUpdate();
