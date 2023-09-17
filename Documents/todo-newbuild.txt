@@ -6,6 +6,8 @@
 - wxSingleChoiceDialog https://docs.wxwidgets.org/3.2/classwx_single_choice_dialog.html
 - wxTextEntryDialog https://docs.wxwidgets.org/3.2/classwx_text_entry_dialog.html
 
+- Add init event for each control in Platform Default props.
+
 - LayoutFactory.AdjustTextBoxesHeight(Control container);
 test auimanager demo under linux
 ? First need to import control methods related to sizing

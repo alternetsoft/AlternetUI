@@ -59,3 +59,7 @@
 - Color names localization
 
 - Add imagelist/ImageSet components to demo
+
+- ListEditor show name and prop name in title
+	ControlNameDictionary
+		CreateNewName(Window window, Control control, string Prefix)
