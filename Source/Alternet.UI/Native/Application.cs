@@ -24,6 +24,17 @@ namespace Alternet.UI.Native
         {
         }
         
+        public string EventArgString
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.Application_GetEventArgString_(NativePointer);
+                return n;
+            }
+            
+        }
+        
         public string Name
         {
             get
@@ -270,11 +281,16 @@ namespace Alternet.UI.Native
                 {
                     Idle?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
                 }
+                case NativeApi.ApplicationEvent.LogMessage:
+                {
+                    LogMessage?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                }
                 default: throw new Exception("Unexpected ApplicationEvent value: " + e);
             }
         }
         
         public event EventHandler? Idle;
+        public event EventHandler? LogMessage;
         
         [SuppressUnmanagedCodeSecurity]
         public class NativeApi : NativeApiProvider
@@ -287,6 +303,7 @@ namespace Alternet.UI.Native
             public enum ApplicationEvent
             {
                 Idle,
+                LogMessage,
             }
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
@@ -294,6 +311,9 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern IntPtr Application_Create_();
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern string Application_GetEventArgString_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern string Application_GetName_(IntPtr obj);

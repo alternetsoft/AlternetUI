@@ -7,6 +7,8 @@ namespace NativeApi.Api
 {
     public class Application
     {
+        public string EventArgString { get; }
+
         public static void ThrowError(int value) { }
 
         public static void SetSystemOptionInt(string name, int value) {}
@@ -18,6 +20,7 @@ namespace NativeApi.Api
         public void Run(Window window) { }
 
         public event EventHandler Idle;
+        public event EventHandler LogMessage;
 
         public Keyboard Keyboard { get; }
         public Mouse Mouse { get; }

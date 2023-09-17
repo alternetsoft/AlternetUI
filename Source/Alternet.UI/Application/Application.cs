@@ -44,6 +44,7 @@ namespace Alternet.UI
             SynchronizationContext.InstallIfNeeded();
 
             nativeApplication.Idle += NativeApplication_Idle;
+            nativeApplication.LogMessage += NativeApplication_LogMessage;
             nativeApplication.Name = Path.GetFileNameWithoutExtension(
                 Process.GetCurrentProcess()?.MainModule?.FileName!);
             current = this;
@@ -58,6 +59,11 @@ namespace Alternet.UI
 #if DEBUG
             WebBrowser.CrtSetDbgFlag(0);
 #endif
+        }
+
+        private void NativeApplication_LogMessage(object? sender, EventArgs e)
+        {
+             LogMessage?.Invoke(this, EventArgs.Empty);
         }
 
         /// <summary>
@@ -97,6 +103,11 @@ namespace Alternet.UI
         /// about to enter the idle state.
         /// </summary>
         public event EventHandler? Idle;
+
+        /// <summary>
+        /// Occurs when debug message needs to be displayed.
+        /// </summary>
+        public event EventHandler? LogMessage;
 
         /// <summary>
         /// Returns true if operating system is Windows.
@@ -173,6 +184,8 @@ namespace Alternet.UI
                     ErrorMessages.Default.CurrentApplicationIsNotSet);
             }
         }
+
+        public string EventArgString => NativeApplication.EventArgString;
 
         /// <summary>
         /// Gets the instantiated windows in an application.
@@ -491,6 +504,7 @@ namespace Alternet.UI
                 if (disposing)
                 {
                     nativeApplication.Idle -= NativeApplication_Idle;
+                    nativeApplication.LogMessage -= NativeApplication_LogMessage;
                     keyboardInputProvider.Dispose();
                     mouseInputProvider.Dispose();
                     nativeApplication.Dispose();

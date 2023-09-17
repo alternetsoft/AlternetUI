@@ -61,6 +61,7 @@ namespace PropertyGridSample
 
         public MainWindow()
         {
+            Application.Current.LogMessage += Application_LogMessage;
             propertyGrid.ApplyFlags |= PropertyGridApplyFlags.PropInfoSetValue
                 | PropertyGridApplyFlags.ReloadAfterSetValue;
 
@@ -585,6 +586,13 @@ namespace PropertyGridSample
 
 #if DEBUG
             contextMenu2.Add(new("C++ Throw", () => { WebBrowser.DoCommandGlobal("CppThrow"); }));
+#endif
+        }
+
+        private void Application_LogMessage(object? sender, EventArgs e)
+        {
+#if DEBUG
+            Log($"DEBUG MSG: { Application.Current.EventArgString}");
 #endif
         }
 

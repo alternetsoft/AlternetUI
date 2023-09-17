@@ -8,6 +8,7 @@
 #include "Object.h"
 #include "WindowsVisualThemeSupport.h"
 #include "wx/log.h"
+#include "wxAlternet/wxAlternetLogFormatter.h"
 
 namespace Alternet::UI
 {
@@ -46,11 +47,13 @@ namespace Alternet::UI
         void RaiseIdle();
 
         static Application* GetCurrent();
+
+        void DoLogRecord(wxLogLevel level, const wxString& msg,
+            const wxLogRecordInfo& info);
     private:
 
         App* _app = nullptr;
-
-      //  string _name;
+        string _eventArgString;
 
         Keyboard* _keyboard = nullptr;
         Mouse* _mouse = nullptr;
@@ -64,4 +67,21 @@ namespace Alternet::UI
         ULONG_PTR windowsVisualThemeSupportCookie = NULL;
 #endif
     };
+
+    // https://docs.wxwidgets.org/3.2/classwx_log.html
+    class wxAlternetLog : public wxLog
+    {
+        void DoLogRecord(wxLogLevel level, const wxString& msg,
+            const wxLogRecordInfo& info) override
+        {
+            auto app = Application::GetCurrent();
+            if (app != nullptr)
+            {
+                app->DoLogRecord(level, msg, info);
+            }
+
+            wxLog::DoLogRecord(level, msg, info);
+        }
+    };
+
 }

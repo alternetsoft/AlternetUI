@@ -17,6 +17,11 @@ ALTERNET_UI_API Application* Application_Create_()
     return new Application();
 }
 
+ALTERNET_UI_API char16_t* Application_GetEventArgString_(Application* obj)
+{
+    return AllocPInvokeReturnString(obj->GetEventArgString());
+}
+
 ALTERNET_UI_API char16_t* Application_GetName_(Application* obj)
 {
     return AllocPInvokeReturnString(obj->GetName());

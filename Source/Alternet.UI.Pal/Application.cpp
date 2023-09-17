@@ -49,6 +49,10 @@ namespace Alternet::UI
 #if defined(__WXGTK__)
         wxApp::GTKAllowDiagnosticsControl();
 #endif
+#ifdef _DEBUG
+        wxLog::SetActiveTarget(new wxAlternetLog());
+        wxLog::GetActiveTarget()->SetFormatter(new wxAlternetLogFormatter());
+#endif
         return wxApp::OnInit();
     }
 
@@ -370,6 +374,18 @@ wxDEFINE_EVENT( wxEVT_HOTKEY, wxKeyEvent );
     Keyboard* Application::GetKeyboardInternal()
     {
         return _keyboard;
+    }
+
+    string Application::GetEventArgString()
+    {
+        return _eventArgString;
+    }
+
+    void Application::DoLogRecord(wxLogLevel level /*unsigned long*/, const wxString& msg,
+        const wxLogRecordInfo& info)
+    {
+        _eventArgString = wxStr(msg);
+        RaiseEvent(ApplicationEvent::LogMessage);
     }
 
     /*static*/ Application* Application::GetCurrent()
