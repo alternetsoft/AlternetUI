@@ -80,7 +80,22 @@ namespace Alternet.UI
             RegisterListEditSource(
                 typeof(ListViewItem),
                 nameof(ListViewItem.Cells),
-                typeof(ListEditSourceListViewCell));            
+                typeof(ListEditSourceListViewCell));
+
+            /*RegisterListEditSource(
+                typeof(ListBox),
+                nameof(ListBox.Items),
+                ListEditSourceListBox);
+            
+            RegisterListEditSource(
+                typeof(CheckListBox),
+                nameof(CheckListBox.Items),
+                ListEditSourceListBox);
+            
+            RegisterListEditSource(
+                typeof(ComboBox),
+                nameof(ComboBox.Items),
+                ListEditSourceListBox);*/
         }
 
         public static IListEditSource? CreateEditSource(object? instance, PropertyInfo? propInfo)
