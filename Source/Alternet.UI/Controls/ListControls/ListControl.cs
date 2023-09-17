@@ -136,5 +136,35 @@ namespace Alternet.UI
                 Items.Add(item);
             SelectedItem = selectValue;
         }
+
+        /// <summary>
+        /// Removed all items from the control.
+        /// </summary>
+        public void RemoveAll()
+        {
+            BeginUpdate();
+            try
+            {
+                ClearSelected();
+                Items.Clear();
+            }
+            finally
+            {
+                EndUpdate();
+            }
+        }
+
+        /// <summary>
+        /// Unselects all items in the control.
+        /// </summary>
+        /// <remarks>
+        /// Calling this method is equivalent to setting the
+        /// <see cref="SelectedIndex"/> property to <c>null</c>.
+        /// You can use this method to quickly unselect all items in the list.
+        /// </remarks>
+        public virtual void ClearSelected()
+        {
+            SelectedItem = null;
+        }
     }
 }

@@ -132,21 +132,16 @@ namespace Alternet.UI
         {
             get
             {
-                CheckDisposed();
                 return text;
             }
 
             set
             {
-                if (value == null)
-                    throw new ArgumentNullException(nameof(value));
-
-                CheckDisposed();
-
                 if (text == value)
                     return;
+                CheckDisposed();
 
-                text = value;
+                text = value ?? throw new ArgumentNullException(nameof(value));
 
                 if (text == string.Empty)
                     SelectedIndex = null;
@@ -236,7 +231,6 @@ namespace Alternet.UI
         {
             get
             {
-                CheckDisposed();
                 return isEditable;
             }
 
