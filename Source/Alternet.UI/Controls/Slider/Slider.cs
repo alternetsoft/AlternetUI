@@ -347,7 +347,7 @@ namespace Alternet.UI
 #pragma warning enable
         {
             RaiseValueChanged(EventArgs.Empty);
-            Designer?.PropertyChanged(this, nameof(Value));
+            Designer?.RaisePropertyChanged(this, nameof(Value));
         }
 
         /// <summary>
