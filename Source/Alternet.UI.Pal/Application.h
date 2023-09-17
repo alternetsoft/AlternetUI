@@ -7,6 +7,7 @@
 #include "Mouse.h"
 #include "Object.h"
 #include "WindowsVisualThemeSupport.h"
+#include "wx/log.h"
 
 namespace Alternet::UI
 {
