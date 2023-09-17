@@ -8,6 +8,7 @@ namespace Alternet::UI
     class StatusBarPanel;
     class Window;
 
+    // https://docs.wxwidgets.org/3.2/classwx_status_bar.html
     class StatusBar : public Control
     {
 #include "Api/StatusBar.inc"
