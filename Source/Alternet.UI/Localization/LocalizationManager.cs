@@ -1,4 +1,5 @@
-﻿using System;
+﻿#pragma warning disable CA1822 // Mark members as static
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,6 +16,24 @@ namespace Alternet.UI.Localization
         /// Current localizations for all application strings.
         /// </summary>
         public static LocalizationManager Default { get; set; } = new();
+
+        /// <summary>
+        /// Gets or sets localizations for property categories.
+        /// </summary>
+        public PropCategoryStrings PropCategories
+        {
+            get => PropCategoryStrings.Default;
+            set => PropCategoryStrings.Default = value;
+        }
+
+        /// <summary>
+        /// Gets or sets localizations for control categories.
+        /// </summary>
+        public ControlCategoryStrings ControlCategories
+        {
+            get => ControlCategoryStrings.Default;
+            set => ControlCategoryStrings.Default = value;
+        }
 
         /// <summary>
         /// Gets or sets localizations for common strings.
