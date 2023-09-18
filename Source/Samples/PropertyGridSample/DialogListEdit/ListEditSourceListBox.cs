@@ -57,7 +57,7 @@ namespace Alternet.UI
             /// <inheritdoc/>
             public override string ToString()
             {
-                var s = Value?.ToString();
+                var s = Value?.ToString()!;
                 if (string.IsNullOrWhiteSpace(s))
                     return CommonStrings.Default.ListEditDefaultItemTitle;
                 else
