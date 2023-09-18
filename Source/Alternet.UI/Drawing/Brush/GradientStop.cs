@@ -60,6 +60,26 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Creates copy of this <see cref="GradientStop"/>.
+        /// </summary>
+        public GradientStop Clone()
+        {
+            var result = new GradientStop();
+            result.Assign(this);
+            return result;
+        }
+
+        /// <summary>
+        /// Assigns properties from another <see cref="GradientStop"/>.
+        /// </summary>
+        /// <param name="item">Source of the properties to assign.</param>
+        public void Assign(GradientStop item)
+        {
+            Color = item.Color;
+            Offset = item.Offset;
+        }
+
+        /// <summary>
         /// Serves as the default hash function.
         /// </summary>
         /// <returns>A hash code for the current object.</returns>
