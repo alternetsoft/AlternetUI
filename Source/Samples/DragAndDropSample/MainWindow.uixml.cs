@@ -132,30 +132,10 @@ namespace DragAndDropSample
             return result;
         }
 
-        private string GetDataObjectString(IDataObject value)
-        {
-            var result = new StringBuilder();
-            if (value.GetDataPresent(DataFormats.Text))
-                result.AppendLine("Text: " + value.GetData(DataFormats.Text));
-            if (value.GetDataPresent(DataFormats.Files))
-                result.AppendLine("Files: "
-                    + string.Join("\n", (string[])value.GetData(DataFormats.Files)!));
-            if (value.GetDataPresent(DataFormats.Bitmap))
-            {
-                var bitmap = (Image)value.GetData(DataFormats.Bitmap)!;
-                result.AppendLine($"Bitmap: {bitmap.Size.Width}x{bitmap.Size.Height}");
-            }
-
-            result.AppendLine().AppendLine("All formats: "
-                + string.Join(";", value.GetFormats()));
-
-            return result.ToString();
-        }
-
         private string GetStringFromDropResultObject(object? value) => value switch
         {
             string x => x,
-            IDataObject x => GetDataObjectString(x),
+            IDataObject x => DataObject.ToDebugString(x),
             _ => throw new Exception(),
         };
 

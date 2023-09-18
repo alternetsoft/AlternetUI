@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 
 namespace Alternet.UI
 {
@@ -21,7 +22,8 @@ namespace Alternet.UI
         object? GetData(string format);
 
         /// <summary>
-        /// Stores the specified data in this data object, along with one or more specified data formats. The data format is specified by a string.
+        /// Stores the specified data in this data object, along with one or more specified
+        /// data formats. The data format is specified by a string.
         /// </summary>
         /// <param name="format">
         /// A string that specifies what format to store the data in.
@@ -31,7 +33,8 @@ namespace Alternet.UI
         void SetData(string format, object data);
 
         /// <summary>
-        /// Stores the specified data in this data object, automatically converting the data format from the source object type.
+        /// Stores the specified data in this data object, automatically converting the data
+        /// format from the source object type.
         /// </summary>
         /// <param name="data">
         /// The data to store in this data object.
@@ -39,7 +42,8 @@ namespace Alternet.UI
         void SetData(object data);
 
         /// <summary>
-        /// Determines whether data stored in this instance is associated with, or can be converted to, the specified format.
+        /// Determines whether data stored in this instance is associated with, or can be
+        /// converted to, the specified format.
         /// </summary>
         /// <param name="format">
         /// The format for which to check. See <see cref="DataFormats"/> for predefined formats.
@@ -47,10 +51,12 @@ namespace Alternet.UI
         bool GetDataPresent(string format);
 
         /// <summary>
-        /// Returns a list of all formats that data stored in this instance is associated with or can be converted to.
+        /// Returns a list of all formats that data stored in this instance is associated with
+        /// or can be converted to.
         /// </summary>
         /// <returns>
-        /// An array of the names that represents a list of all formats that are supported by the data stored in this object.
+        /// An array of the names that represents a list of all formats that are supported by
+        /// the data stored in this object.
         /// </returns>
         string[] GetFormats();
     }

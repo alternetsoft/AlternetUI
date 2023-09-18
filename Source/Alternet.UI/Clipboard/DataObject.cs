@@ -1,14 +1,17 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Text;
 
 namespace Alternet.UI
 {
     /// <summary>
     /// Implements a basic data transfer mechanism.
     /// </summary>
+    [DebuggerDisplay("{ToDebugString()}")]
     public class DataObject : IDataObject
     {
         private readonly Dictionary<string, object> data = new(StringComparer.Ordinal);
@@ -76,6 +79,32 @@ namespace Alternet.UI
         /// <see cref="DataFormats.Text"/> format.
         /// </summary>
         public virtual bool ContainsText => GetDataPresent(DataFormats.Text);
+
+        /// <summary>
+        /// Gets object properties formatted for debug purposes.
+        /// </summary>
+        public static string ToDebugString(IDataObject value)
+        {
+            var result = new StringBuilder();
+            if (value.GetDataPresent(DataFormats.Text))
+                result.AppendLine("Text: " + value.GetData(DataFormats.Text));
+            if (value.GetDataPresent(DataFormats.Files))
+            {
+                result.AppendLine("Files: "
+                    + string.Join("\n", (string[])value.GetData(DataFormats.Files)!));
+            }
+
+            if (value.GetDataPresent(DataFormats.Bitmap))
+            {
+                var bitmap = (Image)value.GetData(DataFormats.Bitmap)!;
+                result.AppendLine($"Bitmap: {bitmap.Size.Width}x{bitmap.Size.Height}");
+            }
+
+            result.AppendLine().AppendLine("All formats: "
+                + string.Join(";", value.GetFormats()));
+
+            return result.ToString();
+        }
 
         /// <inheritdoc/>
         public object? GetData(string format)
