@@ -18,6 +18,7 @@ namespace Alternet::UI
         }
     };
 
+    // wxDummyPanel
 
     class wxDummyPanel : public wxPanel 
     {
@@ -42,6 +43,8 @@ namespace Alternet::UI
 
     class Window;
 
+    // wxWidgetExtender
+
     class wxWidgetExtender
     {
     public:
@@ -58,6 +61,8 @@ namespace Alternet::UI
         }
     };
   
+    // Control
+
     class Control : public Object
     {
 #include "Api/Control.inc"
@@ -162,9 +167,6 @@ namespace Alternet::UI
         bool IsInitInProgress();
 
     private:
-
-        //Font* _font = nullptr;
-
         bool CanSetScrollbar();
 
         void NotifyAllChildrenOnParentChange();
@@ -257,7 +259,8 @@ namespace Alternet::UI
         void OnScrollThumbTrack(wxScrollWinEvent& event);
         void OnScrollThumbRelease(wxScrollWinEvent& event);
 
-        DelayedValue<Control, Control::ScrollInfo>& GetScrollInfoDelayedValue(const wxScrollWinEvent& event);
+        DelayedValue<Control, Control::ScrollInfo>& GetScrollInfoDelayedValue(
+            const wxScrollWinEvent& event);
 
         void ApplyScroll(wxScrollWinEvent& event, int position);
 
@@ -283,6 +286,8 @@ namespace Alternet::UI
     };
 }
 
-template<> struct enable_bitmask_operators<Alternet::UI::Control::DelayedControlFlags> { static const bool enable = true; };
-template<> struct enable_bitmask_operators<Alternet::UI::Control::ControlFlags> { static const bool enable = true; };
+template<> struct enable_bitmask_operators<Alternet::UI::Control::DelayedControlFlags>
+    { static const bool enable = true; };
+template<> struct enable_bitmask_operators<Alternet::UI::Control::ControlFlags>
+    { static const bool enable = true; };
 
