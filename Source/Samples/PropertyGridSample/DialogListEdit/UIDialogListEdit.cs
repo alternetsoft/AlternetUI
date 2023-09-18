@@ -408,11 +408,32 @@ namespace Alternet.UI
             public TreeViewPlus()
             {
                 AllowDrop = true;
+                DragDrop += OnDragDropEvent;
+                DragOver += OnDragOverEvent;
+                DragEnter += OnDragEnterEvent;
+                DragLeave += OnDragLeaveEvent;
+            }
 
-                //<DragEventArgs>? DragDrop;
-                //<DragEventArgs>? DragOver;
-                //<DragEventArgs>? DragEnter;
-                //DragLeave;
+            private void OnDragDropEvent(object sender, DragEventArgs e)
+            {
+                Application.DebugLog($"DragDrop: {e.MouseClientLocation}, {e.Effect}");
+                Application.DebugLog($"Dropped Data: {DataObject.ToDebugString(e.Data)}");
+            }
+
+            private void OnDragOverEvent(object sender, DragEventArgs e)
+            {
+                Application.DebugLogReplace(
+                    $"DragOver: {e.MouseClientLocation}, {e.Effect}", "DragOver");
+            }
+
+            private void OnDragEnterEvent(object sender, DragEventArgs e)
+            {
+                Application.DebugLog($"DragEnter: {e.MouseClientLocation}, {e.Effect}");
+            }
+
+            private void OnDragLeaveEvent(object sender, EventArgs e)
+            {
+                Application.DebugLog("DragLeave");
             }
 
             IEnumerable<TreeViewItem>? IEnumerableTree<TreeViewItem>.GetChildren(TreeViewItem item)
