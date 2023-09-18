@@ -7,7 +7,7 @@ using System.Runtime.InteropServices;
 
 namespace Alternet.UI
 {
-    static class DataObjectHelpers
+    internal static class DataObjectHelpers
     {
         public static object SetDataTransform(string format, object data)
         {
