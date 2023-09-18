@@ -164,7 +164,7 @@ namespace XamlX.IL
             private IReadOnlyList<IXamlType> _genericParameters;
             private IReadOnlyList<IXamlType> _interfaces;
             private IReadOnlyList<IXamlEventInfo> _events;
-            
+
             public Type Type { get; }
 
             public SreType(SreTypeSystem system, SreAssembly asm, Type type)
@@ -262,18 +262,23 @@ namespace XamlX.IL
                 : null;
 
             public bool IsArray => Type.IsArray;
+
             public IXamlType ArrayElementType => IsArray ? System.ResolveType(Type.GetElementType()) : null;
 
             public IXamlType MakeArrayType(int dimensions) => System.ResolveType(
                 dimensions == 1 ? Type.MakeArrayType() : Type.MakeArrayType(dimensions));
 
             public IXamlType BaseType => Type.BaseType == null ? null : System.ResolveType(Type.BaseType);
+
             public bool IsValueType => Type.IsValueType;
+
             public bool IsEnum => Type.IsEnum;
+
             public IXamlType GetEnumUnderlyingType()
             {
                 return System.ResolveType(Enum.GetUnderlyingType(Type));
             }
+
             public override string ToString() => Type.ToString();
         }
 
@@ -298,7 +303,9 @@ namespace XamlX.IL
             }
 
             public IXamlType Type { get; }
+
             public List<object> Parameters { get; }
+
             public Dictionary<string, object> Properties { get; }
         }
 
@@ -308,13 +315,17 @@ namespace XamlX.IL
             private readonly MethodBase _method;
 
             protected IReadOnlyList<IXamlType> _parameters;
+
             public SreMethodBase(SreTypeSystem system, MethodBase method)
                 : base(system, method)
             {
                 _method = method;
             }
+
             public bool IsPublic => _method.IsPublic;
+
             public bool IsStatic => _method.IsStatic;
+
             public IReadOnlyList<IXamlType> Parameters =>
                 _parameters ?? (_parameters = _method.GetParameters()
                     .Select(p => System.ResolveType(p.ParameterType)).ToList());
@@ -343,6 +354,7 @@ namespace XamlX.IL
             }
 
             public IXamlType ReturnType => _system.ResolveType(Method.ReturnType);
+
             public IXamlType DeclaringType => _system.ResolveType(Method.DeclaringType);
         }
 
@@ -399,14 +411,18 @@ namespace XamlX.IL
         class SreEvent : SreMemberInfo, IXamlEventInfo
         {
             public EventInfo Event { get; }
+
             public SreEvent(SreTypeSystem system, EventInfo ev)
                 : base(system, ev)
             {
                 Event = ev;
                 Add = new SreMethod(system, ev.AddMethod);
             }
+
             public IXamlMethod Add { get; }
+
             public bool Equals(IXamlEventInfo other) => (other as SreEvent)?.Event.Equals(Event) == true;
+
             public override string ToString() => Event.ToString();
         }
 
@@ -538,7 +554,6 @@ namespace XamlX.IL
                 return this;
             }
 
-
             public void InsertSequencePoint(IFileSource file, int line, int position)
             {
             }
@@ -550,7 +565,6 @@ namespace XamlX.IL
                 _ilg.Emit(code, ((SreType)type).Type);
                 return this;
             }
-
 
             public IXamlILEmitter Emit(OpCode code, IXamlField field)
             {
@@ -667,7 +681,6 @@ namespace XamlX.IL
 
                 public IXamlILEmitter Generator { get; }
             }
-
 
             public IXamlConstructorBuilder<IXamlILEmitter> DefineConstructor(bool isStatic, params IXamlType[] args)
             {

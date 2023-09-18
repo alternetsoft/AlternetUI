@@ -9,6 +9,8 @@ namespace XamlX.Transform.Transformers
 {
 #if !XAMLX_INTERNAL
     public
+#else
+    internal
 #endif
     class ConvertPropertyValuesToAssignmentsTransformer : IXamlAstTransformer
     {
@@ -27,7 +29,6 @@ namespace XamlX.Transform.Transformers
                         arguments.Add(keyNode);
                     arguments.Add(v);
 
-
                     // Pre-filter setters by non-last argument
                     var filteredSetters = property.Setters.Where(s => s.Parameters.Count == arguments.Count)
                         .ToList();
@@ -42,8 +43,11 @@ namespace XamlX.Transform.Transformers
                                 var setter = filteredSetters[s];
                                 if (convertedTo == null)
                                 {
-                                    if (!XamlTransformHelpers.TryGetCorrectlyTypedValue(context, arguments[c],
-                                        setter.Parameters[c], out var converted))
+                                    if (!XamlTransformHelpers.TryGetCorrectlyTypedValue(
+                                        context,
+                                        arguments[c],
+                                        setter.Parameters[c],
+                                        out var converted))
                                     {
                                         filteredSetters.RemoveAt(c);
                                         continue;
@@ -57,10 +61,13 @@ namespace XamlX.Transform.Transformers
                                 else
                                 {
                                     if (!setter.Parameters[c].IsAssignableFrom(convertedTo))
+                                    {
                                         throw new XamlLoadException(
                                             $"Runtime setter selection is not supported for non-last setter arguments (e. g. x:Key) and can not downcast argument {c} of the setter from {convertedTo} to {setter.Parameters[c]}",
                                             arguments[c]);
+                                    }
                                 }
+
                                 s++;
                             }
                         }
@@ -95,14 +102,21 @@ namespace XamlX.Transform.Transformers
 
                             if (CanAssign(valueArg, setterType))
                                 matchedSetters.Add(setter);
-                            // Converted value have more priority than custom setters, so we just create a setter without an alternative
-                            else if (XamlTransformHelpers.TryConvertValue(context, valueArg, setterType, property,
+                            /*Converted value have more priority than custom setters,
+                              so we just create a setter without an alternative*/
+                            else if (XamlTransformHelpers.TryConvertValue(
+                                context,
+                                valueArg,
+                                setterType,
+                                property,
                                 out var converted))
                             {
-
                                 arguments[valueArgIndex] = converted;
-                                return new XamlPropertyAssignmentNode(valueNode,
-                                    property, new[] { setter }, arguments);
+                                return new XamlPropertyAssignmentNode(
+                                    valueNode,
+                                    property,
+                                    new[] { setter },
+                                    arguments);
                             }
                         }
 
@@ -112,10 +126,11 @@ namespace XamlX.Transform.Transformers
                         throw new XamlLoadException(
                             $"Unable to find suitable setter or adder for property {property.Name} of type {property.DeclaringType.GetFqn()} for argument {v.Type.GetClrType().GetFqn()}"
                             + (keyNode != null ? $" and x:Key of type {keyNode.Type.GetClrType()}" : null)
-                            + ", available setter parameter lists are:\n" + string.Join("\n",
+                            + ", available setter parameter lists are:\n" + string.Join(
+                                "\n",
                                 filteredSetters.Select(setter =>
-                                    string.Join(", ", setter.Parameters.Select(p => p.FullName))))
-                            , v);
+                                    string.Join(", ", setter.Parameters.Select(p => p.FullName)))),
+                            v);
                     }
 
                     assignments.Add(CreateAssignment());
@@ -137,14 +152,15 @@ namespace XamlX.Transform.Transformers
                     {
                         ass.PossibleSetters = ass.PossibleSetters.Where(s => s.BinderParameters.AllowMultiple).ToList();
                         if (ass.PossibleSetters.Count == 0)
+                        {
                             throw new XamlLoadException(
                                 $"Unable to find a setter that allows multiple assignments to the property {ass.Property.Name} of type {ass.Property.DeclaringType.GetFqn()}",
                                 node);
+                        }
                     }
                 }
 
                 return new XamlManipulationGroupNode(valueNode, assignments);
-
             }
 
             return node;
@@ -161,11 +177,14 @@ namespace XamlX.Transform.Transformers
             {
                 var directive = (XamlAstXmlDirective)d;
                 if (directive.Values.Count != 1)
-                    throw new XamlParseException("Invalid number of arguments for x:Key directive",
+                {
+                    throw new XamlParseException(
+                        "Invalid number of arguments for x:Key directive",
                         directive);
+                }
+
                 keyNode = directive.Values[0];
             }
-
 
             void ProcessDirectiveCandidateList(IList nodes)
             {
@@ -184,6 +203,7 @@ namespace XamlX.Transform.Transformers
                     ProcessDirective(man);
                     return new XamlManipulationGroupNode(man);
                 }
+
                 if (man is XamlManipulationGroupNode grp)
                     ProcessDirectiveCandidateList(grp.Children);
                 if (man is XamlObjectInitializationNode init)
@@ -205,7 +225,6 @@ namespace XamlX.Transform.Transformers
             }
 
             return keyNode;
-
         }
     }
 }

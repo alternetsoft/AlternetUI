@@ -663,5 +663,4 @@ namespace XamlX.TypeSystem
             return lst;
         }
     }
-
 }
