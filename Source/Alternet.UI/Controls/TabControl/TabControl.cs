@@ -111,6 +111,7 @@ namespace Alternet.UI
         [Bindable(true)]
         [Category("Appearance")]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        [Browsable(false)]
         public TabPage? SelectedPage
         {
             get { return (TabPage?)GetValue(SelectedPageProperty); }
