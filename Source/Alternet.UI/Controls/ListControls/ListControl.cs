@@ -103,7 +103,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="item">The object to be added to the end of the
         /// <see cref="Items"/> collection.</param>
-        public void Add(object item)
+        public virtual void Add(object item)
         {
             Items.Add(item);
         }
@@ -111,9 +111,9 @@ namespace Alternet.UI
         /// <summary>
         /// Selects last item in the control.
         /// </summary>
-        public void SelectLastItem()
+        public virtual void SelectLastItem()
         {
-            if(Count > 0)
+            if (Count > 0)
                 SelectedIndex = Count - 1;
         }
 
@@ -147,7 +147,7 @@ namespace Alternet.UI
         /// <summary>
         /// Removed all items from the control.
         /// </summary>
-        public void RemoveAll()
+        public virtual void RemoveAll()
         {
             BeginUpdate();
             try
@@ -162,14 +162,67 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Returns the index of the first item in the control that starts
+        /// with the specified string.
+        /// </summary>
+        /// <param name="s">The <see cref="string"/> to search for.</param>
+        /// <returns>The zero-based index of the first item found;
+        /// returns <c>null</c> if no match is found.</returns>
+        /// <remarks>
+        /// The search performed by this method is not case-sensitive.
+        /// The <paramref name="s"/> parameter is a substring to compare against
+        /// the text associated with the items in the control. The search performs
+        /// a partial match starting from the beginning of the text, and returning
+        /// the first item in the list that matches the specified substring.
+        /// </remarks>
+        public virtual int? FindString(string s)
+        {
+            return FindStringInternal(
+                s,
+                Items,
+                startIndex: null,
+                exact: false,
+                ignoreCase: true);
+        }
+
+        /// <summary>
+        /// Returns the index of the first item in the control beyond the specified
+        /// index that contains the specified string. The search is not case sensitive.
+        /// </summary>
+        /// <param name="s">The <see cref="string"/> to search for.</param>
+        /// <param name="startIndex">The zero-based index of the item before
+        /// the first item to be searched. Set to <c>null</c> to search from the beginning
+        /// of the control.</param>
+        /// <returns>The zero-based index of the first item found; returns <c>null</c> if
+        /// no match is found.</returns>
+        /// <remarks>
+        /// The search performed by this method is not case-sensitive. The <paramref name="s"/>
+        /// parameter is a substring to compare against the text associated with the
+        /// <see cref="Items"/> in the control. The search performs a partial match
+        /// starting from the beginning of the text, returning the first item in the
+        /// list that matches the specified substring.
+        /// </remarks>
+        public virtual int? FindString(string s, int? startIndex)
+        {
+            return FindStringInternal(
+                s,
+                Items,
+                startIndex,
+                exact: false,
+                ignoreCase: true);
+        }
+
+        /// <summary>
         /// Finds the first item in the combo box that matches the specified string.
         /// </summary>
         /// <param name="s">The string to search for.</param>
         /// <returns>The zero-based index of the first item found; returns
         /// <c>null</c> if no match is found.</returns>
-        public int? FindStringExact(string s)
+        /// <remarks>
+        /// The search performed by this method is not case-sensitive.
+        /// </remarks>
+        public virtual int? FindStringExact(string s)
         {
-            // todo: add other similar methods: FindString and overloads.
             return FindStringInternal(
                 s,
                 Items,
@@ -215,8 +268,44 @@ namespace Alternet.UI
             SelectedItem = null;
         }
 
+        /// <summary>
+        /// Returns the index of the first item in the control beyond the specified
+        /// index that contains or equal the specified string.
+        /// </summary>
+        /// <param name="str">The <see cref="string"/> to search for.</param>
+        /// <param name="startIndex">The zero-based index of the item before
+        /// the first item to be searched. Set to <c>null</c> to search from the beginning
+        /// of the control.</param>
+        /// <returns>The zero-based index of the first item found; returns <c>null</c> if
+        /// no match is found.</returns>
+        /// <remarks>
+        /// The <paramref name="str"/>
+        /// parameter is a substring to compare against the text associated with the
+        /// <see cref="Items"/> in the control.
+        /// The search performs a partial match (<paramref name="exact"/> is <c>false</c>)
+        /// or exact match (<paramref name="exact"/> is <c>true</c>)
+        /// Search starts from the beginning of the text, returning the first item in the
+        /// list that matches the specified substring.
+        /// </remarks>
+        /// <param name="exact"><c>true</c> uses exact comparison; <c>false</c> uses partial
+        /// compare.</param>
+        /// <param name="ignoreCase">Whether to ignore text case or not.</param>
+        public virtual int? FindStringEx(
+         string? str,
+         int? startIndex,
+         bool exact,
+         bool ignoreCase)
+        {
+            return FindStringInternal(
+             str,
+             Items,
+             startIndex,
+             exact,
+             ignoreCase);
+        }
+
         private int? FindStringInternal(
-             string str,
+             string? str,
              IList<object> items,
              int? startIndex,
              bool exact,
