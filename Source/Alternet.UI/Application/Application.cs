@@ -61,11 +61,6 @@ namespace Alternet.UI
 #endif
         }
 
-        private void NativeApplication_LogMessage(object? sender, EventArgs e)
-        {
-             LogMessage?.Invoke(this, EventArgs.Empty);
-        }
-
         /// <summary>
         ///  Occurs when an untrapped thread exception is thrown.
         /// </summary>
@@ -107,7 +102,7 @@ namespace Alternet.UI
         /// <summary>
         /// Occurs when debug message needs to be displayed.
         /// </summary>
-        public event EventHandler? LogMessage;
+        public event EventHandler<LogMessageEventArgs>? LogMessage;
 
         /// <summary>
         /// Returns true if operating system is Windows.
@@ -184,8 +179,6 @@ namespace Alternet.UI
                     ErrorMessages.Default.CurrentApplicationIsNotSet);
             }
         }
-
-        public string EventArgString => NativeApplication.EventArgString;
 
         /// <summary>
         /// Gets the instantiated windows in an application.
@@ -330,6 +323,8 @@ namespace Alternet.UI
 
         internal bool InvokeRequired => nativeApplication.InvokeRequired;
 
+        internal string EventArgString => NativeApplication.EventArgString;
+
         /// <summary>
         /// Sets wxSystemOptions value.
         /// </summary>
@@ -338,6 +333,15 @@ namespace Alternet.UI
         public static void SetSystemOption(string name, int value)
         {
             Native.Application.SetSystemOptionInt(name, value);
+        }
+
+        /// <summary>
+        /// Calls <see cref="LogMessage"/> event.
+        /// </summary>
+        /// <param name="msg">Message text.</param>
+        public static void Log(string msg)
+        {
+            Current.LogMessage?.Invoke(Current, new LogMessageEventArgs(msg));
         }
 
         /// <summary>
@@ -560,6 +564,11 @@ namespace Alternet.UI
         {
             foreach (var window in Windows)
                 window.RecreateAllHandlers();
+        }
+
+        private void NativeApplication_LogMessage(object? sender, EventArgs e)
+        {
+            Log(this.EventArgString);
         }
 
         private void CheckDisposed()
