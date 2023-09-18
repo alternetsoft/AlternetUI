@@ -38,10 +38,12 @@ namespace DragAndDropSample
             if (allowedEffects.Count == 1)
                 return allowedEffects.Single();
 
-            if ((Keyboard.Modifiers & ModifierKeys.Alt) != 0 && allowedEffects.Contains(DragDropEffects.Link))
+            if ((Keyboard.Modifiers & ModifierKeys.Alt) != 0
+                && allowedEffects.Contains(DragDropEffects.Link))
                 return DragDropEffects.Link;
 
-            if ((Keyboard.Modifiers & ModifierKeys.Control) != 0 && allowedEffects.Contains(DragDropEffects.Copy))
+            if ((Keyboard.Modifiers & ModifierKeys.Control) != 0
+                && allowedEffects.Contains(DragDropEffects.Copy))
                 return DragDropEffects.Copy;
 
             if (allowedEffects.Contains(defaultEffect))
@@ -63,19 +65,20 @@ namespace DragAndDropSample
             return output;
         }
 
-        private DragDropEffects GetAllowedEffectsFlags() => GetAllowedEffects().Aggregate((a, b) => a | b);
+        private DragDropEffects GetAllowedEffectsFlags() =>
+            GetAllowedEffects().Aggregate((a, b) => a | b);
 
         private void DropTarget_DragDrop(object sender, DragEventArgs e)
         {
             e.Effect = GetDropEffect(e.Effect);
             LogEvent($"DragDrop: {e.MouseClientLocation}, {e.Effect}");
-            MessageBox.Show(this, GetStringFromDropResultObject(e.Data), "Dropped Data");
+            LogEvent($"Dropped Data: {GetStringFromDropResultObject(e.Data)}");
         }
 
         private void DropTarget_DragOver(object sender, DragEventArgs e)
         {
             e.Effect = GetDropEffect(e.Effect);
-            LogEvent($"DragOver: {e.MouseClientLocation}, {e.Effect}");
+            LogSmart($"DragOver: {e.MouseClientLocation}, {e.Effect}", "DragOver");
         }
 
         private void DropTarget_DragEnter(object sender, DragEventArgs e)
@@ -89,12 +92,23 @@ namespace DragAndDropSample
             LogEvent("DragLeave");
         }
 
-        private int lastEventNumber = 1;
-
         void LogEvent(string message)
         {
-            eventsListBox.Items.Add($"{lastEventNumber++}. {message}");
+            eventsListBox.Items.Add($"{message}");
             eventsListBox.SelectedIndex = eventsListBox.Items.Count - 1;
+        }
+
+        void LogSmart(string message, string prefix)
+        {
+            var s = eventsListBox.LastItem?.ToString();
+            var b = s?.StartsWith(prefix) ?? false;
+
+            if (b)
+            {
+                eventsListBox.LastItem = message;
+            }
+            else
+                LogEvent(message);
         }
 
         private IDataObject GetDataObject()
@@ -124,14 +138,16 @@ namespace DragAndDropSample
             if (value.GetDataPresent(DataFormats.Text))
                 result.AppendLine("Text: " + value.GetData(DataFormats.Text));
             if (value.GetDataPresent(DataFormats.Files))
-                result.AppendLine("Files: " + string.Join("\n", (string[])value.GetData(DataFormats.Files)!));
+                result.AppendLine("Files: "
+                    + string.Join("\n", (string[])value.GetData(DataFormats.Files)!));
             if (value.GetDataPresent(DataFormats.Bitmap))
             {
                 var bitmap = (Image)value.GetData(DataFormats.Bitmap)!;
                 result.AppendLine($"Bitmap: {bitmap.Size.Width}x{bitmap.Size.Height}");
             }
 
-            result.AppendLine().AppendLine("All formats: " + string.Join(";", value.GetFormats()));
+            result.AppendLine().AppendLine("All formats: "
+                + string.Join(";", value.GetFormats()));
 
             return result.ToString();
         }
@@ -140,7 +156,7 @@ namespace DragAndDropSample
         {
             string x => x,
             IDataObject x => GetDataObjectString(x),
-            _ => throw new Exception()
+            _ => throw new Exception(),
         };
 
         private bool IsDataObjectSupported(object? value)
@@ -149,7 +165,7 @@ namespace DragAndDropSample
             {
                 string _ => true,
                 IDataObject d => SupportedFormats.Any(f => d.GetDataPresent(f)),
-                _ => false
+                _ => false,
             };
         }
 
@@ -157,9 +173,9 @@ namespace DragAndDropSample
         {
             var value = Clipboard.GetDataObject();
             if (IsDataObjectSupported(value))
-                MessageBox.Show(this, GetStringFromDropResultObject((object?)value), "Pasted Data");
+                LogEvent($"Pasted Data: {GetStringFromDropResultObject((object?)value)}");
             else
-                MessageBox.Show(this, "Clipboard doesn't contain data in a supported format.");
+                LogEvent("Clipboard doesn't contain data in a supported format.");
         }
 
         bool isDragging = false;
@@ -171,11 +187,13 @@ namespace DragAndDropSample
 
         private void DragSource_MouseMove(object sender, Alternet.UI.MouseEventArgs e)
         {
+            /*LogSmart($"MouseMove: {LogUtils.GenNewId()}", "MouseMove");*/
+
             if (isDragging)
             {
-                //dragStopwatch.Restart();
                 var result = DoDragDrop(GetDataObject(), GetAllowedEffectsFlags());
-                MessageBox.Show(this, result.ToString(), "DoDragDrop Result");
+                var prefix = "DoDragDrop Result";
+                LogSmart($"{prefix}: {result}", prefix);
                 isDragging = false;
             }
         }
