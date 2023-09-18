@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
 using Alternet.Base.Collections;
@@ -121,7 +122,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="item">The object from which to get the contents to
         /// display.</param>
-        public virtual string GetItemText(object item)
+        public virtual string GetItemText(object? item)
         {
             return item switch
             {
@@ -161,6 +162,47 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Finds the first item in the combo box that matches the specified string.
+        /// </summary>
+        /// <param name="s">The string to search for.</param>
+        /// <returns>The zero-based index of the first item found; returns
+        /// <c>null</c> if no match is found.</returns>
+        public int? FindStringExact(string s)
+        {
+            // todo: add other similar methods: FindString and overloads.
+            return FindStringInternal(
+                s,
+                Items,
+                startIndex: null,
+                exact: true,
+                ignoreCase: true);
+        }
+
+        /// <summary>
+        /// Removes items from the control.
+        /// </summary>
+        public virtual void RemoveItems(IReadOnlyList<int> items)
+        {
+            if (items == null || items.Count == 0)
+                return;
+
+            BeginUpdate();
+            try
+            {
+                ClearSelected();
+                foreach (int index in items)
+                {
+                    if (index < Items.Count)
+                        Items.RemoveAt(index);
+                }
+            }
+            finally
+            {
+                EndUpdate();
+            }
+        }
+
+        /// <summary>
         /// Unselects all items in the control.
         /// </summary>
         /// <remarks>
@@ -171,6 +213,64 @@ namespace Alternet.UI
         public virtual void ClearSelected()
         {
             SelectedItem = null;
+        }
+
+        private int? FindStringInternal(
+             string str,
+             IList<object> items,
+             int? startIndex,
+             bool exact,
+             bool ignoreCase)
+        {
+            if (str is null)
+                return null;
+            if (items is null || items.Count == 0)
+                return null;
+
+            var startIndexInt = startIndex ?? -1;
+
+            if (startIndexInt < -1 || startIndexInt >= items.Count)
+                throw new ArgumentOutOfRangeException(nameof(startIndex));
+
+            // Start from the start index and wrap around until we find the string
+            // in question. Use a separate counter to ensure that we arent cycling
+            // through the list infinitely.
+            int numberOfTimesThroughLoop = 0;
+
+            // this API is really Find NEXT String...
+            for (
+                int index = (startIndexInt + 1) % items.Count;
+                numberOfTimesThroughLoop < items.Count;
+                index = (index + 1) % items.Count)
+            {
+                numberOfTimesThroughLoop++;
+
+                bool found;
+                if (exact)
+                {
+                    found = string.Compare(
+                        str,
+                        GetItemText(items[index]),
+                        ignoreCase,
+                        CultureInfo.CurrentCulture) == 0;
+                }
+                else
+                {
+                    found = string.Compare(
+                        str,
+                        0,
+                        GetItemText(items[index]),
+                        0,
+                        str.Length,
+                        ignoreCase,
+                        CultureInfo.CurrentCulture) == 0;
+                }
+
+                if (found)
+                    return index;
+            }
+
+            return null;
         }
     }
 }
