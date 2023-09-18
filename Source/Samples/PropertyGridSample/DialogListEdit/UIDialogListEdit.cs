@@ -405,6 +405,8 @@ namespace Alternet.UI
 
         public class TreeViewPlus : TreeView, IEnumerableTree<TreeViewItem>
         {
+            private bool isDragging = false;
+
             public TreeViewPlus()
             {
                 AllowDrop = true;
@@ -412,26 +414,58 @@ namespace Alternet.UI
                 DragOver += OnDragOverEvent;
                 DragEnter += OnDragEnterEvent;
                 DragLeave += OnDragLeaveEvent;
+                MouseUp += OnMouseUpEvent;
+                MouseDown += OnMouseDownEvent;
+                MouseMove += OnMouseMoveEvent;
             }
 
-            private void OnDragDropEvent(object sender, DragEventArgs e)
+            private IDataObject GetDataObject()
+            {
+                var result = new DataObject();
+                result.SetData(DataFormats.Text, "Test data string.");
+                return result;
+            }
+
+            private void OnMouseDownEvent(object? sender, MouseButtonEventArgs e)
+            {
+                isDragging = true;
+            }
+
+            private void OnMouseMoveEvent(object? sender, MouseEventArgs e)
+            {
+                if (isDragging)
+                {
+                    var result =
+                        DoDragDrop(GetDataObject(), DragDropEffects.Copy | DragDropEffects.Move);
+                    var prefix = "DoDragDrop Result";
+                    Application.DebugLogReplace($"{prefix}: {result}", prefix);
+                    isDragging = false;
+                }
+            }
+
+            private void OnMouseUpEvent(object sender, Alternet.UI.MouseButtonEventArgs e)
+            {
+                isDragging = false;
+            }
+
+            private void OnDragDropEvent(object? sender, DragEventArgs e)
             {
                 Application.DebugLog($"DragDrop: {e.MouseClientLocation}, {e.Effect}");
                 Application.DebugLog($"Dropped Data: {DataObject.ToDebugString(e.Data)}");
             }
 
-            private void OnDragOverEvent(object sender, DragEventArgs e)
+            private void OnDragOverEvent(object? sender, DragEventArgs e)
             {
                 Application.DebugLogReplace(
                     $"DragOver: {e.MouseClientLocation}, {e.Effect}", "DragOver");
             }
 
-            private void OnDragEnterEvent(object sender, DragEventArgs e)
+            private void OnDragEnterEvent(object? sender, DragEventArgs e)
             {
                 Application.DebugLog($"DragEnter: {e.MouseClientLocation}, {e.Effect}");
             }
 
-            private void OnDragLeaveEvent(object sender, EventArgs e)
+            private void OnDragLeaveEvent(object? sender, EventArgs e)
             {
                 Application.DebugLog("DragLeave");
             }

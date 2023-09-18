@@ -592,8 +592,24 @@ namespace PropertyGridSample
         private void Application_LogMessage(object? sender, LogMessageEventArgs e)
         {
 #if DEBUG
-            Log($"DEBUG MSG: { e.Message }");
+            if (e.ReplaceLastMessage)
+                LogSmart(e.Message, e.MessagePrefix);
+            else
+                Log($"DEBUG MSG: { e.Message }");
 #endif
+        }
+
+        private void LogSmart(string message, string? prefix)
+        {
+            var s = logListBox.LastItem?.ToString();
+            var b = s?.StartsWith(prefix ?? string.Empty) ?? false;
+
+            if (b)
+            {
+                logListBox.LastItem = message;
+            }
+            else
+                LogEvent(message);
         }
 
         private void LogEvent(string name, bool logAlways = false)
