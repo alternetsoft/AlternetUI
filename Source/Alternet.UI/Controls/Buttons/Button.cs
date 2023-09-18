@@ -27,6 +27,7 @@ namespace Alternet.UI
         /// <summary>
         /// Specifies a set of images for different <see cref="Button"/> states.
         /// </summary>
+        [Browsable(false)]
         public ControlStateImages StateImages
         {
             get => Handler.StateImages;
@@ -74,6 +75,33 @@ namespace Alternet.UI
             {
                 StateImages.NormalImage = value;
             }
+        }
+
+        /// <summary>
+        /// Gets or sets an <see cref="Image"/> for hovered control state.
+        /// </summary>
+        public Image? HoveredImage
+        {
+            get => StateImages.HoveredImage;
+            set => StateImages.HoveredImage = value;
+        }
+
+        /// <summary>
+        /// Gets or sets an <see cref="Image"/> for pressed control state.
+        /// </summary>
+        public Image? PressedImage
+        {
+            get => StateImages.PressedImage;
+            set => StateImages.PressedImage = value;
+        }
+
+        /// <summary>
+        /// Gets or sets an <see cref="Image"/> for disabled control state.
+        /// </summary>
+        public Image? DisabledImage
+        {
+            get => StateImages.DisabledImage;
+            set => StateImages.DisabledImage = value;
         }
 
         /// <summary>
