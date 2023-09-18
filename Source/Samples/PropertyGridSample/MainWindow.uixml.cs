@@ -12,6 +12,9 @@ namespace PropertyGridSample
 {
     public partial class MainWindow : Window
     {
+        private readonly AuiNotebook leftNotebook = new();
+        private readonly AuiNotebook rightNotebook = new();
+        private readonly AuiNotebook bottomNotebook = new();
         private readonly AuiManager manager = new();
         private readonly LayoutPanel panel = new();
         private readonly ListBox controlsListBox;
@@ -23,11 +26,14 @@ namespace PropertyGridSample
         };
 
         internal readonly PropertyGrid propertyGrid = new();
+        internal readonly PropertyGrid eventGrid = new();
 
         private bool updatePropertyGrid = false;
 
         static MainWindow()
         {
+            AuiNotebook.DefaultCreateStyle = AuiNotebookCreateStyle.Top;
+
             PropertyGrid.RegisterCollectionEditors();
             ListEditSource.RegisterCreateFuncs();
 
@@ -78,45 +84,50 @@ namespace PropertyGridSample
 
             InitializeComponent();
 
-            panel.Layout = LayoutPanelKind.Native;
             Children.Add(panel);
 
             manager.SetFlags(AuiManagerOption.Default);
             manager.SetManagedWindow(panel);
 
             // Left Pane
-            var pane1 = manager.CreatePaneInfo();
-            pane1.Name("pane1").Caption("Controls").Left().PaneBorder(false).CloseButton(false)
+            var leftPane = manager.CreatePaneInfo();
+            leftPane.Name(nameof(leftPane)).Caption("Controls").Left()
+                .PaneBorder(false).CloseButton(false)
                 .TopDockable(false).BottomDockable(false).Movable(false).Floatable(false)
-                .CaptionVisible(false);
+                .CaptionVisible(false).BestSize(150, 200).MinSize(150, 200);
             controlsListBox = CreateListBox();
-            controlsListBox.SetBounds(0, 0, 150, 100, BoundsSpecified.Size);
-            manager.AddPane(controlsListBox, pane1);
+            leftNotebook.AddPage(controlsListBox, "Controls", true, null);
+            manager.AddPane(leftNotebook, leftPane);
 
             // Right Pane
-            var pane2 = manager.CreatePaneInfo();
-            pane2.Name("pane2").Caption("Properties").Right().PaneBorder(false)
+            var rightPane = manager.CreatePaneInfo();
+            rightPane.Name(nameof(rightPane)).Caption("Properties").Right().PaneBorder(false)
                 .CloseButton(false)
                 .TopDockable(false).BottomDockable(false).Movable(false).Floatable(false)
-                .BestSize(350, 200).CaptionVisible(false).MinSize(350, 200);
+                .BestSize(350, 200).MinSize(350, 200).CaptionVisible(false);
             propertyGrid.HasBorder = false;
-            panel.Children.Add(propertyGrid);
-            manager.AddPane(propertyGrid, pane2);
+            eventGrid.HasBorder = false;
+            rightNotebook.AddPage(propertyGrid, "Properties", true);
+            rightNotebook.AddPage(eventGrid, "Events", false);
+            manager.AddPane(rightNotebook, rightPane);
 
             // Bottom Pane    
-            var pane3 = manager.CreatePaneInfo();
-            pane3.Name("pane3").Caption("Output").Bottom().PaneBorder(false).CloseButton(false)
-                .LeftDockable(false).RightDockable(false).Movable(false).Floatable(false);
+            var bottomPane = manager.CreatePaneInfo();
+            bottomPane.Name(nameof(bottomPane)).Caption("Output").Bottom()
+                .PaneBorder(false).CloseButton(false).CaptionVisible(false)
+                .LeftDockable(false).RightDockable(false).Movable(false)
+                .BestSize(200, 150).MinSize(200, 150).Floatable(false);
             logListBox = CreateListBox();
-            manager.AddPane(logListBox, pane3);
+            bottomNotebook.AddPage(logListBox, "Output", true);
+            manager.AddPane(bottomNotebook, bottomPane);
 
             // Center pane
-            var pane5 = manager.CreatePaneInfo();
-            pane5.Name("pane5").CenterPane().PaneBorder(false);
+            var centerPane = manager.CreatePaneInfo();
+            centerPane.Name(nameof(centerPane)).CenterPane().PaneBorder(false);
             controlPanel.HorizontalAlignment = HorizontalAlignment.Center;
             controlPanel.VerticalAlignment = VerticalAlignment.Center;
             panel.Children.Add(controlPanel);
-            manager.AddPane(controlPanel, pane5);
+            manager.AddPane(controlPanel, centerPane);
 
             manager.Update();
 
@@ -145,7 +156,7 @@ namespace PropertyGridSample
               typeof(MainMenu),// can create some modal window? or add child window 
               typeof(StatusBar),// can create some modal window? or add child window 
               typeof(PropertyGrid),
-              typeof(TabControl),// know how
+              typeof(TabControl), // pages are not shown. Why?
               typeof(Window),
             };
 
@@ -190,9 +201,15 @@ namespace PropertyGridSample
             Key.DownArrow,
             ModifierKeys.Control);
 
-            propertyGrid.ApplyKnownColors(PropertyGridSettings.Default.ColorScheme);
-            propertyGrid.CenterSplitter();
-            propertyGrid.SetVerticalSpacing();
+            static void SetPropertyGridDefaults(PropertyGrid pg)
+            {
+                pg.ApplyKnownColors(PropertyGridSettings.Default!.ColorScheme);
+                pg.CenterSplitter();
+                pg.SetVerticalSpacing();
+            }
+
+            SetPropertyGridDefaults(propertyGrid);
+            SetPropertyGridDefaults(eventGrid);
 
             controlsListBox.SelectedIndex = 0;
 
@@ -201,6 +218,13 @@ namespace PropertyGridSample
 
             ComponentDesigner.InitDefault();
             ComponentDesigner.Default!.PropertyChanged += Default_PropertyChanged;
+
+            controlPanel.MouseDown += ControlPanel_MouseDown;
+        }
+
+        private void ControlPanel_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            UpdatePropertyGrid(controlPanel);
         }
 
         private void Default_PropertyChanged(object? sender, PropertyChangeEventArgs e)
@@ -538,8 +562,14 @@ namespace PropertyGridSample
             UpdatePropertyGrid();
         }
 
-        internal void UpdatePropertyGrid()
+        internal void UpdatePropertyGrid(object? instance = null)
         {
+            if(instance != null)
+            {
+                propertyGrid.SetProps(instance, true);
+                return;
+            }
+
             void DoAction()
             {
                 controlPanel.Children.Clear();
@@ -548,8 +578,11 @@ namespace PropertyGridSample
 
                 if (item?.Instance is Control control)
                 {
-                    if (control.Parent == null)
-                        controlPanel.Children.Add(control);
+                    var s = control.GetType().ToString();
+                    var splitted = s.Split('.');
+                    control.Name ??=
+                        splitted[splitted.Length-1] + LogUtils.GenNewId().ToString();
+                    control.Parent ??= controlPanel;
                 }
 
                 if (type == typeof(WelcomeControl))

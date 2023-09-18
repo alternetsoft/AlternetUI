@@ -69,7 +69,6 @@ namespace AuiManagerSample
 
             InitializeComponent();
 
-            panel.Layout = LayoutPanelKind.Native;
             Children.Add(panel);
 
             manager.SetFlags(AuiManagerOption.Default | AuiManagerOption.AllowActivePane);

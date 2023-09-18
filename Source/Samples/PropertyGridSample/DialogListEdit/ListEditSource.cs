@@ -96,6 +96,11 @@ namespace Alternet.UI
                 typeof(ComboBox),
                 nameof(ComboBox.Items),
                 typeof(ListEditSourceListBox));
+
+            RegisterListEditSource(
+                typeof(PropertyGridAdapterBrush),
+                nameof(PropertyGridAdapterBrush.GradientStops),
+                typeof(ListEditSourceGradientStops));
         }
 
         public static IListEditSource? CreateEditSource(object? instance, PropertyInfo? propInfo)

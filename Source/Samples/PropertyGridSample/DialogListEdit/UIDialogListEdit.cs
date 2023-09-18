@@ -419,7 +419,7 @@ namespace Alternet.UI
                 MouseMove += OnMouseMoveEvent;
             }
 
-            private IDataObject GetDataObject()
+            internal static IDataObject GetDataObject()
             {
                 var result = new DataObject();
                 result.SetData(DataFormats.Text, "Test data string.");
@@ -428,7 +428,7 @@ namespace Alternet.UI
 
             private void OnMouseDownEvent(object? sender, MouseButtonEventArgs e)
             {
-                isDragging = true;
+                isDragging = false;
             }
 
             private void OnMouseMoveEvent(object? sender, MouseEventArgs e)

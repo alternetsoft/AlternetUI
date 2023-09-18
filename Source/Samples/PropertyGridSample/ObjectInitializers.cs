@@ -138,6 +138,81 @@ namespace PropertyGridSample
                 Control control = (c as Control)!;
                 control.Height = 150;
             });
+
+            Actions.Add(typeof(TabControl), (c) =>
+            {
+                TabControl control = (c as TabControl)!;
+                control.Height = 300;
+                InsertPage(control, null);
+                InsertPage(control, null);
+                InsertPage(control, null);
+            });
+
+            Actions.Add(typeof(AuiNotebook), (c) =>
+            {
+                AuiNotebook control = (c as AuiNotebook)!;
+                control.Height = 300;
+                InsertPage(control);
+                InsertPage(control);
+                InsertPage(control);
+            });
+
+            Actions.Add(typeof(ProgressBar), (c) =>
+            {
+                ProgressBar control = (c as ProgressBar)!;
+                control.Value = 50;
+            });
+        }
+
+        private static void InsertPage(TabControl tabControl, int? index = null)
+        {
+            var s = "Page " + LogUtils.GenNewId();
+            var page = new TabPage(s)
+            {
+                Padding = 5,
+            };
+
+            var panel = CreatePanelWithButtons(s);
+            page.Children.Add(panel);
+
+            if (index == null)
+                tabControl.Pages.Add(page);
+            else
+                tabControl.Pages.Insert(index.Value, page);
+        }
+
+        private static void InsertPage(AuiNotebook tabControl)
+        {
+            var s = "Page " + LogUtils.GenNewId();
+            var page = new Control()
+            {
+                Padding = 5,
+            };
+
+            var panel = CreatePanelWithButtons(s);
+            page.Children.Add(panel);
+            tabControl.AddPage(page, s, true);
+        }
+
+        private static StackPanel CreatePanelWithButtons(string s)
+        {
+            VerticalStackPanel panel = new()
+            {
+                HorizontalAlignment = HorizontalAlignment.Left,
+                Padding = 5,
+            };
+
+            for (int i = 1; i < 4; i++)
+            {
+                var button = new Button()
+                {
+                    Text = s + " Button " + i.ToString(),
+                    Margin = 5,
+                };
+                panel.Children.Add(button);
+            }
+
+            return panel;
         }
 
         internal static void AddTenItems(IList items)
@@ -168,6 +243,7 @@ namespace PropertyGridSample
             var parent = control as Control;
             parent!.Height = 250;
 
+#pragma warning disable
             Button OkButton = new()
             {
                 Text = CommonStrings.Default.ButtonOk,
@@ -197,6 +273,7 @@ namespace PropertyGridSample
                 Visible = false,
                 Parent = parent,
             };
+#pragma warning restore
 
         }
 
