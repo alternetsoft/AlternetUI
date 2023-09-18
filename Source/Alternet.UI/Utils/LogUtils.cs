@@ -9,7 +9,13 @@ namespace Alternet.UI
     /// <summary>
     /// Contains static methods for log handling.
     /// </summary>
-    internal static class LogUtils
+    public static class LogUtils
     {
+        private static int id;
+
+        public static int GenNewId()
+        {
+            return id++;
+        }
     }
 }
