@@ -71,8 +71,8 @@ namespace Alternet.Base.Collections
         /// <returns>The element at the specified index.</returns>
         public T this[long index]
         {
-            get => Items[(int)index];
-            set => SetItem((int)index, value);
+            get => base[(int)index];
+            set => SafeSetItem((int)index, value);
         }
 
         /// <summary>
@@ -86,7 +86,7 @@ namespace Alternet.Base.Collections
             get => base[index];
             set
             {
-                SetItem(index, value);
+                SafeSetItem(index, value);
             }
         }
 
@@ -127,7 +127,7 @@ namespace Alternet.Base.Collections
             }
         }
 
-        public new void SetItem(int index, T item)
+        internal void SafeSetItem(int index, T item)
         {
             if (Items.IsReadOnly)
                 throw new NotSupportedException(ErrorMessages.Default.CannotChangeReadOnlyObject);
@@ -135,7 +135,7 @@ namespace Alternet.Base.Collections
             if ((uint)index >= (uint)Count)
                 throw new ArgumentOutOfRangeException(nameof(index));
 
-            base.SetItem(index, item);
+            SetItem(index, item);
         }
 
         /// <summary>
