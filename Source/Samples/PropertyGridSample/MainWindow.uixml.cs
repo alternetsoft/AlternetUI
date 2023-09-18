@@ -589,10 +589,10 @@ namespace PropertyGridSample
 #endif
         }
 
-        private void Application_LogMessage(object? sender, EventArgs e)
+        private void Application_LogMessage(object? sender, LogMessageEventArgs e)
         {
 #if DEBUG
-            Log($"DEBUG MSG: { Application.Current.EventArgString}");
+            Log($"DEBUG MSG: { e.Message }");
 #endif
         }
 
