@@ -215,13 +215,14 @@ namespace Alternet.UI
         /// <param name="isAnimationProhibited">Should animation of this property be prohibited?</param>
         /// <param name="defaultUpdateSourceTrigger">The UpdateSourceTrigger to use for bindings that have UpdateSourceTriger=Default.</param>
         [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.NoInlining)]
-        public FrameworkPropertyMetadata(object defaultValue,
-                                         PropMetadataOption flags,
-                                         PropertyChangedCallback propertyChangedCallback,
-                                         CoerceValueCallback coerceValueCallback,
-                                         bool isAnimationProhibited,
-                                         UpdateSourceTrigger defaultUpdateSourceTrigger) :
-            base(defaultValue, propertyChangedCallback, coerceValueCallback, isAnimationProhibited)
+        public FrameworkPropertyMetadata(
+            object defaultValue,
+            PropMetadataOption flags,
+            PropertyChangedCallback propertyChangedCallback,
+            CoerceValueCallback coerceValueCallback,
+            bool isAnimationProhibited,
+            UpdateSourceTrigger defaultUpdateSourceTrigger)
+                : base(defaultValue, propertyChangedCallback, coerceValueCallback, isAnimationProhibited)
         {
             if (!BindingOperations.IsValidUpdateSourceTrigger(defaultUpdateSourceTrigger))
                 throw new InvalidEnumArgumentException("defaultUpdateSourceTrigger", (int) defaultUpdateSourceTrigger, typeof(UpdateSourceTrigger));
