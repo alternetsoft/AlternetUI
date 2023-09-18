@@ -1,6 +1,7 @@
 using System;
 using System.ComponentModel;
 using Alternet.UI;
+using Alternet.UI.Localization;
 
 namespace Alternet.Drawing
 {

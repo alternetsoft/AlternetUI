@@ -2,6 +2,7 @@ using System;
 using System.ComponentModel;
 using Alternet.Base.Collections;
 using Alternet.Drawing;
+using Alternet.UI.Localization;
 
 namespace Alternet.UI
 {

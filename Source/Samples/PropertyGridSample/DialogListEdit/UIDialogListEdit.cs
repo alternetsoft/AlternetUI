@@ -6,9 +6,10 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Alternet.Drawing;
-using Alternet.Base.Collections;
 using System.Reflection;
+using Alternet.Base.Collections;
+using Alternet.Drawing;
+using Alternet.UI.Localization;
 
 namespace Alternet.UI
 {

@@ -5,6 +5,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Threading;
+using Alternet.UI.Localization;
 
 namespace Alternet.UI
 {
@@ -192,7 +193,7 @@ namespace Alternet.UI
         /// </summary>
         /// <value>A <see cref="IReadOnlyList{Window}"/> that contains
         /// references to all visible window objects in the current application.</value>
-        public IEnumerable<Window>? VisibleWindows
+        public IEnumerable<Window> VisibleWindows
         {
             get
             {

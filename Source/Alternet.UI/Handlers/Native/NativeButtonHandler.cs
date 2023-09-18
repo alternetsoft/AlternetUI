@@ -163,7 +163,7 @@ namespace Alternet.UI
         }
 
         private void StateImages_PropertyChanged(
-            object sender,
+            object? sender,
             PropertyChangedEventArgs e)
         {
             var nativeControl = NativeControl;

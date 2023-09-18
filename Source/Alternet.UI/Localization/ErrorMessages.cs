@@ -1,4 +1,4 @@
-namespace Alternet.UI
+namespace Alternet.UI.Localization
 {
     /// <summary>
     /// Defines localizations for error messages.

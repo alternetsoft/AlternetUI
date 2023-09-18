@@ -36,18 +36,18 @@ namespace Alternet.UI
             NativeControl.HyperlinkClick += NativeControl_HyperlinkClick;
         }
 
-        private void NativeControl_HyperlinkClick(
-            object sender,
-            System.ComponentModel.CancelEventArgs e)
-        {
-            Control.RaiseLinkClicked(e);
-        }
-
         protected override void OnDetach()
         {
             base.OnDetach();
             Control.TextChanged -= Control_TextChanged;
             NativeControl.HyperlinkClick -= NativeControl_HyperlinkClick;
+        }
+
+        private void NativeControl_HyperlinkClick(
+            object? sender,
+            System.ComponentModel.CancelEventArgs e)
+        {
+            Control.RaiseLinkClicked(e);
         }
 
         private void Control_TextChanged(object? sender, System.EventArgs? e)

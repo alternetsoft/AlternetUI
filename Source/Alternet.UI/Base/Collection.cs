@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Alternet.UI;
+using Alternet.UI.Localization;
 
 namespace Alternet.Base.Collections
 {
@@ -127,17 +128,6 @@ namespace Alternet.Base.Collections
             }
         }
 
-        internal void SafeSetItem(int index, T item)
-        {
-            if (Items.IsReadOnly)
-                throw new NotSupportedException(ErrorMessages.Default.CannotChangeReadOnlyObject);
-
-            if ((uint)index >= (uint)Count)
-                throw new ArgumentOutOfRangeException(nameof(index));
-
-            SetItem(index, item);
-        }
-
         /// <summary>
         /// Changes the number of elements in the collection.
         /// </summary>
@@ -155,6 +145,17 @@ namespace Alternet.Base.Collections
 
             for (int i = Count; i < newCount; i++)
                 Add(createItem());
+        }
+
+        internal void SafeSetItem(int index, T item)
+        {
+            if (Items.IsReadOnly)
+                throw new NotSupportedException(ErrorMessages.Default.CannotChangeReadOnlyObject);
+
+            if ((uint)index >= (uint)Count)
+                throw new ArgumentOutOfRangeException(nameof(index));
+
+            SetItem(index, item);
         }
 
         /// <summary>

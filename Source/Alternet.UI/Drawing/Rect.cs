@@ -7,6 +7,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Numerics;
 using System.Runtime.InteropServices;
 using Alternet.UI;
+using Alternet.UI.Localization;
 using Alternet.UI.Markup;
 
 namespace Alternet.Drawing

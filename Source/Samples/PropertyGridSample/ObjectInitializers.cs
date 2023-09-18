@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Alternet.UI;
-using Alternet.Base.Collections;
-using Alternet.Drawing;
 using System.Collections;
 using System.Reflection;
+using Alternet.Base.Collections;
+using Alternet.Drawing;
+using Alternet.UI;
+using Alternet.UI.Localization;
 
 namespace PropertyGridSample
 {

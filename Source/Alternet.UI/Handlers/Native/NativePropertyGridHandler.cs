@@ -93,7 +93,7 @@ namespace Alternet.UI
             NativeControl.ColEndDrag += NativeControl_ColEndDrag;
         }
 
-        private void NativeControl_ButtonClick(object sender, EventArgs e)
+        private void NativeControl_ButtonClick(object? sender, EventArgs e)
         {
             Control.RaiseButtonClick(e);
         }
@@ -173,4 +173,3 @@ namespace Alternet.UI
         }
     }
 }
-

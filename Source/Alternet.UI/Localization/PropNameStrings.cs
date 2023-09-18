@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Alternet.UI
+namespace Alternet.UI.Localization
 {
     /// <summary>
     /// Defines localizations for property names.

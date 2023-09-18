@@ -1,5 +1,6 @@
 using System;
 using System.ComponentModel;
+using Alternet.UI.Localization;
 
 namespace Alternet.Drawing
 {
@@ -63,7 +64,7 @@ namespace Alternet.Drawing
             if (emSize <= 0 || double.IsInfinity(emSize) || double.IsNaN(emSize))
             {
                 throw new ArgumentException(
-                    Alternet.UI.ErrorMessages.Default.InvalidParameter,
+                    ErrorMessages.Default.InvalidParameter,
                     nameof(emSize));
             }
 

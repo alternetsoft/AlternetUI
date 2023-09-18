@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Linq;
 using Alternet.Base.Collections;
 using Alternet.Drawing;
+using Alternet.UI.Localization;
 
 namespace Alternet.UI
 {

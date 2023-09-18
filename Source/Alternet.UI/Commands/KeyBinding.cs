@@ -2,11 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
 // Description: The KeyBinding class is used by the developer to create Keyboard Input Bindings
-//
-//                  See spec at : http://avalon/coreui/Specs/Commanding(new).mht 
-//
+//                  See spec at : http://avalon/coreui/Specs/Commanding(new).mht
 // * KeyBinding class serves the purpose of Input Bindings for Keyboard Device.
 using System;
 using System.ComponentModel;
@@ -16,58 +13,47 @@ namespace Alternet.UI
 {
     /// <summary>
     /// KeyBinding - Implements InputBinding (generic InputGesture-Command map)
-    ///         KeyBinding acts like a map for KeyGesture and Commands. 
-    ///         Most of the logic is in InputBinding and KeyGesture, this only 
+    ///         KeyBinding acts like a map for KeyGesture and Commands.
+    ///         Most of the logic is in InputBinding and KeyGesture, this only
     ///         facilitates user  to add Key/Modifiers directly without going in
-    ///         KeyGesture path. Also it provides the KeyGestureTypeConverter 
-    ///         on the Gesture property to have KeyGesture, like Ctrl+X, Alt+V 
+    ///         KeyGesture path. Also it provides the KeyGestureTypeConverter
+    ///         on the Gesture property to have KeyGesture, like Ctrl+X, Alt+V
     ///         defined in Markup as Gesture="Ctrl+X" working
     /// </summary>
     public class KeyBinding : InputBinding
     {
-        //------------------------------------------------------
-        //
-        //  Constructors
-        //
-        //------------------------------------------------------
-        #region Constructor
         /// <summary>
-        /// Constructor 
+        /// Initializes a new instance of the <see cref="KeyBinding"/> class.
         /// </summary>
-        public KeyBinding() : base()
+        public KeyBinding()
+            : base()
         {
         }
 
         /// <summary>
-        /// Constructor
+        /// Initializes a new instance of the <see cref="KeyBinding"/> class.
         /// </summary>
-        /// <param name="command">Command associated</param>
-        /// <param name="gesture">KeyGesture associated</param>
-        public KeyBinding(ICommand command, KeyGesture gesture) : base(command, gesture)
+        /// <param name="command">Associated command.</param>
+        /// <param name="gesture">Associated <see cref="KeyGesture"/>.</param>
+        public KeyBinding(ICommand command, KeyGesture gesture)
+            : base(command, gesture)
         {
             SynchronizePropertiesFromGesture(gesture);
         }
 
         /// <summary>
-        /// Constructor
+        /// Initializes a new instance of the <see cref="KeyBinding"/> class.
         /// </summary>
-        /// <param name="command"></param>
-        /// <param name="modifiers">modifiers</param>
-        /// <param name="key">key</param>
-        public KeyBinding(ICommand command, Key key, ModifierKeys modifiers) :
-                            this(command, new KeyGesture(key, modifiers))
+        /// <param name="command">Associated command.</param>
+        /// <param name="modifiers">Key modifiers.</param>
+        /// <param name="key">Key.</param>
+        public KeyBinding(ICommand command, Key key, ModifierKeys modifiers)
+            : this(command, new KeyGesture(key, modifiers))
         {
         }
-        #endregion Constructor
 
-        //------------------------------------------------------
-        //
-        //  Public Methods
-        //
-        //------------------------------------------------------
-        #region Public Methods
         /// <summary>
-        /// KeyGesture Override, to ensure type-safety and provide a 
+        /// KeyGesture Override, to ensure type-safety and provide a
         ///  TypeConverter for KeyGesture
         /// </summary>
         [TypeConverter(typeof(KeyGestureConverter))]
@@ -78,6 +64,7 @@ namespace Alternet.UI
             {
                 return base.Gesture as KeyGesture;
             }
+
             set
             {
                 var keyGesture = value as KeyGesture;
@@ -88,7 +75,8 @@ namespace Alternet.UI
                 }
                 else
                 {
-                    throw new ArgumentException(SR.Get(SRID.InputBinding_ExpectedInputGesture, typeof(KeyGesture)));
+                    throw new ArgumentException(
+                        SR.Get(SRID.InputBinding_ExpectedInputGesture, typeof(KeyGesture)));
                 }
             }
         }
@@ -108,6 +96,7 @@ namespace Alternet.UI
             {
                 return (ModifierKeys)GetValue(ModifiersProperty);
             }
+
             set
             {
                 SetValue(ModifiersProperty, value);
@@ -124,7 +113,13 @@ namespace Alternet.UI
         ///     Dependency Property for Key
         /// </summary>
         public static readonly DependencyProperty KeyProperty =
-            DependencyProperty.Register("Key", typeof(Key), typeof(KeyBinding), new UIPropertyMetadata(Key.None, new PropertyChangedCallback(OnKeyPropertyChanged)));
+            DependencyProperty.Register(
+                "Key",
+                typeof(Key),
+                typeof(KeyBinding),
+                new UIPropertyMetadata(
+                    Key.None,
+                    new PropertyChangedCallback(OnKeyPropertyChanged)));
 
         /// <summary>
         ///     Key
@@ -135,21 +130,20 @@ namespace Alternet.UI
             {
                 return (Key)GetValue(KeyProperty);
             }
+
             set
             {
                 SetValue(KeyProperty, value);
             }
         }
 
-        private static void OnKeyPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private static void OnKeyPropertyChanged(
+            DependencyObject d,
+            DependencyPropertyChangedEventArgs e)
         {
             KeyBinding keyBinding = (KeyBinding)d;
             keyBinding.SynchronizeGestureFromProperties((Key)(e.NewValue), keyBinding.Modifiers);
         }
-
-        #endregion Public Methods
-
-        #region Private Methods
 
         /// <summary>
         ///     Synchronized Properties from Gesture
@@ -190,16 +184,6 @@ namespace Alternet.UI
             }
         }
 
-        #endregion
-        //------------------------------------------------------
-        //
-        //   Private Fields
-        //
-        //------------------------------------------------------
-        #region Data
-
         private bool _settingGesture = false;
-
-        #endregion
     }
 }

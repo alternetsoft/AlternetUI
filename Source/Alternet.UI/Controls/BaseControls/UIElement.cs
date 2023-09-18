@@ -2,6 +2,7 @@ using System;
 using System.ComponentModel;
 using System.Diagnostics;
 using Alternet.UI.Internal.KnownBoxes;
+using Alternet.UI.Localization;
 
 namespace Alternet.UI
 {

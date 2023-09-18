@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Globalization;
 using System.Runtime.InteropServices;
 using Alternet.Drawing;
+using Alternet.UI.Localization;
 
 namespace Alternet.UI
 {

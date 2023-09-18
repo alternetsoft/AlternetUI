@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 using Alternet.UI;
+using Alternet.UI.Localization;
 
 namespace Alternet.Drawing
 {

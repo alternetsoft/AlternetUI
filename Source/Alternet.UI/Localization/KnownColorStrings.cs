@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Alternet.Drawing;
 
-namespace Alternet.UI
+namespace Alternet.UI.Localization
 {
     /// <summary>
     /// Defines localizations for system color names.

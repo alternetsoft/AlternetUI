@@ -1,5 +1,6 @@
 using System;
 using System.ComponentModel;
+using Alternet.UI.Localization;
 
 namespace Alternet.UI
 {
