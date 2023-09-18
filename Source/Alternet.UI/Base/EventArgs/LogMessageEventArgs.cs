@@ -12,6 +12,8 @@ namespace Alternet.UI
     public class LogMessageEventArgs : EventArgs
     {
         private readonly string message;
+        private readonly string? prefix;
+        private readonly bool replaceLast;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PropertyChangeEventArgs"/> class.
@@ -23,8 +25,35 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="LogMessageEventArgs"/> class.
+        /// </summary>
+        /// <param name="message">Message that needs to be logged.</param>
+        /// <param name="prefix">Message text prefix.</param>
+        /// <param name="replaceLast">If <c>true</c>, last logged message must be replaced
+        /// with the <paramref name="message"/> (if old message starts from
+        /// <paramref name="prefix"/>).</param>
+        public LogMessageEventArgs(string message, string prefix, bool replaceLast)
+        {
+            this.message = message;
+            this.prefix = prefix;
+            this.replaceLast = replaceLast;
+        }
+
+        /// <summary>
         /// Message that needs to be logged.
         /// </summary>
         public string Message => message;
+
+        /// <summary>
+        /// Message text prefix.
+        /// </summary>
+        public string? MessagePrefix => prefix;
+
+        /// <summary>
+        /// If <c>true</c>, last logged message must be replaced
+        /// with the <see cref="Message"/> (if old message starts from
+        /// <see cref="MessagePrefix"/>).
+        /// </summary>
+        public bool ReplaceLastMessage => replaceLast;
     }
 }
