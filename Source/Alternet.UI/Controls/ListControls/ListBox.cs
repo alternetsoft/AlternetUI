@@ -433,30 +433,6 @@ namespace Alternet.UI
             return index >= 0 && index < Items.Count;
         }
 
-        /// <summary>
-        /// Removes items from the <see cref="ListBox"/>.
-        /// </summary>
-        public virtual void RemoveItems(IReadOnlyList<int> items)
-        {
-            if (items == null || items.Count == 0)
-                return;
-
-            BeginUpdate();
-            try
-            {
-                ClearSelected();
-                foreach (int index in items)
-                {
-                    if (index < Items.Count)
-                        Items.RemoveAt(index);
-                }
-            }
-            finally
-            {
-                EndUpdate();
-            }
-        }
-
         /// <inheritdoc/>
         public override void ClearSelected()
         {

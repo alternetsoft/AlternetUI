@@ -142,6 +142,12 @@ namespace Alternet.UI.Native
             return n;
         }
         
+        public void SetItem(int index, string value)
+        {
+            CheckDisposed();
+            NativeApi.ListBox_SetItem_(NativePointer, index, value);
+        }
+        
         static GCHandle eventCallbackGCHandle;
         
         static void SetEventCallback()
@@ -250,6 +256,9 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern int ListBox_ItemHitTest_(IntPtr obj, Alternet.Drawing.Point position);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void ListBox_SetItem_(IntPtr obj, int index, string value);
             
         }
     }

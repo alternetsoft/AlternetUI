@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Specialized;
 using Alternet.Base.Collections;
 using Alternet.Drawing;
 
@@ -41,6 +42,7 @@ namespace Alternet.UI
 
             Control.Items.ItemInserted += Items_ItemInserted;
             Control.Items.ItemRemoved += Items_ItemRemoved;
+            Control.Items.CollectionChanged += Items_CollectionChanged;
             Control.SelectionModeChanged += Control_SelectionModeChanged;
 
             Control.SelectionChanged += Control_SelectionChanged;
@@ -52,6 +54,7 @@ namespace Alternet.UI
             Control.Items.ItemInserted -= Items_ItemInserted;
             Control.Items.ItemRemoved -= Items_ItemRemoved;
             Control.SelectionModeChanged -= Control_SelectionModeChanged;
+            Control.Items.CollectionChanged -= Items_CollectionChanged;
 
             Control.SelectionChanged -= Control_SelectionChanged;
             NativeControl.SelectionChanged -= NativeControl_SelectionChanged;
@@ -135,6 +138,17 @@ namespace Alternet.UI
         private void Items_ItemInserted(object? sender, int index, object item)
         {
             NativeControl.InsertItem(index, Control.GetItemText(item));
+        }
+
+        private void Items_CollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
+        {
+            if(e.Action == NotifyCollectionChangedAction.Replace)
+            {
+                var item = e.NewItems?[0];
+                var index = e.NewStartingIndex;
+                var text = Control.GetItemText(item);
+                NativeControl.SetItem(index, text);
+            }
         }
 
         private void Items_ItemRemoved(object? sender, int index, object item)

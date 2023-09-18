@@ -43,6 +43,14 @@ namespace Alternet::UI
         }
     }
 
+    void ListBox::SetItem(int index, const string& value)
+    {
+        if (IsWxWindowCreated())
+            GetListBox()->SetString(index, wxStr(value));
+        else
+            _items.at(index) = value;
+    }
+
     void ListBox::InsertItem(int index, const string& value)
     {
         if (IsWxWindowCreated())

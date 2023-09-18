@@ -98,6 +98,11 @@ ALTERNET_UI_API int ListBox_ItemHitTest_(ListBox* obj, Point position)
     return obj->ItemHitTest(position);
 }
 
+ALTERNET_UI_API void ListBox_SetItem_(ListBox* obj, int index, const char16_t* value)
+{
+    obj->SetItem(index, value);
+}
+
 ALTERNET_UI_API void ListBox_SetEventCallback_(ListBox::ListBoxEventCallbackType callback)
 {
     ListBox::SetEventCallback(callback);
