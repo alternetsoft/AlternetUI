@@ -21,6 +21,10 @@ namespace Alternet.UI
             "Cannot dispose an immutable object.";
 
         /// <see cref="CurrentApplicationIsNotSet"/>
+        public string CannotChangeReadOnlyObject { get; set; } =
+            "Cannot change a readonly object.";
+
+        /// <see cref="CurrentApplicationIsNotSet"/>
         public string OnlySolidBrushInstancesSupported { get; set; } =
             "Only SolidBrush instances are supported.";
 
