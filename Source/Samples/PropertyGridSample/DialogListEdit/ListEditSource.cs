@@ -125,9 +125,14 @@ namespace Alternet.UI
 
         public virtual string? GetItemTitle(object item) => item?.ToString();
 
-        public abstract IEnumerable? RootItems
+        public virtual IEnumerable? RootItems
         {
-            get;
+            get
+            {
+                var value = PropInfo?.GetValue(Instance);
+                var result = value as IEnumerable;
+                return result;
+            }
         }
 
         public bool AllowApplyData => true;
@@ -185,5 +190,13 @@ namespace Alternet.UI
         public virtual int? GetItemImageIndex(object item) => null;
 
         public virtual object? CreateNewItem() => null;
+
+        protected void ApplyDataAsArray<T>(IEnumerableTree tree)
+        {
+            List<T> value = new();
+            value.AddRange(GetItems<T>(tree));
+            T[] asArray = value.ToArray();
+            PropInfo?.SetValue(Instance, asArray);
+        }
     }
 }
