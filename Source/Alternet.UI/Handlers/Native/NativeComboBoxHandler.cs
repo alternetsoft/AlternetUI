@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using Alternet.Base.Collections;
 
 namespace Alternet.UI
@@ -53,6 +54,7 @@ namespace Alternet.UI
                 Items_ItemRangeAdditionFinished;
             Control.Items.ItemInserted += Items_ItemInserted;
             Control.Items.ItemRemoved += Items_ItemRemoved;
+            Control.Items.CollectionChanged += Items_CollectionChanged;
             Control.IsEditableChanged += Control_IsEditableChanged;
             Control.TextChanged += Control_TextChanged;
             Control.SelectedItemChanged += Control_SelectedItemChanged;
@@ -65,6 +67,7 @@ namespace Alternet.UI
         {
             Control.Items.ItemRangeAdditionFinished -=
                 Items_ItemRangeAdditionFinished;
+            Control.Items.CollectionChanged -= Items_CollectionChanged;
             Control.Items.ItemInserted -= Items_ItemInserted;
             Control.Items.ItemRemoved -= Items_ItemRemoved;
             Control.IsEditableChanged -= Control_IsEditableChanged;
@@ -73,6 +76,17 @@ namespace Alternet.UI
             NativeControl.SelectedItemChanged -= NativeControl_SelectedItemChanged;
 
             base.OnDetach();
+        }
+
+        private void Items_CollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
+        {
+            if (e.Action == NotifyCollectionChangedAction.Replace)
+            {
+                var item = e.NewItems?[0];
+                var index = e.NewStartingIndex;
+                var text = Control.GetItemText(item);
+                NativeControl.SetItem(index, text);
+            }
         }
 
         private void NativeControl_SelectedItemChanged(object? sender, EventArgs e)

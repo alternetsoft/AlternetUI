@@ -288,23 +288,6 @@ namespace Alternet.UI
         public void SelectAllText() => Handler.SelectAllText();
 
         /// <summary>
-        /// Finds the first item in the combo box that matches the specified string.
-        /// </summary>
-        /// <param name="s">The string to search for.</param>
-        /// <returns>The zero-based index of the first item found; returns
-        /// <c>null</c> if no match is found.</returns>
-        public int? FindStringExact(string s)
-        {
-            // todo: add other similar methods: FindString and overloads.
-            return FindStringInternal(
-                s,
-                Items,
-                startIndex: null,
-                exact: true,
-                ignoreCase: true);
-        }
-
-        /// <summary>
         /// Raises the <see cref="SelectedItemChanged"/> event and calls
         /// <see cref="OnSelectedItemChanged(EventArgs)"/>.
         /// </summary>
@@ -385,58 +368,6 @@ namespace Alternet.UI
             var index = Items.IndexOf(newValue);
             if (index != -1)
                 SelectedIndex = index;
-        }
-
-        private int? FindStringInternal(
-            string str,
-            IList<object> items,
-            int? startIndex,
-            bool exact,
-            bool ignoreCase)
-        {
-            if (str is null)
-            {
-                return null;
-            }
-
-            if (items is null || items.Count == 0)
-            {
-                return null;
-            }
-
-            var startIndexInt = startIndex ?? -1;
-
-            if (startIndexInt < -1 || startIndexInt >= items.Count)
-            {
-                throw new ArgumentOutOfRangeException(nameof(startIndexInt));
-            }
-
-            // Start from the start index and wrap around until we find the string
-            // in question. Use a separate counter to ensure that we arent cycling through the list infinitely.
-            int numberOfTimesThroughLoop = 0;
-
-            // this API is really Find NEXT String...
-            for (int index = (startIndexInt + 1) % items.Count; numberOfTimesThroughLoop < items.Count; index = (index + 1) % items.Count)
-            {
-                numberOfTimesThroughLoop++;
-
-                bool found;
-                if (exact)
-                {
-                    found = string.Compare(str, GetItemText(items[index]), ignoreCase, CultureInfo.CurrentCulture) == 0;
-                }
-                else
-                {
-                    found = string.Compare(str, 0, GetItemText(items[index]), 0, str.Length, ignoreCase, CultureInfo.CurrentCulture) == 0;
-                }
-
-                if (found)
-                {
-                    return index;
-                }
-            }
-
-            return null;
-        }
+        } 
     }
 }

@@ -5,41 +5,26 @@ namespace NativeApi.Api
 {
     public class ComboBox : Control
     {
+        public event EventHandler? SelectedItemChanged;
+        public event EventHandler? TextChanged;
+
         public bool HasBorder { get; set; }
-
-        public event EventHandler? SelectedItemChanged { 
-            add => throw new Exception(); remove => throw new Exception(); }
-
-        public event EventHandler? TextChanged { 
-            add => throw new Exception(); remove => throw new Exception(); }
-
         public int ItemsCount { get; }
-
         public bool IsEditable { get; set; }
-
         public int SelectedIndex { get; set; }
-
-        public string Text { get => throw new Exception(); 
-            set => throw new Exception(); }
-
-        public void InsertItem(int index, string value) => throw new Exception();
-
-        public IntPtr CreateItemsInsertion() => throw new Exception();
-        public void AddItemToInsertion(IntPtr insertion, string item) => 
-            throw new Exception();
-        public void CommitItemsInsertion(IntPtr insertion, int index) => 
-            throw new Exception();
-
-        public void RemoveItemAt(int index) => throw new Exception();
-
-        public void ClearItems() => throw new Exception();
-
+        public string Text { get; set; }
         public int TextSelectionStart { get; }
-
         public int TextSelectionLength { get; }
 
-        public void SelectTextRange(int start, int length) => throw new Exception();
+        public IntPtr CreateItemsInsertion() => default;
+        public void AddItemToInsertion(IntPtr insertion, string item) { }
+        public void CommitItemsInsertion(IntPtr insertion, int index) { }
+        public void InsertItem(int index, string value) { }
+        public void RemoveItemAt(int index) { }
+        public void ClearItems() { }
+        public void SelectTextRange(int start, int length) { }
+        public void SelectAllText() { }
 
-        public void SelectAllText() => throw new Exception();
+        public void SetItem(int index, string value) {}
     }
 }

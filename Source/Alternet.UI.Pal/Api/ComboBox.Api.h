@@ -68,11 +68,6 @@ ALTERNET_UI_API int ComboBox_GetTextSelectionLength_(ComboBox* obj)
     return obj->GetTextSelectionLength();
 }
 
-ALTERNET_UI_API void ComboBox_InsertItem_(ComboBox* obj, int index, const char16_t* value)
-{
-    obj->InsertItem(index, value);
-}
-
 ALTERNET_UI_API void* ComboBox_CreateItemsInsertion_(ComboBox* obj)
 {
     return obj->CreateItemsInsertion();
@@ -86,6 +81,11 @@ ALTERNET_UI_API void ComboBox_AddItemToInsertion_(ComboBox* obj, void* insertion
 ALTERNET_UI_API void ComboBox_CommitItemsInsertion_(ComboBox* obj, void* insertion, int index)
 {
     obj->CommitItemsInsertion(insertion, index);
+}
+
+ALTERNET_UI_API void ComboBox_InsertItem_(ComboBox* obj, int index, const char16_t* value)
+{
+    obj->InsertItem(index, value);
 }
 
 ALTERNET_UI_API void ComboBox_RemoveItemAt_(ComboBox* obj, int index)
@@ -106,6 +106,11 @@ ALTERNET_UI_API void ComboBox_SelectTextRange_(ComboBox* obj, int start, int len
 ALTERNET_UI_API void ComboBox_SelectAllText_(ComboBox* obj)
 {
     obj->SelectAllText();
+}
+
+ALTERNET_UI_API void ComboBox_SetItem_(ComboBox* obj, int index, const char16_t* value)
+{
+    obj->SetItem(index, value);
 }
 
 ALTERNET_UI_API void ComboBox_SetEventCallback_(ComboBox::ComboBoxEventCallbackType callback)

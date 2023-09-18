@@ -54,6 +54,14 @@ namespace Alternet::UI
         }
     }
 
+    void ComboBox::SetItem(int index, const string& value)
+    {
+        if (IsWxWindowCreated())
+            GetItemContainer()->SetString(index, wxStr(value));
+        else
+            _items.at(index) = value;
+    }
+
     void ComboBox::InsertItem(int index, const string& value)
     {
         if (IsWxWindowCreated())
@@ -182,7 +190,6 @@ namespace Alternet::UI
             value->Bind(wxEVT_TEXT, &ComboBox::OnTextChanged, this);
             return value;
         }
-
     }
 
     void ComboBox::OnSelectedItemChanged(wxCommandEvent& event)

@@ -41,6 +41,8 @@
                             Margin="0,3,0,0" Click="GetTextSelectionButton_Click"/>
                     <Button Text="Text = 'abc'" Name="setTextToAbcButton" 
                             Margin="0,3,0,0" Click="SetTextToAbcButton_Click"/>
+                    <Button Text="Items[2] = 'hello'"
+                            Margin="0,3,0,0" Click="SetItem_Click"/>
                 </VerticalStackPanel>
 
               <VerticalStackPanel Margin="5,0,0,5" Padding="5,0,5,5">

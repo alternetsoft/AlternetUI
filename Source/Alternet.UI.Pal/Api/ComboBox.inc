@@ -25,14 +25,15 @@ int GetTextSelectionStart();
 
 int GetTextSelectionLength();
 
-void InsertItem(int index, const string& value);
 void* CreateItemsInsertion();
 void AddItemToInsertion(void* insertion, const string& item);
 void CommitItemsInsertion(void* insertion, int index);
+void InsertItem(int index, const string& value);
 void RemoveItemAt(int index);
 void ClearItems();
 void SelectTextRange(int start, int length);
 void SelectAllText();
+void SetItem(int index, const string& value);
 public:
 enum class ComboBoxEvent
 {

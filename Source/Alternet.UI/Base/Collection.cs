@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using Alternet.UI;
 
 namespace Alternet.Base.Collections
 {
@@ -71,7 +72,22 @@ namespace Alternet.Base.Collections
         public T this[long index]
         {
             get => Items[(int)index];
-            set => Items[(int)index] = value;
+            set => SetItem((int)index, value);
+        }
+
+        /// <summary>
+        /// Gets or sets the element at the specified index.
+        /// </summary>
+        /// <param name="index">The zero-based index of the element
+        /// to get or set.</param>
+        /// <returns>The element at the specified index.</returns>
+        public new T this[int index]
+        {
+            get => base[index];
+            set
+            {
+                SetItem(index, value);
+            }
         }
 
         /// <summary>
@@ -109,6 +125,17 @@ namespace Alternet.Base.Collections
                 RangeOpInProgress = false;
                 OnItemRangeAdditionFinished(index, collection);
             }
+        }
+
+        public new void SetItem(int index, T item)
+        {
+            if (Items.IsReadOnly)
+                throw new NotSupportedException(ErrorMessages.Default.CannotChangeReadOnlyObject);
+
+            if ((uint)index >= (uint)Count)
+                throw new ArgumentOutOfRangeException(nameof(index));
+
+            base.SetItem(index, item);
         }
 
         /// <summary>
