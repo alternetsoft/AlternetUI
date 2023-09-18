@@ -11,8 +11,7 @@ namespace Alternet.UI
         public MouseInputProvider(Native.Mouse nativeMouse)
         {
             this.nativeMouse = nativeMouse;
-            //nativeMouse.MouseMove += NativeMouse_MouseMove;
-            
+            nativeMouse.MouseMove += NativeMouse_MouseMove;            
             nativeMouse.MouseDown += NativeMouse_MouseDown;
             nativeMouse.MouseUp += NativeMouse_MouseUp;
             nativeMouse.MouseWheel += NativeMouse_MouseWheel;
@@ -76,7 +75,9 @@ namespace Alternet.UI
             if (targetControlPointer == IntPtr.Zero)
                 return null;
 
-            var c = NativeObject.GetFromNativePointer<NativeObject>(targetControlPointer, null) as Native.Control;
+            var c = NativeObject.GetFromNativePointer<NativeObject>(
+                targetControlPointer,
+                null) as Native.Control;
             if (c == null)
                 return null;
 
