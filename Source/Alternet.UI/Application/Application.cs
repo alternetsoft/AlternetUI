@@ -344,6 +344,41 @@ namespace Alternet.UI
             Current.LogMessage?.Invoke(Current, new LogMessageEventArgs(msg));
         }
 
+        /// <inheritdoc cref="Log"/>
+        /// <remarks>
+        /// Works only if DEBUG conditional is defined.
+        /// </remarks>
+        [Conditional("DEBUG")]
+        public static void DebugLog(string msg)
+        {
+            Log(msg);
+        }
+
+        /// <inheritdoc cref="LogReplace"/>
+        /// <remarks>
+        /// Works only if DEBUG conditional is defined.
+        /// </remarks>
+        [Conditional("DEBUG")]
+        public static void DebugLogReplace(string msg, string prefix)
+        {
+            LogReplace(msg, prefix);
+        }
+
+        /// <summary>
+        /// Calls <see cref="LogMessage"/> event to add or replace log message.
+        /// </summary>
+        /// <param name="msg">Message text.</param>
+        /// <param name="prefix">Message text prefix.</param>
+        /// <remarks>
+        /// If last logged message
+        /// contains <paramref name="prefix"/>, last log item is replaced with
+        /// <paramref name="msg"/> instead of adding new log item.
+        /// </remarks>
+        public static void LogReplace(string msg, string prefix)
+        {
+            Current.LogMessage?.Invoke(Current, new LogMessageEventArgs(msg, prefix, true));
+        }
+
         /// <summary>
         /// Processes all pending events.
         /// </summary>
