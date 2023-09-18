@@ -65,6 +65,12 @@ namespace Alternet.UI
                     return Items[Count - 1];
                 return null;
             }
+
+            set
+            {
+                if (Count > 0 && value is not null)
+                    Items[Count - 1] = value;
+            }
         }
 
         /// <summary>
