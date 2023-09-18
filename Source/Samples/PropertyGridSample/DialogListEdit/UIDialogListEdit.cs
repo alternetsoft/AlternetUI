@@ -405,6 +405,16 @@ namespace Alternet.UI
 
         public class TreeViewPlus : TreeView, IEnumerableTree<TreeViewItem>
         {
+            public TreeViewPlus()
+            {
+                AllowDrop = true;
+
+                //<DragEventArgs>? DragDrop;
+                //<DragEventArgs>? DragOver;
+                //<DragEventArgs>? DragEnter;
+                //DragLeave;
+            }
+
             IEnumerable<TreeViewItem>? IEnumerableTree<TreeViewItem>.GetChildren(TreeViewItem item)
             {
                 if (item == null || !item.HasItems)
@@ -438,3 +448,4 @@ namespace Alternet.UI
         }
     }
 }
+
