@@ -63,3 +63,22 @@
 - ListEditor show name and prop name in title
 	ControlNameDictionary
 		CreateNewName(Window window, Control control, string Prefix)
+
+- ListEditor Add editors for:
+            RegisterCollectionEditor(typeof(ImageList), nameof(ImageList.Images));
+            RegisterCollectionEditor(typeof(ImageSet), nameof(ImageSet.Images));
+            RegisterCollectionEditor(typeof(StatusBar), nameof(StatusBar.Panels));
+            RegisterCollectionEditor(typeof(TabControl), nameof(TabControl.Pages));
+            RegisterCollectionEditor(typeof(Toolbar), nameof(Toolbar.Items));
+            RegisterCollectionEditor(typeof(Menu), nameof(Menu.Items));
+            RegisterCollectionEditor(typeof(Window), nameof(Window.InputBindings));
+
+- In bottom listbox add Refresh() item of propGrid
+
+- Collection edit DRAG N DROP
+	Implement in Control
+		protected virtual void OnMouseDown(MouseButtonEventArgs e)
+		protected virtual void OnMouseUp(MouseButtonEventArgs e)
+		DragStart event
+		double DragDistance
+		double DefaultDragDistance

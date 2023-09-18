@@ -6,6 +6,10 @@
 - wxSingleChoiceDialog https://docs.wxwidgets.org/3.2/classwx_single_choice_dialog.html
 - wxTextEntryDialog https://docs.wxwidgets.org/3.2/classwx_text_entry_dialog.html
 
+- IAuiToolbarButton
+
+- Study wxDialog maybe have DialogWindow
+
 - Add init event for each control in Platform Default props.
 
 - LayoutFactory.AdjustTextBoxesHeight(Control container);
