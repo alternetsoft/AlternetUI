@@ -29,14 +29,15 @@ namespace XamlX.IL
             rasm = typeof(TypeConverterAttribute).Assembly;
             rasm = typeof(Uri).Assembly;
             foreach (var asm in AppDomain.CurrentDomain.GetAssemblies())
+            {
                 try
                 {
                     ResolveAssembly(asm);
                 }
                 catch
                 {
-                    //
                 }
+            }
         }
 
         public IXamlAssembly FindAssembly(string name)
@@ -44,20 +45,23 @@ namespace XamlX.IL
             return Assemblies.FirstOrDefault(a => a.Name.ToLowerInvariant() == name.ToLowerInvariant());
         }
 
-        SreAssembly ResolveAssembly(Assembly asm)
+        private SreAssembly ResolveAssembly(Assembly asm)
         {
             if (asm.IsDynamic)
                 return null;
             foreach (var a in Assemblies)
+            {
                 if (((SreAssembly)a).Assembly == asm)
                     return (SreAssembly)a;
+            }
+
             var n = new SreAssembly(this, asm);
             _assemblies.Add(n);
             n.Init();
             return n;
         }
 
-        SreType ResolveType(Type t)
+        private SreType ResolveType(Type t)
         {
             if (_typeDic.TryGetValue(t, out var rv))
                 return rv;
@@ -74,6 +78,7 @@ namespace XamlX.IL
                 return null;
             return ResolveType(found);
         }
+
         public IXamlType FindType(string name)
         {
             foreach (var asm in Assemblies)
@@ -86,11 +91,12 @@ namespace XamlX.IL
             return null;
         }
 
-        class SreAssembly : IXamlAssembly
+        private class SreAssembly : IXamlAssembly
         {
             private readonly SreTypeSystem _system;
 
             private IReadOnlyList<IXamlCustomAttribute> _customAttributes;
+
             public Assembly Assembly { get; }
 
             public SreAssembly(SreTypeSystem system, Assembly asm)
@@ -99,12 +105,12 @@ namespace XamlX.IL
                 Assembly = asm;
             }
 
-
             public bool Equals(IXamlAssembly other) => Assembly == ((SreAssembly)other)?.Assembly;
 
             public string Name => Assembly.GetName().Name;
 
             public IReadOnlyList<IXamlType> Types { get; private set; }
+
             private Dictionary<string, SreType> _typeDic = new Dictionary<string, SreType>();
 
             public IReadOnlyList<IXamlCustomAttribute> CustomAttributes
@@ -120,14 +126,14 @@ namespace XamlX.IL
 
             public void Init()
             {
-                //                var types = Assembly.GetExportedTypes().Select(t => _system.ResolveType(t)).ToList();
+                // var types = Assembly.GetExportedTypes().Select(t => _system.ResolveType(t)).ToList();
                 var types = Assembly.GetTypes().Select(t => _system.ResolveType(t)).ToList(); // yezo: with using only exported types uixml cannot be loaded from outside of the assembly.
                 Types = types;
                 _typeDic = types.ToDictionary(t => t.Type.FullName);
             }
         }
 
-        class SreMemberInfo
+        private class SreMemberInfo
         {
             protected readonly SreTypeSystem System;
             private readonly MemberInfo _member;
@@ -158,19 +164,24 @@ namespace XamlX.IL
             private IReadOnlyList<IXamlType> _genericParameters;
             private IReadOnlyList<IXamlType> _interfaces;
             private IReadOnlyList<IXamlEventInfo> _events;
+            
             public Type Type { get; }
 
-            public SreType(SreTypeSystem system, SreAssembly asm, Type type) : base(system, type)
+            public SreType(SreTypeSystem system, SreAssembly asm, Type type)
+                : base(system, type)
             {
                 Assembly = asm;
                 Type = type;
             }
 
             public bool Equals(IXamlType other) => Type == (other as SreType)?.Type;
+
             public override int GetHashCode() => Type.GetHashCode();
+
             public object Id => Type;
 
             public string FullName => Type.FullName;
+
             public string Namespace => Type.Namespace;
             public IXamlAssembly Assembly { get; }
 
@@ -297,7 +308,8 @@ namespace XamlX.IL
             private readonly MethodBase _method;
 
             protected IReadOnlyList<IXamlType> _parameters;
-            public SreMethodBase(SreTypeSystem system, MethodBase method) : base(system, method)
+            public SreMethodBase(SreTypeSystem system, MethodBase method)
+                : base(system, method)
             {
                 _method = method;
             }
@@ -316,7 +328,8 @@ namespace XamlX.IL
             public MethodInfo Method { get; }
             private readonly SreTypeSystem _system;
 
-            public SreMethod(SreTypeSystem system, MethodInfo method) : base(system, method)
+            public SreMethod(SreTypeSystem system, MethodInfo method)
+                : base(system, method)
             {
                 Method = method;
                 _system = system;
@@ -337,7 +350,8 @@ namespace XamlX.IL
         {
             public ConstructorInfo Constuctor { get; }
 
-            public SreConstructor(SreTypeSystem system, ConstructorInfo ctor) : base(system, ctor)
+            public SreConstructor(SreTypeSystem system, ConstructorInfo ctor)
+                : base(system, ctor)
             {
                 Constuctor = ctor;
             }
@@ -352,7 +366,8 @@ namespace XamlX.IL
 
             public PropertyInfo Member { get; }
 
-            public SreProperty(SreTypeSystem system, PropertyInfo member) : base(system, member)
+            public SreProperty(SreTypeSystem system, PropertyInfo member)
+                : base(system, member)
             {
                 Member = member;
                 Setter = member.SetMethod == null ? null : new SreMethod(system, member.SetMethod);
@@ -384,7 +399,8 @@ namespace XamlX.IL
         class SreEvent : SreMemberInfo, IXamlEventInfo
         {
             public EventInfo Event { get; }
-            public SreEvent(SreTypeSystem system, EventInfo ev) : base(system, ev)
+            public SreEvent(SreTypeSystem system, EventInfo ev)
+                : base(system, ev)
             {
                 Event = ev;
                 Add = new SreMethod(system, ev.AddMethod);
@@ -398,7 +414,8 @@ namespace XamlX.IL
         {
             public FieldInfo Field { get; }
 
-            public SreField(SreTypeSystem system, FieldInfo field) : base(system, field)
+            public SreField(SreTypeSystem system, FieldInfo field)
+                : base(system, field)
             {
                 Field = field;
                 FieldType = system.ResolveType(field.FieldType);
@@ -606,18 +623,25 @@ namespace XamlX.IL
                 }
             }
 
-            public IXamlMethodBuilder<IXamlILEmitter> DefineMethod(IXamlType returnType, IEnumerable<IXamlType> args, string name,
-                bool isPublic, bool isStatic,
-                bool isInterfaceImpl, IXamlMethod overrideMethod)
+            public IXamlMethodBuilder<IXamlILEmitter> DefineMethod(
+                IXamlType returnType,
+                IEnumerable<IXamlType> args,
+                string name,
+                bool isPublic,
+                bool isStatic,
+                bool isInterfaceImpl,
+                IXamlMethod overrideMethod)
             {
                 var ret = ((SreType)returnType).Type;
                 var largs = (IReadOnlyList<IXamlType>)(args?.ToList()) ?? new IXamlType[0];
                 var argTypes = largs.Cast<SreType>().Select(t => t.Type);
-                var m = _tb.DefineMethod(name,
+                var m = _tb.DefineMethod(
+                    name,
                     (isPublic ? MethodAttributes.Public : MethodAttributes.Private)
                     | (isStatic ? MethodAttributes.Static : default(MethodAttributes))
-                    | (isInterfaceImpl ? MethodAttributes.Virtual | MethodAttributes.NewSlot : default(MethodAttributes))
-                    , ret, argTypes.ToArray());
+                    | (isInterfaceImpl ? MethodAttributes.Virtual | MethodAttributes.NewSlot : default(MethodAttributes)),
+                    ret,
+                    argTypes.ToArray());
                 if (overrideMethod != null)
                     _tb.DefineMethodOverride(m, ((SreMethod)overrideMethod).Method);
 

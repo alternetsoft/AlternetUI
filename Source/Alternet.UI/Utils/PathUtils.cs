@@ -41,7 +41,7 @@ namespace Alternet.UI
         {
             if (string.IsNullOrEmpty(path))
                 return false;
-            int index = path.Length - 1;
+            int index = path!.Length - 1;
             char c = path[index];
             if (c != Path.DirectorySeparatorChar)
                 return c == Path.AltDirectorySeparatorChar;

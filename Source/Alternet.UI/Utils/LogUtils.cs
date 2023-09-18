@@ -13,6 +13,9 @@ namespace Alternet.UI
     {
         private static int id;
 
+        /// <summary>
+        /// Gets unique id for debug purposes.
+        /// </summary>
         public static int GenNewId()
         {
             return id++;

@@ -14,46 +14,49 @@ namespace Alternet.UI
     internal class XamlCompiler
     {
         private readonly IXamlTypeSystem _typeSystem;
+
         public TransformerConfiguration Configuration { get; }
 
         private XamlCompiler(IXamlTypeSystem typeSystem)
         {
             _typeSystem = typeSystem;
-            Configuration = new TransformerConfiguration(typeSystem,
+            Configuration = new TransformerConfiguration(
+                typeSystem,
                 typeSystem.FindAssembly("Alternet.UI"),
                 new XamlLanguageTypeMappings(typeSystem)
                 {
                     XmlnsAttributes =
                     {
                         typeSystem.GetType("Alternet.UI.XmlnsDefinitionAttribute"),
-
                     },
                     ContentAttributes =
                     {
-                        typeSystem.GetType("Alternet.UI.ContentAttribute")
+                        typeSystem.GetType("Alternet.UI.ContentAttribute"),
                     },
                     UsableDuringInitializationAttributes =
                     {
-                        typeSystem.GetType("Alternet.UI.UsableDuringInitializationAttribute")
+                        typeSystem.GetType("Alternet.UI.UsableDuringInitializationAttribute"),
                     },
                     DeferredContentPropertyAttributes =
                     {
-                        typeSystem.GetType("Alternet.UI.DeferredContentAttribute")
+                        typeSystem.GetType("Alternet.UI.DeferredContentAttribute"),
                     },
                     RootObjectProvider = typeSystem.GetType("Alternet.UI.ITestRootObjectProvider"),
                     UriContextProvider = typeSystem.GetType("Alternet.UI.ITestUriContext"),
                     ProvideValueTarget = typeSystem.GetType("Alternet.UI.ITestProvideValueTarget"),
                     ParentStackProvider = typeSystem.GetType("XamlX.Runtime.IXamlParentStackProviderV1"),
-                    XmlNamespaceInfoProvider = typeSystem.GetType("XamlX.Runtime.IXamlXmlNamespaceInfoProviderV1")
-                }
-            );
+                    XmlNamespaceInfoProvider = typeSystem.GetType("XamlX.Runtime.IXamlXmlNamespaceInfoProviderV1"),
+                });
         }
 
         protected object CompileAndRun(string xaml, IServiceProvider? prov = null) => Compile(xaml).create(prov);
 
+#pragma warning disable
         protected object CompileAndPopulate(string xaml, IServiceProvider? prov = null, object? instance = null)
+#pragma warning restore
             => Compile(xaml).create(prov);
-        XamlDocument Compile(IXamlTypeBuilder<IXamlILEmitter> builder, IXamlType context, string xaml)
+
+        private XamlDocument Compile(IXamlTypeBuilder<IXamlILEmitter> builder, IXamlType context, string xaml)
         {
             var parsed = XDocumentXamlParser.Parse(xaml);
             var compiler = new XamlILCompiler(
@@ -61,19 +64,26 @@ namespace Alternet.UI
                 new XamlLanguageEmitMappings<IXamlILEmitter, XamlILNodeEmitResult>(),
                 true)
             {
-                EnableIlVerification = true
+                EnableIlVerification = true,
             };
             compiler.Transform(parsed);
-            compiler.Compile(parsed, builder, context, "Populate", "Build",
+            compiler.Compile(
+                parsed,
+                builder,
+                context,
+                "Populate",
+                "Build",
                 "XamlNamespaceInfo",
-                "http://example.com/", null);
+                "http://example.com/",
+                null);
             return parsed;
         }
-        //static object s_asmLock = new object();
 
-        public XamlCompiler() : this(new SreTypeSystem())
+        /*static object s_asmLock = new object();*/
+
+        public XamlCompiler()
+            : this(new SreTypeSystem())
         {
-
         }
 
         public (Func<IServiceProvider?, object> create, Action<IServiceProvider?, object> populate, Assembly assembly) Compile(string xaml, string? targetDllFileName = null)
@@ -97,15 +107,11 @@ namespace Alternet.UI
                     Configuration.TypeMappings,
                     new XamlLanguageEmitMappings<IXamlILEmitter, XamlILNodeEmitResult>());
 
-
             var parserTypeBuilder = ((SreTypeSystem)_typeSystem).CreateTypeBuilder(t);
 
             var parsed = Compile(parserTypeBuilder, contextTypeDef, xaml);
 
-            var created = t.CreateTypeInfo();
-            if (created == null)
-                throw new Exception();
-
+            var created = t.CreateTypeInfo() ?? throw new Exception();
             dm.CreateGlobalFunctions();
 
             return GetCallbacks(created, da);
@@ -115,8 +121,12 @@ namespace Alternet.UI
         {
             var isp = System.Linq.Expressions.Expression.Parameter(typeof(IServiceProvider));
             var createCb = System.Linq.Expressions.Expression.Lambda<Func<IServiceProvider?, object>>(
-                System.Linq.Expressions.Expression.Convert(System.Linq.Expressions.Expression.Call(
-                    created.GetMethod("Build"), isp), typeof(object)), isp).Compile();
+                System.Linq.Expressions.Expression.Convert(
+                    System.Linq.Expressions.Expression.Call(
+                        created.GetMethod("Build")!,
+                        isp),
+                    typeof(object)),
+                isp).Compile();
 
             var epar = System.Linq.Expressions.Expression.Parameter(typeof(object));
             var populate = created.GetMethod("Populate");
@@ -124,9 +134,16 @@ namespace Alternet.UI
                 throw new InvalidOperationException();
 
             isp = System.Linq.Expressions.Expression.Parameter(typeof(IServiceProvider));
-            var populateCb = System.Linq.Expressions.Expression.Lambda<Action<IServiceProvider?, object>>(
-                System.Linq.Expressions.Expression.Call(populate, isp, System.Linq.Expressions.Expression.Convert(epar, populate.GetParameters()[1].ParameterType)),
-                isp, epar).Compile();
+            var populateCb =
+                System.Linq.Expressions.Expression.Lambda<Action<IServiceProvider?, object>>(
+                    System.Linq.Expressions.Expression.Call(
+                        populate,
+                        isp,
+                        System.Linq.Expressions.Expression.Convert(
+                            epar,
+                            populate.GetParameters()[1].ParameterType)),
+                    isp,
+                    epar).Compile();
 
             return (createCb, populateCb, assembly);
         }
