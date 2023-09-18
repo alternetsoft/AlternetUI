@@ -45,7 +45,11 @@ namespace Alternet.UI
         /// <param name="ownerType">Type that is registering the property</param>
         /// <param name="typeMetadata">Metadata to use if current type doesn't specify type-specific metadata</param>
         /// <returns>Dependency Property</returns>
-        public static DependencyProperty Register(string name, Type propertyType, Type ownerType, PropertyMetadata typeMetadata)
+        public static DependencyProperty Register(
+            string name,
+            Type propertyType,
+            Type ownerType,
+            PropertyMetadata typeMetadata)
         {
             // Forwarding
             return Register(name, propertyType, ownerType, typeMetadata, null);
