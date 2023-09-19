@@ -4415,6 +4415,22 @@ namespace Alternet.UI
                 return;
             staticStateFlags |= StaticStateFlags.KnownColorsAdded;
 
+            var items = ColorUtils.GetColorInfos();
+
+            KnownColorsClear();
+
+            foreach (var item in items)
+            {
+                if (!item.Visible)
+                    continue;
+                KnownColorsAdd(
+                            item.Label,
+                            item.LabelLocalized,
+                            item.Value,
+                            item.KnownColor);
+            }
+
+            KnownColorsApply();
         }
 
         internal static void KnownColorsAdd(

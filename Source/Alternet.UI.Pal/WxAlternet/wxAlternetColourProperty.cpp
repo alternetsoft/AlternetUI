@@ -72,7 +72,7 @@ namespace Alternet::UI
 	wxPG_IMPLEMENT_PROPERTY_CLASS(wxAlternetColourProperty, wxSystemColourProperty,
 		TextCtrlAndButton)
 
-		static wxPGChoices gs_wxColourProperty_choicesCache;
+	static wxPGChoices gs_wxColourProperty_choicesCache;
 
 	wxAlternetColourProperty::wxAlternetColourProperty(const wxString& label,
 		const wxString& name,
