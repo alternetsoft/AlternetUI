@@ -9,10 +9,6 @@
                     Width="250">
           <TextBox Text="" Margin="0,0,0,5" Name="textBox1"
                    TextChanged="TextBox_ValueChanged" />
-          <TextBox Text="Text 2" Margin="0,0,0,5" 
-                   TextChanged="TextBox_ValueChanged" />
-          <TextBox Text="Text 3" Margin="0,0,0,5" 
-                   TextChanged="TextBox_ValueChanged" />
         </VerticalStackPanel>
         
         <VerticalStackPanel Margin="5" HorizontalAlignment="Right">

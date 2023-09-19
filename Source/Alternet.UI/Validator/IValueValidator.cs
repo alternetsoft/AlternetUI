@@ -21,5 +21,22 @@ namespace Alternet.UI
         /// Object handle.
         /// </summary>
         IntPtr Handle { get; }
+
+        /// <summary>
+        /// Gets or sets the identifying name of the object.
+        /// </summary>
+        /// <value>The name of the object. The default is <c>null</c>.</value>
+        string? Name { get; set; }
+
+        /// <summary>
+        /// Gets or sets data related to the object.
+        /// </summary>
+        /// <value>An <see cref="object"/> that contains data.
+        /// The default is <c>null</c>.</value>
+        /// <remarks>
+        /// Any type derived from the <see cref="object"/> class can be assigned
+        /// to this property.
+        /// </remarks>
+        object? Tag { get; set; }
     }
 }

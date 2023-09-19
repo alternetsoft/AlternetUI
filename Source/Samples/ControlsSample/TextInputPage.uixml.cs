@@ -1,21 +1,21 @@
 ﻿using System;
-using System.Linq;
-using Alternet.UI;
-using Alternet.Drawing;
 using System.Collections.Generic;
+using System.Linq;
+using Alternet.Drawing;
+using Alternet.UI;
 
 namespace ControlsSample
 {
     internal partial class TextInputPage : Control
     {
-        private const string LoremIpsum = "Lorem ipsum dolor sit amet,\nconsectetur adipiscing elit. Suspendisse tincidunt orci vitae arcu congue commodo. Proin fermentum rhoncus dictum.";
+        private const string LoremIpsum =
+            "Lorem ipsum dolor sit amet,\nconsectetur adipiscing elit. Suspendisse tincidunt orci vitae arcu congue commodo. Proin fermentum rhoncus dictum.";
         
         private IPageSite? site;
 
         public TextInputPage()
         {
             InitializeComponent();
-            multiLineTextBox.EmptyTextHint = "Sample Hint";
             textBox1.EmptyTextHint = "Sample Hint";
             multiLineTextBox.Text = LoremIpsum;
             multiLineTextBox.TextUrl += MultiLineTextBox_TextUrl;
@@ -54,17 +54,15 @@ namespace ControlsSample
 
         private void HasBorderButton_Click(object? sender, EventArgs e)
         {
-            foreach (var textBox in textBoxesPanel.Children.OfType<TextBox>())
-                textBox.HasBorder = !textBox.HasBorder;
+            textBox1.HasBorder = !textBox1.HasBorder;
         }
 
         private void AddLetterAButton_Click(object? sender, EventArgs e)
         {
-            foreach (var textBox in textBoxesPanel.Children.OfType<TextBox>())
-                textBox.Text += "A";
+            textBox1.Text += "A";
         }
 
-        private void GetWordIndex(
+        internal void GetWordIndex(
             string s, 
             string word, 
             out int startIndex,
@@ -81,39 +79,39 @@ namespace ControlsSample
 
         private void RichEditButton_Click(object? sender, EventArgs e)
         {
-            ITextBoxTextAttr taTextColorRed = TextBox.CreateTextAttr();
+            var taTextColorRed = TextBox.CreateTextAttr();
             taTextColorRed.SetTextColor(Color.Red);
 
-            ITextBoxTextAttr taBackColorYellow = TextBox.CreateTextAttr();
+            var taBackColorYellow = TextBox.CreateTextAttr();
             taBackColorYellow.SetBackgroundColor(Color.Yellow);
 
-            ITextBoxTextAttr taUnderlined = TextBox.CreateTextAttr();
+            var taUnderlined = TextBox.CreateTextAttr();
             taUnderlined.SetFontUnderlined();
 
-            ITextBoxTextAttr taItalic = TextBox.CreateTextAttr();
+            var taItalic = TextBox.CreateTextAttr();
             taItalic.SetFontItalic();
 
-            ITextBoxTextAttr taBold = TextBox.CreateTextAttr();
+            var taBold = TextBox.CreateTextAttr();
             taBold.SetFontWeight(FontWeight.Bold);
 
             var homePage = @"https://www.alternet-ui.com/";
 
-            ITextBoxTextAttr taUrl = TextBox.CreateTextAttr();
+            var taUrl = TextBox.CreateTextAttr();
             taUrl.SetURL(homePage);
 
-            ITextBoxTextAttr taDefault = TextBox.CreateTextAttr();
+            var taDefault = TextBox.CreateTextAttr();
 
-            ITextBoxTextAttr taUnorderedList = TextBox.CreateTextAttr();
+            var taUnorderedList = TextBox.CreateTextAttr();
             taUnorderedList.SetBulletStyle(TextBoxTextAttrBulletStyle.Standard);
             taUnorderedList.SetBulletName("standard/circle");
 
-            ITextBoxTextAttr taOrderedList = TextBox.CreateTextAttr();
-            taUnorderedList.SetBulletStyle(TextBoxTextAttrBulletStyle.Arabic);
+            var taOrderedList = TextBox.CreateTextAttr();
+            taOrderedList.SetBulletStyle(TextBoxTextAttrBulletStyle.Arabic);
 
-            ITextBoxTextAttr taBig = TextBox.CreateTextAttr();
+            var taBig = TextBox.CreateTextAttr();
             taBig.SetFontPointSize((int)Font.Default.SizeInPoints+15);
 
-            ITextBoxTextAttr taUnderlined2 = TextBox.CreateTextAttr();
+            var taUnderlined2 = TextBox.CreateTextAttr();
             taUnderlined2.SetFontUnderlinedEx(
                 TextBoxTextAttrUnderlineType.Special, 
                 Color.Red);
