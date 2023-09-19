@@ -15,6 +15,19 @@ namespace Alternet::UI
 		}
 	};
 
+	void PropertyGrid::KnownColorsClear()
+	{
+	}
+
+	void PropertyGrid::KnownColorsAdd(const string& Name, const string& Title,
+		const Color& value, int knownColor)
+	{
+	}
+
+	void PropertyGrid::KnownColorsApply()
+	{
+	}
+
 	PropertyGrid::PropertyGrid()
 	{
 		bindScrollEvents = false;

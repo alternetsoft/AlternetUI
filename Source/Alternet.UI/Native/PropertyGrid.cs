@@ -158,6 +158,25 @@ namespace Alternet.UI.Native
             }
         }
         
+        public void BeginAddChildren(System.IntPtr id)
+        {
+            CheckDisposed();
+            NativeApi.PropertyGrid_BeginAddChildren_(NativePointer, id);
+        }
+        
+        public bool Collapse(System.IntPtr id)
+        {
+            CheckDisposed();
+            var n = NativeApi.PropertyGrid_Collapse_(NativePointer, id);
+            return n;
+        }
+        
+        public void DeleteProperty(System.IntPtr id)
+        {
+            CheckDisposed();
+            NativeApi.PropertyGrid_DeleteProperty_(NativePointer, id);
+        }
+        
         public System.IntPtr RemoveProperty(System.IntPtr id)
         {
             CheckDisposed();
@@ -538,6 +557,24 @@ namespace Alternet.UI.Native
         {
             CheckDisposed();
             NativeApi.PropertyGrid_SetPropertyAttributeAll_(NativePointer, attrName, variant);
+        }
+        
+        public void ResetColors()
+        {
+            CheckDisposed();
+            NativeApi.PropertyGrid_ResetColors_(NativePointer);
+        }
+        
+        public void ResetColumnSizes(bool enableAutoResizing)
+        {
+            CheckDisposed();
+            NativeApi.PropertyGrid_ResetColumnSizes_(NativePointer, enableAutoResizing);
+        }
+        
+        public void MakeColumnEditable(uint column, bool editable)
+        {
+            CheckDisposed();
+            NativeApi.PropertyGrid_MakeColumnEditable_(NativePointer, column, editable);
         }
         
         public void BeginLabelEdit(uint column)
@@ -1080,25 +1117,6 @@ namespace Alternet.UI.Native
             return n;
         }
         
-        public void BeginAddChildren(System.IntPtr id)
-        {
-            CheckDisposed();
-            NativeApi.PropertyGrid_BeginAddChildren_(NativePointer, id);
-        }
-        
-        public bool Collapse(System.IntPtr id)
-        {
-            CheckDisposed();
-            var n = NativeApi.PropertyGrid_Collapse_(NativePointer, id);
-            return n;
-        }
-        
-        public void DeleteProperty(System.IntPtr id)
-        {
-            CheckDisposed();
-            NativeApi.PropertyGrid_DeleteProperty_(NativePointer, id);
-        }
-        
         public static System.IntPtr ColorDatabaseCreate()
         {
             var n = NativeApi.PropertyGrid_ColorDatabaseCreate_();
@@ -1130,6 +1148,21 @@ namespace Alternet.UI.Native
         {
             var n = NativeApi.PropertyGrid_ColorDatabaseFindName_(handle, color);
             return n;
+        }
+        
+        public static void KnownColorsClear()
+        {
+            NativeApi.PropertyGrid_KnownColorsClear_();
+        }
+        
+        public static void KnownColorsAdd(string Name, string Title, Alternet.Drawing.Color value, int knownColor)
+        {
+            NativeApi.PropertyGrid_KnownColorsAdd_(Name, Title, value, knownColor);
+        }
+        
+        public static void KnownColorsApply()
+        {
+            NativeApi.PropertyGrid_KnownColorsApply_();
         }
         
         public System.IntPtr GetPropertyValidator(System.IntPtr prop)
@@ -1352,24 +1385,6 @@ namespace Alternet.UI.Native
             return n;
         }
         
-        public void ResetColors()
-        {
-            CheckDisposed();
-            NativeApi.PropertyGrid_ResetColors_(NativePointer);
-        }
-        
-        public void ResetColumnSizes(bool enableAutoResizing)
-        {
-            CheckDisposed();
-            NativeApi.PropertyGrid_ResetColumnSizes_(NativePointer, enableAutoResizing);
-        }
-        
-        public void MakeColumnEditable(uint column, bool editable)
-        {
-            CheckDisposed();
-            NativeApi.PropertyGrid_MakeColumnEditable_(NativePointer, column, editable);
-        }
-        
         static GCHandle eventCallbackGCHandle;
         
         static void SetEventCallback()
@@ -1562,6 +1577,15 @@ namespace Alternet.UI.Native
             public static extern void PropertyGrid_SetCreateStyleEx_(IntPtr obj, long value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void PropertyGrid_BeginAddChildren_(IntPtr obj, System.IntPtr id);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool PropertyGrid_Collapse_(IntPtr obj, System.IntPtr id);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void PropertyGrid_DeleteProperty_(IntPtr obj, System.IntPtr id);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern System.IntPtr PropertyGrid_RemoveProperty_(IntPtr obj, System.IntPtr id);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
@@ -1734,6 +1758,15 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void PropertyGrid_SetPropertyAttributeAll_(IntPtr obj, string attrName, System.IntPtr variant);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void PropertyGrid_ResetColors_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void PropertyGrid_ResetColumnSizes_(IntPtr obj, bool enableAutoResizing);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void PropertyGrid_MakeColumnEditable_(IntPtr obj, uint column, bool editable);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void PropertyGrid_BeginLabelEdit_(IntPtr obj, uint column);
@@ -1982,15 +2015,6 @@ namespace Alternet.UI.Native
             public static extern System.IntPtr PropertyGrid_AppendIn_(IntPtr obj, System.IntPtr id, System.IntPtr newproperty);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void PropertyGrid_BeginAddChildren_(IntPtr obj, System.IntPtr id);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool PropertyGrid_Collapse_(IntPtr obj, System.IntPtr id);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void PropertyGrid_DeleteProperty_(IntPtr obj, System.IntPtr id);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern System.IntPtr PropertyGrid_ColorDatabaseCreate_();
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
@@ -2007,6 +2031,15 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern string PropertyGrid_ColorDatabaseFindName_(System.IntPtr handle, NativeApiTypes.Color color);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void PropertyGrid_KnownColorsClear_();
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void PropertyGrid_KnownColorsAdd_(string Name, string Title, NativeApiTypes.Color value, int knownColor);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void PropertyGrid_KnownColorsApply_();
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern System.IntPtr PropertyGrid_GetPropertyValidator_(IntPtr obj, System.IntPtr prop);
@@ -2106,15 +2139,6 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool PropertyGrid_IsAnyModified_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void PropertyGrid_ResetColors_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void PropertyGrid_ResetColumnSizes_(IntPtr obj, bool enableAutoResizing);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void PropertyGrid_MakeColumnEditable_(IntPtr obj, uint column, bool editable);
             
         }
     }

@@ -89,6 +89,21 @@ ALTERNET_UI_API void PropertyGrid_SetCreateStyleEx_(PropertyGrid* obj, int64_t v
     obj->SetCreateStyleEx(value);
 }
 
+ALTERNET_UI_API void PropertyGrid_BeginAddChildren_(PropertyGrid* obj, void* id)
+{
+    obj->BeginAddChildren(id);
+}
+
+ALTERNET_UI_API c_bool PropertyGrid_Collapse_(PropertyGrid* obj, void* id)
+{
+    return obj->Collapse(id);
+}
+
+ALTERNET_UI_API void PropertyGrid_DeleteProperty_(PropertyGrid* obj, void* id)
+{
+    obj->DeleteProperty(id);
+}
+
 ALTERNET_UI_API void* PropertyGrid_RemoveProperty_(PropertyGrid* obj, void* id)
 {
     return obj->RemoveProperty(id);
@@ -377,6 +392,21 @@ ALTERNET_UI_API void PropertyGrid_SetPropertyAttribute_(PropertyGrid* obj, void*
 ALTERNET_UI_API void PropertyGrid_SetPropertyAttributeAll_(PropertyGrid* obj, const char16_t* attrName, void* variant)
 {
     obj->SetPropertyAttributeAll(attrName, variant);
+}
+
+ALTERNET_UI_API void PropertyGrid_ResetColors_(PropertyGrid* obj)
+{
+    obj->ResetColors();
+}
+
+ALTERNET_UI_API void PropertyGrid_ResetColumnSizes_(PropertyGrid* obj, c_bool enableAutoResizing)
+{
+    obj->ResetColumnSizes(enableAutoResizing);
+}
+
+ALTERNET_UI_API void PropertyGrid_MakeColumnEditable_(PropertyGrid* obj, uint32_t column, c_bool editable)
+{
+    obj->MakeColumnEditable(column, editable);
 }
 
 ALTERNET_UI_API void PropertyGrid_BeginLabelEdit_(PropertyGrid* obj, uint32_t column)
@@ -789,21 +819,6 @@ ALTERNET_UI_API void* PropertyGrid_AppendIn_(PropertyGrid* obj, void* id, void* 
     return obj->AppendIn(id, newproperty);
 }
 
-ALTERNET_UI_API void PropertyGrid_BeginAddChildren_(PropertyGrid* obj, void* id)
-{
-    obj->BeginAddChildren(id);
-}
-
-ALTERNET_UI_API c_bool PropertyGrid_Collapse_(PropertyGrid* obj, void* id)
-{
-    return obj->Collapse(id);
-}
-
-ALTERNET_UI_API void PropertyGrid_DeleteProperty_(PropertyGrid* obj, void* id)
-{
-    obj->DeleteProperty(id);
-}
-
 ALTERNET_UI_API void* PropertyGrid_ColorDatabaseCreate_()
 {
     return PropertyGrid::ColorDatabaseCreate();
@@ -832,6 +847,21 @@ ALTERNET_UI_API Color_C PropertyGrid_ColorDatabaseFind_(void* handle, const char
 ALTERNET_UI_API char16_t* PropertyGrid_ColorDatabaseFindName_(void* handle, Color color)
 {
     return AllocPInvokeReturnString(PropertyGrid::ColorDatabaseFindName(handle, color));
+}
+
+ALTERNET_UI_API void PropertyGrid_KnownColorsClear_()
+{
+    PropertyGrid::KnownColorsClear();
+}
+
+ALTERNET_UI_API void PropertyGrid_KnownColorsAdd_(const char16_t* Name, const char16_t* Title, Color value, int knownColor)
+{
+    PropertyGrid::KnownColorsAdd(Name, Title, value, knownColor);
+}
+
+ALTERNET_UI_API void PropertyGrid_KnownColorsApply_()
+{
+    PropertyGrid::KnownColorsApply();
 }
 
 ALTERNET_UI_API void* PropertyGrid_GetPropertyValidator_(PropertyGrid* obj, void* prop)
@@ -997,21 +1027,6 @@ ALTERNET_UI_API c_bool PropertyGrid_IsEditorsValueModified_(PropertyGrid* obj)
 ALTERNET_UI_API c_bool PropertyGrid_IsAnyModified_(PropertyGrid* obj)
 {
     return obj->IsAnyModified();
-}
-
-ALTERNET_UI_API void PropertyGrid_ResetColors_(PropertyGrid* obj)
-{
-    obj->ResetColors();
-}
-
-ALTERNET_UI_API void PropertyGrid_ResetColumnSizes_(PropertyGrid* obj, c_bool enableAutoResizing)
-{
-    obj->ResetColumnSizes(enableAutoResizing);
-}
-
-ALTERNET_UI_API void PropertyGrid_MakeColumnEditable_(PropertyGrid* obj, uint32_t column, c_bool editable)
-{
-    obj->MakeColumnEditable(column, editable);
 }
 
 ALTERNET_UI_API void PropertyGrid_SetEventCallback_(PropertyGrid::PropertyGridEventCallbackType callback)

@@ -35,6 +35,9 @@ void SetCreateStyle(int64_t value);
 int64_t GetCreateStyleEx();
 void SetCreateStyleEx(int64_t value);
 
+void BeginAddChildren(void* id);
+bool Collapse(void* id);
+void DeleteProperty(void* id);
 void* RemoveProperty(void* id);
 bool DisableProperty(void* id);
 bool EnableProperty(void* id, bool enable);
@@ -93,6 +96,9 @@ bool ChangePropertyValue(void* id, void* variant);
 void SetPropertyImage(void* id, ImageSet* bmp);
 void SetPropertyAttribute(void* id, const string& attrName, void* variant, int64_t argFlags);
 void SetPropertyAttributeAll(const string& attrName, void* variant);
+void ResetColors();
+void ResetColumnSizes(bool enableAutoResizing);
+void MakeColumnEditable(uint32_t column, bool editable);
 void BeginLabelEdit(uint32_t column);
 void EndLabelEdit(bool commit);
 void SetCaptionBackgroundColor(const Color& col);
@@ -175,15 +181,15 @@ void* CreateColorProperty(const string& label, const string& name, const Color& 
 void SetPropertyReadOnly(void* id, bool set, int flags);
 void SetPropertyValueUnspecified(void* id);
 void* AppendIn(void* id, void* newproperty);
-void BeginAddChildren(void* id);
-bool Collapse(void* id);
-void DeleteProperty(void* id);
 static void* ColorDatabaseCreate();
 static void ColorDatabaseDelete(void* handle);
 static void ColorDatabaseSetGlobal(void* handle);
 static void ColorDatabaseAdd(void* handle, const string& name, const Color& color);
 static Color ColorDatabaseFind(void* handle, const string& name);
 static string ColorDatabaseFindName(void* handle, const Color& color);
+static void KnownColorsClear();
+static void KnownColorsAdd(const string& Name, const string& Title, const Color& value, int knownColor);
+static void KnownColorsApply();
 void* GetPropertyValidator(void* prop);
 void SetPropertyValidator(void* prop, void* validator);
 void SetPropertyFlag(void* prop, int flag, bool value);
@@ -217,9 +223,6 @@ int GetVerticalSpacing();
 bool IsEditorFocused();
 bool IsEditorsValueModified();
 bool IsAnyModified();
-void ResetColors();
-void ResetColumnSizes(bool enableAutoResizing);
-void MakeColumnEditable(uint32_t column, bool editable);
 public:
 enum class PropertyGridEvent
 {
