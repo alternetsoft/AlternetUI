@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -198,6 +199,16 @@ namespace Alternet.UI
 
                 type = baseType!;
             }
+        }
+
+        /// <summary>
+        /// Outputs all <see cref="Control"/> descendants to the debug console.
+        /// </summary>
+        public static void ControlsToConsole()
+        {
+            EnumerableUtils.ForEach<Type>(
+                GetTypeDescendants(typeof(Control)),
+                (t) => Debug.WriteLine(t.Name));
         }
 
         /// <summary>

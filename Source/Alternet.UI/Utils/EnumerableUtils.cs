@@ -14,6 +14,19 @@ namespace Alternet.UI
     public static class EnumerableUtils
     {
         /// <summary>
+        /// Calls specified action for the each item of the
+        /// <see cref="IEnumerable{T}"/>.
+        /// </summary>
+        /// <param name="collection">Items to enumerate.</param>
+        /// <param name="action">Action to call on each item.</param>
+        /// <typeparam name="T">Type of the item.</typeparam>
+        public static void ForEach<T>(IEnumerable<T> collection, Action<T> action)
+        {
+            foreach (var item in collection)
+                action(item);
+        }
+
+        /// <summary>
         /// Enumerates root items of the <see cref="IEnumerableTree"/>.
         /// </summary>
         /// <typeparam name="T">Type of the result item.</typeparam>
