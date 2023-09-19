@@ -48,9 +48,10 @@ namespace Alternet.UI
                                 "DataContext",
                                 typeof(object),
                                 typeof(FrameworkElement),
-                                new FrameworkPropertyMetadata(null,
-                                        PropMetadataOption.Inherits,
-                                        new PropertyChangedCallback(OnDataContextChanged)));
+                                new FrameworkPropertyMetadata(
+                                    null,
+                                    PropMetadataOption.Inherits,
+                                    new PropertyChangedCallback(OnDataContextChanged)));
 
         /// <summary>
         ///     InheritedPropertyChanged private key
@@ -492,8 +493,8 @@ namespace Alternet.UI
             // Check the route to see if we are returning into a logical tree
             // that we left before.  If so, restore the source of the event to
             // be the source that it was when we left the logical tree.
-            var branchNode = route.PeekBranchNode() as DependencyObject;
-            if (branchNode != null && IsLogicalDescendent(branchNode))
+            if (route.PeekBranchNode() is DependencyObject branchNode
+                && IsLogicalDescendent(branchNode))
             {
                 // We keep the most recent source in the event args.  Note that
                 // this is only for our consumption.  Once the event is raised,
@@ -598,8 +599,8 @@ namespace Alternet.UI
             // BUGBUG: this misses "trees" that have only one logical node.  No parents, no children.
             if (LogicalParent != null || HasLogicalChildren)
             {
-                var logicalSource = args.Source as DependencyObject;
-                if (logicalSource == null || !IsLogicalDescendent(logicalSource))
+                if (args.Source is not DependencyObject logicalSource
+                    || !IsLogicalDescendent(logicalSource))
                 {
                     args.Source = this;
                     source = this;
@@ -947,11 +948,9 @@ namespace Alternet.UI
         /// </summary>
         internal virtual void OnNewParent(DependencyObject? oldParent, DependencyObject? newParent)
         {
-            //
             // This API is only here for compatability with the old
             // behavior.  Note that FrameworkElement does not have
             // this virtual, so why do we need it here?
-            //
 
             // Synchronize ForceInherit properties
             // if (_parent != null && _parent is ContentElement)
@@ -962,7 +961,6 @@ namespace Alternet.UI
             // {
             //    UIElement.SynchronizeForceInheritProperties(this, null, null, oldParent);
             // }
-
 
             // Synchronize ReverseInheritProperty Flags
             //
