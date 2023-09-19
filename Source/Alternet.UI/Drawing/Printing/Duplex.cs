@@ -20,6 +20,6 @@ namespace Alternet.Drawing.Printing
         /// <summary>
         /// Double-sided, horizontal printing.
         /// </summary>
-        Horizontal
+        Horizontal,
     }
 }
