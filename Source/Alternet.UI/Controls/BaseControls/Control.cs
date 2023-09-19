@@ -762,6 +762,38 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets real background color for the control.
+        /// </summary>
+        /// <remarks>
+        /// This property returns color value even if <see cref="BackgroundColor"/>
+        /// is <c>null</c>.
+        /// </remarks>
+        public virtual Color? RealBackgroundColor
+        {
+            get
+            {
+                var result = Handler.NativeControl?.BackgroundColor;
+                return result;
+            }
+        }
+
+        /// <summary>
+        /// Gets real foreground color for the control.
+        /// </summary>
+        /// <remarks>
+        /// This property returns color value even if <see cref="ForegroundColor"/>
+        /// is <c>null</c>.
+        /// </remarks>
+        public virtual Color? RealForegroundColor
+        {
+            get
+            {
+                var result = Handler.NativeControl?.ForegroundColor;
+                return result;
+            }
+        }
+
+        /// <summary>
         /// Gets or sets the foreground color for the control.
         /// </summary>
         public virtual Color? ForegroundColor

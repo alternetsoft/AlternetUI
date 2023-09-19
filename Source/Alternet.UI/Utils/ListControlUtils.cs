@@ -47,12 +47,22 @@ namespace Alternet.UI
             Color? defaultValue = null)
         {
             var knownColors = Color.GetKnownColors();
-            var colorsNames = knownColors.Select(x => x.Name).ToArray();
+
+            var colorsNames = new List<string>();
+            colorsNames.AddRange(knownColors.Select(x => x.Name));
+
+            var name = defaultValue?.Name;
+
+            if (name is not null && !colorsNames.Exists(x => x == name))
+            {
+                colorsNames.Add(name);
+                colorsNames.Sort();
+            }
 
             control.Items.AddRange(colorsNames);
-            if (select && defaultValue is not null)
+            if (select && name is not null)
             {
-                var found = control.FindStringExact(defaultValue.Value.Name);
+                var found = control.FindStringExact(name);
                 if (found != null)
                     control.SelectedIndex = found.Value;
             }

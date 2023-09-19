@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Collections.Generic;
 using System.Linq;
 using Alternet.Drawing;
@@ -43,7 +44,9 @@ namespace ControlsSample
             ApplyAll();
 
             textAlignComboBox.Items.AddRange(ValidAlign);
+            textAlignComboBox.SelectedIndex = textAlignComboBox.FindStringExact("Default");
             imageAlignComboBox.Items.AddRange(ValidAlign);
+            imageAlignComboBox.SelectedIndex = imageAlignComboBox.FindStringExact("Default");
 
             if (Application.IsMacOs)
             {
@@ -54,8 +57,13 @@ namespace ControlsSample
 
             ListControlUtils.AddFontSizes(comboBoxFontSize, true);
             ListControlUtils.AddFontNames(comboBoxFontName, true);
+
+            comboBoxTextColor.Add("Default");
+            comboBoxBackColor.Add("Default");
             ListControlUtils.AddColorNames(comboBoxTextColor, false);
             ListControlUtils.AddColorNames(comboBoxBackColor, false);
+            comboBoxTextColor.SelectedIndex = comboBoxTextColor.FindStringExact("Default");
+            comboBoxBackColor.SelectedIndex = comboBoxBackColor.FindStringExact("Default");
 
             comboBoxFontName.SelectedItemChanged += ComboBoxFontName_Changed;
             comboBoxFontSize.SelectedItemChanged += ComboBoxFontSize_Changed;
@@ -232,14 +240,19 @@ namespace ControlsSample
             if (item == null)
                 return;
 
-            Color newColor = Color.FromName(item.ToString());
+            var text = item.ToString();
 
-            if (button.ForegroundColor is not null && 
-                newColor == button.ForegroundColor.Value)
-                return;
+            if (uint.TryParse(text, NumberStyles.HexNumber, null, out _) || text == "Default")
+            {
+                button.ForegroundColor = null;
+            }
+            else
+            {
+                Color newColor = Color.FromName(text);
+                button.ForegroundColor = newColor;
+            }
 
             site?.LogEvent("Button: Text Color = " + item);
-            button.ForegroundColor = newColor;
         }
 
         private void ApplyBackColor()
@@ -252,14 +265,19 @@ namespace ControlsSample
             if (item == null)
                 return;
 
-            Color newColor = Color.FromName(item.ToString());
+            var text = item.ToString();
 
-            if (button.BackgroundColor is not null
-                && newColor == button.BackgroundColor.Value)
-                return;
+            if (uint.TryParse(text, NumberStyles.HexNumber, null, out _) || text == "Default")
+            {
+                button.BackgroundColor = null;
+            }
+            else
+            {
+                Color newColor = Color.FromName(text);
+                button.BackgroundColor = newColor;
+            }
 
             site?.LogEvent("Button: Back Color = " + item);
-            button.BackgroundColor = newColor;
         }
 
         private void ComboBoxFontName_Changed(object? sender, EventArgs e)

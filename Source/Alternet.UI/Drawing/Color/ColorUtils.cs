@@ -28,6 +28,22 @@ namespace Alternet.Drawing
             }
         }
 
+        public static Color? FindKnownColor(Color? color)
+        {
+            if (color is null)
+                return null;
+            var result = FindKnownColor(color.Value);
+            return result;
+        }
+
+        public static Color FindKnownColor(Color color)
+        {
+            if (color.IsKnownColor)
+                return color;
+            var result = KnownColorTable.ArgbToKnownColor(color.AsUInt());
+            return result;
+        }
+
         /// <summary>
         /// Converts <see cref="WxSystemColor"/> to <see cref="KnownColor"/>.
         /// </summary>
