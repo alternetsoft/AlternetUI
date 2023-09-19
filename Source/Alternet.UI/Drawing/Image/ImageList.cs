@@ -1,5 +1,6 @@
 using System;
 using Alternet.Base.Collections;
+using Alternet.UI;
 
 namespace Alternet.Drawing
 {
@@ -11,7 +12,7 @@ namespace Alternet.Drawing
     /// You can add images to the <see cref="ImageList"/>, and the other controls are
     /// able to use the images as they require.
     /// </remarks>
-    public class ImageList : IDisposable
+    public class ImageList : Component, IDisposable
     {
         private bool isDisposed;
 

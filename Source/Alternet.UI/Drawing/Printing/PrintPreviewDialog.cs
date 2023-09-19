@@ -1,19 +1,21 @@
-using Alternet.Drawing.Printing;
 using System;
+using Alternet.Drawing.Printing;
 
 namespace Alternet.UI
 {
     /// <summary>
-    /// Represents a dialog box form that contains a preview for printing from an AlterNET UI application.
+    /// Represents a dialog box form that contains a preview for printing
+    /// from an Alternet.UI application.
     /// </summary>
-    public class PrintPreviewDialog : IDisposable
+    public class PrintPreviewDialog : Component, IDisposable
     {
         private bool isDisposed;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PrintPreviewDialog"/> class.
         /// </summary>
-        public PrintPreviewDialog() : this(new Native.PrintPreviewDialog())
+        public PrintPreviewDialog()
+            : this(new Native.PrintPreviewDialog())
         {
         }
 
@@ -29,12 +31,13 @@ namespace Alternet.UI
         {
             get
             {
-                return NativePrintPreviewDialog.Document == null ? null : new PrintDocument(NativePrintPreviewDialog.Document);
+                return NativePrintPreviewDialog.Document == null
+                    ? null : new PrintDocument(NativePrintPreviewDialog.Document);
             }
 
             set
             {
-                NativePrintPreviewDialog.Document = value == null ? null : value.NativePrintDocument;
+                NativePrintPreviewDialog.Document = value?.NativePrintDocument;
             }
         }
 
@@ -62,18 +65,24 @@ namespace Alternet.UI
         /// Shows the <see cref="PrintPreviewDialog"/> with the specified optional owner window.
         /// </summary>
         /// <param name="owner">The owner window for the dialog.</param>
-        /// <exception cref="InvalidOperationException">The <see cref="Document"/> property value is <see langword="null"/>.</exception>
+        /// <exception cref="InvalidOperationException">The <see cref="Document"/> property
+        /// value is <see langword="null"/>.</exception>
         public void ShowModal(Window? owner = null)
         {
             if (NativePrintPreviewDialog.Document == null)
-                throw new InvalidOperationException("Cannot show the print preview dialog when the Document property value is null.");
+            {
+                throw new InvalidOperationException(
+                    "Cannot show the print preview dialog when the Document property value is null.");
+            }
 
-            var nativeOwner = owner == null ? null : ((NativeWindowHandler)owner.Handler).NativeControl;
+            var nativeOwner = owner == null
+                ? null : ((NativeWindowHandler)owner.Handler).NativeControl;
             NativePrintPreviewDialog.ShowModal(nativeOwner);
         }
 
         /// <summary>
-        /// Releases the unmanaged resources used by the <see cref="PrintPreviewDialog"/> and optionally releases the managed resources.
+        /// Releases the unmanaged resources used by the <see cref="PrintPreviewDialog"/>
+        /// and optionally releases the managed resources.
         /// </summary>
         /// <param name="disposing"></param>
         protected virtual void Dispose(bool disposing)

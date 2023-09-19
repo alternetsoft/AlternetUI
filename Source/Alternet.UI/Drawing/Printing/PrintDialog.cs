@@ -3,16 +3,18 @@ using Alternet.Drawing.Printing;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Lets users select a printer and choose which sections of the document to print from an AlterNET UI application.
+    /// Lets users select a printer and choose which sections of the document to print from
+    /// an Alternet.UI application.
     /// </summary>
     /// <remarks>
-    /// When you create an instance of <see cref="PrintDialog"/>, the read/write properties are set to initial values.
+    /// When you create an instance of <see cref="PrintDialog"/>, the read/write properties are
+    /// set to initial values.
     /// To get printer settings that are modified by the user with the
     /// <see cref="PrintDialog"/>, use the <see cref="PrinterSettings"/> property.
     /// </remarks>
     public sealed class PrintDialog : CommonDialog
     {
-        private Native.PrintDialog nativeDialog;
+        private readonly Native.PrintDialog nativeDialog;
 
         /// <summary>
         /// Initializes a new instance of <see cref="PrintDialog"/>.
@@ -87,19 +89,22 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets a value indicating the PrintDocument used to obtain <see cref="PrinterSettings"/>.
+        /// Gets or sets a value indicating the PrintDocument used to obtain
+        /// <see cref="PrinterSettings"/>.
         /// </summary>
-        /// <value>The <see cref="PrintDocument"/> used to obtain <see cref="PrinterSettings"/>. The default is <see langword="null"/>.</value>
+        /// <value>The <see cref="PrintDocument"/> used to obtain <see cref="PrinterSettings"/>.
+        /// The default is <see langword="null"/>.</value>
         public PrintDocument? Document
         {
             get
             {
-                return nativeDialog.Document == null ? null : new PrintDocument(nativeDialog.Document);
+                return nativeDialog.Document == null
+                    ? null : new PrintDocument(nativeDialog.Document);
             }
 
             set
             {
-                nativeDialog.Document = value == null ? null : value.NativePrintDocument;
+                nativeDialog.Document = value?.NativePrintDocument;
             }
         }
 
@@ -107,7 +112,8 @@ namespace Alternet.UI
 
         private protected override ModalResult ShowModalCore(Window? owner)
         {
-            var nativeOwner = owner == null ? null : ((NativeWindowHandler)owner.Handler).NativeControl;
+            var nativeOwner = owner == null
+                ? null : ((NativeWindowHandler)owner.Handler).NativeControl;
             return (ModalResult)nativeDialog.ShowModal(nativeOwner);
         }
     }
