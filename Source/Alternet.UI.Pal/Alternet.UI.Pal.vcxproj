@@ -536,6 +536,7 @@
     <ClInclude Include="WindowsVisualThemeSupport.h" />
     <ClInclude Include="Window.h" />
     <ClInclude Include="WrapSizer.h" />
+    <ClInclude Include="WxAlternet\wxAlternet.h" />
     <ClInclude Include="WxAlternet\wxAlternetColourProperty.h" />
     <ClInclude Include="WxAlternet\wxAlternetLogFormatter.h" />
   </ItemGroup>

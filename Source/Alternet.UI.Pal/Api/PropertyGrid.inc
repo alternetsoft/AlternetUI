@@ -188,7 +188,7 @@ static void ColorDatabaseAdd(void* handle, const string& name, const Color& colo
 static Color ColorDatabaseFind(void* handle, const string& name);
 static string ColorDatabaseFindName(void* handle, const Color& color);
 static void KnownColorsClear();
-static void KnownColorsAdd(const string& Name, const string& Title, const Color& value, int knownColor);
+static void KnownColorsAdd(const string& name, const string& title, const Color& value, int knownColor);
 static void KnownColorsApply();
 void* GetPropertyValidator(void* prop);
 void SetPropertyValidator(void* prop, void* validator);

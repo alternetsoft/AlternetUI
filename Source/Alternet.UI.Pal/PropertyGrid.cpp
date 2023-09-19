@@ -17,15 +17,38 @@ namespace Alternet::UI
 
 	void PropertyGrid::KnownColorsClear()
 	{
+		if (wxAlternetColourProperty::KnownColorLabels.capacity() == 0)
+		{
+#define numColors 200
+			wxAlternetColourProperty::KnownColorLabels.Alloc(numColors);
+			wxAlternetColourProperty::KnownColorValues.Alloc(numColors);
+			wxAlternetColourProperty::KnownColorColors.Alloc(numColors);
+		}
+		else
+		{
+			wxAlternetColourProperty::KnownColorLabels.Clear();
+			wxAlternetColourProperty::KnownColorValues.Clear();
+			wxAlternetColourProperty::KnownColorColors.Clear();
+		}
+		wxAlternetColourProperty::gs_wxColourProperty_choicesCache.Clear();
 	}
 
-	void PropertyGrid::KnownColorsAdd(const string& Name, const string& Title,
+	void PropertyGrid::KnownColorsAdd(const string& name, const string& title,
 		const Color& value, int knownColor)
 	{
+		auto wxtitle = wxStr(title);
+		auto index = wxAlternetColourProperty::KnownColorLabels.Add(wxtitle);
+		wxAlternetColourProperty::KnownColorValues.Add(index);
+		wxAlternetColourProperty::KnownColorColors.Add(wxPG_COLOUR(value.R, value.G, value.B));
+		wxAlternetColourProperty::gs_wxColourProperty_choicesCache.Add(wxtitle, index);
 	}
 
 	void PropertyGrid::KnownColorsApply()
 	{
+		wxAlternetColourProperty::KnownColorLabels.Add("Custom");
+		wxAlternetColourProperty::KnownColorValues.Add(wxPG_COLOUR_CUSTOM);
+		wxAlternetColourProperty::KnownColorColors.Add(wxPG_COLOUR(0, 0, 0));
+		wxAlternetColourProperty::gs_wxColourProperty_choicesCache.Add("Custom", wxPG_COLOUR_CUSTOM);
 	}
 
 	PropertyGrid::PropertyGrid()

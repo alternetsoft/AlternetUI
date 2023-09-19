@@ -2,6 +2,7 @@
 #include "wx/defs.h"
 #include "wx/propgrid/props.h"
 #include "wx/propgrid/advprops.h"
+#include "wxAlternet.h"
 
 namespace Alternet::UI
 {
@@ -9,6 +10,11 @@ namespace Alternet::UI
     {
         WX_PG_DECLARE_PROPERTY_CLASS(wxAlternetColourProperty)
     public:
+        static wxPGChoices gs_wxColourProperty_choicesCache;
+        static wxArrayString KnownColorLabels;
+        static wxArrayInt KnownColorValues;
+        static wxArrayULong KnownColorColors;
+
         wxAlternetColourProperty(const wxString& label = wxPG_LABEL,
             const wxString& name = wxPG_LABEL,
             const wxColour& value = *wxWHITE);

@@ -1155,9 +1155,9 @@ namespace Alternet.UI.Native
             NativeApi.PropertyGrid_KnownColorsClear_();
         }
         
-        public static void KnownColorsAdd(string Name, string Title, Alternet.Drawing.Color value, int knownColor)
+        public static void KnownColorsAdd(string name, string title, Alternet.Drawing.Color value, int knownColor)
         {
-            NativeApi.PropertyGrid_KnownColorsAdd_(Name, Title, value, knownColor);
+            NativeApi.PropertyGrid_KnownColorsAdd_(name, title, value, knownColor);
         }
         
         public static void KnownColorsApply()
@@ -2036,7 +2036,7 @@ namespace Alternet.UI.Native
             public static extern void PropertyGrid_KnownColorsClear_();
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void PropertyGrid_KnownColorsAdd_(string Name, string Title, NativeApiTypes.Color value, int knownColor);
+            public static extern void PropertyGrid_KnownColorsAdd_(string name, string title, NativeApiTypes.Color value, int knownColor);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void PropertyGrid_KnownColorsApply_();

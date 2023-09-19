@@ -854,9 +854,9 @@ ALTERNET_UI_API void PropertyGrid_KnownColorsClear_()
     PropertyGrid::KnownColorsClear();
 }
 
-ALTERNET_UI_API void PropertyGrid_KnownColorsAdd_(const char16_t* Name, const char16_t* Title, Color value, int knownColor)
+ALTERNET_UI_API void PropertyGrid_KnownColorsAdd_(const char16_t* name, const char16_t* title, Color value, int knownColor)
 {
-    PropertyGrid::KnownColorsAdd(Name, Title, value, knownColor);
+    PropertyGrid::KnownColorsAdd(name, title, value, knownColor);
 }
 
 ALTERNET_UI_API void PropertyGrid_KnownColorsApply_()

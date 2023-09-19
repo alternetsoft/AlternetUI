@@ -20,7 +20,7 @@ namespace NativeApi.Api
         public static string ColorDatabaseFindName(IntPtr handle, Color color) => default;
 
         public static void KnownColorsClear() { }
-        public static void KnownColorsAdd(string Name, string Title, Color value, int knownColor) { }
+        public static void KnownColorsAdd(string name, string title, Color value, int knownColor) { }
         public static void KnownColorsApply() { }
 
         public IntPtr GetPropertyValidator(IntPtr prop) => default;

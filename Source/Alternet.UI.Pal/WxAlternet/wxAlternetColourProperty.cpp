@@ -2,7 +2,7 @@
 
 namespace Alternet::UI
 {
-	static const char* const gs_cp_es_normcolour_labels[] = {
+	/*static const char* const gs_cp_es_normcolour_labels[] = {
 		wxTRANSLATE("Black"),
 		wxTRANSLATE("Maroon"),
 		wxTRANSLATE("Navy"),
@@ -21,11 +21,11 @@ namespace Alternet::UI
 		wxTRANSLATE("Aqua"),
 		wxTRANSLATE("Yellow"),
 		wxTRANSLATE("White"),
-		/* TRANSLATORS: Custom colour choice entry */ wxTRANSLATE("Custom"),
+		wxTRANSLATE("Custom"),
 		NULL
-	};
+	};*/
 
-	static const long gs_cp_es_normcolour_values[] = {
+	/*static const long gs_cp_es_normcolour_values[] = {
 		0,
 		1,
 		2,
@@ -45,9 +45,9 @@ namespace Alternet::UI
 		16,
 		17,
 		wxPG_COLOUR_CUSTOM
-	};
+	};*/
 
-	static const unsigned long gs_cp_es_normcolour_colours[] = {
+	/*static const unsigned long gs_cp_es_normcolour_colours[] = {
 		wxPG_COLOUR(0,0,0),
 		wxPG_COLOUR(128,0,0),
 		wxPG_COLOUR(0,0,128),
@@ -67,37 +67,42 @@ namespace Alternet::UI
 		wxPG_COLOUR(255,255,0),
 		wxPG_COLOUR(255,255,255),
 		wxPG_COLOUR(0,0,0)
-	};
+	};*/
+
+	wxArrayString wxAlternetColourProperty::KnownColorLabels = wxArrayString();
+	wxArrayInt wxAlternetColourProperty::KnownColorValues = wxArrayInt();
+	wxArrayULong wxAlternetColourProperty::KnownColorColors = wxArrayULong();
 
 	wxPG_IMPLEMENT_PROPERTY_CLASS(wxAlternetColourProperty, wxSystemColourProperty,
 		TextCtrlAndButton)
+	
+	wxPGChoices wxAlternetColourProperty::gs_wxColourProperty_choicesCache = wxPGChoices();
 
-	static wxPGChoices gs_wxColourProperty_choicesCache;
+	//  const char* const* untranslatedLabels,
+	//	const long* values,
 
 	wxAlternetColourProperty::wxAlternetColourProperty(const wxString& label,
 		const wxString& name,
 		const wxColour& value)
-		: wxSystemColourProperty(label, name, gs_cp_es_normcolour_labels,
-			gs_cp_es_normcolour_values,
-			&gs_wxColourProperty_choicesCache, value)
+		: wxSystemColourProperty(label, name, nullptr, nullptr, &gs_wxColourProperty_choicesCache, value)
 	{
 		wxASSERT_MSG(wxTheColourDatabase, wxS("No colour database"));
 		if (wxTheColourDatabase)
 		{
 			// Extend colour database with PG-specific colours.
-			const char* const* colourLabels = gs_cp_es_normcolour_labels;
-			for (int i = 0; *colourLabels; colourLabels++, i++)
+			//const char* const* colourLabels = gs_cp_es_normcolour_labels /*gs_cp_es_normcolour_labels*/;
+			for (int i = 0; i < KnownColorLabels.Count(); i++)
 			{
 				// Don't take into account user-defined custom colour.
-				if (gs_cp_es_normcolour_values[i] != wxPG_COLOUR_CUSTOM)
+				if (/**/KnownColorValues[i] != wxPG_COLOUR_CUSTOM)
 				{
-					wxColour clr = wxTheColourDatabase->Find(*colourLabels);
+					wxColour clr = wxTheColourDatabase->Find(KnownColorLabels[i]/*colourLabels*/);
 					// Use standard wx colour value if its label was found,
 					// otherwise register custom PG colour.
 					if (!clr.IsOk())
 					{
-						clr.Set(gs_cp_es_normcolour_colours[i]);
-						wxTheColourDatabase->AddColour(*colourLabels, clr);
+						clr.Set(KnownColorColors[i]/*gs_cp_es_normcolour_colours*/);
+						wxTheColourDatabase->AddColour(KnownColorLabels[i]/*colourLabels*/, clr);
 					}
 				}
 			}
@@ -137,7 +142,7 @@ namespace Alternet::UI
 
 	wxColour wxAlternetColourProperty::GetColour(int index) const
 	{
-		return wxColour(gs_cp_es_normcolour_labels[m_choices.GetValue(index)]);
+		return wxColour(KnownColorLabels[m_choices.GetValue(index)]/*gs_cp_es_normcolour_labels*/);
 	}
 
 	wxVariant wxAlternetColourProperty::DoTranslateVal(wxColourPropertyValue& v) const
