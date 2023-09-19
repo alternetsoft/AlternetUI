@@ -7,6 +7,7 @@ using System.Reflection;
 using Alternet.Drawing;
 using Alternet.UI;
 using Alternet.Base.Collections;
+using Alternet.UI.Localization;
 
 namespace PropertyGridSample
 {
@@ -32,6 +33,9 @@ namespace PropertyGridSample
 
         static MainWindow()
         {
+            KnownColorStrings.Default.Custom = "Custom...";
+            KnownColorStrings.Default.Black = "black";
+
             AuiNotebook.DefaultCreateStyle = AuiNotebookCreateStyle.Top;
 
             PropertyGrid.RegisterCollectionEditors();

@@ -12,13 +12,15 @@ namespace Alternet.UI.Localization
     /// </summary>
     public class KnownColorStrings
     {
+        private string custom = "Custom";
+
         /// <summary>
         /// Current localizations for system color names.
         /// </summary>
         public static KnownColorStrings Default { get; set; } = new();
 
         /// <summary>
-        /// Getsor sets localized system color name.
+        /// Gets or sets localized system color name.
         /// </summary>
         public string ActiveBorder
         {
@@ -1590,6 +1592,30 @@ namespace Alternet.UI.Localization
         {
             get => GetLabel(KnownColor.RebeccaPurple);
             set => SetLabel(KnownColor.RebeccaPurple, value);
+        }
+
+        /// <summary>
+        /// Gets or sets localized "Custom" color name.
+        /// </summary>
+        /// <remarks>
+        /// When "Custom" color is selected in the color editor
+        /// (for example in <see cref="PropertyGrid"/> control),
+        /// <see cref="ColorDialog"/> is shown for the user.
+        /// </remarks>
+        public string Custom
+        {
+            get
+            {
+                return custom;
+            }
+
+            set
+            {
+                if (custom == value)
+                    return;
+                custom = value;
+                Native.PropertyGrid.KnownColorsSetCustomColorTitle(custom);
+            }
         }
 
         /// <summary>

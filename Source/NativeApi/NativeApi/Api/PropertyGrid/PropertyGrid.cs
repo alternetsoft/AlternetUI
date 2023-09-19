@@ -22,6 +22,7 @@ namespace NativeApi.Api
         public static void KnownColorsClear() { }
         public static void KnownColorsAdd(string name, string title, Color value, int knownColor) { }
         public static void KnownColorsApply() { }
+        public static void KnownColorsSetCustomColorTitle(string value) { }
 
         public IntPtr GetPropertyValidator(IntPtr prop) => default;
         public void SetPropertyValidator(IntPtr prop, IntPtr validator) { }

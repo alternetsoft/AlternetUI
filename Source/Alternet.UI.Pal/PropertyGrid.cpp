@@ -43,12 +43,20 @@ namespace Alternet::UI
 		wxAlternetColourProperty::gs_wxColourProperty_choicesCache.Add(wxtitle, index);
 	}
 
+	wxString PropertyGrid::CustomColorTitle = "Custom";
+
+	void PropertyGrid::KnownColorsSetCustomColorTitle(const string& value)
+	{
+		CustomColorTitle = wxStr(value);
+	}
+
 	void PropertyGrid::KnownColorsApply()
 	{
-		wxAlternetColourProperty::KnownColorLabels.Add("Custom");
+		wxAlternetColourProperty::KnownColorLabels.Add(CustomColorTitle);
 		wxAlternetColourProperty::KnownColorValues.Add(wxPG_COLOUR_CUSTOM);
 		wxAlternetColourProperty::KnownColorColors.Add(wxPG_COLOUR(0, 0, 0));
-		wxAlternetColourProperty::gs_wxColourProperty_choicesCache.Add("Custom", wxPG_COLOUR_CUSTOM);
+		wxAlternetColourProperty::gs_wxColourProperty_choicesCache.Add(CustomColorTitle,
+			wxPG_COLOUR_CUSTOM);
 	}
 
 	PropertyGrid::PropertyGrid()

@@ -158,6 +158,13 @@ namespace Alternet.UI.Native
             }
         }
         
+        public System.IntPtr AppendIn(System.IntPtr id, System.IntPtr newproperty)
+        {
+            CheckDisposed();
+            var n = NativeApi.PropertyGrid_AppendIn_(NativePointer, id, newproperty);
+            return n;
+        }
+        
         public void BeginAddChildren(System.IntPtr id)
         {
             CheckDisposed();
@@ -557,6 +564,13 @@ namespace Alternet.UI.Native
         {
             CheckDisposed();
             NativeApi.PropertyGrid_SetPropertyAttributeAll_(NativePointer, attrName, variant);
+        }
+        
+        public bool IsAnyModified()
+        {
+            CheckDisposed();
+            var n = NativeApi.PropertyGrid_IsAnyModified_(NativePointer);
+            return n;
         }
         
         public void ResetColors()
@@ -1110,13 +1124,6 @@ namespace Alternet.UI.Native
             NativeApi.PropertyGrid_SetPropertyValueUnspecified_(NativePointer, id);
         }
         
-        public System.IntPtr AppendIn(System.IntPtr id, System.IntPtr newproperty)
-        {
-            CheckDisposed();
-            var n = NativeApi.PropertyGrid_AppendIn_(NativePointer, id, newproperty);
-            return n;
-        }
-        
         public static System.IntPtr ColorDatabaseCreate()
         {
             var n = NativeApi.PropertyGrid_ColorDatabaseCreate_();
@@ -1163,6 +1170,11 @@ namespace Alternet.UI.Native
         public static void KnownColorsApply()
         {
             NativeApi.PropertyGrid_KnownColorsApply_();
+        }
+        
+        public static void KnownColorsSetCustomColorTitle(string value)
+        {
+            NativeApi.PropertyGrid_KnownColorsSetCustomColorTitle_(value);
         }
         
         public System.IntPtr GetPropertyValidator(System.IntPtr prop)
@@ -1378,13 +1390,6 @@ namespace Alternet.UI.Native
             return n;
         }
         
-        public bool IsAnyModified()
-        {
-            CheckDisposed();
-            var n = NativeApi.PropertyGrid_IsAnyModified_(NativePointer);
-            return n;
-        }
-        
         static GCHandle eventCallbackGCHandle;
         
         static void SetEventCallback()
@@ -1577,6 +1582,9 @@ namespace Alternet.UI.Native
             public static extern void PropertyGrid_SetCreateStyleEx_(IntPtr obj, long value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr PropertyGrid_AppendIn_(IntPtr obj, System.IntPtr id, System.IntPtr newproperty);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void PropertyGrid_BeginAddChildren_(IntPtr obj, System.IntPtr id);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
@@ -1758,6 +1766,9 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void PropertyGrid_SetPropertyAttributeAll_(IntPtr obj, string attrName, System.IntPtr variant);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool PropertyGrid_IsAnyModified_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void PropertyGrid_ResetColors_(IntPtr obj);
@@ -2012,9 +2023,6 @@ namespace Alternet.UI.Native
             public static extern void PropertyGrid_SetPropertyValueUnspecified_(IntPtr obj, System.IntPtr id);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr PropertyGrid_AppendIn_(IntPtr obj, System.IntPtr id, System.IntPtr newproperty);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern System.IntPtr PropertyGrid_ColorDatabaseCreate_();
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
@@ -2040,6 +2048,9 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void PropertyGrid_KnownColorsApply_();
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void PropertyGrid_KnownColorsSetCustomColorTitle_(string value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern System.IntPtr PropertyGrid_GetPropertyValidator_(IntPtr obj, System.IntPtr prop);
@@ -2136,9 +2147,6 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool PropertyGrid_IsEditorsValueModified_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool PropertyGrid_IsAnyModified_(IntPtr obj);
             
         }
     }

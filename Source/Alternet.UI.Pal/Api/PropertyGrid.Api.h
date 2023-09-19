@@ -89,6 +89,11 @@ ALTERNET_UI_API void PropertyGrid_SetCreateStyleEx_(PropertyGrid* obj, int64_t v
     obj->SetCreateStyleEx(value);
 }
 
+ALTERNET_UI_API void* PropertyGrid_AppendIn_(PropertyGrid* obj, void* id, void* newproperty)
+{
+    return obj->AppendIn(id, newproperty);
+}
+
 ALTERNET_UI_API void PropertyGrid_BeginAddChildren_(PropertyGrid* obj, void* id)
 {
     obj->BeginAddChildren(id);
@@ -392,6 +397,11 @@ ALTERNET_UI_API void PropertyGrid_SetPropertyAttribute_(PropertyGrid* obj, void*
 ALTERNET_UI_API void PropertyGrid_SetPropertyAttributeAll_(PropertyGrid* obj, const char16_t* attrName, void* variant)
 {
     obj->SetPropertyAttributeAll(attrName, variant);
+}
+
+ALTERNET_UI_API c_bool PropertyGrid_IsAnyModified_(PropertyGrid* obj)
+{
+    return obj->IsAnyModified();
 }
 
 ALTERNET_UI_API void PropertyGrid_ResetColors_(PropertyGrid* obj)
@@ -814,11 +824,6 @@ ALTERNET_UI_API void PropertyGrid_SetPropertyValueUnspecified_(PropertyGrid* obj
     obj->SetPropertyValueUnspecified(id);
 }
 
-ALTERNET_UI_API void* PropertyGrid_AppendIn_(PropertyGrid* obj, void* id, void* newproperty)
-{
-    return obj->AppendIn(id, newproperty);
-}
-
 ALTERNET_UI_API void* PropertyGrid_ColorDatabaseCreate_()
 {
     return PropertyGrid::ColorDatabaseCreate();
@@ -862,6 +867,11 @@ ALTERNET_UI_API void PropertyGrid_KnownColorsAdd_(const char16_t* name, const ch
 ALTERNET_UI_API void PropertyGrid_KnownColorsApply_()
 {
     PropertyGrid::KnownColorsApply();
+}
+
+ALTERNET_UI_API void PropertyGrid_KnownColorsSetCustomColorTitle_(const char16_t* value)
+{
+    PropertyGrid::KnownColorsSetCustomColorTitle(value);
 }
 
 ALTERNET_UI_API void* PropertyGrid_GetPropertyValidator_(PropertyGrid* obj, void* prop)
@@ -1022,11 +1032,6 @@ ALTERNET_UI_API c_bool PropertyGrid_IsEditorFocused_(PropertyGrid* obj)
 ALTERNET_UI_API c_bool PropertyGrid_IsEditorsValueModified_(PropertyGrid* obj)
 {
     return obj->IsEditorsValueModified();
-}
-
-ALTERNET_UI_API c_bool PropertyGrid_IsAnyModified_(PropertyGrid* obj)
-{
-    return obj->IsAnyModified();
 }
 
 ALTERNET_UI_API void PropertyGrid_SetEventCallback_(PropertyGrid::PropertyGridEventCallbackType callback)

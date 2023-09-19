@@ -35,6 +35,7 @@ void SetCreateStyle(int64_t value);
 int64_t GetCreateStyleEx();
 void SetCreateStyleEx(int64_t value);
 
+void* AppendIn(void* id, void* newproperty);
 void BeginAddChildren(void* id);
 bool Collapse(void* id);
 void DeleteProperty(void* id);
@@ -96,6 +97,7 @@ bool ChangePropertyValue(void* id, void* variant);
 void SetPropertyImage(void* id, ImageSet* bmp);
 void SetPropertyAttribute(void* id, const string& attrName, void* variant, int64_t argFlags);
 void SetPropertyAttributeAll(const string& attrName, void* variant);
+bool IsAnyModified();
 void ResetColors();
 void ResetColumnSizes(bool enableAutoResizing);
 void MakeColumnEditable(uint32_t column, bool editable);
@@ -180,7 +182,6 @@ void RefreshProperty(void* p);
 void* CreateColorProperty(const string& label, const string& name, const Color& value);
 void SetPropertyReadOnly(void* id, bool set, int flags);
 void SetPropertyValueUnspecified(void* id);
-void* AppendIn(void* id, void* newproperty);
 static void* ColorDatabaseCreate();
 static void ColorDatabaseDelete(void* handle);
 static void ColorDatabaseSetGlobal(void* handle);
@@ -190,6 +191,7 @@ static string ColorDatabaseFindName(void* handle, const Color& color);
 static void KnownColorsClear();
 static void KnownColorsAdd(const string& name, const string& title, const Color& value, int knownColor);
 static void KnownColorsApply();
+static void KnownColorsSetCustomColorTitle(const string& value);
 void* GetPropertyValidator(void* prop);
 void SetPropertyValidator(void* prop, void* validator);
 void SetPropertyFlag(void* prop, int flag, bool value);
@@ -222,7 +224,6 @@ int GetSplitterPosition(uint32_t splitterIndex);
 int GetVerticalSpacing();
 bool IsEditorFocused();
 bool IsEditorsValueModified();
-bool IsAnyModified();
 public:
 enum class PropertyGridEvent
 {

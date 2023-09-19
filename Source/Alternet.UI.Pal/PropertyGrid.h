@@ -21,6 +21,7 @@ namespace Alternet::UI
     {
 #include "Api/PropertyGrid.inc"
     public:
+        static wxString CustomColorTitle;
         wxWindow* CreateWxWindowCore(wxWindow* parent) override;
         wxPropertyGrid* GetPropGrid();
         wxPropertyGridInterface* GetPropGridInterface();

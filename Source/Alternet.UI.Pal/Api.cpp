@@ -98,3 +98,4 @@
 #include "Api/ValidatorText.Api.h"
 #include "Api/WebBrowser.Api.h"
 #include "Api/Window.Api.h"
+#include "Api/WxControlFactory.Api.h"
