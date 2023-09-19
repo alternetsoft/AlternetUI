@@ -570,6 +570,7 @@ namespace PropertyGridSample
             if(instance != null)
             {
                 propertyGrid.SetProps(instance, true);
+                UpdateEventsPropertyGrid(instance);
                 return;
             }
 
@@ -589,9 +590,33 @@ namespace PropertyGridSample
                 }
 
                 if (type == typeof(WelcomeControl))
+                {
                     InitDefaultPropertyGrid();
-                else
+                    UpdateEventsPropertyGrid(null);
+                }
+                else 
+                {
+                    UpdateEventsPropertyGrid(item?.PropInstance);
                     propertyGrid.SetProps(item?.PropInstance, true);
+                }
+            }
+
+            void UpdateEventsPropertyGrid(object? instance)
+            {
+                eventGrid.DoInsideUpdate(() =>
+                {
+                    eventGrid.Clear();
+                    if (instance == null)
+                        return;
+                    var events = EnumEvents(instance.GetType(), true);
+
+                    foreach(var item in events)
+                    {
+                        var prop = eventGrid.CreateBoolItem(item.Name, null, false);
+                        eventGrid.SetPropertyReadOnly(prop, true);
+                        eventGrid.Add(prop);
+                    }
+                });
             }
 
             controlPanel.SuspendLayout();
@@ -603,6 +628,32 @@ namespace PropertyGridSample
             {
                 controlPanel.ResumeLayout();
             }
+        }
+
+        public virtual IEnumerable<EventInfo> EnumEvents(
+            Type type,
+            bool sort = false,
+            BindingFlags bindingFlags = BindingFlags.Instance | BindingFlags.Public)
+        {
+            List<EventInfo> result = new();
+
+            IList<EventInfo> props =
+                new List<EventInfo>(type.GetEvents(bindingFlags));
+
+            SortedList<string, EventInfo> addedNames = new();
+
+            foreach (var p in props)
+            {
+                var propName = p.Name;
+                if (addedNames.ContainsKey(propName))
+                    continue;
+                result.Add(p);
+                addedNames.Add(propName, p);
+            }
+
+            if (sort)
+                result.Sort(PropertyGridItem.CompareByName);
+            return result;
         }
 
         private void Log_MouseRightButtonUp(object? sender, MouseButtonEventArgs e)
