@@ -34,6 +34,11 @@ namespace Alternet.UI
         double AsDouble { get; set; }
 
         /// <summary>
+        /// Gets variant value as <see cref="decimal"/>.
+        /// </summary>
+        decimal AsDecimal { get; }
+
+        /// <summary>
         /// Gets or sets variant value as <see cref="bool"/>.
         /// </summary>
         bool AsBool { get; set; }

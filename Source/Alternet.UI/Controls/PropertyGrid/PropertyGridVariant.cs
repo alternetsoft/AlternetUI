@@ -78,6 +78,37 @@ namespace Alternet.UI
             }
         }
 
+        public decimal AsDecimal
+        {
+            get
+            {
+                try
+                {
+                    var type = ValueType;
+
+                    if (type == TypeNameString)
+                    {
+                        if (decimal.TryParse(AsString, out var decimalResult))
+                            return decimalResult;
+                    }
+
+                    if (type == TypeNameBool)
+                        return AsBool ? 1 : 0;
+                    if (type == TypeNameDouble)
+                        return (decimal)AsDouble;
+                    if (type == TypeNameLong || type == TypeNameLongLong)
+                        return (decimal)AsLong;
+                    if (type == TypeNameULong || type == TypeNameULongLong)
+                        return (decimal)AsULong;
+                    return default;
+                }
+                catch
+                {
+                    return default;
+                }
+            }
+        }
+
         public double AsDouble
         {
             get
@@ -297,7 +328,7 @@ namespace Alternet.UI
                 case TypeCode.Double:
                     return AsDouble;
                 case TypeCode.Decimal:
-                    return default(decimal);
+                    return AsDecimal;
                 case TypeCode.DateTime:
                     return AsDateTime;
                 case TypeCode.String:
@@ -382,7 +413,15 @@ namespace Alternet.UI
                     AsDouble = (double)value;
                     break;
                 case TypeCode.Decimal:
-                    AsDouble = Convert.ToDouble((decimal)value);
+                    try
+                    {
+                        AsDouble = Convert.ToDouble((decimal)value);
+                    }
+                    catch
+                    {
+                        AsDouble = 0;
+                    }
+
                     break;
                 case TypeCode.DateTime:
                     AsDateTime = (DateTime)value;
