@@ -1272,6 +1272,12 @@ namespace Alternet.Drawing
         public uint AsUInt() => unchecked((uint)Value);
 
         /// <summary>
+        /// Gets color properties for the debug purposes.
+        /// </summary>
+        public string ToDebugString() =>
+            $"{{Name={Name}, KnownColor={(KnownColor)knownColor}, ARGB=({A}, {R}, {G}, {B}), State={state}}}";
+
+        /// <summary>
         /// Gets the <see cref="KnownColor"/> value of this
         /// <see cref="Color"/> structure.
         /// </summary>
