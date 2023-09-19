@@ -49,22 +49,18 @@
 
 
       <Label Text="Text Font:" Name="labelFont" Margin="0,20,0,0"/>
-      <ComboBox Name="comboBoxFontName" IsEditable="false" Margin="0,3,0,0"
-                SelectedItemChanged="ComboBoxFontName_Changed" />
+      <ComboBox Name="comboBoxFontName" IsEditable="false" Margin="0,3,0,0"/>
 
       <Label Text="Text Size:" Name="labelSize" Margin="0,10,0,0"/>
       <ComboBox Width="5" Name="comboBoxFontSize" IsEditable="false"
-                Margin="0,5,0,0"
-                SelectedItemChanged="ComboBoxFontSize_Changed" />
+                Margin="0,5,0,0"/>
 
       <Label Text="Text Color:" Name="labelTextColor" Margin="0,10,0,0"/>
-      <ComboBox Name="comboBoxTextColor" Margin="0,5,0,0" IsEditable="false"
-                SelectedItemChanged="ComboBoxTextColor_Changed" />
+      <ComboBox Name="comboBoxTextColor" Margin="0,5,0,0" IsEditable="false"/>
 
       <Label Text="BackGround Color:" Name="labelBackColor" Margin="0,10,0,0"/>
       <ComboBox Name="comboBoxBackColor"
-                Margin="0,5,0,0" IsEditable="false"
-                SelectedItemChanged="ComboBoxBackColor_Changed" />
+                Margin="0,5,0,0" IsEditable="false"/>
 
     </StackPanel>
 

@@ -42,21 +42,8 @@ namespace ControlsSample
 
             ApplyAll();
 
-            comboBoxFontName.Items.AddRange(FontFamily.FamiliesNamesAscending);
-
-            comboBoxFontSize.Items.AddRange(
-                new object[] { 8, 9, 10, 11, 12, 14, 18, 24, 30, 36, 48, 60, 72, 96 });
-
-            var knownColors = Color.GetKnownColors();
-            var colorsNames = knownColors.Select(x => x.Name).ToArray();
-            comboBoxTextColor.Items.AddRange(colorsNames);
-            comboBoxBackColor.Items.AddRange(colorsNames);
-
             textAlignComboBox.Items.AddRange(ValidAlign);
-            textAlignComboBox.SelectedItemChanged += TextAlignComboBox_Changed;
-
             imageAlignComboBox.Items.AddRange(ValidAlign);
-            imageAlignComboBox.SelectedItemChanged += ImageAlignComboBox_Changed;
 
             if (Application.IsMacOs)
             {
@@ -64,6 +51,18 @@ namespace ControlsSample
                 imageCheckBox.Enabled = false;
                 showTextCheckBox.Enabled = false;
             }
+
+            ListControlUtils.AddFontSizes(comboBoxFontSize, true);
+            ListControlUtils.AddFontNames(comboBoxFontName, true);
+            ListControlUtils.AddColorNames(comboBoxTextColor, false);
+            ListControlUtils.AddColorNames(comboBoxBackColor, false);
+
+            comboBoxFontName.SelectedItemChanged += ComboBoxFontName_Changed;
+            comboBoxFontSize.SelectedItemChanged += ComboBoxFontSize_Changed;
+            comboBoxTextColor.SelectedItemChanged += ComboBoxTextColor_Changed;
+            comboBoxBackColor.SelectedItemChanged += ComboBoxBackColor_Changed;
+            textAlignComboBox.SelectedItemChanged += TextAlignComboBox_Changed;
+            imageAlignComboBox.SelectedItemChanged += ImageAlignComboBox_Changed;
         }
 
         public IPageSite? Site
@@ -213,11 +212,14 @@ namespace ControlsSample
             //site?.LogEvent("Button: Font changed to " + font.Name + ", "
             //    + font.SizeInPoints);
 
-            button.Font = Font.Default;
-            button.Font = font;
-            button.PerformLayout();
-            button.Refresh();
-            button.Update();
+            button.DoInsideUpdate(() =>
+            {
+                button.Font = Font.Default;
+                button.Font = font;
+                button.PerformLayout();
+                button.Refresh();
+                button.Update();
+            });
         }
 
         private void ApplyTextColor()
@@ -232,21 +234,12 @@ namespace ControlsSample
 
             Color newColor = Color.FromName(item.ToString());
 
-            if (ColorIsEqual(newColor, button.Foreground))
+            if (button.ForegroundColor is not null && 
+                newColor == button.ForegroundColor.Value)
                 return;
 
-            site?.LogEvent("Button: Text Color changed to " + item);
-            button.Foreground = new SolidBrush(newColor);
-        }
-
-        private bool ColorIsEqual(Color color, Brush? brush)
-        {
-            SolidBrush? solid = brush as SolidBrush;
-
-            if (solid == null)
-                return false;
-
-            return solid.Color == color;
+            site?.LogEvent("Button: Text Color = " + item);
+            button.ForegroundColor = newColor;
         }
 
         private void ApplyBackColor()
@@ -261,11 +254,12 @@ namespace ControlsSample
 
             Color newColor = Color.FromName(item.ToString());
 
-            if (ColorIsEqual(newColor, button.Background))
+            if (button.BackgroundColor is not null
+                && newColor == button.BackgroundColor.Value)
                 return;
 
-            site?.LogEvent("Button: Back Color changed to " + item);
-            button.Background = new SolidBrush(newColor);
+            site?.LogEvent("Button: Back Color = " + item);
+            button.BackgroundColor = newColor;
         }
 
         private void ComboBoxFontName_Changed(object? sender, EventArgs e)
