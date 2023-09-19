@@ -7,9 +7,12 @@ using System.Threading.Tasks;
 
 namespace Alternet.UI
 {
-    internal class ValueValidator : DisposableObject, IValueValidator
+    /// <summary>
+    /// Base class for <see cref="IValueValidator"/> implementation.
+    /// </summary>
+    public class ValueValidator : DisposableObject, IValueValidator
     {
-        public ValueValidator(IntPtr handle = default, bool disposeHandle = true)
+        internal ValueValidator(IntPtr handle = default, bool disposeHandle = true)
             : base(handle, disposeHandle)
         {
         }
