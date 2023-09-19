@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,6 +12,14 @@ namespace Alternet.UI.Localization
     /// </summary>
     public class PropCategoryStrings
     {
+        private static AdvDictionary<string, Func<string, string>>? titles;
+
+        /// <summary>
+        /// Gets <see cref="IDictionary"/> which is used to get
+        /// localized title for the property category.
+        /// </summary>
+        public static IDictionary<string, Func<string, string>>? Titles => titles ?? CreateTitles();
+
         /// <summary>
         /// Current localizations for control categories.
         /// </summary>
@@ -59,5 +68,39 @@ namespace Alternet.UI.Localization
 
         /// <inheritdoc cref="Other"/>
         public string WindowStyle { get; set; } = "WindowStyle";
+
+        /// <summary>
+        /// Gets localized title for the specified category id.
+        /// </summary>
+        /// <param name="id">Category id.</param>
+        public virtual string GetLocalizedTitle(string id)
+        {
+            CreateTitles();
+            var fn = titles!.GetValueOrDefault(id, (s) => s);
+            return fn(id);
+        }
+
+        private static IDictionary<string, Func<string, string>>? CreateTitles()
+        {
+            titles ??= new()
+                {
+                    { nameof(Other), (s) => Default.Other },
+                    { nameof(Action), (s) => Default.Action },
+                    { nameof(Appearance), (s) => Default.Appearance },
+                    { nameof(Asynchronous), (s) => Default.Asynchronous },
+                    { nameof(Behavior), (s) => Default.Behavior },
+                    { nameof(Data), (s) => Default.Data },
+                    { nameof(Design), (s) => Default.Design },
+                    { nameof(DragDrop), (s) => Default.DragDrop },
+                    { nameof(Focus), (s) => Default.Focus },
+                    { nameof(Format), (s) => Default.Format },
+                    { nameof(Key), (s) => Default.Key },
+                    { nameof(Layout), (s) => Default.Layout },
+                    { nameof(Mouse), (s) => Default.Mouse },
+                    { nameof(WindowStyle), (s) => Default.WindowStyle },
+                };
+
+            return titles;
+        }
     }
 }
