@@ -25,7 +25,7 @@ namespace Alternet.UI
             listView.DoInsideUpdate(() =>
             {
                 List<ListViewColumn> columns = new();
-                columns.AddRange(GetItems<ListViewColumn>(tree));
+                columns.AddRange(EnumerableUtils.GetItems<ListViewColumn>(tree));
                 listView.Columns.SetCount(columns.Count, () => new ListViewColumn());
                 for (int i = 0; i < columns.Count; i++)
                     listView.Columns[i].Assign(columns[i]);

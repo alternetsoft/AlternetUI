@@ -22,19 +22,20 @@ namespace Alternet.UI
 
         /// <summary>
         /// Calls <see cref="PropertyInfo.SetValue(object?, object?)"/> when property is changed
-        /// in the <see cref="PropertyGrid"/>. This requires <see cref="IPropertyGridItem.Instance"/>
-        /// and <see cref="IPropertyGridItem.PropInfo"/> to be specified.
+        /// in the <see cref="PropertyGrid"/>. This requires <see cref="IPropInfoAndInstance.Instance"/>
+        /// and <see cref="IPropInfoAndInstance.PropInfo"/> to be specified in the
+        /// <see cref="IPropertyGridItem"/>.
         /// </summary>
         PropInfoSetValue = 0x02,
 
         /// <summary>
-        /// Reload property value again after set value (<see cref="PropInfoSetValue"/>)
+        /// Reloads property value again after set value (<see cref="PropInfoSetValue"/>)
         /// and updates <see cref="PropertyGrid"/>.
         /// </summary>
         ReloadAfterSetValue = 0x04,
 
         /// <summary>
-        /// Reload all property value again after set value (<see cref="PropInfoSetValue"/>)
+        /// Reloads all property value again after set value (<see cref="PropInfoSetValue"/>)
         /// and updates <see cref="PropertyGrid"/>.
         /// </summary>
         ReloadAllAfterSetValue = 0x08,

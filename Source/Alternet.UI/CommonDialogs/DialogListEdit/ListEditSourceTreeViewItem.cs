@@ -14,13 +14,9 @@ namespace Alternet.UI
 
         public TreeView? TreeView => Instance as TreeView;
 
-        public override IEnumerable? RootItems
-        {
-            get
-            {
-                return TreeView?.Items;
-            }
-        }
+        public override IEnumerable? RootItems => TreeView?.Items;
+
+        public override ImageList? ImageList => TreeView?.ImageList;
 
         public override object CloneItem(object item)
         {
@@ -35,8 +31,6 @@ namespace Alternet.UI
             return tvItem.Items;
         }
 
-        public override ImageList? ImageList => TreeView?.ImageList;
-
         public override int? GetItemImageIndex(object item) => (item as TreeViewItem)?.ImageIndex;
 
         public override object? CreateNewItem() => new TreeViewItem();
@@ -47,15 +41,15 @@ namespace Alternet.UI
                 return;
             TreeView treeView = TreeView;
 
-            ForEachItem(
-                tree, 
+            EnumerableUtils.ForEachItem(
+                tree,
                 (item) =>
                 {
                     var data = tree.GetData(item);
                     if (data is TreeViewItem treeItem)
                     {
                         treeItem.Items.Clear();
-                        var children = GetChildren<TreeViewItem>(tree, item);
+                        var children = EnumerableUtils.GetChildren<TreeViewItem>(tree, item);
                         treeItem.Items.AddRange(children);
                     }
                 });
@@ -63,7 +57,7 @@ namespace Alternet.UI
             treeView.DoInsideUpdate(() =>
             {
                 treeView.RemoveAll();
-                treeView.Items.AddRange(GetItems<TreeViewItem>(tree));
+                treeView.Items.AddRange(EnumerableUtils.GetItems<TreeViewItem>(tree));
             });
         }
     }

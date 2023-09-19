@@ -433,23 +433,81 @@ namespace Alternet.UI
             if (staticStateFlags.HasFlag(StaticStateFlags.CollectionEditorsRegistered))
                 return;
             staticStateFlags |= StaticStateFlags.CollectionEditorsRegistered;
-            RegisterCollectionEditor(typeof(ImageList), nameof(ImageList.Images));
-            RegisterCollectionEditor(typeof(ImageSet), nameof(ImageSet.Images));
-            RegisterCollectionEditor(typeof(TreeView), nameof(TreeView.Items));
-            RegisterCollectionEditor(typeof(ListView), nameof(ListView.Items));
-            RegisterCollectionEditor(typeof(ListView), nameof(ListView.Columns));
-            RegisterCollectionEditor(typeof(ListViewItem), nameof(ListViewItem.Cells));
-            RegisterCollectionEditor(typeof(ListBox), nameof(ListBox.Items));
-            RegisterCollectionEditor(typeof(CheckListBox), nameof(CheckListBox.Items));
-            RegisterCollectionEditor(typeof(ComboBox), nameof(ComboBox.Items));
-            RegisterCollectionEditor(typeof(StatusBar), nameof(StatusBar.Panels));
-            RegisterCollectionEditor(typeof(TabControl), nameof(TabControl.Pages));
-            RegisterCollectionEditor(typeof(Toolbar), nameof(Toolbar.Items));
-            RegisterCollectionEditor(typeof(Menu), nameof(Menu.Items));
-            RegisterCollectionEditor(typeof(Window), nameof(Window.InputBindings));
+
+            RegisterCollectionEditor(
+                typeof(ImageList),
+                nameof(ImageList.Images),
+                null); // todo: List edit for ImageList.Images
+
+            RegisterCollectionEditor(
+                typeof(ImageSet),
+                nameof(ImageSet.Images),
+                null); // todo: List edit for ImageSet.Images
+
+            RegisterCollectionEditor(
+                typeof(TreeView),
+                nameof(TreeView.Items),
+                typeof(ListEditSourceTreeViewItem));
+
+            RegisterCollectionEditor(
+                typeof(ListView),
+                nameof(ListView.Items),
+                typeof(ListEditSourceListViewItem));
+
+            RegisterCollectionEditor(
+                typeof(ListView),
+                nameof(ListView.Columns),
+                typeof(ListEditSourceListViewColumn));
+
+            RegisterCollectionEditor(
+                typeof(ListViewItem),
+                nameof(ListViewItem.Cells),
+                typeof(ListEditSourceListViewCell));
+
+            RegisterCollectionEditor(
+                typeof(ListBox),
+                nameof(ListBox.Items),
+                typeof(ListEditSourceListBox));
+
+            RegisterCollectionEditor(
+                typeof(CheckListBox),
+                nameof(CheckListBox.Items),
+                typeof(ListEditSourceListBox));
+
+            RegisterCollectionEditor(
+                typeof(ComboBox),
+                nameof(ComboBox.Items),
+                typeof(ListEditSourceListBox));
+
+            RegisterCollectionEditor(
+                typeof(StatusBar),
+                nameof(StatusBar.Panels),
+                null); // todo: List edit for StatusBar.Panels
+
+            RegisterCollectionEditor(
+                typeof(TabControl),
+                nameof(TabControl.Pages),
+                null); // todo: List edit for TabControl.Pages
+
+            RegisterCollectionEditor(
+                typeof(Toolbar),
+                nameof(Toolbar.Items),
+                null); // todo: List edit for Toolbar.Items
+
+            RegisterCollectionEditor(
+                typeof(Menu),
+                nameof(Menu.Items),
+                null); // todo: List edit for Menu.Items
+
+            RegisterCollectionEditor(
+                typeof(Window),
+                nameof(Window.InputBindings),
+                null); // todo: List edit for Window.InputBindings
+
             RegisterCollectionEditor(
                 typeof(PropertyGridAdapterBrush),
-                nameof(PropertyGridAdapterBrush.GradientStops));
+                nameof(PropertyGridAdapterBrush.GradientStops),
+                typeof(ListEditSourceGradientStops));
         }
 
         /// <summary>
@@ -538,14 +596,19 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="type">Type which contains the property.</param>
         /// <param name="propName">Property name.</param>
+        /// <param name="editType">Editor type which implements
+        /// <see cref="IListEditSource"/> interface.</param>
         /// <returns><see cref="IPropertyGridPropInfoRegistry"/> item for the property
         /// specified in <paramref name="propName"/>.</returns>
         public static IPropertyGridPropInfoRegistry RegisterCollectionEditor(
             Type type,
-            string propName)
+            string propName,
+            Type? editType)
         {
             var propRegistry = ShowEllipsisButton(type, propName);
             propRegistry.NewItemParams.OnlyTextReadOnly = true;
+            propRegistry.ListEditSourceType = editType;
+            propRegistry.NewItemParams.ButtonClick += ListEditSource.EditWithListEdit;
             return propRegistry;
         }
 

@@ -16,13 +16,13 @@ namespace Alternet.UI
 
         public ListViewItem? ListViewItem => Instance as ListViewItem;
 
+        public override ImageList? ImageList => ListViewItem?.ListView?.SmallImageList;
+
         public override IEnumerable? RootItems => ListViewItem?.Cells;
 
         public override object? CreateNewItem() => new ListViewItemCell();
 
         public override object CloneItem(object item) => ((ListViewItemCell)item).Clone();
-
-        public override ImageList? ImageList => ListViewItem?.ListView?.SmallImageList;
 
         public override int? GetItemImageIndex(object item) => (item as ListViewItemCell)?.ImageIndex;
 
@@ -33,7 +33,7 @@ namespace Alternet.UI
             ListViewItem listViewItem = ListViewItem;
 
             List<ListViewItemCell> cells = new();
-            cells.AddRange(GetItems<ListViewItemCell>(tree));
+            cells.AddRange(EnumerableUtils.GetItems<ListViewItemCell>(tree));
             listViewItem.Cells.SetCount(cells.Count, () => new ListViewItemCell());
             for (int i = 0; i < cells.Count; i++)
                 listViewItem.Cells[i].Assign(cells[i]);

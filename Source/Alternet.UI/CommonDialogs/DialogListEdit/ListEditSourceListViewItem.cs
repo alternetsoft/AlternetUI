@@ -14,9 +14,9 @@ namespace Alternet.UI
 
         public override IEnumerable? RootItems => ListView?.Items;
 
-        public override object? CreateNewItem() => new ListViewItem();
-
         public override ImageList? ImageList => ListView?.SmallImageList;
+
+        public override object? CreateNewItem() => new ListViewItem();
 
         public override int? GetItemImageIndex(object item) => (item as ListViewItem)?.ImageIndex;
 
@@ -35,7 +35,7 @@ namespace Alternet.UI
             listView.DoInsideUpdate(() =>
             {
                 listView.RemoveAll();
-                listView.Items.AddRange(GetItems<ListViewItem>(tree));
+                listView.Items.AddRange(EnumerableUtils.GetItems<ListViewItem>(tree));
             });
         }
     }

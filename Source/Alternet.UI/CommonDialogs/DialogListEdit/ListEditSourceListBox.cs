@@ -14,14 +14,14 @@ namespace Alternet.UI
 
         public override IEnumerable? RootItems => ListControl?.Items;
 
-        public override object? CreateNewItem() => new ValueContainer<string>(string.Empty); 
+        public override object? CreateNewItem() => new ValueContainer<string>(string.Empty);
 
         public override object CloneItem(object item)
         {
             var s = item.ToString() ?? string.Empty;
             var container = new ValueContainer<string>(s);
             return container;
-        } 
+        }
 
         public override object? GetProperties(object item)
         {
@@ -37,7 +37,7 @@ namespace Alternet.UI
             control.DoInsideUpdate(() =>
             {
                 control.RemoveAll();
-                var containers = GetItems<ValueContainer<string>>(tree);
+                var containers = EnumerableUtils.GetItems<ValueContainer<string>>(tree);
                 foreach(var item in containers)
                     control.Items.Add(item.Value);
             });

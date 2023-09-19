@@ -9,13 +9,18 @@ using Alternet.Drawing;
 
 namespace Alternet.UI
 {
+    /// <summary>
+    /// Base abstract class which implements <see cref="IListEditSource"/>.
+    /// </summary>
     public abstract class ListEditSource : IListEditSource
     {
         private object? instance;
         private PropertyInfo? propInfo;
 
+        /// <inheritdoc/>
         public virtual bool AllowSubItems => false;
 
+        /// <inheritdoc/>
         public object? Instance
         {
             get => instance;
@@ -27,6 +32,7 @@ namespace Alternet.UI
             }
         }
 
+        /// <inheritdoc/>
         public PropertyInfo? PropInfo
         {
             get => propInfo;
@@ -38,21 +44,38 @@ namespace Alternet.UI
             }
         }
 
-        public static IPropertyGridPropInfoRegistry RegisterListEditSource(
-            Type type,
-            string propName,
-            Type editType)
+        /// <inheritdoc/>
+        public virtual IEnumerable? RootItems
         {
-            var typeRegistry = PropertyGrid.GetTypeRegistry(type);
-            var propRegistry = typeRegistry.GetPropRegistry(propName);
-            propRegistry.ListEditSourceType = editType;
-            propRegistry.NewItemParams.ButtonClick += EditWithListEdit;
-            return propRegistry;
+            get
+            {
+                var value = PropInfo?.GetValue(Instance);
+                var result = value as IEnumerable;
+                return result;
+            }
         }
 
-        private static void EditWithListEdit(object? sender, EventArgs e)
+        /// <inheritdoc/>
+        public bool AllowApplyData => true;
+
+        /// <inheritdoc/>
+        public virtual bool AllowAdd => true;
+
+        /// <inheritdoc/>
+        public virtual bool AllowDelete => true;
+
+        /// <summary>
+        /// Used as event handler.
+        /// </summary>
+        /// <param name="sender">Must implement <see cref="IPropInfoAndInstance"/>.</param>
+        /// <param name="e">Event arguments.</param>
+        /// <remarks>
+        /// Calls <see cref="UIDialogListEdit.EditProperty"/> for the <paramref name="sender"/>,
+        /// if it implements <see cref="IPropInfoAndInstance"/> interface.
+        /// </remarks>
+        public static void EditWithListEdit(object? sender, EventArgs e)
         {
-            if (sender is not IPropertyGridItem prop)
+            if (sender is not IPropInfoAndInstance prop)
                 return;
             var instance = prop.Instance;
             var propInfo = prop.PropInfo;
@@ -60,49 +83,14 @@ namespace Alternet.UI
             UIDialogListEdit.EditProperty(instance, propInfo);
         }
 
-        public static void RegisterCreateFuncs()
-        {
-            RegisterListEditSource(
-                typeof(ListView),
-                nameof(ListView.Items),
-                typeof(ListEditSourceListViewItem));
-
-            RegisterListEditSource(
-                typeof(ListView),
-                nameof(ListView.Columns),
-                typeof(ListEditSourceListViewColumn));
-
-            RegisterListEditSource(
-                typeof(TreeView),
-                nameof(TreeView.Items),
-                typeof(ListEditSourceTreeViewItem));
-
-            RegisterListEditSource(
-                typeof(ListViewItem),
-                nameof(ListViewItem.Cells),
-                typeof(ListEditSourceListViewCell));
-
-            RegisterListEditSource(
-                typeof(ListBox),
-                nameof(ListBox.Items),
-                typeof(ListEditSourceListBox));
-            
-            RegisterListEditSource(
-                typeof(CheckListBox),
-                nameof(CheckListBox.Items),
-                typeof(ListEditSourceListBox));
-            
-            RegisterListEditSource(
-                typeof(ComboBox),
-                nameof(ComboBox.Items),
-                typeof(ListEditSourceListBox));
-
-            RegisterListEditSource(
-                typeof(PropertyGridAdapterBrush),
-                nameof(PropertyGridAdapterBrush.GradientStops),
-                typeof(ListEditSourceGradientStops));
-        }
-
+        /// <summary>
+        /// Creates <see cref="IListEditSource"/> provider using collection editors
+        /// registered with <see cref="PropertyGrid.RegisterCollectionEditor"/>.
+        /// </summary>
+        /// <param name="instance">Object which contains the collection.</param>
+        /// <param name="propInfo">Property information.</param>
+        /// <returns><see cref="IListEditSource"/> provider which is capable of editing
+        /// specified collecion property; <c>null</c> if no suitable providers were found.</returns>
         public static IListEditSource? CreateEditSource(object? instance, PropertyInfo? propInfo)
         {
             if (propInfo == null)
@@ -120,81 +108,43 @@ namespace Alternet.UI
                 return null;
             result.Instance = instance;
             result.PropInfo = propInfo;
-            return result;                
+            return result;
         }
 
+        /// <inheritdoc/>
         public virtual string? GetItemTitle(object item) => item?.ToString();
 
-        public virtual IEnumerable? RootItems
-        {
-            get
-            {
-                var value = PropInfo?.GetValue(Instance);
-                var result = value as IEnumerable;
-                return result;
-            }
-        }
-
-        public bool AllowApplyData => true;
-
-        public virtual bool AllowAdd => true;
-
-        public virtual bool AllowDelete => true;
-
-        public static IEnumerable<T> GetItems<T>(IEnumerableTree tree)
-        {
-            foreach (var srcItem in tree)
-            {
-                if (tree.GetData(srcItem) is T data)
-                    yield return data;
-            }
-        }
-
-        public static IEnumerable<T> GetChildren<T>(IEnumerableTree tree, object item)
-        {
-            var children = tree.GetChildren(item);
-            if (children != null)
-                foreach (var srcItem in children)
-                {
-                    if (tree.GetData(srcItem) is T data)
-                        yield return data;
-                }
-        }
-
-        public static void ForEachItem(IEnumerableTree tree, Action<object> func)
-        {
-            void Fn(IEnumerable parent)
-            {
-                foreach (var item in parent)
-                {
-                    func(item);
-                    var childs = tree.GetChildren(item);
-                    if (childs != null)
-                        Fn(childs);
-                }
-            }
-
-            Fn(tree);
-        }
-
+        /// <inheritdoc/>
         public abstract void ApplyData(IEnumerableTree tree);
 
+        /// <inheritdoc/>
         public abstract object CloneItem(object item);
 
+        /// <inheritdoc/>
         public virtual IEnumerable? GetChildren(object item) => null;
 
+        /// <inheritdoc/>
         public virtual object? GetProperties(object item) => item;
 
+        /// <inheritdoc/>
         public virtual ImageList? ImageList => null;
 
+        /// <inheritdoc/>
         public virtual int? GetItemImageIndex(object item) => null;
 
+        /// <inheritdoc/>
         public virtual object? CreateNewItem() => null;
 
+        /// <summary>
+        /// Applies <see cref="IEnumerableTree"/> data to the property specified
+        /// in <see cref="Instance"/> and <see cref="PropInfo"/>.
+        /// </summary>
+        /// <typeparam name="T">Type of the item in the result collection.</typeparam>
+        /// <param name="tree">Data to apply.</param>
         protected void ApplyDataAsArray<T>(IEnumerableTree tree)
         {
             List<T> value = new();
-            value.AddRange(GetItems<T>(tree));
+            value.AddRange(EnumerableUtils.GetItems<T>(tree));
             T[] asArray = value.ToArray();
             PropInfo?.SetValue(Instance, asArray);
         }

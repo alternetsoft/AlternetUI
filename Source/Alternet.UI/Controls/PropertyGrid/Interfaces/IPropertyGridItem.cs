@@ -10,7 +10,7 @@ namespace Alternet.UI
     /// <summary>
     /// Item of the <see cref="PropertyGrid"/>.
     /// </summary>
-    public interface IPropertyGridItem
+    public interface IPropertyGridItem : IPropInfoAndInstance
     {
         /// <summary>
         /// Occurs when property value has been changed.
@@ -41,22 +41,6 @@ namespace Alternet.UI
         /// Gets or sets user data associated with this <see cref="IPropertyGridItem"/>.
         /// </summary>
         object? UserData { get; set; }
-
-        /// <summary>
-        /// Gets objects instance in which property is contained.
-        /// </summary>
-        /// <remarks>
-        /// This is used when object properties are added to <see cref="PropertyGrid"/>.
-        /// </remarks>
-        object? Instance { get; set; }
-
-        /// <summary>
-        /// Gets property information.
-        /// </summary>
-        /// <remarks>
-        /// This is used when object properties are added to <see cref="PropertyGrid"/>.
-        /// </remarks>
-        PropertyInfo? PropInfo { get; set; }
 
         /// <summary>
         /// Gets <see cref="IPropertyGridChoices"/> used in the item editor.
