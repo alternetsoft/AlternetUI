@@ -12,7 +12,7 @@ namespace Alternet.Drawing
     /// You can add images to the <see cref="ImageList"/>, and the other controls are
     /// able to use the images as they require.
     /// </remarks>
-    public class ImageList : Component, IDisposable
+    public class ImageList : BaseComponent, IDisposable
     {
         private bool isDisposed;
 

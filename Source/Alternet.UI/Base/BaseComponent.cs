@@ -9,7 +9,7 @@ namespace Alternet.UI
     /// <summary>
     /// Base class for Alternet.UI components.
     /// </summary>
-    public class Component : BaseObject
+    public class BaseComponent : BaseObject
     {
     }
 }

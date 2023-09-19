@@ -11,7 +11,7 @@ namespace Alternet.UI
     /// Can be used for specifying several size representations of the same picture.
     /// </summary>
     [TypeConverter(typeof(ImageSetConverter))]
-    public class ImageSet : Component, IDisposable
+    public class ImageSet : BaseComponent, IDisposable
     {
         private bool isDisposed;
 

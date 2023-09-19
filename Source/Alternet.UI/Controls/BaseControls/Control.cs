@@ -14,8 +14,7 @@ namespace Alternet.UI
     [DesignerCategory("Code")]
     [DefaultProperty("Text")]
     [DefaultEvent("Click")]
-    public class Control : FrameworkElement, ISupportInitialize, IDisposable,
-        IControl
+    public class Control : FrameworkElement, ISupportInitialize, IDisposable, IControl
     {
         /// <summary>
         /// Identifies the <see cref="ToolTip"/> dependency property.

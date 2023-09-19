@@ -7,7 +7,7 @@ namespace Alternet.UI
     /// Represents a dialog box form that contains a preview for printing
     /// from an Alternet.UI application.
     /// </summary>
-    public class PrintPreviewDialog : Component, IDisposable
+    public class PrintPreviewDialog : BaseComponent, IDisposable
     {
         private bool isDisposed;
 
