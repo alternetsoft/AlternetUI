@@ -41,7 +41,7 @@ namespace Alternet.UI
                 return;
             TreeView treeView = TreeView;
 
-            EnumerableUtils.ForEachItem(
+            EnumerableUtils.ForEach(
                 tree,
                 (item) =>
                 {

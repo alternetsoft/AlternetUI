@@ -1230,6 +1230,7 @@ namespace Alternet.UI
             Color value,
             IPropertyGridNewItemParams? prm = null)
         {
+            KnownColorsAdd();
             uint kind = GetColorKind(value);
 
             var handle = NativeControl.CreateSystemColorProperty(
@@ -1260,6 +1261,7 @@ namespace Alternet.UI
             Color value,
             IPropertyGridNewItemParams? prm = null)
         {
+            KnownColorsAdd();
             var handle = NativeControl.CreateColorProperty(
                 CorrectPropLabel(label, prm),
                 CorrectPropName(name),
@@ -1319,7 +1321,7 @@ namespace Alternet.UI
                 if (prm != null && prm.EditKindColor != null)
                     kind = prm.EditKindColor.Value;
 
-                if(kind == PropertyGridEditKindColor.Default)
+                if (kind == PropertyGridEditKindColor.Default)
                     kind = DefaultEditKindColor;
 
                 return kind switch
@@ -4402,6 +4404,33 @@ namespace Alternet.UI
             return NativeControl.GetSelectionBackgroundColor();
         }
 
+        internal static void KnownColorsClear()
+        {
+            Native.PropertyGrid.KnownColorsClear();
+        }
+
+        internal static void KnownColorsAdd()
+        {
+            if (staticStateFlags.HasFlag(StaticStateFlags.KnownColorsAdded))
+                return;
+            staticStateFlags |= StaticStateFlags.KnownColorsAdded;
+
+        }
+
+        internal static void KnownColorsAdd(
+            string Name,
+            string Title,
+            Color value,
+            KnownColor knownColor)
+	    {
+            Native.PropertyGrid.KnownColorsAdd(Name, Title, value, (int)knownColor);
+        }
+
+        internal static void KnownColorsApply()
+        {
+            Native.PropertyGrid.KnownColorsApply();
+        }
+
         internal Color GetSelectionForegroundColor()
         {
             return NativeControl.GetSelectionForegroundColor();
@@ -4861,6 +4890,7 @@ namespace Alternet.UI
         private enum StaticStateFlags
         {
             CollectionEditorsRegistered = 1,
+            KnownColorsAdded = 2,
         }
     }
 }

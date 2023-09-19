@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 
 namespace Alternet.UI
 {
-
     /// <summary>
     /// Contains static methods related to <see cref="IEnumerable"/>.
     /// </summary>
@@ -75,7 +74,7 @@ namespace Alternet.UI
         /// <remarks>
         /// All items are enumerated recursively.
         /// </remarks>
-        public static void ForEachItem(IEnumerableTree tree, Action<object> func)
+        public static void ForEach(IEnumerableTree tree, Action<object> func)
         {
             void Fn(IEnumerable parent)
             {
