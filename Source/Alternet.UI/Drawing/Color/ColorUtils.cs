@@ -28,6 +28,7 @@ namespace Alternet.Drawing
             }
         }
 
+        /// <inheritdoc cref="FindKnownColor(Color)"/>
         public static Color? FindKnownColor(Color? color)
         {
             if (color is null)
@@ -36,6 +37,14 @@ namespace Alternet.Drawing
             return result;
         }
 
+        /// <summary>
+        /// Converts <see cref="Color"/> to known color if its possible.
+        /// </summary>
+        /// <param name="color">Color.</param>
+        /// <returns>If <see cref="Color.IsKnownColor"/> for <paramref name="color"/> returns
+        /// <c>true</c>, color is returned as is;
+        /// otherwise list of known colors is searched for <paramref name="color"/> ARGB and
+        /// and if it is found, <paramref name="color"/> is modified to become a known color.</returns>
         public static Color FindKnownColor(Color color)
         {
             if (color.IsKnownColor)
