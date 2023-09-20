@@ -96,11 +96,17 @@ wxDEFINE_EVENT( wxEVT_MAGNIFY, wxMouseEvent );
         auto eventType = e.GetEventType();
 
         if (eventType == wxEVT_MOTION)
+        {
             _owner->GetMouseInternal()->OnMouseMove(e, handled);
-        else if (eventType == wxEVT_MOUSEWHEEL)
+            return;
+        }      
+
+        if (eventType == wxEVT_MOUSEWHEEL)
             _owner->GetMouseInternal()->OnMouseWheel(e, handled);
         else if (eventType == wxEVT_LEFT_DOWN)
+        {
             _owner->GetMouseInternal()->OnMouseDown(e, MouseButton::Left, handled);
+        }
         else if (eventType == wxEVT_MIDDLE_DOWN)
             _owner->GetMouseInternal()->OnMouseDown(e, MouseButton::Middle, handled);
         else if (eventType == wxEVT_RIGHT_DOWN)
@@ -112,7 +118,9 @@ wxDEFINE_EVENT( wxEVT_MAGNIFY, wxMouseEvent );
             _owner->GetMouseInternal()->OnMouseDown(
                 e, MouseButton::XButton2, handled);
         else if (eventType == wxEVT_LEFT_UP)
+        {
             _owner->GetMouseInternal()->OnMouseUp(e, MouseButton::Left, handled);
+        }
         else if (eventType == wxEVT_MIDDLE_UP)
             _owner->GetMouseInternal()->OnMouseUp(e, MouseButton::Middle, handled);
         else if (eventType == wxEVT_RIGHT_UP)
@@ -379,6 +387,17 @@ wxDEFINE_EVENT( wxEVT_HOTKEY, wxKeyEvent );
     string Application::GetEventArgString()
     {
         return _eventArgString;
+    }
+
+    void Application::Log(wxString msg)
+    {
+        Log(wxStr(msg));
+    }
+
+    void Application::Log(string msg)
+    {
+        GetCurrent()->_eventArgString = msg;
+        GetCurrent()->RaiseEvent(ApplicationEvent::LogMessage);
     }
 
     void Application::DoLogRecord(wxLogLevel level /*unsigned long*/, const wxString& msg,
