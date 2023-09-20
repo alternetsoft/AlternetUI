@@ -217,7 +217,8 @@ using System.Security;");
                     w.WriteLine("set");
                     using (new BlockIndent(w))
                     {
-                        w.WriteLine("CheckDisposed();");
+                        if (!isStatic)
+                            w.WriteLine("CheckDisposed();");
                         var argument = GetManagedToNativeArgument(contextualProperty, "value", types, pinvokeTypes);
                         w.WriteLine(
                             $"NativeApi.{nativeDeclaringTypeName}_Set{propertyName}_({(isStatic ? "" : "NativePointer, ")}{argument});");
