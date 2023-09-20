@@ -57,11 +57,20 @@ namespace Alternet.UI
         /// <inheritdoc cref="PropertyGrid.ColEndDrag"/>
         event EventHandler? ColEndDrag;
 
+        /// <inheritdoc cref="PropertyGrid.HasItems"/>
+        bool HasItems { get; }
+
+        /// <inheritdoc cref="PropertyGrid.FirstItem"/>
+        IPropertyGridItem? FirstItem { get; }
+
+        /// <inheritdoc cref="PropertyGrid.FirstItemInstance"/>
+        object? FirstItemInstance { get; }
+
         /// <inheritdoc cref="PropertyGrid.Factory"/>
         IPropertyGridFactory Factory { get; }
 
         /// <inheritdoc cref="PropertyGrid.Items"/>
-        IEnumerable<IPropertyGridItem> Items { get; }
+        ICollection<IPropertyGridItem> Items { get; }
 
         /// <inheritdoc cref="PropertyGrid.IgnorePropNames"/>
         ICollection<string> IgnorePropNames { get; }

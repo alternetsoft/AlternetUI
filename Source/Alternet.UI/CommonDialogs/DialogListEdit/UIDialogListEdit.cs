@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-using System.Reflection;
 using Alternet.Base.Collections;
 using Alternet.Drawing;
 using Alternet.UI.Localization;
@@ -150,6 +150,58 @@ namespace Alternet.UI
             ComponentDesigner.Default!.PropertyChanged += OnDesignerPropertyChanged;
         }
 
+        public IListEditSource? DataSource
+        {
+            get
+            {
+                return dataSource;
+            }
+
+            set
+            {
+                if (dataSource == value)
+                    return;
+
+                Unbind();
+                dataSource = value;
+                Load();
+                Bind();
+                UpdateButtons();
+            }
+        }
+
+        /// <summary>
+        /// Edits property with <see cref="UIDialogListEdit"/>.
+        /// </summary>
+        /// <param name="instance">Object which contains the property.</param>
+        /// <param name="propInfo">Property information.</param>
+        public static void EditProperty(object? instance, PropertyInfo? propInfo)
+        {
+            var source = ListEditSource.CreateEditSource(instance, propInfo);
+            if (source == null)
+                return;
+
+            using UIDialogListEdit dialog = new()
+            {
+                DataSource = source,
+            };
+            dialog.ShowModal();
+            if (dialog.ModalResult == ModalResult.Accepted)
+            {
+                dialog.Save();
+                dialog.Designer?.RaisePropertyChanged(instance, propInfo?.Name);
+            }
+
+            dialog.Clear();
+        }
+
+        internal void Save()
+        {
+            if (dataSource is null)
+                return;
+            dataSource.ApplyData(treeView);
+        }
+
         private void OnDesignerPropertyChanged(object? sender, PropertyChangeEventArgs e)
         {
             if (IsDisposed)
@@ -214,7 +266,7 @@ namespace Alternet.UI
 
             if (dataSource == null)
                 return;
-            
+
             var item = dataSource.CreateNewItem();
 
             if (item == null)
@@ -254,6 +306,7 @@ namespace Alternet.UI
                 canRemoveAll = dataSource.AllowDelete && treeView.Items.Count > 0;
                 canApply = dataSource.AllowApplyData;
             }
+
             toolbar.EnableTool(buttonIdAdd, canAdd);
             toolbar.EnableTool(buttonIdRemove, canRemove);
             toolbar.EnableTool(buttonIdRemoveAll, canRemoveAll);
@@ -286,51 +339,6 @@ namespace Alternet.UI
 
             var propInstance = dataSource?.GetProperties(instance);
             propertyGrid.SetProps(propInstance);
-        }
-
-        public IListEditSource? DataSource
-        {
-            get
-            {
-                return dataSource;
-            }
-            set
-            {
-                if (dataSource == value)
-                    return;
-
-                Unbind();
-                dataSource = value;
-                Load();
-                Bind();
-                UpdateButtons();
-            }
-        }
-
-        public static void EditProperty(object? instance, PropertyInfo? propInfo)
-        {
-            var source = ListEditSource.CreateEditSource(instance, propInfo);
-            if (source == null)
-                return;
-
-            using UIDialogListEdit dialog = new()
-            {
-                DataSource = source,
-            };
-            dialog.ShowModal();
-            if (dialog.ModalResult == ModalResult.Accepted)
-            {
-                dialog.Save();
-                dialog.Designer?.RaisePropertyChanged(instance, propInfo?.Name);
-            }
-            dialog.Clear();
-        }
-
-        public void Save()
-        {
-            if (dataSource is null)
-                return;
-            dataSource.ApplyData(treeView);
         }
 
         private void Load()
@@ -406,69 +414,20 @@ namespace Alternet.UI
 
         public class TreeViewPlus : TreeView, IEnumerableTree<TreeViewItem>
         {
-            private bool isDragging = false;
-
             public TreeViewPlus()
             {
                 AllowDrop = true;
-                DragDrop += OnDragDropEvent;
-                DragOver += OnDragOverEvent;
-                DragEnter += OnDragEnterEvent;
-                DragLeave += OnDragLeaveEvent;
-                MouseUp += OnMouseUpEvent;
-                MouseDown += OnMouseDownEvent;
-                MouseMove += OnMouseMoveEvent;
-            }
 
-            internal static IDataObject GetDataObject()
-            {
-                var result = new DataObject();
-                result.SetData(DataFormats.Text, "Test data string.");
-                return result;
-            }
-
-            private void OnMouseDownEvent(object? sender, MouseButtonEventArgs e)
-            {
-                isDragging = false;
-            }
-
-            private void OnMouseMoveEvent(object? sender, MouseEventArgs e)
-            {
-                if (isDragging)
-                {
-                    var result =
-                        DoDragDrop(GetDataObject(), DragDropEffects.Copy | DragDropEffects.Move);
-                    var prefix = "DoDragDrop Result";
-                    Application.DebugLogReplace($"{prefix}: {result}", prefix);
-                    isDragging = false;
-                }
-            }
-
-            private void OnMouseUpEvent(object sender, Alternet.UI.MouseButtonEventArgs e)
-            {
-                isDragging = false;
-            }
-
-            private void OnDragDropEvent(object? sender, DragEventArgs e)
-            {
-                Application.DebugLog($"DragDrop: {e.MouseClientLocation}, {e.Effect}");
-                Application.DebugLog($"Dropped Data: {DataObject.ToDebugString(e.Data)}");
-            }
-
-            private void OnDragOverEvent(object? sender, DragEventArgs e)
-            {
-                Application.DebugLogReplace(
-                    $"DragOver: {e.MouseClientLocation}, {e.Effect}", "DragOver");
-            }
-
-            private void OnDragEnterEvent(object? sender, DragEventArgs e)
-            {
-                Application.DebugLog($"DragEnter: {e.MouseClientLocation}, {e.Effect}");
-            }
-
-            private void OnDragLeaveEvent(object? sender, EventArgs e)
-            {
-                Application.DebugLog("DragLeave");
+                // DragDrop += OnDragDropEvent;
+                // DragOver += OnDragOverEvent;
+                // DragEnter += OnDragEnterEvent;
+                // DragLeave += OnDragLeaveEvent;
+                // DragStart += OnDragStartEvent;
+                // MouseDown += TreeViewPlus_MouseDown;
+                // MouseUp += TreeViewPlus_MouseUp;
+                // Click += TreeViewPlus_Click;
+                // PreviewMouseUp += TreeViewPlus_PreviewMouseUp;
+                // MouseLeftButtonUp += TreeViewPlus_MouseLeftButtonUp;
             }
 
             IEnumerable<TreeViewItem>? IEnumerableTree<TreeViewItem>.GetChildren(TreeViewItem item)
@@ -501,7 +460,76 @@ namespace Alternet.UI
             {
                 return Items.GetEnumerator();
             }
+
+            internal static IDataObject GetDataObject()
+            {
+                var result = new DataObject();
+                result.SetData(DataFormats.Text, "Test data string.");
+                return result;
+            }
+
+            internal void OnDragStartEvent(object? sender, DragStartEventArgs e)
+            {
+                if (e.DistanceIsLess)
+                    return;
+                if (e.TimeIsGreater)
+                {
+                    e.Cancel = true;
+                    return;
+                }
+
+                e.DragStarted = true;
+                var result = DoDragDrop(GetDataObject(), DragDropEffects.Copy | DragDropEffects.Move);
+                if (result == DragDropEffects.None)
+                    return;
+            }
+
+            internal void TreeViewPlus_Click(object sender, EventArgs e)
+            {
+                Application.DebugLog("Click");
+            }
+
+            internal void TreeViewPlus_MouseUp(object sender, MouseButtonEventArgs e)
+            {
+                Application.DebugLog("MouseUp");
+            }
+
+            internal void TreeViewPlus_MouseDown(object sender, MouseButtonEventArgs e)
+            {
+                Application.DebugLog("MouseDown");
+            }
+
+            internal void OnDragDropEvent(object? sender, DragEventArgs e)
+            {
+                Application.DebugLog($"DragDrop: {e.MouseClientLocation}, {e.Effect}");
+                Application.DebugLog($"Dropped Data: {DataObject.ToDebugString(e.Data)}");
+            }
+
+            internal void OnDragOverEvent(object? sender, DragEventArgs e)
+            {
+                Application.DebugLogReplace(
+                    $"DragOver: {e.MouseClientLocation}, {e.Effect}", "DragOver");
+            }
+
+            internal void TreeViewPlus_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+            {
+                Application.DebugLog("MouseLeftButtonUp");
+            }
+
+            internal void TreeViewPlus_PreviewMouseUp(object sender, MouseButtonEventArgs e)
+            {
+                Application.DebugLog("PreviewMouseUp");
+            }
+
+            internal void OnDragEnterEvent(object? sender, DragEventArgs e)
+            {
+                Application.DebugLog($"DragEnter: {e.MouseClientLocation}, {e.Effect}");
+            }
+
+            internal void OnDragLeaveEvent(object? sender, EventArgs e)
+            {
+                Application.DebugLog("DragLeave");
+            }
         }
     }
 }
-

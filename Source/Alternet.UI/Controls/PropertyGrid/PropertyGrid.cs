@@ -197,9 +197,25 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets whether <see cref="Items"/> has items.
+        /// </summary>
+        public bool HasItems => Items.Count > 0;
+
+        /// <summary>
+        /// Gets first item in <see cref="Items"/>.
+        /// </summary>
+        public IPropertyGridItem? FirstItem => Items.FirstOrDefault();
+
+        /// <summary>
+        /// Gets <see cref="PropertyGridItem.Instance"/> of the first
+        /// item in the <see cref="Items"/>.
+        /// </summary>
+        public object? FirstItemInstance => Items.FirstOrDefault()?.Instance;
+
+        /// <summary>
         /// Gets list of <see cref="IPropertyGridItem"/> added to this control.
         /// </summary>
-        public IEnumerable<IPropertyGridItem> Items => items.Values;
+        public ICollection<IPropertyGridItem> Items => items.Values;
 
         /// <summary>
         /// Contains list of property names to ignore in <see cref="AddProps"/>.

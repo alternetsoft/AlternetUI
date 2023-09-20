@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -223,11 +224,37 @@ namespace PropertyGridSample
             ComponentDesigner.Default!.PropertyChanged += Default_PropertyChanged;
 
             controlPanel.MouseDown += ControlPanel_MouseDown;
+            controlPanel.DragStart += ControlPanel_DragStart;
+        }
+
+        private IDataObject GetDataObject()
+        {
+            var result = new DataObject();
+            result.SetData(DataFormats.Text, "Test data string.");
+            return result;
+        }
+
+        private void ControlPanel_DragStart(object sender, DragStartEventArgs e)
+        {
+            if (e.DistanceIsLess)
+                return;
+
+            // if (e.TimeIsGreater)
+            // {
+            //     e.Cancel = true;
+            //     return;
+            // }
+
+            e.DragStarted = true;
+            var distance = MathUtils.GetDistance(e.MouseDownLocation, e.MouseClientLocation);
+            Log($"DragStart {e.MouseDownLocation} {e.MouseClientLocation} {!e.DistanceIsLess} {distance}");
+            DoDragDrop(GetDataObject(), DragDropEffects.Copy | DragDropEffects.Move); 
         }
 
         private void ControlPanel_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            UpdatePropertyGrid(controlPanel);
+            if(e.Source == controlPanel)
+                UpdatePropertyGrid(controlPanel);
         }
 
         private void Default_PropertyChanged(object? sender, PropertyChangeEventArgs e)
@@ -569,6 +596,8 @@ namespace PropertyGridSample
         {
             if(instance != null)
             {
+                if (propertyGrid.FirstItemInstance == instance)
+                    return;
                 propertyGrid.SetProps(instance, true);
                 UpdateEventsPropertyGrid(instance);
                 return;
@@ -661,9 +690,14 @@ namespace PropertyGridSample
             logListBox.ShowPopupMenu(contextMenu2);
         }
 
+        private string ConstructMessage(string s)
+        {
+            return $"{s} ({LogUtils.GenNewId()})";
+        }
+
         internal void Log(string s)
         {
-            logListBox.Add(s);
+            logListBox.Add(ConstructMessage(s));
             logListBox.SelectLastItem();
         }
 
@@ -682,7 +716,7 @@ namespace PropertyGridSample
             if (e.ReplaceLastMessage)
                 LogSmart(e.Message, e.MessagePrefix);
             else
-                Log($"DEBUG MSG: { e.Message }");
+                Log(e.Message);
 #endif
         }
 
@@ -693,7 +727,7 @@ namespace PropertyGridSample
 
             if (b)
             {
-                logListBox.LastItem = message;
+                logListBox.LastItem = ConstructMessage(message);
             }
             else
                 LogEvent(message);
@@ -702,8 +736,8 @@ namespace PropertyGridSample
         private void LogEvent(string name, bool logAlways = false)
         {
             var propValue = propertyGrid.EventPropValue;
-            if (propValue is Color)
-                propValue = ((Color)propValue).ToDebugString();
+            if (propValue is Color color)
+                propValue = color.ToDebugString();
             propValue ??= "NULL";
             string propName = propertyGrid.EventPropName;
             string s = $"Event: {name}. PropName: <{propName}>. Value: <{propValue}>";
