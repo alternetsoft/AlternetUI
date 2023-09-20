@@ -78,7 +78,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        ///     Gets the current position of the mouse in screen co-ords from either the underlying system or the StylusDevice
+        ///     Gets the current position of the mouse in screen co-ords from either
+        ///     the underlying system or the StylusDevice
         /// </summary>
         /// <returns>
         ///     The current mouse location in screen co-ords
