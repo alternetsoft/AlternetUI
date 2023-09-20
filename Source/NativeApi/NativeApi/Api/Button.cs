@@ -7,6 +7,8 @@ namespace NativeApi.Api
 {
     public class Button : Control
     {
+        public static bool ImagesEnabled { get; set; }
+
         public event EventHandler? Click;
 
         public string Text { get; set; }

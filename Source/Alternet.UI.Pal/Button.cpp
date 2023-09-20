@@ -23,11 +23,20 @@ namespace Alternet::UI
     }
 
 #ifdef __WXOSX_COCOA__            
-    static const bool ButtonImagesEnabled = false;
+    static bool ButtonImagesEnabled = false;
 #else
-    static const bool ButtonImagesEnabled = true;
+    static bool ButtonImagesEnabled = true;
 #endif
 
+    bool Button::GetImagesEnabled()
+    {
+        return ButtonImagesEnabled;
+    }
+
+    void Button::SetImagesEnabled(bool value)
+    {
+        ButtonImagesEnabled = value;
+    }
 
     bool Button::GetTextVisible() 
     {
@@ -281,12 +290,12 @@ namespace Alternet::UI
         {
             _normalImage->AddRef();
             if(ButtonImagesEnabled)
-                button->SetBitmapLabel(_normalImage->GetBitmap());
+                button->SetBitmap(_normalImage->GetBitmap());
         }
         else
         {
             if (ButtonImagesEnabled)
-                button->SetBitmapLabel(wxBitmap());
+                button->SetBitmap(wxBitmap());
         }
     }
 

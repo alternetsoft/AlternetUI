@@ -24,6 +24,20 @@ namespace Alternet.UI.Native
         {
         }
         
+        public static bool ImagesEnabled
+        {
+            get
+            {
+                var n = NativeApi.Button_GetImagesEnabled_();
+                return n;
+            }
+            
+            set
+            {
+                NativeApi.Button_SetImagesEnabled_(value);
+            }
+        }
+        
         public string Text
         {
             get
@@ -303,6 +317,12 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern IntPtr Button_Create_();
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool Button_GetImagesEnabled_();
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Button_SetImagesEnabled_(bool value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern string Button_GetText_(IntPtr obj);

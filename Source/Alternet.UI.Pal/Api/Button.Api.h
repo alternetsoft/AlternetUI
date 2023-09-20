@@ -14,6 +14,16 @@ ALTERNET_UI_API Button* Button_Create_()
     return new Button();
 }
 
+ALTERNET_UI_API c_bool Button_GetImagesEnabled_()
+{
+    return Button::GetImagesEnabled();
+}
+
+ALTERNET_UI_API void Button_SetImagesEnabled_(c_bool value)
+{
+    Button::SetImagesEnabled(value);
+}
+
 ALTERNET_UI_API char16_t* Button_GetText_(Button* obj)
 {
     return AllocPInvokeReturnString(obj->GetText());
