@@ -25,6 +25,8 @@ namespace Alternet.UI
         /// in logical units (1/96th of an inch).</param>
         /// <param name="mouseDownLocation">Coordinates of the mouse pointer in the moment when
         /// <see cref="UIElement.MouseDown"/> event was fired.</param>
+        /// <param name="mouseDownArgs"></param>
+        /// <param name="mouseMoveArgs"></param>
         internal DragStartEventArgs(
             Point mouseClientLocation,
             Point mouseDownLocation,
