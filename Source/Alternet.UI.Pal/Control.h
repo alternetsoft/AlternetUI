@@ -246,6 +246,7 @@ namespace Alternet::UI
 
         void OnMouseEnter(wxMouseEvent& event);
         void OnMouseLeave(wxMouseEvent& event);
+        void OnMouseLeftUp(wxMouseEvent& event);
         void OnVisibleChanged(wxShowEvent& event);
         void OnSizeChanged(wxSizeEvent& event);
         void OnDestroy(wxWindowDestroyEvent& event);

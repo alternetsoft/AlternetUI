@@ -105,6 +105,7 @@ namespace Alternet::UI
 
     void Control::OnDestroy(wxWindowDestroyEvent& event)
     {
+        event.Skip();
         auto app = Application::GetCurrent();
         if (app == nullptr || app->GetInUixmlPreviewerMode())
             return; // HACK. This gets invoked by wxWidgets on a dead this pointer.
@@ -130,6 +131,7 @@ namespace Alternet::UI
         wxWindow->Unbind(wxEVT_SIZE, &Control::OnSizeChanged, this);
         wxWindow->Unbind(wxEVT_SET_FOCUS, &Control::OnGotFocus, this);
         wxWindow->Unbind(wxEVT_KILL_FOCUS, &Control::OnLostFocus, this);
+        wxWindow->Unbind(wxEVT_LEFT_UP, &Control::OnMouseLeftUp, this);
 
         if (bindScrollEvents) 
         {
@@ -169,30 +171,35 @@ namespace Alternet::UI
     void Control::OnScrollTop(wxScrollWinEvent& event)
     {
         ApplyScroll(event, 0);
+        event.Skip();
     }
 
     void Control::OnScrollBottom(wxScrollWinEvent& event)
     {
         auto scrollInfo = GetScrollInfoDelayedValue(event).Get();
         ApplyScroll(event, scrollInfo.maximum);
+        event.Skip();
     }
 
     void Control::OnScrollLineUp(wxScrollWinEvent& event)
     {
         auto scrollInfo = GetScrollInfoDelayedValue(event).Get();
         ApplyScroll(event, scrollInfo.value - 1);
+        event.Skip();
     }
 
     void Control::OnScrollLineDown(wxScrollWinEvent& event)
     {
         auto scrollInfo = GetScrollInfoDelayedValue(event).Get();
         ApplyScroll(event, scrollInfo.value + 1);
+        event.Skip();
     }
 
     void Control::OnScrollPageUp(wxScrollWinEvent& event)
     {
         auto scrollInfo = GetScrollInfoDelayedValue(event).Get();
         ApplyScroll(event, scrollInfo.value - scrollInfo.largeChange);
+        event.Skip();
     }
 
     void Control::OnScrollPageDown(wxScrollWinEvent& event)
@@ -204,11 +211,13 @@ namespace Alternet::UI
     void Control::OnScrollThumbTrack(wxScrollWinEvent& event)
     {
         ApplyScroll(event, event.GetPosition());
+        event.Skip();
     }
 
     void Control::OnScrollThumbRelease(wxScrollWinEvent& event)
     {
         ApplyScroll(event, event.GetPosition());
+        event.Skip();
     }
 
     DelayedValue<Control, Control::ScrollInfo>& Control::GetScrollInfoDelayedValue(
@@ -316,7 +325,7 @@ namespace Alternet::UI
             _flags.Set(ControlFlags::PostInitWxWindowRecreationPending, false);
         }
 
-        for (auto action : _postInitActions)
+        for (auto& action : _postInitActions)
         {
             action();
         }
@@ -506,6 +515,7 @@ namespace Alternet::UI
         _wxWindow->Bind(wxEVT_SIZE, &Control::OnSizeChanged, this);
         _wxWindow->Bind(wxEVT_SET_FOCUS, &Control::OnGotFocus, this);
         _wxWindow->Bind(wxEVT_KILL_FOCUS, &Control::OnLostFocus, this);
+        _wxWindow->Bind(wxEVT_LEFT_UP, &Control::OnMouseLeftUp, this);
 
         if (bindScrollEvents)
         {
@@ -959,15 +969,18 @@ namespace Alternet::UI
 
     void Control::OnEraseBackground(wxEraseEvent& event)
     {
+        event.Skip();
     }
 
     void Control::OnMouseCaptureLost(wxEvent& event)
     {
+        event.Skip();
         RaiseEvent(ControlEvent::MouseCaptureLost);
     }
 
     void Control::OnMouseEnter(wxMouseEvent& event)
     {
+        event.Skip();
         RaiseEvent(ControlEvent::MouseEnter);
 
         auto window = GetParent();
@@ -980,8 +993,14 @@ namespace Alternet::UI
         }
     }
 
+    void Control::OnMouseLeftUp(wxMouseEvent& event)
+    {
+        event.Skip();
+    }
+
     void Control::OnMouseLeave(wxMouseEvent& event)
     {
+        event.Skip();
         RaiseEvent(ControlEvent::MouseLeave);
 
         auto window = GetParent();
