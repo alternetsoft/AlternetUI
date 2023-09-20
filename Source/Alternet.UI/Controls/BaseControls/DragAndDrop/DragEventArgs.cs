@@ -1,10 +1,11 @@
-using Alternet.Drawing;
 using System;
+using Alternet.Drawing;
 
 namespace Alternet.UI
 {
     /// <summary>
-    /// Provides data for the <see cref="Control.DragDrop"/>, <see cref="Control.DragEnter"/>, or <see cref="Control.DragOver"/> events.
+    /// Provides data for the <see cref="Control.DragDrop"/>, <see cref="Control.DragEnter"/>,
+    /// or <see cref="Control.DragOver"/> events.
     /// </summary>
     public class DragEventArgs : EventArgs
     {
@@ -12,7 +13,8 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref="DragEventArgs"/> class.
         /// </summary>
         /// <param name="data">The data associated with this event.</param>
-        /// <param name="mouseClientLocation">The client coordinates of the mouse pointer in logical units (1/96th of an inch).</param>
+        /// <param name="mouseClientLocation">The client coordinates of the mouse pointer
+        /// in logical units (1/96th of an inch).</param>
         /// <param name="effect">One of the <see cref="DragDropEffects"/> values.</param>
         public DragEventArgs(
             IDataObject data,
@@ -25,7 +27,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets the <see cref="IDataObject"/> that contains the data associated with this event.
+        /// Gets the <see cref="IDataObject"/> that contains the data associated
+        /// with this event.
         /// </summary>
         public IDataObject Data { get; }
 
