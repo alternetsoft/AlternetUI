@@ -50,6 +50,8 @@ namespace Alternet::UI
 
         void DoLogRecord(wxLogLevel level, const wxString& msg,
             const wxLogRecordInfo& info);
+        static void Log(wxString msg);
+        static void Log(string msg);
     private:
 
         App* _app = nullptr;
