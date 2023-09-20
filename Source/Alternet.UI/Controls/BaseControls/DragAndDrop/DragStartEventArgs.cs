@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,8 +11,10 @@ namespace Alternet.UI
     /// <summary>
     /// Provides data for the <see cref="Control.DragStart"/> event.
     /// </summary>
-    public class DragStartEventArgs : EventArgs
+    public class DragStartEventArgs : CancelEventArgs
     {
+        private readonly MouseButtonEventArgs mouseDownArgs;
+        private readonly MouseEventArgs mouseMoveArgs;
         private readonly Point mouseClientLocation;
         private readonly Point mouseDownLocation;
 
@@ -22,10 +25,14 @@ namespace Alternet.UI
         /// in logical units (1/96th of an inch).</param>
         /// <param name="mouseDownLocation">Coordinates of the mouse pointer in the moment when
         /// <see cref="UIElement.MouseDown"/> event was fired.</param>
-        public DragStartEventArgs(
+        internal DragStartEventArgs(
             Point mouseClientLocation,
-            Point mouseDownLocation)
+            Point mouseDownLocation,
+            MouseButtonEventArgs mouseDownArgs,
+            MouseEventArgs mouseMoveArgs)
         {
+            this.mouseDownArgs = mouseDownArgs;
+            this.mouseMoveArgs = mouseMoveArgs;
             this.mouseClientLocation = mouseClientLocation;
             this.mouseDownLocation = mouseDownLocation;
         }
@@ -39,7 +46,7 @@ namespace Alternet.UI
         /// <see cref="UIElement.MouseDown"/> event was fired. If distance is greater
         /// than <see cref="MinDragStartDistance"/>, drag operation can be started.
         /// </remarks>
-        public static double MinDragStartDistance { get; set; } = 3;
+        public static double MinDragStartDistance { get; set; } = 7;
 
         /// <summary>
         /// Gets the client coordinates of the mouse pointer in logical units (1/96th of an inch).
@@ -56,10 +63,42 @@ namespace Alternet.UI
         public Point MouseDownLocation => mouseDownLocation;
 
         /// <summary>
+        /// Gets or sets whether drag operation was actually started.
+        /// </summary>
+        /// <remarks>
+        /// Set this property <c>true</c> if you want to start drag operation.
+        /// See <see cref="Control.DragStart"/> for the details.
+        /// </remarks>
+        public bool DragStarted { get; set; }
+
+        /// <summary>
         /// Gets whether distance between <see cref="MouseDownLocation"/> and
         /// <see cref="MouseClientLocation"/> is less than <see cref="MinDragStartDistance"/>.
         /// </summary>
-        public bool DistanceIsLess =>
-            MathUtils.DistanceIsLess(MouseDownLocation, MouseClientLocation, MinDragStartDistance);
+        public bool DistanceIsLess
+        {
+            get
+            {
+                var result = MathUtils.DistanceIsLess(
+                    MouseDownLocation,
+                    MouseClientLocation,
+                    MinDragStartDistance);
+                return result;
+            }
+        }
+
+        internal long TimestampStart => mouseDownArgs.Timestamp;
+
+        internal long TimestampEnd => mouseMoveArgs.Timestamp;
+
+        internal long TimePeriod => Math.Abs(TimestampEnd - TimestampStart);
+
+        internal bool TimeIsGreater
+        {
+            get
+            {
+                return TimePeriod > 10;
+            }
+        }
     }
 }

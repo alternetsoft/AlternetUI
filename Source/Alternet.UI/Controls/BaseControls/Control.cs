@@ -50,6 +50,8 @@ namespace Alternet.UI
 
         private static readonly Size DefaultSize = new(double.NaN, double.NaN);
 
+        private MouseButtonEventArgs? dragEventArgs;
+        private Point dragEventMousePos;
         private IComponentDesigner? designer;
         private Color? backgroundColor;
         private Color? foregroundColor;
@@ -197,6 +199,30 @@ namespace Alternet.UI
         /// Occurs when the control's location is changed.
         /// </summary>
         public event EventHandler? LocationChanged;
+
+        /// <summary>
+        /// Occurs when a drag-and-drop operation needs to be started.
+        /// </summary>
+        /// <example>
+        /// The simplest event implementation is the following:
+        /// <code>
+        /// private IDataObject GetDataObject()
+        /// {
+        ///     var result = new DataObject();
+        ///     result.SetData(DataFormats.Text, "Test data string.");
+        ///     return result;
+        /// }
+        ///
+        /// private void ControlPanel_DragStart(object sender, DragStartEventArgs e)
+        /// {
+        ///     if (e.DistanceIsLess)
+        ///         return;
+        ///     e.DragStarted = true;
+        ///     var result = DoDragDrop(GetDataObject(), DragDropEffects.Copy | DragDropEffects.Move);
+        /// }
+        /// </code>
+        /// </example>
+        public event EventHandler<DragStartEventArgs>? DragStart;
 
         /// <summary>
         /// Occurs when a drag-and-drop operation is completed.
@@ -768,6 +794,7 @@ namespace Alternet.UI
         /// This property returns color value even if <see cref="BackgroundColor"/>
         /// is <c>null</c>.
         /// </remarks>
+        [Browsable(false)]
         public virtual Color? RealBackgroundColor
         {
             get
@@ -784,6 +811,7 @@ namespace Alternet.UI
         /// This property returns color value even if <see cref="ForegroundColor"/>
         /// is <c>null</c>.
         /// </remarks>
+        [Browsable(false)]
         public virtual Color? RealForegroundColor
         {
             get
@@ -1752,6 +1780,8 @@ namespace Alternet.UI
             LogicalParent = value;
         }
 
+        internal void RaiseDragStart(DragStartEventArgs e) => OnDragStart(e);
+
         internal void RaiseDragDrop(DragEventArgs e) => OnDragDrop(e);
 
         internal void RaiseDragOver(DragEventArgs e) => OnDragOver(e);
@@ -1996,31 +2026,82 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="e">The <see cref="DragEventArgs"/> that contains the
         /// event data.</param>
-        protected virtual void OnDragDrop(DragEventArgs e) =>
+        protected virtual void OnDragDrop(DragEventArgs e)
+        {
             DragDrop?.Invoke(this, e);
+        }
+
+        /// <summary>
+        /// Raises the <see cref="DragStart"/> event.
+        /// </summary>
+        /// <param name="e">The <see cref="DragStartEventArgs"/> that contains the
+        /// event data.</param>
+        protected virtual void OnDragStart(DragStartEventArgs e)
+        {
+            DragStart?.Invoke(this, e);
+        }
 
         /// <summary>
         /// Raises the <see cref="DragOver"/> event.
         /// </summary>
         /// <param name="e">The <see cref="DragEventArgs"/> that contains the
         /// event data.</param>
-        protected virtual void OnDragOver(DragEventArgs e) =>
+        protected virtual void OnDragOver(DragEventArgs e)
+        {
             DragOver?.Invoke(this, e);
+        }
 
         /// <summary>
         /// Raises the <see cref="DragEnter"/> event.
         /// </summary>
         /// <param name="e">The <see cref="DragEventArgs"/>
         /// that contains the event data.</param>
-        protected virtual void OnDragEnter(DragEventArgs e) =>
+        protected virtual void OnDragEnter(DragEventArgs e)
+        {
             DragEnter?.Invoke(this, e);
+        }
 
         /// <summary>
         /// Raises the <see cref="DragLeave"/> event.
         /// </summary>
         /// <param name="e">The <see cref="EventArgs"/> that
         /// contains the event data.</param>
-        protected virtual void OnDragLeave(EventArgs e) => DragLeave?.Invoke(this, e);
+        protected virtual void OnDragLeave(EventArgs e)
+        {
+            DragLeave?.Invoke(this, e);
+        }
+
+        /// <inheritdoc/>
+        protected override void OnMouseDown(MouseButtonEventArgs e)
+        {
+            base.OnMouseDown(e);
+            if (e.LeftButton == MouseButtonState.Pressed && e.Source == this)
+            {
+                dragEventArgs = e;
+                dragEventMousePos = e.GetPosition(this);
+            }
+        }
+
+        /// <inheritdoc/>
+        protected override void OnMouseMove(MouseEventArgs e)
+        {
+            base.OnMouseMove(e);
+            if (dragEventArgs is null || e.Source != this)
+                return;
+            var mousePos = e.GetPosition(this);
+            var args = new DragStartEventArgs(dragEventMousePos, mousePos, dragEventArgs, e);
+            RaiseDragStart(args);
+            if(args.DragStarted || args.Cancel)
+                dragEventArgs = null;
+        }
+
+        /// <inheritdoc/>
+        protected override void OnMouseUp(MouseButtonEventArgs e)
+        {
+            base.OnMouseUp(e);
+            /*if (e.LeftButton == MouseButtonState.Released && e.Source == this)*/
+            dragEventArgs = null;
+        }
 
         /// <summary>
         /// Raises the <see cref="ToolTipChanged"/> event.
