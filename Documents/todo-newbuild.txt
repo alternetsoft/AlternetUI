@@ -1,8 +1,24 @@
+Top priority controls:
+
+- Calendar
+
+- DataGrid
+
+- wxHtmlWindow https://docs.wxwidgets.org/3.2/classwx_html_window.html
+
+======================
+
+- Validator check how works with editor (PropertyGrid in dialog)
+	Need property grid dialog (can use CollectionEditor)
+   	public static IValueValidatorText CreateValueValidatorNum(
+       ValueValidatorNumStyle numericType,
+       int valueBase = 10)
+    	ValueValidatorNumStyle       Signed, Unsigned, Float,
+
 - wxBitmapComboBox https://docs.wxwidgets.org/3.2/classwx_bitmap_combo_box.html
 - wxComboCtrl https://docs.wxwidgets.org/3.2/classwx_combo_ctrl.html
 - wxRearrangeList (in checkListBox) https://docs.wxwidgets.org/3.2/classwx_rearrange_list.html
 - wxSashWindow (resizable bounds) https://docs.wxwidgets.org/3.2/classwx_sash_window.html
-- wxHtmlWindow https://docs.wxwidgets.org/3.2/classwx_html_window.html
 - wxSingleChoiceDialog https://docs.wxwidgets.org/3.2/classwx_single_choice_dialog.html
 - wxTextEntryDialog https://docs.wxwidgets.org/3.2/classwx_text_entry_dialog.html
 
