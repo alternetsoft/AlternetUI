@@ -177,7 +177,27 @@ namespace Alternet.UI
         /// <value><see langword="true"/> if the tree item is in the selected
         /// state; otherwise, <see langword="false"/>.</value>
         [Browsable(false)]
-        public bool IsSelected => RequiredTreeView.Handler.IsItemSelected(this);
+        public bool IsSelected
+        {
+            get => RequiredTreeView.Handler.IsItemSelected(this);
+            set
+            {
+                var treeView = RequiredTreeView;
+
+                if (treeView.SelectionMode == TreeViewSelectionMode.Multiple)
+                    treeView.SetSelected(this, value);
+                else
+                {
+                    if (value)
+                        treeView.SelectedItem = this;
+                    else
+                    {
+                        if (treeView.SelectedItem == this)
+                            treeView.SelectedItem = null;
+                    }
+                }
+            }
+        }
 
         /// <summary>
         /// Gets or sets a value indicating whether the tree item is in the
