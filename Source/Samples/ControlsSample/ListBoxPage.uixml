@@ -27,6 +27,8 @@
             Margin="0,3,0,0" Click="SelectItemAtIndices2And4Button_Click" />
         <Button Text="Deselect All" Name="deselectAllButton" Margin="0,3,0,0"
             Click="DeselectAllButton_Click" />
+        <Button Text="Edit Items..." Margin="0,3,0,0"
+            Click="EditorButton_Click" />
         <Button Text="Has Border" Name="hasBorderButton"
             Margin="0,3,0,5" Click="HasBorderButton_Click" />
       </StackPanel>

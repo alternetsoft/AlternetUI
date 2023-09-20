@@ -1,10 +1,10 @@
 ﻿<Control x:Class="ControlsSample.ComboBoxPage"
         xmlns="http://schemas.alternetsoft.com/ui/2021"
         xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
-        xmlns:local="clr-namespace:ControlsSample;assembly=ControlsSample">
-    <VerticalStackPanel Padding="10">
-        <Control>
-            <HorizontalStackPanel Margin="5">
+        xmlns:local="clr-namespace:ControlsSample;assembly=ControlsSample" Padding="10,0,10,0">
+  <Control>
+    <VerticalStackPanel>
+        <HorizontalStackPanel>
                 <ComboBox Width="200" Name="comboBox" IsEditable="false" 
                           VerticalAlignment="Top"
                           SelectedItemChanged="ComboBox_SelectedItemChanged" 
@@ -19,23 +19,23 @@
                             Margin="0,3,0,0" Click="AddManyItemsButton_Click"/>
 
                     <Button Text="Text = Empty String" 
-                            Name="setTextToEmptyStringButton" Margin="0,10,0,0" 
+                            Name="setTextToEmptyStringButton" Margin="0,3,0,0" 
                             Click="SetTextToEmptyStringButton_Click"/>
                     <Button Text="Text = 'One'" Name="setTextToOneButton" 
                             Margin="0,3,0,0" Click="SetTextToOneButton_Click"/>
                     
                     <Button Text="SelectedIndex = 2" 
-                            Name="setSelectedIndexTo2Button" Margin="0,10,0,0" 
+                            Name="setSelectedIndexTo2Button" Margin="0,3,0,0" 
                             Click="SetSelectedIndexTo2_Click"/>
                     <Button Text="SelectedItem = null" 
                             Name="setSelectedItemToNullButton" Margin="0,3,0,0" 
                             Click="SetSelectedItemToNullButton_Click"/>
                     <CheckBox Text="Allow Text Edit" 
-                              Name="allowTextEditingCheckBox" Margin="0,10,0,0" 
+                              Name="allowTextEditingCheckBox" Margin="0,10,0,10" 
                               CheckedChanged=
                                 "AllowTextEditingCheckBox_CheckedChanged"/>
                     <Button Text="Select Text Range [2..5]" 
-                            Name="selectTextRangeButton" Margin="0,3,0,0" 
+                            Name="selectTextRangeButton" Margin="0,0,0,0" 
                             Click="SelectTextRangeButton_Click"/>
                     <Button Text="Get Text Selection" Name="getTextSelectionButton" 
                             Margin="0,3,0,0" Click="GetTextSelectionButton_Click"/>
@@ -43,14 +43,15 @@
                             Margin="0,3,0,0" Click="SetTextToAbcButton_Click"/>
                     <Button Text="Items[2] = 'hello'"
                             Margin="0,3,0,0" Click="SetItem_Click"/>
+                    <Button Text="Edit Items..."
+                          Margin="0,3,0,0" Click="Editor_Click"/>
                 </VerticalStackPanel>
 
-              <VerticalStackPanel Margin="5,0,0,5" Padding="5,0,5,5">
-                <Button Text="Has Border" Margin="0,0,0,5" Name="hasBorderButton"
-                        Click="HasBorderButton_Click" Visible="false"/>
-              </VerticalStackPanel>
-
-            </HorizontalStackPanel>
-        </Control>
+                <VerticalStackPanel Margin="5,0,0,5" Padding="5,0,5,5">
+                  <Button Text="Has Border" Margin="0,0,0,5" Name="hasBorderButton"
+                          Click="HasBorderButton_Click" Visible="false"/>
+                </VerticalStackPanel>
+        </HorizontalStackPanel>
     </VerticalStackPanel>
+  </Control>
 </Control>

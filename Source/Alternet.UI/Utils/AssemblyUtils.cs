@@ -71,7 +71,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="instance">Object instance.</param>
         /// <param name="name">Property name.</param>
-        public static PropertyInfo? GetPropInfo(object instance, string name)
+        public static PropertyInfo? GetPropInfo(object? instance, string? name)
         {
             if (instance == null || string.IsNullOrEmpty(name))
                 return null;

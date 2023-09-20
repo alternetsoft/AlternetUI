@@ -14,7 +14,8 @@ namespace Alternet.UI
 
         public override IEnumerable? RootItems => ListControl?.Items;
 
-        public override object? CreateNewItem() => new ValueContainer<string>(string.Empty);
+        public override object? CreateNewItem() =>
+            new ValueContainer<string>(CommonStrings.Default.ListEditDefaultItemTitle);
 
         public override object CloneItem(object item)
         {

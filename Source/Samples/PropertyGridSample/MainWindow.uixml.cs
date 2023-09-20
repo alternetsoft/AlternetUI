@@ -227,14 +227,14 @@ namespace PropertyGridSample
             controlPanel.DragStart += ControlPanel_DragStart;
         }
 
-        private IDataObject GetDataObject()
+        private static IDataObject GetDataObject()
         {
             var result = new DataObject();
             result.SetData(DataFormats.Text, "Test data string.");
             return result;
         }
 
-        private void ControlPanel_DragStart(object sender, DragStartEventArgs e)
+        private void ControlPanel_DragStart(object? sender, DragStartEventArgs e)
         {
             if (e.DistanceIsLess)
                 return;
@@ -690,7 +690,7 @@ namespace PropertyGridSample
             logListBox.ShowPopupMenu(contextMenu2);
         }
 
-        private string ConstructMessage(string s)
+        private static string ConstructMessage(string s)
         {
             return $"{s} ({LogUtils.GenNewId()})";
         }

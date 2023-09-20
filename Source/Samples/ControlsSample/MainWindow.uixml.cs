@@ -17,6 +17,8 @@ namespace ControlsSample
 
         public MainWindow()
         {
+            Application.Current.LogMessage += Application_LogMessage;
+
             Icon = ImageSet.FromUrlOrNull("embres:ControlsSample.Sample.ico");
             InitializeComponent();
 

@@ -31,6 +31,11 @@ namespace ControlsSample
             }
         }
 
+        private void Editor_Click(object? sender, System.EventArgs e)
+        {
+            DialogFactory.EditItemsWithListEditor(comboBox);
+        }
+
         private void SetSelectedItemToNullButton_Click(object? sender, EventArgs e)
         {
             comboBox.SelectedItem = null;

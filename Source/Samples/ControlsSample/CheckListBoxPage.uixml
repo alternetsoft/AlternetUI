@@ -15,17 +15,27 @@
 
         <StackPanel Orientation="Vertical" Margin="10,0,5,5">
           <Button Text="Add Item" Name="addItemButton" Click="AddItemButton_Click"/>
-          <Button Text="Remove Checked" Name="removeCheckedButton" Margin="0,3,0,0" Click="RemoveCheckedButton_Click"/>
-          <Button Text="Remove Selected" Name="removeItemButton" Margin="0,3,0,0" Click="RemoveItemButton_Click"/>
-          <Button Text="Add 5000 Items" Name="addManyItemsButton" Margin="0,3,0,0" Click="AddManyItemsButton_Click" />
-          <CheckBox Text="Allow Multiple Selection" Name="allowMultipleSelectionCheckBox" Margin="0,10,0,0" IsChecked="true" CheckedChanged="AllowMultipleSelectionCheckBox_CheckedChanged"/>
-          <Button Text="Ensure Last Item is Visible" Name="ensureLastItemVisibleButton" Margin="0,3,0,0" Click="EnsureLastItemVisibleButton_Click" />
-          <Button Text="Check Item at Index 2" Name="checkItemAtIndex2Button" Margin="0,3,0,0" Click="CheckItemAtIndex2Button_Click" />
-          <Button Text="Check Item at Indices 2, 4" Name="checkItemAtIndices2And4Button" Margin="0,3,0,0" Click="CheckItemAtIndices2And4Button_Click" />
+          <Button Text="Remove Checked" Name="removeCheckedButton" Margin="0,3,0,0"
+                  Click="RemoveCheckedButton_Click"/>
+          <Button Text="Remove Selected" Name="removeItemButton" Margin="0,3,0,0"
+                  Click="RemoveItemButton_Click"/>
+          <Button Text="Add 5000 Items" Name="addManyItemsButton" Margin="0,3,0,0"
+                  Click="AddManyItemsButton_Click" />
+          <CheckBox Text="Allow Multiple Selection" Name="allowMultipleSelectionCheckBox"
+                    Margin="0,10,0,0" IsChecked="true"
+                    CheckedChanged="AllowMultipleSelectionCheckBox_CheckedChanged"/>
+          <Button Text="Ensure Last Item is Visible" Name="ensureLastItemVisibleButton"
+                  Margin="0,3,0,0" Click="EnsureLastItemVisibleButton_Click" />
+          <Button Text="Check Item at Index 2" Name="checkItemAtIndex2Button"
+                  Margin="0,3,0,0" Click="CheckItemAtIndex2Button_Click" />
+          <Button Text="Check Item at Indices 2, 4" Name="checkItemAtIndices2And4Button"
+                  Margin="0,3,0,0" Click="CheckItemAtIndices2And4Button_Click" />
           <Button Text="Uncheck All" Name="uncheckAllButton"
                   Margin="0,3,0,0" Click="UncheckAllButton_Click" />
           <Button Text="Has Border" Name="hasBorderButton"
-                  Margin="0,3,0,3" Click="HasBorderButton_Click" />
+                  Margin="0,3,0,0" Click="HasBorderButton_Click" />
+          <Button Text="Edit Items..."
+                  Margin="0,3,0,3" Click="EditorButton_Click" />
         </StackPanel>
         
       </StackPanel>

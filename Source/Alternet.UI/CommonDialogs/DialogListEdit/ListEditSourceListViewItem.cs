@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Alternet.Drawing;
+using Alternet.UI.Localization;
 
 namespace Alternet.UI
 {
@@ -16,7 +17,14 @@ namespace Alternet.UI
 
         public override ImageList? ImageList => ListView?.SmallImageList;
 
-        public override object? CreateNewItem() => new ListViewItem();
+        public override object? CreateNewItem()
+        {
+            var result = new ListViewItem
+            {
+                Text = CommonStrings.Default.ListEditDefaultItemTitle,
+            };
+            return result;
+        }
 
         public override int? GetItemImageIndex(object item) => (item as ListViewItem)?.ImageIndex;
 

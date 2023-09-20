@@ -47,32 +47,48 @@
                   CheckedChanged="FullRowSelectCheckBox_CheckedChanged" 
                   IsChecked="False" />
 
-        <CheckBox Text="Cancel BeforeExpand Events" Name="cancelBeforeExpandEventsCheckBox" Margin="0,10,0,0"
+        <CheckBox Text="Cancel BeforeExpand Events" Name="cancelBeforeExpandEventsCheckBox"
+                  Margin="0,10,0,0"
                   IsChecked="False" />
-        <CheckBox Text="Cancel BeforeCollapse Events" Name="cancelBeforeCollapseEventsCheckBox" Margin="0,5,0,0"
+        <CheckBox Text="Cancel BeforeCollapse Events" Name="cancelBeforeCollapseEventsCheckBox"
+                  Margin="0,5,0,0"
                   IsChecked="False" />
-        <CheckBox Text="Cancel BeforeLabelEdit Events" Name="cancelBeforeLabelEditEventsCheckBox" Margin="0,5,0,0"
+        <CheckBox Text="Cancel BeforeLabelEdit Events" Name="cancelBeforeLabelEditEventsCheckBox"
+                  Margin="0,5,0,0"
                   IsChecked="False" />
-        <CheckBox Text="Cancel AfterLabelEdit Events" Name="cancelAfterLabelEditEventsCheckBox" Margin="0,5,0,0"
+        <CheckBox Text="Cancel AfterLabelEdit Events" Name="cancelAfterLabelEditEventsCheckBox"
+                  Margin="0,5,0,0"
                   IsChecked="False" />
       </StackPanel>
+      
       <StackPanel Orientation="Vertical" Margin="10,0,0,0" >
-        <Button Text="Expand All" Name="expandAllButton" Margin="0,0,0,0" Click="ExpandAllButton_Click" />
-        <Button Text="Collapse All" Name="collapseAllButton" Margin="0,3,0,0" Click="CollapseAllButton_Click" />
-        <Button Text="Expand All Children" Name="expandAllChildrenButton" Margin="0,3,0,0" Click="ExpandAllChildrenButton_Click" />
-        <Button Text="Collapse All Children" Name="collapseAllChildrenButton" Margin="0,3,0,0" Click="CollapseAllChildrenButton_Click" />
+        <Button Text="Expand All" Name="expandAllButton" Margin="0,0,0,0"
+                Click="ExpandAllButton_Click" />
+        <Button Text="Collapse All" Name="collapseAllButton" Margin="0,3,0,0"
+                Click="CollapseAllButton_Click" />
+        <Button Text="Expand All Children" Name="expandAllChildrenButton" Margin="0,3,0,0"
+                Click="ExpandAllChildrenButton_Click" />
+        <Button Text="Collapse All Children" Name="collapseAllChildrenButton" Margin="0,3,0,0"
+                Click="CollapseAllChildrenButton_Click" />
 
-        <Button Text="Ensure Last Item is Visible" Name="ensureLastItemVisibleButton" Margin="0,5,0,0" Click="EnsureLastItemVisibleButton_Click" />
-        <Button Text="Scroll Last Item Into View" Name="scrollLastItemIntoViewButton" Margin="0,3,0,0" Click="ScrollLastItemIntoViewButton_Click" />
-        <Button Text="Focus Last Item" Name="focusLastItemButton" Margin="0,3,0,0" Click="FocusLastItemButton_Click" />
-        <Button Text="Modify Last Item" Name="modifyLastItemButton" Margin="0,3,0,0" Click="ModifyLastItemButton_Click" />
-        <Button Text="Add Last Item Sibling" Name="addLastItemSiblingButton" Margin="0,3,0,0" Click="AddLastItemSiblingButton_Click" />
+        <Button Text="Ensure Last Item is Visible" Name="ensureLastItemVisibleButton"
+                Margin="0,3,0,0" Click="EnsureLastItemVisibleButton_Click" />
+        <Button Text="Last Item To View" Name="scrollLastItemIntoViewButton"
+                Margin="0,3,0,0" Click="ScrollLastItemIntoViewButton_Click" />
+        <Button Text="Focus Last Item" Name="focusLastItemButton" Margin="0,3,0,0"
+                Click="FocusLastItemButton_Click" />
+        <Button Text="Modify Last Item" Name="modifyLastItemButton" Margin="0,3,0,0"
+                Click="ModifyLastItemButton_Click" />
+        <Button Text="Add Last Item Sibling" Name="addLastItemSiblingButton" Margin="0,3,0,0"
+                Click="AddLastItemSiblingButton_Click" />
         <Button Text="Clear Items" Margin="0,3,0,0"
               Name="clearButton" Click="ClearItemsButton_Click"/>
         <Button Text="Log Selected" Margin="0,3,0,0"
                 Name="viewSelectedButton" Click="TreeView_SelectionChanged"/>
         <Button Text="Has Border" Margin="0,3,0,0" Name="hasBorderButton"
                 Click="HasBorderButton_Click"/>
+        <Button Text="Edit Items..." Margin="0,3,0,0" Name="EditorButton"
+                Click="EditorButton_Click"/>
 
       </StackPanel>
     </StackPanel>

@@ -329,6 +329,11 @@ namespace ControlsSample
             hasBorderButton.Enabled = fastRecreate;
         }
 
+        private void EditorButton_Click(object? sender, System.EventArgs e)
+        {
+            DialogFactory.EditItemsWithListEditor(treeView);
+        }
+
         private void HasBorderButton_Click(object? sender, System.EventArgs e)
         {
             treeView.HasBorder = !treeView.HasBorder;

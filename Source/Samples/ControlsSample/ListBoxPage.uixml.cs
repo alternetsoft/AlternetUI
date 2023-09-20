@@ -35,6 +35,11 @@ namespace ControlsSample
             }
         }
 
+        private void EditorButton_Click(object? sender, System.EventArgs e)
+        {
+            DialogFactory.EditItemsWithListEditor(listBox);
+        }
+
         private int GenItemIndex()
         {
             newItemIndex++;

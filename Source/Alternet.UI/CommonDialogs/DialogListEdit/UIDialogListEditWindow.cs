@@ -13,7 +13,7 @@ using Alternet.UI.Localization;
 
 namespace Alternet.UI
 {
-    internal class UIDialogListEdit : UIDialogWindow
+    internal class UIDialogListEditWindow : UIDialogWindow
     {
         private readonly AuiManager manager = new();
         private readonly LayoutPanel panel = new();
@@ -39,7 +39,7 @@ namespace Alternet.UI
         private IListEditSource? dataSource;
         private object? lastPropInstance;
 
-        public UIDialogListEdit()
+        public UIDialogListEditWindow()
         {
             treeView.FullRowSelect = true;
             treeView.ShowLines = false;
@@ -170,36 +170,17 @@ namespace Alternet.UI
             }
         }
 
-        /// <summary>
-        /// Edits property with <see cref="UIDialogListEdit"/>.
-        /// </summary>
-        /// <param name="instance">Object which contains the property.</param>
-        /// <param name="propInfo">Property information.</param>
-        public static void EditProperty(object? instance, PropertyInfo? propInfo)
-        {
-            var source = ListEditSource.CreateEditSource(instance, propInfo);
-            if (source == null)
-                return;
-
-            using UIDialogListEdit dialog = new()
-            {
-                DataSource = source,
-            };
-            dialog.ShowModal();
-            if (dialog.ModalResult == ModalResult.Accepted)
-            {
-                dialog.Save();
-                dialog.Designer?.RaisePropertyChanged(instance, propInfo?.Name);
-            }
-
-            dialog.Clear();
-        }
-
         internal void Save()
         {
             if (dataSource is null)
                 return;
             dataSource.ApplyData(treeView);
+        }
+
+        internal void Clear()
+        {
+            propertyGrid.Clear();
+            treeView.RemoveAll();
         }
 
         private void OnDesignerPropertyChanged(object? sender, PropertyChangeEventArgs e)
@@ -301,7 +282,7 @@ namespace Alternet.UI
             {
                 var itemSelected = treeView.SelectedItem != null;
                 canAdd = dataSource.AllowAdd;
-                canAddChild = itemSelected && canAdd;
+                canAddChild = itemSelected && canAdd && dataSource.AllowSubItems;
                 canRemove = itemSelected && dataSource.AllowDelete;
                 canRemoveAll = dataSource.AllowDelete && treeView.Items.Count > 0;
                 canApply = dataSource.AllowApplyData;
@@ -394,12 +375,6 @@ namespace Alternet.UI
 
                 treeItems.Add(treeItem);
             }
-        }
-
-        private void Clear()
-        {
-            propertyGrid.Clear();
-            treeView.RemoveAll();
         }
 
         private void Bind()

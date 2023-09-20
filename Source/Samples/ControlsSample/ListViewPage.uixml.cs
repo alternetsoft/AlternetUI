@@ -55,6 +55,16 @@ namespace ControlsSample
             }
         }
 
+        private void EditItemsButton_Click(object? sender, System.EventArgs e)
+        {
+            DialogFactory.EditItemsWithListEditor(listView);
+        }
+
+        private void EditColumnsButton_Click(object? sender, System.EventArgs e)
+        {
+            DialogFactory.EditColumnsWithListEditor(listView);
+        }
+
         private void InitializeColumns()
         {
             listView?.Columns.Add(new ListViewColumn("Column 1"));

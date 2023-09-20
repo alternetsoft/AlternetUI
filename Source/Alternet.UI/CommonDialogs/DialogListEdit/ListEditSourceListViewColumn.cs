@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Alternet.Drawing;
+using Alternet.UI.Localization;
 
 namespace Alternet.UI
 {
@@ -12,7 +13,14 @@ namespace Alternet.UI
     {
         public override IEnumerable? RootItems => ListView?.Columns;
 
-        public override object? CreateNewItem() => new ListViewColumn();
+        public override object? CreateNewItem()
+        {
+            var result = new ListViewColumn
+            {
+                Title = CommonStrings.Default.ListEditDefaultItemTitle,
+            };
+            return result;
+        }
 
         public override object CloneItem(object item) => ((ListViewColumn)item).Clone();
 

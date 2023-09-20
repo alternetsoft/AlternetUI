@@ -56,6 +56,9 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        public virtual ImageList? ImageList => null;
+
+        /// <inheritdoc/>
         public bool AllowApplyData => true;
 
         /// <inheritdoc/>
@@ -70,7 +73,8 @@ namespace Alternet.UI
         /// <param name="sender">Must implement <see cref="IPropInfoAndInstance"/>.</param>
         /// <param name="e">Event arguments.</param>
         /// <remarks>
-        /// Calls <see cref="UIDialogListEdit.EditProperty"/> for the <paramref name="sender"/>,
+        /// Calls <see cref="DialogFactory.EditPropertyWithListEditor(object,string)"/> for
+        /// the <paramref name="sender"/>,
         /// if it implements <see cref="IPropInfoAndInstance"/> interface.
         /// </remarks>
         public static void EditWithListEdit(object? sender, EventArgs e)
@@ -80,7 +84,7 @@ namespace Alternet.UI
             var instance = prop.Instance;
             var propInfo = prop.PropInfo;
 
-            UIDialogListEdit.EditProperty(instance, propInfo);
+            DialogFactory.EditPropertyWithListEditor(instance, propInfo);
         }
 
         /// <summary>
@@ -125,9 +129,6 @@ namespace Alternet.UI
 
         /// <inheritdoc/>
         public virtual object? GetProperties(object item) => item;
-
-        /// <inheritdoc/>
-        public virtual ImageList? ImageList => null;
 
         /// <inheritdoc/>
         public virtual int? GetItemImageIndex(object item) => null;

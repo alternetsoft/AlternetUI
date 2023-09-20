@@ -39,6 +39,11 @@ namespace ControlsSample
             }
         }
 
+        private void EditorButton_Click(object? sender, System.EventArgs e)
+        {
+            DialogFactory.EditItemsWithListEditor(checkListBox);
+        }
+
         private void CheckListBox_MouseLeftButtonDown(
             object? sender, 
             MouseButtonEventArgs e)
