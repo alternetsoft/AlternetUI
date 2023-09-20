@@ -12,6 +12,7 @@ namespace Alternet.UI
     /// </remarks>
     [DefaultProperty("Image")]
     [DefaultBindingProperty("Image")]
+    [ControlCategory("Common")]
     public class PictureBox : Control
     {
         /// <summary>

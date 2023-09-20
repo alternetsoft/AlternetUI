@@ -8,6 +8,7 @@ namespace Alternet.UI
     /// </summary>
     [DefaultProperty("Text")]
     [DefaultBindingProperty("Text")]
+    [ControlCategory("Other")]
     public class LinkLabel : Control
     {
         /// <summary>

@@ -30,7 +30,7 @@ namespace Alternet.UI
     /// can be used to avoid flicker, by modifying more than one pane at a time,
     /// and then "committing" all of the changes at once by calling <see cref="Update"/>.
     /// </remarks>
-    public class AuiManager : IDisposable
+    public class AuiManager : BaseComponent, IDisposable
     {
         private Control? managedControl;
         private IntPtr handle;

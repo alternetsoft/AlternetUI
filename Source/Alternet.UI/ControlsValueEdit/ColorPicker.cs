@@ -6,6 +6,7 @@ namespace Alternet.UI
     /// <summary>
     /// Represents control that displays a selected color and allows to change it.
     /// </summary>
+    [ControlCategory("Other")]
     public class ColorPicker : Control
     {
         /// <summary>

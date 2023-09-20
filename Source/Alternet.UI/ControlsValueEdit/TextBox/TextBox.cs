@@ -14,6 +14,7 @@ namespace Alternet.UI
     /// </remarks>
     [DefaultEvent("TextChanged")]
     [DefaultBindingProperty("Text")]
+    [ControlCategory("Common")]
     public class TextBox : Control
     {
         /// <summary>

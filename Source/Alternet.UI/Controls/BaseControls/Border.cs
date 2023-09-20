@@ -5,6 +5,7 @@ namespace Alternet.UI
     /// <summary>
     /// Draws a border, background, or both around another control.
     /// </summary>
+    [ControlCategory("Containers")]
     public class Border : UserPaintControl
     {
         private static readonly BorderPens DefaultPens = new();

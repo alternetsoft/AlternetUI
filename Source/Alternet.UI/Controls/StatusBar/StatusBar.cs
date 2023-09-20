@@ -7,6 +7,7 @@ namespace Alternet.UI
     /// <summary>
     /// Represents a status bar control.
     /// </summary>
+    [ControlCategory("MenusAndToolbars")]
     public class StatusBar : NonVisualControl
     {
         /// <summary>

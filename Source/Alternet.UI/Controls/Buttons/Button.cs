@@ -7,6 +7,7 @@ namespace Alternet.UI
     /// <summary>
     /// Represents a button control.
     /// </summary>
+    [ControlCategory("Common")]
     public class Button : ButtonBase
     {
         /// <summary>

@@ -15,6 +15,7 @@ namespace Alternet.UI
     [DefaultProperty("Value")]
     [DefaultEvent("ValueChanged")]
     [DefaultBindingProperty("Value")]
+    [ControlCategory("Common")]
     public class DateTimePicker : Control
     {
         /// <summary>Specifies the maximum date value of the

@@ -24,6 +24,7 @@ namespace Alternet.UI
     /// commands that are not appropriate for the <see cref="MainMenu"/> to display.
     /// </para>
     /// </remarks>
+    [ControlCategory("MenusAndToolbars")]
     public class ContextMenu : Menu
     {
         /// <summary>

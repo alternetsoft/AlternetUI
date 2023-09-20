@@ -8,24 +8,17 @@ namespace Alternet.UI
     /// </summary>
     public abstract class FileDialog : CommonDialog
     {
-        private Native.FileDialog nativeDialog;
-
-        private protected Native.FileDialog NativeDialog => nativeDialog;
+        private readonly Native.FileDialog nativeDialog;
 
         /// <summary>
         /// Initializes a new instance of <see cref="FileDialog"/>.
         /// </summary>
         public FileDialog()
         {
-            nativeDialog = new Native.FileDialog();
-            nativeDialog.Mode = Mode;
-        }
-
-        private protected override ModalResult ShowModalCore(Window? owner)
-        {
-            CheckDisposed();
-            var nativeOwner = owner == null ? null : ((NativeWindowHandler)owner.Handler).NativeControl;
-            return (ModalResult)nativeDialog.ShowModal(nativeOwner);
+            nativeDialog = new Native.FileDialog
+            {
+                Mode = this.Mode,
+            };
         }
 
         /// <summary>
@@ -46,21 +39,6 @@ namespace Alternet.UI
             }
         }
 
-        private protected override string? TitleCore
-        {
-            get
-            {
-                CheckDisposed();
-                return nativeDialog.Title;
-            }
-
-            set
-            {
-                CheckDisposed();
-                nativeDialog.Title = value;
-            }
-        }
-
         /// <summary>
         /// Gets or sets the current file name filter string, which determines the choices that appear
         /// in the "Save as file type" or "Files of type" box in the dialog window.
@@ -70,12 +48,15 @@ namespace Alternet.UI
         /// </value>
         /// <remarks>
         /// For each filtering option, the filter string contains a description of the filter,
-        /// followed by the vertical bar (|) and the filter pattern. The strings for different filtering options are separated by the vertical bar.
+        /// followed by the vertical bar (|) and the filter pattern. The strings for different
+        /// filtering options are separated by the vertical bar.
         /// The following is an example of a filter string:
         /// <code>Text files(*.txt)|*.txt|All files(*.*)|*.*</code>
-        /// You can add several filter patterns to a filter by separating the file types with semicolons, for example:
+        /// You can add several filter patterns to a filter by separating the file types with
+        /// semicolons, for example:
         /// <code>Image Files(*.BMP;*.JPG;*.GIF)|*.BMP;*.JPG;*.GIF|All files(*.*)|*.*</code>
-        /// Use the <see cref="SelectedFilterIndex"/> property to set which filtering option is shown first to the user.
+        /// Use the <see cref="SelectedFilterIndex"/> property to set which filtering option
+        /// is shown first to the user.
         /// </remarks>
         public string? Filter
         {
@@ -128,6 +109,31 @@ namespace Alternet.UI
             }
         }
 
+        private protected Native.FileDialog NativeDialog => nativeDialog;
+
+        private protected override string? TitleCore
+        {
+            get
+            {
+                CheckDisposed();
+                return nativeDialog.Title;
+            }
+
+            set
+            {
+                CheckDisposed();
+                nativeDialog.Title = value;
+            }
+        }
+
         private protected abstract Native.FileDialogMode Mode { get; }
+
+        private protected override ModalResult ShowModalCore(Window? owner)
+        {
+            CheckDisposed();
+            var nativeOwner = owner == null ? null
+                : ((NativeWindowHandler)owner.Handler).NativeControl;
+            return (ModalResult)nativeDialog.ShowModal(nativeOwner);
+        }
     }
 }

@@ -5,7 +5,8 @@ namespace Alternet.UI
     /// <summary>
     /// Displays a standard dialog window that prompts the user to open a file.
     /// </summary>
-    public sealed class OpenFileDialog : FileDialog
+    [ControlCategory("Dialogs")]
+    public class OpenFileDialog : FileDialog
     {
         /// <summary>
         /// Gets or sets a value indicating whether the dialog window allows multiple files

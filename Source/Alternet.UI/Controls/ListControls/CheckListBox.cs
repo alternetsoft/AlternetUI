@@ -26,6 +26,7 @@ namespace Alternet.UI
     /// properties provide access to the
     /// collections that are used by the <see cref="CheckListBox"/>.
     /// </remarks>
+    [ControlCategory("Common")]
     public class CheckListBox : ListBox
     {
         private readonly HashSet<int> checkedIndices = new();

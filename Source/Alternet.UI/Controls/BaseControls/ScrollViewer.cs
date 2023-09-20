@@ -5,6 +5,7 @@ namespace Alternet.UI
     /// <summary>
     /// Represents a scrollable area that can contain other visible elements.
     /// </summary>
+    [ControlCategory("Containers")]
     public class ScrollViewer : Control
     {
         /// <inheritdoc/>

@@ -12,6 +12,7 @@ namespace Alternet.UI
     /// Notebook control, managing multiple windows with associated tabs.
     /// Used with <see cref="AuiManager"/>.
     /// </summary>
+    [ControlCategory("Containers")]
     public class AuiNotebook : Control
     {
         /// <summary>

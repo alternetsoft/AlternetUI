@@ -11,6 +11,7 @@ namespace Alternet.UI
     /// <summary>
     /// Dockable toolbar, managed by <see cref="AuiManager"/>.
     /// </summary>
+    [ControlCategory("MenusAndToolbars")]
     public class AuiToolbar : Control
     {
         /// <summary>

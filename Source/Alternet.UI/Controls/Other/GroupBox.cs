@@ -25,6 +25,7 @@ namespace Alternet.UI
     /// </remarks>
     [DefaultEvent("Enter")]
     [DefaultProperty("Text")]
+    [ControlCategory("Containers")]
     public class GroupBox : Control
     {
         private string? title = null;

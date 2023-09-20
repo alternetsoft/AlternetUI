@@ -45,6 +45,7 @@ namespace Alternet.UI
     /// to the selected object.
     /// </para>
     /// </remarks>
+    [ControlCategory("Common")]
     public class ComboBox : ListControl
     {
         /// <summary>
@@ -368,6 +369,6 @@ namespace Alternet.UI
             var index = Items.IndexOf(newValue);
             if (index != -1)
                 SelectedIndex = index;
-        } 
+        }
     }
 }

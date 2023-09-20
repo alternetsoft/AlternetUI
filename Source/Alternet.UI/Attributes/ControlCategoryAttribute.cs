@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Alternet.UI.Localization;
 
-namespace Alternet.UI.Attributes
+namespace Alternet.UI
 {
     /// <summary>
     /// Specifies the category in which the control will be displayed in a tool box.

@@ -13,6 +13,7 @@ namespace Alternet.UI
     /// To specify the allowable range of values for the control, set the
     /// <see cref="Minimum"/> and <see cref="Maximum"/> properties.
     /// </remarks>
+    [ControlCategory("Common")]
     public class NumericUpDown : Control
     {
         /// <summary>

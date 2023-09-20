@@ -13,6 +13,7 @@ namespace Alternet.UI
     /// <see cref="Toolbar"/> as it is deprecated and has limited functionality.
     /// </remarks>
     [DefaultProperty("Items")]
+    [ControlCategory("MenusAndToolbars")]
     public class Toolbar : NonVisualControl
     {
         /// <summary>

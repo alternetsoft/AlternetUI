@@ -16,6 +16,7 @@ namespace Alternet.UI
     /// can be split into two programmatically, and unsplit either
     /// programmatically or via the user interface.
     /// </summary>
+    [ControlCategory("Containers")]
     public class SplitterPanel : Control
     {
         private const int SPLITHORIZONTAL = 1;

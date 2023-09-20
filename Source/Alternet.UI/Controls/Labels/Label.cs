@@ -26,6 +26,7 @@ namespace Alternet.UI
     /// </remarks>
     [DefaultProperty("Text")]
     [DefaultBindingProperty("Text")]
+    [ControlCategory("Common")]
     public class Label : Control
     {
         /// <summary>

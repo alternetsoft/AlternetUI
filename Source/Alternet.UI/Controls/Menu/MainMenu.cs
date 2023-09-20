@@ -5,6 +5,7 @@ namespace Alternet.UI
     /// <summary>
     /// Represents the main menu structure of an application or a window.
     /// </summary>
+    [ControlCategory("MenusAndToolbars")]
     public class MainMenu : Menu
     {
         /// <summary>

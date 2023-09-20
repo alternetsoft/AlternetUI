@@ -7,7 +7,8 @@ namespace Alternet.UI
     /// <summary>
     /// Displays a dialog window from which the user can select a font.
     /// </summary>
-    public sealed class FontDialog : CommonDialog
+    [ControlCategory("Dialogs")]
+    public class FontDialog : CommonDialog
     {
         private readonly Native.FontDialog nativeDialog;
         private FontInfo fontInfo = Control.DefaultFont;

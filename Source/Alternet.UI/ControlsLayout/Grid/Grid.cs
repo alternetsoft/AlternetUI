@@ -1,5 +1,5 @@
 #nullable disable
-
+#pragma warning disable
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -15,6 +15,7 @@ namespace Alternet.UI
     /// <summary>
     /// Defines a flexible grid area that consists of columns and rows.
     /// </summary>
+    [ControlCategory("Containers")]
     public partial class Grid : Control
     {
         /// <summary>
@@ -23,7 +24,7 @@ namespace Alternet.UI
         public Grid()
         {
             SetFlags(ShowGridLinesDefaultValue, Flags.ShowGridLinesPropertyValue);
-            
+
             // UserPaint = true;
         }
 
@@ -32,7 +33,8 @@ namespace Alternet.UI
         /// <summary>
         /// <inheritdoc />
         /// </summary>
-        protected override IEnumerable<FrameworkElement> LogicalChildrenCollection => base.LogicalChildrenCollection.Concat(ColumnDefinitions).Concat(RowDefinitions);
+        protected override IEnumerable<FrameworkElement> LogicalChildrenCollection =>
+            base.LogicalChildrenCollection.Concat(ColumnDefinitions).Concat(RowDefinitions);
 
         // bool showGridLines = false;
 
@@ -47,7 +49,8 @@ namespace Alternet.UI
         // }
 
         /// <summary>
-        /// Gets a <see cref="ColumnDefinitionCollection"/> defined on this instance of <see cref="Grid"/>.
+        /// Gets a <see cref="ColumnDefinitionCollection"/> defined on this instance
+        /// of <see cref="Grid"/>.
         /// </summary>
         /// <remarks>
         /// This collection contains one or more <see cref="ColumnDefinition"/> objects.
@@ -3079,10 +3082,14 @@ namespace Alternet.UI
             internal LayoutTimeSizeType SizeTypeU;
             internal LayoutTimeSizeType SizeTypeV;
             internal int Next;
-            internal bool IsStarU { get { return ((SizeTypeU & LayoutTimeSizeType.Star) != 0); } }
-            internal bool IsAutoU { get { return ((SizeTypeU & LayoutTimeSizeType.Auto) != 0); } }
-            internal bool IsStarV { get { return ((SizeTypeV & LayoutTimeSizeType.Star) != 0); } }
-            internal bool IsAutoV { get { return ((SizeTypeV & LayoutTimeSizeType.Auto) != 0); } }
+
+            internal bool IsStarU { get { return (SizeTypeU & LayoutTimeSizeType.Star) != 0; } }
+
+            internal bool IsAutoU { get { return (SizeTypeU & LayoutTimeSizeType.Auto) != 0; } }
+
+            internal bool IsStarV { get { return (SizeTypeV & LayoutTimeSizeType.Star) != 0; } }
+
+            internal bool IsAutoV { get { return (SizeTypeV & LayoutTimeSizeType.Auto) != 0; } }
         }
 
         /// <summary>

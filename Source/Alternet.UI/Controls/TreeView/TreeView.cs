@@ -51,6 +51,7 @@ namespace Alternet.UI
     /// </remarks>
     [DefaultProperty("Items")]
     [DefaultEvent("SelectionChanged")]
+    [ControlCategory("Common")]
     public class TreeView : Control
     {
         private readonly HashSet<TreeViewItem> selectedItems = new();

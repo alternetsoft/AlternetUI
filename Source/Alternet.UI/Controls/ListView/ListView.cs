@@ -23,6 +23,7 @@ namespace Alternet.UI
     /// </remarks>
     [DefaultProperty("Items")]
     [DefaultEvent("SelectionChanged")]
+    [ControlCategory("Common")]
     public class ListView : Control
     {
         private HashSet<long>? selectedIndices = null;

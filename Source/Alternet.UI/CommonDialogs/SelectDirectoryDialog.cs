@@ -3,9 +3,10 @@ namespace Alternet.UI
     /// <summary>
     /// Displays a dialog window from which the user can select a directory.
     /// </summary>
-    public sealed class SelectDirectoryDialog : CommonDialog
+    [ControlCategory("Dialogs")]
+    public class SelectDirectoryDialog : CommonDialog
     {
-        private Native.SelectDirectoryDialog nativeDialog;
+        private readonly Native.SelectDirectoryDialog nativeDialog;
 
         /// <summary>
         /// Initializes a new instance of <see cref="SelectDirectoryDialog"/>.

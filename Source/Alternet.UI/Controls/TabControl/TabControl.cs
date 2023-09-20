@@ -10,6 +10,7 @@ namespace Alternet.UI
     /// </summary>
     [DefaultProperty("Pages")]
     [DefaultEvent("SelectedPageChanged")]
+    [ControlCategory("Containers")]
     public class TabControl : Control
     {
         /// <summary>

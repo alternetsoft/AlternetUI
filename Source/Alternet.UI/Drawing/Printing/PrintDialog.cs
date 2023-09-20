@@ -12,6 +12,7 @@ namespace Alternet.UI
     /// To get printer settings that are modified by the user with the
     /// <see cref="PrintDialog"/>, use the <see cref="PrinterSettings"/> property.
     /// </remarks>
+    [ControlCategory("Printing")]
     public sealed class PrintDialog : CommonDialog
     {
         private readonly Native.PrintDialog nativeDialog;

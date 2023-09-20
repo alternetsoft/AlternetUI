@@ -10,6 +10,7 @@ namespace Alternet.UI
     /// <summary>
     /// Parent class for all owner draw controls.
     /// </summary>
+    [ControlCategory("Other")]
     public class UserPaintControl : Control
     {
         /// <summary>
@@ -29,5 +30,4 @@ namespace Alternet.UI
         {
         }
     }
-
 }

@@ -23,6 +23,7 @@ namespace Alternet.UI
     /// <see cref="SelectedIndices"/> properties provide access to the three
     /// collections that are used by the <see cref="ListBox"/>.
     /// </remarks>
+    [ControlCategory("Common")]
     public class ListBox : ListControl
     {
         private readonly HashSet<int> selectedIndices = new();

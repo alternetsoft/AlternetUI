@@ -3,9 +3,10 @@ using System;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Arranges child controls into a single line that can be oriented 
+    /// Arranges child controls into a single line that can be oriented
     /// horizontally or vertically.
     /// </summary>
+    [ControlCategory("Containers")]
     public class StackPanel : Control
     {
         private StackPanelOrientation orientation;

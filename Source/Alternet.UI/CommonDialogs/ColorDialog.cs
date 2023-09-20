@@ -5,9 +5,10 @@ namespace Alternet.UI
     /// <summary>
     /// Displays a dialog window from which the user can select a color.
     /// </summary>
-    public sealed class ColorDialog : CommonDialog
+    [ControlCategory("Dialogs")]
+    public class ColorDialog : CommonDialog
     {
-        private Native.ColorDialog nativeDialog;
+        private readonly Native.ColorDialog nativeDialog;
 
         /// <summary>
         /// Initializes a new instance of <see cref="ColorDialog"/>.

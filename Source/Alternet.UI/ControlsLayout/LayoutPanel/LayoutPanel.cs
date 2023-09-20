@@ -16,9 +16,10 @@ namespace Alternet.UI
     /// If it dock style is not specified, controls are positioned absolutely using
     /// <see cref="Control.Bounds"/>.
     /// </remarks>
+    [ControlCategory("Containers")]
     public class LayoutPanel : Control
     {
-        LayoutPanelKind layout;
+        private LayoutPanelKind layout;
 
         /// <inheritdoc/>
         public override ControlId ControlKind => ControlId.LayoutPanel;
