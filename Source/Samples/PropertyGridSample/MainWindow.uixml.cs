@@ -152,6 +152,7 @@ namespace PropertyGridSample
               typeof(Popup), // button with popup like ContextMenu
               typeof(AuiNotebook),
               typeof(AuiToolbar),
+              typeof(UIDialogWindow),
               typeof(SplitterPanel),// know how
               typeof(Grid),// know how
               typeof(ScrollViewer),
