@@ -38,15 +38,6 @@ namespace ControlsSample
             AddItems(10);
         }
 
-        private static TreeViewItem? GetLastItem(TreeViewItem? parent, ICollection<TreeViewItem> children)
-        {
-            if (!children.Any())
-                return parent;
-
-            var child = children.Last();
-            return GetLastItem(child, child.Items);
-        }
-
         private void AddManyItemsButton_Click(object? sender, EventArgs e)
         {
             AddItems(1000);
@@ -244,18 +235,23 @@ namespace ControlsSample
             treeView.SelectedItem?.CollapseAll();
 
         private void EnsureLastItemVisibleButton_Click(object? sender, System.EventArgs e) 
-            => GetLastItem(null, treeView.Items)?.EnsureVisible();
+            => treeView.LastItem?.EnsureVisible();
 
         private void ScrollLastItemIntoViewButton_Click(object? sender, System.EventArgs e)
-            => GetLastItem(null, treeView.Items)?.ScrollIntoView();
+            => treeView.LastItem?.ScrollIntoView();
 
         private void FocusLastItemButton_Click(object? sender, System.EventArgs e)
         {
-            var item = GetLastItem(null, treeView.Items);
+            var item = treeView.LastItem;
             if (item != null)
             {
-                treeView.SetFocus();
-                item.IsFocused = true;
+                treeView.DoInsideUpdate(() =>
+                {
+                    treeView.ClearSelected();
+                    treeView.SetFocus();
+                    item.IsFocused = true;
+                    item.IsSelected = true;
+                });
             }
         }
 
@@ -269,7 +265,7 @@ namespace ControlsSample
 
         private void ModifyLastItemButton_Click(object? sender, System.EventArgs e)
         {
-            var item = GetLastItem(null, treeView.Items);
+            var item = treeView.LastItem;
             if (item != null)
             {
                 item.EnsureVisible();
@@ -294,7 +290,7 @@ namespace ControlsSample
             object? sender, 
             EventArgs e)
         {
-            var item = GetLastItem(null, treeView.Items);
+            var item = treeView.LastItem;
             if (item != null)
             {
                 var collection = item.Parent == null ? 

@@ -196,6 +196,42 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets last root item in the control or <c>null</c> if there are no items.
+        /// </summary>
+        [Browsable(false)]
+        public TreeViewItem? LastRootItem
+        {
+            get
+            {
+                if (Items.Count == 0)
+                    return null;
+                return Items[Items.Count - 1];
+            }
+        }
+
+        /// <summary>
+        /// Gets last item in the control or <c>null</c> if there are no items.
+        /// </summary>
+        [Browsable(false)]
+        public TreeViewItem? LastItem
+        {
+            get
+            {
+                static TreeViewItem? GetLastItem(TreeViewItem? item)
+                {
+                    if (item is null)
+                        return null;
+                    if (!item.HasItems)
+                        return item;
+                    var child = item.Items.Last();
+                    return GetLastItem(child);
+                }
+
+                return GetLastItem(LastRootItem);
+            }
+        }
+
         /// <inheritdoc/>
         public override ControlId ControlKind => ControlId.TreeView;
 

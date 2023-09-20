@@ -106,8 +106,9 @@ namespace ControlsSample
             mainGridParent.Padding = 10;
             mainGridParent.Children.Add(mainGrid);
             Children.Add(mainGridParent);
-
+#if DEBUG
             LogEvent("Net Version = " + Environment.Version.ToString());
+#endif
         }
 
         Control CreateTreeViewPage() => new TreeViewPage() { Site = this };
@@ -131,6 +132,16 @@ namespace ControlsSample
         Control CreateLayoutPanelPage() => new LayoutPanelPage() { Site = this };
         Control CreateAllSamplesPage() => new AllSamplesPage() { Site = this };
 
+        private void Application_LogMessage(object? sender, LogMessageEventArgs e)
+        {
+#if DEBUG
+            if (e.ReplaceLastMessage)
+                LogEventSmart(e.Message, e.MessagePrefix);
+            else
+                LogEvent(e.Message);
+#endif
+        }
+
         private void LinkLabel_LinkClicked(
             object? sender,
             System.ComponentModel.CancelEventArgs e)
@@ -140,16 +151,32 @@ namespace ControlsSample
             LogEvent(linkLabel.Url);
         }
 
-        string? IPageSite.LastEventMessage => lastEventMessage;
+        public string? LastEventMessage => lastEventMessage;
 
-        void IPageSite.LogEvent(string message) => LogEvent(message);
+        public void LogEventSmart(string message, string? prefix)
+        {
+            var s = lastEventMessage;
+            var b = s?.StartsWith(prefix ?? string.Empty) ?? false;
 
-        void LogEvent(string message)
+            if (b && eventsControl.LastRootItem is not null)
+            {
+                eventsControl.LastRootItem.Text = ConstructMessage(message);
+            }
+            else
+                LogEvent(message);
+        }
+
+        private string ConstructMessage(string message)
+        {
+            var s = $"{lastEventNumber++}. {message}";
+            return s;
+        }
+
+        public void LogEvent(string message)
         {
             lastEventMessage = message;
 
-            var s = $"{lastEventNumber++}. {message}";
-            var item = new TreeViewItem(s);
+            var item = new TreeViewItem(ConstructMessage(message));
             eventsControl.Items.Add(item);
             eventsControl.SelectedItem = item;
         }
