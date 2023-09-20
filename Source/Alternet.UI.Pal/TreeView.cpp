@@ -1,4 +1,5 @@
 #include "TreeView.h"
+#include "Application.h"
 
 namespace Alternet::UI
 {
@@ -181,6 +182,29 @@ namespace Alternet::UI
         {
             Create(parent, id, pos, size, style, validator, name);
         }
+    protected:
+/*
+        WXLRESULT MSWDefWindowProc(WXUINT nMsg, WXWPARAM wParam, WXLPARAM lParam) override
+        {
+            return wxTreeCtrl::MSWDefWindowProc(nMsg, wParam, lParam);
+        }
+
+        bool MSWShouldPreProcessMessage(WXMSG* msg) override
+        {
+  
+            return wxTreeCtrl::MSWShouldPreProcessMessage(msg);
+        }
+
+        WXLRESULT MSWWindowProc(WXUINT nMsg, WXWPARAM wParam, WXLPARAM lParam) override
+        {
+            return wxTreeCtrl::MSWWindowProc(nMsg, wParam, lParam);
+        }
+
+        bool ProcessEvent(wxEvent& event) override
+        {
+            return wxTreeCtrl::ProcessEvent(event);
+        }
+*/
     };
 
     wxWindow* TreeView::CreateWxWindowCore(wxWindow* parent)
