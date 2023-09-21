@@ -1,30 +1,45 @@
-using Alternet.Drawing.Printing;
 using System;
+using Alternet.Drawing.Printing;
 
 namespace Alternet.UI
 {
     /// <summary>
-    /// Enables users to change page-related print settings, including margins and paper orientation. This class cannot
+    /// Enables users to change page-related print settings, including margins and paper
+    /// orientation. This class cannot
     /// be inherited.
     /// </summary>
     /// <remarks>
     /// <para>
     /// The <see cref="PageSetupDialog"/> dialog box modifies the <see cref="PageSettings"/> and
     /// <see cref="PrinterSettings"/> information for a given Document.
-    /// The user can enable sections of the dialog box to manipulate printing and margins; paper orientation, size, and
-    /// source; and to show Help button. The <see cref="MinMargins"/> property defines the minimum margins a user can
+    /// The user can enable sections of the dialog box to manipulate printing and margins;
+    /// paper orientation, size, and
+    /// source; and to show Help button. The <see cref="MinMargins"/> property defines the
+    /// minimum margins a user can
     /// select.
     /// </para>
     /// <para>
-    /// When you create an instance of the <see cref="PageSetupDialog"/> class, the read/write properties are set to initial values.
+    /// When you create an instance of the <see cref="PageSetupDialog"/> class, the read/write
+    /// properties are set to initial values.
     /// </para>
     /// <para>
-    /// Because a <see cref="PageSetupDialog"/> needs page settings to display, you need to set the <see cref="Document"/>, <see cref="PrinterSettings"/>, or
+    /// Because a <see cref="PageSetupDialog"/> needs page settings to display, you need to set
+    /// the <see cref="Document"/>, <see cref="PrinterSettings"/>, or
     /// <see cref="PageSettings"/> property before calling <see cref="CommonDialog.ShowModal()"/>.
     /// </para>
     /// </remarks>
     public sealed class PageSetupDialog : CommonDialog
     {
+        private readonly Native.PageSetupDialog nativeDialog;
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="PageSetupDialog"/>.
+        /// </summary>
+        public PageSetupDialog()
+        {
+            nativeDialog = new Native.PageSetupDialog();
+        }
+
         /// <summary>
         /// Gets or sets a value indicating the <see cref="PrintDocument"/> to get page settings from.
         /// </summary>
@@ -37,18 +52,19 @@ namespace Alternet.UI
 
             set
             {
-                nativeDialog.Document = value == null ? null : value.NativePrintDocument;
+                nativeDialog.Document = value?.NativePrintDocument;
             }
         }
 
         /// <summary>
-        /// Gets or sets a value indicating the minimum margins, in millimeters, the user is allowed to select.
+        /// Gets or sets a value indicating the minimum margins, in millimeters, the user is
+        /// allowed to select.
         /// </summary>
-        public Margins? MinMargins
+        public Thickness? MinMargins
         {
             get
             {
-                return nativeDialog.MinMarginsValueSet ? new Margins(nativeDialog.MinMargins) : null;
+                return nativeDialog.MinMarginsValueSet ? nativeDialog.MinMargins : null;
             }
 
             set
@@ -56,7 +72,7 @@ namespace Alternet.UI
                 nativeDialog.MinMarginsValueSet = value != null;
 
                 if (value != null)
-                    nativeDialog.MinMargins = value.Value.ToThickness();
+                    nativeDialog.MinMargins = value.Value;
             }
         }
 
@@ -77,7 +93,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether the orientation section of the dialog box (landscape versus
+        /// Gets or sets a value indicating whether the orientation section of the dialog box
+        /// (landscape versus
         /// portrait) is enabled.
         /// </summary>
         public bool AllowOrientation
@@ -94,7 +111,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether the paper section of the dialog box (paper size and paper source) is
+        /// Gets or sets a value indicating whether the paper section of the dialog box
+        /// (paper size and paper source) is
         /// enabled.
         /// </summary>
         public bool AllowPaper
@@ -126,23 +144,14 @@ namespace Alternet.UI
             }
         }
 
-        private Native.PageSetupDialog nativeDialog;
-
-        /// <summary>
-        /// Initializes a new instance of <see cref="PageSetupDialog"/>.
-        /// </summary>
-        public PageSetupDialog()
-        {
-            nativeDialog = new Native.PageSetupDialog();
-        }
+        private protected override string? TitleCore { get; set; }
 
         private protected override ModalResult ShowModalCore(Window? owner)
         {
             CheckDisposed();
-            var nativeOwner = owner == null ? null : ((NativeWindowHandler)owner.Handler).NativeControl;
+            var nativeOwner = owner == null ? null
+                : ((NativeWindowHandler)owner.Handler).NativeControl;
             return (ModalResult)nativeDialog.ShowModal(nativeOwner);
         }
-
-        private protected override string? TitleCore { get; set; }
     }
 }

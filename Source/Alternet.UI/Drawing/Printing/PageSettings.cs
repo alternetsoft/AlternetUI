@@ -1,4 +1,5 @@
 using System;
+using Alternet.UI;
 
 namespace Alternet.Drawing.Printing
 {
@@ -6,10 +7,13 @@ namespace Alternet.Drawing.Printing
     /// Specifies settings that apply to a single, printed page.
     /// </summary>
     /// <remarks>
-    /// The <see cref="PageSettings"/> class is used to specify settings that modify the way a page will be printed.
-    /// Typically, you set default settings for all pages to be printed through the <see
-    /// cref="PrintDocument.PageSettings"/> property. To specify settings on a page-by-page basis, handle the
-    /// <see cref="PrintDocument.PrintPage"/> event and modify the <see cref="PageSettings"/> argument included in the
+    /// The <see cref="PageSettings"/> class is used to specify settings that modify the way
+    /// a page will be printed.
+    /// Typically, you set default settings for all pages to be printed through the
+    /// <see cref="PrintDocument.PageSettings"/> property. To specify settings on a page-by-page
+    /// basis, handle the
+    /// <see cref="PrintDocument.PrintPage"/> event and modify the <see cref="PageSettings"/>
+    /// argument included in the
     /// <see cref="PrintPageEventArgs"/>.
     /// </remarks>
     public class PageSettings : IDisposable
@@ -19,7 +23,8 @@ namespace Alternet.Drawing.Printing
         /// <summary>
         /// Initializes a new instance of the <see cref="PageSettings"/> class.
         /// </summary>
-        public PageSettings() : this(new UI.Native.PageSettings())
+        public PageSettings()
+            : this(new UI.Native.PageSettings())
         {
         }
 
@@ -28,12 +33,11 @@ namespace Alternet.Drawing.Printing
             NativePageSettings = nativePageSettings;
         }
 
-        internal UI.Native.PageSettings NativePageSettings { get; private set; }
-
         /// <summary>
         /// Gets or sets a value indicating whether the page should be printed in color.
         /// </summary>
-        /// <value><see langword="true"/> if the page should be printed in color; otherwise, <see langword="false"/>.</value>
+        /// <value><see langword="true"/> if the page should be printed in color; otherwise,
+        /// <see langword="false"/>.</value>
         public bool Color
         {
             get
@@ -48,9 +52,11 @@ namespace Alternet.Drawing.Printing
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether the page is printed in landscape or portrait orientation.
+        /// Gets or sets a value indicating whether the page is printed in landscape or portrait
+        /// orientation.
         /// </summary>
-        /// <value><see langword="true"/> if the page should be printed in landscape orientation; otherwise, <see langword="false"/>.</value>
+        /// <value><see langword="true"/> if the page should be printed in landscape orientation;
+        /// otherwise, <see langword="false"/>.</value>
         public bool Landscape
         {
             get
@@ -67,17 +73,18 @@ namespace Alternet.Drawing.Printing
         /// <summary>
         /// Gets or sets the margins for this page.
         /// </summary>
-        /// <value>A <see cref="Printing.Margins"/> value that represents the margins, in millimeters, for the page.</value>
-        public Margins Margins
+        /// <value>A <see cref="Thickness"/> value that represents the margins,
+        /// in millimeters, for the page.</value>
+        public Thickness Margins
         {
             get
             {
-                return new Margins(NativePageSettings.Margins);
+                return NativePageSettings.Margins;
             }
 
             set
             {
-                NativePageSettings.Margins = value.ToThickness();
+                NativePageSettings.Margins = value;
             }
         }
 
@@ -139,6 +146,8 @@ namespace Alternet.Drawing.Printing
                 NativePageSettings.PrinterResolution = (UI.Native.PrinterResolutionKind)value.Kind;
             }
         }
+
+        internal UI.Native.PageSettings NativePageSettings { get; private set; }
 
         /// <summary>
         /// Releases all resources used by the object.
