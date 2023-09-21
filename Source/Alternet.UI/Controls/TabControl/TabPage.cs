@@ -15,6 +15,7 @@ namespace Alternet.UI
     /// The tabs in a <see cref="TabControl"/> are part of the <see cref="TabControl"/> but
     /// not parts of the individual <see cref="TabPage"/> controls.
     /// </remarks>
+    [ControlCategory("Hidden")]
     public class TabPage : Control
     {
         private string title;

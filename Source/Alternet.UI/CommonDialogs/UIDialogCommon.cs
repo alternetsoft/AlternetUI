@@ -10,6 +10,7 @@ namespace Alternet.UI
     /// Specifies the base class used for displaying dialog windows inherited from
     /// <see cref="Window"/> on the screen.
     /// </summary>
+    [ControlCategory("Hidden")]
     internal class UIDialogCommon : DisposableObject
     {
         private string? title;

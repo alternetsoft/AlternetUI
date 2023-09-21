@@ -1,12 +1,14 @@
-using Alternet.Drawing;
 using System;
+using Alternet.Drawing;
 
 namespace Alternet.UI
 {
     /// <summary>
-    /// The <see cref="Popup"/> control displays content in a separate window that floats over the current application window.
+    /// The <see cref="Popup"/> control displays content in a separate window that floats
+    /// over the current application window.
     /// </summary>
     [System.ComponentModel.DesignerCategory("Code")]
+    [ControlCategory("Hidden")]
     public class Popup : Control
     {
         private Window? owner;
@@ -82,8 +84,10 @@ namespace Alternet.UI
         /// <summary>
         /// Changes size of the window to fit the size of its content.
         /// </summary>
-        /// <param name="mode">Specifies how a window will size itself to fit the size of its content.</param>
-        public void SetSizeToContent(WindowSizeToContentMode mode = WindowSizeToContentMode.WidthAndHeight)
+        /// <param name="mode">Specifies how a window will size itself to fit
+        /// the size of its content.</param>
+        public void SetSizeToContent(WindowSizeToContentMode mode =
+            WindowSizeToContentMode.WidthAndHeight)
         {
             Handler.SetSizeToContent(mode);
         }

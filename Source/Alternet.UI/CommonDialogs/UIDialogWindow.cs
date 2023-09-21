@@ -10,6 +10,7 @@ namespace Alternet.UI
     /// <summary>
     /// Base class for dialog windows.
     /// </summary>
+    [ControlCategory("Hidden")]
     public class UIDialogWindow : Window
     {
         /// <summary>

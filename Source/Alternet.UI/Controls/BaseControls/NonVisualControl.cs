@@ -13,6 +13,7 @@ namespace Alternet.UI
     /// Base class for all non visual controls like <see cref="Menu"/>,
     /// <see cref="StatusBar"/> and other.
     /// </summary>
+    [ControlCategory("Hidden")]
     public class NonVisualControl : Control
     {
         /// <summary>

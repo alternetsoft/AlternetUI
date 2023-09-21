@@ -6,6 +6,7 @@ namespace Alternet.UI
     /// <summary>
     /// Specifies the base class used for displaying standard system dialog windows on the screen.
     /// </summary>
+    [ControlCategory("Hidden")]
     public abstract class CommonDialog : BaseComponent, IDisposable
     {
         private bool isDisposed;

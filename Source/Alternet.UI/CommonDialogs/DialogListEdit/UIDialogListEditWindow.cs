@@ -13,6 +13,7 @@ using Alternet.UI.Localization;
 
 namespace Alternet.UI
 {
+    [ControlCategory("Hidden")]
     internal class UIDialogListEditWindow : UIDialogWindow
     {
         private readonly AuiManager manager = new();

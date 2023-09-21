@@ -6,6 +6,7 @@ namespace Alternet.UI
     /// <summary>
     /// Displays a dialog window from which the user can select a file.
     /// </summary>
+    [ControlCategory("Hidden")]
     public abstract class FileDialog : CommonDialog
     {
         private readonly Native.FileDialog nativeDialog;

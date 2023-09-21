@@ -11,6 +11,7 @@ namespace Alternet.UI
     /// Please use <see cref="AuiManager"/> and <see cref="AuiToolbar"/> instead of
     /// <see cref="Toolbar"/> as it is deprecated and has limited functionality.
     /// </remarks>
+    [ControlCategory("Hidden")]
     public class ToolbarItem : NonVisualControl, ICommandSource
     {
         /// <summary>

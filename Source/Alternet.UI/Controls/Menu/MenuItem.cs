@@ -6,6 +6,7 @@ namespace Alternet.UI
     /// <summary>
     /// Represents an individual item that is displayed within a menu.
     /// </summary>
+    [ControlCategory("Hidden")]
     public class MenuItem : Menu, ICommandSource
     {
         /// <summary>

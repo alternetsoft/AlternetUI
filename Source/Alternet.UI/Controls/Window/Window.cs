@@ -13,6 +13,7 @@ namespace Alternet.UI
     /// <remarks>A <see cref="Window"/> is a representation of any window displayed in
     /// your application.</remarks>
     [DesignerCategory("Code")]
+    [ControlCategory("Hidden")]
     public class Window : Control
     {
         private string title = string.Empty;
