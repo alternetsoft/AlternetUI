@@ -8,7 +8,9 @@ namespace ApiGenerator
 {
     internal static class Program
     {
+#pragma warning disable
         public static void Main(string[] args)
+#pragma warning restore
         {
             bool UseNativeGenerator = true;
 
