@@ -5,9 +5,10 @@ namespace Alternet.UI
 {
     internal partial class StackPanelHandler
     {
-        class HorizontalLayout : OrientedLayout
+        private class HorizontalLayout : OrientedLayout
         {
-            public HorizontalLayout(StackPanelHandler handler) : base(handler)
+            public HorizontalLayout(StackPanelHandler handler)
+                : base(handler)
             {
             }
 

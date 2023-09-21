@@ -41,6 +41,11 @@ namespace Alternet.UI
         object? Instance { get; set; }
 
         /// <summary>
+        /// Gets <see cref="ImageList"/> which contains item images.
+        /// </summary>
+        ImageList? ImageList { get; }
+
+        /// <summary>
         /// Gets or sets property will be edited with the collection editor.
         /// </summary>
         public PropertyInfo? PropInfo { get; set; }
@@ -74,11 +79,6 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="item">Item id.</param>
         object? GetProperties(object item);
-
-        /// <summary>
-        /// Gets <see cref="ImageList"/> which contains item images.
-        /// </summary>
-        ImageList? ImageList { get; }
 
         /// <summary>
         /// Gets index of the image associated with the item.

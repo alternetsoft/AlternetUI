@@ -18,11 +18,11 @@ namespace Alternet.UI
         Layout,
 
         /// <summary>
-        ///     Only the text changes in size when zooming. Images and other 
+        ///     Only the text changes in size when zooming. Images and other
         ///     layout elements retain their initial size.
         /// </summary>
         Text,
-    };
+    }
 
     /// <summary>
     ///     Zoom levels available in WebBrowser.

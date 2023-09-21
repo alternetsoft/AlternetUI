@@ -1,5 +1,4 @@
-﻿
-namespace Alternet.Drawing
+﻿namespace Alternet.Drawing
 {
     /// <summary>
     /// Specifies how to join consecutive line or curve segments.
@@ -19,6 +18,6 @@ namespace Alternet.Drawing
         /// <summary>
         /// Specifies a circular join. This produces a smooth, circular arc between the lines.
         /// </summary>
-        Round
+        Round,
     }
 }

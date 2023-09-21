@@ -1,5 +1,4 @@
-﻿
-namespace Alternet.Drawing
+﻿namespace Alternet.Drawing
 {
     /// <summary>
     /// Gets or sets the style used for dashed lines drawn with this <see cref="Pen"/>.
@@ -29,6 +28,6 @@ namespace Alternet.Drawing
         /// <summary>
         /// Specifies a user-defined custom dash style.
         /// </summary>
-        Custom
+        Custom,
     }
 }

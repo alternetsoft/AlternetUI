@@ -10,10 +10,10 @@ namespace Alternet.UI
         /// Only one item can be selected.
         /// </summary>
         Single,
-        
+
         /// <summary>
         /// Multiple items can be selected.
         /// </summary>
-        Multiple
+        Multiple,
     }
 }

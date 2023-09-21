@@ -31,15 +31,15 @@ namespace Alternet.UI
         IELatest = 2,
 
         /// <summary>
-        ///     The Edge backend uses Microsoft's Edge WebView2. It is available for 
-        ///     Windows 7 and newer. This backend does not support custom schemes 
+        ///     The Edge backend uses Microsoft's Edge WebView2. It is available for
+        ///     Windows 7 and newer. This backend does not support custom schemes
         ///     and virtual file systems.
         /// </summary>
         Edge = 3,
 
         /// <summary>
-        ///     Under GTK the WebKit backend uses WebKitGTK+. 
-        ///     The macOS WebKit backend uses Apple's WKWebView class. 
+        ///     Under GTK the WebKit backend uses WebKitGTK+.
+        ///     The macOS WebKit backend uses Apple's WKWebView class.
         ///     Custom schemes and virtual files systems are supported under this backend.
         ///     For further details see the documentation on wxWEBVIEW_WEBKIT.
         /// </summary>

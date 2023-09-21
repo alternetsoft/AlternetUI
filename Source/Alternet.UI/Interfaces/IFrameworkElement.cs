@@ -13,13 +13,13 @@ namespace Alternet.UI
 
         string? Name { get; set; }
 
-        //IReadOnlyList<IFrameworkElement> ContentElements { get; }
+        // IReadOnlyList<IFrameworkElement> ContentElements { get; }
 
         public object? DataContext { get; set; }
 
-        //IFrameworkElement? TryFindElement(string name);
+        // IFrameworkElement? TryFindElement(string name);
 
-        //IUIElement FindElement(string name);
+        // IUIElement FindElement(string name);
     }
 
     internal interface IFrameworkElementInternalStatic
@@ -31,7 +31,7 @@ namespace Alternet.UI
         EventPrivateKey InheritedPropertyChangedKey { get; }
 
         bool GetFrameworkParent(
-            IFrameworkElement current, 
+            IFrameworkElement current,
             out IFrameworkElement feParent);
 
         DependencyObject GetFrameworkParent(object current);
@@ -50,36 +50,6 @@ namespace Alternet.UI
 
     internal interface IFrameworkElementInternal
     {
-        Expression? GetExpressionCore(
-            DependencyProperty dp, 
-            PropertyMetadata metadata);
-
-        bool HasLogicalChildren { get; }
-
-        void WriteInternalFlag(InternalFlags reqFlag, bool set);
-
-        bool AncestorChangeInProgress { get; set; }
-
-        bool InVisibilityCollapsedTree { get; set; }
-
-        void OnNewParent(DependencyObject? oldParent, DependencyObject? newParent);
-
-        void OnAncestorChangedInternal(TreeChangeInfo parentTreeState);
-
-        void RaiseClrEvent(EventPrivateKey key, EventArgs args);
-
-        bool PotentiallyHasMentees { get; set; }
-
-        void OnAncestorChanged();
-
-        void RaiseInheritedPropertyChangedEvent(
-            ref InheritablePropertyChangeInfo info);
-
-        FrugalObjectList<DependencyProperty> InvalidateTreeDependentProperties(
-            TreeChangeInfo parentTreeState, 
-            bool isSelfInheritanceParent, 
-            bool wasSelfInheritanceParent);
-
         bool IsInitialized { get; set; }
 
         IFrameworkElement? LogicalParent { get; set; }
@@ -90,24 +60,54 @@ namespace Alternet.UI
 
         InheritanceBehavior InheritanceBehavior { get; set; }
 
+        IEnumerator LogicalChildren { get; }
+
+        bool ShouldLookupImplicitStyles { get; set; }
+
+        bool HasLogicalChildren { get; }
+
+        bool AncestorChangeInProgress { get; set; }
+
+        bool InVisibilityCollapsedTree { get; set; }
+
+        bool PotentiallyHasMentees { get; set; }
+
+        void WriteInternalFlag(InternalFlags reqFlag, bool set);
+
+        Expression? GetExpressionCore(
+            DependencyProperty dp,
+            PropertyMetadata metadata);
+
+        void OnNewParent(DependencyObject? oldParent, DependencyObject? newParent);
+
+        void OnAncestorChangedInternal(TreeChangeInfo parentTreeState);
+
+        void RaiseClrEvent(EventPrivateKey key, EventArgs args);
+
+        void OnAncestorChanged();
+
+        void RaiseInheritedPropertyChangedEvent(
+            ref InheritablePropertyChangeInfo info);
+
+        FrugalObjectList<DependencyProperty> InvalidateTreeDependentProperties(
+            TreeChangeInfo parentTreeState,
+            bool isSelfInheritanceParent,
+            bool wasSelfInheritanceParent);
+
         void ChangeLogicalParent(
-            DependencyObject? oldParent, 
+            DependencyObject? oldParent,
             DependencyObject? newParent);
 
         bool ReadInternalFlag(InternalFlags reqFlag);
 
-        bool ShouldLookupImplicitStyles { get; set; }
-
         void AdjustBranchSource(RoutedEventArgs args);
 
         bool BuildRouteCoreHelper(
-            EventRoute route, 
-            RoutedEventArgs args, 
+            EventRoute route,
+            RoutedEventArgs args,
             bool shouldAddIntermediateElementsToRoute);
 
         bool IgnoreModelParentBuildRoute(RoutedEventArgs args);
-
-        IEnumerator LogicalChildren { get; }
 
         void EventHandlersStoreAdd(EventPrivateKey key, Delegate handler);
 

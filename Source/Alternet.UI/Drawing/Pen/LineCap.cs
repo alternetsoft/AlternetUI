@@ -1,5 +1,4 @@
-﻿
-namespace Alternet.Drawing
+﻿namespace Alternet.Drawing
 {
     /// <summary>
     /// Specifies the available cap styles with which a <see cref="Pen"/> object can end a line.
@@ -14,6 +13,6 @@ namespace Alternet.Drawing
         /// <summary>
         /// Specifies a round line cap.
         /// </summary>
-        Round
+        Round,
     }
 }

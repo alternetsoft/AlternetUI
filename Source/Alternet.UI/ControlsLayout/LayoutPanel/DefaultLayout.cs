@@ -37,10 +37,18 @@ namespace Alternet.UI
 {
     internal class DefaultLayout
     {
-        internal static readonly DefaultLayout Instance = new DefaultLayout();
+        internal static readonly DefaultLayout Instance = new();
 
         private DefaultLayout()
         {
+        }
+
+        public static void Layout(Control container)
+        {
+            LayoutDockedChildren(container);
+
+            // LayoutAnchoredChildren(container, controls);
+            // return container.AutoSize;
         }
 
         public void InitLayout(Control control, BoundsSpecified specified)
@@ -271,13 +279,6 @@ namespace Alternet.UI
                 }
             }
         }*/
-
-        public static void Layout(Control container)
-        {
-            LayoutDockedChildren(container);
-            //LayoutAnchoredChildren(container, controls);
-            //return container.AutoSize;
-        }
 
         /*private static Size GetPreferredControlSize(Control child, Size proposed)
         {

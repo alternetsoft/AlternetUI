@@ -60,5 +60,4 @@ namespace Alternet.UI
         /// </returns>
         string[] GetFormats();
     }
-
 }

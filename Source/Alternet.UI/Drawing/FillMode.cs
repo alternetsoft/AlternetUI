@@ -27,6 +27,6 @@ namespace Alternet.Drawing
         /// fill or clip area. A figure is considered clockwise or counterclockwise based on the order in which the
         /// segments of the figure are drawn.
         /// </remarks>
-        Winding
+        Winding,
     }
 }

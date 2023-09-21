@@ -27,6 +27,6 @@ namespace Alternet.UI
         /// <summary>
         /// Each item appears as a full-sized icon with a text label.
         /// </summary>
-        LargeIcon
+        LargeIcon,
     }
 }

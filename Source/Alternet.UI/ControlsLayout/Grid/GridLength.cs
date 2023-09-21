@@ -1,5 +1,4 @@
 #nullable disable
-
 using System;
 using System.ComponentModel;
 using System.Globalization;
@@ -7,25 +6,17 @@ using System.Globalization;
 namespace Alternet.UI
 {
     /// <summary>
-    /// GridLength is the type used for various length-like properties in the system, 
-    /// that explicitely support Star unit type. For example, "Width", "Height" 
+    /// GridLength is the type used for various length-like properties in the system,
+    /// that explicitely support Star unit type. For example, "Width", "Height"
     /// properties of ColumnDefinition and RowDefinition used by Grid.
     /// </summary>
     [TypeConverter(typeof(GridLengthConverter))]
     public struct GridLength : IEquatable<GridLength>
     {
-        // ------------------------------------------------------
-        //
-        //  Constructors
-        //
-        // ------------------------------------------------------
-
-        #region Constructors
-
         /// <summary>
         /// Constructor, initializes the GridLength as absolute value in pixels.
         /// </summary>
-        /// <param name="pixels">Specifies the number of 'device-independent pixels' 
+        /// <param name="pixels">Specifies the number of 'device-independent pixels'
         /// (96 pixels-per-inch).</param>
         /// <exception cref="ArgumentException">
         /// If <c>pixels</c> parameter is <c>double.NaN</c>
@@ -38,15 +29,15 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Constructor, initializes the GridLength and specifies what kind of value 
+        /// Constructor, initializes the GridLength and specifies what kind of value
         /// it will hold.
         /// </summary>
-        /// <param name="value">Value to be stored by this GridLength 
+        /// <param name="value">Value to be stored by this GridLength
         /// instance.</param>
-        /// <param name="type">Type of the value to be stored by this GridLength 
+        /// <param name="type">Type of the value to be stored by this GridLength
         /// instance.</param>
-        /// <remarks> 
-        /// If the <c>type</c> parameter is <c>GridUnitType.Auto</c>, 
+        /// <remarks>
+        /// If the <c>type</c> parameter is <c>GridUnitType.Auto</c>,
         /// then passed in value is ignored and replaced with <c>0</c>.
         /// </remarks>
         /// <exception cref="ArgumentException">
@@ -71,15 +62,6 @@ namespace Alternet.UI
             _unitType = type;
         }
 
-        #endregion Constructors
-
-        // ------------------------------------------------------
-        //
-        //  Public Methods
-        //
-        // ------------------------------------------------------
-        #region Public Methods 
-
         /// <summary>
         /// Overloaded operator, compares 2 GridLength's.
         /// </summary>
@@ -89,8 +71,8 @@ namespace Alternet.UI
         /// and unit type.</returns>
         public static bool operator ==(GridLength gl1, GridLength gl2)
         {
-            return (gl1.GridUnitType == gl2.GridUnitType
-                    && gl1.Value == gl2.Value);
+            return gl1.GridUnitType == gl2.GridUnitType
+                    && gl1.Value == gl2.Value;
         }
 
         /// <summary>
@@ -98,27 +80,24 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="gl1">first GridLength to compare.</param>
         /// <param name="gl2">second GridLength to compare.</param>
-        /// <returns>true if specified GridLengths have either different value or 
+        /// <returns>true if specified GridLengths have either different value or
         /// unit type.</returns>
         public static bool operator !=(GridLength gl1, GridLength gl2)
         {
-            return (gl1.GridUnitType != gl2.GridUnitType
-                    || gl1.Value != gl2.Value);
+            return gl1.GridUnitType != gl2.GridUnitType
+                    || gl1.Value != gl2.Value;
         }
 
         /// <summary>
         /// Compares this instance of GridLength with another object.
         /// </summary>
         /// <param name="oCompare">Reference to an object for comparison.</param>
-        /// <returns><c>true</c>if this GridLength instance has the same value 
+        /// <returns><c>true</c>if this GridLength instance has the same value
         /// and unit type as oCompare.</returns>
-        override public bool Equals(object oCompare)
+        public override bool Equals(object oCompare)
         {
-            if (oCompare is GridLength)
-            {
-                GridLength l = (GridLength)oCompare;
-                return (this == l);
-            }
+            if (oCompare is GridLength l)
+                return this == l;
             else
                 return false;
         }
@@ -127,20 +106,20 @@ namespace Alternet.UI
         /// Compares this instance of GridLength with another instance.
         /// </summary>
         /// <param name="gridLength">Grid length instance to compare.</param>
-        /// <returns><c>true</c>if this GridLength instance has the same value 
+        /// <returns><c>true</c>if this GridLength instance has the same value
         /// and unit type as gridLength.</returns>
         public bool Equals(GridLength gridLength)
         {
-            return (this == gridLength);
+            return this == gridLength;
         }
 
         /// <summary>
-        /// <see cref="Object.GetHashCode"/>
+        /// <see cref="object.GetHashCode"/>
         /// </summary>
-        /// <returns><see cref="Object.GetHashCode"/></returns>
+        /// <returns><see cref="object.GetHashCode"/></returns>
         public override int GetHashCode()
         {
-            return ((int)_unitValue + (int)_unitType);
+            return (int)_unitValue + (int)_unitType;
         }
 
         /// <summary>
@@ -150,13 +129,13 @@ namespace Alternet.UI
         public bool IsAbsolute { get { return (_unitType == GridUnitType.Pixel); } }
 
         /// <summary>
-        /// Returns <c>true</c> if this GridLength instance is 
+        /// Returns <c>true</c> if this GridLength instance is
         /// automatic (not specified).
         /// </summary>
         public bool IsAuto { get { return (_unitType == GridUnitType.Auto); } }
 
         /// <summary>
-        /// Returns <c>true</c> if this GridLength instance holds weighted propertion 
+        /// Returns <c>true</c> if this GridLength instance holds weighted propertion
         /// of available space.
         /// </summary>
         public bool IsStar { get { return (_unitType == GridUnitType.Star); } }
@@ -179,15 +158,6 @@ namespace Alternet.UI
             return GridLengthConverter.ToString(this, CultureInfo.InvariantCulture);
         }
 
-        #endregion Public Methods 
-
-        // ------------------------------------------------------
-        //
-        //  Public Properties
-        //
-        // ------------------------------------------------------
-        #region Public Properties
-
         /// <summary>
         /// Returns initialized Auto GridLength value.
         /// </summary>
@@ -196,20 +166,11 @@ namespace Alternet.UI
             get { return (s_auto); }
         }
 
-        #endregion Public Properties
+        private double _unitValue;
+        private GridUnitType _unitType;
 
-        // ------------------------------------------------------
-        //
-        //  Private Fields
-        //
-        // ------------------------------------------------------
-        #region Private Fields 
-        private double _unitValue;      //  unit value storage
-        private GridUnitType _unitType; //  unit type storage
-
-        //  static instance of Auto GridLength
+        // static instance of Auto GridLength
         private static readonly GridLength s_auto = new GridLength(1, GridUnitType.Auto);
-        #endregion Private Fields 
     }
 
 }

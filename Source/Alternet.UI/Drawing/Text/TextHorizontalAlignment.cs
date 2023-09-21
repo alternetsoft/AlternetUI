@@ -18,6 +18,6 @@ namespace Alternet.Drawing
         /// <summary>
         /// Specifies that text is aligned in the right edge of the layout rectangle.
         /// </summary>
-        Right
+        Right,
     }
 }

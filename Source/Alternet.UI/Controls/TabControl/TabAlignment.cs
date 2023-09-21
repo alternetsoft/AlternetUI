@@ -1,4 +1,3 @@
-
 namespace Alternet.UI
 {
     /// <summary>
@@ -27,6 +26,6 @@ namespace Alternet.UI
         /// <summary>
         /// The tabs are located along the right edge of the control.
         /// </summary>
-        Right
+        Right,
     }
 }

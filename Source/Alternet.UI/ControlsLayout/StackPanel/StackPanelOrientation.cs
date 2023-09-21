@@ -9,6 +9,7 @@ namespace Alternet.UI
         /// Stack layout should be vertically oriented.
         /// </summary>
         Vertical,
+
         /// <summary>
         /// Stack layout should be horizontally oriented.
         /// </summary>

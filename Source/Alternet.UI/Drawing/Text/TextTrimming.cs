@@ -18,6 +18,6 @@ namespace Alternet.Drawing
         /// <summary>
         /// Specifies that the text is trimmed to the nearest character.
         /// </summary>
-        Character
+        Character,
     }
 }

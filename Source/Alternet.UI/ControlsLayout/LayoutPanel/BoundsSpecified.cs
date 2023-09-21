@@ -21,7 +21,7 @@ namespace Alternet.UI
         X = 0x00000001,
 
         /// <summary>
-        /// Specifies that the top edge of the object is defined. 
+        /// Specifies that the top edge of the object is defined.
         /// </summary>
         Y = 0x00000002,
 
