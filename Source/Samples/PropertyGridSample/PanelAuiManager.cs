@@ -20,7 +20,7 @@ namespace Alternet.UI
         private IAuiPaneInfo? bottomPane;
         private PropertyGrid? propertyGrid;
         private PropertyGrid? eventGrid;
-        private ListBox? logControl;
+        private TreeView? logControl;
         private ContextMenu? logContextMenu;
 
         public AuiManager Manager => manager;
@@ -31,7 +31,7 @@ namespace Alternet.UI
             Manager.SetManagedWindow(this);
         }
 
-        public ListBox LogControl
+        public TreeView LogControl
         {
             get
             {
@@ -201,7 +201,7 @@ namespace Alternet.UI
         public virtual void Log(string s)
         {
             LogControl.Add(ConstructMessage(s));
-            LogControl.SelectLastItem();
+            LogControl.FocusAndSelectItem(LogControl.LastRootItem);
         }
 
         public virtual void InitLogContextMenu()
@@ -225,13 +225,18 @@ namespace Alternet.UI
 
         public virtual void LogSmart(string message, string? prefix)
         {
-            var s = LogControl.LastItem?.ToString();
+            var lastItem = LogControl.LastRootItem;
+            if(lastItem is null)
+            {
+                Log(message);
+                return;
+            }
+
+            var s = lastItem.Text;
             var b = s?.StartsWith(prefix ?? string.Empty) ?? false;
 
             if (b)
-            {
-                LogControl.LastItem = ConstructMessage(message);
-            }
+                lastItem.Text = ConstructMessage(message);
             else
                 Log(message);
         }
