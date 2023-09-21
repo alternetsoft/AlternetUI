@@ -771,6 +771,34 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Focuses and selects specified item in the control.
+        /// </summary>
+        public virtual void FocusAndSelectItem(TreeViewItem? item)
+        {
+            if (item != null)
+            {
+                DoInsideUpdate(() =>
+                {
+                    ClearSelected();
+                    SetFocus();
+                    item.IsFocused = true;
+                    item.IsSelected = true;
+                });
+            }
+        }
+
+        /// <summary>
+        /// Adds <see cref="string"/> to the end of the <see cref="Items"/> collection.
+        /// </summary>
+        /// <param name="s">The <see cref="string"/> to be added to the end of the
+        /// <see cref="Items"/> collection.</param>
+        public virtual void Add(string s)
+        {
+            var item = new TreeViewItem(s);
+            Items.Add(item);
+        }
+
+        /// <summary>
         /// Raises the <see cref="AfterCollapse"/> event and calls
         /// <see cref="OnAfterCollapse"/>.
         /// </summary>
