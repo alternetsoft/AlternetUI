@@ -147,7 +147,7 @@ namespace Alternet.UI
                     leftPane.Name(nameof(leftPane)).Left()
                         .PaneBorder(false).CloseButton(false)
                         .TopDockable(false).BottomDockable(false).Movable(false).Floatable(false)
-                        .CaptionVisible(false).BestSize(150, 200).MinSize(150, 200);
+                        .CaptionVisible(false).BestSize(200, 200).MinSize(150, 200);
                 }
                 return leftPane;
             }
@@ -236,7 +236,7 @@ namespace Alternet.UI
                 Log(message);
         }
 
-        public void BindApplicationLogMessage()
+        public virtual void BindApplicationLogMessage()
         {
             Application.Current.LogMessage += Application_LogMessage;
         }

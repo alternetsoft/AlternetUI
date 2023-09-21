@@ -3,19 +3,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Alternet.UI;
 
 namespace PropertyGridSample
 {
-    internal class ControlListBoxItem
+    internal class ControlListBoxItem : TreeViewItem
     {
         private object? instance;
         private object? propInstance;
         private readonly Type type;
 
-        public ControlListBoxItem(Type type, object? instance = null)
+        public ControlListBoxItem(Type type, object? instance = null) : base()
         {
             this.type = type;
             this.instance = instance;
+            this.Text = ToString();
         }
 
         public Type InstanceType => type;

@@ -15,7 +15,7 @@ namespace PropertyGridSample
     public partial class MainWindow : Window
     {
         internal readonly PanelAuiManager panel = new();
-        private readonly ListBox controlsView;
+        private readonly TreeView controlsView;
 
         private readonly StackPanel controlPanel = new()
         {
@@ -74,6 +74,7 @@ namespace PropertyGridSample
             {
                 HasBorder = false
             };
+            controlsView.MakeAsListBox();
             panel.LeftNotebook.AddPage(controlsView, "Controls", true);
 
             // Center pane
@@ -115,7 +116,7 @@ namespace PropertyGridSample
             SetPropertyGridDefaults(panel.PropGrid);
             SetPropertyGridDefaults(panel.EventGrid);
 
-            controlsView.SelectedIndex = 0;
+            controlsView.SelectedItem = controlsView.FirstItem;
 
             Application.Current.Idle += ApplicationIdle;
             RunTests();
