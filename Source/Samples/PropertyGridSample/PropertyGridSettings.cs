@@ -17,8 +17,8 @@ namespace PropertyGridSample
         public PropertyGridSettings(MainWindow window)
         {
             this.mainWindow = window;
-            this.propertyGrid = window.propertyGrid;
-            this.eventGrid = window.eventGrid;
+            this.propertyGrid = window.PropGrid;
+            this.eventGrid = window.panel.EventGrid;
         }
 
         public static PropertyGridSettings? Default { get; set; }
