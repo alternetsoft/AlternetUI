@@ -71,6 +71,7 @@ namespace Alternet.UI
         private Thickness? minPadding;
         private bool visible = true;
         private Control? parent;
+        private int updateCount = 0;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Control"/> class.
@@ -759,6 +760,15 @@ namespace Alternet.UI
                 PaddingChanged?.Invoke(this, EventArgs.Empty);
             }
         }
+
+        /// <summary>
+        /// Getw whether control is performing updates.
+        /// </summary>
+        /// <remarks>
+        /// This property is <c>true</c> after call to <see cref="BeginUpdate"/>
+        /// and before call to <see cref="EndUpdate"/>.
+        /// </remarks>
+        public bool InUpdates => updateCount > 0;
 
         /// <summary>
         /// Gets or sets the background color for the control.
@@ -1472,7 +1482,7 @@ namespace Alternet.UI
         /// method to enable the changes to take effect.
         /// </para>
         /// </remarks>
-        public void ResumeLayout(bool performLayout = true)
+        public virtual void ResumeLayout(bool performLayout = true)
         {
             Handler?.ResumeLayout(performLayout);
             if (performLayout)
@@ -1484,8 +1494,9 @@ namespace Alternet.UI
         /// by preventing the control from
         /// drawing until the <see cref="EndUpdate"/> method is called.
         /// </summary>
-        public void BeginUpdate()
+        public virtual void BeginUpdate()
         {
+            updateCount++;
             Handler?.BeginUpdate();
         }
 
@@ -1493,8 +1504,9 @@ namespace Alternet.UI
         /// Resumes painting the control after painting is suspended by the
         /// <see cref="BeginUpdate"/> method.
         /// </summary>
-        public void EndUpdate()
+        public virtual void EndUpdate()
         {
+            updateCount--;
             Handler?.EndUpdate();
         }
 
@@ -1506,7 +1518,7 @@ namespace Alternet.UI
         /// the <see cref="PerformLayout"/> method,
         /// the layout is suppressed.
         /// </remarks>
-        public void PerformLayout()
+        public virtual void PerformLayout()
         {
             Handler?.PerformLayout();
         }
@@ -1563,7 +1575,7 @@ namespace Alternet.UI
         /// successful; otherwise, <see langword="false"/>.</returns>
         /// <remarks>The <see cref="SetFocus"/> method returns true if the
         /// control successfully received input focus.</remarks>
-        public bool SetFocus()
+        public virtual bool SetFocus()
         {
             return Handler.SetFocus();
         }
@@ -1574,7 +1586,7 @@ namespace Alternet.UI
         /// <param name="fileName">Name of the file to which screenshot
         /// will be saved.</param>
         /// <remarks>This function works only on Windows.</remarks>
-        public void SaveScreenshot(string fileName)
+        public virtual void SaveScreenshot(string fileName)
         {
             Handler?.SaveScreenshot(fileName);
         }
@@ -1596,7 +1608,7 @@ namespace Alternet.UI
         /// <param name="menu">The menu to pop up.</param>
         /// <param name="x">The X position where the menu will appear.</param>
         /// <param name="y">The Y position where the menu will appear.</param>
-        public void ShowPopupMenu(Menu menu, int x = -1, int y = -1)
+        public virtual void ShowPopupMenu(Menu menu, int x = -1, int y = -1)
         {
             Handler.ShowPopupMenu(menu, x, y);
         }
@@ -1610,7 +1622,7 @@ namespace Alternet.UI
         /// <param name="nested"><see langword="true"/> to include nested
         /// (children of child controls) child controls; otherwise,
         /// <see langword="false"/>.</param>
-        public void FocusNextControl(bool forward = true, bool nested = true)
+        public virtual void FocusNextControl(bool forward = true, bool nested = true)
         {
             Handler?.FocusNextControl(forward, nested);
         }
@@ -1639,7 +1651,7 @@ namespace Alternet.UI
         /// represents the final effect that was
         /// performed during the drag-and-drop operation.
         /// </returns>
-        public DragDropEffects DoDragDrop(object data, DragDropEffects allowedEffects)
+        public virtual DragDropEffects DoDragDrop(object data, DragDropEffects allowedEffects)
         {
             return Handler.DoDragDrop(data, allowedEffects);
         }
@@ -1647,7 +1659,7 @@ namespace Alternet.UI
         /// <summary>
         /// Forces the re-creation of the underlying native control.
         /// </summary>
-        public void RecreateWindow()
+        public virtual void RecreateWindow()
         {
             Handler?.NativeControl?.RecreateWindow();
         }
@@ -1665,7 +1677,7 @@ namespace Alternet.UI
         /// used by this control. If the DPI is not available,
         /// returns Size(0,0) object.
         /// </returns>
-        public Size GetDPI()
+        public virtual Size GetDPI()
         {
             if(Handler != null)
                 return Handler.GetDPI();
@@ -1680,7 +1692,7 @@ namespace Alternet.UI
         /// <typeparam name="T">Specifies type of the child control.</typeparam>
         /// <param name="action">Specifies action which will be called for the
         /// each child.</param>
-        public void ForEachChild<T>(Action<T> action)
+        public virtual void ForEachChild<T>(Action<T> action)
         {
             foreach (var child in ChildrenOfType<T>())
                 action(child);
@@ -1690,7 +1702,7 @@ namespace Alternet.UI
         /// Disable control recreate when properties that require control
         /// recreation are changed.
         /// </summary>
-        public void BeginIgnoreRecreate()
+        public virtual void BeginIgnoreRecreate()
         {
             Handler?.BeginIgnoreRecreate();
         }
@@ -1699,7 +1711,7 @@ namespace Alternet.UI
         /// Enable control recreate if it's required after it was previously
         /// disabled by <see cref="BeginIgnoreRecreate"/>
         /// </summary>
-        public void EndIgnoreRecreate()
+        public virtual void EndIgnoreRecreate()
         {
             Handler?.EndIgnoreRecreate();
         }
