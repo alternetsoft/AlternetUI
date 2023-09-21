@@ -4,6 +4,11 @@
 
 namespace Alternet::UI
 {
+    void* StatusBar::GetRealHandle()
+    {
+        return GetWxStatusBar();
+    }
+
     StatusBar::StatusBar()
     {
     }
@@ -18,19 +23,19 @@ namespace Alternet::UI
         return _items.size();
     }
 
-    void StatusBar::InsertPanelAt(int index, StatusBarPanel* item)
-    {
-        _items.insert(_items.begin() + index, item);
-        ApplyItems(index);
-    }
+    //void StatusBar::InsertPanelAt(int index, StatusBarPanel* item)
+    //{
+    //    _items.insert(_items.begin() + index, item);
+    //    ApplyItems(index);
+    //}
 
-    void StatusBar::RemovePanelAt(int index)
-    {
-        auto it = _items.begin() + index;
-        auto item = *it;
-        _items.erase(it);
-        ApplyItems(index);
-    }
+    //void StatusBar::RemovePanelAt(int index)
+    //{
+    //    auto it = _items.begin() + index;
+    //    auto item = *it;
+    //    _items.erase(it);
+    //    ApplyItems(index);
+    //}
 
     wxWindow* StatusBar::CreateWxWindowCore(wxWindow* parent)
     {
@@ -63,6 +68,8 @@ namespace Alternet::UI
 
     void StatusBar::ApplyItems(size_t startIndex, optional<int> count/* = nullopt*/)
     {
+        return;
+
         auto sb = GetWxStatusBar();
         if (sb == nullptr)
             return;
@@ -101,7 +108,7 @@ namespace Alternet::UI
 
         auto getStyle = [&]
         {
-            auto style = wxFULL_REPAINT_ON_RESIZE;
+            auto style = (wxSTB_ELLIPSIZE_END | wxSTB_SHOW_TIPS | wxFULL_REPAINT_ON_RESIZE);
 
             if (_sizingGripperVisible)
                 style |= wxSTB_SIZEGRIP;

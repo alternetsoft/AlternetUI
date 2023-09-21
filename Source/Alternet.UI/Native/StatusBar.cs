@@ -12,6 +12,7 @@ namespace Alternet.UI.Native
     {
         static StatusBar()
         {
+            SetEventCallback();
         }
         
         public StatusBar()
@@ -33,6 +34,16 @@ namespace Alternet.UI.Native
             
         }
         
+        public System.IntPtr RealHandle
+        {
+            get
+            {
+                CheckDisposed();
+                return NativeApi.StatusBar_GetRealHandle_(NativePointer);
+            }
+            
+        }
+        
         public bool SizingGripVisible
         {
             get
@@ -48,23 +59,54 @@ namespace Alternet.UI.Native
             }
         }
         
-        public void InsertPanelAt(int index, StatusBarPanel item)
+        static GCHandle eventCallbackGCHandle;
+        
+        static void SetEventCallback()
         {
-            CheckDisposed();
-            NativeApi.StatusBar_InsertPanelAt_(NativePointer, index, item.NativePointer);
+            if (!eventCallbackGCHandle.IsAllocated)
+            {
+                var sink = new NativeApi.StatusBarEventCallbackType((obj, e, parameter) =>
+                UI.Application.HandleThreadExceptions(() =>
+                {
+                    var w = NativeObject.GetFromNativePointer<StatusBar>(obj, p => new StatusBar(p));
+                    if (w == null) return IntPtr.Zero;
+                    return w.OnEvent(e, parameter);
+                }
+                ));
+                eventCallbackGCHandle = GCHandle.Alloc(sink);
+                NativeApi.StatusBar_SetEventCallback_(sink);
+            }
         }
         
-        public void RemovePanelAt(int index)
+        IntPtr OnEvent(NativeApi.StatusBarEvent e, IntPtr parameter)
         {
-            CheckDisposed();
-            NativeApi.StatusBar_RemovePanelAt_(NativePointer, index);
+            switch (e)
+            {
+                case NativeApi.StatusBarEvent.ControlRecreated:
+                {
+                    ControlRecreated?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                }
+                default: throw new Exception("Unexpected StatusBarEvent value: " + e);
+            }
         }
         
+        public event EventHandler? ControlRecreated;
         
         [SuppressUnmanagedCodeSecurity]
         public class NativeApi : NativeApiProvider
         {
             static NativeApi() => Initialize();
+            
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            public delegate IntPtr StatusBarEventCallbackType(IntPtr obj, StatusBarEvent e, IntPtr param);
+            
+            public enum StatusBarEvent
+            {
+                ControlRecreated,
+            }
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void StatusBar_SetEventCallback_(StatusBarEventCallbackType callback);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern IntPtr StatusBar_Create_();
@@ -73,16 +115,13 @@ namespace Alternet.UI.Native
             public static extern int StatusBar_GetPanelCount_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr StatusBar_GetRealHandle_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool StatusBar_GetSizingGripVisible_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void StatusBar_SetSizingGripVisible_(IntPtr obj, bool value);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void StatusBar_InsertPanelAt_(IntPtr obj, int index, IntPtr item);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void StatusBar_RemovePanelAt_(IntPtr obj, int index);
             
         }
     }

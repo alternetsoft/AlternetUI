@@ -47,16 +47,16 @@ namespace NativeApi.Api
         // The widths of the variable fields are calculated from the total width of all
         // fields, minus the sum of widths of the non-variable fields, divided
         // by the number of variable fields. 
-        public static void SetStatusWidths(IntPtr handle, int n, int[] widths){}
+        public static void SetStatusWidths(IntPtr handle, int[] widths){}
 
-        public static void SetFieldsCount(IntPtr handle, int number, int[] widths) { }
+        public static void SetFieldsCount(IntPtr handle, int number) { }
 
         public static int GetStatusWidth(IntPtr handle, int n) => default;
 
         public static int GetStatusStyle(IntPtr handle, int n) => default;
 
         // Set the field border style to one of wxSB_XXX values.
-        public static void SetStatusStyles(IntPtr handle, int n, int[] styles){}
+        public static void SetStatusStyles(IntPtr handle, int[] styles){}
 
         // Get the position and size of the field's internal bounding rectangle
         public static Int32Rect GetFieldRect(IntPtr handle, int i) => default;

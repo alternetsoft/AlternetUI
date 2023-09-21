@@ -79,7 +79,7 @@ namespace MenuSample
 
         private void TimerEvent(object? sender, EventArgs e)
         {
-            if (this.IsDisposed || clockStatusBarPanel!.IsDisposed)
+            if (this.IsDisposed || statusBar!.IsDisposed)
                 return;
             clockStatusBarPanel.Text = System.DateTime.Now.ToString("HH:mm:ss");
         }

@@ -48,14 +48,14 @@ namespace Alternet.UI.Native
             NativeApi.WxStatusBarFactory_PopStatusText_(handle, number);
         }
         
-        public static void SetStatusWidths(System.IntPtr handle, int n, System.Int32[] widths)
+        public static void SetStatusWidths(System.IntPtr handle, System.Int32[] widths)
         {
-            NativeApi.WxStatusBarFactory_SetStatusWidths_(handle, n, widths, widths.Length);
+            NativeApi.WxStatusBarFactory_SetStatusWidths_(handle, widths, widths.Length);
         }
         
-        public static void SetFieldsCount(System.IntPtr handle, int number, System.Int32[] widths)
+        public static void SetFieldsCount(System.IntPtr handle, int number)
         {
-            NativeApi.WxStatusBarFactory_SetFieldsCount_(handle, number, widths, widths.Length);
+            NativeApi.WxStatusBarFactory_SetFieldsCount_(handle, number);
         }
         
         public static int GetStatusWidth(System.IntPtr handle, int n)
@@ -68,9 +68,9 @@ namespace Alternet.UI.Native
             return NativeApi.WxStatusBarFactory_GetStatusStyle_(handle, n);
         }
         
-        public static void SetStatusStyles(System.IntPtr handle, int n, System.Int32[] styles)
+        public static void SetStatusStyles(System.IntPtr handle, System.Int32[] styles)
         {
-            NativeApi.WxStatusBarFactory_SetStatusStyles_(handle, n, styles, styles.Length);
+            NativeApi.WxStatusBarFactory_SetStatusStyles_(handle, styles, styles.Length);
         }
         
         public static Alternet.Drawing.Int32Rect GetFieldRect(System.IntPtr handle, int i)
@@ -118,10 +118,10 @@ namespace Alternet.UI.Native
             public static extern void WxStatusBarFactory_PopStatusText_(System.IntPtr handle, int number);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void WxStatusBarFactory_SetStatusWidths_(System.IntPtr handle, int n, System.Int32[] widths, int widthsCount);
+            public static extern void WxStatusBarFactory_SetStatusWidths_(System.IntPtr handle, System.Int32[] widths, int widthsCount);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void WxStatusBarFactory_SetFieldsCount_(System.IntPtr handle, int number, System.Int32[] widths, int widthsCount);
+            public static extern void WxStatusBarFactory_SetFieldsCount_(System.IntPtr handle, int number);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern int WxStatusBarFactory_GetStatusWidth_(System.IntPtr handle, int n);
@@ -130,7 +130,7 @@ namespace Alternet.UI.Native
             public static extern int WxStatusBarFactory_GetStatusStyle_(System.IntPtr handle, int n);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void WxStatusBarFactory_SetStatusStyles_(System.IntPtr handle, int n, System.Int32[] styles, int stylesCount);
+            public static extern void WxStatusBarFactory_SetStatusStyles_(System.IntPtr handle, System.Int32[] styles, int stylesCount);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern Alternet.Drawing.Int32Rect WxStatusBarFactory_GetFieldRect_(System.IntPtr handle, int i);

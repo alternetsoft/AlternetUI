@@ -1,4 +1,5 @@
-﻿using System;
+﻿#pragma warning disable
+using System;
 
 namespace NativeApi.Api
 {
@@ -6,10 +7,10 @@ namespace NativeApi.Api
     {
         public int PanelCount { get; }
 
-        public void InsertPanelAt(int index, StatusBarPanel item) => throw new Exception();
-
-        public void RemovePanelAt(int index) => throw new Exception();
+        public IntPtr RealHandle { get; }
 
         public bool SizingGripVisible { get; set; }
+
+        public event EventHandler? ControlRecreated;
     }
 }

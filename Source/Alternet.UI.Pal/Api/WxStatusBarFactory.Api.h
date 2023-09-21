@@ -38,14 +38,14 @@ ALTERNET_UI_API void WxStatusBarFactory_PopStatusText_(void* handle, int number)
     WxStatusBarFactory::PopStatusText(handle, number);
 }
 
-ALTERNET_UI_API void WxStatusBarFactory_SetStatusWidths_(void* handle, int n, int* widths, int widthsCount)
+ALTERNET_UI_API void WxStatusBarFactory_SetStatusWidths_(void* handle, int* widths, int widthsCount)
 {
-    WxStatusBarFactory::SetStatusWidths(handle, n, widths, widthsCount);
+    WxStatusBarFactory::SetStatusWidths(handle, widths, widthsCount);
 }
 
-ALTERNET_UI_API void WxStatusBarFactory_SetFieldsCount_(void* handle, int number, int* widths, int widthsCount)
+ALTERNET_UI_API void WxStatusBarFactory_SetFieldsCount_(void* handle, int number)
 {
-    WxStatusBarFactory::SetFieldsCount(handle, number, widths, widthsCount);
+    WxStatusBarFactory::SetFieldsCount(handle, number);
 }
 
 ALTERNET_UI_API int WxStatusBarFactory_GetStatusWidth_(void* handle, int n)
@@ -58,9 +58,9 @@ ALTERNET_UI_API int WxStatusBarFactory_GetStatusStyle_(void* handle, int n)
     return WxStatusBarFactory::GetStatusStyle(handle, n);
 }
 
-ALTERNET_UI_API void WxStatusBarFactory_SetStatusStyles_(void* handle, int n, int* styles, int stylesCount)
+ALTERNET_UI_API void WxStatusBarFactory_SetStatusStyles_(void* handle, int* styles, int stylesCount)
 {
-    WxStatusBarFactory::SetStatusStyles(handle, n, styles, stylesCount);
+    WxStatusBarFactory::SetStatusStyles(handle, styles, stylesCount);
 }
 
 ALTERNET_UI_API Int32Rect_C WxStatusBarFactory_GetFieldRect_(void* handle, int i)

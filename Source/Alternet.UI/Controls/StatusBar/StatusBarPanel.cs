@@ -7,9 +7,11 @@ namespace Alternet.UI
     /// <summary>
     /// Represents an individual item that is displayed within a status bar.
     /// </summary>
-    public class StatusBarPanel : NonVisualControl
+    public class StatusBarPanel : FrameworkElement
     {
         private string text = string.Empty;
+        private int width = -1;
+        private StatusBarPanelStyle style = StatusBarPanelStyle.Flat;
 
         /// <summary>
         /// Initializes a new instance of the <see cref='StatusBarPanel'/> class.
@@ -25,7 +27,7 @@ namespace Alternet.UI
         /// </summary>
         public StatusBarPanel(string text)
         {
-            Text = text;
+            this.text = text;
         }
 
         /// <summary>
@@ -33,20 +35,20 @@ namespace Alternet.UI
         /// </summary>
         public event EventHandler? TextChanged;
 
-        /// <inheritdoc/>
-        public override ControlId ControlKind => ControlId.StatusBarPanel;
+        /// <summary>
+        /// Occurs when the <see cref="Width"/> property changes.
+        /// </summary>
+        public event EventHandler? WidthChanged;
 
         /// <summary>
-        /// Gets a <see cref="StatusBarPanelHandler"/> associated with this class.
+        /// Occurs when the <see cref="Style"/> property changes.
         /// </summary>
-        public new StatusBarPanelHandler Handler
-        {
-            get
-            {
-                CheckDisposed();
-                return (StatusBarPanelHandler)base.Handler;
-            }
-        }
+        public event EventHandler? StyleChanged;
+
+        /// <summary>
+        /// Occurs when any of the properties were changed.
+        /// </summary>
+        public event EventHandler? PropertyChanged;
 
         /// <summary>
         /// Gets or sets a value indicating the text displayed in the status bar panel.
@@ -65,10 +67,43 @@ namespace Alternet.UI
 
                 text = value;
                 TextChanged?.Invoke(this, EventArgs.Empty);
+                PropertyChanged?.Invoke(this, EventArgs.Empty);
             }
         }
 
-        internal override bool IsDummy => true;
+        public int Width
+        {
+            get
+            {
+                return width;
+            }
+
+            set
+            {
+                if (width == value)
+                    return;
+                width = value;
+                WidthChanged?.Invoke(this, EventArgs.Empty);
+                PropertyChanged?.Invoke(this, EventArgs.Empty);
+            }
+        }
+
+        public StatusBarPanelStyle Style
+        {
+            get
+            {
+                return style;
+            }
+
+            set
+            {
+                if (style == value)
+                    return;
+                style = value;
+                StyleChanged?.Invoke(this, EventArgs.Empty);
+                PropertyChanged?.Invoke(this, EventArgs.Empty);
+            }
+        }
 
         /// <inheritdoc/>
         public override string ToString()
@@ -77,13 +112,6 @@ namespace Alternet.UI
                 return base.ToString() ?? nameof(StatusBarPanel);
             else
                 return Text;
-        }
-
-        /// <inheritdoc/>
-        protected override ControlHandler CreateHandler()
-        {
-            return GetEffectiveControlHandlerHactory().
-                CreateStatusBarPanelHandler(this);
         }
     }
 }

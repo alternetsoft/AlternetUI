@@ -3,7 +3,6 @@
 #pragma once
 
 #include "StatusBar.h"
-#include "StatusBarPanel.h"
 #include "ApiUtils.h"
 #include "Exceptions.h"
 
@@ -19,6 +18,11 @@ ALTERNET_UI_API int StatusBar_GetPanelCount_(StatusBar* obj)
     return obj->GetPanelCount();
 }
 
+ALTERNET_UI_API void* StatusBar_GetRealHandle_(StatusBar* obj)
+{
+    return obj->GetRealHandle();
+}
+
 ALTERNET_UI_API c_bool StatusBar_GetSizingGripVisible_(StatusBar* obj)
 {
     return obj->GetSizingGripVisible();
@@ -29,13 +33,8 @@ ALTERNET_UI_API void StatusBar_SetSizingGripVisible_(StatusBar* obj, c_bool valu
     obj->SetSizingGripVisible(value);
 }
 
-ALTERNET_UI_API void StatusBar_InsertPanelAt_(StatusBar* obj, int index, StatusBarPanel* item)
+ALTERNET_UI_API void StatusBar_SetEventCallback_(StatusBar::StatusBarEventCallbackType callback)
 {
-    obj->InsertPanelAt(index, item);
-}
-
-ALTERNET_UI_API void StatusBar_RemovePanelAt_(StatusBar* obj, int index)
-{
-    obj->RemovePanelAt(index);
+    StatusBar::SetEventCallback(callback);
 }
 
