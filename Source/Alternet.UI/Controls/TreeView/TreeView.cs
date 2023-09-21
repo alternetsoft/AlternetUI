@@ -198,6 +198,20 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets first root item in the control or <c>null</c> if there are no items.
+        /// </summary>
+        [Browsable(false)]
+        public TreeViewItem? FirstItem
+        {
+            get
+            {
+                if (Items.Count == 0)
+                    return null;
+                return Items[0];
+            }
+        }
+
+        /// <summary>
         /// Gets last root item in the control or <c>null</c> if there are no items.
         /// </summary>
         [Browsable(false)]
@@ -744,6 +758,16 @@ namespace Alternet.UI
         {
             OnSelectionChanged(e);
             SelectionChanged?.Invoke(this, e);
+        }
+
+        /// <summary>
+        /// Adds an object to the end of the <see cref="Items"/> collection.
+        /// </summary>
+        /// <param name="item">The object to be added to the end of the
+        /// <see cref="Items"/> collection.</param>
+        public virtual void Add(TreeViewItem item)
+        {
+            Items.Add(item);
         }
 
         /// <summary>
