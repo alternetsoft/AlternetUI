@@ -303,6 +303,8 @@
     <ClCompile Include="WrapSizer.cpp" />
     <ClCompile Include="WxAlternet\wxAlternetColourProperty.cpp" />
     <ClCompile Include="WxControlFactory.cpp" />
+    <ClCompile Include="WxStatusBarFactory.cpp" />
+    <ClCompile Include="WxTreeViewFactory.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ApiUtils.h" />
@@ -418,6 +420,8 @@
     <ClInclude Include="Api\Window.Api.h" />
     <ClInclude Include="Api\WrapSizer.Api.h" />
     <ClInclude Include="Api\WxControlFactory.Api.h" />
+    <ClInclude Include="Api\WxStatusBarFactory.Api.h" />
+    <ClInclude Include="Api\WxTreeViewFactory.Api.h" />
     <ClInclude Include="Application.h" />
     <ClInclude Include="AuiDefaultTabArt.h" />
     <ClInclude Include="AuiDefaultToolBarArt.h" />
@@ -542,6 +546,8 @@
     <ClInclude Include="WxAlternet\wxAlternetColourProperty.h" />
     <ClInclude Include="WxAlternet\wxAlternetLogFormatter.h" />
     <ClInclude Include="WxControlFactory.h" />
+    <ClInclude Include="WxStatusBarFactory.h" />
+    <ClInclude Include="WxTreeViewFactory.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Api\Application.inc" />
@@ -646,6 +652,8 @@
     <None Include="Api\Window.inc" />
     <None Include="Api\WrapSizer.inc" />
     <None Include="Api\WxControlFactory.inc" />
+    <None Include="Api\WxStatusBarFactory.inc" />
+    <None Include="Api\WxTreeViewFactory.inc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <Import Project="wxWidgets.props" />

@@ -99,3 +99,5 @@
 #include "Api/WebBrowser.Api.h"
 #include "Api/Window.Api.h"
 #include "Api/WxControlFactory.Api.h"
+#include "Api/WxStatusBarFactory.Api.h"
+#include "Api/WxTreeViewFactory.Api.h"

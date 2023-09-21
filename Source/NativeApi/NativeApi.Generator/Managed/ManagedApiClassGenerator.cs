@@ -153,7 +153,11 @@ using System.Security;");
             return types.GetTypeName(baseType.ToContextualType());
         }
 
-        private static void WriteProperty(IndentedTextWriter w, ApiProperty apiProperty, Types types, Types pinvokeTypes)
+        private static void WriteProperty(
+            IndentedTextWriter w,
+            ApiProperty apiProperty,
+            Types types,
+            Types pinvokeTypes)
         {
             var property = apiProperty.Property;
             var propertyName = property.Name;
@@ -185,26 +189,32 @@ using System.Security;");
                             WriteArrayAccessorPropertyGetterBody(w, apiProperty, types);
                         else
                         {
-                            w.WriteLine($"var n = NativeApi.{nativeDeclaringTypeName}_Get{propertyName}_({(isStatic ? "" : "NativePointer")});");
+                            var nname = "_nnn";
+                            var mname = "_mmm";
 
                             var complexTypeStr =
                                 string.Format(GetNativeToManagedFormatString(
                                     contextualProperty,
                                     out var isComplexType),
-                                    "n");
-                            if(isComplexType || complexTypeStr != "n")
+                                    nname);
+
+                            var nativeCallStr =
+                                $"NativeApi.{nativeDeclaringTypeName}_Get{propertyName}_({(isStatic ? "" : "NativePointer")});";
+
+                            if(isComplexType || complexTypeStr != nname)
                             {
-                                w.Write("var m = ");
+                                w.WriteLine($"var {nname} = {nativeCallStr}");
+                                w.Write($"var {mname} = ");
                                 w.Write(complexTypeStr);
                                 w.WriteLine(";");
 
                                 if (isComplexType)
-                                    w.WriteLine("ReleaseNativeObjectPointer(n);");
+                                    w.WriteLine($"ReleaseNativeObjectPointer({nname});");
 
-                                w.WriteLine("return m;");
+                                w.WriteLine($"return {mname};");
                             }
                             else
-                                w.WriteLine("return n;");
+                                w.WriteLine($"return {nativeCallStr}");
                         }
 
                     }
@@ -232,23 +242,30 @@ using System.Security;");
 
         private static void WriteArrayAccessorPropertyGetterBody(IndentedTextWriter w, ApiProperty apiProperty, Types types)
         {
-            var nativeDeclaringTypeName = TypeProvider.GetNativeName(apiProperty.Property.DeclaringType!);
-            var propertyName = apiProperty.Property.Name;
-            var arrayElementType = apiProperty.Property.PropertyType.GetElementType().ToContextualType();
+            var nativeDeclaringTypeName =
+                TypeProvider.GetNativeName(apiProperty.Property.DeclaringType!);
+            var propertyName =
+                apiProperty.Property.Name;
+            var arrayElementType =
+                apiProperty.Property.PropertyType.GetElementType().ToContextualType();
             var arrayElementTypeName = types.GetTypeName(arrayElementType);
 
             bool isStatic = MemberProvider.IsStatic(apiProperty.Property);
 
-            w.WriteLine($"var array = NativeApi.{nativeDeclaringTypeName}_Open{propertyName}Array_({(isStatic ? "" : "NativePointer")});");
+            w.WriteLine(
+                $"var array = NativeApi.{nativeDeclaringTypeName}_Open{propertyName}Array_({(isStatic ? "" : "NativePointer")});");
             w.WriteLine("try");
             using (new BlockIndent(w))
             {
-                w.WriteLine($"var count = NativeApi.{nativeDeclaringTypeName}_Get{propertyName}ItemCount_({(isStatic ? "" : "NativePointer, ")}array);");
-                w.WriteLine($"var result = new System.Collections.Generic.List<{arrayElementTypeName}>(count);");
+                w.WriteLine(
+                    $"var count = NativeApi.{nativeDeclaringTypeName}_Get{propertyName}ItemCount_({(isStatic ? "" : "NativePointer, ")}array);");
+                w.WriteLine(
+                    $"var result = new System.Collections.Generic.List<{arrayElementTypeName}>(count);");
                 w.WriteLine($"for (int i = 0; i < count; i++)");
                 using (new BlockIndent(w))
                 {
-                    w.WriteLine($"var n = NativeApi.{nativeDeclaringTypeName}_Get{propertyName}ItemAt_({(isStatic ? "" : "NativePointer, ")}array, i);");
+                    w.WriteLine(
+                        $"var n = NativeApi.{nativeDeclaringTypeName}_Get{propertyName}ItemAt_({(isStatic ? "" : "NativePointer, ")}array, i);");
 
                     w.Write("var item = ");
                     w.Write(string.Format(GetNativeToManagedFormatString(arrayElementType, out var isComplexType), "n"));
@@ -328,7 +345,8 @@ using System.Security;");
                 }
             }
 
-            w.WriteLine($"public {GetModifiers(method)}{managedDeclaringTypeName} {methodName}({signatureParametersString})");
+            w.WriteLine(
+                $"public {GetModifiers(method)}{managedDeclaringTypeName} {methodName}({signatureParametersString})");
             w.WriteLine("{");
             w.Indent++;
 
@@ -345,22 +363,25 @@ using System.Security;");
             }
             else
             {
-                w.WriteLine($"var n = {callString};");
+                var nname = "_nnn";
+                var mname = "_mmm";
+
                 string complexTypeStr = string.Format(GetNativeToManagedFormatString(
                     method.ReturnParameter.ToContextualParameter(),
                     out var isComplexType),
-                    "n");
-                if(isComplexType || complexTypeStr != "n")
+                    nname);
+                if(isComplexType || complexTypeStr != nname)
                 {
-                    w.Write("var m = ");
+                    w.WriteLine($"var {nname} = {callString};");
+                    w.Write($"var {mname} = ");
                     w.Write(complexTypeStr);
                     w.WriteLine(";");
                     if (isComplexType)
-                        w.WriteLine("ReleaseNativeObjectPointer(n);");
-                    w.WriteLine("return m;");
+                        w.WriteLine($"ReleaseNativeObjectPointer({nname});");
+                    w.WriteLine($"return {mname};");
                 }
                 else
-                    w.WriteLine("return n;");
+                    w.WriteLine($"return {callString};");
             }
 
             w.Indent--;

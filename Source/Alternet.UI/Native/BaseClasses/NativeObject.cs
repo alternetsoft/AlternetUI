@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Security;
 
@@ -102,6 +103,7 @@ namespace Alternet.UI.Native
             }
         }
 
+        [Conditional("DEBUG")]
         protected void CheckDisposed()
         {
             if (IsDisposed)
