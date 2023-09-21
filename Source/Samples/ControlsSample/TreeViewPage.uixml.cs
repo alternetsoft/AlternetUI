@@ -242,17 +242,7 @@ namespace ControlsSample
 
         private void FocusLastItemButton_Click(object? sender, System.EventArgs e)
         {
-            var item = treeView.LastItem;
-            if (item != null)
-            {
-                treeView.DoInsideUpdate(() =>
-                {
-                    treeView.ClearSelected();
-                    treeView.SetFocus();
-                    item.IsFocused = true;
-                    item.IsSelected = true;
-                });
-            }
+            treeView.FocusAndSelectItem(treeView.LastItem);
         }
 
         private void TreeView_MouseLeftButtonDown(
@@ -281,9 +271,7 @@ namespace ControlsSample
 
         private void ClearItemsButton_Click(object? sender, System.EventArgs e)
         {
-            treeView.BeginUpdate();
-            treeView.Items.Clear();
-            treeView.EndUpdate();
+            treeView.RemoveAll();
         }
 
         private void AddLastItemSiblingButton_Click(
