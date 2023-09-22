@@ -72,6 +72,13 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets or sets width of the status bar panel.
+        /// </summary>
+        /// <remarks>
+        /// See more details in <see cref="StatusBar.SetStatusWidths"/> on how to define
+        /// automatically resizable panels.
+        /// </remarks>
         public int Width
         {
             get
@@ -89,6 +96,9 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets or sets style of the status bar panel.
+        /// </summary>
         public StatusBarPanelStyle Style
         {
             get
