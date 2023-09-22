@@ -13,7 +13,8 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref="WindowClosingEventArgs"/> class.
         /// </summary>
         /// <param name="cancel"><c>true</c> to cancel the event; otherwise, <c>false</c>.</param>
-        public WindowClosingEventArgs(bool cancel) : base(cancel)
+        public WindowClosingEventArgs(bool cancel)
+            : base(cancel)
         {
         }
 
