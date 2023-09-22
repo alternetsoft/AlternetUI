@@ -4386,13 +4386,19 @@ namespace Alternet.UI
             var prop = EventProperty;
             if (prop == null)
                 return;
-            prop.RaiseButtonClick();
+            AvoidException(() =>
+            {
+                prop.RaiseButtonClick();
+            });
 
             prop = EventProperty;
             var prm = prop?.Params;
             if (prm == null)
                 return;
-            prm.RaiseButtonClick(prop);
+            AvoidException(() =>
+            {
+                prm.RaiseButtonClick(prop);
+            });
         }
 
         internal void RaiseColDragging(EventArgs e)

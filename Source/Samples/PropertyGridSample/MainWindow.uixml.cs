@@ -15,7 +15,6 @@ namespace PropertyGridSample
     public partial class MainWindow : Window
     {
         internal readonly PanelAuiManager panel = new();
-        private readonly TreeView controlsView;
 
         private readonly StackPanel controlPanel = new()
         {
@@ -28,13 +27,20 @@ namespace PropertyGridSample
 
         static MainWindow()
         {
+#if DEBUG
+            Application.LogFileIsEnabled = true;
+#endif
+            // Sample localization of "Custom" color item (which calls color dialog)
             KnownColorStrings.Default.Custom = "Custom...";
+
+            // Sample localization of color name
             KnownColorStrings.Default.Black = "black";
 
             AuiNotebook.DefaultCreateStyle = AuiNotebookCreateStyle.Top;
 
             PropertyGrid.RegisterCollectionEditors();
 
+            // Sample localization of Enum property values.
             var localizableEnum = PropertyGrid.GetChoices<BrushType>();
             localizableEnum.SetLabelForValue<BrushType>(BrushType.LinearGradient, "Linear Gradient");
             localizableEnum.SetLabelForValue<BrushType>(BrushType.RadialGradient, "Radial Gradient");
@@ -69,13 +75,7 @@ namespace PropertyGridSample
 
             Children.Add(panel);
 
-            // Left Pane
-            controlsView = new()
-            {
-                HasBorder = false
-            };
-            controlsView.MakeAsListBox();
-            panel.LeftNotebook.AddPage(controlsView, "Controls", true);
+            panel.LeftTreeView.SelectionChanged += ControlsListBox_SelectionChanged;
 
             // Center pane
             panel.Manager.AddPane(controlPanel, panel.CenterPane);
@@ -84,7 +84,6 @@ namespace PropertyGridSample
 
             InitToolBox();
 
-            controlsView.SelectionChanged += ControlsListBox_SelectionChanged;
 
             PropGrid.PropertySelected += PGPropertySelected;
             PropGrid.PropertyChanged += PGPropertyChanged;
@@ -116,7 +115,7 @@ namespace PropertyGridSample
             SetPropertyGridDefaults(panel.PropGrid);
             SetPropertyGridDefaults(panel.EventGrid);
 
-            controlsView.SelectedItem = controlsView.FirstItem;
+            panel.LeftTreeView.SelectedItem = panel.LeftTreeView.FirstItem;
 
             Application.Current.Idle += ApplicationIdle;
             RunTests();
@@ -126,11 +125,15 @@ namespace PropertyGridSample
 
             controlPanel.MouseDown += ControlPanel_MouseDown;
             controlPanel.DragStart += ControlPanel_DragStart;
+
+            Application.DebugLog($"Net Version = {Environment.Version}");
+            if(Application.LogFileIsEnabled)
+                Application.DebugLog($"Log File = {Application.LogFilePath}");
         }
 
         private void Default_PropertyChanged(object? sender, PropertyChangeEventArgs e)
         {
-            var item = controlsView.SelectedItem as ControlListBoxItem;
+            var item = panel.LeftTreeView.SelectedItem as ControlListBoxItem;
             var type = item?.InstanceType;
             if (type == typeof(WelcomeControl))
                 return;
@@ -140,7 +143,8 @@ namespace PropertyGridSample
 
         private void PropertyGrid_ProcessException(object? sender, PropertyGridExceptionEventArgs e)
         {
-            panel.Log("Exception: " + e.InnerException.Message);
+            Application.LogFileIsEnabled = true;
+            LogUtils.LogException(e.InnerException);
         }
 
         private void ControlsListBox_SelectionChanged(object? sender, EventArgs e)
@@ -162,7 +166,7 @@ namespace PropertyGridSample
             void DoAction()
             {
                 controlPanel.Children.Clear();
-                var item = controlsView.SelectedItem as ControlListBoxItem;
+                var item = panel.LeftTreeView.SelectedItem as ControlListBoxItem;
                 var type = item?.InstanceType;
 
                 if (item?.Instance is Control control)
@@ -193,7 +197,7 @@ namespace PropertyGridSample
                     panel.EventGrid.Clear();
                     if (instance == null)
                         return;
-                    var events = EnumEvents(instance.GetType(), true);
+                    var events = AssemblyUtils.EnumEvents(instance.GetType(), true);
 
                     foreach(var item in events)
                     {
@@ -214,32 +218,5 @@ namespace PropertyGridSample
                 controlPanel.ResumeLayout();
             }
         }
-
-        public virtual IEnumerable<EventInfo> EnumEvents(
-            Type type,
-            bool sort = false,
-            BindingFlags bindingFlags = BindingFlags.Instance | BindingFlags.Public)
-        {
-            List<EventInfo> result = new();
-
-            IList<EventInfo> props =
-                new List<EventInfo>(type.GetEvents(bindingFlags));
-
-            SortedList<string, EventInfo> addedNames = new();
-
-            foreach (var p in props)
-            {
-                var propName = p.Name;
-                if (addedNames.ContainsKey(propName))
-                    continue;
-                result.Add(p);
-                addedNames.Add(propName, p);
-            }
-
-            if (sort)
-                result.Sort(PropertyGridItem.CompareByName);
-            return result;
-        }
-
     }
 }

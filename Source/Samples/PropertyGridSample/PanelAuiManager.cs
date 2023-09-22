@@ -7,10 +7,8 @@ using Alternet.UI.Localization;
 
 namespace Alternet.UI
 {
-    public class PanelAuiManager : LayoutPanel
+    public class PanelAuiManager : PanelAuiManagerBase
     {
-
-        private readonly AuiManager manager = new();
         private AuiNotebook? leftNotebook;
         private AuiNotebook? rightNotebook;
         private AuiNotebook? bottomNotebook;
@@ -21,14 +19,11 @@ namespace Alternet.UI
         private PropertyGrid? propertyGrid;
         private PropertyGrid? eventGrid;
         private TreeView? logControl;
+        private TreeView? leftTreeView;
         private ContextMenu? logContextMenu;
-
-        public AuiManager Manager => manager;
 
         public PanelAuiManager()
         {
-            Manager.SetFlags(AuiManagerOption.Default);
-            Manager.SetManagedWindow(this);
         }
 
         public TreeView LogControl
@@ -39,13 +34,35 @@ namespace Alternet.UI
                 {
                     logControl = new()
                     {
-                        HasBorder = false
+                        Parent = this,
+                        HasBorder = false,
+                        FullRowSelect = true,
                     };
                     BottomNotebook.AddPage(
                         logControl,
                         CommonStrings.Default.NotebookTabTitleOutput, true);
                 }
                 return logControl;
+            }
+        }
+
+        public TreeView LeftTreeView
+        {
+            get
+            {
+                if (leftTreeView == null)
+                {
+                    leftTreeView = new()
+                    {
+                        Parent = this,
+                        HasBorder = false,
+                        FullRowSelect = true,
+                    };
+                    LeftNotebook.AddPage(
+                        leftTreeView,
+                        CommonStrings.Default.NotebookTabTitleActivity, true);
+                }
+                return leftTreeView;
             }
         }
 
@@ -143,7 +160,7 @@ namespace Alternet.UI
             {
                 if(leftPane is null)
                 {
-                    leftPane = manager.CreatePaneInfo();
+                    leftPane = Manager.CreatePaneInfo();
                     leftPane.Name(nameof(leftPane)).Left()
                         .PaneBorder(false).CloseButton(false)
                         .TopDockable(false).BottomDockable(false).Movable(false).Floatable(false)
@@ -159,7 +176,7 @@ namespace Alternet.UI
             {
                 if (rightPane is null)
                 {
-                    rightPane = manager.CreatePaneInfo();
+                    rightPane = Manager.CreatePaneInfo();
                     rightPane.Name(nameof(rightPane)).Right().PaneBorder(false)
                         .CloseButton(false)
                         .TopDockable(false).BottomDockable(false).Movable(false).Floatable(false)
@@ -175,7 +192,7 @@ namespace Alternet.UI
             {
                 if (centerPane is null)
                 {
-                    centerPane = manager.CreatePaneInfo();
+                    centerPane = Manager.CreatePaneInfo();
                     centerPane.Name(nameof(centerPane)).CenterPane().PaneBorder(false);
                 }
                 return centerPane;
@@ -188,7 +205,7 @@ namespace Alternet.UI
             {
                 if (bottomPane is null)
                 {
-                    bottomPane = manager.CreatePaneInfo();
+                    bottomPane = Manager.CreatePaneInfo();
                     bottomPane.Name(nameof(bottomPane)).Bottom()
                         .PaneBorder(false).CloseButton(false).CaptionVisible(false)
                         .LeftDockable(false).RightDockable(false).Movable(false)

@@ -15,7 +15,7 @@ namespace PropertyGridSample
         private void InitToolBox()
         {
             ControlListBoxItem item = new(typeof(WelcomeControl));
-            controlsView.Add(item);
+            panel.LeftTreeView.Add(item);
 
             Type[] badTypes = new Type[]
             {
@@ -52,7 +52,7 @@ namespace PropertyGridSample
                 if (type.Assembly != typeof(Control).Assembly)
                     continue;
                 item = new(type);
-                controlsView.Add(item);
+                panel.LeftTreeView.Add(item);
             }
 
             AddDialog<ColorDialog>();
@@ -65,7 +65,7 @@ namespace PropertyGridSample
 
         internal void AddMainWindow()
         {
-            controlsView.Add(new ControlListBoxItem(typeof(Window), this.ParentWindow));
+            panel.LeftTreeView.Add(new ControlListBoxItem(typeof(Window), this.ParentWindow));
         }
 
         private void AddDialog<T>()
@@ -80,7 +80,7 @@ namespace PropertyGridSample
             {
                 PropInstance = dialog,
             };
-            controlsView.Add(item);
+            panel.LeftTreeView.Add(item);
         }
 
         private void AddContextMenu<T>()
@@ -96,7 +96,7 @@ namespace PropertyGridSample
             {
                 PropInstance = menu,
             };
-            controlsView.Add(item);
+            panel.LeftTreeView.Add(item);
         }
 
         private void ApplicationIdle(object? sender, EventArgs e)
