@@ -65,8 +65,8 @@ namespace Alternet.UI
         /// </summary>
         public TreeView()
         {
-            Items.ItemInserted += Items_ItemInsertedFast;
-            Items.ItemRemoved += Items_ItemRemovedFast;
+            Items.ItemInserted += Items_ItemInserted;
+            Items.ItemRemoved += Items_ItemRemoved;
         }
 
         /// <summary>
@@ -884,6 +884,8 @@ namespace Alternet.UI
         /// </summary>
         public void RemoveAll()
         {
+            if (Items.Count == 0)
+                return;
             BeginUpdate();
             try
             {
@@ -921,9 +923,9 @@ namespace Alternet.UI
         /// <summary>
         /// Changes visual style of the control to look like <see cref="ListBox"/>.
         /// </summary>
-        public void MakeAsListBox()
+        public void MakeAsListBox(bool ignoreRecreate = false)
         {
-            BeginIgnoreRecreate();
+            if(ignoreRecreate) BeginIgnoreRecreate();
             try
             {
                 FullRowSelect = true;
@@ -936,7 +938,7 @@ namespace Alternet.UI
             }
             finally
             {
-                EndIgnoreRecreate();
+                if(ignoreRecreate) EndIgnoreRecreate();
             }
         }
 
@@ -1085,12 +1087,13 @@ namespace Alternet.UI
             return GetEffectiveControlHandlerHactory().CreateTreeViewHandler(this);
         }
 
-        private void Items_ItemRemovedFast(object? sender, int index, TreeViewItem item)
+        private void Items_ItemRemoved(object? sender, int index, TreeViewItem item)
         {
+            /*Application.DebugLog($"TreeViewItem Removed: {item.Text}");*/
             TreeViewItem.OnChildItemRemoved(item);
         }
 
-        private void Items_ItemInsertedFast(object? sender, int index, TreeViewItem item)
+        private void Items_ItemInserted(object? sender, int index, TreeViewItem item)
         {
             TreeViewItem.OnChildItemAdded(item, null, this, index);
         }
