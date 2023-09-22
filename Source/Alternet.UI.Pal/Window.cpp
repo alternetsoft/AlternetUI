@@ -32,7 +32,11 @@ namespace Alternet::UI
                 ParkingWindow::Destroy();
             }
             else
-                _allFrames[0]->SetFocus();
+            {
+                auto win = _allFrames[0];
+                if(win->CanBeFocused())
+                    win->SetFocus();            
+            }
         }
     }
 
