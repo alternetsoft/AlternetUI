@@ -18,7 +18,6 @@ namespace Alternet.UI
     [ControlCategory("Common")]
     public partial class WebBrowser : Control, IWebBrowser
     {
-        private static string stringFormatJs = "yyyy-MM-ddTHH:mm:ss.fffK";
         private static Brush? uixmlPreviewerBrush = null;
 
         private IWebBrowserMemoryFS? fMemoryFS;
@@ -73,13 +72,6 @@ namespace Alternet.UI
             {
                 return Environment.Is64BitOperatingSystem;
             }
-        }
-
-        /// <include file="Interfaces/IWebBrowser.xml" path='doc/StringFormatJs/*'/>
-        public static string StringFormatJs
-        {
-            get => stringFormatJs;
-            set => stringFormatJs = value;
         }
 
         /// <include file="Interfaces/IWebBrowser.xml" path='doc/MemoryFS/*'/>
@@ -1114,7 +1106,7 @@ namespace Alternet.UI
                     // https://learn.microsoft.com/en-us/dotnet/standard/base-types/custom-date-and-time-format-strings
                     // https://javascript.info/date
                     return "'" + ((System.DateTime)arg).ToString(
-                        WebBrowser.StringFormatJs,
+                        DateUtils.DateFormatJs,
                         CultureInfo.InvariantCulture) + "'";
                 default:
                     break;

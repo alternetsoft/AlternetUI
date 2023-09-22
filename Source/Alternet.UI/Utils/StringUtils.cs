@@ -11,6 +11,19 @@ namespace Alternet.UI
     /// </summary>
     public static class StringUtils
     {
+        /// <summary>
+        /// Gets or sets values that split one string to many when
+        /// log operations are performed (or in other situations).
+        /// </summary>
+        /// <remarks>
+        /// An example of such split values is <see cref="Environment.NewLine"/>
+        /// which is assigned to <see cref="StringSplitToArrayChars"/> by default.
+        /// </remarks>
+        public static string[] StringSplitToArrayChars { get; set; } = new string[]
+        {
+            Environment.NewLine,
+        };
+
         private static IComparer<object>? comparerObjectUsingToString;
 
         /// <summary>

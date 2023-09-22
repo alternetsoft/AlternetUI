@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Threading;
 using Alternet.UI.Localization;
 
@@ -18,6 +19,7 @@ namespace Alternet.UI
     public partial class Application : IDisposable
     {
         private static bool terminating = false;
+        private static bool logFileIsEnabled;
         private static Application? current;
 
         private readonly List<Window> windows = new();
@@ -104,6 +106,46 @@ namespace Alternet.UI
         /// Occurs when debug message needs to be displayed.
         /// </summary>
         public event EventHandler<LogMessageEventArgs>? LogMessage;
+
+        /// <summary>
+        /// Gets or sets application log file path.
+        /// </summary>
+        /// <remarks>
+        /// Default value is exe file path and "Alternet.UI.log" file name.
+        /// </remarks>
+        public static string LogFilePath { get; set; } =
+            Path.ChangeExtension(Assembly.GetExecutingAssembly().Location, ".log");
+
+        /// <summary>
+        /// Gets or sets whether to write all log messages to file.
+        /// </summary>
+        /// <remarks>
+        ///  Default value is <c>false</c>.
+        /// </remarks>
+        public static bool LogFileIsEnabled
+        {
+            get
+            {
+                return logFileIsEnabled;
+            }
+
+            set
+            {
+                if (logFileIsEnabled == value)
+                    return;
+                logFileIsEnabled = value;
+
+                if (logFileIsEnabled)
+                {
+                    LogUtils.LogToFile(string.Empty);
+                    LogUtils.LogToFile(string.Empty);
+                    LogUtils.LogToFile("================");
+                    LogUtils.LogToFile("Log file started");
+                    LogUtils.LogToFile("================");
+                    LogUtils.LogToFile(string.Empty);
+                }
+            }
+        }
 
         /// <summary>
         /// Returns true if operating system is Windows.
@@ -342,6 +384,7 @@ namespace Alternet.UI
         /// <param name="msg">Message text.</param>
         public static void Log(string msg)
         {
+            WriteToLogFileIfAllowed(msg);
             Current.LogMessage?.Invoke(Current, new LogMessageEventArgs(msg));
         }
 
@@ -377,6 +420,7 @@ namespace Alternet.UI
         /// </remarks>
         public static void LogReplace(string msg, string prefix)
         {
+            WriteToLogFileIfAllowed(msg);
             Current.LogMessage?.Invoke(Current, new LogMessageEventArgs(msg, prefix, true));
         }
 
@@ -554,6 +598,19 @@ namespace Alternet.UI
                 }
 
                 IsDisposed = true;
+            }
+        }
+
+        private static void WriteToLogFileIfAllowed(string msg)
+        {
+            if (!LogFileIsEnabled)
+                return;
+            try
+            {
+                LogUtils.LogToFile(msg);
+            }
+            catch
+            {
             }
         }
 
