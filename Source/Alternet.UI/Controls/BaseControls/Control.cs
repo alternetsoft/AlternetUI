@@ -757,6 +757,7 @@ namespace Alternet.UI
         /// This property is <c>true</c> after call to <see cref="BeginUpdate"/>
         /// and before call to <see cref="EndUpdate"/>.
         /// </remarks>
+        [Browsable(false)]
         public bool InUpdates => updateCount > 0;
 
         /// <summary>
