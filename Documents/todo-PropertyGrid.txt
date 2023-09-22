@@ -1,7 +1,5 @@
 - Color add sub argb (public static bool AddColorSubItems)
 
-- add full color list and make color names localizable
-
 - Use IPropertyGridItemInfo
 
 - Use more options in NewItem (see demo)
@@ -32,12 +30,8 @@
 
 - Setprops with categories
 
-- OtherCategoryName
-
 - Localization event to localize categories, values, etc.?
     (registration for the enum elements, prop names)
-
-- color edit with all values in combo
 
 - How to set null to nullable props
 
@@ -56,8 +50,6 @@
 
 - Localizable ToString for Pen/Brush/Etc. Have IToStringProperties ? with list of properties used in ToString?
 
-- Color names localization
-
 - Add imagelist/ImageSet components to demo
 
 - ListEditor show name and prop name in title
@@ -72,6 +64,9 @@
             RegisterCollectionEditor(typeof(Toolbar), nameof(Toolbar.Items));
             RegisterCollectionEditor(typeof(Menu), nameof(Menu.Items));
             RegisterCollectionEditor(typeof(Window), nameof(Window.InputBindings));
+
+- Edit statusbar panels with list edit
+- Statusdbar in propGrid demo show dropdown panel with status bar.
 
 - In bottom listbox add Refresh() item of propGrid
 
