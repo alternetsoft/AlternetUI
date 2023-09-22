@@ -52,8 +52,6 @@ namespace Alternet.UI
             ShowInTaskbar = false;
             MinimizeEnabled = false;
             MaximizeEnabled = false;
-            Size = new(600, 400);
-            MinimumSize = new(500, 300);
             Title = CommonStrings.Default.WindowTitleListEdit;
             StartLocation = WindowStartLocation.CenterScreen;
 
@@ -65,12 +63,14 @@ namespace Alternet.UI
             Children.Add(panel);
             manager.SetManagedWindow(panel);
 
+            const int defaultWidth = 300;
+
             // Right Pane
             var rightPane = manager.CreatePaneInfo();
             rightPane.Name(nameof(rightPane)).Caption("Properties").Right().PaneBorder(false)
-                .TopDockable(false).BottomDockable(false).BestSize(300, 300).MinSize(300, 300)
+                .TopDockable(false).BottomDockable(false).BestSize(defaultWidth, 300).MinSize(defaultWidth, 300)
                 .CaptionVisible(false);
-            propertyGrid.Width = 300;
+            propertyGrid.Width = defaultWidth;
             manager.AddPane(propertyGrid, rightPane);
 
             // Toolbar pane
@@ -149,6 +149,11 @@ namespace Alternet.UI
 
             ComponentDesigner.InitDefault();
             ComponentDesigner.Default!.PropertyChanged += OnDesignerPropertyChanged;
+            Size = new(600, 400);
+            MinimumSize = new(500, 300);
+            rightPane.BestSize(defaultWidth + 1, 300).MinSize(defaultWidth + 1, 300);
+            propertyGrid.Width = defaultWidth + 1;
+            manager.Update();
             PerformLayout();
             Closing += UIDialogListEditWindow_Closing;
             Closed += UIDialogListEditWindow_Closed;
