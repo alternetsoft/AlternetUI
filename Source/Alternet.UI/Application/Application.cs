@@ -32,6 +32,7 @@ namespace Alternet.UI
         private VisualTheme visualTheme = StockVisualThemes.Native;
         private ThreadExceptionEventHandler? threadExceptionHandler;
         private bool inOnThreadException;
+        private Window? window;
 
         static Application()
         {
@@ -350,6 +351,12 @@ namespace Alternet.UI
             set => nativeApplication.VendorDisplayName = value;
         }
 
+        internal Window? MainWindow
+        {
+            get => window;
+            set => window = value;
+        }
+
         internal Native.Clipboard NativeClipboard => nativeApplication.Clipboard;
 
         internal Native.Keyboard NativeKeyboard => nativeApplication.Keyboard;
@@ -385,6 +392,7 @@ namespace Alternet.UI
         public static void Log(string msg)
         {
             WriteToLogFileIfAllowed(msg);
+            Debug.WriteLine(msg);
             Current.LogMessage?.Invoke(Current, new LogMessageEventArgs(msg));
         }
 
@@ -421,6 +429,7 @@ namespace Alternet.UI
         public static void LogReplace(string msg, string prefix)
         {
             WriteToLogFileIfAllowed(msg);
+            Debug.WriteLine(msg);
             Current.LogMessage?.Invoke(Current, new LogMessageEventArgs(msg, prefix, true));
         }
 
@@ -474,11 +483,13 @@ namespace Alternet.UI
         public void Run(Window window)
         {
             if (window == null) throw new ArgumentNullException(nameof(window));
+            this.window = window;
             CheckDisposed();
             window.Show();
             nativeApplication.Run(
                 ((NativeWindowHandler)window.Handler).NativeControl);
             SynchronizationContext.Uninstall();
+            this.window = null;
             terminating = true;
         }
 
@@ -566,6 +577,8 @@ namespace Alternet.UI
 
         internal void UnregisterWindow(Window window)
         {
+            if (this.window == window)
+                this.window = null;
             windows.Remove(window);
         }
 
