@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -61,11 +62,13 @@ namespace Alternet.UI
         /// <summary>
         /// Gets whether object is disposed.
         /// </summary>
+        [Browsable(false)]
         public bool IsDisposed => disposed;
 
         /// <summary>
         /// Gets handle to unmanaged resources.
         /// </summary>
+        [Browsable(false)]
         public IntPtr Handle
         {
             get => handle;
@@ -75,6 +78,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets whether to dispose <see cref="Handle"/>.
         /// </summary>
+        [Browsable(false)]
         public bool DisposeHandle
         {
             get => disposeHandle;
