@@ -24,16 +24,6 @@ namespace Alternet.UI.Native
         {
         }
         
-        public int PanelCount
-        {
-            get
-            {
-                CheckDisposed();
-                return NativeApi.StatusBar_GetPanelCount_(NativePointer);
-            }
-            
-        }
-        
         public System.IntPtr RealHandle
         {
             get
@@ -110,9 +100,6 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern IntPtr StatusBar_Create_();
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int StatusBar_GetPanelCount_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern System.IntPtr StatusBar_GetRealHandle_(IntPtr obj);

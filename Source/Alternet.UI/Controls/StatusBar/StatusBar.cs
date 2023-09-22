@@ -11,39 +11,34 @@ namespace Alternet.UI
     /// Represents a status bar control.
     /// </summary>
     [ControlCategory("MenusAndToolbars")]
-    public class StatusBar : NonVisualControl
+    public class StatusBar : FrameworkElement
     {
+        private Native.StatusBar statusBar = new();
+        private int updateCount = 0;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="StatusBar"/> class.
         /// </summary>
         public StatusBar()
         {
-            Panels.ItemInserted += Items_ItemInserted;
-            Panels.ItemRemoved += Items_ItemRemoved;
+            Panels.ItemInserted += OnItemInserted;
+            Panels.ItemRemoved += OnItemRemoved;
+            statusBar.ControlRecreated += OnControlRecreated;
         }
 
         /// <summary>
-        /// Gets a collection of <see cref="StatusBarPanel"/> objects associated with the status bar.
+        /// Gets a collection of <see cref="StatusBarPanel"/> objects associated with the control.
         /// </summary>
         [Content]
         public Collection<StatusBarPanel> Panels { get; } = new() { ThrowOnNullAdd = true };
 
-        /// <inheritdoc/>
-        public override ControlId ControlKind => ControlId.StatusBar;
-
         /// <summary>
-        /// Gets a <see cref="StatusBarHandler"/> associated with this class.
+        /// Gets or sets whether to ignore <see cref="Panels"/>.
         /// </summary>
-        [Browsable(false)]
-        public new StatusBarHandler Handler
-        {
-            get
-            {
-                CheckDisposed();
-                return (StatusBarHandler)base.Handler;
-            }
-        }
-
+        /// <remarks>
+        /// When <see cref="Panels"/> are ignored, they are not automatically assigned to
+        /// the native control. Default value is <c>false</c>.
+        /// </remarks>
         public bool IgnorePanels { get; set; }
 
         /// <summary>
@@ -52,47 +47,72 @@ namespace Alternet.UI
         /// </summary>
         public bool SizingGripVisible
         {
-            get => Handler.SizingGripVisible;
-            set => Handler.SizingGripVisible = value;
+            get => statusBar.SizingGripVisible;
+            set => statusBar.SizingGripVisible = value;
         }
+
+        /// <inheritdoc cref="Control.InUpdates"/>
+        public bool InUpdates => updateCount > 0;
 
         /// <inheritdoc/>
         public override IReadOnlyList<FrameworkElement> ContentElements => Panels;
 
+        /// <summary>
+        /// Gets whether control is fully active and is attached to the window.
+        /// </summary>
         public bool IsOk => StatusBarHandle != IntPtr.Zero;
 
-        internal IntPtr StatusBarHandle => (Handler.NativeControl as Native.StatusBar).RealHandle;
+        internal IntPtr StatusBarHandle => statusBar.RealHandle;
 
-        internal override bool IsDummy => true;
+        internal Native.StatusBar NativeStatusBar => statusBar;
 
         /// <inheritdoc />
         protected override IEnumerable<FrameworkElement> LogicalChildrenCollection => Panels;
 
-        /// <inheritdoc/>
-        public override void BeginUpdate()
+        /*internal void SetParentWindow(Window? window)
         {
-            base.BeginUpdate();
+        }*/
+
+        /// <inheritdoc cref="Control.BeginUpdate"/>
+        public virtual void BeginUpdate()
+        {
+            updateCount++;
         }
 
-        /// <inheritdoc/>
-        public override void EndUpdate()
+        /// <inheritdoc cref="Control.EndUpdate"/>
+        public virtual void EndUpdate()
         {
-            ApplyPanels();
-            base.EndUpdate();
+            updateCount--;
+            if(updateCount == 0)
+                ApplyPanels();
         }
 
-        internal void ApplyPanels()
+        /// <summary>
+        /// Applies <see cref="Panels"/> to the native control.
+        /// </summary>
+        public virtual void ApplyPanels()
         {
-            if (InUpdates || IgnorePanels)
+            if (IgnorePanels)
                 return;
-            var count = Panels.Count;
+            ApplyPanels(Panels);
+        }
+
+        /// <summary>
+        /// Appllies <paramref name="panels"/> to the native control.
+        /// </summary>
+        /// <param name="panels">Collection of the panels.</param>
+        public virtual void ApplyPanels(Collection<StatusBarPanel> panels)
+        {
+            if (InUpdates || !IsOk)
+                return;
+            var count = panels.Count;
             var widths = new int[count];
             var styles = new StatusBarPanelStyle[count];
 
             for(int i = 0; i < count; i++)
             {
-                widths[i] = Panels[i].Width;
-                styles[i] = Panels[i].Style;
+                widths[i] = panels[i].Width;
+                styles[i] = panels[i].Style;
             }
 
             if(count == 0)
@@ -108,51 +128,146 @@ namespace Alternet.UI
 
             for (int i = 0; i < count; i++)
             {
-                SetStatusText(Panels[i].Text, i);
+                SetStatusText(panels[i].Text, i);
             }
         }
 
-        public int? GetFieldsCount()
+        /// <summary>
+        /// Returns number of the panels in the native control.
+        /// </summary>
+        /// <returns>
+        /// number of the panels in the native control if success;
+        /// <c>null</c> otherwise.
+        /// </returns>
+        public virtual int? GetFieldsCount()
         {
             if (StatusBarHandle == IntPtr.Zero)
                 return null;
             return Native.WxStatusBarFactory.GetFieldsCount(StatusBarHandle);
         }
 
-        public bool SetStatusText(string? text = null, int number = 0)
+        /// <summary>
+        /// Sets the status text for the specified panel in the native control.
+        /// </summary>
+        /// <param name="text">The text to be set. Use an empty string or <c>null</c>
+        /// to clear the panel.</param>
+        /// <param name="index">Panel index, starting from zero.</param>
+        /// <returns><c>true</c> if success; <c>false</c> otherwise.</returns>
+        /// <remarks>
+        /// The given text will replace the current text. The display of the status bar is
+        /// updated immediately.
+        /// </remarks>
+        /// <remarks>
+        /// If <see cref="PushStatusText"/> had been called before the new text will
+        /// also replace the last saved value to make sure that the next call to
+        /// <see cref="PopStatusText"/> doesn't restore the old value, which was overwritten
+        /// by the call to this function.
+        /// </remarks>
+        /// <remarks>
+        /// This method doesn't affect <see cref="Panels"/>, it wortks with the native control.
+        /// </remarks>
+        public virtual bool SetStatusText(string? text = null, int index = 0)
         {
             if (StatusBarHandle == IntPtr.Zero)
                 return false;
             text ??= string.Empty;
-            Native.WxStatusBarFactory.SetStatusText(StatusBarHandle, text, number);
+            Native.WxStatusBarFactory.SetStatusText(StatusBarHandle, text, index);
             return true;
         }
 
-        public string? GetStatusText(int number = 0)
+        /// <summary>
+        /// Gets the status text for the specified panel in the native control.
+        /// </summary>
+        /// <param name="index">Panel index, starting from zero.</param>
+        /// <returns>
+        /// <see cref="string"/> with the status text if success; <c>null</c> otherwise.
+        /// </returns>
+        /// <remarks>
+        /// This method doesn't affect <see cref="Panels"/>, it wortks with the native control.
+        /// </remarks>
+        public virtual string? GetStatusText(int index = 0)
         {
             if (StatusBarHandle == IntPtr.Zero)
                 return null;
-            return Native.WxStatusBarFactory.GetStatusText(StatusBarHandle, number);
+            return Native.WxStatusBarFactory.GetStatusText(StatusBarHandle, index);
         }
 
-        public bool PushStatusText(string? text = null, int number = 0)
+        /// <summary>
+        /// Saves the current status text in a per-panel stack, and sets the
+        /// status text to the string passed as argument.
+        /// </summary>
+        /// <param name="text">New panel status text.</param>
+        /// <param name="index">Panel index, starting from zero.</param>
+        /// <returns><c>true</c> if success; <c>false</c> otherwise.</returns>
+        /// <remarks>
+        /// This method doesn't affect <see cref="Panels"/>, it wortks with the native control.
+        /// </remarks>
+        /// <seealso cref="PopStatusText"/>
+        public virtual bool PushStatusText(string? text = null, int index = 0)
         {
             if (StatusBarHandle == IntPtr.Zero)
                 return false;
             text ??= string.Empty;
-            Native.WxStatusBarFactory.PushStatusText(StatusBarHandle, text, number);
+            Native.WxStatusBarFactory.PushStatusText(StatusBarHandle, text, index);
             return true;
         }
 
-        public bool PopStatusText(int number = 0)
+        /// <summary>
+        /// Restores the text to the value it had before the last call to <see cref="PushStatusText"/>.
+        /// </summary>
+        /// <param name="index">Panel index, starting from zero.</param>
+        /// <returns><c>true</c> if success; <c>false</c> otherwise.</returns>
+        /// <remarks>
+        /// This method doesn't affect <see cref="Panels"/>, it wortks with the native control.
+        /// </remarks>
+        /// <seealso cref="PushStatusText"/>
+        /// <remarks>
+        /// Notice that if <see cref="SetStatusText"/> had been called in the meanwhile,
+        /// <see cref="PopStatusText"/> will not change the text, i.e. it does not override
+        /// explicit changes to status text but only restores the saved text
+        /// if it hadn't been changed since.
+        /// </remarks>
+        public virtual bool PopStatusText(int index = 0)
         {
             if (StatusBarHandle == IntPtr.Zero)
                 return false;
-            Native.WxStatusBarFactory.PopStatusText(StatusBarHandle, number);
+            Native.WxStatusBarFactory.PopStatusText(StatusBarHandle, index);
             return true;
         }
 
-        public bool SetStatusWidths(int[] widths)
+        /// <summary>
+        /// Sets the widths of the panels in the native control.
+        /// </summary>
+        /// <param name="widths">Contains an array of integers, each of which is either an
+        /// absolute status panel width in pixels if positive or indicates a variable width
+        /// panel if negative. </param>
+        /// <returns><c>true</c> if success; <c>false</c> otherwise.</returns>
+        /// <remarks>
+        /// This method doesn't affect <see cref="Panels"/>, it wortks with the native control.
+        /// </remarks>
+        /// <remarks>
+        /// There are two types of panels: fixed widths and variable width panels. For the fixed
+        /// width panels you should specify their(constant) width in pixels. For the variable width
+        /// panels, specify a negative number which indicates how the panels should expand:
+        /// the space left for all variable width panels is divided between them according
+        /// to the absolute value of this number. A variable width panels with width
+        /// of (-2) gets twice as much of it as a panels with width (-1) and so on.
+        /// </remarks>
+        /// <remarks>
+        /// For example, to create one fixed width panels of width 100 in the right part
+        /// of the status bar and two more panels which get 66% and 33% of the
+        /// remaining space correspondingly, you should use an array containing (-2), (-1) and 100.
+        /// </remarks>
+        /// <remarks>
+        /// Size of the <paramref name="widths"/> array must be equal to the number passed to
+        /// <see cref="SetFieldsCount"/> the last time it was called.
+        /// </remarks>
+        /// <remarks>
+        /// The widths of the variable panels are calculated from the total width of all panels,
+        /// minus the sum of widths of the non-variable panels, divided by the number of
+        /// variable panels.
+        /// </remarks>
+        public virtual bool SetStatusWidths(int[] widths)
         {
             if (StatusBarHandle == IntPtr.Zero || widths.Length == 0)
                 return false;
@@ -160,29 +275,74 @@ namespace Alternet.UI
             return true;
         }
 
-        public bool SetFieldsCount(int number)
+        /// <summary>
+        /// Sets the number of panels in the native control.
+        /// </summary>
+        /// <param name="count">New number of panels. Must be greater than zero.</param>
+        /// <returns><c>true</c> if success; <c>false</c> otherwise.</returns>
+        /// <remarks>
+        /// This method doesn't affect <see cref="Panels"/>, it wortks with the native control.
+        /// </remarks>
+        /// <remarks>
+        /// If <paramref name="count"/> is greater than the previous number of panels,
+        /// then new panels with empty strings will be added to the status bar.
+        /// </remarks>
+        public virtual bool SetFieldsCount(int count)
         {
-            if (StatusBarHandle == IntPtr.Zero)
+            if (StatusBarHandle == IntPtr.Zero || count < 1)
                 return false;
-            Native.WxStatusBarFactory.SetFieldsCount(StatusBarHandle, number);
+            Native.WxStatusBarFactory.SetFieldsCount(StatusBarHandle, count);
             return true;
         }
 
-        public int? GetStatusWidth(int n)
+        /// <summary>
+        /// Gets the width of the specified panel in the native control.
+        /// </summary>
+        /// <param name="index">Panel index, starting from zero.</param>
+        /// <returns>
+        /// <see cref="int"/> with the panel width if success; <c>null</c> otherwise.
+        /// </returns>
+        /// <remarks>
+        /// This method doesn't affect <see cref="Panels"/>, it wortks with the native control.
+        /// </remarks>
+        public virtual int? GetStatusWidth(int index)
         {
             if (StatusBarHandle == IntPtr.Zero)
                 return null;
-            return Native.WxStatusBarFactory.GetStatusWidth(StatusBarHandle, n);
+            return Native.WxStatusBarFactory.GetStatusWidth(StatusBarHandle, index);
         }
 
-        public StatusBarPanelStyle? GetStatusStyle(int n)
+        /// <summary>
+        /// Gets the style of the specified panel in the native control.
+        /// </summary>
+        /// <param name="index">Panel index, starting from zero.</param>
+        /// <returns></returns>
+        /// <remarks>
+        /// This method doesn't affect <see cref="Panels"/>, it wortks with the native control.
+        /// </remarks>
+        public virtual StatusBarPanelStyle? GetStatusStyle(int index)
         {
             if (StatusBarHandle == IntPtr.Zero)
                 return null;
-            return (StatusBarPanelStyle)Native.WxStatusBarFactory.GetStatusStyle(StatusBarHandle, n);
+            return
+                (StatusBarPanelStyle)Native.WxStatusBarFactory.GetStatusStyle(StatusBarHandle, index);
         }
 
-        public bool SetStatusStyles(StatusBarPanelStyle[] styles)
+        /// <summary>
+        /// Sets the styles of the panels in the status line which can make panels appear
+        /// flat or raised instead of the standard sunken 3D border.
+        /// </summary>
+        /// <param name="styles">Contains an array of <see cref="StatusBarPanelStyle"/> with
+        /// the styles for each panel.</param>
+        /// <returns><c>true</c> if success; <c>false</c> otherwise.</returns>
+        /// <remarks>
+        /// This method doesn't affect <see cref="Panels"/>, it wortks with the native control.
+        /// </remarks>
+        /// <remarks>
+        /// Size of the <paramref name="styles"/> array must be equal to the number passed to
+        /// <see cref="SetFieldsCount"/> the last time it was called.
+        /// </remarks>
+        public virtual bool SetStatusStyles(StatusBarPanelStyle[] styles)
         {
             if (StatusBarHandle == IntPtr.Zero || styles.Length == 0)
                 return false;
@@ -191,14 +351,36 @@ namespace Alternet.UI
             return true;
         }
 
-        public Int32Rect? GetFieldRect(int i)
+        /// <summary>
+        /// Gets the size and position of a panels's internal bounding rectangle in the
+        /// native control.
+        /// </summary>
+        /// <param name="index">Panel index, starting from zero.</param>
+        /// <returns><see cref="Int32Rect"/> with the size and position of a panels's
+        /// internal bounding rectangle on success; <c>null</c> otherwise.</returns>
+        /// <remarks>
+        /// This method doesn't affect <see cref="Panels"/>, it wortks with the native control.
+        /// </remarks>
+        public virtual Int32Rect? GetFieldRect(int index)
         {
             if (StatusBarHandle == IntPtr.Zero)
                 return null;
-            return Native.WxStatusBarFactory.GetFieldRect(StatusBarHandle, i);
+            var result = Native.WxStatusBarFactory.GetFieldRect(StatusBarHandle, index);
+            if (result == Int32Rect.Empty)
+                return null;
+            return result;
         }
 
-        public bool SetMinHeight(int height)
+        /// <summary>
+        /// Sets the minimal possible height for the status bar.
+        /// </summary>
+        /// <param name="height">New height value.</param>
+        /// <returns><c>true</c> if success; <c>false</c> otherwise.</returns>
+        /// <remarks>
+        /// The real height may be bigger than the height specified here depending
+        /// on the size of the font used by the status bar.
+        /// </remarks>
+        public virtual bool SetMinHeight(int height)
         {
             if (StatusBarHandle == IntPtr.Zero)
                 return false;
@@ -206,41 +388,68 @@ namespace Alternet.UI
             return true;
         }
 
-        public int? GetBorderX()
+        /// <summary>
+        /// Gets the horizontal border used when rendering the panel text inside the panel area.
+        /// </summary>
+        /// <returns><see cref="int"/> with the horizontal border on success;
+        /// <c>null</c> otherwise.</returns>
+        /// <remarks>
+        /// Note that the rect returned by <see cref="GetFieldRect"/> already accounts for
+        /// the presence of horizontal and vertical border returned by this function.
+        /// </remarks>
+        public virtual int? GetBorderX()
         {
             if (StatusBarHandle == IntPtr.Zero)
                 return null;
             return Native.WxStatusBarFactory.GetBorderX(StatusBarHandle);
         }
 
-        public int? GetBorderY()
+        /// <summary>
+        /// Gets the vertical border used when rendering the panel text inside the panel area.
+        /// </summary>
+        /// <returns><see cref="int"/> with the vertical border on success;
+        /// <c>null</c> otherwise.</returns>
+        /// <remarks>
+        /// Note that the rect returned by <see cref="GetFieldRect"/> already accounts for
+        /// the presence of horizontal and vertical border returned by this function.
+        /// </remarks>
+        public virtual int? GetBorderY()
         {
             if (StatusBarHandle == IntPtr.Zero)
                 return null;
             return Native.WxStatusBarFactory.GetBorderY(StatusBarHandle);
         }
 
+        /// <summary>
+        /// Called when item was inserted in the <see cref="Panels"/>.
+        /// </summary>
+        internal virtual void OnItemInserted(object? sender, int index, StatusBarPanel item)
+        {
+            item.PropertyChanged += OnItemPropertyChanged;
+            ApplyPanels();
+        }
+
+        internal virtual void OnItemPropertyChanged(object? sender, EventArgs e)
+        {
+            ApplyPanels();
+        }
+
+        internal virtual void OnControlRecreated(object? sender, EventArgs e)
+        {
+            ApplyPanels();
+        }
+
+        internal virtual void OnItemRemoved(object? sender, int index, StatusBarPanel item)
+        {
+            item.PropertyChanged -= OnItemPropertyChanged;
+            ApplyPanels();
+        }
+
         /// <inheritdoc/>
-        protected override ControlHandler CreateHandler()
+        protected override void DisposeManagedResources()
         {
-            return GetEffectiveControlHandlerHactory().CreateStatusBarHandler(this);
-        }
-
-        private void Items_ItemInserted(object? sender, int index, StatusBarPanel item)
-        {
-            item.PropertyChanged += Item_PropertyChanged;
-            ApplyPanels();
-        }
-
-        private void Item_PropertyChanged(object sender, EventArgs e)
-        {
-            ApplyPanels();
-        }
-
-        private void Items_ItemRemoved(object? sender, int index, StatusBarPanel item)
-        {
-            item.PropertyChanged -= Item_PropertyChanged;
-            ApplyPanels();
+            statusBar.Dispose();
+            statusBar = null!;
         }
     }
 }

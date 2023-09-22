@@ -110,10 +110,6 @@ namespace Alternet.UI
             StockControlHandlerFactories.Native.CreateToolbarItemHandler(control);
 
         /// <inheritdoc/>
-        public ControlHandler CreateStatusBarHandler(Control control) =>
-            StockControlHandlerFactories.Native.CreateStatusBarHandler(control);
-
-        /// <inheritdoc/>
         public ControlHandler CreateColorPickerHandler(Control control) =>
             StockControlHandlerFactories.Native.CreateColorPickerHandler(control);
 

@@ -110,10 +110,6 @@ namespace Alternet.UI
             new NativeToolbarItemHandler();
 
         /// <inheritdoc/>
-        public ControlHandler CreateStatusBarHandler(Control control) =>
-            new NativeStatusBarHandler();
-
-        /// <inheritdoc/>
         public ControlHandler CreateColorPickerHandler(Control control) =>
             new NativeColorPickerHandler();
 

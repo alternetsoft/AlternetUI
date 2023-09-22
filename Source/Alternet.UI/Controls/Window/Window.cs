@@ -560,8 +560,8 @@ namespace Alternet.UI
                 var oldValue = statusBar;
                 statusBar = value;
 
-                oldValue?.SetParentInternal(null);
-                statusBar?.SetParentInternal(this);
+                /* oldValue?.SetParentWindow(null);
+                   statusBar?.SetParentWindow(this);*/
 
                 OnStatusBarChanged(EventArgs.Empty);
                 StatusBarChanged?.Invoke(this, EventArgs.Empty);

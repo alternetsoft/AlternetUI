@@ -20,7 +20,7 @@ namespace Alternet.UI.Threading
     ///     DispatcherObject cannot be independently instantiated; that is,
     ///     all constructors are protected.
     /// </remarks>
-    public abstract class DispatcherObject
+    public abstract class DispatcherObject : DisposableObject
     {
         /// <summary>
         ///     Returns the <see cref="Dispatcher"/> that this

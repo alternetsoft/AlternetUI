@@ -277,7 +277,6 @@
     <ClCompile Include="SplitterPanel.cpp" />
     <ClCompile Include="StaticBoxSizer.cpp" />
     <ClCompile Include="StatusBar.cpp" />
-    <ClCompile Include="StatusBarPanel.cpp" />
     <ClCompile Include="StdDialogButtonSizer.cpp" />
     <ClCompile Include="TabControl.cpp" />
     <ClCompile Include="TextBox.cpp" />
@@ -396,7 +395,6 @@
     <ClInclude Include="Api\SplitterPanel.Api.h" />
     <ClInclude Include="Api\StaticBoxSizer.Api.h" />
     <ClInclude Include="Api\StatusBar.Api.h" />
-    <ClInclude Include="Api\StatusBarPanel.Api.h" />
     <ClInclude Include="Api\StdDialogButtonSizer.Api.h" />
     <ClInclude Include="Api\TabControl.Api.h" />
     <ClInclude Include="Api\TabPage.Api.h" />
@@ -517,7 +515,6 @@
     <ClInclude Include="SplitterPanel.h" />
     <ClInclude Include="StaticBoxSizer.h" />
     <ClInclude Include="StatusBar.h" />
-    <ClInclude Include="StatusBarPanel.h" />
     <ClInclude Include="StdDialogButtonSizer.h" />
     <ClInclude Include="TabControl.h" />
     <ClInclude Include="TextBox.h" />
@@ -628,7 +625,6 @@
     <None Include="Api\SplitterPanel.inc" />
     <None Include="Api\StaticBoxSizer.inc" />
     <None Include="Api\StatusBar.inc" />
-    <None Include="Api\StatusBarPanel.inc" />
     <None Include="Api\StdDialogButtonSizer.inc" />
     <None Include="Api\TabControl.inc" />
     <None Include="Api\TabPage.inc" />

@@ -1,5 +1,4 @@
 #include "StatusBar.h"
-#include "StatusBarPanel.h"
 #include "Window.h"
 
 namespace Alternet::UI
@@ -18,25 +17,6 @@ namespace Alternet::UI
         DestroyWxStatusBar();
     }
 
-    int StatusBar::GetPanelCount()
-    {
-        return _items.size();
-    }
-
-    //void StatusBar::InsertPanelAt(int index, StatusBarPanel* item)
-    //{
-    //    _items.insert(_items.begin() + index, item);
-    //    ApplyItems(index);
-    //}
-
-    //void StatusBar::RemovePanelAt(int index)
-    //{
-    //    auto it = _items.begin() + index;
-    //    auto item = *it;
-    //    _items.erase(it);
-    //    ApplyItems(index);
-    //}
-
     wxWindow* StatusBar::CreateWxWindowCore(wxWindow* parent)
     {
         return new wxDummyPanel("statusbar");
@@ -53,20 +33,7 @@ namespace Alternet::UI
         RecreateWxStatusBar(window);
     }
 
-    void StatusBar::OnItemChanged(int index)
-    {
-        ApplyItems(index, 1);
-    }
-
-    void StatusBar::ApplyEnabled(bool value)
-    {
-    }
-
-    void StatusBar::ApplyBounds(const Rect& value)
-    {
-    }
-
-    void StatusBar::ApplyItems(size_t startIndex, optional<int> count/* = nullopt*/)
+    /*void StatusBar::ApplyItems(size_t startIndex, optional<int> count)
     {
         return;
 
@@ -96,7 +63,7 @@ namespace Alternet::UI
             _items[i]->SetParentStatusBar(this, i);
             sb->SetStatusText(wxStr(_items[i]->GetText()), i);
         }
-    }
+    }*/
 
     void StatusBar::CreateWxStatusBar(Window* window)
     {
@@ -117,8 +84,6 @@ namespace Alternet::UI
         };
 
         _wxStatusBar = window->GetFrame()->CreateStatusBar(1, getStyle());
-
-        ApplyItems(0);
     }
 
     void StatusBar::DestroyWxStatusBar()

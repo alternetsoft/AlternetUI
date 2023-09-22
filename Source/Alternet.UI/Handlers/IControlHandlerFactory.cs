@@ -163,12 +163,6 @@ namespace Alternet.UI
 
         /// <summary>
         /// Creates a <see cref="ControlHandler"/> for
-        /// <see cref="StatusBar"/> control.
-        /// </summary>
-        ControlHandler CreateStatusBarHandler(Control control);
-
-        /// <summary>
-        /// Creates a <see cref="ControlHandler"/> for
         /// <see cref="ColorPicker"/> control.
         /// </summary>
         ControlHandler CreateColorPickerHandler(Control control);

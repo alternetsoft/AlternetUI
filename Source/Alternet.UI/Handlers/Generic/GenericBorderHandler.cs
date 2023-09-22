@@ -21,7 +21,7 @@ namespace Alternet.UI
 
         public override void OnPaint(DrawingContext drawingContext)
         {
-           if (Control.Background != null)
+            if (Control.Background != null)
             {
                 drawingContext.FillRectangle(
                     Control.Background,
@@ -43,6 +43,5 @@ namespace Alternet.UI
                     Control.BorderWidth.Horizontal,
                     Control.BorderWidth.Vertical);
         }
-
     }
 }

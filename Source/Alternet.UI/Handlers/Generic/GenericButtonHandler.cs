@@ -42,7 +42,7 @@ namespace Alternet.UI
 
             border = new Border
             {
-                Padding = new Thickness(5)
+                Padding = new Thickness(5),
             };
 
             Control.Handler.VisualChildren.Add(border);
@@ -52,12 +52,6 @@ namespace Alternet.UI
 
             UpdateText();
             UpdateVisual();
-        }
-
-        private void NativeControl_MouseClick(object? sender, EventArgs? e)
-        {
-            if (IsMouseOver)
-                Control.RaiseClick(EventArgs.Empty);
         }
 
         protected override void OnDetach()
@@ -125,6 +119,12 @@ namespace Alternet.UI
 
             border.BorderBrush = new SolidBrush(borderColor);
             border.Background = new SolidBrush(backgroundColor);
+        }
+
+        private void NativeControl_MouseClick(object? sender, EventArgs? e)
+        {
+            if (IsMouseOver)
+                Control.RaiseClick(EventArgs.Empty);
         }
 
         private void Control_TextChanged(object? sender, System.EventArgs? e)

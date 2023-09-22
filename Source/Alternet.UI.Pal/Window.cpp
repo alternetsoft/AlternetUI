@@ -162,7 +162,7 @@ namespace Alternet::UI
             return;
 
         std::vector<wxAcceleratorEntry> entries;
-        for (auto pair : _acceleratorsByCommandIds)
+        for (auto& pair : _acceleratorsByCommandIds)
             entries.push_back(pair.second);
 
         frame->SetAcceleratorTable(entries.empty() ?
@@ -174,7 +174,7 @@ namespace Alternet::UI
         auto id = event.GetId();
 
         optional<string> foundManagedCommandId;
-        for (auto pair : _acceleratorsByCommandIds)
+        for (auto& pair : _acceleratorsByCommandIds)
         {
             if (pair.second.GetCommand() == id)
                 foundManagedCommandId = pair.first;

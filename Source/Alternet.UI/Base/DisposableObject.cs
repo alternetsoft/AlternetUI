@@ -11,9 +11,9 @@ namespace Alternet.UI
     /// <summary>
     /// Provides a mechanism for releasing managed and unmanaged resources.
     /// </summary>
-    public abstract class DisposableObject : IDisposable
+    public abstract class DisposableObject : BaseObject, IDisposable
     {
-        private readonly bool disposeHandle;
+        private bool disposeHandle;
         private bool disposed = false;
         private IntPtr handle;
 
@@ -54,6 +54,11 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Occurs when control is disposed.
+        /// </summary>
+        public event EventHandler? Disposed;
+
+        /// <summary>
         /// Gets whether object is disposed.
         /// </summary>
         public bool IsDisposed => disposed;
@@ -61,13 +66,36 @@ namespace Alternet.UI
         /// <summary>
         /// Gets handle to unmanaged resources.
         /// </summary>
-        public IntPtr Handle { get => handle; }
+        public IntPtr Handle
+        {
+            get => handle;
+            protected set => handle = value;
+        }
+
+        /// <summary>
+        /// Gets or sets whether to dispose <see cref="Handle"/>.
+        /// </summary>
+        public bool DisposeHandle
+        {
+            get => disposeHandle;
+            protected set => disposeHandle = value;
+        }
 
         /// <inheritdoc/>
         public void Dispose()
         {
             Dispose(disposing: true);
             GC.SuppressFinalize(this);
+        }
+
+        /// <summary>
+        /// Throws <see cref="ObjectDisposedException"/> if
+        /// <see cref="IsDisposed"/> is <c>true</c>.
+        /// </summary>
+        protected void CheckDisposed()
+        {
+            if (IsDisposed)
+                throw new ObjectDisposedException(null);
         }
 
         /// <summary>
@@ -87,6 +115,8 @@ namespace Alternet.UI
         {
             if (!this.disposed)
             {
+                Disposed?.Invoke(this, EventArgs.Empty);
+
                 // If disposing equals true, dispose all managed
                 // and unmanaged resources.
                 if (disposing)

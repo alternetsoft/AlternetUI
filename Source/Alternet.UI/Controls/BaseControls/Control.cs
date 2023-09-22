@@ -155,11 +155,6 @@ namespace Alternet.UI
         public event EventHandler? MouseLeave;
 
         /// <summary>
-        /// Occurs when control is disposed.
-        /// </summary>
-        public event EventHandler? Disposed;
-
-        /// <summary>
         /// Occurs when the value of the <see cref="Enabled"/> property changes.
         /// </summary>
         public event EventHandler? EnabledChanged;
@@ -497,12 +492,6 @@ namespace Alternet.UI
                 return handler ?? throw new InvalidOperationException();
             }
         }
-
-        /// <summary>
-        /// Gets whether <see cref="Dispose(bool)"/> has been called.
-        /// </summary>
-        [Browsable(false)]
-        public virtual bool IsDisposed { get; private set; }
 
         /// <summary>
         /// Gets the collection of child controls contained within the control.
@@ -1329,7 +1318,7 @@ namespace Alternet.UI
         /// <see cref="DrawingContext.MeasureText(string, Font)"/>.
         /// Instead, you must call <see cref="CreateDrawingContext"/> every time
         /// that you want to use the <see cref="DrawingContext"/> object,
-        /// and then call <see cref="Dispose()"/> when you are finished using it.
+        /// and then call its Dispose() when you are finished using it.
         /// </remarks>
         public DrawingContext CreateDrawingContext() =>
             Handler.CreateDrawingContext();
@@ -1625,15 +1614,6 @@ namespace Alternet.UI
         public virtual void FocusNextControl(bool forward = true, bool nested = true)
         {
             Handler?.FocusNextControl(forward, nested);
-        }
-
-        /// <summary>
-        /// Releases all resources used by the object.
-        /// </summary>
-        public void Dispose()
-        {
-            Dispose(disposing: true);
-            GC.SuppressFinalize(this);
         }
 
         /// <summary>
@@ -1953,48 +1933,22 @@ namespace Alternet.UI
             return new GenericControlHandler();
         }
 
-        /// <summary>
-        /// Releases the unmanaged resources used by the object and
-        /// optionally releases the managed resources.
-        /// </summary>
-        /// <param name="disposing"><c>true</c> to release both managed and
-        /// unmanaged resources; <c>false</c> to release only unmanaged
-        /// resources.</param>
-        protected virtual void Dispose(bool disposing)
+        /// <inheritdoc/>
+        protected override void DisposeManagedResources()
         {
-            if (!IsDisposed)
-            {
-                Disposed?.Invoke(this, EventArgs.Empty);
+            /*var children = Handler.AllChildren.ToArray();*/
 
-                if (disposing)
-                {
-                    /*var children = Handler.AllChildren.ToArray();*/
+            SuspendLayout();
+            if(HasChildren)
+                Children.Clear();
+            if(Handler.HasVisualChildren)
+                Handler.VisualChildren.Clear();
+            ResumeLayout(performLayout: false);
 
-                    SuspendLayout();
-                    if(HasChildren)
-                        Children.Clear();
-                    if(Handler.HasVisualChildren)
-                        Handler.VisualChildren.Clear();
-                    ResumeLayout(performLayout: false);
+            // TODO
+            /* foreach (var child in children) child.Dispose();*/
 
-                    // TODO
-                    /* foreach (var child in children) child.Dispose();*/
-
-                    DetachHandler();
-                }
-
-                IsDisposed = true;
-            }
-        }
-
-        /// <summary>
-        /// Throws <see cref="ObjectDisposedException"/> if
-        /// <see cref="IsDisposed"/> is <c>true</c>.
-        /// </summary>
-        protected void CheckDisposed()
-        {
-            if (IsDisposed)
-                throw new ObjectDisposedException(null);
+            DetachHandler();
         }
 
         /// <summary>

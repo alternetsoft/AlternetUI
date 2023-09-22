@@ -13,11 +13,6 @@ ALTERNET_UI_API StatusBar* StatusBar_Create_()
     return new StatusBar();
 }
 
-ALTERNET_UI_API int StatusBar_GetPanelCount_(StatusBar* obj)
-{
-    return obj->GetPanelCount();
-}
-
 ALTERNET_UI_API void* StatusBar_GetRealHandle_(StatusBar* obj)
 {
     return obj->GetRealHandle();

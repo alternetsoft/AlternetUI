@@ -379,9 +379,7 @@ namespace Alternet.UI
 
         private void ApplyStatusBar()
         {
-            NativeControl.StatusBar =
-                (Control.StatusBar?.Handler as NativeStatusBarHandler)?
-                .NativeControl ?? null;
+            NativeControl.StatusBar = Control.StatusBar?.NativeStatusBar;
         }
 
         private void NativeControl_Deactivated(object? sender, EventArgs e)
