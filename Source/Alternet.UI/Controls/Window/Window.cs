@@ -563,6 +563,8 @@ namespace Alternet.UI
                 /* oldValue?.SetParentWindow(null);
                    statusBar?.SetParentWindow(this);*/
 
+                PerformLayout();
+
                 OnStatusBarChanged(EventArgs.Empty);
                 StatusBarChanged?.Invoke(this, EventArgs.Empty);
             }
