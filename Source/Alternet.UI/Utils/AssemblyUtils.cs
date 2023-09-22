@@ -16,6 +16,39 @@ namespace Alternet.UI
     public static class AssemblyUtils
     {
         /// <summary>
+        /// Enumerates event information for the specified <see cref="Type"/>.
+        /// </summary>
+        /// <param name="type">Type which events are enumerated.</param>
+        /// <param name="sort">Defines whether to sort result events by name.</param>
+        /// <param name="bindingFlags"></param>
+        /// <returns></returns>
+        public static IEnumerable<EventInfo> EnumEvents(
+            Type type,
+            bool sort = false,
+            BindingFlags bindingFlags = BindingFlags.Instance | BindingFlags.Public)
+        {
+            List<EventInfo> result = new();
+
+            IList<EventInfo> props =
+                new List<EventInfo>(type.GetEvents(bindingFlags));
+
+            SortedList<string, EventInfo> addedNames = new();
+
+            foreach (var p in props)
+            {
+                var propName = p.Name;
+                if (addedNames.ContainsKey(propName))
+                    continue;
+                result.Add(p);
+                addedNames.Add(propName, p);
+            }
+
+            if (sort)
+                result.Sort(PropertyGridItem.CompareByName);
+            return result;
+        }
+
+        /// <summary>
         /// Gets whether <see cref="Type"/> has constructor without parameters.
         /// </summary>
         /// <param name="type">Object type.</param>
