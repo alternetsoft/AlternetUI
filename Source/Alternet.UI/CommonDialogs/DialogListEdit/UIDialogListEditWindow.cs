@@ -149,6 +149,9 @@ namespace Alternet.UI
 
             ComponentDesigner.InitDefault();
             ComponentDesigner.Default!.PropertyChanged += OnDesignerPropertyChanged;
+            PerformLayout();
+            Closing += UIDialogListEditWindow_Closing;
+            Closed += UIDialogListEditWindow_Closed;
         }
 
         public IListEditSource? DataSource
@@ -182,6 +185,24 @@ namespace Alternet.UI
         {
             propertyGrid.Clear();
             treeView.RemoveAll();
+        }
+
+        private void UIDialogListEditWindow_Closed(object? sender, WindowClosedEventArgs e)
+        {
+        }
+
+        private void UIDialogListEditWindow_Closing(object? sender, WindowClosingEventArgs e)
+        {
+            ComponentDesigner.Default!.PropertyChanged -= OnDesignerPropertyChanged;
+            if (ModalResult == ModalResult.Accepted)
+            {
+                Save();
+                Designer?.RaisePropertyChanged(DataSource?.Instance, DataSource?.PropInfo?.Name);
+            }
+
+            /*Application.DebugLog("Before dialog.Clear");
+            Clear();
+            Application.DebugLog("After dialog.Clear");*/
         }
 
         private void OnDesignerPropertyChanged(object? sender, PropertyChangeEventArgs e)

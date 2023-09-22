@@ -35,16 +35,9 @@ namespace Alternet.UI
             {
                 DataSource = source,
             };
-            dialog.ShowModal();
-            if (dialog.ModalResult == ModalResult.Accepted)
-            {
-                dialog.Save();
-                dialog.Designer?.RaisePropertyChanged(instance, propInfo?.Name);
-                return true;
-            }
 
-            dialog.Clear();
-            return false;
+            var result = dialog.ShowModal(Window.ActiveWindow) == ModalResult.Accepted;
+            return result;
         }
 
         /// <summary>
