@@ -320,6 +320,8 @@ namespace Alternet::UI
         if (value != nullptr)
             value->SetOwnerWindow(this);
         _frame->SetStatusBar(value == nullptr ? nullptr : value->GetWxStatusBar());
+        _frame->Layout();
+        _frame->PostSizeEvent();
     }
 
     void Window::OnWxWindowDestroyed(wxWindow* window)
