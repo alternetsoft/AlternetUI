@@ -6,7 +6,7 @@ namespace PrintingSample
 {
     public partial class MainWindow : Window
     {
-        private Font font = new Font(FontFamily.GenericSerif, 25);
+        private readonly Font font = new(FontFamily.GenericSerif, 25);
 
         public MainWindow()
         {
@@ -30,7 +30,7 @@ namespace PrintingSample
             DrawFirstPage(dc, bounds);
         }
 
-        Pen thickGrayPen = new Pen(Color.Gray, 4);
+        private readonly Pen thickGrayPen = new(Color.Gray, 4);
 
         private void DrawFirstPage(DrawingContext dc, Rect bounds)
         {
@@ -66,11 +66,10 @@ namespace PrintingSample
             document.Print();
         }
 
-        Margins? TryGetPageMargins()
+        Thickness? TryGetPageMargins()
         {
             if (Thickness.TryParse(pageMarginTextBox.Text, out var thickness))
-                return new Margins(thickness.Left, thickness.Top, thickness.Right, thickness.Bottom);
-
+                return thickness;
             return null;
         }
 
@@ -83,7 +82,7 @@ namespace PrintingSample
             };
 
             document.PageSettings.Color = printInColorCheckBox.IsChecked;
-            document.PageSettings.Margins = TryGetPageMargins() ?? new Margins();
+            document.PageSettings.Margins = TryGetPageMargins() ?? new();
 
             return document;
         }
@@ -137,14 +136,15 @@ namespace PrintingSample
 
         private void Document_PrintPage(object? sender, PrintPageEventArgs e)
         {
-            var pb = e.PageBounds;
+            /*var pb = e.PageBounds;
             var ppb = e.PrintablePageBounds;
             var phpb = e.PhysicalPageBounds;
-            var mb = e.MarginBounds;
+            var mb = e.MarginBounds;*/
 
             int pageNumber = e.PageNumber;
 
-            var bounds = new Rect(new Point(), originAtMarginCheckBox.IsChecked ? e.MarginBounds.Size : e.PrintablePageBounds.Size);
+            var bounds = new Rect(new Point(), originAtMarginCheckBox.IsChecked
+                ? e.MarginBounds.Size : e.PrintablePageBounds.Size);
 
             if (pageNumber == 1)
             {
