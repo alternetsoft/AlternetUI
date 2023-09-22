@@ -58,9 +58,19 @@ namespace Alternet.UI
         /// </summary>
         internal static readonly EventPrivateKey InheritedPropertyChangedKey = new();
 
+        /// <summary>
+        ///     ResourcesChanged private key
+        /// </summary>
+        internal static readonly EventPrivateKey ResourcesChangedKey = new();
+
+        /// <summary>
+        ///     DataContextChanged private key
+        /// </summary>
+        internal static readonly EventPrivateKey DataContextChangedKey = new();
+
         // Optimization, to avoid calling FromSystemType too often
-        internal static new DependencyObjectType DType =
-            DependencyObjectType.FromSystemTypeInternal(typeof(FrameworkElement));
+        /*private static readonly new DependencyObjectType DType =
+            DependencyObjectType.FromSystemTypeInternal(typeof(FrameworkElement));*/
 
         private static readonly UncommonField<DependencyObject> InheritanceContextField = new();
 
@@ -144,6 +154,20 @@ namespace Alternet.UI
                 logicalParent = value;
                 ChangeLogicalParent(oldParent, logicalParent);
             }
+        }
+
+        // Indicates that an ancestor change tree walk is progressing
+        // through the given node
+        internal bool AncestorChangeInProgress
+        {
+            get { return ReadInternalFlag(InternalFlags.AncestorChangeInProgress); }
+            set { WriteInternalFlag(InternalFlags.AncestorChangeInProgress, value); }
+        }
+
+        internal bool InVisibilityCollapsedTree
+        {
+            get { return ReadInternalFlag(InternalFlags.InVisibilityCollapsedTree); }
+            set { WriteInternalFlag(InternalFlags.InVisibilityCollapsedTree, value); }
         }
 
         // Indicates if the current element has or had mentees at some point.
@@ -321,6 +345,26 @@ namespace Alternet.UI
 
             return TryFindElement(name) ?? throw new InvalidOperationException(
                 $"Element with name '{name}' was not found.");
+        }
+
+        internal static bool GetFrameworkParent(FrameworkElement current, out FrameworkElement feParent)
+        {
+            FrameworkObject fo = new(current);
+
+            fo = fo.FrameworkParent;
+
+            feParent = fo.FE;
+
+            return fo.IsValid;
+        }
+
+        internal static DependencyObject GetFrameworkParent(object current)
+        {
+            FrameworkObject fo = new(current as DependencyObject);
+
+            fo = fo.FrameworkParent;
+
+            return fo.DO;
         }
 
         internal static void AddIntermediateElementsToRoute(
@@ -622,6 +666,255 @@ namespace Alternet.UI
             store?.Remove(key, handler);
         }
 
+        // Sets or Unsets the required flag based on
+        // the bool argument
+        internal void WriteInternalFlag(InternalFlags reqFlag, bool set)
+        {
+            if (set)
+            {
+                internalFlags |= reqFlag;
+            }
+            else
+            {
+                internalFlags &= ~reqFlag;
+            }
+        }
+
+        /// <summary>
+        ///     Called before the parent is chanded to the new value.
+        /// </summary>
+        internal virtual void OnNewParent(DependencyObject? oldParent, DependencyObject? newParent)
+        {
+            // This API is only here for compatability with the old
+            // behavior.  Note that FrameworkElement does not have
+            // this virtual, so why do we need it here?
+
+            // Synchronize ForceInherit properties
+            // if (_parent != null && _parent is ContentElement)
+            // {
+            //    UIElement.SynchronizeForceInheritProperties(this, null, null, _parent);
+            // }
+            // else if (oldParent is ContentElement)
+            // {
+            //    UIElement.SynchronizeForceInheritProperties(this, null, null, oldParent);
+            // }
+
+            // Synchronize ReverseInheritProperty Flags
+            //
+            // NOTE: do this AFTER synchronizing force-inherited flags, since
+            // they often effect focusability and such.
+            // this.SynchronizeReverseInheritPropertyFlags(oldParent, false);
+        }
+
+        // OnAncestorChangedInternal variant when we know what type (FE/FCE) the
+        //  tree node is.
+        internal void OnAncestorChangedInternal(TreeChangeInfo parentTreeState)
+        {
+            // Cache the IsSelfInheritanceParent flag
+            bool wasSelfInheritanceParent = IsSelfInheritanceParent;
+
+            if (parentTreeState.Root != this)
+            {
+                // Clear the HasStyleChanged flag
+                // HasStyleChanged = false;
+                // HasStyleInvalidated = false;
+                // HasTemplateChanged = false;
+            }
+
+            // If this is a tree add operation update the ShouldLookupImplicitStyles
+            // flag with respect to your parent.
+            if (parentTreeState.IsAddOperation)
+            {
+                FrameworkObject fo = new(this);
+
+                fo.SetShouldLookupImplicitStyles();
+            }
+
+            // Invalidate ResourceReference properties
+            // if (HasResourceReference)
+            // {
+            //    // This operation may cause a style change and hence should be done before the call to
+            //    // InvalidateTreeDependents as it relies on the HasStyleChanged flag
+            //    TreeWalkHelper.OnResourcesChanged(this, ResourcesChangeInfo.TreeChangeInfo, false);
+            // }
+
+            // If parent is a FrameworkElement
+            // This is also an operation that could change the style
+            FrugalObjectList<DependencyProperty> currentInheritableProperties =
+            InvalidateTreeDependentProperties(parentTreeState, IsSelfInheritanceParent, wasSelfInheritanceParent);
+
+            // we have inherited properties that changes as a result of the above;
+            // invalidation; push that list of inherited properties on the stack
+            // for the children to use
+            parentTreeState.InheritablePropertiesStack.Push(currentInheritableProperties);
+
+            // Call OnAncestorChanged
+            OnAncestorChanged();
+
+            // Notify mentees if they exist
+            if (PotentiallyHasMentees)
+            {
+                // Raise the ResourcesChanged Event so that ResourceReferenceExpressions
+                // on non-[FE/FCE] listening for this can then update their values
+                RaiseClrEvent(FrameworkElement.ResourcesChangedKey, EventArgs.Empty);
+            }
+        }
+
+        // Helper method to retrieve and fire Clr Event handlers
+        internal void RaiseClrEvent(EventPrivateKey key, EventArgs args)
+        {
+            var store = EventHandlersStore;
+            if (store != null)
+            {
+                Delegate handler = store.Get(key);
+                if (handler != null)
+                {
+                    ((EventHandler)handler)(this, args);
+                }
+            }
+        }
+
+        /// <summary>
+        ///     Invoked when ancestor is changed.  This is invoked after
+        ///     the ancestor has changed, and the purpose is to allow elements to
+        ///     perform actions based on the changed ancestor.
+        /// </summary>
+        internal virtual void OnAncestorChanged()
+        {
+        }
+
+        // Helper method to retrieve and fire the InheritedPropertyChanged event
+        internal void RaiseInheritedPropertyChangedEvent(ref InheritablePropertyChangeInfo info)
+        {
+            var store = EventHandlersStore;
+            if (store != null)
+            {
+                Delegate handler = store.Get(FrameworkElement.InheritedPropertyChangedKey);
+                if (handler != null)
+                {
+                    InheritedPropertyChangedEventArgs args = new(ref info);
+                    ((InheritedPropertyChangedEventHandler)handler)(this, args);
+                }
+            }
+        }
+
+        // Invalidate all the properties that may have changed as a result of
+        //  changing this element's parent in the logical (and sometimes visual tree.)
+        internal FrugalObjectList<DependencyProperty> InvalidateTreeDependentProperties(
+            TreeChangeInfo parentTreeState,
+            bool isSelfInheritanceParent,
+            bool wasSelfInheritanceParent)
+        {
+            AncestorChangeInProgress = true;
+
+            // False == we don't know whether we're in a visibility collapsed tree.
+            InVisibilityCollapsedTree = false;
+
+            if (parentTreeState.TopmostCollapsedParentNode == null)
+            {
+                //// There is no ancestor node with Visibility=Collapsed.
+                ////  See if "fe" is the root of a collapsed subtree.
+                // if (Visibility == Visibility.Collapsed)
+                // {
+                //    // This is indeed the root of a collapsed subtree.
+                //    //  remember this information as we proceed on the tree walk.
+                //    parentTreeState.TopmostCollapsedParentNode = this;
+                //    // Yes, this FE node is in a visibility collapsed subtree.
+                //    InVisibilityCollapsedTree = true;
+                // }
+            }
+            else
+            {
+                // There is an ancestor node somewhere above us with
+                //  Visibility=Collapsed.  We're in a visibility collapsed subtree.
+                InVisibilityCollapsedTree = true;
+            }
+
+            try
+            {
+                // Style property is a special case of a non-inherited property that needs
+                // invalidation for parent changes. Invalidate StyleProperty if it hasn't been
+                // locally set because local value takes precedence over implicit references
+                // if (IsInitialized && !HasLocalStyle && (this != parentTreeState.Root))
+                // {
+                //    UpdateStyleProperty();
+                // }
+
+                // Style selfStyle = null;
+                // Style selfThemeStyle = null;
+                // DependencyObject templatedParent = null;
+
+                // int childIndex = -1;
+                // ChildRecord childRecord = new ChildRecord();
+                // bool isChildRecordValid = false;
+
+                // selfStyle = Style;
+                // selfThemeStyle = ThemeStyle;
+                // templatedParent = TemplatedParent;
+                // childIndex = TemplateChildIndex;
+
+                // StyleProperty could have changed during invalidation of
+                // ResourceReferenceExpressions if it
+                // were locally set or during the invalidation of unresolved implicitly
+                // referenced style
+                // bool hasStyleChanged = HasStyleChanged;
+
+                // Fetch selfStyle, hasStyleChanged and childIndex for the current node
+                // FrameworkElement.GetTemplatedParentChildRecord(templatedParent, childIndex,
+                // out childRecord, out isChildRecordValid);
+
+                // FrameworkContentElement parentFCE;
+                bool hasParent = FrameworkElement.GetFrameworkParent(
+                    this,
+                    out FrameworkElement parentFE/*, out parentFCE*/);
+
+                DependencyObject? parent = null;
+                InheritanceBehavior parentInheritanceBehavior = InheritanceBehavior.Default;
+                if (hasParent)
+                {
+                    if (parentFE != null)
+                    {
+                        parent = parentFE;
+                        parentInheritanceBehavior = parentFE.InheritanceBehavior;
+                    }
+
+                    // else
+                    // {
+                    //    parent = parentFCE;
+                    //    parentInheritanceBehavior = parentFCE.InheritanceBehavior;
+                    // }
+                }
+
+                if (!TreeWalkHelper.SkipNext(InheritanceBehavior) &&
+                    !TreeWalkHelper.SkipNow(parentInheritanceBehavior))
+                {
+                    // Synchronize InheritanceParent
+                    this.SynchronizeInheritanceParent(parent);
+                }
+                else if (!IsSelfInheritanceParent)
+                {
+                    // Set IsSelfInheritanceParet on the root node at a tree boundary
+                    // so that all inheritable properties are cached on it.
+                    SetIsSelfInheritanceParent();
+                }
+
+                // Loop through all cached inheritable properties for the parent to see if they
+                // should be invalidated.
+                return TreeWalkHelper.InvalidateTreeDependentProperties(
+                    parentTreeState,
+                    this,
+                    isSelfInheritanceParent,
+                    wasSelfInheritanceParent);
+            }
+            finally
+            {
+                AncestorChangeInProgress = false;
+
+                // 'false' just means 'we don't know' - see comment at definition of the flag.
+                InVisibilityCollapsedTree = false;
+            }
+        }
+
         /// <summary>
         ///     Notification that a specified property has been changed
         /// </summary>
@@ -868,6 +1161,14 @@ namespace Alternet.UI
             }
         }
 
+        private static void OnDataContextChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (e.NewValue == BindingExpressionBase.DisconnectedItem)
+                return;
+
+            ((FrameworkElement)d).RaiseDependencyPropertyChanged(DataContextChangedKey, e);
+        }
+
         // Helper method to retrieve and fire Clr Event handlers for DependencyPropertyChanged event
         private void RaiseDependencyPropertyChanged(EventPrivateKey key, DependencyPropertyChangedEventArgs args)
         {
@@ -879,307 +1180,6 @@ namespace Alternet.UI
                 {
                     ((DependencyPropertyChangedEventHandler)handler)(this, args);
                 }
-            }
-        }
-
-        /// <summary>
-        ///     DataContextChanged private key
-        /// </summary>
-        internal static readonly EventPrivateKey DataContextChangedKey = new();
-
-        private static void OnDataContextChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            if (e.NewValue == BindingExpressionBase.DisconnectedItem)
-                return;
-
-            ((FrameworkElement)d).RaiseDependencyPropertyChanged(DataContextChangedKey, e);
-        }
-
-        // Sets or Unsets the required flag based on
-        // the bool argument
-        internal void WriteInternalFlag(InternalFlags reqFlag, bool set)
-        {
-            if (set)
-            {
-                internalFlags |= reqFlag;
-            }
-            else
-            {
-                internalFlags &= (~reqFlag);
-            }
-        }
-
-        internal static bool GetFrameworkParent(FrameworkElement current, out FrameworkElement feParent)
-        {
-            FrameworkObject fo = new(current);
-
-            fo = fo.FrameworkParent;
-
-            feParent = fo.FE;
-
-            return fo.IsValid;
-        }
-
-        internal static DependencyObject GetFrameworkParent(object current)
-        {
-            FrameworkObject fo = new(current as DependencyObject);
-
-            fo = fo.FrameworkParent;
-
-            return fo.DO;
-        }
-
-        // Indicates that an ancestor change tree walk is progressing
-        // through the given node
-        internal bool AncestorChangeInProgress
-        {
-            get { return ReadInternalFlag(InternalFlags.AncestorChangeInProgress); }
-            set { WriteInternalFlag(InternalFlags.AncestorChangeInProgress, value); }
-        }
-
-        internal bool InVisibilityCollapsedTree
-        {
-            get { return ReadInternalFlag(InternalFlags.InVisibilityCollapsedTree); }
-            set { WriteInternalFlag(InternalFlags.InVisibilityCollapsedTree, value); }
-        }
-
-        /// <summary>
-        ///     Called before the parent is chanded to the new value.
-        /// </summary>
-        internal virtual void OnNewParent(DependencyObject? oldParent, DependencyObject? newParent)
-        {
-            // This API is only here for compatability with the old
-            // behavior.  Note that FrameworkElement does not have
-            // this virtual, so why do we need it here?
-
-            // Synchronize ForceInherit properties
-            // if (_parent != null && _parent is ContentElement)
-            // {
-            //    UIElement.SynchronizeForceInheritProperties(this, null, null, _parent);
-            // }
-            // else if (oldParent is ContentElement)
-            // {
-            //    UIElement.SynchronizeForceInheritProperties(this, null, null, oldParent);
-            // }
-
-            // Synchronize ReverseInheritProperty Flags
-            //
-            // NOTE: do this AFTER synchronizing force-inherited flags, since
-            // they often effect focusability and such.
-            // this.SynchronizeReverseInheritPropertyFlags(oldParent, false);
-        }
-
-        // OnAncestorChangedInternal variant when we know what type (FE/FCE) the
-        //  tree node is.
-        internal void OnAncestorChangedInternal(TreeChangeInfo parentTreeState)
-        {
-            // Cache the IsSelfInheritanceParent flag
-            bool wasSelfInheritanceParent = IsSelfInheritanceParent;
-
-            if (parentTreeState.Root != this)
-            {
-                // Clear the HasStyleChanged flag
-                // HasStyleChanged = false;
-                // HasStyleInvalidated = false;
-                // HasTemplateChanged = false;
-            }
-
-            // If this is a tree add operation update the ShouldLookupImplicitStyles
-            // flag with respect to your parent.
-            if (parentTreeState.IsAddOperation)
-            {
-                FrameworkObject fo = new(this);
-
-                fo.SetShouldLookupImplicitStyles();
-            }
-
-            // Invalidate ResourceReference properties
-            // if (HasResourceReference)
-            // {
-            //    // This operation may cause a style change and hence should be done before the call to
-            //    // InvalidateTreeDependents as it relies on the HasStyleChanged flag
-            //    TreeWalkHelper.OnResourcesChanged(this, ResourcesChangeInfo.TreeChangeInfo, false);
-            // }
-
-            // If parent is a FrameworkElement
-            // This is also an operation that could change the style
-            FrugalObjectList<DependencyProperty> currentInheritableProperties =
-            InvalidateTreeDependentProperties(parentTreeState, IsSelfInheritanceParent, wasSelfInheritanceParent);
-
-            // we have inherited properties that changes as a result of the above;
-            // invalidation; push that list of inherited properties on the stack
-            // for the children to use
-            parentTreeState.InheritablePropertiesStack.Push(currentInheritableProperties);
-
-            // Call OnAncestorChanged
-            OnAncestorChanged();
-
-            // Notify mentees if they exist
-            if (PotentiallyHasMentees)
-            {
-                // Raise the ResourcesChanged Event so that ResourceReferenceExpressions
-                // on non-[FE/FCE] listening for this can then update their values
-                RaiseClrEvent(FrameworkElement.ResourcesChangedKey, EventArgs.Empty);
-            }
-        }
-
-        /// <summary>
-        ///     ResourcesChanged private key
-        /// </summary>
-        internal static readonly EventPrivateKey ResourcesChangedKey = new();
-
-        // Helper method to retrieve and fire Clr Event handlers
-        internal void RaiseClrEvent(EventPrivateKey key, EventArgs args)
-        {
-            var store = EventHandlersStore;
-            if (store != null)
-            {
-                Delegate handler = store.Get(key);
-                if (handler != null)
-                {
-                    ((EventHandler)handler)(this, args);
-                }
-            }
-        }
-
-        /// <summary>
-        ///     Invoked when ancestor is changed.  This is invoked after
-        ///     the ancestor has changed, and the purpose is to allow elements to
-        ///     perform actions based on the changed ancestor.
-        /// </summary>
-        internal virtual void OnAncestorChanged()
-        {
-        }
-
-        // Helper method to retrieve and fire the InheritedPropertyChanged event
-        internal void RaiseInheritedPropertyChangedEvent(ref InheritablePropertyChangeInfo info)
-        {
-            var store = EventHandlersStore;
-            if (store != null)
-            {
-                Delegate handler = store.Get(FrameworkElement.InheritedPropertyChangedKey);
-                if (handler != null)
-                {
-                    InheritedPropertyChangedEventArgs args = new(ref info);
-                    ((InheritedPropertyChangedEventHandler)handler)(this, args);
-                }
-            }
-        }
-
-        // Invalidate all the properties that may have changed as a result of
-        //  changing this element's parent in the logical (and sometimes visual tree.)
-        internal FrugalObjectList<DependencyProperty> InvalidateTreeDependentProperties(
-            TreeChangeInfo parentTreeState,
-            bool isSelfInheritanceParent,
-            bool wasSelfInheritanceParent)
-        {
-            AncestorChangeInProgress = true;
-
-            // False == we don't know whether we're in a visibility collapsed tree.
-            InVisibilityCollapsedTree = false;
-
-            if (parentTreeState.TopmostCollapsedParentNode == null)
-            {
-                //// There is no ancestor node with Visibility=Collapsed.
-                ////  See if "fe" is the root of a collapsed subtree.
-                // if (Visibility == Visibility.Collapsed)
-                // {
-                //    // This is indeed the root of a collapsed subtree.
-                //    //  remember this information as we proceed on the tree walk.
-                //    parentTreeState.TopmostCollapsedParentNode = this;
-                //    // Yes, this FE node is in a visibility collapsed subtree.
-                //    InVisibilityCollapsedTree = true;
-                // }
-            }
-            else
-            {
-                // There is an ancestor node somewhere above us with
-                //  Visibility=Collapsed.  We're in a visibility collapsed subtree.
-                InVisibilityCollapsedTree = true;
-            }
-
-            try
-            {
-                // Style property is a special case of a non-inherited property that needs
-                // invalidation for parent changes. Invalidate StyleProperty if it hasn't been
-                // locally set because local value takes precedence over implicit references
-                // if (IsInitialized && !HasLocalStyle && (this != parentTreeState.Root))
-                // {
-                //    UpdateStyleProperty();
-                // }
-
-                // Style selfStyle = null;
-                // Style selfThemeStyle = null;
-                // DependencyObject templatedParent = null;
-
-                // int childIndex = -1;
-                // ChildRecord childRecord = new ChildRecord();
-                // bool isChildRecordValid = false;
-
-                // selfStyle = Style;
-                // selfThemeStyle = ThemeStyle;
-                // templatedParent = TemplatedParent;
-                // childIndex = TemplateChildIndex;
-
-                // StyleProperty could have changed during invalidation of
-                // ResourceReferenceExpressions if it
-                // were locally set or during the invalidation of unresolved implicitly
-                // referenced style
-                // bool hasStyleChanged = HasStyleChanged;
-
-                // Fetch selfStyle, hasStyleChanged and childIndex for the current node
-                // FrameworkElement.GetTemplatedParentChildRecord(templatedParent, childIndex,
-                // out childRecord, out isChildRecordValid);
-
-                // FrameworkContentElement parentFCE;
-                bool hasParent = FrameworkElement.GetFrameworkParent(
-                    this,
-                    out FrameworkElement parentFE/*, out parentFCE*/);
-
-                DependencyObject? parent = null;
-                InheritanceBehavior parentInheritanceBehavior = InheritanceBehavior.Default;
-                if (hasParent)
-                {
-                    if (parentFE != null)
-                    {
-                        parent = parentFE;
-                        parentInheritanceBehavior = parentFE.InheritanceBehavior;
-                    }
-
-                    // else
-                    // {
-                    //    parent = parentFCE;
-                    //    parentInheritanceBehavior = parentFCE.InheritanceBehavior;
-                    // }
-                }
-
-                if (!TreeWalkHelper.SkipNext(InheritanceBehavior) &&
-                    !TreeWalkHelper.SkipNow(parentInheritanceBehavior))
-                {
-                    // Synchronize InheritanceParent
-                    this.SynchronizeInheritanceParent(parent);
-                }
-                else if (!IsSelfInheritanceParent)
-                {
-                    // Set IsSelfInheritanceParet on the root node at a tree boundary
-                    // so that all inheritable properties are cached on it.
-                    SetIsSelfInheritanceParent();
-                }
-
-                // Loop through all cached inheritable properties for the parent to see if they
-                // should be invalidated.
-                return TreeWalkHelper.InvalidateTreeDependentProperties(
-                    parentTreeState,
-                    this,
-                    isSelfInheritanceParent,
-                    wasSelfInheritanceParent);
-            }
-            finally
-            {
-                AncestorChangeInProgress = false;
-
-                // 'false' just means 'we don't know' - see comment at definition of the flag.
-                InVisibilityCollapsedTree = false;
             }
         }
 
