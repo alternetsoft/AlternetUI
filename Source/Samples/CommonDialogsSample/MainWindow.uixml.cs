@@ -25,17 +25,6 @@ namespace CommonDialogsSample
 
         }
 
-        internal void LogFontFamilies()
-        {
-            var s = string.Empty;
-            foreach (string s2 in FontFamily.FamiliesNames)
-            {
-                s += s2 + Environment.NewLine;
-            }
-
-            File.WriteAllText("e:/families.txt", s);
-        }
-
         enum TestExceptionType
         {
             InvalidOperationException,
