@@ -482,8 +482,7 @@ namespace Alternet.UI
         /// method and passes to it the main window of the application.</remarks>
         public void Run(Window window)
         {
-            if (window == null) throw new ArgumentNullException(nameof(window));
-            this.window = window;
+            this.window = window ?? throw new ArgumentNullException(nameof(window));
             CheckDisposed();
             window.Show();
             nativeApplication.Run(
