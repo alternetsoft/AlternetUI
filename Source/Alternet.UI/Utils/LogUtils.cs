@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Alternet.Drawing;
 
 namespace Alternet.UI
 {
@@ -21,6 +22,23 @@ namespace Alternet.UI
         public static int GenNewId()
         {
             return id++;
+        }
+
+        /// <summary>
+        /// Logs <see cref="FontFamily.FamiliesNames"/>.
+        /// </summary>
+        public static void LogFontFamilies()
+        {
+            var s = string.Empty;
+            foreach (string s2 in FontFamily.FamiliesNames)
+            {
+                s += s2 + Environment.NewLine;
+            }
+
+            LogToFile("=========");
+            LogToFile("Font Families:");
+            LogToFile(s);
+            LogToFile("=========");
         }
 
         /// <summary>
