@@ -132,7 +132,9 @@ namespace PropertyGridSample
             {
                 Panel panel = (c as Panel)!;
                 panel.Height = 150;
+                panel.BackgroundColor = Color.BurlyWood;
             });
+
 
             Actions.Add(typeof(Control), (c) =>
             {

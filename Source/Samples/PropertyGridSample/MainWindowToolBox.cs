@@ -14,11 +14,17 @@ namespace PropertyGridSample
     {
         private void InitToolBox()
         {
-            ControlListBoxItem item = new(typeof(WelcomeControl));
-            panel.LeftTreeView.Add(item);
-
-            Type[] badTypes = new Type[]
+            void Fn()
             {
+
+                ControlListBoxItem item = new(typeof(WelcomeControl))
+                {
+                    Text = "Welcome Page",
+                };
+                panel.LeftTreeView.Add(item);
+
+                Type[] badTypes = new Type[]
+                {
               typeof(ContextMenu), // added using other style
               typeof(NonVisualControl), // has no sense to add
               typeof(StatusBarPanel), // part of other control
@@ -42,25 +48,36 @@ namespace PropertyGridSample
               typeof(PropertyGrid),
               typeof(TabControl), // pages are not shown. Why?
               typeof(Window),
-            };
+                };
 
-            IEnumerable<Type> result = AssemblyUtils.GetTypeDescendants(typeof(Control));
-            foreach (Type type in result)
-            {
-                if (Array.IndexOf(badTypes, type) >= 0)
-                    continue;
-                if (type.Assembly != typeof(Control).Assembly)
-                    continue;
-                item = new(type);
+                IEnumerable<Type> result = AssemblyUtils.GetTypeDescendants(typeof(Control));
+                foreach (Type type in result)
+                {
+                    if (Array.IndexOf(badTypes, type) >= 0)
+                        continue;
+                    if (type.Assembly != typeof(Control).Assembly)
+                        continue;
+                    item = new(type);
+                    panel.LeftTreeView.Add(item);
+                }
+
+                item = new(typeof(SettingsControl))
+                {
+                    PropInstance = PropertyGridSettings.Default,
+                    EventInstance = new object(),
+                    Text = "Demo Options",
+                };
                 panel.LeftTreeView.Add(item);
+
+                AddDialog<ColorDialog>();
+                AddDialog<OpenFileDialog>();
+                AddDialog<SaveFileDialog>();
+                AddDialog<SelectDirectoryDialog>();
+                AddDialog<FontDialog>();
+                /*AddContextMenu<ContextMenu>();*/
             }
 
-            AddDialog<ColorDialog>();
-            AddDialog<OpenFileDialog>();
-            AddDialog<SaveFileDialog>();
-            AddDialog<SelectDirectoryDialog>();
-            AddDialog<FontDialog>();
-            AddContextMenu<ContextMenu>();
+            panel.LeftTreeView.DoInsideUpdate(() => { Fn(); });
         }
 
         internal void AddMainWindow()

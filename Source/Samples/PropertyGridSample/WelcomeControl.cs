@@ -27,30 +27,12 @@ namespace PropertyGridSample
             Text = descText,
             Margin = new(0,5,0,15),
         };
-        private readonly PropertyGrid propertyGrid = new()
-        {
-            Height = 350,
-            HorizontalAlignment = HorizontalAlignment.Stretch,
-        };
 
         public WelcomeControl()
         {
-            propertyGrid.ApplyColors(PropertyGridColors.ColorSchemeWhite);
-            propertyGrid.BackgroundToLineColor();
-
             Children.Add(stackPanel);
             stackPanel.Children.Add(header);
             stackPanel.Children.Add(desc);
-            stackPanel.Children.Add(propertyGrid);
-
-            propertyGrid.SetVerticalSpacing();
-            propertyGrid.SetProps(PropertyGridSettings.Default);
-            propertyGrid.LayoutUpdated += PropertyGrid_LayoutUpdated;
-        }
-
-        private void PropertyGrid_LayoutUpdated(object? sender, EventArgs e)
-        {
-            propertyGrid.CenterSplitter();
         }
     }
 }

@@ -28,17 +28,24 @@ namespace PropertyGridSample
         static MainWindow()
         {
 #if DEBUG
-            Application.LogFileIsEnabled = true;
+            Application.LogFileIsEnabled = false;
 #endif
+            InitSampleLocalization();
+
+            AuiNotebook.DefaultCreateStyle = AuiNotebookCreateStyle.Top;
+
+            // Registers known collection property editors.
+            PropertyGrid.RegisterCollectionEditors();
+
+        }
+
+        private static void InitSampleLocalization()
+        {
             // Sample localization of "Custom" color item (which calls color dialog)
             KnownColorStrings.Default.Custom = "Custom...";
 
             // Sample localization of color name
             KnownColorStrings.Default.Black = "black";
-
-            AuiNotebook.DefaultCreateStyle = AuiNotebookCreateStyle.Top;
-
-            PropertyGrid.RegisterCollectionEditors();
 
             // Sample localization of Enum property values.
             var localizableEnum = PropertyGrid.GetChoices<BrushType>();
@@ -84,7 +91,6 @@ namespace PropertyGridSample
 
             InitToolBox();
 
-
             PropGrid.PropertySelected += PGPropertySelected;
             PropGrid.PropertyChanged += PGPropertyChanged;
             PropGrid.PropertyChanging += PGPropertyChanging;
@@ -100,6 +106,7 @@ namespace PropertyGridSample
             PropGrid.ColEndDrag += PGColEndDrag;
             PropGrid.ButtonClick += PropertyGrid_ButtonClick;
 
+            // Ctrl+Down moves to next property in PropertyGrid
             PropGrid.AddActionTrigger(
                 PropertyGridKeyboardAction.ActionNextProperty,
                 Key.DownArrow,
@@ -126,9 +133,7 @@ namespace PropertyGridSample
             controlPanel.MouseDown += ControlPanel_MouseDown;
             controlPanel.DragStart += ControlPanel_DragStart;
 
-            Application.DebugLog($"Net Version = {Environment.Version}");
-            if(Application.LogFileIsEnabled)
-                Application.DebugLog($"Log File = {Application.LogFilePath}");
+            panel.WriteWelcomeLogMessages();
         }
 
         private void Default_PropertyChanged(object? sender, PropertyChangeEventArgs e)
@@ -165,27 +170,34 @@ namespace PropertyGridSample
 
             void DoAction()
             {
-                controlPanel.Children.Clear();
+                controlPanel.GetVisibleChildOrNull()?.Hide();
                 var item = panel.LeftTreeView.SelectedItem as ControlListBoxItem;
                 var type = item?.InstanceType;
 
                 if (item?.Instance is Control control)
                 {
-                    var s = control.GetType().ToString();
-                    var splitted = s.Split('.');
-                    control.Name ??=
-                        splitted[splitted.Length-1] + LogUtils.GenNewId().ToString();
+                    if(control.Name == null)
+                    {
+                        var s = control.GetType().ToString();
+                        var splitted = s.Split('.');
+                        control.Name = splitted[splitted.Length - 1] + LogUtils.GenNewId().ToString();
+                    }
+
                     control.Parent ??= controlPanel;
+                    control.Visible = true;
+                    Application.Current.ProcessPendingEvents();
                 }
 
                 if (type == typeof(WelcomeControl))
                 {
                     InitDefaultPropertyGrid();
+                    Application.Current.ProcessPendingEvents();
                     UpdateEventsPropertyGrid(null);
                 }
-                else 
+                else
                 {
-                    UpdateEventsPropertyGrid(item?.PropInstance);
+                    UpdateEventsPropertyGrid(item?.EventInstance);
+                    Application.Current.ProcessPendingEvents();
                     PropGrid.SetProps(item?.PropInstance, true);
                 }
             }
@@ -208,15 +220,20 @@ namespace PropertyGridSample
                 });
             }
 
-            controlPanel.SuspendLayout();
+            //controlPanel.SuspendLayout();
             try
             {
                 DoAction();
             }
             finally
             {
-                controlPanel.ResumeLayout();
+                //controlPanel.ResumeLayout();
             }
+        }
+
+        public class SettingsControl : Control
+        {
+
         }
     }
 }

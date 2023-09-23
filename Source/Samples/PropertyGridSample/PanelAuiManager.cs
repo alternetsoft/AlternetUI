@@ -221,6 +221,13 @@ namespace Alternet.UI
             LogControl.FocusAndSelectItem(LogControl.LastRootItem);
         }
 
+        public virtual void WriteWelcomeLogMessages()
+        {
+            Application.DebugLog($"Net Version = {Environment.Version}");
+            if (Application.LogFileIsEnabled)
+                Application.DebugLog($"Log File = {Application.LogFilePath}");
+        }
+
         public virtual void InitLogContextMenu()
         {
             LogContextMenu.Add(new("Clear", () => { LogControl.RemoveAll(); }));

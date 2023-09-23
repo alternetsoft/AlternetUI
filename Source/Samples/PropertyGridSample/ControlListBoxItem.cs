@@ -11,16 +11,33 @@ namespace PropertyGridSample
     {
         private object? instance;
         private object? propInstance;
+        private object? eventInstance;
         private readonly Type type;
 
-        public ControlListBoxItem(Type type, object? instance = null) : base()
+        public ControlListBoxItem(Type type, object? instance = null)
+            : base()
         {
             this.type = type;
             this.instance = instance;
-            this.Text = ToString();
+            this.Text = type.Name;
         }
 
         public Type InstanceType => type;
+
+        public object? EventInstance
+        {
+            get
+            {
+                if (eventInstance == null)
+                    return Instance;
+                return eventInstance;
+            }
+
+            set
+            {
+                eventInstance = value;
+            }
+        }
 
         public object? PropInstance
         {
@@ -56,13 +73,6 @@ namespace PropertyGridSample
                 return instance!;
             action(instance!);
             return instance!;
-        }
-
-        public override string ToString()
-        {
-            if (type.Name == nameof(WelcomeControl))
-                return "Welcome Page";
-            return type.Name;
         }
     }
 }
