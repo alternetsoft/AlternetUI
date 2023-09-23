@@ -1,13 +1,52 @@
-# 0.9.400 (2023 September ?)
+# 0.9.402 (2023 September ??)
 
-- Added AuiManager, AuiToolbar, AuiNotebook controls.
-- Added AuiManager sample.
-- Added PropertyGrid control and sample.
-- Add Control: CanAcceptFocus, IsFocusable, BackgroundColor, ForegroundColor.
+
+# 0.9.401 (2023 September 22)
+
+- Complete rewrite of the StatusBar control (many new features, fixed known bugs).
+- Added PanelAuiManager control.
+- Fixed ListView.Items were not added without created native control.
+- Added to TreeView: FirstItem, LastItem, LastRootItem, Add, FocusAndSelectItem, Add(string).
+- Added to Control: DoInsideUpdate, InUpdates, DragStart event.
+- Added to Collection: SetCount.
+- Added to (ListViewItrem, TreeViewItem): Assign, Clone.
+- Added to ListControl: RemoveAll, ClearSelected, FindString.
+- Added to Application: different loggind methods.
+- Fixed DragDrop related issues.
+- Fixed (ListBox, ComboBox) item change not applied to control.
+- Add to Button: HoveredImage, PressedImage, DisabledImage.
+- Fixed incorrect event handling in Control.cpp.
+- Add static Button.ImagesEnabled (mostly for MacOs).
+- TreeViewItem.IsSelected is now writable.
+- Improved NativeApiGenerator: Now extra code is not generated for simple properties and methods (speed up overall lib performance), fixed bugs.
+- Fixed Window exception in some cases
+
+# 0.9.400 (2023 September 15)
+
+- Added PropertyGrid, AuiManager, AuiToolbar, AuiNotebook, PanelOKCancelButtons controls.
+- Added Svg images support.
+- Added AuiManager, PropertyGrid samples.
+- Added Validator class and interface (allows to apply constraints on input data in TextBox and other controls).
+- Added to Control: CanAcceptFocus, IsFocusable, BackgroundColor, ForegroundColor, Disposed event.
+- Added to TextBox: Validator, DefaultValidator.
+- Added to TreeView: RemoveSelected, RemoveAll, RemoveItemAndSelectSibling.
+- Added to TreeViewItem: NextOrPrevSibling.
+- Added visual editor for list and collection properties.
 - Improved Brush and Font handling in Control.
 - Fixed bugs in ComboBox.
 - Improved Font, Brush (and its descendants).
-- Collection class speedup.
+- Improved Native class generator (speedup in Native controls, bug fixes). 
+- Speed up in Collection, TreeView, TreeViewItem, ListView, .
+- Fixed (TreeView, ListBox) raised SelectionChanged twice.
+- Fixed exceptions in DateTimePicker, StatusBar.
+- Implemented localization related classes, methods and props (full localization is not completed yet).
+- Improved ContextMenu.Show.
+- Added to Window: HasSystemMenu.
+- Implemented in Color: speedup, new methods and props, localization.
+- Added Control.Parent set method.
+- Speed up: MenuItem.Items are not created for items without childs.
+- Added to ResourceLoader: Default, StreamFromUrl, etc.
+- Fixed bug in application exit if no visible form.
 
 # 0.9.300 (2023 August 9)
 
