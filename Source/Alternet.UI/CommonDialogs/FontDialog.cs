@@ -136,6 +136,7 @@ namespace Alternet.UI
         /// <remarks>
         /// The default value is black color.
         /// </remarks>
+        [Browsable(false)]
         public Color Color
         {
             get
