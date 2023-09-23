@@ -6,7 +6,7 @@
         Title="Alternet UI Menu Sample" StartLocation="CenterScreen">
   
   <Window.InputBindings>
-    <KeyBinding Gesture="Ctrl+Shift+G" Command="{Binding ExportToPngCommand}" />
+    <KeyBinding Gesture="Ctrl+Shift+A" Command="{Binding ExportToPngCommand}" />
   </Window.InputBindings>
   <Window.Menu>
     <MainMenu>

@@ -142,18 +142,25 @@ namespace MenuSample
 
             dynamicToolbarItemsSeparator = new ToolbarItem("-");
             toolbar?.Items.Add(dynamicToolbarItemsSeparator);
+
+            Application.Current.LogMessage += Current_LogMessage;
+        }
+
+        private void Current_LogMessage(object? sender, LogMessageEventArgs e)
+        {
+            LogEvent(e.Message);
         }
 
         private void PlatformSpecificInitialize()
         {
-            bool runningUnderMacOS = WebBrowser.GetBackendOS() == WebBrowserBackendOS.MacOS;
-            roleControlsPanel.Visible = runningUnderMacOS;
+            roleControlsPanel.Visible = Application.IsMacOs;
         }
 
         public Command? SaveCommand { get; private set; }
         public Command? ExportToPngCommand { get; private set; }
 
-        private void OpenMenuItem_Click(object? sender, EventArgs e) => LogEvent("Open");
+        private void OpenMenuItem_Click(object? sender, EventArgs e) =>
+            LogEvent("Open");
 
         private void SaveEnabledMenuItem_Click(object? sender, EventArgs e) =>
             SaveCommand!.RaiseCanExecuteChanged();

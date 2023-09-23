@@ -13,7 +13,7 @@ namespace Alternet.UI
     /// InputBinding - InputGesture and ICommand combination.
     /// Used to specify the binding between Gesture and Command at Element level.
     /// </summary>
-    public class InputBinding : DependencyObject, ICommandSource
+    public class InputBinding : FrameworkElement, ICommandSource
     {
         /// <summary>
         /// Dependency property for <see cref="CommandTarget"/>.
