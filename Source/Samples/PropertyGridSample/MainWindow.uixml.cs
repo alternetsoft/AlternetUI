@@ -76,13 +76,13 @@ namespace PropertyGridSample
             PropGrid.CreateStyleEx = PropertyGridCreateStyleEx.AlwaysAllowFocus;
 
             Icon = ImageSet.FromUrlOrNull("embres:PropertyGridSample.Sample.ico");
-            panel.InitLogContextMenu();
 
             InitializeComponent();
 
             Children.Add(panel);
 
             panel.LeftTreeView.SelectionChanged += ControlsListBox_SelectionChanged;
+            panel.LogControl.Required();
 
             // Center pane
             panel.Manager.AddPane(controlPanel, panel.CenterPane);

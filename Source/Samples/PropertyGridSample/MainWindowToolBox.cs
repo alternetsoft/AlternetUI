@@ -100,7 +100,7 @@ namespace PropertyGridSample
             panel.LeftTreeView.Add(item);
         }
 
-        private void AddContextMenu<T>()
+        internal void AddContextMenu<T>()
             where T : ContextMenu
         {
             var menu = (T)ControlListBoxItem.CreateInstance(typeof(T))!;
