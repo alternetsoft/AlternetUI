@@ -205,7 +205,7 @@ namespace Alternet.UI
         /// <param name="caption">Text for the new page.</param>
         /// <param name="select">Specifies whether the page should be selected.</param>
         /// <param name="bitmap">image for the new page. Optional.</param>
-        /// <returns><c>true</c> if successful, <c>false</c> otherwise.</returns>
+        /// <returns><c>int</c> value with page index if successful, <c>null</c> otherwise.</returns>
         /// <remarks>
         /// If the <paramref name="select"/> parameter is true, calling
         /// this will generate a page change event.
@@ -214,17 +214,21 @@ namespace Alternet.UI
         /// <see cref="InsertPage"/> is similar to <see cref="AddPage"/>, but allows
         /// the ability to specify the insert location.
         /// </remarks>
-        public bool AddPage(
+        public int? AddPage(
             Control page,
             string caption,
             bool select = true,
             ImageSet? bitmap = null)
         {
-            return NativeControl.AddPage(
+            var result = NativeControl.AddPage(
                 page.WxWidget,
                 caption,
                 select,
                 bitmap?.NativeImageSet);
+            if (result)
+                return (int)GetPageCount() - 1;
+            else
+                return null;
         }
 
         /// <summary>
@@ -244,19 +248,23 @@ namespace Alternet.UI
         /// <see cref="InsertPage"/> is similar to <see cref="AddPage"/>, but allows
         /// the ability to specify the insert location.
         /// </remarks>
-        public bool InsertPage(
-            ulong pageIdx,
+        public int? InsertPage(
+            int pageIdx,
             Control page,
             string caption,
             bool select = true,
             ImageSet? bitmap = null)
         {
-            return NativeControl.InsertPage(
-                pageIdx,
+            var result = NativeControl.InsertPage(
+                (ulong)pageIdx,
                 page.WxWidget,
                 caption,
                 select,
                 bitmap?.NativeImageSet);
+            if (result)
+                return pageIdx;
+            else
+                return null;
         }
 
         /// <summary>
@@ -268,9 +276,9 @@ namespace Alternet.UI
         /// <remarks>
         /// Calling this method will generate a page change event.
         /// </remarks>
-        public bool DeletePage(ulong page)
+        public bool DeletePage(int page)
         {
-            return NativeControl.DeletePage(page);
+            return NativeControl.DeletePage((ulong)page);
         }
 
         /// <summary>
@@ -279,17 +287,17 @@ namespace Alternet.UI
         /// <param name="page">Page index</param>
         /// <returns><c>true</c> if operation was successfull,
         /// <c>false</c> otherwise.</returns>
-        public bool RemovePage(ulong page)
+        public bool RemovePage(int page)
         {
-            return NativeControl.RemovePage(page);
+            return NativeControl.RemovePage((ulong)page);
         }
 
         /// <summary>
         /// Returns the number of pages in the notebook.
         /// </summary>
-        public ulong GetPageCount()
+        public int GetPageCount()
         {
-            return NativeControl.GetPageCount();
+            return (int)NativeControl.GetPageCount();
         }
 
         /// <summary>
@@ -297,11 +305,14 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="page">Page index.</param>
         /// <remarks>
-        /// If the window is not found in the notebook, -1 is returned.
+        /// If the window is not found in the notebook, <c>null</c> is returned.
         /// </remarks>
-        public int FindPage(Control page)
+        public int? FindPage(Control page)
         {
-            return NativeControl.FindPage(page.WxWidget);
+            var result = NativeControl.FindPage(page.WxWidget);
+            if (result < 0)
+                return null;
+            return result;
         }
 
         /// <summary>
@@ -310,18 +321,18 @@ namespace Alternet.UI
         /// <param name="page">Page index.</param>
         /// <param name="text">New tab label.</param>
         /// <returns></returns>
-        public bool SetPageText(ulong page, string text)
+        public bool SetPageText(int page, string text)
         {
-            return NativeControl.SetPageText(page, text);
+            return NativeControl.SetPageText((ulong)page, text);
         }
 
         /// <summary>
         /// Returns the tab label for the page.
         /// </summary>
         /// <param name="pageIdx">Page index.</param>
-        public string GetPageText(ulong pageIdx)
+        public string GetPageText(int pageIdx)
         {
-            return NativeControl.GetPageText(pageIdx);
+            return NativeControl.GetPageText((ulong)pageIdx);
         }
 
         /// <summary>
@@ -331,18 +342,18 @@ namespace Alternet.UI
         /// <param name="text">New tooltip value.</param>
         /// <returns><c>true</c> if tooltip was updated, <c>false</c> if it failed,
         /// e.g. because the page index is invalid.</returns>
-        public bool SetPageToolTip(ulong page, string text)
+        public bool SetPageToolTip(int page, string text)
         {
-            return NativeControl.SetPageToolTip(page, text);
+            return NativeControl.SetPageToolTip((ulong)page, text);
         }
 
         /// <summary>
         /// Returns the tooltip for the tab label of the page.
         /// </summary>
         /// <param name="pageIdx">Page index.</param>
-        public string GetPageToolTip(ulong pageIdx)
+        public string GetPageToolTip(int pageIdx)
         {
-            return NativeControl.GetPageToolTip(pageIdx);
+            return NativeControl.GetPageToolTip((ulong)pageIdx);
         }
 
         /// <summary>
@@ -353,9 +364,9 @@ namespace Alternet.UI
         /// <remarks>
         /// To remove a bitmap from the tab caption, pass <c>null</c>.
         /// </remarks>
-        public bool SetPageBitmap(ulong page, ImageSet? bitmap)
+        public bool SetPageBitmap(int page, ImageSet? bitmap)
         {
-            return NativeControl.SetPageBitmap(page, bitmap?.NativeImageSet);
+            return NativeControl.SetPageBitmap((ulong)page, bitmap?.NativeImageSet);
         }
 
         /// <summary>
@@ -365,18 +376,20 @@ namespace Alternet.UI
         /// <remarks>
         /// Calling this method will generate a page change event.
         /// </remarks>
-        public long SetSelection(ulong newPage)
+        public int SetSelection(int newPage)
         {
-            return NativeControl.SetSelection(newPage);
+            return (int)NativeControl.SetSelection((ulong)newPage);
         }
 
         /// <summary>
         /// Returns the currently selected page index.
         /// </summary>
         /// <returns></returns>
-        public long GetSelection()
+        public int? GetSelection()
         {
-            return NativeControl.GetSelection();
+            if (GetPageCount() == 0)
+                return null;
+            return (int)NativeControl.GetSelection();
         }
 
         /// <summary>
@@ -388,12 +401,12 @@ namespace Alternet.UI
         /// be one of the following: Top, Bottom, Left, or Right.</param>
         /// <exception cref="ArgumentException"><paramref name="direction"/>
         /// is incorrect.</exception>
-        public void Split(ulong page, GenericDirection direction)
+        public void Split(int page, GenericDirection direction)
         {
             if (direction == GenericDirection.Top || direction == GenericDirection.Bottom
                 || direction == GenericDirection.Right ||
                 direction == GenericDirection.Left)
-                NativeControl.Split(page, (int)direction);
+                NativeControl.Split((ulong)page, (int)direction);
             else
                 throw new ArgumentException(nameof(direction));
         }
@@ -447,9 +460,9 @@ namespace Alternet.UI
         /// This function behaves as <see cref="SetSelection"/> but does not
         /// generate the page changing events.
         /// </remarks>
-        public long ChangeSelection(ulong newPage)
+        public int ChangeSelection(int newPage)
         {
-            return NativeControl.ChangeSelection(newPage);
+            return (int)NativeControl.ChangeSelection((ulong)newPage);
         }
 
         /// <summary>
@@ -466,7 +479,7 @@ namespace Alternet.UI
         /// Sets the font for measuring tab labels.
         /// </summary>
         /// <param name="font">New font value.</param>
-        public void SetMeasuringFont(Font? font)
+        public void SetMeasuringFont(Font? font = null)
         {
             if (font == null)
                 font = Font.Default;
@@ -477,7 +490,7 @@ namespace Alternet.UI
         /// Sets the font for drawing unselected tab labels.
         /// </summary>
         /// <param name="font">New font value.</param>
-        public void SetNormalFont(Font? font)
+        public void SetNormalFont(Font? font = null)
         {
             if (font == null)
                 font = Font.Default;
@@ -488,7 +501,7 @@ namespace Alternet.UI
         /// Sets the font for drawing selected tab labels.
         /// </summary>
         /// <param name="font">New font value.</param>
-        public void SetSelectedFont(Font? font)
+        public void SetSelectedFont(Font? font = null)
         {
             if (font == null)
                 font = Font.Default;
@@ -499,9 +512,9 @@ namespace Alternet.UI
         /// Returns the page specified by the given index.
         /// </summary>
         /// <param name="pageIdx">Page index.</param>
-        internal IntPtr GetPage(ulong pageIdx)
+        internal IntPtr GetPage(int pageIdx)
         {
-            return NativeControl.GetPage(pageIdx);
+            return NativeControl.GetPage((ulong)pageIdx);
         }
 
         /// <summary>
