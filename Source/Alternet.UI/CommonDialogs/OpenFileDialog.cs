@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel;
 
 namespace Alternet.UI
 {
@@ -35,6 +36,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets the file names of all selected files in the dialog window.
         /// </summary>
+        [Browsable(false)]
         public string[] FileNames
         {
             get
