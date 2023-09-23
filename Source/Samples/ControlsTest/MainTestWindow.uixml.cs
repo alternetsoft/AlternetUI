@@ -4,8 +4,8 @@ namespace ControlsTest
 {
     internal partial class MainTestWindow : Window, ITestPageSite
     {
+        private readonly PageContainer pageContainer = new ();
         private int lastEventNumber = 1;
-        private PageContainer pageContainer = new ();
 
         public MainTestWindow()
         {
@@ -20,7 +20,6 @@ namespace ControlsTest
             {
                 WebBrowserTestPage.UseBackend = WebBrowserBackend.Edge;
                 AddWebBrowserPage("Web Browser Edge");
-                /*AddWebBrowserPage("Web Browser Edge2");*/
             }
 
             if (WebBrowser.IsBackendAvailable(WebBrowserBackend.WebKit))

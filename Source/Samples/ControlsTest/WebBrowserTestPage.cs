@@ -27,28 +27,136 @@ namespace ControlsTest
         private readonly WebBrowserFindParams findParams = new();
         private readonly Dictionary<string, MethodCaller> testActions = new();
 
-        private StackPanel webBrowserToolbarPanel;
+        private readonly Button zoomInButton = new()
+        {
+            Margin = new Thickness(0, 5, 5, 5),
+            Image = Bitmap.FromUrl($"{ResPrefix}plus-{ImageSize}.png"),
+            Visible = true,
+        };
 
-        private Button zoomInButton;
-        private Button zoomOutButton;
-        private Button backButton;
-        private Button goButton;
-        private Button forwardButton;
+        private readonly Button zoomOutButton = new()
+        {
+            Margin = new Thickness(0, 5, 5, 5),
+            Image = Bitmap.FromUrl($"{ResPrefix}minus-{ImageSize}.png"),
+            Visible = true,
+        };
 
-        private TextBox urlTextBox;
-        private StackPanel findOptionsPanel;
-        private CheckBox findWrapCheckBox;
-        private CheckBox findEntireWordCheckBox;
-        private CheckBox findMatchCaseCheckBox;
-        private CheckBox findHighlightResultCheckBox;
-        private CheckBox findBackwardsCheckBox;
-        private StackPanel findPanel;
-        private TextBox findTextBox;
-        private Button findButton;
-        private Button findClearButton;
-        private SplitterPanel mainPanel;
-        private ListBox listBox1;
+        private readonly Button backButton = new()
+        {
+            Margin = new Thickness(0, 5, 5, 5),
+            Image = Bitmap.FromUrl($"{ResPrefix}arrow-left-{ImageSize}.png"),
+        };
 
+        private readonly Button goButton = new()
+        {
+            Margin = new Thickness(0, 5, 0, 5),
+            Image = Bitmap.FromUrl($"{ResPrefix}caret-right-{ImageSize}.png"),
+        };
+
+        private readonly Button forwardButton = new()
+        {
+            Margin = new Thickness(0, 5, 5, 5),
+            Image = Bitmap.FromUrl($"{ResPrefix}arrow-right-{ImageSize}.png"),
+        };
+
+        private readonly TextBox urlTextBox = new()
+        {
+            Margin = new Thickness(0, 5, 5, 5),
+            HorizontalAlignment = HorizontalAlignment.Stretch,
+            Width = 200,
+        };
+
+        private readonly Label headerLabel = new()
+        {
+            Text = "Web Browser Control",
+            Margin = 5,
+            VerticalAlignment = VerticalAlignment.Center,
+        };
+
+        private readonly Grid webBrowserGrid = new()
+        {
+            Margin = 5,
+            HorizontalAlignment = HorizontalAlignment.Stretch,
+        };
+
+        private readonly WebBrowser webBrowser1 = new()
+        {
+        };
+
+        private readonly SplitterPanel mainPanel = new()
+        {
+            Margin = 5,
+        };
+
+        private readonly StackPanel webBrowserToolbarPanel = new()
+        {
+            Margin = new Thickness(5, 5, 5, 5),
+            HorizontalAlignment = HorizontalAlignment.Stretch,
+            Orientation = StackPanelOrientation.Horizontal,
+        };
+
+        private readonly StackPanel findOptionsPanel = new()
+        {
+            Margin = new(5, 5, 5, 5),
+            Orientation = StackPanelOrientation.Horizontal,
+        };
+
+        private readonly CheckBox findWrapCheckBox = new()
+        {
+            Text = "Wrap",
+            Margin = new Thickness(0, 5, 5, 5),
+        };
+
+        private readonly CheckBox findEntireWordCheckBox = new()
+        {
+            Text = "Entire Word",
+            Margin = new Thickness(0, 5, 5, 5),
+        };
+
+        private readonly CheckBox findMatchCaseCheckBox = new()
+        {
+            Text = "Match Case",
+            Margin = new Thickness(0, 5, 5, 5),
+        };
+
+        private readonly CheckBox findHighlightResultCheckBox = new()
+        {
+            Text = "Highlight",
+            Margin = new Thickness(0, 5, 5, 5),
+        };
+
+        private readonly CheckBox findBackwardsCheckBox = new()
+        {
+            Text = "Backwards",
+            Margin = new Thickness(0, 5, 5, 5),
+        };
+
+        private readonly StackPanel findPanel = new()
+        {
+            Margin = new Thickness(5, 5, 5, 5),
+            Orientation = StackPanelOrientation.Horizontal,
+        };
+
+        private readonly TextBox findTextBox = new()
+        {
+            Width = 300,
+            Margin = new Thickness(0, 10, 5, 5),
+            Text = "panda",
+        };
+
+        private readonly Button findButton = new()
+        {
+            Text = "Find",
+            Margin = new Thickness(0, 10, 5, 5),
+        };
+
+        private readonly Button findClearButton = new()
+        {
+            Text = "Find Clear",
+            Margin = new Thickness(0, 10, 5, 5),
+        };
+
+        private readonly ListBox listBox1 = new();
         private bool pandaInMemory = false;
         private bool mappingSet = false;
         private int scriptRunCounter = 0;
@@ -58,9 +166,6 @@ namespace ControlsTest
         private string? headerText;
         private bool scriptMessageHandlerAdded = false;
         private ITestPageSite? site;
-        private WebBrowser webBrowser1;
-        private Label headerLabel;
-        private Grid webBrowserGrid;
 
         static WebBrowserTestPage()
         {
@@ -84,12 +189,6 @@ namespace ControlsTest
         {
             var myListener = new CommonUtils.DebugTraceListener();
             Trace.Listeners.Add(myListener);
-
-            webBrowserGrid = new()
-            {
-                Margin = 5,
-                HorizontalAlignment = HorizontalAlignment.Stretch,
-            };
 
             webBrowserGrid.RowDefinitions.Add(new RowDefinition
             {
@@ -122,204 +221,12 @@ namespace ControlsTest
 
             Children.Add(webBrowserGrid);
 
-            headerLabel = new()
-            {
-                Text = "Web Browser Control",
-                Margin = 5,
-                VerticalAlignment = VerticalAlignment.Center,
-            };
             webBrowserGrid.Children.Add(headerLabel);
 
             AddToolbar(2);
             AddMainPanel(3);
             AddFindPanel(4);
             AddFindOptionsPanel(5);
-        }
-
-        public void AddMainPanel(int rowIndex)
-        {
-            mainPanel = new()
-            {
-                Margin = 5,
-            };
-            Grid.SetRowColumn(mainPanel, rowIndex, 0);
-
-            listBox1 = new()
-            {
-                // Width = 180,
-                // Height = 400,
-            };
-            listBox1.MouseDoubleClick += ListBox1_MouseDoubleClick;
-
-            webBrowser1 = new()
-            {
-                // Width = 500,
-                // Height = 300,
-                // Margin = new(5, 0, 0, 0),
-            };
-            webBrowser1.Navigated += WebBrowser1_Navigated;
-            webBrowser1.Loaded += WebBrowser1_Loaded;
-            webBrowser1.NewWindow += WebBrowser1_NewWindow;
-            webBrowser1.DocumentTitleChanged += WebBrowser1_TitleChanged;
-            webBrowser1.FullScreenChanged += WebBrowser1_FullScreenChanged;
-            webBrowser1.ScriptMessageReceived += WebBrowser1_ScriptMessageReceived;
-            webBrowser1.ScriptResult += WebBrowser1_ScriptResult;
-            webBrowser1.Navigating += WebBrowser1_Navigating;
-            webBrowser1.Error += WebBrowser1_Error;
-            webBrowser1.BeforeBrowserCreate += WebBrowser1_BeforeBrowserCreate;
-            mainPanel.Children.Add(webBrowser1);
-            mainPanel.Children.Add(listBox1);
-
-            mainPanel.SplitVertical(webBrowser1, listBox1, 650);
-
-            webBrowserGrid.Children.Add(mainPanel);
-        }
-
-        public void AddToolbar(int rowIndex)
-        {
-            webBrowserToolbarPanel = new()
-            {
-                Margin = new Thickness(5, 5, 5, 5),
-                HorizontalAlignment = HorizontalAlignment.Stretch,
-                Orientation = StackPanelOrientation.Horizontal,
-            };
-            Grid.SetRowColumn(webBrowserToolbarPanel, rowIndex, 0);
-
-            backButton = new()
-            {
-                Margin = new Thickness(0, 5, 5, 5),
-                Image = Bitmap.FromUrl($"{ResPrefix}arrow-left-{ImageSize}.png"),
-            };
-            backButton.Click += BackButton_Click;
-
-            forwardButton = new()
-            {
-                Margin = new Thickness(0, 5, 5, 5),
-                Image = Bitmap.FromUrl($"{ResPrefix}arrow-right-{ImageSize}.png"),
-            };
-            forwardButton.Click += ForwardBtn_Click;
-
-            zoomInButton = new()
-            {
-                Margin = new Thickness(0, 5, 5, 5),
-                Image = Bitmap.FromUrl($"{ResPrefix}plus-{ImageSize}.png"),
-                Visible = true,
-            };
-            zoomInButton.Click += ZoomInButton_Click;
-
-            zoomOutButton = new()
-            {
-                Margin = new Thickness(0, 5, 5, 5),
-                Image = Bitmap.FromUrl($"{ResPrefix}minus-{ImageSize}.png"),
-                Visible = true,
-            };
-            zoomOutButton.Click += ZoomOutButton_Click;
-
-            goButton = new()
-            {
-                Margin = new Thickness(0, 5, 0, 5),
-                Image = Bitmap.FromUrl($"{ResPrefix}caret-right-{ImageSize}.png"),
-            };
-            goButton.Click += GoButton_Click;
-
-            urlTextBox = new()
-            {
-                Margin = new Thickness(0, 5, 5, 5),
-                HorizontalAlignment = HorizontalAlignment.Stretch,
-                Width = 200,
-            };
-            urlTextBox.KeyDown += TextBox_KeyDown;
-
-            webBrowserToolbarPanel.Children.Add(backButton);
-            webBrowserToolbarPanel.Children.Add(forwardButton);
-            webBrowserToolbarPanel.Children.Add(zoomInButton);
-            webBrowserToolbarPanel.Children.Add(zoomOutButton);
-            webBrowserToolbarPanel.Children.Add(urlTextBox);
-            webBrowserToolbarPanel.Children.Add(goButton);
-            webBrowserGrid.Children.Add(webBrowserToolbarPanel);
-        }
-
-        public void AddFindPanel(int rowIndex)
-        {
-            findPanel = new()
-            {
-                Margin = new Thickness(5, 5, 5, 5),
-                Orientation = StackPanelOrientation.Horizontal,
-            };
-            Grid.SetRowColumn(findPanel, rowIndex, 0);
-
-            findTextBox = new()
-            {
-                Width = 300,
-                Margin = new Thickness(0, 10, 5, 5),
-                Text = "panda",
-            };
-            findPanel.Children.Add(findTextBox);
-
-            findButton = new()
-            {
-                Text = "Find",
-                Margin = new Thickness(0, 10, 5, 5),
-            };
-            findButton.Click += FindButton_Click;
-            findPanel.Children.Add(findButton);
-
-            findClearButton = new()
-            {
-                Text = "Find Clear",
-                Margin = new Thickness(0, 10, 5, 5),
-            };
-            findClearButton.Click += FindClearButton_Click;
-            findPanel.Children.Add(findClearButton);
-
-            webBrowserGrid.Children.Add(findPanel);
-        }
-
-        public void AddFindOptionsPanel(int rowIndex)
-        {
-            findOptionsPanel = new()
-            {
-                Margin = new(5, 5, 5, 5),
-                Orientation = StackPanelOrientation.Horizontal,
-            };
-            Grid.SetRowColumn(findOptionsPanel, rowIndex, 0);
-
-            findWrapCheckBox = new()
-            {
-                Text = "Wrap",
-                Margin = new Thickness(0, 5, 5, 5),
-            };
-            findOptionsPanel.Children.Add(findWrapCheckBox);
-
-            findEntireWordCheckBox = new()
-            {
-                Text = "Entire Word",
-                Margin = new Thickness(0, 5, 5, 5),
-            };
-            findOptionsPanel.Children.Add(findEntireWordCheckBox);
-
-            findMatchCaseCheckBox = new()
-            {
-                Text = "Match Case",
-                Margin = new Thickness(0, 5, 5, 5),
-            };
-            findOptionsPanel.Children.Add(findMatchCaseCheckBox);
-
-            findHighlightResultCheckBox = new()
-            {
-                Text = "Highlight",
-                Margin = new Thickness(0, 5, 5, 5),
-            };
-            findOptionsPanel.Children.Add(findHighlightResultCheckBox);
-
-            findBackwardsCheckBox = new()
-            {
-                Text = "Backwards",
-                Margin = new Thickness(0, 5, 5, 5),
-            };
-            findOptionsPanel.Children.Add(findBackwardsCheckBox);
-
-            webBrowserGrid.Children.Add(findOptionsPanel);
         }
 
         public static WebBrowserBackend UseBackend
@@ -369,6 +276,77 @@ namespace ControlsTest
             a.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
             AppDomain.CurrentDomain.UnhandledException +=
                 CurrentDomain_UnhandledException;
+        }
+
+        public void AddMainPanel(int rowIndex)
+        {
+            Grid.SetRowColumn(mainPanel, rowIndex, 0);
+
+            listBox1.MouseDoubleClick += ListBox1_MouseDoubleClick;
+
+            webBrowser1.Navigated += WebBrowser1_Navigated;
+            webBrowser1.Loaded += WebBrowser1_Loaded;
+            webBrowser1.NewWindow += WebBrowser1_NewWindow;
+            webBrowser1.DocumentTitleChanged += WebBrowser1_TitleChanged;
+            webBrowser1.FullScreenChanged += WebBrowser1_FullScreenChanged;
+            webBrowser1.ScriptMessageReceived += WebBrowser1_ScriptMessageReceived;
+            webBrowser1.ScriptResult += WebBrowser1_ScriptResult;
+            webBrowser1.Navigating += WebBrowser1_Navigating;
+            webBrowser1.Error += WebBrowser1_Error;
+            webBrowser1.BeforeBrowserCreate += WebBrowser1_BeforeBrowserCreate;
+            mainPanel.Children.Add(webBrowser1);
+            mainPanel.Children.Add(listBox1);
+
+            mainPanel.SplitVertical(webBrowser1, listBox1, 650);
+
+            webBrowserGrid.Children.Add(mainPanel);
+        }
+
+        public void AddToolbar(int rowIndex)
+        {
+            Grid.SetRowColumn(webBrowserToolbarPanel, rowIndex, 0);
+
+            backButton.Click += BackButton_Click;
+            forwardButton.Click += ForwardBtn_Click;
+            zoomInButton.Click += ZoomInButton_Click;
+            zoomOutButton.Click += ZoomOutButton_Click;
+            goButton.Click += GoButton_Click;
+            urlTextBox.KeyDown += TextBox_KeyDown;
+
+            webBrowserToolbarPanel.Children.Add(backButton);
+            webBrowserToolbarPanel.Children.Add(forwardButton);
+            webBrowserToolbarPanel.Children.Add(zoomInButton);
+            webBrowserToolbarPanel.Children.Add(zoomOutButton);
+            webBrowserToolbarPanel.Children.Add(urlTextBox);
+            webBrowserToolbarPanel.Children.Add(goButton);
+            webBrowserGrid.Children.Add(webBrowserToolbarPanel);
+        }
+
+        public void AddFindPanel(int rowIndex)
+        {
+            Grid.SetRowColumn(findPanel, rowIndex, 0);
+
+            findPanel.Children.Add(findTextBox);
+
+            findButton.Click += FindButton_Click;
+            findPanel.Children.Add(findButton);
+
+            findClearButton.Click += FindClearButton_Click;
+            findPanel.Children.Add(findClearButton);
+
+            webBrowserGrid.Children.Add(findPanel);
+        }
+
+        public void AddFindOptionsPanel(int rowIndex)
+        {
+            Grid.SetRowColumn(findOptionsPanel, rowIndex, 0);
+
+            findOptionsPanel.Children.Add(findWrapCheckBox);
+            findOptionsPanel.Children.Add(findEntireWordCheckBox);
+            findOptionsPanel.Children.Add(findMatchCaseCheckBox);
+            findOptionsPanel.Children.Add(findHighlightResultCheckBox);
+            findOptionsPanel.Children.Add(findBackwardsCheckBox);
+            webBrowserGrid.Children.Add(findOptionsPanel);
         }
 
         internal void DoTestIEShowPrintPreviewDialog()
@@ -1063,8 +1041,10 @@ namespace ControlsTest
             AddTestAction("ZoomFactor+", () => { webBrowser1.ZoomFactor += 1; });
             AddTestAction("ZoomFactor-", () => { webBrowser1.ZoomFactor -= 1; });
             AddTestAction();
-            AddTestAction("HasBorder", () => {
-                webBrowser1.HasBorder = !webBrowser1.HasBorder; });
+            AddTestAction("HasBorder", () =>
+            {
+                webBrowser1.HasBorder = !webBrowser1.HasBorder;
+            });
             AddTestAction("CanNavigate=false", () => { canNavigate = false; });
             AddTestAction("CanNavigate=true", () => { canNavigate = true; });
             AddTestAction(
