@@ -203,19 +203,16 @@ namespace ControlsSample
             if (site == null)
                 return;
 
-            object? fontNameItem = comboBoxFontName.SelectedItem;
-            object? fontSizeItem = comboBoxFontSize.SelectedItem;
+            FontStyle fontStyle = boldCheckBox.IsChecked ? FontStyle.Bold : FontStyle.Regular;
 
-            FontStyle fontStyle = boldCheckBox.IsChecked ?
-                FontStyle.Bold : FontStyle.Regular;
+            var s = comboBoxFontSize.SelectedItem?.ToString();
+            double fontSize = string.IsNullOrWhiteSpace(s) ?
+                Font.Default.SizeInPoints : Double.Parse(s);
 
-            double fontSize = fontSizeItem == null ?
-                Font.Default.SizeInPoints : Double.Parse(fontSizeItem.ToString());
+            s = comboBoxFontName.SelectedItem?.ToString();
+            string fontName = string.IsNullOrWhiteSpace(s) ? Font.Default.Name : s!;
 
-            string fontName = fontNameItem == null ?
-                Font.Default.Name : (string)fontNameItem;
-
-            Font font = new(fontName, fontSize, fontStyle);
+            Font font = Alternet.Drawing.Font.GetDefaultOrNew(fontName, fontSize, fontStyle);
 
             //site?.LogEvent("Button: Font changed to " + font.Name + ", "
             //    + font.SizeInPoints);
@@ -230,54 +227,34 @@ namespace ControlsSample
             });
         }
 
-        private void ApplyTextColor()
+        private Color? GetColor(ListControl? control)
         {
             if (site == null)
-                return;
+                return null;
 
-            object? item = comboBoxTextColor.SelectedItem;
+            var text = control?.SelectedItem?.ToString();
 
-            if (item == null)
-                return;
-
-            var text = item.ToString();
-
-            if (uint.TryParse(text, NumberStyles.HexNumber, null, out _) || text == "Default")
-            {
-                button.ForegroundColor = null;
-            }
+            if(string.IsNullOrWhiteSpace(text) || text == "Default" || StringUtils.IsHexNumber(text))
+                return null;
             else
             {
-                Color newColor = Color.FromName(text);
-                button.ForegroundColor = newColor;
+                Color newColor = Color.FromName(text!);
+                return newColor;
             }
+        }
 
-            site?.LogEvent("Button: Text Color = " + item);
+        private void ApplyTextColor()
+        {
+            var color = GetColor(comboBoxTextColor);
+            button.ForegroundColor = color;
+            site?.LogEvent($"Button: Text Color = {comboBoxTextColor.SelectedItem}");
         }
 
         private void ApplyBackColor()
         {
-            if (site == null)
-                return;
-
-            object? item = comboBoxBackColor.SelectedItem;
-
-            if (item == null)
-                return;
-
-            var text = item.ToString();
-
-            if (uint.TryParse(text, NumberStyles.HexNumber, null, out _) || text == "Default")
-            {
-                button.BackgroundColor = null;
-            }
-            else
-            {
-                Color newColor = Color.FromName(text);
-                button.BackgroundColor = newColor;
-            }
-
-            site?.LogEvent("Button: Back Color = " + item);
+            var color = GetColor(comboBoxBackColor);
+            button.BackgroundColor = color;
+            site?.LogEvent($"Button: Back Color = {comboBoxBackColor.SelectedItem}");
         }
 
         private void ComboBoxFontName_Changed(object? sender, EventArgs e)
