@@ -263,6 +263,21 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Creates new font or gets <see cref="Font.Default"/> if its properties
+        /// are equal to the specified.
+        /// </summary>
+        /// <param name="name">Font name.</param>
+        /// <param name="sizeInPoints">Font size.</param>
+        /// <param name="style">Font style</param>
+        public static Font GetDefaultOrNew(string name, double sizeInPoints, FontStyle style)
+        {
+            var result = Font.Default;
+            if (result.Equals(name, sizeInPoints, style))
+                return result;
+            return new(name, sizeInPoints, style);
+        }
+
+        /// <summary>
         /// Releases all resources used by this <see cref="Font"/>.
         /// </summary>
         public void Dispose()
@@ -319,6 +334,19 @@ namespace Alternet.Drawing
                 return false;
 
             return Equals(font);
+        }
+
+        /// <summary>
+        /// Indicates whether the current objects properties are equal to the
+        /// specified properties.
+        /// </summary>
+        /// <param name="name">Font name.</param>
+        /// <param name="sizeInPoints">Font size.</param>
+        /// <param name="style">Font style.</param>
+        /// <returns></returns>
+        public bool Equals(string name, double sizeInPoints, FontStyle style)
+        {
+            return Name == name && SizeInPoints == sizeInPoints && Style == style;
         }
 
         internal static UI.Native.GenericFontFamily ToNativeGenericFamily(
