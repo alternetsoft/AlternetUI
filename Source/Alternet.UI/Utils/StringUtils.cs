@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,6 +12,8 @@ namespace Alternet.UI
     /// </summary>
     public static class StringUtils
     {
+        private static IComparer<object>? comparerObjectUsingToString;
+
         /// <summary>
         /// Gets or sets values that split one string to many when
         /// log operations are performed (or in other situations).
@@ -24,8 +27,6 @@ namespace Alternet.UI
             Environment.NewLine,
         };
 
-        private static IComparer<object>? comparerObjectUsingToString;
-
         /// <summary>
         /// Returns <see cref="IComparer{T}"/> which converts objects to strings using
         /// <see cref="object.ToString"/> and uses
@@ -38,6 +39,17 @@ namespace Alternet.UI
                 comparerObjectUsingToString ??= new ComparerUsingToString<object>();
                 return comparerObjectUsingToString;
             }
+        }
+
+        /// <summary>
+        /// Gets whether <paramref name="text"/> is a hex number.
+        /// </summary>
+        /// <param name="text">Text.</param>
+        public static bool IsHexNumber(string? text)
+        {
+            if (text is null)
+                return false;
+            return uint.TryParse(text, NumberStyles.HexNumber, null, out _);
         }
 
         /// <summary>
