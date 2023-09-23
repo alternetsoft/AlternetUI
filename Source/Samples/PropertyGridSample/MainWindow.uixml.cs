@@ -83,6 +83,8 @@ namespace PropertyGridSample
 
             panel.LeftTreeView.SelectionChanged += ControlsListBox_SelectionChanged;
             panel.LogControl.Required();
+            panel.PropGrid.Required();
+            panel.EventGrid.Required();
 
             // Center pane
             panel.Manager.AddPane(controlPanel, panel.CenterPane);
@@ -134,6 +136,13 @@ namespace PropertyGridSample
             controlPanel.DragStart += ControlPanel_DragStart;
 
             panel.WriteWelcomeLogMessages();
+
+            panel.RightNotebook.PageChanged += RightNotebook_PageChanged;
+        }
+
+        private void RightNotebook_PageChanged(object sender, EventArgs e)
+        {
+            updatePropertyGrid = true;
         }
 
         private void Default_PropertyChanged(object? sender, PropertyChangeEventArgs e)
@@ -154,7 +163,7 @@ namespace PropertyGridSample
 
         private void ControlsListBox_SelectionChanged(object? sender, EventArgs e)
         {
-            UpdatePropertyGrid();
+            updatePropertyGrid = true;
         }
 
         internal void UpdatePropertyGrid(object? instance = null)
@@ -191,14 +200,20 @@ namespace PropertyGridSample
                 if (type == typeof(WelcomeControl))
                 {
                     InitDefaultPropertyGrid();
-                    Application.Current.ProcessPendingEvents();
                     UpdateEventsPropertyGrid(null);
                 }
                 else
                 {
-                    UpdateEventsPropertyGrid(item?.EventInstance);
-                    Application.Current.ProcessPendingEvents();
-                    PropGrid.SetProps(item?.PropInstance, true);
+                    if (panel.RightNotebook.GetSelection() == panel.PropGridPageIndex)
+                    {
+                        PropGrid.SetProps(item?.PropInstance, true);
+                        panel.EventGrid.Clear();
+                    }
+                    else
+                    {
+                        PropGrid.Clear();
+                        UpdateEventsPropertyGrid(item?.EventInstance);
+                    }
                 }
             }
 
@@ -220,14 +235,14 @@ namespace PropertyGridSample
                 });
             }
 
-            //controlPanel.SuspendLayout();
+            controlPanel.SuspendLayout();
             try
             {
                 DoAction();
             }
             finally
             {
-                //controlPanel.ResumeLayout();
+                controlPanel.ResumeLayout();
             }
         }
 

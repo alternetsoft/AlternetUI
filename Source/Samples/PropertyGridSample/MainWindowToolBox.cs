@@ -37,6 +37,8 @@ namespace PropertyGridSample
               typeof(Popup), // button with popup like ContextMenu
               typeof(AuiNotebook),
               typeof(AuiToolbar),
+              typeof(PanelAuiManager),
+              typeof(PanelAuiManagerBase),
               typeof(UIDialogWindow),
               typeof(SplitterPanel),// know how
               typeof(Grid),// know how
@@ -96,6 +98,7 @@ namespace PropertyGridSample
             var item = new ControlListBoxItem(typeof(T), button)
             {
                 PropInstance = dialog,
+                EventInstance = new object(),
             };
             panel.LeftTreeView.Add(item);
         }
@@ -112,6 +115,7 @@ namespace PropertyGridSample
             var item = new ControlListBoxItem(typeof(T), button)
             {
                 PropInstance = menu,
+                EventInstance = new object(),
             };
             panel.LeftTreeView.Add(item);
         }
