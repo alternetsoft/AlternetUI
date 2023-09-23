@@ -538,7 +538,7 @@ namespace Alternet.Drawing
             return ColorTranslator.COLORREFToARGB(
                 Interop.User32.GetSysColor((byte)ColorValueTable[(int)color]));
 #else
-            return s_colorValueTable[(int)color];
+            return ColorValueTable[(int)color];
 #endif
         }
     }
