@@ -51,6 +51,10 @@ namespace PropertyGridSample
             var localizableEnum = PropertyGrid.GetChoices<BrushType>();
             localizableEnum.SetLabelForValue<BrushType>(BrushType.LinearGradient, "Linear Gradient");
             localizableEnum.SetLabelForValue<BrushType>(BrushType.RadialGradient, "Radial Gradient");
+
+            // Sample localization of the property label
+            var prm = PropertyGrid.GetNewItemParams(typeof(Control), "Name");
+            prm.Label = "(name)";
         }
 
         private static void InitIgnorePropNames(ICollection<string> items)

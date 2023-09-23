@@ -674,6 +674,19 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets <see cref="IPropertyGridNewItemParams"/> for the given
+        /// <see cref="Type"/> and property name.
+        /// </summary>
+        /// <param name="type">Object type.</param>
+        /// <param name="propName">Property name.</param>
+        public static IPropertyGridNewItemParams GetNewItemParams(Type type, string propName)
+        {
+            var registry = GetTypeRegistry(type);
+            var propRegistry = registry.GetPropRegistry(propName);
+            return propRegistry.NewItemParams;
+        }
+
+        /// <summary>
         /// Gets "constructed" <see cref="IPropertyGridNewItemParams"/> for the given
         /// <see cref="Type"/> and <see cref="PropertyInfo"/>.
         /// </summary>
