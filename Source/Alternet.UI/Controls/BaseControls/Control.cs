@@ -1600,6 +1600,8 @@ namespace Alternet.UI
         /// <param name="y">The Y position where the menu will appear.</param>
         public virtual void ShowPopupMenu(Menu menu, int x = -1, int y = -1)
         {
+            if (menu.Items.Count == 0)
+                return;
             Handler.ShowPopupMenu(menu, x, y);
         }
 
