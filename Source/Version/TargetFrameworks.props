@@ -4,6 +4,7 @@
 <!-- Also edit \Source\Samples\CommonData\TargetFrameworks.props -->	
 
   <PropertyGroup>
+        <FrameworkOverridesName>FrameworksOverride.props</FrameworkOverridesName>
 	<TargetFramework48Version>net480</TargetFramework48Version>
 	<TargetFramework46Version>net462</TargetFramework46Version>
 	<UITargetFrameworksWindows>net7.0;net6.0;$(TargetFramework46Version);$(TargetFramework48Version)</UITargetFrameworksWindows>
@@ -11,5 +12,8 @@
 
         <UIIntegrationUIXmlHostAppTargetFrameworks>$(TargetFramework46Version);$(TargetFramework48Version);net6.0-windows;net7.0-windows</UIIntegrationUIXmlHostAppTargetFrameworks>
   </PropertyGroup>
+
+  <Import Project="$(FrameworkOverridesName)" Condition="Exists($(FrameworkOverridesName))"/>
+
 </Project>
 

@@ -3,6 +3,7 @@
   <PropertyGroup>
     <SamplesTargetFrameworksWindows>net7.0;net6.0;net462;net480</SamplesTargetFrameworksWindows>
     <SamplesTargetFrameworksNonWindows>net7.0;net6.0</SamplesTargetFrameworksNonWindows>
+    <FrameworkOverridesName>FrameworksOverride.props</FrameworkOverridesName>
   </PropertyGroup>
 
   <PropertyGroup Condition="$([MSBuild]::IsOsPlatform('Windows'))">
@@ -18,5 +19,6 @@
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)\Sample.ico" />
   </ItemGroup>
 
+  <Import Project="$(FrameworkOverridesName)" Condition="Exists($(FrameworkOverridesName))"/>
 
 </Project>
