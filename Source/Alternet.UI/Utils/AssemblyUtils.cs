@@ -245,12 +245,25 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Outputs all <see cref="Native.NativeObject"/> descendants to the debug console.
+        /// </summary>
+        public static void NativeObjectToConsole()
+        {
+            EnumerableUtils.ForEach<Type>(
+                GetTypeDescendants(typeof(Native.NativeObject), true, false),
+                (t) => Debug.WriteLine(t.Name));
+        }
+
+        /// <summary>
         /// Returns list of types which descend from specified type.
         /// </summary>
         /// <param name="type">Base type.</param>
         /// <param name="ascending">Sort result ascending by type name.</param>
-        /// <returns></returns>
-        public static IEnumerable<Type> GetTypeDescendants(Type type, bool ascending = true)
+        /// <param name="isPublic">Whether to return only public types.</param>
+        public static IEnumerable<Type> GetTypeDescendants(
+            Type type,
+            bool ascending = true,
+            bool isPublic = true)
         {
             List<Type> result = new();
 
@@ -261,7 +274,7 @@ namespace Alternet.UI
             foreach (TypeInfo typeInfo in definedTypes)
             {
                 var resultType = typeInfo.AsType();
-                if (resultType.IsAbstract || !resultType.IsPublic)
+                if (resultType.IsAbstract || (resultType.IsPublic != isPublic))
                     continue;
                 if (TypeIsDescendant(resultType, type))
                     result.Add(resultType);
