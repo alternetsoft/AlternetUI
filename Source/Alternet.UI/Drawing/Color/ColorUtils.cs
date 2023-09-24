@@ -101,6 +101,22 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Gets or sets whether colors from the specified category are visible for the end user.
+        /// </summary>
+        /// <param name="category">Color category.</param>
+        /// <param name="visible">Show or hide colors.</param>
+        public static void SetVisibleColors(KnownColorCategory category, bool visible)
+        {
+            var colors = GetColorInfos();
+
+            foreach (var color in colors)
+            {
+                if (color.Category == category)
+                    color.Visible = visible;
+            }
+        }
+
+        /// <summary>
         /// Converts <see cref="KnownColor"/> to <see cref="WxSystemColor"/>.
         /// </summary>
         /// <param name="color">Color value.</param>
@@ -368,6 +384,8 @@ namespace Alternet.Drawing
             RegisterKnownColor(KnownColor.MenuHighlight, KnownColorCategory.System);
 
             RegisterKnownColor(KnownColor.RebeccaPurple, KnownColorCategory.Web);
+
+            SetVisibleColors(KnownColorCategory.System, false);
         }
     }
 }
