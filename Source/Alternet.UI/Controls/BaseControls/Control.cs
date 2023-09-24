@@ -1256,6 +1256,24 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Executes <paramref name="action"/> between calls to <see cref="SuspendLayout"/>
+        /// and <see cref="ResumeLayout"/>.
+        /// </summary>
+        /// <param name="action">Action that will be executed.</param>
+        public void DoInsideLayout(Action action)
+        {
+            SuspendLayout();
+            try
+            {
+                action();
+            }
+            finally
+            {
+                ResumeLayout();
+            }
+        }
+
+        /// <summary>
         /// Returns enumeration with the list of visible child controls.
         /// </summary>
         /// <seealso cref="GetVisibleChildOrNull"/>
