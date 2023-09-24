@@ -61,6 +61,6 @@ namespace Alternet.UI.Localization
         public string NotebookTabTitleActions { get; set; } = "Actions";
 
         /// <inheritdoc cref="ButtonOk"/>
-        public string ListEditDefaultItemTitle { get; set; } = "item";
+        public string ListEditDefaultItemTitle { get; set; } = "Item";
     }
 }
