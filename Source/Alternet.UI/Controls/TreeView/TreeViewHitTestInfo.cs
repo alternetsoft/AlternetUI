@@ -3,7 +3,8 @@ using System;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Contains information about <see cref="TreeView.HitTest(Drawing.Point)"/> result for a <see cref="TreeView"/> control.
+    /// Contains information about <see cref="TreeView.HitTest(Drawing.Point)"/> result for a
+    /// <see cref="TreeView"/> control.
     /// </summary>
     public class TreeViewHitTestInfo
     {
@@ -23,7 +24,8 @@ namespace Alternet.UI
         public TreeViewHitTestLocations Location { get; }
 
         /// <summary>
-        /// Gets the <see cref="TreeViewItem"/> at the position indicated by a hit test of a <see cref="TreeView"/>
+        /// Gets the <see cref="TreeViewItem"/> at the position indicated by a hit test of a
+        /// <see cref="TreeView"/>
         /// control.
         /// </summary>
         public TreeViewItem? Item { get; }

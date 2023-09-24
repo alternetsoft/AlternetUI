@@ -4,14 +4,15 @@ using System.ComponentModel;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Provides data for the <see cref="TreeView.BeforeLabelEdit"/> and <see cref="TreeView.AfterLabelEdit"/> events.
+    /// Provides data for the <see cref="TreeView.BeforeLabelEdit"/> and
+    /// <see cref="TreeView.AfterLabelEdit"/> events.
     /// </summary>
-    public class TreeViewItemLabelEditEventArgs : CancelEventArgs
+    public class TreeViewEditEventArgs : CancelEventArgs
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="TreeViewItemLabelEditEventArgs"/> class.
+        /// Initializes a new instance of the <see cref="TreeViewEditEventArgs"/> class.
         /// </summary>
-        public TreeViewItemLabelEditEventArgs(TreeViewItem item, string? label)
+        public TreeViewEditEventArgs(TreeViewItem item, string? label)
         {
             Item = item;
             Label = label;
@@ -25,7 +26,8 @@ namespace Alternet.UI
         /// <summary>
         /// Gets the new text to associate with the tree item.
         /// </summary>
-        /// <value>The string value that represents the new <see cref="TreeViewItem"/> label or <see langword="null"/>
+        /// <value>The string value that represents the new <see cref="TreeViewItem"/> label or
+        /// <see langword="null"/>
         /// if the user cancels the edit.</value>
         public string? Label { get; }
     }

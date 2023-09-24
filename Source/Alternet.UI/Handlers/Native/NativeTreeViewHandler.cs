@@ -344,7 +344,7 @@ namespace Alternet.UI
             var item = GetItemFromHandle(e.Data.item);
             if (item == null)
                 return;
-            var ea = new TreeViewItemExpandedChangingEventArgs(item);
+            var ea = new TreeViewCancelEventArgs(item);
             Control.RaiseBeforeCollapse(ea);
             e.Result = ea.Cancel ? (IntPtr)1 : IntPtr.Zero;
         }
@@ -356,7 +356,7 @@ namespace Alternet.UI
             var item = GetItemFromHandle(e.Data.item);
             if (item == null)
                 return;
-            var ea = new TreeViewItemExpandedChangingEventArgs(item);
+            var ea = new TreeViewCancelEventArgs(item);
             Control.RaiseBeforeExpand(ea);
             e.Result = ea.Cancel ? (IntPtr)1 : IntPtr.Zero;
         }
@@ -368,7 +368,7 @@ namespace Alternet.UI
             var item = GetItemFromHandle(e.Data.item);
             if (item == null)
                 return;
-            var ea = new TreeViewItemLabelEditEventArgs(
+            var ea = new TreeViewEditEventArgs(
                 item,
                 e.Data.editCancelled ? null : e.Data.label);
 
@@ -392,7 +392,7 @@ namespace Alternet.UI
             if (item == null)
                 return;
 
-            var ea = new TreeViewItemLabelEditEventArgs(
+            var ea = new TreeViewEditEventArgs(
                 item,
                 e.Data.editCancelled ? null : e.Data.label);
             Control.RaiseBeforeLabelEdit(ea);
@@ -406,7 +406,7 @@ namespace Alternet.UI
             var item = GetItemFromHandle(e.Data.item);
             if (item == null)
                 return;
-            var ea = new TreeViewItemExpandedChangedEventArgs(item);
+            var ea = new TreeViewEventArgs(item);
             Control.RaiseAfterCollapse(ea);
             Control.RaiseExpandedChanged(ea);
         }
@@ -418,7 +418,7 @@ namespace Alternet.UI
             var item = GetItemFromHandle(e.Data.item);
             if (item == null)
                 return;
-            var ea = new TreeViewItemExpandedChangedEventArgs(item);
+            var ea = new TreeViewEventArgs(item);
             Control.RaiseAfterExpand(ea);
             Control.RaiseExpandedChanged(ea);
         }
@@ -573,14 +573,14 @@ namespace Alternet.UI
 
         private void Control_ItemAdded(
             object? sender,
-            TreeViewItemContainmentEventArgs e)
+            TreeViewEventArgs e)
         {
             InsertItemAndChildren(e.Item);
         }
 
         private void Control_ItemRemoved(
             object? sender,
-            TreeViewItemContainmentEventArgs e)
+            TreeViewEventArgs e)
         {
             var item = e.Item;
 

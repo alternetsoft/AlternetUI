@@ -97,9 +97,7 @@ namespace ControlsSample
             site?.LogEvent($"TreeView: SelectionChanged. SelectedItems: ({s})");
         }
 
-        private void TreeView_ExpandedChanged(
-            object? sender, 
-            TreeViewItemExpandedChangedEventArgs e)
+        private void TreeView_ExpandedChanged(object? sender, TreeViewEventArgs e)
         {
             if (supressExpandEvents > 0)
                 return;
@@ -107,9 +105,7 @@ namespace ControlsSample
             site?.LogEvent($"TreeView: ExpandedChanged. Item: '{e.Item.Text}', IsExpanded: {exp}");
         }
 
-        private void TreeView_BeforeLabelEdit(
-            object? sender, 
-            TreeViewItemLabelEditEventArgs e)
+        private void TreeView_BeforeLabelEdit(object? sender, TreeViewEditEventArgs e)
         {
             e.Cancel = cancelBeforeLabelEditEventsCheckBox.IsChecked;
             var s = e.Label ?? "<null>";
@@ -118,7 +114,7 @@ namespace ControlsSample
 
         private void TreeView_AfterLabelEdit(
             object? sender, 
-            TreeViewItemLabelEditEventArgs e)
+            TreeViewEditEventArgs e)
         {
             e.Cancel = cancelAfterLabelEditEventsCheckBox.IsChecked;
             var s = e.Label ?? "<null>";
@@ -127,7 +123,7 @@ namespace ControlsSample
 
         private void TreeView_BeforeExpand(
             object? sender, 
-            TreeViewItemExpandedChangingEventArgs e)
+            TreeViewCancelEventArgs e)
         {
             if (supressExpandEvents > 0)
                 return;
@@ -137,7 +133,7 @@ namespace ControlsSample
 
         private void TreeView_BeforeCollapse(
             object? sender, 
-            TreeViewItemExpandedChangingEventArgs e)
+            TreeViewCancelEventArgs e)
         {
             if (supressExpandEvents > 0)
                 return;

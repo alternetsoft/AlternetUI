@@ -3,7 +3,8 @@ using System;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Defines constants that represent areas of a <see cref="TreeView"/> or <see cref="TreeViewItem"/>.
+    /// Defines constants that represent areas of a <see cref="TreeView"/> or
+    /// <see cref="TreeViewItem"/>.
     /// </summary>
     /// <remarks>
     /// This enumeration supports a bitwise combination of its member values.
@@ -12,7 +13,8 @@ namespace Alternet.UI
     public enum TreeViewHitTestLocations
     {
         /// <summary>
-        /// A position in the client area of the <see cref="TreeView"/> control, but not on a node or a portion of a
+        /// A position in the client area of the <see cref="TreeView"/> control,
+        /// but not on a node or a portion of a
         /// node.
         /// </summary>
         None = 1 << 1,
