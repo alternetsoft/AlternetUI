@@ -7,6 +7,10 @@ namespace NativeApi.Api
 {
     public class TreeView : Control
     {
+        public void MakeAsListBox() { }
+
+        public long CreateStyle { get; set; }
+
         public bool HideRoot { get; set; }
 
         public bool VariableRowHeight { get; set; }

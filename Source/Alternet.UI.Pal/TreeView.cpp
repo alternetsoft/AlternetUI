@@ -207,6 +207,32 @@ namespace Alternet::UI
 */
     };
 
+    int64_t TreeView::GetCreateStyle()
+    {
+        return 0;
+    }
+
+    void TreeView::SetCreateStyle(int64_t value)
+    {
+
+    }
+
+    void TreeView::MakeAsListBox()
+    {
+        _fullRowSelect = true;
+        _showRootLines = false;
+        _showLines = false;
+        _twistButtons = false;
+        _rowLines = false;
+        _showExpandButtons = false;
+        _hideRoot = true;
+        _variableRowHeight = false;
+        RecreateWxWindowIfNeeded();
+        SetStateImageSpacing(0);
+        if (GetIndentation() > 3)
+            SetIndentation(3);
+    }
+
     wxWindow* TreeView::CreateWxWindowCore(wxWindow* parent)
     {
         long style = GetStyle() | GetBorderStyle();

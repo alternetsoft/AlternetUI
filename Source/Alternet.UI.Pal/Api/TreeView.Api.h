@@ -14,6 +14,16 @@ ALTERNET_UI_API TreeView* TreeView_Create_()
     return new TreeView();
 }
 
+ALTERNET_UI_API int64_t TreeView_GetCreateStyle_(TreeView* obj)
+{
+    return obj->GetCreateStyle();
+}
+
+ALTERNET_UI_API void TreeView_SetCreateStyle_(TreeView* obj, int64_t value)
+{
+    obj->SetCreateStyle(value);
+}
+
 ALTERNET_UI_API c_bool TreeView_GetHideRoot_(TreeView* obj)
 {
     return obj->GetHideRoot();
@@ -182,6 +192,11 @@ ALTERNET_UI_API void* TreeView_GetSelectedItemsItemAt_(TreeView* obj, void* arra
 ALTERNET_UI_API void TreeView_CloseSelectedItemsArray_(TreeView* obj, void* array)
 {
     obj->CloseSelectedItemsArray(array);
+}
+
+ALTERNET_UI_API void TreeView_MakeAsListBox_(TreeView* obj)
+{
+    obj->MakeAsListBox();
 }
 
 ALTERNET_UI_API int TreeView_GetItemCount_(TreeView* obj, void* parentItem)

@@ -24,6 +24,21 @@ namespace Alternet.UI.Native
         {
         }
         
+        public long CreateStyle
+        {
+            get
+            {
+                CheckDisposed();
+                return NativeApi.TreeView_GetCreateStyle_(NativePointer);
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.TreeView_SetCreateStyle_(NativePointer, value);
+            }
+        }
+        
         public bool HideRoot
         {
             get
@@ -283,6 +298,12 @@ namespace Alternet.UI.Native
             }
         }
         
+        public void MakeAsListBox()
+        {
+            CheckDisposed();
+            NativeApi.TreeView_MakeAsListBox_(NativePointer);
+        }
+        
         public int GetItemCount(System.IntPtr parentItem)
         {
             CheckDisposed();
@@ -534,6 +555,12 @@ namespace Alternet.UI.Native
             public static extern IntPtr TreeView_Create_();
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern long TreeView_GetCreateStyle_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void TreeView_SetCreateStyle_(IntPtr obj, long value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool TreeView_GetHideRoot_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
@@ -634,6 +661,9 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void TreeView_CloseSelectedItemsArray_(IntPtr obj, System.IntPtr array);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void TreeView_MakeAsListBox_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern int TreeView_GetItemCount_(IntPtr obj, System.IntPtr parentItem);

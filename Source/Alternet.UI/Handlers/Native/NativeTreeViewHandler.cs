@@ -9,7 +9,7 @@ namespace Alternet.UI
     {
         private readonly Dictionary<TreeViewItem, IntPtr> handlesByItems = new();
 
-        private readonly Dictionary<IntPtr, TreeViewItem> itemsByHandles = new ();
+        private readonly Dictionary<IntPtr, TreeViewItem> itemsByHandles = new();
 
         private bool skipSetItemText;
 
@@ -115,8 +115,8 @@ namespace Alternet.UI
             }
         }
 
-        public new Native.TreeView NativeControl =>
-            (Native.TreeView)base.NativeControl!;
+        public new NativeTreeView NativeControl =>
+            (NativeTreeView)base.NativeControl!;
 
         /// <inheritdoc cref="TreeView.ShowLines"/>
         public override bool ShowLines
@@ -289,7 +289,7 @@ namespace Alternet.UI
 
         internal override Native.Control CreateNativeControl()
         {
-            return new Native.TreeView();
+            return new NativeTreeView();
         }
 
         protected override void OnAttach()
@@ -567,7 +567,7 @@ namespace Alternet.UI
                 }
             }
 
-            if(item.HasItems)
+            if (item.HasItems)
                 Apply(item.Items);
         }
 
@@ -604,6 +604,14 @@ namespace Alternet.UI
                 var handle = GetHandleFromItem(parentItem);
                 handlesByItems.Remove(parentItem);
                 itemsByHandles.Remove(handle);
+            }
+        }
+
+        public class NativeTreeView : Native.TreeView
+        {
+            public NativeTreeView()
+                : base()
+            {
             }
         }
     }

@@ -940,23 +940,9 @@ namespace Alternet.UI
         /// <summary>
         /// Changes visual style of the control to look like <see cref="ListBox"/>.
         /// </summary>
-        public void MakeAsListBox(bool ignoreRecreate = false)
+        public void MakeAsListBox()
         {
-            if(ignoreRecreate) BeginIgnoreRecreate();
-            try
-            {
-                FullRowSelect = true;
-                ShowRootLines = false;
-                ShowLines = false;
-                TwistButtons = false;
-                StateImageSpacing = 0;
-                if (Indentation > 3)
-                    Indentation = 3;
-            }
-            finally
-            {
-                if(ignoreRecreate) EndIgnoreRecreate();
-            }
+            (Handler.NativeControl as NativeTreeViewHandler.NativeTreeView)?.MakeAsListBox();
         }
 
         /// <summary>
