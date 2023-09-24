@@ -60,3 +60,8 @@ Auto hook to events and output to log
 Implement LogUtils
 
 - DOCS: Examples for PropertyGrid, LayoutPanel, AuiManager, AuiToolbar, AuiNotebook 
+
+- Not working in menu sample
+  <Window.InputBindings>
+    <KeyBinding Gesture="Ctrl+Shift+A" Command="{Binding ExportToPngCommand}" />
+  </Window.InputBindings>
