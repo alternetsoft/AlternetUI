@@ -5,42 +5,42 @@
   <Control>
     <VerticalStackPanel>
         <HorizontalStackPanel>
-                <ComboBox Width="200" Name="comboBox" IsEditable="false" 
-                          VerticalAlignment="Top"
-                          SelectedItemChanged="ComboBox_SelectedItemChanged" 
-                          TextChanged="ComboBox_TextChanged" />
+            <VerticalStackPanel Margin="5,0,0,5" Padding="5,0,5,5">
+              <ComboBox Width="200" Name="comboBox" IsEditable="false"
+                            VerticalAlignment="Top"
+                            SelectedItemChanged="ComboBox_SelectedItemChanged"
+                            TextChanged="ComboBox_TextChanged" />
+              <CheckBox Text="Allow Text Edit"
+                        Name="allowTextEditingCheckBox" Margin="0,10,0,10"
+                        CheckedChanged=
+                                "AllowTextEditingCheckBox_CheckedChanged"/>
+              <Button Text="Text = Empty String"
+                      Name="setTextToEmptyStringButton" Margin="0,3,0,0"
+                      Click="SetTextToEmptyStringButton_Click"/>
+              <Button Text="Text = 'One'" Name="setTextToOneButton"
+                      Margin="0,3,0,0" Click="SetTextToOneButton_Click"/>
+              <Button Text="Text = 'abc'" Name="setTextToAbcButton"
+                      Margin="0,3,0,0" Click="SetTextToAbcButton_Click"/>
+            </VerticalStackPanel>
 
-                <VerticalStackPanel Margin="5,0,0,5" Padding="5,0,5,5">
+            <VerticalStackPanel Margin="5,0,0,5" Padding="5,0,5,5">
                     <Button Text="Add Item" Name="addItemButton" 
                             Click="AddItemButton_Click"/>
                     <Button Text="Remove Item" Name="removeItemButton" 
                             Margin="0,3,0,0" Click="RemoveItemButton_Click"/>
                     <Button Text="Add 500 Items" Name="addManyItemsButton" 
                             Margin="0,3,0,0" Click="AddManyItemsButton_Click"/>
-
-                    <Button Text="Text = Empty String" 
-                            Name="setTextToEmptyStringButton" Margin="0,3,0,0" 
-                            Click="SetTextToEmptyStringButton_Click"/>
-                    <Button Text="Text = 'One'" Name="setTextToOneButton" 
-                            Margin="0,3,0,0" Click="SetTextToOneButton_Click"/>
-                    
                     <Button Text="SelectedIndex = 2" 
                             Name="setSelectedIndexTo2Button" Margin="0,3,0,0" 
                             Click="SetSelectedIndexTo2_Click"/>
                     <Button Text="SelectedItem = null" 
                             Name="setSelectedItemToNullButton" Margin="0,3,0,0" 
                             Click="SetSelectedItemToNullButton_Click"/>
-                    <CheckBox Text="Allow Text Edit" 
-                              Name="allowTextEditingCheckBox" Margin="0,10,0,10" 
-                              CheckedChanged=
-                                "AllowTextEditingCheckBox_CheckedChanged"/>
                     <Button Text="Select Text Range [2..5]" 
-                            Name="selectTextRangeButton" Margin="0,0,0,0" 
+                            Name="selectTextRangeButton" Margin="0,3,0,0" 
                             Click="SelectTextRangeButton_Click"/>
                     <Button Text="Get Text Selection" Name="getTextSelectionButton" 
                             Margin="0,3,0,0" Click="GetTextSelectionButton_Click"/>
-                    <Button Text="Text = 'abc'" Name="setTextToAbcButton" 
-                            Margin="0,3,0,0" Click="SetTextToAbcButton_Click"/>
                     <Button Text="Items[2] = 'hello'"
                             Margin="0,3,0,0" Click="SetItem_Click"/>
                     <Button Text="Edit Items..."

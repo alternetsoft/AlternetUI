@@ -49,9 +49,9 @@
                 <Button Text="Edit Items..." Margin="0,3,0,0"
                         Click="EditItemsButton_Click"/>
                 <Button Text="Add Column" Name="AddColumnButton" Margin="0,3,0,0"
-                        Click="AddColumnButton_Click"/>
+                        Click="AddColumnButton_Click" Visible="false"/>
                 <Button Text="Modify Column Title" Name="ModifyColumnTitleButton"
-                    Margin="0,3,0,0" Click="ModifyColumnTitleButton_Click"/>
+                    Margin="0,3,0,0" Click="ModifyColumnTitleButton_Click" Visible="false"/>
                 <Button Text="Edit Columns..." Margin="0,3,0,0"
                         Click="EditColumnsButton_Click"/>
 
