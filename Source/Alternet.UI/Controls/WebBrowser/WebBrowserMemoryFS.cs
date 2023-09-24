@@ -95,25 +95,5 @@ namespace Alternet.UI
                 AddFile(filename, unmanagedIntPtr, data.Length);
             }
         }
-
-        private class AutoPinner : IDisposable
-        {
-            private GCHandle pinnedArray;
-
-            public AutoPinner(object obj)
-            {
-                pinnedArray = GCHandle.Alloc(obj, GCHandleType.Pinned);
-            }
-
-            public static implicit operator IntPtr(AutoPinner ap)
-            {
-                return ap.pinnedArray.AddrOfPinnedObject();
-            }
-
-            public void Dispose()
-            {
-                pinnedArray.Free();
-            }
-        }
     }
 }
