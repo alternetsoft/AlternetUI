@@ -8,7 +8,7 @@
 #include "Object.h"
 #include "WindowsVisualThemeSupport.h"
 #include "wx/log.h"
-#include "wxAlternet/wxAlternetLogFormatter.h"
+#include "WxAlternet/wxAlternetLogFormatter.h"
 
 namespace Alternet::UI
 {
