@@ -312,6 +312,8 @@ namespace Alternet.UI
         {
             LogControl.Add(ConstructLogMessage(message));
             LogControl.FocusAndSelectItem(LogControl.LastRootItem);
+            LogControl.ScrollIntoView(LogControl.LastRootItem);
+            LogControl.EnsureVisible(LogControl.LastRootItem);
         }
 
         /// <summary>
