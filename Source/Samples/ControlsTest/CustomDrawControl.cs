@@ -32,6 +32,5 @@ namespace ControlsTest
             if (brush != null)
                 dc.FillRectangle(brush, bounds);
         }
-
     }
 }

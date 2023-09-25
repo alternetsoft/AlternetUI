@@ -9,17 +9,17 @@ namespace Alternet.UI
 {
     internal interface IFrameworkElement : IUIElement
     {
-        // public event DependencyPropertyChangedEventHandler DataContextChanged;
+        /* public event DependencyPropertyChangedEventHandler DataContextChanged;*/
 
         string? Name { get; set; }
 
-        // IReadOnlyList<IFrameworkElement> ContentElements { get; }
+        /* IReadOnlyList<IFrameworkElement> ContentElements { get; }*/
 
         public object? DataContext { get; set; }
 
-        // IFrameworkElement? TryFindElement(string name);
+        /* IFrameworkElement? TryFindElement(string name);*/
 
-        // IUIElement FindElement(string name);
+        /* IUIElement FindElement(string name);*/
     }
 
     internal interface IFrameworkElementInternalStatic

@@ -45,7 +45,6 @@ namespace Alternet.UI
                     y += preferredSize.Height + verticalMargin;
                 }
             }
-
         }
     }
 }

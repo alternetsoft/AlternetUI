@@ -1,4 +1,3 @@
-
 namespace Alternet.UI
 {
     /// <summary>
@@ -14,6 +13,6 @@ namespace Alternet.UI
         /// <summary>
         /// The <see cref="ProgressBar"/> is oriented vertically.
         /// </summary>
-        Vertical
+        Vertical,
     }
 }

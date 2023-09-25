@@ -18,6 +18,6 @@ namespace Alternet.UI
         /// <summary>
         /// The bounding rectangle of the item text should be retrieved.
         /// </summary>
-        Label
+        Label,
     }
 }

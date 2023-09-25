@@ -9,12 +9,13 @@ using Alternet.Drawing;
 
 namespace Alternet.UI
 {
-//#if !BUILDTASK
-//    public
-//#endif
-    static class ResourcesIndexReaderWriter
+    // #if !BUILDTASK
+    //    public
+    // #endif
+    internal static class ResourcesIndexReaderWriter
     {
         private const int LastKnownVersion = 1;
+
         public static List<UIResourcesIndexEntry> Read(Stream stream)
         {
             var ver = new BinaryReader(stream).ReadInt32();
@@ -29,7 +30,7 @@ namespace Alternet.UI
                  {
                      Path = entry.Element(assetNs + "Path")!.Value,
                      Offset = int.Parse(entry.Element(assetNs + "Offset")!.Value),
-                     Size = int.Parse(entry.Element(assetNs + "Size")!.Value)
+                     Size = int.Parse(entry.Element(assetNs + "Size")!.Value),
                  }).ToList();
 
             return entries;
@@ -38,10 +39,11 @@ namespace Alternet.UI
         public static void Write(Stream stream, List<UIResourcesIndexEntry> entries)
         {
             new BinaryWriter(stream).Write(LastKnownVersion);
-            new DataContractSerializer(typeof(UIResourcesIndex)).WriteObject(stream,
+            new DataContractSerializer(typeof(UIResourcesIndex)).WriteObject(
+                stream,
                 new UIResourcesIndex()
                 {
-                    Entries = entries
+                    Entries = entries,
                 });
         }
 
@@ -55,11 +57,12 @@ namespace Alternet.UI
                 offsets[s.Key] = coffset;
                 coffset += s.Value.Length;
             }
+
             var index = sources.Select(s => new UIResourcesIndexEntry
             {
                 Path = s.Key,
                 Size = s.Value.Length,
-                Offset = offsets[s.Key]
+                Offset = offsets[s.Key],
             }).ToList();
             var output = new MemoryStream();
             var ms = new MemoryStream();
@@ -76,21 +79,21 @@ namespace Alternet.UI
         }
     }
 
+    // #if !BUILDTASK
+    //    public
+    // #endif
     [DataContract]
-//#if !BUILDTASK
-//    public
-//#endif
-    class UIResourcesIndex
+    internal class UIResourcesIndex
     {
         [DataMember]
         public List<UIResourcesIndexEntry> Entries { get; set; } = new List<UIResourcesIndexEntry>();
     }
 
+    // #if !BUILDTASK
+    //    public
+    // #endif
     [DataContract]
-//#if !BUILDTASK
-//    public
-//#endif
-    class UIResourcesIndexEntry
+    internal class UIResourcesIndexEntry
     {
         [DataMember]
         public string? Path { get; set; }
@@ -101,5 +104,4 @@ namespace Alternet.UI
         [DataMember]
         public int Size { get; set; }
     }
-
 }

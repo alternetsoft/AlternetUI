@@ -6,7 +6,7 @@ namespace Alternet.UI
 {
     internal class NativeLayoutPanelHandler : ControlHandler
     {
-        new public LayoutPanel Control => (LayoutPanel)base.Control;
+        public new LayoutPanel Control => (LayoutPanel)base.Control;
 
         public new Native.Panel NativeControl =>
             (Native.Panel)base.NativeControl!;

@@ -245,6 +245,7 @@ namespace Alternet.UI.Integration
                 [Flags]
                 public enum SetWindowPosFlags : uint
                 {
+#pragma warning disable
                     SWP_ASYNCWINDOWPOS = 0x4000,
                     SWP_DEFERERASE = 0x2000,
                     SWP_DRAWFRAME = 0x0020,
@@ -260,33 +261,42 @@ namespace Alternet.UI.Integration
                     SWP_NOSIZE = 0x0001,
                     SWP_NOZORDER = 0x0004,
                     SWP_SHOWWINDOW = 0x0040,
+#pragma warning restore
                 }
 
                 [DllImport(nameof(User32), SetLastError = true)]
                 [return: MarshalAs(UnmanagedType.Bool)]
+#pragma warning disable SYSLIB1054 // Use 'LibraryImportAttribute' instead of 'DllImportAttribute' to generate P/Invoke marshalling code at compile time
                 public static extern bool GetWindowRect(IntPtr hWnd, out RECT lpRect);
+#pragma warning restore SYSLIB1054 // Use 'LibraryImportAttribute' instead of 'DllImportAttribute' to generate P/Invoke marshalling code at compile time
 
                 [DllImport(nameof(User32), SetLastError = true)]
                 [return: MarshalAs(UnmanagedType.Bool)]
+#pragma warning disable SYSLIB1054
                 public static extern bool SetWindowPos(
                     IntPtr hWnd,
                     IntPtr hWndInsertAfter,
-                    int X,
-                    int Y,
+                    int x,
+                    int y,
                     int cx,
                     int cy,
                     SetWindowPosFlags uFlags);
+#pragma warning restore SYSLIB1054
 
                 [DllImport(nameof(User32), SetLastError = true)]
                 [return: MarshalAs(UnmanagedType.Bool)]
+#pragma warning disable SYSLIB1054
                 public static extern bool UpdateWindow(IntPtr hWnd);
+#pragma warning restore SYSLIB1054
 
                 public struct RECT
                 {
+#pragma warning disable
                     public int left;
                     public int top;
                     public int right;
                     public int bottom;
+#pragma warning restore
                 }
             }
         }

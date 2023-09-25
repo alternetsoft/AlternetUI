@@ -14,7 +14,7 @@ namespace Alternet.UI
             get => NativeControl.IsIndeterminate;
             set => NativeControl.IsIndeterminate = value;
         }
-        
+
         public override ProgressBarOrientation Orientation
         {
             get => (ProgressBarOrientation)NativeControl.Orientation;

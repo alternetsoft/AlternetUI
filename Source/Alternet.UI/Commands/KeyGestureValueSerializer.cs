@@ -1,14 +1,7 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
-
-//
-//
-//
-// Description: KeyGestureValueSerializer - Serializes a KeyGesture 
-//              to and from a string
-//
-//
+// Description: KeyGestureValueSerializer - Serializes a KeyGesture to and from a string
 
 using System;
 using System.ComponentModel;    // for TypeConverter
@@ -28,7 +21,7 @@ namespace Alternet.UI
         /// <param name="value"></param>
         /// <param name="context"></param>
         /// <returns></returns>
-        /// <ExternalAPI/> 
+        /// <ExternalAPI/>
         public override bool CanConvertFromString(string value, IValueSerializerContext context)
         {
             return true;
@@ -40,13 +33,11 @@ namespace Alternet.UI
         /// <param name="value"></param>
         /// <param name="context"></param>
         /// <returns></returns>
-        /// <ExternalAPI/> 
+        /// <ExternalAPI/>
         public override bool CanConvertToString(object value, IValueSerializerContext context)
         {
-            var keyGesture = value as KeyGesture;
-
 #pragma warning disable 6506
-            return (keyGesture != null)
+            return (value is KeyGesture keyGesture)
                 && ModifierKeysConverter.IsDefinedModifierKeys(keyGesture.Modifiers)
                 && KeyGestureConverter.IsDefinedKey(keyGesture.Key);
 #pragma warning restore 6506
@@ -83,4 +74,3 @@ namespace Alternet.UI
         }
     }
 }
-

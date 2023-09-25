@@ -45,7 +45,7 @@ namespace System.Diagnostics.CodeAnalysis
     internal
 #endif
     sealed class NotNullAttribute : Attribute
-    { 
+    {
     }
 
     /// <summary>Specifies that when a method returns <see cref="ReturnValue"/>, the parameter may be null even if the corresponding type disallows it.</summary>

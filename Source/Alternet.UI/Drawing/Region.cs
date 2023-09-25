@@ -12,7 +12,8 @@ namespace Alternet.Drawing
         /// <summary>
         /// This constructor initializes a new <see cref="Region"/> with an infinite interior.
         /// </summary>
-        public Region() : this(new UI.Native.Region())
+        public Region()
+            : this(new UI.Native.Region())
         {
         }
 
@@ -20,7 +21,8 @@ namespace Alternet.Drawing
         /// Initializes a new <see cref="Region"/> from the specified <see cref="Rect"/> structure.
         /// </summary>
         /// <param name="rect">A <see cref="Rect"/> structure that defines the interior of the new <see cref="Region"/>.</param>
-        public Region(Rect rect) : this()
+        public Region(Rect rect)
+            : this()
         {
             NativeRegion.InitializeWithRect(rect);
         }
@@ -30,7 +32,8 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="points">A <see cref="Point"/> structures array describing the polygon.</param>
         /// <param name="fillMode">The polygon fill mode.</param>
-        public Region(Point[] points, FillMode fillMode = FillMode.Alternate) : this()
+        public Region(Point[] points, FillMode fillMode = FillMode.Alternate)
+            : this()
         {
             NativeRegion.InitializeWithPolygon(points, (UI.Native.FillMode)fillMode);
         }
@@ -147,8 +150,7 @@ namespace Alternet.Drawing
         {
             CheckDisposed();
 
-            var region = obj as Region;
-            if (region == null)
+            if (obj is not Region region)
                 return false;
 
             return NativeRegion.IsEqualTo(region.NativeRegion);

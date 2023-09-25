@@ -15,7 +15,8 @@ namespace Alternet.UI
         /// <summary>
         /// Initializes a new instance of the <see cref="RoutedCancelEventArgs"/> class.
         /// </summary>
-        public RoutedCancelEventArgs(RoutedEvent routedEvent, object source) : base(routedEvent, source)
+        public RoutedCancelEventArgs(RoutedEvent routedEvent, object source)
+            : base(routedEvent, source)
         {
         }
 

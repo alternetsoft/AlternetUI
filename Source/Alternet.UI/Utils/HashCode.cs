@@ -70,9 +70,9 @@ namespace System
         private static uint GenerateGlobalSeed()
         {
             // yezo
-            //uint result;
-            //Interop.GetRandomBytes((byte*)&result, sizeof(uint));
-            //return result;
+            // uint result;
+            // Interop.GetRandomBytes((byte*)&result, sizeof(uint));
+            // return result;
 
             uint result = (uint)Environment.TickCount;
             return result;

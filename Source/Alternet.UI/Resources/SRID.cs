@@ -1155,38 +1155,55 @@ namespace Alternet.UI
 
         /// <summary>ZIP archive contains data structures too large to fit in memory.</summary>
         internal const string @Zip64StructuresTooLarge = "Zip64StructuresTooLarge";
+
         /// <summary>ZIP archive contains unsupported encrypted data.</summary>
         internal const string @ZipNotSupportedEncryptedArchive = "ZipNotSupportedEncryptedArchive";
+
         /// <summary>ZIP archive contains unsupported signature data.</summary>
         internal const string @ZipNotSupportedSignedArchive = "ZipNotSupportedSignedArchive";
+
         /// <summary>ZIP archive contains data compressed using an unsupported algorithm.</summary>
         internal const string @ZipNotSupportedCompressionMethod = "ZipNotSupportedCompressionMethod";
+
         /// <summary>Compressed part has inconsistent data length.</summary>
         internal const string @CompressLengthMismatch = "CompressLengthMismatch";
+
         /// <summary>CreateNew is not a valid FileMode for a nonempty stream.</summary>
         internal const string @CreateNewOnNonEmptyStream = "CreateNewOnNonEmptyStream";
+
         /// <summary>Specified part does not exist in the package.</summary>
         internal const string @PartDoesNotExist = "PartDoesNotExist";
+
         /// <summary>Cannot add part for the specified URI because it is already in the package.</summary>
         internal const string @PartAlreadyExists = "PartAlreadyExists";
+
         /// <summary>Cannot add part to the package. Part names cannot be derived from another part name by appending segments to it.</summary>
         internal const string @PartNamePrefixExists = "PartNamePrefixExists";
+
         /// <summary>Cannot open package because FileMode or FileAccess value is not valid for the stream.</summary>
         internal const string @IncompatibleModeOrAccess = "IncompatibleModeOrAccess";
+
         /// <summary>Cannot be an absolute URI.</summary>
         internal const string @URIShouldNotBeAbsolute = "URIShouldNotBeAbsolute";
+
         /// <summary>Must have absolute URI.</summary>
         internal const string @UriShouldBeAbsolute = "UriShouldBeAbsolute";
+
         /// <summary>FileMode/FileAccess for Part.GetStream is not compatible with FileMode/FileAccess used to open the Package.</summary>
         internal const string @ContainerAndPartModeIncompatible = "ContainerAndPartModeIncompatible";
+
         /// <summary>Cannot get stream with FileMode.Create, FileMode.CreateNew, FileMode.Truncate, FileMode.Append when access is FileAccess.Read.</summary>
         internal const string @UnsupportedCombinationOfModeAccess = "UnsupportedCombinationOfModeAccess";
+
         /// <summary>Returned stream for the part is null.</summary>
         internal const string @NullStreamReturned = "NullStreamReturned";
+
         /// <summary>Package object was closed and disposed, so cannot carry out operations on this object or any stream opened on a part of this package.</summary>
         internal const string @ObjectDisposed = "ObjectDisposed";
+
         /// <summary>Cannot write to read-only stream.</summary>
         internal const string @ReadOnlyStream = "ReadOnlyStream";
+
         /// <summary>Cannot read from write-only stream.</summary>
         internal const string @WriteOnlyStream = "WriteOnlyStream";
         /// <summary>Cannot access part because parent package was closed.</summary>

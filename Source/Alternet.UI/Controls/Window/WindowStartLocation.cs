@@ -24,6 +24,6 @@ namespace Alternet.UI
         /// The startup location of a <see cref="Window"/> is the center of the <see cref="Window"/> that owns it,
         /// as specified by the <see cref="Window.Owner"/> property.
         /// </summary>
-        CenterOwner
+        CenterOwner,
     }
 }

@@ -9,8 +9,6 @@
 
         private void InitializeControls(string details)
         {
-            // Cannot use UIXML in the Alternet.UI assembly itself, so populate the controls from code.
-
             BeginInit();
             Title = "Exception Details";
             Padding = new Thickness(10);

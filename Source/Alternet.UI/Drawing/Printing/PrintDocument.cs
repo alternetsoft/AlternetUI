@@ -25,7 +25,8 @@ namespace Alternet.Drawing.Printing
         /// <summary>
         /// Initializes a new instance of the <see cref="PrintDocument"/> class.
         /// </summary>
-        public PrintDocument() : this(new UI.Native.PrintDocument())
+        public PrintDocument()
+            : this(new UI.Native.PrintDocument())
         {
         }
 
@@ -98,10 +99,8 @@ namespace Alternet.Drawing.Printing
 
             set
             {
-                if (value == null)
-                    throw new ArgumentNullException();
-
-                NativePrintDocument.DocumentName = value;
+                NativePrintDocument.DocumentName = value
+                    ?? throw new ArgumentNullException(nameof(DocumentName));
             }
         }
 

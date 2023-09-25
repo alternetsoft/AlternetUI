@@ -18,6 +18,6 @@ namespace Alternet.UI
         /// <summary>
         /// A maximized window.
         /// </summary>
-        Maximized
+        Maximized,
     }
 }

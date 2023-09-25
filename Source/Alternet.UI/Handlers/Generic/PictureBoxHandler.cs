@@ -10,7 +10,7 @@ namespace Alternet.UI
         {
             if (Control.Background != null)
                 drawingContext.FillRectangle(Control.Background, ClientRectangle);
-            
+
             if (Control.Image != null)
                 drawingContext.DrawImage(Control.Image, ClientRectangle);
         }

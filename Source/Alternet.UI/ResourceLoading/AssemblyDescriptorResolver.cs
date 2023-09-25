@@ -2,8 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using Alternet.Drawing;
 using System.Runtime.CompilerServices;
+using Alternet.Drawing;
 
 namespace Alternet.UI
 {

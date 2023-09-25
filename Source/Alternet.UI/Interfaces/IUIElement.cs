@@ -1,6 +1,6 @@
-using Alternet.UI.Internal.KnownBoxes;
 using System;
 using System.Diagnostics;
+using Alternet.UI.Internal.KnownBoxes;
 
 namespace Alternet.UI
 {
@@ -124,5 +124,4 @@ namespace Alternet.UI
 
         void OnLostFocus(RoutedEventArgs e);
     }
-
 }

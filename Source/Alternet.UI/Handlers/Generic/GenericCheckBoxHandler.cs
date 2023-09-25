@@ -30,7 +30,7 @@ namespace Alternet.UI
 
             panel = new StackPanel
             {
-                Orientation = StackPanelOrientation.Horizontal
+                Orientation = StackPanelOrientation.Horizontal,
             };
 
             VisualChildren.Add(panel);

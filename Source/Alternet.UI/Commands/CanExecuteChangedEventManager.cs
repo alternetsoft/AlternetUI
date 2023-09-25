@@ -1,4 +1,5 @@
 #nullable disable
+
 // Manager for the CanExecuteChanged event in the "weak event listener"
 // pattern. See WeakEventTable.cs for an overview.
 using System;
@@ -13,23 +14,9 @@ namespace Alternet.UI
     /// </summary>
     public class CanExecuteChangedEventManager : WeakEventManager
     {
-        #region Constructors
-
-        //
-        //  Constructors
-        //
-
         private CanExecuteChangedEventManager()
         {
         }
-
-        #endregion Constructors
-
-        #region Public Methods
-
-        //
-        //  Public Methods
-        //
 
         /// <summary>
         /// Add a handler for the given source's event.
@@ -56,14 +43,6 @@ namespace Alternet.UI
 
             CurrentManager.PrivateRemoveHandler(source, handler);
         }
-
-        #endregion Public Methods
-
-        #region Protected Methods
-
-        //
-        //  Protected Methods
-        //
 
         /// <summary>
         /// Listen to the given source for the event.
@@ -102,14 +81,13 @@ namespace Alternet.UI
                 {
                     if (sink.IsInactive)
                     {
-                        if (toRemove == null)
-                        {
-                            toRemove = new List<HandlerSink>();
-                        }
+                        toRemove ??= new List<HandlerSink>();
+
                         toRemove.Add(sink);
                     }
                 }
-                removeList = (toRemove != null && toRemove.Count == list.Count);
+
+                removeList = toRemove != null && toRemove.Count == list.Count;
             }
 
             if (removeList)
@@ -117,7 +95,7 @@ namespace Alternet.UI
                 toRemove = list;
             }
 
-            foundDirt = (toRemove != null);
+            foundDirt = toRemove != null;
 
             // if the whole list is going away, remove the data (unless parent table
             // is already doing that for us - purgeAll=true)
@@ -134,7 +112,7 @@ namespace Alternet.UI
                     EventHandler<EventArgs> handler = sink.Handler;
                     sink.Detach(isOnOriginalThread);
 
-                    if (!removeList)    // if list is going away, no need to remove from it
+                    if (!removeList) // if list is going away, no need to remove from it
                     {
                         list.Remove(sink);
                     }
@@ -148,14 +126,6 @@ namespace Alternet.UI
 
             return foundDirt;
         }
-
-        #endregion Protected Methods
-
-        #region Private Properties
-
-        //
-        //  Private Properties
-        //
 
         // get the event manager for the current thread
         private static CanExecuteChangedEventManager CurrentManager
@@ -176,14 +146,6 @@ namespace Alternet.UI
             }
         }
 
-        #endregion Private Properties
-
-        #region Private Methods
-
-        //
-        //  Private Methods
-        //
-
         private void PrivateAddHandler(ICommand source, EventHandler<EventArgs> handler)
         {
             // get the list of sinks for this source, creating if necessary
@@ -195,7 +157,7 @@ namespace Alternet.UI
             }
 
             // add a new sink to the list
-            HandlerSink sink = new HandlerSink(this, source, handler);
+            HandlerSink sink = new(this, source, handler);
             list.Add(sink);
 
             // keep the handler alive
@@ -246,12 +208,8 @@ namespace Alternet.UI
         // the target
         void AddHandlerToCWT(Delegate handler, ConditionalWeakTable<object, object> cwt)
         {
-            object value;
-            object target = handler.Target;
-            if (target == null)
-                target = StaticSource;
-
-            if (!cwt.TryGetValue(target, out value))
+            object target = handler.Target ?? StaticSource;
+            if (!cwt.TryGetValue(target, out object value))
             {
                 // 99% case - the target only listens once
                 cwt.Add(target, handler);
@@ -260,12 +218,13 @@ namespace Alternet.UI
             {
                 // 1% case - the target listens multiple times
                 // we store the delegates in a list
-                List<Delegate> list = value as List<Delegate>;
-                if (list == null)
+                if (value is not List<Delegate> list)
                 {
                     // lazily allocate the list, and add the old handler
                     Delegate oldHandler = value as Delegate;
+#pragma warning disable
                     list = new List<Delegate>();
+#pragma warning restore
                     list.Add(oldHandler);
 
                     // install the list as the CWT value
@@ -278,17 +237,16 @@ namespace Alternet.UI
             }
         }
 
-        void RemoveHandlerFromCWT(Delegate handler, ConditionalWeakTable<object, object> cwt)
+#pragma warning disable IDE0060 // Remove unused parameter
+        private void RemoveHandlerFromCWT(Delegate handler, ConditionalWeakTable<object, object> cwt)
+#pragma warning restore IDE0060 // Remove unused parameter
         {
-            object value;
             object target = handler.Target;
-            if (target == null)
-                target = StaticSource;
+            target ??= StaticSource;
 
-            if (_cwt.TryGetValue(target, out value))
+            if (_cwt.TryGetValue(target, out object value))
             {
-                List<Delegate> list = value as List<Delegate>;
-                if (list == null)
+                if (value is not List<Delegate> list)
                 {
                     // 99% case - the target is removing its single handler
                     _cwt.Remove(target);
@@ -305,14 +263,8 @@ namespace Alternet.UI
             }
         }
 
-        #endregion Private Methods
-
-        #region Private Data
-
-        ConditionalWeakTable<object, object> _cwt = new ConditionalWeakTable<object, object>();
-        static readonly object StaticSource = new NamedObject("StaticSource");
-
-        #endregion Private Data
+        private readonly ConditionalWeakTable<object, object> _cwt = new();
+        private static readonly object StaticSource = new NamedObject("StaticSource");
 
         #region HandlerSink
 
@@ -357,7 +309,6 @@ namespace Alternet.UI
         // The internal data structures (Sink, List entry, LocalHandler) can be purged
         // when either the Button or the Command is GC'd.  Both conditions are
         // testable by querying the Sink's weak references.
-
         private class HandlerSink
         {
             public HandlerSink(CanExecuteChangedEventManager manager, ICommand source, EventHandler<EventArgs> originalHandler)
@@ -470,13 +421,12 @@ namespace Alternet.UI
                 }
             }
 
-            CanExecuteChangedEventManager _manager;
-            WeakReference _source;
-            WeakReference _originalHandler;
-            EventHandler _onCanExecuteChangedHandler;   // see remarks in the constructor
+            private CanExecuteChangedEventManager _manager;
+            private WeakReference _source;
+            private WeakReference _originalHandler;
+            private EventHandler _onCanExecuteChangedHandler;   // see remarks in the constructor
         }
 
         #endregion HandlerSink
     }
 }
-

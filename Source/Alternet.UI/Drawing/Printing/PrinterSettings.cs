@@ -17,7 +17,8 @@ namespace Alternet.Drawing.Printing
         /// <summary>
         /// Initializes a new instance of the <see cref="PrinterSettings"/> class.
         /// </summary>
-        public PrinterSettings() : this(new UI.Native.PrinterSettings())
+        public PrinterSettings()
+            : this(new UI.Native.PrinterSettings())
         {
         }
 

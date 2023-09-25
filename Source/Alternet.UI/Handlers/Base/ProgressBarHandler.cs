@@ -1,4 +1,3 @@
-
 namespace Alternet.UI
 {
     /// <summary>
@@ -6,7 +5,9 @@ namespace Alternet.UI
     /// </summary>
     public abstract class ProgressBarHandler : ControlHandler
     {
-        /// <inheritdoc/>
+        /// <summary>
+        /// Gets a <see cref="ProgressBar"/> this handler provides the implementation for.
+        /// </summary>
         public new ProgressBar Control => (ProgressBar)base.Control;
 
         /// <summary>

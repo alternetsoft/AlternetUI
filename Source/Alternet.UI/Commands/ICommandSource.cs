@@ -1,17 +1,17 @@
-
 using System;
 using System.Windows.Input;
 
 namespace Alternet.UI
 {
-    ///<summary>
+    /// <summary>
     ///     An interface for classes that know how to invoke a Command.
-    ///</summary>
+    /// </summary>
     public interface ICommandSource
     {
         /// <summary>
         ///     The command that will be executed when the class is "invoked."
-        ///     Classes that implement this interface should enable or disable based on the command's CanExecute return value.
+        ///     Classes that implement this interface should enable or disable based on the
+        ///     command's CanExecute return value.
         ///     The property may be implemented as read-write if desired.
         /// </summary>
         ICommand? Command

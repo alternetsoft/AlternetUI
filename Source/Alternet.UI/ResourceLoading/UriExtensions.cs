@@ -25,8 +25,11 @@ namespace Alternet.UI
             if (!baseUri.IsAbsoluteUri)
                 throw new ArgumentException($"Base uri {baseUri} is relative");
             if (baseUri.IsEmbres())
+            {
                 throw new ArgumentException(
                     $"Relative uris for 'embres' scheme aren't supported; {baseUri} uses embres");
+            }
+
             return new Uri(baseUri, uri);
         }
 
@@ -48,6 +51,7 @@ namespace Alternet.UI
             {
                 var isFind = false;
                 for (var i = 0; i < assembly.Length; ++currentIndex, ++i)
+                {
                     if (query[currentIndex] == assembly[i])
                     {
                         isFind = i == assembly.Length - 1;
@@ -56,6 +60,7 @@ namespace Alternet.UI
                     {
                         break;
                     }
+                }
 
                 // Skip the '='
                 ++currentIndex;
@@ -65,13 +70,14 @@ namespace Alternet.UI
                     ++currentIndex;
 
                 if (isFind)
+#pragma warning disable
                     return query.Substring(beginIndex, currentIndex - beginIndex);
+#pragma warning restore
 
                 ++currentIndex;
             }
 
-            return "";
+            return string.Empty;
         }
     }
-
 }

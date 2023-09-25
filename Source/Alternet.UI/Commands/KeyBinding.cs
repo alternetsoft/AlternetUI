@@ -67,8 +67,7 @@ namespace Alternet.UI
 
             set
             {
-                var keyGesture = value as KeyGesture;
-                if (keyGesture != null)
+                if (value is KeyGesture keyGesture)
                 {
                     base.Gesture = value;
                     SynchronizePropertiesFromGesture(keyGesture);
@@ -106,7 +105,7 @@ namespace Alternet.UI
         private static void OnModifiersPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             KeyBinding keyBinding = (KeyBinding)d;
-            keyBinding.SynchronizeGestureFromProperties(keyBinding.Key, (ModifierKeys)(e.NewValue));
+            keyBinding.SynchronizeGestureFromProperties(keyBinding.Key, (ModifierKeys)e.NewValue);
         }
 
         /// <summary>
@@ -142,7 +141,7 @@ namespace Alternet.UI
             DependencyPropertyChangedEventArgs e)
         {
             KeyBinding keyBinding = (KeyBinding)d;
-            keyBinding.SynchronizeGestureFromProperties((Key)(e.NewValue), keyBinding.Modifiers);
+            keyBinding.SynchronizeGestureFromProperties((Key)e.NewValue, keyBinding.Modifiers);
         }
 
         /// <summary>

@@ -39,7 +39,8 @@ namespace Alternet.UI
             }
         }
 
-        public string? CurrentToken => _tokenIndex < 0 ? null : _s.Substring(_tokenIndex, _tokenLength);
+        public readonly string? CurrentToken =>
+            _tokenIndex < 0 ? null : _s.Substring(_tokenIndex, _tokenLength);
 
         public void Dispose()
         {
@@ -49,7 +50,7 @@ namespace Alternet.UI
             }
         }
 
-        public bool TryReadInt32(out Int32 result, char? separator = null)
+        public bool TryReadInt32(out int result, char? separator = null)
         {
             if (TryReadString(out var stringResult, separator) &&
                 int.TryParse(stringResult, NumberStyles.Integer, _formatProvider, out result))
@@ -58,7 +59,7 @@ namespace Alternet.UI
             }
             else
             {
-                result = default(Int32);
+                result = default;
                 return false;
             }
         }
@@ -82,7 +83,7 @@ namespace Alternet.UI
             }
             else
             {
-                result = default(double);
+                result = default;
                 return false;
             }
         }
@@ -106,7 +107,7 @@ namespace Alternet.UI
             }
             else
             {
-                result = default(double);
+                result = default;
                 return false;
             }
         }
@@ -226,7 +227,7 @@ namespace Alternet.UI
             }
         }
 
-        private FormatException GetFormatException() =>
+        private readonly FormatException GetFormatException() =>
             _exceptionMessage != null ? new FormatException(_exceptionMessage) : new FormatException();
 
         private static char GetSeparatorFromFormatProvider(IFormatProvider provider)

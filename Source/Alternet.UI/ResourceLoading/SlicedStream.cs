@@ -8,23 +8,24 @@ namespace Alternet.UI
 {
     internal class SlicedStream : Stream
     {
-        private readonly Stream _baseStream;
-        private readonly int _from;
+        private readonly Stream baseStream;
+        private readonly int from;
 
         public SlicedStream(Stream baseStream, int from, int length)
         {
             Length = length;
-            _baseStream = baseStream;
-            _from = from;
-            _baseStream.Position = from;
+            this.baseStream = baseStream;
+            this.from = from;
+            this.baseStream.Position = from;
         }
+
         public override void Flush()
         {
         }
 
         public override int Read(byte[] buffer, int offset, int count)
         {
-            return _baseStream.Read(buffer, offset, (int)Math.Min(count, Length - Position));
+            return baseStream.Read(buffer, offset, (int)Math.Min(count, Length - Position));
         }
 
         public override long Seek(long offset, SeekOrigin origin)
@@ -32,32 +33,38 @@ namespace Alternet.UI
             if (origin == SeekOrigin.Begin)
                 Position = offset;
             if (origin == SeekOrigin.End)
-                Position = _from + Length + offset;
+                Position = from + Length + offset;
             if (origin == SeekOrigin.Current)
-                Position = Position + offset;
+                Position += offset;
             return Position;
         }
 
-        public override void SetLength(long value) => throw new NotSupportedException();
+        public override void SetLength(long value) =>
+            throw new NotSupportedException();
 
-        public override void Write(byte[] buffer, int offset, int count) => throw new NotSupportedException();
+        public override void Write(byte[] buffer, int offset, int count) =>
+            throw new NotSupportedException();
 
         public override bool CanRead => true;
-        public override bool CanSeek => _baseStream.CanRead;
+
+        public override bool CanSeek => baseStream.CanRead;
+
         public override bool CanWrite => false;
+
         public override long Length { get; }
+
         public override long Position
         {
-            get => _baseStream.Position - _from;
-            set => _baseStream.Position = value + _from;
+            get => baseStream.Position - from;
+            set => baseStream.Position = value + from;
         }
+
+        public override void Close() => baseStream.Close();
 
         protected override void Dispose(bool disposing)
         {
             if (disposing)
-                _baseStream.Dispose();
+                baseStream.Dispose();
         }
-
-        public override void Close() => _baseStream.Close();
     }
 }

@@ -17,7 +17,8 @@ namespace Alternet.UI
         /// <summary>
         /// Initializes a new instance of the <see cref="SelectedTabPageChangedEventArgs"/> class.
         /// </summary>
-        public SelectedTabPageChangedEventArgs(RoutedEvent routedEvent, object source, TabPage? oldValue, TabPage? newValue) : base(routedEvent, source)
+        public SelectedTabPageChangedEventArgs(RoutedEvent routedEvent, object source, TabPage? oldValue, TabPage? newValue)
+            : base(routedEvent, source)
         {
             OldValue = oldValue;
             NewValue = newValue;

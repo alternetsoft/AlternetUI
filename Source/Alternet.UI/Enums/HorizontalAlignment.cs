@@ -28,5 +28,4 @@ namespace Alternet.UI
         /// </summary>
         Stretch = 3,
     }
-
 }

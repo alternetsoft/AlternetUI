@@ -12,7 +12,8 @@ namespace Alternet.Drawing
         /// <summary>
         /// Initializes a new instance of the <see cref="TransformMatrix"/> class as the identity matrix.
         /// </summary>
-        public TransformMatrix() : this(new UI.Native.TransformMatrix())
+        public TransformMatrix()
+            : this(new UI.Native.TransformMatrix())
         {
         }
 
@@ -31,7 +32,8 @@ namespace Alternet.Drawing
             double m21,
             double m22,
             double dx,
-            double dy) : this()
+            double dy)
+            : this()
         {
             NativeMatrix.Initialize(m11, m12, m21, m22, dx, dy);
         }
@@ -307,8 +309,7 @@ namespace Alternet.Drawing
         {
             CheckDisposed();
 
-            var matrix2 = obj as TransformMatrix;
-            if (matrix2 == null)
+            if (obj is not TransformMatrix matrix2)
                 return false;
 
             return NativeMatrix.IsEqualTo(matrix2.NativeMatrix);

@@ -56,7 +56,7 @@ namespace Alternet.UI
         {
             get
             {
-                if ((destinationThreadReference != null) && (destinationThreadReference.IsAlive))
+                if ((destinationThreadReference != null) && destinationThreadReference.IsAlive)
                     return destinationThreadReference.Target as Thread;
 
                 return null;
@@ -153,8 +153,7 @@ namespace Alternet.UI
         {
             if (AutoInstall)
             {
-                var syncContext = AsyncOperationManager.SynchronizationContext as SynchronizationContext;
-                if (syncContext != null)
+                if (AsyncOperationManager.SynchronizationContext is SynchronizationContext syncContext)
                 {
                     try
                     {

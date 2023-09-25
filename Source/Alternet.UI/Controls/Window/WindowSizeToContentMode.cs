@@ -23,6 +23,6 @@ namespace Alternet.UI
         /// <summary>
         /// Specifies that a window will set both its width and height to fit the width and height of its content.
         /// </summary>
-        WidthAndHeight
+        WidthAndHeight,
     }
 }

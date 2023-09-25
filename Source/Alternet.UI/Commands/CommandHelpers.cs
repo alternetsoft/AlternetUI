@@ -1,8 +1,6 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
-
-
 using System;
 using System.Diagnostics;
 using System.Security;
@@ -12,7 +10,7 @@ namespace Alternet.UI
     internal static class CommandHelpers
     {
         //// Lots of specialized registration methods to avoid new'ing up more common stuff (like InputGesture's) at the callsite, as that's frequently
-        //// repeated and increases code size.  Do it once, here.  
+        //// repeated and increases code size.  Do it once, here.
 
         // internal static void RegisterCommandHandler(Type controlType, RoutedCommand command, ExecutedRoutedEventHandler executedRoutedEventHandler)
         // {
@@ -25,7 +23,7 @@ namespace Alternet.UI
         //    PrivateRegisterCommandHandler(controlType, command, executedRoutedEventHandler, null, inputGesture);
         // }
 
-        //internal static void RegisterCommandHandler(Type controlType, RoutedCommand command, ExecutedRoutedEventHandler executedRoutedEventHandler,
+        // internal static void RegisterCommandHandler(Type controlType, RoutedCommand command, ExecutedRoutedEventHandler executedRoutedEventHandler,
         //                                            Key key)
         // {
         //    PrivateRegisterCommandHandler(controlType, command, executedRoutedEventHandler, null, new KeyGesture(key));
@@ -47,9 +45,9 @@ namespace Alternet.UI
         //                                            CanExecuteRoutedEventHandler canExecuteRoutedEventHandler, InputGesture inputGesture)
         // {
         //    PrivateRegisterCommandHandler(controlType, command, executedRoutedEventHandler, canExecuteRoutedEventHandler, inputGesture);
-        //}
+        // }
 
-        //internal static void RegisterCommandHandler(Type controlType, RoutedCommand command, ExecutedRoutedEventHandler executedRoutedEventHandler,
+        // internal static void RegisterCommandHandler(Type controlType, RoutedCommand command, ExecutedRoutedEventHandler executedRoutedEventHandler,
         //                                            CanExecuteRoutedEventHandler canExecuteRoutedEventHandler, Key key)
         // {
         //    PrivateRegisterCommandHandler(controlType, command, executedRoutedEventHandler, canExecuteRoutedEventHandler, new KeyGesture(key));
@@ -75,7 +73,7 @@ namespace Alternet.UI
         //    PrivateRegisterCommandHandler(controlType, command, executedRoutedEventHandler, canExecuteRoutedEventHandler, new KeyGesture(key, modifierKeys));
         // }
 
-        //internal static void RegisterCommandHandler(Type controlType, RoutedCommand command, ExecutedRoutedEventHandler executedRoutedEventHandler,
+        // internal static void RegisterCommandHandler(Type controlType, RoutedCommand command, ExecutedRoutedEventHandler executedRoutedEventHandler,
         //                                            string srid1, string srid2)
         // {
         //    PrivateRegisterCommandHandler(controlType, command, executedRoutedEventHandler, null,
@@ -97,12 +95,12 @@ namespace Alternet.UI
         //    Debug.Assert(controlType != null);
         //    Debug.Assert(command != null);
         //    Debug.Assert(executedRoutedEventHandler != null);
-        //    // All other parameters may be null
+        // /*All other parameters may be null*/
 
-        //    // Create command link for this command
+        // /*Create command link for this command*/
         //    CommandManager.RegisterClassCommandBinding(controlType, new CommandBinding(command, executedRoutedEventHandler, canExecuteRoutedEventHandler));
 
-        //    // Create additional input binding for this command
+        // /*Create additional input binding for this command*/
         //    if (inputGestures != null)
         //    {
         //        for (int i = 0; i < inputGestures.Length; i++)
@@ -111,15 +109,14 @@ namespace Alternet.UI
         //        }
         //    }
         // }
-
         internal static bool CanExecuteCommandSource(ICommandSource commandSource)
         {
             var command = commandSource.Command;
             if (command != null)
             {
                 var parameter = commandSource.CommandParameter;
-                // var target = commandSource.CommandTarget;
 
+                // var target = commandSource.CommandTarget;
                 // RoutedCommand routed = command as RoutedCommand;
                 // if (routed != null)
                 // {
@@ -149,7 +146,11 @@ namespace Alternet.UI
         /// <summary>
         ///     Executes the command on the given command source.
         /// </summary>
-        internal static void CriticalExecuteCommandSource(ICommandSource commandSource, bool userInitiated)
+        internal static void CriticalExecuteCommandSource(
+            ICommandSource commandSource,
+#pragma warning disable
+            bool userInitiated)
+#pragma warning restore
         {
             var command = commandSource.Command;
             if (command != null)
@@ -176,8 +177,14 @@ namespace Alternet.UI
                 }
             }
         }
+
         // This allows a caller to override its ICommandSource values (used by Button and ScrollBar)
-        internal static void ExecuteCommand(ICommand command, object? parameter, IInputElement? target)
+        internal static void ExecuteCommand(
+            ICommand command,
+            object? parameter,
+#pragma warning disable
+            IInputElement? target)
+#pragma warning restore
         {
             /*RoutedCommand routed = command as RoutedCommand;
             if (routed != null)
