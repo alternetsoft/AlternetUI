@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,21 +14,57 @@ namespace Alternet.UI
     public class PropertyGridAdapterBrush : PropertyGridAdapterGeneric
     {
         private BrushType brushType = BrushType.None;
-        private Color color = Color.Black;
-        private Point linearGradientStart;
-        private Point linearGradientEnd = new(1, 1);
-        private Point radialGradientCenter = Point.Empty;
-        private Point radialGradientOrigin;
-        private Color endColor = Color.White;
-        private double radialGradientRadius = 10;
+        private Color color = DefaultColor;
+        private Point linearGradientStart = DefaultLinearGradientStart;
+        private Point linearGradientEnd = DefaultLinearGradientEnd;
+        private Point radialGradientCenter = DefaultRadialGradientCenter;
+        private Point radialGradientOrigin = DefaultRadialGradientOrigin;
+        private Color endColor = DefaultEndColor;
+        private double radialGradientRadius = DefaultRadialGradientRadius;
         private BrushHatchStyle hatchStyle;
 
         // (Color color, double offset)
         private GradientStop[] gradientStops = Array.Empty<GradientStop>();
 
         /// <summary>
+        /// Gets or sets default value for the <see cref="LinearGradientStart"/> property.
+        /// </summary>
+        public static Point DefaultLinearGradientStart { get; set; } = Point.Empty;
+
+        /// <summary>
+        /// Gets or sets default value for the <see cref="LinearGradientEnd"/> property.
+        /// </summary>
+        public static Point DefaultLinearGradientEnd { get; set; } = new(25, 25);
+
+        /// <summary>
+        /// Gets or sets default value for the <see cref="RadialGradientCenter"/> property.
+        /// </summary>
+        public static Point DefaultRadialGradientCenter { get; set; } = new(150, 50);
+
+        /// <summary>
+        /// Gets or sets default value for the <see cref="RadialGradientOrigin"/> property.
+        /// </summary>
+        public static Point DefaultRadialGradientOrigin { get; set; } = new(50, 50);
+
+        /// <summary>
+        /// Gets or sets default value for the <see cref="Color"/> property.
+        /// </summary>
+        public static Color DefaultColor { get; set; } = Color.Black;
+
+        /// <summary>
+        /// Gets or sets default value for the <see cref="EndColor"/> property.
+        /// </summary>
+        public static Color DefaultEndColor { get; set; } = Color.White;
+
+        /// <summary>
+        /// Gets or sets default value for the <see cref="RadialGradientRadius"/> property.
+        /// </summary>
+        public static double DefaultRadialGradientRadius { get; set; } = 200;
+
+        /// <summary>
         /// Returns <see cref="PropertyGridAdapterGeneric.Value"/> as <see cref="Brush"/>.
         /// </summary>
+        [Browsable(false)]
         public Brush? Brush
         {
             get => Value as Brush;
