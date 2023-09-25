@@ -315,9 +315,12 @@ namespace Alternet.UI
         /// <c>false</c> otherwise.</returns>
         public bool RemovePage(int page)
         {
+            if (page < 0 || page >= pages.Count)
+                return false;
             var ok = NativeControl.RemovePage((ulong)page);
             if (ok)
             {
+                pages.RemoveAt(page);
                 for (int i = page; i < pages.Count; i++)
                 {
                     (pages[i] as AuiNotebookPage)!.Index = pages[i].Index - 1;
