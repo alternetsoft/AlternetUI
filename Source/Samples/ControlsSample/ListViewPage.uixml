@@ -83,7 +83,7 @@
                           VerticalAlignment="Stretch" Name="stackPanel2">
                 <CheckBox Text="Multiple Selection"
                           Name="allowMultipleSelectionCheckBox"
-                          IsChecked="True" Margin="0,10,0,0"
+                          IsChecked="True" Margin="0,0,0,0"
                           CheckedChanged=
                             "AllowMultipleSelectionCheckBox_CheckedChanged"/>
 

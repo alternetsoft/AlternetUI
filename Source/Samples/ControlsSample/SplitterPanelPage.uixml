@@ -30,16 +30,14 @@
               Margin="0,0,0,5" Enabled="true"/>
       <Button Text="Set Sash Position" Click="SetSashPositionButton_Click"
               Margin="0,0,0,5" Enabled="true"/>
-      <GroupBox>
-        <VerticalStackPanel>
+
           <Button Text="Resize Pane 1" Click="SashGravity10Button_Click"
-                  Margin="5" Enabled="true"/>
+                  Margin="0,0,0,5" Enabled="true"/>
           <Button Text="Resize Pane 2" Click="SashGravity00Button_Click"
-                  Margin="5" Enabled="true"/>
+                  Margin="0,0,0,5" Enabled="true"/>
           <Button Text="Resize Panes Equal" Click="SashGravity05Button_Click"
-                  Margin="5" Enabled="true"/>
-        </VerticalStackPanel>  
-      </GroupBox>  
+                  Margin="0,0,0,5" Enabled="true"/>
+
       <CheckBox Text="Log moving once" Name="LogMovingOnceCheckbox" 
                 IsChecked="true" Margin="0,5,0,5" />
     </VerticalStackPanel>
