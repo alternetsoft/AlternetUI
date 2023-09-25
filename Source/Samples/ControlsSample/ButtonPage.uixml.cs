@@ -101,7 +101,10 @@ namespace ControlsSample
                 return;
             if (imageAlignComboBox.SelectedItem is not TextValuePair item)
                 return;
-            button.SetImagePosition((GenericDirection)item.Value);
+            DoInside(() =>
+            {
+                button.SetImagePosition((GenericDirection)item.Value);
+            });
         }
 
         private void ImageAlignComboBox_Changed(object? sender, EventArgs e)
@@ -117,7 +120,10 @@ namespace ControlsSample
 
         private void ApplyText()
         {
-            button.Text = textTextBox.Text;
+            DoInside(() =>
+            {
+                button.Text = textTextBox.Text;
+            });
         }
 
         private void ShowTextCheckBox_Changed(object? sender, EventArgs e)
@@ -140,7 +146,10 @@ namespace ControlsSample
 
         private void ApplyDisabled()
         {
-            button.Enabled = !disabledCheckBox.IsChecked;
+            DoInside(() =>
+            {
+                button.Enabled = !disabledCheckBox.IsChecked;
+            });
         }
 
         private void ImageCheckBox_CheckedChanged(object sender, System.EventArgs e)
@@ -152,8 +161,12 @@ namespace ControlsSample
         {
             if (button == null)
                 return;
-            button.StateImages = imageCheckBox.IsChecked ?
-                ResourceLoader.ButtonImages : new ControlStateImages();
+
+            DoInside(() =>
+            {
+                button.StateImages = imageCheckBox.IsChecked ?
+                    ResourceLoader.ButtonImages : new ControlStateImages();
+            });
         }
 
         private void TabStopCheckBox_Changed(object sender, System.EventArgs e)
@@ -168,19 +181,30 @@ namespace ControlsSample
             ApplyAll();
         }
 
+        public void DoInside(Action action)
+        {
+            button?.Parent?.DoInsideUpdate(() =>
+            {
+                button.DoInsideLayout(() =>
+                {
+                    action();
+                });
+            });
+        }
+
         private void ApplyAll()
         {
-            ApplyText();
-            ApplyDisabled();
-            ApplyImage();
-            ApplyDefault();
-            ApplyFont();
-            ApplyTextColor();
-            ApplyBackColor();
-            ApplyImageAlign();
-            button.PerformLayout();
-            button.Refresh();
-            button.Update();
+            DoInside(() =>
+            {
+                ApplyText();
+                ApplyDisabled();
+                ApplyImage();
+                ApplyDefault();
+                ApplyFont();
+                ApplyTextColor();
+                ApplyBackColor();
+                ApplyImageAlign();
+            });
         }
 
         private void DefaultCheckBox_CheckedChanged(object sender, System.EventArgs e)
@@ -190,7 +214,10 @@ namespace ControlsSample
 
         private void ApplyDefault()
         {
-            button.IsDefault = defaultCheckBox.IsChecked;
+            DoInside(() =>
+            {
+                button.IsDefault = defaultCheckBox.IsChecked;
+            });
         }
 
         private void Button_Click(object sender, System.EventArgs e)
@@ -217,7 +244,7 @@ namespace ControlsSample
             //site?.LogEvent("Button: Font changed to " + font.Name + ", "
             //    + font.SizeInPoints);
 
-            button.DoInsideUpdate(() =>
+            DoInside(() =>
             {
                 button.Font = Font.Default;
                 button.Font = font;
@@ -246,14 +273,20 @@ namespace ControlsSample
         private void ApplyTextColor()
         {
             var color = GetColor(comboBoxTextColor);
-            button.ForegroundColor = color;
+            DoInside(() =>
+            {
+                button.ForegroundColor = color;
+            });
             site?.LogEvent($"Button: Text Color = {comboBoxTextColor.SelectedItem}");
         }
 
         private void ApplyBackColor()
         {
             var color = GetColor(comboBoxBackColor);
-            button.BackgroundColor = color;
+            DoInside(() =>
+            {
+                button.BackgroundColor = color;
+            });
             site?.LogEvent($"Button: Back Color = {comboBoxBackColor.SelectedItem}");
         }
 
