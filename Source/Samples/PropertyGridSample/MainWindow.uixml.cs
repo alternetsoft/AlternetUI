@@ -45,7 +45,7 @@ namespace PropertyGridSample
             KnownColorStrings.Default.Custom = "Custom...";
 
             // Sample localization of color name
-            KnownColorStrings.Default.Black = "black";
+            KnownColorStrings.Default.Azure = "azure color";
 
             // Sample localization of Enum property values.
             var localizableEnum = PropertyGrid.GetChoices<BrushType>();
