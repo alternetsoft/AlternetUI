@@ -264,6 +264,7 @@ namespace Alternet::UI
 
     void TreeView::OnSelectionChanged(wxCommandEvent& event)
     {
+        event.Skip();
         auto window = dynamic_cast<wxWindow*>(event.GetEventObject());
         if (window->IsBeingDeleted())
             return;
@@ -274,12 +275,14 @@ namespace Alternet::UI
 
     void TreeView::OnItemCollapsed(wxTreeEvent& event)
     {
+        event.Skip();
         TreeViewItemEventData data{ event.GetItem() };
         RaiseEvent(TreeViewEvent::ItemCollapsed, &data);
     }
 
     void TreeView::OnItemExpanded(wxTreeEvent& event)
     {
+        event.Skip();
         if (_skipExpandedEvent)
             return;
 
@@ -292,20 +295,28 @@ namespace Alternet::UI
         TreeViewItemEventData data{ event.GetItem() };
         if (RaiseEventWithPointerResult(TreeViewEvent::ItemCollapsing, &data) != 0)
             event.Veto();
+        else
+            event.Skip();
     }
 
     void TreeView::OnItemExpanding(wxTreeEvent& event)
     {
         if (_skipExpandedEvent)
+        {
+            event.Skip();
             return;
+        }
 
         TreeViewItemEventData data{ event.GetItem() };
         if (RaiseEventWithPointerResult(TreeViewEvent::ItemExpanding, &data) != 0)
             event.Veto();
+        else
+            event.Skip();
     }
 
     void TreeView::OnItemBeginLabelEdit(wxTreeEvent& event)
     {
+        event.Skip();
         OnItemLabelEditEvent(event, TreeViewEvent::BeforeItemLabelEdit);
     }
 
@@ -322,10 +333,13 @@ namespace Alternet::UI
 
         if (result != 0)
             event.Veto();
+        else
+            event.Skip();
     }
 
     void TreeView::OnItemEndLabelEdit(wxTreeEvent& event)
     {
+        event.Skip();
         auto window = GetWxWindow();
         window->Refresh();
         window->Update();

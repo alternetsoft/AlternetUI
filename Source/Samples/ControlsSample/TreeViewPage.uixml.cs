@@ -19,6 +19,24 @@ namespace ControlsSample
             
             treeView.Items.ItemInserted += Items_ItemInserted;
             treeView.Items.ItemRemoved += Items_ItemRemoved;
+            treeView.MouseUp += TreeView_MouseUp;
+            treeView.PreviewMouseUp += TreeView_PreviewMouseUp;
+            treeView.MouseLeftButtonUp += TreeView_MouseLeftButtonUp;
+        }
+
+        private void TreeView_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            /*site?.LogEvent($"TreeView: MouseLeftButtonUp");*/
+        }
+
+        private void TreeView_PreviewMouseUp(object sender, MouseButtonEventArgs e)
+        {
+            /*site?.LogEvent($"TreeView: PreviewMouseUp");*/
+        }
+
+        private void TreeView_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            /*site?.LogEvent($"TreeView: MouseUp");*/
         }
 
         public IPageSite? Site
