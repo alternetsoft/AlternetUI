@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Alternet.Base.Collections;
 using Alternet.Drawing;
 
 namespace Alternet.UI
@@ -15,6 +16,8 @@ namespace Alternet.UI
     [ControlCategory("Containers")]
     public class AuiNotebook : Control
     {
+        private readonly Collection<IAuiNotebookPage> pages = new();
+
         /// <summary>
         /// Occurs when a page is about to be closed.
         /// </summary>
@@ -116,6 +119,23 @@ namespace Alternet.UI
             set
             {
                 Handler.CreateStyle = (int)value;
+            }
+        }
+
+        /// <summary>
+        /// Gets the collection of tab pages in this control.
+        /// </summary>
+        /// <value>A <see cref="ICollection{IAuiNotebookPage}"/> that contains
+        /// the <see cref="IAuiNotebookPage"/>
+        /// objects in this <see cref="AuiNotebook"/>.</value>
+        /// <remarks>The order of tab pages in this collection reflects the order the tabs appear
+        /// in the control.</remarks>
+        [Browsable(false)]
+        public IReadOnlyCollection<IAuiNotebookPage> Pages
+        {
+            get
+            {
+                return pages;
             }
         }
 
@@ -232,6 +252,7 @@ namespace Alternet.UI
                 {
                     Index = (int)GetPageCount() - 1,
                 };
+                pages.Add(result);
                 return result;
             }
             else
@@ -274,24 +295,16 @@ namespace Alternet.UI
                 {
                     Index = pageIdx,
                 };
+                pages.Insert(pageIdx, result);
+                for(int i = pageIdx + 1; i < pages.Count; i++)
+                {
+                    (pages[i] as AuiNotebookPage)!.Index = pages[i].Index + 1;
+                }
+
                 return result;
             }
             else
                 return null;
-        }
-
-        /// <summary>
-        /// Deletes a page at the given index.
-        /// </summary>
-        /// <param name="page">Page index.</param>
-        /// <returns><c>true</c> if operation was successfull,
-        /// <c>false</c> otherwise.</returns>
-        /// <remarks>
-        /// Calling this method will generate a page change event.
-        /// </remarks>
-        public bool DeletePage(int page)
-        {
-            return NativeControl.DeletePage((ulong)page);
         }
 
         /// <summary>
@@ -302,7 +315,16 @@ namespace Alternet.UI
         /// <c>false</c> otherwise.</returns>
         public bool RemovePage(int page)
         {
-            return NativeControl.RemovePage((ulong)page);
+            var ok = NativeControl.RemovePage((ulong)page);
+            if (ok)
+            {
+                for (int i = page; i < pages.Count; i++)
+                {
+                    (pages[i] as AuiNotebookPage)!.Index = pages[i].Index - 1;
+                }
+            }
+
+            return ok;
         }
 
         /// <summary>
@@ -633,6 +655,21 @@ namespace Alternet.UI
         {
             OnBgDclickMouse(e);
             BgDclickMouse?.Invoke(this, e);
+        }
+
+        /// <summary>
+        /// Deletes a page at the given index.
+        /// </summary>
+        /// <param name="page">Page index.</param>
+        /// <returns><c>true</c> if operation was successfull,
+        /// <c>false</c> otherwise.</returns>
+        /// <remarks>
+        /// Calling this method will generate a page change event.
+        /// </remarks>
+        internal bool DeletePage(int page)
+        {
+            throw new NotImplementedException();
+            /*return NativeControl.DeletePage((ulong)page);*/
         }
 
         /// <summary>
