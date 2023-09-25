@@ -10,6 +10,8 @@ Top priority controls:
 
 ======================
 
+- Remove try catch in event handler of cpp controls
+
 - Border Background property not working properly (have image in BugImages)
 
 - improve demo of AuiManager, add propGrid, add actions add/delete etc, add collection edit.
