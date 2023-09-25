@@ -71,10 +71,18 @@ namespace Alternet.UI
             }
         }
 
-        /*
         /// <inheritdoc cref="Control.Background"/>
-        public new Brush? Background { get => base.Background; set => base.Background = value; }
-        */
+        public new Brush? Background
+        {
+            get => base.Background;
+            set
+            {
+                if (Background == value)
+                    return;
+                base.Background = value;
+                Invalidate();
+            }
+        }
 
         /// <inheritdoc/>
         public override ControlId ControlKind => ControlId.Border;
