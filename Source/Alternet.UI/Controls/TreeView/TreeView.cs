@@ -696,8 +696,7 @@ namespace Alternet.UI
 
         /// <summary>
         /// Ensures that the tree item is visible, expanding tree items and
-        /// scrolling the tree view control as
-        /// necessary.
+        /// scrolling the tree view control as necessary.
         /// </summary>
         /// <remarks>
         /// When the <see cref="EnsureVisible"/> method is called, the tree is
@@ -705,13 +704,12 @@ namespace Alternet.UI
         /// item is visible in the <see cref="TreeView"/>. This method is useful
         /// if you are selecting a tree item in code based on
         /// certain criteria. By calling this method after you select the item,
-        /// the user can see and interact with the
-        /// selected item.
+        /// the user can see and interact with the selected item.
         /// </remarks>
-        public virtual void EnsureVisible(TreeViewItem item)
+        public virtual void EnsureVisible(TreeViewItem? item)
         {
             if (item is null)
-                throw new ArgumentNullException(nameof(item));
+                return;
 
             item.EnsureVisible();
         }
@@ -719,10 +717,10 @@ namespace Alternet.UI
         /// <summary>
         /// Scrolls the specified item into view.
         /// </summary>
-        public virtual void ScrollIntoView(TreeViewItem item)
+        public virtual void ScrollIntoView(TreeViewItem? item)
         {
             if (item is null)
-                throw new ArgumentNullException(nameof(item));
+                return;
 
             item.ScrollIntoView();
         }
