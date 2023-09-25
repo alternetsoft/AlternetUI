@@ -376,10 +376,12 @@ namespace ControlsSample
 
                 item.ImageIndex = imageIndex;
 
+                var i = 0;
                 foreach (var cell in item.Cells)
                 {
-                    cell.Text += cell.ColumnIndex.ToString();
+                    cell.Text = cell.Text + i.ToString();
                     cell.ImageIndex = imageIndex;
+                    i++;
                 }
             }
         }

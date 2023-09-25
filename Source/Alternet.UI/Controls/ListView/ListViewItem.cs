@@ -86,6 +86,7 @@ namespace Alternet.UI
         /// the <see cref="ImageList"/> associated with the <see cref="ListView"/> that
         /// contains the item.</param>
         public ListViewItem(string[] cellText, int? imageIndex = null)
+            : this()
         {
             foreach (var cell in cellText)
                 Cells.Add(new ListViewItemCell(cell));
