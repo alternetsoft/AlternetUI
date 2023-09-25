@@ -144,7 +144,7 @@ namespace PropertyGridSample
             panel.RightNotebook.PageChanged += RightNotebook_PageChanged;
         }
 
-        private void RightNotebook_PageChanged(object sender, EventArgs e)
+        private void RightNotebook_PageChanged(object? sender, EventArgs e)
         {
             updatePropertyGrid = true;
         }
@@ -208,15 +208,22 @@ namespace PropertyGridSample
                 }
                 else
                 {
-                    if (panel.RightNotebook.GetSelection() == panel.PropGridPageIndex)
+                    var selection = panel.RightNotebook.GetSelection();
+                    if (selection == panel.PropGridPage?.Index)
                     {
                         PropGrid.SetProps(item?.PropInstance, true);
                         panel.EventGrid.Clear();
                     }
                     else
+                    if (selection == panel.EventGridPage?.Index)
                     {
                         PropGrid.Clear();
                         UpdateEventsPropertyGrid(item?.EventInstance);
+                    }
+                    else
+                    {
+                        PropGrid.Clear();
+                        panel.EventGrid.Clear();
                     }
                 }
             }

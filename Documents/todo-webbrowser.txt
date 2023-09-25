@@ -1,0 +1,8 @@
+- Event string url, IntPtr file
+
+- Mem scheme DeleteFile, IntPtr GetFile
+
+- Navigation no macos not working in memoryscheme
+
+- WebBrowser custom scheme support
+Getfile event in browser to support custom protocols - wxWebView::RegisterHandler

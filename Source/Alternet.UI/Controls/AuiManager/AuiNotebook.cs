@@ -205,7 +205,7 @@ namespace Alternet.UI
         /// <param name="caption">Text for the new page.</param>
         /// <param name="select">Specifies whether the page should be selected.</param>
         /// <param name="bitmap">image for the new page. Optional.</param>
-        /// <returns><c>int</c> value with page index if successful, <c>null</c> otherwise.</returns>
+        /// <returns><see cref="IAuiNotebookPage"/> if successful, <c>null</c> otherwise.</returns>
         /// <remarks>
         /// If the <paramref name="select"/> parameter is true, calling
         /// this will generate a page change event.
@@ -214,19 +214,26 @@ namespace Alternet.UI
         /// <see cref="InsertPage"/> is similar to <see cref="AddPage"/>, but allows
         /// the ability to specify the insert location.
         /// </remarks>
-        public int? AddPage(
+        public IAuiNotebookPage? AddPage(
             Control page,
             string caption,
             bool select = true,
             ImageSet? bitmap = null)
         {
-            var result = NativeControl.AddPage(
+            var ok = NativeControl.AddPage(
                 page.WxWidget,
                 caption,
                 select,
                 bitmap?.NativeImageSet);
-            if (result)
-                return (int)GetPageCount() - 1;
+
+            if (ok)
+            {
+                IAuiNotebookPage result = new AuiNotebookPage(this)
+                {
+                    Index = (int)GetPageCount() - 1,
+                };
+                return result;
+            }
             else
                 return null;
         }
@@ -239,7 +246,7 @@ namespace Alternet.UI
         /// <param name="caption">Text for the new page.</param>
         /// <param name="select">Specifies whether the page should be selected.</param>
         /// <param name="bitmap">image for the new page. Optional.</param>
-        /// <returns><c>true</c> if successful, <c>false</c> otherwise.</returns>
+        /// <returns><see cref="IAuiNotebookPage"/> if successful, <c>null</c> otherwise.</returns>
         /// <remarks>
         /// If the <paramref name="select"/> parameter is true, calling
         /// this will generate a page change event.
@@ -248,21 +255,27 @@ namespace Alternet.UI
         /// <see cref="InsertPage"/> is similar to <see cref="AddPage"/>, but allows
         /// the ability to specify the insert location.
         /// </remarks>
-        public int? InsertPage(
+        public IAuiNotebookPage? InsertPage(
             int pageIdx,
             Control page,
             string caption,
             bool select = true,
             ImageSet? bitmap = null)
         {
-            var result = NativeControl.InsertPage(
+            var ok = NativeControl.InsertPage(
                 (ulong)pageIdx,
                 page.WxWidget,
                 caption,
                 select,
                 bitmap?.NativeImageSet);
-            if (result)
-                return pageIdx;
+            if (ok)
+            {
+                IAuiNotebookPage result = new AuiNotebookPage(this)
+                {
+                    Index = pageIdx,
+                };
+                return result;
+            }
             else
                 return null;
         }
@@ -408,7 +421,7 @@ namespace Alternet.UI
                 direction == GenericDirection.Left)
                 NativeControl.Split((ulong)page, (int)direction);
             else
-                throw new ArgumentException(nameof(direction));
+                throw new ArgumentException(null, nameof(direction));
         }
 
         /// <summary>

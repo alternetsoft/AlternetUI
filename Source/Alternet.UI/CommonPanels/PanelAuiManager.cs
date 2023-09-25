@@ -32,10 +32,10 @@ namespace Alternet.UI
         private TreeView? leftTreeView;
         private ContextMenu? logContextMenu;
 
-        private int? logPageIndex;
-        private int? leftTreeViewPageIndex;
-        private int? propGridPageIndex;
-        private int? eventGridPageIndex;
+        private IAuiNotebookPage? logPage;
+        private IAuiNotebookPage? leftTreeViewPage;
+        private IAuiNotebookPage? propGridPage;
+        private IAuiNotebookPage? eventGridPage;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PanelAuiManager"/> class.
@@ -47,22 +47,22 @@ namespace Alternet.UI
         /// <summary>
         /// Gets <see cref="LogControl"/> page index in the <see cref="BottomNotebook"/>.
         /// </summary>
-        public int? LogPageIndex => logPageIndex;
+        public IAuiNotebookPage? LogPage => logPage;
 
         /// <summary>
         /// Gets <see cref="LeftTreeView"/> page index in the <see cref="LeftNotebook"/>.
         /// </summary>
-        public int? LeftTreeViewPageIndex => leftTreeViewPageIndex;
+        public IAuiNotebookPage? LeftTreeViewPage => leftTreeViewPage;
 
         /// <summary>
         /// Gets <see cref="PropGrid"/> page index in the <see cref="RightNotebook"/>.
         /// </summary>
-        public int? PropGridPageIndex => propGridPageIndex;
+        public IAuiNotebookPage? PropGridPage => propGridPage;
 
         /// <summary>
         /// Gets <see cref="EventGrid"/> page index in the <see cref="RightNotebook"/>.
         /// </summary>
-        public int? EventGridPageIndex => eventGridPageIndex;
+        public IAuiNotebookPage? EventGridPage => eventGridPage;
 
         /// <summary>
         /// Gets control on the bottom pane which can be used for logging.
@@ -79,7 +79,7 @@ namespace Alternet.UI
                         HasBorder = false,
                         FullRowSelect = true,
                     };
-                    logPageIndex = BottomNotebook.AddPage(
+                    logPage = BottomNotebook.AddPage(
                         logControl,
                         CommonStrings.Default.NotebookTabTitleOutput);
                 }
@@ -103,7 +103,7 @@ namespace Alternet.UI
                         HasBorder = false,
                         FullRowSelect = true,
                     };
-                    leftTreeViewPageIndex = LeftNotebook.AddPage(
+                    leftTreeViewPage = LeftNotebook.AddPage(
                         leftTreeView,
                         CommonStrings.Default.NotebookTabTitleActivity);
                 }
@@ -143,7 +143,7 @@ namespace Alternet.UI
                     {
                         HasBorder = false,
                     };
-                    propGridPageIndex = RightNotebook.AddPage(
+                    propGridPage = RightNotebook.AddPage(
                         propertyGrid,
                         CommonStrings.Default.NotebookTabTitleProperties);
                 }
@@ -165,7 +165,7 @@ namespace Alternet.UI
                     {
                         HasBorder = false,
                     };
-                    eventGridPageIndex = RightNotebook.AddPage(
+                    eventGridPage = RightNotebook.AddPage(
                         eventGrid,
                         CommonStrings.Default.NotebookTabTitleEvents,
                         false);

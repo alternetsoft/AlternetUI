@@ -7,3 +7,44 @@ Get Binding props
 Get routed events
 Improve Bindings / RoutedEvents
 
+- ? Button canfocus
+
+- wxSpinCtrlDouble displays a real number. (wxSpinCtrl displays an integer.)
+https://docs.wxwidgets.org/3.2/classwx_spin_ctrl_double.html
+
+- ExplorerDemo must show real files and folders
+
+========
+In Mono there is System.Windows.Forms.Layout.
+So add to DefaultLayout:
+- margins.
+- AnchorStyles
+- AutoSizeMode
+-  FlowLayout and TableLayout
+- Sizer layouts (https://docs.wxwidgets.org/3.0/classwx_sizer.html). 
+=======
+
+- !!! Use Background in Border and do FillRect if Background is specified
+BorderBrush study
+GenericBorderHandler
+Add button in demos SetBorder and check
+		
+----------------------------------------------------------------------
+- Stack panel needs Distance property
+DistanceKind()
+Spacer control
+Small 3
+Medium 5
+Large 10
+X-Large 15
+2X-Large 20
+3X-Large 25
+4X-Large 30
+-------------------
+
+- install - build native linux no sh
+Remove sh usage as EOL could be not linux
+
+- Caret #include <wx/caret.h>
+
+
