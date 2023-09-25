@@ -1,5 +1,7 @@
 Top priority controls:
 
+- panelwebbrowser/panelrichedit
+
 - Calendar
 
 - DataGrid
@@ -7,6 +9,24 @@ Top priority controls:
 - wxHtmlWindow https://docs.wxwidgets.org/3.2/classwx_html_window.html
 
 ======================
+
+- Border Background property not working properly (have image in BugImages)
+
+- improve demo of AuiManager, add propGrid, add actions add/delete etc, add collection edit.
+
+- Testpropject with AuiManager // drop down popup in toolbar
+	On linux it doesn’t work right
+	Also as we redo events, maybe we need to redo it behavior on Windows
+
+- PanelLinkLabels
+	LinkLabel Add(string title, string url)
+	LinkLabel Add(string title, Action action)
+	LinkLabel Add(string title)
+Use for all actions in demos
+Also have Actions property in controls
+
+?? PropGrid Progressbar value change press enter does nothing , needs select another prop
+
 - why window is always disposed after close
 and if not disposed app behaves incorrectly. (seen in list edit after it closed)
 
@@ -65,3 +85,73 @@ Implement LogUtils
   <Window.InputBindings>
     <KeyBinding Gesture="Ctrl+Shift+A" Command="{Binding ExportToPngCommand}" />
   </Window.InputBindings>
+
+- Treeview item bold
+
+- Color picker add text
+
+- Set label color on linux for prop grid demo to black
+
+- find where binding is read from xml (or even prop)
+
+- Datetimepicker where style props in propgrid linux 
+
+- Statusbar panel not read from uixml, seen in propgrid demo linux
+
+- setcustomflag/getcustomflag for type/prop register and for other objects
+
+- setcustomattr/getcustomattr
+
+- Use custom flags for eventGrid
+
+- SPEED SetEventCallback() in Applicatio no try catch
+
+- Redo disposable from DisposableObject // also all other
+C:\DIMA\AlternetUI\Source\Alternet.UI\CommonDialogs\CommonDialog.cs
+C:\DIMA\AlternetUI\Source\Alternet.UI\Controls\AuiManager\AuiManager.cs
+C:\DIMA\AlternetUI\Source\Alternet.UI\Drawing\Image\ImageList.cs
+C:\DIMA\AlternetUI\Source\Alternet.UI\Drawing\Image\ImageSet.cs
+C:\DIMA\AlternetUI\Source\Alternet.UI\Drawing\Printing\PrintPreviewDialog.cs
+
+- C:\DIMA\AlternetUI\Source\Alternet.UI\Base\BaseComponent.cs
+From FrameworkElement
+
+- When modal form is opened click on app icon in task bar doesn;t show it 
+And shows main form but it is disabled.
+	- add set mainform and check how modal form 
+
+- AuiManager sample on exit we have silent exception ??
+
+- Webbrowswer test page use new toolbars and remove hints
+
+- SPEED NativeObject.cs InstancesByNativePointers
+
+- SPEED TreView 2 dictionaries in NativeHandler
+
+- compare class and interface methods need for intf support of all class methods
+
+- test popupdropdown in auitoolbar
+
+ - TreeViewCreateArgs, Style,	Etc.
+
+- Autosize width button in ListView ControlsSample
+
+- Datetimepicker is bad with popup calendar under linux
+ (when closed, artefacts remain on fdorm)
+
+- Propgriddemo don’t update propGrid if instance is not in propGrid
+
+=======
+Controls sample: 
+Need first panelAuiManager
+https://github.com/alternetsoft/AlternetUI/issues/34
+- DO NOT USE GRID AND STACKPANEL, USE AUIMANAGER
+BUT FIRST ADD MANAGER TO LAYOUT PANEL
+- DisablePaint on ParentChange
+- call UpdateLayout/Refresh
+- send message to user when fixed
+
+- But strange thing : My version of Ubuntu is 22.04.3 LTS
+- >just after Control Samples opened, just Treeview show things. Others ListView/ListBox/All show nothing
+- >after on minute and reduce/maximize windows, others samples show things now
+==========
