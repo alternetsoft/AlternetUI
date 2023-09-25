@@ -267,594 +267,892 @@ namespace Alternet.UI
 
         /// <summary>Cannot delete because the storage is not empty. Try a recursive delete with Delete(true).</summary>
         internal const string @CanNotDeleteNonEmptyStorage = "CanNotDeleteNonEmptyStorage";
+
         /// <summary>Cannot delete the root StorageInfo.</summary>
         internal const string @CanNotDeleteRoot = "CanNotDeleteRoot";
+
         /// <summary>Cannot perform this function on a storage that does not exist.</summary>
         internal const string @CanNotOnNonExistStorage = "CanNotOnNonExistStorage";
+
         /// <summary>Cannot open data storage.</summary>
         internal const string @CanNotOpenStorage = "CanNotOpenStorage";
+
         /// <summary>Cannot find specified package file.</summary>
         internal const string @ContainerNotFound = "ContainerNotFound";
+
         /// <summary>Cannot open specified package file.</summary>
         internal const string @ContainerCanNotOpen = "ContainerCanNotOpen";
+
         /// <summary>Create mode parameter must be either FileMode.Create or FileMode.Open.</summary>
         internal const string @CreateModeMustBeCreateOrOpen = "CreateModeMustBeCreateOrOpen";
+
         /// <summary>Compound File API failure.</summary>
         internal const string @CFAPIFailure = "CFAPIFailure";
+
         /// <summary>The given data space label name is already in use.</summary>
         internal const string @DataSpaceLabelInUse = "DataSpaceLabelInUse";
+
         /// <summary>Empty string is not a valid data space label.</summary>
         internal const string @DataSpaceLabelInvalidEmpty = "DataSpaceLabelInvalidEmpty";
+
         /// <summary>Specified data space label has not been defined.</summary>
         internal const string @DataSpaceLabelUndefined = "DataSpaceLabelUndefined";
+
         /// <summary>DataSpaceManager object was disposed.</summary>
         internal const string @DataSpaceManagerDisposed = "DataSpaceManagerDisposed";
+
         /// <summary>DataSpace map entry is not valid.</summary>
         internal const string @DataSpaceMapEntryInvalid = "DataSpaceMapEntryInvalid";
+
         /// <summary>FileAccess value is not valid.</summary>
         internal const string @FileAccessInvalid = "FileAccessInvalid";
+
         /// <summary>
-        /// RoutedEvent/EventPrivateKey limit exceeded. Routed events or EventPrivateKey for CLR events are typically static class members registered with field initializers or static constructors. In this case, routed events or EventPrivateKeys might be getting initialized in instance constructors, causing the limit to be exceeded.
+        /// RoutedEvent/EventPrivateKey limit exceeded. Routed events or EventPrivateKey
+        /// for CLR events are typically static class members registered with
+        /// field initializers or static constructors. In this case, routed events
+        /// or EventPrivateKeys might be getting initialized in instance
+        /// constructors, causing the limit to be exceeded.
         /// </summary>
         internal const string @TooManyRoutedEvents = "TooManyRoutedEvents";
+
         /// <summary>File already exists.</summary>
         internal const string @FileAlreadyExists = "FileAlreadyExists";
+
         /// <summary>FileMode value is not supported.</summary>
         internal const string @FileModeUnsupported = "FileModeUnsupported";
+
         /// <summary>FileMode value is not valid.</summary>
         internal const string @FileModeInvalid = "FileModeInvalid";
+
         /// <summary>FileShare value is not supported.</summary>
         internal const string @FileShareUnsupported = "FileShareUnsupported";
+
         /// <summary>FileShare value is not valid.</summary>
         internal const string @FileShareInvalid = "FileShareInvalid";
+
         /// <summary>Streams for exposure as ILockBytes must be seekable.</summary>
         internal const string @ILockBytesStreamMustSeek = "ILockBytesStreamMustSeek";
+
         /// <summary>'{1}' is not a valid value for '{0}'.</summary>
         internal const string @InvalidArgumentValue = "InvalidArgumentValue";
+
         /// <summary>Cannot locate information for stream that should exist. This is an internally inconsistent condition.</summary>
         internal const string @InvalidCondition01 = "InvalidCondition01";
+
         /// <summary>String format is not valid.</summary>
         internal const string @InvalidStringFormat = "InvalidStringFormat";
+
         /// <summary>Internal table type value is not valid. This is an internally inconsistent condition.</summary>
         internal const string @InvalidTableType = "InvalidTableType";
+
         /// <summary>MoveTo Destination storage does not exist.</summary>
         internal const string @MoveToDestNotExist = "MoveToDestNotExist";
+
         /// <summary>IStorage/IStream::MoveTo not supported.</summary>
         internal const string @MoveToNYI = "MoveToNYI";
+
         /// <summary>'{0}' name is already in use.</summary>
         internal const string @NameAlreadyInUse = "NameAlreadyInUse";
+
         /// <summary>'{0}' cannot contain the path delimiter: '{1}'.</summary>
         internal const string @NameCanNotHaveDelimiter = "NameCanNotHaveDelimiter";
+
         /// <summary>Failed call to '{0}'.</summary>
         internal const string @NamedAPIFailure = "NamedAPIFailure";
+
         /// <summary>Name table data is corrupt in data storage.</summary>
         internal const string @NameTableCorruptStg = "NameTableCorruptStg";
+
         /// <summary>Name table data is corrupt in memory.</summary>
         internal const string @NameTableCorruptMem = "NameTableCorruptMem";
+
         /// <summary>Name table cannot be read by this version of the program.</summary>
         internal const string @NameTableVersionMismatchRead = "NameTableVersionMismatchRead";
+
         /// <summary>Name table cannot be updated by this version of the program.</summary>
         internal const string @NameTableVersionMismatchWrite = "NameTableVersionMismatchWrite";
+
         /// <summary>This feature is not supported.</summary>
         internal const string @NYIDefault = "NYIDefault";
+
         /// <summary>Path string cannot include an empty element.</summary>
         internal const string @PathHasEmptyElement = "PathHasEmptyElement";
+
         /// <summary>Count of bytes to read cannot be negative.</summary>
         internal const string @ReadCountNegative = "ReadCountNegative";
+
         /// <summary>Cannot seek to given position.</summary>
         internal const string @SeekFailed = "SeekFailed";
+
         /// <summary>Cannot set seek pointer to a negative position.</summary>
         internal const string @SeekNegative = "SeekNegative";
+
         /// <summary>SeekOrigin value is not valid.</summary>
         internal const string @SeekOriginInvalid = "SeekOriginInvalid";
+
         /// <summary>This combination of flags is not supported.</summary>
         internal const string @StorageFlagsUnsupported = "StorageFlagsUnsupported";
+
         /// <summary>Storage already exists.</summary>
         internal const string @StorageAlreadyExist = "StorageAlreadyExist";
+
         /// <summary>Stream already exists.</summary>
         internal const string @StreamAlreadyExist = "StreamAlreadyExist";
+
         /// <summary>StorageInfo object was disposed.</summary>
         internal const string @StorageInfoDisposed = "StorageInfoDisposed";
+
         /// <summary>Storage does not exist.</summary>
         internal const string @StorageNotExist = "StorageNotExist";
+
         /// <summary>StorageRoot object was disposed.</summary>
         internal const string @StorageRootDisposed = "StorageRootDisposed";
+
         /// <summary>StreamInfo object was disposed.</summary>
         internal const string @StreamInfoDisposed = "StreamInfoDisposed";
+
         /// <summary>Stream length cannot be negative.</summary>
         internal const string @StreamLengthNegative = "StreamLengthNegative";
+
         /// <summary>Cannot perform this function on a stream that does not exist.</summary>
         internal const string @StreamNotExist = "StreamNotExist";
+
         /// <summary>Stream name cannot be '{0}'.</summary>
         internal const string @StreamNameNotValid = "StreamNameNotValid";
+
         /// <summary>Stream time stamp not implemented in OLE32 implementation of Compound Files.</summary>
         internal const string @StreamTimeStampNotImplemented = "StreamTimeStampNotImplemented";
+
         /// <summary>'{0}' cannot start with the reserved character range 0x01-0x1F.</summary>
         internal const string @StringCanNotBeReservedName = "StringCanNotBeReservedName";
+
         /// <summary>Requested time stamp is not available.</summary>
         internal const string @TimeStampNotAvailable = "TimeStampNotAvailable";
+
         /// <summary>Transform label name is already in use.</summary>
         internal const string @TransformLabelInUse = "TransformLabelInUse";
+
         /// <summary>Data space transform stack includes undefined transform labels.</summary>
         internal const string @TransformLabelUndefined = "TransformLabelUndefined";
+
         /// <summary>Transform object type is required to have a constructor which takes a TransformEnvironment object.</summary>
         internal const string @TransformObjectConstructorParam = "TransformObjectConstructorParam";
+
         /// <summary>Transform object type is required to implement IDataTransform interface.</summary>
         internal const string @TransformObjectImplementIDataTransform = "TransformObjectImplementIDataTransform";
+
         /// <summary>Stream transformation failed due to uninitialized data transform objects.</summary>
         internal const string @TransformObjectInitFailed = "TransformObjectInitFailed";
+
         /// <summary>Transform identifier type is not supported.</summary>
         internal const string @TransformTypeUnsupported = "TransformTypeUnsupported";
+
         /// <summary>Transform stack must have at least one transform.</summary>
         internal const string @TransformStackValid = "TransformStackValid";
+
         /// <summary>Cannot create package on stream.</summary>
         internal const string @UnableToCreateOnStream = "UnableToCreateOnStream";
+
         /// <summary>Cannot create data storage.</summary>
         internal const string @UnableToCreateStorage = "UnableToCreateStorage";
+
         /// <summary>Cannot create data stream.</summary>
         internal const string @UnableToCreateStream = "UnableToCreateStream";
+
         /// <summary>Cannot open data stream.</summary>
         internal const string @UnableToOpenStream = "UnableToOpenStream";
+
         /// <summary>Encountered unsupported type of storage element when building storage enumerator.</summary>
         internal const string @UnsupportedTypeEncounteredWhenBuildingStgEnum = "UnsupportedTypeEncounteredWhenBuildingStgEnum";
+
         /// <summary>Cannot write all data as specified.</summary>
         internal const string @WriteFailure = "WriteFailure";
+
         /// <summary>Write-only mode is not supported.</summary>
         internal const string @WriteOnlyUnsupported = "WriteOnlyUnsupported";
+
         /// <summary>Cannot write a negative number of bytes.</summary>
         internal const string @WriteSizeNegative = "WriteSizeNegative";
+
         /// <summary>Object metadata stream in the package is corrupt and the content is not valid.</summary>
         internal const string @CFM_CorruptMetadataStream = "CFM_CorruptMetadataStream";
+
         /// <summary>Object metadata stream in the package is corrupt and the root tag is not valid.</summary>
         internal const string @CFM_CorruptMetadataStream_Root = "CFM_CorruptMetadataStream_Root";
+
         /// <summary>Object metadata stream in the package is corrupt with duplicated key tags.</summary>
         internal const string @CFM_CorruptMetadataStream_DuplicateKey = "CFM_CorruptMetadataStream_DuplicateKey";
+
         /// <summary>Object used as metadata key must be an instance of the CompoundFileMetadataKey class.</summary>
         internal const string @CFM_ObjectMustBeCompoundFileMetadataKey = "CFM_ObjectMustBeCompoundFileMetadataKey";
+
         /// <summary>Cannot perform this operation when the package is in read-only mode.</summary>
         internal const string @CFM_ReadOnlyContainer = "CFM_ReadOnlyContainer";
+
         /// <summary>Failed to read a stream type table - the data appears to be a different format.</summary>
         internal const string @CFM_TypeTableFormat = "CFM_TypeTableFormat";
+
         /// <summary>Unicode character is not valid.</summary>
         internal const string @CFM_UnicodeCharInvalid = "CFM_UnicodeCharInvalid";
+
         /// <summary>Only strings can be used as value.</summary>
         internal const string @CFM_ValueMustBeString = "CFM_ValueMustBeString";
+
         /// <summary>XML character is not valid.</summary>
         internal const string @CFM_XMLCharInvalid = "CFM_XMLCharInvalid";
+
         /// <summary>Cannot compare different types.</summary>
         internal const string @CanNotCompareDiffTypes = "CanNotCompareDiffTypes";
+
         /// <summary>CompoundFileReference: Corrupted CompoundFileReference.</summary>
         internal const string @CFRCorrupt = "CFRCorrupt";
+
         /// <summary>CompoundFileReference: Corrupted CompoundFileReference - multiple stream components found.</summary>
         internal const string @CFRCorruptMultiStream = "CFRCorruptMultiStream";
+
         /// <summary>CompoundFileReference: Corrupted CompoundFileReference - storage component cannot follow stream component.</summary>
         internal const string @CFRCorruptStgFollowStm = "CFRCorruptStgFollowStm";
+
         /// <summary>Cannot have leading path delimiter.</summary>
         internal const string @DelimiterLeading = "DelimiterLeading";
+
         /// <summary>Cannot have trailing path delimiter.</summary>
         internal const string @DelimiterTrailing = "DelimiterTrailing";
+
         /// <summary>Offset must be greater than or equal to zero.</summary>
         internal const string @OffsetNegative = "OffsetNegative";
+
         /// <summary>Unrecognized reference component type.</summary>
         internal const string @UnknownReferenceComponentType = "UnknownReferenceComponentType";
+
         /// <summary>Cannot serialize unknown CompoundFileReference subclass.</summary>
         internal const string @UnknownReferenceSerialize = "UnknownReferenceSerialize";
+
         /// <summary>CompoundFileReference: malformed path encountered.</summary>
         internal const string @MalformedCompoundFilePath = "MalformedCompoundFilePath";
+
         /// <summary>Stream length cannot be negative.</summary>
         internal const string @CannotMakeStreamLengthNegative = "CannotMakeStreamLengthNegative";
+
         /// <summary>Stream operation failed because stream is corrupted.</summary>
         internal const string @CorruptStream = "CorruptStream";
+
         /// <summary>Stream does not support Length property.</summary>
         internal const string @LengthNotSupported = "LengthNotSupported";
+
         /// <summary>Buffer too small to hold results of Read.</summary>
         internal const string @ReadBufferTooSmall = "ReadBufferTooSmall";
+
         /// <summary>Stream does not support reading.</summary>
         internal const string @ReadNotSupported = "ReadNotSupported";
+
         /// <summary>Stream does not support Seek.</summary>
         internal const string @SeekNotSupported = "SeekNotSupported";
+
         /// <summary>Stream does not support SetLength.</summary>
         internal const string @SetLengthNotSupported = "SetLengthNotSupported";
+
         /// <summary>Stream does not support setting the Position property.</summary>
         internal const string @SetPositionNotSupported = "SetPositionNotSupported";
+
         /// <summary>Negative stream position not supported.</summary>
         internal const string @StreamPositionNegative = "StreamPositionNegative";
+
         /// <summary>Cannot change Transform parameters after the transform is initialized.</summary>
         internal const string @TransformParametersFixed = "TransformParametersFixed";
+
         /// <summary>Buffer of bytes to be written is too small.</summary>
         internal const string @WriteBufferTooSmall = "WriteBufferTooSmall";
+
         /// <summary>Count of bytes to write cannot be negative.</summary>
         internal const string @WriteCountNegative = "WriteCountNegative";
+
         /// <summary>Stream does not support writing.</summary>
         internal const string @WriteNotSupported = "WriteNotSupported";
+
         /// <summary>Compression requires ZLib library version {0}.</summary>
         internal const string @ZLibVersionError = "ZLibVersionError";
+
         /// <summary>Expected a VersionPair object.</summary>
         internal const string @ExpectedVersionPairObject = "ExpectedVersionPairObject";
+
         /// <summary>Major and minor version number components cannot be negative.</summary>
         internal const string @VersionNumberComponentNegative = "VersionNumberComponentNegative";
+
         /// <summary>Feature ID string cannot have zero length.</summary>
         internal const string @ZeroLengthFeatureID = "ZeroLengthFeatureID";
+
         /// <summary>Cannot find version stream.</summary>
         internal const string @VersionStreamMissing = "VersionStreamMissing";
+
         /// <summary>Cannot update version because of a version field size mismatch.</summary>
         internal const string @VersionUpdateFailure = "VersionUpdateFailure";
+
         /// <summary>Cannot remove signature from read-only file.</summary>
         internal const string @CannotRemoveSignatureFromReadOnlyFile = "CannotRemoveSignatureFromReadOnlyFile";
+
         /// <summary>Cannot change the RoutedEvent property while the RoutedEvent is being routed.</summary>
         internal const string @RoutedEventCannotChangeWhileRouting = "RoutedEventCannotChangeWhileRouting";
+
         /// <summary>Cannot sign read-only file.</summary>
         internal const string @CannotSignReadOnlyFile = "CannotSignReadOnlyFile";
+
         /// <summary>Cannot locate the selected digital certificate.</summary>
         internal const string @DigSigCannotLocateCertificate = "DigSigCannotLocateCertificate";
+
         /// <summary>Certificate error. Multiple certificates found with the same thumbprint.</summary>
         internal const string @DigSigDuplicateCertificate = "DigSigDuplicateCertificate";
+
         /// <summary>Digital Signature</summary>
         internal const string @CertSelectionDialogTitle = "CertSelectionDialogTitle";
+
         /// <summary>Select a certificate</summary>
         internal const string @CertSelectionDialogMessage = "CertSelectionDialogMessage";
+
         /// <summary>Duplicates not allowed - signature part already exists.</summary>
         internal const string @DuplicateSignature = "DuplicateSignature";
+
         /// <summary>Error parsing XML Signature.</summary>
         internal const string @XmlSignatureParseError = "XmlSignatureParseError";
+
         /// <summary>Required attribute '{0}' not found.</summary>
         internal const string @RequiredXmlAttributeMissing = "RequiredXmlAttributeMissing";
+
         /// <summary>Unexpected tag '{0}'.</summary>
         internal const string @UnexpectedXmlTag = "UnexpectedXmlTag";
+
         /// <summary>Required tag '{0}' not found.</summary>
         internal const string @RequiredTagNotFound = "RequiredTagNotFound";
+
         /// <summary>Required Package-specific Object tag is missing.</summary>
         internal const string @PackageSignatureObjectTagRequired = "PackageSignatureObjectTagRequired";
+
         /// <summary>Required Package-specific Reference tag is missing.</summary>
         internal const string @PackageSignatureReferenceTagRequired = "PackageSignatureReferenceTagRequired";
+
         /// <summary>Expected exactly one Package-specific Reference tag.</summary>
         internal const string @MoreThanOnePackageSpecificReference = "MoreThanOnePackageSpecificReference";
+
         /// <summary>Uri attribute in Reference tag must refer using fragment identifiers.</summary>
         internal const string @InvalidUriAttribute = "InvalidUriAttribute";
+
         /// <summary>Cannot countersign an unsigned package.</summary>
         internal const string @NoCounterSignUnsignedContainer = "NoCounterSignUnsignedContainer";
+
         /// <summary>Time format string is not valid.</summary>
         internal const string @BadSignatureTimeFormatString = "BadSignatureTimeFormatString";
+
         /// <summary>Signature structures are corrupted in this package.</summary>
         internal const string @PackageSignatureCorruption = "PackageSignatureCorruption";
+
         /// <summary>Unsupported hash algorithm specified.</summary>
         internal const string @UnsupportedHashAlgorithm = "UnsupportedHashAlgorithm";
+
         /// <summary>Relationship transform must be followed by an XML canonicalization transform.</summary>
         internal const string @RelationshipTransformNotFollowedByCanonicalizationTransform = "RelationshipTransformNotFollowedByCanonicalizationTransform";
+
         /// <summary>There must be at most one relationship transform specified for a given relationship part.</summary>
         internal const string @MultipleRelationshipTransformsFound = "MultipleRelationshipTransformsFound";
+
         /// <summary>Unsupported transform algorithm specified.</summary>
         internal const string @UnsupportedTransformAlgorithm = "UnsupportedTransformAlgorithm";
+
         /// <summary>Unsupported canonicalization method specified.</summary>
         internal const string @UnsupportedCanonicalizationMethod = "UnsupportedCanonicalizationMethod";
+
         /// <summary>Reusable hash algorithm must be specified.</summary>
         internal const string @HashAlgorithmMustBeReusable = "HashAlgorithmMustBeReusable";
+
         /// <summary>Malformed Part URI in Reference tag.</summary>
         internal const string @PartReferenceUriMalformed = "PartReferenceUriMalformed";
+
         /// <summary>Relationship was found to the signature origin but the part is missing. Package signature structures are corrupted.</summary>
         internal const string @SignatureOriginNotFound = "SignatureOriginNotFound";
+
         /// <summary>Multiple signature origin relationships found.</summary>
         internal const string @MultipleSignatureOrigins = "MultipleSignatureOrigins";
+
         /// <summary>Must specify an item to sign.</summary>
         internal const string @NothingToSign = "NothingToSign";
+
         /// <summary>Signature Identifier cannot be empty.</summary>
         internal const string @EmptySignatureId = "EmptySignatureId";
+
         /// <summary>Signature was deleted.</summary>
         internal const string @SignatureDeleted = "SignatureDeleted";
+
         /// <summary>Specified object ID conflicts with predefined Package Object ID.</summary>
         internal const string @SignaturePackageObjectTagMustBeUnique = "SignaturePackageObjectTagMustBeUnique";
+
         /// <summary>Specified reference object conflicts with predefined Package specific reference.</summary>
         internal const string @PackageSpecificReferenceTagMustBeUnique = "PackageSpecificReferenceTagMustBeUnique";
+
         /// <summary>Object identifiers must be unique within the same signature.</summary>
         internal const string @SignatureObjectIdMustBeUnique = "SignatureObjectIdMustBeUnique";
+
         /// <summary>Can only countersign parts with Digital Signature ContentType.</summary>
         internal const string @CanOnlyCounterSignSignatureParts = "CanOnlyCounterSignSignatureParts";
+
         /// <summary>Certificate part is not of the correct type.</summary>
         internal const string @CertificatePartContentTypeMismatch = "CertificatePartContentTypeMismatch";
+
         /// <summary>Signing certificate must be of type DSA or RSA.</summary>
         internal const string @CertificateKeyTypeNotSupported = "CertificateKeyTypeNotSupported";
+
         /// <summary>Specified part to sign does not exist.</summary>
         internal const string @PartToSignMissing = "PartToSignMissing";
+
         /// <summary>Duplicate object ID found. IDs must be unique within the signature XML.</summary>
         internal const string @DuplicateObjectId = "DuplicateObjectId";
+
         /// <summary>Caller-supplied parameter to callback function is not of expected type.</summary>
         internal const string @CallbackParameterInvalid = "CallbackParameterInvalid";
+
         /// <summary>Cannot change publish license after the rights management transform settings are fixed.</summary>
         internal const string @CannotChangePublishLicense = "CannotChangePublishLicense";
+
         /// <summary>Cannot change CryptoProvider after the rights management transform settings are fixed.</summary>
         internal const string @CannotChangeCryptoProvider = "CannotChangeCryptoProvider";
+
         /// <summary>Length prefix specifies {0} characters, which exceeds the maximum of {1} characters.</summary>
         internal const string @ExcessiveLengthPrefix = "ExcessiveLengthPrefix";
+
         /// <summary>OLE property ID {0} cannot be read (error {1}).</summary>
         internal const string @GetOlePropertyFailed = "GetOlePropertyFailed";
+
         /// <summary>Authentication type string (the part before the colon) is not valid in user ID '{0}'.</summary>
         internal const string @InvalidAuthenticationTypeString = "InvalidAuthenticationTypeString";
+
         /// <summary>'{0}' document property type is not valid.</summary>
         internal const string @InvalidDocumentPropertyType = "InvalidDocumentPropertyType";
+
         /// <summary>'{0}' document property variant type is not valid.</summary>
         internal const string @InvalidDocumentPropertyVariantType = "InvalidDocumentPropertyVariantType";
+
         /// <summary>User ID in use license stream is not of the form "authenticationType:userName".</summary>
         internal const string @InvalidTypePrefixedUserName = "InvalidTypePrefixedUserName";
+
         /// <summary>Feature name in the transform's primary stream is '{0}', but expected '{1}'.</summary>
         internal const string @InvalidTransformFeatureName = "InvalidTransformFeatureName";
+
         /// <summary>Document does not contain a package.</summary>
         internal const string @PackageNotFound = "PackageNotFound";
+
         /// <summary>File does not contain a stream to hold the publish license.</summary>
         internal const string @NoPublishLicenseStream = "NoPublishLicenseStream";
+
         /// <summary>File does not contain a storage to hold use licenses.</summary>
         internal const string @NoUseLicenseStorage = "NoUseLicenseStorage";
+
         /// <summary>File contains data in format version {0}, but the software can only read that data in format version {1} or lower.</summary>
         internal const string @ReaderVersionError = "ReaderVersionError";
+
         /// <summary>Document's publish license stream is corrupted.</summary>
         internal const string @PublishLicenseStreamCorrupt = "PublishLicenseStreamCorrupt";
+
         /// <summary>Document does not contain a publish license.</summary>
         internal const string @PublishLicenseNotFound = "PublishLicenseNotFound";
+
         /// <summary>Document does not contain any rights management-protected streams.</summary>
         internal const string @RightsManagementEncryptionTransformNotFound = "RightsManagementEncryptionTransformNotFound";
+
         /// <summary>Document contains multiple Rights Management Encryption Transforms.</summary>
         internal const string @MultipleRightsManagementEncryptionTransformFound = "MultipleRightsManagementEncryptionTransformFound";
+
         /// <summary>The stream on which the encrypted package is created must have read/write access.</summary>
         internal const string @StreamNeedsReadWriteAccess = "StreamNeedsReadWriteAccess";
+
         /// <summary>Cannot perform stream operation because CryptoProvider is not set to allow decryption.</summary>
         internal const string @CryptoProviderCanNotDecrypt = "CryptoProviderCanNotDecrypt";
+
         /// <summary>Only cryptographic providers based on a block cipher are supported.</summary>
         internal const string @CryptoProviderCanNotMergeBlocks = "CryptoProviderCanNotMergeBlocks";
+
         /// <summary>EncryptedPackageEnvelope object was disposed.</summary>
         internal const string @EncryptedPackageEnvelopeDisposed = "EncryptedPackageEnvelopeDisposed";
+
         /// <summary>CryptoProvider object was disposed.</summary>
         internal const string @CryptoProviderDisposed = "CryptoProviderDisposed";
+
         /// <summary>File contains data in format version {0}, but the software can only update that data in format version {1} or lower.</summary>
         internal const string @UpdaterVersionError = "UpdaterVersionError";
+
         /// <summary>The dictionary is read-only.</summary>
         internal const string @DictionaryIsReadOnly = "DictionaryIsReadOnly";
+
         /// <summary>The CryptoProvider cannot encrypt or decrypt.</summary>
         internal const string @CryptoProviderIsNotReady = "CryptoProviderIsNotReady";
+
         /// <summary>One of the document's use licenses is corrupted.</summary>
         internal const string @UseLicenseStreamCorrupt = "UseLicenseStreamCorrupt";
+
         /// <summary>Encrypted data stream is corrupted.</summary>
         internal const string @EncryptedDataStreamCorrupt = "EncryptedDataStreamCorrupt";
+
         /// <summary>Unrecognized document property: FMTID = '{0}', property ID = '{1}'.</summary>
         internal const string @UnknownDocumentProperty = "UnknownDocumentProperty";
+
         /// <summary>'{0}' document property in property set '{1}' is of incorrect variant type '{2}'. Expected type '{3}'.</summary>
         internal const string @WrongDocumentPropertyVariantType = "WrongDocumentPropertyVariantType";
+
         /// <summary>User is not activated.</summary>
         internal const string @UserIsNotActivated = "UserIsNotActivated";
+
         /// <summary>User does not have a client licensor certificate.</summary>
         internal const string @UserHasNoClientLicensorCert = "UserHasNoClientLicensorCert";
+
         /// <summary>Encryption right is not granted.</summary>
         internal const string @EncryptionRightIsNotGranted = "EncryptionRightIsNotGranted";
+
         /// <summary>Decryption right is not granted.</summary>
         internal const string @DecryptionRightIsNotGranted = "DecryptionRightIsNotGranted";
+
         /// <summary>CryptoProvider does not have privileges required for decryption of the PublishLicense.</summary>
         internal const string @NoPrivilegesForPublishLicenseDecryption = "NoPrivilegesForPublishLicenseDecryption";
+
         /// <summary>Signed Publish License is not valid.</summary>
         internal const string @InvalidPublishLicense = "InvalidPublishLicense";
+
         /// <summary>Variable-length header in publish license stream is {0} bytes, which exceeds the maximum length of {1} bytes.</summary>
         internal const string @PublishLicenseStreamHeaderTooLong = "PublishLicenseStreamHeaderTooLong";
+
         /// <summary>User must be either Windows or Passport authenticated. Other authentication types are not allowed in this context.</summary>
         internal const string @OnlyPassportOrWindowsAuthenticatedUsersAreAllowed = "OnlyPassportOrWindowsAuthenticatedUsersAreAllowed";
+
         /// <summary>Rights management operation failed.</summary>
         internal const string @RmExceptionGenericMessage = "RmExceptionGenericMessage";
+
         /// <summary>License is not valid.</summary>
         internal const string @RmExceptionInvalidLicense = "RmExceptionInvalidLicense";
+
         /// <summary>Information not found.</summary>
         internal const string @RmExceptionInfoNotInLicense = "RmExceptionInfoNotInLicense";
+
         /// <summary>License signature is not valid.</summary>
         internal const string @RmExceptionInvalidLicenseSignature = "RmExceptionInvalidLicenseSignature";
+
         /// <summary>Encryption not permitted.</summary>
         internal const string @RmExceptionEncryptionNotPermitted = "RmExceptionEncryptionNotPermitted";
+
         /// <summary>Right not granted.</summary>
         internal const string @RmExceptionRightNotGranted = "RmExceptionRightNotGranted";
+
         /// <summary>Version is not valid.</summary>
         internal const string @RmExceptionInvalidVersion = "RmExceptionInvalidVersion";
+
         /// <summary>Encoding type is not valid.</summary>
         internal const string @RmExceptionInvalidEncodingType = "RmExceptionInvalidEncodingType";
+
         /// <summary>Numerical value is not valid.</summary>
         internal const string @RmExceptionInvalidNumericalValue = "RmExceptionInvalidNumericalValue";
+
         /// <summary>Algorithm type is not valid.</summary>
         internal const string @RmExceptionInvalidAlgorithmType = "RmExceptionInvalidAlgorithmType";
+
         /// <summary>Environment not loaded.</summary>
         internal const string @RmExceptionEnvironmentNotLoaded = "RmExceptionEnvironmentNotLoaded";
+
         /// <summary>Cannot load environment.</summary>
         internal const string @RmExceptionEnvironmentCannotLoad = "RmExceptionEnvironmentCannotLoad";
+
         /// <summary>Cannot load more than one environment.</summary>
         internal const string @RmExceptionTooManyLoadedEnvironments = "RmExceptionTooManyLoadedEnvironments";
+
         /// <summary>Incompatible objects.</summary>
         internal const string @RmExceptionIncompatibleObjects = "RmExceptionIncompatibleObjects";
+
         /// <summary>Library fail.</summary>
         internal const string @RmExceptionLibraryFail = "RmExceptionLibraryFail";
+
         /// <summary>Enabling principal failure.</summary>
         internal const string @RmExceptionEnablingPrincipalFailure = "RmExceptionEnablingPrincipalFailure";
+
         /// <summary>Information not found.</summary>
         internal const string @RmExceptionInfoNotPresent = "RmExceptionInfoNotPresent";
+
         /// <summary>Get information query is not valid.</summary>
         internal const string @RmExceptionBadGetInfoQuery = "RmExceptionBadGetInfoQuery";
+
         /// <summary>Key type not supported.</summary>
         internal const string @RmExceptionKeyTypeUnsupported = "RmExceptionKeyTypeUnsupported";
+
         /// <summary>Crypto operation not supported.</summary>
         internal const string @RmExceptionCryptoOperationUnsupported = "RmExceptionCryptoOperationUnsupported";
+
         /// <summary>Clock rollback detected.</summary>
         internal const string @RmExceptionClockRollbackDetected = "RmExceptionClockRollbackDetected";
+
         /// <summary>Query reports no results.</summary>
         internal const string @RmExceptionQueryReportsNoResults = "RmExceptionQueryReportsNoResults";
+
         /// <summary>Unexpected exception.</summary>
         internal const string @RmExceptionUnexpectedException = "RmExceptionUnexpectedException";
+
         /// <summary>Binding validity time violated.</summary>
         internal const string @RmExceptionBindValidityTimeViolated = "RmExceptionBindValidityTimeViolated";
+
         /// <summary>Broken certificate chain.</summary>
         internal const string @RmExceptionBrokenCertChain = "RmExceptionBrokenCertChain";
+
         /// <summary>Binding policy violation.</summary>
         internal const string @RmExceptionBindPolicyViolation = "RmExceptionBindPolicyViolation";
+
         /// <summary>Manifest policy violation.</summary>
         internal const string @RmExceptionManifestPolicyViolation = "RmExceptionManifestPolicyViolation";
+
         /// <summary>License has been revoked.</summary>
         internal const string @RmExceptionBindRevokedLicense = "RmExceptionBindRevokedLicense";
+
         /// <summary>Issuer has been revoked.</summary>
         internal const string @RmExceptionBindRevokedIssuer = "RmExceptionBindRevokedIssuer";
+
         /// <summary>Principal has been revoked.</summary>
         internal const string @RmExceptionBindRevokedPrincipal = "RmExceptionBindRevokedPrincipal";
+
         /// <summary>Resource has been revoked.</summary>
         internal const string @RmExceptionBindRevokedResource = "RmExceptionBindRevokedResource";
+
         /// <summary>Module has been revoked.</summary>
         internal const string @RmExceptionBindRevokedModule = "RmExceptionBindRevokedModule";
+
         /// <summary>Binding content not in the End Use License.</summary>
         internal const string @RmExceptionBindContentNotInEndUseLicense = "RmExceptionBindContentNotInEndUseLicense";
+
         /// <summary>Binding access principal is not enabling.</summary>
         internal const string @RmExceptionBindAccessPrincipalNotEnabling = "RmExceptionBindAccessPrincipalNotEnabling";
+
         /// <summary>Binding access unsatisfied.</summary>
         internal const string @RmExceptionBindAccessUnsatisfied = "RmExceptionBindAccessUnsatisfied";
+
         /// <summary>Principal provided for binding is missing.</summary>
         internal const string @RmExceptionBindIndicatedPrincipalMissing = "RmExceptionBindIndicatedPrincipalMissing";
+
         /// <summary>Machine is not found in group identity certificate.</summary>
         internal const string @RmExceptionBindMachineNotFoundInGroupIdentity = "RmExceptionBindMachineNotFoundInGroupIdentity";
+
         /// <summary>Unsupported library plug-in.</summary>
         internal const string @RmExceptionLibraryUnsupportedPlugIn = "RmExceptionLibraryUnsupportedPlugIn";
+
         /// <summary>Binding revocation list is stale.</summary>
         internal const string @RmExceptionBindRevocationListStale = "RmExceptionBindRevocationListStale";
+
         /// <summary>Binding missing application revocation list.</summary>
         internal const string @RmExceptionBindNoApplicableRevocationList = "RmExceptionBindNoApplicableRevocationList";
+
         /// <summary>Handle is not valid.</summary>
         internal const string @RmExceptionInvalidHandle = "RmExceptionInvalidHandle";
+
         /// <summary>Binding time interval is violated.</summary>
         internal const string @RmExceptionBindIntervalTimeViolated = "RmExceptionBindIntervalTimeViolated";
+
         /// <summary>Binding cannot find a satisfied rights group.</summary>
         internal const string @RmExceptionBindNoSatisfiedRightsGroup = "RmExceptionBindNoSatisfiedRightsGroup";
+
         /// <summary>Cannot find content specified for binding.</summary>
         internal const string @RmExceptionBindSpecifiedWorkMissing = "RmExceptionBindSpecifiedWorkMissing";
+
         /// <summary>No more data.</summary>
         internal const string @RmExceptionNoMoreData = "RmExceptionNoMoreData";
+
         /// <summary>License acquisition failed.</summary>
         internal const string @RmExceptionLicenseAcquisitionFailed = "RmExceptionLicenseAcquisitionFailed";
+
         /// <summary>ID mismatch.</summary>
         internal const string @RmExceptionIdMismatch = "RmExceptionIdMismatch";
+
         /// <summary>Cannot have more than one certificate.</summary>
         internal const string @RmExceptionTooManyCertificates = "RmExceptionTooManyCertificates";
+
         /// <summary>Distribution Point URL was not set.</summary>
         internal const string @RmExceptionNoDistributionPointUrlFound = "RmExceptionNoDistributionPointUrlFound";
+
         /// <summary>Rights management server transaction already in progress.</summary>
         internal const string @RmExceptionAlreadyInProgress = "RmExceptionAlreadyInProgress";
+
         /// <summary>Group identity not set.</summary>
         internal const string @RmExceptionGroupIdentityNotSet = "RmExceptionGroupIdentityNotSet";
+
         /// <summary>Record not found.</summary>
         internal const string @RmExceptionRecordNotFound = "RmExceptionRecordNotFound";
+
         /// <summary>Connection failed.</summary>
         internal const string @RmExceptionNoConnect = "RmExceptionNoConnect";
+
         /// <summary>License not found.</summary>
         internal const string @RmExceptionNoLicense = "RmExceptionNoLicense";
+
         /// <summary>Machine must be activated.</summary>
         internal const string @RmExceptionNeedsMachineActivation = "RmExceptionNeedsMachineActivation";
+
         /// <summary>User identity must be activated.</summary>
         internal const string @RmExceptionNeedsGroupIdentityActivation = "RmExceptionNeedsGroupIdentityActivation";
+
         /// <summary>Activation failed.</summary>
         internal const string @RmExceptionActivationFailed = "RmExceptionActivationFailed";
+
         /// <summary>Command interrupted.</summary>
         internal const string @RmExceptionAborted = "RmExceptionAborted";
+
         /// <summary>Transaction quota exceeded.</summary>
         internal const string @RmExceptionOutOfQuota = "RmExceptionOutOfQuota";
+
         /// <summary>Authentication failed.</summary>
         internal const string @RmExceptionAuthenticationFailed = "RmExceptionAuthenticationFailed";
+
         /// <summary>Server side error.</summary>
         internal const string @RmExceptionServerError = "RmExceptionServerError";
+
         /// <summary>Installation failed.</summary>
         internal const string @RmExceptionInstallationFailed = "RmExceptionInstallationFailed";
+
         /// <summary>Hardware ID corrupted.</summary>
         internal const string @RmExceptionHidCorrupted = "RmExceptionHidCorrupted";
+
         /// <summary>Server response is not valid.</summary>
         internal const string @RmExceptionInvalidServerResponse = "RmExceptionInvalidServerResponse";
+
         /// <summary>Service not found.</summary>
         internal const string @RmExceptionServiceNotFound = "RmExceptionServiceNotFound";
+
         /// <summary>Use default.</summary>
         internal const string @RmExceptionUseDefault = "RmExceptionUseDefault";
+
         /// <summary>Server not found.</summary>
         internal const string @RmExceptionServerNotFound = "RmExceptionServerNotFound";
+
         /// <summary>E-mail address is not valid.</summary>
         internal const string @RmExceptionInvalidEmail = "RmExceptionInvalidEmail";
+
         /// <summary>License validity time violation.</summary>
         internal const string @RmExceptionValidityTimeViolation = "RmExceptionValidityTimeViolation";
+
         /// <summary>Outdated module.</summary>
         internal const string @RmExceptionOutdatedModule = "RmExceptionOutdatedModule";
+
         /// <summary>Service moved.</summary>
         internal const string @RmExceptionServiceMoved = "RmExceptionServiceMoved";
+
         /// <summary>Service gone.</summary>
         internal const string @RmExceptionServiceGone = "RmExceptionServiceGone";
+
         /// <summary>Ad entry not found.</summary>
         internal const string @RmExceptionAdEntryNotFound = "RmExceptionAdEntryNotFound";
+
         /// <summary>Not a certificate chain.</summary>
         internal const string @RmExceptionNotAChain = "RmExceptionNotAChain";
+
         /// <summary>Rights management server denied request.</summary>
         internal const string @RmExceptionRequestDenied = "RmExceptionRequestDenied";
+
         /// <summary>Not set.</summary>
         internal const string @RmExceptionNotSet = "RmExceptionNotSet";
+
         /// <summary>Metadata not set.</summary>
         internal const string @RmExceptionMetadataNotSet = "RmExceptionMetadataNotSet";
+
         /// <summary>Revocation information not set.</summary>
         internal const string @RmExceptionRevocationInfoNotSet = "RmExceptionRevocationInfoNotSet";
+
         /// <summary>Time information is not valid.</summary>
         internal const string @RmExceptionInvalidTimeInfo = "RmExceptionInvalidTimeInfo";
+
         /// <summary>Right not set.</summary>
         internal const string @RmExceptionRightNotSet = "RmExceptionRightNotSet";
+
         /// <summary>License binding to Windows Identity failed (NTLM bind failure).</summary>
         internal const string @RmExceptionLicenseBindingToWindowsIdentityFailed = "RmExceptionLicenseBindingToWindowsIdentityFailed";
+
         /// <summary>Issuance license template is not valid because of incorrectly formatted string.</summary>
         internal const string @RmExceptionInvalidIssuanceLicenseTemplate = "RmExceptionInvalidIssuanceLicenseTemplate";
+
         /// <summary>Key size length is not valid.</summary>
         internal const string @RmExceptionInvalidKeyLength = "RmExceptionInvalidKeyLength";
+
         /// <summary>Expired official Publish License template.</summary>
         internal const string @RmExceptionExpiredOfficialIssuanceLicenseTemplate = "RmExceptionExpiredOfficialIssuanceLicenseTemplate";
+
         /// <summary>Client Licensor Certificate is not valid.</summary>
         internal const string @RmExceptionInvalidClientLicensorCertificate = "RmExceptionInvalidClientLicensorCertificate";
+
         /// <summary>Hardware ID is not valid.</summary>
         internal const string @RmExceptionHidInvalid = "RmExceptionHidInvalid";
+
         /// <summary>E-mail not verified.</summary>
         internal const string @RmExceptionEmailNotVerified = "RmExceptionEmailNotVerified";
+
         /// <summary>Debugger detected.</summary>
         internal const string @RmExceptionDebuggerDetected = "RmExceptionDebuggerDetected";
+
         /// <summary>Lockbox type is not valid.</summary>
         internal const string @RmExceptionInvalidLockboxType = "RmExceptionInvalidLockboxType";
+
         /// <summary>Lockbox path is not valid.</summary>
         internal const string @RmExceptionInvalidLockboxPath = "RmExceptionInvalidLockboxPath";
+
         /// <summary>Registry path is not valid.</summary>
         internal const string @RmExceptionInvalidRegistryPath = "RmExceptionInvalidRegistryPath";
+
         /// <summary>No AES Crypto provider found.</summary>
         internal const string @RmExceptionNoAesCryptoProvider = "RmExceptionNoAesCryptoProvider";
+
         /// <summary>Global option is already set.</summary>
         internal const string @RmExceptionGlobalOptionAlreadySet = "RmExceptionGlobalOptionAlreadySet";
+
         /// <summary>Owner's license not found.</summary>
         internal const string @RmExceptionOwnerLicenseNotFound = "RmExceptionOwnerLicenseNotFound";
+
         /// <summary>Archive file cannot be size 0.</summary>
         internal const string @ZipZeroSizeFileIsNotValidArchive = "ZipZeroSizeFileIsNotValidArchive";
+
         /// <summary>Cannot perform a write operation in read-only mode.</summary>
         internal const string @CanNotWriteInReadOnlyMode = "CanNotWriteInReadOnlyMode";
+
         /// <summary>Cannot perform a read operation in write-only mode.</summary>
         internal const string @CanNotReadInWriteOnlyMode = "CanNotReadInWriteOnlyMode";
+
         /// <summary>Cannot perform a read/write operation in write-only or read-only modes.</summary>
         internal const string @CanNotReadWriteInReadOnlyWriteOnlyMode = "CanNotReadWriteInReadOnlyWriteOnlyMode";
+
         /// <summary>Cannot create file because the specified file name is already in use.</summary>
         internal const string @AttemptedToCreateDuplicateFileName = "AttemptedToCreateDuplicateFileName";
+
         /// <summary>Cannot find specified file.</summary>
         internal const string @FileDoesNotExists = "FileDoesNotExists";
+
         /// <summary>Truncate and Append FileModes are not supported.</summary>
         internal const string @TruncateAppendModesNotSupported = "TruncateAppendModesNotSupported";
+
         /// <summary>Only FileShare.Read and FileShare.None are supported.</summary>
         internal const string @OnlyFileShareReadAndFileShareNoneSupported = "OnlyFileShareReadAndFileShareNoneSupported";
+
         /// <summary>Cannot read data from stream that does not support reading.</summary>
         internal const string @CanNotReadDataFromStreamWhichDoesNotSupportReading = "CanNotReadDataFromStreamWhichDoesNotSupportReading";
+
         /// <summary>Cannot write data to stream that does not support writing.</summary>
         internal const string @CanNotWriteDataToStreamWhichDoesNotSupportWriting = "CanNotWriteDataToStreamWhichDoesNotSupportWriting";
+
         /// <summary>Cannot operate on stream that does not support seeking.</summary>
         internal const string @CanNotOperateOnStreamWhichDoesNotSupportSeeking = "CanNotOperateOnStreamWhichDoesNotSupportSeeking";
+
         /// <summary>Cannot get stream with FileMode.Create, FileMode.CreateNew, FileMode.Truncate, FileMode.Append when access is FileAccess.Read.</summary>
         internal const string @UnsupportedCombinationOfModeAccessShareStreaming = "UnsupportedCombinationOfModeAccessShareStreaming";
+
         /// <summary>File contains corrupted data.</summary>
         internal const string @CorruptedData = "CorruptedData";
+
         /// <summary>Multidisk ZIP format is not supported.</summary>
         internal const string @NotSupportedMultiDisk = "NotSupportedMultiDisk";
+
         /// <summary>ZIP archive was closed and disposed.</summary>
         internal const string @ZipArchiveDisposed = "ZipArchiveDisposed";
+
         /// <summary>ZIP file was closed, disposed, or deleted.</summary>
         internal const string @ZipFileItemDisposed = "ZipFileItemDisposed";
+
         /// <summary>ZIP archive contains unsupported data structures.</summary>
         internal const string @NotSupportedVersionNeededToExtract = "NotSupportedVersionNeededToExtract";
+
         /// <summary>ZIP archive contains data structures too large to fit in memory.</summary>
         internal const string @Zip64StructuresTooLarge = "Zip64StructuresTooLarge";
         /// <summary>ZIP archive contains unsupported encrypted data.</summary>
@@ -1333,12 +1631,16 @@ namespace Alternet.UI
         internal const string @PropertyPathIndexWrongType = "PropertyPathIndexWrongType";
         /// <summary>Failed to compare two elements in the array.</summary>
         internal const string @InvalidOperation_IComparerFailed = "InvalidOperation_IComparerFailed";
+
         /// <summary>Offset and length were out of bounds for the array or count is greater than the number of elements from index to the end of the source collection.</summary>
         internal const string @Argument_InvalidOffLen = "Argument_InvalidOffLen";
+
         /// <summary>Synchronization callback for '{0}' collection is no longer available.\n This could happen if the callback is an anonymous method.</summary>
         internal const string @CollectionView_MissingSynchronizationCallback = "CollectionView_MissingSynchronizationCallback";
+
         /// <summary>Number of elements in source Enumerable is greater than available space from index to the end of destination array.</summary>
         internal const string @CopyToNotEnoughSpace = "CopyToNotEnoughSpace";
+
         /// <summary>Collection was modified; enumeration operation may not execute.</summary>
         internal const string @EnumeratorVersionChanged = "EnumeratorVersionChanged";
 
@@ -1592,7 +1894,7 @@ namespace Alternet.UI
         /// already uses type '{1}'.</summary>
         internal const string @CollectionView_NameTypeDuplicity = "CollectionView_NameTypeDuplicity";
 
-        /// <summary>Must set Source in RoutedEventArgs before building event route or        
+        /// <summary>Must set Source in RoutedEventArgs before building event route or
         /// invoking handlers.</summary>
         internal const string @SourceNotSet = "SourceNotSet";
 
@@ -1661,7 +1963,9 @@ namespace Alternet.UI
         [global::System.Runtime.CompilerServices.MethodImpl(
             global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
 #endif
+#pragma warning disable
         internal static string GetResourceString(string resourceKey, string defaultValue = null) =>
             ResourceManager.GetString(resourceKey, Culture);
+#pragma warning restore
     }
 }
