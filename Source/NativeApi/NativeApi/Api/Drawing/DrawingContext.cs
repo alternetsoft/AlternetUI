@@ -1,32 +1,28 @@
-﻿using System;
+﻿#pragma warning disable
+using System;
 using Alternet.Drawing;
 
 namespace NativeApi.Api
 {
     public class DrawingContext
     {
-        protected DrawingContext() => throw new Exception();
+        protected DrawingContext() { }
 
         public static DrawingContext FromImage(Image image) => throw new Exception();
 
-        public void FillRectangle(Brush brush, Rect rectangle) => throw new Exception();
-
-        public void DrawRectangle(Pen pen, Rect rectangle) => throw new Exception();
-
-        public void FillEllipse(Brush brush, Rect bounds) => throw new Exception();
-
-        public void DrawEllipse(Pen pen, Rect bounds) => throw new Exception();
-
-        public void FloodFill(Brush brush, Point point) => throw new Exception();
-
-        public void DrawPath(Pen pen, GraphicsPath path) => throw new Exception();
-        public void FillPath(Brush brush, GraphicsPath path) => throw new Exception();
+        public void FillRectangle(Brush brush, Rect rectangle) { }
+        public void DrawRectangle(Pen pen, Rect rectangle) { }
+        public void FillEllipse(Brush brush, Rect bounds) { }
+        public void DrawEllipse(Pen pen, Rect bounds) { }
+        public void FloodFill(Brush brush, Point point) { }
+        public void DrawPath(Pen pen, GraphicsPath path) { }
+        public void FillPath(Brush brush, GraphicsPath path) { }
 
         public void DrawTextAtPoint(
             string text,
             Point origin,
             Font font,
-            Brush brush) => throw new Exception();
+            Brush brush) {}
 
         public void DrawTextAtRect(
             string text,
@@ -42,9 +38,13 @@ namespace NativeApi.Api
 
         public void DrawImageAtRect(Image image, Rect destinationRect) => throw new Exception();
 
-        public void DrawImagePortionAtRect(Image image, Rect destinationRect, Rect sourceRect) => throw new Exception();
+        public void DrawImagePortionAtRect(Image image, Rect destinationRect, Rect sourceRect) { }
 
-        public Size MeasureText(string text, Font font, double maximumWidth, TextWrapping textWrapping) => throw new Exception();
+        public Size MeasureText(
+            string text,
+            Font font,
+            double maximumWidth,
+            TextWrapping textWrapping) => throw new Exception();
 
         public void Push() => throw new Exception();
 
@@ -56,27 +56,36 @@ namespace NativeApi.Api
 
         public void DrawLines(Pen pen, Point[] points) => throw new Exception();
 
-        public void DrawArc(Pen pen, Point center, double radius, double startAngle, double sweepAngle) => throw new Exception();
+        public void DrawArc(Pen pen, Point center, double radius, double startAngle,
+            double sweepAngle) => throw new Exception();
 
-        public void FillPie(Brush brush, Point center, double radius, double startAngle, double sweepAngle) => throw new Exception();
+        public void FillPie(Brush brush, Point center, double radius, double startAngle,
+            double sweepAngle) => throw new Exception();
         
-        public void DrawPie(Pen pen, Point center, double radius, double startAngle, double sweepAngle) => throw new Exception();
+        public void DrawPie(Pen pen, Point center, double radius, double startAngle,
+            double sweepAngle) => throw new Exception();
 
-        public void DrawBezier(Pen pen, Point startPoint, Point controlPoint1, Point controlPoint2, Point endPoint) => throw new Exception();
+        public void DrawBezier(Pen pen, Point startPoint, Point controlPoint1,
+            Point controlPoint2, Point endPoint) => throw new Exception();
 
         public void DrawBeziers(Pen pen, Point[] points) => throw new Exception();
+
+        public void DrawPoint(Pen pen, double x, double y) { }
 
         public void DrawCircle(Pen pen, Point center, double radius) => throw new Exception();
 
         public void FillCircle(Brush brush, Point center, double radius) => throw new Exception();
 
-        public void DrawRoundedRectangle(Pen pen, Rect rect, double cornerRadius) => throw new Exception();
+        public void DrawRoundedRectangle(Pen pen, Rect rect, double cornerRadius)
+            => throw new Exception();
 
-        public void FillRoundedRectangle(Brush brush, Rect rect, double cornerRadius) => throw new Exception();
+        public void FillRoundedRectangle(Brush brush, Rect rect, double cornerRadius)
+            => throw new Exception();
 
         public void DrawPolygon(Pen pen, Point[] points) => throw new Exception();
 
-        public void FillPolygon(Brush brush, Point[] points, FillMode fillMode) => throw new Exception();
+        public void FillPolygon(Brush brush, Point[] points, FillMode fillMode)
+            => throw new Exception();
 
         public void DrawRectangles(Pen pen, Rect[] rects) => throw new Exception();
 

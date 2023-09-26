@@ -35,6 +35,7 @@ void FillPie(Brush* brush, const Point& center, double radius, double startAngle
 void DrawPie(Pen* pen, const Point& center, double radius, double startAngle, double sweepAngle);
 void DrawBezier(Pen* pen, const Point& startPoint, const Point& controlPoint1, const Point& controlPoint2, const Point& endPoint);
 void DrawBeziers(Pen* pen, Point* points, int pointsCount);
+void DrawPoint(Pen* pen, double x, double y);
 void DrawCircle(Pen* pen, const Point& center, double radius);
 void FillCircle(Brush* brush, const Point& center, double radius);
 void DrawRoundedRectangle(Pen* pen, const Rect& rect, double cornerRadius);

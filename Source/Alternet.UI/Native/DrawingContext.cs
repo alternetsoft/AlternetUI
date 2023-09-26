@@ -213,6 +213,12 @@ namespace Alternet.UI.Native
             NativeApi.DrawingContext_DrawBeziers_(NativePointer, pen.NativePointer, points, points.Length);
         }
         
+        public void DrawPoint(Pen pen, double x, double y)
+        {
+            CheckDisposed();
+            NativeApi.DrawingContext_DrawPoint_(NativePointer, pen.NativePointer, x, y);
+        }
+        
         public void DrawCircle(Pen pen, Alternet.Drawing.Point center, double radius)
         {
             CheckDisposed();
@@ -353,6 +359,9 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void DrawingContext_DrawBeziers_(IntPtr obj, IntPtr pen, Alternet.Drawing.Point[] points, int pointsCount);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void DrawingContext_DrawPoint_(IntPtr obj, IntPtr pen, double x, double y);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void DrawingContext_DrawCircle_(IntPtr obj, IntPtr pen, Alternet.Drawing.Point center, double radius);

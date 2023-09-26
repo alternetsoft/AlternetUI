@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using Alternet.UI;
 using Alternet.UI.Internal.ComponentModel;
 using Alternet.UI.Localization;
@@ -149,6 +150,43 @@ namespace Alternet.Drawing
                 throw new ArgumentNullException(nameof(pen));
 #endif
             dc.DrawArc(pen.NativePen, center, radius, startAngle, sweepAngle);
+        }
+
+        /// <summary>
+        /// Draws debug points on the corners of the specified rectangle.
+        /// </summary>
+        /// <param name="pen">Color of the debug points. if <c>null</c>, red color is used.</param>
+        /// <param name="rect"></param>
+        [Conditional("DEBUG")]
+        public void DrawDebugPoints(Rect rect, Pen? pen = null)
+        {
+            void DrawDebugPoint(Point p)
+            {
+                DrawPoint(pen, p.X, p.Y);
+            }
+
+            pen ??= Pens.Red;
+
+            DrawDebugPoint(rect.TopLeft);
+            DrawDebugPoint(new Point(rect.Right - 1, rect.Top));
+            DrawDebugPoint(new Point(rect.Right - 1, rect.Bottom - 1));
+            DrawDebugPoint(new Point(rect.Left, rect.Bottom - 1));
+        }
+
+        /// <summary>
+        /// Draws point with the specified color.
+        /// </summary>
+        /// <param name="pen">Color of the point.</param>
+        /// <param name="x">X-coordinate of the point.</param>
+        /// <param name="y">Y-coordinate of the point.</param>
+        /// <exception cref="ArgumentNullException">if <paramref name="pen"/> is <c>null</c>.</exception>
+        public void DrawPoint(Pen pen, double x, double y)
+        {
+#if DEBUG
+            if (pen is null)
+                throw new ArgumentNullException(nameof(pen));
+#endif
+            dc.DrawPoint(pen.NativePen, x, y);
         }
 
         /// <summary>

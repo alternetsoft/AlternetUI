@@ -88,7 +88,8 @@ namespace Alternet::UI
         }
     }
 
-    void DrawingContext::DrawArc(Pen* pen, const Point& center, double radius, double startAngle, double sweepAngle)
+    void DrawingContext::DrawArc(Pen* pen, const Point& center, double radius, double startAngle,
+        double sweepAngle)
     {
         auto path = new GraphicsPath(_dc, _graphicsContext);
 
@@ -98,7 +99,8 @@ namespace Alternet::UI
         path->Release();
     }
 
-    void DrawingContext::FillPie(Brush* brush, const Point& center, double radius, double startAngle, double sweepAngle)
+    void DrawingContext::FillPie(Brush* brush, const Point& center, double radius, double startAngle,
+        double sweepAngle)
     {
         auto path = new GraphicsPath(_dc, _graphicsContext);
 
@@ -110,7 +112,8 @@ namespace Alternet::UI
         path->Release();
     }
 
-    void DrawingContext::DrawPie(Pen* pen, const Point& center, double radius, double startAngle, double sweepAngle)
+    void DrawingContext::DrawPie(Pen* pen, const Point& center, double radius, double startAngle,
+        double sweepAngle)
     {
         auto path = new GraphicsPath(_dc, _graphicsContext);
 
@@ -122,7 +125,8 @@ namespace Alternet::UI
         path->Release();
     }
 
-    void DrawingContext::DrawBezier(Pen* pen, const Point& startPoint, const Point& controlPoint1, const Point& controlPoint2, const Point& endPoint)
+    void DrawingContext::DrawBezier(Pen* pen, const Point& startPoint, const Point& controlPoint1,
+        const Point& controlPoint2, const Point& endPoint)
     {
         auto path = new GraphicsPath(_dc, _graphicsContext);
 
@@ -307,7 +311,8 @@ namespace Alternet::UI
         _graphicsContext->SetInterpolationQuality(oldInterpolationQuality);
     }
 
-    void DrawingContext::DrawImagePortionAtRect(Image* image, const Rect& destinationRect, const Rect& sourceRect)
+    void DrawingContext::DrawImagePortionAtRect(Image* image, const Rect& destinationRect,
+        const Rect& sourceRect)
     {
         wxBitmap bitmap = image->GetBitmap();
         auto wxSourceRect = fromDip(sourceRect, _dc->GetWindow());
@@ -332,7 +337,8 @@ namespace Alternet::UI
             oldDC.SelectObject(bitmap);
             wxBitmap tempBitmap(wxSourceRect.width, wxSourceRect.height);
             newDC.SelectObject(tempBitmap);
-            newDC.Blit(0, 0, wxSourceRect.width, wxSourceRect.height, &oldDC, wxSourceRect.x, wxSourceRect.y);
+            newDC.Blit(0, 0, wxSourceRect.width, wxSourceRect.height, &oldDC, wxSourceRect.x,
+                wxSourceRect.y);
             oldDC.SelectObject(wxNullBitmap);
             newDC.SelectObject(wxNullBitmap);
 
@@ -526,6 +532,27 @@ namespace Alternet::UI
 
             _graphicsContext->DrawRectangle(rect.X, rect.Y, rect.Width, rect.Height);
         }
+    }
+
+    void DrawingContext::DrawPoint(Pen* pen, double x, double y)
+    {
+        //if (NeedToUseDC())
+        //{
+            UseDC();
+            auto oldPen = _dc->GetPen();
+            _dc->SetPen(pen->GetWxPen());
+            _dc->DrawPoint(fromDip(Point(x, y), _dc->GetWindow()));
+            _dc->SetPen(oldPen);
+        //}
+        //else
+        //{
+        //    UseGC();
+
+        //    auto point = fromDipF(Point(x,y), _dc->GetWindow());
+
+        //    _graphicsContext->SetPen(pen->GetWxPen());
+        //    _graphicsContext->DrawPoint(point);
+        //}
     }
 
     void DrawingContext::FillEllipse(Brush* brush, const Rect& bounds)
@@ -810,7 +837,8 @@ namespace Alternet::UI
         return new TextPainter(_dc, _graphicsContext, /*NeedToUseDC()*/true, translation);
     }
 
-    Size DrawingContext::MeasureText(const string& text, Font* font, double maximumWidth, TextWrapping wrapping)
+    Size DrawingContext::MeasureText(const string& text, Font* font, double maximumWidth,
+        TextWrapping wrapping)
     {
         //if (NeedToUseDC())
         //    UseDC();
@@ -822,6 +850,7 @@ namespace Alternet::UI
         _dc->ResetTransformMatrix();
 #endif
 
-        return std::unique_ptr<TextPainter>(GetTextPainter())->MeasureText(text, font, maximumWidth, wrapping);
+        return std::unique_ptr<TextPainter>(GetTextPainter())->MeasureText(text, font,
+            maximumWidth, wrapping);
     }
 }

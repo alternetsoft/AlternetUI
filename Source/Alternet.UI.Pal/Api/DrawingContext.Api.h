@@ -160,6 +160,11 @@ ALTERNET_UI_API void DrawingContext_DrawBeziers_(DrawingContext* obj, Pen* pen, 
     obj->DrawBeziers(pen, points, pointsCount);
 }
 
+ALTERNET_UI_API void DrawingContext_DrawPoint_(DrawingContext* obj, Pen* pen, double x, double y)
+{
+    obj->DrawPoint(pen, x, y);
+}
+
 ALTERNET_UI_API void DrawingContext_DrawCircle_(DrawingContext* obj, Pen* pen, Point center, double radius)
 {
     obj->DrawCircle(pen, center, radius);
