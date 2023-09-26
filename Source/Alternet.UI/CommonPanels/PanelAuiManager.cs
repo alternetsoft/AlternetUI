@@ -22,6 +22,7 @@ namespace Alternet.UI
         private AuiNotebook? leftNotebook;
         private AuiNotebook? rightNotebook;
         private AuiNotebook? bottomNotebook;
+        private AuiNotebook? centerNotebook;
         private IAuiPaneInfo? leftPane;
         private IAuiPaneInfo? rightPane;
         private IAuiPaneInfo? centerPane;
@@ -206,6 +207,23 @@ namespace Alternet.UI
                 }
 
                 return rightNotebook;
+            }
+        }
+
+        /// <summary>
+        /// Gets <see cref="AuiNotebook"/> control which is located on the bottom pane.
+        /// </summary>
+        public AuiNotebook CenterNotebook
+        {
+            get
+            {
+                if (centerNotebook == null)
+                {
+                    centerNotebook = new();
+                    Manager.AddPane(centerNotebook, CenterPane);
+                }
+
+                return centerNotebook;
             }
         }
 
