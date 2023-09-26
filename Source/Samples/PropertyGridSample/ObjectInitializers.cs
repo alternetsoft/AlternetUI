@@ -56,7 +56,12 @@ namespace PropertyGridSample
 
             Actions.Add(typeof(Border), (c) =>
             {
-                (c as Border)!.Height = 150; 
+                var border = (c as Border)!;
+                border.Height = 150;
+                border.BorderColor = Color.Indigo;
+                border.BackgroundColor = Color.Aquamarine;
+                border.Background = Brushes.BurlyWood;
+                border.DrawDebugPointsAfter = true;
             });
 
             Actions.Add(typeof(Button), (c) =>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -7,21 +8,33 @@ using Alternet.Drawing;
 
 namespace Alternet.UI
 {
-    internal class BorderPens
+    /// <summary>
+    /// Specifies <see cref="Border"/> drawing settings.
+    /// </summary>
+    internal class BorderSettings
+
     {
         private static readonly Color DefaultColor = Color.Gray;
-        private Pen? left;
-        private Pen? top;
-        private Pen? right;
-        private Pen? bottom;
+        private Pen? leftPen;
+        private Pen? topPen;
+        private Pen? rightPen;
+        private Pen? bottomPen;
         private Thickness width = new(1);
         private Color leftColor = DefaultColor;
         private Color topColor = DefaultColor;
         private Color bottomColor = DefaultColor;
         private Color rightColor = DefaultColor;
 
+        /// <summary>
+        /// Gets whether all sides have same color and width.
+        /// </summary>
+        [Browsable(false)]
         public bool IsUniform => IsUniformColor && width.IsUniform;
 
+        /// <summary>
+        /// Gets or sets uniform color of the border lines.
+        /// </summary>
+        [Browsable(false)]
         public Color Color
         {
             get
@@ -34,13 +47,13 @@ namespace Alternet.UI
             set
             {
                 if (leftColor != value)
-                    left = null;
+                    leftPen = null;
                 if (rightColor != value)
-                    right = null;
+                    rightPen = null;
                 if (topColor != value)
-                    top = null;
+                    topPen = null;
                 if (bottomColor != value)
-                    bottom = null;
+                    bottomPen = null;
                 leftColor = value;
                 topColor = value;
                 bottomColor = value;
@@ -60,56 +73,64 @@ namespace Alternet.UI
                 if (width == value)
                     return;
                 if (width.Left != value.Left)
-                    left = null;
+                    leftPen = null;
                 if (width.Right != value.Right)
-                    right = null;
+                    rightPen = null;
                 if (width.Top != value.Top)
-                    top = null;
+                    topPen = null;
                 if (width.Bottom != value.Bottom)
-                    bottom = null;
+                    bottomPen = null;
                 width = value;
             }
         }
 
-        public Pen Left
+        public Pen LeftPen
         {
             get
             {
-                if (left == null)
-                    left = CreatePen(leftColor, width.Left);
-                return left;
+                if (leftPen == null)
+                    leftPen = BorderSettings.CreatePen(leftColor, width.Left);
+                return leftPen;
             }
         }
 
-        public Pen Top
+        public Pen TopPen
         {
             get
             {
-                if (top == null)
-                    top = CreatePen(topColor, width.Top);
-                return top;
+                if (topPen == null)
+                    topPen = BorderSettings.CreatePen(topColor, width.Top);
+                return topPen;
             }
         }
 
-        public Pen Right
+        public Pen RightPen
         {
             get
             {
-                if (right == null)
-                    right = CreatePen(rightColor, width.Right);
-                return right;
+                if (rightPen == null)
+                    rightPen = BorderSettings.CreatePen(rightColor, width.Right);
+                return rightPen;
             }
         }
 
-        public Pen Bottom
+        public Pen BottomPen
         {
             get
             {
-                if (bottom == null)
-                    bottom = CreatePen(bottomColor, width.Bottom);
-                return bottom;
+                if (bottomPen == null)
+                    bottomPen = BorderSettings.CreatePen(bottomColor, width.Bottom);
+                return bottomPen;
             }
         }
+
+        public Color LeftColor => leftColor;
+
+        public Color TopColor => topColor;
+
+        public Color BottomColor => bottomColor;
+
+        public Color RightColor => rightColor;
 
         private bool IsUniformVerticalColor => leftColor == rightColor;
 
@@ -118,19 +139,20 @@ namespace Alternet.UI
         private bool IsUniformColor =>
             IsUniformVerticalColor && IsUniformHorizontalColor;
 
-        public BorderPens Clone()
+        public BorderSettings Clone()
         {
-            BorderPens result = new();
-
-            result.width = width;
-            result.leftColor = leftColor;
-            result.topColor = topColor;
-            result.bottomColor = bottomColor;
-            result.rightColor = rightColor;
+            BorderSettings result = new()
+            {
+                width = width,
+                leftColor = leftColor,
+                topColor = topColor,
+                bottomColor = bottomColor,
+                rightColor = rightColor,
+            };
             return result;
         }
 
-        private Pen CreatePen(Color color, double width)
+        private static Pen CreatePen(Color color, double width)
         {
             return new Pen(color, Math.Max(1, width));
         }

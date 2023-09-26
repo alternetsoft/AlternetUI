@@ -8,8 +8,8 @@ namespace Alternet.UI
     [ControlCategory("Containers")]
     public class Border : UserPaintControl
     {
-        private static readonly BorderPens DefaultPens = new();
-        private readonly BorderPens pens = DefaultPens.Clone();
+        private static readonly BorderSettings DefaultPens = new();
+        private readonly BorderSettings pens = DefaultPens.Clone();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Border"/> class.
@@ -62,12 +62,34 @@ namespace Alternet.UI
             get => pens.Width;
             set
             {
-                value.ApplyMinMax(0, 1);
+                value.ApplyMin(0);
                 if (pens.Width == value)
                     return;
                 pens.Width = value;
                 UpdatePadding();
                 Refresh();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the border width for the <see cref="Border"/> control.
+        /// </summary>
+        public double? UniformBorderWidth
+        {
+            get
+            {
+                if (pens.Width.IsUniform)
+                    return pens.Width.Left;
+                else
+                    return null;
+            }
+
+            set
+            {
+                if (value is null)
+                    value = 0;
+                var w = new Thickness(value.Value);
+                BorderWidth = w;
             }
         }
 
@@ -80,7 +102,7 @@ namespace Alternet.UI
                 if (Background == value)
                     return;
                 base.Background = value;
-                Invalidate();
+                Refresh();
             }
         }
 
@@ -111,11 +133,16 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets individual border side settings.
+        /// </summary>
+        internal BorderSettings Pens => pens;
+
         /// <inheritdoc/>
         public override Size GetPreferredSize(Size availableSize)
         {
-            return base.GetPreferredSize(availableSize) +
-                new Size(pens.Width.Horizontal, pens.Width.Vertical);
+            return base.GetPreferredSize(availableSize)/* +
+                new Size(pens.Width.Horizontal, pens.Width.Vertical)*/;
         }
 
         /// <inheritdoc/>
@@ -123,30 +150,6 @@ namespace Alternet.UI
         {
             return GetEffectiveControlHandlerHactory().
                 CreateBorderHandler(this);
-        }
-
-        /// <inheritdoc/>
-        protected override void OnPaint(PaintEventArgs e)
-        {
-            base.OnPaint(e);
-            var dc = e.DrawingContext;
-
-            if (pens.IsUniform && pens.Width.Top > 0)
-            {
-                dc.DrawRectangle(pens.Top, DrawClientRectangle);
-                return;
-            }
-
-            var r = DrawClientRectangle;
-
-            if(pens.Width.Top > 0)
-                dc.DrawLine(pens.Top, r.TopLeft, r.TopRight);
-            if (pens.Width.Bottom > 0)
-                dc.DrawLine(pens.Bottom, r.BottomLeft, r.BottomRight);
-            if (pens.Width.Left > 0)
-                dc.DrawLine(pens.Left, r.TopLeft, r.BottomLeft);
-            if (pens.Width.Right > 0)
-                dc.DrawLine(pens.Right, r.TopRight, r.BottomRight);
         }
 
         private void UpdatePadding()
