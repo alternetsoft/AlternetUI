@@ -93,11 +93,6 @@ namespace Alternet.UI
         public event EventHandler? Click;
 
         /// <summary>
-        /// Occurs when the value of the <see cref="BorderBrush"/> property changes.
-        /// </summary>
-        public event EventHandler? BorderBrushChanged;
-
-        /// <summary>
         /// Occurs when the control is redrawn.
         /// </summary>
         /// <remarks>
@@ -239,6 +234,11 @@ namespace Alternet.UI
         /// Occurs when an object is dragged out of the control's bounds.
         /// </summary>
         public event EventHandler? DragLeave;
+
+        /// <summary>
+        /// Occurs when the value of the <see cref="BorderBrush"/> property changes.
+        /// </summary>
+        internal event EventHandler? BorderBrushChanged;
 
         /// <summary>
         /// Gets the default font used for controls.
@@ -467,7 +467,7 @@ namespace Alternet.UI
         /// Gets or sets the border brush of the control.
         /// </summary>
         [Browsable(false)]
-        public virtual Brush? BorderBrush
+        internal virtual Brush? BorderBrush
         {
             get => borderBrush;
             set
@@ -958,7 +958,7 @@ namespace Alternet.UI
             get
             {
                 var size = ClientSize;
-                return new(0, 0, size.Width - 1, size.Height - 1);
+                return new(0, 0, size.Width, size.Height);
             }
         }
 
