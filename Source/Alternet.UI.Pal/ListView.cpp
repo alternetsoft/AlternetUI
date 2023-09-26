@@ -275,11 +275,10 @@ namespace Alternet::UI
         case ListViewColumnWidthMode::Fixed:
             return fromDip(width, GetListView());
         case ListViewColumnWidthMode::AutoSize:
+        default:
             return wxLIST_AUTOSIZE;
         case ListViewColumnWidthMode::AutoSizeHeader:
             return wxLIST_AUTOSIZE_USEHEADER;
-        default:
-            throwExNoInfo;
         }
     }
 

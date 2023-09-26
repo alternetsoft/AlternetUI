@@ -184,6 +184,24 @@ namespace Alternet.UI
                 return Title;
         }
 
+        internal void ApplyWidth()
+        {
+            if (TryGetColumnIndex(out var listView, out var columnIndex))
+                listView.Handler.SetColumnWidth(columnIndex.Value, Width, WidthMode);
+        }
+
+        internal void ApplyTitle()
+        {
+            if (TryGetColumnIndex(out var listView, out var columnIndex))
+                listView.Handler.SetColumnTitle(columnIndex.Value, Title);
+        }
+
+        internal void ApplyAll()
+        {
+            ApplyTitle();
+            ApplyWidth();
+        }
+
         private bool TryGetColumnIndex(
             [NotNullWhen(true)] out ListView? listView,
             [NotNullWhen(true)] out int? columnIndex)
@@ -192,24 +210,6 @@ namespace Alternet.UI
             columnIndex = Index;
 
             return listView != null && columnIndex != null;
-        }
-
-        private void ApplyWidth()
-        {
-            if (TryGetColumnIndex(out var listView, out var columnIndex))
-                listView.Handler.SetColumnWidth(columnIndex.Value, Width, WidthMode);
-        }
-
-        private void ApplyTitle()
-        {
-            if (TryGetColumnIndex(out var listView, out var columnIndex))
-                listView.Handler.SetColumnTitle(columnIndex.Value, Title);
-        }
-
-        private void ApplyAll()
-        {
-            ApplyTitle();
-            ApplyWidth();
         }
     }
 }

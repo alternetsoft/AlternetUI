@@ -115,10 +115,14 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets a boolean value which specifies whether the column header is visible in <see
-        /// cref="ListViewView.Details"/> view.
+        /// Gets or sets a boolean value which specifies whether the column header is visible in
+        /// <see cref="ListViewView.Details"/> view.
         /// </summary>
-        public bool ColumnHeaderVisible { get => Handler.ColumnHeaderVisible; set => Handler.ColumnHeaderVisible = value; }
+        public bool ColumnHeaderVisible
+        {
+            get => Handler.ColumnHeaderVisible;
+            set => Handler.ColumnHeaderVisible = value;
+        }
 
         /// <inheritdoc/>
         public override ControlId ControlKind => ControlId.ListView;
@@ -137,41 +141,62 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether the user can edit the labels of items in the control.
+        /// Gets or sets a value indicating whether the user can edit the labels of items in the
+        /// control.
         /// </summary>
-        /// <value><see langword="true"/> if the user can edit the labels of items at run time; otherwise, <see
+        /// <value><see langword="true"/> if the user can edit the labels of items at run time;
+        /// otherwise, <see
         /// langword="false"/>. The default is <see langword="false"/>.</value>
-        public bool AllowLabelEdit { get => Handler.AllowLabelEdit; set => Handler.AllowLabelEdit = value; }
+        public bool AllowLabelEdit
+        {
+            get => Handler.AllowLabelEdit;
+            set => Handler.AllowLabelEdit = value;
+        }
 
         /// <summary>
         /// Gets or sets the first fully-visible item in the list view control.
         /// </summary>
-        /// <value>A <see cref="ListViewItem"/> that represents the first fully-visible item in the list view control.</value>
+        /// <value>A <see cref="ListViewItem"/> that represents the first fully-visible item
+        /// in the list view control.</value>
         [Browsable(false)]
         public ListViewItem? TopItem { get => Handler.TopItem; }
 
         /// <summary>
         /// Gets or sets the grid line display mode for this list view.
         /// </summary>
-        public ListViewGridLinesDisplayMode GridLinesDisplayMode { get => Handler.GridLinesDisplayMode; set => Handler.GridLinesDisplayMode = value; }
+        public ListViewGridLinesDisplayMode GridLinesDisplayMode
+        {
+            get => Handler.GridLinesDisplayMode;
+            set => Handler.GridLinesDisplayMode = value;
+        }
 
         /// <summary>
-        /// Gets a collection that contains the zero-based indexes of all currently selected items in the <see cref="ListView"/>.
+        /// Gets a collection that contains the zero-based indexes of all currently selected
+        /// items in the <see cref="ListView"/>.
         /// </summary>
         /// <value>
-        /// An <see cref="IReadOnlyList{T}"/> containing the indexes of the currently selected items in the control.
+        /// An <see cref="IReadOnlyList{T}"/> containing the indexes of the currently selected
+        /// items in the control.
         /// If no items are currently selected, an empty <see cref="IReadOnlyList{T}"/> is returned.
         /// </value>
         /// <remarks>
-        /// For a multiple-selection <see cref="ListView"/>, this property returns a collection containing the indexes to all items that are selected
-        /// in the <see cref="ListView"/>. For a single-selection <see cref="ListView"/>, this property returns a collection containing a
-        /// single element containing the index of the only selected item in the <see cref="ListView"/>.
+        /// For a multiple-selection <see cref="ListView"/>, this property returns a collection
+        /// containing the indexes to all items that are selected
+        /// in the <see cref="ListView"/>. For a single-selection <see cref="ListView"/>, this
+        /// property returns a collection containing a
+        /// single element containing the index of the only selected item in the
+        /// <see cref="ListView"/>.
         /// <para>
-        /// The <see cref="ListView"/> class provides a number of ways to reference selected items. Instead of using the <see cref="SelectedIndices"/>
-        /// property to obtain the index position of the currently selected item in a single-selection <see cref="ListView"/>, you
-        /// can use the <see cref="SelectedIndex"/> property. If you want to obtain the item that is currently selected in the <see cref="ListView"/>,
-        /// instead of the index position of the item, use the <see cref="SelectedItem"/> property. In addition,
-        /// you can use the <see cref="SelectedItems"/> property if you want to obtain all the selected items in a multiple-selection <see cref="ListView"/>.
+        /// The <see cref="ListView"/> class provides a number of ways to reference selected
+        /// items. Instead of using the <see cref="SelectedIndices"/>
+        /// property to obtain the index position of the currently selected item in a
+        /// single-selection <see cref="ListView"/>, you
+        /// can use the <see cref="SelectedIndex"/> property. If you want to obtain
+        /// the item that is currently selected in the <see cref="ListView"/>,
+        /// instead of the index position of the item, use the <see cref="SelectedItem"/>
+        /// property. In addition,
+        /// you can use the <see cref="SelectedItems"/> property if you want to obtain
+        /// all the selected items in a multiple-selection <see cref="ListView"/>.
         /// </para>
         /// </remarks>
         [Browsable(false)]
@@ -206,22 +231,31 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets the zero-based index of the currently selected item in a <see cref="ListView"/>.
+        /// Gets or sets the zero-based index of the currently selected item in a
+        /// <see cref="ListView"/>.
         /// </summary>
-        /// <value>A zero-based index of the currently selected item. A value of <c>null</c> is returned if no item is selected.</value>
+        /// <value>A zero-based index of the currently selected item. A value of <c>null</c>
+        /// is returned if no item is selected.</value>
         /// <remarks>
-        /// For a standard <see cref="ListView"/>, you can use this property to determine the index of the item that is selected
-        /// in the <see cref="ListView"/>. If the <see cref="SelectionMode"/> property of the <see cref="ListView"/> is set to either
-        /// <see cref="ListViewSelectionMode.Multiple"/> (which indicates a multiple-selection <see cref="ListView"/>) and multiple items
+        /// For a standard <see cref="ListView"/>, you can use this property to determine the
+        /// index of the item that is selected
+        /// in the <see cref="ListView"/>. If the <see cref="SelectionMode"/> property of the
+        /// <see cref="ListView"/> is set to either
+        /// <see cref="ListViewSelectionMode.Multiple"/> (which indicates a multiple-selection
+        /// <see cref="ListView"/>) and multiple items
         /// are selected in the list, this property can return the index to any selected item.
         /// <para>
-        /// To retrieve a collection containing the indexes of all selected items in a multiple-selection <see cref="ListView"/>,
-        /// use the <see cref="SelectedIndices"/> property. If you want to obtain the item that is currently selected in the <see cref="ListView"/>,
-        /// use the <see cref="SelectedItem"/> property. In addition, you can use the <see cref="SelectedItems"/> property to obtain
+        /// To retrieve a collection containing the indexes of all selected items in a
+        /// multiple-selection <see cref="ListView"/>,
+        /// use the <see cref="SelectedIndices"/> property. If you want to obtain the item that
+        /// is currently selected in the <see cref="ListView"/>,
+        /// use the <see cref="SelectedItem"/> property. In addition, you can use the
+        /// <see cref="SelectedItems"/> property to obtain
         /// all the selected items in a multiple-selection <see cref="ListView"/>.
         /// </para>
         /// </remarks>
-        /// <exception cref="ArgumentOutOfRangeException">The assigned value is less than 0 or greater than or equal to the item count.</exception>
+        /// <exception cref="ArgumentOutOfRangeException">The assigned value is less than
+        /// 0 or greater than or equal to the item count.</exception>
         [Browsable(false)]
         public long? SelectedIndex
         {
@@ -301,9 +335,11 @@ namespace Alternet.UI
         /// <summary>
         /// Gets a collection containing the currently selected items in the <see cref="ListView"/>.
         /// </summary>
-        /// <value>A <see cref="IReadOnlyList{ListViewItem}"/> containing the currently selected items in the control.</value>
+        /// <value>A <see cref="IReadOnlyList{ListViewItem}"/> containing the currently
+        /// selected items in the control.</value>
         /// <remarks>
-        /// For a multiple-selection <see cref="ListView"/>, this property returns a collection containing all the items that are selected
+        /// For a multiple-selection <see cref="ListView"/>, this property returns a collection
+        /// containing all the items that are selected
         /// in the <see cref="ListView"/>. For a single-selection <see cref="ListView"/>, this property returns a collection containing a
         /// single element containing the index of the only selected item in the <see cref="ListView"/>.
         /// <para>
@@ -328,9 +364,11 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the method in which items are selected in the <see cref="ListView"/>.
         /// </summary>
-        /// <value>One of the <see cref="ListViewSelectionMode"/> values. The default is <see cref="ListViewSelectionMode.Single"/>.</value>
+        /// <value>One of the <see cref="ListViewSelectionMode"/> values. The default is
+        /// <see cref="ListViewSelectionMode.Single"/>.</value>
         /// <remarks>
-        /// The <see cref="SelectionMode"/> property enables you to determine how many items in the <see cref="ListView"/>
+        /// The <see cref="SelectionMode"/> property enables you to determine how many items
+        /// in the <see cref="ListView"/>
         /// a user can select at one time.
         /// </remarks>
         public ListViewSelectionMode SelectionMode
@@ -377,12 +415,12 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets how items are displayed in the control.
         /// </summary>
-        /// <value>One of the <see cref="ListViewView"/> values. The default is <see cref="ListViewView.List"/>.</value>
+        /// <value>One of the <see cref="ListViewView"/> values. The default is
+        /// <see cref="ListViewView.List"/>.</value>
         public ListViewView View
         {
             get
             {
-                CheckDisposed();
                 return view;
             }
 
@@ -429,7 +467,6 @@ namespace Alternet.UI
         {
             get
             {
-                CheckDisposed();
                 return smallImageList;
             }
 
@@ -694,6 +731,18 @@ namespace Alternet.UI
         {
             OnAfterLabelEdit(e);
             AfterLabelEdit?.Invoke(this, e);
+        }
+
+        /// <summary>
+        /// Updates columns width and title.
+        /// </summary>
+        public void UpdateColumns()
+        {
+            DoInsideUpdate(() =>
+            {
+                foreach (var column in Columns)
+                    column.ApplyAll();
+            });
         }
 
         /// <summary>

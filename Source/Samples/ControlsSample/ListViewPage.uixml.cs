@@ -15,10 +15,9 @@ namespace ControlsSample
         private int newItemIndex = 0;
         private int newColIndex = 2;
 
-	static ListViewPage()
-	{
-		//ListView.UseGenericOnMacOs = true;
-	}
+        static ListViewPage()
+        {
+        }
 
         public ListViewPage()
         {
@@ -43,7 +42,7 @@ namespace ControlsSample
                 AddDefaultItems();
 
                 viewComboBox.AddEnumValues(typeof(ListViewView), ListViewView.Details);
-                gridLinesComboBox.AddEnumValues(typeof(ListViewGridLinesDisplayMode), 
+                gridLinesComboBox.AddEnumValues(typeof(ListViewGridLinesDisplayMode),
                     ListViewGridLinesDisplayMode.None);
                 columnWidthModeComboBox.AddEnumValues(typeof(ListViewColumnWidthMode),
                     ListViewColumnWidthMode.AutoSize);
@@ -73,6 +72,7 @@ namespace ControlsSample
 
         private void AddDefaultItems()
         {
+            listView!.View = ListViewView.Details;
             InitializeColumns();
             AddItems(50);
             foreach (var column in listView!.Columns)
@@ -158,7 +158,7 @@ namespace ControlsSample
                 scrollViewer1.Bounds.Width,
                 scrollViewer1.Bounds.Width);
 
-            if(parent != null && Double.IsNaN(parent.Width))
+            if (parent != null && Double.IsNaN(parent.Width))
             {
                 parent.SuspendLayout();
                 parent.Width = Math.Max(maxWidth + 30, parent.Bounds.Width);
@@ -204,9 +204,9 @@ namespace ControlsSample
                 {
                     var ix = GenItemIndex();
                     listView.Items.Add(
-                        new ListViewItem(new[] { 
-                            "Item " + ix, 
-                            "Some Info " + ix 
+                        new ListViewItem(new[] {
+                            "Item " + ix,
+                            "Some Info " + ix
                         }, i % 4));
                 }
             }
@@ -239,7 +239,7 @@ namespace ControlsSample
                 return;
             if (listView is null)
                 return;
-            listView.SelectionMode = allowMultipleSelectionCheckBox.IsChecked ? 
+            listView.SelectionMode = allowMultipleSelectionCheckBox.IsChecked ?
                 ListViewSelectionMode.Multiple : ListViewSelectionMode.Single;
         }
 
@@ -247,9 +247,9 @@ namespace ControlsSample
         {
             var selectedIndex = listView.SelectedIndex ?? -1;
             listView.RemoveSelectedItems();
-            if(listView.Items.Count > 0 && selectedIndex >= 0)
-                listView.SelectedIndex = 
-                    Math.Min(selectedIndex, listView.Items.Count-1);
+            if (listView.Items.Count > 0 && selectedIndex >= 0)
+                listView.SelectedIndex =
+                    Math.Min(selectedIndex, listView.Items.Count - 1);
         }
 
         private void AddItemButton_Click(object? sender, EventArgs e)
@@ -268,7 +268,7 @@ namespace ControlsSample
             Log($"ListView: BeforeLabelEdit. Item: '{s}', Label: '{lbl}'");
         }
 
-        private void ListView_AfterLabelEdit(object? sender, 
+        private void ListView_AfterLabelEdit(object? sender,
             ListViewItemLabelEditEventArgs e)
         {
             e.Cancel = cancelAfterLabelEditEventsCheckBox.IsChecked;
@@ -284,19 +284,19 @@ namespace ControlsSample
         }
 
         private void AllowLabelEditingCheckBox_CheckedChanged(
-            object? sender, 
+            object? sender,
             EventArgs e)
         {
             if (SlowRecreate)
                 return;
             if (listView is not null)
                 listView.AllowLabelEdit = allowLabelEditingCheckBox.IsChecked;
-            beginSelectedLabelEditingButton.Enabled = 
+            beginSelectedLabelEditingButton.Enabled =
                 allowLabelEditingCheckBox.IsChecked;
         }
 
         private void BeginSelectedLabelEditingButton_Click(
-            object? sender, 
+            object? sender,
             EventArgs e)
         {
             listView.SelectedItem?.BeginLabelEdit();
@@ -308,8 +308,8 @@ namespace ControlsSample
         }
 
         private void EnsureLastItemVisibleButton_Click(
-            object? sender, 
-            System.EventArgs e) 
+            object? sender,
+            System.EventArgs e)
             => GetLastItem()?.EnsureVisible();
 
         private void HasBorderButton_Click(object sender, System.EventArgs e)
@@ -318,7 +318,7 @@ namespace ControlsSample
         }
 
         private void FocusLastItemButton_Click(
-            object? sender, 
+            object? sender,
             System.EventArgs e)
         {
             var item = GetLastItem();
@@ -331,7 +331,7 @@ namespace ControlsSample
         }
 
         private void ListView_MouseLeftButtonDown(
-            object? sender, 
+            object? sender,
             MouseButtonEventArgs e)
         {
             var result = listView.HitTest(e.GetPosition(listView));
@@ -351,11 +351,11 @@ namespace ControlsSample
             {
                 var index = result.Item.Index!.Value;
 
-                var entireItemBounds = listView.GetItemBounds(index, 
+                var entireItemBounds = listView.GetItemBounds(index,
                     ListViewItemBoundsPortion.EntireItem);
-                var iconBounds = listView.GetItemBounds(index, 
+                var iconBounds = listView.GetItemBounds(index,
                     ListViewItemBoundsPortion.Icon);
-                var labelBounds = listView.GetItemBounds(index, 
+                var labelBounds = listView.GetItemBounds(index,
                     ListViewItemBoundsPortion.Label);
 
                 Log($"Item Bounds: {entireItemBounds}, " +
@@ -387,7 +387,7 @@ namespace ControlsSample
         }
 
         private void AddLastItemSiblingButton_Click(
-            object? sender, 
+            object? sender,
             System.EventArgs e)
         {
             var item = GetLastItem();
@@ -416,10 +416,10 @@ namespace ControlsSample
         }
 
         private void ModifyColumnTitleButton_Click(
-            object? sender, 
+            object? sender,
             System.EventArgs e)
         {
-            foreach(var column in listView.Columns)
+            foreach (var column in listView.Columns)
                 column.Title += column.Index;
         }
 
