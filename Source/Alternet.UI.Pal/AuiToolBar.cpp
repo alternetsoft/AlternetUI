@@ -131,6 +131,7 @@ namespace Alternet::UI
 
     void AuiToolBar::OnToolbarCommand(wxCommandEvent& event)
     {
+        event.Skip();
         _eventToolId = event.GetId();
         RaiseEvent(AuiToolBarEvent::ToolCommand);
         event.StopPropagation();
