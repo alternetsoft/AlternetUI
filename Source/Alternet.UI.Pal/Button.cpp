@@ -260,6 +260,7 @@ namespace Alternet::UI
 
     void Button::OnButtonClick(wxCommandEvent& event)
     {
+        event.Skip();
         RaiseClick();
     }
 
@@ -394,6 +395,20 @@ namespace Alternet::UI
         Control::OnWxWindowCreated();
         ApplyIsDefault();
         ApplyIsCancel();
+
+        auto button = GetButton();
+
+        if (ButtonImagesEnabled)
+        {
+            if (_normalImage != nullptr)
+                button->SetBitmap(_normalImage->GetBitmap());
+            if (_hoveredImage != nullptr)
+                button->SetBitmapCurrent(_hoveredImage->GetBitmap());
+            if (_pressedImage != nullptr)
+                button->SetBitmapPressed(_pressedImage->GetBitmap());
+            if (_disabledImage != nullptr)
+                button->SetBitmapDisabled(_disabledImage->GetBitmap());
+        }
     }
 
     void Button::OnParentChanged()
