@@ -160,9 +160,12 @@ namespace ControlsSample
             var s = lastEventMessage;
             var b = s?.StartsWith(prefix ?? string.Empty) ?? false;
 
-            if (b && eventsControl.LastRootItem is not null)
+            var item = eventsControl.LastRootItem;
+
+            if (b && item is not null)
             {
-                eventsControl.LastRootItem.Text = ConstructMessage(message);
+                item.Text = ConstructMessage(message);
+                eventsControl.SelectAndShowItem(item);
             }
             else
                 LogEvent(message);
@@ -180,7 +183,7 @@ namespace ControlsSample
 
             var item = new TreeViewItem(ConstructMessage(message));
             eventsControl.Items.Add(item);
-            eventsControl.SelectedItem = item;
+            eventsControl.SelectAndShowItem(item);
         }
     }
 }
