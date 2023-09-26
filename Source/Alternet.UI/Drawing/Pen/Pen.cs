@@ -165,6 +165,11 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Creates <see cref="SolidBrush"/> with <see cref="Color"/> of this pen.
+        /// </summary>
+        public SolidBrush AsBrush => new(Color);
+
+        /// <summary>
         /// Gets or sets the style used for dashed lines drawn with this <see cref="Pen"/>.
         /// </summary>
         /// <value>One of the <see cref="PenDashStyle"/> values that represents the dash style
