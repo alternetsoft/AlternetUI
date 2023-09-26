@@ -61,7 +61,10 @@ namespace PropertyGridSample
 
             Actions.Add(typeof(Button), (c) =>
             {
-                (c as Button)!.Text = "Button";
+                var button = (c as Button)!;
+                button.Text = "Button";
+                button.StateImages = ButtonImages;
+                button.Height = 50;
             });
 
             Actions.Add(typeof(CheckBox), (c) =>
@@ -165,6 +168,27 @@ namespace PropertyGridSample
                 ProgressBar control = (c as ProgressBar)!;
                 control.Value = 50;
             });
+        }
+
+        private static ControlStateImages? buttonImages;
+
+        public static ControlStateImages ButtonImages => buttonImages ??= LoadButtonImages();
+
+        private static ControlStateImages LoadButtonImages()
+        {
+            static Image LoadImage(string stateName) =>
+                new Bitmap(
+                    Assembly.GetExecutingAssembly().GetManifestResourceStream(
+                        $"PropertyGridSample.Resources.ButtonImages.ButtonImage{stateName}.png")
+                    ?? throw new Exception());
+
+            return new ControlStateImages
+            {
+                NormalImage = LoadImage("Normal"),
+                HoveredImage = LoadImage("Hovered"),
+                PressedImage = LoadImage("Pressed"),
+                DisabledImage = LoadImage("Disabled"),
+            };
         }
 
         private static void InsertPage(TabControl tabControl, int? index = null)
