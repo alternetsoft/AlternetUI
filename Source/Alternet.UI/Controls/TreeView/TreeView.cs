@@ -786,18 +786,18 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Focuses and selects specified item in the control.
+        /// Selects and shows specified item in the control.
         /// </summary>
-        public virtual void FocusAndSelectItem(TreeViewItem? item)
+        public virtual void SelectAndShowItem(TreeViewItem? item)
         {
             if (item != null)
             {
                 DoInsideUpdate(() =>
                 {
-                    ClearSelected();
-                    SetFocus();
-                    item.IsFocused = true;
+                    ClearSelectedCore();
                     item.IsSelected = true;
+                    ScrollIntoView(item);
+                    EnsureVisible(item);
                 });
             }
         }
