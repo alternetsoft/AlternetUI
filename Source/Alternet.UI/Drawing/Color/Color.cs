@@ -905,6 +905,18 @@ namespace Alternet.Drawing
             IsKnownColor && IsKnownColorSystem((KnownColor)knownColor);
 
         /// <summary>
+        /// Creates <see cref="SolidBrush"/> instance for this color.
+        /// </summary>
+        [Browsable(false)]
+        public SolidBrush AsBrush => new(this);
+
+        /// <summary>
+        /// Creates <see cref="Pen"/> instance for this color.
+        /// </summary>
+        [Browsable(false)]
+        public Pen AsPen => new(this);
+
+        /// <summary>
         /// Gets the name of this <see cref="Color"/>.
         /// </summary>
         /// <value>The name of this <see cref="Color"/>.</value>
