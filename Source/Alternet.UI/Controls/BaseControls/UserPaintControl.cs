@@ -13,6 +13,11 @@ namespace Alternet.UI
     [ControlCategory("Other")]
     public class UserPaintControl : Control
     {
+#if DEBUG
+        private bool drawDebugPointsBefore;
+        private bool drawDebugPointsAfter;
+#endif
+
         /// <summary>
         /// Initializes a new instance of the <see cref="UserPaintControl"/> class.
         /// </summary>
@@ -24,6 +29,66 @@ namespace Alternet.UI
 
         /// <inheritdoc/>
         public override ControlId ControlKind => ControlId.UserPaintControl;
+
+        /// <summary>
+        /// Gets or sets whether to draw debug related points for the owner draw controls.
+        /// </summary>
+#if DEBUG
+#else
+        [Browsable(false)]
+#endif
+        public bool DrawDebugPointsBefore
+        {
+            get
+            {
+#if DEBUG
+                return drawDebugPointsBefore;
+#else
+                return false;
+#endif
+            }
+
+            set
+            {
+#if DEBUG
+                if (drawDebugPointsBefore == value)
+                    return;
+                drawDebugPointsBefore = value;
+                Refresh();
+#else
+#endif
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets whether to draw debug related points for the owner draw controls.
+        /// </summary>
+#if DEBUG
+#else
+        [Browsable(false)]
+#endif
+        public bool DrawDebugPointsAfter
+        {
+            get
+            {
+#if DEBUG
+                return drawDebugPointsAfter;
+#else
+                return false;
+#endif
+            }
+
+            set
+            {
+#if DEBUG
+                if (drawDebugPointsAfter == value)
+                    return;
+                drawDebugPointsAfter = value;
+                Refresh();
+#else
+#endif
+            }
+        }
 
         /// <inheritdoc/>
         protected override void OnPaint(PaintEventArgs e)
