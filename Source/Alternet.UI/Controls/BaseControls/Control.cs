@@ -772,7 +772,7 @@ namespace Alternet.UI
 
             set
             {
-                if (backgroundColor == value)
+                if (backgroundColor == value || value == null)
                     return;
                 backgroundColor = value;
 
@@ -782,7 +782,7 @@ namespace Alternet.UI
                         Handler.NativeControl.ResetBackgroundColor();
                     else
                         Handler.NativeControl.BackgroundColor = backgroundColor.Value;
-                    Invalidate();
+                    Refresh();
                 }
             }
         }
@@ -833,7 +833,7 @@ namespace Alternet.UI
 
             set
             {
-                if (foregroundColor == value)
+                if (foregroundColor == value || value == null)
                     return;
                 foregroundColor = value;
 
@@ -1044,6 +1044,32 @@ namespace Alternet.UI
             => HasChildren ? Children : Array.Empty<FrameworkElement>();
 
         private IControlHandlerFactory? ControlHandlerFactory { get; set; }
+
+        /// <summary>
+        /// Resets bacgkround color to the default value.
+        /// </summary>
+        public virtual void ResetBackgroundColor()
+        {
+            backgroundColor = null;
+            if (Handler.NativeControl is not null)
+            {
+                Handler.NativeControl.ResetBackgroundColor();
+                Refresh();
+            }
+        }
+
+        /// <summary>
+        /// Resets foreground color to the default value.
+        /// </summary>
+        public virtual void ResetForegroundColor()
+        {
+            foregroundColor = null;
+            if (Handler.NativeControl is not null)
+            {
+                Handler.NativeControl.ResetForegroundColor();
+                Refresh();
+            }
+        }
 
         /// <summary>
         /// Returns the currently focused control, or <see langword="null"/> if
