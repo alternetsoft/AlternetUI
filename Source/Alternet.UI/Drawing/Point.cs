@@ -98,24 +98,30 @@ namespace Alternet.Drawing
         public static explicit operator Point(Vector2 vector) => new(vector);
 
         /// <summary>
-        /// Translates a <see cref='Drawing.Point'/> by a given <see cref='Drawing.Int32Size'/> .
+        /// Translates a <see cref='Drawing.Point'/> by a given <see cref='Drawing.Int32Size'/>.
         /// </summary>
         public static Point operator +(Point pt, Int32Size sz) => Add(pt, sz);
 
         /// <summary>
         /// Translates a <see cref='Drawing.Point'/> by the negative of a given
-        /// <see cref='Drawing.Int32Size'/> .
+        /// <see cref='Drawing.Int32Size'/>.
         /// </summary>
         public static Point operator -(Point pt, Int32Size sz) => Subtract(pt, sz);
 
         /// <summary>
-        /// Translates a <see cref='Drawing.Point'/> by a given <see cref='Drawing.Size'/> .
+        /// Translates a <see cref='Drawing.Point'/> by a given <see cref='Drawing.Size'/>.
         /// </summary>
         public static Point operator +(Point pt, Size sz) => Add(pt, sz);
 
         /// <summary>
+        /// Moves a <see cref='Point'/> by a given value.
+        /// </summary>
+        public static Point operator +(Point pt, double offset) =>
+            new(pt.X + offset, pt.Y + offset);
+
+        /// <summary>
         /// Translates a <see cref='Drawing.Point'/> by the negative of a given
-        /// <see cref='Drawing.Size'/> .
+        /// <see cref='Drawing.Size'/>.
         /// </summary>
         public static Point operator -(Point pt, Size sz) => Subtract(pt, sz);
 
@@ -137,25 +143,25 @@ namespace Alternet.Drawing
         public static bool operator !=(Point left, Point right) => !(left == right);
 
         /// <summary>
-        /// Translates a <see cref='Drawing.Point'/> by a given <see cref='Drawing.Int32Size'/> .
+        /// Translates a <see cref='Drawing.Point'/> by a given <see cref='Drawing.Int32Size'/>.
         /// </summary>
         public static Point Add(Point pt, Int32Size sz) => new(pt.X + sz.Width, pt.Y + sz.Height);
 
         /// <summary>
         /// Translates a <see cref='Drawing.Point'/> by the negative of a given
-        /// <see cref='Drawing.Int32Size'/> .
+        /// <see cref='Drawing.Int32Size'/>.
         /// </summary>
         public static Point Subtract(Point pt, Int32Size sz) =>
             new(pt.X - sz.Width, pt.Y - sz.Height);
 
         /// <summary>
-        /// Translates a <see cref='Drawing.Point'/> by a given <see cref='Drawing.Size'/> .
+        /// Translates a <see cref='Drawing.Point'/> by a given <see cref='Drawing.Size'/>.
         /// </summary>
         public static Point Add(Point pt, Size sz) => new(pt.X + sz.Width, pt.Y + sz.Height);
 
         /// <summary>
         /// Translates a <see cref='Drawing.Point'/> by the negative of a given
-        /// <see cref='Drawing.Size'/> .
+        /// <see cref='Drawing.Size'/>.
         /// </summary>
         public static Point Subtract(Point pt, Size sz) => new(pt.X - sz.Width, pt.Y - sz.Height);
 
