@@ -64,7 +64,7 @@ namespace PropertyGridSample
                 var button = (c as Button)!;
                 button.Text = "Button";
                 button.StateImages = ButtonImages;
-                button.Height = 50;
+                button.Height = 100;
             });
 
             Actions.Add(typeof(CheckBox), (c) =>
