@@ -329,9 +329,7 @@ namespace Alternet.UI
         public virtual void Log(string message)
         {
             LogControl.Add(ConstructLogMessage(message));
-            LogControl.FocusAndSelectItem(LogControl.LastRootItem);
-            LogControl.ScrollIntoView(LogControl.LastRootItem);
-            LogControl.EnsureVisible(LogControl.LastRootItem);
+            LogControl.SelectAndShowItem(LogControl.LastRootItem);
         }
 
         /// <summary>
@@ -369,7 +367,10 @@ namespace Alternet.UI
             var b = s?.StartsWith(prefix ?? string.Empty) ?? false;
 
             if (b)
+            {
                 lastItem.Text = ConstructLogMessage(message);
+                LogControl.SelectAndShowItem(lastItem);
+            }
             else
                 Log(message);
         }
