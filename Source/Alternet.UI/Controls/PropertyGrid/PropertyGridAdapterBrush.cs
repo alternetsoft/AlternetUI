@@ -34,7 +34,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets default value for the <see cref="LinearGradientEnd"/> property.
         /// </summary>
-        public static Point DefaultLinearGradientEnd { get; set; } = new(25, 25);
+        public static Point DefaultLinearGradientEnd { get; set; } = new(250, 250);
 
         /// <summary>
         /// Gets or sets default value for the <see cref="RadialGradientCenter"/> property.
