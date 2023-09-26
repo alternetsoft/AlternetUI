@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -34,6 +35,7 @@ namespace Alternet.UI
         /// Gets or sets whether to draw debug related points for the owner draw controls.
         /// </summary>
 #if DEBUG
+        [Browsable(true)]
 #else
         [Browsable(false)]
 #endif
@@ -64,6 +66,7 @@ namespace Alternet.UI
         /// Gets or sets whether to draw debug related points for the owner draw controls.
         /// </summary>
 #if DEBUG
+        [Browsable(true)]
 #else
         [Browsable(false)]
 #endif
