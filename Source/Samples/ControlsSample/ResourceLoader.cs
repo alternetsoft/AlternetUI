@@ -17,7 +17,7 @@ namespace ControlsSample
             return imageLists;
         }
 
-        static ControlStateImages? buttonImages;
+        private static ControlStateImages? buttonImages;
 
         public static ControlStateImages ButtonImages => buttonImages ??= LoadButtonImages();
 
