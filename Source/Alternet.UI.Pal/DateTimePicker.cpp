@@ -160,6 +160,7 @@ namespace Alternet::UI
 
     void DateTimePicker::OnDateTimePickerValueChanged(wxDateEvent& event)
     {
+        event.Skip();
         RaiseEvent(DateTimePickerEvent::ValueChanged);
     }
 

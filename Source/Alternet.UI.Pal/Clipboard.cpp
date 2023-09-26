@@ -42,7 +42,8 @@ namespace Alternet::UI
             auto bitmapDataObject = UnmanagedDataObject::TryGetBitmapDataObject(composite);
             if (bitmapDataObject != nullptr)
             {
-                // Workaround: wxWidgets does not support Composite Data Objects which contain bitmap objects.
+                // Workaround: wxWidgets does not support Composite Data Objects which
+                // contain bitmap objects.
                 wxTheClipboard->SetData(bitmapDataObject);
             }
             else

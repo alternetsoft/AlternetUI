@@ -194,11 +194,13 @@ namespace Alternet::UI
 
     void ComboBox::OnSelectedItemChanged(wxCommandEvent& event)
     {
+        event.Skip();
         RaiseEvent(ComboBoxEvent::SelectedItemChanged);
     }
 
     void ComboBox::OnTextChanged(wxCommandEvent& event)
     {
+        event.Skip();
         RaiseEvent(ComboBoxEvent::TextChanged);
     }
 

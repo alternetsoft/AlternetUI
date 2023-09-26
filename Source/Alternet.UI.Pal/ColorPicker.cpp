@@ -15,7 +15,8 @@ namespace Alternet::UI
             auto window = GetWxWindow();
             if (window != nullptr)
             {
-                window->Unbind(wxEVT_COLOURPICKER_CHANGED, &ColorPicker::OnColourPickerValueChanged, this);
+                window->Unbind(wxEVT_COLOURPICKER_CHANGED,
+                    &ColorPicker::OnColourPickerValueChanged, this);
             }
         }
     }
@@ -59,6 +60,7 @@ namespace Alternet::UI
     
     void ColorPicker::OnColourPickerValueChanged(wxColourPickerEvent& event)
     {
+        event.Skip();
         RaiseEvent(ColorPickerEvent::ValueChanged);
     }
     

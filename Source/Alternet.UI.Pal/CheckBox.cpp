@@ -91,6 +91,7 @@ namespace Alternet::UI
 
     void CheckBox::OnCheckedChanged(wxCommandEvent& event)
     {
+        event.Skip();
         RaiseEvent(CheckBoxEvent::CheckedChanged);
     }
     
