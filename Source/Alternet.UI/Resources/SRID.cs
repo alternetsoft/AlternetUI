@@ -1206,446 +1206,667 @@ namespace Alternet.UI
 
         /// <summary>Cannot read from write-only stream.</summary>
         internal const string @WriteOnlyStream = "WriteOnlyStream";
+
         /// <summary>Cannot access part because parent package was closed.</summary>
         internal const string @ParentContainerClosed = "ParentContainerClosed";
+
         /// <summary>Part was deleted.</summary>
         internal const string @PackagePartDeleted = "PackagePartDeleted";
+
         /// <summary>PackageRelationship cannot target another PackageRelationship.</summary>
         internal const string @RelationshipToRelationshipIllegal = "RelationshipToRelationshipIllegal";
+
         /// <summary>PackageRelationship parts cannot have relationships to other parts.</summary>
         internal const string @RelationshipPartsCannotHaveRelationships = "RelationshipPartsCannotHaveRelationships";
+
         /// <summary>Incorrect content type for PackageRelationship part.</summary>
         internal const string @RelationshipPartIncorrectContentType = "RelationshipPartIncorrectContentType";
+
         /// <summary>PackageRelationship with specified ID does not exist at the Package level.</summary>
         internal const string @PackageRelationshipDoesNotExist = "PackageRelationshipDoesNotExist";
+
         /// <summary>PackageRelationship with specified ID does not exist for the source part.</summary>
         internal const string @PackagePartRelationshipDoesNotExist = "PackagePartRelationshipDoesNotExist";
+
         /// <summary>PackageRelationship target must be relative URI if TargetMode is Internal.</summary>
         internal const string @RelationshipTargetMustBeRelative = "RelationshipTargetMustBeRelative";
+
         /// <summary>Relationship tag requires attribute '{0}'.</summary>
         internal const string @RequiredRelationshipAttributeMissing = "RequiredRelationshipAttributeMissing";
+
         /// <summary>Relationship tag contains incorrect attribute.</summary>
         internal const string @RelationshipTagDoesntMatchSchema = "RelationshipTagDoesntMatchSchema";
+
         /// <summary>Relationships tag has extra attributes.</summary>
         internal const string @RelationshipsTagHasExtraAttributes = "RelationshipsTagHasExtraAttributes";
+
         /// <summary>Unrecognized tag found in Relationships XML.</summary>
         internal const string @UnknownTagEncountered = "UnknownTagEncountered";
+
         /// <summary>Relationships tag expected at root level.</summary>
         internal const string @ExpectedRelationshipsElementTag = "ExpectedRelationshipsElementTag";
+
         /// <summary>Relationships XML elements cannot specify attribute '{0}'.</summary>
         internal const string @InvalidXmlBaseAttributePresent = "InvalidXmlBaseAttributePresent";
+
         /// <summary>'{0}' ID conflicts with the ID of an existing relationship for the specified source.</summary>
         internal const string @NotAUniqueRelationshipId = "NotAUniqueRelationshipId";
+
         /// <summary>'{0}' ID is not a valid XSD ID.</summary>
         internal const string @NotAValidXmlIdString = "NotAValidXmlIdString";
+
         /// <summary>'{0}' attribute value is not valid.</summary>
         internal const string @InvalidValueForTheAttribute = "InvalidValueForTheAttribute";
+
         /// <summary>Relationship Type cannot contain only spaces or be empty.</summary>
         internal const string @InvalidRelationshipType = "InvalidRelationshipType";
+
         /// <summary>Part URI must start with a forward slash.</summary>
         internal const string @PartUriShouldStartWithForwardSlash = "PartUriShouldStartWithForwardSlash";
+
         /// <summary>Part URI cannot end with a forward slash.</summary>
         internal const string @PartUriShouldNotEndWithForwardSlash = "PartUriShouldNotEndWithForwardSlash";
+
         /// <summary>URI must contain pack:// scheme.</summary>
         internal const string @UriShouldBePackScheme = "UriShouldBePackScheme";
+
         /// <summary>Part URI is empty.</summary>
         internal const string @PartUriIsEmpty = "PartUriIsEmpty";
+
         /// <summary>Part URI is not valid per rules defined in the Open Packaging Conventions specification.</summary>
         internal const string @InvalidPartUri = "InvalidPartUri";
+
         /// <summary>PackageRelationship part URI is not expected.</summary>
         internal const string @RelationshipPartUriNotExpected = "RelationshipPartUriNotExpected";
+
         /// <summary>PackageRelationship part URI is expected.</summary>
         internal const string @RelationshipPartUriExpected = "RelationshipPartUriExpected";
+
         /// <summary>PackageRelationship part URI syntax is not valid.</summary>
         internal const string @NotAValidRelationshipPartUri = "NotAValidRelationshipPartUri";
+
         /// <summary>The 'fragment' parameter must start with a number sign.</summary>
         internal const string @FragmentMustStartWithHash = "FragmentMustStartWithHash";
+
         /// <summary>Part URI cannot contain a Fragment component.</summary>
         internal const string @PartUriCannotHaveAFragment = "PartUriCannotHaveAFragment";
+
         /// <summary>Part URI cannot start with two forward slashes.</summary>
         internal const string @PartUriShouldNotStartWithTwoForwardSlashes = "PartUriShouldNotStartWithTwoForwardSlashes";
+
         /// <summary>Package URI obtained from the pack URI cannot contain a Fragment.</summary>
         internal const string @InnerPackageUriHasFragment = "InnerPackageUriHasFragment";
+
         /// <summary>Cannot access Stream object because it was closed or disposed.</summary>
         internal const string @StreamObjectDisposed = "StreamObjectDisposed";
+
         /// <summary>GetContentTypeCore method cannot return null for the content type stream.</summary>
         internal const string @NullContentTypeProvided = "NullContentTypeProvided";
+
         /// <summary>PackagePart subclass must implement GetContentTypeCore method if passing a null value for the content type when PackagePart object is constructed.</summary>
         internal const string @GetContentTypeCoreNotImplemented = "GetContentTypeCoreNotImplemented";
+
         /// <summary>'{0}' tag requires attribute '{1}'.</summary>
         internal const string @RequiredAttributeMissing = "RequiredAttributeMissing";
+
         /// <summary>'{0}' tag requires a nonempty '{1}' attribute.</summary>
         internal const string @RequiredAttributeEmpty = "RequiredAttributeEmpty";
+
         /// <summary>Types tag has attributes not valid per the schema.</summary>
         internal const string @TypesTagHasExtraAttributes = "TypesTagHasExtraAttributes";
+
         /// <summary>Required Types tag not found.</summary>
         internal const string @TypesElementExpected = "TypesElementExpected";
+
         /// <summary>Content Types XML does not match schema.</summary>
         internal const string @TypesXmlDoesNotMatchSchema = "TypesXmlDoesNotMatchSchema";
+
         /// <summary>Default tag is not valid per the schema. Verify that attributes are correct.</summary>
         internal const string @DefaultTagDoesNotMatchSchema = "DefaultTagDoesNotMatchSchema";
+
         /// <summary>Override tag is not valid per the schema. Verify that attributes are correct.</summary>
         internal const string @OverrideTagDoesNotMatchSchema = "OverrideTagDoesNotMatchSchema";
+
         /// <summary>'{0}' element must be empty.</summary>
         internal const string @ElementIsNotEmptyElement = "ElementIsNotEmptyElement";
+
         /// <summary>Format error in package.</summary>
         internal const string @BadPackageFormat = "BadPackageFormat";
+
         /// <summary>Streaming mode is supported only for creating packages.</summary>
         internal const string @StreamingModeNotSupportedForConsumption = "StreamingModeNotSupportedForConsumption";
+
         /// <summary>Must have write-only access to produce a package in streaming mode.</summary>
         internal const string @StreamingPackageProductionImpliesWriteOnlyAccess = "StreamingPackageProductionImpliesWriteOnlyAccess";
+
         /// <summary>Cannot have concurrent write accesses on package being produced in streaming mode.</summary>
         internal const string @StreamingPackageProductionRequiresSingleWriter = "StreamingPackageProductionRequiresSingleWriter";
+
         /// <summary>'{0}' method can only be called on a package opened in streaming mode.</summary>
         internal const string @MethodAvailableOnlyInStreamingCreation = "MethodAvailableOnlyInStreamingCreation";
+
         /// <summary>Package.{0} is not supported in streaming production.</summary>
         internal const string @OperationIsNotSupportedInStreamingProduction = "OperationIsNotSupportedInStreamingProduction";
+
         /// <summary>Only write operations are supported in streaming production.</summary>
         internal const string @OnlyWriteOperationsAreSupportedInStreamingCreation = "OnlyWriteOperationsAreSupportedInStreamingCreation";
+
         /// <summary>Write-once semantics in streaming production precludes the use of '{0}'.</summary>
         internal const string @OperationViolatesWriteOnceSemantics = "OperationViolatesWriteOnceSemantics";
+
         /// <summary>Streaming consumption of packages not supported.</summary>
         internal const string @OnlyStreamingProductionIsSupported = "OnlyStreamingProductionIsSupported";
+
         /// <summary>Read or write operation references location outside the bounds of the buffer provided.</summary>
         internal const string @IOBufferOverflow = "IOBufferOverflow";
+
         /// <summary>Cannot change content of a read-only stream.</summary>
         internal const string @StreamDoesNotSupportWrite = "StreamDoesNotSupportWrite";
+
         /// <summary>Package has more than one Core Properties relationship.</summary>
         internal const string @MoreThanOneMetadataRelationships = "MoreThanOneMetadataRelationships";
+
         /// <summary>TargetMode for a Core Properties relationship must be 'Internal'.</summary>
         internal const string @NoExternalTargetForMetadataRelationship = "NoExternalTargetForMetadataRelationship";
+
         /// <summary>Unrecognized root element in Core Properties part.</summary>
         internal const string @CorePropertiesElementExpected = "CorePropertiesElementExpected";
+
         /// <summary>Core Properties part: core property elements can contain only text data.</summary>
         internal const string @NoStructuredContentInsideProperties = "NoStructuredContentInsideProperties";
+
         /// <summary>Unrecognized namespace in Core Properties part.</summary>
         internal const string @UnknownNamespaceInCorePropertiesPart = "UnknownNamespaceInCorePropertiesPart";
+
         /// <summary>'{0}' property name is not valid in Core Properties part.</summary>
         internal const string @InvalidPropertyNameInCorePropertiesPart = "InvalidPropertyNameInCorePropertiesPart";
+
         /// <summary>Core Properties part: A property start-tag was expected.</summary>
         internal const string @PropertyStartTagExpected = "PropertyStartTagExpected";
+
         /// <summary>Core Properties part: Text data of XSD type 'DateTime' was expected.</summary>
         internal const string @XsdDateTimeExpected = "XsdDateTimeExpected";
+
         /// <summary>The target of the Core Properties relationship does not reference an existing part.</summary>
         internal const string @DanglingMetadataRelationship = "DanglingMetadataRelationship";
+
         /// <summary>The Core Properties relationship references a part that has an incorrect content type.</summary>
         internal const string @WrongContentTypeForPropertyPart = "WrongContentTypeForPropertyPart";
+
         /// <summary>Unexpected number of attributes is found on '{0}'.</summary>
         internal const string @PropertyWrongNumbOfAttribsDefinedOn = "PropertyWrongNumbOfAttribsDefinedOn";
+
         /// <summary>Unknown xsi:type for DateTime on '{0}'.</summary>
         internal const string @UnknownDCDateTimeXsiType = "UnknownDCDateTimeXsiType";
+
         /// <summary>More than one '{0}' property found.</summary>
         internal const string @DuplicateCorePropertyName = "DuplicateCorePropertyName";
+
         /// <summary>PackageProperties object was disposed.</summary>
         internal const string @StorageBasedPackagePropertiesDiposed = "StorageBasedPackagePropertiesDiposed";
+
         /// <summary>Encoding format is not supported. Only UTF-8 and UTF-16 are supported.</summary>
         internal const string @EncodingNotSupported = "EncodingNotSupported";
+
         /// <summary>Duplicate pieces found in the package.</summary>
         internal const string @DuplicatePiecesFound = "DuplicatePiecesFound";
+
         /// <summary>Cannot find piece with the specified piece number.</summary>
         internal const string @PieceDoesNotExist = "PieceDoesNotExist";
+
         /// <summary>This serviceType is already registered to another service.</summary>
         internal const string @ServiceTypeAlreadyAdded = "ServiceTypeAlreadyAdded";
+
         /// <summary>'{0}' type name does not have the expected format 'className, assembly'.</summary>
         internal const string @QualifiedNameHasWrongFormat = "QualifiedNameHasWrongFormat";
+
         /// <summary>Too many attributes are specified for '{0}'.</summary>
         internal const string @ParserAttributeArgsHigh = "ParserAttributeArgsHigh";
+
         /// <summary>'{0}' requires more attributes.</summary>
         internal const string @ParserAttributeArgsLow = "ParserAttributeArgsLow";
+
         /// <summary>Cannot load assembly '{0}' because a different version of that same assembly is loaded '{1}'.</summary>
         internal const string @ParserAssemblyLoadVersionMismatch = "ParserAssemblyLoadVersionMismatch";
+
         /// <summary>(null)</summary>
         internal const string @ToStringNull = "ToStringNull";
+
         /// <summary>'{0}' ValueSerializer cannot convert '{1}' to '{2}'.</summary>
         internal const string @ConvertToException = "ConvertToException";
+
         /// <summary>'{0}' ValueSerializer cannot convert from '{1}'.</summary>
         internal const string @ConvertFromException = "ConvertFromException";
+
         /// <summary>SortDescription must have a nonempty property name.</summary>
         internal const string @SortDescriptionPropertyNameCannotBeEmpty = "SortDescriptionPropertyNameCannotBeEmpty";
+
         /// <summary>Cannot modify a '{0}' after it is sealed.</summary>
         internal const string @CannotChangeAfterSealed = "CannotChangeAfterSealed";
+
         /// <summary>Cannot group by property '{0}' because it cannot be found on type '{1}'.</summary>
         internal const string @BadPropertyForGroup = "BadPropertyForGroup";
+
         /// <summary>The CollectionView that originates this CurrentChanging event is in a state that does not allow the event to be canceled. Check CurrentChangingEventArgs.IsCancelable before assigning to this CurrentChangingEventArgs.Cancel property.</summary>
         internal const string @CurrentChangingCannotBeCanceled = "CurrentChangingCannotBeCanceled";
+
         /// <summary>Collection is read-only.</summary>
         internal const string @NotSupported_ReadOnlyCollection = "NotSupported_ReadOnlyCollection";
+
         /// <summary>Only single dimensional arrays are supported for the requested action.</summary>
         internal const string @Arg_RankMultiDimNotSupported = "Arg_RankMultiDimNotSupported";
+
         /// <summary>The lower bound of target array must be zero.</summary>
         internal const string @Arg_NonZeroLowerBound = "Arg_NonZeroLowerBound";
+
         /// <summary>Non-negative number required.</summary>
         internal const string @ArgumentOutOfRange_NeedNonNegNum = "ArgumentOutOfRange_NeedNonNegNum";
+
         /// <summary>Destination array is not long enough to copy all the items in the collection. Check array index and length.</summary>
         internal const string @Arg_ArrayPlusOffTooSmall = "Arg_ArrayPlusOffTooSmall";
+
         /// <summary>Target array type is not compatible with the type of items in the collection.</summary>
         internal const string @Argument_InvalidArrayType = "Argument_InvalidArrayType";
+
         /// <summary>'{0}' index is beyond maximum '{1}'.</summary>
         internal const string @ReachOutOfRange = "ReachOutOfRange";
+
         /// <summary>Permission state is not valid.</summary>
         internal const string @InvalidPermissionState = "InvalidPermissionState";
+
         /// <summary>Target is not a WebBrowserPermission.</summary>
         internal const string @TargetNotWebBrowserPermissionLevel = "TargetNotWebBrowserPermissionLevel";
+
         /// <summary>Target is not a MediaPermission.</summary>
         internal const string @TargetNotMediaPermissionLevel = "TargetNotMediaPermissionLevel";
+
         /// <summary>'{0}' attribute is not valid XML.</summary>
         internal const string @BadXml = "BadXml";
+
         /// <summary>Permission level is not valid.</summary>
         internal const string @InvalidPermissionLevel = "InvalidPermissionLevel";
+
         /// <summary>Choice is valid only in AlternateContent.</summary>
         internal const string @XCRChoiceOnlyInAC = "XCRChoiceOnlyInAC";
+
         /// <summary>Choice cannot follow a Fallback.</summary>
         internal const string @XCRChoiceAfterFallback = "XCRChoiceAfterFallback";
+
         /// <summary>Choice must contain Requires attribute.</summary>
         internal const string @XCRRequiresAttribNotFound = "XCRRequiresAttribNotFound";
+
         /// <summary>Requires attribute must contain a valid namespace prefix.</summary>
         internal const string @XCRInvalidRequiresAttribute = "XCRInvalidRequiresAttribute";
+
         /// <summary>Fallback is valid only in AlternateContent.</summary>
         internal const string @XCRFallbackOnlyInAC = "XCRFallbackOnlyInAC";
+
         /// <summary>AlternateContent must contain one or more Choice elements.</summary>
         internal const string @XCRChoiceNotFound = "XCRChoiceNotFound";
+
         /// <summary>AlternateContent must contain only one Fallback element.</summary>
         internal const string @XCRMultipleFallbackFound = "XCRMultipleFallbackFound";
+
         /// <summary>'{0}' attribute is not valid for '{1}' element.</summary>
         internal const string @XCRInvalidAttribInElement = "XCRInvalidAttribInElement";
+
         /// <summary>Unrecognized Compatibility element '{0}'.</summary>
         internal const string @XCRUnknownCompatElement = "XCRUnknownCompatElement";
+
         /// <summary>'{0}' element is not a valid child of AlternateContent. Only Choice and Fallback elements are valid children of an AlternateContent element.</summary>
         internal const string @XCRInvalidACChild = "XCRInvalidACChild";
+
         /// <summary>'{0}' format is not valid.</summary>
         internal const string @XCRInvalidFormat = "XCRInvalidFormat";
+
         /// <summary>'{0}' prefix is not defined.</summary>
         internal const string @XCRUndefinedPrefix = "XCRUndefinedPrefix";
+
         /// <summary>Unrecognized compatibility attribute '{0}'.</summary>
         internal const string @XCRUnknownCompatAttrib = "XCRUnknownCompatAttrib";
+
         /// <summary>'{0}' namespace cannot process content; it must be declared Ignorable first.</summary>
         internal const string @XCRNSProcessContentNotIgnorable = "XCRNSProcessContentNotIgnorable";
+
         /// <summary>Duplicate ProcessContent declaration for element '{1}' in namespace '{0}'.</summary>
         internal const string @XCRDuplicateProcessContent = "XCRDuplicateProcessContent";
+
         /// <summary>Cannot have both a specific and a wildcard ProcessContent declaration for namespace '{0}'.</summary>
         internal const string @XCRInvalidProcessContent = "XCRInvalidProcessContent";
+
         /// <summary>Duplicate wildcard ProcessContent declaration for namespace '{0}'.</summary>
         internal const string @XCRDuplicateWildcardProcessContent = "XCRDuplicateWildcardProcessContent";
+
         /// <summary>MustUnderstand condition failed on namespace '{0}'</summary>
         internal const string @XCRMustUnderstandFailed = "XCRMustUnderstandFailed";
+
         /// <summary>'{0}' namespace cannot preserve items; it must be declared Ignorable first.</summary>
         internal const string @XCRNSPreserveNotIgnorable = "XCRNSPreserveNotIgnorable";
+
         /// <summary>Duplicate Preserve declaration for element {1} in namespace '{0}'.</summary>
         internal const string @XCRDuplicatePreserve = "XCRDuplicatePreserve";
+
         /// <summary>Cannot have both a specific and a wildcard Preserve declaration for namespace '{0}'.</summary>
         internal const string @XCRInvalidPreserve = "XCRInvalidPreserve";
+
         /// <summary>Duplicate wildcard Preserve declaration for namespace '{0}'.</summary>
         internal const string @XCRDuplicateWildcardPreserve = "XCRDuplicateWildcardPreserve";
+
         /// <summary>'{0}' attribute value is not a valid XML name.</summary>
         internal const string @XCRInvalidXMLName = "XCRInvalidXMLName";
+
         /// <summary>There is a cycle of XML compatibility definitions, such that namespace '{0}' overrides itself. This could be due to inconsistent XmlnsCompatibilityAttributes in different assemblies. Please change the definitions to eliminate this cycle.</summary>
         internal const string @XCRCompatCycle = "XCRCompatCycle";
+
         /// <summary>'{1}' event not found on type '{0}'.</summary>
         internal const string @EventNotFound = "EventNotFound";
+
         /// <summary>Listener did not handle requested event.</summary>
         internal const string @ListenerDidNotHandleEvent = "ListenerDidNotHandleEvent";
+
         /// <summary>Listener of type '{0}' registered with event manager of type '{1}', but then did not handle the event. The listener is coded incorrectly.</summary>
         internal const string @ListenerDidNotHandleEventDetail = "ListenerDidNotHandleEventDetail";
+
         /// <summary>WeakEventManager supports only delegates with one target.</summary>
         internal const string @NoMulticastHandlers = "NoMulticastHandlers";
+
         /// <summary>Unrecoverable system error.</summary>
         internal const string @InvariantFailure = "InvariantFailure";
+
         /// <summary>ContentType string cannot have leading/trailing Linear White Spaces [LWS - RFC 2616].</summary>
         internal const string @ContentTypeCannotHaveLeadingTrailingLWS = "ContentTypeCannotHaveLeadingTrailingLWS";
+
         /// <summary>ContentType string is not valid. Expected format is type/subtype.</summary>
         internal const string @InvalidTypeSubType = "InvalidTypeSubType";
+
         /// <summary>';' must be followed by parameter=value pair.</summary>
         internal const string @ExpectingParameterValuePairs = "ExpectingParameterValuePairs";
+
         /// <summary>Parameter and value pair is not valid. Expected form is parameter=value.</summary>
         internal const string @InvalidParameterValuePair = "InvalidParameterValuePair";
+
         /// <summary>A token is not valid. Refer to RFC 2616 for correct grammar of content types.</summary>
         internal const string @InvalidToken = "InvalidToken";
+
         /// <summary>Parameter value must be a valid token or a quoted string as per RFC 2616.</summary>
         internal const string @InvalidParameterValue = "InvalidParameterValue";
+
         /// <summary>A Linear White Space character is not valid.</summary>
         internal const string @InvalidLinearWhiteSpaceCharacter = "InvalidLinearWhiteSpaceCharacter";
+
         /// <summary>Semicolon separator is required between two valid parameter=value pairs.</summary>
         internal const string @ExpectingSemicolon = "ExpectingSemicolon";
+
         /// <summary>HwndSubclass.Attach has already been called;  it cannot be called again.</summary>
         internal const string @HwndSubclassMultipleAttach = "HwndSubclassMultipleAttach";
+
         /// <summary>Cannot locate resource '{0}'.</summary>
         internal const string @UnableToLocateResource = "UnableToLocateResource";
+
         /// <summary>Please wait while the application opens</summary>
         internal const string @SplashScreenIsLoading = "SplashScreenIsLoading";
+
         /// <summary>Name cannot be an empty string.</summary>
         internal const string @NameScopeNameNotEmptyString = "NameScopeNameNotEmptyString";
+
         /// <summary>'{0}' Name is not found.</summary>
         internal const string @NameScopeNameNotFound = "NameScopeNameNotFound";
+
         /// <summary>Cannot register duplicate Name '{0}' in this scope.</summary>
         internal const string @NameScopeDuplicateNamesNotAllowed = "NameScopeDuplicateNamesNotAllowed";
+
         /// <summary>No NameScope found to {1} the Name '{0}'.</summary>
         internal const string @NameScopeNotFound = "NameScopeNotFound";
+
         /// <summary>'{0}' name is not valid for identifier.</summary>
         internal const string @NameScopeInvalidIdentifierName = "NameScopeInvalidIdentifierName";
+
         /// <summary>No dependency property {0} on {1}.</summary>
         internal const string @NoDependencyProperty = "NoDependencyProperty";
+
         /// <summary>Must set ArrayType before calling ProvideValue on ArrayExtension.</summary>
         internal const string @MarkupExtensionArrayType = "MarkupExtensionArrayType";
+
         /// <summary>Items in the array must be type '{0}'. One or more items cannot be cast to this type.</summary>
         internal const string @MarkupExtensionArrayBadType = "MarkupExtensionArrayBadType";
+
         /// <summary>Markup extension '{0}' requires '{1}' be implemented in the IServiceProvider for ProvideValue.</summary>
         internal const string @MarkupExtensionNoContext = "MarkupExtensionNoContext";
+
         /// <summary>'{0}' StaticExtension value cannot be resolved to an enumeration, static field, or static property.</summary>
         internal const string @MarkupExtensionBadStatic = "MarkupExtensionBadStatic";
+
         /// <summary>StaticExtension must have Member property set before ProvideValue can be called.</summary>
         internal const string @MarkupExtensionStaticMember = "MarkupExtensionStaticMember";
+
         /// <summary>TypeExtension must have TypeName property set before ProvideValue can be called.</summary>
         internal const string @MarkupExtensionTypeName = "MarkupExtensionTypeName";
+
         /// <summary>'{0}' string is not valid for type.</summary>
         internal const string @MarkupExtensionTypeNameBad = "MarkupExtensionTypeNameBad";
+
         /// <summary>'{0}' must be of type '{1}'.</summary>
         internal const string @MustBeOfType = "MustBeOfType";
+
         /// <summary>This operation requires the thread's apartment state to be '{0}'.</summary>
         internal const string @Verify_ApartmentState = "Verify_ApartmentState";
+
         /// <summary>The argument can neither be null nor empty.</summary>
         internal const string @Verify_NeitherNullNorEmpty = "Verify_NeitherNullNorEmpty";
+
         /// <summary>The argument can not be equal to '{0}'.</summary>
         internal const string @Verify_AreNotEqual = "Verify_AreNotEqual";
+
         /// <summary>No file exists at '{0}'.</summary>
         internal const string @Verify_FileExists = "Verify_FileExists";
+
         /// <summary>Event argument is invalid.</summary>
         internal const string @InvalidEvent = "InvalidEvent";
+
         /// <summary>The property '{0}' cannot be changed. The '{1}' class has been sealed.</summary>
         internal const string @CompatibilityPreferencesSealed = "CompatibilityPreferencesSealed";
+
         /// <summary>Desktop applications are required to opt in to all earlier accessibility improvements to get the later improvements. To do this, ensure that if the AppContext switch 'Switch.UseLegacyAccessibilityFeatures.N' is set to 'false', then 'Switch.UseLegacyAccessi ...</summary>
         internal const string @CombinationOfAccessibilitySwitchesNotSupported = "CombinationOfAccessibilitySwitchesNotSupported";
+
         /// <summary>Desktop applications setting AppContext switch '{0}' to false are required to opt in to all earlier accessibility improvements. To do this, ensure that the AppContext switch '{1}' is set to 'false', then 'Switch.UseLegacyAccessibilityFeatures' and all 'Swi ...</summary>
         internal const string @AccessibilitySwitchDependencyNotSatisfied = "AccessibilitySwitchDependencyNotSatisfied";
+
         /// <summary>Extra data encountered at position {0} while parsing '{1}'.</summary>
         internal const string @TokenizerHelperExtraDataEncountered = "TokenizerHelperExtraDataEncountered";
+
         /// <summary>Premature string termination encountered while parsing '{0}'.</summary>
         internal const string @TokenizerHelperPrematureStringTermination = "TokenizerHelperPrematureStringTermination";
+
         /// <summary>Missing end quote encountered while parsing '{0}'.</summary>
         internal const string @TokenizerHelperMissingEndQuote = "TokenizerHelperMissingEndQuote";
+
         /// <summary>Empty token encountered at position {0} while parsing '{1}'.</summary>
         internal const string @TokenizerHelperEmptyToken = "TokenizerHelperEmptyToken";
+
         /// <summary>No current object to return.</summary>
         internal const string @Enumerator_VerifyContext = "Enumerator_VerifyContext";
+
         /// <summary>PermissionState value '{0}' is not valid for this Permission.</summary>
         internal const string @InvalidPermissionStateValue = "InvalidPermissionStateValue";
+
         /// <summary>Permission type is not valid. Expected '{0}'.</summary>
         internal const string @InvalidPermissionType = "InvalidPermissionType";
+
         /// <summary>Parameter cannot be a zero-length string.</summary>
         internal const string @StringEmpty = "StringEmpty";
+
         /// <summary>Parameter must be greater than or equal to zero.</summary>
         internal const string @ParameterCannotBeNegative = "ParameterCannotBeNegative";
+
         /// <summary>Specified value of type '{0}' must have IsFrozen set to false to modify.</summary>
         internal const string @Freezable_CantBeFrozen = "Freezable_CantBeFrozen";
+
         /// <summary>Cannot change property metadata after it has been associated with a property.</summary>
         internal const string @TypeMetadataCannotChangeAfterUse = "TypeMetadataCannotChangeAfterUse";
+
         /// <summary>'{0}' enumeration value is not valid.</summary>
         internal const string @Enum_Invalid = "Enum_Invalid";
+
         /// <summary>Cannot convert string value '{0}' to type '{1}'.</summary>
         internal const string @CannotConvertStringToType = "CannotConvertStringToType";
+
         /// <summary>Cannot modify a read-only container.</summary>
         internal const string @CannotModifyReadOnlyContainer = "CannotModifyReadOnlyContainer";
+
         /// <summary>Cannot get part or part information from a write-only container.</summary>
         internal const string @CannotRetrievePartsOfWriteOnlyContainer = "CannotRetrievePartsOfWriteOnlyContainer";
+
         /// <summary>'{0}' file does not conform to the expected file format specification.</summary>
         internal const string @FileFormatExceptionWithFileName = "FileFormatExceptionWithFileName";
+
         /// <summary>Input file or data stream does not conform to the expected file format specification.</summary>
         internal const string @FileFormatException = "FileFormatException";
+
         /// <summary>{0} is an invalid handle.</summary>
         internal const string @Cryptography_InvalidHandle = "Cryptography_InvalidHandle";
+
         /// <summary>DLL Name: {0} DLL Location: {1}</summary>
         internal const string @WpfDllConsistencyErrorData = "WpfDllConsistencyErrorData";
+
         /// <summary>Failed Alternet UI DLL consistency checks. Expected location: {0}.</summary>
         internal const string @WpfDllConsistencyErrorHeader = "WpfDllConsistencyErrorHeader";
+
         /// <summary>Every RoutedEventArgs must have a non-null RoutedEvent associated with it.</summary>
         internal const string @RoutedEventArgsMustHaveRoutedEvent = "RoutedEventArgsMustHaveRoutedEvent";
+
         /// <summary>A '{0}' cannot be set on the '{1}' property of type '{2}'. A '{0}' can only be set on a DependencyProperty of a DependencyObject.</summary>
         internal const string @MarkupExtensionDynamicOrBindingOnClrProp = "MarkupExtensionDynamicOrBindingOnClrProp";
+
         /// <summary>A '{0}' cannot be used within a '{1}' collection. A '{0}' can only be set on a DependencyProperty of a DependencyObject.</summary>
         internal const string @MarkupExtensionDynamicOrBindingInCollection = "MarkupExtensionDynamicOrBindingInCollection";
+
         /// <summary>Binding cannot be changed after it has been used.</summary>
         internal const string @ChangeSealedBinding = "ChangeSealedBinding";
+
         /// <summary>Validation rule '{0}' received unexpected value '{1}'.  (This could be caused by assigning the wrong ValidationStep to the rule.)</summary>
         internal const string @ValidationRule_UnexpectedValue = "ValidationRule_UnexpectedValue";
+
         /// <summary>Syntax error in Binding.Path '{0}' ... '{1}'.</summary>
         internal const string @PathSyntax = "PathSyntax";
+
         /// <summary>Unmatched parenthesis '{0}'.</summary>
         internal const string @UnmatchedParen = "UnmatchedParen";
+
         /// <summary>Unmatched bracket '{0}'.</summary>
         internal const string @UnmatchedBracket = "UnmatchedBracket";
+
         /// <summary>URI must be absolute. Relative URIs are not supported.</summary>
         internal const string @UriMustBeAbsolute = "UriMustBeAbsolute";
+
         /// <summary>This factory supports only URIs with the '{0}' scheme.</summary>
         internal const string @UriSchemeMismatch = "UriSchemeMismatch";
+
         /// <summary>The package URI is not allowed in the package store.</summary>
         internal const string @NotAllowedPackageUri = "NotAllowedPackageUri";
+
         /// <summary>A package with the same URI is already in the package store.</summary>
         internal const string @PackageAlreadyExists = "PackageAlreadyExists";
+
         /// <summary>Current CachePolicy is CacheOnly but the requested resource does not exist in the cache.</summary>
         internal const string @ResourceNotFoundUnderCacheOnlyPolicy = "ResourceNotFoundUnderCacheOnlyPolicy";
+
         /// <summary>Cache policy is not valid.</summary>
         internal const string @PackWebRequestCachePolicyIllegal = "PackWebRequestCachePolicyIllegal";
+
         /// <summary>Cannot have empty name of a temporary file.</summary>
         internal const string @InvalidTempFileName = "InvalidTempFileName";
+
         /// <summary>The operation is not allowed after the first request is made.</summary>
         internal const string @RequestAlreadyStarted = "RequestAlreadyStarted";
+
         /// <summary>Cannot access a disposed HTTP byte range downloader.</summary>
         internal const string @ByteRangeDownloaderDisposed = "ByteRangeDownloaderDisposed";
+
         /// <summary>HTTP byte range downloader can support only HTTP or HTTPS schemes.</summary>
         internal const string @InvalidScheme = "InvalidScheme";
+
         /// <summary>The event handle is not usable.</summary>
         internal const string @InvalidEventHandle = "InvalidEventHandle";
+
         /// <summary>Byte range request failed.</summary>
         internal const string @ByteRangeDownloaderErroredOut = "ByteRangeDownloaderErroredOut";
+
         /// <summary>Byte ranges are not valid in '{0}'.</summary>
         internal const string @InvalidByteRanges = "InvalidByteRanges";
+
         /// <summary>Server does not support byte range request.</summary>
         internal const string @ByteRangeRequestIsNotSupported = "ByteRangeRequestIsNotSupported";
+
         /// <summary>Requested PackagePart not found in target resource.</summary>
         internal const string @WebResponsePartNotFound = "WebResponsePartNotFound";
+
         /// <summary>Error processing WebResponse.</summary>
         internal const string @WebResponseFailure = "WebResponseFailure";
+
         /// <summary>WebRequest timed out. Response did not arrive before the specified Timeout period elapsed.</summary>
         internal const string @WebRequestTimeout = "WebRequestTimeout";
+
         /// <summary>Cannot resolve current inner request URI schema. Bypass cache only for resolvable schema types such as http, ftp, or file.</summary>
         internal const string @SchemaInvalidForTransport = "SchemaInvalidForTransport";
+
         /// <summary>Cannot convert type '{0}' to '{1}'.</summary>
         internal const string @CannotConvertType = "CannotConvertType";
+
         /// <summary>Parameter is unexpected type '{0}'. Expected type is '{1}'.</summary>
         internal const string @UnexpectedParameterType = "UnexpectedParameterType";
+
         /// <summary>Property path is not valid. '{0}' does not have a public property named '{1}'.</summary>
         internal const string @PropertyPathNoProperty = "PropertyPathNoProperty";
+
         /// <summary>Cannot use indexed Value on PropertyDescriptor.</summary>
         internal const string @IndexedPropDescNotImplemented = "IndexedPropDescNotImplemented";
+
         /// <summary>Text formatting engine encountered a non-CLS exception.</summary>
         internal const string @NonCLSException = "NonCLSException";
+
         /// <summary>A TwoWay or OneWayToSource binding cannot work on the read-only property '{1}' of type '{0}'.</summary>
         internal const string @CannotWriteToReadOnly = "CannotWriteToReadOnly";
+
         /// <summary>Mode must be specified for RelativeSource.</summary>
         internal const string @RelativeSourceNeedsMode = "RelativeSourceNeedsMode";
+
         /// <summary>AncestorType must be specified for RelativeSource in FindAncestor mode.</summary>
         internal const string @RelativeSourceNeedsAncestorType = "RelativeSourceNeedsAncestorType";
+
         /// <summary>RelativeSource.Mode is immutable after initialization; instead of changing the Mode on this instance, create a new RelativeSource or use a different static instance.</summary>
         internal const string @RelativeSourceModeIsImmutable = "RelativeSourceModeIsImmutable";
+
         /// <summary>RelativeSource is not in FindAncestor mode.</summary>
         internal const string @RelativeSourceNotInFindAncestorMode = "RelativeSourceNotInFindAncestorMode";
+
         /// <summary>AncestorLevel cannot be set to less than 1.</summary>
         internal const string @RelativeSourceInvalidAncestorLevel = "RelativeSourceInvalidAncestorLevel";
+
         /// <summary>Invalid value for RelativeSourceMode enum.</summary>
         internal const string @RelativeSourceModeInvalid = "RelativeSourceModeInvalid";
+
         /// <summary>Syntax error in PropertyPath '{0}'.</summary>
         internal const string @PropertyPathSyntaxError = "PropertyPathSyntaxError";
+
         /// <summary>Cannot set BaseUri on this IUriContext implementation.</summary>
         internal const string @ParserProvideValueCantSetUri = "ParserProvideValueCantSetUri";
+
         /// <summary>Object '{0}' cannot be used as an accessor parameter for a PropertyPath. An accessor parameter must be DependencyProperty, PropertyInfo, or PropertyDescriptor.</summary>
         internal const string @PropertyPathInvalidAccessor = "PropertyPathInvalidAccessor";
+
         /// <summary>Index {0} is out of range of the PathParameters list, which has length {1}.</summary>
         internal const string @PathParametersIndexOutOfRange = "PathParametersIndexOutOfRange";
+
         /// <summary>Property path is not valid. Cannot resolve type name '{0}'.</summary>
         internal const string @PropertyPathNoOwnerType = "PropertyPathNoOwnerType";
+
         /// <summary>PathParameters list contains null at index {0}.</summary>
         internal const string @PathParameterIsNull = "PathParameterIsNull";
+
         /// <summary>Path indexer parameter has value that cannot be resolved to specified type: '{0}'</summary>
         internal const string @PropertyPathIndexWrongType = "PropertyPathIndexWrongType";
+
         /// <summary>Failed to compare two elements in the array.</summary>
         internal const string @InvalidOperation_IComparerFailed = "InvalidOperation_IComparerFailed";
 
