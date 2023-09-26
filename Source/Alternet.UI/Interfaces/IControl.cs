@@ -12,7 +12,7 @@ namespace Alternet.UI
     {
         event EventHandler? Click;
 
-        event EventHandler? BorderBrushChanged;
+        /*event EventHandler? BorderBrushChanged;*/
 
         /*event EventHandler<PaintEventArgs>? Paint; */
 
