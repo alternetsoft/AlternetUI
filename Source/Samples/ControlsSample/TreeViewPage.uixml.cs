@@ -256,7 +256,7 @@ namespace ControlsSample
 
         private void FocusLastItemButton_Click(object? sender, System.EventArgs e)
         {
-            treeView.FocusAndSelectItem(treeView.LastItem);
+            treeView.SelectAndShowItem(treeView.LastItem);
         }
 
         private void TreeView_MouseLeftButtonDown(
