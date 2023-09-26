@@ -69,6 +69,12 @@ namespace Alternet.UI
             set => NativeControl.IsDefault = value;
         }
 
+        public override bool ExactFit
+        {
+            get => NativeControl.ExactFit;
+            set => NativeControl.ExactFit = value;
+        }
+
         public override bool IsCancel
         {
             get => NativeControl.IsCancel;
@@ -155,6 +161,7 @@ namespace Alternet.UI
             nativeControl.HoveredImage = images.HoveredImage?.NativeImage;
             nativeControl.PressedImage = images.PressedImage?.NativeImage;
             nativeControl.DisabledImage = images.DisabledImage?.NativeImage;
+            nativeControl.FocusedImage = images.FocusedImage?.NativeImage;
         }
 
         private void OnImageChanged()

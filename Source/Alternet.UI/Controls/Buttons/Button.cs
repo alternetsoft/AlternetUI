@@ -109,6 +109,15 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets an <see cref="Image"/> for focused control state.
+        /// </summary>
+        public Image? FocusedImage
+        {
+            get => StateImages.FocusedImage;
+            set => StateImages.FocusedImage = value;
+        }
+
+        /// <summary>
         /// Gets or sets an <see cref="Image"/> for pressed control state.
         /// </summary>
         public Image? PressedImage
@@ -153,6 +162,24 @@ namespace Alternet.UI
         {
             get => Handler.IsDefault;
             set => Handler.IsDefault = value;
+        }
+
+        /// <summary>
+        /// Gets or sets whether buttons are made of at least the standard button size, even
+        /// if their contents is small enough to fit into a smaller size.
+        /// </summary>
+        /// <remarks>
+        /// Standard button size is used
+        /// for consistency as most platforms use buttons of the same size in the native
+        /// dialogs. If this flag is specified, the
+        /// button will be made just big enough for its contents. Notice that under MSW
+        /// the button will still have at least the standard height, even with this style,
+        /// if it has a non-empty label.
+        /// </remarks>
+        public bool ExactFit
+        {
+            get => Handler.ExactFit;
+            set => Handler.ExactFit = value;
         }
 
         /// <summary>

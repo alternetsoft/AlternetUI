@@ -155,6 +155,19 @@ namespace Alternet::UI
         RecreateWxWindowIfNeeded();
     }    
 
+    bool Button::GetExactFit()
+    {
+        return _exactFit;
+    }
+
+    void Button::SetExactFit(bool value)
+    {
+        if (_exactFit == value)
+            return;
+        _exactFit = value;
+        RecreateWxWindowIfNeeded();
+    }
+
     wxWindow* Button::CreateWxWindowCore(wxWindow* parent)
     {
         long style = 0;
@@ -181,6 +194,9 @@ namespace Alternet::UI
         else
         if (isBottom)
             style |= wxBU_BOTTOM;
+
+        if (_exactFit)
+            style |= wxBU_EXACTFIT;
 
         auto button = new wxButton2(this, parent,
             wxID_ANY,
@@ -267,6 +283,36 @@ namespace Alternet::UI
     void Button::RaiseClick()
     {
         RaiseEvent(ButtonEvent::Click);
+    }
+
+    Image* Button::GetFocusedImage()
+    {
+        if (_focusedImage == nullptr)
+            return nullptr;
+
+        _focusedImage->AddRef();
+        return _focusedImage;
+    }
+
+    void Button::SetFocusedImage(Image* value)
+    {
+        if (_focusedImage != nullptr)
+            _focusedImage->Release();
+
+        _focusedImage = value;
+
+        auto button = GetButton();
+        if (_focusedImage != nullptr)
+        {
+            _focusedImage->AddRef();
+            if (ButtonImagesEnabled)
+                button->SetBitmapFocus(_focusedImage->GetBitmap());
+        }
+        else
+        {
+            if (ButtonImagesEnabled)
+                button->SetBitmapFocus(wxBitmap());
+        }
     }
 
     Image* Button::GetNormalImage()
@@ -408,6 +454,8 @@ namespace Alternet::UI
                 button->SetBitmapPressed(_pressedImage->GetBitmap());
             if (_disabledImage != nullptr)
                 button->SetBitmapDisabled(_disabledImage->GetBitmap());
+            if (_focusedImage != nullptr)
+                button->SetBitmapFocus(_focusedImage->GetBitmap());
         }
     }
 

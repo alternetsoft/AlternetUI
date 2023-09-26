@@ -52,6 +52,21 @@ namespace Alternet.UI.Native
             }
         }
         
+        public bool ExactFit
+        {
+            get
+            {
+                CheckDisposed();
+                return NativeApi.Button_GetExactFit_(NativePointer);
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.Button_SetExactFit_(NativePointer, value);
+            }
+        }
+        
         public bool IsDefault
         {
             get
@@ -166,6 +181,24 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 NativeApi.Button_SetDisabledImage_(NativePointer, value?.NativePointer ?? IntPtr.Zero);
+            }
+        }
+        
+        public Image? FocusedImage
+        {
+            get
+            {
+                CheckDisposed();
+                var _nnn = NativeApi.Button_GetFocusedImage_(NativePointer);
+                var _mmm = NativeObject.GetFromNativePointer<Image>(_nnn, p => new Image(p));
+                ReleaseNativeObjectPointer(_nnn);
+                return _mmm;
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.Button_SetFocusedImage_(NativePointer, value?.NativePointer ?? IntPtr.Zero);
             }
         }
         
@@ -321,6 +354,12 @@ namespace Alternet.UI.Native
             public static extern void Button_SetText_(IntPtr obj, string value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool Button_GetExactFit_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Button_SetExactFit_(IntPtr obj, bool value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool Button_GetIsDefault_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
@@ -361,6 +400,12 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Button_SetDisabledImage_(IntPtr obj, IntPtr value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern IntPtr Button_GetFocusedImage_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Button_SetFocusedImage_(IntPtr obj, IntPtr value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool Button_GetAcceptsFocus_(IntPtr obj);

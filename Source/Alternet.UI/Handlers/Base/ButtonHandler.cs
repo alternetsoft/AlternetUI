@@ -31,6 +31,8 @@ namespace Alternet.UI
         /// </remarks>
         public abstract bool AcceptsFocus { get; set; }
 
+        public abstract bool ExactFit { get; set; }
+
         /// <summary>
         /// Gets or sets value indicating whether this control accepts
         /// focus from keyboard or not.

@@ -13,6 +13,7 @@ namespace Alternet.UI
         private Image? hoveredImage;
         private Image? pressedImage;
         private Image? disabledImage;
+        private Image? focusedImage;
 
         /// <summary>
         /// Occurs when a property value changes.
@@ -26,6 +27,15 @@ namespace Alternet.UI
         {
             get => normalImage;
             set => SetProperty(ref normalImage, value);
+        }
+
+        /// <summary>
+        /// Gets or sets an <see cref="Image"/> for normal control state.
+        /// </summary>
+        public Image? FocusedImage
+        {
+            get => focusedImage;
+            set => SetProperty(ref focusedImage, value);
         }
 
         /// <summary>

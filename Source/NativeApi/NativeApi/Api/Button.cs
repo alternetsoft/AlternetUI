@@ -13,6 +13,8 @@ namespace NativeApi.Api
 
         public string Text { get; set; }
 
+        public bool ExactFit { get; set; }
+
         public bool IsDefault { get; set; }
 
         public bool HasBorder { get; set; }
@@ -26,6 +28,8 @@ namespace NativeApi.Api
         public Image? PressedImage { get; set; }
 
         public Image? DisabledImage { get; set; }
+
+        public Image? FocusedImage { get; set; }
 
         public bool AcceptsFocus { get;set;}
         public bool AcceptsFocusFromKeyboard { get;set;}

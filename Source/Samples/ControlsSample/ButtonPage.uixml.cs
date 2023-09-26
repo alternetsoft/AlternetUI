@@ -9,30 +9,14 @@ namespace ControlsSample
 {
     internal partial class ButtonPage : Control
     {
-        public class TextValuePair
-        {
-            public string Text {get;set;}
-            public object Value {get;set;}
-            public TextValuePair(string text, object value)
-            {
-                Text = text;
-                Value = value;
-            }
-
-            public override string ToString()
-            {
-                return Text;
-            }
-        }
-
         private static readonly object[] ValidAlign =
             new object[]
             {
-                    new TextValuePair("Default", GenericDirection.Default),
-                    new TextValuePair("Left", GenericDirection.Left),
-                    new TextValuePair("Top", GenericDirection.Top),
-                    new TextValuePair("Right", GenericDirection.Right),
-                    new TextValuePair("Bottom", GenericDirection.Bottom),
+                    new ListControlTextValuePair("Default", GenericDirection.Default),
+                    new ListControlTextValuePair("Left", GenericDirection.Left),
+                    new ListControlTextValuePair("Top", GenericDirection.Top),
+                    new ListControlTextValuePair("Right", GenericDirection.Right),
+                    new ListControlTextValuePair("Bottom", GenericDirection.Bottom),
             };
 
         private IPageSite? site;
@@ -40,8 +24,6 @@ namespace ControlsSample
         public ButtonPage()
         {
             InitializeComponent();
-
-            ApplyAll();
 
             textAlignComboBox.Items.AddRange(ValidAlign);
             textAlignComboBox.SelectedIndex = textAlignComboBox.FindStringExact("Default");
@@ -64,13 +46,6 @@ namespace ControlsSample
             ListControlUtils.AddColorNames(comboBoxBackColor, false);
             comboBoxTextColor.SelectedIndex = comboBoxTextColor.FindStringExact("Default");
             comboBoxBackColor.SelectedIndex = comboBoxBackColor.FindStringExact("Default");
-
-            comboBoxFontName.SelectedItemChanged += ComboBoxFontName_Changed;
-            comboBoxFontSize.SelectedItemChanged += ComboBoxFontSize_Changed;
-            comboBoxTextColor.SelectedItemChanged += ComboBoxTextColor_Changed;
-            comboBoxBackColor.SelectedItemChanged += ComboBoxBackColor_Changed;
-            textAlignComboBox.SelectedItemChanged += TextAlignComboBox_Changed;
-            imageAlignComboBox.SelectedItemChanged += ImageAlignComboBox_Changed;
         }
 
         public IPageSite? Site
@@ -80,105 +55,24 @@ namespace ControlsSample
             set
             {
                 site = value;
+
+            ApplyAll();
+
+            comboBoxFontName.SelectedItemChanged += Button_Changed;
+            comboBoxFontSize.SelectedItemChanged += Button_Changed;
+            comboBoxTextColor.SelectedItemChanged += Button_Changed;
+            comboBoxBackColor.SelectedItemChanged += Button_Changed;
+            textAlignComboBox.SelectedItemChanged += Button_Changed;
+            imageAlignComboBox.SelectedItemChanged += Button_Changed;
+            disabledCheckBox.CheckedChanged += Button_Changed;
+            imageCheckBox.CheckedChanged += Button_Changed;
+            defaultCheckBox.CheckedChanged += Button_Changed;
+            boldCheckBox.CheckedChanged += Button_Changed;
+            hasBorderCheckBox.CheckedChanged += Button_Changed;
+            tabStopCheckBox.CheckedChanged += Button_Changed;
+            showTextCheckBox.CheckedChanged += Button_Changed;
+            exactFitCheckBox.CheckedChanged += Button_Changed;
             }
-        }
-
-        private void TextAlignComboBox_Changed(object? sender, EventArgs e) 
-        {
-            if (textAlignComboBox.SelectedItem == null)
-                return;
-            if (textAlignComboBox.SelectedItem is not TextValuePair item)
-                return;
-            button.TextAlign = (GenericDirection)item.Value;
-            ApplyAll();
-        }
-
-        private void ApplyImageAlign()
-        {
-            if (!imageAlignComboBox.Enabled)
-                return;
-            if (imageAlignComboBox.SelectedItem == null)
-                return;
-            if (imageAlignComboBox.SelectedItem is not TextValuePair item)
-                return;
-            DoInside(() =>
-            {
-                button.SetImagePosition((GenericDirection)item.Value);
-            });
-        }
-
-        private void ImageAlignComboBox_Changed(object? sender, EventArgs e)
-        {
-            button.RecreateWindow();
-            ApplyAll();
-        }
-
-        private void TextTextBox_TextChanged(object? sender, TextChangedEventArgs e)
-        {
-            ApplyText();
-        }
-
-        private void ApplyText()
-        {
-            DoInside(() =>
-            {
-                button.Text = textTextBox.Text;
-            });
-        }
-
-        private void ShowTextCheckBox_Changed(object? sender, EventArgs e)
-        {
-            button.TextVisible = showTextCheckBox.IsChecked;
-            ApplyAll();
-        }
-
-        private void DisabledCheckBox_CheckedChanged(object? sender, EventArgs e)
-        {
-            ApplyDisabled();
-        }
-
-        private void BoldCheckBox_CheckedChanged(
-            object? sender,
-            System.EventArgs e)
-        {
-            ApplyFont();
-        }
-
-        private void ApplyDisabled()
-        {
-            DoInside(() =>
-            {
-                button.Enabled = !disabledCheckBox.IsChecked;
-            });
-        }
-
-        private void ImageCheckBox_CheckedChanged(object sender, System.EventArgs e)
-        {
-            ApplyImage();
-        }
-
-        private void ApplyImage()
-        {
-            if (button == null)
-                return;
-
-            DoInside(() =>
-            {
-                button.StateImages = imageCheckBox.IsChecked ?
-                    ResourceLoader.ButtonImages : new ControlStateImages();
-            });
-        }
-
-        private void TabStopCheckBox_Changed(object sender, System.EventArgs e)
-        {
-            button.TabStop = tabStopCheckBox.IsChecked;
-            ApplyAll();
-        }
-
-        private void HasBorderCheckBox_Changed(object sender, System.EventArgs e)
-        {
-            button.HasBorder = hasBorderCheckBox.IsChecked;
-            ApplyAll();
         }
 
         public void DoInside(Action action)
@@ -194,64 +88,71 @@ namespace ControlsSample
 
         private void ApplyAll()
         {
+            void ApplyTextAlign()
+            {
+                if (textAlignComboBox.SelectedItem == null)
+                    return;
+                if (textAlignComboBox.SelectedItem is not ListControlTextValuePair item)
+                    return;
+                button.TextAlign = (GenericDirection)item.Value;
+            }
+
+            void ApplyImageAlign()
+            {
+                if (!imageAlignComboBox.Enabled)
+                    return;
+                if (imageAlignComboBox.SelectedItem == null)
+                    return;
+                if (imageAlignComboBox.SelectedItem is not ListControlTextValuePair item)
+                    return;
+                button.SetImagePosition((GenericDirection)item.Value);
+            }
+
+            void ApplyFont()
+            {
+                FontStyle fontStyle = boldCheckBox.IsChecked ? FontStyle.Bold : FontStyle.Regular;
+
+                var s = comboBoxFontSize.SelectedItem?.ToString();
+                double fontSize = string.IsNullOrWhiteSpace(s) ?
+                    Font.Default.SizeInPoints : Double.Parse(s);
+
+                s = comboBoxFontName.SelectedItem?.ToString();
+                string fontName = string.IsNullOrWhiteSpace(s) ? Font.Default.Name : s!;
+
+                Font font = Alternet.Drawing.Font.GetDefaultOrNew(fontName, fontSize, fontStyle);
+
+                button.Font = Font.Default;
+                button.Font = font;
+            }
+
+            if (site == null)
+                return;
+            if (button == null)
+                return;
+
             DoInside(() =>
             {
-                ApplyText();
-                ApplyDisabled();
-                ApplyImage();
-                ApplyDefault();
-                ApplyFont();
-                ApplyTextColor();
-                ApplyBackColor();
+                button.ExactFit = exactFitCheckBox.IsChecked;
+                button.TabStop = tabStopCheckBox.IsChecked;
+                button.HasBorder = hasBorderCheckBox.IsChecked;
+                button.TextVisible = showTextCheckBox.IsChecked;
                 ApplyImageAlign();
-            });
-        }
-
-        private void DefaultCheckBox_CheckedChanged(object sender, System.EventArgs e)
-        {
-            ApplyDefault();
-        }
-
-        private void ApplyDefault()
-        {
-            DoInside(() =>
-            {
+                ApplyTextAlign();
+                button.Enabled = !disabledCheckBox.IsChecked;
                 button.IsDefault = defaultCheckBox.IsChecked;
+                button.Text = textTextBox.Text;
+                ApplyFont();
+                button.StateImages = imageCheckBox.IsChecked ?
+                    ResourceLoader.ButtonImages : new ControlStateImages();
+                button.ForegroundColor = GetColor(comboBoxTextColor);
+                button.BackgroundColor = GetColor(comboBoxBackColor);
             });
+            button.Refresh();
         }
 
         private void Button_Click(object sender, System.EventArgs e)
         {
             site?.LogEvent("Button: Click");
-        }
-
-        private void ApplyFont()
-        {
-            if (site == null)
-                return;
-
-            FontStyle fontStyle = boldCheckBox.IsChecked ? FontStyle.Bold : FontStyle.Regular;
-
-            var s = comboBoxFontSize.SelectedItem?.ToString();
-            double fontSize = string.IsNullOrWhiteSpace(s) ?
-                Font.Default.SizeInPoints : Double.Parse(s);
-
-            s = comboBoxFontName.SelectedItem?.ToString();
-            string fontName = string.IsNullOrWhiteSpace(s) ? Font.Default.Name : s!;
-
-            Font font = Alternet.Drawing.Font.GetDefaultOrNew(fontName, fontSize, fontStyle);
-
-            //site?.LogEvent("Button: Font changed to " + font.Name + ", "
-            //    + font.SizeInPoints);
-
-            DoInside(() =>
-            {
-                button.Font = Font.Default;
-                button.Font = font;
-                button.PerformLayout();
-                button.Refresh();
-                button.Update();
-            });
         }
 
         private Color? GetColor(ListControl? control)
@@ -270,44 +171,9 @@ namespace ControlsSample
             }
         }
 
-        private void ApplyTextColor()
+        private void Button_Changed(object? sender, EventArgs e)
         {
-            var color = GetColor(comboBoxTextColor);
-            DoInside(() =>
-            {
-                button.ForegroundColor = color;
-            });
-            site?.LogEvent($"Button: Text Color = {comboBoxTextColor.SelectedItem}");
-        }
-
-        private void ApplyBackColor()
-        {
-            var color = GetColor(comboBoxBackColor);
-            DoInside(() =>
-            {
-                button.BackgroundColor = color;
-            });
-            site?.LogEvent($"Button: Back Color = {comboBoxBackColor.SelectedItem}");
-        }
-
-        private void ComboBoxFontName_Changed(object? sender, EventArgs e)
-        {
-            ApplyFont();
-        }
-
-        private void ComboBoxFontSize_Changed(object? sender, EventArgs e)
-        {
-            ApplyFont();
-        }
-
-        private void ComboBoxTextColor_Changed(object? sender, EventArgs e)
-        {
-            ApplyTextColor();
-        }
-
-        private void ComboBoxBackColor_Changed(object? sender, EventArgs e)
-        {
-            ApplyBackColor();
+            ApplyAll();
         }
     }
 }

@@ -9,6 +9,10 @@ string GetText();
 void SetText(const string& value);
 
 
+bool GetExactFit();
+void SetExactFit(bool value);
+
+
 bool GetIsDefault();
 void SetIsDefault(bool value);
 
@@ -35,6 +39,10 @@ void SetPressedImage(Image* value);
 
 Image* GetDisabledImage();
 void SetDisabledImage(Image* value);
+
+
+Image* GetFocusedImage();
+void SetFocusedImage(Image* value);
 
 
 bool GetAcceptsFocus();

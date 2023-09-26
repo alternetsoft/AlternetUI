@@ -64,18 +64,17 @@ namespace Alternet::UI
         bool _isCancel = false;
         bool _hasBorder = true;
         bool _textVisible = true;
+        bool _exactFit = false;
         wxDirection _textAlign = (wxDirection)0;
 
         void ApplyIsDefault();
         void ApplyIsCancel();
 
         Image* _normalImage = nullptr;
-
         Image* _hoveredImage = nullptr;
-
         Image* _pressedImage = nullptr;
-
         Image* _disabledImage = nullptr;
+        Image* _focusedImage = nullptr;
 
         class ButtonDefaultStyleSetter : public wxButton
         {

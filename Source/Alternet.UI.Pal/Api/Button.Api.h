@@ -34,6 +34,16 @@ ALTERNET_UI_API void Button_SetText_(Button* obj, const char16_t* value)
     obj->SetText(value);
 }
 
+ALTERNET_UI_API c_bool Button_GetExactFit_(Button* obj)
+{
+    return obj->GetExactFit();
+}
+
+ALTERNET_UI_API void Button_SetExactFit_(Button* obj, c_bool value)
+{
+    obj->SetExactFit(value);
+}
+
 ALTERNET_UI_API c_bool Button_GetIsDefault_(Button* obj)
 {
     return obj->GetIsDefault();
@@ -102,6 +112,16 @@ ALTERNET_UI_API Image* Button_GetDisabledImage_(Button* obj)
 ALTERNET_UI_API void Button_SetDisabledImage_(Button* obj, Image* value)
 {
     obj->SetDisabledImage(value);
+}
+
+ALTERNET_UI_API Image* Button_GetFocusedImage_(Button* obj)
+{
+    return obj->GetFocusedImage();
+}
+
+ALTERNET_UI_API void Button_SetFocusedImage_(Button* obj, Image* value)
+{
+    obj->SetFocusedImage(value);
 }
 
 ALTERNET_UI_API c_bool Button_GetAcceptsFocus_(Button* obj)

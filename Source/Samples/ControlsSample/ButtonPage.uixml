@@ -11,29 +11,19 @@
     <StackPanel Orientation="Vertical" Padding="10" Grid.Row="0">
       <Label Text="Text: " />
       <TextBox Text="Test Button" Name="textTextBox"
-               TextChanged="TextTextBox_TextChanged"/>
+               TextChanged="Button_Changed"/>
 
       <HorizontalStackPanel>
 
         <VerticalStackPanel>
-          <CheckBox Text="Disabled" Name="disabledCheckBox"
-                      CheckedChanged="DisabledCheckBox_CheckedChanged"
-                      Margin="0,10,0,0" />
-          <CheckBox Text="Image" Name="imageCheckBox"
-                    CheckedChanged="ImageCheckBox_CheckedChanged"
-                    Margin="0,10,0,0" IsChecked="True" />
-          <CheckBox Text="Default" Name="defaultCheckBox"
-                    CheckedChanged="DefaultCheckBox_CheckedChanged"
-                    Margin="0,10,0,0" />
-          <CheckBox Text="Bold" Name="boldCheckBox"
-                    CheckedChanged="BoldCheckBox_CheckedChanged" Margin="0,10,0,0" />
-          <CheckBox Text="Has Border" Name="hasBorderCheckBox" IsChecked="True"
-                    CheckedChanged="HasBorderCheckBox_Changed" Margin="0,10,0,0" />
-          <CheckBox Text="TabStop" Name="tabStopCheckBox" IsChecked="True"
-                    CheckedChanged="TabStopCheckBox_Changed" Margin="0,10,0,0" />
-          <CheckBox Text="Show Text" Name="showTextCheckBox" IsChecked="True"
-                      CheckedChanged="ShowTextCheckBox_Changed"
-                       Margin="0,10,0,0" />
+          <CheckBox Text="Disabled" Name="disabledCheckBox" Margin="0,10,0,0" />
+          <CheckBox Text="Image" Name="imageCheckBox" Margin="0,10,0,0" IsChecked="True" />
+          <CheckBox Text="Default" Name="defaultCheckBox" Margin="0,10,0,0" />
+          <CheckBox Text="Bold" Name="boldCheckBox" Margin="0,10,0,0" />
+          <CheckBox Text="Has Border" Name="hasBorderCheckBox" IsChecked="True" Margin="0,10,0,0" />
+          <CheckBox Text="TabStop" Name="tabStopCheckBox" IsChecked="True" Margin="0,10,0,0" />
+          <CheckBox Text="Show Text" Name="showTextCheckBox" IsChecked="True" Margin="0,10,0,0" />
+          <CheckBox Text="Exact Fit" IsChecked="False" Name="exactFitCheckBox" Margin="0,10,0,0" />
         </VerticalStackPanel>
         
         <VerticalStackPanel Margin="10,0,0,0">
