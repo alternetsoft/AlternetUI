@@ -36,47 +36,15 @@ namespace Alternet.UI
 
         /// <summary>
         /// Content is vertically aligned at the top.
-        /// Up direction is specified.
-        /// </summary>
-        Up = 0x0040,
-
-        /// <summary>
-        /// Content is vertically aligned at the bottom.
-        /// Down direction is specified.
-        /// </summary>
-        Down = 0x0080,
-
-        /// <summary>
-        /// Content is vertically aligned at the top.
         /// Top direction is specified.
         /// </summary>
-        Top = Up,
+        Top = 0x0040,
 
         /// <summary>
         /// Content is vertically aligned at the bottom.
         /// Bottom direction is specified.
         /// </summary>
-        Bottom = Down,
-
-        /// <summary>
-        /// Same as Up direction.
-        /// </summary>
-        North = Up,
-
-        /// <summary>
-        /// Same as Down direction.
-        /// </summary>
-        South = Down,
-
-        /// <summary>
-        /// Same as Left direction.
-        /// </summary>
-        West = Left,
-
-        /// <summary>
-        /// Same as East direction.
-        /// </summary>
-        Eeast = Right,
+        Bottom = 0x0080,
 
         /// <summary>
         /// Content is vertically aligned at the bottom, and horizontally
@@ -105,16 +73,5 @@ namespace Alternet.UI
         /// Top and Right directions are specified.
         /// </summary>
         TopRight = Top | Right,
-
-        /// <summary>
-        /// Value with all direction flags specified.
-        /// </summary>
-        All = Up | Down | Right | Left,
-
-        /// <summary>
-        /// A mask to extract direction or content alignmnent from the combination
-        /// of flags.
-        /// </summary>
-        DirectionMask = All,
     }
 }
