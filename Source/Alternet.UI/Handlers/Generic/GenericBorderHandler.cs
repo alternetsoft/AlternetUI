@@ -29,41 +29,39 @@ namespace Alternet.UI
                     DrawClientRectangle);
             }
 
-            var pens = Control.Pens;
+            var settings = Control.Settings;
 
             var r = DrawClientRectangle;
 
             if (Control.DrawDebugPointsBefore)
                 drawingContext.DrawDebugPoints(r, Pens.Yellow);
 
-            if (pens.Width.Top > 0)
+            if (settings.Width.Top > 0)
             {
-                var topRectangle = new Rect(r.TopLeft, new Size(r.Width, pens.Width.Top));
-                // drawingContext.DrawLine(pens.Top, r.TopLeft, r.TopRight);
-                drawingContext.FillRectangle(pens.TopColor.AsBrush, topRectangle);
+                var topRectangle = new Rect(r.TopLeft, new Size(r.Width, settings.Width.Top));
+                drawingContext.FillRectangle(settings.TopBrush, topRectangle);
             }
 
-            if (pens.Width.Bottom > 0)
+            if (settings.Width.Bottom > 0)
             {
                 var bottomRectangle = new Rect(
-                    new Point(r.Left, r.Bottom - pens.Width.Bottom),
-                    new Size(r.Width, pens.Width.Bottom));
-                // drawingContext.DrawLine(pens.Bottom, r.BottomLeft, r.BottomRight);
-                drawingContext.FillRectangle(pens.BottomColor.AsBrush, bottomRectangle);
+                    new Point(r.Left, r.Bottom - settings.Width.Bottom),
+                    new Size(r.Width, settings.Width.Bottom));
+                drawingContext.FillRectangle(settings.BottomBrush, bottomRectangle);
             }
 
-            if (pens.Width.Left > 0)
+            if (settings.Width.Left > 0)
             {
-                var leftRectangle = new Rect();
-                // drawingContext.DrawLine(pens.Left, r.TopLeft, r.BottomLeft);
-                drawingContext.FillRectangle(pens.LeftColor.AsBrush, leftRectangle);
+                var leftRectangle = new Rect(r.TopLeft, new Size(settings.Width.Left, r.Height));
+                drawingContext.FillRectangle(settings.LeftBrush, leftRectangle);
             }
 
-            if (pens.Width.Right > 0)
+            if (settings.Width.Right > 0)
             {
-                var rightRectangle = new Rect();
-                // drawingContext.DrawLine(pens.Right, r.TopRight, r.BottomRight);
-                drawingContext.FillRectangle(pens.RightColor.AsBrush, rightRectangle);
+                var rightRectangle = new Rect(
+                    new Point(r.Right - settings.Width.Right, r.Top),
+                    new Size(settings.Width.Right, r.Height));
+                drawingContext.FillRectangle(settings.RightBrush, rightRectangle);
             }
 
             if(Control.DrawDebugPointsAfter)
@@ -72,10 +70,10 @@ namespace Alternet.UI
 
         public override Size GetPreferredSize(Size availableSize)
         {
-            return base.GetPreferredSize(availableSize)/* +
+            return base.GetPreferredSize(availableSize) +
                 new Size(
                     Control.BorderWidth.Horizontal,
-                    Control.BorderWidth.Vertical)*/;
+                    Control.BorderWidth.Vertical);
         }
     }
 }

@@ -61,7 +61,6 @@ namespace PropertyGridSample
                 border.BorderColor = Color.Indigo;
                 border.BackgroundColor = Color.Aquamarine;
                 border.Background = Brushes.BurlyWood;
-                border.DrawDebugPointsAfter = true;
             });
 
             Actions.Add(typeof(Button), (c) =>

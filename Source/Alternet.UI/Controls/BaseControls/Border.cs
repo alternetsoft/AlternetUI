@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using Alternet.Drawing;
 
 namespace Alternet.UI
@@ -9,7 +10,7 @@ namespace Alternet.UI
     public class Border : UserPaintControl
     {
         private static readonly BorderSettings DefaultPens = new();
-        private readonly BorderSettings pens = DefaultPens.Clone();
+        private readonly BorderSettings settings = DefaultPens.Clone();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Border"/> class.
@@ -59,13 +60,13 @@ namespace Alternet.UI
         /// </remarks>
         public Thickness BorderWidth
         {
-            get => pens.Width;
+            get => settings.Width;
             set
             {
                 value.ApplyMin(0);
-                if (pens.Width == value)
+                if (settings.Width == value)
                     return;
-                pens.Width = value;
+                settings.Width = value;
                 UpdatePadding();
                 Refresh();
             }
@@ -74,12 +75,17 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the border width for the <see cref="Border"/> control.
         /// </summary>
+#if DEBUG
+        [Browsable(true)]
+#else
+        [Browsable(false)]
+#endif
         public double? UniformBorderWidth
         {
             get
             {
-                if (pens.Width.IsUniform)
-                    return pens.Width.Left;
+                if (settings.Width.IsUniform)
+                    return settings.Width.Left;
                 else
                     return null;
             }
@@ -120,15 +126,15 @@ namespace Alternet.UI
         {
             get
             {
-                return pens.Color;
+                return settings.Color;
             }
 
             set
             {
                 if (value == null)
-                    pens.Color = DefaultPens.Color;
+                    settings.Color = DefaultPens.Color;
                 else
-                    pens.Color = (Color)value;
+                    settings.Color = (Color)value;
                 Refresh();
             }
         }
@@ -136,13 +142,26 @@ namespace Alternet.UI
         /// <summary>
         /// Gets individual border side settings.
         /// </summary>
-        internal BorderSettings Pens => pens;
+        internal BorderSettings Settings => settings;
+
+        /// <summary>
+        /// Sets colors of the individual border sides.
+        /// </summary>
+        /// <param name="left">Color of the left side.</param>
+        /// <param name="top">Color of the top side.</param>
+        /// <param name="right">Color of the right side.</param>
+        /// <param name="bottom">Color of the bottom side.</param>
+        public void SetColors(Color left, Color top, Color right, Color bottom)
+        {
+            if (settings.SetColors(left, top, right, bottom))
+                Refresh();
+        }
 
         /// <inheritdoc/>
         public override Size GetPreferredSize(Size availableSize)
         {
-            return base.GetPreferredSize(availableSize)/* +
-                new Size(pens.Width.Horizontal, pens.Width.Vertical)*/;
+            return base.GetPreferredSize(availableSize) +
+                new Size(settings.Width.Horizontal, settings.Width.Vertical);
         }
 
         /// <inheritdoc/>
@@ -154,7 +173,7 @@ namespace Alternet.UI
 
         private void UpdatePadding()
         {
-            Thickness result = pens.Width;
+            Thickness result = settings.Width;
             Padding = result;
         }
     }

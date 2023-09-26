@@ -19,6 +19,10 @@ namespace Alternet.UI
         private Pen? topPen;
         private Pen? rightPen;
         private Pen? bottomPen;
+        private Brush? leftBrush;
+        private Brush? topBrush;
+        private Brush? rightBrush;
+        private Brush? bottomBrush;
         private Thickness width = new(1);
         private Color leftColor = DefaultColor;
         private Color topColor = DefaultColor;
@@ -46,18 +50,7 @@ namespace Alternet.UI
 
             set
             {
-                if (leftColor != value)
-                    leftPen = null;
-                if (rightColor != value)
-                    rightPen = null;
-                if (topColor != value)
-                    topPen = null;
-                if (bottomColor != value)
-                    bottomPen = null;
-                leftColor = value;
-                topColor = value;
-                bottomColor = value;
-                rightColor = value;
+                SetColors(value, value, value, value);
             }
         }
 
@@ -94,6 +87,16 @@ namespace Alternet.UI
             }
         }
 
+        public Brush LeftBrush
+        {
+            get
+            {
+                if (leftBrush == null)
+                    leftBrush = new SolidBrush(leftColor);
+                return leftBrush;
+            }
+        }
+
         public Pen TopPen
         {
             get
@@ -101,6 +104,16 @@ namespace Alternet.UI
                 if (topPen == null)
                     topPen = BorderSettings.CreatePen(topColor, width.Top);
                 return topPen;
+            }
+        }
+
+        public Brush TopBrush
+        {
+            get
+            {
+                if (topBrush == null)
+                    topBrush = new SolidBrush(topColor);
+                return topBrush;
             }
         }
 
@@ -114,6 +127,16 @@ namespace Alternet.UI
             }
         }
 
+        public Brush RightBrush
+        {
+            get
+            {
+                if (rightBrush == null)
+                    rightBrush = new SolidBrush(rightColor);
+                return rightBrush;
+            }
+        }
+
         public Pen BottomPen
         {
             get
@@ -124,13 +147,35 @@ namespace Alternet.UI
             }
         }
 
-        public Color LeftColor => leftColor;
+        public Brush BottomBrush
+        {
+            get
+            {
+                if (bottomBrush == null)
+                    bottomBrush = new SolidBrush(bottomColor);
+                return bottomBrush;
+            }
+        }
 
-        public Color TopColor => topColor;
+        public Color LeftColor
+        {
+            get => leftColor;
+        }
 
-        public Color BottomColor => bottomColor;
+        public Color TopColor
+        {
+            get => topColor;
+        }
 
-        public Color RightColor => rightColor;
+        public Color BottomColor
+        {
+            get => bottomColor;
+        }
+
+        public Color RightColor
+        {
+            get => rightColor;
+        }
 
         private bool IsUniformVerticalColor => leftColor == rightColor;
 
@@ -138,6 +183,45 @@ namespace Alternet.UI
 
         private bool IsUniformColor =>
             IsUniformVerticalColor && IsUniformHorizontalColor;
+
+        public bool SetColors(Color left, Color top, Color right, Color bottom)
+        {
+            var result = false;
+
+            if (leftColor != left)
+            {
+                leftPen = null;
+                leftBrush = null;
+                leftColor = left;
+                result = true;
+            }
+
+            if (rightColor != right)
+            {
+                rightPen = null;
+                rightBrush = null;
+                rightColor = right;
+                result = true;
+            }
+
+            if (topColor != top)
+            {
+                topPen = null;
+                topBrush = null;
+                topColor = top;
+                result = true;
+            }
+
+            if (bottomColor != bottom)
+            {
+                bottomPen = null;
+                bottomBrush = null;
+                bottomColor = bottom;
+                result = true;
+            }
+
+            return result;
+        }
 
         public BorderSettings Clone()
         {
