@@ -81,6 +81,16 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="Size"/> struct.
+        /// </summary>
+        /// <param name="widthAndHeight"><see cref="Width"/> and <see cref="Height"/> values.</param>
+        public Size(double widthAndHeight)
+        {
+            this.width = widthAndHeight;
+            this.height = widthAndHeight;
+        }
+
+        /// <summary>
         /// Tests whether this <see cref='Drawing.Size'/> has zero width and height.
         /// </summary>
         [Browsable(false)]
@@ -130,6 +140,16 @@ namespace Alternet.Drawing
         /// a <see cref="Drawing.Size"/>.
         /// </summary>
         public static explicit operator Size(Vector2 vector) => new(vector);
+
+        /// <summary>
+        /// Initializes <see cref="Drawing.Size"/> with equal width and hegiht.
+        /// </summary>
+        public static implicit operator Size(double widthAndHeight) => new(widthAndHeight);
+
+        /// <summary>
+        /// Initializes <see cref="Drawing.Size"/> with equal width and hegiht.
+        /// </summary>
+        public static implicit operator Size(int widthAndHeight) => new(widthAndHeight);
 
         /// <summary>
         /// Performs vector addition of two <see cref='Drawing.Size'/> objects.
