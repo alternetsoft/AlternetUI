@@ -11,5 +11,11 @@ namespace Alternet.UI
     /// </summary>
     public class BaseObject
     {
+        /// <summary>
+        /// Marks object as required.
+        /// </summary>
+        public virtual void Required()
+        {
+        }
     }
 }
