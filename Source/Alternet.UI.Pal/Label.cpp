@@ -37,7 +37,14 @@ namespace Alternet::UI
 		{
 			Create(parent, id, label, pos, size, style, name);
 		}
+
+		void OnEraseBackGround(wxEraseEvent& event) {};
+		DECLARE_EVENT_TABLE()
 	};
+
+	BEGIN_EVENT_TABLE(wxStaticText2, wxStaticText)
+		EVT_ERASE_BACKGROUND(wxStaticText2::OnEraseBackGround)
+		END_EVENT_TABLE()
 
 	wxWindow* Label::CreateWxWindowCore(wxWindow* parent)
 	{

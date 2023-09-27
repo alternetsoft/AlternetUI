@@ -508,7 +508,7 @@ namespace Alternet::UI
     {
         long style = wxCLIP_CHILDREN;
 
-        style = style | wxFULL_REPAINT_ON_RESIZE;
+        // style = style | wxFULL_REPAINT_ON_RESIZE;
 
         if(GetHasSystemMenu())
             style |= wxSYSTEM_MENU;

@@ -67,7 +67,12 @@ namespace Alternet::UI
 		{
 			Create(parent, id, label, url, pos, size, style, name);
 		}
+		void OnEraseBackGround(wxEraseEvent& event) {};
+		DECLARE_EVENT_TABLE()
 	};
+	BEGIN_EVENT_TABLE(wxHyperlinkCtrl2, wxHyperlinkCtrl)
+		EVT_ERASE_BACKGROUND(wxHyperlinkCtrl2::OnEraseBackGround)
+		END_EVENT_TABLE()
 
 	wxWindow* LinkLabel::CreateWxWindowCore(wxWindow* parent)
 	{
