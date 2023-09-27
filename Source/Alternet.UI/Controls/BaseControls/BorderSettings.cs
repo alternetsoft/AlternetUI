@@ -11,234 +11,267 @@ namespace Alternet.UI
     /// <summary>
     /// Specifies <see cref="Border"/> drawing settings.
     /// </summary>
-    internal class BorderSettings
-
+    public class BorderSettings : BaseObject, INotifyPropertyChanged
     {
-        private static readonly Color DefaultColor = Color.Gray;
-        private Pen? leftPen;
-        private Pen? topPen;
-        private Pen? rightPen;
-        private Pen? bottomPen;
-        private Brush? leftBrush;
-        private Brush? topBrush;
-        private Brush? rightBrush;
-        private Brush? bottomBrush;
-        private Thickness width = new(1);
-        private Color leftColor = DefaultColor;
-        private Color topColor = DefaultColor;
-        private Color bottomColor = DefaultColor;
-        private Color rightColor = DefaultColor;
+        internal static readonly BorderSettings Default = new();
+
+        private readonly BorderSideSettings left = new();
+        private readonly BorderSideSettings top = new();
+        private readonly BorderSideSettings right = new();
+        private readonly BorderSideSettings bottom = new();
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BorderSettings"/> class.
+        /// </summary>
+        public BorderSettings()
+        {
+            left.PropertyChanged += Left_PropertyChanged;
+            right.PropertyChanged += Right_PropertyChanged;
+            top.PropertyChanged += Top_PropertyChanged;
+            bottom.PropertyChanged += Bottom_PropertyChanged;
+        }
+
+        /// <summary>
+        /// Occurs when a property value changes.
+        /// </summary>
+        public event PropertyChangedEventHandler? PropertyChanged;
 
         /// <summary>
         /// Gets whether all sides have same color and width.
         /// </summary>
         [Browsable(false)]
-        public bool IsUniform => IsUniformColor && width.IsUniform;
+        public bool IsUniform => IsUniformColor && Width.IsUniform;
+
+        /// <summary>
+        /// Gets settings for the left edge of the border.
+        /// </summary>
+        public BorderSideSettings Left => left;
+
+        /// <summary>
+        /// Gets settings for the top edge of the border.
+        /// </summary>
+        public BorderSideSettings Top => top;
+
+        /// <summary>
+        /// Gets settings for the right edge of the border.
+        /// </summary>
+        public BorderSideSettings Right => right;
+
+        /// <summary>
+        /// Gets settings for the bottom edge of the border.
+        /// </summary>
+        public BorderSideSettings Bottom => bottom;
 
         /// <summary>
         /// Gets or sets uniform color of the border lines.
         /// </summary>
         [Browsable(false)]
-        public Color Color
+        public Color? Color
         {
             get
             {
                 if (IsUniformColor)
-                    return topColor;
-                return Color.Empty;
+                    return top.Color;
+                return null;
             }
 
             set
             {
-                SetColors(value, value, value, value);
+                value ??= Default.Color ?? BorderSideSettings.DefaultColor;
+                SetColors(value.Value, value.Value, value.Value, value.Value);
             }
         }
 
+        /// <summary>
+        /// Gets or sets the border widths.
+        /// </summary>
+        /// <remarks>
+        /// You can specify different widths for the left, top, bottom and right
+        /// edges of the border.
+        /// </remarks>
         public Thickness Width
         {
             get
             {
-                return width;
+                return new Thickness(left.Width, top.Width, right.Width, bottom.Width);
             }
 
             set
             {
-                if (width == value)
-                    return;
-                if (width.Left != value.Left)
-                    leftPen = null;
-                if (width.Right != value.Right)
-                    rightPen = null;
-                if (width.Top != value.Top)
-                    topPen = null;
-                if (width.Bottom != value.Bottom)
-                    bottomPen = null;
-                width = value;
+                value.ApplyMin(0);
+                left.Width = value.Left;
+                right.Width = value.Right;
+                top.Width = value.Top;
+                bottom.Width = value.Bottom;
             }
         }
 
-        public Pen LeftPen
-        {
-            get
-            {
-                if (leftPen == null)
-                    leftPen = BorderSettings.CreatePen(leftColor, width.Left);
-                return leftPen;
-            }
-        }
+        /// <summary>
+        /// Gets whether colors of the left and right edges of the border are equal.
+        /// </summary>
+        public bool IsUniformVerticalColor => left.Color == right.Color;
 
-        public Brush LeftBrush
-        {
-            get
-            {
-                if (leftBrush == null)
-                    leftBrush = new SolidBrush(leftColor);
-                return leftBrush;
-            }
-        }
+        /// <summary>
+        /// Gets whether colors of the top and bottom edges of the border are equal.
+        /// </summary>
+        private bool IsUniformHorizontalColor => top.Color == bottom.Color;
 
-        public Pen TopPen
-        {
-            get
-            {
-                if (topPen == null)
-                    topPen = BorderSettings.CreatePen(topColor, width.Top);
-                return topPen;
-            }
-        }
-
-        public Brush TopBrush
-        {
-            get
-            {
-                if (topBrush == null)
-                    topBrush = new SolidBrush(topColor);
-                return topBrush;
-            }
-        }
-
-        public Pen RightPen
-        {
-            get
-            {
-                if (rightPen == null)
-                    rightPen = BorderSettings.CreatePen(rightColor, width.Right);
-                return rightPen;
-            }
-        }
-
-        public Brush RightBrush
-        {
-            get
-            {
-                if (rightBrush == null)
-                    rightBrush = new SolidBrush(rightColor);
-                return rightBrush;
-            }
-        }
-
-        public Pen BottomPen
-        {
-            get
-            {
-                if (bottomPen == null)
-                    bottomPen = BorderSettings.CreatePen(bottomColor, width.Bottom);
-                return bottomPen;
-            }
-        }
-
-        public Brush BottomBrush
-        {
-            get
-            {
-                if (bottomBrush == null)
-                    bottomBrush = new SolidBrush(bottomColor);
-                return bottomBrush;
-            }
-        }
-
-        public Color LeftColor
-        {
-            get => leftColor;
-        }
-
-        public Color TopColor
-        {
-            get => topColor;
-        }
-
-        public Color BottomColor
-        {
-            get => bottomColor;
-        }
-
-        public Color RightColor
-        {
-            get => rightColor;
-        }
-
-        private bool IsUniformVerticalColor => leftColor == rightColor;
-
-        private bool IsUniformHorizontalColor => topColor == bottomColor;
-
+        /// <summary>
+        /// Gets whether colors of the vertical and horizontal edges of the border are equal.
+        /// </summary>
         private bool IsUniformColor =>
             IsUniformVerticalColor && IsUniformHorizontalColor;
 
-        public bool SetColors(Color left, Color top, Color right, Color bottom)
+        /// <summary>
+        /// Gets rectangle of the top border edge.
+        /// </summary>
+        /// <param name="rect">Border rectangle.</param>
+        public Rect GetTopRectangle(Rect rect)
+        {
+            var point = rect.TopLeft;
+            var size = new Size(rect.Width, Top.Width);
+            return new Rect(point, size);
+        }
+
+        /// <summary>
+        /// Gets rectangle of the bottom border edge.
+        /// </summary>
+        /// <param name="rect">Border rectangle.</param>
+        public Rect GetBottomRectangle(Rect rect)
+        {
+            var point = new Point(rect.Left, rect.Bottom - Bottom.Width);
+            var size = new Size(rect.Width, Bottom.Width);
+            return new Rect(point, size);
+        }
+
+        /// <summary>
+        /// Gets rectangle of the left border edge.
+        /// </summary>
+        /// <param name="rect">Border rectangle.</param>
+        public Rect GetLeftRectangle(Rect rect)
+        {
+            var point = rect.TopLeft;
+            var size = new Size(Left.Width, rect.Height);
+            return new Rect(point, size);
+        }
+
+        /// <summary>
+        /// Gets rectangle of the right border edge.
+        /// </summary>
+        /// <param name="rect">Border rectangle.</param>
+        public Rect GetRightRectangle(Rect rect)
+        {
+            var point = new Point(rect.Right - Right.Width, rect.Top);
+            var size = new Size(Right.Width, rect.Height);
+            return new Rect(point, size);
+        }
+
+        /// <summary>
+        /// Draws border in the specified rectangle of the drawing context.
+        /// </summary>
+        /// <param name="dc">Drawing context.</param>
+        /// <param name="rect">Rectangle.</param>
+        public void Draw(DrawingContext dc, Rect rect)
+        {
+            if (Top.Width > 0)
+            {
+                dc.FillRectangle(Top.Brush, GetTopRectangle(rect));
+            }
+
+            if (Bottom.Width > 0)
+            {
+                dc.FillRectangle(Bottom.Brush, GetBottomRectangle(rect));
+            }
+
+            if (Left.Width > 0)
+            {
+                dc.FillRectangle(Left.Brush, GetLeftRectangle(rect));
+            }
+
+            if (Right.Width > 0)
+            {
+                dc.FillRectangle(Right.Brush, GetRightRectangle(rect));
+            }
+        }
+
+        /// <summary>
+        /// Sets colors of the individual border edges.
+        /// </summary>
+        /// <param name="leftColor">Color of the left edge.</param>
+        /// <param name="topColor">Color of the top edge.</param>
+        /// <param name="rightColor">Color of the right edge.</param>
+        /// <param name="bottomColor">Color of the bottom edge.</param>
+        public bool SetColors(Color leftColor, Color topColor, Color rightColor, Color bottomColor)
         {
             var result = false;
 
-            if (leftColor != left)
+            if (left.Color != leftColor)
             {
-                leftPen = null;
-                leftBrush = null;
-                leftColor = left;
+                left.Color = leftColor;
                 result = true;
             }
 
-            if (rightColor != right)
+            if (right.Color != rightColor)
             {
-                rightPen = null;
-                rightBrush = null;
-                rightColor = right;
+                right.Color = rightColor;
                 result = true;
             }
 
-            if (topColor != top)
+            if (top.Color != topColor)
             {
-                topPen = null;
-                topBrush = null;
-                topColor = top;
+                top.Color = topColor;
                 result = true;
             }
 
-            if (bottomColor != bottom)
+            if (bottom.Color != bottomColor)
             {
-                bottomPen = null;
-                bottomBrush = null;
-                bottomColor = bottom;
+                bottom.Color = bottomColor;
                 result = true;
             }
 
             return result;
         }
 
+        /// <summary>
+        /// Creates clone of the <see cref="BorderSettings"/>
+        /// </summary>
         public BorderSettings Clone()
         {
-            BorderSettings result = new()
-            {
-                width = width,
-                leftColor = leftColor,
-                topColor = topColor,
-                bottomColor = bottomColor,
-                rightColor = rightColor,
-            };
+            BorderSettings result = new();
+            result.Assign(this);
             return result;
         }
 
-        private static Pen CreatePen(Color color, double width)
+        /// <summary>
+        /// Assign properties from another object.
+        /// </summary>
+        /// <param name="value">Source of the properties to assign.</param>
+        public void Assign(BorderSettings value)
         {
-            return new Pen(color, Math.Max(1, width));
+            left.Assign(value.left);
+            right.Assign(value.right);
+            top.Assign(value.top);
+            bottom.Assign(value.bottom);
+        }
+
+        private void Left_PropertyChanged(object? sender, PropertyChangedEventArgs e)
+        {
+            PropertyChanged?.Invoke(this, new(nameof(Left)));
+        }
+
+        private void Right_PropertyChanged(object? sender, PropertyChangedEventArgs e)
+        {
+            PropertyChanged?.Invoke(this, new(nameof(Right)));
+        }
+
+        private void Top_PropertyChanged(object? sender, PropertyChangedEventArgs e)
+        {
+            PropertyChanged?.Invoke(this, new(nameof(Top)));
+        }
+
+        private void Bottom_PropertyChanged(object? sender, PropertyChangedEventArgs e)
+        {
+            PropertyChanged?.Invoke(this, new(nameof(Bottom)));
         }
     }
 }

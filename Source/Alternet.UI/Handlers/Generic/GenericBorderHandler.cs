@@ -36,33 +36,7 @@ namespace Alternet.UI
             if (Control.DrawDebugPointsBefore)
                 drawingContext.DrawDebugPoints(r, Pens.Yellow);
 
-            if (settings.Width.Top > 0)
-            {
-                var topRectangle = new Rect(r.TopLeft, new Size(r.Width, settings.Width.Top));
-                drawingContext.FillRectangle(settings.TopBrush, topRectangle);
-            }
-
-            if (settings.Width.Bottom > 0)
-            {
-                var bottomRectangle = new Rect(
-                    new Point(r.Left, r.Bottom - settings.Width.Bottom),
-                    new Size(r.Width, settings.Width.Bottom));
-                drawingContext.FillRectangle(settings.BottomBrush, bottomRectangle);
-            }
-
-            if (settings.Width.Left > 0)
-            {
-                var leftRectangle = new Rect(r.TopLeft, new Size(settings.Width.Left, r.Height));
-                drawingContext.FillRectangle(settings.LeftBrush, leftRectangle);
-            }
-
-            if (settings.Width.Right > 0)
-            {
-                var rightRectangle = new Rect(
-                    new Point(r.Right - settings.Width.Right, r.Top),
-                    new Size(settings.Width.Right, r.Height));
-                drawingContext.FillRectangle(settings.RightBrush, rightRectangle);
-            }
+            settings.Draw(drawingContext, r);
 
             if(Control.DrawDebugPointsAfter)
                 drawingContext.DrawDebugPoints(r);
