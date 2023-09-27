@@ -1,7 +1,7 @@
 <Window xmlns="http://schemas.alternetsoft.com/ui/2021"
         xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
         x:Class="DragAndDropSample.MainWindow"
-        Title="Drag and Drop Sample" StartLocation="CenterScreen">
+        Title="Alternet.UI Drag and Drop Sample" StartLocation="CenterScreen">
   <Control Padding="10">
   <Grid>
     <Grid.RowDefinitions>
@@ -17,14 +17,14 @@
           <Button Text="Paste" Name="pasteButton" Click="PasteButton_Click" Margin="0,5,0,5" />
         </StackPanel>
       </GroupBox>
-      <Border Width="100" Height="100"  VerticalAlignment="Top" Margin="10"
+      <Border SuggestedWidth="100" SuggestedHeight="100"  VerticalAlignment="Top" Margin="10"
               AllowDrop="True" Name="dragSource"
               MouseDown="DragSource_MouseDown"
               MouseMove="DragSource_MouseMove"
               MouseUp="DragSource_MouseUp">
         <Label Text="Drag Me" VerticalAlignment="Center" HorizontalAlignment="Center"/>
       </Border>
-      <Border Width="100" Height="100"  VerticalAlignment="Top" Margin="10"
+      <Border SuggestedWidth="100" SuggestedHeight="100"  VerticalAlignment="Top" Margin="10"
               AllowDrop="True" Name="dropTarget"
               DragDrop="DropTarget_DragDrop"
               DragOver="DropTarget_DragOver"

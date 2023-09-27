@@ -38,7 +38,7 @@
 			<CheckBox Text="Extended 2" Name="x2ButtonDownCheckBox" Enabled="false" Margin="5,0,0,0"/>
 		</StackPanel>
 
-		<ListBox Name="lb" Height="200" Margin="5"/>
+		<ListBox Name="lb" SuggestedHeight="200" Margin="5"/>
         
         <Label Name="mousePositionLabel" Margin="10" />
 	</StackPanel>

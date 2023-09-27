@@ -1,7 +1,7 @@
 <Window xmlns="http://schemas.alternetsoft.com/ui/2021"
         xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
         x:Class="CommonDialogsSample.MainWindow"
-        Title="Common Dialogs Sample"
+        Title="Alternet.UI Common Dialogs Sample"
         Width="850" Height="550" StartLocation="CenterScreen">
   <Window.StatusBar>
     <StatusBar Name="statusBar">

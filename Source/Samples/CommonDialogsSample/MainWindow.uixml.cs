@@ -22,7 +22,6 @@ namespace CommonDialogsSample
             InitEnumComboBox<MessageBoxIcon>(messageBoxIconComboBox);
             InitEnumComboBox<TestExceptionType>(exceptionTypeComboBox);
             this.ResumeLayout();
-
         }
 
         enum TestExceptionType
@@ -153,7 +152,9 @@ namespace CommonDialogsSample
         {
             if (System.Diagnostics.Debugger.IsAttached)
             {
-                MessageBox.Show("Run this application without debugging to see the thread exception window.", "Common Dialogs Sample");
+                MessageBox.Show(
+                    "Run this application without debugging to see the thread exception window.",
+                    "Common Dialogs Sample");
                 return;
             }
 
@@ -208,12 +209,10 @@ namespace CommonDialogsSample
         {
             ResultMessage = "";
 
-            var dialog = new ColorDialog();
-
-            if(sampleLabel.Background is SolidBrush solidBrush)
+            var dialog = new ColorDialog
             {
-                dialog.Color = solidBrush.Color;
-            }
+                Color = sampleLabel.RealBackgroundColor ?? SystemColors.Window
+            };
 
             if (setCustomTitleCheckBox.IsChecked)
                 dialog.Title = CustomTitle;
@@ -224,10 +223,13 @@ namespace CommonDialogsSample
             {
                 ResultMessage =
                     "Color Dialog Result: Accepted, Color = " + dialog.Color;
-                sampleLabel.Background = new SolidBrush(dialog.Color);
+                sampleLabel.BackgroundColor = dialog.Color;
             }
             else
+            {
                 ResultMessage = "Color Dialog Result: " + result.ToString();
+                sampleLabel.BackgroundColor = null;
+            }
         }
     }
 }

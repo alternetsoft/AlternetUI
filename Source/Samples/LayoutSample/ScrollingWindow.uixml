@@ -15,7 +15,7 @@
     </Grid.ColumnDefinitions>
     <GroupBox Title="StackPanel" Padding="10" Grid.Row="0" Grid.Column="0">
       <StackPanel Orientation="Horizontal">
-        <Border Width="200" Height="200" VerticalAlignment="Top" HorizontalAlignment="Left">
+        <Border SuggestedWidth="200" SuggestedHeight="200" VerticalAlignment="Top" HorizontalAlignment="Left">
           <ScrollViewer>
             <StackPanel Name="stackPanel" Orientation="Vertical">
             </StackPanel>
@@ -34,18 +34,24 @@
             <ColumnDefinition Width="*" />
           </Grid.ColumnDefinitions>
 
-          <Label Text="Orientation:" Margin="0,0,5,0" VerticalAlignment="Center" Grid.Column="0" Grid.Row="0" />
-          <ComboBox Name="orientationComboBox" VerticalAlignment="Center" Margin="0,0,0,5" IsEditable="false"
+          <Label Text="Orientation:" Margin="0,0,5,0" VerticalAlignment="Center"
+                 Grid.Column="0" Grid.Row="0" />
+          <ComboBox Name="orientationComboBox" VerticalAlignment="Center" Margin="0,0,0,5"
+                    IsEditable="false"
                     SelectedItemChanged="OrientationComboBox_SelectedItemChanged"
                     Grid.Column="1" Grid.Row="0" />
 
-          <Label Text="Vertical Alignment:" Margin="0,0,5,0" VerticalAlignment="Center" Grid.Column="0" Grid.Row="1" />
-          <ComboBox Name="stackPanelVerticalAlignmentComboBox" VerticalAlignment="Center" Margin="0,0,0,5" IsEditable="false"
+          <Label Text="Vertical Alignment:" Margin="0,0,5,0" VerticalAlignment="Center"
+                 Grid.Column="0" Grid.Row="1" />
+          <ComboBox Name="stackPanelVerticalAlignmentComboBox" VerticalAlignment="Center"
+                    Margin="0,0,0,5" IsEditable="false"
                     SelectedItemChanged="StackPanelVerticalAlignmentComboBox_SelectedItemChanged"
                     Grid.Column="1" Grid.Row="1" />
 
-          <Label Text="Horizontal Alignment:" Margin="0,0,5,0" VerticalAlignment="Center" Grid.Column="0" Grid.Row="2" />
-          <ComboBox Name="stackPanelHorizontalAlignmentComboBox" VerticalAlignment="Center" Margin="0,0,0,5" IsEditable="false"
+          <Label Text="Horizontal Alignment:" Margin="0,0,5,0" VerticalAlignment="Center"
+                 Grid.Column="0" Grid.Row="2" />
+          <ComboBox Name="stackPanelHorizontalAlignmentComboBox" VerticalAlignment="Center"
+                    Margin="0,0,0,5" IsEditable="false"
                     SelectedItemChanged="StackPanelHorizontalAlignmentComboBox_SelectedItemChanged"
                     Grid.Column="1" Grid.Row="2" />
 
@@ -62,7 +68,8 @@
 
     <GroupBox Title="Grid" Padding="10" Grid.Row="1" Grid.Column="0">
       <StackPanel Orientation="Horizontal">
-        <Border Width="200" Height="200" VerticalAlignment="Top" HorizontalAlignment="Left">
+        <Border SuggestedWidth="200" SuggestedHeight="200" VerticalAlignment="Top"
+                HorizontalAlignment="Left">
           <ScrollViewer>
             <Grid Name="grid">
             </Grid>
@@ -82,13 +89,17 @@
             <ColumnDefinition Width="*" />
           </Grid.ColumnDefinitions>
 
-          <Label Text="Vertical Alignment:" Margin="0,0,5,0" VerticalAlignment="Center" Grid.Column="0" Grid.Row="0" />
-          <ComboBox Name="gridVerticalAlignmentComboBox" VerticalAlignment="Center" Margin="0,0,0,5" IsEditable="false"
+          <Label Text="Vertical Alignment:" Margin="0,0,5,0" VerticalAlignment="Center"
+                 Grid.Column="0" Grid.Row="0" />
+          <ComboBox Name="gridVerticalAlignmentComboBox" VerticalAlignment="Center"
+                    Margin="0,0,0,5" IsEditable="false"
                     SelectedItemChanged="GridVerticalAlignmentComboBox_SelectedItemChanged"
                     Grid.Column="1" Grid.Row="0" />
 
-          <Label Text="Horizontal Alignment:" Margin="0,0,5,0" VerticalAlignment="Center" Grid.Column="0" Grid.Row="1" />
-          <ComboBox Name="gridHorizontalAlignmentComboBox" VerticalAlignment="Center" Margin="0,0,0,5" IsEditable="false"
+          <Label Text="Horizontal Alignment:" Margin="0,0,5,0" VerticalAlignment="Center"
+                 Grid.Column="0" Grid.Row="1" />
+          <ComboBox Name="gridHorizontalAlignmentComboBox" VerticalAlignment="Center"
+                    Margin="0,0,0,5" IsEditable="false"
                     SelectedItemChanged="GridHorizontalAlignmentComboBox_SelectedItemChanged"
                     Grid.Column="1" Grid.Row="1" />
 
@@ -114,7 +125,7 @@
     <GroupBox Title="Drawing" Padding="10" Grid.Row="0" Grid.Column="1" Margin="10,0,0,0">
       <StackPanel Orientation="Vertical">
         <Border VerticalAlignment="Top" HorizontalAlignment="Left">
-          <ScrollViewer Width="200" Height="200" Name="imageScrollViewer">
+          <ScrollViewer SuggestedWidth="200" SuggestedHeight="200" Name="imageScrollViewer">
           </ScrollViewer>
         </Border>
         <Grid Margin="0,10,0,0">
@@ -123,7 +134,8 @@
             <ColumnDefinition Width="*" />
           </Grid.ColumnDefinitions>
           <Label Text="Zoom:" Margin="0,0,5,0" VerticalAlignment="Center"/>
-          <Slider Name="zoomSlider" ValueChanged="ZoomSlider_ValueChanged" Minimum="1" Value="2" Maximum="10" Grid.Column="1"/>
+          <Slider Name="zoomSlider" ValueChanged="ZoomSlider_ValueChanged" Minimum="1"
+                  Value="2" Maximum="10" Grid.Column="1"/>
         </Grid>
       </StackPanel>
     </GroupBox>
