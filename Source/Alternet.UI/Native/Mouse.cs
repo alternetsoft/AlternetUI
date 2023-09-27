@@ -43,13 +43,12 @@ namespace Alternet.UI.Native
             if (!eventCallbackGCHandle.IsAllocated)
             {
                 var sink = new NativeApi.MouseEventCallbackType((obj, e, parameter) =>
-                UI.Application.HandleThreadExceptions(() =>
                 {
                     var w = NativeObject.GetFromNativePointer<Mouse>(obj, p => new Mouse(p));
                     if (w == null) return IntPtr.Zero;
                     return w.OnEvent(e, parameter);
                 }
-                ));
+                );
                 eventCallbackGCHandle = GCHandle.Alloc(sink);
                 NativeApi.Mouse_SetEventCallback_(sink);
             }

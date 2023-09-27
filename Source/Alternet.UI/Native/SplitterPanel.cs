@@ -268,13 +268,12 @@ namespace Alternet.UI.Native
             if (!eventCallbackGCHandle.IsAllocated)
             {
                 var sink = new NativeApi.SplitterPanelEventCallbackType((obj, e, parameter) =>
-                UI.Application.HandleThreadExceptions(() =>
                 {
                     var w = NativeObject.GetFromNativePointer<SplitterPanel>(obj, p => new SplitterPanel(p));
                     if (w == null) return IntPtr.Zero;
                     return w.OnEvent(e, parameter);
                 }
-                ));
+                );
                 eventCallbackGCHandle = GCHandle.Alloc(sink);
                 NativeApi.SplitterPanel_SetEventCallback_(sink);
             }

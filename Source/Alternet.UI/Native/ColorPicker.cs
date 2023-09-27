@@ -46,13 +46,12 @@ namespace Alternet.UI.Native
             if (!eventCallbackGCHandle.IsAllocated)
             {
                 var sink = new NativeApi.ColorPickerEventCallbackType((obj, e, parameter) =>
-                UI.Application.HandleThreadExceptions(() =>
                 {
                     var w = NativeObject.GetFromNativePointer<ColorPicker>(obj, p => new ColorPicker(p));
                     if (w == null) return IntPtr.Zero;
                     return w.OnEvent(e, parameter);
                 }
-                ));
+                );
                 eventCallbackGCHandle = GCHandle.Alloc(sink);
                 NativeApi.ColorPicker_SetEventCallback_(sink);
             }

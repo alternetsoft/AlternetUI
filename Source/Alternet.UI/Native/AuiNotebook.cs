@@ -239,13 +239,12 @@ namespace Alternet.UI.Native
             if (!eventCallbackGCHandle.IsAllocated)
             {
                 var sink = new NativeApi.AuiNotebookEventCallbackType((obj, e, parameter) =>
-                UI.Application.HandleThreadExceptions(() =>
                 {
                     var w = NativeObject.GetFromNativePointer<AuiNotebook>(obj, p => new AuiNotebook(p));
                     if (w == null) return IntPtr.Zero;
                     return w.OnEvent(e, parameter);
                 }
-                ));
+                );
                 eventCallbackGCHandle = GCHandle.Alloc(sink);
                 NativeApi.AuiNotebook_SetEventCallback_(sink);
             }

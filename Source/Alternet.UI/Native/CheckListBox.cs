@@ -75,13 +75,12 @@ namespace Alternet.UI.Native
             if (!eventCallbackGCHandle.IsAllocated)
             {
                 var sink = new NativeApi.CheckListBoxEventCallbackType((obj, e, parameter) =>
-                UI.Application.HandleThreadExceptions(() =>
                 {
                     var w = NativeObject.GetFromNativePointer<CheckListBox>(obj, p => new CheckListBox(p));
                     if (w == null) return IntPtr.Zero;
                     return w.OnEvent(e, parameter);
                 }
-                ));
+                );
                 eventCallbackGCHandle = GCHandle.Alloc(sink);
                 NativeApi.CheckListBox_SetEventCallback_(sink);
             }
