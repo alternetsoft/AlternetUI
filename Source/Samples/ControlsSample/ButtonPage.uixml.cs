@@ -30,7 +30,7 @@ namespace ControlsSample
             imageAlignComboBox.Items.AddRange(ValidAlign);
             imageAlignComboBox.SelectedIndex = imageAlignComboBox.FindStringExact("Default");
 
-            if (Application.IsMacOs)
+            if (!Button.ImagesEnabled)
             {
                 imageAlignComboBox.Enabled = false;
                 imageCheckBox.Enabled = false;
@@ -56,22 +56,22 @@ namespace ControlsSample
             {
                 site = value;
 
-            ApplyAll();
+                ApplyAll();
 
-            comboBoxFontName.SelectedItemChanged += Button_Changed;
-            comboBoxFontSize.SelectedItemChanged += Button_Changed;
-            comboBoxTextColor.SelectedItemChanged += Button_Changed;
-            comboBoxBackColor.SelectedItemChanged += Button_Changed;
-            textAlignComboBox.SelectedItemChanged += Button_Changed;
-            imageAlignComboBox.SelectedItemChanged += Button_Changed;
-            disabledCheckBox.CheckedChanged += Button_Changed;
-            imageCheckBox.CheckedChanged += Button_Changed;
-            defaultCheckBox.CheckedChanged += Button_Changed;
-            boldCheckBox.CheckedChanged += Button_Changed;
-            hasBorderCheckBox.CheckedChanged += Button_Changed;
-            tabStopCheckBox.CheckedChanged += Button_Changed;
-            showTextCheckBox.CheckedChanged += Button_Changed;
-            exactFitCheckBox.CheckedChanged += Button_Changed;
+                comboBoxFontName.SelectedItemChanged += Button_Changed;
+                comboBoxFontSize.SelectedItemChanged += Button_Changed;
+                comboBoxTextColor.SelectedItemChanged += Button_Changed;
+                comboBoxBackColor.SelectedItemChanged += Button_Changed;
+                textAlignComboBox.SelectedItemChanged += Button_Changed;
+                imageAlignComboBox.SelectedItemChanged += Button_Changed;
+                disabledCheckBox.CheckedChanged += Button_Changed;
+                imageCheckBox.CheckedChanged += Button_Changed;
+                defaultCheckBox.CheckedChanged += Button_Changed;
+                boldCheckBox.CheckedChanged += Button_Changed;
+                hasBorderCheckBox.CheckedChanged += Button_Changed;
+                tabStopCheckBox.CheckedChanged += Button_Changed;
+                showTextCheckBox.CheckedChanged += Button_Changed;
+                exactFitCheckBox.CheckedChanged += Button_Changed;
             }
         }
 
@@ -136,8 +136,8 @@ namespace ControlsSample
                 button.TabStop = tabStopCheckBox.IsChecked;
                 button.HasBorder = hasBorderCheckBox.IsChecked;
                 button.TextVisible = showTextCheckBox.IsChecked;
-                ApplyImageAlign();
                 ApplyTextAlign();
+                ApplyImageAlign();
                 button.Enabled = !disabledCheckBox.IsChecked;
                 button.IsDefault = defaultCheckBox.IsChecked;
                 button.Text = textTextBox.Text;
@@ -162,7 +162,7 @@ namespace ControlsSample
 
             var text = control?.SelectedItem?.ToString();
 
-            if(string.IsNullOrWhiteSpace(text) || text == "Default" || StringUtils.IsHexNumber(text))
+            if (string.IsNullOrWhiteSpace(text) || text == "Default" || StringUtils.IsHexNumber(text))
                 return null;
             else
             {
