@@ -399,9 +399,14 @@ namespace Alternet::UI
 
             if (result != 0)
                 event.Veto();
-        } else
+            else
+                event.Skip();
+        }
+        else
+        {
+            event.Skip();
             RaiseEvent(eventId, &data);
-
+        }
     }
     
     void WebBrowser::RaiseSimpleEvent(WebBrowserEvent eventId, bool canVeto)

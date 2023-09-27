@@ -132,6 +132,7 @@ namespace Alternet::UI
 
     void Toolbar::OnToolbarCommand(wxCommandEvent& event)
     {
+        event.Skip();
         auto item = ToolbarItem::GetToolbarItemById(event.GetId());
         if (item != nullptr)
         {

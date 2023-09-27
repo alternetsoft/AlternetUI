@@ -96,8 +96,10 @@ namespace Alternet::UI
         {
             auto minMargins = GetMinMargins();
 
-            data.SetMinMarginTopLeft(wxPoint(fromDip(minMargins.Left, nullptr), fromDip(minMargins.Top, nullptr)));
-            data.SetMinMarginBottomRight(wxPoint(fromDip(minMargins.Right, nullptr), fromDip(minMargins.Bottom, nullptr)));
+            data.SetMinMarginTopLeft(wxPoint(fromDip(minMargins.Left, nullptr),
+                fromDip(minMargins.Top, nullptr)));
+            data.SetMinMarginBottomRight(wxPoint(fromDip(minMargins.Right, nullptr),
+                fromDip(minMargins.Bottom, nullptr)));
         }
 
         data.EnableMargins(_allowMargins);

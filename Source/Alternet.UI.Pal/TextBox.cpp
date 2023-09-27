@@ -187,11 +187,13 @@ namespace Alternet::UI
 
     void TextBox::OnTextEnter(wxCommandEvent& event)
     {
+        event.Skip();
         RaiseEvent(TextBoxEvent::TextEnter);
     }
 
     void TextBox::OnTextUrl(wxTextUrlEvent& event)
     {
+        event.Skip();
         const wxMouseEvent& ev = event.GetMouseEvent();
 
         // filter out mouse moves, too many of them
@@ -219,11 +221,13 @@ namespace Alternet::UI
 
     void TextBox::OnTextMaxLength(wxCommandEvent& event)
     {
+        event.Skip();
         RaiseEvent(TextBoxEvent::TextMaxLength);
     }
 
     void TextBox::OnTextChanged(wxCommandEvent& event)
     {
+        event.Skip();
         RaiseEvent(TextBoxEvent::TextChanged);
     }
 

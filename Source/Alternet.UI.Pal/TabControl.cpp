@@ -112,6 +112,7 @@ namespace Alternet::UI
 
     void TabControl::OnSelectedPageChanged(wxBookCtrlEvent& event)
     {
+        event.Skip();
         RaiseEvent(TabControlEvent::SelectedPageIndexChanged);
     }
 
@@ -125,6 +126,8 @@ namespace Alternet::UI
         TabPageSelectionEventData data{ event.GetOldSelection(), event.GetSelection() };
         if (RaiseEventWithPointerResult(TabControlEvent::SelectedPageIndexChanging, &data) != 0)
             event.Veto();
+        else
+            event.Skip();
     }
 
     wxNotebook* TabControl::GetNotebook()

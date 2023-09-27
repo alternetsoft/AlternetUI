@@ -88,8 +88,6 @@ namespace Alternet::UI
         _hasMorePages = value;
     }
 
-    // =========================================================
-
     PrintDocument::PrintDocument()
     {
     }
@@ -147,7 +145,8 @@ namespace Alternet::UI
     void PrintDocument::Print()
     {
         if (_printout != nullptr)
-            throwExInvalidOpWithInfo(u"Another printing operation for this PrintDocument is in progress.");
+            throwExInvalidOpWithInfo(
+                u"Another printing operation for this PrintDocument is in progress.");
 
         _printout = dynamic_cast<Printout*>(CreatePrintout());
 
@@ -279,7 +278,8 @@ namespace Alternet::UI
         auto margins = pageSettings->GetMargins();
 
         data.SetMarginTopLeft(wxPoint(fromDip(margins.Left, nullptr), fromDip(margins.Top, nullptr)));
-        data.SetMarginBottomRight(wxPoint(fromDip(margins.Right, nullptr), fromDip(margins.Bottom, nullptr)));
+        data.SetMarginBottomRight(wxPoint(fromDip(margins.Right, nullptr),
+            fromDip(margins.Bottom, nullptr)));
 
         return data;
     }
@@ -319,7 +319,8 @@ namespace Alternet::UI
 
         data.SetDuplex(GetWxDuplexMode(printerSettings->GetDuplex()));
         data.SetColour(pageSettings->GetColor());
-        data.SetOrientation(pageSettings->GetLandscape() ? wxPrintOrientation::wxLANDSCAPE : wxPrintOrientation::wxPORTRAIT);
+        data.SetOrientation(pageSettings->GetLandscape()
+            ? wxPrintOrientation::wxLANDSCAPE : wxPrintOrientation::wxPORTRAIT);
         
         if (pageSettings->GetUseCustomPaperSize())
         {
@@ -467,8 +468,10 @@ namespace Alternet::UI
         auto printerSettings = GetPrinterSettingsCore();
         auto pageSettings = GetPageSettingsCore();
 
-        printerSettings->SetPrinterName(data.GetPrinterName() == "" ? nullopt : optional<string>(wxStr(data.GetPrinterName())));
-        printerSettings->SetPrintFileName(data.GetFilename() == "" ? nullopt : optional<string>(wxStr(data.GetFilename())));
+        printerSettings->SetPrinterName(data.GetPrinterName() == ""
+            ? nullopt : optional<string>(wxStr(data.GetPrinterName())));
+        printerSettings->SetPrintFileName(data.GetFilename() == ""
+            ? nullopt : optional<string>(wxStr(data.GetFilename())));
         printerSettings->SetDuplex(GetDuplexMode(data.GetDuplex()));
         pageSettings->SetColor(data.GetColour());
         pageSettings->SetLandscape(data.GetOrientation() == wxPrintOrientation::wxLANDSCAPE);

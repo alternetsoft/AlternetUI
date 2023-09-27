@@ -48,11 +48,13 @@ namespace Alternet::UI
 
     void NotifyIcon::OnLeftMouseButtonUp(wxTaskBarIconEvent& event)
     {
+        event.Skip();
         RaiseEvent(NotifyIconEvent::Click);
     }
 
     void NotifyIcon::OnLeftMouseButtonDoubleClick(wxTaskBarIconEvent& event)
     {
+        event.Skip();
         RaiseEvent(NotifyIconEvent::DoubleClick);
     }
 

@@ -4,13 +4,19 @@ namespace Alternet::UI
 {
     Slider::Slider():
         _value(*this, 0, &Control::IsWxWindowCreated, &Slider::RetrieveValue, &Slider::ApplyValue),
-        _maximum(*this, 10, &Control::IsWxWindowCreated, &Slider::RetrieveMaximum, &Slider::ApplyMaximum),
-        _minimum(*this, 0, &Control::IsWxWindowCreated, &Slider::RetrieveMinimum, &Slider::ApplyMinimum),
-        _smallChange(*this, 1, &Control::IsWxWindowCreated, &Slider::RetrieveSmallChange, &Slider::ApplySmallChange),
-        _largeChange(*this, 5, &Control::IsWxWindowCreated, &Slider::RetrieveLargeChange, &Slider::ApplyLargeChange),
-        _tickFrequency(*this, 1, &Control::IsWxWindowCreated, &Slider::RetrieveTickFrequency, &Slider::ApplyTickFrequency)
+        _maximum(*this, 10, &Control::IsWxWindowCreated, &Slider::RetrieveMaximum,
+            &Slider::ApplyMaximum),
+        _minimum(*this, 0, &Control::IsWxWindowCreated, &Slider::RetrieveMinimum,
+            &Slider::ApplyMinimum),
+        _smallChange(*this, 1, &Control::IsWxWindowCreated, &Slider::RetrieveSmallChange,
+            &Slider::ApplySmallChange),
+        _largeChange(*this, 5, &Control::IsWxWindowCreated, &Slider::RetrieveLargeChange,
+            &Slider::ApplyLargeChange),
+        _tickFrequency(*this, 1, &Control::IsWxWindowCreated, &Slider::RetrieveTickFrequency,
+            &Slider::ApplyTickFrequency)
     {
-        GetDelayedValues().Add({ &_minimum, &_maximum, &_value, &_smallChange, &_largeChange, &_tickFrequency });
+        GetDelayedValues().Add({ &_minimum, &_maximum, &_value, &_smallChange, &_largeChange,
+            &_tickFrequency });
     }
 
     Slider::~Slider()
@@ -163,6 +169,7 @@ namespace Alternet::UI
 
     void Slider::OnSliderValueChanged(wxCommandEvent& event)
     {
+        event.Skip();
         RaiseEvent(SliderEvent::ValueChanged);
     }
 

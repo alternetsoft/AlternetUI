@@ -208,7 +208,8 @@ namespace Alternet::UI
             return;
 
         auto info = GetToolInfo();
-        auto tool = toolbar->InsertTool(index, info->id, info->text, info->image, _toolInfo->disabledImage, info->kind, info->toolTipText);
+        auto tool = toolbar->InsertTool(index, info->id, info->text, info->image,
+            _toolInfo->disabledImage, info->kind, info->toolTipText);
 
         if (info->dropDownMenu != nullptr)
             tool->SetDropdownMenu(info->dropDownMenu);

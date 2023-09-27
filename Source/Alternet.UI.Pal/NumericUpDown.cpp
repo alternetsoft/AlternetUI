@@ -106,6 +106,7 @@ namespace Alternet::UI
 
     void NumericUpDown::OnSpinCtrlValueChanged(wxCommandEvent& event)
     {
+        event.Skip();
         RaiseEvent(NumericUpDownEvent::ValueChanged);
     }
 

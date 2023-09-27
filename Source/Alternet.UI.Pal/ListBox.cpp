@@ -137,6 +137,7 @@ namespace Alternet::UI
 
     void ListBox::OnSelectionChanged(wxCommandEvent& event)
     {
+        event.Skip();
         RaiseEvent(ListBoxEvent::SelectionChanged);
     }
 

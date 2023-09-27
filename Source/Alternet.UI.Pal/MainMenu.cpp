@@ -14,6 +14,7 @@ namespace Alternet::UI
 
     void MainMenu::OnMenuCommand(wxCommandEvent& event)
     {
+        event.Skip();
         auto item = MenuItem::GetMenuItemById(event.GetId());
         item->RaiseClick();
     }
@@ -59,7 +60,8 @@ namespace Alternet::UI
     {
         auto menu = _items[index];
         auto wxIndex = LogicalIndexToWxIndex(index);
-        GetWxMenuBar()->Insert(wxIndex, menu->GetWxMenu(), MenuItem::CoerceWxItemText(_itemTextByMenu[menu], nullptr));
+        GetWxMenuBar()->Insert(wxIndex, menu->GetWxMenu(),
+            MenuItem::CoerceWxItemText(_itemTextByMenu[menu], nullptr));
     }
 
     void MainMenu::RemoveWxItem(int index)

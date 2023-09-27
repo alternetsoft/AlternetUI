@@ -3,7 +3,8 @@
 namespace Alternet::UI
 {
     ProgressBar::ProgressBar():
-        _maximum(*this, 100, &Control::IsWxWindowCreated, &ProgressBar::RetrieveMaximum, &ProgressBar::ApplyMaximum)
+        _maximum(*this, 100, &Control::IsWxWindowCreated, &ProgressBar::RetrieveMaximum,
+            &ProgressBar::ApplyMaximum)
     {
         GetDelayedValues().Add(&_maximum);
     }
@@ -134,7 +135,8 @@ namespace Alternet::UI
 
     long ProgressBar::GetStyle()
     {
-        return wxGA_SMOOTH | (_orientation == ProgressBarOrientation::Horizontal ? wxGA_HORIZONTAL : wxGA_VERTICAL);
+        return wxGA_SMOOTH | (_orientation == ProgressBarOrientation::Horizontal ?
+            wxGA_HORIZONTAL : wxGA_VERTICAL);
     }
 
     void ProgressBar::ApplyIndeterminate()
@@ -164,8 +166,6 @@ namespace Alternet::UI
             ApplyValue();
         }
     }
-
-    // -----------------
 
     ProgressBar::IndeterminedModeTimer::IndeterminedModeTimer(ProgressBar* owner) : _owner(owner)
     {

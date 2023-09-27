@@ -46,7 +46,8 @@ namespace Alternet::UI
             return;
 
         if (_document == nullptr)
-            throwExInvalidOpWithInfo(u"Cannot show the print preview dialog when the document is null.");
+            throwExInvalidOpWithInfo(
+                u"Cannot show the print preview dialog when the document is null.");
 
         _state = new State();
 

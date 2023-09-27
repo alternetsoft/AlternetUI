@@ -89,7 +89,8 @@ namespace Alternet::UI
             DelayedWindowFlags::None,
             &Control::IsWxWindowCreated,
             {
-                //{DelayedWindowFlags::ShowInTaskbar, std::make_tuple(&Window::RetrieveShowInTaskbar, &Window::ApplyShowInTaskbar)},
+                //{DelayedWindowFlags::ShowInTaskbar, std::make_tuple(&Window::RetrieveShowInTaskbar,
+                //  &Window::ApplyShowInTaskbar)},
             }),
         _title(*this, u"", &Control::IsWxWindowCreated, &Window::RetrieveTitle, 
             &Window::ApplyTitle),
@@ -137,7 +138,8 @@ namespace Alternet::UI
         auto wxKey = keyboard->KeyToWxKey(key);
         auto acceleratorFlags = keyboard->ModifierKeysToAcceleratorFlags(modifiers);
 
-        _acceleratorsByCommandIds[managedCommandId] = wxAcceleratorEntry(acceleratorFlags, wxKey, IdManager::AllocateId());
+        _acceleratorsByCommandIds[managedCommandId] =
+            wxAcceleratorEntry(acceleratorFlags, wxKey, IdManager::AllocateId());
 
         UpdateAcceleratorTable();
     }
@@ -197,7 +199,8 @@ namespace Alternet::UI
     {
         if (event.m_keyCode == WXK_ESCAPE && _cancelButton != nullptr)
             _cancelButton->RaiseClick();
-        else if (event.m_keyCode == WXK_RETURN && _acceptButton != nullptr)
+        else
+        if (event.m_keyCode == WXK_RETURN && _acceptButton != nullptr)
             _acceptButton->RaiseClick();
         else
             event.Skip();
@@ -931,6 +934,7 @@ namespace Alternet::UI
 
     void Window::OnActivate(wxActivateEvent& event)
     {
+        event.Skip();
         bool active = event.GetActive();
         _flags.Set(WindowFlags::Active, active);
         
@@ -942,12 +946,14 @@ namespace Alternet::UI
 
     void Window::OnMaximize(wxMaximizeEvent& event)
     {
+        event.Skip();
         _lastState = RetrieveState();
         RaiseEvent(WindowEvent::StateChanged);
     }
 
     void Window::OnIconize(wxIconizeEvent& event)
     {
+        event.Skip();
         _lastState = RetrieveState();
         RaiseEvent(WindowEvent::StateChanged);
     }

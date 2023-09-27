@@ -13,10 +13,12 @@ namespace Alternet::UI
         {
             Create(parent, id, pos, size, style);
         }
+        
         void OnLeaveWindow(wxMouseEvent& evt) 
         {
             wxAuiToolBar::OnLeaveWindow(evt);
         }
+
         void OnCaptureLost(wxMouseCaptureLostEvent& evt)
         {
             wxAuiToolBar::OnCaptureLost(evt);

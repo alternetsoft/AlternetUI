@@ -143,6 +143,8 @@ namespace Alternet::UI
 		FromEventData(event);
 		if (!_canMoveSplitter)
 			event.Veto();
+		else
+			event.Skip();
 	}
 
 	void SplitterPanel::RaiseEventEx(SplitterPanelEvent eventId, 
@@ -154,9 +156,14 @@ namespace Alternet::UI
 
 			if (result != 0)
 				event.Veto();
+			else
+				event.Skip();
 		}
 		else
+		{
+			event.Skip();
 			RaiseEvent(eventId, &_eventData);
+		}
 	}
 	
 	bool SplitterPanel::GetCanMoveSplitter()
@@ -193,6 +200,8 @@ namespace Alternet::UI
 		FromEventData(event);
 		if (!_canDoubleClick)
 			event.Veto();
+		else
+			event.Skip();
 	}
 
 	void SplitterPanel::OnSplitterUnsplit(wxSplitterEvent& event)

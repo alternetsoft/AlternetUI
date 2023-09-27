@@ -3,13 +3,15 @@
 namespace Alternet::UI
 {
     RadioButton::RadioButton() :
-        _text(*this, u"", &Control::IsWxWindowCreated, &RadioButton::RetrieveText, &RadioButton::ApplyText),
+        _text(*this, u"", &Control::IsWxWindowCreated, &RadioButton::RetrieveText,
+            &RadioButton::ApplyText),
         _flags(
             *this,
             RadioButtonFlags::Checked,
             &Control::IsWxWindowCreated,
             {
-                {RadioButtonFlags::Checked, std::make_tuple(&RadioButton::RetrieveChecked, &RadioButton::ApplyChecked)},
+                {RadioButtonFlags::Checked, std::make_tuple(&RadioButton::RetrieveChecked,
+                &RadioButton::ApplyChecked)},
             })
     {
         GetDelayedValues().Add(&_text);
@@ -141,10 +143,12 @@ namespace Alternet::UI
 
     void RadioButton::OnCheckedChanged(wxCommandEvent& event)
     {
+        event.Skip();
         auto group = GetRadioButtonsInGroup();
         if (group.size() > 0)
         {
-            // wxEVT_RADIOBUTTON is not fired on unchecked, only on "click". So we need to create an illusion of that.
+            // wxEVT_RADIOBUTTON is not fired on unchecked, only on "click".
+            // So we need to create an illusion of that.
             for (auto rb : group)
                 rb->RaiseEvent(RadioButtonEvent::CheckedChanged);
         }

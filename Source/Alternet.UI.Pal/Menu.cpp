@@ -37,6 +37,7 @@ namespace Alternet::UI
 
     void Menu::OnMenuCommand(wxCommandEvent& event)
     {
+        event.Skip();
         auto item = MenuItem::GetMenuItemById(event.GetId());
         item->RaiseClick();
     }
