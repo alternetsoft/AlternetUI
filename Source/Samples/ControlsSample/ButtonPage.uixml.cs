@@ -21,6 +21,13 @@ namespace ControlsSample
 
         private IPageSite? site;
 
+        static ButtonPage()
+        {
+#if DEBUG
+            Button.ImagesEnabled = true;
+#endif
+        }
+
         public ButtonPage()
         {
             InitializeComponent();

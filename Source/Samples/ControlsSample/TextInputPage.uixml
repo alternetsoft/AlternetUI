@@ -6,7 +6,7 @@
   <VerticalStackPanel Padding="10" HorizontalAlignment="Stretch">
       <HorizontalStackPanel>
         <VerticalStackPanel Margin="5" Name="textBoxesPanel"
-                    Width="250">
+                    SuggestedWidth="250">
           <TextBox Text="" Margin="0,0,0,5" Name="textBox1"
                    TextChanged="TextBox_ValueChanged" />
         </VerticalStackPanel>
@@ -28,7 +28,7 @@
     <HorizontalStackPanel>
       <VerticalStackPanel  Margin="5" >
         <Label Text="Multiline TextBox:" Margin="0,0,0,5"/>
-        <TextBox Name="multiLineTextBox" Multiline="true" Width="250" Height="250"
+        <TextBox Name="multiLineTextBox" Multiline="true" SuggestedWidth="250" SuggestedHeight="250"
                  Margin="0,0,0,5"/>
       </VerticalStackPanel>
 

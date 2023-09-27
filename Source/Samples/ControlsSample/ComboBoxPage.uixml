@@ -6,7 +6,7 @@
     <VerticalStackPanel>
         <HorizontalStackPanel>
             <VerticalStackPanel Margin="5,0,0,5" Padding="5,0,5,5">
-              <ComboBox Width="200" Name="comboBox" IsEditable="false"
+              <ComboBox SuggestedWidth="200" Name="comboBox" IsEditable="false"
                             VerticalAlignment="Top"
                             SelectedItemChanged="ComboBox_SelectedItemChanged"
                             TextChanged="ComboBox_TextChanged" />

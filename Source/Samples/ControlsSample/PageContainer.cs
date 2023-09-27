@@ -1,4 +1,5 @@
 ﻿using Alternet.Base.Collections;
+using Alternet.Drawing;
 using Alternet.UI;
 
 namespace ControlsSample
@@ -8,8 +9,22 @@ namespace ControlsSample
     public class PageContainer : Control
     {
         private readonly TreeView pagesControl;
-        private readonly Control activePageHolder;
+        private readonly Control activePageHolder = new()
+        {
+        };
+
         private readonly Grid grid;
+        private readonly VerticalStackPanel waitLabelContainer = new()
+        {
+            HorizontalAlignment = HorizontalAlignment.Center,
+            VerticalAlignment = VerticalAlignment.Center,
+            Size = new Size(400, 400),
+        };
+        private readonly Label waitLabel = new()
+        {
+            Text = "Page is loading...",
+            Margin = new Thickness(100, 100, 0, 0),
+        };
 
         public PageContainer()
         {
@@ -31,9 +46,10 @@ namespace ControlsSample
             grid.Children.Add(pagesControl);
             Grid.SetColumn(pagesControl, 0);
 
-            activePageHolder = new Control();
             grid.Children.Add(activePageHolder);
             Grid.SetColumn(activePageHolder, 1);
+
+            waitLabel.Parent = waitLabelContainer;
 
             Pages.ItemInserted += Pages_ItemInserted;
         }
@@ -71,9 +87,22 @@ namespace ControlsSample
             try
             {
                 activePageHolder.GetVisibleChildOrNull()?.Hide();
-                var control = Pages[SelectedIndex.Value].Control;
+                var page = Pages[SelectedIndex.Value];
+                var loaded = page.ControlCreated;
+
+                if (!loaded)
+                {
+                    waitLabelContainer.Parent = activePageHolder;
+                    waitLabelContainer.Visible = true;
+                    waitLabelContainer.Refresh();
+                    Application.DoEvents();
+                }
+
+                var control = page.Control;
                 control.Parent = activePageHolder;
                 control.Visible = true;
+                control.PerformLayout();
+                waitLabelContainer.Visible = false;
             }
             finally
             {
@@ -93,6 +122,8 @@ namespace ControlsSample
             }
 
             public string Title { get; }
+
+            public bool ControlCreated => control != null;
 
             public Control Control
             {

@@ -8,7 +8,7 @@
       <StackPanel Orientation="Horizontal">
 
         <CheckListBox
-          Width="200" Height="200" Name="checkListBox" 
+          SuggestedWidth="200" Name="checkListBox" 
           CheckedChanged="CheckListBox_CheckedChanged"
           MouseLeftButtonDown="CheckListBox_MouseLeftButtonDown"
           Margin="0,0,0,5"/>

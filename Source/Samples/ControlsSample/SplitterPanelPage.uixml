@@ -13,7 +13,7 @@
       <RowDefinition Height="Auto"/>
     </Grid.RowDefinitions>
 
-    <SplitterPanel Width="500" Name="splitterPanel">
+    <SplitterPanel SuggestedWidth="500" Name="splitterPanel">
     </SplitterPanel>
 
     <VerticalStackPanel Grid.Column="1" Margin="10,0,0,0" >

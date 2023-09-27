@@ -5,7 +5,7 @@
 
   <Control >
     <StackPanel Orientation="Horizontal">
-      <TreeView Width="240" Name="treeView"
+      <TreeView SuggestedWidth="240" Name="treeView"
                 ExpandedChanged="TreeView_ExpandedChanged"
                 BeforeLabelEdit="TreeView_BeforeLabelEdit"
                 AfterLabelEdit="TreeView_AfterLabelEdit"
