@@ -157,3 +157,71 @@ BUT FIRST ADD MANAGER TO LAYOUT PANEL
 - >just after Control Samples opened, just Treeview show things. Others ListView/ListBox/All show nothing
 - >after on minute and reduce/maximize windows, others samples show things now
 ==========
+
+- Border 
+- add offsets for start/end painting of the side
+- or add order of painting
+
+- Painting flickering under Windows.
+
+- Button State and apply it correctly.
+
+- Change uniform border width and border width is not changed in PropGrid
+
+====
+
+PROPGRID TEST PROPS NULLABLE
+        byte? asByte;
+        bool? asBool;
+        char? asChar;
+        sbyte? asSByte;
+        short? asInt16;
+        ushort? asUInt16;
+        int? asInt32;
+        uint? asUInt32;
+        long? asInt64;
+        ulong? asUInt64;
+        float? asSingle;
+        double? asDouble;
+        decimal? asDecimal;
+        DateTime? asDateTime;
+        string? asString;
+        Color? asColor;
+        Font? asFont;
+        Brush? asBrush;
+        Pen? asPen;
+        Size? asSize;
+        Thickness? asThickness;
+        Rect? asRect;
+        Point? asPoint;
+        FontStyle? asFontStyleN;
+        VerticalAlignment? asVerticalAlignmnentN;
+====
+
+PROPGRID TEST PROPS
+byte asByte = 15;
+bool asBool = true;
+char asChar = 'A';
+sbyte asSByte = 25;
+short asInt16 = -150;
+ushort asUInt16 = 215;
+int asInt32 = 81;
+uint asUInt32 = 105;
+long asInt64 = 12;
+ulong asUInt64 = 315;
+float asSingle = 15.26F;
+double asDouble = 25.27D;
+decimal asDecimal = 34.66M;
+DateTime asDateTime = DateTime.Now;
+string asString = "hello";
+Color asColor = Color.Red;
+Font asFont = Font.Default;
+Brush asBrush = Brush.Default;
+Pen asPen = Pen.Default;
+Size asSize = new(26, 30);
+Thickness asThickness = new(126, 50, 80, 24);
+Rect asRect = new(51, 82, 354, 40);
+Point asPoint = new(50, 85);
+
+====
+
