@@ -350,12 +350,18 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Adds any control to the toolbar, typically e.g. a <see cref="ComboBox"/>.
+        /// Adds any control to the toolbar, typically e.g. a <see cref="ComboBox"/> or
+        /// <see cref="TextBox"/>.
         /// </summary>
         /// <param name="control">The control to be added.</param>
-        public void AddControl(Control control)
+        public int AddControl(Control control)
         {
-            NativeControl.AddControl(control.WxWidget, string.Empty);
+            if (control is null)
+                throw new ArgumentNullException(nameof(control));
+            control.Parent = this;
+            int toolId = GenNewId();
+            NativeControl.AddControl(toolId, control.WxWidget, string.Empty);
+            return toolId;
         }
 
         /// <summary>
@@ -833,9 +839,60 @@ namespace Alternet.UI
         /// <summary>
         /// Returns the number of tools in the toolbar.
         /// </summary>
-        public ulong GetToolCount()
+        public int GetToolCount()
         {
-            return NativeControl.GetToolCount();
+            return (int)NativeControl.GetToolCount();
+        }
+
+        public void SetToolMinWidth(int tool_id, int width)
+        {
+            var minHeight = GetToolMinHeight(tool_id);
+            NativeControl.SetToolMinSize(tool_id, width, minHeight);
+        }
+
+        public void GrowToolMinWidth(int tool_id, int width)
+        {
+            var size = GetToolMinSize(tool_id);
+            NativeControl.SetToolMinSize(tool_id, Math.Max(width, size.Width), size.Height);
+        }
+
+        public void GrowToolMinSize(int tool_id, int width, int height)
+        {
+            var size = GetToolMinSize(tool_id);
+            NativeControl.SetToolMinSize(
+                tool_id,
+                Math.Max(width, size.Width),
+                Math.Max(height, size.Height));
+        }
+
+        public void SetToolMinSize(int tool_id, int width, int height)
+        {
+            NativeControl.SetToolMinSize(tool_id, width, height);
+        }
+
+        public Int32Size GetToolMinSize(int tool_id)
+        {
+            return NativeControl.GetToolMinSize(tool_id);
+        }
+
+        public int GetToolMinHeight(int tool_id)
+        {
+            return NativeControl.GetToolMinSize(tool_id).Height;
+        }
+
+        public int GetToolMinWidth(int tool_id)
+        {
+            return NativeControl.GetToolMinSize(tool_id).Width;
+        }
+
+        internal void SetToolAlignment(int tool_id, GenericAlignment align)
+        {
+            NativeControl.SetAlignment(tool_id, (int)align);
+        }
+
+        internal GenericAlignment GetToolAlignment(int tool_id)
+        {
+            return (GenericAlignment)NativeControl.GetAlignment(tool_id);
         }
 
         internal IntPtr FindControl(int windowId)

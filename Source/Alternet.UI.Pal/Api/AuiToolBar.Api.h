@@ -99,9 +99,9 @@ ALTERNET_UI_API void* AuiToolBar_AddLabel_(AuiToolBar* obj, int toolId, const ch
     return obj->AddLabel(toolId, label, width);
 }
 
-ALTERNET_UI_API void* AuiToolBar_AddControl_(AuiToolBar* obj, void* control, const char16_t* label)
+ALTERNET_UI_API void* AuiToolBar_AddControl_(AuiToolBar* obj, int toolId, void* control, const char16_t* label)
 {
-    return obj->AddControl(control, label);
+    return obj->AddControl(toolId, control, label);
 }
 
 ALTERNET_UI_API void* AuiToolBar_AddSeparator_(AuiToolBar* obj)
@@ -357,6 +357,26 @@ ALTERNET_UI_API void AuiToolBar_SetToolLongHelp_(AuiToolBar* obj, int toolId, co
 ALTERNET_UI_API uint64_t AuiToolBar_GetToolCount_(AuiToolBar* obj)
 {
     return obj->GetToolCount();
+}
+
+ALTERNET_UI_API void AuiToolBar_SetToolMinSize_(AuiToolBar* obj, int tool_id, int width, int height)
+{
+    obj->SetToolMinSize(tool_id, width, height);
+}
+
+ALTERNET_UI_API Int32Size_C AuiToolBar_GetToolMinSize_(AuiToolBar* obj, int tool_id)
+{
+    return obj->GetToolMinSize(tool_id);
+}
+
+ALTERNET_UI_API void AuiToolBar_SetAlignment_(AuiToolBar* obj, int tool_id, int l)
+{
+    obj->SetAlignment(tool_id, l);
+}
+
+ALTERNET_UI_API int AuiToolBar_GetAlignment_(AuiToolBar* obj, int tool_id)
+{
+    return obj->GetAlignment(tool_id);
 }
 
 ALTERNET_UI_API void AuiToolBar_SetEventCallback_(AuiToolBar::AuiToolBarEventCallbackType callback)

@@ -7,9 +7,9 @@ using Alternet.Drawing;
 
 namespace NativeApi.Api
 {
-	//https://docs.wxwidgets.org/3.2/classwx_aui_tool_bar.html
-	public class AuiToolBar	: Control
-	{
+    //https://docs.wxwidgets.org/3.2/classwx_aui_tool_bar.html
+    public class AuiToolBar : Control
+    {
         public void DoOnCaptureLost() { }
         public void DoOnLeftUp(int x, int y) { }
         public void DoOnLeftDown(int x, int y) { }
@@ -30,7 +30,7 @@ namespace NativeApi.Api
         public Int32Point EventClickPoint { get; }
         public Int32Rect EventItemRect { get; }
 
-        public void SetArtProvider(IntPtr art) {}
+        public void SetArtProvider(IntPtr art) { }
         public IntPtr GetArtProvider() => throw new Exception();
 
         public int GetToolKind(int toolId) => throw new Exception();
@@ -61,7 +61,7 @@ namespace NativeApi.Api
         public IntPtr AddLabel(int toolId, string label, int width = -1) =>
             throw new Exception();
 
-        public IntPtr AddControl(IntPtr control, string label) => throw new Exception();
+        public IntPtr AddControl(int toolId, IntPtr control, string label) => throw new Exception();
 
         public IntPtr AddSeparator() => throw new Exception();
 
@@ -148,5 +148,10 @@ namespace NativeApi.Api
         public void SetToolLongHelp(int toolId, string helpString) =>
             throw new Exception();
         public ulong GetToolCount() => throw new Exception();
+
+        public void SetToolMinSize(int tool_id, int width, int height) { }
+        public Int32Size GetToolMinSize(int tool_id) => default;
+        public void SetAlignment(int tool_id, int l) { }
+        public int GetAlignment(int tool_id) => default;
     }
 }

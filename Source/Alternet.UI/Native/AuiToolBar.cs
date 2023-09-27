@@ -144,10 +144,10 @@ namespace Alternet.UI.Native
             return NativeApi.AuiToolBar_AddLabel_(NativePointer, toolId, label, width);
         }
         
-        public System.IntPtr AddControl(System.IntPtr control, string label)
+        public System.IntPtr AddControl(int toolId, System.IntPtr control, string label)
         {
             CheckDisposed();
-            return NativeApi.AuiToolBar_AddControl_(NativePointer, control, label);
+            return NativeApi.AuiToolBar_AddControl_(NativePointer, toolId, control, label);
         }
         
         public System.IntPtr AddSeparator()
@@ -456,6 +456,30 @@ namespace Alternet.UI.Native
             return NativeApi.AuiToolBar_GetToolCount_(NativePointer);
         }
         
+        public void SetToolMinSize(int tool_id, int width, int height)
+        {
+            CheckDisposed();
+            NativeApi.AuiToolBar_SetToolMinSize_(NativePointer, tool_id, width, height);
+        }
+        
+        public Alternet.Drawing.Int32Size GetToolMinSize(int tool_id)
+        {
+            CheckDisposed();
+            return NativeApi.AuiToolBar_GetToolMinSize_(NativePointer, tool_id);
+        }
+        
+        public void SetAlignment(int tool_id, int l)
+        {
+            CheckDisposed();
+            NativeApi.AuiToolBar_SetAlignment_(NativePointer, tool_id, l);
+        }
+        
+        public int GetAlignment(int tool_id)
+        {
+            CheckDisposed();
+            return NativeApi.AuiToolBar_GetAlignment_(NativePointer, tool_id);
+        }
+        
         static GCHandle eventCallbackGCHandle;
         
         static void SetEventCallback()
@@ -589,7 +613,7 @@ namespace Alternet.UI.Native
             public static extern System.IntPtr AuiToolBar_AddLabel_(IntPtr obj, int toolId, string label, int width);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr AuiToolBar_AddControl_(IntPtr obj, System.IntPtr control, string label);
+            public static extern System.IntPtr AuiToolBar_AddControl_(IntPtr obj, int toolId, System.IntPtr control, string label);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern System.IntPtr AuiToolBar_AddSeparator_(IntPtr obj);
@@ -743,6 +767,18 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern ulong AuiToolBar_GetToolCount_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void AuiToolBar_SetToolMinSize_(IntPtr obj, int tool_id, int width, int height);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern Alternet.Drawing.Int32Size AuiToolBar_GetToolMinSize_(IntPtr obj, int tool_id);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void AuiToolBar_SetAlignment_(IntPtr obj, int tool_id, int l);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int AuiToolBar_GetAlignment_(IntPtr obj, int tool_id);
             
         }
     }

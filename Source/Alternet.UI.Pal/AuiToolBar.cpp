@@ -282,9 +282,11 @@ namespace Alternet::UI
         return GetToolbar()->AddLabel(toolId, wxStr(label), width);
     }
 
-    void* AuiToolBar::AddControl(void* control, const string& label)
+    void* AuiToolBar::AddControl(int toolId, void* control, const string& label)
     {
-        return GetToolbar()->AddControl((wxControl*) control, wxStr(label));
+        auto result = GetToolbar()->AddControl((wxControl*) control, wxStr(label));
+        result->SetId(toolId);
+        return result;
     }
 
     void* AuiToolBar::AddSeparator()
@@ -438,6 +440,39 @@ namespace Alternet::UI
     bool AuiToolBar::GetToolEnabled(int toolId)
     {
         return GetToolbar()->GetToolEnabled(toolId);
+    }
+
+    Int32Size AuiToolBar::GetToolMinSize(int tool_id)
+    {
+        wxAuiToolBarItem* item = GetToolbar()->FindTool(tool_id);
+        if (!item)
+            return Int32Size(-1,-1);
+        auto& result = item->GetMinSize();
+        return Int32Size(result.x, result.y);
+    }
+
+    void AuiToolBar::SetAlignment(int tool_id, int l)
+    {
+        wxAuiToolBarItem* item = GetToolbar()->FindTool(tool_id);
+        if (!item)
+            return;
+        return item->SetAlignment(l);
+    }
+
+    int AuiToolBar::GetAlignment(int tool_id)
+    {
+        wxAuiToolBarItem* item = GetToolbar()->FindTool(tool_id);
+        if (!item)
+            return -1;
+        return item->GetAlignment();
+    }
+
+    void AuiToolBar::SetToolMinSize(int tool_id, int width, int height)
+    {
+        wxAuiToolBarItem* item = GetToolbar()->FindTool(tool_id);
+        if (!item)
+            return;
+        item->SetMinSize(wxSize(width, height));
     }
 
     void AuiToolBar::SetToolDropDown(int toolId, bool dropdown)

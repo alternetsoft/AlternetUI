@@ -119,28 +119,36 @@ namespace AuiManagerSample
 
             toolbar4.AddLabel("Text1");
 
-            //var control4 = new ComboBox
-            //{
-            //    IsEditable = false
-            //};
-            //control4.Add("Item 1");
-            //control4.Add("Item 2");
-            //control4.Add("Item 3");
+            var control4 = new ComboBox
+            {
+                IsEditable = false,
+            };
+            control4.Add("Item 1");
+            control4.Add("Item 2");
+            control4.Add("Item 3");
+
             var textBox4 = new TextBox
             {
-                Text = "value"
+                Text = "value",
             };
-			
-            //toolbar4.Children.Add(control4);
-            //toolbar4.AddControl(control4);
+
+            var comboBoxId = toolbar4.AddControl(control4);
+
+            // We need to specify min width. On MacOs without this call control's width
+            // will be too small. Width here is not DIP, it's pixel.
+            toolbar4.GrowToolMinWidth(comboBoxId, 100);
 
             photoToolId = toolbar4.AddTool(
                 "Photo",
                 ImagePhoto,
                 "Photo Hint");
 
-            toolbar4.Children.Add(textBox4);
-            toolbar4.AddControl(textBox4);
+            var textBoxId = toolbar4.AddControl(textBox4);
+            var minHeight = toolbar4.GetToolMinHeight(comboBoxId);
+
+            // On Linux height of the ComboBox is greater than height of the TextBox.
+            // We need to increase height of TextBox.
+            toolbar4.GrowToolMinSize(textBoxId, 100, minHeight);
 
             toolbar4.AddStretchSpacer();
 
@@ -151,17 +159,6 @@ namespace AuiManagerSample
             toolbar4.SetToolDropDown(graphToolId, true);
 
             toolbar4.Realize();
-
-            //Log(textBox4.Bounds.Height.ToString());
-	    //Log(control4.Bounds.Height.ToString());		
-
-            // On Linux height of the ComboBox is greater than height of the TextBox.
-            // We need to increase height of all window's TextBoxes.
-            //LayoutFactory.AdjustTextBoxesHeight(toolbar4);
-
-            //Log(textBox4.Bounds.Height.ToString());
-	    //Log(control4.Bounds.Height.ToString());		
-            //toolbar4.Realize();
 
             AuiToolbarItemKind kind = toolbar4.GetToolKind(pencilToolId);
 

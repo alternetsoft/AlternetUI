@@ -27,7 +27,7 @@ void* AddTool(int toolId, const string& label, ImageSet* bitmapBundle, const str
 void* AddTool2(int toolId, const string& label, ImageSet* bitmapBundle, ImageSet* disabledBitmapBundle, int itemKind, const string& shortHelpString, const string& longHelpString, void* clientData);
 void* AddTool3(int toolId, ImageSet* bitmapBundle, ImageSet* disabledBitmapBundle, bool toggle, void* clientData, const string& shortHelpString, const string& longHelpString);
 void* AddLabel(int toolId, const string& label, int width);
-void* AddControl(void* control, const string& label);
+void* AddControl(int toolId, void* control, const string& label);
 void* AddSeparator();
 void* AddSpacer(int pixels);
 void* AddStretchSpacer(int proportion);
@@ -79,6 +79,10 @@ void SetToolShortHelp(int toolId, const string& helpString);
 string GetToolLongHelp(int toolId);
 void SetToolLongHelp(int toolId, const string& helpString);
 uint64_t GetToolCount();
+void SetToolMinSize(int tool_id, int width, int height);
+Int32Size GetToolMinSize(int tool_id);
+void SetAlignment(int tool_id, int l);
+int GetAlignment(int tool_id);
 public:
 enum class AuiToolBarEvent
 {
