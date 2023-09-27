@@ -393,7 +393,7 @@ namespace Alternet.UI
         {
             WriteToLogFileIfAllowed(msg);
             Debug.WriteLine(msg);
-            Current.LogMessage?.Invoke(Current, new LogMessageEventArgs(msg));
+            Current?.LogMessage?.Invoke(Current, new LogMessageEventArgs(msg));
         }
 
         /// <inheritdoc cref="Log"/>
@@ -430,7 +430,13 @@ namespace Alternet.UI
         {
             WriteToLogFileIfAllowed(msg);
             Debug.WriteLine(msg);
-            Current.LogMessage?.Invoke(Current, new LogMessageEventArgs(msg, prefix, true));
+            Current?.LogMessage?.Invoke(Current, new LogMessageEventArgs(msg, prefix, true));
+        }
+
+        /// <summary>Processes all messages currently in the message queue.</summary>
+        public static void DoEvents()
+        {
+            Current?.ProcessPendingEvents();
         }
 
         /// <summary>
