@@ -16,6 +16,10 @@ namespace ControlsSample
         private readonly ListBox? control3;
         private readonly ListBox? control4;
         private readonly SplitterPanel splitterPanel2;
+        private string info1 = string.Empty;
+        private string info2 = string.Empty;
+        private bool info1Changed;
+        private bool info2Changed;
 
         static SplitterPanelPage()
         {
@@ -53,7 +57,7 @@ namespace ControlsSample
                 MinPaneSize = 20,
             };
 
-            void Repeat(int times, Action action)
+            static void Repeat(int times, Action action)
             {
                 for(int i=0; i < times; i++)        
                     action();
@@ -86,17 +90,36 @@ namespace ControlsSample
             splitterPanel.SplitVertical(control1, splitterPanel2);
             splitterPanel2.SplitHorizontal(control2, control3);
 
+            Application.Current.Idle += Current_Idle;
+
         }
 
-        private void LogEventOnce(string s, bool once = true)
+        private void Current_Idle(object? sender, EventArgs e)
+        {
+            if (!LogMovingCheckbox.IsChecked)
+                return;
+            if(info1Changed)
+            {
+                label1.Text = info1;
+                info1Changed = false;
+            }
+
+            if (info2Changed)
+            {
+                label2.Text = info2;
+                info2Changed = false;
+            }
+        }
+
+        private void LogEventOnce(string s, string prefix, bool once = true)
         {
             if (site == null)
                 return;
 
-            if (site.LastEventMessage == s && once)
-                return;
-
-            site?.LogEvent(s);
+            if(once)
+                site?.LogEventSmart(s, prefix);
+            else
+                site?.LogEvent(s);
         }
 
         private void SplitterPanel_SplitterResize(
@@ -104,8 +127,8 @@ namespace ControlsSample
             SplitterPanelEventArgs e)
         {
             var index = sender == splitterPanel ? 1 : 2;
-            LogEventOnce($"Splitter Panel {index}: Splitter Resize", 
-                LogMovingOnceCheckbox.IsChecked);
+            var s = $"Splitter Panel {index}: Splitter Resize";
+            LogEventOnce(s, s);
         }
 
         private void SplitterPanel_SplitterMoving(
@@ -123,15 +146,13 @@ namespace ControlsSample
                 e.Cancel = true;
             }
 
-            if (LogMovingOnceCheckbox.IsChecked)
-            {
-                LogEventOnce("Splitter Panel 1: Splitter Moving");
-                return;
-            }
-            var s = $"Sash Pos: {e.SashPosition}/{splitterPanel.MaxSashPosition}/"+
+            var s = "Splitter 1 Moving: ";
+
+            var s2 = $"Sash Pos: {e.SashPosition}/{splitterPanel.MaxSashPosition}/"+
                 $"W:{splitterPanel.ClientSize.Width}, "+
                 $"H:{splitterPanel.ClientSize.Height}";
-            LogEventOnce("Splitter Panel 1: Splitter Moving. "+s);
+            info1 = s + s2;
+            info1Changed = true;
         }
 
         private void SplitterPanel2_SplitterMoving(
@@ -144,14 +165,13 @@ namespace ControlsSample
                 e.Cancel = true;
             }
 
-            if (LogMovingOnceCheckbox.IsChecked)
-            {
-                LogEventOnce("Splitter Panel 2: Splitter Moving");
-                return;
-            }
-            var s = $"Sash Pos: {e.SashPosition}/{splitterPanel2.MaxSashPosition}/"+
-                $"{splitterPanel2.ClientSize.Height}";
-            LogEventOnce("Splitter Panel 2: Splitter Moving. " + s);
+            var s = "Splitter 2 Moving: ";
+
+            var s2 = $"Sash Pos: {e.SashPosition}/{splitterPanel2.MaxSashPosition}/" +
+                $"W:{splitterPanel2.ClientSize.Width}, " +
+                $"H:{splitterPanel2.ClientSize.Height}";
+            info2 = s + s2;
+            info2Changed = true;
         }
 
         private void SplitterPanel_Unsplit(
@@ -168,6 +188,11 @@ namespace ControlsSample
         {
             var index = sender == splitterPanel ? 1 : 2;
             site?.LogEvent($"Splitter Panel {index}: Splitter Moved");
+            label1.Text = string.Empty;
+            label2.Text = string.Empty;
+            label2.Refresh();
+            label1.Refresh();
+            Application.Current.ProcessPendingEvents();
         }
 
         private void SplitterPanel_SplitterDoubleClick(

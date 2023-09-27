@@ -9,7 +9,8 @@
       <ColumnDefinition Width="Auto" />
     </Grid.ColumnDefinitions>
     <Grid.RowDefinitions>
-      <RowDefinition Height="100*"/>
+      <RowDefinition Height="*"/>
+      <RowDefinition Height="Auto"/>
     </Grid.RowDefinitions>
 
     <SplitterPanel Width="500" Name="splitterPanel">
@@ -38,10 +39,14 @@
           <Button Text="Resize Panes Equal" Click="SashGravity05Button_Click"
                   Margin="0,0,0,5" Enabled="true"/>
 
-      <CheckBox Text="Log moving once" Name="LogMovingOnceCheckbox" 
-                IsChecked="true" Margin="0,5,0,5" />
+      <CheckBox Text="Log moving" Name="LogMovingCheckbox" 
+                IsChecked="false" Margin="0,5,0,5" />
     </VerticalStackPanel>
 
+    <VerticalStackPanel Grid.Row="1">
+      <Label Name="label1" Margin="0,5,0,5" />
+      <Label Name="label2" Margin="0,0,0,5" />
+    </VerticalStackPanel>
   </Grid>
 
 </Control>
