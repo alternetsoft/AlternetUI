@@ -111,10 +111,15 @@ namespace ControlsSample
             }
         }
 
-        private void LogEventOnce(string s, string prefix, bool once = true)
+        private void LogEvent(string s, string? prefix = null, bool once = true)
         {
+            if (!LogMovingCheckbox.IsChecked)
+                return;
+
             if (site == null)
                 return;
+
+            prefix ??= s;
 
             if(once)
                 site?.LogEventSmart(s, prefix);
@@ -128,7 +133,7 @@ namespace ControlsSample
         {
             var index = sender == splitterPanel ? 1 : 2;
             var s = $"Splitter Panel {index}: Splitter Resize";
-            LogEventOnce(s, s);
+            LogEvent(s);
         }
 
         private void SplitterPanel_SplitterMoving(
@@ -179,7 +184,7 @@ namespace ControlsSample
             SplitterPanelEventArgs e)
         {
             var index = sender == splitterPanel ? 1 : 2;
-            site?.LogEvent($"Splitter Panel {index}: Unsplit");
+            LogEvent($"Splitter Panel {index}: Unsplit");
         }
 
         private void SplitterPanel_SplitterMoved(
@@ -187,12 +192,7 @@ namespace ControlsSample
             SplitterPanelEventArgs e)
         {
             var index = sender == splitterPanel ? 1 : 2;
-            site?.LogEvent($"Splitter Panel {index}: Splitter Moved");
-            label1.Text = string.Empty;
-            label2.Text = string.Empty;
-            label2.Refresh();
-            label1.Refresh();
-            Application.Current.ProcessPendingEvents();
+            LogEvent($"Splitter Panel {index}: Splitter Moved");
         }
 
         private void SplitterPanel_SplitterDoubleClick(
@@ -201,8 +201,7 @@ namespace ControlsSample
         {
             e.Cancel = true;
             var index = sender == splitterPanel ? 1 : 2;
-            site?.LogEvent($"Splitter Panel {index}: Double click. " +
-                $"X: {e.X}, Y: {e.Y}");
+            LogEvent($"Splitter Panel {index}: Double click. X: {e.X}, Y: {e.Y}");
         }
 
         public IPageSite? Site
