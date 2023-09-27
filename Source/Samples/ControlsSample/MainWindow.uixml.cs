@@ -111,6 +111,8 @@ namespace ControlsSample
 #if DEBUG
             LogEvent("Net Version = " + Environment.Version.ToString());
 #endif
+            if (pageContainer.PagesControl.CanAcceptFocus)
+                pageContainer.PagesControl.SetFocus();
         }
 
         Control CreateTreeViewPage() => new TreeViewPage() { Site = this };

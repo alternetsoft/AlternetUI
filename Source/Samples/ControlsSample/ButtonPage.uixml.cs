@@ -119,7 +119,7 @@ namespace ControlsSample
                 s = comboBoxFontName.SelectedItem?.ToString();
                 string fontName = string.IsNullOrWhiteSpace(s) ? Font.Default.Name : s!;
 
-                Font font = Alternet.Drawing.Font.GetDefaultOrNew(fontName, fontSize, fontStyle);
+                Font font = Font.GetDefaultOrNew(fontName, fontSize, fontStyle);
 
                 button.Font = Font.Default;
                 button.Font = font;
@@ -137,15 +137,17 @@ namespace ControlsSample
                 button.HasBorder = hasBorderCheckBox.IsChecked;
                 button.TextVisible = showTextCheckBox.IsChecked;
                 ApplyTextAlign();
-                ApplyImageAlign();
                 button.Enabled = !disabledCheckBox.IsChecked;
                 button.IsDefault = defaultCheckBox.IsChecked;
                 button.Text = textTextBox.Text;
                 ApplyFont();
                 button.StateImages = imageCheckBox.IsChecked ?
                     ResourceLoader.ButtonImages : new ControlStateImages();
-                button.ForegroundColor = GetColor(comboBoxTextColor);
-                button.BackgroundColor = GetColor(comboBoxBackColor);
+                ApplyImageAlign();
+                var color = GetColor(comboBoxTextColor);
+                button.ForegroundColor = color;
+                color = GetColor(comboBoxBackColor);
+                button.BackgroundColor = color;
             });
             button.Refresh();
         }

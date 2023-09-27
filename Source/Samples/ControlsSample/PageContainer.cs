@@ -48,6 +48,8 @@ namespace ControlsSample
             }
         }
 
+        public TreeView PagesControl => pagesControl;
+
         public Collection<Page> Pages { get; } = new Collection<Page>();
 
         private void PagesListBox_SelectionChanged(object? sender, System.EventArgs e)
@@ -62,13 +64,16 @@ namespace ControlsSample
 
         private void SetActivePageControl()
         {
+            if (SelectedIndex == null)
+                return;
+
             activePageHolder.SuspendLayout();
             try
             {
-                activePageHolder.Children.Clear();
-
-                if (SelectedIndex != null)
-                    activePageHolder.Children.Add(Pages[SelectedIndex.Value].Control);
+                activePageHolder.GetVisibleChildOrNull()?.Hide();
+                var control = Pages[SelectedIndex.Value].Control;
+                control.Parent = activePageHolder;
+                control.Visible = true;
             }
             finally
             {
