@@ -63,7 +63,7 @@ namespace ControlsTest
         {
             Margin = new Thickness(0, 5, 5, 5),
             HorizontalAlignment = HorizontalAlignment.Stretch,
-            Width = 200,
+            SuggestedWidth = 200,
         };
 
         private readonly Label headerLabel = new()
@@ -139,7 +139,7 @@ namespace ControlsTest
 
         private readonly TextBox findTextBox = new()
         {
-            Width = 300,
+            SuggestedWidth = 300,
             Margin = new Thickness(0, 10, 5, 5),
             Text = "panda",
         };

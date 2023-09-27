@@ -15,7 +15,7 @@ namespace CustomControlsSample
             InitializeComponent();
             CreateCells();
             InitializeGame();
-            Size = new Size(50*3,50*3);
+            SuggestedSize = new Size(50*3,50*3);
         }
 
         List<TicTacToeCell> cells = new List<TicTacToeCell>();
@@ -40,8 +40,8 @@ namespace CustomControlsSample
                 {
                     var cell = new TicTacToeCell
                     {
-                        Width= cellSize-2,
-                        Height = cellSize-2
+                        SuggestedWidth= cellSize-2,
+                        SuggestedHeight = cellSize-2
                     };
 
                     cell.Click += Cell_Click;

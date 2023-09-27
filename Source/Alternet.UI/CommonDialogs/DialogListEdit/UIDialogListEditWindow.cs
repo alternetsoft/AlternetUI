@@ -70,7 +70,7 @@ namespace Alternet.UI
             rightPane.Name(nameof(rightPane)).Caption("Properties").Right().PaneBorder(false)
                 .TopDockable(false).BottomDockable(false).BestSize(defaultWidth, 300).MinSize(defaultWidth, 300)
                 .CaptionVisible(false);
-            propertyGrid.Width = defaultWidth;
+            propertyGrid.SuggestedWidth = defaultWidth;
             manager.AddPane(propertyGrid, rightPane);
 
             // Toolbar pane
@@ -152,7 +152,7 @@ namespace Alternet.UI
             Size = new(600, 400);
             MinimumSize = new(500, 300);
             rightPane.BestSize(defaultWidth + 1, 300).MinSize(defaultWidth + 1, 300);
-            propertyGrid.Width = defaultWidth + 1;
+            propertyGrid.SuggestedWidth = defaultWidth + 1;
             manager.Update();
             PerformLayout();
             Closing += UIDialogListEditWindow_Closing;

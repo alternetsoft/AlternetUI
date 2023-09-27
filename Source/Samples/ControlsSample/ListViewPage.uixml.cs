@@ -158,10 +158,10 @@ namespace ControlsSample
                 scrollViewer1.Bounds.Width,
                 scrollViewer1.Bounds.Width);
 
-            if (parent != null && Double.IsNaN(parent.Width))
+            if (parent != null && Double.IsNaN(parent.SuggestedWidth))
             {
                 parent.SuspendLayout();
-                parent.Width = Math.Max(maxWidth + 30, parent.Bounds.Width);
+                parent.SuggestedWidth = Math.Max(maxWidth + 30, parent.Bounds.Width);
                 parent.ResumeLayout();
             }
         }

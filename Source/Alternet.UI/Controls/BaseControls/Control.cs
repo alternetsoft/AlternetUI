@@ -56,7 +56,7 @@ namespace Alternet.UI
         private Color? backgroundColor;
         private Color? foregroundColor;
         private Collection<Control>? children;
-        private Size size = DefaultSize;
+        private Size suggestedSize = DefaultSize;
         private Thickness margin;
         private Thickness padding;
         private ControlHandler? handler;
@@ -575,6 +575,67 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets the size of the control.
+        /// </summary>
+        /// <value>The size of the control, in device-independent units (1/96th inch per unit).
+        /// The default value is <see cref="Drawing.Size"/>(<see cref="double.NaN"/>,
+        /// <see cref="double.NaN"/>)/>.
+        /// </value>
+        /// <remarks>
+        /// This property specifies the size of the control.
+        /// Set this property to <see cref="Drawing.Size"/>(<see cref="double.NaN"/>,
+        /// <see cref="double.NaN"/>) to specify system-default sizing
+        /// behavior when the control is first shown.
+        /// </remarks>
+        public virtual Size Size
+        {
+            get
+            {
+                return Bounds.Size;
+            }
+
+            set
+            {
+                Handler.Bounds = new Rect(Bounds.Location, value);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the width of the control.
+        /// </summary>
+        /// <value>The width of the control, in device-independent units (1/96th inch per unit).
+        /// The default value is <see cref="double.NaN"/>.
+        /// </value>
+        /// <remarks>
+        /// This property specifies the width of the control.
+        /// Set this property to <see cref="double.NaN"/> to specify system-default sizing
+        /// behavior before the control is first shown.
+        /// </remarks>
+        public virtual double Width
+        {
+            get => Size.Width;
+            set => Size = new(value, Height);
+        }
+
+        /// <summary>
+        /// Gets or sets the height of the control.
+        /// </summary>
+        /// <value>The height of the control, in device-independent units
+        /// (1/96th inch per unit).
+        /// The default value is <see cref="double.NaN"/>.
+        /// </value>
+        /// <remarks>
+        /// This property specifies the height of the control.
+        /// Set this property to <see cref="double.NaN"/> to specify system-default sizing
+        /// behavior before the control is first shown.
+        /// </remarks>
+        public virtual double Height
+        {
+            get => Size.Height;
+            set => Size = new(Width, value);
+        }
+
+        /// <summary>
         /// Gets or sets the suggested size of the control.
         /// </summary>
         /// <value>The suggested size of the control, in device-independent
@@ -592,19 +653,19 @@ namespace Alternet.UI
         /// set to it and is not changed by the layout system.
         /// </remarks>
         [Browsable(false)]
-        public virtual Size Size
+        public Size SuggestedSize
         {
             get
             {
-                return size;
+                return suggestedSize;
             }
 
             set
             {
-                if (size == value)
+                if (suggestedSize == value)
                     return;
 
-                size = value;
+                suggestedSize = value;
             }
         }
 
@@ -623,13 +684,13 @@ namespace Alternet.UI
         /// The value of this property is always the same as the value that was
         /// set to it and is not changed by the layout system.
         /// </remarks>
-        public virtual double Width
+        public double SuggestedWidth
         {
-            get => size.Width;
+            get => suggestedSize.Width;
 
             set
             {
-                Size = new(value, Size.Height);
+                SuggestedSize = new(value, SuggestedSize.Height);
             }
         }
 
@@ -648,13 +709,13 @@ namespace Alternet.UI
         /// The value of this property is always the same as the value that was
         /// set to it and is not changed by the layout system.
         /// </remarks>
-        public virtual double Height
+        public double SuggestedHeight
         {
-            get => size.Height;
+            get => suggestedSize.Height;
 
             set
             {
-                Size = new(Size.Width, value);
+                SuggestedSize = new(SuggestedSize.Width, value);
             }
         }
 
@@ -1385,9 +1446,9 @@ namespace Alternet.UI
         /// the control.</param>
         /// <param name="y">The new <see cref="Top"/> property value
         /// of the control.</param>
-        /// <param name="width">The new <see cref="Width"/> property value
+        /// <param name="width">The new <see cref="SuggestedWidth"/> property value
         /// of the control.</param>
-        /// <param name="height">The new <see cref="Height"/> property value
+        /// <param name="height">The new <see cref="SuggestedHeight"/> property value
         /// of the control.</param>
         /// <param name="specified">The new Width property value
         /// of the control.</param>
@@ -1561,7 +1622,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="availableSize">The available space that a parent element
         /// can allocate a child control.</param>
-        /// <returns>A <see cref="Size"/> representing the width and height of
+        /// <returns>A <see cref="SuggestedSize"/> representing the width and height of
         /// a rectangle, in device-independent units (1/96th inch per unit).</returns>
         public virtual Size GetPreferredSize(Size availableSize)
         {
@@ -1698,7 +1759,7 @@ namespace Alternet.UI
         /// such as Microsoft Windows.
         /// </remarks>
         /// <returns>
-        /// A <see cref="Size"/> value that represents DPI of the display
+        /// A <see cref="SuggestedSize"/> value that represents DPI of the display
         /// used by this control. If the DPI is not available,
         /// returns Size(0,0) object.
         /// </returns>

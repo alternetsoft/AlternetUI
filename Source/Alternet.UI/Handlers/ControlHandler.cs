@@ -11,7 +11,7 @@ namespace Alternet.UI
     /// Provides base functionality for implementing a specific <see cref="Control"/> behavior
     /// and appearance.
     /// </summary>
-    public abstract class ControlHandler
+    public abstract class ControlHandler : BaseObject
     {
         private int layoutSuspendCount;
 
@@ -839,13 +839,13 @@ namespace Alternet.UI
 
         /// <summary>
         /// Gets the size of the control specified in its
-        /// <see cref="Control.Width"/> and <see cref="Control.Height"/>
+        /// <see cref="Control.SuggestedWidth"/> and <see cref="Control.SuggestedHeight"/>
         /// properties or calculates preferred size from its children.
         /// </summary>
         protected Size GetSpecifiedOrChildrenPreferredSize(Size availableSize)
         {
-            var specifiedWidth = Control.Width;
-            var specifiedHeight = Control.Height;
+            var specifiedWidth = Control.SuggestedWidth;
+            var specifiedHeight = Control.SuggestedHeight;
             if (!double.IsNaN(specifiedWidth) && !double.IsNaN(specifiedHeight))
                 return new Size(specifiedWidth, specifiedHeight);
 
@@ -1049,8 +1049,8 @@ namespace Alternet.UI
             var s = NativeControl?.GetPreferredSize(availableSize) ?? Size.Empty;
             s += Control.Padding.Size;
             return new Size(
-                double.IsNaN(Control.Width) ? s.Width : Control.Width,
-                double.IsNaN(Control.Height) ? s.Height : Control.Height);
+                double.IsNaN(Control.SuggestedWidth) ? s.Width : Control.SuggestedWidth,
+                double.IsNaN(Control.SuggestedHeight) ? s.Height : Control.SuggestedHeight);
         }
 
         private protected virtual void OnNativeControlCreated()

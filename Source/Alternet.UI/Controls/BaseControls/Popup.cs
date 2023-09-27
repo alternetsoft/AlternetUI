@@ -46,32 +46,6 @@ namespace Alternet.UI
             }
         }
 
-        /// <summary>
-        /// Gets or sets the size of the popup.
-        /// </summary>
-        public override Size Size
-        {
-            get
-            {
-                return Bounds.Size;
-            }
-
-            set
-            {
-                Handler.Bounds = new Rect(Bounds.Location, value);
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets the width of the popup.
-        /// </summary>
-        public override double Width { get => Size.Width; set => Size = new Size(value, Height); }
-
-        /// <summary>
-        /// Gets or sets the height of the popup.
-        /// </summary>
-        public override double Height { get => Size.Height; set => Size = new Size(Width, value); }
-
         private new NativePopupHandler Handler
         {
             get

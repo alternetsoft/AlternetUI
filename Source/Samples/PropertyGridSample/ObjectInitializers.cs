@@ -57,7 +57,7 @@ namespace PropertyGridSample
             Actions.Add(typeof(Border), (c) =>
             {
                 var border = (c as Border)!;
-                border.Height = 150;
+                border.SuggestedHeight = 150;
                 border.BorderColor = Color.Indigo;
                 border.BackgroundColor = Color.Aquamarine;
                 border.Background = Brushes.BurlyWood;
@@ -68,7 +68,7 @@ namespace PropertyGridSample
                 var button = (c as Button)!;
                 button.Text = "Button";
                 button.StateImages = ButtonImages;
-                button.Height = 100;
+                button.SuggestedHeight = 100;
             });
 
             Actions.Add(typeof(CheckBox), (c) =>
@@ -84,21 +84,21 @@ namespace PropertyGridSample
             Actions.Add(typeof(TreeView), (c) =>
             {
                 TreeView treeView = (c as TreeView)!;
-                treeView.Height = defaultListHeight;
+                treeView.SuggestedHeight = defaultListHeight;
                 InitTreeView(treeView);
             });
 
             Actions.Add(typeof(ListView), (c) =>
             {
                 ListView listView = (c as ListView)!;
-                listView.Height = defaultListHeight;
+                listView.SuggestedHeight = defaultListHeight;
                 InitListView(listView);
             });
 
             Actions.Add(typeof(ListBox), (c) =>
             {
                 ListBox listBox = (c as ListBox)!;
-                listBox.Height = defaultListHeight;
+                listBox.SuggestedHeight = defaultListHeight;
                 AddTenItems(listBox.Items);
             });
 
@@ -111,7 +111,7 @@ namespace PropertyGridSample
             Actions.Add(typeof(CheckListBox), (c) =>
             {
                 CheckListBox checkListBox = (c as CheckListBox)!;
-                checkListBox.Height = defaultListHeight;
+                checkListBox.SuggestedHeight = defaultListHeight;
                 AddTenItems(checkListBox.Items);
             });
 
@@ -126,7 +126,7 @@ namespace PropertyGridSample
             {
                 GroupBox groupBox = (c as GroupBox)!;
                 groupBox.Title = "GroupBox";
-                groupBox.Height = 150;
+                groupBox.SuggestedHeight = 150;
             });
 
             Actions.Add(typeof(PictureBox), (c) =>
@@ -138,7 +138,7 @@ namespace PropertyGridSample
             Actions.Add(typeof(Panel), (c) =>
             {
                 Panel panel = (c as Panel)!;
-                panel.Height = 150;
+                panel.SuggestedHeight = 150;
                 panel.BackgroundColor = Color.BurlyWood;
             });
 
@@ -146,13 +146,13 @@ namespace PropertyGridSample
             Actions.Add(typeof(Control), (c) =>
             {
                 Control control = (c as Control)!;
-                control.Height = 150;
+                control.SuggestedHeight = 150;
             });
 
             Actions.Add(typeof(TabControl), (c) =>
             {
                 TabControl control = (c as TabControl)!;
-                control.Height = 300;
+                control.SuggestedHeight = 300;
                 InsertPage(control, null);
                 InsertPage(control, null);
                 InsertPage(control, null);
@@ -161,7 +161,7 @@ namespace PropertyGridSample
             Actions.Add(typeof(AuiNotebook), (c) =>
             {
                 AuiNotebook control = (c as AuiNotebook)!;
-                control.Height = 300;
+                control.SuggestedHeight = 300;
                 InsertPage(control);
                 InsertPage(control);
                 InsertPage(control);
@@ -263,7 +263,7 @@ namespace PropertyGridSample
         public static void InitScrollViewer(object control)
         {
             ScrollViewer? sv = control as ScrollViewer;
-            sv!.Height = 250;
+            sv!.SuggestedHeight = 250;
             StackPanel panel = new();
             InitStackPanel(panel);
             panel.Parent = sv;
@@ -272,7 +272,7 @@ namespace PropertyGridSample
         public static void InitStackPanel(object control)
         {
             var parent = control as Control;
-            parent!.Height = 250;
+            parent!.SuggestedHeight = 250;
 
 #pragma warning disable
             Button OkButton = new()

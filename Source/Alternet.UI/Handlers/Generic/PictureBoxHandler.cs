@@ -20,8 +20,8 @@ namespace Alternet.UI
             if (Control.Image == null)
                 return base.GetPreferredSize(availableSize);
 
-            var specifiedWidth = Control.Width;
-            var specifiedHeight = Control.Height;
+            var specifiedWidth = Control.SuggestedWidth;
+            var specifiedHeight = Control.SuggestedHeight;
             if (!double.IsNaN(specifiedWidth) && !double.IsNaN(specifiedHeight))
                 return new Size(specifiedWidth, specifiedHeight);
 

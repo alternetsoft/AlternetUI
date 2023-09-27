@@ -424,67 +424,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets the size of the window.
-        /// </summary>
-        /// <value>The size of the window, in device-independent units (1/96th inch per unit).
-        /// The default value is <see cref="Drawing.Size"/>(<see cref="double.NaN"/>,
-        /// <see cref="double.NaN"/>)/>.
-        /// </value>
-        /// <remarks>
-        /// This property specifies the size of the window.
-        /// Set this property to <see cref="Drawing.Size"/>(<see cref="double.NaN"/>,
-        /// <see cref="double.NaN"/>) to specify system-default sizing
-        /// behavior when the window is first shown.
-        /// </remarks>
-        public override Size Size
-        {
-            get
-            {
-                return Bounds.Size;
-            }
-
-            set
-            {
-                Handler.Bounds = new Rect(Bounds.Location, value);
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets the width of the window.
-        /// </summary>
-        /// <value>The width of the window, in device-independent units (1/96th inch per unit).
-        /// The default value is <see cref="double.NaN"/>.
-        /// </value>
-        /// <remarks>
-        /// This property specifies the width of the window.
-        /// Set this property to <see cref="double.NaN"/> to specify system-default sizing
-        /// behavior before the window is first shown.
-        /// </remarks>
-        public override double Width
-        {
-            get => Size.Width;
-            set => Size = new(value, Height);
-        }
-
-        /// <summary>
-        /// Gets or sets the height of the window.
-        /// </summary>
-        /// <value>The height of the window, in device-independent units
-        /// (1/96th inch per unit).
-        /// The default value is <see cref="double.NaN"/>.
-        /// </value>
-        /// <remarks>
-        /// This property specifies the height of the window.
-        /// Set this property to <see cref="double.NaN"/> to specify system-default sizing
-        /// behavior before the window is first shown.
-        /// </remarks>
-        public override double Height
-        {
-            get => Size.Height;
-            set => Size = new(Width, value);
-        }
-
-        /// <summary>
         /// Gets an array of <see cref="Window"/> objects that represent all windows that are
         /// owned by this window.
         /// </summary>

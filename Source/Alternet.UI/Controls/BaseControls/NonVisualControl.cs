@@ -28,11 +28,11 @@ namespace Alternet.UI
 
         /// <inheritdoc cref="Left"/>
         [Browsable(false)]
-        public override double Width { get; set; }
+        public new double Width { get; set; }
 
         /// <inheritdoc cref="Left"/>
         [Browsable(false)]
-        public override double Height { get; set; }
+        public new double Height { get; set; }
 
         /// <inheritdoc cref="Left"/>
         [Browsable(false)]

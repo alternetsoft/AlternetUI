@@ -76,11 +76,11 @@ namespace Alternet.UI
         /* IList Children { get; }*/
         /* public IControl? Parent { get; }*/
 
-        Size Size { get; set; }
+        Size SuggestedSize { get; set; }
 
-        double Width { get; set; }
+        double SuggestedWidth { get; set; }
 
-        double Height { get; set; }
+        double SuggestedHeight { get; set; }
 
         bool UserPaint { get; set; }
 

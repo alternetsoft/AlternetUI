@@ -35,10 +35,10 @@ namespace Alternet.UI
 
             VisualChildren.Add(panel);
 
-            outerBorder = new Border { Width = 13, Height = 10, Margin = new Thickness(0, 0, 5, 0) };
+            outerBorder = new Border { SuggestedWidth = 13, SuggestedHeight = 10, Margin = new Thickness(0, 0, 5, 0) };
             panel.Handler.VisualChildren.Add(outerBorder);
 
-            innerBorder = new Border { Width = 6, Height = 6, Margin = new Thickness(4, 4, 0, 0) };
+            innerBorder = new Border { SuggestedWidth = 6, SuggestedHeight = 6, Margin = new Thickness(4, 4, 0, 0) };
             outerBorder.Handler.VisualChildren.Add(innerBorder);
 
             label = new Label();

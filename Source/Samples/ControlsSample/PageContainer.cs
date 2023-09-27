@@ -23,7 +23,7 @@ namespace ControlsSample
 
             pagesControl = new()
             {
-                Width = 140,
+                SuggestedWidth = 140,
             };
             pagesControl.MakeAsListBox();
 

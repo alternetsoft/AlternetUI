@@ -26,7 +26,7 @@ namespace Alternet.UI
                     height += preferredSize.Height + margin.Vertical;
                 }
 
-                return new Size(double.IsNaN(Control.Width) ? maxWidth + stackPanelPadding.Horizontal : Control.Width, height + stackPanelPadding.Vertical);
+                return new Size(double.IsNaN(Control.SuggestedWidth) ? maxWidth + stackPanelPadding.Horizontal : Control.SuggestedWidth, height + stackPanelPadding.Vertical);
             }
 
             public override void Layout()

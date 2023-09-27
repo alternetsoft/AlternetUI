@@ -25,8 +25,8 @@ namespace ControlsTest
 
             customDrawControl = new ()
             {
-                Width = 500,
-                Height = 400,
+                SuggestedWidth = 500,
+                SuggestedHeight = 400,
             };
 
             mainPanel.Children.Add(customDrawControl);

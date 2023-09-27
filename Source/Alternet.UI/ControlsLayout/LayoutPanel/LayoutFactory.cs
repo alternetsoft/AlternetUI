@@ -108,7 +108,7 @@ namespace Alternet.UI
                 AddTextEditors(container);
 
                 foreach (Control control in editors)
-                    control.Height = maxHeight;
+                    control.SuggestedHeight = maxHeight;
 
                 /*control.SetBounds(0, 0, 0, maxHeight, BoundsSpecified.Height);*/
 
