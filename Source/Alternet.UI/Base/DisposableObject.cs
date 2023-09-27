@@ -93,13 +93,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Marks object as required.
-        /// </summary>
-        public virtual void Required()
-        {
-        }
-
-        /// <summary>
         /// Throws <see cref="ObjectDisposedException"/> if
         /// <see cref="IsDisposed"/> is <c>true</c>.
         /// </summary>
