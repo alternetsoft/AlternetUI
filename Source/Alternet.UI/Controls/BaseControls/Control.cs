@@ -461,25 +461,6 @@ namespace Alternet.UI
             set { SetValue(EnabledProperty, value); }
         }
 
-        // todo: Do we need border property for all the controls at all?
-
-        /// <summary>
-        /// Gets or sets the border brush of the control.
-        /// </summary>
-        [Browsable(false)]
-        internal virtual Brush? BorderBrush
-        {
-            get => borderBrush;
-            set
-            {
-                if (borderBrush == value)
-                    return;
-
-                borderBrush = value;
-                BorderBrushChanged?.Invoke(this, EventArgs.Empty);
-            }
-        }
-
         /// <summary>
         /// Gets a <see cref="ControlHandler"/> associated with this class.
         /// </summary>
@@ -772,7 +753,7 @@ namespace Alternet.UI
 
             set
             {
-                if (backgroundColor == value || value == null)
+                if (backgroundColor == value && value != null)
                     return;
                 backgroundColor = value;
 
@@ -833,7 +814,7 @@ namespace Alternet.UI
 
             set
             {
-                if (foregroundColor == value || value == null)
+                if (foregroundColor == value && value != null)
                     return;
                 foregroundColor = value;
 
@@ -996,6 +977,23 @@ namespace Alternet.UI
 
         internal static int ScreenShotCounter { get; set; } = 0;
 
+        /// <summary>
+        /// Gets or sets the border brush of the control.
+        /// </summary>
+        [Browsable(false)]
+        internal virtual Brush? BorderBrush
+        {
+            get => borderBrush;
+            set
+            {
+                if (borderBrush == value)
+                    return;
+
+                borderBrush = value;
+                BorderBrushChanged?.Invoke(this, EventArgs.Empty);
+            }
+        }
+
         internal IntPtr WxWidget => Handler.NativeControl!.WxWidget;
 
         internal virtual bool IsDummy => false;
@@ -1046,6 +1044,15 @@ namespace Alternet.UI
         private IControlHandlerFactory? ControlHandlerFactory { get; set; }
 
         /// <summary>
+        /// Returns the currently focused control, or <see langword="null"/> if
+        /// no control is focused.
+        /// </summary>
+        public static Control? GetFocusedControl()
+        {
+            return ControlHandler.GetFocusedControl();
+        }
+
+        /// <summary>
         /// Resets bacgkround color to the default value.
         /// </summary>
         public virtual void ResetBackgroundColor()
@@ -1069,15 +1076,6 @@ namespace Alternet.UI
                 Handler.NativeControl.ResetForegroundColor();
                 Refresh();
             }
-        }
-
-        /// <summary>
-        /// Returns the currently focused control, or <see langword="null"/> if
-        /// no control is focused.
-        /// </summary>
-        public static Control? GetFocusedControl()
-        {
-            return ControlHandler.GetFocusedControl();
         }
 
         /// <summary>
