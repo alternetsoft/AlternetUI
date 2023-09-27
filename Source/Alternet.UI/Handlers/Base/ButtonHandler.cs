@@ -31,6 +31,7 @@ namespace Alternet.UI
         /// </remarks>
         public abstract bool AcceptsFocus { get; set; }
 
+        /// <inheritdoc cref="Button.ExactFit"/>
         public abstract bool ExactFit { get; set; }
 
         /// <summary>
