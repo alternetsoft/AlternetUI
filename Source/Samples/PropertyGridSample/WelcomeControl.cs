@@ -30,9 +30,12 @@ namespace PropertyGridSample
 
         public WelcomeControl()
         {
-            Children.Add(stackPanel);
-            stackPanel.Children.Add(header);
-            stackPanel.Children.Add(desc);
+            DoInsideLayout(() =>
+            {
+                Children.Add(stackPanel);
+                stackPanel.Children.Add(header);
+                stackPanel.Children.Add(desc);
+            });
         }
     }
 }
