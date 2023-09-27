@@ -60,6 +60,10 @@ namespace Alternet::UI
     {
         int Width = 0, Height = 0;
 
+        Int32Size()
+        {
+        }
+
         Int32Size(const wxSize& s) : Width(s.x), Height(s.y)
         {
         }
