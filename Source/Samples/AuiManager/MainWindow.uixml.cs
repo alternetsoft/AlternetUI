@@ -134,20 +134,23 @@ namespace AuiManagerSample
 
             var comboBoxId = toolbar4.AddControl(control4);
 
-            // We need to specify min width. On MacOs without this call control's width
-            // will be too small. Width here is not DIP, it's pixel.
-            toolbar4.GrowToolMinWidth(comboBoxId, 100);
-
             photoToolId = toolbar4.AddTool(
                 "Photo",
                 ImagePhoto,
                 "Photo Hint");
 
             var textBoxId = toolbar4.AddControl(textBox4);
-            var minHeight = toolbar4.GetToolMinHeight(comboBoxId);
 
+            var minHeight1 = toolbar4.GetToolMinHeight(comboBoxId);
+            var minHeight2 = toolbar4.GetToolMinHeight(textBoxId);
+            var minHeight = Math.Max(minHeight1, minHeight2);
+
+            // We need to specify min width. On MacOs without this call control's width
+            // will be too small. Width and height here is not DIP, it's pixel.
             // On Linux height of the ComboBox is greater than height of the TextBox.
-            // We need to increase height of TextBox.
+            // On MacOs height of the TextBox greater than height of the ComboBox.
+            // We need to increase min height of TextBox and ComboBox to the max of their min heights.
+            toolbar4.GrowToolMinSize(comboBoxId, 100, minHeight);
             toolbar4.GrowToolMinSize(textBoxId, 100, minHeight);
 
             toolbar4.AddStretchSpacer();
