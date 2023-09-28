@@ -12,7 +12,7 @@ namespace Alternet.UI
     /// <summary>
     /// Provides a mechanism for releasing managed and unmanaged resources.
     /// </summary>
-    public abstract class DisposableObject : BaseObject, IDisposable
+    public abstract class DisposableObject : BaseObject, IDisposable, IDisposableObject
     {
         private bool disposeHandle;
         private bool disposed = false;
@@ -96,7 +96,7 @@ namespace Alternet.UI
         /// Throws <see cref="ObjectDisposedException"/> if
         /// <see cref="IsDisposed"/> is <c>true</c>.
         /// </summary>
-        protected void CheckDisposed()
+        public void CheckDisposed()
         {
             if (IsDisposed)
                 throw new ObjectDisposedException(null);
