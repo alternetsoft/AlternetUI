@@ -444,20 +444,25 @@ namespace Alternet::UI
 
         auto button = GetButton();
 
+		wxBitmap GetWx(Bitmap* bitmap)
+		{
+                if (bitmap != nullptr)
+                    return bitmap->GetBitmap());
+				else					
+					return wxBitmap();
+		}
+
         if (ButtonImagesEnabled)
         {
-            if (_normalImage != nullptr)
-            {
-                button->SetBitmap(_normalImage->GetBitmap());
+                button->SetBitmap(GetWx(_normalImage));
                 if (_hoveredImage != nullptr)
-                    button->SetBitmapCurrent(_hoveredImage->GetBitmap());
+                    button->SetBitmapCurrent(GetWx(_hoveredImage));
                 if (_pressedImage != nullptr)
-                    button->SetBitmapPressed(_pressedImage->GetBitmap());
+                    button->SetBitmapPressed(GetWx(_pressedImage));
                 if (_disabledImage != nullptr)
-                    button->SetBitmapDisabled(_disabledImage->GetBitmap());
+                    button->SetBitmapDisabled(GetWx(_disabledImage));
                 if (_focusedImage != nullptr)
-                    button->SetBitmapFocus(_focusedImage->GetBitmap());
-            }
+                    button->SetBitmapFocus(GetWx(_focusedImage));
         }
     }
 

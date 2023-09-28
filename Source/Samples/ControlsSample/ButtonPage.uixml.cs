@@ -139,21 +139,22 @@ namespace ControlsSample
 
             DoInside(() =>
             {
-                button.ExactFit = exactFitCheckBox.IsChecked;
-                button.TabStop = tabStopCheckBox.IsChecked;
-                button.HasBorder = hasBorderCheckBox.IsChecked;
                 button.TextVisible = showTextCheckBox.IsChecked;
+                button.ExactFit = exactFitCheckBox.IsChecked;
+                button.HasBorder = hasBorderCheckBox.IsChecked;
                 ApplyTextAlign();
+                button.TabStop = tabStopCheckBox.IsChecked;
                 button.IsDefault = defaultCheckBox.IsChecked;
                 button.Text = textTextBox.Text;
                 ApplyFont();
-                button.StateImages = imageCheckBox.IsChecked ?
-                    ResourceLoader.ButtonImages : new ControlStateImages();
-                ApplyImageAlign();
                 var color = GetColor(comboBoxTextColor);
                 button.ForegroundColor = color;
                 color = GetColor(comboBoxBackColor);
                 button.BackgroundColor = color;
+				button.StateImages = new ControlStateImages();
+				if(imageCheckBox.IsChecked)
+					button.StateImages = ResourceLoader.ButtonImages;
+                ApplyImageAlign();
                 button.Enabled = !disabledCheckBox.IsChecked;
             });
             button.Refresh();
