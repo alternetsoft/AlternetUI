@@ -10,7 +10,8 @@ Top priority controls:
 
 ======================
 
-- Remove try catch in event handler of cpp controls
+- https://docs.wxwidgets.org/3.0/classwx_floating_point_validator.html
+Add code for this
 
 - Border Background property not working properly (have image in BugImages)
 
@@ -19,13 +20,6 @@ Top priority controls:
 - Testpropject with AuiManager // drop down popup in toolbar
 	On linux it doesn’t work right
 	Also as we redo events, maybe we need to redo it behavior on Windows
-
-- PanelLinkLabels
-	LinkLabel Add(string title, string url)
-	LinkLabel Add(string title, Action action)
-	LinkLabel Add(string title)
-Use for all actions in demos
-Also have Actions property in controls
 
 ?? PropGrid Progressbar value change press enter does nothing , needs select another prop
 
