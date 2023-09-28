@@ -13,7 +13,7 @@ Top priority controls:
 - https://docs.wxwidgets.org/3.0/classwx_floating_point_validator.html
 Add code for this
 
-- Border Background property not working properly (have image in BugImages)
+- drawline with pen with non 1 width is different under dif oses.
 
 - improve demo of AuiManager, add propGrid, add actions add/delete etc, add collection edit.
 
