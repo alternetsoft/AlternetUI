@@ -1,6 +1,8 @@
 #!/bin/bash
 set -euo pipefail
 
+./BuildAndRun.AuiManager.sh
+./BuildAndRun.PropertyGridSample.sh
 ./BuildAndRun.CommonDialogsSample.sh
 ./BuildAndRun.ControlsSample.sh
 ./BuildAndRun.ControlsTest.sh
