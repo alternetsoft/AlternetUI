@@ -844,55 +844,89 @@ namespace Alternet.UI
             return (int)NativeControl.GetToolCount();
         }
 
-        public void SetToolMinWidth(int tool_id, int width)
+        /// <summary>
+        /// Sets minimal width of the toolbar item.
+        /// </summary>
+        /// <param name="toolId">ID of a previously added toolbar item.</param>
+        /// <param name="width">New minimal width of a toolbar item.</param>
+        public void SetToolMinWidth(int toolId, int width)
         {
-            var minHeight = GetToolMinHeight(tool_id);
-            NativeControl.SetToolMinSize(tool_id, width, minHeight);
+            var minHeight = GetToolMinHeight(toolId);
+            NativeControl.SetToolMinSize(toolId, width, minHeight);
         }
 
-        public void GrowToolMinWidth(int tool_id, int width)
+        /// <summary>
+        /// Sets new minimal width of the toolbar item if its greater than previous width.
+        /// </summary>
+        /// <param name="toolId">ID of a previously added toolbar item.</param>
+        /// <param name="width">New minimal width of a toolbar item.</param>
+        public void GrowToolMinWidth(int toolId, int width)
         {
-            var size = GetToolMinSize(tool_id);
-            NativeControl.SetToolMinSize(tool_id, Math.Max(width, size.Width), size.Height);
+            var size = GetToolMinSize(toolId);
+            NativeControl.SetToolMinSize(toolId, Math.Max(width, size.Width), size.Height);
         }
 
-        public void GrowToolMinSize(int tool_id, int width, int height)
+        /// <summary>
+        /// Sets new minimal size of the toolbar item if its greater than previous size.
+        /// </summary>
+        /// <param name="toolId">ID of a previously added toolbar item.</param>
+        /// <param name="width">New minimal width of a toolbar item.</param>
+        /// <param name="height">New minimal height of a toolbar item.</param>
+        public void GrowToolMinSize(int toolId, int width, int height)
         {
-            var size = GetToolMinSize(tool_id);
+            var size = GetToolMinSize(toolId);
             NativeControl.SetToolMinSize(
-                tool_id,
+                toolId,
                 Math.Max(width, size.Width),
                 Math.Max(height, size.Height));
         }
 
-        public void SetToolMinSize(int tool_id, int width, int height)
+        /// <summary>
+        /// Sets new minimal size of the toolbar item.
+        /// </summary>
+        /// <param name="toolId">ID of a previously added toolbar item.</param>
+        /// <param name="width">New minimal width of a toolbar item.</param>
+        /// <param name="height">New minimal height of a toolbar item.</param>
+        public void SetToolMinSize(int toolId, int width, int height)
         {
-            NativeControl.SetToolMinSize(tool_id, width, height);
+            NativeControl.SetToolMinSize(toolId, width, height);
         }
 
-        public Int32Size GetToolMinSize(int tool_id)
+        /// <summary>
+        /// Gets minimal size of the toolbar item.
+        /// </summary>
+        /// <param name="toolId">ID of a previously added toolbar item.</param>
+        public Int32Size GetToolMinSize(int toolId)
         {
-            return NativeControl.GetToolMinSize(tool_id);
+            return NativeControl.GetToolMinSize(toolId);
         }
 
-        public int GetToolMinHeight(int tool_id)
+        /// <summary>
+        /// Gets minimal height of the toolbar item.
+        /// </summary>
+        /// <param name="toolId">ID of a previously added toolbar item.</param>
+        public int GetToolMinHeight(int toolId)
         {
-            return NativeControl.GetToolMinSize(tool_id).Height;
+            return NativeControl.GetToolMinSize(toolId).Height;
         }
 
-        public int GetToolMinWidth(int tool_id)
+        /// <summary>
+        /// Gets minimal width of the toolbar item.
+        /// </summary>
+        /// <param name="toolId">ID of a previously added toolbar item.</param>
+        public int GetToolMinWidth(int toolId)
         {
-            return NativeControl.GetToolMinSize(tool_id).Width;
+            return NativeControl.GetToolMinSize(toolId).Width;
         }
 
-        internal void SetToolAlignment(int tool_id, GenericAlignment align)
+        internal void SetToolAlignment(int toolId, int align)
         {
-            NativeControl.SetAlignment(tool_id, (int)align);
+            NativeControl.SetAlignment(toolId, (int)align);
         }
 
-        internal GenericAlignment GetToolAlignment(int tool_id)
+        internal int GetToolAlignment(int toolId)
         {
-            return (GenericAlignment)NativeControl.GetAlignment(tool_id);
+            return NativeControl.GetAlignment(toolId);
         }
 
         internal IntPtr FindControl(int windowId)
