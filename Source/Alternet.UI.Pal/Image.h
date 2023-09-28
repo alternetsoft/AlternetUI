@@ -15,6 +15,15 @@ namespace Alternet::UI
         static wxBitmapBundle CreateFromSvgStream(void* stream, int width, int height);
         static void EnsureImageHandlersInitialized();
         static void wxInitAllImageHandlersV2();
+
+        static wxBitmap GetWxBitmap(Image* bitmap)
+        {
+            if (bitmap != nullptr)
+                return bitmap->GetBitmap();
+            else
+                return wxBitmap();
+        }
+
     private:
 
         static wxBitmapType GetBitmapTypeFromFormat(const string& format);

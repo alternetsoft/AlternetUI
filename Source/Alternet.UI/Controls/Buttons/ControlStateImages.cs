@@ -9,11 +9,20 @@ namespace Alternet.UI
     /// </summary>
     public class ControlStateImages : INotifyPropertyChanged
     {
+        /// <summary>
+        /// Gets <see cref="ControlStateImages"/> with empty state images.
+        /// </summary>
+        public static readonly ControlStateImages Empty = new()
+        {
+            Immutable = true,
+        };
+
         private Image? normalImage;
         private Image? hoveredImage;
         private Image? pressedImage;
         private Image? disabledImage;
         private Image? focusedImage;
+        private bool immutable;
 
         /// <summary>
         /// Occurs when a property value changes.
@@ -21,9 +30,27 @@ namespace Alternet.UI
         public event PropertyChangedEventHandler? PropertyChanged;
 
         /// <summary>
+        /// Gets or sets whether object is immutable (properties can not be changed).
+        /// </summary>
+        public bool Immutable
+        {
+            get
+            {
+                return immutable;
+            }
+
+            set
+            {
+                if (immutable == value || immutable)
+                    return;
+                immutable = true;
+            }
+        }
+
+        /// <summary>
         /// Gets or sets an <see cref="Image"/> for normal control state.
         /// </summary>
-        public Image? NormalImage
+        public virtual Image? NormalImage
         {
             get => normalImage;
             set => SetProperty(ref normalImage, value);
@@ -32,7 +59,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets an <see cref="Image"/> for normal control state.
         /// </summary>
-        public Image? FocusedImage
+        public virtual Image? FocusedImage
         {
             get => focusedImage;
             set => SetProperty(ref focusedImage, value);
@@ -41,7 +68,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets an <see cref="Image"/> for hovered control state.
         /// </summary>
-        public Image? HoveredImage
+        public virtual Image? HoveredImage
         {
             get => hoveredImage;
             set => SetProperty(ref hoveredImage, value);
@@ -50,7 +77,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets an <see cref="Image"/> for pressed control state.
         /// </summary>
-        public Image? PressedImage
+        public virtual Image? PressedImage
         {
             get => pressedImage;
             set => SetProperty(ref pressedImage, value);
@@ -59,7 +86,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets an <see cref="Image"/> for disabled control state.
         /// </summary>
-        public Image? DisabledImage
+        public virtual Image? DisabledImage
         {
             get => disabledImage;
             set => SetProperty(ref disabledImage, value);

@@ -151,7 +151,7 @@ namespace ControlsSample
                 button.ForegroundColor = color;
                 color = GetColor(comboBoxBackColor);
                 button.BackgroundColor = color;
-				button.StateImages = new ControlStateImages();
+				button.StateImages = ControlStateImages.Empty;
 				if(imageCheckBox.IsChecked)
 					button.StateImages = ResourceLoader.ButtonImages;
                 ApplyImageAlign();
@@ -160,7 +160,7 @@ namespace ControlsSample
             button.Refresh();
         }
 
-        private void Button_Click(object sender, System.EventArgs e)
+        private void Button_Click(object? sender, System.EventArgs e)
         {
             site?.LogEvent("Button: Click");
         }
