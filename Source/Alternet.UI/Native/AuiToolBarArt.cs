@@ -23,6 +23,41 @@ namespace Alternet.UI.Native
         {
         }
         
+        public static void SetFlags(System.IntPtr handle, uint flags)
+        {
+            NativeApi.AuiToolBarArt_SetFlags_(handle, flags);
+        }
+        
+        public static uint GetFlags(System.IntPtr handle)
+        {
+            return NativeApi.AuiToolBarArt_GetFlags_(handle);
+        }
+        
+        public static void SetTextOrientation(System.IntPtr handle, int orientation)
+        {
+            NativeApi.AuiToolBarArt_SetTextOrientation_(handle, orientation);
+        }
+        
+        public static int GetTextOrientation(System.IntPtr handle)
+        {
+            return NativeApi.AuiToolBarArt_GetTextOrientation_(handle);
+        }
+        
+        public static int GetElementSize(System.IntPtr handle, int elementId)
+        {
+            return NativeApi.AuiToolBarArt_GetElementSize_(handle, elementId);
+        }
+        
+        public static void SetElementSize(System.IntPtr handle, int elementId, int size)
+        {
+            NativeApi.AuiToolBarArt_SetElementSize_(handle, elementId, size);
+        }
+        
+        public static void UpdateColorsFromSystem(System.IntPtr handle)
+        {
+            NativeApi.AuiToolBarArt_UpdateColorsFromSystem_(handle);
+        }
+        
         
         [SuppressUnmanagedCodeSecurity]
         public class NativeApi : NativeApiProvider
@@ -31,6 +66,27 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern IntPtr AuiToolBarArt_Create_();
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void AuiToolBarArt_SetFlags_(System.IntPtr handle, uint flags);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern uint AuiToolBarArt_GetFlags_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void AuiToolBarArt_SetTextOrientation_(System.IntPtr handle, int orientation);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int AuiToolBarArt_GetTextOrientation_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int AuiToolBarArt_GetElementSize_(System.IntPtr handle, int elementId);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void AuiToolBarArt_SetElementSize_(System.IntPtr handle, int elementId, int size);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void AuiToolBarArt_UpdateColorsFromSystem_(System.IntPtr handle);
             
         }
     }

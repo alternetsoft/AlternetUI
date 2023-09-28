@@ -52,6 +52,23 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets the associated art provider.
+        /// </summary>
+        public IAuiDockArt ArtProvider
+        {
+            get
+            {
+                var result = Native.AuiManager.GetArtProvider(handle);
+                return new AuiDockArt(result, false);
+            }
+
+            set
+            {
+                Native.AuiManager.SetArtProvider(handle, value.Handle);
+            }
+        }
+
+        /// <summary>
         /// Gets container in which toolbars and sidebars will be created.
         /// </summary>
         /// <remarks>

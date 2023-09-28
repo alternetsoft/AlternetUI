@@ -23,6 +23,26 @@ namespace Alternet.UI.Native
         {
         }
         
+        public static Alternet.Drawing.Color GetColor(System.IntPtr handle, int id)
+        {
+            return NativeApi.AuiDockArt_GetColor_(handle, id);
+        }
+        
+        public static int GetMetric(System.IntPtr handle, int id)
+        {
+            return NativeApi.AuiDockArt_GetMetric_(handle, id);
+        }
+        
+        public static void SetColor(System.IntPtr handle, int id, Alternet.Drawing.Color color)
+        {
+            NativeApi.AuiDockArt_SetColor_(handle, id, color);
+        }
+        
+        public static void SetMetric(System.IntPtr handle, int id, int value)
+        {
+            NativeApi.AuiDockArt_SetMetric_(handle, id, value);
+        }
+        
         
         [SuppressUnmanagedCodeSecurity]
         public class NativeApi : NativeApiProvider
@@ -31,6 +51,18 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern IntPtr AuiDockArt_Create_();
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern NativeApiTypes.Color AuiDockArt_GetColor_(System.IntPtr handle, int id);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int AuiDockArt_GetMetric_(System.IntPtr handle, int id);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void AuiDockArt_SetColor_(System.IntPtr handle, int id, NativeApiTypes.Color color);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void AuiDockArt_SetMetric_(System.IntPtr handle, int id, int value);
             
         }
     }

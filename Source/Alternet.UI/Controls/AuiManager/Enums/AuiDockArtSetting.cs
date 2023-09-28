@@ -3,9 +3,9 @@ using System;
 namespace Alternet.UI
 {
     /// <summary>
-    /// These are the possible pane dock art settings.
+    /// These are the possible <see cref="IAuiDockArt"/> metric settings.
     /// </summary>
-    public enum AuiPaneDockArtSetting
+    public enum AuiDockArtSetting
     {
         /// <summary>
         /// Customizes the sash size.

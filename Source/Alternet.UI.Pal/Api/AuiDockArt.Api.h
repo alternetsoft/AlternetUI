@@ -13,3 +13,23 @@ ALTERNET_UI_API AuiDockArt* AuiDockArt_Create_()
     return new AuiDockArt();
 }
 
+ALTERNET_UI_API Color_C AuiDockArt_GetColor_(void* handle, int id)
+{
+    return AuiDockArt::GetColor(handle, id);
+}
+
+ALTERNET_UI_API int AuiDockArt_GetMetric_(void* handle, int id)
+{
+    return AuiDockArt::GetMetric(handle, id);
+}
+
+ALTERNET_UI_API void AuiDockArt_SetColor_(void* handle, int id, Color color)
+{
+    AuiDockArt::SetColor(handle, id, color);
+}
+
+ALTERNET_UI_API void AuiDockArt_SetMetric_(void* handle, int id, int value)
+{
+    AuiDockArt::SetMetric(handle, id, value);
+}
+

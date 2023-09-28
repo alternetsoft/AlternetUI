@@ -13,3 +13,38 @@ ALTERNET_UI_API AuiToolBarArt* AuiToolBarArt_Create_()
     return new AuiToolBarArt();
 }
 
+ALTERNET_UI_API void AuiToolBarArt_SetFlags_(void* handle, uint32_t flags)
+{
+    AuiToolBarArt::SetFlags(handle, flags);
+}
+
+ALTERNET_UI_API uint32_t AuiToolBarArt_GetFlags_(void* handle)
+{
+    return AuiToolBarArt::GetFlags(handle);
+}
+
+ALTERNET_UI_API void AuiToolBarArt_SetTextOrientation_(void* handle, int orientation)
+{
+    AuiToolBarArt::SetTextOrientation(handle, orientation);
+}
+
+ALTERNET_UI_API int AuiToolBarArt_GetTextOrientation_(void* handle)
+{
+    return AuiToolBarArt::GetTextOrientation(handle);
+}
+
+ALTERNET_UI_API int AuiToolBarArt_GetElementSize_(void* handle, int elementId)
+{
+    return AuiToolBarArt::GetElementSize(handle, elementId);
+}
+
+ALTERNET_UI_API void AuiToolBarArt_SetElementSize_(void* handle, int elementId, int size)
+{
+    AuiToolBarArt::SetElementSize(handle, elementId, size);
+}
+
+ALTERNET_UI_API void AuiToolBarArt_UpdateColorsFromSystem_(void* handle)
+{
+    AuiToolBarArt::UpdateColorsFromSystem(handle);
+}
+

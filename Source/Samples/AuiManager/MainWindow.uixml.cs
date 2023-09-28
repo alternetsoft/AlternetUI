@@ -180,6 +180,17 @@ namespace AuiManagerSample
             panel.Children.Add(notebook5);
             manager.AddPane(notebook5, pane5);
 
+            manager.ArtProvider.SetMetric(
+                AuiDockArtSetting.GradientType,
+                (int)AuiPaneDockArtGradients.None);
+
+            var captionSize = manager.ArtProvider.GetMetric(AuiDockArtSetting.CaptionSize);
+            captionSize += 3;
+            manager.ArtProvider.SetMetric(AuiDockArtSetting.CaptionSize, captionSize);
+
+            manager.ArtProvider.SetColor(AuiDockArtSetting.ActiveCaptionColor, Color.LightSkyBlue);
+            manager.ArtProvider.SetColor(AuiDockArtSetting.ActiveCaptionTextColor, Color.Black);
+
             manager.Update();
 
             toolbar4.AddToolOnClick(calendarToolId, CalendarButton_Click);

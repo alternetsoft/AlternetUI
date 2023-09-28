@@ -221,6 +221,23 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets the associated art provider.
+        /// </summary>
+        public IAuiToolbarArt ArtProvider
+        {
+            get
+            {
+                var result = NativeControl.GetArtProvider();
+                return new AuiToolbarArt(result, false);
+            }
+
+            set
+            {
+                NativeControl.SetArtProvider(value.Handle);
+            }
+        }
+
+        /// <summary>
         /// Gets or sets whether toolbar gripper is visible.
         /// </summary>
         public bool GripperVisible
@@ -973,15 +990,6 @@ namespace Alternet.UI
             return NativeControl.DestroyToolByIndex(idx);
         }
 
-        /// <summary>
-        /// Sets the art provider to be used by the toolbar.
-        /// </summary>
-        /// <param name="art">New art provider.</param>
-        internal void SetArtProvider(IntPtr art)
-        {
-            NativeControl.SetArtProvider(art);
-        }
-
         internal void RaiseOverflowClick(EventArgs e)
         {
             OnOverflowClick(e);
@@ -1046,14 +1054,6 @@ namespace Alternet.UI
         {
             OnBeginDrag(e);
             BeginDrag?.Invoke(this, e);
-        }
-
-        /// <summary>
-        /// Returns the associated art provider.
-        /// </summary>
-        internal IntPtr GetArtProvider()
-        {
-            return NativeControl.GetArtProvider();
         }
 
         internal ToolData? GetToolData(int toolId, bool add)
