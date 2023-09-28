@@ -1,5 +1,30 @@
-# 0.9.402 (2023 September ??)
+# 0.9.402 (2023 September 28)
 
+- Border improvements: 
+BorderWidth's can be any positive number (previously only 0 and 1).
+Can set individual colors of the border sides.
+Border painting is now compatible with Background brush and BackgroundColor.
+- Added AuiManager.ArtProvider, AuiToolbar.ArtProvider. Now possible to specify colors and other settings
+for Aui toolbars and panes.
+- Fixed event handling in many cpp controls.
+- Add to Control: SuggestedSize, SuggestedWidth, SuggestedHeight.
+- Add to Button: ExactFit, StateImages.FocusedImage.
+- Fixed flickering in Label, LinkLabel under Windows.
+- Improved sample projects.
+- Added Application.DoEvents.
+- Added to Font: GetDefaultOrNew, custom Equals.
+- Fixed KnownColorTable.cs not compiled under Linux.
+- Improved TreeView.MakeAsListBox.
+- Added Control.DoInsideLayout.
+- Fixed ListViewItem cell index not assigned bug.
+- Added IAuiNotebookPage and used in AuiNotebook.
+- Fixed Button.cpp not updated images on recreate.
+- Add to DrawingContext: DrawPoint, DrawDebugPoints.
+- Add to Color: AsBrush, AsPen.
+- Added Pen.AsBrush.
+- NativeApiGenerator improved, do not gen try/catch on events.
+- Fixed: Button images now work under Macos.
+- AuiToolbar: Implemented methods to set min size of the controls.
 
 # 0.9.401 (2023 September 22)
 
