@@ -216,6 +216,7 @@ namespace PropertyGridSample
 
                     control.Parent ??= controlPanel;
                     control.Visible = true;
+			control.PerformLayout();
                     Application.Current.ProcessPendingEvents();
                 }
 
