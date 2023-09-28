@@ -12,20 +12,37 @@ namespace Alternet.UI
     /// </summary>
     public interface IAuiToolbarArt : IDisposableObject
     {
-        void SetFlags(uint flags);
+        internal void SetFlags(uint flags);
 
-        uint GetFlags();
+        internal uint GetFlags();
 
-        void SetTextOrientation(AuiToolbarTextOrientation orientation);
+        /// <summary>
+        /// Gets or sets text orientation.
+        /// </summary>
+        AuiToolbarTextOrientation TextOrientation { get; set; }
 
-        AuiToolbarTextOrientation GetTextOrientation();
+        /// <summary>
+        /// Gets toolbar element size.
+        /// </summary>
+        /// <param name="elementId">Element id.</param>
+        /// <remarks>
+        /// Note that this function work with the size in DIPs, not physical pixels.
+        /// </remarks>
+        int GetElementSize(AuiToolBarArtSetting elementId);
 
-        // Note that these functions work with the size in DIPs, not physical pixels.
-        int GetElementSize(int elementId);
+        /// <summary>
+        /// Gets toolbar element size.
+        /// </summary>
+        /// <param name="elementId">Element id.</param>
+        /// <remarks>
+        /// Note that this function work with the size in DIPs, not physical pixels.
+        /// </remarks>
+        /// <param name="size">New element size.</param>
+        void SetElementSize(AuiToolBarArtSetting elementId, int size);
 
-        void SetElementSize(int elementId, int size);
-
-        // Provide opportunity for subclasses to recalculate colors
-        void UpdateColorsFromSystem();
+        /// <summary>
+        /// Provides opportunity for subclasses to recalculate colors
+        /// </summary>
+        internal void UpdateColorsFromSystem();
     }
 }

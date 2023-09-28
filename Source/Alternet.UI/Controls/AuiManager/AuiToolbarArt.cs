@@ -13,6 +13,19 @@ namespace Alternet.UI
         {
         }
 
+        public AuiToolbarTextOrientation TextOrientation
+        {
+            get
+            {
+                return (AuiToolbarTextOrientation)Native.AuiToolBarArt.GetTextOrientation(Handle);
+            }
+
+            set
+            {
+                Native.AuiToolBarArt.SetTextOrientation(Handle, (int)value);
+            }
+        }
+
         public void SetFlags(uint flags)
         {
             Native.AuiToolBarArt.SetFlags(Handle, flags);
@@ -23,25 +36,15 @@ namespace Alternet.UI
             return Native.AuiToolBarArt.GetFlags(Handle);
         }
 
-        public void SetTextOrientation(AuiToolbarTextOrientation orientation)
-        {
-            Native.AuiToolBarArt.SetTextOrientation(Handle, (int)orientation);
-        }
-
-        public AuiToolbarTextOrientation GetTextOrientation()
-        {
-            return (AuiToolbarTextOrientation)Native.AuiToolBarArt.GetTextOrientation(Handle);
-        }
-
         // Note that these functions work with the size in DIPs, not physical pixels.
-        public int GetElementSize(int elementId)
+        public int GetElementSize(AuiToolBarArtSetting elementId)
         {
-            return Native.AuiToolBarArt.GetElementSize(Handle, elementId);
+            return Native.AuiToolBarArt.GetElementSize(Handle, (int)elementId);
         }
 
-        public void SetElementSize(int elementId, int size)
+        public void SetElementSize(AuiToolBarArtSetting elementId, int size)
         {
-            Native.AuiToolBarArt.SetElementSize(Handle, elementId, size);
+            Native.AuiToolBarArt.SetElementSize(Handle, (int)elementId, size);
         }
 
         // Provide opportunity for subclasses to recalculate colors

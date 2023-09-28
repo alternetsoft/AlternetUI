@@ -20,6 +20,11 @@ namespace Alternet.UI
         /// <summary>
         /// Overflow button size in toolbar.
         /// </summary>
-        OverflowSize,
+        OverflowSize = 2,
+
+        /// <summary>
+        /// Size of the drop down.
+        /// </summary>
+        DropDownSize = 3,
     }
 }
