@@ -36,7 +36,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Initializes <see cref="ListControl"/> with list of known color names.
+        /// Initializes <see cref="ListControl"/> with list of known color names
+        /// (Web and Standard colors are used).
         /// </summary>
         /// <param name="control">Control instance which items will be filled with color names.</param>
         /// <param name="defaultValue">Select this color name in <see cref="ListControl"/>.</param>
@@ -46,7 +47,7 @@ namespace Alternet.UI
             bool select = true,
             Color? defaultValue = null)
         {
-            var knownColors = Color.GetKnownColors();
+            var knownColors = Color.GetKnownColors(KnownColorCategory.Standard, KnownColorCategory.Web);
 
             var colorsNames = new List<string>();
             colorsNames.AddRange(knownColors.Select(x => x.Name));

@@ -1156,9 +1156,8 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Enumerates all known colors.
+        /// Enumerates colors defined in <see cref="KnownColor"/>.
         /// </summary>
-        /// <returns></returns>
         public static IReadOnlyList<Color> GetKnownColors()
         {
             List<Color> colors = new();
@@ -1166,6 +1165,29 @@ namespace Alternet.Drawing
             foreach (KnownColor knownColor in Enum.GetValues(typeof(KnownColor)))
             {
                 colors.Add(new Color(knownColor));
+            }
+
+            colors.Sort(new ColorNameComparer());
+            return colors;
+        }
+
+        /// <summary>
+        /// Enumerates colors defined in <see cref="KnownColor"/> for the specified
+        /// color categories.
+        /// </summary>
+        public static IReadOnlyList<Color> GetKnownColors(params KnownColorCategory[] cats)
+        {
+            List<Color> colors = new();
+
+            var items = ColorUtils.GetColorInfos();
+
+            foreach(var item in items)
+            {
+                if (!item.Visible)
+                    continue;
+                if (!item.CategoryIs(cats))
+                    continue;
+                colors.Add(new Color(item.KnownColor));
             }
 
             colors.Sort(new ColorNameComparer());

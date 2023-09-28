@@ -144,7 +144,6 @@ namespace ControlsSample
                 button.HasBorder = hasBorderCheckBox.IsChecked;
                 button.TextVisible = showTextCheckBox.IsChecked;
                 ApplyTextAlign();
-                button.Enabled = !disabledCheckBox.IsChecked;
                 button.IsDefault = defaultCheckBox.IsChecked;
                 button.Text = textTextBox.Text;
                 ApplyFont();
@@ -155,6 +154,7 @@ namespace ControlsSample
                 button.ForegroundColor = color;
                 color = GetColor(comboBoxBackColor);
                 button.BackgroundColor = color;
+                button.Enabled = !disabledCheckBox.IsChecked;
             });
             button.Refresh();
         }

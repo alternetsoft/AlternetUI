@@ -23,7 +23,7 @@ namespace Alternet::UI
     }
 
 #ifdef __WXOSX_COCOA__            
-    static bool ButtonImagesEnabled = false;
+    static bool ButtonImagesEnabled = true;
 #else
     static bool ButtonImagesEnabled = true;
 #endif
@@ -447,15 +447,17 @@ namespace Alternet::UI
         if (ButtonImagesEnabled)
         {
             if (_normalImage != nullptr)
+            {
                 button->SetBitmap(_normalImage->GetBitmap());
-            if (_hoveredImage != nullptr)
-                button->SetBitmapCurrent(_hoveredImage->GetBitmap());
-            if (_pressedImage != nullptr)
-                button->SetBitmapPressed(_pressedImage->GetBitmap());
-            if (_disabledImage != nullptr)
-                button->SetBitmapDisabled(_disabledImage->GetBitmap());
-            if (_focusedImage != nullptr)
-                button->SetBitmapFocus(_focusedImage->GetBitmap());
+                if (_hoveredImage != nullptr)
+                    button->SetBitmapCurrent(_hoveredImage->GetBitmap());
+                if (_pressedImage != nullptr)
+                    button->SetBitmapPressed(_pressedImage->GetBitmap());
+                if (_disabledImage != nullptr)
+                    button->SetBitmapDisabled(_disabledImage->GetBitmap());
+                if (_focusedImage != nullptr)
+                    button->SetBitmapFocus(_focusedImage->GetBitmap());
+            }
         }
     }
 

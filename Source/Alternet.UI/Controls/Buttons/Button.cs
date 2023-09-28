@@ -56,6 +56,8 @@ namespace Alternet.UI
 
             set
             {
+                if (Handler.StateImages == value)
+                    return;
                 Handler.StateImages = value ?? throw new ArgumentNullException();
             }
         }

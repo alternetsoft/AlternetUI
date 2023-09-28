@@ -40,5 +40,12 @@ namespace Alternet.Drawing
         /// Gets or sets whether color is visible for the end user.
         /// </summary>
         bool Visible { get; set; }
+
+        /// <summary>
+        /// Gets whether <see cref="Category"/> is in the list of categories.
+        /// </summary>
+        /// <param name="cats">List of categories.</param>
+        /// <returns></returns>
+        bool CategoryIs(params KnownColorCategory[] cats);
     }
 }

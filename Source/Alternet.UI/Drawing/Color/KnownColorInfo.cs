@@ -34,5 +34,16 @@ namespace Alternet.Drawing
         public string LabelLocalized { get => labelLocalized; set => labelLocalized = value; }
 
         public Color Value { get => value; }
+
+        public bool CategoryIs(params KnownColorCategory[] cats)
+        {
+            foreach(var item in cats)
+            {
+                if (item == category)
+                    return true;
+            }
+
+            return false;
+        }
     }
 }
