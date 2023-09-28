@@ -20,7 +20,7 @@ namespace PropertyGridSample
         private readonly Label header = new()
         {
             Text = "PropertyGrid",
-            Font = new Font(Font.Default.Name, Font.Default.SizeInPoints * 2, FontStyle.Bold),
+            Font = Font.Default.AsBold,
         };
         private readonly Label desc = new()
         {
