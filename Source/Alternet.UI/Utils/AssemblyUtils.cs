@@ -16,6 +16,17 @@ namespace Alternet.UI
     public static class AssemblyUtils
     {
         /// <summary>
+        /// Creates <see cref="Action"/> for the specified <see cref="MethodInfo"/>.
+        /// </summary>
+        /// <param name="instance">Object which contains the method.</param>
+        /// <param name="method">Method which needs to be converted to <see cref="Action"/>.</param>
+        public static Action CreateAction(object instance, MethodInfo method)
+        {
+            Action action = (Action)Delegate.CreateDelegate(typeof(Action), instance, method);
+            return action;
+        }
+
+        /// <summary>
         /// Enumerates event information for the specified <see cref="Type"/>.
         /// </summary>
         /// <param name="type">Type which events are enumerated.</param>
