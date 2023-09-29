@@ -61,6 +61,8 @@
     <None Remove="Resources\Svg\align-left.svg" />
     <None Remove="Resources\Svg\align-right.svg" />
     <None Remove="Resources\Svg\alternet-add-child.svg" />
+    <None Remove="Resources\Svg\alternet-zoomin.svg" />
+    <None Remove="Resources\Svg\alternet-zoomout.svg" />
     <None Remove="Resources\Svg\angle-down.svg" />
     <None Remove="Resources\Svg\angle-left.svg" />
     <None Remove="Resources\Svg\angle-right.svg" />
@@ -79,6 +81,7 @@
     <None Remove="Resources\Svg\ban.svg" />
     <None Remove="Resources\Svg\bars.svg" />
     <None Remove="Resources\Svg\bold.svg" />
+    <None Remove="Resources\Svg\caret-right.svg" />
     <None Remove="Resources\Svg\check.svg" />
     <None Remove="Resources\Svg\circle-check.svg" />
     <None Remove="Resources\Svg\circle-exclamation.svg" />
@@ -139,6 +142,8 @@
     <EmbeddedResource Include="Resources\Svg\align-left.svg" />
     <EmbeddedResource Include="Resources\Svg\align-right.svg" />
     <EmbeddedResource Include="Resources\Svg\alternet-add-child.svg" />
+    <EmbeddedResource Include="Resources\Svg\alternet-zoomin.svg" />
+    <EmbeddedResource Include="Resources\Svg\alternet-zoomout.svg" />
     <EmbeddedResource Include="Resources\Svg\angle-down.svg" />
     <EmbeddedResource Include="Resources\Svg\angle-left.svg" />
     <EmbeddedResource Include="Resources\Svg\angle-right.svg" />
@@ -157,6 +162,7 @@
     <EmbeddedResource Include="Resources\Svg\ban.svg" />
     <EmbeddedResource Include="Resources\Svg\bars.svg" />
     <EmbeddedResource Include="Resources\Svg\bold.svg" />
+    <EmbeddedResource Include="Resources\Svg\caret-right.svg" />
     <EmbeddedResource Include="Resources\Svg\check.svg" />
     <EmbeddedResource Include="Resources\Svg\circle-check.svg" />
     <EmbeddedResource Include="Resources\Svg\circle-exclamation.svg" />
