@@ -20,6 +20,7 @@ namespace Alternet.UI
     /// </remarks>
     public class PanelAuiManager : PanelAuiManagerBase
     {
+        private ListBox? actionsControl;
         private AuiNotebook? leftNotebook;
         private AuiNotebook? rightNotebook;
         private AuiNotebook? bottomNotebook;
@@ -28,22 +29,28 @@ namespace Alternet.UI
         private IAuiPaneInfo? rightPane;
         private IAuiPaneInfo? centerPane;
         private IAuiPaneInfo? bottomPane;
+        private IAuiPaneInfo? toolbarPane;
         private PropertyGrid? propertyGrid;
         private PropertyGrid? eventGrid;
         private TreeView? logControl;
         private TreeView? leftTreeView;
         private ContextMenu? logContextMenu;
+        private AuiToolbar? toolbar;
 
         private IAuiNotebookPage? logPage;
         private IAuiNotebookPage? leftTreeViewPage;
         private IAuiNotebookPage? propGridPage;
+        private IAuiNotebookPage? actionsPage;
         private IAuiNotebookPage? eventGridPage;
+
+        private AuiToolbarCreateStyle defaultToolbarStyle;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PanelAuiManager"/> class.
         /// </summary>
         public PanelAuiManager()
         {
+            defaultToolbarStyle = InitDefaultToolbarStyle();
         }
 
         /// <summary>
@@ -60,6 +67,11 @@ namespace Alternet.UI
         /// Gets <see cref="PropGrid"/> page index in the <see cref="RightNotebook"/>.
         /// </summary>
         public IAuiNotebookPage? PropGridPage => propGridPage;
+
+        /// <summary>
+        /// Gets <see cref="ActionsControl"/> page index in the <see cref="RightNotebook"/>.
+        /// </summary>
+        public IAuiNotebookPage? ActionsPage => actionsPage;
 
         /// <summary>
         /// Gets <see cref="EventGrid"/> page index in the <see cref="RightNotebook"/>.
@@ -125,7 +137,7 @@ namespace Alternet.UI
                 {
                     logContextMenu = new();
                     InitLogContextMenu();
-                    LogControl.MouseRightButtonUp += LogControl_MouseRightButtonUp;
+                    LogControl.MouseRightButtonDown += LogControl_ShowMenu;
                 }
 
                 return logContextMenu;
@@ -246,6 +258,61 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets <see cref="AuiToolbar"/> located on the top of the control.
+        /// </summary>
+        public AuiToolbar Toolbar
+        {
+            get
+            {
+                if(toolbar is null)
+                {
+                    toolbar = new();
+
+                    toolbar.CreateStyle = DefaultToolbarStyle;
+                    var imageSize = Drawing.Size.Max(
+                        UI.Toolbar.GetDefaultImageSize(this),
+                        new Size(DefaultMinToolbarImageSize));
+                    toolbar.ToolBitmapSize = imageSize;
+                }
+
+                return toolbar;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets minimal toolbar image size.
+        /// </summary>
+        public int DefaultMinToolbarImageSize { get; set; } = 24;
+
+        /// <summary>
+        /// Gets or sets default toolbar style.
+        /// </summary>
+        public AuiToolbarCreateStyle DefaultToolbarStyle
+        {
+            get => defaultToolbarStyle;
+            set => defaultToolbarStyle = value;
+        }
+
+        /// <summary>
+        /// Gets the top pane with the <see cref="AuiToolbar"/>.
+        /// </summary>
+        public IAuiPaneInfo ToolbarPane
+        {
+            get
+            {
+                if(toolbarPane is null)
+                {
+                    toolbarPane = Manager.CreatePaneInfo();
+                    toolbarPane.Name(nameof(toolbarPane)).Top().ToolbarPane().PaneBorder(false)
+                        .Movable(false).Floatable(false).Resizable(false).Gripper(false)
+                        .Fixed().DockFixed();
+                }
+
+                return toolbarPane;
+            }
+        }
+
+        /// <summary>
         /// Gets the left pane.
         /// </summary>
         public IAuiPaneInfo LeftPane
@@ -305,6 +372,30 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets the control with actions list.
+        /// </summary>
+        public Control ActionsControl
+        {
+            get
+            {
+                if(actionsControl == null)
+                {
+                    actionsControl = new()
+                    {
+                        HasBorder = false,
+                    };
+                    actionsControl.MouseDoubleClick += Actions_MouseDoubleClick;
+                    actionsControl.Parent = RightNotebook;
+                    actionsPage = RightNotebook.AddPage(
+                        actionsControl,
+                        CommonStrings.Default.NotebookTabTitleActions);
+                }
+
+                return actionsControl;
+            }
+        }
+
+        /// <summary>
         /// Gets or sets default best size of the right pane.
         /// </summary>
         public virtual Int32Size DefaultRightPaneBestSize { get; set; } = new(350, 200);
@@ -343,6 +434,34 @@ namespace Alternet.UI
         {
             LogControl.Add(ConstructLogMessage(message));
             LogControl.SelectAndShowItem(LogControl.LastRootItem);
+        }
+
+        /// <summary>
+        /// Adds an empty space to the <see cref="ActionsControl"/>.
+        /// </summary>
+        /// <remarks>
+        /// This method allows to separate different action groups.
+        /// </remarks>
+        public virtual void AddActionSpacer()
+        {
+            ActionsControl.Required();
+            (actionsControl as ListBox)?.Add(string.Empty);
+        }
+
+        /// <summary>
+        /// Adds <see cref="Action"/> to the <see cref="ActionsControl"/>.
+        /// </summary>
+        /// <param name="title">Action title.</param>
+        /// <param name="action">Action method.</param>
+        public virtual void AddAction(string title, Action? action)
+        {
+            ListControlItem item = new(title)
+            {
+                Action = action,
+            };
+
+            ActionsControl.Required();
+            (actionsControl as ListBox)?.Add(item);
         }
 
         /// <summary>
@@ -420,9 +539,32 @@ namespace Alternet.UI
             return $"{msg} ({LogUtils.GenNewId()})";
         }
 
-        private void LogControl_MouseRightButtonUp(object? sender, MouseButtonEventArgs e)
+        private void LogControl_ShowMenu(object? sender, MouseButtonEventArgs e)
         {
             LogControl.ShowPopupMenu(LogContextMenu);
+        }
+
+        private void Actions_MouseDoubleClick(object? sender, MouseButtonEventArgs e)
+        {
+            var listBox = sender as ListBox;
+            if (listBox?.SelectedItem is not ListControlItem item || item.Action == null)
+                return;
+            Log("Do action: " + item.Text);
+            item.Action();
+        }
+
+        private AuiToolbarCreateStyle InitDefaultToolbarStyle()
+        {
+            var toolbarStyle =
+                AuiToolbarCreateStyle.PlainBackground |
+                AuiToolbarCreateStyle.HorzLayout |
+                AuiToolbarCreateStyle.Text |
+                AuiToolbarCreateStyle.NoTooltips |
+                AuiToolbarCreateStyle.DefaultStyle;
+
+            toolbarStyle &= ~AuiToolbarCreateStyle.Gripper;
+
+            return toolbarStyle;
         }
 
         private void InitLogContextMenu()
