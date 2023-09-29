@@ -49,6 +49,9 @@ namespace Alternet.UI.Localization
         public string NotebookTabTitleProperties { get; set; } = "Properties";
 
         /// <inheritdoc cref="ButtonOk"/>
+        public string NotebookTabTitleBrowser { get; set; } = "Browser";
+
+        /// <inheritdoc cref="ButtonOk"/>
         public string NotebookTabTitleEvents { get; set; } = "Events";
 
         /// <inheritdoc cref="ButtonOk"/>
@@ -59,6 +62,9 @@ namespace Alternet.UI.Localization
 
         /// <inheritdoc cref="ButtonOk"/>
         public string NotebookTabTitleActions { get; set; } = "Actions";
+
+        /// <inheritdoc cref="ButtonOk"/>
+        public string NotebookTabTitleSearch { get; set; } = "Search";
 
         /// <inheritdoc cref="ButtonOk"/>
         public string ListEditDefaultItemTitle { get; set; } = "Item";
