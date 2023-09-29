@@ -7,6 +7,7 @@ using System.Runtime.InteropServices;
 using System.Threading;
 using Alternet.Drawing;
 using Alternet.UI;
+using Alternet.UI.Localization;
 
 namespace ControlsTest
 {
@@ -53,8 +54,8 @@ namespace ControlsTest
             Image = Bitmap.FromUrl($"{ResPrefix}caret-right-{ImageSize}.png"),
         };
 
-        HorizontalStackPanel rootPanel = new();
-        VerticalStackPanel webBrowserPanel = new();
+        private readonly PanelAuiManager rootPanel = new();
+        private readonly VerticalStackPanel webBrowserPanel = new();
 
         private readonly Button forwardButton = new()
         {
@@ -69,27 +70,17 @@ namespace ControlsTest
             SuggestedWidth = 200,
         };
 
-        private readonly Label headerLabel = new()
-        {
-            Text = "Web Browser Control",
-            Margin = 5,
-            VerticalAlignment = VerticalAlignment.Center,
-        };
+        private readonly string headerLabelText = "Web Browser Control";
 
         private readonly WebBrowser webBrowser1 = new()
         {
+            HasBorder = false,
         };
 
         private readonly StackPanel webBrowserToolbarPanel = new()
         {
             Margin = new Thickness(5, 5, 5, 5),
             HorizontalAlignment = HorizontalAlignment.Stretch,
-            Orientation = StackPanelOrientation.Horizontal,
-        };
-
-        private readonly StackPanel findOptionsPanel = new()
-        {
-            Margin = new(5, 5, 5, 5),
             Orientation = StackPanelOrientation.Horizontal,
         };
 
@@ -126,7 +117,7 @@ namespace ControlsTest
         private readonly StackPanel findPanel = new()
         {
             Margin = new Thickness(5, 5, 5, 5),
-            Orientation = StackPanelOrientation.Horizontal,
+            Orientation = StackPanelOrientation.Vertical,
         };
 
         private readonly TextBox findTextBox = new()
@@ -148,10 +139,9 @@ namespace ControlsTest
             Margin = new Thickness(0, 10, 5, 5),
         };
 
-        private readonly PanelLinkLabels actions = new()
+        private readonly ListBox actions = new()
         {
-            SuggestedWidth = 150,
-            SuggestedHeight = 200,
+            HasBorder = false,
         };
 
         private bool pandaInMemory = false;
@@ -160,12 +150,13 @@ namespace ControlsTest
         private bool canNavigate = true;
         private bool historyCleared = false;
         private bool pandaLoaded = false;
-        private string? headerText;
         private bool scriptMessageHandlerAdded = false;
         private ITestPageSite? site;
 
         static WebBrowserTestPage()
         {
+            AuiNotebook.DefaultCreateStyle = AuiNotebookCreateStyle.Top;
+
             WebBrowser.SetDefaultFSNameMemory("memory");
             WebBrowser.SetDefaultFSNameArchive(ZipSchemeName);
             if (SetDefaultUserAgent)
@@ -184,18 +175,11 @@ namespace ControlsTest
 
         public WebBrowserTestPage()
         {
+            rootPanel.DefaultRightPaneBestSize = new(150, 200);
+            rootPanel.DefaultRightPaneMinSize = new(150, 200);
+
             var myListener = new CommonUtils.DebugTraceListener();
             Trace.Listeners.Add(myListener);
-
-            rootPanel.Parent = this;
-            webBrowserPanel.Parent = rootPanel;
-
-            webBrowserPanel.Children.Add(headerLabel);
-
-            AddToolbar(2);
-            AddMainPanel(3);
-            AddFindPanel(4);
-            AddFindOptionsPanel(5);
         }
 
         public static WebBrowserBackend UseBackend
@@ -216,7 +200,6 @@ namespace ControlsTest
 
             set
             {
-                headerText = headerLabel.Text;
                 webBrowser1.ZoomType = WebBrowserZoomType.Layout;
                 scriptMessageHandlerAdded = webBrowser1.AddScriptMessageHandler("wx_msg");
                 if (!scriptMessageHandlerAdded)
@@ -229,11 +212,70 @@ namespace ControlsTest
                 if (CommonUtils.CmdLineTest)
                 {
                     actions.Visible = true;
-                    findOptionsPanel.Visible = true;
                     findClearButton.Visible = true;
                 }
 
                 site = value;
+
+                rootPanel.Parent = this;
+
+                backButton.Click += BackButton_Click;
+                forwardButton.Click += ForwardBtn_Click;
+                zoomInButton.Click += ZoomInButton_Click;
+                zoomOutButton.Click += ZoomOutButton_Click;
+                goButton.Click += GoButton_Click;
+                urlTextBox.KeyDown += TextBox_KeyDown;
+
+                webBrowserToolbarPanel.Children.Add(backButton);
+                webBrowserToolbarPanel.Children.Add(forwardButton);
+                webBrowserToolbarPanel.Children.Add(zoomInButton);
+                webBrowserToolbarPanel.Children.Add(zoomOutButton);
+                webBrowserToolbarPanel.Children.Add(urlTextBox);
+                webBrowserToolbarPanel.Children.Add(goButton);
+                webBrowserPanel.Children.Add(webBrowserToolbarPanel);
+
+                webBrowser1.Navigated += WebBrowser1_Navigated;
+                webBrowser1.Loaded += WebBrowser1_Loaded;
+                webBrowser1.NewWindow += WebBrowser1_NewWindow;
+                webBrowser1.DocumentTitleChanged += WebBrowser1_TitleChanged;
+                webBrowser1.FullScreenChanged += WebBrowser1_FullScreenChanged;
+                webBrowser1.ScriptMessageReceived += WebBrowser1_ScriptMessageReceived;
+                webBrowser1.ScriptResult += WebBrowser1_ScriptResult;
+                webBrowser1.Navigating += WebBrowser1_Navigating;
+                webBrowser1.Error += WebBrowser1_Error;
+                webBrowser1.BeforeBrowserCreate += WebBrowser1_BeforeBrowserCreate;
+
+                findPanel.Children.Add(findTextBox);
+
+                findButton.Click += FindButton_Click;
+                findPanel.Children.Add(findButton);
+
+                findClearButton.Click += FindClearButton_Click;
+                findPanel.Children.Add(findClearButton);
+
+                findPanel.Children.Add(findWrapCheckBox);
+                findPanel.Children.Add(findEntireWordCheckBox);
+                findPanel.Children.Add(findMatchCaseCheckBox);
+                findPanel.Children.Add(findHighlightResultCheckBox);
+                findPanel.Children.Add(findBackwardsCheckBox);
+
+                actions.Parent = rootPanel.RightNotebook;
+                findPanel.Parent = rootPanel.RightNotebook;
+
+                rootPanel.RightNotebook.AddPage(
+                    actions,
+                    CommonStrings.Default.NotebookTabTitleActions);
+
+                /*
+                rootPanel.RightNotebook.AddPage(
+                    findPanel,
+                    CommonStrings.Default.NotebookTabTitleSearch);*/
+
+                rootPanel.CenterNotebook.AddPage(
+                    webBrowser1,
+                    CommonStrings.Default.NotebookTabTitleBrowser);
+
+                rootPanel.Manager.Update();
             }
         }
 
@@ -245,64 +287,6 @@ namespace ControlsTest
             a.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
             AppDomain.CurrentDomain.UnhandledException +=
                 CurrentDomain_UnhandledException;
-        }
-
-        public void AddMainPanel(int rowIndex)
-        {
-            rootPanel.Children.Add(actions);
-
-            webBrowser1.Navigated += WebBrowser1_Navigated;
-            webBrowser1.Loaded += WebBrowser1_Loaded;
-            webBrowser1.NewWindow += WebBrowser1_NewWindow;
-            webBrowser1.DocumentTitleChanged += WebBrowser1_TitleChanged;
-            webBrowser1.FullScreenChanged += WebBrowser1_FullScreenChanged;
-            webBrowser1.ScriptMessageReceived += WebBrowser1_ScriptMessageReceived;
-            webBrowser1.ScriptResult += WebBrowser1_ScriptResult;
-            webBrowser1.Navigating += WebBrowser1_Navigating;
-            webBrowser1.Error += WebBrowser1_Error;
-            webBrowser1.BeforeBrowserCreate += WebBrowser1_BeforeBrowserCreate;
-            webBrowserPanel.Children.Add(webBrowser1);
-        }
-
-        public void AddToolbar(int rowIndex)
-        {
-            backButton.Click += BackButton_Click;
-            forwardButton.Click += ForwardBtn_Click;
-            zoomInButton.Click += ZoomInButton_Click;
-            zoomOutButton.Click += ZoomOutButton_Click;
-            goButton.Click += GoButton_Click;
-            urlTextBox.KeyDown += TextBox_KeyDown;
-
-            webBrowserToolbarPanel.Children.Add(backButton);
-            webBrowserToolbarPanel.Children.Add(forwardButton);
-            webBrowserToolbarPanel.Children.Add(zoomInButton);
-            webBrowserToolbarPanel.Children.Add(zoomOutButton);
-            webBrowserToolbarPanel.Children.Add(urlTextBox);
-            webBrowserToolbarPanel.Children.Add(goButton);
-            webBrowserPanel.Children.Add(webBrowserToolbarPanel);
-        }
-
-        public void AddFindPanel(int rowIndex)
-        {
-            findPanel.Children.Add(findTextBox);
-
-            findButton.Click += FindButton_Click;
-            findPanel.Children.Add(findButton);
-
-            findClearButton.Click += FindClearButton_Click;
-            findPanel.Children.Add(findClearButton);
-
-            webBrowserPanel.Children.Add(findPanel);
-        }
-
-        public void AddFindOptionsPanel(int rowIndex)
-        {
-            findOptionsPanel.Children.Add(findWrapCheckBox);
-            findOptionsPanel.Children.Add(findEntireWordCheckBox);
-            findOptionsPanel.Children.Add(findMatchCaseCheckBox);
-            findOptionsPanel.Children.Add(findHighlightResultCheckBox);
-            findOptionsPanel.Children.Add(findBackwardsCheckBox);
-            webBrowserPanel.Children.Add(findOptionsPanel);
         }
 
         internal void DoTestIEShowPrintPreviewDialog()
@@ -735,7 +719,7 @@ namespace ControlsTest
             AssemblyName thisAssemblyName = thisAssembly.GetName();
             Version? ver = thisAssemblyName.Version;
 
-            headerLabel.Text = $"{headerText} {ver} : {e.Text} : {backendVersion}";
+            Log($"{headerLabelText} {ver} : {e.Text} : {backendVersion}");
         }
 
         private void GoButton_Click(object? sender, EventArgs e)
@@ -944,17 +928,15 @@ namespace ControlsTest
         {
             if (name == null)
             {
-                actions.AddSpacer();
+                actions.Add("======");
                 return;
             }
 
-            actions.Add(name, action);
+            actions.Add(name/*, action*/);
         }
 
         private void AddTestActions()
         {
-            var linkLabel = actions.Add("Hello", "www.google.com");
-
             AddTestAction(
                 "Open Panda sample",
                 () => { webBrowser1.LoadURL(GetPandaUrl()); });

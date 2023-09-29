@@ -53,13 +53,18 @@ namespace ControlsTest
 
         private void SetActivePageControl()
         {
-            activePageHolder.SuspendLayout();
-            activePageHolder.Children.Clear();
+            activePageHolder.GetVisibleChildOrNull()?.Hide();
 
             var selectedIndex = pagesListBox.SelectedIndex;
-            if (selectedIndex != null)
-                activePageHolder.Children.Add(Pages[selectedIndex.Value].Control);
-            activePageHolder.ResumeLayout();
+            if (selectedIndex == null)
+                return;
+
+            var page = Pages[selectedIndex.Value];
+
+            var control = page.Control;
+            control.Parent = activePageHolder;
+            control.Visible = true;
+            control.PerformLayout();
         }
 
         public class Page
