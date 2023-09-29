@@ -62,6 +62,21 @@ namespace Alternet::UI
 		return PaneInfo(handle).IsDocked();
 	}
 
+	Int32Size AuiPaneInfo::GetBestSize(void* handle)
+	{
+		return PaneInfo(handle).best_size;
+	}
+
+	Int32Size AuiPaneInfo::GetMinSize(void* handle)
+	{
+		return PaneInfo(handle).min_size;
+	}
+
+	Int32Size AuiPaneInfo::GetMaxSize(void* handle)
+	{
+		return PaneInfo(handle).max_size;
+	}
+
 	bool AuiPaneInfo::IsToolbar(void* handle)
 	{
 		return PaneInfo(handle).IsToolbar();

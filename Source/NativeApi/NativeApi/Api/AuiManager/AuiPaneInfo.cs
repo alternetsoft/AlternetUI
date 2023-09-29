@@ -3,12 +3,22 @@ using ApiCommon;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Alternet.Drawing;
 
 namespace NativeApi.Api
 {
 	//https://docs.wxwidgets.org/3.2/classwx_aui_pane_info.html
 	public class AuiPaneInfo
 	{
+        // size that the layout engine will prefer
+        public static Int32Size GetBestSize(IntPtr handle) => default;
+
+        // minimum size the pane window can tolerate
+        public static Int32Size GetMinSize(IntPtr handle) => default;
+
+        // maximum size the pane window can tolerate
+        public static Int32Size GetMaxSize(IntPtr handle) => default;
+
         public static void Delete(IntPtr handle) { }
         public static IntPtr CreateAuiPaneInfo() => throw new Exception();
 
@@ -115,5 +125,57 @@ namespace NativeApi.Api
         public static void SetFlag(IntPtr handle, int flag, bool option_state) =>
             throw new Exception();
         public static bool HasFlag(IntPtr handle, int flag) => throw new Exception();
+
+
     }
 }
+
+/*
+ 
+// name of the pane
+public static string GetName() => default;
+ 	
+// caption displayed on the window 
+public static string GetCaption() => default;
+
+// icon of the pane, may be invalid or wxBitmap 
+public static IntPtr GetIcon() => default;
+	
+// window that is in this pane 
+public static IntPtr GetWindow() => default;
+ 	
+// floating frame window that holds the pane, wxFrame* 
+public static IntPtr 	GetFrame() => default;
+
+// a combination of wxPaneState values 
+uint GetState() => default;
+
+// dock direction (top, bottom, left, right, center) 
+int GetDockDirection() => default;
+ 
+int GetDockLayer() => default;
+ 	layer number (0 = innermost layer)
+ 
+int 	dock_row() => default;
+ 	row number on the docking bar (0 = first row)
+ 
+int 	dock_pos() => default;
+ 	position inside the row (0 = first position)
+ 
+wxPoint 	floating_pos() => default;
+ 	position while floating
+ 
+wxSize 	floating_size() => default;
+ 	size while floating
+ 
+int 	dock_proportion() => default;
+ 	proportion while docked
+ 
+wxAuiPaneButtonArray 	buttons() => default;
+ 	buttons on the pane
+
+// current rectangle (populated by wxAUI)  
+wxRect 	rect() => default;
+ 	
+ 
+ */

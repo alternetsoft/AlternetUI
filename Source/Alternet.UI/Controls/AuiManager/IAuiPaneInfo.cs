@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Alternet.Drawing;
 
 namespace Alternet.UI
 {
@@ -603,5 +604,20 @@ namespace Alternet.UI
         /// <param name="flag"></param>
         /// <returns></returns>
         bool HasFlag(int flag);
+
+        /// <summary>
+        /// Gets size that the layout engine will prefer.
+        /// </summary>
+        Int32Size GetBestSize();
+
+        /// <summary>
+        /// Gets minimum size the pane window can tolerate.
+        /// </summary>
+        Int32Size GetMinSize();
+
+        /// <summary>
+        /// Gets maximum size the pane window can tolerate.
+        /// </summary>
+        Int32Size GetMaxSize();
     }
 }

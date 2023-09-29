@@ -23,6 +23,21 @@ namespace Alternet.UI.Native
         {
         }
         
+        public static Alternet.Drawing.Int32Size GetBestSize(System.IntPtr handle)
+        {
+            return NativeApi.AuiPaneInfo_GetBestSize_(handle);
+        }
+        
+        public static Alternet.Drawing.Int32Size GetMinSize(System.IntPtr handle)
+        {
+            return NativeApi.AuiPaneInfo_GetMinSize_(handle);
+        }
+        
+        public static Alternet.Drawing.Int32Size GetMaxSize(System.IntPtr handle)
+        {
+            return NativeApi.AuiPaneInfo_GetMaxSize_(handle);
+        }
+        
         public static void Delete(System.IntPtr handle)
         {
             NativeApi.AuiPaneInfo_Delete_(handle);
@@ -411,6 +426,15 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern IntPtr AuiPaneInfo_Create_();
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern Alternet.Drawing.Int32Size AuiPaneInfo_GetBestSize_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern Alternet.Drawing.Int32Size AuiPaneInfo_GetMinSize_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern Alternet.Drawing.Int32Size AuiPaneInfo_GetMaxSize_(System.IntPtr handle);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void AuiPaneInfo_Delete_(System.IntPtr handle);

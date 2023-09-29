@@ -40,6 +40,21 @@ namespace Alternet.UI
             GC.SuppressFinalize(this);
         }
 
+        public Int32Size GetBestSize()
+        {
+            return Native.AuiPaneInfo.GetBestSize(handle);
+        }
+
+        public Int32Size GetMinSize()
+        {
+            return Native.AuiPaneInfo.GetMinSize(handle);
+        }
+
+        public Int32Size GetMaxSize()
+        {
+            return Native.AuiPaneInfo.GetMaxSize(handle);
+        }
+
         public void SafeSet(IAuiPaneInfo source)
         {
             Native.AuiPaneInfo.SafeSet(handle, source.Handle);
