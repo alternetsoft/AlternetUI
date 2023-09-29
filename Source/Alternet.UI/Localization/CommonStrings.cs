@@ -31,6 +31,21 @@ namespace Alternet.UI.Localization
         public string ButtonAdd { get; set; } = "Add";
 
         /// <inheritdoc cref="ButtonOk"/>
+        public string ButtonBack { get; set; } = "Back";
+
+        /// <inheritdoc cref="ButtonOk"/>
+        public string ButtonForward { get; set; } = "Forward";
+
+        /// <inheritdoc cref="ButtonOk"/>
+        public string ButtonGo { get; set; } = "Go";
+
+        /// <inheritdoc cref="ButtonOk"/>
+        public string ButtonZoomIn { get; set; } = "Zoom In";
+
+        /// <inheritdoc cref="ButtonOk"/>
+        public string ButtonZoomOut { get; set; } = "Zoom Out";
+
+        /// <inheritdoc cref="ButtonOk"/>
         public string ButtonAddChild { get; set; } = "Add Child";
 
         /// <inheritdoc cref="ButtonOk"/>
@@ -42,8 +57,12 @@ namespace Alternet.UI.Localization
         /// <inheritdoc cref="ButtonOk"/>
         public string ButtonClear { get; set; } = "Clear";
 
+        // ========================
+
         /// <inheritdoc cref="ButtonOk"/>
         public string WindowTitleListEdit { get; set; } = "List Editor";
+
+        // ========================
 
         /// <inheritdoc cref="ButtonOk"/>
         public string NotebookTabTitleProperties { get; set; } = "Properties";
@@ -65,6 +84,8 @@ namespace Alternet.UI.Localization
 
         /// <inheritdoc cref="ButtonOk"/>
         public string NotebookTabTitleSearch { get; set; } = "Search";
+
+        // ========================
 
         /// <inheritdoc cref="ButtonOk"/>
         public string ListEditDefaultItemTitle { get; set; } = "Item";
