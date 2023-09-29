@@ -25,7 +25,7 @@ namespace Alternet.Drawing
     public struct Int32Size : IEquatable<Int32Size>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref='Drawing.Int32Size'/> class.
+        /// Initializes a new instance of the <see cref='Int32Size'/> class.
         /// </summary>
         public static readonly Int32Size Empty;
 
@@ -33,9 +33,9 @@ namespace Alternet.Drawing
         private int height; // Do not rename (binary serialization)
 
         /// <summary>
-        /// Initializes a new instance of the <see cref='Drawing.Int32Size'/>
+        /// Initializes a new instance of the <see cref='Int32Size'/>
         /// class from the specified
-        /// <see cref='Drawing.Int32Point'/>.
+        /// <see cref='Int32Point'/>.
         /// </summary>
         public Int32Size(Int32Point pt)
         {
@@ -44,7 +44,7 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref='Drawing.Int32Size'/>
+        /// Initializes a new instance of the <see cref='Int32Size'/>
         /// class from the specified dimensions.
         /// </summary>
         public Int32Size(int width, int height)
@@ -65,7 +65,7 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Tests whether this <see cref='Drawing.Int32Size'/> has zero
+        /// Tests whether this <see cref='Int32Size'/> has zero
         /// width and height.
         /// </summary>
         [Browsable(false)]
@@ -73,7 +73,7 @@ namespace Alternet.Drawing
 
         /// <summary>
         /// Represents the horizontal component of this
-        /// <see cref='Drawing.Int32Size'/>.
+        /// <see cref='Int32Size'/>.
         /// </summary>
         public int Width
         {
@@ -83,7 +83,7 @@ namespace Alternet.Drawing
 
         /// <summary>
         /// Represents the vertical component of this
-        /// <see cref='Drawing.Int32Size'/>.
+        /// <see cref='Int32Size'/>.
         /// </summary>
         public int Height
         {
@@ -92,27 +92,27 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Converts the specified <see cref='Drawing.Int32Size'/> to a
-        /// <see cref='Drawing.Int32Point'/>.
+        /// Converts the specified <see cref='Int32Size'/> to a
+        /// <see cref='Int32Point'/>.
         /// </summary>
         public static explicit operator Int32Point(Int32Size size) =>
             new(size.Width, size.Height);
 
         /// <summary>
-        /// Converts the specified <see cref='Drawing.Int32Size'/> to a
-        /// <see cref='Drawing.Size'/>.
+        /// Converts the specified <see cref='Int32Size'/> to a
+        /// <see cref='Size'/>.
         /// </summary>
         public static implicit operator Size(Int32Size p) => new(p.Width, p.Height);
 
         /// <summary>
-        /// Performs vector addition of two <see cref='Drawing.Int32Size'/> objects.
+        /// Performs vector addition of two <see cref='Int32Size'/> objects.
         /// </summary>
         public static Int32Size operator +(Int32Size sz1, Int32Size sz2) =>
             Add(sz1, sz2);
 
         /// <summary>
-        /// Contracts a <see cref='Drawing.Int32Size'/> by another
-        /// <see cref='Drawing.Int32Size'/>
+        /// Contracts a <see cref='Int32Size'/> by another
+        /// <see cref='Int32Size'/>
         /// </summary>
         public static Int32Size operator -(Int32Size sz1, Int32Size sz2) =>
             Subtract(sz1, sz2);
@@ -178,13 +178,13 @@ namespace Alternet.Drawing
             => new(left.width / right, left.height / right);
 
         /// <summary>
-        /// Tests whether two <see cref='Drawing.Int32Size'/> objects are identical.
+        /// Tests whether two <see cref='Int32Size'/> objects are identical.
         /// </summary>
         public static bool operator ==(Int32Size sz1, Int32Size sz2) =>
             sz1.Width == sz2.Width && sz1.Height == sz2.Height;
 
         /// <summary>
-        /// Tests whether two <see cref='Drawing.Int32Size'/> objects are different.
+        /// Tests whether two <see cref='Int32Size'/> objects are different.
         /// </summary>
         public static bool operator !=(Int32Size sz1, Int32Size sz2) =>
             !(sz1 == sz2);
@@ -201,7 +201,7 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Performs vector addition of two <see cref='Drawing.Int32Size'/> objects.
+        /// Performs vector addition of two <see cref='Int32Size'/> objects.
         /// </summary>
         public static Int32Size Add(Int32Size sz1, Int32Size sz2) =>
             new(unchecked(sz1.Width + sz2.Width),
@@ -216,8 +216,8 @@ namespace Alternet.Drawing
                 unchecked((int)Math.Ceiling(value.Height)));
 
         /// <summary>
-        /// Contracts a <see cref='Drawing.Int32Size'/> by another
-        /// <see cref='Drawing.Int32Size'/> .
+        /// Contracts a <see cref='Int32Size'/> by another
+        /// <see cref='Int32Size'/> .
         /// </summary>
         public static Int32Size Subtract(Int32Size sz1, Int32Size sz2) =>
             new(unchecked(sz1.Width - sz2.Width),
@@ -240,8 +240,8 @@ namespace Alternet.Drawing
 
         /// <summary>
         /// Tests to see whether the specified object is a
-        /// <see cref='Drawing.Int32Size'/>  with the same dimensions
-        /// as this <see cref='Drawing.Int32Size'/>.
+        /// <see cref='Int32Size'/>  with the same dimensions
+        /// as this <see cref='Int32Size'/>.
         /// </summary>
         public override readonly bool Equals([NotNullWhen(true)] object? obj) =>
             obj is Int32Size size && Equals(size);
@@ -263,7 +263,7 @@ namespace Alternet.Drawing
 
         /// <summary>
         /// Creates a human-readable string that represents this
-        /// <see cref='Drawing.Int32Size'/>.
+        /// <see cref='Int32Size'/>.
         /// </summary>
         public override readonly string ToString()
         {
