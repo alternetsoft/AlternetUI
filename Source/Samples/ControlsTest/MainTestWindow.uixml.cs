@@ -1,4 +1,5 @@
-﻿using Alternet.UI;
+﻿using Alternet.Drawing;
+using Alternet.UI;
 
 namespace ControlsTest
 {

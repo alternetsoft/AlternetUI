@@ -506,7 +506,7 @@ namespace Alternet.UI
         /// Gets toolbar button bitmap size.
         /// </summary>
         /// <returns></returns>
-        public virtual Size GetToolBitmapSize()
+        public virtual Int32Size GetToolBitmapSize()
         {
             var imageSize = Int32Size.Max(
                 UI.Toolbar.GetDefaultImageSize(this),

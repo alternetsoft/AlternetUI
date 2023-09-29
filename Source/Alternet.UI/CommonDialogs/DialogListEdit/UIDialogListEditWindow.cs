@@ -91,36 +91,31 @@ namespace Alternet.UI
             var imageSize = Toolbar.GetDefaultImageSize(this);
             toolbar.ToolBitmapSize = imageSize;
 
-            var imageAdd = AuiToolbar.LoadSvgImage(SvgUtils.UrlImagePlus, imageSize);
-            var imageRemove = AuiToolbar.LoadSvgImage(SvgUtils.UrlImageMinus, imageSize);
-            var imageOk = AuiToolbar.LoadSvgImage(SvgUtils.UrlImageOk, imageSize);
-            var imageCancel = AuiToolbar.LoadSvgImage(SvgUtils.UrlImageCancel, imageSize);
-            var imageAddChild = AuiToolbar.LoadSvgImage(SvgUtils.UrlImageAddChild, imageSize);
-            var imageRemoveAll = AuiToolbar.LoadSvgImage(SvgUtils.UrlImageRemoveAll, imageSize);
+            var images = KnownSvgImages.GetForSize(imageSize);
 
             buttonIdAdd = toolbar.AddTool(
                 CommonStrings.Default.ButtonAdd,
-                imageAdd,
+                images.ImgAdd,
                 CommonStrings.Default.ButtonAdd);
             buttonIdAddChild = toolbar.AddTool(
                 CommonStrings.Default.ButtonAddChild,
-                imageAddChild,
+                images.ImgAddChild,
                 CommonStrings.Default.ButtonAddChild);
             buttonIdRemove = toolbar.AddTool(
                 CommonStrings.Default.ButtonRemove,
-                imageRemove,
+                images.ImgRemove,
                 CommonStrings.Default.ButtonRemove);
             buttonIdRemoveAll = toolbar.AddTool(
                 CommonStrings.Default.ButtonClear,
-                imageRemoveAll,
+                images.ImgRemoveAll,
                 CommonStrings.Default.ButtonClear);
             buttonIdOk = toolbar.AddTool(
                 CommonStrings.Default.ButtonOk,
-                imageOk,
+                images.ImgOk,
                 CommonStrings.Default.ButtonOk);
             buttonIdCancel = toolbar.AddTool(
                 CommonStrings.Default.ButtonCancel,
-                imageCancel,
+                images.ImgCancel,
                 CommonStrings.Default.ButtonCancel);
 
             toolbar.Realize();
@@ -204,10 +199,6 @@ namespace Alternet.UI
                 Save();
                 Designer?.RaisePropertyChanged(DataSource?.Instance, DataSource?.PropInfo?.Name);
             }
-
-            /*Application.DebugLog("Before dialog.Clear");
-            Clear();
-            Application.DebugLog("After dialog.Clear");*/
         }
 
         private void OnDesignerPropertyChanged(object? sender, PropertyChangeEventArgs e)
@@ -320,7 +311,7 @@ namespace Alternet.UI
             toolbar.EnableTool(buttonIdRemoveAll, canRemoveAll);
             toolbar.EnableTool(buttonIdAddChild, canAddChild);
             toolbar.EnableTool(buttonIdOk, canApply);
-            toolbar.Invalidate();
+            toolbar.Refresh();
         }
 
         private void TreeView_SelectionChanged(object? sender, EventArgs e)
