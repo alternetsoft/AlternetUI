@@ -251,6 +251,17 @@ namespace Alternet.Drawing
             new(sz1.Width - sz2.Width, sz1.Height - sz2.Height);
 
         /// <summary>
+        /// Gets maximal width and height from the two specified <see cref="Size"/> values.
+        /// </summary>
+        /// <param name="v1">First <see cref="Size"/> value.</param>
+        /// <param name="v2">Second <see cref="Size"/> value.</param>
+        /// <returns></returns>
+        public static Size Max(Size v1, Size v2)
+        {
+            return new Size(Math.Max(v1.width, v2.width), Math.Max(v1.height, v2.height));
+        }
+
+        /// <summary>
         /// Tests to see whether the specified object is a
         /// <see cref='Drawing.Size'/>  with the same dimensions
         /// as this <see cref='Drawing.Size'/>.
