@@ -11,14 +11,14 @@ namespace Alternet.UI
     /// <see cref="ListControl"/> descendants. This class has both <see cref="Text"/>
     /// and <see cref="Value"/>.
     /// </summary>
-    public class ListControlTextValuePair
+    public class ListControlItem
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="ListControlTextValuePair"/> class.
+        /// Initializes a new instance of the <see cref="ListControlItem"/> class.
         /// </summary>
         /// <param name="text">Text to display in the <see cref="ListControl"/></param>
         /// <param name="value">User data.</param>
-        public ListControlTextValuePair(string text, object value)
+        public ListControlItem(string text, object? value = null)
         {
             Text = text;
             Value = value;
@@ -32,7 +32,13 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets user data.
         /// </summary>
-        public object Value { get; set; }
+        public object? Value { get; set; }
+
+        /// <summary>
+        /// Gets or sets <see cref="Action"/> associated with this
+        /// <see cref="ListControlItem"/> instance.
+        /// </summary>
+        public Action? Action { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()
