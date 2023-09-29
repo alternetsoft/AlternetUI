@@ -53,6 +53,9 @@ namespace ControlsTest
             Image = Bitmap.FromUrl($"{ResPrefix}caret-right-{ImageSize}.png"),
         };
 
+        HorizontalStackPanel rootPanel = new();
+        VerticalStackPanel webBrowserPanel = new();
+
         private readonly Button forwardButton = new()
         {
             Margin = new Thickness(0, 5, 5, 5),
@@ -73,19 +76,8 @@ namespace ControlsTest
             VerticalAlignment = VerticalAlignment.Center,
         };
 
-        private readonly Grid webBrowserGrid = new()
-        {
-            Margin = 5,
-            HorizontalAlignment = HorizontalAlignment.Stretch,
-        };
-
         private readonly WebBrowser webBrowser1 = new()
         {
-        };
-
-        private readonly SplitterPanel mainPanel = new()
-        {
-            Margin = 5,
         };
 
         private readonly StackPanel webBrowserToolbarPanel = new()
@@ -156,7 +148,12 @@ namespace ControlsTest
             Margin = new Thickness(0, 10, 5, 5),
         };
 
-        private readonly ListBox listBox1 = new();
+        private readonly PanelLinkLabels actions = new()
+        {
+            SuggestedWidth = 150,
+            SuggestedHeight = 200,
+        };
+
         private bool pandaInMemory = false;
         private bool mappingSet = false;
         private int scriptRunCounter = 0;
@@ -190,38 +187,10 @@ namespace ControlsTest
             var myListener = new CommonUtils.DebugTraceListener();
             Trace.Listeners.Add(myListener);
 
-            webBrowserGrid.RowDefinitions.Add(new RowDefinition
-            {
-                Height = new GridLength(),
-            });
-            webBrowserGrid.RowDefinitions.Add(new RowDefinition
-            {
-                Height = new GridLength(),
-            });
-            webBrowserGrid.RowDefinitions.Add(new RowDefinition
-            {
-                Height = new GridLength(),
-            });
-            webBrowserGrid.RowDefinitions.Add(new RowDefinition
-            {
-                Height = new GridLength(100, GridUnitType.Star),
-            });
-            webBrowserGrid.RowDefinitions.Add(new RowDefinition
-            {
-                Height = new GridLength(),
-            });
-            webBrowserGrid.RowDefinitions.Add(new RowDefinition
-            {
-                Height = new GridLength(),
-            });
-            webBrowserGrid.ColumnDefinitions.Add(new ColumnDefinition
-            {
-                Width = new GridLength(100, GridUnitType.Star),
-            });
+            rootPanel.Parent = this;
+            webBrowserPanel.Parent = rootPanel;
 
-            Children.Add(webBrowserGrid);
-
-            webBrowserGrid.Children.Add(headerLabel);
+            webBrowserPanel.Children.Add(headerLabel);
 
             AddToolbar(2);
             AddMainPanel(3);
@@ -259,7 +228,7 @@ namespace ControlsTest
 
                 if (CommonUtils.CmdLineTest)
                 {
-                    listBox1.Visible = true;
+                    actions.Visible = true;
                     findOptionsPanel.Visible = true;
                     findClearButton.Visible = true;
                 }
@@ -280,9 +249,7 @@ namespace ControlsTest
 
         public void AddMainPanel(int rowIndex)
         {
-            Grid.SetRowColumn(mainPanel, rowIndex, 0);
-
-            listBox1.MouseDoubleClick += ListBox1_MouseDoubleClick;
+            rootPanel.Children.Add(actions);
 
             webBrowser1.Navigated += WebBrowser1_Navigated;
             webBrowser1.Loaded += WebBrowser1_Loaded;
@@ -294,18 +261,11 @@ namespace ControlsTest
             webBrowser1.Navigating += WebBrowser1_Navigating;
             webBrowser1.Error += WebBrowser1_Error;
             webBrowser1.BeforeBrowserCreate += WebBrowser1_BeforeBrowserCreate;
-            mainPanel.Children.Add(webBrowser1);
-            mainPanel.Children.Add(listBox1);
-
-            mainPanel.SplitVertical(webBrowser1, listBox1, 650);
-
-            webBrowserGrid.Children.Add(mainPanel);
+            webBrowserPanel.Children.Add(webBrowser1);
         }
 
         public void AddToolbar(int rowIndex)
         {
-            Grid.SetRowColumn(webBrowserToolbarPanel, rowIndex, 0);
-
             backButton.Click += BackButton_Click;
             forwardButton.Click += ForwardBtn_Click;
             zoomInButton.Click += ZoomInButton_Click;
@@ -319,13 +279,11 @@ namespace ControlsTest
             webBrowserToolbarPanel.Children.Add(zoomOutButton);
             webBrowserToolbarPanel.Children.Add(urlTextBox);
             webBrowserToolbarPanel.Children.Add(goButton);
-            webBrowserGrid.Children.Add(webBrowserToolbarPanel);
+            webBrowserPanel.Children.Add(webBrowserToolbarPanel);
         }
 
         public void AddFindPanel(int rowIndex)
         {
-            Grid.SetRowColumn(findPanel, rowIndex, 0);
-
             findPanel.Children.Add(findTextBox);
 
             findButton.Click += FindButton_Click;
@@ -334,19 +292,17 @@ namespace ControlsTest
             findClearButton.Click += FindClearButton_Click;
             findPanel.Children.Add(findClearButton);
 
-            webBrowserGrid.Children.Add(findPanel);
+            webBrowserPanel.Children.Add(findPanel);
         }
 
         public void AddFindOptionsPanel(int rowIndex)
         {
-            Grid.SetRowColumn(findOptionsPanel, rowIndex, 0);
-
             findOptionsPanel.Children.Add(findWrapCheckBox);
             findOptionsPanel.Children.Add(findEntireWordCheckBox);
             findOptionsPanel.Children.Add(findMatchCaseCheckBox);
             findOptionsPanel.Children.Add(findHighlightResultCheckBox);
             findOptionsPanel.Children.Add(findBackwardsCheckBox);
-            webBrowserGrid.Children.Add(findOptionsPanel);
+            webBrowserPanel.Children.Add(findOptionsPanel);
         }
 
         internal void DoTestIEShowPrintPreviewDialog()
@@ -830,7 +786,7 @@ namespace ControlsTest
 
             if (s == "l")
             {
-                listBox1.Visible = true;
+                actions.Visible = true;
                 return;
             }
 
@@ -979,32 +935,26 @@ namespace ControlsTest
             action.DoCall();
         }
 
-        private void AddTestAction()
+        /*private void AddTestAction()
         {
             AddTestAction(null, new MethodCaller());
-        }
+        }*/
 
         private void AddTestAction(string? name = null, Action? action = null)
         {
-            AddTestAction(name, new MethodCaller(this, action));
-        }
-
-        private void AddTestAction(
-            string? name = null,
-            MethodCaller? action = null)
-        {
             if (name == null)
             {
-                listBox1.Items.Add("----");
+                actions.AddSpacer();
                 return;
             }
 
-            testActions.Add(name, action!);
-            listBox1.Items.Add(name);
+            actions.Add(name, action);
         }
 
         private void AddTestActions()
         {
+            var linkLabel = actions.Add("Hello", "www.google.com");
+
             AddTestAction(
                 "Open Panda sample",
                 () => { webBrowser1.LoadURL(GetPandaUrl()); });
@@ -1099,7 +1049,9 @@ namespace ControlsTest
 
                 MethodCaller mc = new(this, item);
 
-                AddTestAction(item.Name, mc);
+                Action action = (Action)Delegate.CreateDelegate(typeof(Action), this, item);
+
+                AddTestAction(item.Name, action);
             }
         }
 
