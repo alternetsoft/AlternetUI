@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Alternet.Drawing;
 using Alternet.UI.Localization;
 
 namespace Alternet.UI
@@ -277,7 +278,9 @@ namespace Alternet.UI
                     rightPane.Name(nameof(rightPane)).Right().PaneBorder(false)
                         .CloseButton(false)
                         .TopDockable(false).BottomDockable(false).Movable(false).Floatable(false)
-                        .BestSize(350, 200).MinSize(350, 200).CaptionVisible(false);
+                        .BestSize(DefaultRightPaneBestSize.Width, DefaultRightPaneBestSize.Height)
+                        .MinSize(DefaultRightPaneMinSize.Width, DefaultRightPaneMinSize.Height)
+                        .CaptionVisible(false);
                 }
 
                 return rightPane;
@@ -300,6 +303,16 @@ namespace Alternet.UI
                 return centerPane;
             }
         }
+
+        /// <summary>
+        /// Gets or sets default best size of the right pane.
+        /// </summary>
+        public virtual Int32Size DefaultRightPaneBestSize { get; set; } = new(350, 200);
+
+        /// <summary>
+        /// Gets or sets default min size of the right pane.
+        /// </summary>
+        public virtual Int32Size DefaultRightPaneMinSize { get; set; } = new(350, 200);
 
         /// <summary>
         /// Gets the bottom pane.
