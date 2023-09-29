@@ -264,16 +264,11 @@ namespace Alternet.UI
         {
             get
             {
-                if(toolbar is null)
-                {
-                    toolbar = new();
-
-                    toolbar.CreateStyle = DefaultToolbarStyle;
-                    var imageSize = Drawing.Size.Max(
-                        UI.Toolbar.GetDefaultImageSize(this),
-                        new Size(DefaultMinToolbarImageSize));
-                    toolbar.ToolBitmapSize = imageSize;
-                }
+                toolbar ??= new()
+                    {
+                        CreateStyle = DefaultToolbarStyle,
+                        ToolBitmapSize = GetToolBitmapSize(),
+                    };
 
                 return toolbar;
             }
@@ -508,6 +503,18 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets toolbar button bitmap size.
+        /// </summary>
+        /// <returns></returns>
+        public virtual Size GetToolBitmapSize()
+        {
+            var imageSize = Int32Size.Max(
+                UI.Toolbar.GetDefaultImageSize(this),
+                new Int32Size(DefaultMinToolbarImageSize));
+            return imageSize;
+        }
+
+        /// <summary>
         /// Binds <see cref="LogControl"/> to show messages which are logged with
         /// <see cref="Application.Log"/>.
         /// </summary>
@@ -553,7 +560,9 @@ namespace Alternet.UI
             item.Action();
         }
 
+#pragma warning disable
         private AuiToolbarCreateStyle InitDefaultToolbarStyle()
+#pragma warning restore
         {
             var toolbarStyle =
                 AuiToolbarCreateStyle.PlainBackground |

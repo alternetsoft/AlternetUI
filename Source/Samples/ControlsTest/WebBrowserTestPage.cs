@@ -26,7 +26,6 @@ namespace ControlsTest
         private static EmptyWindow? emptyWindow = null;
 
         private readonly WebBrowserFindParams findParams = new();
-        private readonly Dictionary<string, MethodCaller> testActions = new();
 
         private readonly Button zoomInButton = new()
         {
@@ -139,11 +138,6 @@ namespace ControlsTest
             Margin = new Thickness(0, 10, 5, 5),
         };
 
-        private readonly ListBox actions = new()
-        {
-            HasBorder = false,
-        };
-
         private bool pandaInMemory = false;
         private bool mappingSet = false;
         private int scriptRunCounter = 0;
@@ -175,8 +169,52 @@ namespace ControlsTest
 
         public WebBrowserTestPage()
         {
+            rootPanel.DefaultToolbarStyle &=
+                ~(AuiToolbarCreateStyle.Text | AuiToolbarCreateStyle.HorzLayout);
+
+            rootPanel.BindApplicationLogMessage();
             rootPanel.DefaultRightPaneBestSize = new(150, 200);
             rootPanel.DefaultRightPaneMinSize = new(150, 200);
+            rootPanel.LogControl.Required();
+            rootPanel.ActionsControl.Required();
+            rootPanel.LogContextMenu.Required();
+            rootPanel.Toolbar.Required();
+
+            var toolbar = rootPanel.Toolbar;
+            var imageSize = rootPanel.GetToolBitmapSize();
+
+            var imageBack = AuiToolbar.LoadSvgImage(SvgUtils.UrlImageWebBrowserBack, imageSize);
+            var imageForward = AuiToolbar.LoadSvgImage(SvgUtils.UrlImageWebBrowserForward, imageSize);
+            var imageZoomIn = AuiToolbar.LoadSvgImage(SvgUtils.UrlImageZoomIn, imageSize);
+            var imageZoomOut = AuiToolbar.LoadSvgImage(SvgUtils.UrlImageZoomOut, imageSize);
+            var imageGo = AuiToolbar.LoadSvgImage(SvgUtils.UrlImageWebBrowserGo, imageSize);
+
+            var buttonIdBack = toolbar.AddTool(
+                CommonStrings.Default.ButtonBack,
+                imageBack,
+                CommonStrings.Default.ButtonBack);
+
+            var buttonIdForward = toolbar.AddTool(
+                CommonStrings.Default.ButtonForward,
+                imageForward,
+                CommonStrings.Default.ButtonForward);
+
+            var buttonIdZoomIn = toolbar.AddTool(
+                CommonStrings.Default.ButtonZoomIn,
+                imageZoomIn,
+                CommonStrings.Default.ButtonZoomIn);
+
+            var buttonIdZoomOut = toolbar.AddTool(
+                CommonStrings.Default.ButtonZoomOut,
+                imageZoomOut,
+                CommonStrings.Default.ButtonZoomOut);
+
+            var buttonIdGo = toolbar.AddTool(
+                CommonStrings.Default.ButtonGo,
+                imageGo,
+                CommonStrings.Default.ButtonGo);
+
+            toolbar.Realize();
 
             var myListener = new CommonUtils.DebugTraceListener();
             Trace.Listeners.Add(myListener);
@@ -211,7 +249,6 @@ namespace ControlsTest
 
                 if (CommonUtils.CmdLineTest)
                 {
-                    actions.Visible = true;
                     findClearButton.Visible = true;
                 }
 
@@ -259,12 +296,7 @@ namespace ControlsTest
                 findPanel.Children.Add(findHighlightResultCheckBox);
                 findPanel.Children.Add(findBackwardsCheckBox);
 
-                actions.Parent = rootPanel.RightNotebook;
                 findPanel.Parent = rootPanel.RightNotebook;
-
-                rootPanel.RightNotebook.AddPage(
-                    actions,
-                    CommonStrings.Default.NotebookTabTitleActions);
 
                 /*
                 rootPanel.RightNotebook.AddPage(
@@ -274,6 +306,8 @@ namespace ControlsTest
                 rootPanel.CenterNotebook.AddPage(
                     webBrowser1,
                     CommonStrings.Default.NotebookTabTitleBrowser);
+
+                rootPanel.Manager.AddPane(rootPanel.Toolbar, rootPanel.ToolbarPane);
 
                 rootPanel.Manager.Update();
             }
@@ -617,8 +651,7 @@ namespace ControlsTest
 
         private void Log(string s)
         {
-            CommonUtils.LogToFile(s);
-            site?.LogEvent(PageName, s);
+            rootPanel.Log(s);
         }
 
         private void LogWebBrowserEvent(WebBrowserEventArgs e)
@@ -768,12 +801,6 @@ namespace ControlsTest
                 return;
             }
 
-            if (s == "l")
-            {
-                actions.Visible = true;
-                return;
-            }
-
             if (s == "t")
             {
                 Test();
@@ -809,58 +836,63 @@ namespace ControlsTest
 
         private void LogInfo(string s = "")
         {
-            Log("=======" + s);
-
-            LogProp(webBrowser1, "HasSelection", "WebBrowser");
-            LogProp(webBrowser1, "SelectedText", "WebBrowser");
-            LogProp(webBrowser1, "SelectedSource", "WebBrowser");
-            LogProp(webBrowser1, "CanCut", "WebBrowser");
-            LogProp(webBrowser1, "CanCopy", "WebBrowser");
-            LogProp(webBrowser1, "CanPaste", "WebBrowser");
-            LogProp(webBrowser1, "CanUndo", "WebBrowser");
-            LogProp(webBrowser1, "CanRedo", "WebBrowser");
-            LogProp(webBrowser1, "IsBusy", "WebBrowser");
-            LogProp(webBrowser1, "PageSource", "WebBrowser");
-            LogProp(webBrowser1, "UserAgent", "WebBrowser");
-
-            LogProp(webBrowser1, "PageText", "WebBrowser");
-            LogProp(webBrowser1, "Zoom", "WebBrowser");
-            LogProp(webBrowser1, "Editable", "WebBrowser");
-            LogProp(webBrowser1, "ZoomType", "WebBrowser");
-            LogProp(webBrowser1, "ZoomFactor", "WebBrowser");
-
-            // Log("GetDefaultImageSize = " + Toolbar.GetDefaultImageSize());
-            Log("DPI = " + webBrowser1.GetDPI().ToString());
-            Log("isDebug = " + WebBrowser.DoCommandGlobal("IsDebug"));
-            Log("os = " + WebBrowser.GetBackendOS().ToString());
-            Log("backend = " + webBrowser1.Backend.ToString());
-            Log("wxWidgetsVersion = " + WebBrowser.GetLibraryVersionString());
-            Log("GetCurrentTitle() = " + webBrowser1.GetCurrentTitle());
-            Log("GetCurrentURL() = " + webBrowser1.GetCurrentURL());
-            Log("IE = " + WebBrowser.IsBackendAvailable(WebBrowserBackend.IE));
-            Log("Edge = " + WebBrowser.IsBackendAvailable(WebBrowserBackend.Edge));
-            Log("WebKit = " + WebBrowser.IsBackendAvailable(WebBrowserBackend.WebKit));
-            Log("Net Version = " + Environment.Version.ToString());
-
-            Log("GetUsefulDefines" + WebBrowser.DoCommandGlobal("GetUsefulDefines"));
-
-            if (WebBrowser.IsBackendAvailable(WebBrowserBackend.Edge))
-                Log("Edge version = " + WebBrowser.GetBackendVersionString(WebBrowserBackend.Edge));
-            if (WebBrowser.IsBackendAvailable(WebBrowserBackend.IE))
-                Log("IE version = " + WebBrowser.GetBackendVersionString(WebBrowserBackend.IE));
-            if (WebBrowser.IsBackendAvailable(WebBrowserBackend.WebKit))
+            void Fn()
             {
-                Log("Webkit version = "
-                    + WebBrowser.GetBackendVersionString(WebBrowserBackend.WebKit));
+                Log("=======" + s);
+
+                LogProp(webBrowser1, "HasSelection", "WebBrowser");
+                LogProp(webBrowser1, "SelectedText", "WebBrowser");
+                LogProp(webBrowser1, "SelectedSource", "WebBrowser");
+                LogProp(webBrowser1, "CanCut", "WebBrowser");
+                LogProp(webBrowser1, "CanCopy", "WebBrowser");
+                LogProp(webBrowser1, "CanPaste", "WebBrowser");
+                LogProp(webBrowser1, "CanUndo", "WebBrowser");
+                LogProp(webBrowser1, "CanRedo", "WebBrowser");
+                LogProp(webBrowser1, "IsBusy", "WebBrowser");
+                LogProp(webBrowser1, "PageSource", "WebBrowser");
+                LogProp(webBrowser1, "UserAgent", "WebBrowser");
+
+                LogProp(webBrowser1, "PageText", "WebBrowser");
+                LogProp(webBrowser1, "Zoom", "WebBrowser");
+                LogProp(webBrowser1, "Editable", "WebBrowser");
+                LogProp(webBrowser1, "ZoomType", "WebBrowser");
+                LogProp(webBrowser1, "ZoomFactor", "WebBrowser");
+
+                // Log("GetDefaultImageSize = " + Toolbar.GetDefaultImageSize());
+                Log("DPI = " + webBrowser1.GetDPI().ToString());
+                Log("isDebug = " + WebBrowser.DoCommandGlobal("IsDebug"));
+                Log("os = " + WebBrowser.GetBackendOS().ToString());
+                Log("backend = " + webBrowser1.Backend.ToString());
+                Log("wxWidgetsVersion = " + WebBrowser.GetLibraryVersionString());
+                Log("GetCurrentTitle() = " + webBrowser1.GetCurrentTitle());
+                Log("GetCurrentURL() = " + webBrowser1.GetCurrentURL());
+                Log("IE = " + WebBrowser.IsBackendAvailable(WebBrowserBackend.IE));
+                Log("Edge = " + WebBrowser.IsBackendAvailable(WebBrowserBackend.Edge));
+                Log("WebKit = " + WebBrowser.IsBackendAvailable(WebBrowserBackend.WebKit));
+                Log("Net Version = " + Environment.Version.ToString());
+
+                Log("GetUsefulDefines" + WebBrowser.DoCommandGlobal("GetUsefulDefines"));
+
+                if (WebBrowser.IsBackendAvailable(WebBrowserBackend.Edge))
+                    Log("Edge version = " + WebBrowser.GetBackendVersionString(WebBrowserBackend.Edge));
+                if (WebBrowser.IsBackendAvailable(WebBrowserBackend.IE))
+                    Log("IE version = " + WebBrowser.GetBackendVersionString(WebBrowserBackend.IE));
+                if (WebBrowser.IsBackendAvailable(WebBrowserBackend.WebKit))
+                {
+                    Log("Webkit version = "
+                        + WebBrowser.GetBackendVersionString(WebBrowserBackend.WebKit));
+                }
+
+                if (WebBrowser.IsBackendAvailable(WebBrowserBackend.Default))
+                {
+                    Log("Default browser version = "
+                        + WebBrowser.GetBackendVersionString(WebBrowserBackend.Default));
+                }
+
+                Log("=======");
             }
 
-            if (WebBrowser.IsBackendAvailable(WebBrowserBackend.Default))
-            {
-                Log("Default browser version = "
-                    + WebBrowser.GetBackendVersionString(WebBrowserBackend.Default));
-            }
-
-            Log("=======");
+            rootPanel.LogControl.DoInsideUpdate(Fn);
         }
 
         private void UpdateZoomButtons()
@@ -903,36 +935,15 @@ namespace ControlsTest
             webBrowser1.GoForward();
         }
 
-        private void ListBox1_MouseDoubleClick(object? sender, MouseButtonEventArgs e)
-        {
-            var listBox = sender as ListBox;
-
-            int? index = listBox!.SelectedIndex;
-            if (index == null)
-                return;
-
-            string? name = listBox.Items[(int)index].ToString();
-
-            if (!testActions.TryGetValue(name!, out MethodCaller? action))
-                return;
-            Log("DoAction: " + name);
-            action.DoCall();
-        }
-
-        /*private void AddTestAction()
-        {
-            AddTestAction(null, new MethodCaller());
-        }*/
-
         private void AddTestAction(string? name = null, Action? action = null)
         {
             if (name == null)
             {
-                actions.Add("======");
+                rootPanel.AddActionSpacer();
                 return;
             }
 
-            actions.Add(name/*, action*/);
+            rootPanel.AddAction(name, action);
         }
 
         private void AddTestActions()
@@ -1028,12 +1039,7 @@ namespace ControlsTest
             {
                 if (!item.Name.StartsWith("DoTest"))
                     continue;
-
-                MethodCaller mc = new(this, item);
-
-                Action action = (Action)Delegate.CreateDelegate(typeof(Action), this, item);
-
-                AddTestAction(item.Name, action);
+                AddTestAction(item.Name, AssemblyUtils.CreateAction(this, item));
             }
         }
 
@@ -1044,42 +1050,6 @@ namespace ControlsTest
                 CommonUtils.LogToFile("===================");
                 CommonUtils.LogToFile("Application finished");
                 CommonUtils.LogToFile("===================");
-            }
-        }
-
-        private class MethodCaller
-        {
-            private static readonly object[] Prm = Array.Empty<object>();
-
-            private readonly MethodInfo? method;
-            private readonly object? parent;
-            private readonly Action? action;
-
-            public MethodCaller()
-            {
-            }
-
-            public MethodCaller(object? parent, Action? action)
-            {
-                this.parent = parent;
-                this.action = action;
-            }
-
-            public MethodCaller(object? parent, MethodInfo? methodInfo)
-            {
-                this.parent = parent;
-                method = methodInfo;
-            }
-
-            public void DoCall()
-            {
-                if (action != null)
-                {
-                    action();
-                    return;
-                }
-
-                method?.Invoke(parent, Prm);
             }
         }
 

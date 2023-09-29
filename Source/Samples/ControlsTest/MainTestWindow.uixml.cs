@@ -4,8 +4,8 @@ namespace ControlsTest
 {
     internal partial class MainTestWindow : Window, ITestPageSite
     {
-        private readonly PageContainer pageContainer = new ();
-        private int lastEventNumber = 1;
+        private readonly StatusBar statusbar = new();
+        private readonly PageContainer pageContainer = new();
 
         public MainTestWindow()
         {
@@ -13,8 +13,9 @@ namespace ControlsTest
 
             InitializeComponent();
 
-            mainGrid.Children.Add(pageContainer);
-            Grid.SetRow(pageContainer, 0);
+            this.StatusBar = statusbar;
+
+            this.Children.Add(pageContainer);
 
             if (WebBrowser.IsBackendAvailable(WebBrowserBackend.Edge))
             {
@@ -41,15 +42,7 @@ namespace ControlsTest
                 "Custom Draw Test",
                 new CustomDrawTestPage { Site = this }));
 
-            Grid.SetRow(eventsListBox, 1);
-
             pageContainer.SelectedIndex = 0;
-        }
-
-        void ITestPageSite.LogEvent(string? pageId, string message)
-        {
-            eventsListBox.Items.Add($"{lastEventNumber++}. {pageId}. {message}");
-            eventsListBox.SelectedIndex = eventsListBox.Items.Count - 1;
         }
 
         private void AddWebBrowserPage(string title)

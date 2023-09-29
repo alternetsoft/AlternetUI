@@ -4,12 +4,4 @@
         xmlns:local="clr-namespace:ControlsTest;assembly=ControlsTest"
         Title="Alternet UI Controls Test"
         Width="900" Height="700" StartLocation="CenterScreen">
-  <Grid Name="mainGrid">
-    <Grid.RowDefinitions>
-      <RowDefinition Height="*" />
-      <RowDefinition Height="100" />
-    </Grid.RowDefinitions>
-
-    <ListBox Name="eventsListBox" Grid.Row="1"/>
-  </Grid>
 </Window>
