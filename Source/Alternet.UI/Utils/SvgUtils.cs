@@ -19,22 +19,22 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets url used to load "plus" svg image used in "Add" toolbar buttons.
         /// </summary>
-        public static string UrlImagePlus { get; set; } = GetImageUrl("plus");
+        public static string UrlImagePlus { get; set; } = GetImageUrl("alternet-plus");
 
         /// <summary>
         /// Gets or sets url used to load "minus" svg image used in "Remove" toolbar buttons.
         /// </summary>
-        public static string UrlImageMinus { get; set; } = GetImageUrl("minus");
+        public static string UrlImageMinus { get; set; } = GetImageUrl("alternet-minus");
 
         /// <summary>
         /// Gets or sets url used to load svg image used in "Ok" toolbar buttons.
         /// </summary>
-        public static string UrlImageOk { get; set; } = GetImageUrl("check");
+        public static string UrlImageOk { get; set; } = GetImageUrl("alternet-check");
 
         /// <summary>
         /// Gets or sets url used to load svg image used in "Cancel" toolbar buttons.
         /// </summary>
-        public static string UrlImageCancel { get; set; } = GetImageUrl("xmark");
+        public static string UrlImageCancel { get; set; } = GetImageUrl("alternet-xmark");
 
         /// <summary>
         /// Gets or sets url used to load svg image used in "Add child" toolbar buttons.
@@ -44,30 +44,30 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets url used to load svg image used in "Remove All" toolbar buttons.
         /// </summary>
-        public static string UrlImageRemoveAll { get; set; } = GetImageUrl("eraser");
+        public static string UrlImageRemoveAll { get; set; } = GetImageUrl("alternet-eraser");
 
         /// <summary>
         /// Gets or sets url used to load svg image used in "Apply" toolbar buttons.
         /// </summary>
-        public static string UrlImageApply { get; set; } = GetImageUrl("square-check");
+        public static string UrlImageApply { get; set; } = GetImageUrl("alternet-square-check");
 
         /// <summary>
         /// Gets or sets url used to load svg image used in "Back" toolbar buttons
         /// for the <see cref="WebBrowser"/>.
         /// </summary>
-        public static string UrlImageWebBrowserBack { get; set; } = GetImageUrl("arrow-left");
+        public static string UrlImageWebBrowserBack { get; set; } = GetImageUrl("alternet-arrow-left");
 
         /// <summary>
         /// Gets or sets url used to load svg image used in "Home" toolbar buttons
         /// for the <see cref="WebBrowser"/>.
         /// </summary>
-        public static string UrlImageWebBrowserHome { get; set; } = GetImageUrl("house");
+        public static string UrlImageWebBrowserHome { get; set; } = GetImageUrl("alternet-house");
 
         /// <summary>
         /// Gets or sets url used to load svg image used in "Forward" toolbar buttons
         /// for the <see cref="WebBrowser"/>.
         /// </summary>
-        public static string UrlImageWebBrowserForward { get; set; } = GetImageUrl("arrow-right");
+        public static string UrlImageWebBrowserForward { get; set; } = GetImageUrl("alternet-arrow-right");
 
         /// <summary>
         /// Gets or sets url used to load svg image used in "Zoom In" toolbar buttons.
@@ -83,19 +83,19 @@ namespace Alternet.UI
         /// Gets or sets url used to load svg image used in "Go" toolbar buttons
         /// for the <see cref="WebBrowser"/>.
         /// </summary>
-        public static string UrlImageWebBrowserGo { get; set; } = GetImageUrl("caret-right");
+        public static string UrlImageWebBrowserGo { get; set; } = GetImageUrl("alternet-caret-right");
 
         /// <summary>
         /// Gets or sets url used to load svg image used in "Refresh" toolbar buttons
         /// for the <see cref="WebBrowser"/>.
         /// </summary>
-        public static string UrlImageWebBrowserRefresh { get; set; } = GetImageUrl("rotate-right");
+        public static string UrlImageWebBrowserRefresh { get; set; } = GetImageUrl("alternet-rotate-right");
 
         /// <summary>
         /// Gets or sets url used to load svg image used in "Stop" toolbar buttons
         /// for the <see cref="WebBrowser"/>.
         /// </summary>
-        public static string UrlImageWebBrowserStop { get; set; } = GetImageUrl("xmark");
+        public static string UrlImageWebBrowserStop { get; set; } = GetImageUrl("alternet-xmark");
 
         private static string GetImageUrl(string name) => string.Format(ResTemplate, name);
     }

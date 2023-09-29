@@ -61,6 +61,17 @@
     <None Remove="Resources\Svg\align-left.svg" />
     <None Remove="Resources\Svg\align-right.svg" />
     <None Remove="Resources\Svg\alternet-add-child.svg" />
+    <None Remove="Resources\Svg\alternet-arrow-left.svg" />
+    <None Remove="Resources\Svg\alternet-arrow-right.svg" />
+    <None Remove="Resources\Svg\alternet-caret-right.svg" />
+    <None Remove="Resources\Svg\alternet-check.svg" />
+    <None Remove="Resources\Svg\alternet-eraser.svg" />
+    <None Remove="Resources\Svg\alternet-house.svg" />
+    <None Remove="Resources\Svg\alternet-minus.svg" />
+    <None Remove="Resources\Svg\alternet-plus.svg" />
+    <None Remove="Resources\Svg\alternet-rotate-right.svg" />
+    <None Remove="Resources\Svg\alternet-square-check.svg" />
+    <None Remove="Resources\Svg\alternet-xmark.svg" />
     <None Remove="Resources\Svg\alternet-zoomin.svg" />
     <None Remove="Resources\Svg\alternet-zoomout.svg" />
     <None Remove="Resources\Svg\angle-down.svg" />
@@ -73,16 +84,12 @@
     <None Remove="Resources\Svg\angles-up.svg" />
     <None Remove="Resources\Svg\arrow-down-a-z.svg" />
     <None Remove="Resources\Svg\arrow-down-z-a.svg" />
-    <None Remove="Resources\Svg\arrow-left.svg" />
-    <None Remove="Resources\Svg\arrow-right.svg" />
     <None Remove="Resources\Svg\arrow-rotate-left.svg" />
     <None Remove="Resources\Svg\arrow-rotate-right.svg" />
     <None Remove="Resources\Svg\arrows-rotate.svg" />
     <None Remove="Resources\Svg\ban.svg" />
     <None Remove="Resources\Svg\bars.svg" />
     <None Remove="Resources\Svg\bold.svg" />
-    <None Remove="Resources\Svg\caret-right.svg" />
-    <None Remove="Resources\Svg\check.svg" />
     <None Remove="Resources\Svg\circle-check.svg" />
     <None Remove="Resources\Svg\circle-exclamation.svg" />
     <None Remove="Resources\Svg\circle-info.svg" />
@@ -91,7 +98,6 @@
     <None Remove="Resources\Svg\copy.svg" />
     <None Remove="Resources\Svg\ellipsis-vertical.svg" />
     <None Remove="Resources\Svg\ellipsis.svg" />
-    <None Remove="Resources\Svg\eraser.svg" />
     <None Remove="Resources\Svg\exclamation.svg" />
     <None Remove="Resources\Svg\file.svg" />
     <None Remove="Resources\Svg\floppy-disk.svg" />
@@ -102,7 +108,6 @@
     <None Remove="Resources\Svg\grip-lines.svg" />
     <None Remove="Resources\Svg\grip-vertical.svg" />
     <None Remove="Resources\Svg\grip.svg" />
-    <None Remove="Resources\Svg\house.svg" />
     <None Remove="Resources\Svg\indent.svg" />
     <None Remove="Resources\Svg\info.svg" />
     <None Remove="Resources\Svg\italic.svg" />
@@ -110,20 +115,16 @@
     <None Remove="Resources\Svg\list-ol.svg" />
     <None Remove="Resources\Svg\list-ul.svg" />
     <None Remove="Resources\Svg\list.svg" />
-    <None Remove="Resources\Svg\minus.svg" />
     <None Remove="Resources\Svg\neuter.svg" />
     <None Remove="Resources\Svg\outdent.svg" />
     <None Remove="Resources\Svg\paste.svg" />
-    <None Remove="Resources\Svg\plus.svg" />
     <None Remove="Resources\Svg\print.svg" />
     <None Remove="Resources\Svg\question.svg" />
     <None Remove="Resources\Svg\Regular\circle-question.svg" />
     <None Remove="Resources\Svg\Regular\circle-xmark.svg" />
     <None Remove="Resources\Svg\rotate-left.svg" />
-    <None Remove="Resources\Svg\rotate-right.svg" />
     <None Remove="Resources\Svg\rotate.svg" />
     <None Remove="Resources\Svg\scissors.svg" />
-    <None Remove="Resources\Svg\square-check.svg" />
     <None Remove="Resources\Svg\terminal.svg" />
     <None Remove="Resources\Svg\text-height.svg" />
     <None Remove="Resources\Svg\toggle-off.svg" />
@@ -131,7 +132,6 @@
     <None Remove="Resources\Svg\trash-can.svg" />
     <None Remove="Resources\Svg\triangle-exclamation.svg" />
     <None Remove="Resources\Svg\underline.svg" />
-    <None Remove="Resources\Svg\xmark.svg" />
     <None Remove="Xaml\.editorconfig" />
   </ItemGroup>
 
@@ -154,16 +154,16 @@
     <EmbeddedResource Include="Resources\Svg\angles-up.svg" />
     <EmbeddedResource Include="Resources\Svg\arrow-down-a-z.svg" />
     <EmbeddedResource Include="Resources\Svg\arrow-down-z-a.svg" />
-    <EmbeddedResource Include="Resources\Svg\arrow-left.svg" />
-    <EmbeddedResource Include="Resources\Svg\arrow-right.svg" />
+    <EmbeddedResource Include="Resources\Svg\alternet-arrow-left.svg" />
+    <EmbeddedResource Include="Resources\Svg\alternet-arrow-right.svg" />
     <EmbeddedResource Include="Resources\Svg\arrow-rotate-left.svg" />
     <EmbeddedResource Include="Resources\Svg\arrow-rotate-right.svg" />
     <EmbeddedResource Include="Resources\Svg\arrows-rotate.svg" />
     <EmbeddedResource Include="Resources\Svg\ban.svg" />
     <EmbeddedResource Include="Resources\Svg\bars.svg" />
     <EmbeddedResource Include="Resources\Svg\bold.svg" />
-    <EmbeddedResource Include="Resources\Svg\caret-right.svg" />
-    <EmbeddedResource Include="Resources\Svg\check.svg" />
+    <EmbeddedResource Include="Resources\Svg\alternet-caret-right.svg" />
+    <EmbeddedResource Include="Resources\Svg\alternet-check.svg" />
     <EmbeddedResource Include="Resources\Svg\circle-check.svg" />
     <EmbeddedResource Include="Resources\Svg\circle-exclamation.svg" />
     <EmbeddedResource Include="Resources\Svg\circle-info.svg" />
@@ -172,7 +172,7 @@
     <EmbeddedResource Include="Resources\Svg\copy.svg" />
     <EmbeddedResource Include="Resources\Svg\ellipsis-vertical.svg" />
     <EmbeddedResource Include="Resources\Svg\ellipsis.svg" />
-    <EmbeddedResource Include="Resources\Svg\eraser.svg" />
+    <EmbeddedResource Include="Resources\Svg\alternet-eraser.svg" />
     <EmbeddedResource Include="Resources\Svg\exclamation.svg" />
     <EmbeddedResource Include="Resources\Svg\file.svg" />
     <EmbeddedResource Include="Resources\Svg\floppy-disk.svg" />
@@ -183,7 +183,7 @@
     <EmbeddedResource Include="Resources\Svg\grip-lines.svg" />
     <EmbeddedResource Include="Resources\Svg\grip-vertical.svg" />
     <EmbeddedResource Include="Resources\Svg\grip.svg" />
-    <EmbeddedResource Include="Resources\Svg\house.svg" />
+    <EmbeddedResource Include="Resources\Svg\alternet-house.svg" />
     <EmbeddedResource Include="Resources\Svg\indent.svg" />
     <EmbeddedResource Include="Resources\Svg\info.svg" />
     <EmbeddedResource Include="Resources\Svg\italic.svg" />
@@ -191,20 +191,20 @@
     <EmbeddedResource Include="Resources\Svg\list-ol.svg" />
     <EmbeddedResource Include="Resources\Svg\list-ul.svg" />
     <EmbeddedResource Include="Resources\Svg\list.svg" />
-    <EmbeddedResource Include="Resources\Svg\minus.svg" />
+    <EmbeddedResource Include="Resources\Svg\alternet-minus.svg" />
     <EmbeddedResource Include="Resources\Svg\neuter.svg" />
     <EmbeddedResource Include="Resources\Svg\outdent.svg" />
     <EmbeddedResource Include="Resources\Svg\paste.svg" />
-    <EmbeddedResource Include="Resources\Svg\plus.svg" />
+    <EmbeddedResource Include="Resources\Svg\alternet-plus.svg" />
     <EmbeddedResource Include="Resources\Svg\print.svg" />
     <EmbeddedResource Include="Resources\Svg\question.svg" />
     <EmbeddedResource Include="Resources\Svg\Regular\circle-question.svg" />
     <EmbeddedResource Include="Resources\Svg\Regular\circle-xmark.svg" />
     <EmbeddedResource Include="Resources\Svg\rotate-left.svg" />
-    <EmbeddedResource Include="Resources\Svg\rotate-right.svg" />
+    <EmbeddedResource Include="Resources\Svg\alternet-rotate-right.svg" />
     <EmbeddedResource Include="Resources\Svg\rotate.svg" />
     <EmbeddedResource Include="Resources\Svg\scissors.svg" />
-    <EmbeddedResource Include="Resources\Svg\square-check.svg" />
+    <EmbeddedResource Include="Resources\Svg\alternet-square-check.svg" />
     <EmbeddedResource Include="Resources\Svg\terminal.svg" />
     <EmbeddedResource Include="Resources\Svg\text-height.svg" />
     <EmbeddedResource Include="Resources\Svg\toggle-off.svg" />
@@ -212,7 +212,7 @@
     <EmbeddedResource Include="Resources\Svg\trash-can.svg" />
     <EmbeddedResource Include="Resources\Svg\triangle-exclamation.svg" />
     <EmbeddedResource Include="Resources\Svg\underline.svg" />
-    <EmbeddedResource Include="Resources\Svg\xmark.svg" />
+    <EmbeddedResource Include="Resources\Svg\alternet-xmark.svg" />
   </ItemGroup>
 
 
