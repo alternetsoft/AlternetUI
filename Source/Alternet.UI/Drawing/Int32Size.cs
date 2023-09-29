@@ -54,6 +54,17 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="Int32Size"/> struct with
+        /// equal width and height.
+        /// </summary>
+        /// <param name="size">Width and Height value.</param>
+        public Int32Size(int size)
+        {
+            this.width = size;
+            this.height = size;
+        }
+
+        /// <summary>
         /// Tests whether this <see cref='Drawing.Int32Size'/> has zero
         /// width and height.
         /// </summary>
@@ -177,6 +188,17 @@ namespace Alternet.Drawing
         /// </summary>
         public static bool operator !=(Int32Size sz1, Int32Size sz2) =>
             !(sz1 == sz2);
+
+        /// <summary>
+        /// Gets maximal width and height from the two specified <see cref="Int32Size"/> values.
+        /// </summary>
+        /// <param name="v1">First <see cref="Int32Size"/> value.</param>
+        /// <param name="v2">Second <see cref="Int32Size"/> value.</param>
+        /// <returns></returns>
+        public static Int32Size Max(Int32Size v1, Int32Size v2)
+        {
+            return new Int32Size(Math.Max(v1.width, v2.width), Math.Max(v1.height, v2.height));
+        }
 
         /// <summary>
         /// Performs vector addition of two <see cref='Drawing.Int32Size'/> objects.
