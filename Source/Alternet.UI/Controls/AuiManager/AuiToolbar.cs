@@ -272,6 +272,13 @@ namespace Alternet.UI
             return result;
         }
 
+        /// <inheritdoc cref="LoadSvgImage(string, Int32Size)"/>
+        public static ImageSet LoadSvgImage(string url, Size imageSize)
+        {
+            var result = ImageSet.FromSvgUrl(url, (int)imageSize.Width, (int)imageSize.Height);
+            return result;
+        }
+
         /// <summary>
         /// Creates <see cref="ImageSet"/> and loads Svg data from the specified
         /// <paramref name="url"/>.
