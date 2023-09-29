@@ -51,6 +51,52 @@ namespace Alternet.UI
         /// </summary>
         public static string UrlImageApply { get; set; } = GetImageUrl("square-check");
 
+        /// <summary>
+        /// Gets or sets url used to load svg image used in "Back" toolbar buttons
+        /// for the <see cref="WebBrowser"/>.
+        /// </summary>
+        public static string UrlImageWebBrowserBack { get; set; } = GetImageUrl("arrow-left");
+
+        /// <summary>
+        /// Gets or sets url used to load svg image used in "Home" toolbar buttons
+        /// for the <see cref="WebBrowser"/>.
+        /// </summary>
+        public static string UrlImageWebBrowserHome { get; set; } = GetImageUrl("house");
+
+        /// <summary>
+        /// Gets or sets url used to load svg image used in "Forward" toolbar buttons
+        /// for the <see cref="WebBrowser"/>.
+        /// </summary>
+        public static string UrlImageWebBrowserForward { get; set; } = GetImageUrl("arrow-right");
+
+        /// <summary>
+        /// Gets or sets url used to load svg image used in "Zoom In" toolbar buttons.
+        /// </summary>
+        public static string UrlImageZoomIn { get; set; } = GetImageUrl("alternet-zoomin");
+
+        /// <summary>
+        /// Gets or sets url used to load svg image used in "Zoom Out" toolbar buttons.
+        /// </summary>
+        public static string UrlImageZoomOut { get; set; } = GetImageUrl("alternet-zoomout");
+
+        /// <summary>
+        /// Gets or sets url used to load svg image used in "Go" toolbar buttons
+        /// for the <see cref="WebBrowser"/>.
+        /// </summary>
+        public static string UrlImageWebBrowserGo { get; set; } = GetImageUrl("caret-right");
+
+        /// <summary>
+        /// Gets or sets url used to load svg image used in "Refresh" toolbar buttons
+        /// for the <see cref="WebBrowser"/>.
+        /// </summary>
+        public static string UrlImageWebBrowserRefresh { get; set; } = GetImageUrl("rotate-right");
+
+        /// <summary>
+        /// Gets or sets url used to load svg image used in "Stop" toolbar buttons
+        /// for the <see cref="WebBrowser"/>.
+        /// </summary>
+        public static string UrlImageWebBrowserStop { get; set; } = GetImageUrl("xmark");
+
         private static string GetImageUrl(string name) => string.Format(ResTemplate, name);
     }
 }
