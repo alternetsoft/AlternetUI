@@ -388,7 +388,8 @@ namespace Alternet::UI
 
     void AuiToolBar::SetToolBitmapSize(const Size& size)
     {
-        GetToolbar()->SetToolBitmapSize(wxSize(size.Width,size.Height));
+        wxSize wxs = wxSize(size.Width, size.Height);
+        GetToolbar()->SetToolBitmapSize(wxs);
     }
 
     Size AuiToolBar::GetToolBitmapSize()
