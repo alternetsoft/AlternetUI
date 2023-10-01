@@ -1,5 +1,6 @@
 using System;
 using System.ComponentModel;
+using Alternet.Drawing;
 
 namespace Alternet.UI
 {
@@ -85,6 +86,48 @@ namespace Alternet.UI
         {
             get { return Handler.Url; }
             set { Handler.Url = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets the color used to draw the label of the hyperlink when the mouse is
+        /// over the control.
+        /// </summary>
+        public Color HoverColor
+        {
+            get => Handler.HoverColor;
+            set => Handler.HoverColor = value;
+        }
+
+        /// <summary>
+        /// Gets or sets the color used to draw the label when the link has never been
+        /// clicked before (i.e. the link has not been visited) and the mouse is
+        /// not over the control.
+        /// </summary>
+        public Color NormalColor
+        {
+            get => Handler.NormalColor;
+            set => Handler.NormalColor = value;
+        }
+
+        /// <summary>
+        /// Gets or sets the color used to draw the label when the mouse is not over the
+        /// control and the link has already been clicked
+        /// before (i.e. the link has been visited).
+        /// </summary>
+        public Color VisitedColor
+        {
+            get => Handler.VisitedColor;
+            set => Handler.VisitedColor = value;
+        }
+
+        /// <summary>
+        /// Gets or sets whether the hyperlink has already been clicked by
+        /// the user at least one time.
+        /// </summary>
+        public bool Visited
+        {
+            get => Handler.Visited;
+            set => Handler.Visited = value;
         }
 
         internal new NativeLinkLabelHandler Handler =>

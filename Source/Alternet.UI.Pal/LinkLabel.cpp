@@ -99,6 +99,46 @@ namespace Alternet::UI
 		GetStaticText()->SetURL(wxStr(value));
 	}
 
+	Color LinkLabel::GetHoverColor()
+	{
+		return GetStaticText()->GetHoverColour();
+	}
+
+	void LinkLabel::SetHoverColor(const Color& value)
+	{
+		GetStaticText()->SetHoverColour(value);
+	}
+
+	Color LinkLabel::GetNormalColor()
+	{
+		return GetStaticText()->GetNormalColour();
+	}
+
+	void LinkLabel::SetNormalColor(const Color& value)
+	{
+		GetStaticText()->SetNormalColour(value);
+	}
+
+	Color LinkLabel::GetVisitedColor()
+	{
+		return GetStaticText()->GetVisitedColour();
+	}
+
+	void LinkLabel::SetVisitedColor(const Color& value)
+	{
+		GetStaticText()->SetVisitedColour(value);
+	}
+
+	bool LinkLabel::GetVisited()
+	{
+		return GetStaticText()->GetVisited();
+	}
+
+	void LinkLabel::SetVisited(bool value)
+	{
+		GetStaticText()->SetVisited(value);
+	}
+
 	string LinkLabel::RetrieveText()
 	{
 		return wxStr(GetStaticText()->GetLabel());

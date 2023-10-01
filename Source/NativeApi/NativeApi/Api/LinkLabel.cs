@@ -1,25 +1,23 @@
 ﻿#pragma warning disable
 using ApiCommon;
 using System;
+using Alternet.Drawing;
 
 namespace NativeApi.Api
 {
     public class LinkLabel : Control
     {
-        public string Text
-        {
-            get => throw new Exception(); 
-            set => throw new Exception(); 
-        }
+        public Color HoverColor { get; set; }
+        public Color NormalColor { get; set; }
+        public Color VisitedColor { get; set; }
+        public bool Visited { get; set; }
 
-        public string Url
-        { 
-            get => throw new Exception(); 
-            set => throw new Exception(); 
-        }
+        public string Text { get; set; }
+        public string Url { get; set; }
 
         [NativeEvent(cancellable: true)]
-        public event EventHandler? HyperlinkClick { 
-            add => throw new Exception(); remove => throw new Exception(); }
+        public event EventHandler? HyperlinkClick;
     }
 }
+
+

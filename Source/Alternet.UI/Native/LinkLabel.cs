@@ -24,6 +24,66 @@ namespace Alternet.UI.Native
         {
         }
         
+        public Alternet.Drawing.Color HoverColor
+        {
+            get
+            {
+                CheckDisposed();
+                return NativeApi.LinkLabel_GetHoverColor_(NativePointer);
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.LinkLabel_SetHoverColor_(NativePointer, value);
+            }
+        }
+        
+        public Alternet.Drawing.Color NormalColor
+        {
+            get
+            {
+                CheckDisposed();
+                return NativeApi.LinkLabel_GetNormalColor_(NativePointer);
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.LinkLabel_SetNormalColor_(NativePointer, value);
+            }
+        }
+        
+        public Alternet.Drawing.Color VisitedColor
+        {
+            get
+            {
+                CheckDisposed();
+                return NativeApi.LinkLabel_GetVisitedColor_(NativePointer);
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.LinkLabel_SetVisitedColor_(NativePointer, value);
+            }
+        }
+        
+        public bool Visited
+        {
+            get
+            {
+                CheckDisposed();
+                return NativeApi.LinkLabel_GetVisited_(NativePointer);
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.LinkLabel_SetVisited_(NativePointer, value);
+            }
+        }
+        
         public string Text
         {
             get
@@ -108,6 +168,30 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern IntPtr LinkLabel_Create_();
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern NativeApiTypes.Color LinkLabel_GetHoverColor_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void LinkLabel_SetHoverColor_(IntPtr obj, NativeApiTypes.Color value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern NativeApiTypes.Color LinkLabel_GetNormalColor_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void LinkLabel_SetNormalColor_(IntPtr obj, NativeApiTypes.Color value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern NativeApiTypes.Color LinkLabel_GetVisitedColor_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void LinkLabel_SetVisitedColor_(IntPtr obj, NativeApiTypes.Color value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool LinkLabel_GetVisited_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void LinkLabel_SetVisited_(IntPtr obj, bool value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern string LinkLabel_GetText_(IntPtr obj);

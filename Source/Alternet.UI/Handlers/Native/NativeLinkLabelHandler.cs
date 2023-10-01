@@ -1,9 +1,34 @@
 using System.ComponentModel;
+using Alternet.Drawing;
 
 namespace Alternet.UI
 {
     internal class NativeLinkLabelHandler : NativeControlHandler<LinkLabel, Native.LinkLabel>
     {
+        public Color HoverColor
+        {
+            get => NativeControl.HoverColor;
+            set => NativeControl.HoverColor = value;
+        }
+
+        public Color NormalColor
+        {
+            get => NativeControl.NormalColor;
+            set => NativeControl.NormalColor = value;
+        }
+
+        public Color VisitedColor
+        {
+            get => NativeControl.VisitedColor;
+            set => NativeControl.VisitedColor = value;
+        }
+
+        public bool Visited
+        {
+            get => NativeControl.Visited;
+            set => NativeControl.Visited = value;
+        }
+
         public string Url
         {
             get

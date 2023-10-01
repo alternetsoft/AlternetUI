@@ -63,6 +63,9 @@ namespace ControlsSample
             };
             linkLabel2.LinkClicked += LinkLabel_LinkClicked;
 
+            linkLabel.VisitedColor = linkLabel.NormalColor;
+            linkLabel2.VisitedColor = linkLabel.NormalColor;
+
             headerPanel.Children.Add(linkLabel);
             headerPanel.Children.Add(linkLabel2);
 
