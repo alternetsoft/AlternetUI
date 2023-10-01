@@ -557,6 +557,7 @@ namespace Alternet.UI
         /// This property is set to <see cref="ModalResult.None"/> at the moment
         /// <see cref="ShowModal()"/> is called.
         /// </summary>
+        [Browsable(false)]
         public ModalResult ModalResult
         {
             get
