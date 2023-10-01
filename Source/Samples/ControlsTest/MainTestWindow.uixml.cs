@@ -10,6 +10,11 @@ namespace ControlsTest
         private readonly PanelChildSwitcher pageContainer = new();
         private readonly PanelAuiManager rootPanel = new();
 
+        static MainTestWindow()
+        {
+            AuiNotebook.DefaultCreateStyle = AuiNotebookCreateStyle.Top;
+        }
+
         public MainTestWindow()
         {
             Icon = ImageSet.FromUrlOrNull("embres:ControlsTest.Sample.ico");

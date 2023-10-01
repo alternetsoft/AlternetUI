@@ -31,8 +31,6 @@ namespace ControlsTest
 
         static WebBrowserTestPage()
         {
-            AuiNotebook.DefaultCreateStyle = AuiNotebookCreateStyle.Top;
-
             WebBrowser.SetDefaultFSNameMemory("memory");
             WebBrowser.SetDefaultFSNameArchive(ZipSchemeName);
             if (SetDefaultUserAgent)
