@@ -1,4 +1,5 @@
-﻿using Alternet.Drawing;
+﻿using System;
+using Alternet.Drawing;
 using Alternet.UI;
 
 namespace ControlsTest
@@ -6,7 +7,9 @@ namespace ControlsTest
     internal partial class MainTestWindow : Window, ITestPageSite
     {
         private readonly StatusBar statusbar = new();
-        private readonly PageContainer pageContainer = new();
+        private readonly ListBox pagesListBox = new();
+        private readonly PanelChildSwitcher pageContainer = new();
+        private readonly Grid grid;
 
         public MainTestWindow()
         {
@@ -16,7 +19,17 @@ namespace ControlsTest
 
             this.StatusBar = statusbar;
 
-            this.Children.Add(pageContainer);
+            grid = new Grid();
+            grid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
+            grid.ColumnDefinitions.Add(
+                new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+            Children.Add(grid);
+
+            grid.Children.Add(pagesListBox);
+            Grid.SetColumn(pagesListBox, 0);
+
+            grid.Children.Add(pageContainer);
+            Grid.SetColumn(pageContainer, 1);
 
             if (WebBrowser.IsBackendAvailable(WebBrowserBackend.Edge))
             {
@@ -39,18 +52,44 @@ namespace ControlsTest
                 AddWebBrowserPage("Web Browser IE2");
             }
 
-            pageContainer.Pages.Add(new PageContainer.Page(
-                "Custom Draw Test",
-                new CustomDrawTestPage { Site = this }));
+            Add("Custom Draw Test", new CustomDrawTestPage { Site = this });
 
-            pageContainer.SelectedIndex = 0;
+            SelectedIndex = 0;
+            pagesListBox.SelectionChanged += PagesListBox_SelectionChanged;
+        }
+
+        public int? SelectedIndex
+        {
+            get => pagesListBox.SelectedIndex;
+            set
+            {
+                pagesListBox.SelectedIndex = value;
+                pageContainer.SetActivePage(pagesListBox.SelectedIndex);
+            }
+        }
+
+        private void PagesListBox_SelectionChanged(object? sender, System.EventArgs e)
+        {
+            pageContainer.SetActivePage(pagesListBox.SelectedIndex);
         }
 
         private void AddWebBrowserPage(string title)
         {
-            pageContainer.Pages.Add(new PageContainer.Page(
-                title,
-                new WebBrowserTestPage { Site = this, PageName = title }));
+            Control Fn() => new WebBrowserTestPage { Site = this, PageName = title };
+
+            Add(title, Fn);
+        }
+
+        private void Add(string title, Func<Control> fn)
+        {
+            pageContainer.Add(title, fn);
+            pagesListBox.Add(title);
+        }
+
+        private void Add(string title, Control control)
+        {
+            pageContainer.Add(title, control);
+            pagesListBox.Add(title);
         }
     }
 }

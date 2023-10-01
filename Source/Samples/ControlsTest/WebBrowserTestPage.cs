@@ -206,63 +206,7 @@ namespace ControlsTest
 
             set
             {
-                webBrowser.ZoomType = WebBrowserZoomType.Layout;
-                scriptMessageHandlerAdded = webBrowser.AddScriptMessageHandler("wx_msg");
-                if (!scriptMessageHandlerAdded)
-                    Log("AddScriptMessageHandler not supported");
-                FindParamsToControls();
-                AddTestActions();
-                if (IsIEBackend())
-                    webBrowser.DoCommand("IE.SetScriptErrorsSuppressed", "true");
-
-                if (CommonUtils.CmdLineTest)
-                {
-                    findClearButton.Visible = true;
-                }
-
                 site = value;
-
-                rootPanel.Parent = this;
-
-                webBrowser.Navigated += WebBrowser1_Navigated;
-                webBrowser.Loaded += WebBrowser1_Loaded;
-                webBrowser.NewWindow += WebBrowser1_NewWindow;
-                webBrowser.DocumentTitleChanged += WebBrowser1_TitleChanged;
-                webBrowser.FullScreenChanged += WebBrowser1_FullScreenChanged;
-                webBrowser.ScriptMessageReceived += WebBrowser1_ScriptMessageReceived;
-                webBrowser.ScriptResult += WebBrowser1_ScriptResult;
-                webBrowser.Navigating += WebBrowser1_Navigating;
-                webBrowser.Error += WebBrowser1_Error;
-                webBrowser.BeforeBrowserCreate += WebBrowser1_BeforeBrowserCreate;
-
-                findPanel.Children.Add(findTextBox);
-
-                findButton.Click += FindButton_Click;
-                findPanel.Children.Add(findButton);
-
-                findClearButton.Click += FindClearButton_Click;
-                findPanel.Children.Add(findClearButton);
-
-                findPanel.Children.Add(findWrapCheckBox);
-                findPanel.Children.Add(findEntireWordCheckBox);
-                findPanel.Children.Add(findMatchCaseCheckBox);
-                findPanel.Children.Add(findHighlightResultCheckBox);
-                findPanel.Children.Add(findBackwardsCheckBox);
-
-                findPanel.Parent = rootPanel.RightNotebook;
-
-                /*
-                rootPanel.RightNotebook.AddPage(
-                    findPanel,
-                    CommonStrings.Default.NotebookTabTitleSearch);*/
-
-                rootPanel.CenterNotebook.AddPage(
-                    webBrowser,
-                    CommonStrings.Default.NotebookTabTitleBrowser);
-
-                rootPanel.Manager.AddPane(rootPanel.Toolbar, rootPanel.ToolbarPane);
-
-                rootPanel.Manager.Update();
             }
         }
 
@@ -462,6 +406,70 @@ namespace ControlsTest
         internal void DoTestRunScript2()
         {
             DoRunScript("alert('hello');");
+        }
+
+        protected override void OnParentChanged(EventArgs e)
+        {
+            base.OnParentChanged(e);
+
+            if (Parent == null || Flags.HasFlag(ControlFlags.ParentAssigned))
+                return;
+
+            webBrowser.ZoomType = WebBrowserZoomType.Layout;
+            scriptMessageHandlerAdded = webBrowser.AddScriptMessageHandler("wx_msg");
+            if (!scriptMessageHandlerAdded)
+                Log("AddScriptMessageHandler not supported");
+            FindParamsToControls();
+            AddTestActions();
+            if (IsIEBackend())
+                webBrowser.DoCommand("IE.SetScriptErrorsSuppressed", "true");
+
+            if (CommonUtils.CmdLineTest)
+            {
+                findClearButton.Visible = true;
+            }
+
+            rootPanel.Parent = this;
+
+            webBrowser.Navigated += WebBrowser1_Navigated;
+            webBrowser.Loaded += WebBrowser1_Loaded;
+            webBrowser.NewWindow += WebBrowser1_NewWindow;
+            webBrowser.DocumentTitleChanged += WebBrowser1_TitleChanged;
+            webBrowser.FullScreenChanged += WebBrowser1_FullScreenChanged;
+            webBrowser.ScriptMessageReceived += WebBrowser1_ScriptMessageReceived;
+            webBrowser.ScriptResult += WebBrowser1_ScriptResult;
+            webBrowser.Navigating += WebBrowser1_Navigating;
+            webBrowser.Error += WebBrowser1_Error;
+            webBrowser.BeforeBrowserCreate += WebBrowser1_BeforeBrowserCreate;
+
+            findPanel.Children.Add(findTextBox);
+
+            findButton.Click += FindButton_Click;
+            findPanel.Children.Add(findButton);
+
+            findClearButton.Click += FindClearButton_Click;
+            findPanel.Children.Add(findClearButton);
+
+            findPanel.Children.Add(findWrapCheckBox);
+            findPanel.Children.Add(findEntireWordCheckBox);
+            findPanel.Children.Add(findMatchCaseCheckBox);
+            findPanel.Children.Add(findHighlightResultCheckBox);
+            findPanel.Children.Add(findBackwardsCheckBox);
+
+            findPanel.Parent = rootPanel.RightNotebook;
+
+            /*
+            rootPanel.RightNotebook.AddPage(
+                findPanel,
+                CommonStrings.Default.NotebookTabTitleSearch);*/
+
+            rootPanel.CenterNotebook.AddPage(
+                webBrowser,
+                CommonStrings.Default.NotebookTabTitleBrowser);
+
+            rootPanel.Manager.AddPane(rootPanel.Toolbar, rootPanel.ToolbarPane);
+
+            rootPanel.Manager.Update();
         }
 
         private static void HandleException(Exception e)
