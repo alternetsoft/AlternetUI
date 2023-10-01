@@ -55,7 +55,6 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref='MenuItem'/> class.
         /// </summary>
         public MenuItem()
-            : this(string.Empty, null, null)
         {
         }
 
@@ -64,8 +63,18 @@ namespace Alternet.UI
         /// the specified <paramref name="text"/> and <paramref name="shortcut"/> for the menu item.
         /// </summary>
         public MenuItem(string text, KeyGesture shortcut)
-            : this(text, null, shortcut)
         {
+            this.text = text;
+            this.shortcut = shortcut;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref='MenuItem'/> class with
+        /// the specified <paramref name="text"/> for the menu item.
+        /// </summary>
+        public MenuItem(string text)
+        {
+            this.text = text;
         }
 
         /// <summary>
@@ -89,6 +98,18 @@ namespace Alternet.UI
         public MenuItem(string text, Action? onClick)
         {
             this.text = text;
+            ClickAction = onClick;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref='MenuItem'/> class with
+        /// the specified <paramref name="text"/>, <paramref name="onClick"/> and
+        /// <paramref name="shortcut"/> for the menu item.
+        /// </summary>
+        public MenuItem(string text, Action? onClick, KeyGesture? shortcut)
+        {
+            this.text = text;
+            this.shortcut = shortcut;
             ClickAction = onClick;
         }
 
