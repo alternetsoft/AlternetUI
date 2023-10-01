@@ -62,14 +62,16 @@ namespace Alternet.UI
             }
         }
 
-        public void Add(string title, Control control)
+        public int Add(string title, Control control)
         {
             Pages.Add(new PanelChildSwitcher.Page(title, control));
+            return Pages.Count - 1;
         }
 
-        public void Add(string title, Func<Control> fnCreate)
+        public int Add(string title, Func<Control> fnCreate)
         {
             Pages.Add(new PanelChildSwitcher.Page(title, fnCreate));
+            return Pages.Count - 1;
         }
 
         public class Page

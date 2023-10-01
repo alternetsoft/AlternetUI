@@ -7,9 +7,8 @@ namespace ControlsTest
     internal partial class MainTestWindow : Window, ITestPageSite
     {
         private readonly StatusBar statusbar = new();
-        private readonly ListBox pagesListBox = new();
         private readonly PanelChildSwitcher pageContainer = new();
-        private readonly Grid grid;
+        private readonly PanelAuiManager rootPanel = new();
 
         public MainTestWindow()
         {
@@ -19,27 +18,22 @@ namespace ControlsTest
 
             this.StatusBar = statusbar;
 
-            grid = new Grid();
-            grid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
-            grid.ColumnDefinitions.Add(
-                new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
-            Children.Add(grid);
+            rootPanel.LeftTreeView.Required();
 
-            grid.Children.Add(pagesListBox);
-            Grid.SetColumn(pagesListBox, 0);
+            Children.Add(rootPanel);
 
-            grid.Children.Add(pageContainer);
-            Grid.SetColumn(pageContainer, 1);
+            rootPanel.Manager.AddPane(pageContainer, rootPanel.CenterPane);
 
             if (WebBrowser.IsBackendAvailable(WebBrowserBackend.Edge))
             {
-                WebBrowserTestPage.UseBackend = WebBrowserBackend.Edge;
+                PanelWebBrowser.UseBackend = WebBrowserBackend.Edge;
                 AddWebBrowserPage("Web Browser Edge");
+                AddWebBrowserPage("Web Browser Edge2");
             }
 
             if (WebBrowser.IsBackendAvailable(WebBrowserBackend.WebKit))
             {
-                WebBrowserTestPage.UseBackend = WebBrowserBackend.WebKit;
+                PanelWebBrowser.UseBackend = WebBrowserBackend.WebKit;
                 AddWebBrowserPage("Web Browser WebKit");
                 AddWebBrowserPage("Web Browser WebKit2");
             }
@@ -47,30 +41,27 @@ namespace ControlsTest
             if (WebBrowser.IsBackendAvailable(WebBrowserBackend.IELatest) &&
                 !WebBrowser.IsBackendAvailable(WebBrowserBackend.Edge))
             {
-                WebBrowserTestPage.UseBackend = WebBrowserBackend.IELatest;
+                PanelWebBrowser.UseBackend = WebBrowserBackend.IELatest;
                 AddWebBrowserPage("Web Browser IE");
                 AddWebBrowserPage("Web Browser IE2");
             }
 
-            Add("Custom Draw Test", new CustomDrawTestPage { Site = this });
+            if(AddCustomDrawPage)
+                Add("Custom Draw Test", new CustomDrawTestPage { Site = this });
 
-            SelectedIndex = 0;
-            pagesListBox.SelectionChanged += PagesListBox_SelectionChanged;
+            rootPanel.LeftTreeView.SelectionChanged += PagesListBox_SelectionChanged;
+
+            rootPanel.Manager.Update();
+
+            rootPanel.LeftTreeView.SelectedItem = rootPanel.LeftTreeView.FirstItem;
         }
 
-        public int? SelectedIndex
-        {
-            get => pagesListBox.SelectedIndex;
-            set
-            {
-                pagesListBox.SelectedIndex = value;
-                pageContainer.SetActivePage(pagesListBox.SelectedIndex);
-            }
-        }
+        internal static bool AddCustomDrawPage { get; set; } = false;
 
         private void PagesListBox_SelectionChanged(object? sender, System.EventArgs e)
         {
-            pageContainer.SetActivePage(pagesListBox.SelectedIndex);
+            var tag = rootPanel.LeftTreeView.SelectedItem?.Tag;
+            pageContainer.SetActivePage(tag as int?);
         }
 
         private void AddWebBrowserPage(string title)
@@ -82,14 +73,16 @@ namespace ControlsTest
 
         private void Add(string title, Func<Control> fn)
         {
-            pageContainer.Add(title, fn);
-            pagesListBox.Add(title);
+            var index = pageContainer.Add(title, fn);
+            var item = rootPanel.LeftTreeView.Add(title);
+            item.Tag = index;
         }
 
         private void Add(string title, Control control)
         {
-            pageContainer.Add(title, control);
-            pagesListBox.Add(title);
+            var index = pageContainer.Add(title, control);
+            var item = rootPanel.LeftTreeView.Add(title);
+            item.Tag = index;
         }
     }
 }
