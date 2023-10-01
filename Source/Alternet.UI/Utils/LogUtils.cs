@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Alternet.Drawing;
@@ -50,6 +51,46 @@ namespace Alternet.UI
             Application.Log("====== EXCEPTION:");
             Application.Log(e.ToString());
             Application.Log("======");
+        }
+
+        /// <summary>
+        /// Writes to log property value of the specified object.
+        /// </summary>
+        /// <param name="obj">Object instance.</param>
+        /// <param name="propName">Property name.</param>
+        /// <param name="prefix">Object name.</param>
+        public static void LogProp(object? obj, string propName, string? prefix = null)
+        {
+            var s = prefix;
+            if (s != null)
+                s += ".";
+
+            PropertyInfo? propInfo = obj?.GetType().GetProperty(propName);
+            if (propInfo == null)
+                return;
+            string? propValue = propInfo?.GetValue(obj)?.ToString();
+
+            Application.Log(s + propName + " = " + propValue);
+        }
+
+        /// <summary>
+        /// Writes to log file "Application started" header text.
+        /// </summary>
+        public static void LogToFileAppStarted()
+        {
+            LogToFile("======================================");
+            LogToFile("Application started");
+            LogToFile("======================================");
+        }
+
+        /// <summary>
+        /// Writes to log file "Application finished" header text.
+        /// </summary>
+        public static void LogToFileAppFinished()
+        {
+            LogToFile("======================================");
+            LogToFile("Application finished");
+            LogToFile("======================================");
         }
 
         /// <summary>
