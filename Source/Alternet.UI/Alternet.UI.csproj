@@ -65,6 +65,8 @@
     <None Remove="Resources\Svg\alternet-arrow-right.svg" />
     <None Remove="Resources\Svg\alternet-caret-right.svg" />
     <None Remove="Resources\Svg\alternet-check.svg" />
+    <None Remove="Resources\Svg\alternet-ellipsis-vertical.svg" />
+    <None Remove="Resources\Svg\alternet-ellipsis.svg" />
     <None Remove="Resources\Svg\alternet-eraser.svg" />
     <None Remove="Resources\Svg\alternet-house.svg" />
     <None Remove="Resources\Svg\alternet-minus.svg" />
@@ -96,8 +98,6 @@
     <None Remove="Resources\Svg\circle-question.svg" />
     <None Remove="Resources\Svg\circle-xmark.svg" />
     <None Remove="Resources\Svg\copy.svg" />
-    <None Remove="Resources\Svg\ellipsis-vertical.svg" />
-    <None Remove="Resources\Svg\ellipsis.svg" />
     <None Remove="Resources\Svg\exclamation.svg" />
     <None Remove="Resources\Svg\file.svg" />
     <None Remove="Resources\Svg\floppy-disk.svg" />
@@ -170,8 +170,8 @@
     <EmbeddedResource Include="Resources\Svg\circle-question.svg" />
     <EmbeddedResource Include="Resources\Svg\circle-xmark.svg" />
     <EmbeddedResource Include="Resources\Svg\copy.svg" />
-    <EmbeddedResource Include="Resources\Svg\ellipsis-vertical.svg" />
-    <EmbeddedResource Include="Resources\Svg\ellipsis.svg" />
+    <EmbeddedResource Include="Resources\Svg\alternet-ellipsis-vertical.svg" />
+    <EmbeddedResource Include="Resources\Svg\alternet-ellipsis.svg" />
     <EmbeddedResource Include="Resources\Svg\alternet-eraser.svg" />
     <EmbeddedResource Include="Resources\Svg\exclamation.svg" />
     <EmbeddedResource Include="Resources\Svg\file.svg" />
