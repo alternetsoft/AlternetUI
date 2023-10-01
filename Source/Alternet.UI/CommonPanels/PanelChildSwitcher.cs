@@ -8,6 +8,12 @@ using Alternet.Drawing;
 
 namespace Alternet.UI
 {
+    /// <summary>
+    /// Allows to switch child controls, so only one of them is visible and other are hidden.
+    /// </summary>
+    /// <remarks>
+    /// It behaves like <see cref="TabControl"/> but has no tab titles.
+    /// </remarks>
     public class PanelChildSwitcher : Control
     {
         private readonly VerticalStackPanel waitLabelContainer = new()
@@ -23,13 +29,23 @@ namespace Alternet.UI
             Margin = new Thickness(100, 100, 0, 0),
         };
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PanelChildSwitcher"/> class.
+        /// </summary>
         public PanelChildSwitcher()
         {
             waitLabel.Parent = waitLabelContainer;
         }
 
+        /// <summary>
+        /// Gets pages with child controls.
+        /// </summary>
         public Collection<Page> Pages { get; } = new Collection<Page>();
 
+        /// <summary>
+        /// Sets active page.
+        /// </summary>
+        /// <param name="pageIndex">Page index.</param>
         public void SetActivePage(int? pageIndex)
         {
             if (pageIndex == null)
@@ -62,39 +78,63 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Adds new page.
+        /// </summary>
+        /// <param name="title">Page title.</param>
+        /// <param name="control">Control.</param>
+        /// <returns></returns>
         public int Add(string title, Control control)
         {
             Pages.Add(new PanelChildSwitcher.Page(title, control));
             return Pages.Count - 1;
         }
 
+        /// <summary>
+        /// Adds new page.
+        /// </summary>
+        /// <param name="title">Page title.</param>
+        /// <param name="fnCreate">Function which creates the control.</param>
+        /// <returns></returns>
         public int Add(string title, Func<Control> fnCreate)
         {
             Pages.Add(new PanelChildSwitcher.Page(title, fnCreate));
             return Pages.Count - 1;
         }
 
+        /// <summary>
+        /// Individual page of the <see cref="PanelChildSwitcher"/>
+        /// </summary>
         public class Page
         {
             private readonly Func<Control>? action;
             private Control? control;
 
-            public Page(string title, Control control)
+            internal Page(string title, Control control)
             {
                 Title = title;
                 this.control = control;
             }
 
-            public Page(string title, Func<Control> action)
+            internal Page(string title, Func<Control> action)
             {
                 Title = title;
                 this.action = action;
             }
 
+            /// <summary>
+            /// Gets page title.
+            /// </summary>
             public string Title { get; }
 
+            /// <summary>
+            /// Gets whether child control was created.
+            /// </summary>
             public bool ControlCreated => control != null;
 
+            /// <summary>
+            /// Child control.
+            /// </summary>
             public Control Control
             {
                 get
