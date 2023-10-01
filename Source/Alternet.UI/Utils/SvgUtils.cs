@@ -97,6 +97,12 @@ namespace Alternet.UI
         /// </summary>
         public static string UrlImageWebBrowserStop { get; set; } = GetImageUrl("alternet-xmark");
 
+        /// <summary>
+        /// Gets or sets url used to load svg image used in "More Actions" toolbar buttons.
+        /// </summary>
+        public static string UrlImageMoreActions { get; set; } =
+            GetImageUrl("alternet-ellipsis-vertical");
+
         private static string GetImageUrl(string name) => string.Format(ResTemplate, name);
     }
 }
