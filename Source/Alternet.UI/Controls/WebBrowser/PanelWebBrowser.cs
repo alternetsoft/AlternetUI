@@ -9,6 +9,10 @@ using Alternet.UI.Localization;
 
 namespace Alternet.UI
 {
+    /// <summary>
+    /// Implements panel with <see cref="WebBrowser"/> and <see cref="AuiToolbar"/> with
+    /// web navigation buttons.
+    /// </summary>
     public class PanelWebBrowser : PanelAuiManager
     {
         private static WebBrowserBackend useBackend = WebBrowserBackend.Default;
@@ -23,63 +27,11 @@ namespace Alternet.UI
             HasBorder = false,
         };
 
-        private readonly CheckBox findWrapCheckBox = new()
-        {
-            Text = "Wrap",
-            Margin = new Thickness(0, 5, 5, 5),
-        };
-
-        private readonly CheckBox findEntireWordCheckBox = new()
-        {
-            Text = "Entire Word",
-            Margin = new Thickness(0, 5, 5, 5),
-        };
-
-        private readonly CheckBox findMatchCaseCheckBox = new()
-        {
-            Text = "Match Case",
-            Margin = new Thickness(0, 5, 5, 5),
-        };
-
-        private readonly CheckBox findHighlightResultCheckBox = new()
-        {
-            Text = "Highlight",
-            Margin = new Thickness(0, 5, 5, 5),
-        };
-
-        private readonly CheckBox findBackwardsCheckBox = new()
-        {
-            Text = "Backwards",
-            Margin = new Thickness(0, 5, 5, 5),
-        };
-
-        private readonly StackPanel findPanel = new()
-        {
-            Margin = new Thickness(5, 5, 5, 5),
-            Orientation = StackPanelOrientation.Vertical,
-        };
-
-        private readonly TextBox findTextBox = new()
-        {
-            SuggestedWidth = 300,
-            Margin = new Thickness(0, 10, 5, 5),
-            Text = "panda",
-        };
-
-        private readonly Button findButton = new()
-        {
-            Text = "Find",
-            Margin = new Thickness(0, 10, 5, 5),
-        };
-
-        private readonly Button findClearButton = new()
-        {
-            Text = "Find Clear",
-            Margin = new Thickness(0, 10, 5, 5),
-        };
+        private readonly ContextMenu moreActionsMenu = new();
 
         private bool historyCleared = false;
         private int buttonIdBack;
+        private int buttonIdMoreActions;
         private int buttonIdForward;
         private int buttonIdZoomIn;
         private int buttonIdZoomOut;
@@ -89,6 +41,9 @@ namespace Alternet.UI
         private bool canNavigate = true;
         private int scriptRunCounter = 0;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PanelWebBrowser"/> class.
+        /// </summary>
         public PanelWebBrowser()
         {
             DefaultToolbarStyle &=
@@ -97,22 +52,6 @@ namespace Alternet.UI
             CreateToolbarItems();
 
             WebBrowser.ZoomType = WebBrowserZoomType.Layout;
-
-            findPanel.Children.Add(findTextBox);
-
-            findButton.Click += FindButton_Click;
-            findPanel.Children.Add(findButton);
-
-            findClearButton.Click += FindClearButton_Click;
-            findPanel.Children.Add(findClearButton);
-
-            findPanel.Children.Add(findWrapCheckBox);
-            findPanel.Children.Add(findEntireWordCheckBox);
-            findPanel.Children.Add(findMatchCaseCheckBox);
-            findPanel.Children.Add(findHighlightResultCheckBox);
-            findPanel.Children.Add(findBackwardsCheckBox);
-
-            FindParamsToControls();
 
             WebBrowser.Navigated += WebBrowser_Navigated;
             WebBrowser.FullScreenChanged += WebBrowser_FullScreenChanged;
@@ -126,6 +65,9 @@ namespace Alternet.UI
             WebBrowser.DocumentTitleChanged += WebBrowser_TitleChanged;
         }
 
+        /// <summary>
+        /// Gets or sets type of <see cref="WebBrowser"/> backend used for browsing.
+        /// </summary>
         public static WebBrowserBackend UseBackend
         {
             get => useBackend;
@@ -136,20 +78,52 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets <see cref="ContextMenu"/> with additional actions like "Find" and "Print".
+        /// </summary>
+        public ContextMenu MoreActionsMenu => moreActionsMenu;
+
+        /// <summary>
+        /// Gets or sets whether to log <see cref="WebBrowser"/> events.
+        /// </summary>
         public bool LogEvents { get => logEvents; set => logEvents = value; }
 
+        /// <summary>
+        /// Gets or sets whether navigation is allowed for the browser.
+        /// </summary>
         public bool CanNavigate { get => canNavigate; set => canNavigate = value; }
 
+        /// <summary>
+        /// Gets <see cref="WebBrowser"/> control used in this panel.
+        /// </summary>
         public WebBrowser WebBrowser => webBrowser;
 
+        /// <summary>
+        /// Gets <see cref="TextBox"/> control used for url editing.
+        /// </summary>
         public TextBox UrlTextBox => urlTextBox;
 
+        /// <summary>
+        /// Gets whetner IE backend is currently used.
+        /// </summary>
         public bool IsIEBackend
         {
             get => WebBrowser.Backend == WebBrowserBackend.IE ||
                 WebBrowser.Backend == WebBrowserBackend.IELatest;
         }
 
+        /// <summary>
+        /// Sets path for the Edge backend.
+        /// </summary>
+        /// <param name="folder">Name of the subfolder under application's path.</param>
+        /// <remarks>
+        /// You can place a fixed version of the WebView2 Edge runtime in the appropriate
+        /// subfolder of this folder. In this case it will be used instead of the
+        /// globally installed runtime. Subfolders:
+        /// "win-arm64" - WebView2 runtime for a 64-bit ARM processor architecture.
+        /// "win-x64" - WebView2 runtime for an Intel-based 64-bit processor architecture.
+        /// "win-x86" - WebView2 runtime for an Intel-based 32-bit processor architecture.
+        /// </remarks>
         public static void SetBackendPathSmart(string folder)
         {
             var os = Environment.OSVersion;
@@ -164,6 +138,10 @@ namespace Alternet.UI
             WebBrowser.SetBackendPath(edgePath, true);
         }
 
+        /// <summary>
+        /// Logs <see cref="WebBrowserEventArgs"/>.
+        /// </summary>
+        /// <param name="e">Event arguments to log.</param>
         public static void LogWebBrowserEvent(WebBrowserEventArgs e)
         {
             string s = "EVENT: " + e.EventType;
@@ -187,6 +165,9 @@ namespace Alternet.UI
             Application.Log(s);
         }
 
+        /// <summary>
+        /// Generates new <see cref="IntPtr"/> client data.
+        /// </summary>
         public IntPtr GetNewClientData()
         {
             scriptRunCounter++;
@@ -194,6 +175,9 @@ namespace Alternet.UI
             return clientData;
         }
 
+        /// <summary>
+        /// Updates enabled state of the "Zoom In" and "Zoom Out" buttons on the toolbar.
+        /// </summary>
         public void UpdateZoomButtons()
         {
             Toolbar.EnableTool(buttonIdZoomIn, webBrowser.CanZoomIn);
@@ -201,6 +185,9 @@ namespace Alternet.UI
             Toolbar.Refresh();
         }
 
+        /// <summary>
+        /// Updates enabled state of the "Back" and "Forward" buttons on the toolbar.
+        /// </summary>
         public void UpdateHistoryButtons()
         {
             if (!historyCleared)
@@ -214,7 +201,19 @@ namespace Alternet.UI
             Toolbar.Refresh();
         }
 
-        public void CreateToolbarItems()
+        /// <summary>
+        /// Shows "Find" dialog window.
+        /// </summary>
+        public void FindWithDialog()
+        {
+            WebBrowserSearchWindow win = new(WebBrowser, findParams);
+            win.ShowModal(this.ParentWindow);
+        }
+
+        /// <summary>
+        /// Creates toolbar items.
+        /// </summary>
+        protected virtual void CreateToolbarItems()
         {
             var toolbar = Toolbar;
             var imageSize = GetToolBitmapSize();
@@ -248,11 +247,29 @@ namespace Alternet.UI
                 images.ImgBrowserGo,
                 CommonStrings.Default.ButtonGo);
 
+            buttonIdMoreActions = toolbar.AddTool(
+                null,
+                images.ImgMoreActions,
+                null);
+
+            MenuItem itemSearch = new(
+                CommonStrings.Default.ButtonFind + "...",
+                () => { FindWithDialog(); }, new(Key.F, ModifierKeys.Control));
+
+            MenuItem itemPrint = new(
+                CommonStrings.Default.ButtonPrint + "...",
+                () => { WebBrowser.Print(); }, new(Key.P, ModifierKeys.Control));
+
+            MoreActionsMenu.Add(itemSearch);
+            MoreActionsMenu.Add(itemPrint);
+
             toolbar.AddToolOnClick(buttonIdBack, BackButton_Click);
             toolbar.AddToolOnClick(buttonIdForward, ForwardBtn_Click);
             toolbar.AddToolOnClick(buttonIdZoomIn, ZoomInButton_Click);
             toolbar.AddToolOnClick(buttonIdZoomOut, ZoomOutButton_Click);
             toolbar.AddToolOnClick(buttonIdGo, GoButton_Click);
+            toolbar.SetToolDropDownMenu(buttonIdMoreActions, MoreActionsMenu);
+            toolbar.SetToolDropDownOnEvent(buttonIdMoreActions, AuiToolbarItemDropDownOnEvent.Click);
 
             urlTextBox.KeyDown += TextBox_KeyDown;
 
@@ -261,6 +278,7 @@ namespace Alternet.UI
             toolbar.Realize();
         }
 
+        /// <inheritdoc/>
         protected override void OnParentChanged(EventArgs e)
         {
             base.OnParentChanged(e);
@@ -330,37 +348,6 @@ namespace Alternet.UI
                 LogWebBrowserEvent(e);
             if (!canNavigate)
                 e.Cancel = true;
-        }
-
-        private void FindButton_Click(object? sender, EventArgs e)
-        {
-            FindParamsFromControls();
-            int findResult = webBrowser.Find(findTextBox.Text, findParams);
-            Application.DebugLog("Find Result = " + findResult.ToString());
-        }
-
-        private void FindParamsToControls()
-        {
-            findWrapCheckBox.IsChecked = findParams.Wrap;
-            findEntireWordCheckBox.IsChecked = findParams.EntireWord;
-            findMatchCaseCheckBox.IsChecked = findParams.MatchCase;
-            findHighlightResultCheckBox.IsChecked = findParams.HighlightResult;
-            findBackwardsCheckBox.IsChecked = findParams.Backwards;
-        }
-
-        private void FindParamsFromControls()
-        {
-            findParams.Wrap = findWrapCheckBox.IsChecked;
-            findParams.EntireWord = findEntireWordCheckBox.IsChecked;
-            findParams.MatchCase = findMatchCaseCheckBox.IsChecked;
-            findParams.HighlightResult = findHighlightResultCheckBox.IsChecked;
-            findParams.Backwards = findBackwardsCheckBox.IsChecked;
-        }
-
-        private void FindClearButton_Click(object? sender, EventArgs e)
-        {
-            findTextBox.Text = string.Empty;
-            webBrowser.FindClearResult();
         }
 
         private void TextBox_KeyDown(object? sender, KeyEventArgs e)
