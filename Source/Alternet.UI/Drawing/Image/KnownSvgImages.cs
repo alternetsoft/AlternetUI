@@ -19,6 +19,7 @@ namespace Alternet.UI
         private ImageSet? imgZoomOut;
         private ImageSet? imgBrowserGo;
         private ImageSet? imgAdd;
+        private ImageSet? imgMoreActions;
         private ImageSet? imgRemove;
         private ImageSet? imgOk;
         private ImageSet? imgCancel;
@@ -92,6 +93,15 @@ namespace Alternet.UI
         {
             get => imgAdd ??= AuiToolbar.LoadSvgImage(SvgUtils.UrlImagePlus, size);
             set => imgAdd = value;
+        }
+
+        /// <summary>
+        /// Gets or sets image that can be used in "More Actions" toolbar buttons.
+        /// </summary>
+        public ImageSet ImgMoreActions
+        {
+            get => imgMoreActions ??= AuiToolbar.LoadSvgImage(SvgUtils.UrlImageMoreActions, size);
+            set => imgMoreActions = value;
         }
 
         /// <summary>
