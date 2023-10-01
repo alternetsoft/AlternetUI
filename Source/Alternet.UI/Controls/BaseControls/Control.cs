@@ -72,6 +72,7 @@ namespace Alternet.UI
         private bool visible = true;
         private Control? parent;
         private int updateCount = 0;
+        private ControlFlags flags;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Control"/> class.
@@ -91,6 +92,11 @@ namespace Alternet.UI
         /// Occurs when the control is clicked.
         /// </summary>
         public event EventHandler? Click;
+
+        /// <summary>
+        /// Occurs when <see cref="Parent"/> is changed.
+        /// </summary>
+        public event EventHandler? ParentChanged;
 
         /// <summary>
         /// Occurs when the control is redrawn.
@@ -241,6 +247,23 @@ namespace Alternet.UI
         internal event EventHandler? BorderBrushChanged;
 
         /// <summary>
+        /// Internal control flags.
+        /// </summary>
+        [Flags]
+        public enum ControlFlags
+        {
+            /// <summary>
+            /// Indicates that <see cref="Parent"/> was already assigned.
+            /// </summary>
+            /// <remarks>
+            /// This flag is set after <see cref="Parent"/> was changed. It can be used
+            /// in the <see cref="ParentChanged"/> event. It allows
+            /// to determine whether <see cref="Parent"/> is changed for the first time.
+            /// </remarks>
+            ParentAssigned = 1,
+        }
+
+        /// <summary>
         /// Gets the default font used for controls.
         /// </summary>
         /// <value>
@@ -260,6 +283,11 @@ namespace Alternet.UI
             get => Handler.ClientSize;
             set => Handler.ClientSize = value;
         }
+
+        /// <summary>
+        /// Gets control flags.
+        /// </summary>
+        public ControlFlags Flags => flags;
 
         /// <summary>
         /// Executes assigned action immediately.
@@ -551,6 +579,8 @@ namespace Alternet.UI
                     return;
                 parent?.Children.Remove(this);
                 value?.Children.Add(this);
+                OnParentChanged(EventArgs.Empty);
+                flags |= ControlFlags.ParentAssigned;
             }
         }
 
@@ -2178,10 +2208,19 @@ namespace Alternet.UI
         /// <summary>
         /// Raises the <see cref="ToolTipChanged"/> event.
         /// </summary>
-        /// <param name="e"></param>
+        /// <param name="e">Event arguments.</param>
         protected virtual void OnToolTipChanged(EventArgs e)
         {
             ToolTipChanged?.Invoke(this, e);
+        }
+
+        /// <summary>
+        /// Raises the <see cref="ParentChanged"/> event.
+        /// </summary>
+        /// <param name="e">Event arguments.</param>
+        protected virtual void OnParentChanged(EventArgs e)
+        {
+            ParentChanged?.Invoke(this, e);
         }
 
         /// <summary>
@@ -2258,9 +2297,9 @@ namespace Alternet.UI
             EnabledChanged?.Invoke(this, e);
         }
 
-#pragma warning disable IDE0060 // Remove unused parameter
+#pragma warning disable
         private void OnEnabledPropertyChanged(bool oldValue, bool newValue)
-#pragma warning restore IDE0060 // Remove unused parameter
+#pragma warning restore
         {
             RaiseEnabledChanged(EventArgs.Empty);
         }
