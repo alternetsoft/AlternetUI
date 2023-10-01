@@ -429,6 +429,7 @@ namespace Alternet.UI
         {
             LogControl.Add(ConstructLogMessage(message));
             LogControl.SelectAndShowItem(LogControl.LastRootItem);
+            Application.DoEvents();
         }
 
         /// <summary>
@@ -500,6 +501,8 @@ namespace Alternet.UI
             }
             else
                 Log(message);
+
+            Application.DoEvents();
         }
 
         /// <summary>
