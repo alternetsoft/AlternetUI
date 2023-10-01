@@ -219,3 +219,16 @@ Point asPoint = new(50, 85);
 
 ====
 
+- IAuiToolbarItem
+
+- Canvas drawline winforms help (pen width>1)
+
+- Drawing context what methods are missing comparing with WinForms
+
+- PanelLinkLabels
+	- No flickering
+	- Click must work
+- (SEPARATE PAGE IN test)
+
+- ButtonState class and get/set ??
+
