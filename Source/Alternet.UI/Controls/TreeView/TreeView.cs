@@ -807,10 +807,11 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="s">The <see cref="string"/> to be added to the end of the
         /// <see cref="Items"/> collection.</param>
-        public virtual void Add(string s)
+        public virtual TreeViewItem Add(string s)
         {
             var item = new TreeViewItem(s);
             Items.Add(item);
+            return item;
         }
 
         /// <summary>
