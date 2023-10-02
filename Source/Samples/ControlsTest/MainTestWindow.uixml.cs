@@ -7,7 +7,7 @@ namespace ControlsTest
     internal partial class MainTestWindow : Window, ITestPageSite
     {
         private readonly StatusBar statusbar = new();
-        private readonly PanelChildSwitcher pageContainer = new();
+        private readonly CardPanel pageContainer = new();
         private readonly PanelAuiManager rootPanel = new();
 
         static MainTestWindow()

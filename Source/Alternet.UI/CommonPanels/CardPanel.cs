@@ -14,7 +14,7 @@ namespace Alternet.UI
     /// <remarks>
     /// It behaves like <see cref="TabControl"/> but has no tab titles.
     /// </remarks>
-    public class PanelChildSwitcher : Control
+    public class CardPanel : Control
     {
         private readonly VerticalStackPanel waitLabelContainer = new()
         {
@@ -30,9 +30,9 @@ namespace Alternet.UI
         };
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="PanelChildSwitcher"/> class.
+        /// Initializes a new instance of the <see cref="CardPanel"/> class.
         /// </summary>
-        public PanelChildSwitcher()
+        public CardPanel()
         {
             waitLabel.Parent = waitLabelContainer;
         }
@@ -40,7 +40,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets pages with child controls.
         /// </summary>
-        public Collection<Page> Pages { get; } = new Collection<Page>();
+        public Collection<CardPanelItem> Cards { get; } = new Collection<CardPanelItem>();
 
         /// <summary>
         /// Sets active page.
@@ -55,7 +55,7 @@ namespace Alternet.UI
             try
             {
                 GetVisibleChildOrNull()?.Hide();
-                var page = Pages[pageIndex.Value];
+                var page = Cards[pageIndex.Value];
                 var loaded = page.ControlCreated;
 
                 if (!loaded)
@@ -86,8 +86,8 @@ namespace Alternet.UI
         /// <returns></returns>
         public int Add(string title, Control control)
         {
-            Pages.Add(new PanelChildSwitcher.Page(title, control));
-            return Pages.Count - 1;
+            Cards.Add(new CardPanelItem(title, control));
+            return Cards.Count - 1;
         }
 
         /// <summary>
@@ -98,51 +98,8 @@ namespace Alternet.UI
         /// <returns></returns>
         public int Add(string title, Func<Control> fnCreate)
         {
-            Pages.Add(new PanelChildSwitcher.Page(title, fnCreate));
-            return Pages.Count - 1;
-        }
-
-        /// <summary>
-        /// Individual page of the <see cref="PanelChildSwitcher"/>
-        /// </summary>
-        public class Page
-        {
-            private readonly Func<Control>? action;
-            private Control? control;
-
-            internal Page(string title, Control control)
-            {
-                Title = title;
-                this.control = control;
-            }
-
-            internal Page(string title, Func<Control> action)
-            {
-                Title = title;
-                this.action = action;
-            }
-
-            /// <summary>
-            /// Gets page title.
-            /// </summary>
-            public string Title { get; }
-
-            /// <summary>
-            /// Gets whether child control was created.
-            /// </summary>
-            public bool ControlCreated => control != null;
-
-            /// <summary>
-            /// Child control.
-            /// </summary>
-            public Control Control
-            {
-                get
-                {
-                    control ??= action!();
-                    return control;
-                }
-            }
+            Cards.Add(new CardPanelItem(title, fnCreate));
+            return Cards.Count - 1;
         }
     }
 }
