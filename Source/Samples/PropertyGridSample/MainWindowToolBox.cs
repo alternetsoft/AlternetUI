@@ -25,31 +25,33 @@ namespace PropertyGridSample
 
                 Type[] badTypes = new Type[]
                 {
-              typeof(ContextMenu), // added using other style
-              typeof(NonVisualControl), // has no sense to add
-              typeof(StatusBarPanel), // part of other control
-              typeof(MenuItem), // part of other control
-              typeof(TabPage), // part of other control
-              typeof(ToolbarItem), // part of other control
+                  typeof(ContextMenu), // added using other style
+                  typeof(NonVisualControl), // has no sense to add
+                  typeof(StatusBarPanel), // part of other control
+                  typeof(MenuItem), // part of other control
+                  typeof(TabPage), // part of other control
+                  typeof(ToolbarItem), // part of other control
 
-              typeof(Toolbar), // can create some modal window? or add child window 
-              typeof(WebBrowser),
-              typeof(Popup), // button with popup like ContextMenu
-              typeof(AuiNotebook),
-              typeof(AuiToolbar),
-              typeof(PanelAuiManager),
-              typeof(PanelAuiManagerBase),
-              typeof(UIDialogWindow),
-              typeof(SplitterPanel),// know how
-              typeof(Grid),// know how
-              typeof(ScrollViewer),
-              typeof(LayoutPanel),// know how
-              typeof(UserPaintControl),// know how
-              typeof(MainMenu),// can create some modal window? or add child window 
-              typeof(StatusBar),// can create some modal window? or add child window 
-              typeof(PropertyGrid),
-              typeof(TabControl), // pages are not shown. Why?
-              typeof(Window),
+                  typeof(Toolbar), // can create some modal window? or add child window 
+                  typeof(WebBrowser),
+                  typeof(Popup), // button with popup like ContextMenu
+                  typeof(AuiNotebook),
+                  typeof(AuiToolbar),
+                  typeof(PanelAuiManager),
+                  typeof(PanelAuiManagerBase),
+                  typeof(UIDialogWindow),
+                  typeof(SplitterPanel),// know how
+                  typeof(Grid),// know how
+                  typeof(ScrollViewer),
+                  typeof(LayoutPanel),// know how
+                  typeof(UserPaintControl),// know how
+                  typeof(MainMenu),// can create some modal window? or add child window 
+                  typeof(StatusBar),// can create some modal window? or add child window 
+                  typeof(PropertyGrid),
+                  typeof(PanelWebBrowser),
+                  typeof(CardPanel),
+                  typeof(TabControl), // pages are not shown. Why?
+                  typeof(Window),
                 };
 
                 IEnumerable<Type> result = AssemblyUtils.GetTypeDescendants(typeof(Control));
