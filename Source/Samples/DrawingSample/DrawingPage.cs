@@ -7,7 +7,6 @@ namespace DrawingSample
     internal abstract class DrawingPage
     {
         private Control? settingsControl;
-
         private Control? canvas;
 
         public Control? Canvas
@@ -54,12 +53,9 @@ namespace DrawingSample
 
         private void Canvas_Paint(object? sender, PaintEventArgs e)
         {
-            //e.DrawingContext.FillRectangle(e.Bounds, Color.White);
             var b = e.Bounds;
-//            b.Width -= 1;
-            //b.Height -= 30;
-            e.DrawingContext.DrawRectangle(Pens.Gray, b);
             Draw(e.DrawingContext, e.Bounds);
+            e.DrawingContext.DrawRectangle(Pens.LightGray, b);
         }
     }
 }

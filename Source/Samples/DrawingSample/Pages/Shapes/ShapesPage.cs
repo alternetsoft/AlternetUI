@@ -101,13 +101,15 @@ namespace DrawingSample
         private void DrawShapesGrid(DrawingContext dc, Rect bounds, Cell[] cells)
         {
             const int ColumnCount = 5;
-            const double CellMargin = 10;
-            var cellSize = (Math.Max(bounds.Width, bounds.Height) / ColumnCount) - CellMargin - (CellMargin / ColumnCount);
+            const double CellMargin = 0;
+            var cellSize =
+                (Math.Max(bounds.Width, bounds.Height) / (ColumnCount)) - CellMargin
+                - (CellMargin / (ColumnCount));
 
             double x = CellMargin, y = CellMargin;
 
-            var cellBackgroundBrush = Brushes.LightGray;
-            var cellBorderPen = Pens.Black;
+            var cellBackgroundBrush = Brushes.White;
+            var cellBorderPen = Pens.White;
 
             for (int i = 0; i < cells.Length; i++)
             {
@@ -125,7 +127,8 @@ namespace DrawingSample
 
                 var cellContentFrameRect = cellNameRect.InflatedBy(-5, -5);
                 if (nameVisible)
-                    cellContentFrameRect.Height -= dc.MeasureText(cell.Name, Control.DefaultFont).Height;
+                    cellContentFrameRect.Height -=
+                        dc.MeasureText(cell.Name, Control.DefaultFont).Height;
 
                 if (cellContentFrameRect.Width <= 0 || cellContentFrameRect.Height <= 0)
                     continue;

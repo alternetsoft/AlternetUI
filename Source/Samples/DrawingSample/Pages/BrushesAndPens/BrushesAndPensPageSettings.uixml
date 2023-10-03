@@ -5,13 +5,15 @@
     
 	<StackPanel Orientation="Vertical" Margin="5">
         <Label Text="Shape Count:" />
-        <Slider Minimum="1" Maximum="100" Margin="0,0,0,10" Value="{Binding ShapeCount}"/>
+        <Slider Minimum="1" Maximum="100" Margin="0,0,0,10"  TickStyle="None"
+                Value="{Binding ShapeCount}"/>
 
         <CheckBox Text="Rectangles" Margin="0,0,0,5" IsChecked="{Binding RectanglesIncluded}"/>
         <CheckBox Text="Ellipses" Margin="0,0,0,5" IsChecked="{Binding EllipsesIncluded}"/>
 
         <Label Text="Brush:" Margin="0,5,0,5"/>
-        <ComboBox Name="brushComboBox" IsEditable="false" SelectedItem="{Binding Brush}" SelectedItemChanged="BrushComboBox_SelectedItemChanged"/>
+        <ComboBox Name="brushComboBox" IsEditable="false" SelectedItem="{Binding Brush}"
+                  SelectedItemChanged="BrushComboBox_SelectedItemChanged"/>
 
         <StackPanel Name="hatchStylePanel" Visible="false">
             <Label Text="Brush Hatch Style:" Margin="0,5,0,5" />
@@ -19,22 +21,34 @@
         </StackPanel>
 
         <Label Text="Brush Color:" Margin="0,5,0,5"/>
-        <Slider Minimum="0" Maximum="10" Margin="0,0,0,10" Value="{Binding BrushColorHue}"/>
+        <Slider Minimum="0" Maximum="10" Margin="0,0,0,10"  TickStyle="None"
+                Value="{Binding BrushColorHue}"/>
 
         <Label Text="Pen Color:" Margin="0,5,0,5"/>
-        <Slider Minimum="0" Maximum="10" Margin="0,0,0,10" Value="{Binding PenColorHue}"/>
+        <Slider Minimum="0" Maximum="10" Margin="0,0,0,10"  TickStyle="None"
+                Value="{Binding PenColorHue}"/>
 
         <Label Text="Pen Width:" Margin="0,5,0,5"/>
-        <Slider Minimum="0" Maximum="6" Margin="0,0,0,10" Value="{Binding PenWidth}"/>
+        <Slider Minimum="0" Maximum="6" Margin="0,0,0,10"  TickStyle="None"
+                Value="{Binding PenWidth}"/>
 
-        <Label Text="Pen Dash Style:" Margin="0,5,0,5" />
-        <ComboBox Name="dashStyleComboBox" IsEditable="false" SelectedItem="{Binding PenDashStyle}"/>
+      <HorizontalStackPanel Margin="0,5,0,5" >
+        <Label Text="Dash Style:" Margin="0,0,5,0" />
+        <ComboBox Name="dashStyleComboBox" IsEditable="false"
+                  SelectedItem="{Binding PenDashStyle}"/>
+      </HorizontalStackPanel>
 
-        <Label Text="Line Cap:" Margin="0,5,0,5" />
-        <ComboBox Name="lineCapComboBox" IsEditable="false" SelectedItem="{Binding LineCap}"/>
+      <HorizontalStackPanel  Margin="0,5,0,5" >
+        <Label Text="Line Cap:" Margin="0,0,5,0" />
+        <ComboBox Name="lineCapComboBox" IsEditable="false"
+                  SelectedItem="{Binding LineCap}"/>
+      </HorizontalStackPanel>
 
-        <Label Text="Line Join:" Margin="0,5,0,5" />
-        <ComboBox Name="lineJoinComboBox" IsEditable="false" SelectedItem="{Binding LineJoin}"/>
+      <HorizontalStackPanel Margin="0,5,0,5" >
+        <Label Text="Line Join:" Margin="0,0,5,0" />
+        <ComboBox Name="lineJoinComboBox" IsEditable="false"
+                  SelectedItem="{Binding LineJoin}"/>
+      </HorizontalStackPanel>
     </StackPanel>
 
 </Control>

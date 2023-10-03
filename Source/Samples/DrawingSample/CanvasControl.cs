@@ -8,7 +8,7 @@ namespace DrawingSample
         public CanvasControl()
         {
             UserPaint = true;
-            Background = Brushes.White;
+            BackgroundColor = Color.White;
         }
     }
 }

@@ -4,7 +4,8 @@
         xmlns:local="clr-namespace:DrawingSample;assembly=DrawingSample">
     <StackPanel Orientation="Vertical" Margin="5">
         <Label Text="Font Size" />
-        <Slider Minimum="5" Maximum="25" Margin="0,0,0,10" Value="{Binding FontSize}" />
+        <Slider Minimum="5" Maximum="25" Margin="0,0,0,10"  TickStyle="None"
+                Value="{Binding FontSize}" />
 
       <HorizontalStackPanel>
         <VerticalStackPanel>
@@ -17,35 +18,41 @@
         </VerticalStackPanel>
       </HorizontalStackPanel>
 
-      <Label Text="Custom Font Family:" Margin="0,5,0,5" />
+      <HorizontalStackPanel>
+        <Label Text="Font Name:" Margin="0,5,5,5" />
         <ComboBox Name="customFontFamilyComboBox" IsEditable="false"
-                  SelectedItem="{Binding CustomFontFamilyName}" Margin="0,0,5,5"/>
+                  SelectedItem="{Binding CustomFontFamilyName}" Margin="0,5,5,5"/>
+      </HorizontalStackPanel>
 
-        <CheckBox Text="Limit width to:" Margin="0,5,5,0"
-                  IsChecked="{Binding TextWidthLimitEnabled}"/>
+      <HorizontalStackPanel>
+        <CheckBox Text="Limit width:" Margin="0,5,5,0"
+                    IsChecked="{Binding TextWidthLimitEnabled}"/>
         <NumericUpDown
             Minimum="100"
             Maximum="1000"
             Value="{Binding TextWidthLimit}"
             Margin="0,5,5,0"
             Enabled="{Binding TextWidthLimitEnabled}"/>
+      </HorizontalStackPanel>
+      
         <Slider
-            Minimum="{Binding MinTextWidthLimit}"
+            Minimum="{Binding MinTextWidthLimit}" TickStyle="None"
             Maximum="{Binding MaxTextWidthLimit}"
             Margin="0,5,5,0"
             Value="{Binding TextWidthLimit}"
             Enabled="{Binding TextWidthLimitEnabled}"/>
 
-      <CheckBox Text="Set height to:" Margin="0,10,5,0" IsChecked="{Binding TextHeightSet}"/>
-      <NumericUpDown
-          Minimum="20"
-          Maximum="200"
-          Value="{Binding TextHeightValue}"
-          Margin="0,5,5,0"
-          Enabled="{Binding TextHeightSet}"/>
-
+      <HorizontalStackPanel>
+        <CheckBox Text="Set height:" Margin="0,10,5,0" IsChecked="{Binding TextHeightSet}"/>
+        <NumericUpDown
+            Minimum="20"
+            Maximum="200"
+            Value="{Binding TextHeightValue}"
+            Margin="0,5,5,0"
+            Enabled="{Binding TextHeightSet}"/>
+      </HorizontalStackPanel>
       <Slider
-          Minimum="{Binding MinTextHeightValue}"
+          Minimum="{Binding MinTextHeightValue}"  TickStyle="None"
           Maximum="{Binding MaxTextHeightValue}"
           Margin="0,5,5,0"
           Value="{Binding TextHeightValue}"
