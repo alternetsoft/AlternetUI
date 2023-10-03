@@ -1,7 +1,7 @@
 <Window xmlns="http://schemas.alternetsoft.com/ui/2021"
         xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
         x:Class="EmployeeFormSample.MainWindow"
-		Title="Alternet UI Employee Details Form" Width="800" Height="600" 
+		Title="Alternet UI Employee Details Form"
 		StartLocation="CenterScreen">
 	<Control Padding="10">
 	<Grid>
@@ -44,19 +44,23 @@
 
 			<Label Text="Last Name" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center"
                    Margin="0,0,10,5"/>
-			<TextBox Text="{Binding LastName}" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" Margin="0,0,0,5"/>
+			<TextBox Text="{Binding LastName}" Grid.Row="1" Grid.Column="1"
+                     VerticalAlignment="Center" Margin="0,0,0,5"/>
 
 			<Label Text="Birth Date" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center"
                    Margin="0,0,10,5"/>
-			<TextBox Text="{Binding BirthDate}" Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" Margin="0,0,0,5"/>
+			<TextBox Text="{Binding BirthDate}" Grid.Row="2" Grid.Column="1"
+                     VerticalAlignment="Center" Margin="0,0,0,5"/>
 
 			<Label Text="Title" Grid.Row="3" Grid.Column="0" VerticalAlignment="Center"
                    Margin="0,0,10,5"/>
-			<TextBox Text="{Binding Title}" Grid.Row="3" Grid.Column="1" VerticalAlignment="Center" Margin="0,0,0,5"/>
+			<TextBox Text="{Binding Title}" Grid.Row="3" Grid.Column="1"
+                     VerticalAlignment="Center" Margin="0,0,0,5"/>
 
 			<Label Text="Prefix" Grid.Row="4" Grid.Column="0" VerticalAlignment="Center"
                    Margin="0,0,10,20"/>
-			<ComboBox SelectedItem="{Binding Prefix}" Name="prefixComboBox" Grid.Row="4" Grid.Column="1" IsEditable="false"
+			<ComboBox SelectedItem="{Binding Prefix}" Name="prefixComboBox"
+                      Grid.Row="4" Grid.Column="1" IsEditable="false"
 					  VerticalAlignment="Center" Margin="0,0,0,10"/>
 
 			<Label Text="Address" Grid.Row="5" Grid.Column="0" VerticalAlignment="Center"
@@ -66,7 +70,8 @@
 
 			<Label Text="City" Grid.Row="6" Grid.Column="0" VerticalAlignment="Center"
                    Margin="0,0,10,5"/>
-			<TextBox Text="{Binding City}" Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="2" VerticalAlignment="Center" 
+			<TextBox Text="{Binding City}" Grid.Row="6" Grid.Column="1"
+                     Grid.ColumnSpan="2" VerticalAlignment="Center" 
 				Margin="0,0,0,5"/>
 
 			<Label Text="State" Grid.Row="7" Grid.Column="0" VerticalAlignment="Center"

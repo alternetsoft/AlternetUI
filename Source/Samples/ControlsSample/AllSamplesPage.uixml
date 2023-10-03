@@ -17,18 +17,19 @@
           <RowDefinition Height="100*"/>
         </Grid.RowDefinitions>
 
-        <TreeView Width="350" Name="view" Grid.Column="0" Grid.Row="0"
+        <TreeView SuggestedWidth="350" Name="view" Grid.Column="0" Grid.Row="0"
                           />
 
         <VerticalStackPanel Margin="10,0,0,0" Padding="5"
                     Grid.Column="1" Grid.Row="0" VerticalAlignment="Stretch">
             <Button Text="Run" Name="runButton" Margin="0,0,0,5"
                     Click="RunButton_Click" HorizontalAlignment="Center" />
-          <Button Text="Build" Name="buildButton" Margin="0,0,0,5" Enabled="false"
+          <Button Text="Build" Name="buildButton" Margin="0,0,0,5" Enabled="false" Visible="false"
                   Click="BuildButton_Click" HorizontalAlignment="Center" />
-          <Button Text="Run All" Name="runAllButton" Margin="0,0,0,5" Enabled="false"
+          <Button Text="Run All" Name="runAllButton" Margin="0,0,0,5" Enabled="false" Visible="false"
                   Click="RunAllButton_Click" HorizontalAlignment="Center"/>
           <Button Text="Build All" Name="buildAllButton" Margin="0,0,0,5" Enabled="false"
+                  Visible="false"
                   Click="BuildAllButton_Click" HorizontalAlignment="Center"/>
         </VerticalStackPanel>
       </Grid>

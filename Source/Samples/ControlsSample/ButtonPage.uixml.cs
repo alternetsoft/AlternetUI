@@ -86,7 +86,7 @@ namespace ControlsSample
         {
             button?.Parent?.DoInsideUpdate(() =>
             {
-                button.DoInsideLayout(() =>
+                button.Parent?.DoInsideLayout(() =>
                 {
                     action();
                 });

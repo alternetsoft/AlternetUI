@@ -21,20 +21,20 @@
 				<StackPanel Orientation="Horizontal">
 					<Slider Minimum="0" Maximum="100" Value="{Binding IntValue}" 
                             TickFrequency="25" 
-						VerticalAlignment="Center" Margin="0,0,10,0" Width="200"/>
+						VerticalAlignment="Center" Margin="0,0,10,0" SuggestedWidth="200"/>
 					<ProgressBar Minimum="0" Maximum="100" Value="{Binding IntValue}" 
-						VerticalAlignment="Center" Margin="0,0,10,0" Width="200"/>
+						VerticalAlignment="Center" Margin="0,0,10,0" SuggestedWidth="200"/>
 					<Label Text="{Binding IntValue}" VerticalAlignment="Center"/>
 				</StackPanel>
 			</GroupBox>
 			
-			<GroupBox Title="Custom Sliders and Progress Bars" Padding="10">
+			<GroupBox Title="Custom Sliders and Progress Bars" Padding="5">
 				<StackPanel Orientation="Horizontal" Name="slidersStackPanel">
 				</StackPanel>
 			</GroupBox>
 
-        <GroupBox Title="Tic Tac Toe" VerticalAlignment="Top" Padding="10">
-            <StackPanel Orientation="Horizontal" Margin="10" Name="ticTacToeStackPanel">
+        <GroupBox Title="Tic Tac Toe" VerticalAlignment="Top">
+            <StackPanel Orientation="Horizontal" Margin="5" Name="ticTacToeStackPanel">
             </StackPanel>
         </GroupBox>
 		

@@ -64,9 +64,12 @@ namespace ControlsSample
                     csproj.RemoveAt(i);
                     continue;
                 }
+#if DEBUG
+#else
                 if(csproj[i].EndsWith("Sample.csproj"))
                     continue;
                 csproj.RemoveAt(i);
+#endif
             }
 
             var csproj2 = csproj.Distinct();

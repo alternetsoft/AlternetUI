@@ -65,9 +65,12 @@ namespace EmployeeFormSample
             // On Linux height of the ComboBox is greater than height of the TextBox.
             // We need to increase height of all window's TextBoxes.
             LayoutFactory.AdjustTextBoxesHeight(this);
+
+            this.MinimumSize = new(750, 470);
+            this.SetSizeToContent();
         }
 
-        private void MainWindow_LayoutUpdated(object sender, EventArgs e)
+        private void MainWindow_LayoutUpdated(object? sender, EventArgs e)
         {
         }        
 

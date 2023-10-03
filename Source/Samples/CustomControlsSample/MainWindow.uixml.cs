@@ -68,6 +68,8 @@ namespace CustomControlsSample
             slidersStackPanel.Children.Add(knobControl);
             slidersStackPanel.Children.Add(gaugeControl);
             ResumeLayout(true);
+            this.SetSizeToContent();
+            this.MinimumSize = this.Size;
         }
 
         class Data : INotifyPropertyChanged
