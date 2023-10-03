@@ -3214,6 +3214,24 @@ namespace Alternet.UI
             SetLineColor(GetCellBackgroundColor());
         }
 
+        public virtual IPropertyGridColors GetCurrentColors()
+        {
+            var result = new PropertyGridColors();
+
+            result.CaptionBackgroundColor = GetCaptionBackgroundColor();
+            result.CaptionForegroundColor = GetCaptionForegroundColor();
+            result.CellBackgroundColor = GetCellBackgroundColor();
+            result.CellDisabledTextColor = GetCellDisabledTextColor();
+            result.CellTextColor = GetCellTextColor();
+            result.EmptySpaceColor = GetEmptySpaceColor();
+            result.LineColor = GetLineColor();
+            result.MarginColor = GetMarginColor();
+            result.SelectionBackgroundColor = GetSelectionBackgroundColor();
+            result.SelectionForegroundColor = GetSelectionForegroundColor();
+
+            return result;
+        }
+
         /// <summary>
         /// Sets all <see cref="PropertyGrid"/> colors.
         /// </summary>

@@ -12,7 +12,7 @@ namespace PropertyGridSample
         private readonly PropertyGrid propertyGrid;
         private readonly PropertyGrid eventGrid;
         private readonly MainWindow mainWindow;
-        private PropertyGridKnownColors colorScheme = PropertyGridKnownColors.White;
+        private PropertyGridKnownColors colorScheme = PropertyGridKnownColors.Default;
 
         public PropertyGridSettings(MainWindow window)
         {

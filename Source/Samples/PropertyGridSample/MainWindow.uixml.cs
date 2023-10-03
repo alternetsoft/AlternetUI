@@ -125,7 +125,6 @@ namespace PropertyGridSample
 
             static void SetPropertyGridDefaults(PropertyGrid pg)
             {
-                pg.ApplyKnownColors(PropertyGridSettings.Default!.ColorScheme);
                 pg.CenterSplitter();
                 pg.SetVerticalSpacing();
             }
@@ -218,7 +217,7 @@ namespace PropertyGridSample
 
                     control.Parent ??= controlPanel;
                     control.Visible = true;
-			control.PerformLayout();
+			        control.PerformLayout();
                     Application.Current.ProcessPendingEvents();
                 }
 

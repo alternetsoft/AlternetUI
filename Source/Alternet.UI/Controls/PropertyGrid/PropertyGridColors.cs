@@ -60,6 +60,13 @@ namespace Alternet.UI
                     CaptionBackgroundColor = Color.White,
                     CellBackgroundColor = Color.White,
                     MarginColor = Color.White,
+                    CaptionForegroundColor = Color.Gray,
+                    CellDisabledTextColor = Color.Gray,
+                    CellTextColor = Color.Black,
+                    EmptySpaceColor = Color.White,
+                    LineColor = Color.FromArgb(200, 200, 200),
+                    SelectionBackgroundColor = Color.FromArgb(0, 120, 215),
+                    SelectionForegroundColor = Color.White,
                     immutable = true,
                 };
 
@@ -81,6 +88,13 @@ namespace Alternet.UI
                     CaptionBackgroundColor = my_grey_1,
                     LineColor = my_grey_1,
                     MarginColor = my_grey_1,
+                    CaptionForegroundColor = Color.Gray,
+                    CellBackgroundColor = Color.White,
+                    CellDisabledTextColor = Color.Gray,
+                    CellTextColor = Color.Black,
+                    EmptySpaceColor = Color.White,
+                    SelectionBackgroundColor = Color.FromArgb(0, 120, 215),
+                    SelectionForegroundColor = Color.White,
                     immutable = true,
                 };
 
@@ -105,6 +119,11 @@ namespace Alternet.UI
                     EmptySpaceColor = my_grey_2,
                     LineColor = my_grey_1,
                     MarginColor = my_grey_2,
+                    CaptionForegroundColor = Color.Gray,
+                    CellDisabledTextColor = Color.Gray,
+                    CellTextColor = Color.Black,
+                    SelectionBackgroundColor = Color.FromArgb(0, 120, 215),
+                    SelectionForegroundColor = Color.White,
                     immutable = true,
                 };
 
@@ -131,13 +150,13 @@ namespace Alternet.UI
                     CellBackgroundColor = color3,
                     EmptySpaceColor = color3,
                     MarginColor = color3,
-
                     CaptionForegroundColor = color2,
                     CellDisabledTextColor = Color.FromArgb(192, 192, 192),
                     CellTextColor = color2,
                     LineColor = Color.FromArgb(113, 113, 113),
                     SelectionBackgroundColor = Color.FromArgb(38, 79, 120),
                     SelectionForegroundColor = Color.FromArgb(220, 220, 220),
+                    immutable = true,
                 };
                 return colorSchemeBlack;
             }
@@ -287,6 +306,44 @@ namespace Alternet.UI
                 PropertyGridKnownColors.Custom => ColorSchemeCustom,
                 _ => new PropertyGridColors(),
             };
+        }
+
+        /// <summary>
+        ///  Logs <see cref="PropertyGridColors"/> to file.
+        /// </summary>
+        public void LogToFile()
+        {
+            static void LogColor(string title, Color? value)
+            {
+                if (value is not null)
+                    value = ColorUtils.FindKnownColor(value.Value);
+                LogUtils.LogToFile($"{title} = {value?.ToDebugString()}");
+            }
+
+            LogColor("CaptionBackgroundColor", CaptionBackgroundColor);
+            LogColor("CaptionForegroundColor", CaptionForegroundColor);
+            LogColor("CellBackgroundColor", CellBackgroundColor);
+            LogColor("CellDisabledTextColor", CellDisabledTextColor);
+            LogColor("CellTextColor", CellTextColor);
+            LogColor("EmptySpaceColor", EmptySpaceColor);
+            LogColor("LineColor", LineColor);
+            LogColor("MarginColor", MarginColor);
+            LogColor("SelectionBackgroundColor", SelectionBackgroundColor);
+            LogColor("SelectionForegroundColor", SelectionForegroundColor);
+        }
+
+        internal void ApplyDefaultWhiteScheme()
+        {
+            CaptionBackgroundColor = Color.FromArgb(200, 200, 200);
+            CaptionForegroundColor = Color.Gray;
+            CellBackgroundColor = Color.White;
+            CellDisabledTextColor = Color.Gray;
+            CellTextColor = Color.Black;
+            EmptySpaceColor = Color.White;
+            LineColor = Color.FromArgb(200, 200, 200);
+            MarginColor = Color.FromArgb(200, 200, 200);
+            SelectionBackgroundColor = Color.FromArgb(0, 120, 215);
+            SelectionForegroundColor = Color.White;
         }
     }
 }
