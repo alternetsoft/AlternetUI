@@ -20,12 +20,12 @@ namespace Alternet.UI
         {
             HorizontalAlignment = HorizontalAlignment.Center,
             VerticalAlignment = VerticalAlignment.Center,
-            Size = new Size(400, 400),
+            SuggestedSize = new Size(400, 400),
         };
 
         private readonly Label waitLabel = new()
         {
-            Text = "Page is loading...",
+            Text = "Loading. Please wait...",
             Margin = new Thickness(100, 100, 0, 0),
         };
 
@@ -45,17 +45,17 @@ namespace Alternet.UI
         /// <summary>
         /// Sets active page.
         /// </summary>
-        /// <param name="pageIndex">Page index.</param>
-        public void SetActivePage(int? pageIndex)
+        /// <param name="index">Card index.</param>
+        public void SetActiveCard(int? index)
         {
-            if (pageIndex == null)
+            if (index == null || index < 0 || index >= Cards.Count)
                 return;
 
             SuspendLayout();
             try
             {
                 GetVisibleChildOrNull()?.Hide();
-                var page = Cards[pageIndex.Value];
+                var page = Cards[index.Value];
                 var loaded = page.ControlCreated;
 
                 if (!loaded)
