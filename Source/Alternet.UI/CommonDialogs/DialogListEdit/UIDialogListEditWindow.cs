@@ -68,7 +68,8 @@ namespace Alternet.UI
             // Right Pane
             var rightPane = manager.CreatePaneInfo();
             rightPane.Name(nameof(rightPane)).Caption("Properties").Right().PaneBorder(false)
-                .TopDockable(false).BottomDockable(false).BestSize(defaultWidth, 300).MinSize(defaultWidth, 300)
+                .TopDockable(false).BottomDockable(false)
+                .BestSize(defaultWidth, 300).MinSize(defaultWidth, 300)
                 .CaptionVisible(false);
             propertyGrid.SuggestedWidth = defaultWidth;
             manager.AddPane(propertyGrid, rightPane);
@@ -135,7 +136,6 @@ namespace Alternet.UI
             toolbar.AddToolOnClick(buttonIdOk, OkButton_Click);
             toolbar.AddToolOnClick(buttonIdCancel, CancelButton_Click);
 
-            propertyGrid.ApplyKnownColors(PropertyGridKnownColors.White);
             propertyGrid.CenterSplitter();
             propertyGrid.SetVerticalSpacing();
 
@@ -144,7 +144,7 @@ namespace Alternet.UI
 
             ComponentDesigner.InitDefault();
             ComponentDesigner.Default!.PropertyChanged += OnDesignerPropertyChanged;
-            Size = new(600, 400);
+            SuggestedSize = new(600, 400);
             MinimumSize = new(500, 300);
             rightPane.BestSize(defaultWidth + 1, 300).MinSize(defaultWidth + 1, 300);
             propertyGrid.SuggestedWidth = defaultWidth + 1;
