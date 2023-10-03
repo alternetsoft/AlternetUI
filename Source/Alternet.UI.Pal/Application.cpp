@@ -66,6 +66,27 @@ namespace Alternet::UI
         wxApp::OnRun();
     }
 
+    void App::OnFatalException()
+    {
+        wxApp::OnFatalException();
+    }
+
+    void App::OnAssertFailure(const wxChar* file, int line, const wxChar* func,
+        const wxChar* cond, const wxChar* msg)
+    {
+        wxApp::OnAssertFailure(file, line, func, cond, msg);
+    }
+
+    void App::OnUnhandledException()
+    {
+        wxApp::OnUnhandledException();
+    }
+
+    bool App::OnExceptionInMainLoop()
+    {
+        return wxApp::OnExceptionInMainLoop();
+    }
+
 /*
 wxDEFINE_EVENT( wxEVT_LEFT_DOWN, wxMouseEvent );
 wxDEFINE_EVENT( wxEVT_LEFT_UP, wxMouseEvent );
@@ -259,6 +280,66 @@ wxDEFINE_EVENT( wxEVT_HOTKEY, wxKeyEvent );
 
         _clipboard->Release();
         _clipboard = nullptr;
+    }
+
+    void* Application::GetDisplayMode()
+    {
+        return nullptr;
+    }
+
+    bool Application::GetExitOnFrameDelete()
+    {
+        return _app->GetExitOnFrameDelete();
+    }
+
+    int Application::GetLayoutDirection()
+    {
+        return _app->GetLayoutDirection();
+    }
+
+    bool Application::GetUseBestVisual()
+    {
+        return _app->GetUseBestVisual();
+    }
+
+    bool Application::IsActive()
+    {
+        return _app->IsActive();
+    }
+
+    bool Application::SafeYield(void* window, bool onlyIfNeeded)
+    {
+        return _app->SafeYield((wxWindow*)window, onlyIfNeeded);
+    }
+
+    bool Application::SafeYieldFor(void* window, int64_t eventsToProcess)
+    {
+        return _app->SafeYieldFor((wxWindow*)window, eventsToProcess);
+    }
+
+    bool Application::SetDisplayMode(void* videoMode)
+    {
+        return false;
+    }
+
+    void Application::SetExitOnFrameDelete(bool flag)
+    {
+        _app->SetExitOnFrameDelete(flag);
+    }
+
+    bool Application::SetNativeTheme(const string& theme)
+    {
+        return _app->SetNativeTheme(wxStr(theme));
+    }
+
+    void Application::SetTopWindow(void* window)
+    {
+        _app->SetTopWindow((wxWindow*)window);
+    }
+
+    void Application::SetUseBestVisual(bool flag, bool forceTrueColour)
+    {
+        _app->SetUseBestVisual(flag, forceTrueColour);
     }
 
     void Application::WakeUpIdle()

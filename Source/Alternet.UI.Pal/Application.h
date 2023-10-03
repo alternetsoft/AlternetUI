@@ -19,6 +19,11 @@ namespace Alternet::UI
     public:
         App();
 
+        void OnAssertFailure(const wxChar* file, int line, const wxChar* func,
+            const wxChar* cond, const wxChar* msg) override;
+        void OnUnhandledException() override;
+        void OnFatalException() override;
+        bool OnExceptionInMainLoop() override;
         bool OnInit() override;
         int OnExit() override;
         wxWindow* GetTopWindow() const override;

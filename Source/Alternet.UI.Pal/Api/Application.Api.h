@@ -157,6 +157,66 @@ ALTERNET_UI_API c_bool Application_HasPendingEvents_(Application* obj)
     return obj->HasPendingEvents();
 }
 
+ALTERNET_UI_API void* Application_GetDisplayMode_(Application* obj)
+{
+    return obj->GetDisplayMode();
+}
+
+ALTERNET_UI_API c_bool Application_GetExitOnFrameDelete_(Application* obj)
+{
+    return obj->GetExitOnFrameDelete();
+}
+
+ALTERNET_UI_API int Application_GetLayoutDirection_(Application* obj)
+{
+    return obj->GetLayoutDirection();
+}
+
+ALTERNET_UI_API c_bool Application_GetUseBestVisual_(Application* obj)
+{
+    return obj->GetUseBestVisual();
+}
+
+ALTERNET_UI_API c_bool Application_IsActive_(Application* obj)
+{
+    return obj->IsActive();
+}
+
+ALTERNET_UI_API c_bool Application_SafeYield_(Application* obj, void* window, c_bool onlyIfNeeded)
+{
+    return obj->SafeYield(window, onlyIfNeeded);
+}
+
+ALTERNET_UI_API c_bool Application_SafeYieldFor_(Application* obj, void* window, int64_t eventsToProcess)
+{
+    return obj->SafeYieldFor(window, eventsToProcess);
+}
+
+ALTERNET_UI_API c_bool Application_SetDisplayMode_(Application* obj, void* videoMode)
+{
+    return obj->SetDisplayMode(videoMode);
+}
+
+ALTERNET_UI_API void Application_SetExitOnFrameDelete_(Application* obj, c_bool flag)
+{
+    obj->SetExitOnFrameDelete(flag);
+}
+
+ALTERNET_UI_API c_bool Application_SetNativeTheme_(Application* obj, const char16_t* theme)
+{
+    return obj->SetNativeTheme(theme);
+}
+
+ALTERNET_UI_API void Application_SetTopWindow_(Application* obj, void* window)
+{
+    obj->SetTopWindow(window);
+}
+
+ALTERNET_UI_API void Application_SetUseBestVisual_(Application* obj, c_bool flag, c_bool forceTrueColour)
+{
+    obj->SetUseBestVisual(flag, forceTrueColour);
+}
+
 ALTERNET_UI_API void Application_SetEventCallback_(Application::ApplicationEventCallbackType callback)
 {
     Application::SetEventCallback(callback);

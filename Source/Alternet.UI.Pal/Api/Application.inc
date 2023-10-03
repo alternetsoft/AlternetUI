@@ -50,11 +50,29 @@ static void SuppressDiagnostics(int flags);
 void BeginInvoke(PInvokeCallbackActionType action);
 void ProcessPendingEvents();
 bool HasPendingEvents();
+void* GetDisplayMode();
+bool GetExitOnFrameDelete();
+int GetLayoutDirection();
+bool GetUseBestVisual();
+bool IsActive();
+bool SafeYield(void* window, bool onlyIfNeeded);
+bool SafeYieldFor(void* window, int64_t eventsToProcess);
+bool SetDisplayMode(void* videoMode);
+void SetExitOnFrameDelete(bool flag);
+bool SetNativeTheme(const string& theme);
+void SetTopWindow(void* window);
+void SetUseBestVisual(bool flag, bool forceTrueColour);
 public:
 enum class ApplicationEvent
 {
     Idle,
     LogMessage,
+    QueryEndSession,
+    EndSession,
+    ActivateApp,
+    Hibernate,
+    DialupConnected,
+    DialupDisconnected,
 };
 typedef void* (*ApplicationEventCallbackType)(Application* obj, ApplicationEvent event, void* param);
 static void SetEventCallback(ApplicationEventCallbackType value) { eventCallback = value; }

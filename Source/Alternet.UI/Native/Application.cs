@@ -244,6 +244,78 @@ namespace Alternet.UI.Native
             return NativeApi.Application_HasPendingEvents_(NativePointer);
         }
         
+        public System.IntPtr GetDisplayMode()
+        {
+            CheckDisposed();
+            return NativeApi.Application_GetDisplayMode_(NativePointer);
+        }
+        
+        public bool GetExitOnFrameDelete()
+        {
+            CheckDisposed();
+            return NativeApi.Application_GetExitOnFrameDelete_(NativePointer);
+        }
+        
+        public int GetLayoutDirection()
+        {
+            CheckDisposed();
+            return NativeApi.Application_GetLayoutDirection_(NativePointer);
+        }
+        
+        public bool GetUseBestVisual()
+        {
+            CheckDisposed();
+            return NativeApi.Application_GetUseBestVisual_(NativePointer);
+        }
+        
+        public bool IsActive()
+        {
+            CheckDisposed();
+            return NativeApi.Application_IsActive_(NativePointer);
+        }
+        
+        public bool SafeYield(System.IntPtr window, bool onlyIfNeeded)
+        {
+            CheckDisposed();
+            return NativeApi.Application_SafeYield_(NativePointer, window, onlyIfNeeded);
+        }
+        
+        public bool SafeYieldFor(System.IntPtr window, long eventsToProcess)
+        {
+            CheckDisposed();
+            return NativeApi.Application_SafeYieldFor_(NativePointer, window, eventsToProcess);
+        }
+        
+        public bool SetDisplayMode(System.IntPtr videoMode)
+        {
+            CheckDisposed();
+            return NativeApi.Application_SetDisplayMode_(NativePointer, videoMode);
+        }
+        
+        public void SetExitOnFrameDelete(bool flag)
+        {
+            CheckDisposed();
+            NativeApi.Application_SetExitOnFrameDelete_(NativePointer, flag);
+        }
+        
+        public bool SetNativeTheme(string theme)
+        {
+            CheckDisposed();
+            return NativeApi.Application_SetNativeTheme_(NativePointer, theme);
+        }
+        
+        public void SetTopWindow(System.IntPtr window)
+        {
+            CheckDisposed();
+            NativeApi.Application_SetTopWindow_(NativePointer, window);
+        }
+        
+        public void SetUseBestVisual(bool flag, bool forceTrueColour)
+        {
+            CheckDisposed();
+            NativeApi.Application_SetUseBestVisual_(NativePointer, flag, forceTrueColour);
+        }
+        
         static GCHandle eventCallbackGCHandle;
         
         static void SetEventCallback()
@@ -274,12 +346,42 @@ namespace Alternet.UI.Native
                 {
                     LogMessage?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
                 }
+                case NativeApi.ApplicationEvent.QueryEndSession:
+                {
+                    QueryEndSession?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                }
+                case NativeApi.ApplicationEvent.EndSession:
+                {
+                    EndSession?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                }
+                case NativeApi.ApplicationEvent.ActivateApp:
+                {
+                    ActivateApp?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                }
+                case NativeApi.ApplicationEvent.Hibernate:
+                {
+                    Hibernate?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                }
+                case NativeApi.ApplicationEvent.DialupConnected:
+                {
+                    DialupConnected?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                }
+                case NativeApi.ApplicationEvent.DialupDisconnected:
+                {
+                    DialupDisconnected?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                }
                 default: throw new Exception("Unexpected ApplicationEvent value: " + e);
             }
         }
         
         public event EventHandler? Idle;
         public event EventHandler? LogMessage;
+        public event EventHandler? QueryEndSession;
+        public event EventHandler? EndSession;
+        public event EventHandler? ActivateApp;
+        public event EventHandler? Hibernate;
+        public event EventHandler? DialupConnected;
+        public event EventHandler? DialupDisconnected;
         
         [SuppressUnmanagedCodeSecurity]
         public class NativeApi : NativeApiProvider
@@ -293,6 +395,12 @@ namespace Alternet.UI.Native
             {
                 Idle,
                 LogMessage,
+                QueryEndSession,
+                EndSession,
+                ActivateApp,
+                Hibernate,
+                DialupConnected,
+                DialupDisconnected,
             }
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
@@ -384,6 +492,42 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool Application_HasPendingEvents_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr Application_GetDisplayMode_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool Application_GetExitOnFrameDelete_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int Application_GetLayoutDirection_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool Application_GetUseBestVisual_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool Application_IsActive_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool Application_SafeYield_(IntPtr obj, System.IntPtr window, bool onlyIfNeeded);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool Application_SafeYieldFor_(IntPtr obj, System.IntPtr window, long eventsToProcess);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool Application_SetDisplayMode_(IntPtr obj, System.IntPtr videoMode);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Application_SetExitOnFrameDelete_(IntPtr obj, bool flag);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool Application_SetNativeTheme_(IntPtr obj, string theme);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Application_SetTopWindow_(IntPtr obj, System.IntPtr window);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Application_SetUseBestVisual_(IntPtr obj, bool flag, bool forceTrueColour);
             
         }
     }

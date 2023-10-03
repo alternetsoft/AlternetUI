@@ -137,14 +137,7 @@ namespace Alternet.UI
                 logFileIsEnabled = value;
 
                 if (logFileIsEnabled)
-                {
-                    LogUtils.LogToFile(string.Empty);
-                    LogUtils.LogToFile(string.Empty);
-                    LogUtils.LogToFile("================");
-                    LogUtils.LogToFile("Log file started");
-                    LogUtils.LogToFile("================");
-                    LogUtils.LogToFile(string.Empty);
-                }
+                    LogUtils.LogToFileAppStarted();
             }
         }
 
@@ -236,7 +229,7 @@ namespace Alternet.UI
         /// </summary>
         /// <value>A <see cref="IReadOnlyList{Window}"/> that contains
         /// references to all visible window objects in the current application.</value>
-        public IEnumerable<Window> VisibleWindows
+        public virtual IEnumerable<Window> VisibleWindows
         {
             get
             {
@@ -248,7 +241,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets whether <see cref="Dispose(bool)"/> has been called.
         /// </summary>
-        public bool IsDisposed
+        public virtual bool IsDisposed
         {
             get => isDisposed;
             private set => isDisposed = value;
@@ -258,7 +251,7 @@ namespace Alternet.UI
         /// Gets or sets a <see cref="UI.VisualTheme"/> that is used by
         /// UI controls in the application.
         /// </summary>
-        public VisualTheme VisualTheme
+        public virtual VisualTheme VisualTheme
         {
             get => visualTheme;
             set
@@ -280,7 +273,7 @@ namespace Alternet.UI
         /// It is used for paths, config, and other places the user doesn't see.
         /// By default it is set to the executable program name.
         /// </remarks>
-        public string Name
+        public virtual string Name
         {
             get => nativeApplication.Name;
             set => nativeApplication.Name = value;
@@ -302,7 +295,7 @@ namespace Alternet.UI
         /// It's usually better to set it explicitly to something nicer.
         /// </para>
         /// </remarks>
-        public string DisplayName
+        public virtual string DisplayName
         {
             get => nativeApplication.DisplayName;
             set => nativeApplication.DisplayName = value;
@@ -315,7 +308,7 @@ namespace Alternet.UI
         /// It should be set by the application itself, there are
         /// no reasonable defaults.
         /// </remarks>
-        public string AppClassName
+        public virtual string AppClassName
         {
             get => nativeApplication.AppClassName;
             set => nativeApplication.AppClassName = value;
@@ -329,7 +322,7 @@ namespace Alternet.UI
         /// It should be set by the application itself, there are
         /// no reasonable defaults.
         /// </remarks>
-        public string VendorName
+        public virtual string VendorName
         {
             get => nativeApplication.VendorName;
             set => nativeApplication.VendorName = value;
@@ -345,11 +338,49 @@ namespace Alternet.UI
         /// It should be set by the application itself, there are
         /// no reasonable defaults.
         /// </remarks>
-        public string VendorDisplayName
+        public virtual string VendorDisplayName
         {
             get => nativeApplication.VendorDisplayName;
             set => nativeApplication.VendorDisplayName = value;
         }
+
+        /// <summary>
+        /// Allows the programmer to specify whether the application will exit when the
+        /// top-level frame is deleted.
+        /// Returns true if the application will exit when the top-level frame is deleted.
+        /// </summary>
+        public virtual bool ExitOnFrameDelete
+        {
+            get => nativeApplication.GetExitOnFrameDelete();
+            set => nativeApplication.SetExitOnFrameDelete(value);
+        }
+
+        /// <summary>
+        /// Gets the layout direction for the current locale or wxLayout_Default if it's unknown.
+        /// </summary>
+        public virtual LayoutDirection LayoutDirection
+        {
+            get
+            {
+                return (LayoutDirection)nativeApplication.GetLayoutDirection();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets whether application will use the best visual on systems that
+        /// support different visuals.
+        /// </summary>
+        public virtual bool UseBestVisual
+        {
+            get => nativeApplication.GetUseBestVisual();
+            set => nativeApplication.SetUseBestVisual(value, false);
+        }
+
+        /// <summary>
+        /// Gets whether the application is active, i.e. if one of its windows is currently in
+        /// the foreground.
+        /// </summary>
+        public virtual bool IsActive => nativeApplication.IsActive();
 
         internal Window? MainWindow
         {
@@ -442,7 +473,7 @@ namespace Alternet.UI
         /// <summary>
         /// Processes all pending events.
         /// </summary>
-        public void ProcessPendingEvents()
+        public virtual void ProcessPendingEvents()
         {
             nativeApplication.ProcessPendingEvents();
         }
@@ -463,7 +494,7 @@ namespace Alternet.UI
         /// <param name="mode">An <see cref="UnhandledExceptionMode"/>
         /// value describing how the application should
         /// behave if an exception is thrown without being caught.</param>
-        public void SetUnhandledExceptionMode(UnhandledExceptionMode mode)
+        public virtual void SetUnhandledExceptionMode(UnhandledExceptionMode mode)
         {
             unhandledExceptionMode = mode;
         }
@@ -472,7 +503,7 @@ namespace Alternet.UI
         /// Informs all message pumps that they must terminate, and then closes
         /// all application windows after the messages have been processed.
         /// </summary>
-        public void Exit()
+        public virtual void Exit()
         {
             nativeApplication.Exit();
         }
@@ -507,6 +538,25 @@ namespace Alternet.UI
             GC.SuppressFinalize(this);
         }
 
+        /// <summary>
+        /// Allows runtime switching of the UI environment theme.
+        /// </summary>
+        /// <param name="theme">Theme name</param>
+        /// <returns><c>true</c> if operation was successful, <c>false</c> otherwise.</returns>
+        public virtual bool SetNativeTheme(string theme)
+        {
+            return nativeApplication.SetNativeTheme(theme);
+        }
+
+        /// <summary>
+        /// Allows the programmer to specify whether the application will use the best
+        /// visual on systems that support several visual on the same display.
+        /// </summary>
+        public virtual void SetUseBestVisual(bool flag, bool forceTrueColour = false)
+        {
+            nativeApplication.SetUseBestVisual(flag, forceTrueColour);
+        }
+
         [return: MaybeNull]
         internal static T HandleThreadExceptions<T>(Func<T> func)
         {
@@ -522,6 +572,15 @@ namespace Alternet.UI
                 action();
             else
                 current.HandleThreadExceptionsCore(action);
+        }
+
+        /// <summary>
+        /// Sets the 'top' window.
+        /// </summary>
+        /// <param name="window">New 'top' window.</param>
+        internal virtual void SetTopWindow(Window window)
+        {
+            nativeApplication.SetTopWindow(window.WxWidget);
         }
 
         internal void OnThreadException(Exception exception)
