@@ -115,6 +115,7 @@ namespace Alternet.UI
             FindParamsToControls();
 
             this.SetSizeToContent();
+            this.MinimumSize = Size;
         }
 
         private void CloseButton_Click(object? sender, EventArgs e)
