@@ -23,6 +23,7 @@ namespace WindowPropertiesSample
             sizeToContentModeComboBox.AddEnumValues(typeof(WindowSizeToContentMode),
                 WindowSizeToContentMode.WidthAndHeight);
             UpdateControls();
+            this.SetSizeToContent();
         }
 
         private void CreateAndShowWindowButton_Click(object sender, EventArgs e)

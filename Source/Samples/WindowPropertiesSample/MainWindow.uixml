@@ -7,10 +7,9 @@
         StartLocation="CenterScreen"
 		Activated="Window_Activated"
 		Deactivated="Window_Deactivated">
-  <ScrollViewer>
+  
     <Grid>
       <Grid.ColumnDefinitions>
-        <ColumnDefinition Width="Auto" />
         <ColumnDefinition Width="Auto" />
         <ColumnDefinition Width="Auto" />
         <ColumnDefinition Width="Auto" />
@@ -28,15 +27,16 @@
 						Margin="0,0,0,5" />
 					<Button Text="Create modal window" Name="createAndShowModalWindowButton"
 						Click="CreateAndShowModalWindowButton_Click" Margin="0,0,0,5"/>
-					<CheckBox Text="Set Owner" Name="setOwnerCheckBox" Margin="0,0,0,5"/>
+					<Button Name="addOwnedWindow" Click="AddOwnedWindow_Click"
+                        Text="Add Owned Window" Margin="0,0,0,5"/>
+                <CheckBox Text="Set Owner" Name="setOwnerCheckBox" Margin="0,0,0,5"/>
 					<CheckBox Text="Cancel Closing" Name="cancelClosingCheckBox" Margin="0,0,0,5"/>
 					  <Label Text="Start Location:" Margin="0,0,0,5"/>
 					  <ComboBox IsEditable="false" Name="startLocationComboBox" Margin="0,0,0,5"/>
-
-          		</StackPanel>
+              </StackPanel>
         </GroupBox>
 
-        <GroupBox Title="Properties" Grid.Row="0" Grid.Column="1"  Margin="10">
+      <GroupBox Title="Properties" Grid.Row="0" Grid.Column="1"  Margin="10">
 			  <StackPanel Padding="10" >
 				<CheckBox Text="ShowInTaskbar" Name="showInTaskBarCheckBox"
 						  CheckedChanged="ShowInTaskBarCheckBox_CheckedChanged"
@@ -64,12 +64,6 @@
 			  </StackPanel>
         </GroupBox>
         
-		<GroupBox Title="Owned Windows" Grid.Row="0" Grid.Column="2"  Margin="10">
-			  <StackPanel Padding="10" >
-				<Button Name="addOwnedWindow" Click="AddOwnedWindow_Click" Text="Add Owned Window" />
-			  </StackPanel>
-        </GroupBox>
-		
         <GroupBox Title="State" Grid.Row="0" Grid.Column="3"  Margin="10">
 			  <StackPanel Padding="10" >
 				<Label Text="Window State:" Margin="0,0,0,3"/>
@@ -108,16 +102,16 @@
 				</StackPanel>
 			</GroupBox>
 			<GroupBox Title="Icon"  Margin="10">
-				<StackPanel Padding="10" >
-					<Button Text="Set Icon 1" Name="setIcon1Button" Click="SetIcon1Button_Click" 
+				<HorizontalStackPanel Padding="10" >
+					<Button Text="Set 1" Name="setIcon1Button" Click="SetIcon1Button_Click" 
 						Margin="0,0,0,5"/>
-					<Button Text="Set Icon 2" Name="setIcon2Button" Click="SetIcon2Button_Click" />
-				</StackPanel>
+					<Button Text="Set 2" Name="setIcon2Button" Click="SetIcon2Button_Click" />
+				</HorizontalStackPanel>
 			</GroupBox>
 		</StackPanel>
         
 		<GroupBox Title="Activation"  Grid.Row="1" Grid.Column="2" 
-			Grid.ColumnSpan="2"  Margin="10">
+			Grid.ColumnSpan="2"  Margin="10" SuggestedWidth="200">
 			  <StackPanel Padding="10" >
 				<Label Text="Active window title:" Margin="0,0,0,3"/>
 				<Label Name="activeWindowTitleLabel" Margin="0,0,0,3"/>
@@ -126,8 +120,8 @@
 			  </StackPanel>
         </GroupBox>
 		
-      <ListBox Name="eventsListBox"  Grid.Row="2" Grid.Column="0" Height="100" 
+      <ListBox Name="eventsListBox"  Grid.Row="2" Grid.Column="0" SuggestedHeight="100" 
 			Grid.ColumnSpan="4" Margin="10"/>
     </Grid>
-  </ScrollViewer>
+  
 </Window>
