@@ -118,7 +118,7 @@ namespace Alternet.UI
         {
             filename ??= Application.LogFilePath;
 
-            string dt = System.DateTime.Now.ToString(DateUtils.DateFormatJs);
+            string dt = System.DateTime.Now.ToString("HH:mm:ss");
             string[] result = msg.Split(StringUtils.StringSplitToArrayChars, StringSplitOptions.None);
 
             string contents = string.Empty;
@@ -139,6 +139,18 @@ namespace Alternet.UI
         public static void DebugLogToFile(string msg, string? filename = null)
         {
             LogToFile(msg, filename);
+        }
+
+        /// <summary>
+        /// Opens log file <see cref="Application.LogFilePath"/> in the default editor
+        /// of the operating system.
+        /// </summary>
+        public static void OpenLogFile()
+        {
+            if (!File.Exists(Application.LogFilePath))
+                LogToFileAppStarted();
+
+            AppUtils.ShellExecute(Application.LogFilePath);
         }
     }
 }

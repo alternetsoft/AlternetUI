@@ -96,6 +96,7 @@ namespace Alternet.UI
                     logPage = BottomNotebook.AddPage(
                         logControl,
                         CommonStrings.Default.NotebookTabTitleOutput);
+                    LogContextMenu.Required();
                 }
 
                 return logControl;
@@ -559,7 +560,8 @@ namespace Alternet.UI
             var listBox = sender as ListBox;
             if (listBox?.SelectedItem is not ListControlItem item || item.Action == null)
                 return;
-            Log("Do action: " + item.Text);
+            if(logControl is not null)
+                Log("Do action: " + item.Text);
             item.Action();
         }
 
@@ -581,7 +583,9 @@ namespace Alternet.UI
 
         private void InitLogContextMenu()
         {
-            LogContextMenu.Add(new("Clear", () => { LogControl.RemoveAll(); }));
+            LogContextMenu.Add(new(CommonStrings.Default.ButtonClear, LogControl.RemoveAll));
+
+            LogContextMenu.Add(new("Open log file", LogUtils.OpenLogFile));
 
 #if DEBUG
             /*LogContextMenu.Add(
