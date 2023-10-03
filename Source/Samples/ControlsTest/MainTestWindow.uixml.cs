@@ -66,7 +66,7 @@ namespace ControlsTest
         private void PagesListBox_SelectionChanged(object? sender, System.EventArgs e)
         {
             var tag = rootPanel.LeftTreeView.SelectedItem?.Tag;
-            pageContainer.SetActivePage(tag as int?);
+            pageContainer.SetActiveCard(tag as int?);
         }
 
         private void AddWebBrowserPage(string title)
