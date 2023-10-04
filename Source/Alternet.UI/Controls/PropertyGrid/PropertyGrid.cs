@@ -289,6 +289,76 @@ namespace Alternet.UI
             }
         }
 
+        /// <inheritdoc cref="PropertyGridColors.CaptionBackgroundColor"/>
+        public Color CaptionBackgroundColor
+        {
+            get => NativeControl.GetCaptionBackgroundColor();
+            set => NativeControl.SetCaptionBackgroundColor(value);
+        }
+
+        /// <inheritdoc cref="PropertyGridColors.CaptionForegroundColor"/>
+        public Color CaptionForegroundColor
+        {
+            get => NativeControl.GetCaptionForegroundColor();
+            set => NativeControl.SetCaptionTextColor(value);
+        }
+
+        /// <inheritdoc cref="PropertyGridColors.SelectionForegroundColor"/>
+        public Color SelectionForegroundColor
+        {
+            get => NativeControl.GetSelectionForegroundColor();
+            set => NativeControl.SetSelectionTextColor(value);
+        }
+
+        /// <inheritdoc cref="PropertyGridColors.CellBackgroundColor"/>
+        public Color CellBackgroundColor
+        {
+            get => NativeControl.GetCellBackgroundColor();
+            set => NativeControl.SetCellBackgroundColor(value);
+        }
+
+        /// <inheritdoc cref="PropertyGridColors.CellDisabledTextColor"/>
+        public Color CellDisabledTextColor
+        {
+            get => NativeControl.GetCellDisabledTextColor();
+            set => NativeControl.SetCellDisabledTextColor(value);
+        }
+
+        /// <inheritdoc cref="PropertyGridColors.CellTextColor"/>
+        public Color CellTextColor
+        {
+            get => NativeControl.GetCellTextColor();
+            set => NativeControl.SetCellTextColor(value);
+        }
+
+        /// <inheritdoc cref="PropertyGridColors.EmptySpaceColor"/>
+        public Color EmptySpaceColor
+        {
+            get => NativeControl.GetEmptySpaceColor();
+            set => NativeControl.SetEmptySpaceColor(value);
+        }
+
+        /// <inheritdoc cref="PropertyGridColors.LineColor"/>
+        public Color LineColor
+        {
+            get => NativeControl.GetLineColor();
+            set => NativeControl.SetLineColor(value);
+        }
+
+        /// <inheritdoc cref="PropertyGridColors.MarginColor"/>
+        public Color MarginColor
+        {
+            get => NativeControl.GetMarginColor();
+            set => NativeControl.SetMarginColor(value);
+        }
+
+        /// <inheritdoc cref="PropertyGridColors.SelectionBackgroundColor"/>
+        public Color SelectionBackgroundColor
+        {
+            get => NativeControl.GetSelectionBackgroundColor();
+            set => NativeControl.SetSelectionBackgroundColor(value);
+        }
+
         /// <summary>
         /// Gets column index on which event is fired.
         /// </summary>
@@ -3211,23 +3281,23 @@ namespace Alternet.UI
         /// </summary>
         public virtual void BackgroundToLineColor()
         {
-            SetLineColor(GetCellBackgroundColor());
+            LineColor = CellBackgroundColor;
         }
 
         public virtual IPropertyGridColors GetCurrentColors()
         {
             var result = new PropertyGridColors();
 
-            result.CaptionBackgroundColor = GetCaptionBackgroundColor();
-            result.CaptionForegroundColor = GetCaptionForegroundColor();
-            result.CellBackgroundColor = GetCellBackgroundColor();
-            result.CellDisabledTextColor = GetCellDisabledTextColor();
-            result.CellTextColor = GetCellTextColor();
-            result.EmptySpaceColor = GetEmptySpaceColor();
-            result.LineColor = GetLineColor();
-            result.MarginColor = GetMarginColor();
-            result.SelectionBackgroundColor = GetSelectionBackgroundColor();
-            result.SelectionForegroundColor = GetSelectionForegroundColor();
+            result.CaptionBackgroundColor = CaptionBackgroundColor;
+            result.CaptionForegroundColor = CaptionForegroundColor;
+            result.CellBackgroundColor = CellBackgroundColor;
+            result.CellDisabledTextColor = CellDisabledTextColor;
+            result.CellTextColor = CellTextColor;
+            result.EmptySpaceColor = EmptySpaceColor;
+            result.LineColor = LineColor;
+            result.MarginColor = MarginColor;
+            result.SelectionBackgroundColor = SelectionBackgroundColor;
+            result.SelectionForegroundColor = SelectionForegroundColor;
 
             return result;
         }
@@ -3251,25 +3321,25 @@ namespace Alternet.UI
                     ResetColors();
 
                 if (colors.CaptionBackgroundColor is not null)
-                    SetCaptionBackgroundColor(colors.CaptionBackgroundColor.Value);
+                    CaptionBackgroundColor = colors.CaptionBackgroundColor.Value;
                 if (colors.CaptionForegroundColor is not null)
-                    SetCaptionTextColor(colors.CaptionForegroundColor.Value);
+                    CaptionForegroundColor = colors.CaptionForegroundColor.Value;
                 if (colors.CellDisabledTextColor is not null)
-                    SetCellDisabledTextColor(colors.CellDisabledTextColor.Value);
+                    CellDisabledTextColor = colors.CellDisabledTextColor.Value;
                 if (colors.EmptySpaceColor is not null)
-                    SetEmptySpaceColor(colors.EmptySpaceColor.Value);
+                    EmptySpaceColor = colors.EmptySpaceColor.Value;
                 if (colors.LineColor is not null)
-                    SetLineColor(colors.LineColor.Value);
+                    LineColor = colors.LineColor.Value;
                 if (colors.MarginColor is not null)
-                    SetMarginColor(colors.MarginColor.Value);
+                    MarginColor = colors.MarginColor.Value;
                 if (colors.SelectionBackgroundColor is not null)
-                    SetSelectionBackgroundColor(colors.SelectionBackgroundColor.Value);
+                    SelectionBackgroundColor = colors.SelectionBackgroundColor.Value;
                 if (colors.SelectionForegroundColor is not null)
-                    SetSelectionTextColor(colors.SelectionForegroundColor.Value);
+                    SelectionForegroundColor = colors.SelectionForegroundColor.Value;
                 if (colors.CellTextColor is not null)
-                    SetCellTextColor(colors.CellTextColor.Value);
+                    CellTextColor = colors.CellTextColor.Value;
                 if (colors.CellBackgroundColor is not null)
-                    SetCellBackgroundColor(colors.CellBackgroundColor.Value);
+                    CellBackgroundColor = colors.CellBackgroundColor.Value;
             }
             finally
             {
@@ -4188,56 +4258,6 @@ namespace Alternet.UI
             return NativeControl.GetPropertyValidator(prop.Handle);
         }
 
-        internal Color GetCaptionBackgroundColor()
-        {
-            return NativeControl.GetCaptionBackgroundColor();
-        }
-
-        internal Color GetCaptionForegroundColor()
-        {
-            return NativeControl.GetCaptionForegroundColor();
-        }
-
-        internal void SetEmptySpaceColor(Color col)
-        {
-            NativeControl.SetEmptySpaceColor(col);
-        }
-
-        internal void SetLineColor(Color col)
-        {
-            NativeControl.SetLineColor(col);
-        }
-
-        internal void SetMarginColor(Color col)
-        {
-            NativeControl.SetMarginColor(col);
-        }
-
-        internal void SetSelectionBackgroundColor(Color col)
-        {
-            NativeControl.SetSelectionBackgroundColor(col);
-        }
-
-        internal void SetSelectionTextColor(Color col)
-        {
-            NativeControl.SetSelectionTextColor(col);
-        }
-
-        internal Color GetCellBackgroundColor()
-        {
-            return NativeControl.GetCellBackgroundColor();
-        }
-
-        internal Color GetCellDisabledTextColor()
-        {
-            return NativeControl.GetCellDisabledTextColor();
-        }
-
-        internal Color GetCellTextColor()
-        {
-            return NativeControl.GetCellTextColor();
-        }
-
         internal bool CommitChangesFromEditor()
         {
             return NativeControl.CommitChangesFromEditor(0);
@@ -4366,35 +4386,10 @@ namespace Alternet.UI
             ItemCollapsed?.Invoke(this, e);
         }
 
-        internal void SetCaptionBackgroundColor(Color col)
-        {
-            NativeControl.SetCaptionBackgroundColor(col);
-        }
-
-        internal void SetCaptionTextColor(Color col)
-        {
-            NativeControl.SetCaptionTextColor(col);
-        }
-
         internal static IPropertyGridNewItemParams CreateNewItemParams(
            IPropertyGridPropInfoRegistry? owner, PropertyInfo? propInfo = null)
         {
             return new PropertyGridNewItemParams(owner, propInfo);
-        }
-
-        internal void SetCellBackgroundColor(Color col)
-        {
-            NativeControl.SetCellBackgroundColor(col);
-        }
-
-        internal void SetCellDisabledTextColor(Color col)
-        {
-            NativeControl.SetCellDisabledTextColor(col);
-        }
-
-        internal void SetCellTextColor(Color col)
-        {
-            NativeControl.SetCellTextColor(col);
         }
 
         internal void RaiseItemExpanded(EventArgs e)
@@ -4438,26 +4433,6 @@ namespace Alternet.UI
             ColDragging?.Invoke(this, e);
         }
 
-        internal Color GetEmptySpaceColor()
-        {
-            return NativeControl.GetEmptySpaceColor();
-        }
-
-        internal Color GetLineColor()
-        {
-            return NativeControl.GetLineColor();
-        }
-
-        internal Color GetMarginColor()
-        {
-            return NativeControl.GetMarginColor();
-        }
-
-        internal Color GetSelectionBackgroundColor()
-        {
-            return NativeControl.GetSelectionBackgroundColor();
-        }
-
         internal static void KnownColorsClear()
         {
             Native.PropertyGrid.KnownColorsClear();
@@ -4499,11 +4474,6 @@ namespace Alternet.UI
         internal static void KnownColorsApply()
         {
             Native.PropertyGrid.KnownColorsApply();
-        }
-
-        internal Color GetSelectionForegroundColor()
-        {
-            return NativeControl.GetSelectionForegroundColor();
         }
 
         internal void EndAddChildren(IPropertyGridItem prop)
