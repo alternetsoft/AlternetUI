@@ -267,6 +267,13 @@ namespace Alternet.Drawing
             return new Size(Math.Max(v1.width, v2.width), Math.Max(v1.height, v2.height));
         }
 
+        /// <summary>
+        /// Gets size with applied minimal and maximal limitations.
+        /// </summary>
+        /// <param name="min">Minimal width and height.</param>
+        /// <param name="max">Maximal width and height.</param>
+        /// <returns><see cref="Size"/> with width and height greater than specified in
+        /// <paramref name="min"/> and less than specified in <paramref name="max"/>.</returns>
         public readonly Size ApplyMinMax(Size min, Size max)
         {
             var minApplied = this.ApplyMin(min);
@@ -274,6 +281,12 @@ namespace Alternet.Drawing
             return maxApplied;
         }
 
+        /// <summary>
+        /// Gets size with applied minimal limitations.
+        /// </summary>
+        /// <param name="min">Minimal width and height.</param>
+        /// <returns><see cref="Size"/> with width and height greater than specified in
+        /// <paramref name="min"/>.</returns>
         public readonly Size ApplyMin(Size min)
         {
             var result = this;
@@ -284,6 +297,12 @@ namespace Alternet.Drawing
             return result;
         }
 
+        /// <summary>
+        /// Gets size with applied maximal limitations.
+        /// </summary>
+        /// <param name="max">Maximal width and height.</param>
+        /// <returns><see cref="Size"/> with width and height less than
+        /// specified in <paramref name="max"/>.</returns>
         public readonly Size ApplyMax(Size max)
         {
             var result = this;
