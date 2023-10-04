@@ -3,7 +3,8 @@
 namespace Alternet::UI
 {
     GroupBox::GroupBox() :
-        _title(*this, nullopt, &Control::IsWxWindowCreated, &GroupBox::RetrieveTitle, &GroupBox::ApplyTitle)
+        _title(*this, nullopt, &Control::IsWxWindowCreated,
+            &GroupBox::RetrieveTitle, &GroupBox::ApplyTitle)
     {
         GetDelayedValues().Add(&_title);
     }
