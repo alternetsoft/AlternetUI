@@ -31,9 +31,15 @@ namespace Alternet.Drawing
     public struct Size : IEquatable<Size>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref='Drawing.Size'/> class.
+        /// Gets <see cref="Size"/> with zero width and height.
         /// </summary>
         public static readonly Size Empty;
+
+        /// <summary>
+        /// Gets <see cref="Size"/> with width and height equal to -1.
+        /// </summary>
+        public static readonly Size Default = new(-1);
+
         private double width; // Do not rename (binary serialization)
         private double height; // Do not rename (binary serialization)
 
