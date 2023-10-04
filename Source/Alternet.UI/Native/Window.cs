@@ -219,36 +219,6 @@ namespace Alternet.UI.Native
             }
         }
         
-        public Alternet.Drawing.Size MinimumSize
-        {
-            get
-            {
-                CheckDisposed();
-                return NativeApi.Window_GetMinimumSize_(NativePointer);
-            }
-            
-            set
-            {
-                CheckDisposed();
-                NativeApi.Window_SetMinimumSize_(NativePointer, value);
-            }
-        }
-        
-        public Alternet.Drawing.Size MaximumSize
-        {
-            get
-            {
-                CheckDisposed();
-                return NativeApi.Window_GetMaximumSize_(NativePointer);
-            }
-            
-            set
-            {
-                CheckDisposed();
-                NativeApi.Window_SetMaximumSize_(NativePointer, value);
-            }
-        }
-        
         public bool Modal
         {
             get
@@ -594,18 +564,6 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Window_SetModalResult_(IntPtr obj, ModalResult value);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.Size Window_GetMinimumSize_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Window_SetMinimumSize_(IntPtr obj, Alternet.Drawing.Size value);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.Size Window_GetMaximumSize_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Window_SetMaximumSize_(IntPtr obj, Alternet.Drawing.Size value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool Window_GetModal_(IntPtr obj);

@@ -21,12 +21,15 @@ namespace Alternet.UI
                 foreach (var control in Handler.AllChildrenIncludedInLayout)
                 {
                     var margin = control.Margin;
-                    var preferredSize = control.GetPreferredSize(new Size(availableSize.Width - width, availableSize.Height));
+                    var preferredSize = control.GetPreferredSizeLimited(
+                        new Size(availableSize.Width - width, availableSize.Height));
                     width += preferredSize.Width + margin.Horizontal;
                     maxHeight = Math.Max(maxHeight, preferredSize.Height + margin.Vertical);
                 }
 
-                return new Size(width + stackPanelPadding.Horizontal, double.IsNaN(Control.SuggestedHeight) ? maxHeight + stackPanelPadding.Vertical : Control.SuggestedHeight);
+                return new Size(
+                    width + stackPanelPadding.Horizontal,
+                    double.IsNaN(Control.SuggestedHeight) ? maxHeight + stackPanelPadding.Vertical : Control.SuggestedHeight);
             }
 
             public override void Layout()
@@ -39,9 +42,18 @@ namespace Alternet.UI
                     var margin = control.Margin;
                     var horizontalMargin = margin.Horizontal;
 
-                    var preferredSize = control.GetPreferredSize(new Size(childrenLayoutBounds.Width - x - horizontalMargin, childrenLayoutBounds.Height));
-                    var alignedPosition = AlignedLayout.AlignVertical(childrenLayoutBounds, control, preferredSize);
-                    control.Handler.Bounds = new Rect(childrenLayoutBounds.Left + x + margin.Left, alignedPosition.Origin, preferredSize.Width, alignedPosition.Size);
+                    var preferredSize = control.GetPreferredSizeLimited(
+                        new Size(
+                            childrenLayoutBounds.Width - x - horizontalMargin,
+                            childrenLayoutBounds.Height));
+                    var alignedPosition =
+                        AlignedLayout.AlignVertical(childrenLayoutBounds, control, preferredSize);
+                    control.Handler.Bounds =
+                        new Rect(
+                            childrenLayoutBounds.Left + x + margin.Left,
+                            alignedPosition.Origin,
+                            preferredSize.Width,
+                            alignedPosition.Size);
                     x += preferredSize.Width + horizontalMargin;
                 }
             }

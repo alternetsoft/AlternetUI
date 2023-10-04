@@ -380,6 +380,60 @@ namespace Alternet.UI.Native
             }
         }
         
+        public Alternet.Drawing.Size MinimumSize
+        {
+            get
+            {
+                CheckDisposed();
+                return NativeApi.Control_GetMinimumSize_(NativePointer);
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.Control_SetMinimumSize_(NativePointer, value);
+            }
+        }
+        
+        public Alternet.Drawing.Size MaximumSize
+        {
+            get
+            {
+                CheckDisposed();
+                return NativeApi.Control_GetMaximumSize_(NativePointer);
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.Control_SetMaximumSize_(NativePointer, value);
+            }
+        }
+        
+        public void SetMouseCapture(bool value)
+        {
+            CheckDisposed();
+            NativeApi.Control_SetMouseCapture_(NativePointer, value);
+        }
+        
+        public void AddChild(Control control)
+        {
+            CheckDisposed();
+            NativeApi.Control_AddChild_(NativePointer, control.NativePointer);
+        }
+        
+        public void RemoveChild(Control control)
+        {
+            CheckDisposed();
+            NativeApi.Control_RemoveChild_(NativePointer, control.NativePointer);
+        }
+        
+        public void Invalidate()
+        {
+            CheckDisposed();
+            NativeApi.Control_Invalidate_(NativePointer);
+        }
+        
         public void Update()
         {
             CheckDisposed();
@@ -633,30 +687,6 @@ namespace Alternet.UI.Native
         {
             CheckDisposed();
             return NativeApi.Control_GetDPI_(NativePointer);
-        }
-        
-        public void SetMouseCapture(bool value)
-        {
-            CheckDisposed();
-            NativeApi.Control_SetMouseCapture_(NativePointer, value);
-        }
-        
-        public void AddChild(Control control)
-        {
-            CheckDisposed();
-            NativeApi.Control_AddChild_(NativePointer, control.NativePointer);
-        }
-        
-        public void RemoveChild(Control control)
-        {
-            CheckDisposed();
-            NativeApi.Control_RemoveChild_(NativePointer, control.NativePointer);
-        }
-        
-        public void Invalidate()
-        {
-            CheckDisposed();
-            NativeApi.Control_Invalidate_(NativePointer);
         }
         
         static GCHandle eventCallbackGCHandle;
@@ -924,6 +954,30 @@ namespace Alternet.UI.Native
             public static extern void Control_SetFont_(IntPtr obj, IntPtr value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern Alternet.Drawing.Size Control_GetMinimumSize_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Control_SetMinimumSize_(IntPtr obj, Alternet.Drawing.Size value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern Alternet.Drawing.Size Control_GetMaximumSize_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Control_SetMaximumSize_(IntPtr obj, Alternet.Drawing.Size value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Control_SetMouseCapture_(IntPtr obj, bool value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Control_AddChild_(IntPtr obj, IntPtr control);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Control_RemoveChild_(IntPtr obj, IntPtr control);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Control_Invalidate_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Control_Update_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
@@ -1045,18 +1099,6 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern Alternet.Drawing.Size Control_GetDPI_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Control_SetMouseCapture_(IntPtr obj, bool value);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Control_AddChild_(IntPtr obj, IntPtr control);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Control_RemoveChild_(IntPtr obj, IntPtr control);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Control_Invalidate_(IntPtr obj);
             
         }
     }

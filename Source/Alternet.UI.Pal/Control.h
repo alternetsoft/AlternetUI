@@ -123,6 +123,12 @@ namespace Alternet::UI
         virtual Color RetrieveBackgroundColor();
         virtual void ApplyBackgroundColor(const Color& value);
 
+        Size RetrieveMinimumSize();
+        void ApplyMinimumSize(const Size& value);
+
+        Size RetrieveMaximumSize();
+        void ApplyMaximumSize(const Size& value);
+
         virtual Color RetrieveForegroundColor();
         virtual void ApplyForegroundColor(const Color& value);
 
@@ -214,11 +220,19 @@ namespace Alternet::UI
         DelayedValue<Control, ScrollInfo> _verticalScrollBarInfo;
         DelayedValue<Control, ScrollInfo> _horizontalScrollBarInfo;
 
+        DelayedValue<Control, Size> _minimumSize;
+        DelayedValue<Control, Size> _maximumSize;
+
         DelayedValues _delayedValues;
 
         DropTarget* _dropTarget = nullptr;
 
         optional<string> _toolTip;
+
+        Size _appliedMinimumSize;
+        Size _appliedMaximumSize;
+
+        optional<Size> CoerceSize(const Size& value);
 
         static DragDropEffects GetDragDropEffects(wxDragResult input);
         static wxDragResult GetDragResult(DragDropEffects input);

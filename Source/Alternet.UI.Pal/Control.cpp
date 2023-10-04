@@ -15,17 +15,37 @@ namespace Alternet::UI
             DelayedControlFlags::Visible,
             &Control::IsWxWindowCreated,
             {
-                {DelayedControlFlags::Visible, std::make_tuple(&Control::RetrieveVisible, &Control::ApplyVisible)},
-                {DelayedControlFlags::Frozen, std::make_tuple(&Control::RetrieveFrozen, &Control::ApplyFrozen)},
-                {DelayedControlFlags::Enabled, std::make_tuple(&Control::RetrieveEnabled, &Control::ApplyEnabled)},
+                {DelayedControlFlags::Visible, std::make_tuple(&Control::RetrieveVisible,
+                    &Control::ApplyVisible)},
+                {DelayedControlFlags::Frozen, std::make_tuple(&Control::RetrieveFrozen,
+                    &Control::ApplyFrozen)},
+                {DelayedControlFlags::Enabled, std::make_tuple(&Control::RetrieveEnabled,
+                    &Control::ApplyEnabled)},
             }),
-            _bounds(*this, Rect(), &Control::IsWxWindowCreated, &Control::RetrieveBounds, &Control::ApplyBounds),
-            _backgroundColor(*this, Color(), &Control::IsWxWindowCreated, &Control::RetrieveBackgroundColor, &Control::ApplyBackgroundColor),
-            _foregroundColor(*this, Color(), &Control::IsWxWindowCreated, &Control::RetrieveForegroundColor, &Control::ApplyForegroundColor),
-            _horizontalScrollBarInfo(*this, ScrollInfo(), &Control::CanSetScrollbar, &Control::RetrieveHorizontalScrollBarInfo, &Control::ApplyHorizontalScrollBarInfo),
-            _verticalScrollBarInfo(*this, ScrollInfo(), &Control::CanSetScrollbar, &Control::RetrieveVerticalScrollBarInfo, &Control::ApplyVerticalScrollBarInfo),
-            _delayedValues({&_delayedFlags, &_bounds, &_backgroundColor, &_foregroundColor, &_horizontalScrollBarInfo, &_verticalScrollBarInfo })
+            _bounds(*this, Rect(), &Control::IsWxWindowCreated, &Control::RetrieveBounds,
+                &Control::ApplyBounds),
+            
+            _backgroundColor(*this, Color(), &Control::IsWxWindowCreated,
+                &Control::RetrieveBackgroundColor, &Control::ApplyBackgroundColor),
+            
+            _foregroundColor(*this, Color(), &Control::IsWxWindowCreated,
+                &Control::RetrieveForegroundColor, &Control::ApplyForegroundColor),
+
+            _minimumSize(*this, Size(), &Control::IsWxWindowCreated,
+                    &Control::RetrieveMinimumSize, &Control::ApplyMinimumSize),
+            _maximumSize(*this, Size(), &Control::IsWxWindowCreated,
+                &Control::RetrieveMaximumSize, &Control::ApplyMaximumSize),
+            
+            _horizontalScrollBarInfo(*this, ScrollInfo(), &Control::CanSetScrollbar,
+                &Control::RetrieveHorizontalScrollBarInfo, &Control::ApplyHorizontalScrollBarInfo),
+            _verticalScrollBarInfo(*this, ScrollInfo(), &Control::CanSetScrollbar,
+                &Control::RetrieveVerticalScrollBarInfo, &Control::ApplyVerticalScrollBarInfo),
+            _delayedValues({&_delayedFlags, &_bounds, &_backgroundColor,
+                &_foregroundColor,&_horizontalScrollBarInfo,
+                &_verticalScrollBarInfo })
     {
+        GetDelayedValues().Add(&_minimumSize);
+        GetDelayedValues().Add(&_maximumSize);
     }
 
     bool Control::GetIsFocusable()
@@ -41,6 +61,96 @@ namespace Alternet::UI
     void Control::ShowPopupMenu(void* menu, int x, int y)
     {
         GetWxWindow()->PopupMenu((wxMenu*)menu, x, y);
+    }
+
+    Size Control::RetrieveMinimumSize()
+    {
+        return _appliedMinimumSize;
+    }
+
+    void Control::ApplyMinimumSize(const Size& value)
+    {
+        auto window = GetWxWindow();
+        auto size = fromDip(value, window);
+        window->SetMinSize(size == wxSize() ? wxDefaultSize : size);
+    }
+
+    Size Control::GetMinimumSize()
+    {
+        return _minimumSize.Get();
+    }
+
+    void Control::SetMinimumSize(const Size& value)
+    {
+        _minimumSize.Set(value);
+        _appliedMinimumSize = value;
+        auto limited = CoerceSize(GetSize());
+         if (limited.has_value())
+            SetSize(limited.value());
+    }
+
+    optional<Size> Control::CoerceSize(const Size& value)
+    {
+        auto minSize = GetMinimumSize();
+        auto maxSize = GetMaximumSize();
+
+        bool limitNeeded = false;
+        Size limitedSize = value;
+
+        if (minSize.Width > 0 && minSize.Width > value.Width)
+        {
+            limitedSize.Width = minSize.Width;
+            limitNeeded = true;
+        }
+
+        if (minSize.Height > 0 && minSize.Height > value.Height)
+        {
+            limitedSize.Height = minSize.Height;
+            limitNeeded = true;
+        }
+
+        if (maxSize.Width > 0 && maxSize.Width < value.Width)
+        {
+            limitedSize.Width = maxSize.Width;
+            limitNeeded = true;
+        }
+
+        if (maxSize.Height > 0 && maxSize.Height < value.Height)
+        {
+            limitedSize.Height = maxSize.Height;
+            limitNeeded = true;
+        }
+
+        if (limitNeeded)
+            return limitedSize;
+        else
+            return nullopt;
+    }
+
+    Size Control::GetMaximumSize()
+    {
+        return _maximumSize.Get();
+    }
+
+    void Control::SetMaximumSize(const Size& value)
+    {
+        _maximumSize.Set(value);
+        _appliedMaximumSize = value;
+        auto limited = CoerceSize(GetSize());
+        if (limited.has_value())
+            SetSize(limited.value());
+    }
+
+    Size Control::RetrieveMaximumSize()
+    {
+        return _appliedMaximumSize;
+    }
+
+    void Control::ApplyMaximumSize(const Size& value)
+    {
+        auto window = GetWxWindow();
+        auto size = fromDip(value, window);
+        window->SetMaxSize(size == wxSize() ? wxDefaultSize : size);
     }
 
     int Control::GetId()

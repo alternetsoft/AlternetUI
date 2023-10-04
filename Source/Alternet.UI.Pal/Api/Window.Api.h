@@ -147,26 +147,6 @@ ALTERNET_UI_API void Window_SetModalResult_(Window* obj, ModalResult value)
     obj->SetModalResult(value);
 }
 
-ALTERNET_UI_API Size_C Window_GetMinimumSize_(Window* obj)
-{
-    return obj->GetMinimumSize();
-}
-
-ALTERNET_UI_API void Window_SetMinimumSize_(Window* obj, Size value)
-{
-    obj->SetMinimumSize(value);
-}
-
-ALTERNET_UI_API Size_C Window_GetMaximumSize_(Window* obj)
-{
-    return obj->GetMaximumSize();
-}
-
-ALTERNET_UI_API void Window_SetMaximumSize_(Window* obj, Size value)
-{
-    obj->SetMaximumSize(value);
-}
-
 ALTERNET_UI_API c_bool Window_GetModal_(Window* obj)
 {
     return obj->GetModal();

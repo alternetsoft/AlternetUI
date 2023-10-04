@@ -97,6 +97,18 @@ void SetForegroundColor(const Color& value);
 Font* GetFont();
 void SetFont(Font* value);
 
+
+Size GetMinimumSize();
+void SetMinimumSize(const Size& value);
+
+
+Size GetMaximumSize();
+void SetMaximumSize(const Size& value);
+
+void SetMouseCapture(bool value);
+void AddChild(Control* control);
+void RemoveChild(Control* control);
+void Invalidate();
 void Update();
 virtual Size GetPreferredSize(const Size& availableSize);
 DragDropEffects DoDragDrop(UnmanagedDataObject* data, DragDropEffects allowedEffects);
@@ -138,10 +150,6 @@ void ShowPopupMenu(void* menu, int x, int y);
 void BeginIgnoreRecreate();
 void EndIgnoreRecreate();
 Size GetDPI();
-void SetMouseCapture(bool value);
-void AddChild(Control* control);
-void RemoveChild(Control* control);
-void Invalidate();
 public:
 enum class ControlEvent
 {

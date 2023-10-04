@@ -30,8 +30,6 @@ namespace NativeApi.Api
         public bool HasTitleBar {get; set;}
         public bool HasSystemMenu { get; set; }
         public ModalResult ModalResult {get; set;}
-        public Size MinimumSize { get; set; }
-        public Size MaximumSize { get; set; }
         public bool Modal => default;
 
         public void ShowModal() {}

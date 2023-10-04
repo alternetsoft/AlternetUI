@@ -287,6 +287,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets control flags.
         /// </summary>
+        [Browsable(false)]
         public ControlFlags Flags => flags;
 
         /// <summary>
@@ -831,6 +832,114 @@ namespace Alternet.UI
         /// </remarks>
         [Browsable(false)]
         public bool InUpdates => updateCount > 0;
+
+        /// <summary>
+        /// Gets or sets the minimum size the window can be resized to.
+        /// </summary>
+        [Browsable(false)]
+        public virtual Size MinimumSize
+        {
+            get => Handler.MinimumSize;
+            set => Handler.MinimumSize = value;
+        }
+
+        /// <summary>
+        /// Gets or sets the maximum size the window can be resized to.
+        /// </summary>
+        [Browsable(false)]
+        public virtual Size MaximumSize
+        {
+            get => Handler.MaximumSize;
+            set => Handler.MaximumSize = value;
+        }
+
+        /// <summary>
+        /// Gets or sets the minimum width the window can be resized to.
+        /// </summary>
+        public virtual double? MinWidth
+        {
+            get
+            {
+                var result = MinimumSize.Width;
+                if (result == -1 || result == 0)
+                    return null;
+                return result;
+            }
+
+            set
+            {
+                if (value is null)
+                    MinimumSize = new(-1, MinimumSize.Height);
+                else
+                    MinimumSize = new(value.Value, MinimumSize.Height);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the minimum height the window can be resized to.
+        /// </summary>
+        public virtual double? MinHeight
+        {
+            get
+            {
+                var result = MinimumSize.Height;
+                if (result == -1 || result == 0)
+                    return null;
+                return result;
+            }
+
+            set
+            {
+                if (value is null)
+                    MinimumSize = new(MinimumSize.Width, -1);
+                else
+                    MinimumSize = new(MinimumSize.Width, value.Value);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the maximum width the window can be resized to.
+        /// </summary>
+        public virtual double? MaxWidth
+        {
+            get
+            {
+                var result = MaximumSize.Width;
+                if (result == -1 || result == 0)
+                    return null;
+                return result;
+            }
+
+            set
+            {
+                if (value is null)
+                    MaximumSize = new(-1, MaximumSize.Height);
+                else
+                    MaximumSize = new(value.Value, MaximumSize.Height);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the maximum height the window can be resized to.
+        /// </summary>
+        public virtual double? MaxHeight
+        {
+            get
+            {
+                var result = MaximumSize.Height;
+                if (result == -1 || result == 0)
+                    return null;
+                return result;
+            }
+
+            set
+            {
+                if (value is null)
+                    MaximumSize = new(MaximumSize.Width, -1);
+                else
+                    MaximumSize = new(MaximumSize.Width, value.Value);
+            }
+        }
 
         /// <summary>
         /// Gets or sets the background color for the control.
@@ -1657,6 +1766,15 @@ namespace Alternet.UI
         public virtual Size GetPreferredSize(Size availableSize)
         {
             return Handler.GetPreferredSize(availableSize);
+        }
+
+        internal virtual Size GetPreferredSizeLimited(Size availableSize)
+        {
+            var result = GetPreferredSize(availableSize);
+            var minSize = MinimumSize;
+            var maxSize = MaximumSize;
+            var preferredSize = result.ApplyMinMax(minSize, maxSize);
+            return preferredSize;
         }
 
         /// <summary>

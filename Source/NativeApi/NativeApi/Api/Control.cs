@@ -51,6 +51,8 @@ namespace NativeApi.Api
         public Color BackgroundColor { get; set; }
         public Color ForegroundColor { get; set; }
         public Font? Font { get; set; }
+        public Size MinimumSize { get; set; }
+        public Size MaximumSize { get; set; }
 
         public static Control? HitTest(Point screenPoint) => default;
         public static Control? GetFocusedControl() => default;

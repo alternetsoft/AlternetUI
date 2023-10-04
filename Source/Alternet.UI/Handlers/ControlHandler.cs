@@ -33,6 +33,48 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets the minimum size the window can be resized to.
+        /// </summary>
+        public Size MinimumSize
+        {
+            get
+            {
+                if (NativeControl is null)
+                    return Size.Default;
+                return NativeControl.MinimumSize;
+            }
+
+            set
+            {
+                if (MinimumSize == value)
+                    return;
+                if (NativeControl is not null) NativeControl.MinimumSize = value;
+                PerformLayout();
+            }
+        }
+
+        /// <summary>
+        /// Gets the maximum size the window can be resized to.
+        /// </summary>
+        public Size MaximumSize
+        {
+            get
+            {
+                if (NativeControl is null)
+                    return Size.Default;
+                return NativeControl.MaximumSize;
+            }
+
+            set
+            {
+                if (MaximumSize == value)
+                    return;
+                if (NativeControl is not null) NativeControl.MaximumSize = value;
+                PerformLayout();
+            }
+        }
+
+        /// <summary>
         /// Gets a <see cref="Control"/> this handler provides the implementation for.
         /// </summary>
         public Control Control
@@ -471,7 +513,7 @@ namespace Alternet.UI
             var childrenLayoutBounds = ChildrenLayoutBounds;
             foreach (var control in AllChildrenIncludedInLayout)
             {
-                var preferredSize = control.GetPreferredSize(childrenLayoutBounds.Size);
+                var preferredSize = control.GetPreferredSizeLimited(childrenLayoutBounds.Size);
 
                 var horizontalPosition =
                     AlignedLayout.AlignHorizontal(

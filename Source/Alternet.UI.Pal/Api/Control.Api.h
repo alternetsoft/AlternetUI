@@ -226,6 +226,46 @@ ALTERNET_UI_API void Control_SetFont_(Control* obj, Font* value)
     obj->SetFont(value);
 }
 
+ALTERNET_UI_API Size_C Control_GetMinimumSize_(Control* obj)
+{
+    return obj->GetMinimumSize();
+}
+
+ALTERNET_UI_API void Control_SetMinimumSize_(Control* obj, Size value)
+{
+    obj->SetMinimumSize(value);
+}
+
+ALTERNET_UI_API Size_C Control_GetMaximumSize_(Control* obj)
+{
+    return obj->GetMaximumSize();
+}
+
+ALTERNET_UI_API void Control_SetMaximumSize_(Control* obj, Size value)
+{
+    obj->SetMaximumSize(value);
+}
+
+ALTERNET_UI_API void Control_SetMouseCapture_(Control* obj, c_bool value)
+{
+    obj->SetMouseCapture(value);
+}
+
+ALTERNET_UI_API void Control_AddChild_(Control* obj, Control* control)
+{
+    obj->AddChild(control);
+}
+
+ALTERNET_UI_API void Control_RemoveChild_(Control* obj, Control* control)
+{
+    obj->RemoveChild(control);
+}
+
+ALTERNET_UI_API void Control_Invalidate_(Control* obj)
+{
+    obj->Invalidate();
+}
+
 ALTERNET_UI_API void Control_Update_(Control* obj)
 {
     obj->Update();
@@ -429,26 +469,6 @@ ALTERNET_UI_API void Control_EndIgnoreRecreate_(Control* obj)
 ALTERNET_UI_API Size_C Control_GetDPI_(Control* obj)
 {
     return obj->GetDPI();
-}
-
-ALTERNET_UI_API void Control_SetMouseCapture_(Control* obj, c_bool value)
-{
-    obj->SetMouseCapture(value);
-}
-
-ALTERNET_UI_API void Control_AddChild_(Control* obj, Control* control)
-{
-    obj->AddChild(control);
-}
-
-ALTERNET_UI_API void Control_RemoveChild_(Control* obj, Control* control)
-{
-    obj->RemoveChild(control);
-}
-
-ALTERNET_UI_API void Control_Invalidate_(Control* obj)
-{
-    obj->Invalidate();
 }
 
 ALTERNET_UI_API void Control_SetEventCallback_(Control::ControlEventCallbackType callback)

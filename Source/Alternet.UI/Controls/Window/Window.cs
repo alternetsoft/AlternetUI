@@ -460,24 +460,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets the minimum size the window can be resized to.
-        /// </summary>
-        public Size MinimumSize
-        {
-            get => Handler.MinimumSize;
-            set => Handler.MinimumSize = value;
-        }
-
-        /// <summary>
-        /// Gets the maximum size the window can be resized to.
-        /// </summary>
-        public Size MaximumSize
-        {
-            get => Handler.MaximumSize;
-            set => Handler.MaximumSize = value;
-        }
-
-        /// <summary>
         /// Gets or sets the <see cref="StatusBar"/> that is displayed in the window.
         /// </summary>
         /// <value>

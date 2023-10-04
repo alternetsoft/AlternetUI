@@ -93,19 +93,11 @@ namespace Alternet::UI
         void OnCommand(wxCommandEvent& event);
         void OnCharHook(wxKeyEvent& event);
 
-        optional<Size> CoerceSize(const Size& value);
-
         string RetrieveTitle();
         void ApplyTitle(const string& value);
 
         WindowState RetrieveState();
         void ApplyState(const WindowState& value);
-
-        Size RetrieveMinimumSize();
-        void ApplyMinimumSize(const Size& value);
-
-        Size RetrieveMaximumSize();
-        void ApplyMaximumSize(const Size& value);
 
         MainMenu* RetrieveMenu();
         void ApplyMenu(MainMenu* const& value);
@@ -156,9 +148,6 @@ namespace Alternet::UI
         DelayedValue<Window, string> _title;
         DelayedValue<Window, WindowState> _state;
 
-        DelayedValue<Window, Size> _minimumSize;
-        DelayedValue<Window, Size> _maximumSize;
-        
         DelayedValue<Window, MainMenu*> _menu;
         DelayedValue<Window, Toolbar*> _toolbar;
         DelayedValue<Window, StatusBar*> _statusBar;
@@ -166,12 +155,7 @@ namespace Alternet::UI
         MainMenu* _storedMenu = nullptr;
         Toolbar* _storedToolbar = nullptr;
         StatusBar* _storedStatusBar = nullptr;
-
-        Size _appliedMinimumSize;
-        Size _appliedMaximumSize;
-
         ImageSet* _icon = nullptr;
-        
         WindowState _lastState = WindowState::Normal;
 
         inline static FrameDisabler* _modalWindowDisabler = nullptr;

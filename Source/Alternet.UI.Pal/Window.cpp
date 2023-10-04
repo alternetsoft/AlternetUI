@@ -96,10 +96,6 @@ namespace Alternet::UI
             &Window::ApplyTitle),
         _state(*this, WindowState::Normal, &Control::IsWxWindowCreated, 
             &Window::RetrieveState, &Window::ApplyState),
-        _minimumSize(*this, Size(), &Control::IsWxWindowCreated, 
-            &Window::RetrieveMinimumSize, &Window::ApplyMinimumSize),
-        _maximumSize(*this, Size(), &Control::IsWxWindowCreated, 
-            &Window::RetrieveMaximumSize, &Window::ApplyMaximumSize),
         _menu(*this, nullptr, &Control::IsWxWindowCreated, &Window::RetrieveMenu,   
             &Window::ApplyMenu),
         _toolbar(*this, nullptr, &Control::IsWxWindowCreated, &Window::RetrieveToolbar, 
@@ -110,8 +106,6 @@ namespace Alternet::UI
         GetDelayedValues().Add(&_title);
         GetDelayedValues().Add(&_state);
         GetDelayedValues().Add(&_delayedFlags);
-        GetDelayedValues().Add(&_minimumSize);
-        GetDelayedValues().Add(&_maximumSize);
         SetVisible(false);
 
         CreateWxWindow();
@@ -265,30 +259,6 @@ namespace Alternet::UI
         }
         else
             throwExInvalidArgEnumValue(value);
-    }
-
-    Size Window::RetrieveMinimumSize()
-    {
-        return _appliedMinimumSize;
-    }
-
-    void Window::ApplyMinimumSize(const Size& value)
-    {
-        auto window = GetWxWindow();
-        auto size = fromDip(value, window);
-        window->SetMinSize(size == wxSize() ? wxDefaultSize : size);
-    }
-
-    Size Window::RetrieveMaximumSize()
-    {
-        return _appliedMaximumSize;
-    }
-
-    void Window::ApplyMaximumSize(const Size& value)
-    {
-        auto window = GetWxWindow();
-        auto size = fromDip(value, window);
-        window->SetMaxSize(size == wxSize() ? wxDefaultSize : size);
     }
 
     MainMenu* Window::RetrieveMenu()
@@ -609,34 +579,6 @@ namespace Alternet::UI
     Button* Window::GetCancelButton()
     {
         return _cancelButton;
-    }
-
-    Size Window::GetMinimumSize()
-    {
-        return _minimumSize.Get();
-    }
-
-    void Window::SetMinimumSize(const Size& value)
-    {
-        _minimumSize.Set(value);
-        _appliedMinimumSize = value;
-        auto limited = CoerceSize(GetSize());
-        if (limited.has_value())
-            SetSize(limited.value());
-    }
-
-    Size Window::GetMaximumSize()
-    {
-        return _maximumSize.Get();
-    }
-
-    void Window::SetMaximumSize(const Size& value)
-    {
-        _maximumSize.Set(value);
-        _appliedMaximumSize = value;
-        auto limited = CoerceSize(GetSize());
-        if (limited.has_value())
-            SetSize(limited.value());
     }
 
     ModalResult Window::GetModalResult()
@@ -977,44 +919,6 @@ namespace Alternet::UI
         return dynamic_cast<Frame*>(GetWxWindow());
     }
 
-    optional<Size> Window::CoerceSize(const Size& value)
-    {
-        auto minSize = GetMinimumSize();
-        auto maxSize = GetMaximumSize();
-
-        bool limitNeeded = false;
-        Size limitedSize = value;
-
-        if (minSize.Width != 0 && minSize.Width > value.Width)
-        {
-            limitedSize.Width = minSize.Width;
-            limitNeeded = true;
-        }
-
-        if (minSize.Height != 0 && minSize.Height > value.Height)
-        {
-            limitedSize.Height = minSize.Height;
-            limitNeeded = true;
-        }
-
-        if (maxSize.Width != 0 && maxSize.Width < value.Width)
-        {
-            limitedSize.Width = maxSize.Width;
-            limitNeeded = true;
-        }
-
-        if (maxSize.Height != 0 && maxSize.Height < value.Height)
-        {
-            limitedSize.Height = maxSize.Height;
-            limitNeeded = true;
-        }
-
-        if (limitNeeded)
-            return limitedSize;
-        else
-            return nullopt;
-    }
-    
     bool Window::GetHasSystemMenu()
     {
         return _flags.IsSet(WindowFlags::SystemMenu);

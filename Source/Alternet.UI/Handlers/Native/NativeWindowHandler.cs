@@ -93,24 +93,6 @@ namespace Alternet.UI
             }
         }
 
-        /// <summary>
-        /// Gets the minimum size the window can be resized to.
-        /// </summary>
-        public Size MinimumSize
-        {
-            get => NativeControl.MinimumSize;
-            set => NativeControl.MinimumSize = value;
-        }
-
-        /// <summary>
-        /// Gets the maximum size the window can be resized to.
-        /// </summary>
-        public Size MaximumSize
-        {
-            get => NativeControl.MaximumSize;
-            set => NativeControl.MaximumSize = value;
-        }
-
         public void Activate()
         {
             NativeControl.Activate();

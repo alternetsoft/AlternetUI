@@ -267,6 +267,33 @@ namespace Alternet.Drawing
             return new Size(Math.Max(v1.width, v2.width), Math.Max(v1.height, v2.height));
         }
 
+        public readonly Size ApplyMinMax(Size min, Size max)
+        {
+            var minApplied = this.ApplyMin(min);
+            var maxApplied = minApplied.ApplyMax(max);
+            return maxApplied;
+        }
+
+        public readonly Size ApplyMin(Size min)
+        {
+            var result = this;
+            if (min.Width > 0 && result.Width < min.Width)
+                result.Width = min.Width;
+            if (min.Height > 0 && result.Height < min.Height)
+                result.Height = min.Height;
+            return result;
+        }
+
+        public readonly Size ApplyMax(Size max)
+        {
+            var result = this;
+            if (max.Width > 0 && result.Width > max.Width)
+                result.Width = max.Width;
+            if (max.Height > 0 && result.Height > max.Height)
+                result.Height = max.Height;
+            return result;
+        }
+
         /// <summary>
         /// Tests to see whether the specified object is a
         /// <see cref='Drawing.Size'/>  with the same dimensions
