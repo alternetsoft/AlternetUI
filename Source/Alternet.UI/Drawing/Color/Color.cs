@@ -1381,6 +1381,14 @@ namespace Alternet.Drawing
         public bool Equals(Color other) => this == other;
 
         /// <summary>
+        /// Indicates whether ARGB of this color is equal to ARGB of another color.
+        /// </summary>
+        /// <param name="other">A <see cref="Color"/> to compare with this color.</param>
+        /// <returns><c>true</c> if ARGB of the colors are equal;
+        /// otherwise, <c>false</c>.</returns>
+        public bool EqualARGB(Color other) => Value == other.Value;
+
+        /// <summary>
         /// Serves as the default hash function.
         /// </summary>
         /// <returns>A hash code for the current object.</returns>
