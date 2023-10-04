@@ -95,7 +95,7 @@ namespace Alternet.UI
             }
         }
 
-        internal double MinHeight
+        internal double SuggestedMinHeight
         {
             get
             {
