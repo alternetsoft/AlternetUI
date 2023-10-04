@@ -62,7 +62,7 @@ namespace ControlsSample
             textBox1.Text += "A";
         }
 
-        internal void GetWordIndex(
+        internal static void GetWordIndex(
             string s, 
             string word, 
             out int startIndex,
