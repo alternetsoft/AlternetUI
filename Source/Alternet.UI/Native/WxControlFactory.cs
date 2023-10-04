@@ -23,6 +23,1416 @@ namespace Alternet.UI.Native
         {
         }
         
+        public static void SetConstraintSizes(System.IntPtr handle, bool recurse)
+        {
+            NativeApi.WxControlFactory_SetConstraintSizes_(handle, recurse);
+        }
+        
+        public static bool DoPhase(System.IntPtr handle, int phase)
+        {
+            return NativeApi.WxControlFactory_DoPhase_(handle, phase);
+        }
+        
+        public static void SetSizeConstraint(System.IntPtr handle, int x, int y, int w, int h)
+        {
+            NativeApi.WxControlFactory_SetSizeConstraint_(handle, x, y, w, h);
+        }
+        
+        public static void MoveConstraint(System.IntPtr handle, int x, int y)
+        {
+            NativeApi.WxControlFactory_MoveConstraint_(handle, x, y);
+        }
+        
+        public static Alternet.Drawing.Int32Size GetSizeConstraint(System.IntPtr handle)
+        {
+            return NativeApi.WxControlFactory_GetSizeConstraint_(handle);
+        }
+        
+        public static Alternet.Drawing.Int32Size GetClientSizeConstraint(System.IntPtr handle)
+        {
+            return NativeApi.WxControlFactory_GetClientSizeConstraint_(handle);
+        }
+        
+        public static Alternet.Drawing.Int32Size GetPositionConstraint(System.IntPtr handle)
+        {
+            return NativeApi.WxControlFactory_GetPositionConstraint_(handle);
+        }
+        
+        public static void SetAutoLayout(System.IntPtr handle, bool autoLayout)
+        {
+            NativeApi.WxControlFactory_SetAutoLayout_(handle, autoLayout);
+        }
+        
+        public static bool GetAutoLayout(System.IntPtr handle)
+        {
+            return NativeApi.WxControlFactory_GetAutoLayout_(handle);
+        }
+        
+        public static bool Layout(System.IntPtr handle)
+        {
+            return NativeApi.WxControlFactory_Layout_(handle);
+        }
+        
+        public static void SetSizer(System.IntPtr handle, System.IntPtr sizer, bool deleteOld)
+        {
+            NativeApi.WxControlFactory_SetSizer_(handle, sizer, deleteOld);
+        }
+        
+        public static void SetSizerAndFit(System.IntPtr handle, System.IntPtr sizer, bool deleteOld)
+        {
+            NativeApi.WxControlFactory_SetSizerAndFit_(handle, sizer, deleteOld);
+        }
+        
+        public static System.IntPtr GetSizer(System.IntPtr handle)
+        {
+            return NativeApi.WxControlFactory_GetSizer_(handle);
+        }
+        
+        public static void SetContainingSizer(System.IntPtr handle, System.IntPtr sizer)
+        {
+            NativeApi.WxControlFactory_SetContainingSizer_(handle, sizer);
+        }
+        
+        public static System.IntPtr GetContainingSizer(System.IntPtr handle)
+        {
+            return NativeApi.WxControlFactory_GetContainingSizer_(handle);
+        }
+        
+        public static System.IntPtr CreateAccessible(System.IntPtr handle)
+        {
+            return NativeApi.WxControlFactory_CreateAccessible_(handle);
+        }
+        
+        public static void SetAccessible(System.IntPtr handle, System.IntPtr accessible)
+        {
+            NativeApi.WxControlFactory_SetAccessible_(handle, accessible);
+        }
+        
+        public static System.IntPtr GetAccessible(System.IntPtr handle)
+        {
+            return NativeApi.WxControlFactory_GetAccessible_(handle);
+        }
+        
+        public static System.IntPtr GetOrCreateAccessible(System.IntPtr handle)
+        {
+            return NativeApi.WxControlFactory_GetOrCreateAccessible_(handle);
+        }
+        
+        public static bool SetTransparent(System.IntPtr handle, byte alpha)
+        {
+            return NativeApi.WxControlFactory_SetTransparent_(handle, alpha);
+        }
+        
+        public static bool CanSetTransparent(System.IntPtr handle)
+        {
+            return NativeApi.WxControlFactory_CanSetTransparent_(handle);
+        }
+        
+        public static System.IntPtr GetHandle(System.IntPtr handle)
+        {
+            return NativeApi.WxControlFactory_GetHandle_(handle);
+        }
+        
+        public static void InheritAttributes(System.IntPtr handle)
+        {
+            NativeApi.WxControlFactory_InheritAttributes_(handle);
+        }
+        
+        public static bool ShouldInheritColors(System.IntPtr handle)
+        {
+            return NativeApi.WxControlFactory_ShouldInheritColors_(handle);
+        }
+        
+        public static bool CanBeOutsideClientArea(System.IntPtr handle)
+        {
+            return NativeApi.WxControlFactory_CanBeOutsideClientArea_(handle);
+        }
+        
+        public static bool CanApplyThemeBorder(System.IntPtr handle)
+        {
+            return NativeApi.WxControlFactory_CanApplyThemeBorder_(handle);
+        }
+        
+        public static System.IntPtr GetMainWindowOfCompositeControl(System.IntPtr handle)
+        {
+            return NativeApi.WxControlFactory_GetMainWindowOfCompositeControl_(handle);
+        }
+        
+        public static bool IsTopNavigationDomain(System.IntPtr handle, int kind)
+        {
+            return NativeApi.WxControlFactory_IsTopNavigationDomain_(handle, kind);
+        }
+        
+        public static System.IntPtr WXGetTextEntry(System.IntPtr handle)
+        {
+            return NativeApi.WxControlFactory_WXGetTextEntry_(handle);
+        }
+        
+        public static void ReleaseMouse(System.IntPtr handle)
+        {
+            NativeApi.WxControlFactory_ReleaseMouse_(handle);
+        }
+        
+        public static System.IntPtr GetCapture()
+        {
+            return NativeApi.WxControlFactory_GetCapture_();
+        }
+        
+        public static bool HasCapture(System.IntPtr handle)
+        {
+            return NativeApi.WxControlFactory_HasCapture_(handle);
+        }
+        
+        public static bool EnableTouchEvents(System.IntPtr handle, int WXUNUSEDeventsMask)
+        {
+            return NativeApi.WxControlFactory_EnableTouchEvents_(handle, WXUNUSEDeventsMask);
+        }
+        
+        public static void RefreshRect(System.IntPtr handle, Alternet.Drawing.Int32Rect rect, bool eraseBackground)
+        {
+            NativeApi.WxControlFactory_RefreshRect_(handle, rect, eraseBackground);
+        }
+        
+        public static void Update(System.IntPtr handle)
+        {
+            NativeApi.WxControlFactory_Update_(handle);
+        }
+        
+        public static void ClearBackground(System.IntPtr handle)
+        {
+            NativeApi.WxControlFactory_ClearBackground_(handle);
+        }
+        
+        public static void Freeze(System.IntPtr handle)
+        {
+            NativeApi.WxControlFactory_Freeze_(handle);
+        }
+        
+        public static void Thaw(System.IntPtr handle)
+        {
+            NativeApi.WxControlFactory_Thaw_(handle);
+        }
+        
+        public static bool IsFrozen(System.IntPtr handle)
+        {
+            return NativeApi.WxControlFactory_IsFrozen_(handle);
+        }
+        
+        public static void PrepareDC(System.IntPtr handle, System.IntPtr dc)
+        {
+            NativeApi.WxControlFactory_PrepareDC_(handle, dc);
+        }
+        
+        public static void SetDoubleBuffered(System.IntPtr handle, bool on)
+        {
+            NativeApi.WxControlFactory_SetDoubleBuffered_(handle, on);
+        }
+        
+        public static bool IsDoubleBuffered(System.IntPtr handle)
+        {
+            return NativeApi.WxControlFactory_IsDoubleBuffered_(handle);
+        }
+        
+        public static System.IntPtr GetUpdateRegion(System.IntPtr handle)
+        {
+            return NativeApi.WxControlFactory_GetUpdateRegion_(handle);
+        }
+        
+        public static Alternet.Drawing.Int32Rect GetUpdateClientRect(System.IntPtr handle)
+        {
+            return NativeApi.WxControlFactory_GetUpdateClientRect_(handle);
+        }
+        
+        public static bool IsExposed(System.IntPtr handle, int x, int y)
+        {
+            return NativeApi.WxControlFactory_IsExposed_(handle, x, y);
+        }
+        
+        public static bool IsExposed2(System.IntPtr handle, int x, int y, int w, int h)
+        {
+            return NativeApi.WxControlFactory_IsExposed2_(handle, x, y, w, h);
+        }
+        
+        public static bool SetBackgroundColor(System.IntPtr handle, Alternet.Drawing.Color Color)
+        {
+            return NativeApi.WxControlFactory_SetBackgroundColor_(handle, Color);
+        }
+        
+        public static void SetOwnBackgroundColor(System.IntPtr handle, Alternet.Drawing.Color Color)
+        {
+            NativeApi.WxControlFactory_SetOwnBackgroundColor_(handle, Color);
+        }
+        
+        public static Alternet.Drawing.Color GetBackgroundColor(System.IntPtr handle)
+        {
+            return NativeApi.WxControlFactory_GetBackgroundColor_(handle);
+        }
+        
+        public static bool InheritsBackgroundColor(System.IntPtr handle)
+        {
+            return NativeApi.WxControlFactory_InheritsBackgroundColor_(handle);
+        }
+        
+        public static bool UseBackgroundColor(System.IntPtr handle)
+        {
+            return NativeApi.WxControlFactory_UseBackgroundColor_(handle);
+        }
+        
+        public static bool SetForegroundColor(System.IntPtr handle, Alternet.Drawing.Color Color)
+        {
+            return NativeApi.WxControlFactory_SetForegroundColor_(handle, Color);
+        }
+        
+        public static void SetOwnForegroundColor(System.IntPtr handle, Alternet.Drawing.Color Color)
+        {
+            NativeApi.WxControlFactory_SetOwnForegroundColor_(handle, Color);
+        }
+        
+        public static Alternet.Drawing.Color GetForegroundColor(System.IntPtr handle)
+        {
+            return NativeApi.WxControlFactory_GetForegroundColor_(handle);
+        }
+        
+        public static bool UseForegroundColor(System.IntPtr handle)
+        {
+            return NativeApi.WxControlFactory_UseForegroundColor_(handle);
+        }
+        
+        public static bool InheritsForegroundColor(System.IntPtr handle)
+        {
+            return NativeApi.WxControlFactory_InheritsForegroundColor_(handle);
+        }
+        
+        public static bool SetBackgroundStyle(System.IntPtr handle, int style)
+        {
+            return NativeApi.WxControlFactory_SetBackgroundStyle_(handle, style);
+        }
+        
+        public static int GetBackgroundStyle(System.IntPtr handle)
+        {
+            return NativeApi.WxControlFactory_GetBackgroundStyle_(handle);
+        }
+        
+        public static bool HasTransparentBackground(System.IntPtr handle)
+        {
+            return NativeApi.WxControlFactory_HasTransparentBackground_(handle);
+        }
+        
+        public static bool IsTransparentBackgroundSupported(System.IntPtr handle, string reason)
+        {
+            return NativeApi.WxControlFactory_IsTransparentBackgroundSupported_(handle, reason);
+        }
+        
+        public static bool SetFont(System.IntPtr handle, System.IntPtr font)
+        {
+            return NativeApi.WxControlFactory_SetFont_(handle, font);
+        }
+        
+        public static void SetOwnFont(System.IntPtr handle, System.IntPtr font)
+        {
+            NativeApi.WxControlFactory_SetOwnFont_(handle, font);
+        }
+        
+        public static System.IntPtr GetFont(System.IntPtr handle)
+        {
+            return NativeApi.WxControlFactory_GetFont_(handle);
+        }
+        
+        public static bool SetCursor(System.IntPtr handle, System.IntPtr cursor)
+        {
+            return NativeApi.WxControlFactory_SetCursor_(handle, cursor);
+        }
+        
+        public static System.IntPtr GetCursor(System.IntPtr handle)
+        {
+            return NativeApi.WxControlFactory_GetCursor_(handle);
+        }
+        
+        public static void SetCaret(System.IntPtr handle, System.IntPtr caret)
+        {
+            NativeApi.WxControlFactory_SetCaret_(handle, caret);
+        }
+        
+        public static System.IntPtr GetCaret(System.IntPtr handle)
+        {
+            return NativeApi.WxControlFactory_GetCaret_(handle);
+        }
+        
+        public static int GetCharHeight(System.IntPtr handle)
+        {
+            return NativeApi.WxControlFactory_GetCharHeight_(handle);
+        }
+        
+        public static int GetCharWidth(System.IntPtr handle)
+        {
+            return NativeApi.WxControlFactory_GetCharWidth_(handle);
+        }
+        
+        public static Alternet.Drawing.Int32Size GetTextExtent(System.IntPtr handle, string str)
+        {
+            return NativeApi.WxControlFactory_GetTextExtent_(handle, str);
+        }
+        
+        public static Alternet.Drawing.Int32Point ClientToScreen(System.IntPtr handle, Alternet.Drawing.Int32Point pt)
+        {
+            return NativeApi.WxControlFactory_ClientToScreen_(handle, pt);
+        }
+        
+        public static Alternet.Drawing.Int32Point ScreenToClient(System.IntPtr handle, Alternet.Drawing.Int32Point pt)
+        {
+            return NativeApi.WxControlFactory_ScreenToClient_(handle, pt);
+        }
+        
+        public static int HitTest(System.IntPtr handle, int x, int y)
+        {
+            return NativeApi.WxControlFactory_HitTest_(handle, x, y);
+        }
+        
+        public static int GetBorderEx(System.IntPtr handle, long flags)
+        {
+            return NativeApi.WxControlFactory_GetBorderEx_(handle, flags);
+        }
+        
+        public static int GetBorder(System.IntPtr handle)
+        {
+            return NativeApi.WxControlFactory_GetBorder_(handle);
+        }
+        
+        public static void UpdateWindowUI(System.IntPtr handle, long flags)
+        {
+            NativeApi.WxControlFactory_UpdateWindowUI_(handle, flags);
+        }
+        
+        public static bool PopupMenu(System.IntPtr handle, System.IntPtr menu, int x, int y)
+        {
+            return NativeApi.WxControlFactory_PopupMenu_(handle, menu, x, y);
+        }
+        
+        public static int GetPopupMenuSelectionFromUser(System.IntPtr handle, System.IntPtr menu, int x, int y)
+        {
+            return NativeApi.WxControlFactory_GetPopupMenuSelectionFromUser_(handle, menu, x, y);
+        }
+        
+        public static bool HasMultiplePages(System.IntPtr handle)
+        {
+            return NativeApi.WxControlFactory_HasMultiplePages_(handle);
+        }
+        
+        public static bool CanScroll(System.IntPtr handle, int orient)
+        {
+            return NativeApi.WxControlFactory_CanScroll_(handle, orient);
+        }
+        
+        public static bool HasScrollbar(System.IntPtr handle, int orient)
+        {
+            return NativeApi.WxControlFactory_HasScrollbar_(handle, orient);
+        }
+        
+        public static void SetScrollbar(System.IntPtr handle, int orient, int pos, int thumbvisible, int range, bool refresh)
+        {
+            NativeApi.WxControlFactory_SetScrollbar_(handle, orient, pos, thumbvisible, range, refresh);
+        }
+        
+        public static void SetScrollPos(System.IntPtr handle, int orient, int pos, bool refresh)
+        {
+            NativeApi.WxControlFactory_SetScrollPos_(handle, orient, pos, refresh);
+        }
+        
+        public static int GetScrollPos(System.IntPtr handle, int orient)
+        {
+            return NativeApi.WxControlFactory_GetScrollPos_(handle, orient);
+        }
+        
+        public static int GetScrollThumb(System.IntPtr handle, int orient)
+        {
+            return NativeApi.WxControlFactory_GetScrollThumb_(handle, orient);
+        }
+        
+        public static int GetScrollRange(System.IntPtr handle, int orient)
+        {
+            return NativeApi.WxControlFactory_GetScrollRange_(handle, orient);
+        }
+        
+        public static bool ScrollLines(System.IntPtr handle, int lines)
+        {
+            return NativeApi.WxControlFactory_ScrollLines_(handle, lines);
+        }
+        
+        public static bool ScrollPages(System.IntPtr handle, int pages)
+        {
+            return NativeApi.WxControlFactory_ScrollPages_(handle, pages);
+        }
+        
+        public static bool LineUp(System.IntPtr handle)
+        {
+            return NativeApi.WxControlFactory_LineUp_(handle);
+        }
+        
+        public static bool LineDown(System.IntPtr handle)
+        {
+            return NativeApi.WxControlFactory_LineDown_(handle);
+        }
+        
+        public static bool PageUp(System.IntPtr handle)
+        {
+            return NativeApi.WxControlFactory_PageUp_(handle);
+        }
+        
+        public static bool PageDown(System.IntPtr handle)
+        {
+            return NativeApi.WxControlFactory_PageDown_(handle);
+        }
+        
+        public static void AlwaysShowScrollbars(System.IntPtr handle, bool horz, bool vert)
+        {
+            NativeApi.WxControlFactory_AlwaysShowScrollbars_(handle, horz, vert);
+        }
+        
+        public static bool IsScrollbarAlwaysShown(System.IntPtr handle, int orient)
+        {
+            return NativeApi.WxControlFactory_IsScrollbarAlwaysShown_(handle, orient);
+        }
+        
+        public static void SetHelpText(System.IntPtr handle, string text)
+        {
+            NativeApi.WxControlFactory_SetHelpText_(handle, text);
+        }
+        
+        public static string GetHelpTextAtPoint(System.IntPtr handle, Alternet.Drawing.Int32Point pt, int origin)
+        {
+            return NativeApi.WxControlFactory_GetHelpTextAtPoint_(handle, pt, origin);
+        }
+        
+        public static string GetHelpText(System.IntPtr handle)
+        {
+            return NativeApi.WxControlFactory_GetHelpText_(handle);
+        }
+        
+        public static void SetToolTip(System.IntPtr handle, string tip)
+        {
+            NativeApi.WxControlFactory_SetToolTip_(handle, tip);
+        }
+        
+        public static void SetToolTip2(System.IntPtr handle, System.IntPtr tip)
+        {
+            NativeApi.WxControlFactory_SetToolTip2_(handle, tip);
+        }
+        
+        public static void UnsetToolTip(System.IntPtr handle)
+        {
+            NativeApi.WxControlFactory_UnsetToolTip_(handle);
+        }
+        
+        public static System.IntPtr GetToolTip(System.IntPtr handle)
+        {
+            return NativeApi.WxControlFactory_GetToolTip_(handle);
+        }
+        
+        public static string GetToolTipText(System.IntPtr handle)
+        {
+            return NativeApi.WxControlFactory_GetToolTipText_(handle);
+        }
+        
+        public static bool CopyToolTip(System.IntPtr handle, System.IntPtr tip)
+        {
+            return NativeApi.WxControlFactory_CopyToolTip_(handle, tip);
+        }
+        
+        public static void SetDropTarget(System.IntPtr handle, System.IntPtr dropTarget)
+        {
+            NativeApi.WxControlFactory_SetDropTarget_(handle, dropTarget);
+        }
+        
+        public static System.IntPtr GetDropTarget(System.IntPtr handle)
+        {
+            return NativeApi.WxControlFactory_GetDropTarget_(handle);
+        }
+        
+        public static void DragAcceptFiles(System.IntPtr handle, bool accept)
+        {
+            NativeApi.WxControlFactory_DragAcceptFiles_(handle, accept);
+        }
+        
+        public static void SetConstraints(System.IntPtr handle, System.IntPtr constraints)
+        {
+            NativeApi.WxControlFactory_SetConstraints_(handle, constraints);
+        }
+        
+        public static System.IntPtr GetConstraints(System.IntPtr handle)
+        {
+            return NativeApi.WxControlFactory_GetConstraints_(handle);
+        }
+        
+        public static void UnsetConstraints(System.IntPtr handle, System.IntPtr c)
+        {
+            NativeApi.WxControlFactory_UnsetConstraints_(handle, c);
+        }
+        
+        public static System.IntPtr GetConstraintsInvolvedIn(System.IntPtr handle)
+        {
+            return NativeApi.WxControlFactory_GetConstraintsInvolvedIn_(handle);
+        }
+        
+        public static void AddConstraintReference(System.IntPtr handle, System.IntPtr otherWin)
+        {
+            NativeApi.WxControlFactory_AddConstraintReference_(handle, otherWin);
+        }
+        
+        public static void RemoveConstraintReference(System.IntPtr handle, System.IntPtr otherWin)
+        {
+            NativeApi.WxControlFactory_RemoveConstraintReference_(handle, otherWin);
+        }
+        
+        public static void DeleteRelatedConstraints(System.IntPtr handle)
+        {
+            NativeApi.WxControlFactory_DeleteRelatedConstraints_(handle);
+        }
+        
+        public static void ResetConstraints(System.IntPtr handle)
+        {
+            NativeApi.WxControlFactory_ResetConstraints_(handle);
+        }
+        
+        public static bool HasFlag(System.IntPtr handle, int flag)
+        {
+            return NativeApi.WxControlFactory_HasFlag_(handle, flag);
+        }
+        
+        public static bool IsRetained(System.IntPtr handle)
+        {
+            return NativeApi.WxControlFactory_IsRetained_(handle);
+        }
+        
+        public static bool ToggleWindowStyle(System.IntPtr handle, int flag)
+        {
+            return NativeApi.WxControlFactory_ToggleWindowStyle_(handle, flag);
+        }
+        
+        public static void SetExtraStyle(System.IntPtr handle, long exStyle)
+        {
+            NativeApi.WxControlFactory_SetExtraStyle_(handle, exStyle);
+        }
+        
+        public static long GetExtraStyle(System.IntPtr handle)
+        {
+            return NativeApi.WxControlFactory_GetExtraStyle_(handle);
+        }
+        
+        public static bool HasExtraStyle(System.IntPtr handle, int exFlag)
+        {
+            return NativeApi.WxControlFactory_HasExtraStyle_(handle, exFlag);
+        }
+        
+        public static void SetThemeEnabled(System.IntPtr handle, bool enableTheme)
+        {
+            NativeApi.WxControlFactory_SetThemeEnabled_(handle, enableTheme);
+        }
+        
+        public static bool GetThemeEnabled(System.IntPtr handle)
+        {
+            return NativeApi.WxControlFactory_GetThemeEnabled_(handle);
+        }
+        
+        public static void SetFocus(System.IntPtr handle)
+        {
+            NativeApi.WxControlFactory_SetFocus_(handle);
+        }
+        
+        public static void SetFocusFromKbd(System.IntPtr handle)
+        {
+            NativeApi.WxControlFactory_SetFocusFromKbd_(handle);
+        }
+        
+        public static System.IntPtr FindFocus()
+        {
+            return NativeApi.WxControlFactory_FindFocus_();
+        }
+        
+        public static bool HasFocus(System.IntPtr handle)
+        {
+            return NativeApi.WxControlFactory_HasFocus_(handle);
+        }
+        
+        public static bool AcceptsFocus(System.IntPtr handle)
+        {
+            return NativeApi.WxControlFactory_AcceptsFocus_(handle);
+        }
+        
+        public static bool AcceptsFocusRecursively(System.IntPtr handle)
+        {
+            return NativeApi.WxControlFactory_AcceptsFocusRecursively_(handle);
+        }
+        
+        public static bool AcceptsFocusFromKeyboard(System.IntPtr handle)
+        {
+            return NativeApi.WxControlFactory_AcceptsFocusFromKeyboard_(handle);
+        }
+        
+        public static void DisableFocusFromKeyboard(System.IntPtr handle)
+        {
+            NativeApi.WxControlFactory_DisableFocusFromKeyboard_(handle);
+        }
+        
+        public static bool CanBeFocused(System.IntPtr handle)
+        {
+            return NativeApi.WxControlFactory_CanBeFocused_(handle);
+        }
+        
+        public static bool IsFocusable(System.IntPtr handle)
+        {
+            return NativeApi.WxControlFactory_IsFocusable_(handle);
+        }
+        
+        public static bool CanAcceptFocus(System.IntPtr handle)
+        {
+            return NativeApi.WxControlFactory_CanAcceptFocus_(handle);
+        }
+        
+        public static bool CanAcceptFocusFromKeyboard(System.IntPtr handle)
+        {
+            return NativeApi.WxControlFactory_CanAcceptFocusFromKeyboard_(handle);
+        }
+        
+        public static void SetCanFocus(System.IntPtr handle, bool canFocus)
+        {
+            NativeApi.WxControlFactory_SetCanFocus_(handle, canFocus);
+        }
+        
+        public static void EnableVisibleFocus(System.IntPtr handle, bool enabled)
+        {
+            NativeApi.WxControlFactory_EnableVisibleFocus_(handle, enabled);
+        }
+        
+        public static bool NavigateIn(System.IntPtr handle, int flags)
+        {
+            return NativeApi.WxControlFactory_NavigateIn_(handle, flags);
+        }
+        
+        public static bool Navigate(System.IntPtr handle, int flags)
+        {
+            return NativeApi.WxControlFactory_Navigate_(handle, flags);
+        }
+        
+        public static void MoveBeforeInTabOrder(System.IntPtr handle, System.IntPtr win)
+        {
+            NativeApi.WxControlFactory_MoveBeforeInTabOrder_(handle, win);
+        }
+        
+        public static void MoveAfterInTabOrder(System.IntPtr handle, System.IntPtr win)
+        {
+            NativeApi.WxControlFactory_MoveAfterInTabOrder_(handle, win);
+        }
+        
+        public static System.IntPtr GetChildren(System.IntPtr handle)
+        {
+            return NativeApi.WxControlFactory_GetChildren_(handle);
+        }
+        
+        public static System.IntPtr GetPrevSibling(System.IntPtr handle)
+        {
+            return NativeApi.WxControlFactory_GetPrevSibling_(handle);
+        }
+        
+        public static System.IntPtr GetNextSibling(System.IntPtr handle)
+        {
+            return NativeApi.WxControlFactory_GetNextSibling_(handle);
+        }
+        
+        public static System.IntPtr GetParent(System.IntPtr handle)
+        {
+            return NativeApi.WxControlFactory_GetParent_(handle);
+        }
+        
+        public static System.IntPtr GetGrandParent(System.IntPtr handle)
+        {
+            return NativeApi.WxControlFactory_GetGrandParent_(handle);
+        }
+        
+        public static bool IsTopLevel(System.IntPtr handle)
+        {
+            return NativeApi.WxControlFactory_IsTopLevel_(handle);
+        }
+        
+        public static bool IsDescendant(System.IntPtr handle, System.IntPtr win)
+        {
+            return NativeApi.WxControlFactory_IsDescendant_(handle, win);
+        }
+        
+        public static void SetParent(System.IntPtr handle, System.IntPtr parent)
+        {
+            NativeApi.WxControlFactory_SetParent_(handle, parent);
+        }
+        
+        public static bool Reparent(System.IntPtr handle, System.IntPtr newParent)
+        {
+            return NativeApi.WxControlFactory_Reparent_(handle, newParent);
+        }
+        
+        public static void AddChild(System.IntPtr handle, System.IntPtr child)
+        {
+            NativeApi.WxControlFactory_AddChild_(handle, child);
+        }
+        
+        public static void RemoveChild(System.IntPtr handle, System.IntPtr child)
+        {
+            NativeApi.WxControlFactory_RemoveChild_(handle, child);
+        }
+        
+        public static bool IsClientAreaChild(System.IntPtr handle, System.IntPtr child)
+        {
+            return NativeApi.WxControlFactory_IsClientAreaChild_(handle, child);
+        }
+        
+        public static System.IntPtr FindWindow(System.IntPtr handle, long winid)
+        {
+            return NativeApi.WxControlFactory_FindWindow_(handle, winid);
+        }
+        
+        public static System.IntPtr FindWindow2(System.IntPtr handle, string name)
+        {
+            return NativeApi.WxControlFactory_FindWindow2_(handle, name);
+        }
+        
+        public static System.IntPtr FindWindowById(long winid, System.IntPtr parent)
+        {
+            return NativeApi.WxControlFactory_FindWindowById_(winid, parent);
+        }
+        
+        public static System.IntPtr FindWindowByName(string name, System.IntPtr parent)
+        {
+            return NativeApi.WxControlFactory_FindWindowByName_(name, parent);
+        }
+        
+        public static System.IntPtr FindWindowByLabel(string label, System.IntPtr parent)
+        {
+            return NativeApi.WxControlFactory_FindWindowByLabel_(label, parent);
+        }
+        
+        public static void SetValidator(System.IntPtr handle, System.IntPtr validator)
+        {
+            NativeApi.WxControlFactory_SetValidator_(handle, validator);
+        }
+        
+        public static System.IntPtr GetValidator(System.IntPtr handle)
+        {
+            return NativeApi.WxControlFactory_GetValidator_(handle);
+        }
+        
+        public static bool Validate(System.IntPtr handle)
+        {
+            return NativeApi.WxControlFactory_Validate_(handle);
+        }
+        
+        public static bool TransferDataToWindow(System.IntPtr handle)
+        {
+            return NativeApi.WxControlFactory_TransferDataToWindow_(handle);
+        }
+        
+        public static bool TransferDataFromWindow(System.IntPtr handle)
+        {
+            return NativeApi.WxControlFactory_TransferDataFromWindow_(handle);
+        }
+        
+        public static void InitDialog(System.IntPtr handle)
+        {
+            NativeApi.WxControlFactory_InitDialog_(handle);
+        }
+        
+        public static void SetAcceleratorTable(System.IntPtr handle, System.IntPtr accel)
+        {
+            NativeApi.WxControlFactory_SetAcceleratorTable_(handle, accel);
+        }
+        
+        public static System.IntPtr GetAcceleratorTable(System.IntPtr handle)
+        {
+            return NativeApi.WxControlFactory_GetAcceleratorTable_(handle);
+        }
+        
+        public static Alternet.Drawing.Int32Size GetDPI(System.IntPtr handle)
+        {
+            return NativeApi.WxControlFactory_GetDPI_(handle);
+        }
+        
+        public static void WXAdjustFontToOwnPPI(System.IntPtr handle, System.IntPtr font)
+        {
+            NativeApi.WxControlFactory_WXAdjustFontToOwnPPI_(handle, font);
+        }
+        
+        public static Alternet.Drawing.Int32Size FromPhys(Alternet.Drawing.Int32Size sz, System.IntPtr w)
+        {
+            return NativeApi.WxControlFactory_FromPhys_(sz, w);
+        }
+        
+        public static Alternet.Drawing.Int32Point FromPhys2(Alternet.Drawing.Int32Point pt, System.IntPtr w)
+        {
+            return NativeApi.WxControlFactory_FromPhys2_(pt, w);
+        }
+        
+        public static int FromPhys3(int d, System.IntPtr w)
+        {
+            return NativeApi.WxControlFactory_FromPhys3_(d, w);
+        }
+        
+        public static Alternet.Drawing.Int32Size FromPhys4(Alternet.Drawing.Int32Size sz)
+        {
+            return NativeApi.WxControlFactory_FromPhys4_(sz);
+        }
+        
+        public static Alternet.Drawing.Int32Point FromPhys5(Alternet.Drawing.Int32Point pt)
+        {
+            return NativeApi.WxControlFactory_FromPhys5_(pt);
+        }
+        
+        public static int FromPhys6(int d)
+        {
+            return NativeApi.WxControlFactory_FromPhys6_(d);
+        }
+        
+        public static Alternet.Drawing.Int32Size ToPhys(Alternet.Drawing.Int32Size sz, System.IntPtr w)
+        {
+            return NativeApi.WxControlFactory_ToPhys_(sz, w);
+        }
+        
+        public static Alternet.Drawing.Int32Point ToPhys2(Alternet.Drawing.Int32Point pt, System.IntPtr w)
+        {
+            return NativeApi.WxControlFactory_ToPhys2_(pt, w);
+        }
+        
+        public static int ToPhys3(int d, System.IntPtr w)
+        {
+            return NativeApi.WxControlFactory_ToPhys3_(d, w);
+        }
+        
+        public static Alternet.Drawing.Int32Size ToPhys4(Alternet.Drawing.Int32Size sz)
+        {
+            return NativeApi.WxControlFactory_ToPhys4_(sz);
+        }
+        
+        public static Alternet.Drawing.Int32Point ToPhys5(Alternet.Drawing.Int32Point pt)
+        {
+            return NativeApi.WxControlFactory_ToPhys5_(pt);
+        }
+        
+        public static int ToPhys6(int d)
+        {
+            return NativeApi.WxControlFactory_ToPhys6_(d);
+        }
+        
+        public static Alternet.Drawing.Int32Size FromDIP(Alternet.Drawing.Int32Size sz, System.IntPtr window)
+        {
+            return NativeApi.WxControlFactory_FromDIP_(sz, window);
+        }
+        
+        public static Alternet.Drawing.Int32Point FromDIP2(Alternet.Drawing.Int32Point pt, System.IntPtr window)
+        {
+            return NativeApi.WxControlFactory_FromDIP2_(pt, window);
+        }
+        
+        public static int FromDIP3(int d, System.IntPtr w)
+        {
+            return NativeApi.WxControlFactory_FromDIP3_(d, w);
+        }
+        
+        public static Alternet.Drawing.Int32Size FromDIP4(System.IntPtr handle, Alternet.Drawing.Int32Size sz)
+        {
+            return NativeApi.WxControlFactory_FromDIP4_(handle, sz);
+        }
+        
+        public static Alternet.Drawing.Int32Point FromDIP5(System.IntPtr handle, Alternet.Drawing.Int32Point pt)
+        {
+            return NativeApi.WxControlFactory_FromDIP5_(handle, pt);
+        }
+        
+        public static int FromDIP6(System.IntPtr handle, int d)
+        {
+            return NativeApi.WxControlFactory_FromDIP6_(handle, d);
+        }
+        
+        public static Alternet.Drawing.Int32Size ToDIP(Alternet.Drawing.Int32Size sz, System.IntPtr w)
+        {
+            return NativeApi.WxControlFactory_ToDIP_(sz, w);
+        }
+        
+        public static Alternet.Drawing.Int32Point ToDIP2(Alternet.Drawing.Int32Point pt, System.IntPtr w)
+        {
+            return NativeApi.WxControlFactory_ToDIP2_(pt, w);
+        }
+        
+        public static int ToDIP3(int d, System.IntPtr w)
+        {
+            return NativeApi.WxControlFactory_ToDIP3_(d, w);
+        }
+        
+        public static Alternet.Drawing.Int32Size ToDIP4(System.IntPtr handle, Alternet.Drawing.Int32Size sz)
+        {
+            return NativeApi.WxControlFactory_ToDIP4_(handle, sz);
+        }
+        
+        public static Alternet.Drawing.Int32Point ToDIP5(System.IntPtr handle, Alternet.Drawing.Int32Point pt)
+        {
+            return NativeApi.WxControlFactory_ToDIP5_(handle, pt);
+        }
+        
+        public static int ToDIP6(int d)
+        {
+            return NativeApi.WxControlFactory_ToDIP6_(d);
+        }
+        
+        public static Alternet.Drawing.Int32Point ConvertPixelsToDialog(System.IntPtr handle, Alternet.Drawing.Int32Point pt)
+        {
+            return NativeApi.WxControlFactory_ConvertPixelsToDialog_(handle, pt);
+        }
+        
+        public static Alternet.Drawing.Int32Point ConvertDialogToPixels(System.IntPtr handle, Alternet.Drawing.Int32Point pt)
+        {
+            return NativeApi.WxControlFactory_ConvertDialogToPixels_(handle, pt);
+        }
+        
+        public static Alternet.Drawing.Int32Size ConvertPixelsToDialog2(System.IntPtr handle, Alternet.Drawing.Int32Size sz)
+        {
+            return NativeApi.WxControlFactory_ConvertPixelsToDialog2_(handle, sz);
+        }
+        
+        public static Alternet.Drawing.Int32Size ConvertDialogToPixels2(System.IntPtr handle, Alternet.Drawing.Int32Size sz)
+        {
+            return NativeApi.WxControlFactory_ConvertDialogToPixels2_(handle, sz);
+        }
+        
+        public static void WarpPointer(System.IntPtr handle, int x, int y)
+        {
+            NativeApi.WxControlFactory_WarpPointer_(handle, x, y);
+        }
+        
+        public static void CaptureMouse(System.IntPtr handle)
+        {
+            NativeApi.WxControlFactory_CaptureMouse_(handle);
+        }
+        
+        public static bool Close(System.IntPtr handle, bool force)
+        {
+            return NativeApi.WxControlFactory_Close_(handle, force);
+        }
+        
+        public static bool DestroyWindow(System.IntPtr handle)
+        {
+            return NativeApi.WxControlFactory_DestroyWindow_(handle);
+        }
+        
+        public static bool DestroyChildren(System.IntPtr handle)
+        {
+            return NativeApi.WxControlFactory_DestroyChildren_(handle);
+        }
+        
+        public static bool IsBeingDeleted(System.IntPtr handle)
+        {
+            return NativeApi.WxControlFactory_IsBeingDeleted_(handle);
+        }
+        
+        public static void SetLabel(System.IntPtr handle, string label)
+        {
+            NativeApi.WxControlFactory_SetLabel_(handle, label);
+        }
+        
+        public static string GetLabel(System.IntPtr handle)
+        {
+            return NativeApi.WxControlFactory_GetLabel_(handle);
+        }
+        
+        public static void SetName(System.IntPtr handle, string name)
+        {
+            NativeApi.WxControlFactory_SetName_(handle, name);
+        }
+        
+        public static string GetName(System.IntPtr handle)
+        {
+            return NativeApi.WxControlFactory_GetName_(handle);
+        }
+        
+        public static int GetLayoutDirection(System.IntPtr handle)
+        {
+            return NativeApi.WxControlFactory_GetLayoutDirection_(handle);
+        }
+        
+        public static void SetLayoutDirection(System.IntPtr handle, int dir)
+        {
+            NativeApi.WxControlFactory_SetLayoutDirection_(handle, dir);
+        }
+        
+        public static int AdjustForLayoutDirection(System.IntPtr handle, int x, int width, int widthTotal)
+        {
+            return NativeApi.WxControlFactory_AdjustForLayoutDirection_(handle, x, width, widthTotal);
+        }
+        
+        public static void SetId(System.IntPtr handle, int winid)
+        {
+            NativeApi.WxControlFactory_SetId_(handle, winid);
+        }
+        
+        public static int GetId(System.IntPtr handle)
+        {
+            return NativeApi.WxControlFactory_GetId_(handle);
+        }
+        
+        public static int NewControlId(int count)
+        {
+            return NativeApi.WxControlFactory_NewControlId_(count);
+        }
+        
+        public static void UnreserveControlId(int id, int count)
+        {
+            NativeApi.WxControlFactory_UnreserveControlId_(id, count);
+        }
+        
+        public static void SetSize2(System.IntPtr handle, int x, int y, int width, int height)
+        {
+            NativeApi.WxControlFactory_SetSize2_(handle, x, y, width, height);
+        }
+        
+        public static void SetSize(System.IntPtr handle, int width, int height)
+        {
+            NativeApi.WxControlFactory_SetSize_(handle, width, height);
+        }
+        
+        public static void Move(System.IntPtr handle, int x, int y, int flags)
+        {
+            NativeApi.WxControlFactory_Move_(handle, x, y, flags);
+        }
+        
+        public static void SetPosition(System.IntPtr handle, int width, int height)
+        {
+            NativeApi.WxControlFactory_SetPosition_(handle, width, height);
+        }
+        
+        public static void Raise(System.IntPtr handle)
+        {
+            NativeApi.WxControlFactory_Raise_(handle);
+        }
+        
+        public static void Lower(System.IntPtr handle)
+        {
+            NativeApi.WxControlFactory_Lower_(handle);
+        }
+        
+        public static void SetClientSize(System.IntPtr handle, int width, int height)
+        {
+            NativeApi.WxControlFactory_SetClientSize_(handle, width, height);
+        }
+        
+        public static Alternet.Drawing.Int32Point GetPosition(System.IntPtr handle)
+        {
+            return NativeApi.WxControlFactory_GetPosition_(handle);
+        }
+        
+        public static Alternet.Drawing.Int32Point GetScreenPosition(System.IntPtr handle)
+        {
+            return NativeApi.WxControlFactory_GetScreenPosition_(handle);
+        }
+        
+        public static Alternet.Drawing.Int32Size GetSize(System.IntPtr handle)
+        {
+            return NativeApi.WxControlFactory_GetSize_(handle);
+        }
+        
+        public static Alternet.Drawing.Int32Size GetClientSize(System.IntPtr handle)
+        {
+            return NativeApi.WxControlFactory_GetClientSize_(handle);
+        }
+        
+        public static Alternet.Drawing.Int32Rect GetRect(System.IntPtr handle)
+        {
+            return NativeApi.WxControlFactory_GetRect_(handle);
+        }
+        
+        public static Alternet.Drawing.Int32Rect GetScreenRect(System.IntPtr handle)
+        {
+            return NativeApi.WxControlFactory_GetScreenRect_(handle);
+        }
+        
+        public static Alternet.Drawing.Int32Point GetClientAreaOrigin(System.IntPtr handle)
+        {
+            return NativeApi.WxControlFactory_GetClientAreaOrigin_(handle);
+        }
+        
+        public static Alternet.Drawing.Int32Rect GetClientRect(System.IntPtr handle)
+        {
+            return NativeApi.WxControlFactory_GetClientRect_(handle);
+        }
+        
+        public static Alternet.Drawing.Int32Size ClientToWindowSize(System.IntPtr handle, Alternet.Drawing.Int32Size size)
+        {
+            return NativeApi.WxControlFactory_ClientToWindowSize_(handle, size);
+        }
+        
+        public static Alternet.Drawing.Int32Size WindowToClientSize(System.IntPtr handle, Alternet.Drawing.Int32Size size)
+        {
+            return NativeApi.WxControlFactory_WindowToClientSize_(handle, size);
+        }
+        
+        public static Alternet.Drawing.Int32Size GetBestSize(System.IntPtr handle)
+        {
+            return NativeApi.WxControlFactory_GetBestSize_(handle);
+        }
+        
+        public static int GetBestHeight(System.IntPtr handle, int width)
+        {
+            return NativeApi.WxControlFactory_GetBestHeight_(handle, width);
+        }
+        
+        public static int GetBestWidth(System.IntPtr handle, int height)
+        {
+            return NativeApi.WxControlFactory_GetBestWidth_(handle, height);
+        }
+        
+        public static void SetScrollHelper(System.IntPtr handle, System.IntPtr sh)
+        {
+            NativeApi.WxControlFactory_SetScrollHelper_(handle, sh);
+        }
+        
+        public static System.IntPtr GetScrollHelper(System.IntPtr handle)
+        {
+            return NativeApi.WxControlFactory_GetScrollHelper_(handle);
+        }
+        
+        public static void InvalidateBestSize(System.IntPtr handle)
+        {
+            NativeApi.WxControlFactory_InvalidateBestSize_(handle);
+        }
+        
+        public static void CacheBestSize(System.IntPtr handle, Alternet.Drawing.Int32Size size)
+        {
+            NativeApi.WxControlFactory_CacheBestSize_(handle, size);
+        }
+        
+        public static Alternet.Drawing.Int32Size GetEffectiveMinSize(System.IntPtr handle)
+        {
+            return NativeApi.WxControlFactory_GetEffectiveMinSize_(handle);
+        }
+        
+        public static void SetInitialSize(System.IntPtr handle, Alternet.Drawing.Int32Size size)
+        {
+            NativeApi.WxControlFactory_SetInitialSize_(handle, size);
+        }
+        
+        public static void Center(System.IntPtr handle, int dir)
+        {
+            NativeApi.WxControlFactory_Center_(handle, dir);
+        }
+        
+        public static void CenterOnParent(System.IntPtr handle, int dir)
+        {
+            NativeApi.WxControlFactory_CenterOnParent_(handle, dir);
+        }
+        
+        public static void Fit(System.IntPtr handle)
+        {
+            NativeApi.WxControlFactory_Fit_(handle);
+        }
+        
+        public static void FitInside(System.IntPtr handle)
+        {
+            NativeApi.WxControlFactory_FitInside_(handle);
+        }
+        
+        public static void SetSizeHints(System.IntPtr handle, int minW, int minH, int maxW, int maxH, int incW, int incH)
+        {
+            NativeApi.WxControlFactory_SetSizeHints_(handle, minW, minH, maxW, maxH, incW, incH);
+        }
+        
+        public static void SetMinSize(System.IntPtr handle, Alternet.Drawing.Int32Size minSize)
+        {
+            NativeApi.WxControlFactory_SetMinSize_(handle, minSize);
+        }
+        
+        public static void SetMaxSize(System.IntPtr handle, Alternet.Drawing.Int32Size maxSize)
+        {
+            NativeApi.WxControlFactory_SetMaxSize_(handle, maxSize);
+        }
+        
+        public static void SetMinClientSize(System.IntPtr handle, Alternet.Drawing.Int32Size size)
+        {
+            NativeApi.WxControlFactory_SetMinClientSize_(handle, size);
+        }
+        
+        public static void SetMaxClientSize(System.IntPtr handle, Alternet.Drawing.Int32Size size)
+        {
+            NativeApi.WxControlFactory_SetMaxClientSize_(handle, size);
+        }
+        
+        public static Alternet.Drawing.Int32Size GetMinSize(System.IntPtr handle)
+        {
+            return NativeApi.WxControlFactory_GetMinSize_(handle);
+        }
+        
+        public static Alternet.Drawing.Int32Size GetMaxSize(System.IntPtr handle)
+        {
+            return NativeApi.WxControlFactory_GetMaxSize_(handle);
+        }
+        
+        public static Alternet.Drawing.Int32Size GetMinClientSize(System.IntPtr handle)
+        {
+            return NativeApi.WxControlFactory_GetMinClientSize_(handle);
+        }
+        
+        public static Alternet.Drawing.Int32Size GetMaxClientSize(System.IntPtr handle)
+        {
+            return NativeApi.WxControlFactory_GetMaxClientSize_(handle);
+        }
+        
+        public static int GetMinWidth(System.IntPtr handle)
+        {
+            return NativeApi.WxControlFactory_GetMinWidth_(handle);
+        }
+        
+        public static int GetMinHeight(System.IntPtr handle)
+        {
+            return NativeApi.WxControlFactory_GetMinHeight_(handle);
+        }
+        
+        public static int GetMaxWidth(System.IntPtr handle)
+        {
+            return NativeApi.WxControlFactory_GetMaxWidth_(handle);
+        }
+        
+        public static int GetMaxHeight(System.IntPtr handle)
+        {
+            return NativeApi.WxControlFactory_GetMaxHeight_(handle);
+        }
+        
+        public static void SetVirtualSize(System.IntPtr handle, int x, int y)
+        {
+            NativeApi.WxControlFactory_SetVirtualSize_(handle, x, y);
+        }
+        
+        public static Alternet.Drawing.Int32Size GetVirtualSize(System.IntPtr handle)
+        {
+            return NativeApi.WxControlFactory_GetVirtualSize_(handle);
+        }
+        
+        public static Alternet.Drawing.Int32Size GetBestVirtualSize(System.IntPtr handle)
+        {
+            return NativeApi.WxControlFactory_GetBestVirtualSize_(handle);
+        }
+        
+        public static double GetContentScaleFactor(System.IntPtr handle)
+        {
+            return NativeApi.WxControlFactory_GetContentScaleFactor_(handle);
+        }
+        
+        public static double GetDPIScaleFactor(System.IntPtr handle)
+        {
+            return NativeApi.WxControlFactory_GetDPIScaleFactor_(handle);
+        }
+        
+        public static Alternet.Drawing.Int32Size GetWindowBorderSize(System.IntPtr handle)
+        {
+            return NativeApi.WxControlFactory_GetWindowBorderSize_(handle);
+        }
+        
+        public static bool InformFirstDirection(System.IntPtr handle, int direction, int size, int availableOtherDir)
+        {
+            return NativeApi.WxControlFactory_InformFirstDirection_(handle, direction, size, availableOtherDir);
+        }
+        
+        public static void SendSizeEvent(System.IntPtr handle, int flags)
+        {
+            NativeApi.WxControlFactory_SendSizeEvent_(handle, flags);
+        }
+        
+        public static void SendSizeEventToParent(System.IntPtr handle, int flags)
+        {
+            NativeApi.WxControlFactory_SendSizeEventToParent_(handle, flags);
+        }
+        
+        public static void PostSizeEvent(System.IntPtr handle)
+        {
+            NativeApi.WxControlFactory_PostSizeEvent_(handle);
+        }
+        
+        public static void PostSizeEventToParent(System.IntPtr handle)
+        {
+            NativeApi.WxControlFactory_PostSizeEventToParent_(handle);
+        }
+        
+        public static bool BeginRepositioningChildren(System.IntPtr handle)
+        {
+            return NativeApi.WxControlFactory_BeginRepositioningChildren_(handle);
+        }
+        
+        public static void EndRepositioningChildren(System.IntPtr handle)
+        {
+            NativeApi.WxControlFactory_EndRepositioningChildren_(handle);
+        }
+        
+        public static bool Show(System.IntPtr handle, bool show)
+        {
+            return NativeApi.WxControlFactory_Show_(handle, show);
+        }
+        
+        public static bool Hide(System.IntPtr handle)
+        {
+            return NativeApi.WxControlFactory_Hide_(handle);
+        }
+        
+        public static bool ShowWithEffect(System.IntPtr handle, int effect, uint timeout)
+        {
+            return NativeApi.WxControlFactory_ShowWithEffect_(handle, effect, timeout);
+        }
+        
+        public static bool HideWithEffect(System.IntPtr handle, int effect, uint timeout)
+        {
+            return NativeApi.WxControlFactory_HideWithEffect_(handle, effect, timeout);
+        }
+        
+        public static bool Enable(System.IntPtr handle, bool enable)
+        {
+            return NativeApi.WxControlFactory_Enable_(handle, enable);
+        }
+        
+        public static bool Disable(System.IntPtr handle)
+        {
+            return NativeApi.WxControlFactory_Disable_(handle);
+        }
+        
+        public static bool IsShown(System.IntPtr handle)
+        {
+            return NativeApi.WxControlFactory_IsShown_(handle);
+        }
+        
+        public static bool IsEnabled(System.IntPtr handle)
+        {
+            return NativeApi.WxControlFactory_IsEnabled_(handle);
+        }
+        
+        public static bool IsThisEnabled(System.IntPtr handle)
+        {
+            return NativeApi.WxControlFactory_IsThisEnabled_(handle);
+        }
+        
+        public static bool IsShownOnScreen(System.IntPtr handle)
+        {
+            return NativeApi.WxControlFactory_IsShownOnScreen_(handle);
+        }
+        
+        public static void SetWindowStyleFlag(System.IntPtr handle, long style)
+        {
+            NativeApi.WxControlFactory_SetWindowStyleFlag_(handle, style);
+        }
+        
+        public static long GetWindowStyleFlag(System.IntPtr handle)
+        {
+            return NativeApi.WxControlFactory_GetWindowStyleFlag_(handle);
+        }
+        
+        public static void SetWindowStyle(System.IntPtr handle, long style)
+        {
+            NativeApi.WxControlFactory_SetWindowStyle_(handle, style);
+        }
+        
+        public static long GetWindowStyle(System.IntPtr handle)
+        {
+            return NativeApi.WxControlFactory_GetWindowStyle_(handle);
+        }
+        
         
         [SuppressUnmanagedCodeSecurity]
         public class NativeApi : NativeApiProvider
@@ -31,6 +1441,852 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern IntPtr WxControlFactory_Create_();
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void WxControlFactory_SetConstraintSizes_(System.IntPtr handle, bool recurse);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool WxControlFactory_DoPhase_(System.IntPtr handle, int phase);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void WxControlFactory_SetSizeConstraint_(System.IntPtr handle, int x, int y, int w, int h);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void WxControlFactory_MoveConstraint_(System.IntPtr handle, int x, int y);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern Alternet.Drawing.Int32Size WxControlFactory_GetSizeConstraint_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern Alternet.Drawing.Int32Size WxControlFactory_GetClientSizeConstraint_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern Alternet.Drawing.Int32Size WxControlFactory_GetPositionConstraint_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void WxControlFactory_SetAutoLayout_(System.IntPtr handle, bool autoLayout);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool WxControlFactory_GetAutoLayout_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool WxControlFactory_Layout_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void WxControlFactory_SetSizer_(System.IntPtr handle, System.IntPtr sizer, bool deleteOld);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void WxControlFactory_SetSizerAndFit_(System.IntPtr handle, System.IntPtr sizer, bool deleteOld);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr WxControlFactory_GetSizer_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void WxControlFactory_SetContainingSizer_(System.IntPtr handle, System.IntPtr sizer);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr WxControlFactory_GetContainingSizer_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr WxControlFactory_CreateAccessible_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void WxControlFactory_SetAccessible_(System.IntPtr handle, System.IntPtr accessible);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr WxControlFactory_GetAccessible_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr WxControlFactory_GetOrCreateAccessible_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool WxControlFactory_SetTransparent_(System.IntPtr handle, byte alpha);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool WxControlFactory_CanSetTransparent_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr WxControlFactory_GetHandle_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void WxControlFactory_InheritAttributes_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool WxControlFactory_ShouldInheritColors_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool WxControlFactory_CanBeOutsideClientArea_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool WxControlFactory_CanApplyThemeBorder_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr WxControlFactory_GetMainWindowOfCompositeControl_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool WxControlFactory_IsTopNavigationDomain_(System.IntPtr handle, int kind);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr WxControlFactory_WXGetTextEntry_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void WxControlFactory_ReleaseMouse_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr WxControlFactory_GetCapture_();
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool WxControlFactory_HasCapture_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool WxControlFactory_EnableTouchEvents_(System.IntPtr handle, int WXUNUSEDeventsMask);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void WxControlFactory_RefreshRect_(System.IntPtr handle, Alternet.Drawing.Int32Rect rect, bool eraseBackground);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void WxControlFactory_Update_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void WxControlFactory_ClearBackground_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void WxControlFactory_Freeze_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void WxControlFactory_Thaw_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool WxControlFactory_IsFrozen_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void WxControlFactory_PrepareDC_(System.IntPtr handle, System.IntPtr dc);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void WxControlFactory_SetDoubleBuffered_(System.IntPtr handle, bool on);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool WxControlFactory_IsDoubleBuffered_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr WxControlFactory_GetUpdateRegion_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern Alternet.Drawing.Int32Rect WxControlFactory_GetUpdateClientRect_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool WxControlFactory_IsExposed_(System.IntPtr handle, int x, int y);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool WxControlFactory_IsExposed2_(System.IntPtr handle, int x, int y, int w, int h);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool WxControlFactory_SetBackgroundColor_(System.IntPtr handle, NativeApiTypes.Color Color);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void WxControlFactory_SetOwnBackgroundColor_(System.IntPtr handle, NativeApiTypes.Color Color);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern NativeApiTypes.Color WxControlFactory_GetBackgroundColor_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool WxControlFactory_InheritsBackgroundColor_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool WxControlFactory_UseBackgroundColor_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool WxControlFactory_SetForegroundColor_(System.IntPtr handle, NativeApiTypes.Color Color);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void WxControlFactory_SetOwnForegroundColor_(System.IntPtr handle, NativeApiTypes.Color Color);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern NativeApiTypes.Color WxControlFactory_GetForegroundColor_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool WxControlFactory_UseForegroundColor_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool WxControlFactory_InheritsForegroundColor_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool WxControlFactory_SetBackgroundStyle_(System.IntPtr handle, int style);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int WxControlFactory_GetBackgroundStyle_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool WxControlFactory_HasTransparentBackground_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool WxControlFactory_IsTransparentBackgroundSupported_(System.IntPtr handle, string reason);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool WxControlFactory_SetFont_(System.IntPtr handle, System.IntPtr font);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void WxControlFactory_SetOwnFont_(System.IntPtr handle, System.IntPtr font);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr WxControlFactory_GetFont_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool WxControlFactory_SetCursor_(System.IntPtr handle, System.IntPtr cursor);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr WxControlFactory_GetCursor_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void WxControlFactory_SetCaret_(System.IntPtr handle, System.IntPtr caret);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr WxControlFactory_GetCaret_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int WxControlFactory_GetCharHeight_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int WxControlFactory_GetCharWidth_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern Alternet.Drawing.Int32Size WxControlFactory_GetTextExtent_(System.IntPtr handle, string str);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern Alternet.Drawing.Int32Point WxControlFactory_ClientToScreen_(System.IntPtr handle, Alternet.Drawing.Int32Point pt);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern Alternet.Drawing.Int32Point WxControlFactory_ScreenToClient_(System.IntPtr handle, Alternet.Drawing.Int32Point pt);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int WxControlFactory_HitTest_(System.IntPtr handle, int x, int y);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int WxControlFactory_GetBorderEx_(System.IntPtr handle, long flags);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int WxControlFactory_GetBorder_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void WxControlFactory_UpdateWindowUI_(System.IntPtr handle, long flags);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool WxControlFactory_PopupMenu_(System.IntPtr handle, System.IntPtr menu, int x, int y);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int WxControlFactory_GetPopupMenuSelectionFromUser_(System.IntPtr handle, System.IntPtr menu, int x, int y);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool WxControlFactory_HasMultiplePages_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool WxControlFactory_CanScroll_(System.IntPtr handle, int orient);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool WxControlFactory_HasScrollbar_(System.IntPtr handle, int orient);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void WxControlFactory_SetScrollbar_(System.IntPtr handle, int orient, int pos, int thumbvisible, int range, bool refresh);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void WxControlFactory_SetScrollPos_(System.IntPtr handle, int orient, int pos, bool refresh);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int WxControlFactory_GetScrollPos_(System.IntPtr handle, int orient);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int WxControlFactory_GetScrollThumb_(System.IntPtr handle, int orient);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int WxControlFactory_GetScrollRange_(System.IntPtr handle, int orient);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool WxControlFactory_ScrollLines_(System.IntPtr handle, int lines);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool WxControlFactory_ScrollPages_(System.IntPtr handle, int pages);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool WxControlFactory_LineUp_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool WxControlFactory_LineDown_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool WxControlFactory_PageUp_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool WxControlFactory_PageDown_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void WxControlFactory_AlwaysShowScrollbars_(System.IntPtr handle, bool horz, bool vert);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool WxControlFactory_IsScrollbarAlwaysShown_(System.IntPtr handle, int orient);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void WxControlFactory_SetHelpText_(System.IntPtr handle, string text);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern string WxControlFactory_GetHelpTextAtPoint_(System.IntPtr handle, Alternet.Drawing.Int32Point pt, int origin);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern string WxControlFactory_GetHelpText_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void WxControlFactory_SetToolTip_(System.IntPtr handle, string tip);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void WxControlFactory_SetToolTip2_(System.IntPtr handle, System.IntPtr tip);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void WxControlFactory_UnsetToolTip_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr WxControlFactory_GetToolTip_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern string WxControlFactory_GetToolTipText_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool WxControlFactory_CopyToolTip_(System.IntPtr handle, System.IntPtr tip);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void WxControlFactory_SetDropTarget_(System.IntPtr handle, System.IntPtr dropTarget);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr WxControlFactory_GetDropTarget_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void WxControlFactory_DragAcceptFiles_(System.IntPtr handle, bool accept);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void WxControlFactory_SetConstraints_(System.IntPtr handle, System.IntPtr constraints);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr WxControlFactory_GetConstraints_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void WxControlFactory_UnsetConstraints_(System.IntPtr handle, System.IntPtr c);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr WxControlFactory_GetConstraintsInvolvedIn_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void WxControlFactory_AddConstraintReference_(System.IntPtr handle, System.IntPtr otherWin);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void WxControlFactory_RemoveConstraintReference_(System.IntPtr handle, System.IntPtr otherWin);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void WxControlFactory_DeleteRelatedConstraints_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void WxControlFactory_ResetConstraints_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool WxControlFactory_HasFlag_(System.IntPtr handle, int flag);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool WxControlFactory_IsRetained_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool WxControlFactory_ToggleWindowStyle_(System.IntPtr handle, int flag);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void WxControlFactory_SetExtraStyle_(System.IntPtr handle, long exStyle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern long WxControlFactory_GetExtraStyle_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool WxControlFactory_HasExtraStyle_(System.IntPtr handle, int exFlag);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void WxControlFactory_SetThemeEnabled_(System.IntPtr handle, bool enableTheme);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool WxControlFactory_GetThemeEnabled_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void WxControlFactory_SetFocus_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void WxControlFactory_SetFocusFromKbd_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr WxControlFactory_FindFocus_();
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool WxControlFactory_HasFocus_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool WxControlFactory_AcceptsFocus_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool WxControlFactory_AcceptsFocusRecursively_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool WxControlFactory_AcceptsFocusFromKeyboard_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void WxControlFactory_DisableFocusFromKeyboard_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool WxControlFactory_CanBeFocused_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool WxControlFactory_IsFocusable_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool WxControlFactory_CanAcceptFocus_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool WxControlFactory_CanAcceptFocusFromKeyboard_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void WxControlFactory_SetCanFocus_(System.IntPtr handle, bool canFocus);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void WxControlFactory_EnableVisibleFocus_(System.IntPtr handle, bool enabled);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool WxControlFactory_NavigateIn_(System.IntPtr handle, int flags);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool WxControlFactory_Navigate_(System.IntPtr handle, int flags);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void WxControlFactory_MoveBeforeInTabOrder_(System.IntPtr handle, System.IntPtr win);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void WxControlFactory_MoveAfterInTabOrder_(System.IntPtr handle, System.IntPtr win);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr WxControlFactory_GetChildren_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr WxControlFactory_GetPrevSibling_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr WxControlFactory_GetNextSibling_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr WxControlFactory_GetParent_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr WxControlFactory_GetGrandParent_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool WxControlFactory_IsTopLevel_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool WxControlFactory_IsDescendant_(System.IntPtr handle, System.IntPtr win);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void WxControlFactory_SetParent_(System.IntPtr handle, System.IntPtr parent);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool WxControlFactory_Reparent_(System.IntPtr handle, System.IntPtr newParent);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void WxControlFactory_AddChild_(System.IntPtr handle, System.IntPtr child);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void WxControlFactory_RemoveChild_(System.IntPtr handle, System.IntPtr child);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool WxControlFactory_IsClientAreaChild_(System.IntPtr handle, System.IntPtr child);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr WxControlFactory_FindWindow_(System.IntPtr handle, long winid);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr WxControlFactory_FindWindow2_(System.IntPtr handle, string name);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr WxControlFactory_FindWindowById_(long winid, System.IntPtr parent);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr WxControlFactory_FindWindowByName_(string name, System.IntPtr parent);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr WxControlFactory_FindWindowByLabel_(string label, System.IntPtr parent);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void WxControlFactory_SetValidator_(System.IntPtr handle, System.IntPtr validator);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr WxControlFactory_GetValidator_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool WxControlFactory_Validate_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool WxControlFactory_TransferDataToWindow_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool WxControlFactory_TransferDataFromWindow_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void WxControlFactory_InitDialog_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void WxControlFactory_SetAcceleratorTable_(System.IntPtr handle, System.IntPtr accel);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr WxControlFactory_GetAcceleratorTable_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern Alternet.Drawing.Int32Size WxControlFactory_GetDPI_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void WxControlFactory_WXAdjustFontToOwnPPI_(System.IntPtr handle, System.IntPtr font);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern Alternet.Drawing.Int32Size WxControlFactory_FromPhys_(Alternet.Drawing.Int32Size sz, System.IntPtr w);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern Alternet.Drawing.Int32Point WxControlFactory_FromPhys2_(Alternet.Drawing.Int32Point pt, System.IntPtr w);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int WxControlFactory_FromPhys3_(int d, System.IntPtr w);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern Alternet.Drawing.Int32Size WxControlFactory_FromPhys4_(Alternet.Drawing.Int32Size sz);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern Alternet.Drawing.Int32Point WxControlFactory_FromPhys5_(Alternet.Drawing.Int32Point pt);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int WxControlFactory_FromPhys6_(int d);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern Alternet.Drawing.Int32Size WxControlFactory_ToPhys_(Alternet.Drawing.Int32Size sz, System.IntPtr w);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern Alternet.Drawing.Int32Point WxControlFactory_ToPhys2_(Alternet.Drawing.Int32Point pt, System.IntPtr w);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int WxControlFactory_ToPhys3_(int d, System.IntPtr w);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern Alternet.Drawing.Int32Size WxControlFactory_ToPhys4_(Alternet.Drawing.Int32Size sz);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern Alternet.Drawing.Int32Point WxControlFactory_ToPhys5_(Alternet.Drawing.Int32Point pt);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int WxControlFactory_ToPhys6_(int d);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern Alternet.Drawing.Int32Size WxControlFactory_FromDIP_(Alternet.Drawing.Int32Size sz, System.IntPtr window);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern Alternet.Drawing.Int32Point WxControlFactory_FromDIP2_(Alternet.Drawing.Int32Point pt, System.IntPtr window);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int WxControlFactory_FromDIP3_(int d, System.IntPtr w);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern Alternet.Drawing.Int32Size WxControlFactory_FromDIP4_(System.IntPtr handle, Alternet.Drawing.Int32Size sz);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern Alternet.Drawing.Int32Point WxControlFactory_FromDIP5_(System.IntPtr handle, Alternet.Drawing.Int32Point pt);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int WxControlFactory_FromDIP6_(System.IntPtr handle, int d);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern Alternet.Drawing.Int32Size WxControlFactory_ToDIP_(Alternet.Drawing.Int32Size sz, System.IntPtr w);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern Alternet.Drawing.Int32Point WxControlFactory_ToDIP2_(Alternet.Drawing.Int32Point pt, System.IntPtr w);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int WxControlFactory_ToDIP3_(int d, System.IntPtr w);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern Alternet.Drawing.Int32Size WxControlFactory_ToDIP4_(System.IntPtr handle, Alternet.Drawing.Int32Size sz);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern Alternet.Drawing.Int32Point WxControlFactory_ToDIP5_(System.IntPtr handle, Alternet.Drawing.Int32Point pt);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int WxControlFactory_ToDIP6_(int d);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern Alternet.Drawing.Int32Point WxControlFactory_ConvertPixelsToDialog_(System.IntPtr handle, Alternet.Drawing.Int32Point pt);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern Alternet.Drawing.Int32Point WxControlFactory_ConvertDialogToPixels_(System.IntPtr handle, Alternet.Drawing.Int32Point pt);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern Alternet.Drawing.Int32Size WxControlFactory_ConvertPixelsToDialog2_(System.IntPtr handle, Alternet.Drawing.Int32Size sz);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern Alternet.Drawing.Int32Size WxControlFactory_ConvertDialogToPixels2_(System.IntPtr handle, Alternet.Drawing.Int32Size sz);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void WxControlFactory_WarpPointer_(System.IntPtr handle, int x, int y);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void WxControlFactory_CaptureMouse_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool WxControlFactory_Close_(System.IntPtr handle, bool force);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool WxControlFactory_DestroyWindow_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool WxControlFactory_DestroyChildren_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool WxControlFactory_IsBeingDeleted_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void WxControlFactory_SetLabel_(System.IntPtr handle, string label);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern string WxControlFactory_GetLabel_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void WxControlFactory_SetName_(System.IntPtr handle, string name);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern string WxControlFactory_GetName_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int WxControlFactory_GetLayoutDirection_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void WxControlFactory_SetLayoutDirection_(System.IntPtr handle, int dir);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int WxControlFactory_AdjustForLayoutDirection_(System.IntPtr handle, int x, int width, int widthTotal);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void WxControlFactory_SetId_(System.IntPtr handle, int winid);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int WxControlFactory_GetId_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int WxControlFactory_NewControlId_(int count);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void WxControlFactory_UnreserveControlId_(int id, int count);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void WxControlFactory_SetSize2_(System.IntPtr handle, int x, int y, int width, int height);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void WxControlFactory_SetSize_(System.IntPtr handle, int width, int height);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void WxControlFactory_Move_(System.IntPtr handle, int x, int y, int flags);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void WxControlFactory_SetPosition_(System.IntPtr handle, int width, int height);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void WxControlFactory_Raise_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void WxControlFactory_Lower_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void WxControlFactory_SetClientSize_(System.IntPtr handle, int width, int height);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern Alternet.Drawing.Int32Point WxControlFactory_GetPosition_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern Alternet.Drawing.Int32Point WxControlFactory_GetScreenPosition_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern Alternet.Drawing.Int32Size WxControlFactory_GetSize_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern Alternet.Drawing.Int32Size WxControlFactory_GetClientSize_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern Alternet.Drawing.Int32Rect WxControlFactory_GetRect_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern Alternet.Drawing.Int32Rect WxControlFactory_GetScreenRect_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern Alternet.Drawing.Int32Point WxControlFactory_GetClientAreaOrigin_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern Alternet.Drawing.Int32Rect WxControlFactory_GetClientRect_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern Alternet.Drawing.Int32Size WxControlFactory_ClientToWindowSize_(System.IntPtr handle, Alternet.Drawing.Int32Size size);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern Alternet.Drawing.Int32Size WxControlFactory_WindowToClientSize_(System.IntPtr handle, Alternet.Drawing.Int32Size size);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern Alternet.Drawing.Int32Size WxControlFactory_GetBestSize_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int WxControlFactory_GetBestHeight_(System.IntPtr handle, int width);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int WxControlFactory_GetBestWidth_(System.IntPtr handle, int height);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void WxControlFactory_SetScrollHelper_(System.IntPtr handle, System.IntPtr sh);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr WxControlFactory_GetScrollHelper_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void WxControlFactory_InvalidateBestSize_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void WxControlFactory_CacheBestSize_(System.IntPtr handle, Alternet.Drawing.Int32Size size);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern Alternet.Drawing.Int32Size WxControlFactory_GetEffectiveMinSize_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void WxControlFactory_SetInitialSize_(System.IntPtr handle, Alternet.Drawing.Int32Size size);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void WxControlFactory_Center_(System.IntPtr handle, int dir);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void WxControlFactory_CenterOnParent_(System.IntPtr handle, int dir);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void WxControlFactory_Fit_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void WxControlFactory_FitInside_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void WxControlFactory_SetSizeHints_(System.IntPtr handle, int minW, int minH, int maxW, int maxH, int incW, int incH);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void WxControlFactory_SetMinSize_(System.IntPtr handle, Alternet.Drawing.Int32Size minSize);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void WxControlFactory_SetMaxSize_(System.IntPtr handle, Alternet.Drawing.Int32Size maxSize);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void WxControlFactory_SetMinClientSize_(System.IntPtr handle, Alternet.Drawing.Int32Size size);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void WxControlFactory_SetMaxClientSize_(System.IntPtr handle, Alternet.Drawing.Int32Size size);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern Alternet.Drawing.Int32Size WxControlFactory_GetMinSize_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern Alternet.Drawing.Int32Size WxControlFactory_GetMaxSize_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern Alternet.Drawing.Int32Size WxControlFactory_GetMinClientSize_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern Alternet.Drawing.Int32Size WxControlFactory_GetMaxClientSize_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int WxControlFactory_GetMinWidth_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int WxControlFactory_GetMinHeight_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int WxControlFactory_GetMaxWidth_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int WxControlFactory_GetMaxHeight_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void WxControlFactory_SetVirtualSize_(System.IntPtr handle, int x, int y);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern Alternet.Drawing.Int32Size WxControlFactory_GetVirtualSize_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern Alternet.Drawing.Int32Size WxControlFactory_GetBestVirtualSize_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern double WxControlFactory_GetContentScaleFactor_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern double WxControlFactory_GetDPIScaleFactor_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern Alternet.Drawing.Int32Size WxControlFactory_GetWindowBorderSize_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool WxControlFactory_InformFirstDirection_(System.IntPtr handle, int direction, int size, int availableOtherDir);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void WxControlFactory_SendSizeEvent_(System.IntPtr handle, int flags);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void WxControlFactory_SendSizeEventToParent_(System.IntPtr handle, int flags);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void WxControlFactory_PostSizeEvent_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void WxControlFactory_PostSizeEventToParent_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool WxControlFactory_BeginRepositioningChildren_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void WxControlFactory_EndRepositioningChildren_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool WxControlFactory_Show_(System.IntPtr handle, bool show);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool WxControlFactory_Hide_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool WxControlFactory_ShowWithEffect_(System.IntPtr handle, int effect, uint timeout);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool WxControlFactory_HideWithEffect_(System.IntPtr handle, int effect, uint timeout);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool WxControlFactory_Enable_(System.IntPtr handle, bool enable);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool WxControlFactory_Disable_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool WxControlFactory_IsShown_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool WxControlFactory_IsEnabled_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool WxControlFactory_IsThisEnabled_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool WxControlFactory_IsShownOnScreen_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void WxControlFactory_SetWindowStyleFlag_(System.IntPtr handle, long style);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern long WxControlFactory_GetWindowStyleFlag_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void WxControlFactory_SetWindowStyle_(System.IntPtr handle, long style);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern long WxControlFactory_GetWindowStyle_(System.IntPtr handle);
             
         }
     }
