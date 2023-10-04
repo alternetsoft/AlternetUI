@@ -423,7 +423,7 @@ namespace NativeApi.Api
         // find window among the descendants of this one either by id or by
         // name (return NULL if not found)
         public static IntPtr FindWindow(IntPtr handle, long winid) => default;
-        public static IntPtr FindWindow(IntPtr handle, string name) => default;
+        public static IntPtr FindWindow2(IntPtr handle, string name) => default;
 
         // Find a window among any window (all return NULL if not found)
         public static IntPtr FindWindowById(long winid, IntPtr parent = default) => default; //real static 
@@ -711,7 +711,7 @@ namespace NativeApi.Api
         public static void SetToolTip(IntPtr handle, string tip) { }
         // attach a tooltip to the window, pointer can be NULL to remove
         // existing tooltip
-        public static void SetToolTip(IntPtr handle, IntPtr tip) { }
+        public static void SetToolTip2(IntPtr handle, IntPtr tip) { }
         // more readable synonym for SetToolTip(NULL)
         public static void UnsetToolTip(IntPtr handle) { }
         // get the associated tooltip or NULL if none

@@ -13,3 +13,1413 @@ ALTERNET_UI_API WxControlFactory* WxControlFactory_Create_()
     return new WxControlFactory();
 }
 
+ALTERNET_UI_API void WxControlFactory_SetConstraintSizes_(void* handle, c_bool recurse)
+{
+    WxControlFactory::SetConstraintSizes(handle, recurse);
+}
+
+ALTERNET_UI_API c_bool WxControlFactory_DoPhase_(void* handle, int phase)
+{
+    return WxControlFactory::DoPhase(handle, phase);
+}
+
+ALTERNET_UI_API void WxControlFactory_SetSizeConstraint_(void* handle, int x, int y, int w, int h)
+{
+    WxControlFactory::SetSizeConstraint(handle, x, y, w, h);
+}
+
+ALTERNET_UI_API void WxControlFactory_MoveConstraint_(void* handle, int x, int y)
+{
+    WxControlFactory::MoveConstraint(handle, x, y);
+}
+
+ALTERNET_UI_API Int32Size_C WxControlFactory_GetSizeConstraint_(void* handle)
+{
+    return WxControlFactory::GetSizeConstraint(handle);
+}
+
+ALTERNET_UI_API Int32Size_C WxControlFactory_GetClientSizeConstraint_(void* handle)
+{
+    return WxControlFactory::GetClientSizeConstraint(handle);
+}
+
+ALTERNET_UI_API Int32Size_C WxControlFactory_GetPositionConstraint_(void* handle)
+{
+    return WxControlFactory::GetPositionConstraint(handle);
+}
+
+ALTERNET_UI_API void WxControlFactory_SetAutoLayout_(void* handle, c_bool autoLayout)
+{
+    WxControlFactory::SetAutoLayout(handle, autoLayout);
+}
+
+ALTERNET_UI_API c_bool WxControlFactory_GetAutoLayout_(void* handle)
+{
+    return WxControlFactory::GetAutoLayout(handle);
+}
+
+ALTERNET_UI_API c_bool WxControlFactory_Layout_(void* handle)
+{
+    return WxControlFactory::Layout(handle);
+}
+
+ALTERNET_UI_API void WxControlFactory_SetSizer_(void* handle, void* sizer, c_bool deleteOld)
+{
+    WxControlFactory::SetSizer(handle, sizer, deleteOld);
+}
+
+ALTERNET_UI_API void WxControlFactory_SetSizerAndFit_(void* handle, void* sizer, c_bool deleteOld)
+{
+    WxControlFactory::SetSizerAndFit(handle, sizer, deleteOld);
+}
+
+ALTERNET_UI_API void* WxControlFactory_GetSizer_(void* handle)
+{
+    return WxControlFactory::GetSizer(handle);
+}
+
+ALTERNET_UI_API void WxControlFactory_SetContainingSizer_(void* handle, void* sizer)
+{
+    WxControlFactory::SetContainingSizer(handle, sizer);
+}
+
+ALTERNET_UI_API void* WxControlFactory_GetContainingSizer_(void* handle)
+{
+    return WxControlFactory::GetContainingSizer(handle);
+}
+
+ALTERNET_UI_API void* WxControlFactory_CreateAccessible_(void* handle)
+{
+    return WxControlFactory::CreateAccessible(handle);
+}
+
+ALTERNET_UI_API void WxControlFactory_SetAccessible_(void* handle, void* accessible)
+{
+    WxControlFactory::SetAccessible(handle, accessible);
+}
+
+ALTERNET_UI_API void* WxControlFactory_GetAccessible_(void* handle)
+{
+    return WxControlFactory::GetAccessible(handle);
+}
+
+ALTERNET_UI_API void* WxControlFactory_GetOrCreateAccessible_(void* handle)
+{
+    return WxControlFactory::GetOrCreateAccessible(handle);
+}
+
+ALTERNET_UI_API c_bool WxControlFactory_SetTransparent_(void* handle, uint8_t alpha)
+{
+    return WxControlFactory::SetTransparent(handle, alpha);
+}
+
+ALTERNET_UI_API c_bool WxControlFactory_CanSetTransparent_(void* handle)
+{
+    return WxControlFactory::CanSetTransparent(handle);
+}
+
+ALTERNET_UI_API void* WxControlFactory_GetHandle_(void* handle)
+{
+    return WxControlFactory::GetHandle(handle);
+}
+
+ALTERNET_UI_API void WxControlFactory_InheritAttributes_(void* handle)
+{
+    WxControlFactory::InheritAttributes(handle);
+}
+
+ALTERNET_UI_API c_bool WxControlFactory_ShouldInheritColors_(void* handle)
+{
+    return WxControlFactory::ShouldInheritColors(handle);
+}
+
+ALTERNET_UI_API c_bool WxControlFactory_CanBeOutsideClientArea_(void* handle)
+{
+    return WxControlFactory::CanBeOutsideClientArea(handle);
+}
+
+ALTERNET_UI_API c_bool WxControlFactory_CanApplyThemeBorder_(void* handle)
+{
+    return WxControlFactory::CanApplyThemeBorder(handle);
+}
+
+ALTERNET_UI_API void* WxControlFactory_GetMainWindowOfCompositeControl_(void* handle)
+{
+    return WxControlFactory::GetMainWindowOfCompositeControl(handle);
+}
+
+ALTERNET_UI_API c_bool WxControlFactory_IsTopNavigationDomain_(void* handle, int kind)
+{
+    return WxControlFactory::IsTopNavigationDomain(handle, kind);
+}
+
+ALTERNET_UI_API void* WxControlFactory_WXGetTextEntry_(void* handle)
+{
+    return WxControlFactory::WXGetTextEntry(handle);
+}
+
+ALTERNET_UI_API void WxControlFactory_ReleaseMouse_(void* handle)
+{
+    WxControlFactory::ReleaseMouse(handle);
+}
+
+ALTERNET_UI_API void* WxControlFactory_GetCapture_()
+{
+    return WxControlFactory::GetCapture();
+}
+
+ALTERNET_UI_API c_bool WxControlFactory_HasCapture_(void* handle)
+{
+    return WxControlFactory::HasCapture(handle);
+}
+
+ALTERNET_UI_API c_bool WxControlFactory_EnableTouchEvents_(void* handle, int WXUNUSEDeventsMask)
+{
+    return WxControlFactory::EnableTouchEvents(handle, WXUNUSEDeventsMask);
+}
+
+ALTERNET_UI_API void WxControlFactory_RefreshRect_(void* handle, Int32Rect rect, c_bool eraseBackground)
+{
+    WxControlFactory::RefreshRect(handle, rect, eraseBackground);
+}
+
+ALTERNET_UI_API void WxControlFactory_Update_(void* handle)
+{
+    WxControlFactory::Update(handle);
+}
+
+ALTERNET_UI_API void WxControlFactory_ClearBackground_(void* handle)
+{
+    WxControlFactory::ClearBackground(handle);
+}
+
+ALTERNET_UI_API void WxControlFactory_Freeze_(void* handle)
+{
+    WxControlFactory::Freeze(handle);
+}
+
+ALTERNET_UI_API void WxControlFactory_Thaw_(void* handle)
+{
+    WxControlFactory::Thaw(handle);
+}
+
+ALTERNET_UI_API c_bool WxControlFactory_IsFrozen_(void* handle)
+{
+    return WxControlFactory::IsFrozen(handle);
+}
+
+ALTERNET_UI_API void WxControlFactory_PrepareDC_(void* handle, void* dc)
+{
+    WxControlFactory::PrepareDC(handle, dc);
+}
+
+ALTERNET_UI_API void WxControlFactory_SetDoubleBuffered_(void* handle, c_bool on)
+{
+    WxControlFactory::SetDoubleBuffered(handle, on);
+}
+
+ALTERNET_UI_API c_bool WxControlFactory_IsDoubleBuffered_(void* handle)
+{
+    return WxControlFactory::IsDoubleBuffered(handle);
+}
+
+ALTERNET_UI_API void* WxControlFactory_GetUpdateRegion_(void* handle)
+{
+    return WxControlFactory::GetUpdateRegion(handle);
+}
+
+ALTERNET_UI_API Int32Rect_C WxControlFactory_GetUpdateClientRect_(void* handle)
+{
+    return WxControlFactory::GetUpdateClientRect(handle);
+}
+
+ALTERNET_UI_API c_bool WxControlFactory_IsExposed_(void* handle, int x, int y)
+{
+    return WxControlFactory::IsExposed(handle, x, y);
+}
+
+ALTERNET_UI_API c_bool WxControlFactory_IsExposed2_(void* handle, int x, int y, int w, int h)
+{
+    return WxControlFactory::IsExposed2(handle, x, y, w, h);
+}
+
+ALTERNET_UI_API c_bool WxControlFactory_SetBackgroundColor_(void* handle, Color Color)
+{
+    return WxControlFactory::SetBackgroundColor(handle, Color);
+}
+
+ALTERNET_UI_API void WxControlFactory_SetOwnBackgroundColor_(void* handle, Color Color)
+{
+    WxControlFactory::SetOwnBackgroundColor(handle, Color);
+}
+
+ALTERNET_UI_API Color_C WxControlFactory_GetBackgroundColor_(void* handle)
+{
+    return WxControlFactory::GetBackgroundColor(handle);
+}
+
+ALTERNET_UI_API c_bool WxControlFactory_InheritsBackgroundColor_(void* handle)
+{
+    return WxControlFactory::InheritsBackgroundColor(handle);
+}
+
+ALTERNET_UI_API c_bool WxControlFactory_UseBackgroundColor_(void* handle)
+{
+    return WxControlFactory::UseBackgroundColor(handle);
+}
+
+ALTERNET_UI_API c_bool WxControlFactory_SetForegroundColor_(void* handle, Color Color)
+{
+    return WxControlFactory::SetForegroundColor(handle, Color);
+}
+
+ALTERNET_UI_API void WxControlFactory_SetOwnForegroundColor_(void* handle, Color Color)
+{
+    WxControlFactory::SetOwnForegroundColor(handle, Color);
+}
+
+ALTERNET_UI_API Color_C WxControlFactory_GetForegroundColor_(void* handle)
+{
+    return WxControlFactory::GetForegroundColor(handle);
+}
+
+ALTERNET_UI_API c_bool WxControlFactory_UseForegroundColor_(void* handle)
+{
+    return WxControlFactory::UseForegroundColor(handle);
+}
+
+ALTERNET_UI_API c_bool WxControlFactory_InheritsForegroundColor_(void* handle)
+{
+    return WxControlFactory::InheritsForegroundColor(handle);
+}
+
+ALTERNET_UI_API c_bool WxControlFactory_SetBackgroundStyle_(void* handle, int style)
+{
+    return WxControlFactory::SetBackgroundStyle(handle, style);
+}
+
+ALTERNET_UI_API int WxControlFactory_GetBackgroundStyle_(void* handle)
+{
+    return WxControlFactory::GetBackgroundStyle(handle);
+}
+
+ALTERNET_UI_API c_bool WxControlFactory_HasTransparentBackground_(void* handle)
+{
+    return WxControlFactory::HasTransparentBackground(handle);
+}
+
+ALTERNET_UI_API c_bool WxControlFactory_IsTransparentBackgroundSupported_(void* handle, const char16_t* reason)
+{
+    return WxControlFactory::IsTransparentBackgroundSupported(handle, reason);
+}
+
+ALTERNET_UI_API c_bool WxControlFactory_SetFont_(void* handle, void* font)
+{
+    return WxControlFactory::SetFont(handle, font);
+}
+
+ALTERNET_UI_API void WxControlFactory_SetOwnFont_(void* handle, void* font)
+{
+    WxControlFactory::SetOwnFont(handle, font);
+}
+
+ALTERNET_UI_API void* WxControlFactory_GetFont_(void* handle)
+{
+    return WxControlFactory::GetFont(handle);
+}
+
+ALTERNET_UI_API c_bool WxControlFactory_SetCursor_(void* handle, void* cursor)
+{
+    return WxControlFactory::SetCursor(handle, cursor);
+}
+
+ALTERNET_UI_API void* WxControlFactory_GetCursor_(void* handle)
+{
+    return WxControlFactory::GetCursor(handle);
+}
+
+ALTERNET_UI_API void WxControlFactory_SetCaret_(void* handle, void* caret)
+{
+    WxControlFactory::SetCaret(handle, caret);
+}
+
+ALTERNET_UI_API void* WxControlFactory_GetCaret_(void* handle)
+{
+    return WxControlFactory::GetCaret(handle);
+}
+
+ALTERNET_UI_API int WxControlFactory_GetCharHeight_(void* handle)
+{
+    return WxControlFactory::GetCharHeight(handle);
+}
+
+ALTERNET_UI_API int WxControlFactory_GetCharWidth_(void* handle)
+{
+    return WxControlFactory::GetCharWidth(handle);
+}
+
+ALTERNET_UI_API Int32Size_C WxControlFactory_GetTextExtent_(void* handle, const char16_t* str)
+{
+    return WxControlFactory::GetTextExtent(handle, str);
+}
+
+ALTERNET_UI_API Int32Point_C WxControlFactory_ClientToScreen_(void* handle, Int32Point pt)
+{
+    return WxControlFactory::ClientToScreen(handle, pt);
+}
+
+ALTERNET_UI_API Int32Point_C WxControlFactory_ScreenToClient_(void* handle, Int32Point pt)
+{
+    return WxControlFactory::ScreenToClient(handle, pt);
+}
+
+ALTERNET_UI_API int WxControlFactory_HitTest_(void* handle, int x, int y)
+{
+    return WxControlFactory::HitTest(handle, x, y);
+}
+
+ALTERNET_UI_API int WxControlFactory_GetBorderEx_(void* handle, int64_t flags)
+{
+    return WxControlFactory::GetBorderEx(handle, flags);
+}
+
+ALTERNET_UI_API int WxControlFactory_GetBorder_(void* handle)
+{
+    return WxControlFactory::GetBorder(handle);
+}
+
+ALTERNET_UI_API void WxControlFactory_UpdateWindowUI_(void* handle, int64_t flags)
+{
+    WxControlFactory::UpdateWindowUI(handle, flags);
+}
+
+ALTERNET_UI_API c_bool WxControlFactory_PopupMenu_(void* handle, void* menu, int x, int y)
+{
+    return WxControlFactory::PopupMenu(handle, menu, x, y);
+}
+
+ALTERNET_UI_API int WxControlFactory_GetPopupMenuSelectionFromUser_(void* handle, void* menu, int x, int y)
+{
+    return WxControlFactory::GetPopupMenuSelectionFromUser(handle, menu, x, y);
+}
+
+ALTERNET_UI_API c_bool WxControlFactory_HasMultiplePages_(void* handle)
+{
+    return WxControlFactory::HasMultiplePages(handle);
+}
+
+ALTERNET_UI_API c_bool WxControlFactory_CanScroll_(void* handle, int orient)
+{
+    return WxControlFactory::CanScroll(handle, orient);
+}
+
+ALTERNET_UI_API c_bool WxControlFactory_HasScrollbar_(void* handle, int orient)
+{
+    return WxControlFactory::HasScrollbar(handle, orient);
+}
+
+ALTERNET_UI_API void WxControlFactory_SetScrollbar_(void* handle, int orient, int pos, int thumbvisible, int range, c_bool refresh)
+{
+    WxControlFactory::SetScrollbar(handle, orient, pos, thumbvisible, range, refresh);
+}
+
+ALTERNET_UI_API void WxControlFactory_SetScrollPos_(void* handle, int orient, int pos, c_bool refresh)
+{
+    WxControlFactory::SetScrollPos(handle, orient, pos, refresh);
+}
+
+ALTERNET_UI_API int WxControlFactory_GetScrollPos_(void* handle, int orient)
+{
+    return WxControlFactory::GetScrollPos(handle, orient);
+}
+
+ALTERNET_UI_API int WxControlFactory_GetScrollThumb_(void* handle, int orient)
+{
+    return WxControlFactory::GetScrollThumb(handle, orient);
+}
+
+ALTERNET_UI_API int WxControlFactory_GetScrollRange_(void* handle, int orient)
+{
+    return WxControlFactory::GetScrollRange(handle, orient);
+}
+
+ALTERNET_UI_API c_bool WxControlFactory_ScrollLines_(void* handle, int lines)
+{
+    return WxControlFactory::ScrollLines(handle, lines);
+}
+
+ALTERNET_UI_API c_bool WxControlFactory_ScrollPages_(void* handle, int pages)
+{
+    return WxControlFactory::ScrollPages(handle, pages);
+}
+
+ALTERNET_UI_API c_bool WxControlFactory_LineUp_(void* handle)
+{
+    return WxControlFactory::LineUp(handle);
+}
+
+ALTERNET_UI_API c_bool WxControlFactory_LineDown_(void* handle)
+{
+    return WxControlFactory::LineDown(handle);
+}
+
+ALTERNET_UI_API c_bool WxControlFactory_PageUp_(void* handle)
+{
+    return WxControlFactory::PageUp(handle);
+}
+
+ALTERNET_UI_API c_bool WxControlFactory_PageDown_(void* handle)
+{
+    return WxControlFactory::PageDown(handle);
+}
+
+ALTERNET_UI_API void WxControlFactory_AlwaysShowScrollbars_(void* handle, c_bool horz, c_bool vert)
+{
+    WxControlFactory::AlwaysShowScrollbars(handle, horz, vert);
+}
+
+ALTERNET_UI_API c_bool WxControlFactory_IsScrollbarAlwaysShown_(void* handle, int orient)
+{
+    return WxControlFactory::IsScrollbarAlwaysShown(handle, orient);
+}
+
+ALTERNET_UI_API void WxControlFactory_SetHelpText_(void* handle, const char16_t* text)
+{
+    WxControlFactory::SetHelpText(handle, text);
+}
+
+ALTERNET_UI_API char16_t* WxControlFactory_GetHelpTextAtPoint_(void* handle, Int32Point pt, int origin)
+{
+    return AllocPInvokeReturnString(WxControlFactory::GetHelpTextAtPoint(handle, pt, origin));
+}
+
+ALTERNET_UI_API char16_t* WxControlFactory_GetHelpText_(void* handle)
+{
+    return AllocPInvokeReturnString(WxControlFactory::GetHelpText(handle));
+}
+
+ALTERNET_UI_API void WxControlFactory_SetToolTip_(void* handle, const char16_t* tip)
+{
+    WxControlFactory::SetToolTip(handle, tip);
+}
+
+ALTERNET_UI_API void WxControlFactory_SetToolTip2_(void* handle, void* tip)
+{
+    WxControlFactory::SetToolTip2(handle, tip);
+}
+
+ALTERNET_UI_API void WxControlFactory_UnsetToolTip_(void* handle)
+{
+    WxControlFactory::UnsetToolTip(handle);
+}
+
+ALTERNET_UI_API void* WxControlFactory_GetToolTip_(void* handle)
+{
+    return WxControlFactory::GetToolTip(handle);
+}
+
+ALTERNET_UI_API char16_t* WxControlFactory_GetToolTipText_(void* handle)
+{
+    return AllocPInvokeReturnString(WxControlFactory::GetToolTipText(handle));
+}
+
+ALTERNET_UI_API c_bool WxControlFactory_CopyToolTip_(void* handle, void* tip)
+{
+    return WxControlFactory::CopyToolTip(handle, tip);
+}
+
+ALTERNET_UI_API void WxControlFactory_SetDropTarget_(void* handle, void* dropTarget)
+{
+    WxControlFactory::SetDropTarget(handle, dropTarget);
+}
+
+ALTERNET_UI_API void* WxControlFactory_GetDropTarget_(void* handle)
+{
+    return WxControlFactory::GetDropTarget(handle);
+}
+
+ALTERNET_UI_API void WxControlFactory_DragAcceptFiles_(void* handle, c_bool accept)
+{
+    WxControlFactory::DragAcceptFiles(handle, accept);
+}
+
+ALTERNET_UI_API void WxControlFactory_SetConstraints_(void* handle, void* constraints)
+{
+    WxControlFactory::SetConstraints(handle, constraints);
+}
+
+ALTERNET_UI_API void* WxControlFactory_GetConstraints_(void* handle)
+{
+    return WxControlFactory::GetConstraints(handle);
+}
+
+ALTERNET_UI_API void WxControlFactory_UnsetConstraints_(void* handle, void* c)
+{
+    WxControlFactory::UnsetConstraints(handle, c);
+}
+
+ALTERNET_UI_API void* WxControlFactory_GetConstraintsInvolvedIn_(void* handle)
+{
+    return WxControlFactory::GetConstraintsInvolvedIn(handle);
+}
+
+ALTERNET_UI_API void WxControlFactory_AddConstraintReference_(void* handle, void* otherWin)
+{
+    WxControlFactory::AddConstraintReference(handle, otherWin);
+}
+
+ALTERNET_UI_API void WxControlFactory_RemoveConstraintReference_(void* handle, void* otherWin)
+{
+    WxControlFactory::RemoveConstraintReference(handle, otherWin);
+}
+
+ALTERNET_UI_API void WxControlFactory_DeleteRelatedConstraints_(void* handle)
+{
+    WxControlFactory::DeleteRelatedConstraints(handle);
+}
+
+ALTERNET_UI_API void WxControlFactory_ResetConstraints_(void* handle)
+{
+    WxControlFactory::ResetConstraints(handle);
+}
+
+ALTERNET_UI_API c_bool WxControlFactory_HasFlag_(void* handle, int flag)
+{
+    return WxControlFactory::HasFlag(handle, flag);
+}
+
+ALTERNET_UI_API c_bool WxControlFactory_IsRetained_(void* handle)
+{
+    return WxControlFactory::IsRetained(handle);
+}
+
+ALTERNET_UI_API c_bool WxControlFactory_ToggleWindowStyle_(void* handle, int flag)
+{
+    return WxControlFactory::ToggleWindowStyle(handle, flag);
+}
+
+ALTERNET_UI_API void WxControlFactory_SetExtraStyle_(void* handle, int64_t exStyle)
+{
+    WxControlFactory::SetExtraStyle(handle, exStyle);
+}
+
+ALTERNET_UI_API int64_t WxControlFactory_GetExtraStyle_(void* handle)
+{
+    return WxControlFactory::GetExtraStyle(handle);
+}
+
+ALTERNET_UI_API c_bool WxControlFactory_HasExtraStyle_(void* handle, int exFlag)
+{
+    return WxControlFactory::HasExtraStyle(handle, exFlag);
+}
+
+ALTERNET_UI_API void WxControlFactory_SetThemeEnabled_(void* handle, c_bool enableTheme)
+{
+    WxControlFactory::SetThemeEnabled(handle, enableTheme);
+}
+
+ALTERNET_UI_API c_bool WxControlFactory_GetThemeEnabled_(void* handle)
+{
+    return WxControlFactory::GetThemeEnabled(handle);
+}
+
+ALTERNET_UI_API void WxControlFactory_SetFocus_(void* handle)
+{
+    WxControlFactory::SetFocus(handle);
+}
+
+ALTERNET_UI_API void WxControlFactory_SetFocusFromKbd_(void* handle)
+{
+    WxControlFactory::SetFocusFromKbd(handle);
+}
+
+ALTERNET_UI_API void* WxControlFactory_FindFocus_()
+{
+    return WxControlFactory::FindFocus();
+}
+
+ALTERNET_UI_API c_bool WxControlFactory_HasFocus_(void* handle)
+{
+    return WxControlFactory::HasFocus(handle);
+}
+
+ALTERNET_UI_API c_bool WxControlFactory_AcceptsFocus_(void* handle)
+{
+    return WxControlFactory::AcceptsFocus(handle);
+}
+
+ALTERNET_UI_API c_bool WxControlFactory_AcceptsFocusRecursively_(void* handle)
+{
+    return WxControlFactory::AcceptsFocusRecursively(handle);
+}
+
+ALTERNET_UI_API c_bool WxControlFactory_AcceptsFocusFromKeyboard_(void* handle)
+{
+    return WxControlFactory::AcceptsFocusFromKeyboard(handle);
+}
+
+ALTERNET_UI_API void WxControlFactory_DisableFocusFromKeyboard_(void* handle)
+{
+    WxControlFactory::DisableFocusFromKeyboard(handle);
+}
+
+ALTERNET_UI_API c_bool WxControlFactory_CanBeFocused_(void* handle)
+{
+    return WxControlFactory::CanBeFocused(handle);
+}
+
+ALTERNET_UI_API c_bool WxControlFactory_IsFocusable_(void* handle)
+{
+    return WxControlFactory::IsFocusable(handle);
+}
+
+ALTERNET_UI_API c_bool WxControlFactory_CanAcceptFocus_(void* handle)
+{
+    return WxControlFactory::CanAcceptFocus(handle);
+}
+
+ALTERNET_UI_API c_bool WxControlFactory_CanAcceptFocusFromKeyboard_(void* handle)
+{
+    return WxControlFactory::CanAcceptFocusFromKeyboard(handle);
+}
+
+ALTERNET_UI_API void WxControlFactory_SetCanFocus_(void* handle, c_bool canFocus)
+{
+    WxControlFactory::SetCanFocus(handle, canFocus);
+}
+
+ALTERNET_UI_API void WxControlFactory_EnableVisibleFocus_(void* handle, c_bool enabled)
+{
+    WxControlFactory::EnableVisibleFocus(handle, enabled);
+}
+
+ALTERNET_UI_API c_bool WxControlFactory_NavigateIn_(void* handle, int flags)
+{
+    return WxControlFactory::NavigateIn(handle, flags);
+}
+
+ALTERNET_UI_API c_bool WxControlFactory_Navigate_(void* handle, int flags)
+{
+    return WxControlFactory::Navigate(handle, flags);
+}
+
+ALTERNET_UI_API void WxControlFactory_MoveBeforeInTabOrder_(void* handle, void* win)
+{
+    WxControlFactory::MoveBeforeInTabOrder(handle, win);
+}
+
+ALTERNET_UI_API void WxControlFactory_MoveAfterInTabOrder_(void* handle, void* win)
+{
+    WxControlFactory::MoveAfterInTabOrder(handle, win);
+}
+
+ALTERNET_UI_API void* WxControlFactory_GetChildren_(void* handle)
+{
+    return WxControlFactory::GetChildren(handle);
+}
+
+ALTERNET_UI_API void* WxControlFactory_GetPrevSibling_(void* handle)
+{
+    return WxControlFactory::GetPrevSibling(handle);
+}
+
+ALTERNET_UI_API void* WxControlFactory_GetNextSibling_(void* handle)
+{
+    return WxControlFactory::GetNextSibling(handle);
+}
+
+ALTERNET_UI_API void* WxControlFactory_GetParent_(void* handle)
+{
+    return WxControlFactory::GetParent(handle);
+}
+
+ALTERNET_UI_API void* WxControlFactory_GetGrandParent_(void* handle)
+{
+    return WxControlFactory::GetGrandParent(handle);
+}
+
+ALTERNET_UI_API c_bool WxControlFactory_IsTopLevel_(void* handle)
+{
+    return WxControlFactory::IsTopLevel(handle);
+}
+
+ALTERNET_UI_API c_bool WxControlFactory_IsDescendant_(void* handle, void* win)
+{
+    return WxControlFactory::IsDescendant(handle, win);
+}
+
+ALTERNET_UI_API void WxControlFactory_SetParent_(void* handle, void* parent)
+{
+    WxControlFactory::SetParent(handle, parent);
+}
+
+ALTERNET_UI_API c_bool WxControlFactory_Reparent_(void* handle, void* newParent)
+{
+    return WxControlFactory::Reparent(handle, newParent);
+}
+
+ALTERNET_UI_API void WxControlFactory_AddChild_(void* handle, void* child)
+{
+    WxControlFactory::AddChild(handle, child);
+}
+
+ALTERNET_UI_API void WxControlFactory_RemoveChild_(void* handle, void* child)
+{
+    WxControlFactory::RemoveChild(handle, child);
+}
+
+ALTERNET_UI_API c_bool WxControlFactory_IsClientAreaChild_(void* handle, void* child)
+{
+    return WxControlFactory::IsClientAreaChild(handle, child);
+}
+
+ALTERNET_UI_API void* WxControlFactory_FindWindow_(void* handle, int64_t winid)
+{
+    return WxControlFactory::FindWindow(handle, winid);
+}
+
+ALTERNET_UI_API void* WxControlFactory_FindWindow2_(void* handle, const char16_t* name)
+{
+    return WxControlFactory::FindWindow2(handle, name);
+}
+
+ALTERNET_UI_API void* WxControlFactory_FindWindowById_(int64_t winid, void* parent)
+{
+    return WxControlFactory::FindWindowById(winid, parent);
+}
+
+ALTERNET_UI_API void* WxControlFactory_FindWindowByName_(const char16_t* name, void* parent)
+{
+    return WxControlFactory::FindWindowByName(name, parent);
+}
+
+ALTERNET_UI_API void* WxControlFactory_FindWindowByLabel_(const char16_t* label, void* parent)
+{
+    return WxControlFactory::FindWindowByLabel(label, parent);
+}
+
+ALTERNET_UI_API void WxControlFactory_SetValidator_(void* handle, void* validator)
+{
+    WxControlFactory::SetValidator(handle, validator);
+}
+
+ALTERNET_UI_API void* WxControlFactory_GetValidator_(void* handle)
+{
+    return WxControlFactory::GetValidator(handle);
+}
+
+ALTERNET_UI_API c_bool WxControlFactory_Validate_(void* handle)
+{
+    return WxControlFactory::Validate(handle);
+}
+
+ALTERNET_UI_API c_bool WxControlFactory_TransferDataToWindow_(void* handle)
+{
+    return WxControlFactory::TransferDataToWindow(handle);
+}
+
+ALTERNET_UI_API c_bool WxControlFactory_TransferDataFromWindow_(void* handle)
+{
+    return WxControlFactory::TransferDataFromWindow(handle);
+}
+
+ALTERNET_UI_API void WxControlFactory_InitDialog_(void* handle)
+{
+    WxControlFactory::InitDialog(handle);
+}
+
+ALTERNET_UI_API void WxControlFactory_SetAcceleratorTable_(void* handle, void* accel)
+{
+    WxControlFactory::SetAcceleratorTable(handle, accel);
+}
+
+ALTERNET_UI_API void* WxControlFactory_GetAcceleratorTable_(void* handle)
+{
+    return WxControlFactory::GetAcceleratorTable(handle);
+}
+
+ALTERNET_UI_API Int32Size_C WxControlFactory_GetDPI_(void* handle)
+{
+    return WxControlFactory::GetDPI(handle);
+}
+
+ALTERNET_UI_API void WxControlFactory_WXAdjustFontToOwnPPI_(void* handle, void* font)
+{
+    WxControlFactory::WXAdjustFontToOwnPPI(handle, font);
+}
+
+ALTERNET_UI_API Int32Size_C WxControlFactory_FromPhys_(Int32Size sz, void* w)
+{
+    return WxControlFactory::FromPhys(sz, w);
+}
+
+ALTERNET_UI_API Int32Point_C WxControlFactory_FromPhys2_(Int32Point pt, void* w)
+{
+    return WxControlFactory::FromPhys2(pt, w);
+}
+
+ALTERNET_UI_API int WxControlFactory_FromPhys3_(int d, void* w)
+{
+    return WxControlFactory::FromPhys3(d, w);
+}
+
+ALTERNET_UI_API Int32Size_C WxControlFactory_FromPhys4_(Int32Size sz)
+{
+    return WxControlFactory::FromPhys4(sz);
+}
+
+ALTERNET_UI_API Int32Point_C WxControlFactory_FromPhys5_(Int32Point pt)
+{
+    return WxControlFactory::FromPhys5(pt);
+}
+
+ALTERNET_UI_API int WxControlFactory_FromPhys6_(int d)
+{
+    return WxControlFactory::FromPhys6(d);
+}
+
+ALTERNET_UI_API Int32Size_C WxControlFactory_ToPhys_(Int32Size sz, void* w)
+{
+    return WxControlFactory::ToPhys(sz, w);
+}
+
+ALTERNET_UI_API Int32Point_C WxControlFactory_ToPhys2_(Int32Point pt, void* w)
+{
+    return WxControlFactory::ToPhys2(pt, w);
+}
+
+ALTERNET_UI_API int WxControlFactory_ToPhys3_(int d, void* w)
+{
+    return WxControlFactory::ToPhys3(d, w);
+}
+
+ALTERNET_UI_API Int32Size_C WxControlFactory_ToPhys4_(Int32Size sz)
+{
+    return WxControlFactory::ToPhys4(sz);
+}
+
+ALTERNET_UI_API Int32Point_C WxControlFactory_ToPhys5_(Int32Point pt)
+{
+    return WxControlFactory::ToPhys5(pt);
+}
+
+ALTERNET_UI_API int WxControlFactory_ToPhys6_(int d)
+{
+    return WxControlFactory::ToPhys6(d);
+}
+
+ALTERNET_UI_API Int32Size_C WxControlFactory_FromDIP_(Int32Size sz, void* window)
+{
+    return WxControlFactory::FromDIP(sz, window);
+}
+
+ALTERNET_UI_API Int32Point_C WxControlFactory_FromDIP2_(Int32Point pt, void* window)
+{
+    return WxControlFactory::FromDIP2(pt, window);
+}
+
+ALTERNET_UI_API int WxControlFactory_FromDIP3_(int d, void* w)
+{
+    return WxControlFactory::FromDIP3(d, w);
+}
+
+ALTERNET_UI_API Int32Size_C WxControlFactory_FromDIP4_(void* handle, Int32Size sz)
+{
+    return WxControlFactory::FromDIP4(handle, sz);
+}
+
+ALTERNET_UI_API Int32Point_C WxControlFactory_FromDIP5_(void* handle, Int32Point pt)
+{
+    return WxControlFactory::FromDIP5(handle, pt);
+}
+
+ALTERNET_UI_API int WxControlFactory_FromDIP6_(void* handle, int d)
+{
+    return WxControlFactory::FromDIP6(handle, d);
+}
+
+ALTERNET_UI_API Int32Size_C WxControlFactory_ToDIP_(Int32Size sz, void* w)
+{
+    return WxControlFactory::ToDIP(sz, w);
+}
+
+ALTERNET_UI_API Int32Point_C WxControlFactory_ToDIP2_(Int32Point pt, void* w)
+{
+    return WxControlFactory::ToDIP2(pt, w);
+}
+
+ALTERNET_UI_API int WxControlFactory_ToDIP3_(int d, void* w)
+{
+    return WxControlFactory::ToDIP3(d, w);
+}
+
+ALTERNET_UI_API Int32Size_C WxControlFactory_ToDIP4_(void* handle, Int32Size sz)
+{
+    return WxControlFactory::ToDIP4(handle, sz);
+}
+
+ALTERNET_UI_API Int32Point_C WxControlFactory_ToDIP5_(void* handle, Int32Point pt)
+{
+    return WxControlFactory::ToDIP5(handle, pt);
+}
+
+ALTERNET_UI_API int WxControlFactory_ToDIP6_(int d)
+{
+    return WxControlFactory::ToDIP6(d);
+}
+
+ALTERNET_UI_API Int32Point_C WxControlFactory_ConvertPixelsToDialog_(void* handle, Int32Point pt)
+{
+    return WxControlFactory::ConvertPixelsToDialog(handle, pt);
+}
+
+ALTERNET_UI_API Int32Point_C WxControlFactory_ConvertDialogToPixels_(void* handle, Int32Point pt)
+{
+    return WxControlFactory::ConvertDialogToPixels(handle, pt);
+}
+
+ALTERNET_UI_API Int32Size_C WxControlFactory_ConvertPixelsToDialog2_(void* handle, Int32Size sz)
+{
+    return WxControlFactory::ConvertPixelsToDialog2(handle, sz);
+}
+
+ALTERNET_UI_API Int32Size_C WxControlFactory_ConvertDialogToPixels2_(void* handle, Int32Size sz)
+{
+    return WxControlFactory::ConvertDialogToPixels2(handle, sz);
+}
+
+ALTERNET_UI_API void WxControlFactory_WarpPointer_(void* handle, int x, int y)
+{
+    WxControlFactory::WarpPointer(handle, x, y);
+}
+
+ALTERNET_UI_API void WxControlFactory_CaptureMouse_(void* handle)
+{
+    WxControlFactory::CaptureMouse(handle);
+}
+
+ALTERNET_UI_API c_bool WxControlFactory_Close_(void* handle, c_bool force)
+{
+    return WxControlFactory::Close(handle, force);
+}
+
+ALTERNET_UI_API c_bool WxControlFactory_DestroyWindow_(void* handle)
+{
+    return WxControlFactory::DestroyWindow(handle);
+}
+
+ALTERNET_UI_API c_bool WxControlFactory_DestroyChildren_(void* handle)
+{
+    return WxControlFactory::DestroyChildren(handle);
+}
+
+ALTERNET_UI_API c_bool WxControlFactory_IsBeingDeleted_(void* handle)
+{
+    return WxControlFactory::IsBeingDeleted(handle);
+}
+
+ALTERNET_UI_API void WxControlFactory_SetLabel_(void* handle, const char16_t* label)
+{
+    WxControlFactory::SetLabel(handle, label);
+}
+
+ALTERNET_UI_API char16_t* WxControlFactory_GetLabel_(void* handle)
+{
+    return AllocPInvokeReturnString(WxControlFactory::GetLabel(handle));
+}
+
+ALTERNET_UI_API void WxControlFactory_SetName_(void* handle, const char16_t* name)
+{
+    WxControlFactory::SetName(handle, name);
+}
+
+ALTERNET_UI_API char16_t* WxControlFactory_GetName_(void* handle)
+{
+    return AllocPInvokeReturnString(WxControlFactory::GetName(handle));
+}
+
+ALTERNET_UI_API int WxControlFactory_GetLayoutDirection_(void* handle)
+{
+    return WxControlFactory::GetLayoutDirection(handle);
+}
+
+ALTERNET_UI_API void WxControlFactory_SetLayoutDirection_(void* handle, int dir)
+{
+    WxControlFactory::SetLayoutDirection(handle, dir);
+}
+
+ALTERNET_UI_API int WxControlFactory_AdjustForLayoutDirection_(void* handle, int x, int width, int widthTotal)
+{
+    return WxControlFactory::AdjustForLayoutDirection(handle, x, width, widthTotal);
+}
+
+ALTERNET_UI_API void WxControlFactory_SetId_(void* handle, int winid)
+{
+    WxControlFactory::SetId(handle, winid);
+}
+
+ALTERNET_UI_API int WxControlFactory_GetId_(void* handle)
+{
+    return WxControlFactory::GetId(handle);
+}
+
+ALTERNET_UI_API int WxControlFactory_NewControlId_(int count)
+{
+    return WxControlFactory::NewControlId(count);
+}
+
+ALTERNET_UI_API void WxControlFactory_UnreserveControlId_(int id, int count)
+{
+    WxControlFactory::UnreserveControlId(id, count);
+}
+
+ALTERNET_UI_API void WxControlFactory_SetSize2_(void* handle, int x, int y, int width, int height)
+{
+    WxControlFactory::SetSize2(handle, x, y, width, height);
+}
+
+ALTERNET_UI_API void WxControlFactory_SetSize_(void* handle, int width, int height)
+{
+    WxControlFactory::SetSize(handle, width, height);
+}
+
+ALTERNET_UI_API void WxControlFactory_Move_(void* handle, int x, int y, int flags)
+{
+    WxControlFactory::Move(handle, x, y, flags);
+}
+
+ALTERNET_UI_API void WxControlFactory_SetPosition_(void* handle, int width, int height)
+{
+    WxControlFactory::SetPosition(handle, width, height);
+}
+
+ALTERNET_UI_API void WxControlFactory_Raise_(void* handle)
+{
+    WxControlFactory::Raise(handle);
+}
+
+ALTERNET_UI_API void WxControlFactory_Lower_(void* handle)
+{
+    WxControlFactory::Lower(handle);
+}
+
+ALTERNET_UI_API void WxControlFactory_SetClientSize_(void* handle, int width, int height)
+{
+    WxControlFactory::SetClientSize(handle, width, height);
+}
+
+ALTERNET_UI_API Int32Point_C WxControlFactory_GetPosition_(void* handle)
+{
+    return WxControlFactory::GetPosition(handle);
+}
+
+ALTERNET_UI_API Int32Point_C WxControlFactory_GetScreenPosition_(void* handle)
+{
+    return WxControlFactory::GetScreenPosition(handle);
+}
+
+ALTERNET_UI_API Int32Size_C WxControlFactory_GetSize_(void* handle)
+{
+    return WxControlFactory::GetSize(handle);
+}
+
+ALTERNET_UI_API Int32Size_C WxControlFactory_GetClientSize_(void* handle)
+{
+    return WxControlFactory::GetClientSize(handle);
+}
+
+ALTERNET_UI_API Int32Rect_C WxControlFactory_GetRect_(void* handle)
+{
+    return WxControlFactory::GetRect(handle);
+}
+
+ALTERNET_UI_API Int32Rect_C WxControlFactory_GetScreenRect_(void* handle)
+{
+    return WxControlFactory::GetScreenRect(handle);
+}
+
+ALTERNET_UI_API Int32Point_C WxControlFactory_GetClientAreaOrigin_(void* handle)
+{
+    return WxControlFactory::GetClientAreaOrigin(handle);
+}
+
+ALTERNET_UI_API Int32Rect_C WxControlFactory_GetClientRect_(void* handle)
+{
+    return WxControlFactory::GetClientRect(handle);
+}
+
+ALTERNET_UI_API Int32Size_C WxControlFactory_ClientToWindowSize_(void* handle, Int32Size size)
+{
+    return WxControlFactory::ClientToWindowSize(handle, size);
+}
+
+ALTERNET_UI_API Int32Size_C WxControlFactory_WindowToClientSize_(void* handle, Int32Size size)
+{
+    return WxControlFactory::WindowToClientSize(handle, size);
+}
+
+ALTERNET_UI_API Int32Size_C WxControlFactory_GetBestSize_(void* handle)
+{
+    return WxControlFactory::GetBestSize(handle);
+}
+
+ALTERNET_UI_API int WxControlFactory_GetBestHeight_(void* handle, int width)
+{
+    return WxControlFactory::GetBestHeight(handle, width);
+}
+
+ALTERNET_UI_API int WxControlFactory_GetBestWidth_(void* handle, int height)
+{
+    return WxControlFactory::GetBestWidth(handle, height);
+}
+
+ALTERNET_UI_API void WxControlFactory_SetScrollHelper_(void* handle, void* sh)
+{
+    WxControlFactory::SetScrollHelper(handle, sh);
+}
+
+ALTERNET_UI_API void* WxControlFactory_GetScrollHelper_(void* handle)
+{
+    return WxControlFactory::GetScrollHelper(handle);
+}
+
+ALTERNET_UI_API void WxControlFactory_InvalidateBestSize_(void* handle)
+{
+    WxControlFactory::InvalidateBestSize(handle);
+}
+
+ALTERNET_UI_API void WxControlFactory_CacheBestSize_(void* handle, Int32Size size)
+{
+    WxControlFactory::CacheBestSize(handle, size);
+}
+
+ALTERNET_UI_API Int32Size_C WxControlFactory_GetEffectiveMinSize_(void* handle)
+{
+    return WxControlFactory::GetEffectiveMinSize(handle);
+}
+
+ALTERNET_UI_API void WxControlFactory_SetInitialSize_(void* handle, Int32Size size)
+{
+    WxControlFactory::SetInitialSize(handle, size);
+}
+
+ALTERNET_UI_API void WxControlFactory_Center_(void* handle, int dir)
+{
+    WxControlFactory::Center(handle, dir);
+}
+
+ALTERNET_UI_API void WxControlFactory_CenterOnParent_(void* handle, int dir)
+{
+    WxControlFactory::CenterOnParent(handle, dir);
+}
+
+ALTERNET_UI_API void WxControlFactory_Fit_(void* handle)
+{
+    WxControlFactory::Fit(handle);
+}
+
+ALTERNET_UI_API void WxControlFactory_FitInside_(void* handle)
+{
+    WxControlFactory::FitInside(handle);
+}
+
+ALTERNET_UI_API void WxControlFactory_SetSizeHints_(void* handle, int minW, int minH, int maxW, int maxH, int incW, int incH)
+{
+    WxControlFactory::SetSizeHints(handle, minW, minH, maxW, maxH, incW, incH);
+}
+
+ALTERNET_UI_API void WxControlFactory_SetMinSize_(void* handle, Int32Size minSize)
+{
+    WxControlFactory::SetMinSize(handle, minSize);
+}
+
+ALTERNET_UI_API void WxControlFactory_SetMaxSize_(void* handle, Int32Size maxSize)
+{
+    WxControlFactory::SetMaxSize(handle, maxSize);
+}
+
+ALTERNET_UI_API void WxControlFactory_SetMinClientSize_(void* handle, Int32Size size)
+{
+    WxControlFactory::SetMinClientSize(handle, size);
+}
+
+ALTERNET_UI_API void WxControlFactory_SetMaxClientSize_(void* handle, Int32Size size)
+{
+    WxControlFactory::SetMaxClientSize(handle, size);
+}
+
+ALTERNET_UI_API Int32Size_C WxControlFactory_GetMinSize_(void* handle)
+{
+    return WxControlFactory::GetMinSize(handle);
+}
+
+ALTERNET_UI_API Int32Size_C WxControlFactory_GetMaxSize_(void* handle)
+{
+    return WxControlFactory::GetMaxSize(handle);
+}
+
+ALTERNET_UI_API Int32Size_C WxControlFactory_GetMinClientSize_(void* handle)
+{
+    return WxControlFactory::GetMinClientSize(handle);
+}
+
+ALTERNET_UI_API Int32Size_C WxControlFactory_GetMaxClientSize_(void* handle)
+{
+    return WxControlFactory::GetMaxClientSize(handle);
+}
+
+ALTERNET_UI_API int WxControlFactory_GetMinWidth_(void* handle)
+{
+    return WxControlFactory::GetMinWidth(handle);
+}
+
+ALTERNET_UI_API int WxControlFactory_GetMinHeight_(void* handle)
+{
+    return WxControlFactory::GetMinHeight(handle);
+}
+
+ALTERNET_UI_API int WxControlFactory_GetMaxWidth_(void* handle)
+{
+    return WxControlFactory::GetMaxWidth(handle);
+}
+
+ALTERNET_UI_API int WxControlFactory_GetMaxHeight_(void* handle)
+{
+    return WxControlFactory::GetMaxHeight(handle);
+}
+
+ALTERNET_UI_API void WxControlFactory_SetVirtualSize_(void* handle, int x, int y)
+{
+    WxControlFactory::SetVirtualSize(handle, x, y);
+}
+
+ALTERNET_UI_API Int32Size_C WxControlFactory_GetVirtualSize_(void* handle)
+{
+    return WxControlFactory::GetVirtualSize(handle);
+}
+
+ALTERNET_UI_API Int32Size_C WxControlFactory_GetBestVirtualSize_(void* handle)
+{
+    return WxControlFactory::GetBestVirtualSize(handle);
+}
+
+ALTERNET_UI_API double WxControlFactory_GetContentScaleFactor_(void* handle)
+{
+    return WxControlFactory::GetContentScaleFactor(handle);
+}
+
+ALTERNET_UI_API double WxControlFactory_GetDPIScaleFactor_(void* handle)
+{
+    return WxControlFactory::GetDPIScaleFactor(handle);
+}
+
+ALTERNET_UI_API Int32Size_C WxControlFactory_GetWindowBorderSize_(void* handle)
+{
+    return WxControlFactory::GetWindowBorderSize(handle);
+}
+
+ALTERNET_UI_API c_bool WxControlFactory_InformFirstDirection_(void* handle, int direction, int size, int availableOtherDir)
+{
+    return WxControlFactory::InformFirstDirection(handle, direction, size, availableOtherDir);
+}
+
+ALTERNET_UI_API void WxControlFactory_SendSizeEvent_(void* handle, int flags)
+{
+    WxControlFactory::SendSizeEvent(handle, flags);
+}
+
+ALTERNET_UI_API void WxControlFactory_SendSizeEventToParent_(void* handle, int flags)
+{
+    WxControlFactory::SendSizeEventToParent(handle, flags);
+}
+
+ALTERNET_UI_API void WxControlFactory_PostSizeEvent_(void* handle)
+{
+    WxControlFactory::PostSizeEvent(handle);
+}
+
+ALTERNET_UI_API void WxControlFactory_PostSizeEventToParent_(void* handle)
+{
+    WxControlFactory::PostSizeEventToParent(handle);
+}
+
+ALTERNET_UI_API c_bool WxControlFactory_BeginRepositioningChildren_(void* handle)
+{
+    return WxControlFactory::BeginRepositioningChildren(handle);
+}
+
+ALTERNET_UI_API void WxControlFactory_EndRepositioningChildren_(void* handle)
+{
+    WxControlFactory::EndRepositioningChildren(handle);
+}
+
+ALTERNET_UI_API c_bool WxControlFactory_Show_(void* handle, c_bool show)
+{
+    return WxControlFactory::Show(handle, show);
+}
+
+ALTERNET_UI_API c_bool WxControlFactory_Hide_(void* handle)
+{
+    return WxControlFactory::Hide(handle);
+}
+
+ALTERNET_UI_API c_bool WxControlFactory_ShowWithEffect_(void* handle, int effect, uint32_t timeout)
+{
+    return WxControlFactory::ShowWithEffect(handle, effect, timeout);
+}
+
+ALTERNET_UI_API c_bool WxControlFactory_HideWithEffect_(void* handle, int effect, uint32_t timeout)
+{
+    return WxControlFactory::HideWithEffect(handle, effect, timeout);
+}
+
+ALTERNET_UI_API c_bool WxControlFactory_Enable_(void* handle, c_bool enable)
+{
+    return WxControlFactory::Enable(handle, enable);
+}
+
+ALTERNET_UI_API c_bool WxControlFactory_Disable_(void* handle)
+{
+    return WxControlFactory::Disable(handle);
+}
+
+ALTERNET_UI_API c_bool WxControlFactory_IsShown_(void* handle)
+{
+    return WxControlFactory::IsShown(handle);
+}
+
+ALTERNET_UI_API c_bool WxControlFactory_IsEnabled_(void* handle)
+{
+    return WxControlFactory::IsEnabled(handle);
+}
+
+ALTERNET_UI_API c_bool WxControlFactory_IsThisEnabled_(void* handle)
+{
+    return WxControlFactory::IsThisEnabled(handle);
+}
+
+ALTERNET_UI_API c_bool WxControlFactory_IsShownOnScreen_(void* handle)
+{
+    return WxControlFactory::IsShownOnScreen(handle);
+}
+
+ALTERNET_UI_API void WxControlFactory_SetWindowStyleFlag_(void* handle, int64_t style)
+{
+    WxControlFactory::SetWindowStyleFlag(handle, style);
+}
+
+ALTERNET_UI_API int64_t WxControlFactory_GetWindowStyleFlag_(void* handle)
+{
+    return WxControlFactory::GetWindowStyleFlag(handle);
+}
+
+ALTERNET_UI_API void WxControlFactory_SetWindowStyle_(void* handle, int64_t style)
+{
+    WxControlFactory::SetWindowStyle(handle, style);
+}
+
+ALTERNET_UI_API int64_t WxControlFactory_GetWindowStyle_(void* handle)
+{
+    return WxControlFactory::GetWindowStyle(handle);
+}
+
