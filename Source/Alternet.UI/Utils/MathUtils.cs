@@ -51,7 +51,7 @@ namespace Alternet.UI
             return (Math.Pow(p2.X - p1.X, 2) + Math.Pow(p2.Y - p1.Y, 2)) < Math.Pow(value, 2);
         }
 
-        public static double ApplyMinMax(double value, double? min = null, double? max = null)
+        internal static double ApplyMinMax(double value, double? min = null, double? max = null)
         {
             if (min is not null && value < min)
                 value = min.Value;
