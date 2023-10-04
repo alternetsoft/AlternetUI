@@ -49,6 +49,21 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Removes a <see cref="Path.DirectorySeparatorChar"/> and
+        /// <see cref="Path.AltDirectorySeparatorChar"/> characters from the end
+        /// of the specified string.
+        /// </summary>
+        /// <param name="path">Path to be trimmed.</param>
+        /// <returns>Trimmed string.</returns>
+        public static string? TrimEndDirectorySeparator(string? path)
+        {
+            if (string.IsNullOrEmpty(path))
+                return path;
+            var s = path.TrimEnd(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar);
+            return s;
+        }
+
+        /// <summary>
         /// Returns path to the application folder.
         /// </summary>
         /// <returns><see cref="string"/> containing path to the application folder
