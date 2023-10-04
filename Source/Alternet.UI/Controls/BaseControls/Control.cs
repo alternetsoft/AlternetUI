@@ -1769,15 +1769,6 @@ namespace Alternet.UI
             return Handler.GetPreferredSize(availableSize);
         }
 
-        internal virtual Size GetPreferredSizeLimited(Size availableSize)
-        {
-            var result = GetPreferredSize(availableSize);
-            var minSize = MinimumSize;
-            var maxSize = MaximumSize;
-            var preferredSize = result.ApplyMinMax(minSize, maxSize);
-            return preferredSize;
-        }
-
         /// <summary>
         /// Starts the initialization process for this control.
         /// </summary>
@@ -2025,6 +2016,15 @@ namespace Alternet.UI
         {
             parent = value;
             LogicalParent = value;
+        }
+
+        internal virtual Size GetPreferredSizeLimited(Size availableSize)
+        {
+            var result = GetPreferredSize(availableSize);
+            var minSize = MinimumSize;
+            var maxSize = MaximumSize;
+            var preferredSize = result.ApplyMinMax(minSize, maxSize);
+            return preferredSize;
         }
 
         internal void RaiseDragStart(DragStartEventArgs e) => OnDragStart(e);
