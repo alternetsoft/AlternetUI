@@ -62,8 +62,10 @@ namespace Alternet.UI
                     return this;
                 if(nullableChoices == null)
                 {
-                    var nullable = new PropertyGridChoices();
-                    nullable.isNullable = true;
+                    var nullable = new PropertyGridChoices
+                    {
+                        isNullable = true,
+                    };
                     nullableChoices = nullable;
                 }
 
@@ -177,6 +179,14 @@ namespace Alternet.UI
         public int GetValueIndex(int val)
         {
             return Native.PropertyGridChoices.GetValueIndex(handle, val);
+        }
+
+        public void RemoveValue<T>(T value)
+            where T : Enum
+        {
+            var index = GetValueIndex(Convert.ToInt32(value));
+            if (index >= 0)
+                RemoveAt(index);
         }
 
         public bool IsOk()
