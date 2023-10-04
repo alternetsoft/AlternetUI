@@ -150,7 +150,15 @@ namespace Alternet.UI
         ///     BrushType.LinearGradient, "Linear Gradient");
         /// </code>
         /// </example>
-        public void SetLabelForValue<T>(T value, string label)
+        void SetLabelForValue<T>(T value, string label)
+            where T : Enum;
+
+        /// <summary>
+        /// Removes specified enum value from the list of choices.
+        /// </summary>
+        /// <typeparam name="T">Type of the item value.</typeparam>
+        /// <param name="value">Item value.</param>
+        void RemoveValue<T>(T value)
             where T : Enum;
 
         /// <summary>
