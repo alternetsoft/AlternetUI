@@ -8,25 +8,18 @@
   <Control VerticalAlignment="Stretch"
               HorizontalAlignment="Stretch">
 
-      <Grid Name="mainGrid">
-        <Grid.ColumnDefinitions>
-          <ColumnDefinition Width="*" />
-          <ColumnDefinition Width="Auto" />
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-          <RowDefinition Height="100*"/>
-        </Grid.RowDefinitions>
+      <HorizontalStackPanel>
 
         <!-- ========================= -->
-        <ListView Width="350" Name="listView" Grid.Column="0" Grid.Row="0"
+        <ListView SuggestedWidth="320" Name="listView" 
                     BeforeLabelEdit="ListView_BeforeLabelEdit"
                     AfterLabelEdit="ListView_AfterLabelEdit"
                     MouseLeftButtonDown="ListView_MouseLeftButtonDown"
-                    ColumnClick="ListView_ColumnClick"
+                    ColumnClick="ListView_ColumnClick"                  
                           />
         <!-- ========================= -->
         <StackPanel Margin="10,0,0,0" Padding="5" Name="tabControlPanel"
-                    Grid.Column="1" Grid.Row="0" VerticalAlignment="Stretch">
+                    VerticalAlignment="Stretch">
           <HorizontalStackPanel >
             <Button Text="Actions" Name="ActionsButton"
                     Click="ActionsButton_Click" HorizontalAlignment="Center"/>
@@ -34,11 +27,12 @@
                     Click="SettingsButton_Click" HorizontalAlignment="Center"/>
           </HorizontalStackPanel>
           <!-- ========================= -->
-          <GroupBox Name="scrollViewer1" VerticalAlignment="Stretch">
-              <StackPanel Orientation="Vertical" Padding="5"
+          <Border Name="scrollViewer1" VerticalAlignment="Stretch"  BorderWidth="0,3,0,0"
+                  Margin="0,5,0,0">
+              <StackPanel Orientation="Vertical"
                           VerticalAlignment="Stretch" Name="stackPanel1">
                 <Button Text="Add Item" Name="addItemButton"
-                        Click="AddItemButton_Click"/>
+                        Margin="0,3,0,0" Click="AddItemButton_Click"/>
                 <Button Text="Remove Item" Name="removeItemButton"
                         Margin="0,3,0,0" Click="RemoveItemButton_Click"/>
                 <Button Text="Add 1000 Items" Name="addManyItemsButton"
@@ -74,16 +68,16 @@
                         Click="BeginSelectedLabelEditingButton_Click"
                         Enabled="true" />
               </StackPanel>
-          </GroupBox>
+          </Border>
           <!-- ========================= -->
 
-          <GroupBox Name="scrollViewer2" Visible="false"
-                  VerticalAlignment="Stretch" >
-              <StackPanel Orientation="Vertical" Padding="5"
+          <Border Name="scrollViewer2" Visible="false" BorderWidth="0,3,0,0"
+                  Margin="0,5,0,0" VerticalAlignment="Stretch" >
+              <StackPanel Orientation="Vertical" 
                           VerticalAlignment="Stretch" Name="stackPanel2">
                 <CheckBox Text="Multiple Selection"
                           Name="allowMultipleSelectionCheckBox"
-                          IsChecked="True" Margin="0,0,0,0"
+                          IsChecked="True" Margin="0,5,0,0"
                           CheckedChanged=
                             "AllowMultipleSelectionCheckBox_CheckedChanged"/>
 
@@ -102,17 +96,23 @@
                           CheckedChanged=
                             "AllowLabelEditingCheckBox_CheckedChanged"
                           IsChecked="True" />
-                <CheckBox Text="Column Header Visible"
+                <CheckBox Text="Column Header"
                     Name="columnHeaderVisibleCheckBox" Margin="0,5,0,0"
                     IsChecked="True"
                     CheckedChanged="ColumnHeaderVisibleCheckBox_CheckedChanged" />
-                <CheckBox Text="Cancel BeforeLabelEdit Event"
-                          Name="cancelBeforeLabelEditEventsCheckBox"
-                          Margin="0,5,0,0" IsChecked="False" />
-                <CheckBox Text="Cancel AfterLabelEdit Event"
-                          Name="cancelAfterLabelEditEventsCheckBox"
-                          Margin="0,5,0,0" IsChecked="False" />
-                <CheckBox Text="Log Item Bounds on Click"
+
+                <GroupBox Title="Cancel Events" Margin="0,3,0,3" Padding="3" >
+                  <VerticalStackPanel>
+                    <CheckBox Text="BeforeLabelEdit"
+                              Name="cancelBeforeLabelEditEventsCheckBox"
+                              Margin="0,5,0,0" IsChecked="False" />
+                    <CheckBox Text="AfterLabelEdit"
+                              Name="cancelAfterLabelEditEventsCheckBox"
+                              Margin="0,5,0,0" IsChecked="False" />
+                  </VerticalStackPanel>
+                </GroupBox>
+
+                <CheckBox Text="Log Bounds on Click"
                           Name="logItemBoundsOnClickCheckBox" Margin="0,5,0,0"
                     IsChecked="False" />
                 <Label Text="Column width:" VerticalAlignment="Center"
@@ -127,9 +127,9 @@
                         Name="hasBorderButton" Click="HasBorderButton_Click"/>
 
               </StackPanel>
-          </GroupBox>
+          </Border>
           <!-- ========================= -->
         </StackPanel>
-      </Grid>
+      </HorizontalStackPanel>
   </Control>
 </Control>

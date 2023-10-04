@@ -4,7 +4,6 @@
         xmlns:local="clr-namespace:ControlsSample;assembly=ControlsSample"
           Padding="10,0,10,0">
   <Control>
-    <Control>
       <StackPanel Orientation="Horizontal">
 
         <CheckListBox
@@ -21,14 +20,14 @@
                   Click="RemoveItemButton_Click"/>
           <Button Text="Add 5000 Items" Name="addManyItemsButton" Margin="0,3,0,0"
                   Click="AddManyItemsButton_Click" />
-          <CheckBox Text="Allow Multiple Selection" Name="allowMultipleSelectionCheckBox"
-                    Margin="0,10,0,0" IsChecked="true"
+          <CheckBox Text="Multiple Selection" Name="allowMultipleSelectionCheckBox"
+                    Margin="0,3,0,0" IsChecked="true"
                     CheckedChanged="AllowMultipleSelectionCheckBox_CheckedChanged"/>
-          <Button Text="Ensure Last Item is Visible" Name="ensureLastItemVisibleButton"
+          <Button Text="Make Last Item Visible" Name="ensureLastItemVisibleButton"
                   Margin="0,3,0,0" Click="EnsureLastItemVisibleButton_Click" />
-          <Button Text="Check Item at Index 2" Name="checkItemAtIndex2Button"
+          <Button Text="Check Item: 2" Name="checkItemAtIndex2Button"
                   Margin="0,3,0,0" Click="CheckItemAtIndex2Button_Click" />
-          <Button Text="Check Item at Indices 2, 4" Name="checkItemAtIndices2And4Button"
+          <Button Text="Check Items: 2, 4" Name="checkItemAtIndices2And4Button"
                   Margin="0,3,0,0" Click="CheckItemAtIndices2And4Button_Click" />
           <Button Text="Uncheck All" Name="uncheckAllButton"
                   Margin="0,3,0,0" Click="UncheckAllButton_Click" />
@@ -39,6 +38,5 @@
         </StackPanel>
         
       </StackPanel>
-    </Control>
   </Control>
 </Control>

@@ -9,7 +9,7 @@
     </Grid.RowDefinitions>
 
     <StackPanel Orientation="Vertical" Padding="10" Grid.Row="0">
-      <Label Text="Text: " />
+      <Label Text="Text: " Margin="0,0,0,3"/>
       <TextBox Text="Test Button" Name="textTextBox"
                TextChanged="Button_Changed"/>
 

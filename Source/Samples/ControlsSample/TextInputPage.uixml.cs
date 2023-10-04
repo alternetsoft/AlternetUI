@@ -84,6 +84,7 @@ namespace ControlsSample
 
             var taBackColorYellow = TextBox.CreateTextAttr();
             taBackColorYellow.SetBackgroundColor(Color.Yellow);
+            taBackColorYellow.SetTextColor(Color.Black);
 
             var taUnderlined = TextBox.CreateTextAttr();
             taUnderlined.SetFontUnderlined();

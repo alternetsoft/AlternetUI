@@ -15,7 +15,7 @@
                         CheckedChanged=
                                 "AllowTextEditingCheckBox_CheckedChanged"/>
               <Button Text="Text = Empty String"
-                      Name="setTextToEmptyStringButton" Margin="0,3,0,0"
+                      Name="setTextToEmptyStringButton" Margin="0,0,0,0"
                       Click="SetTextToEmptyStringButton_Click"/>
               <Button Text="Text = 'One'" Name="setTextToOneButton"
                       Margin="0,3,0,0" Click="SetTextToOneButton_Click"/>

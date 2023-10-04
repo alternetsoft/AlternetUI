@@ -16,16 +16,17 @@
             Click="RemoveItemButton_Click"/>
         <Button Text="Add 5000 Items" Name="addManyItemsButton" Margin="0,3,0,0"
             Click="AddManyItemsButton_Click" />
-        <CheckBox Text="Allow Multiple Selection" Name="allowMultipleSelectionCheckBox"
-            Margin="0,10,0,0"
+        <CheckBox Text="Multiple Selection" Name="allowMultipleSelectionCheckBox"
+            Margin="0,10,0,10"
             CheckedChanged="AllowMultipleSelectionCheckBox_CheckedChanged"/>
-        <Button Text="Ensure Last Item is Visible" Name="ensureLastItemVisibleButton"
-            Margin="0,3,0,0" Click="EnsureLastItemVisibleButton_Click" />
-        <Button Text="Select Item at Index 2" Name="selectItemAtIndex2Button"
+        <Button Text="Make Last Item Visible" Name="ensureLastItemVisibleButton"
+            Margin="0,0,0,0" Click="EnsureLastItemVisibleButton_Click" />
+        <Button Text="Select Item: 2" Name="selectItemAtIndex2Button"
             Margin="0,3,0,0" Click="SelectItemAtIndex2Button_Click" />
-        <Button Text="Select Item at Indices 2, 4" Name="selectItemAtIndices2And4Button"
-            Margin="0,3,0,0" Click="SelectItemAtIndices2And4Button_Click" />
-        <Button Text="Deselect All" Name="deselectAllButton" Margin="0,3,0,0"
+        <Button Text="Select Items: 2, 4" Name="selectItemAtIndices2And4Button"
+            Margin="0,3,0,0" Click="SelectItemAtIndices2And4Button_Click"
+                Enabled="false"/>
+        <Button Text="Unselect All" Name="deselectAllButton" Margin="0,3,0,0"
             Click="DeselectAllButton_Click" />
         <Button Text="Edit Items..." Margin="0,3,0,0"
             Click="EditorButton_Click" />
