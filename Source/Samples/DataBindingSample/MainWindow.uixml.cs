@@ -47,7 +47,7 @@ namespace HelloWorldSample
                 set
                 {
                     myDataProperty = value;
-                    OnPropertyChanged("MyDataProperty");
+                    OnPropertyChanged(nameof(MyDataProperty));
                 }
             }
 
