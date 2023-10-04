@@ -51,7 +51,7 @@
       </GroupBox>
     </StackPanel>
 
-    <ListBox Name="eventsListBox" Grid.Row="2"/>
+    <ListBox Name="eventsListBox" Grid.Row="2" SuggestedSize="500,300"/>
   </Grid>
   </Control>  
 </Window>

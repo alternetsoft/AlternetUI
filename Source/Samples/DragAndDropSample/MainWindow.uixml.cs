@@ -22,6 +22,8 @@ namespace DragAndDropSample
             InitializeComponent();
 
             testBitmap = new Bitmap(new Size(64, 64));
+
+            SetSizeToContent();
         }
 
         private void CopyButton_Click(object sender, System.EventArgs e)
