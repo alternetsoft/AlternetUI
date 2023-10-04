@@ -62,7 +62,8 @@ namespace
                 if (i == 0)
                     charWidth = useDC ? widths[i] : doubleWidths[i];
                 else
-                    charWidth = useDC ? (widths[i] - widths[i - 1]) : (doubleWidths[i] - doubleWidths[i - 1]);
+                    charWidth = useDC ? (widths[i] - widths[i - 1])
+                    : (doubleWidths[i] - doubleWidths[i - 1]);
 
                 bool needLineBreak = false;
 
@@ -145,7 +146,7 @@ namespace
 
         static void GetStringsWidths(wxDC* dc, const wxArrayString& strings, wxArrayInt& widths)
         {
-            for (auto str : strings)
+            for (auto& str : strings)
                 widths.Add(dc->GetTextExtent(str).x);
         }
 
@@ -261,7 +262,7 @@ namespace
             int linesLastIndex = lines.GetCount() - 1;
 
             int i = 0;
-            for (auto line : lines)
+            for (auto& line : lines)
             {
                 if (needToTrim)
                 {
@@ -361,7 +362,7 @@ namespace Alternet::UI
             if (_useDC)
             {
                 wxCoord x = 0, y = 0;
-                auto oldFont = _dc->GetFont();
+                auto& oldFont = _dc->GetFont();
                 _dc->SetFont(wxFont); // just passing font as a GetMultiLineTextExtent argument doesn't work on macOS/Linux
 
                 wxString str = wxStr(text);
@@ -450,8 +451,8 @@ namespace Alternet::UI
 
             if (_useDC)
             {
-                auto oldTextForeground = _dc->GetTextForeground();
-                auto oldFont = _dc->GetFont();
+                auto& oldTextForeground = _dc->GetTextForeground();
+                auto& oldFont = _dc->GetFont();
                 _dc->SetTextForeground(solidBrush->GetWxBrush().GetColour());
                 _dc->SetFont(font->GetWxFont());
 

@@ -5,7 +5,8 @@
 
 namespace Alternet::UI
 {
-    DrawingContext::DrawingContext(wxDC* dc, optional<std::function<void()>> onUseDC /*= nullopt*/) : _dc(dc), _onUseDC(onUseDC)
+    DrawingContext::DrawingContext(wxDC* dc,
+        optional<std::function<void()>> onUseDC /*= nullopt*/) : _dc(dc), _onUseDC(onUseDC)
     {
         assert(_dc);
         _graphicsContext = wxGraphicsContext::CreateFromUnknownDC(*_dc);
@@ -201,7 +202,7 @@ namespace Alternet::UI
             if (pointsCount <= 2)
                 return;
 
-            auto oldPen = _dc->GetPen();
+            auto& oldPen = _dc->GetPen();
 
             _dc->SetPen(pen->GetWxPen());
 
@@ -375,7 +376,7 @@ namespace Alternet::UI
             throwExInvalidArg(fillBrush, u"Only SolidBrush objects are supported");
         }
 
-        auto oldBrush = _dc->GetBrush();
+        auto& oldBrush = _dc->GetBrush();
         _dc->SetBrush(fillSolidBrush->GetWxBrush());
 
         auto pixelPoint = fromDip(point, _dc->GetWindow());
@@ -503,8 +504,8 @@ namespace Alternet::UI
         {
             UseDC();
 
-            auto oldPen = _dc->GetPen();
-            auto oldBrush = _dc->GetBrush();
+            auto& oldPen = _dc->GetPen();
+            auto& oldBrush = _dc->GetBrush();
 
             _dc->SetPen(*wxTRANSPARENT_PEN);
             _dc->SetBrush(brush->GetWxBrush());
@@ -539,7 +540,7 @@ namespace Alternet::UI
         //if (NeedToUseDC())
         //{
             UseDC();
-            auto oldPen = _dc->GetPen();
+            auto& oldPen = _dc->GetPen();
             _dc->SetPen(pen->GetWxPen());
             _dc->DrawPoint(fromDip(Point(x, y), _dc->GetWindow()));
             _dc->SetPen(oldPen);
@@ -561,8 +562,8 @@ namespace Alternet::UI
         {
             UseDC();
 
-            auto oldPen = _dc->GetPen();
-            auto oldBrush = _dc->GetBrush();
+            auto& oldPen = _dc->GetPen();
+            auto& oldBrush = _dc->GetBrush();
 
             _dc->SetPen(*wxTRANSPARENT_PEN);
             _dc->SetBrush(brush->GetWxBrush());
@@ -604,8 +605,8 @@ namespace Alternet::UI
         {
             UseDC();
 
-            auto oldPen = _dc->GetPen();
-            auto oldBrush = _dc->GetBrush();
+            auto& oldPen = _dc->GetPen();
+            auto& oldBrush = _dc->GetBrush();
 
             auto penThickness = pen->GetWxPen().GetWidth();
             _dc->SetPen(pen->GetWxPen());
@@ -656,7 +657,7 @@ namespace Alternet::UI
         {
             UseDC();
 
-            auto oldPen = _dc->GetPen();
+            auto& oldPen = _dc->GetPen();
 
             _dc->SetPen(pen->GetWxPen());
 
@@ -689,7 +690,7 @@ namespace Alternet::UI
             if (pointsCount <= 2)
                 return;
 
-            auto oldPen = _dc->GetPen();
+            auto& oldPen = _dc->GetPen();
 
             _dc->SetPen(pen->GetWxPen());
 
@@ -729,8 +730,8 @@ namespace Alternet::UI
         {
             UseDC();
 
-            auto oldPen = _dc->GetPen();
-            auto oldBrush = _dc->GetBrush();
+            auto& oldPen = _dc->GetPen();
+            auto& oldBrush = _dc->GetBrush();
 
             _dc->SetPen(pen->GetWxPen());
             _dc->SetBrush(*wxTRANSPARENT_BRUSH);

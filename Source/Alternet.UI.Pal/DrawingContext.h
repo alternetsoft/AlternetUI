@@ -46,7 +46,7 @@ namespace Alternet::UI
 
         InterpolationMode _interpolationMode = InterpolationMode::HighQuality;
 
-        wxDC* _dc;
+        wxDC* _dc = nullptr;
         wxGraphicsContext* _graphicsContext = nullptr;
 
         wxGraphicsRenderer* _dcRenderer = nullptr;
