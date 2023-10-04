@@ -32,6 +32,11 @@ namespace Alternet.UI
         Cream,
 
         /// <summary>
+        /// Black color scheme.
+        /// </summary>
+        Black,
+
+        /// <summary>
         /// Custom color scheme.
         /// </summary>
         Custom,
