@@ -40,7 +40,8 @@ namespace PropertyGridSample
 
             Actions.Add(typeof(Label), (c) =>
             { 
-                (c as Label)!.Text = "Label"; 
+                (c as Label)!.Text = "Label";
+                (c as Label)!.HorizontalAlignment = HorizontalAlignment.Left;
             });
 
             Actions.Add(typeof(ScrollViewer), InitScrollViewer);
@@ -59,7 +60,7 @@ namespace PropertyGridSample
                 var border = (c as Border)!;
                 border.SuggestedHeight = 150;
                 border.BorderColor = Color.Indigo;
-                border.BackgroundColor = Color.Aquamarine;
+                border.BackgroundColor = Color.BurlyWood;
                 border.Background = Brushes.BurlyWood;
             });
 
@@ -69,6 +70,7 @@ namespace PropertyGridSample
                 button.Text = "Button";
                 button.StateImages = ButtonImages;
                 button.SuggestedHeight = 100;
+                button.HorizontalAlignment = HorizontalAlignment.Left;
             });
 
             Actions.Add(typeof(CheckBox), (c) =>
@@ -106,6 +108,8 @@ namespace PropertyGridSample
             {
                 ComboBox comboBox = (c as ComboBox)!;
                 AddTenItems(comboBox.Items);
+                comboBox.HorizontalAlignment = HorizontalAlignment.Left;
+                comboBox.SuggestedWidth = 150;
             });
 
             Actions.Add(typeof(CheckListBox), (c) =>
@@ -171,6 +175,12 @@ namespace PropertyGridSample
             {
                 ProgressBar control = (c as ProgressBar)!;
                 control.Value = 50;
+            });
+
+            Actions.Add(typeof(PanelOkCancelButtons), (c) =>
+            {
+                PanelOkCancelButtons control = (c as PanelOkCancelButtons)!;
+                control.BackgroundColor = Color.Cornsilk;
             });
         }
 
@@ -273,11 +283,12 @@ namespace PropertyGridSample
         {
             var parent = control as Control;
             parent!.SuggestedHeight = 250;
+            parent.BackgroundColor = Color.Cornsilk;
 
 #pragma warning disable
             Button OkButton = new()
             {
-                Text = CommonStrings.Default.ButtonOk,
+                Text = "1",
                 Margin = PanelOkCancelButtons.DefaultButtonMargin,
                 VerticalAlignment = VerticalAlignment.Center,
                 HorizontalAlignment = HorizontalAlignment.Right,
@@ -287,7 +298,7 @@ namespace PropertyGridSample
 
             Button CancelButton = new()
             {
-                Text = CommonStrings.Default.ButtonCancel,
+                Text = "2",
                 Margin = PanelOkCancelButtons.DefaultButtonMargin,
                 VerticalAlignment = VerticalAlignment.Center,
                 HorizontalAlignment = HorizontalAlignment.Right,
@@ -298,10 +309,9 @@ namespace PropertyGridSample
             Button ApplyButton = new()
             {
                 Margin = PanelOkCancelButtons.DefaultButtonMargin,
-                Text = CommonStrings.Default.ButtonApply,
+                Text = "3",
                 VerticalAlignment = VerticalAlignment.Center,
                 HorizontalAlignment = HorizontalAlignment.Right,
-                Visible = false,
                 Parent = parent,
             };
 #pragma warning restore
@@ -331,6 +341,7 @@ namespace PropertyGridSample
         public static void InitListView(ListView listView)
         {
             var imageLists = LoadImageLists();
+            listView.HorizontalAlignment = HorizontalAlignment.Stretch;
             listView.SmallImageList = imageLists.Small;
             listView.LargeImageList = imageLists.Large;
 
@@ -380,6 +391,7 @@ namespace PropertyGridSample
         public static void InitTreeView(TreeView control)
         {
             control.ImageList = LoadImageLists().Small;
+            control.HorizontalAlignment = HorizontalAlignment.Stretch;
             AddItems(control, 10);
         }
 

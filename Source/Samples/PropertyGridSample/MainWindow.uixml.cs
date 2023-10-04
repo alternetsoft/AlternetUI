@@ -19,8 +19,8 @@ namespace PropertyGridSample
         private readonly StackPanel controlPanel = new()
         {
             Padding = new(15, 15, 15, 15),
-            HorizontalAlignment = HorizontalAlignment.Stretch,
-            VerticalAlignment = VerticalAlignment.Center,
+            HorizontalAlignment = HorizontalAlignment.Left,
+            VerticalAlignment = VerticalAlignment.Top,
         };
 
         private bool updatePropertyGrid = false;
@@ -76,6 +76,21 @@ namespace PropertyGridSample
 
         public MainWindow()
         {
+/*
+            controlPanel.RowDefinitions.Add(
+                new RowDefinition { Height = new GridLength(15, GridUnitType.Pixel) });
+            controlPanel.RowDefinitions.Add(
+                new RowDefinition { Height = new GridLength(1, GridUnitType.Auto) });
+            controlPanel.RowDefinitions.Add(
+                new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
+
+            controlPanel.ColumnDefinitions.Add(
+                new ColumnDefinition { Width = new GridLength(15, GridUnitType.Pixel) });
+            controlPanel.ColumnDefinitions.Add(
+                new ColumnDefinition { Width = new GridLength(1, GridUnitType.Auto) });
+            controlPanel.ColumnDefinitions.Add(
+                new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+*/
             panel.BindApplicationLogMessage();
 
             PropGrid.ApplyFlags |= PropertyGridApplyFlags.PropInfoSetValue
@@ -220,7 +235,18 @@ namespace PropertyGridSample
                         control.Name = splitted[splitted.Length - 1] + LogUtils.GenNewId().ToString();
                     }
 
-                    control.Parent ??= controlPanel;
+                    /*if (control.SuggestedHeight < 100)
+                        control.SuggestedHeight = 100;
+                    if (control.SuggestedWidth < 100)
+                        control.SuggestedWidth = 100;*/
+
+                    if(control.Parent == null)
+                    {
+                        control.VerticalAlignment = VerticalAlignment.Top;
+                        control.MinWidth = 100;
+                        control.Parent = controlPanel;
+                    }
+
                     control.Visible = true;
 			        control.PerformLayout();
                     Application.Current.ProcessPendingEvents();
