@@ -47,10 +47,15 @@ namespace PropertyGridSample
             // Sample localization of color name
             KnownColorStrings.Default.Azure = "azure color";
 
-            // Sample localization of Enum property values.
-            var localizableEnum = PropertyGrid.GetChoices<BrushType>();
-            localizableEnum.SetLabelForValue<BrushType>(BrushType.LinearGradient, "Linear Gradient");
-            localizableEnum.SetLabelForValue<BrushType>(BrushType.RadialGradient, "Radial Gradient");
+            // Sample localization of Enum property values
+            var brushTypeChoices = PropertyGrid.GetChoices<BrushType>();
+            brushTypeChoices.SetLabelForValue<BrushType>(BrushType.LinearGradient, "Linear Gradient");
+            brushTypeChoices.SetLabelForValue<BrushType>(BrushType.RadialGradient, "Radial Gradient");
+
+            // Sample of hiding Enum value in PropertyGrid
+            var knownColorsChoices = PropertyGrid.GetChoices<PropertyGridKnownColors>();
+            knownColorsChoices.RemoveValue<PropertyGridKnownColors>(PropertyGridKnownColors.Custom);
+            knownColorsChoices.RemoveValue<PropertyGridKnownColors>(PropertyGridKnownColors.Black);
 
             // Sample localization of the property label
             var prm = PropertyGrid.GetNewItemParams(typeof(Control), "Name");
