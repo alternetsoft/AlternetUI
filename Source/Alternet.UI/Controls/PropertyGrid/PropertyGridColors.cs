@@ -65,8 +65,6 @@ namespace Alternet.UI
                     CellTextColor = Color.Black,
                     EmptySpaceColor = Color.White,
                     LineColor = Color.FromArgb(200, 200, 200),
-                    SelectionBackgroundColor = Color.FromArgb(0, 120, 215),
-                    SelectionForegroundColor = Color.White,
                     immutable = true,
                 };
 
@@ -93,8 +91,6 @@ namespace Alternet.UI
                     CellDisabledTextColor = Color.Gray,
                     CellTextColor = Color.Black,
                     EmptySpaceColor = Color.White,
-                    SelectionBackgroundColor = Color.FromArgb(0, 120, 215),
-                    SelectionForegroundColor = Color.White,
                     immutable = true,
                 };
 
@@ -122,8 +118,6 @@ namespace Alternet.UI
                     CaptionForegroundColor = Color.Gray,
                     CellDisabledTextColor = Color.Gray,
                     CellTextColor = Color.Black,
-                    SelectionBackgroundColor = Color.FromArgb(0, 120, 215),
-                    SelectionForegroundColor = Color.White,
                     immutable = true,
                 };
 
@@ -141,23 +135,44 @@ namespace Alternet.UI
         {
             get
             {
-                Color color2 = Color.FromArgb(250, 250, 250);
-                Color color3 = Color.FromArgb(30, 30, 30);
+                /*
+                                Color color2 = Color.FromArgb(250, 250, 250);
+                                Color color3 = Color.FromArgb(30, 30, 30);
+
+                                colorSchemeBlack ??= new PropertyGridColors
+                                {
+                                    CaptionBackgroundColor = color3,
+                                    CellBackgroundColor = color3,
+                                    EmptySpaceColor = color3,
+                                    MarginColor = color3,
+                                    CaptionForegroundColor = color2,
+                                    CellDisabledTextColor = Color.FromArgb(192, 192, 192),
+                                    CellTextColor = color2,
+                                    LineColor = Color.FromArgb(113, 113, 113),
+                                    SelectionBackgroundColor = Color.FromArgb(38, 79, 120),
+                                    SelectionForegroundColor = Color.FromArgb(220, 220, 220),
+                                    immutable = true,
+                                };
+                */
+
+                var color1 = Color.FromArgb(55, 55, 55);
+                var color2 = Color.FromArgb(39, 39, 39);
 
                 colorSchemeBlack ??= new PropertyGridColors
                 {
-                    CaptionBackgroundColor = color3,
-                    CellBackgroundColor = color3,
-                    EmptySpaceColor = color3,
-                    MarginColor = color3,
-                    CaptionForegroundColor = color2,
-                    CellDisabledTextColor = Color.FromArgb(192, 192, 192),
-                    CellTextColor = color2,
-                    LineColor = Color.FromArgb(113, 113, 113),
-                    SelectionBackgroundColor = Color.FromArgb(38, 79, 120),
-                    SelectionForegroundColor = Color.FromArgb(220, 220, 220),
+                    CaptionBackgroundColor = color1,
+                    CaptionForegroundColor = Color.White,
+                    CellBackgroundColor = color2,
+                    CellDisabledTextColor = Color.White,
+                    CellTextColor = Color.White,
+                    EmptySpaceColor = color2,
+                    LineColor = color1,
+                    MarginColor = color1,
+/*                    SelectionBackgroundColor = Color.FromArgb(233, 84, 32),
+                    SelectionForegroundColor = Color.White,*/
                     immutable = true,
                 };
+
                 return colorSchemeBlack;
             }
         }
@@ -303,6 +318,7 @@ namespace Alternet.UI
                 PropertyGridKnownColors.White => ColorSchemeWhite,
                 PropertyGridKnownColors.Net => ColorSchemeNet,
                 PropertyGridKnownColors.Cream => ColorSchemeCream,
+                PropertyGridKnownColors.Black => ColorSchemeBlack,
                 PropertyGridKnownColors.Custom => ColorSchemeCustom,
                 _ => new PropertyGridColors(),
             };
