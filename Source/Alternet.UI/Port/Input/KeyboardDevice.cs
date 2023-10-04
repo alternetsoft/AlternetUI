@@ -200,22 +200,28 @@ namespace Alternet.UI
         {
             get
             {
-                //                 VerifyAccess();
-
                 ModifierKeys modifiers = ModifierKeys.None;
                 if (IsKeyDown_private(Key.Alt))
                 {
                     modifiers |= ModifierKeys.Alt;
                 }
+
                 if (IsKeyDown_private(Key.Control))
                 {
                     modifiers |= ModifierKeys.Control;
                 }
+
                 if (IsKeyDown_private(Key.Shift))
                 {
                     modifiers |= ModifierKeys.Shift;
                 }
-                if (IsKeyDown_private(Key.Windows))
+
+                // We check here for Application.IsWindowsOS as under Ubuntu 23 (and probably 22)
+                // we have an exception in IsKeyDown_private
+                //  ../src/unix/utilsx11.cpp(2645): assert ""Assert failure"" failed in
+                //  wxGetKeyStateGTK(): Unsupported key 393, the only supported ones
+                //  are: Ctrl, Alt, Shift, Caps Lock, Num Lock and Scroll Lock for GTK 3.18+
+                if (Application.IsWindowsOS && IsKeyDown_private(Key.Windows))
                 {
                     modifiers |= ModifierKeys.Windows;
                 }

@@ -23,7 +23,9 @@ namespace Alternet::UI
             if (wxKey == WXK_NONE)
                 continue;
 
-            if (wxGetKeyState((wxKeyCode)wxKey))
+            auto kk = (wxKeyCode)wxKey;
+
+            if (wxGetKeyState(kk))
             {
                 if (key == Key::CapsLock || key == Key::NumLock)
                 {
