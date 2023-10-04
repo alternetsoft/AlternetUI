@@ -13,6 +13,7 @@ namespace Alternet.UI.Localization
     public class KnownColorStrings
     {
         private string custom = "Custom";
+        private string empty = "Empty";
 
         /// <summary>
         /// Current localizations for system color names.
@@ -1615,6 +1616,24 @@ namespace Alternet.UI.Localization
                     return;
                 custom = value;
                 Native.PropertyGrid.KnownColorsSetCustomColorTitle(custom);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets localized "Empty" color name.
+        /// </summary>
+        public string Empty
+        {
+            get
+            {
+                return empty;
+            }
+
+            set
+            {
+                if (empty == value)
+                    return;
+                empty = value;
             }
         }
 
