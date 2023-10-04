@@ -618,6 +618,7 @@ namespace Alternet.UI
         /// <see cref="double.NaN"/>) to specify system-default sizing
         /// behavior when the control is first shown.
         /// </remarks>
+        [Browsable(false)]
         public virtual Size Size
         {
             get
