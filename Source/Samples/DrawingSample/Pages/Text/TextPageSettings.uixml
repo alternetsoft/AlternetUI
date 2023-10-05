@@ -19,7 +19,7 @@
       </HorizontalStackPanel>
 
       <HorizontalStackPanel>
-        <Label Text="Font Name:" Margin="0,5,5,5" />
+        <Label Text="Font Name:" Margin="0,5,5,5" VerticalAlignment="Center"/>
         <ComboBox Name="customFontFamilyComboBox" IsEditable="false"
                   SelectedItem="{Binding CustomFontFamilyName}" Margin="0,5,5,5"/>
       </HorizontalStackPanel>
@@ -58,28 +58,7 @@
           Value="{Binding TextHeightValue}"
           Enabled="{Binding TextHeightSet}"/>
 
-      <HorizontalStackPanel>
-        <Label Text="Horz Align:" Margin="0,10,10,5" />
-        <ComboBox Name="horizontalAlignmentComboBox" IsEditable="false"
-                  Margin="0,5,0,5" SelectedItem="{Binding HorizontalAlignment}"/>
-      </HorizontalStackPanel>
-
-      <HorizontalStackPanel>
-        <Label Text="Vert Align:" Margin="0,5,10,5" />
-        <ComboBox Name="verticalAlignmentComboBox" IsEditable="false"
-                  Margin="0,5,0,5" SelectedItem="{Binding VerticalAlignment}"/>
-      </HorizontalStackPanel>
-
-      <HorizontalStackPanel>
-        <Label Text="Trimming:" Margin="0,5,10,5" />
-        <ComboBox Name="trimmingComboBox" Margin="0,5,0,5" 
-                  IsEditable="false" SelectedItem="{Binding Trimming}"/>
-      </HorizontalStackPanel>
-
-      <HorizontalStackPanel>
-        <Label Text="Wrapping:" Margin="0,5,10,5" />
-        <ComboBox Name="wrappingComboBox" Margin="0,5,0,5" 
-                  IsEditable="false" SelectedItem="{Binding Wrapping}"/>
-      </HorizontalStackPanel>
+      <Grid Name="propGrid" Margin="0,5,0,0">
+      </Grid>
     </StackPanel>
 </Control>

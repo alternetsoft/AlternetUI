@@ -7,32 +7,43 @@ namespace DrawingSample
 {
     partial class BrushesAndPensPageSettings : Control
     {
+        private readonly Label dashStyleLabel = new("Dash Style:");
+        private readonly Label lineCapLabel = new("Line Cap:");
+        private readonly Label lineJoinLabel = new("Line Join:");
+        private readonly ComboBox dashStyleComboBox = new();
+        private readonly ComboBox lineCapComboBox = new();
+        private readonly ComboBox lineJoinComboBox = new();
         private BrushesAndPensPage? page;
 
         public BrushesAndPensPageSettings()
         {
-            InitializeComponent();
+            DoInsideLayout(() =>
+            {
+                InitializeComponent();
+
+                ControlSet labels = new(dashStyleLabel, lineCapLabel, lineJoinLabel);
+                ControlSet comboBoxes = new(dashStyleComboBox, lineCapComboBox, lineJoinComboBox);
+                labels.Margin(new(0, 5, 10, 5)).VerticalAlignment(VerticalAlignment.Center);
+                comboBoxes.Margin(new(0, 5, 0, 5)).IsEditable(false);
+                var gridControls = ControlSet.GridFromColumns(labels, comboBoxes);
+
+                LayoutFactory.SetupGrid(propGrid, gridControls);
+            });
         }
 
         public void Initialize(BrushesAndPensPage page)
         {
             DataContext = page;
             this.page = page;
+            brushComboBox.AddEnumValues<BrushesAndPensPage.BrushType>();
+            hatchStyleComboBox.AddEnumValues<BrushHatchStyle>();
+            dashStyleComboBox.AddEnumValues<PenDashStyle>();
+            lineJoinComboBox.AddEnumValues<LineJoin>();
+            lineCapComboBox.AddEnumValues<LineCap>();
 
-            foreach (var brushType in Enum.GetValues(typeof(BrushesAndPensPage.BrushType)))
-                brushComboBox.Items.Add(brushType!);
-
-            foreach (var style in Enum.GetValues(typeof(BrushHatchStyle)))
-                hatchStyleComboBox.Items.Add(style!);
-
-            foreach (var style in Enum.GetValues(typeof(PenDashStyle)))
-                dashStyleComboBox.Items.Add(style!);
-
-            foreach (var value in Enum.GetValues(typeof(LineJoin)))
-                lineJoinComboBox.Items.Add(value!);
-
-            foreach (var value in Enum.GetValues(typeof(LineCap)))
-                lineCapComboBox.Items.Add(value!);
+            dashStyleComboBox.BindSelectedItem(nameof(BrushesAndPensPage.PenDashStyle));
+            lineCapComboBox.BindSelectedItem(nameof(BrushesAndPensPage.LineCap));
+            lineJoinComboBox.BindSelectedItem(nameof(BrushesAndPensPage.LineJoin));
         }
 
         private void BrushComboBox_SelectedItemChanged(object? sender, EventArgs e)

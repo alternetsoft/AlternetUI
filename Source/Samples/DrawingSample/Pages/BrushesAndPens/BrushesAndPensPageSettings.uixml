@@ -2,53 +2,38 @@
         xmlns="http://schemas.alternetsoft.com/ui/2021"
         xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
         xmlns:local="clr-namespace:DrawingSample;assembly=DrawingSample">
-    
-	<StackPanel Orientation="Vertical" Margin="5">
-        <Label Text="Shape Count:" />
-        <Slider Minimum="1" Maximum="100" Margin="0,0,0,10"  TickStyle="None"
-                Value="{Binding ShapeCount}"/>
 
-        <CheckBox Text="Rectangles" Margin="0,0,0,5" IsChecked="{Binding RectanglesIncluded}"/>
-        <CheckBox Text="Ellipses" Margin="0,0,0,5" IsChecked="{Binding EllipsesIncluded}"/>
+  <StackPanel Orientation="Vertical" Margin="5">
+    <Label Text="Shape Count:" />
+    <Slider Minimum="1" Maximum="100" Margin="0,0,0,10"  TickStyle="None"
+            Value="{Binding ShapeCount}"/>
 
-        <Label Text="Brush:" Margin="0,5,0,5"/>
-        <ComboBox Name="brushComboBox" IsEditable="false" SelectedItem="{Binding Brush}"
-                  SelectedItemChanged="BrushComboBox_SelectedItemChanged"/>
+    <CheckBox Text="Rectangles" Margin="0,0,0,5" IsChecked="{Binding RectanglesIncluded}"/>
+    <CheckBox Text="Ellipses" Margin="0,0,0,5" IsChecked="{Binding EllipsesIncluded}"/>
 
-        <StackPanel Name="hatchStylePanel" Visible="false">
-            <Label Text="Brush Hatch Style:" Margin="0,5,0,5" />
-            <ComboBox Name="hatchStyleComboBox" IsEditable="false" SelectedItem="{Binding HatchStyle}"/>
-        </StackPanel>
+    <Label Text="Brush:" Margin="0,5,0,5"/>
+    <ComboBox Name="brushComboBox" IsEditable="false" SelectedItem="{Binding Brush}"
+              SelectedItemChanged="BrushComboBox_SelectedItemChanged"/>
 
-        <Label Text="Brush Color:" Margin="0,5,0,5"/>
-        <Slider Minimum="0" Maximum="10" Margin="0,0,0,10"  TickStyle="None"
-                Value="{Binding BrushColorHue}"/>
-
-        <Label Text="Pen Color:" Margin="0,5,0,5"/>
-        <Slider Minimum="0" Maximum="10" Margin="0,0,0,10"  TickStyle="None"
-                Value="{Binding PenColorHue}"/>
-
-        <Label Text="Pen Width:" Margin="0,5,0,5"/>
-        <Slider Minimum="0" Maximum="6" Margin="0,0,0,10"  TickStyle="None"
-                Value="{Binding PenWidth}"/>
-
-      <HorizontalStackPanel Margin="0,5,0,5" >
-        <Label Text="Dash Style:" Margin="0,0,5,0" />
-        <ComboBox Name="dashStyleComboBox" IsEditable="false"
-                  SelectedItem="{Binding PenDashStyle}"/>
-      </HorizontalStackPanel>
-
-      <HorizontalStackPanel  Margin="0,5,0,5" >
-        <Label Text="Line Cap:" Margin="0,0,5,0" />
-        <ComboBox Name="lineCapComboBox" IsEditable="false"
-                  SelectedItem="{Binding LineCap}"/>
-      </HorizontalStackPanel>
-
-      <HorizontalStackPanel Margin="0,5,0,5" >
-        <Label Text="Line Join:" Margin="0,0,5,0" />
-        <ComboBox Name="lineJoinComboBox" IsEditable="false"
-                  SelectedItem="{Binding LineJoin}"/>
-      </HorizontalStackPanel>
+    <StackPanel Name="hatchStylePanel" Visible="false">
+      <Label Text="Brush Hatch Style:" Margin="0,5,0,5" />
+      <ComboBox Name="hatchStyleComboBox" IsEditable="false" SelectedItem="{Binding HatchStyle}"/>
     </StackPanel>
+
+    <Label Text="Brush Color:" Margin="0,5,0,5"/>
+    <Slider Minimum="0" Maximum="10" Margin="0,0,0,10"  TickStyle="None"
+            Value="{Binding BrushColorHue}"/>
+
+    <Label Text="Pen Color:" Margin="0,5,0,5"/>
+    <Slider Minimum="0" Maximum="10" Margin="0,0,0,10"  TickStyle="None"
+            Value="{Binding PenColorHue}"/>
+
+    <Label Text="Pen Width:" Margin="0,5,0,5"/>
+    <Slider Minimum="0" Maximum="6" Margin="0,0,0,10"  TickStyle="None"
+            Value="{Binding PenWidth}"/>
+
+    <Grid Margin="0,5,0,5" Name="propGrid">
+    </Grid>
+  </StackPanel>
 
 </Control>
