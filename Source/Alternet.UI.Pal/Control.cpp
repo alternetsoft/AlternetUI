@@ -71,6 +71,12 @@ namespace Alternet::UI
     void Control::ApplyMinimumSize(const Size& value)
     {
         auto window = GetWxWindow();
+        if (value.Width <= 0 && value.Height <= 0)
+        {
+            window->SetMinSize(wxDefaultSize);
+            return;
+        }
+
         auto size = fromDip(value, window);
         window->SetMinSize(size == wxSize() ? wxDefaultSize : size);
     }
@@ -149,6 +155,11 @@ namespace Alternet::UI
     void Control::ApplyMaximumSize(const Size& value)
     {
         auto window = GetWxWindow();
+        if (value.Width <= 0 && value.Height <= 0)
+        {
+            window->SetMaxSize(wxDefaultSize);
+            return;
+        }
         auto size = fromDip(value, window);
         window->SetMaxSize(size == wxSize() ? wxDefaultSize : size);
     }
@@ -460,6 +471,7 @@ namespace Alternet::UI
 
     /*static*/ int Control::GetDoDragDropFlags(DragDropEffects allowedEffects)
     {
+        #pragma warning(suppress: 26813)
         if (allowedEffects == DragDropEffects::Copy)
             return wxDrag_CopyOnly; // allow only copying
 
