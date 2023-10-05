@@ -35,6 +35,10 @@ namespace Alternet.UI
         /// <returns>The element at the specified index.</returns>
         public Control this[int index] => items[index];
 
+        /// <summary>
+        /// Creates two dimensional array 'Control[,]' from the specified columns with controls.
+        /// </summary>
+        /// <param name="columns">Columns with the controls</param>
         public static Control[,] GridFromColumns(params ControlSet[] columns)
         {
             var colCount = columns.Length;
