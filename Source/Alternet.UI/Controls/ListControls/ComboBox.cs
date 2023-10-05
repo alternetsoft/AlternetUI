@@ -284,6 +284,17 @@ namespace Alternet.UI
             => Handler.SelectTextRange(start, length);
 
         /// <summary>
+        /// Binds <see cref="SelectedItem"/> to the specified property of the
+        /// <see cref="FrameworkElement.DataContext"/>
+        /// </summary>
+        /// <param name="propName">Property name.</param>
+        public void BindSelectedItem(string propName)
+        {
+            Binding myBinding = new(propName) { Mode = BindingMode.TwoWay };
+            BindingOperations.SetBinding(this, ComboBox.SelectedItemProperty, myBinding);
+        }
+
+        /// <summary>
         /// Selects all the text in the editable portion of the ComboBox.
         /// </summary>
         public void SelectAllText() => Handler.SelectAllText();
