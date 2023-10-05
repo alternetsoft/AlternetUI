@@ -46,7 +46,7 @@
     </MainMenu>
   </Window.Menu>
   <Window.Toolbar>
-    <Toolbar>
+    <Toolbar NoDivider="true">
     </Toolbar>
   </Window.Toolbar>    
  <Window.StatusBar>
@@ -69,11 +69,11 @@
           <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-      <Border Grid.Column="1" Grid.Row="1" Margin="5" >
+      <Border Grid.Column="1" Grid.Row="1" BorderWidth="0,1,0,0">
       <ScrollViewer >  
       <StackPanel Orientation="Horizontal" Name="mainPanel" Margin="5"
                   Padding="5">
-        <GroupBox Title="Menu" Margin="5" VerticalAlignment="Top" Padding="5">
+        <GroupBox Title="Menu" Margin="5" VerticalAlignment="Stretch" Padding="5">
           <StackPanel Padding="10"  >
             <Button Text="Add Menu Item" 
                     Name="addDynamicMenuItemMenuItem"
@@ -105,13 +105,13 @@
             <Border Name="contextMenuBorder"
                     MouseRightButtonUp="ContextMenuBorder_MouseRightButtonUp"
                     Margin="0,0,0,5">
-              <Label Margin="5" Text="Right-click shows the context menu"
+              <Label Margin="5" Text="Right-click shows context menu"
                      Name="contextMenuLabel"/>
             </Border>
           </StackPanel>
         </GroupBox>
 
-        <GroupBox Title="Toolbar" VerticalAlignment="Top" Margin="5,5,5,10" >
+        <GroupBox Title="Toolbar" VerticalAlignment="Stretch" Margin="5,5,5,5" >
           <HorizontalStackPanel>
             <StackPanel Padding="10"  >
               <Button Text="Toggle item check"
@@ -130,14 +130,7 @@
                       Name="removeLastDynamicToolbarItemButton"
                       Click="RemoveLastDynamicToolbarItemButton_Click"
                       Margin="5,5,0,5" />
-              <CheckBox Text="Show text" Name="showToolbarTextCheckBox"
-                  CheckedChanged="ShowToolbarTextCheckBox_CheckedChanged"
-                        Margin="5,5,0,5" IsChecked="True" />
-              <CheckBox Text="Show images" Name="showToolbarImagesCheckBox"
-                  CheckedChanged="ShowToolbarImagesCheckBox_CheckedChanged"
-                  Margin="5,5,0,5" IsChecked="True"/>
-
-              <Label Text="Image to Text:" Margin="5,5,0,5"/>
+              <Label Text="Image to Text:" Margin="5,5,0,3"/>
               <ComboBox IsEditable="false"
                   Name="imageToTextDisplayModeComboBox"
                   SelectedItemChanged=
@@ -147,8 +140,8 @@
 
             <StackPanel Padding="10"  >
               <CheckBox Text="No divider" Name="noDividerCheckBox"
-                  CheckedChanged="NoDividerCheckBox_Changed"
-                  Margin="5,5,0,5" IsChecked="false"/>
+                  CheckedChanged="NoDividerCheckBox_Changed" IsChecked="True"
+                  Margin="5,5,0,5"/>
               <CheckBox Text="Vertical" Name="verticalCheckBox"
                   CheckedChanged="VerticalCheckBox_Changed"
                   Margin="5,5,0,5" IsChecked="false"/>
@@ -158,11 +151,17 @@
               <CheckBox Text="Is Bottom" Name="isBottomCheckBox"
                   CheckedChanged="IsBottomCheckBox_Changed"
                   Margin="5,5,0,5" IsChecked="false"/>
+              <CheckBox Text="Show text" Name="showToolbarTextCheckBox"
+                  CheckedChanged="ShowToolbarTextCheckBox_CheckedChanged"
+                        Margin="5,5,0,5" IsChecked="True" />
+              <CheckBox Text="Show images" Name="showToolbarImagesCheckBox"
+                  CheckedChanged="ShowToolbarImagesCheckBox_CheckedChanged"
+                  Margin="5,5,0,5" IsChecked="True"/>
             </StackPanel>
           </HorizontalStackPanel>
         </GroupBox>
 
-        <GroupBox Title="Status Bar" VerticalAlignment="Top" Padding="5"  
+        <GroupBox Title="Status Bar" VerticalAlignment="Stretch" Padding="5"  
                   Margin="5,5,10,5">
           <StackPanel Padding="10"  >
             <CheckBox
@@ -171,12 +170,12 @@
               CheckedChanged="ShowSizingGripCheckBox_CheckedChanged"
               Margin="0,0,0,10" IsChecked="True" />
             
-            <Button Text="Add panel"
+            <Button Text="Add item"
                     Name="addDynamicStatusBarPanelButton"
                     Click="AddDynamicStatusBarPanelButton_Click"
                     Margin="0,0,0,10" />
             
-            <Button Text="Remove panel"
+            <Button Text="Remove item"
                     Name="removeLastDynamicStatusBarPanelButton"
                     Click="RemoveLastDynamicStatusBarPanelButton_Click"
                     Margin="0,0,0,10" />
@@ -187,7 +186,7 @@
       </ScrollViewer>
       </Border>  
 
-      <ListBox Name="eventsListBox" Grid.Column="1" Grid.Row="2" Margin="5"/>
+      <ListBox Name="eventsListBox" Grid.Column="1" Grid.Row="2" Margin="10,0,10,10"/>
     </Grid>
   
 </Window>
