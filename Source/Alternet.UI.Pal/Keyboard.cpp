@@ -10,8 +10,26 @@ namespace Alternet::UI
     {
     }
 
+    bool IsValidLinuxKey(Key key)
+    {
+        if (key == Key::Control || key == Key::ScrollLock || key == Key::NumLock ||
+            key == Key::CapsLock || key == Key::Shift || key == Key::Alt)
+            return true;
+        return false;
+    }
+
     KeyStates Keyboard::GetKeyState(Key key)
     {
+        // We check here for Linux as under Ubuntu 23 (and probably 22)
+        // we have an exception in IsKeyDown_private
+        //  ../src/unix/utilsx11.cpp(2645): assert ""Assert failure"" failed in
+        //  wxGetKeyStateGTK(): Unsupported key 393, the only supported ones
+        //  are: Ctrl, Alt, Shift, Caps Lock, Num Lock and Scroll Lock for GTK 3.18+
+#ifdef __WXGTK__
+        if (!IsValidLinuxKey(key))
+            return KeyStates::None;
+#endif
+
         std::vector<int> wxKeys;
         if (KeyHasMultipleWxKeys(key))
             wxKeys = KeyToWxKeys(key);
