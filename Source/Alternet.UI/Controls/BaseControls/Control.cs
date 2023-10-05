@@ -14,7 +14,7 @@ namespace Alternet.UI
     [DesignerCategory("Code")]
     [DefaultProperty("Text")]
     [DefaultEvent("Click")]
-    public class Control : FrameworkElement, ISupportInitialize, IDisposable, IControl
+    public partial class Control : FrameworkElement, ISupportInitialize, IDisposable, IControl
     {
         /// <summary>
         /// Identifies the <see cref="ToolTip"/> dependency property.
@@ -766,7 +766,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets the outer margin of an control.
+        /// Gets or sets the outer margin of a control.
         /// </summary>
         /// <value>Provides margin values for the control. The default value is a
         /// <see cref="Thickness"/> with all properties equal to 0 (zero).</value>
