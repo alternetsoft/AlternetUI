@@ -9,7 +9,8 @@ namespace PaintSample
 {
     public partial class MainWindow : Window
     {
-        private const string FileDialogImageFilesFilter = "Image files(*.png; *.jpg)|*.png;*.jpg|All files(*.*)|*.*";
+        private const string FileDialogImageFilesFilter =
+            "Image files(*.png; *.jpg)|*.png;*.jpg|All files(*.*)|*.*";
         private Tools? tools;
 
         private Document? document;
@@ -50,10 +51,9 @@ namespace PaintSample
             StartLocation = WindowStartLocation.CenterScreen;
 
             var menu = new MainMenu();
-            Menu = menu;
 
             fileMainMenu = "_File";
-            Menu.Items.Add(fileMainMenu);
+            menu.Items.Add(fileMainMenu);
 
             newMenuItem = new("_New", NewMenuItem_Click, "Ctrl+N");
             fileMainMenu.Items.Add(newMenuItem);
@@ -72,7 +72,7 @@ namespace PaintSample
             fileMainMenu.Items.Add(exitMenuItem);
 
             editMainMenu = "_Edit";
-            Menu.Items.Add(editMainMenu);
+            menu.Items.Add(editMainMenu);
 
             undoMenuItem = new("_Undo", UndoMenuItem_Click, "Ctrl+Z");
             editMainMenu.Items.Add(undoMenuItem);
@@ -85,14 +85,15 @@ namespace PaintSample
             editMainMenu.Items.Add(pasteMenuItem);
 
             toolsMenu = new("_Tools");
-            Menu.Items.Add(toolsMenu);
+            menu.Items.Add(toolsMenu);
 
             helpMainMenu = new("_Help");            
-            Menu.Items.Add(helpMainMenu);
+            menu.Items.Add(helpMainMenu);
 
             aboutMenuItem = new("_About", AboutMenuItem_Click);
             helpMainMenu.Items.Add(aboutMenuItem);
 
+            Menu = menu;
 
             mainGrid = new();
             Children.Add(mainGrid);

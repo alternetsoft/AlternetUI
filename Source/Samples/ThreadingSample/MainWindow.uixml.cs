@@ -13,6 +13,8 @@ namespace ThreadingSample
 
             InitializeComponent();
 
+            SetSizeToContent();
+
             StartCounterThreads();
         }
 
