@@ -2,7 +2,8 @@
         xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
         x:Class="HelloWorldSample.MainWindow"
         Title="Alternet UI Hello World Sample" StartLocation="CenterScreen"
-        xmlns:drawing="clr-namespace:Alternet.Drawing;assembly=Alternet.UI">
+        xmlns:drawing="clr-namespace:Alternet.Drawing;assembly=Alternet.UI"
+        MinWidth="500" MinHeight="200">
     <StackPanel Orientation="Vertical">
         <Button Name="helloButton" Text="Say Hello" Margin="20" Click="HelloButton_Click" />
     </StackPanel>

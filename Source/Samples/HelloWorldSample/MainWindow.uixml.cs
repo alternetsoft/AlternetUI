@@ -12,6 +12,8 @@ namespace HelloWorldSample
             Icon = ImageSet.FromUrlOrNull("embres:HelloWorldSample.Sample.ico");
 
             InitializeComponent();
+
+            SetSizeToContent();
         }
 
         private void HelloButton_Click(object? sender, EventArgs e)
