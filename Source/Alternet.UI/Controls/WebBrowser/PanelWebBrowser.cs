@@ -23,7 +23,7 @@ namespace Alternet.UI
         };
 
         private readonly ContextMenu moreActionsMenu = new();
-
+        private readonly string defaultUrl = "about:blank";
         private WebBrowser? webBrowser;
         private bool historyCleared = false;
         private int buttonIdBack;
@@ -36,7 +36,6 @@ namespace Alternet.UI
         private bool logEvents;
         private bool canNavigate = true;
         private int scriptRunCounter = 0;
-        private string defaultUrl = "about:blank";
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PanelWebBrowser"/> class.

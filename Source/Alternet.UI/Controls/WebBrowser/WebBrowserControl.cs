@@ -19,7 +19,7 @@ namespace Alternet.UI
     public partial class WebBrowser : Control, IWebBrowser
     {
         private static Brush? uixmlPreviewerBrush = null;
-        private string defaultUrl = "about:blank";
+        private readonly string defaultUrl = "about:blank";
 
         private IWebBrowserMemoryFS? fMemoryFS;
 
@@ -612,12 +612,6 @@ namespace Alternet.UI
             Native.WebBrowser.SetDefaultFSNameArchive(value);
         }
 
-        /// <include file="Interfaces/IWebBrowser.xml" path='doc/SetDefaultPage/*'/>
-        internal static void SetDefaultPage(string url)
-        {
-            WebBrowserHandlerApi.WebBrowser_SetDefaultPage_(url);
-        }
-
         /// <include file="Interfaces/IWebBrowser.xml" path='doc/SetLatestBackend/*'/>
         public static void SetLatestBackend()
         {
@@ -1172,6 +1166,12 @@ namespace Alternet.UI
         {
             CheckDisposed();
             Browser.RunScriptAsync(javascript, clientData);
+        }
+
+        /// <include file="Interfaces/IWebBrowser.xml" path='doc/SetDefaultPage/*'/>
+        internal static void SetDefaultPage(string url)
+        {
+            WebBrowserHandlerApi.WebBrowser_SetDefaultPage_(url);
         }
 
         internal void OnNativeScriptMessageReceived(

@@ -13,13 +13,13 @@ namespace ControlsSample
         private const string SItemGoogle = "Google Search";
         private const string SItemPDF = "PDF Document";
         private const string SItemImage = "View Image";
-                                                     
-        private static string? headerText;    
 
+        private static string? headerText;
+
+        private readonly WebBrowser WebBrowser1;
         private IPageSite? site;
         private bool historyCleared = false;
         private bool pandaLoaded = false;
-        private readonly WebBrowser WebBrowser1;
 
         static WebBrowserPage()
         {
@@ -34,7 +34,7 @@ namespace ControlsSample
 
             InitializeComponent();
 
-            WebBrowser1 = new ();
+            WebBrowser1 = new(GetPandaUrl());
             WebBrowser1.Navigated += WebBrowser1_Navigated;
             WebBrowser1.Loaded += WebBrowser1_Loaded;
             WebBrowser1.NewWindow += WebBrowser1_NewWindow;
@@ -115,15 +115,6 @@ namespace ControlsSample
             if (!pandaLoaded)
             {
                 WebBrowser1.PreferredColorScheme = WebBrowserPreferredColorScheme.Light;
-
-                pandaLoaded = true;
-                try
-                {
-                    WebBrowser1.LoadURL(GetPandaUrl());
-                }
-                catch (Exception)
-                {
-                }
             }
         }
 
