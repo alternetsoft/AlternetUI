@@ -11,7 +11,7 @@ namespace Alternet.UI
     /// </summary>
     public class ControlSet
     {
-        private IReadOnlyList<Control> items;
+        private readonly IReadOnlyList<Control> items;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ControlSet"/> class.
