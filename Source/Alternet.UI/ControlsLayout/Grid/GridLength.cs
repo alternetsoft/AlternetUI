@@ -13,6 +13,9 @@ namespace Alternet.UI
     [TypeConverter(typeof(GridLengthConverter))]
     public struct GridLength : IEquatable<GridLength>
     {
+        private readonly double _unitValue;
+        private readonly GridUnitType _unitType;
+
         /// <summary>
         /// Constructor, initializes the GridLength as absolute value in pixels.
         /// </summary>
@@ -159,18 +162,16 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Returns initialized Auto GridLength value.
+        /// Returns initialized <see cref="GridLength"/> value with <see cref="GridUnitType"/>
+        /// equal to <see cref="GridUnitType.Auto"/>.
         /// </summary>
-        public static GridLength Auto
-        {
-            get { return (s_auto); }
-        }
+        public static GridLength Auto { get; } = new(1, GridUnitType.Auto);
 
-        private double _unitValue;
-        private GridUnitType _unitType;
-
-        // static instance of Auto GridLength
-        private static readonly GridLength s_auto = new GridLength(1, GridUnitType.Auto);
+        /// <summary>
+        /// Returns initialized <see cref="GridLength"/> value with <see cref="GridUnitType"/>
+        /// equal to <see cref="GridUnitType.Star"/>.
+        /// </summary>
+        public static GridLength Star { get; } = new(1, GridUnitType.Star);
     }
 
 }

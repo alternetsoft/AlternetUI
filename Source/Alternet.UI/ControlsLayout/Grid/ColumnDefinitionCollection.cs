@@ -6,8 +6,10 @@ using System.Collections.Generic;
 
 namespace Alternet.UI
 {
-    /// <summary>Provides access to an ordered, strongly typed collection of <see cref="ColumnDefinition" /> objects.</summary>
-    public sealed class ColumnDefinitionCollection : IList<ColumnDefinition>, ICollection<ColumnDefinition>, IEnumerable<ColumnDefinition>, IEnumerable, IList, ICollection
+    /// <summary>Provides access to an ordered, strongly typed collection of
+    /// <see cref="ColumnDefinition" /> objects.</summary>
+    public sealed class ColumnDefinitionCollection : IList<ColumnDefinition>,
+        ICollection<ColumnDefinition>, IEnumerable<ColumnDefinition>, IEnumerable, IList, ICollection
     {
         internal ColumnDefinitionCollection(Grid owner)
         {

@@ -10,18 +10,21 @@ namespace Alternet.UI
     /// </summary>
     public class RowDefinition : DefinitionBase
     {
+        private GridLength height = GridLength.Star;
+        private double minHeight;
+        private double maxHeight = double.PositiveInfinity;
+
         /// <summary>Initializes a new instance of the <see cref="RowDefinition" /> class.</summary>
         public RowDefinition() : base(false)
         {
         }
 
-        GridLength height = new(1, GridUnitType.Star);
-        double minHeight;
-        double maxHeight = double.PositiveInfinity;
-
-
-        /// <summary>Gets the calculated height of a <see cref="RowDefinition" />, or sets the <see cref="GridLength" /> value of a row that is defined by the <see cref="RowDefinition" />.   </summary>
-        /// <returns>The <see cref="GridLength" /> that represents the height of the row. The default value is 1.0.</returns>
+        /// <summary>Gets the calculated height of a <see cref="RowDefinition" />,
+        /// or sets the <see cref="GridLength" /> value of a row that is defined
+        /// by the <see cref="RowDefinition" />.
+        /// </summary>
+        /// <returns>The <see cref="GridLength" /> that represents the height of the row.
+        /// The default value is 1.0.</returns>
         public GridLength Height
         {
             get
@@ -40,8 +43,12 @@ namespace Alternet.UI
             }
         }
 
-        /// <summary>Gets or sets a value that represents the minimum allowable height of a <see cref="RowDefinition" />.  </summary>
-        /// <returns>A <see cref="double" /> that represents the minimum allowable height. The default value is 0.</returns>
+        /// <summary>
+        /// Gets or sets a value that represents the minimum allowable height
+        /// of a <see cref="RowDefinition" />.
+        /// </summary>
+        /// <returns>A <see cref="double" /> that represents the minimum allowable
+        /// height. The default value is 0.</returns>
         [TypeConverter(typeof(LengthConverter))]
         public double MinHeight
         {
@@ -60,8 +67,12 @@ namespace Alternet.UI
             }
         }
 
-        /// <summary>Gets or sets a value that represents the maximum height of a <see cref="RowDefinition" />.  </summary>
-        /// <returns>A <see cref="double" /> that represents the maximum height. </returns>
+        /// <summary>
+        /// Gets or sets a value that represents the
+        /// maximum height of a <see cref="RowDefinition" />.
+        /// </summary>
+        /// <returns>A <see cref="double" /> that represents
+        /// the maximum height. </returns>
         [TypeConverter(typeof(LengthConverter))]
         public double MaxHeight
         {
@@ -80,8 +91,10 @@ namespace Alternet.UI
             }
         }
 
-        /// <summary>Gets a value that represents the calculated height of the <see cref="RowDefinition" />.</summary>
-        /// <returns>A <see cref="double" /> that represents the calculated height in device independent pixels. The default value is 0.</returns>
+        /// <summary>Gets a value that represents the calculated height
+        /// of the <see cref="RowDefinition" />.</summary>
+        /// <returns>A <see cref="double" /> that represents the
+        /// calculated height in device independent pixels. The default value is 0.</returns>
         public double ActualHeight
         {
             get
@@ -95,8 +108,10 @@ namespace Alternet.UI
             }
         }
 
-        /// <summary>Gets a value that represents the offset value of this <see cref="RowDefinition" />.</summary>
-        /// <returns>A <see cref="double" /> that represents the offset of the row. The default value is 0.</returns>
+        /// <summary>Gets a value that represents the offset value of this
+        /// <see cref="RowDefinition" />.</summary>
+        /// <returns>A <see cref="double" /> that represents the offset of the row.
+        /// The default value is 0.</returns>
         public double Offset
         {
             get
@@ -108,6 +123,18 @@ namespace Alternet.UI
                 }
                 return result;
             }
+        }
+
+        /// <summary>
+        /// Creates <see cref="RowDefinition"/> instance with <see cref="Height"/> equal to
+        /// <see cref="GridLength.Auto"/>.
+        /// </summary>
+        public static RowDefinition CreateAuto()
+        {
+            return new()
+            {
+                Height = GridLength.Auto,
+            };
         }
     }
 }

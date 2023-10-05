@@ -8,14 +8,9 @@ namespace Alternet.UI
 {
     public partial class Grid
     {
-        /*static Dictionary<Control, int> controlColumns = new Dictionary<Control, int>();
-        static Dictionary<Control, int> controlRows = new Dictionary<Control, int>();
-        static Dictionary<Control, int> controlColumnSpans = new Dictionary<Control, int>();
-        static Dictionary<Control, int> controlRowSpans = new Dictionary<Control, int>();*/
-        // static Dictionary<Control, bool> controlIsSharedSizeScopes = new Dictionary<Control, bool>();
-
         /// <summary>
-        /// Sets a value that indicates which column child control within a <see cref="Grid"/> should appear in.
+        /// Sets a value that indicates which column child control within a <see cref="Grid"/>
+        /// should appear in.
         /// </summary>
         /// <param name="control">The control on which to set the column index.</param>
         /// <param name="value">The 0-based column index to set.</param>
@@ -26,15 +21,13 @@ namespace Alternet.UI
 
             if (value < 0)
                 throw new ArgumentOutOfRangeException(nameof(value));
-
-            /*controlColumns[control] = value;*/
-
             control.ExtendedProps.GridColumn = value;
             OnCellAttachedPropertyChanged(control);
         }
 
         /// <summary>
-        /// Sets a value that indicates which row and column child control within a <see cref="Grid"/> should appear in.
+        /// Sets a value that indicates which row and column child control within
+        /// a <see cref="Grid"/> should appear in.
         /// </summary>
         /// <param name="control">The control on which to set the column index.</param>
         /// <param name="row">The 0-based row index to set.</param>
@@ -46,7 +39,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets a value that indicates which column child control within a <see cref="Grid"/> should appear in.
+        /// Gets a value that indicates which column child control within a <see cref="Grid"/>
+        /// should appear in.
         /// </summary>
         /// <param name="control">The control for which to get the column index.</param>
         /// <remarks>The 0-based column index.</remarks>
@@ -54,9 +48,6 @@ namespace Alternet.UI
         {
             if (control is null)
                 throw new ArgumentNullException(nameof(control));
-
-            /*return controlColumns.TryGetValue(control, out var value) ? value : 0;*/
-
             if (control.HasExtendedProps)
                 return control.ExtendedProps.GridColumn;
             else
@@ -64,7 +55,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Sets a value that indicates which row child control within a <see cref="Grid"/> should appear in.
+        /// Sets a value that indicates which row child control within a <see cref="Grid"/>
+        /// should appear in.
         /// </summary>
         /// <param name="control">The control on which to set the row index.</param>
         /// <param name="value">The 0-based row index to set.</param>
@@ -75,9 +67,6 @@ namespace Alternet.UI
 
             if (value < 0)
                 throw new ArgumentOutOfRangeException(nameof(value));
-
-            /*controlRows[control] = value;*/
-
             control.ExtendedProps.GridRow = value;
             OnCellAttachedPropertyChanged(control);
         }
@@ -91,9 +80,6 @@ namespace Alternet.UI
         {
             if (control is null)
                 throw new ArgumentNullException(nameof(control));
-
-            /*return controlRows.TryGetValue(control, out var value) ? value : 0;*/
-
             if (control.HasExtendedProps)
                 return control.ExtendedProps.GridRow;
             else
@@ -102,17 +88,16 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets a value that indicates the total number of rows that child content spans within a <see cref="Grid"/>.
+        /// Gets a value that indicates the total number of rows that child content spans
+        /// within a <see cref="Grid"/>.
         /// </summary>
         /// <param name="control">The control for which to get the row span.</param>
-        /// <returns>The total number of rows that child content spans within a <see cref="Grid"/>.</returns>
+        /// <returns>The total number of rows that child content spans within a
+        /// <see cref="Grid"/>.</returns>
         public static int GetRowSpan(Control control)
         {
             if (control is null)
                 throw new ArgumentNullException(nameof(control));
-
-            /*return controlRowSpans.TryGetValue(control, out var value) ? value : 1;*/
-
             if (control.HasExtendedProps)
                 return control.ExtendedProps.GridRowSpan;
             else
@@ -120,10 +105,12 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Sets a value that indicates the total number of rows that child content spans within a <see cref="Grid"/>.
+        /// Sets a value that indicates the total number of rows that child content spans
+        /// within a <see cref="Grid"/>.
         /// </summary>
         /// <param name="control">The control for which to set the row span.</param>
-        /// <param name="value">The total number of rows that child content spans within a <see cref="Grid"/>.</param>
+        /// <param name="value">The total number of rows that child content spans within
+        /// a <see cref="Grid"/>.</param>
         public static void SetRowSpan(Control control, int value)
         {
             if (control == null)
@@ -139,17 +126,16 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets a value that indicates the total number of columns that child content spans within a <see cref="Grid"/>.
+        /// Gets a value that indicates the total number of columns that child content
+        /// spans within a <see cref="Grid"/>.
         /// </summary>
         /// <param name="control">The control for which to get the column span.</param>
-        /// <returns>The total number of columns that child content spans within a <see cref="Grid"/>.</returns>
+        /// <returns>The total number of columns that child content spans within a
+        /// <see cref="Grid"/>.</returns>
         public static int GetColumnSpan(Control control)
         {
             if (control is null)
                 throw new ArgumentNullException(nameof(control));
-
-            /*return controlColumnSpans.TryGetValue(control, out var value) ? value : 1;*/
-
             if (control.HasExtendedProps)
                 return control.ExtendedProps.GridColumnSpan;
             else
@@ -157,10 +143,12 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Sets a value that indicates the total number of columns that child content spans within a <see cref="Grid"/>.
+        /// Sets a value that indicates the total number of columns that child content
+        /// spans within a <see cref="Grid"/>.
         /// </summary>
         /// <param name="control">The control for which to set the column span.</param>
-        /// <param name="value">The total number of columns that child content spans within a <see cref="Grid"/>.</param>
+        /// <param name="value">The total number of columns that child content spans
+        /// within a <see cref="Grid"/>.</param>
         public static void SetColumnSpan(Control control, int value)
         {
             if (control == null)
@@ -168,32 +156,30 @@ namespace Alternet.UI
 
             if (value < 0)
                 throw new ArgumentOutOfRangeException(nameof(value));
-
-            /*controlColumnSpans[control] = value;*/
-
             control.ExtendedProps.GridColumnSpan = value;
             OnCellAttachedPropertyChanged(control);
         }
 
-        // public static bool GetIsSharedSizeScope(Control control)
-        // {
-        //    if (control is null)
-        //    {
-        //        throw new ArgumentNullException(nameof(control));
-        //    }
+        /// <summary>
+        /// Adds <see cref="RowDefinition"/> instance with <see cref="RowDefinition.Height"/> equal to
+        /// <see cref="GridLength.Auto"/>.
+        /// </summary>
+        public RowDefinition AddAutoRow()
+        {
+            var result = RowDefinition.CreateAuto();
+            RowDefinitions.Add(result);
+            return result;
+        }
 
-        // return controlIsSharedSizeScopes.TryGetValue(control, out var value) ? value : false;
-        // }
-
-        // public static void SetIsSharedSizeScope(Control control, bool value)
-        // {
-        //    if (control == null)
-        //    {
-        //        throw new ArgumentNullException(nameof(control));
-        //    }
-
-        // controlIsSharedSizeScopes[control] = value;
-        //    DefinitionBase.OnIsSharedSizeScopePropertyChanged(control, value);
-        // }
+        /// <summary>
+        /// Adds <see cref="ColumnDefinition"/> instance with <see cref="ColumnDefinition.Width"/>
+        /// equal to <see cref="GridLength.Auto"/>.
+        /// </summary>
+        public ColumnDefinition AddAutoColumn()
+        {
+            var result = ColumnDefinition.CreateAuto();
+            ColumnDefinitions.Add(result);
+            return result;
+        }
     }
 }

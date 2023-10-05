@@ -5,20 +5,27 @@ using System.ComponentModel;
 
 namespace Alternet.UI
 {
-    /// <summary>Defines column-specific properties that apply to <see cref="Grid" /> controls. </summary>
+    /// <summary>Defines column-specific properties that apply to <see cref="Grid" />
+    /// controls. </summary>
     public class ColumnDefinition : DefinitionBase
     {
-        /// <summary>Initializes a new instance of the <see cref="ColumnDefinition" /> class.</summary>
+        private GridLength width = GridLength.Star;
+        private double minWidth;
+        private double maxWidth = double.PositiveInfinity;
+
+        /// <summary>Initializes a new instance of the <see cref="ColumnDefinition" />
+        /// class.</summary>
         public ColumnDefinition() : base(true)
         {
         }
 
-        GridLength width = new GridLength(1, GridUnitType.Star);
-        double minWidth;
-        double maxWidth = double.PositiveInfinity;
-
-        /// <summary>Gets the calculated width of a <see cref="ColumnDefinition" />, or sets the <see cref="GridLength" /> value of a column that is defined by the <see cref="ColumnDefinition" />.   </summary>
-        /// <returns>The <see cref="GridLength" /> that represents the width of the Column. The default value is 1.0.</returns>
+        /// <summary>
+        /// Gets the calculated width of a <see cref="ColumnDefinition" />,
+        /// or sets the <see cref="GridLength" /> value of a column that is defined by
+        /// the <see cref="ColumnDefinition" />.
+        /// </summary>
+        /// <returns>The <see cref="GridLength" /> that represents the width of the
+        /// Column. The default value is 1.0.</returns>
         public GridLength Width
         {
             get
@@ -36,8 +43,10 @@ namespace Alternet.UI
             }
         }
 
-        /// <summary>Gets or sets a value that represents the minimum width of a <see cref="ColumnDefinition" />.   </summary>
-        /// <returns>A <see cref="double" /> that represents the minimum width. The default value is 0.</returns>
+        /// <summary>Gets or sets a value that represents the minimum width of
+        /// a <see cref="ColumnDefinition" />.   </summary>
+        /// <returns>A <see cref="double" /> that represents the minimum width.
+        /// The default value is 0.</returns>
         [TypeConverter(typeof(LengthConverter))]
         public double MinWidth
         {
@@ -55,8 +64,10 @@ namespace Alternet.UI
             }
         }
 
-        /// <summary>Gets or sets a value that represents the maximum width of a <see cref="ColumnDefinition" />.   </summary>
-        /// <returns>A <see cref="double" /> that represents the maximum width. The default value is <see cref="F:System.Double.PositiveInfinity" />.</returns>
+        /// <summary>Gets or sets a value that represents the maximum width of a
+        /// <see cref="ColumnDefinition" />.   </summary>
+        /// <returns>A <see cref="double" /> that represents the maximum width.
+        /// The default value is <see cref="F:System.Double.PositiveInfinity" />.</returns>
         [TypeConverter(typeof(LengthConverter))]
         public double MaxWidth
         {
@@ -75,8 +86,10 @@ namespace Alternet.UI
             }
         }
 
-        /// <summary>Gets a value that represents the actual calculated width of a <see cref="ColumnDefinition" />. </summary>
-        /// <returns>A <see cref="double" /> that represents the actual calculated width in device independent pixels. The default value is 0.</returns>
+        /// <summary>Gets a value that represents the actual calculated width of a
+        /// <see cref="ColumnDefinition" />. </summary>
+        /// <returns>A <see cref="double" /> that represents the actual calculated width in
+        /// device independent pixels. The default value is 0.</returns>
         public double ActualWidth
         {
             get
@@ -90,8 +103,10 @@ namespace Alternet.UI
             }
         }
 
-        /// <summary>Gets a value that represents the offset value of this <see cref="ColumnDefinition" />. </summary>
-        /// <returns>A <see cref="double" /> that represents the offset of the column. The default value is 0.</returns>
+        /// <summary>Gets a value that represents the offset value of this
+        /// <see cref="ColumnDefinition" />. </summary>
+        /// <returns>A <see cref="double" /> that represents the offset of the column.
+        /// The default value is 0.</returns>
         public double Offset
         {
             get
@@ -103,6 +118,18 @@ namespace Alternet.UI
                 }
                 return result;
             }
+        }
+
+        /// <summary>
+        /// Creates <see cref="ColumnDefinition"/> instance with <see cref="Width"/> equal to
+        /// <see cref="GridLength.Auto"/>.
+        /// </summary>
+        public static ColumnDefinition CreateAuto()
+        {
+            return new()
+            {
+                Width = GridLength.Auto,
+            };
         }
     }
 }
