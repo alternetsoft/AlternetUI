@@ -9,7 +9,8 @@ namespace Alternet.UI
     public class UixmlLoader
     {
         /// <summary>
-        /// This flag supports internal infrastructure and is not supposed to be used from the user code.
+        /// This flag supports internal infrastructure and is not supposed to be used from
+        /// the user code.
         /// </summary>
         public static bool DisableComponentInitialization { get; set; }
 
@@ -22,11 +23,15 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Populates an existing root object with the object property values created from a source XAML.
+        /// Populates an existing root object with the object property values created
+        /// from a source XAML.
         /// </summary>
         public void LoadExisting(Stream xamlStream, object existingObject)
         {
-            Markup.Xaml.UixmlPortRuntimeXamlLoader.Load(xamlStream, existingObject.GetType().Assembly, existingObject);
+            Markup.Xaml.UixmlPortRuntimeXamlLoader.Load(
+                xamlStream,
+                existingObject.GetType().Assembly,
+                existingObject);
         }
     }
 }
