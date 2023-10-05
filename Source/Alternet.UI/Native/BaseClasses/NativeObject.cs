@@ -6,7 +6,7 @@ using System.Security;
 
 namespace Alternet.UI.Native
 {
-    internal class NativeObject : IDisposable
+    internal class NativeObject : BaseObject, IDisposable
     {
         private static readonly Dictionary<IntPtr, NativeObject>
             InstancesByNativePointers = new();
