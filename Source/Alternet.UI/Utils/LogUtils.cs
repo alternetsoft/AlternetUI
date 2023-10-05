@@ -78,12 +78,18 @@ namespace Alternet.UI
         /// </summary>
         public static void LogToFileAppStarted()
         {
-            LogUtils.LogToFile(string.Empty);
-            LogUtils.LogToFile(string.Empty);
-            LogToFile("======================================");
-            LogToFile("Application log started");
-            LogToFile("======================================");
-            LogUtils.LogToFile(string.Empty);
+            try
+            {
+                LogUtils.LogToFile(string.Empty);
+                LogUtils.LogToFile(string.Empty);
+                LogToFile("======================================");
+                LogToFile("Application log started");
+                LogToFile("======================================");
+                LogUtils.LogToFile(string.Empty);
+            }
+            catch
+            {
+            }
         }
 
         /// <summary>
@@ -91,12 +97,18 @@ namespace Alternet.UI
         /// </summary>
         public static void LogToFileAppFinished()
         {
-            LogUtils.LogToFile(string.Empty);
-            LogUtils.LogToFile(string.Empty);
-            LogToFile("======================================");
-            LogToFile("Application log finished");
-            LogToFile("======================================");
-            LogUtils.LogToFile(string.Empty);
+            try
+            {
+                LogUtils.LogToFile(string.Empty);
+                LogUtils.LogToFile(string.Empty);
+                LogToFile("======================================");
+                LogToFile("Application log finished");
+                LogToFile("======================================");
+                LogUtils.LogToFile(string.Empty);
+            }
+            catch
+            {
+            }
         }
 
         /// <summary>
