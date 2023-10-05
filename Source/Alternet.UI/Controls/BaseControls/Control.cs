@@ -79,8 +79,6 @@ namespace Alternet.UI
         /// </summary>
         public Control()
         {
-            margin.ApplyMin(MinMargin);
-            padding.ApplyMin(MinPadding);
         }
 
         /// <summary>
@@ -780,7 +778,13 @@ namespace Alternet.UI
         /// </remarks>
         public virtual Thickness Margin
         {
-            get => margin;
+            get
+            {
+                if(minMargin == null)
+                    margin.ApplyMin(MinMargin);
+                return margin;
+            }
+
             set
             {
                 value.ApplyMin(MinMargin);
@@ -810,7 +814,13 @@ namespace Alternet.UI
         /// </remarks>
         public virtual Thickness Padding
         {
-            get => padding;
+            get
+            {
+                if(minPadding == null)
+                    padding.ApplyMin(MinPadding);
+                return padding;
+            }
+
             set
             {
                 value.ApplyMin(MinPadding);
