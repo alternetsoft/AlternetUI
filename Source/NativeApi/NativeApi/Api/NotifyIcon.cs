@@ -1,19 +1,21 @@
-﻿using System;
+﻿#pragma warning disable
+using System;
 
 namespace NativeApi.Api
 {
+    // https://docs.wxwidgets.org/3.2/classwx_task_bar_icon.html
     public class NotifyIcon
     {
-        public event EventHandler? Click { add => throw new Exception(); remove => throw new Exception(); }
-
-        public event EventHandler? DoubleClick { add => throw new Exception(); remove => throw new Exception(); }
+        public event EventHandler? Click;
+        public event EventHandler? DoubleClick;
 
         public string? Text { get; set; }
-
         public Image? Icon { get; set; }
-
         public Menu? Menu { get; set; }
-
         public bool Visible { get; set; }
+
+        public static bool IsAvailable { get; }
+        public bool IsIconInstalled { get; }
+        public bool IsOk { get; }
     }
 }

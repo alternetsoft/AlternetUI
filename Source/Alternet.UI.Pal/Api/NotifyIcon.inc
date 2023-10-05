@@ -16,6 +16,15 @@ void SetMenu(Menu* value);
 bool GetVisible();
 void SetVisible(bool value);
 
+
+static bool GetIsAvailable();
+
+
+bool GetIsIconInstalled();
+
+
+bool GetIsOk();
+
 public:
 enum class NotifyIconEvent
 {

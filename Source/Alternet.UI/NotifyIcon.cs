@@ -45,6 +45,47 @@ namespace Alternet.UI
         public event EventHandler? DoubleClick;
 
         /// <summary>
+        /// Gets whether system tray is available in the desktop environment the app runs under.
+        /// </summary>
+        /// <remarks>
+        /// On Windows and macOS, the tray is always available and this function simply returns true.
+        /// On Linux environment may or may not provide the tray, depending on
+        /// user's desktop environment. Tray availability may change during application's
+        /// lifetime under Linux and so applications shouldn't cache the result.
+        /// </remarks>
+        public static bool IsAvailable
+        {
+            get
+            {
+                return Native.NotifyIcon.IsAvailable;
+            }
+        }
+
+        /// <summary>
+        /// Gets whether icon was actually installed and visible.
+        /// </summary>
+        public bool IsIconInstalled
+        {
+            get
+            {
+                CheckDisposed();
+                return nativeNotifyIcon.IsIconInstalled;
+            }
+        }
+
+        /// <summary>
+        /// Gets whether this object initialized successfully.
+        /// </summary>
+        public bool IsOk
+        {
+            get
+            {
+                CheckDisposed();
+                return nativeNotifyIcon.IsOk;
+            }
+        }
+
+        /// <summary>
         /// Gets or sets the tool tip text displayed when the mouse pointer rests on a notification area icon.
         /// </summary>
         /// <value>

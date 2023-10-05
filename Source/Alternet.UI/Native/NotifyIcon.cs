@@ -90,6 +90,35 @@ namespace Alternet.UI.Native
             }
         }
         
+        public static bool IsAvailable
+        {
+            get
+            {
+                return NativeApi.NotifyIcon_GetIsAvailable_();
+            }
+            
+        }
+        
+        public bool IsIconInstalled
+        {
+            get
+            {
+                CheckDisposed();
+                return NativeApi.NotifyIcon_GetIsIconInstalled_(NativePointer);
+            }
+            
+        }
+        
+        public bool IsOk
+        {
+            get
+            {
+                CheckDisposed();
+                return NativeApi.NotifyIcon_GetIsOk_(NativePointer);
+            }
+            
+        }
+        
         static GCHandle eventCallbackGCHandle;
         
         static void SetEventCallback()
@@ -170,6 +199,15 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void NotifyIcon_SetVisible_(IntPtr obj, bool value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool NotifyIcon_GetIsAvailable_();
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool NotifyIcon_GetIsIconInstalled_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool NotifyIcon_GetIsOk_(IntPtr obj);
             
         }
     }

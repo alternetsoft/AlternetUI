@@ -100,7 +100,8 @@ namespace ControlsSample
             AddPage("Check Box", CreateCheckBoxesPage);
             AddPage("Text Input", CreateTextInputPage);
             AddPage("Date Time", CreateDateTimePage);
-            AddPage("Notify Icon", CreateNotifyIconPage);
+            if(NotifyIcon.IsAvailable)
+                AddPage("Notify Icon", CreateNotifyIconPage);
             AddPage("Web Browser", CreateWebBrowserPage);
             AddPage("Splitter Panel", CreateSplitterPanelPage);
             AddPage("Layout Panel", CreateLayoutPanelPage);

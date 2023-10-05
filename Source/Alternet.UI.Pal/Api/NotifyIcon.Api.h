@@ -55,6 +55,21 @@ ALTERNET_UI_API void NotifyIcon_SetVisible_(NotifyIcon* obj, c_bool value)
     obj->SetVisible(value);
 }
 
+ALTERNET_UI_API c_bool NotifyIcon_GetIsAvailable_()
+{
+    return NotifyIcon::GetIsAvailable();
+}
+
+ALTERNET_UI_API c_bool NotifyIcon_GetIsIconInstalled_(NotifyIcon* obj)
+{
+    return obj->GetIsIconInstalled();
+}
+
+ALTERNET_UI_API c_bool NotifyIcon_GetIsOk_(NotifyIcon* obj)
+{
+    return obj->GetIsOk();
+}
+
 ALTERNET_UI_API void NotifyIcon_SetEventCallback_(NotifyIcon::NotifyIconEventCallbackType callback)
 {
     NotifyIcon::SetEventCallback(callback);

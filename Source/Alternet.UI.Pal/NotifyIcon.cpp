@@ -99,7 +99,8 @@ namespace Alternet::UI
             _taskBarIcons.erase(std::find(_taskBarIcons.begin(), _taskBarIcons.end(), _taskBarIcon));
             
             _taskBarIcon->Unbind(wxEVT_TASKBAR_LEFT_UP, &NotifyIcon::OnLeftMouseButtonUp, this);
-            _taskBarIcon->Unbind(wxEVT_TASKBAR_LEFT_DCLICK, &NotifyIcon::OnLeftMouseButtonDoubleClick, this);
+            _taskBarIcon->Unbind(wxEVT_TASKBAR_LEFT_DCLICK,
+                &NotifyIcon::OnLeftMouseButtonDoubleClick, this);
             
             delete _taskBarIcon;
             _taskBarIcon = nullptr;
@@ -117,6 +118,25 @@ namespace Alternet::UI
     optional<string> NotifyIcon::GetText()
     {
         return _text;
+    }
+
+    bool NotifyIcon::GetIsAvailable()
+    {
+        return wxTaskBarIcon::IsAvailable();
+    }
+
+    bool NotifyIcon::GetIsIconInstalled()
+    {
+        if (_taskBarIcon == nullptr)
+            RecreateTaskBarIconIfNeeded();
+        return _taskBarIcon->IsIconInstalled();
+    }
+
+    bool NotifyIcon::GetIsOk()
+    {
+        if (_taskBarIcon == nullptr)
+            RecreateTaskBarIconIfNeeded();
+        return _taskBarIcon->IsOk();
     }
 
     void NotifyIcon::SetText(optional<string> value)
