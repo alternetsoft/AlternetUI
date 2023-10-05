@@ -6,14 +6,14 @@ namespace DrawingSample
 {
     partial class TextPageSettings : Control
     {
-        Label horzAlignLabel = new("Horz Align:");
-        Label vertAlignLabel = new("Vert Align:");
-        Label trimmingLabel = new("Trimming:");
-        Label wrappingLabel = new("Wrapping:");
-        ComboBox horizontalAlignmentComboBox = new();
-        ComboBox verticalAlignmentComboBox = new();
-        ComboBox wrappingComboBox = new();
-        ComboBox trimmingComboBox = new();
+        private readonly Label horzAlignLabel = new("Horz Align:");
+        private readonly Label vertAlignLabel = new("Vert Align:");
+        private readonly Label trimmingLabel = new("Trimming:");
+        private readonly Label wrappingLabel = new("Wrapping:");
+        private readonly ComboBox horizontalAlignmentComboBox = new();
+        private readonly ComboBox verticalAlignmentComboBox = new();
+        private readonly ComboBox wrappingComboBox = new();
+        private readonly ComboBox trimmingComboBox = new();
 
         public TextPageSettings()
         {

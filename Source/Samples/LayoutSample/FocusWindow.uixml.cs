@@ -10,6 +10,7 @@ namespace LayoutSample
 
             textBox1.SetFocus();
             UpdateTextBox1IsFocusedValueLabel();
+            SetSizeToContent();
         }
 
         protected override void OnPreviewKeyDown(KeyEventArgs e)

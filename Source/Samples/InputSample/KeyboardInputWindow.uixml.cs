@@ -6,8 +6,6 @@ namespace InputSample
 {
     public partial class KeyboardInputWindow : Window
     {
-        bool runningUnderMacOS;
-
         public KeyboardInputWindow()
         {
             InitializeComponent();
@@ -18,15 +16,10 @@ namespace InputSample
 
         private void PlatformSpecificInitialize()
         {
-#if NETCOREAPP
-            runningUnderMacOS = System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(
-                System.Runtime.InteropServices.OSPlatform.OSX);
+            var runningUnderMacOS = Application.IsMacOs;
 
             if (runningUnderMacOS)
                 messageLabel.Text = messageLabel.Text.Replace("Ctrl", "Cmd");
-#else
-            runningUnderMacOS = false;
-#endif
 
             macKeysPanel.Visible = runningUnderMacOS;
         }
@@ -37,7 +30,8 @@ namespace InputSample
             if (e.Key == Key.D && e.Modifiers == (ModifierKeys.Control | ModifierKeys.Shift))
             {
                 e.Handled = true;
-                messageLabel.Background = messageLabel.Background != Brushes.Red ? Brushes.Red : Brushes.Green;
+                messageLabel.BackgroundColor =
+                    messageLabel.BackgroundColor != Color.Red ? Color.Red : Color.Green;
             }
         }
 
@@ -53,11 +47,14 @@ namespace InputSample
             altPressedCheckBox.IsChecked = (Keyboard.Modifiers & ModifierKeys.Alt) != 0;
             windowsPressedCheckBox.IsChecked = (Keyboard.Modifiers & ModifierKeys.Windows) != 0;
 
-            if (runningUnderMacOS)
+            if (Application.IsMacOs)
             {
-                macControlPressedCheckBox.IsChecked = (Keyboard.RawModifiers & RawModifierKeys.MacControl) != 0;
-                macCommandPressedCheckBox.IsChecked = (Keyboard.RawModifiers & RawModifierKeys.MacCommand) != 0;
-                macOptionPressedCheckBox.IsChecked = (Keyboard.RawModifiers & RawModifierKeys.MacOption) != 0;
+                macControlPressedCheckBox.IsChecked =
+                    (Keyboard.RawModifiers & RawModifierKeys.MacControl) != 0;
+                macCommandPressedCheckBox.IsChecked =
+                    (Keyboard.RawModifiers & RawModifierKeys.MacCommand) != 0;
+                macOptionPressedCheckBox.IsChecked =
+                    (Keyboard.RawModifiers & RawModifierKeys.MacOption) != 0;
             }
         }
 
@@ -96,24 +93,33 @@ namespace InputSample
             lb.SelectedIndex = lb.Items.Count - 1;
         }
 
-        private void Window_TextInput(object sender, TextInputEventArgs e) => LogTextInput(e, "Window", "TextInput");
+        private void Window_TextInput(object sender, TextInputEventArgs e) =>
+            LogTextInput(e, "Window", "TextInput");
 
-        private void LogKey(KeyEventArgs e, string objectName, string eventName) => LogMessage($"{++messageNumber} {objectName}_{eventName} [{e.Key}], Repeat: {e.IsRepeat}");
-        private void LogTextInput(TextInputEventArgs e, string objectName, string eventName) => LogMessage($"{++messageNumber} {objectName}_{eventName} '{e.KeyChar}'");
+        private void LogKey(KeyEventArgs e, string objectName, string eventName) =>
+            LogMessage($"{++messageNumber} {objectName}_{eventName} [{e.Key}], Repeat: {e.IsRepeat}");
+        private void LogTextInput(TextInputEventArgs e, string objectName, string eventName) =>
+            LogMessage($"{++messageNumber} {objectName}_{eventName} '{e.KeyChar}'");
 
-        private void HelloButton_KeyDown(object sender, KeyEventArgs e) => LogKey(e, "HelloButton", "KeyDown");
+        private void HelloButton_KeyDown(object sender, KeyEventArgs e) =>
+            LogKey(e, "HelloButton", "KeyDown");
 
-        private void StackPanel_KeyDown(object sender, KeyEventArgs e) => LogKey(e, "StackPanel", "KeyDown");
+        private void StackPanel_KeyDown(object sender, KeyEventArgs e) =>
+            LogKey(e, "StackPanel", "KeyDown");
 
-        private void Window_KeyDown(object sender, KeyEventArgs e) => LogKey(e, "Window", "KeyDown");
+        private void Window_KeyDown(object sender, KeyEventArgs e) =>
+            LogKey(e, "Window", "KeyDown");
 
-        private void HelloButton_KeyUp(object sender, KeyEventArgs e) => LogKey(e, "HelloButton", "KeyUp");
+        private void HelloButton_KeyUp(object sender, KeyEventArgs e) =>
+            LogKey(e, "HelloButton", "KeyUp");
 
-        private void StackPanel_KeyUp(object sender, KeyEventArgs e) => LogKey(e, "StackPanel", "KeyUp");
+        private void StackPanel_KeyUp(object sender, KeyEventArgs e) =>
+            LogKey(e, "StackPanel", "KeyUp");
 
         private void Window_KeyUp(object sender, KeyEventArgs e) => LogKey(e, "Window", "KeyUp");
 
-        private void HelloButton_PreviewKeyDown(object sender, KeyEventArgs e) => LogKey(e, "HelloButton", "PreviewKeyDown");
+        private void HelloButton_PreviewKeyDown(object sender, KeyEventArgs e) =>
+            LogKey(e, "HelloButton", "PreviewKeyDown");
 
         private void StackPanel_PreviewKeyDown(object sender, KeyEventArgs e)
         {
@@ -122,9 +128,11 @@ namespace InputSample
                 e.Handled = true;
         }
 
-        private void Window_PreviewKeyDown(object sender, KeyEventArgs e) => LogKey(e, "Window", "PreviewKeyDown");
+        private void Window_PreviewKeyDown(object sender, KeyEventArgs e) =>
+            LogKey(e, "Window", "PreviewKeyDown");
 
-        private void HelloButton_PreviewKeyUp(object sender, KeyEventArgs e) => LogKey(e, "HelloButton", "PreviewKeyUp");
+        private void HelloButton_PreviewKeyUp(object sender, KeyEventArgs e) =>
+            LogKey(e, "HelloButton", "PreviewKeyUp");
 
         private void StackPanel_PreviewKeyUp(object sender, KeyEventArgs e)
         {
@@ -133,6 +141,7 @@ namespace InputSample
                 e.Handled = true;
         }
 
-        private void Window_PreviewKeyUp(object sender, KeyEventArgs e) => LogKey(e, "Window", "PreviewKeyUp");
+        private void Window_PreviewKeyUp(object sender, KeyEventArgs e) =>
+            LogKey(e, "Window", "PreviewKeyUp");
     }
 }

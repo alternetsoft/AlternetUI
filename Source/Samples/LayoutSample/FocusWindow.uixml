@@ -2,12 +2,13 @@
         xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
 		xmlns:local="clr-namespace:LayoutSample"
         x:Class="LayoutSample.FocusWindow" StartLocation="CenterScreen"
-        Title="ALternet UI Focus Window Sample">
+        Title="ALternet UI Focus Window Sample" MinWidth="500" MinHeight="400">
     <StackPanel Padding="10">
         <GroupBox Margin="0,0,0,10" Padding="5">
             <StackPanel>
                 <Label Text="TextBox1 (TabStop = true):" Margin="0,0,0,3"/>
-                <TextBox Name="textBox1" Text="TextBox1" Margin="0,0,0,15" TabStop="true" GotFocus="TextBox1_GotFocus" LostFocus="TextBox1_LostFocus"/>
+                <TextBox Name="textBox1" Text="TextBox1" Margin="0,0,0,15" TabStop="true"
+                         GotFocus="TextBox1_GotFocus" LostFocus="TextBox1_LostFocus"/>
 
                 <Label Text="TextBox2 (TabStop = false):" Margin="0,0,0,3"/>
                 <TextBox Name="textBox2" Text="TextBox2" Margin="0,0,0,15" TabStop="false"/>
@@ -24,7 +25,8 @@
                     <Label Name="textBox1IsFocusedValueLabel" />
                 </StackPanel>
 
-                <Button Text="Set Focus to TextBox1" Name="setFocusToTextBox1Button" Click="SetFocusToTextBox1Button_Click" Margin="0,0,0,5" />
+                <Button Text="Set Focus to TextBox1" Name="setFocusToTextBox1Button"
+                        Click="SetFocusToTextBox1Button_Click" Margin="0,0,0,5" />
                 <Label Text="Press 'N' key to focus next control." Margin="0,0,0,5"/>
             </StackPanel>
         </GroupBox>

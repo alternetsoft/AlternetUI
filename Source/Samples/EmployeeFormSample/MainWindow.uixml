@@ -49,7 +49,7 @@
 
 			<Label Text="Birth Date" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center"
                    Margin="0,0,10,5"/>
-			<TextBox Text="{Binding BirthDate}" Grid.Row="2" Grid.Column="1"
+			<DateTimePicker Value="{Binding BirthDate}" Grid.Row="2" Grid.Column="1"
                      VerticalAlignment="Center" Margin="0,0,0,5"/>
 
 			<Label Text="Title" Grid.Row="3" Grid.Column="0" VerticalAlignment="Center"
@@ -127,8 +127,8 @@
 
 			<Label Text="Hire Date" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center"
                    Margin="0,0,10,5"/>
-			<TextBox Text="{Binding HireDate}" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center"
-                     Margin="0,0,0,5"/>
+			<DateTimePicker Value="{Binding HireDate}" Grid.Row="1" Grid.Column="1"
+                            VerticalAlignment="Center" Margin="0,0,0,5"/>
 
 			<Label Text="Status" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center"
                    Margin="0,0,10,5"/>

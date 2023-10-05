@@ -9,7 +9,7 @@ namespace EmployeeFormSample
     {
         public string? FirstName { get; set; }
         public string? LastName { get; set; }
-        public string? BirthDate { get; set; }
+        public DateTime? BirthDate { get; set; }
         public string? Title { get; set; }
         public EmployeePrefix Prefix { get; set; }
         public string? Address { get; set; }
@@ -21,7 +21,7 @@ namespace EmployeeFormSample
         public string? Email { get; set; }
         public string? Skype { get; set; }
         public Department Department { get; set; }
-        public string? HireDate { get; set; }
+        public DateTime? HireDate { get; set; }
         public Status Status { get; set; }
     }
 

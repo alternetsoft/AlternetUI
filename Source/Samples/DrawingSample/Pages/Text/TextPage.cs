@@ -12,9 +12,9 @@ namespace DrawingSample
             "Lorem ipsum dolor sit amet,\nconsectetur adipiscing elit." +
             " Suspendisse tincidunt orci vitae arcu congue commodo. Proin fermentum rhoncus dictum.";
 
-        private static Font fontInfoFont = new Font(FontFamily.GenericMonospace, 8);
-        private static Brush fontInfoBrush = Brushes.Black;
-        private static Pen textWidthLimitPen = new Pen(Color.Gray, 1, PenDashStyle.Dash);
+        private static readonly Font fontInfoFont = new(FontFamily.GenericMonospace, 8);
+        private static readonly Brush fontInfoBrush = Brushes.Black;
+        private static readonly Pen textWidthLimitPen = new(Color.Gray, 1, PenDashStyle.Dash);
         private Paragraph[]? paragraphs;
         private double fontSize = 10;
         private FontStyle fontStyle;
@@ -100,13 +100,12 @@ namespace DrawingSample
             }
         }
 
+#pragma warning disable
         public int MinTextWidthLimit => 100;
-
         public int MaxTextWidthLimit => 1000;
-
         public int MinTextHeightValue => 20;
-
         public int MaxTextHeightValue => 200;
+#pragma warning restore
 
         public bool TextWidthLimitEnabled
         {
@@ -180,8 +179,7 @@ namespace DrawingSample
 
         public override void Draw(DrawingContext dc, Rect bounds)
         {
-            if (paragraphs == null)
-                paragraphs = CreateParagraphs().ToArray();
+            paragraphs ??= CreateParagraphs().ToArray();
 
             var color = Color.MidnightBlue;
             float lighten = 10;
@@ -277,12 +275,12 @@ namespace DrawingSample
         private IEnumerable<Paragraph> CreateParagraphs()
         {
             Paragraph CreateGenericFontParagraph(GenericFontFamily genericFamily) =>
-                new Paragraph(
+                new(
                     new Font(new FontFamily(genericFamily), FontSize, FontStyle),
                     "Generic " + genericFamily.ToString());
 
             Paragraph CreateCustomFontParagraph(FontFamily family) =>
-                new Paragraph(
+                new(
                     new Font(family, FontSize, FontStyle),
                     "Custom");
 

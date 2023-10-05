@@ -2,24 +2,16 @@
         xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
         x:Class="LayoutSample.AlignmentControl">
 
-	<GroupBox Title="Alignment" Padding="5" >
-		<Grid>
-			<Grid.ColumnDefinitions>
-				<ColumnDefinition />
-				<ColumnDefinition />
-			</Grid.ColumnDefinitions>
-			<Grid.RowDefinitions>
-				<RowDefinition />
-				<RowDefinition />
-			</Grid.RowDefinitions>
+	<VerticalStackPanel Padding="5" >
+			<Label Text="Align Horizontal:" VerticalAlignment="Center" />
+			<ComboBox 
+                      SelectedItemChanged="HorizontalAlignmentComboBox_SelectedItemChanged"
+					  Name="horizontalAlignmentComboBox" IsEditable="false" Margin="0,5,0,0" />
 
-			<Label Grid.Column="0" Grid.Row="0" Text="Horizontal:" VerticalAlignment="Center" />
-			<ComboBox Grid.Column="1" Grid.Row="0" SelectedItemChanged="HorizontalAlignmentComboBox_SelectedItemChanged"
-					  Name="horizontalAlignmentComboBox" IsEditable="false" Margin="5" />
-
-			<Label Grid.Column="0" Grid.Row="1" Text="Vertical:"  VerticalAlignment="Center" Margin="0,5,0,0" />
-			<ComboBox Grid.Column="1" Grid.Row="1" SelectedItemChanged="VerticalAlignmentComboBox_SelectedItemChanged"
-					  Margin="5" Name="verticalAlignmentComboBox" IsEditable="false" />
-		</Grid>
-	</GroupBox>
+			<Label Text="Align Vertical:"
+                   VerticalAlignment="Center" Margin="0,5,0,0" />
+			<ComboBox 
+                      SelectedItemChanged="VerticalAlignmentComboBox_SelectedItemChanged"
+					  Margin="0,5,0,0" Name="verticalAlignmentComboBox" IsEditable="false" />
+	</VerticalStackPanel>
 </Control>

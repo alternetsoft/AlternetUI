@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
         xmlns:local="clr-namespace:ExplorerUISample;assembly=ExplorerUISample"
         Title="Alternet UI Explorer Sample"
-        Width="700" Height="450" StartLocation="CenterScreen" 
+        Width="800" Height="450" StartLocation="CenterScreen" 
         HorizontalAlignment="Stretch">
   <Window.StatusBar>
     <StatusBar Name="statusBar">
