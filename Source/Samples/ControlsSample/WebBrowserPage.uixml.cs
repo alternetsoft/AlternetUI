@@ -66,14 +66,12 @@ namespace ControlsSample
         {
             var s = PathUtils.GetAppFolder() +
                 "Html/SampleArchive/Html/page1.html";
-            // Log("GetPandaFileName: " + s);
             return s;
         }
 
         private static string GetPandaUrl()
         {
             var s = WebBrowser.PrepareFileUrl(GetPandaFileName());
-            // Log("GetPandaUrl: " + s);
             return s;
         }
 
@@ -112,10 +110,15 @@ namespace ControlsSample
         private void WebBrowser1_Loaded(object? sender, WebBrowserEventArgs e)
         {
             UpdateHistoryButtons();
-            if (!pandaLoaded)
+
+            // Under Windows 'Black' scheme for other controls is not implemented
+            // so we turn on Light scheme in browser.
+            if (!pandaLoaded && Application.IsWindowsOS)
             {
                 WebBrowser1.PreferredColorScheme = WebBrowserPreferredColorScheme.Light;
             }
+
+            pandaLoaded = true;
         }
 
         private void WebBrowser1_NewWindow(object? sender, WebBrowserEventArgs e)

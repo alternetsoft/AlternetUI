@@ -369,11 +369,14 @@ namespace ControlsTest
 
         private void WebBrowser_Loaded(object? sender, WebBrowserEventArgs e)
         {
-            if (!pandaLoaded)
+            // Under Windows 'Black' scheme for other controls is not implemented
+            // so we turn on Light scheme in browser.
+            if (!pandaLoaded && Application.IsWindowsOS)
             {
                 rootPanel.WebBrowser.PreferredColorScheme = WebBrowserPreferredColorScheme.Light;
-                pandaLoaded = true;
             }
+
+            pandaLoaded = true;
         }
 
         private void WebBrowser_TitleChanged(object? sender, WebBrowserEventArgs e)
