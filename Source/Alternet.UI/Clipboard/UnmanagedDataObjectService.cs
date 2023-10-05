@@ -1,7 +1,7 @@
-using Alternet.Drawing;
 using System;
 using System.IO;
 using System.Linq;
+using Alternet.Drawing;
 
 namespace Alternet.UI
 {
@@ -12,8 +12,8 @@ namespace Alternet.UI
             if (input is null)
                 throw new ArgumentNullException(nameof(input));
 
-            if (input is IDataObject)
-                return GetUnmanagedDataObject((IDataObject)input);
+            if (input is IDataObject obj)
+                return GetUnmanagedDataObject(obj);
 
             var output = new Native.UnmanagedDataObject();
             var adatpter = new UnmanagedDataObjectAdapter(output);
@@ -43,12 +43,10 @@ namespace Alternet.UI
             else if (format == DataFormats.Bitmap || data is Image)
             {
                 var image = (Image)data;
-                using (var stream = new MemoryStream())
-                {
-                    image.Save(stream, ImageFormat.Png);
-                    stream.Position = 0;
-                    dataObject.SetStreamData(format, new Native.InputStream(stream));
-                }
+                using var stream = new MemoryStream();
+                image.Save(stream, ImageFormat.Png);
+                stream.Position = 0;
+                dataObject.SetStreamData(format, new Native.InputStream(stream));
             }
             else
                 throw new NotSupportedException("This type of data is not supported: " + data.GetType());

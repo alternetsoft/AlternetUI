@@ -7,6 +7,9 @@ namespace Alternet.UI
     /// </summary>
     public class Command : ICommand
     {
+        private readonly ExecuteDelegate? executeDelegate;
+        private readonly CanExecuteDelegate? canExecuteDelegate;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="Command"/> class.
         /// </summary>
@@ -20,7 +23,8 @@ namespace Alternet.UI
         /// </summary>
         public Command(ExecuteDelegate executeDelegate)
         {
-            this.executeDelegate = executeDelegate ?? throw new ArgumentNullException(nameof(executeDelegate));
+            this.executeDelegate =
+                executeDelegate ?? throw new ArgumentNullException(nameof(executeDelegate));
         }
 
         /// <summary>
@@ -29,12 +33,21 @@ namespace Alternet.UI
         /// </summary>
         public Command(ExecuteDelegate executeDelegate, CanExecuteDelegate canExecuteDelegate)
         {
-            this.executeDelegate = executeDelegate ?? throw new ArgumentNullException(nameof(executeDelegate));
-            this.canExecuteDelegate = canExecuteDelegate ?? throw new ArgumentNullException(nameof(canExecuteDelegate));
+            this.executeDelegate =
+                executeDelegate ?? throw new ArgumentNullException(nameof(executeDelegate));
+            this.canExecuteDelegate =
+                canExecuteDelegate ?? throw new ArgumentNullException(nameof(canExecuteDelegate));
         }
 
-        ExecuteDelegate? executeDelegate;
-        CanExecuteDelegate? canExecuteDelegate;
+        /// <summary>
+        /// Defines a delegate signature for <see cref="Command.CanExecute"/> logic.
+        /// </summary>
+        public delegate bool CanExecuteDelegate(object? parameter);
+
+        /// <summary>
+        /// Defines a delegate signature for <see cref="Command.Execute"/> logic.
+        /// </summary>
+        public delegate void ExecuteDelegate(object? parameter);
 
         /// <inheritdoc/>
         public event EventHandler? CanExecuteChanged;
@@ -59,18 +72,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public virtual void Execute(object? parameter)
         {
-            if (executeDelegate != null)
-                executeDelegate(parameter);
+            executeDelegate?.Invoke(parameter);
         }
-
-        /// <summary>
-        /// Defines a delegate signature for <see cref="Command.CanExecute"/> logic.
-        /// </summary>
-        public delegate bool CanExecuteDelegate(object? parameter);
-
-        /// <summary>
-        /// Defines a delegate signature for <see cref="Command.Execute"/> logic.
-        /// </summary>
-        public delegate void ExecuteDelegate(object? parameter);
     }
 }

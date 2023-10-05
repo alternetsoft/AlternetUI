@@ -9,6 +9,29 @@ namespace Alternet.UI
     public static class Clipboard
     {
         /// <summary>
+        /// Gets a value indicating whether there is data on the
+        /// <see cref='Clipboard'/> that is in the
+        /// <see cref="DataFormats.Files"/> format.
+        /// </summary>
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        public static bool ContainsFiles => ContainsData(DataFormats.Files);
+
+        /// <summary>
+        /// Gets a value indicating whether there is data on the
+        /// <see cref='Clipboard'/> that is in the
+        /// <see cref="DataFormats.Bitmap"/> format.
+        /// </summary>
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        public static bool ContainsBitmap => ContainsData(DataFormats.Bitmap);
+
+        /// <summary>
+        /// Gets a value indicating whether there is data on the
+        /// <see cref='Clipboard'/> in the <see cref="DataFormats.Text"/> format.
+        /// </summary>
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        public static bool ContainsText => ContainsData(DataFormats.Text);
+
+        /// <summary>
         /// Retrieves the data that is currently on the system <see cref='Clipboard'/>,
         /// or <see langword="null"/> if there is no data on the Clipboard.
         /// </summary>
@@ -45,29 +68,6 @@ namespace Alternet.UI
         /// See DataFormats for predefined formats.</param>
         public static bool ContainsData(string format) =>
             GetDataObject()?.GetDataPresent(format) ?? false;
-
-        /// <summary>
-        /// Gets a value indicating whether there is data on the
-        /// <see cref='Clipboard'/> that is in the
-        /// <see cref="DataFormats.Files"/> format.
-        /// </summary>
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        public static bool ContainsFiles => ContainsData(DataFormats.Files);
-
-        /// <summary>
-        /// Gets a value indicating whether there is data on the
-        /// <see cref='Clipboard'/> that is in the
-        /// <see cref="DataFormats.Bitmap"/> format.
-        /// </summary>
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        public static bool ContainsBitmap => ContainsData(DataFormats.Bitmap);
-
-        /// <summary>
-        /// Gets a value indicating whether there is data on the
-        /// <see cref='Clipboard'/> in the <see cref="DataFormats.Text"/> format.
-        /// </summary>
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        public static bool ContainsText => ContainsData(DataFormats.Text);
 
         /// <summary>
         /// Retrieves data from the Clipboard in the specified format.

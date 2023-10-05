@@ -1,12 +1,12 @@
-using Alternet.UI.Native;
 using System;
 using System.IO;
+using Alternet.UI.Native;
 
 namespace Alternet.UI
 {
     internal class UnmanagedStreamAdapter : Stream
     {
-        private UnmanagedStream stream;
+        private readonly UnmanagedStream stream;
 
         public UnmanagedStreamAdapter(UnmanagedStream stream)
         {

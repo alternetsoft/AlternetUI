@@ -1,12 +1,12 @@
+using System;
 using Alternet.Drawing;
 using Alternet.UI.Native;
-using System;
 
 namespace Alternet.UI
 {
     internal class UnmanagedDataObjectAdapter : IDataObject
     {
-        private UnmanagedDataObject dataObject;
+        private readonly UnmanagedDataObject dataObject;
 
         internal UnmanagedDataObjectAdapter(UnmanagedDataObject dataObject)
         {

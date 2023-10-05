@@ -14,8 +14,30 @@ namespace Alternet.UI
     /// </summary>
     public class CanExecuteChangedEventManager : WeakEventManager
     {
+        private static readonly object StaticSource = new NamedObject("StaticSource");
+        private readonly ConditionalWeakTable<object, object> cwt = new();
+
         private CanExecuteChangedEventManager()
         {
+        }
+
+        // get the event manager for the current thread
+        private static CanExecuteChangedEventManager CurrentManager
+        {
+            get
+            {
+                Type managerType = typeof(CanExecuteChangedEventManager);
+                CanExecuteChangedEventManager manager = (CanExecuteChangedEventManager)GetCurrentManager(managerType);
+
+                // at first use, create and register a new manager
+                if (manager == null)
+                {
+                    manager = new CanExecuteChangedEventManager();
+                    SetCurrentManager(managerType, manager);
+                }
+
+                return manager;
+            }
         }
 
         /// <summary>
@@ -67,11 +89,15 @@ namespace Alternet.UI
             // but the final cleanup (purgeAll) can happen on a different thread.
             bool isOnOriginalThread = !purgeAll || CheckAccess();
 
+#pragma warning disable
             ICommand command = source as ICommand;
+#pragma warning restore
             List<HandlerSink> list = data as List<HandlerSink>;
             List<HandlerSink> toRemove = null;
 
+#pragma warning disable
             bool foundDirt = false;
+#pragma warning restore
             bool removeList = purgeAll || source == null;
 
             // find dead entries to be removed from the list
@@ -112,38 +138,20 @@ namespace Alternet.UI
                     EventHandler<EventArgs> handler = sink.Handler;
                     sink.Detach(isOnOriginalThread);
 
-                    if (!removeList) // if list is going away, no need to remove from it
+                    // if list is going away, no need to remove from it
+                    if (!removeList)
                     {
                         list.Remove(sink);
                     }
 
                     if (handler != null)
                     {
-                        RemoveHandlerFromCWT(handler, _cwt);
+                        RemoveHandlerFromCWT(handler, cwt);
                     }
                 }
             }
 
             return foundDirt;
-        }
-
-        // get the event manager for the current thread
-        private static CanExecuteChangedEventManager CurrentManager
-        {
-            get
-            {
-                Type managerType = typeof(CanExecuteChangedEventManager);
-                CanExecuteChangedEventManager manager = (CanExecuteChangedEventManager)GetCurrentManager(managerType);
-
-                // at first use, create and register a new manager
-                if (manager == null)
-                {
-                    manager = new CanExecuteChangedEventManager();
-                    SetCurrentManager(managerType, manager);
-                }
-
-                return manager;
-            }
         }
 
         private void PrivateAddHandler(ICommand source, EventHandler<EventArgs> handler)
@@ -161,7 +169,7 @@ namespace Alternet.UI
             list.Add(sink);
 
             // keep the handler alive
-            AddHandlerToCWT(handler, _cwt);
+            AddHandlerToCWT(handler, cwt);
         }
 
         private void PrivateRemoveHandler(ICommand source, EventHandler<EventArgs> handler)
@@ -192,7 +200,7 @@ namespace Alternet.UI
                 {
                     list.Remove(sinkToRemove);
                     sinkToRemove.Detach(isOnOriginalThread: true);
-                    RemoveHandlerFromCWT(handler, _cwt);
+                    RemoveHandlerFromCWT(handler, cwt);
                 }
 
                 // if we noticed any stale sinks, schedule a purge
@@ -206,7 +214,7 @@ namespace Alternet.UI
         // add the handler to the CWT - this keeps the handler alive throughout
         // the lifetime of the target, without prolonging the lifetime of
         // the target
-        void AddHandlerToCWT(Delegate handler, ConditionalWeakTable<object, object> cwt)
+        private void AddHandlerToCWT(Delegate handler, ConditionalWeakTable<object, object> cwt)
         {
             object target = handler.Target ?? StaticSource;
             if (!cwt.TryGetValue(target, out object value))
@@ -244,12 +252,12 @@ namespace Alternet.UI
             object target = handler.Target;
             target ??= StaticSource;
 
-            if (_cwt.TryGetValue(target, out object value))
+            if (this.cwt.TryGetValue(target, out object value))
             {
                 if (value is not List<Delegate> list)
                 {
                     // 99% case - the target is removing its single handler
-                    _cwt.Remove(target);
+                    this.cwt.Remove(target);
                 }
                 else
                 {
@@ -257,16 +265,11 @@ namespace Alternet.UI
                     list.Remove(handler);
                     if (list.Count == 0)
                     {
-                        _cwt.Remove(target);
+                        this.cwt.Remove(target);
                     }
                 }
             }
         }
-
-        private readonly ConditionalWeakTable<object, object> _cwt = new();
-        private static readonly object StaticSource = new NamedObject("StaticSource");
-
-        #region HandlerSink
 
         // Some sources delegate their CanExecuteChanged event to another event
         // on a different object.  For example, RoutedCommands delegate to
@@ -311,11 +314,16 @@ namespace Alternet.UI
         // testable by querying the Sink's weak references.
         private class HandlerSink
         {
+            private readonly CanExecuteChangedEventManager manager;
+            private readonly EventHandler onCanExecuteChangedHandler;   // see remarks in the constructor
+            private WeakReference source;
+            private WeakReference originalHandler;
+
             public HandlerSink(CanExecuteChangedEventManager manager, ICommand source, EventHandler<EventArgs> originalHandler)
             {
-                _manager = manager;
-                _source = new WeakReference(source);
-                _originalHandler = new WeakReference(originalHandler);
+                this.manager = manager;
+                this.source = new WeakReference(source);
+                this.originalHandler = new WeakReference(originalHandler);
 
                 // In WPF 4.0, elements with commands (Button, Hyperlink, etc.) listened
                 // for CanExecuteChanged and also stored a strong reference to the handler
@@ -335,7 +343,7 @@ namespace Alternet.UI
                 // directly to the command's event.  For compat, the manager stores a
                 // strong reference to its handler.   The only reason for this is to
                 // support those commands that relied on the 4.0 implementation.
-                _onCanExecuteChangedHandler = new EventHandler(OnCanExecuteChanged);
+                onCanExecuteChangedHandler = new EventHandler(OnCanExecuteChanged);
 
                 // BTW, the reason commands used weak-references was to avoid leaking
                 // the Button.   This is fixed in 4.5, precisely
@@ -345,35 +353,35 @@ namespace Alternet.UI
                 // general, as in the case of DelegateCommand<T>).
 
                 // register the local listener
-                source.CanExecuteChanged += _onCanExecuteChangedHandler;
+                source.CanExecuteChanged += onCanExecuteChangedHandler;
             }
 
             public bool IsInactive
             {
                 get
                 {
-                    return _source == null || !_source.IsAlive
-                        || _originalHandler == null || !_originalHandler.IsAlive;
+                    return source == null || !source.IsAlive
+                        || originalHandler == null || !originalHandler.IsAlive;
                 }
             }
 
             public EventHandler<EventArgs> Handler
             {
-                get { return (_originalHandler != null) ? (EventHandler<EventArgs>)_originalHandler.Target : null; }
+                get { return (originalHandler != null) ? (EventHandler<EventArgs>)originalHandler.Target : null; }
             }
 
             public bool Matches(ICommand source, EventHandler<EventArgs> handler)
             {
-                return (_source != null && (ICommand)_source.Target == source) &&
-                        (_originalHandler != null && (EventHandler<EventArgs>)_originalHandler.Target == handler);
+                return (this.source != null && (ICommand)this.source.Target == source) &&
+                        (originalHandler != null && (EventHandler<EventArgs>)originalHandler.Target == handler);
             }
 
             public void Detach(bool isOnOriginalThread)
             {
-                if (_source != null)
+                if (source != null)
                 {
-                    ICommand source = (ICommand)_source.Target;
-                    if (source != null && isOnOriginalThread)
+                    ICommand target = (ICommand)source.Target;
+                    if (target != null && isOnOriginalThread)
                     {
                         // some sources delegate the event to another weak-event
                         // manager, using thread-static information (CurrentManager)
@@ -381,19 +389,19 @@ namespace Alternet.UI
                         // If we're on the wrong thread, bypass this step as it
                         // would create a new WeakEventTable and Dispatcher on
                         // the wrong thread, causing problems at shutdown
-                        source.CanExecuteChanged -= _onCanExecuteChangedHandler;
+                        target.CanExecuteChanged -= onCanExecuteChangedHandler;
                     }
 
-                    _source = null;
-                    _originalHandler = null;
+                    this.source = null;
+                    originalHandler = null;
                 }
             }
 
-            void OnCanExecuteChanged(object sender, EventArgs e)
+            private void OnCanExecuteChanged(object sender, EventArgs e)
             {
                 // this protects against re-entrancy:  a purge happening
                 // while a CanExecuteChanged event is being delivered
-                if (_source == null)
+                if (source == null)
                     return;
 
                 // if the sender is our own CommandManager, the original
@@ -409,7 +417,7 @@ namespace Alternet.UI
                 // }
 
                 // pass the event along to the original listener
-                EventHandler<EventArgs> handler = (EventHandler<EventArgs>)_originalHandler.Target;
+                EventHandler<EventArgs> handler = (EventHandler<EventArgs>)originalHandler.Target;
                 if (handler != null)
                 {
                     handler(sender, e);
@@ -417,16 +425,9 @@ namespace Alternet.UI
                 else
                 {
                     // listener has been GC'd - schedule a purge
-                    _manager.ScheduleCleanup();
+                    manager.ScheduleCleanup();
                 }
             }
-
-            private CanExecuteChangedEventManager _manager;
-            private WeakReference _source;
-            private WeakReference _originalHandler;
-            private EventHandler _onCanExecuteChangedHandler;   // see remarks in the constructor
         }
-
-        #endregion HandlerSink
-    }
+   }
 }
