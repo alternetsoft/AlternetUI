@@ -14,6 +14,40 @@ namespace Alternet.UI
     public static class LayoutFactory
     {
         /// <summary>
+        /// Initializes <see cref="Grid"/> rows and columns for the specified controls.
+        /// </summary>
+        /// <param name="grid">Grid instance.</param>
+        /// <param name="controls">Grid controls.</param>
+        /// <remarks>
+        /// Dimensions for all rows and columns are set to <see cref="GridLength.Auto"/>.
+        /// <see cref="Grid.SetRowColumn"/> is called for the each control with row and column
+        /// indexes equal to position in the <paramref name="controls"/> array.
+        /// </remarks>
+        public static void SetupGrid(Grid grid, Control[,] controls)
+        {
+            var rowCount = controls.GetLength(0);
+            var colCount = controls.GetLength(1);
+
+            grid.DoInsideLayout(() =>
+            {
+                for (int i = 0; i < rowCount; i++)
+                    grid.AddAutoRow();
+                for (int i = 0; i < colCount; i++)
+                    grid.AddAutoColumn();
+
+                for (int i = 0; i < rowCount; i++)
+                {
+                    for (int j = 0; j < colCount; j++)
+                    {
+                        var control = controls[i, j];
+                        control.Parent ??= grid;
+                        Grid.SetRowColumn(control, i, j);
+                    }
+                }
+            });
+        }
+
+        /// <summary>
         /// Increases height of all <see cref="TextBox"/> controls in the specified
         /// container to height of the <see cref="ComboBox"/> control, if it
         /// is present in the container.
