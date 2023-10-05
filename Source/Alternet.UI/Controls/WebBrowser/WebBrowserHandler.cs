@@ -296,7 +296,7 @@ namespace Alternet.UI
 
         internal override Native.Control CreateNativeControl()
         {
-            var browser = new Native.WebBrowser();
+            var browser = new NativeWebBrowser(Control.DefaultUrl);
             return browser;
         }
 
@@ -349,5 +349,14 @@ namespace Alternet.UI
             if (args.Length > 1 && args[1] != null)
                 cmdParam2 = args[1]?.ToString();
         }
-     }
+
+        internal class NativeWebBrowser : Native.WebBrowser
+        {
+            public NativeWebBrowser(string url)
+                 : base()
+            {
+                SetNativePointer(NativeApi.WebBrowser_CreateWebBrowser_(url));
+            }
+        }
+    }
 }

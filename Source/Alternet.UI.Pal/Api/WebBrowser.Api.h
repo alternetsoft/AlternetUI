@@ -158,6 +158,11 @@ ALTERNET_UI_API void WebBrowser_SetZoom_(WebBrowser* obj, int value)
     obj->SetZoom(value);
 }
 
+ALTERNET_UI_API void* WebBrowser_CreateWebBrowser_(const char16_t* url)
+{
+    return WebBrowser::CreateWebBrowser(url);
+}
+
 ALTERNET_UI_API void WebBrowser_SetDefaultUserAgent_(const char16_t* value)
 {
     WebBrowser::SetDefaultUserAgent(value);

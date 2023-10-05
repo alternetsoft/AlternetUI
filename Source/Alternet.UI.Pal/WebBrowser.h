@@ -42,11 +42,11 @@ namespace Alternet::UI
         static bool IELatest;
         static wxString WebViewBackendNameFromId(WebBrowserBackend id);
 
-        WebBrowserBackend Backend;
+        WebBrowserBackend Backend = WEBBROWSER_BACKEND_DEFAULT;
         int preferredColorScheme = 0;
         bool hasBorder = true;
-        wxWebView* webView;
-        wxWindow* webViewParent;
+        wxWebView* webView = nullptr;
+        wxWindow* webViewParent = nullptr;
         bool DefaultUserAgentDone = false;
         bool DefaultScriptMesageNameDone = false;
         bool DefaultFSNameMemoryDone = false;
@@ -74,6 +74,8 @@ namespace Alternet::UI
         void RegisterHandlerZip(const string& schemeName);
         void RegisterHandlerMemory(const string& schemeName);
 
+        WebBrowser(string url);
+
         static void SetDefaultPage(const string& value);
         static bool IsBackendAvailable(const string& value);
         static bool IsBackendIEAvailable();
@@ -92,6 +94,8 @@ namespace Alternet::UI
         void OnWxWindowCreated() override;
 
     private:
+        wxString _defaultPage;
+
         void OnBeforeBrowserCreate(wxWebViewEvent& event);
         void OnNavigating(wxWebViewEvent& event);
         void OnNavigated(wxWebViewEvent& event);

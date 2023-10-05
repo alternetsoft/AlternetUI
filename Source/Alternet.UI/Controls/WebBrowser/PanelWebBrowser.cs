@@ -22,13 +22,9 @@ namespace Alternet.UI
         {
         };
 
-        private readonly WebBrowser webBrowser = new()
-        {
-            HasBorder = false,
-        };
-
         private readonly ContextMenu moreActionsMenu = new();
 
+        private WebBrowser? webBrowser;
         private bool historyCleared = false;
         private int buttonIdBack;
         private int buttonIdMoreActions;
@@ -40,29 +36,24 @@ namespace Alternet.UI
         private bool logEvents;
         private bool canNavigate = true;
         private int scriptRunCounter = 0;
+        private string defaultUrl = "about:blank";
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PanelWebBrowser"/> class.
         /// </summary>
         public PanelWebBrowser()
         {
-            DefaultToolbarStyle &=
-                ~(AuiToolbarCreateStyle.Text | AuiToolbarCreateStyle.HorzLayout);
-            Toolbar.Required();
-            CreateToolbarItems();
+            Initialize();
+        }
 
-            WebBrowser.ZoomType = WebBrowserZoomType.Layout;
-
-            WebBrowser.Navigated += WebBrowser_Navigated;
-            WebBrowser.FullScreenChanged += WebBrowser_FullScreenChanged;
-            WebBrowser.ScriptMessageReceived += WebBrowser_ScriptMessageReceived;
-            WebBrowser.ScriptResult += WebBrowser_ScriptResult;
-            WebBrowser.Navigating += WebBrowser_Navigating;
-            WebBrowser.Error += WebBrowser_Error;
-            WebBrowser.BeforeBrowserCreate += WebBrowser_BeforeBrowserCreate;
-            WebBrowser.Loaded += WebBrowser_Loaded;
-            WebBrowser.NewWindow += WebBrowser_NewWindow;
-            WebBrowser.DocumentTitleChanged += WebBrowser_TitleChanged;
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PanelWebBrowser"/> class.
+        /// </summary>
+        /// <param name="url">Default url.</param>
+        public PanelWebBrowser(string url)
+        {
+            defaultUrl = url;
+            Initialize();
         }
 
         /// <summary>
@@ -96,7 +87,14 @@ namespace Alternet.UI
         /// <summary>
         /// Gets <see cref="WebBrowser"/> control used in this panel.
         /// </summary>
-        public WebBrowser WebBrowser => webBrowser;
+        public WebBrowser WebBrowser
+        {
+            get
+            {
+                webBrowser ??= new WebBrowser(defaultUrl);
+                return webBrowser;
+            }
+        }
 
         /// <summary>
         /// Gets <see cref="TextBox"/> control used for url editing.
@@ -180,8 +178,8 @@ namespace Alternet.UI
         /// </summary>
         public void UpdateZoomButtons()
         {
-            Toolbar.EnableTool(buttonIdZoomIn, webBrowser.CanZoomIn);
-            Toolbar.EnableTool(buttonIdZoomOut, webBrowser.CanZoomOut);
+            Toolbar.EnableTool(buttonIdZoomIn, WebBrowser.CanZoomIn);
+            Toolbar.EnableTool(buttonIdZoomOut, WebBrowser.CanZoomOut);
             Toolbar.Refresh();
         }
 
@@ -193,11 +191,11 @@ namespace Alternet.UI
             if (!historyCleared)
             {
                 historyCleared = true;
-                webBrowser.ClearHistory();
+                WebBrowser.ClearHistory();
             }
 
-            Toolbar.EnableTool(buttonIdBack, webBrowser.CanGoBack);
-            Toolbar.EnableTool(buttonIdForward, webBrowser.CanGoForward);
+            Toolbar.EnableTool(buttonIdBack, WebBrowser.CanGoBack);
+            Toolbar.EnableTool(buttonIdForward, WebBrowser.CanGoForward);
             Toolbar.Refresh();
         }
 
@@ -381,13 +379,13 @@ namespace Alternet.UI
 
         private void ZoomInButton_Click(object? sender, EventArgs e)
         {
-            webBrowser.ZoomIn();
+            WebBrowser.ZoomIn();
             UpdateZoomButtons();
         }
 
         private void ZoomOutButton_Click(object? sender, EventArgs e)
         {
-            webBrowser.ZoomOut();
+            WebBrowser.ZoomOut();
             UpdateZoomButtons();
         }
 
@@ -395,17 +393,39 @@ namespace Alternet.UI
         {
             if (LogEvents)
                 LogWebBrowserEvent(e);
-            urlTextBox.Text = webBrowser.GetCurrentURL();
+            urlTextBox.Text = WebBrowser.GetCurrentURL();
         }
 
         private void BackButton_Click(object? sender, EventArgs e)
         {
-            webBrowser.GoBack();
+            WebBrowser.GoBack();
+        }
+
+        private void Initialize()
+        {
+            WebBrowser.HasBorder = false;
+            DefaultToolbarStyle &=
+                ~(AuiToolbarCreateStyle.Text | AuiToolbarCreateStyle.HorzLayout);
+            Toolbar.Required();
+            CreateToolbarItems();
+
+            WebBrowser.ZoomType = WebBrowserZoomType.Layout;
+
+            WebBrowser.Navigated += WebBrowser_Navigated;
+            WebBrowser.FullScreenChanged += WebBrowser_FullScreenChanged;
+            WebBrowser.ScriptMessageReceived += WebBrowser_ScriptMessageReceived;
+            WebBrowser.ScriptResult += WebBrowser_ScriptResult;
+            WebBrowser.Navigating += WebBrowser_Navigating;
+            WebBrowser.Error += WebBrowser_Error;
+            WebBrowser.BeforeBrowserCreate += WebBrowser_BeforeBrowserCreate;
+            WebBrowser.Loaded += WebBrowser_Loaded;
+            WebBrowser.NewWindow += WebBrowser_NewWindow;
+            WebBrowser.DocumentTitleChanged += WebBrowser_TitleChanged;
         }
 
         private void ForwardBtn_Click(object? sender, EventArgs e)
         {
-            webBrowser.GoForward();
+            WebBrowser.GoForward();
         }
     }
 }

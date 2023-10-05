@@ -71,6 +71,7 @@ void SetEditable(bool value);
 int GetZoom();
 void SetZoom(int value);
 
+static void* CreateWebBrowser(const string& url);
 static void SetDefaultUserAgent(const string& value);
 static void SetDefaultScriptMesageName(const string& value);
 static void SetDefaultFSNameMemory(const string& value);

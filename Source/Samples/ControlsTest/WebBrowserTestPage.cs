@@ -19,7 +19,7 @@ namespace ControlsTest
         private static readonly bool SetDefaultUserAgent = false;
         private static bool insideUnhandledException;
 
-        private readonly PanelWebBrowser rootPanel = new();
+        private readonly PanelWebBrowser rootPanel;
 
         private readonly string headerLabelText = "Web Browser Control";
 
@@ -42,11 +42,14 @@ namespace ControlsTest
 
         public WebBrowserTestPage()
         {
-            rootPanel.LogEvents = true;
+            rootPanel = new(GetPandaUrl())
+            {
+                LogEvents = true,
+                DefaultRightPaneBestSize = new(150, 200),
+                DefaultRightPaneMinSize = new(150, 200),
+            };
 
             rootPanel.BindApplicationLogMessage();
-            rootPanel.DefaultRightPaneBestSize = new(150, 200);
-            rootPanel.DefaultRightPaneMinSize = new(150, 200);
             rootPanel.LogControl.Required();
             rootPanel.ActionsControl.Required();
             rootPanel.LogContextMenu.Required();
@@ -369,15 +372,7 @@ namespace ControlsTest
             if (!pandaLoaded)
             {
                 rootPanel.WebBrowser.PreferredColorScheme = WebBrowserPreferredColorScheme.Light;
-
                 pandaLoaded = true;
-                try
-                {
-                    rootPanel.WebBrowser.LoadURL(GetPandaUrl());
-                }
-                catch (Exception)
-                {
-                }
             }
         }
 

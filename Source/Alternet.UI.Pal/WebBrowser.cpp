@@ -142,11 +142,6 @@ namespace Alternet::UI
         return wxStr(version.GetVersionString());
     }
     
-    WebBrowser::WebBrowser()
-    {
-        bindScrollEvents = false;
-    }
-    
     wxString WebBrowser::WebViewBackendNameFromId(WebBrowserBackend id)
     {
         auto backend = wxASCII_STR(wxWebViewBackendDefault);
@@ -294,6 +289,23 @@ namespace Alternet::UI
         RecreateWxWindowIfNeeded();
     }
 
+    void* WebBrowser::CreateWebBrowser(const string& url)
+    {
+        return new WebBrowser(url);
+    }
+
+    WebBrowser::WebBrowser()
+    {
+        _defaultPage = WebBrowser::DefaultPage;
+        bindScrollEvents = false;
+    }
+
+    WebBrowser::WebBrowser(string url)
+    {
+        _defaultPage = wxStr(url);
+        bindScrollEvents = false;
+    }
+
     void WebBrowser::CreateBackend()
     {
         RaiseSimpleEvent(WebBrowserEvent::BeforeBrowserCreate);
@@ -306,7 +318,7 @@ namespace Alternet::UI
         webView->Create(
             webViewParent,
             wxID_ANY,
-            WebBrowser::DefaultPage,
+            _defaultPage,
             wxDefaultPosition,
             wxDefaultSize,
             style);

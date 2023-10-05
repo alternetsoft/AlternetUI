@@ -19,6 +19,7 @@ namespace Alternet.UI
     public partial class WebBrowser : Control, IWebBrowser
     {
         private static Brush? uixmlPreviewerBrush = null;
+        private string defaultUrl = "about:blank";
 
         private IWebBrowserMemoryFS? fMemoryFS;
 
@@ -28,10 +29,15 @@ namespace Alternet.UI
         public WebBrowser()
             : base()
         {
-            if (Application.Current.InUixmlPreviewerMode)
-            {
-                UserPaint = true;
-            }
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="WebBrowser"/> class.
+        /// </summary>
+        public WebBrowser(string url)
+            : base()
+        {
+            defaultUrl = url;
         }
 
         /// <include file="Interfaces/IWebBrowser.xml" path='doc/Events/FullScreenChanged/*'/>
@@ -86,6 +92,11 @@ namespace Alternet.UI
 
         /// <inheritdoc/>
         public override ControlId ControlKind => ControlId.WebBrowser;
+
+        /// <summary>
+        /// Gets default url (the first loaded url).
+        /// </summary>
+        public string DefaultUrl => defaultUrl;
 
         /// <include file="Interfaces/IWebBrowser.xml" path='doc/HasSelection/*'/>
         public virtual bool HasSelection
@@ -602,7 +613,7 @@ namespace Alternet.UI
         }
 
         /// <include file="Interfaces/IWebBrowser.xml" path='doc/SetDefaultPage/*'/>
-        public static void SetDefaultPage(string url)
+        internal static void SetDefaultPage(string url)
         {
             WebBrowserHandlerApi.WebBrowser_SetDefaultPage_(url);
         }

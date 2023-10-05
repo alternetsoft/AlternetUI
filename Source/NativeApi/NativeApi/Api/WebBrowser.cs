@@ -6,10 +6,10 @@ using System.Text;
 
 namespace NativeApi.Api
 {
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", 
-        "CA1822:Mark members as static", Justification = "ok")]
     public class WebBrowser : Control
     {
+        public static IntPtr CreateWebBrowser(string url) => default;
+
         public bool HasBorder { get; set; }
 
         public static void SetDefaultUserAgent(string value) => 
@@ -93,25 +93,15 @@ namespace NativeApi.Api
         public bool AddUserScript(string javascript, int injectionTime) 
             => throw new Exception();
 
-        public event NativeEventHandler<WebBrowserEventData>? Navigating 
-        { add => throw new Exception(); remove => throw new Exception(); }
-        public event NativeEventHandler<WebBrowserEventData>? Navigated 
-        { add => throw new Exception(); remove => throw new Exception(); }
-        public event NativeEventHandler<WebBrowserEventData>? Loaded 
-        { add => throw new Exception(); remove => throw new Exception(); }
-        public event NativeEventHandler<WebBrowserEventData>? Error 
-        { add => throw new Exception(); remove => throw new Exception(); }
-        public event NativeEventHandler<WebBrowserEventData>? NewWindow 
-        { add => throw new Exception(); remove => throw new Exception(); }
-        public event NativeEventHandler<WebBrowserEventData>? TitleChanged 
-        { add => throw new Exception(); remove => throw new Exception(); }
-        public event NativeEventHandler<WebBrowserEventData>? FullScreenChanged 
-        { add => throw new Exception(); remove => throw new Exception(); }
-        public event NativeEventHandler<WebBrowserEventData>? ScriptMessageReceived 
-        { add => throw new Exception(); remove => throw new Exception(); }
-        public event NativeEventHandler<WebBrowserEventData>? ScriptResult 
-        { add => throw new Exception(); remove => throw new Exception(); }
-        public event NativeEventHandler<WebBrowserEventData>? BeforeBrowserCreate 
-        { add => throw new Exception(); remove => throw new Exception(); }
+        public event NativeEventHandler<WebBrowserEventData>? Navigating;
+        public event NativeEventHandler<WebBrowserEventData>? Navigated;
+        public event NativeEventHandler<WebBrowserEventData>? Loaded;
+        public event NativeEventHandler<WebBrowserEventData>? Error;
+        public event NativeEventHandler<WebBrowserEventData>? NewWindow;
+        public event NativeEventHandler<WebBrowserEventData>? TitleChanged;
+        public event NativeEventHandler<WebBrowserEventData>? FullScreenChanged;
+        public event NativeEventHandler<WebBrowserEventData>? ScriptMessageReceived;
+        public event NativeEventHandler<WebBrowserEventData>? ScriptResult;
+        public event NativeEventHandler<WebBrowserEventData>? BeforeBrowserCreate; 
     }
 }

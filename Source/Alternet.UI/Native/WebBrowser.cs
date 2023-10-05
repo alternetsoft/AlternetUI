@@ -274,6 +274,11 @@ namespace Alternet.UI.Native
             }
         }
         
+        public static System.IntPtr CreateWebBrowser(string url)
+        {
+            return NativeApi.WebBrowser_CreateWebBrowser_(url);
+        }
+        
         public static void SetDefaultUserAgent(string value)
         {
             NativeApi.WebBrowser_SetDefaultUserAgent_(value);
@@ -690,6 +695,9 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void WebBrowser_SetZoom_(IntPtr obj, int value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr WebBrowser_CreateWebBrowser_(string url);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void WebBrowser_SetDefaultUserAgent_(string value);
