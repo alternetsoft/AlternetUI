@@ -1,4 +1,5 @@
-﻿using ApiCommon;
+﻿#pragma warning disable
+using ApiCommon;
 using System;
 
 namespace NativeApi.Api

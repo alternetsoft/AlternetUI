@@ -1,3 +1,4 @@
+#pragma warning disable
 namespace NativeApi.Api
 {
     public enum PrintRange

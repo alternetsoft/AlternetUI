@@ -73,7 +73,7 @@ namespace Alternet.UI
             if (NativePrintPreviewDialog.Document == null)
             {
                 throw new InvalidOperationException(
-                    "Cannot show the print preview dialog when the Document property value is null.");
+                    "Cannot show the print preview dialog when the Document is null.");
             }
 
             var nativeOwner = owner == null

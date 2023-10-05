@@ -13,6 +13,9 @@ namespace PrintingSample
             Icon = ImageSet.FromUrlOrNull("embres:PrintingSample.Sample.ico");
             InitializeComponent();
             DrawingArea.UserPaint = true;
+
+            // This is important if OS style is BlackOnWhite.
+            DrawingArea.BackgroundColor = Color.White;
         }
 
         private void DrawingArea_Paint(object? sender, PaintEventArgs e)
@@ -38,7 +41,8 @@ namespace PrintingSample
 
             var cornerRectSize = new Size(50, 50);
             var cornerRectLeft = new Rect(bounds.Location, cornerRectSize);
-            var cornerRectRight = new Rect(bounds.TopRight - new Size(cornerRectSize.Width, 0), cornerRectSize);
+            var cornerRectRight =
+                new Rect(bounds.TopRight - new Size(cornerRectSize.Width, 0), cornerRectSize);
 
             dc.DrawRectangle(Pens.Red, cornerRectLeft);
             dc.DrawRectangle(Pens.Red, cornerRectRight);
@@ -80,6 +84,13 @@ namespace PrintingSample
                 OriginAtMargins = originAtMarginCheckBox.IsChecked,
                 DocumentName = printDocumentNameTextBox.Text,
             };
+
+            document.PrinterSettings.FromPage = 1;
+            document.PrinterSettings.MinimumPage = 1;
+            
+            var maxPage = additionalPagesCountNumericUpDown.Value + 1;
+            document.PrinterSettings.MaximumPage = maxPage;
+            document.PrinterSettings.ToPage = maxPage;
 
             document.PageSettings.Color = printInColorCheckBox.IsChecked;
             document.PageSettings.Margins = TryGetPageMargins() ?? new();
@@ -126,7 +137,7 @@ namespace PrintingSample
         private void PrintPreviewMenuItem_Click(object sender, System.EventArgs e)
         {
             var dialog = new PrintPreviewDialog();
-            var document = new PrintDocument();
+            var document = CreatePrintDocument();
 
             document.PrintPage += Document_PrintPage;
             
@@ -164,19 +175,24 @@ namespace PrintingSample
 
         private void DrawAdditionalPage(DrawingContext dc, int pageNumber, Rect bounds)
         {
-            dc.DrawText("Additional page #" + pageNumber, font, Brushes.Black, bounds.Location + new Size(10, 10));
+            dc.DrawText(
+                "Additional page #" + pageNumber,
+                font,
+                Brushes.Black,
+                bounds.Location + new Size(10, 10));
         }
 
-        private void AboutMenuItem_Click(object sender, System.EventArgs e) => MessageBox.Show("AlterNET UI Printing Sample Application.", "About");
+        private void AboutMenuItem_Click(object sender, System.EventArgs e) =>
+            MessageBox.Show("AlterNET UI Printing Sample Application.", "About");
 
         private void ExitMenuItem_Click(object sender, System.EventArgs e) => Close();
 
-        private void OriginAtMarginCheckBox_CheckedChanged(object sender, System.EventArgs e)
+        private void OriginAtMarginCheckBox_CheckedChanged(object? sender, System.EventArgs e)
         {
             DrawingArea.Invalidate();
         }
 
-        private void PageMarginTextBox_TextChanged(object sender, Alternet.UI.TextChangedEventArgs e)
+        private void PageMarginTextBox_TextChanged(object? sender, TextChangedEventArgs e)
         {
             DrawingArea.Invalidate();
         }

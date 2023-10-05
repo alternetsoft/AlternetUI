@@ -1,3 +1,4 @@
+#pragma warning disable
 using System.ComponentModel;
 
 namespace NativeApi.Api

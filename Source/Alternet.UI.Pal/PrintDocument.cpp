@@ -75,7 +75,14 @@ namespace Alternet::UI
 
     void PrintDocument::Printout::GetPageInfo(int* minPage, int* maxPage, int* pageFrom, int* pageTo)
     {
-        wxPrintout::GetPageInfo(minPage, maxPage, pageFrom, pageTo);
+        auto printerSettings = _owner->GetPrinterSettings();
+
+        *minPage = printerSettings->GetMinimumPage();
+        *maxPage = printerSettings->GetMaximumPage();
+        *pageFrom = printerSettings->GetFromPage();
+        *pageTo = printerSettings->GetToPage();
+
+        // wxPrintout::GetPageInfo(minPage, maxPage, pageFrom, pageTo);
     }
 
     bool PrintDocument::Printout::GetHasMorePages()
@@ -479,7 +486,7 @@ namespace Alternet::UI
         if (data.GetPaperId() == wxPaperSize::wxPAPER_NONE)
         {
             pageSettings->SetUseCustomPaperSize(true);
-            auto paperSize = data.GetPaperSize();
+            auto& paperSize = data.GetPaperSize();
             pageSettings->SetCustomPaperSize(Size(paperSize.x, paperSize.y));
         }
         else
