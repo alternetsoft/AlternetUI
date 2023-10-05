@@ -141,7 +141,18 @@ namespace Alternet.UI
         {
             foreach (var item in Enum.GetValues(type))
                 Items.Add(item);
-            SelectedItem = selectValue;
+            if(selectValue is not null)
+                SelectedItem = selectValue;
+        }
+
+        /// <summary>
+        /// Adds enum values to <see cref="Items"/> property of the control.
+        /// </summary>
+        /// <typeparam name="T">Type of the enum which values are added.</typeparam>
+        public virtual void AddEnumValues<T>()
+            where T : Enum
+        {
+            AddEnumValues(typeof(T));
         }
 
         /// <summary>
