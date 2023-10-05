@@ -54,6 +54,22 @@ namespace Alternet.UI
                         new CoerceValueCallback(CoerceText)));
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="Label"/> class with specified text.
+        /// </summary>
+        /// <param name="text">Text displayed on this label.</param>
+        public Label(string text)
+        {
+            Text = text;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Label"/> class.
+        /// </summary>
+        public Label()
+        {
+        }
+
+         /// <summary>
         /// Occurs when the value of the <see cref="Text"/> property changes.
         /// </summary>
         public event TextChangedEventHandler TextChanged
