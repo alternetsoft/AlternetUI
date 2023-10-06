@@ -410,6 +410,18 @@ namespace Alternet.UI.Native
             }
         }
         
+        public void EndIgnoreRecreate()
+        {
+            CheckDisposed();
+            NativeApi.Control_EndIgnoreRecreate_(NativePointer);
+        }
+        
+        public Alternet.Drawing.Size GetDPI()
+        {
+            CheckDisposed();
+            return NativeApi.Control_GetDPI_(NativePointer);
+        }
+        
         public void SetMouseCapture(bool value)
         {
             CheckDisposed();
@@ -677,18 +689,6 @@ namespace Alternet.UI.Native
             NativeApi.Control_BeginIgnoreRecreate_(NativePointer);
         }
         
-        public void EndIgnoreRecreate()
-        {
-            CheckDisposed();
-            NativeApi.Control_EndIgnoreRecreate_(NativePointer);
-        }
-        
-        public Alternet.Drawing.Size GetDPI()
-        {
-            CheckDisposed();
-            return NativeApi.Control_GetDPI_(NativePointer);
-        }
-        
         static GCHandle eventCallbackGCHandle;
         
         static void SetEventCallback()
@@ -774,6 +774,10 @@ namespace Alternet.UI.Native
                 {
                     HorizontalScrollBarValueChanged?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
                 }
+                case NativeApi.ControlEvent.SizeChanged:
+                {
+                    SizeChanged?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                }
                 default: throw new Exception("Unexpected ControlEvent value: " + e);
             }
         }
@@ -793,6 +797,7 @@ namespace Alternet.UI.Native
         public event NativeEventHandler<DragEventData>? DragEnter;
         public event EventHandler? VerticalScrollBarValueChanged;
         public event EventHandler? HorizontalScrollBarValueChanged;
+        public event EventHandler? SizeChanged;
         
         [SuppressUnmanagedCodeSecurity]
         public class NativeApi : NativeApiProvider
@@ -819,6 +824,7 @@ namespace Alternet.UI.Native
                 DragEnter,
                 VerticalScrollBarValueChanged,
                 HorizontalScrollBarValueChanged,
+                SizeChanged,
             }
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
@@ -966,6 +972,12 @@ namespace Alternet.UI.Native
             public static extern void Control_SetMaximumSize_(IntPtr obj, Alternet.Drawing.Size value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Control_EndIgnoreRecreate_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern Alternet.Drawing.Size Control_GetDPI_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Control_SetMouseCapture_(IntPtr obj, bool value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
@@ -1093,12 +1105,6 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Control_BeginIgnoreRecreate_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Control_EndIgnoreRecreate_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.Size Control_GetDPI_(IntPtr obj);
             
         }
     }

@@ -25,6 +25,7 @@ namespace NativeApi.Api
         public event NativeEventHandler<DragEventData>? DragEnter;
         public event EventHandler? VerticalScrollBarValueChanged;
         public event EventHandler? HorizontalScrollBarValueChanged;
+        public event EventHandler? SizeChanged;
 
         public IntPtr Handle { get; }
         public IntPtr WxWidget { get; }

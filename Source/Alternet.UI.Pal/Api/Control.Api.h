@@ -246,6 +246,16 @@ ALTERNET_UI_API void Control_SetMaximumSize_(Control* obj, Size value)
     obj->SetMaximumSize(value);
 }
 
+ALTERNET_UI_API void Control_EndIgnoreRecreate_(Control* obj)
+{
+    obj->EndIgnoreRecreate();
+}
+
+ALTERNET_UI_API Size_C Control_GetDPI_(Control* obj)
+{
+    return obj->GetDPI();
+}
+
 ALTERNET_UI_API void Control_SetMouseCapture_(Control* obj, c_bool value)
 {
     obj->SetMouseCapture(value);
@@ -459,16 +469,6 @@ ALTERNET_UI_API void Control_ShowPopupMenu_(Control* obj, void* menu, int x, int
 ALTERNET_UI_API void Control_BeginIgnoreRecreate_(Control* obj)
 {
     obj->BeginIgnoreRecreate();
-}
-
-ALTERNET_UI_API void Control_EndIgnoreRecreate_(Control* obj)
-{
-    obj->EndIgnoreRecreate();
-}
-
-ALTERNET_UI_API Size_C Control_GetDPI_(Control* obj)
-{
-    return obj->GetDPI();
 }
 
 ALTERNET_UI_API void Control_SetEventCallback_(Control::ControlEventCallbackType callback)

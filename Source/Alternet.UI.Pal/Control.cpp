@@ -1152,6 +1152,8 @@ namespace Alternet::UI
         event.Skip();
 
         _flags.Set(ControlFlags::ClientSizeCacheValid, false);
+
+        RaiseEvent(ControlEvent::SizeChanged);
     }
 
     void Control::UpdateWxWindowParent()

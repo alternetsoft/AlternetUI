@@ -105,6 +105,8 @@ void SetMinimumSize(const Size& value);
 Size GetMaximumSize();
 void SetMaximumSize(const Size& value);
 
+void EndIgnoreRecreate();
+Size GetDPI();
 void SetMouseCapture(bool value);
 void AddChild(Control* control);
 void RemoveChild(Control* control);
@@ -148,8 +150,6 @@ void Freeze();
 void Thaw();
 void ShowPopupMenu(void* menu, int x, int y);
 void BeginIgnoreRecreate();
-void EndIgnoreRecreate();
-Size GetDPI();
 public:
 enum class ControlEvent
 {
@@ -168,6 +168,7 @@ enum class ControlEvent
     DragEnter,
     VerticalScrollBarValueChanged,
     HorizontalScrollBarValueChanged,
+    SizeChanged,
 };
 typedef void* (*ControlEventCallbackType)(Control* obj, ControlEvent event, void* param);
 static void SetEventCallback(ControlEventCallbackType value) { eventCallback = value; }
