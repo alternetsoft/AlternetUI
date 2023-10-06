@@ -270,6 +270,12 @@ namespace Alternet.UI
             return this;
         }
 
+        public IAuiPaneInfo MinSize(Int32Size size)
+        {
+            Native.AuiPaneInfo.MinSize(handle, size.Width, size.Height);
+            return this;
+        }
+
         public IAuiPaneInfo MinSize(double width, double height)
         {
             Native.AuiPaneInfo.MinSize(handle, (int)width, (int)height);
@@ -279,6 +285,12 @@ namespace Alternet.UI
         public IAuiPaneInfo MaxSize(int x, int y)
         {
             Native.AuiPaneInfo.MaxSize(handle, x, y);
+            return this;
+        }
+
+        public IAuiPaneInfo MaxSize(Int32Size size)
+        {
+            Native.AuiPaneInfo.MaxSize(handle, size.Width, size.Height);
             return this;
         }
 

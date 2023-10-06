@@ -270,6 +270,11 @@ namespace Alternet::UI
 	void AuiPaneInfo::Fixed(void* handle)
 	{
 		PaneInfo(handle).Fixed();
+
+		if (PaneInfo(handle).IsFixed())
+		{
+			if (true) {}
+		}
 	}
 	
 	void AuiPaneInfo::Resizable(void* handle, bool resizable)

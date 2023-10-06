@@ -347,6 +347,13 @@ namespace Alternet.UI
         IAuiPaneInfo MaxSize(int width, int height);
 
         /// <summary>
+        /// Sets the maximum size of the pane.
+        /// </summary>
+        /// <param name="size">New maximal width and height.</param>
+        /// <returns></returns>
+        IAuiPaneInfo MaxSize(Int32Size size);
+
+        /// <summary>
         /// Sets the position of the floating pane.
         /// </summary>
         /// <param name="x">New floating pane horizontal position.</param>
