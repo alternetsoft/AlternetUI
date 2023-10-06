@@ -93,6 +93,32 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Sets <see cref="Control.Margin"/> property for all the controls in the set.
+        /// </summary>
+        /// <param name="left">The margin for the left side.</param>
+        /// <param name="top">The margin for the top side.</param>
+        /// <param name="right">The margin for the right side.</param>
+        /// <param name="bottom">The margin for the bottom side.</param>
+        public ControlSet Margin(double left, double top, double right, double bottom)
+        {
+            Thickness value = new(left, top, right, bottom);
+            foreach (var item in items)
+                item.Margin = value;
+            return this;
+        }
+
+        /// <summary>
+        /// Sets <see cref="Control.Parent"/> property for all the controls in the set.
+        /// </summary>
+        /// <param name="value">Parent control.</param>
+        public ControlSet Parent(Control value)
+        {
+            foreach (var item in items)
+                item.Parent = value;
+            return this;
+        }
+
+        /// <summary>
         /// Sets <see cref="ComboBox.IsEditable"/> property for all the controls in the set.
         /// </summary>
         /// <param name="value"><c>true</c> enables editing of the text;
