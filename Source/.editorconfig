@@ -97,3 +97,5 @@ dotnet_diagnostic.WFAC010.severity = none
 dotnet_diagnostic.SA1000.severity = none
 
 dotnet_diagnostic.IDE0056.severity = none
+
+dotnet_diagnostic.IDE0057.severity = none
