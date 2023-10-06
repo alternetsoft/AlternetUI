@@ -48,6 +48,7 @@ namespace ControlsTest
                 DefaultRightPaneBestSize = new(150, 200),
                 DefaultRightPaneMinSize = new(150, 200),
             };
+            rootPanel.Visible = false;
 
             rootPanel.BindApplicationLogMessage();
             rootPanel.LogControl.Required();
@@ -367,18 +368,6 @@ namespace ControlsTest
             rootPanel.Log(s);
         }
 
-        private void WebBrowser_Loaded(object? sender, WebBrowserEventArgs e)
-        {
-            // Under Windows 'Black' scheme for other controls is not implemented
-            // so we turn on Light scheme in browser.
-            if (!pandaLoaded && Application.IsWindowsOS)
-            {
-                rootPanel.WebBrowser.PreferredColorScheme = WebBrowserPreferredColorScheme.Light;
-            }
-
-            pandaLoaded = true;
-        }
-
         private void WebBrowser_TitleChanged(object? sender, WebBrowserEventArgs e)
         {
             var backendVersion = WebBrowser.GetBackendVersionString(rootPanel.WebBrowser.Backend);
@@ -570,6 +559,21 @@ namespace ControlsTest
                     continue;
                 AddTestAction(item.Name, AssemblyUtils.CreateAction(this, item));
             }
+        }
+
+        private void WebBrowser_Loaded(object? sender, WebBrowserEventArgs e)
+        {
+            if (!pandaLoaded)
+            {
+                rootPanel.Visible = true;
+
+                // Under Windows 'Black' scheme for other controls is not implemented
+                // so we turn on Light scheme in browser.
+                if (Application.IsWindowsOS)
+                    rootPanel.WebBrowser.PreferredColorScheme = WebBrowserPreferredColorScheme.Light;
+            }
+
+            pandaLoaded = true;
         }
 
         internal sealed class Destructor

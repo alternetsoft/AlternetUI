@@ -95,5 +95,22 @@ namespace Alternet.UI.Localization
 
         /// <inheritdoc cref="ButtonOk"/>
         public string ListEditDefaultItemTitle { get; set; } = "Item";
+
+        // ========================
+
+        /// <inheritdoc cref="ButtonOk"/>
+        public string FindOptionWrap { get; set; } = "Wrap";
+
+        /// <inheritdoc cref="ButtonOk"/>
+        public string FindOptionEntireWord { get; set; } = "Entire Word";
+
+        /// <inheritdoc cref="ButtonOk"/>
+        public string FindOptionMatchCase { get; set; } = "Match Case";
+
+        /// <inheritdoc cref="ButtonOk"/>
+        public string FindOptionHighlight { get; set; } = "Highlight";
+
+        /// <inheritdoc cref="ButtonOk"/>
+        public string FindOptionBackwards { get; set; } = "Backwards";
     }
 }

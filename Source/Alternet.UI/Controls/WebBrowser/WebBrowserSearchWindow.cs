@@ -9,67 +9,27 @@ namespace Alternet.UI
 {
     internal class WebBrowserSearchWindow : Window
     {
-        private readonly CheckBox findWrapCheckBox = new()
-        {
-            Text = "Wrap",
-            Margin = new Thickness(5, 5, 5, 5),
-        };
+        private readonly CheckBox findWrapCheckBox = new(CommonStrings.Default.FindOptionWrap);
+        private readonly CheckBox findEntireWordCheckBox = new(CommonStrings.Default.FindOptionEntireWord);
+        private readonly CheckBox findMatchCaseCheckBox = new(CommonStrings.Default.FindOptionMatchCase);
+        private readonly CheckBox findHighlightResultCheckBox = new(CommonStrings.Default.FindOptionHighlight);
+        private readonly CheckBox findBackwardsCheckBox = new(CommonStrings.Default.FindOptionBackwards);
 
-        private readonly CheckBox findEntireWordCheckBox = new()
+        private readonly VerticalStackPanel findPanel = new()
         {
-            Text = "Entire Word",
-            Margin = new Thickness(5, 5, 5, 5),
-        };
-
-        private readonly CheckBox findMatchCaseCheckBox = new()
-        {
-            Text = "Match Case",
-            Margin = new Thickness(5, 5, 5, 5),
-        };
-
-        private readonly CheckBox findHighlightResultCheckBox = new()
-        {
-            Text = "Highlight",
-            Margin = new Thickness(5, 5, 5, 5),
-        };
-
-        private readonly CheckBox findBackwardsCheckBox = new()
-        {
-            Text = "Backwards",
-            Margin = new Thickness(5, 5, 5, 5),
-        };
-
-        private readonly StackPanel findPanel = new()
-        {
-            Margin = new Thickness(5, 5, 5, 5),
-            Orientation = StackPanelOrientation.Vertical,
+            Margin = 5,
             Padding = 5,
         };
 
         private readonly TextBox findTextBox = new()
         {
             SuggestedWidth = 300,
-            Margin = new Thickness(5, 5, 5, 5),
+            Margin = 5,
         };
 
-        private readonly Button findButton = new()
-        {
-            Text = "Find",
-            Margin = new Thickness(5, 5, 5, 5),
-        };
-
-        private readonly Button findClearButton = new()
-        {
-            Text = "Find Clear",
-            Margin = new Thickness(5, 5, 5, 5),
-        };
-
-        private readonly Button closeButton = new()
-        {
-            Text = "Close",
-            Margin = new Thickness(5, 5, 5, 5),
-        };
-
+        private readonly Button findButton = new(CommonStrings.Default.ButtonFind);
+        private readonly Button findClearButton = new(CommonStrings.Default.ButtonClear);
+        private readonly Button closeButton = new(CommonStrings.Default.ButtonCancel);
         private readonly WebBrowser webBrowser;
         private readonly WebBrowserFindParams findParams;
 
@@ -79,7 +39,6 @@ namespace Alternet.UI
             MinimizeEnabled = false;
             MaximizeEnabled = false;
             Resizable = false;
-            StartLocation = WindowStartLocation.CenterScreen;
             Title = CommonStrings.Default.ButtonFind;
 
             findButton.IsDefault = true;
@@ -88,19 +47,21 @@ namespace Alternet.UI
             this.webBrowser = webBrowser;
             this.findParams = findParams;
 
-            this.Children.Add(findPanel);
-
-            findPanel.Children.Add(findTextBox);
+            findPanel.Parent = this;
+            findTextBox.Parent = findPanel;
 
             findButton.Click += FindButton_Click;
             findClearButton.Click += FindClearButton_Click;
             closeButton.Click += CloseButton_Click;
 
-            findPanel.Children.Add(findWrapCheckBox);
-            findPanel.Children.Add(findEntireWordCheckBox);
-            findPanel.Children.Add(findMatchCaseCheckBox);
-            findPanel.Children.Add(findHighlightResultCheckBox);
-            findPanel.Children.Add(findBackwardsCheckBox);
+            ControlSet optionControls = new(
+                findWrapCheckBox,
+                findEntireWordCheckBox,
+                findMatchCaseCheckBox,
+                findHighlightResultCheckBox,
+                findBackwardsCheckBox);
+
+            optionControls.Margin(5).Parent(findPanel);
 
             HorizontalStackPanel buttonPanel = new()
             {
@@ -108,14 +69,14 @@ namespace Alternet.UI
                 HorizontalAlignment = HorizontalAlignment.Right,
             };
 
-            buttonPanel.Children.Add(findButton);
-            buttonPanel.Children.Add(findClearButton);
-            buttonPanel.Children.Add(closeButton);
+            ControlSet buttons = new(findButton, findClearButton, closeButton);
+            buttons.Margin(5).Parent(buttonPanel);
 
             FindParamsToControls();
 
             this.SetSizeToContent();
             this.MinimumSize = Size;
+            StartLocation = WindowStartLocation.CenterScreen;
         }
 
         private void CloseButton_Click(object? sender, EventArgs e)
