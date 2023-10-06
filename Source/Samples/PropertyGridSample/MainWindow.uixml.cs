@@ -91,7 +91,7 @@ namespace PropertyGridSample
             controlPanel.ColumnDefinitions.Add(
                 new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
 */
-            panel.BindApplicationLogMessage();
+            panel.BindApplicationLog();
 
             PropGrid.ApplyFlags |= PropertyGridApplyFlags.PropInfoSetValue
                 | PropertyGridApplyFlags.ReloadAfterSetValue;

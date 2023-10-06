@@ -47,6 +47,7 @@ namespace ControlsTest
                 DefaultRightPaneBestSize = new(150, 200),
                 DefaultRightPaneMinSize = new(150, 200),
                 Visible = false,
+                Name = "PanelWebBrowser",
             };
 
             rootPanel.ActionsControl.Required();
@@ -54,6 +55,8 @@ namespace ControlsTest
             var myListener = new CommonUtils.DebugTraceListener();
             Trace.Listeners.Add(myListener);
         }
+
+        public PanelWebBrowser PanelWebBrowser => rootPanel;
 
         public WebBrowser WebBrowser => rootPanel.WebBrowser;
 

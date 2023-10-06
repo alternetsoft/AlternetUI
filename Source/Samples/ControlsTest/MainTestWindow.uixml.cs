@@ -28,7 +28,6 @@ namespace ControlsTest
             {
                 PanelWebBrowser.UseBackend = WebBrowserBackend.Edge;
                 AddWebBrowserPage("Web Browser Edge");
-                AddWebBrowserPage("Web Browser Edge2");
             }
 
             if (WebBrowser.IsBackendAvailable(WebBrowserBackend.WebKit))
@@ -49,11 +48,48 @@ namespace ControlsTest
             if(AddCustomDrawPage)
                 mainPanel.Add("Custom Draw Test", new CustomDrawTestPage());
 
+            if(AddLinkLabelPage)
+                mainPanel.Add("PanelLinkLabels Test", new PanelLinkLabelsPage());
+
             mainPanel.LeftTreeView.SelectedItem = mainPanel.LeftTreeView.FirstItem;
             mainPanel.Manager.Update();
+
+            this.LayoutUpdated += Log_LayoutUpdated;
+            this.SizeChanged += Log_SizeChanged;
+
+            mainPanel.LayoutUpdated += Log_LayoutUpdated;
+            mainPanel.SizeChanged += Log_SizeChanged;
+
+            mainPanel.CardPanel.LayoutUpdated += Log_LayoutUpdated;
+            mainPanel.CardPanel.SizeChanged += Log_SizeChanged;
+
+            mainPanel.Name = "mainPanel";
+            Name = "MainTestWindow";
+            mainPanel.CardPanel.Name = "cardPanel";
+        }
+
+        private void LogSizeEvent(object? sender, string evName)
+        {
+            var control = sender as Control;
+            var name = control?.Name;
+            Application.Log($"{evName}: {name}, Bounds: {control!.Bounds}");
+
+            Application.Log(mainPanel.CardPanel.Bounds);
+        }
+
+        private void Log_SizeChanged(object? sender, EventArgs e)
+        {
+            LogSizeEvent(sender, "SizeChanged");
+        }
+
+        private void Log_LayoutUpdated(object? sender, EventArgs e)
+        {
+            LogSizeEvent(sender, "LayoutUpdated");
         }
 
         internal static bool AddCustomDrawPage { get; set; } = true;
+
+        internal static bool AddLinkLabelPage { get; set; } = false;
 
         private void AddWebBrowserPage(string title)
         {

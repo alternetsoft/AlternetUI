@@ -8,7 +8,7 @@ namespace ControlsTest
         {
             InitializeComponent();
 
-            var addControls = true;
+            var addControls = false;
 
             if (addControls)
             {

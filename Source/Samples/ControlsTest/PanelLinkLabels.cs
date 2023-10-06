@@ -8,46 +8,56 @@ using Alternet.Drawing;
 
 namespace Alternet.UI
 {
-    public class PanelLinkLabels : Control
+    public class PanelLinkLabels : ScrollViewer
     {
         public static readonly Thickness DefaultPadding = new(5);
         public static readonly Thickness DefaultItemMargin = new(5);
         public static readonly double DefaultSpacerSize = 15;
 
-        private readonly ScrollViewer scrollViewer = new();
-
         private readonly StackPanel panel = new()
         {
             Orientation = StackPanelOrientation.Vertical,
-            HorizontalAlignment = HorizontalAlignment.Left,
         };
 
         public PanelLinkLabels()
         {
-            scrollViewer.Parent = this;
-            panel.Parent = scrollViewer;
+            panel.Parent = this;
             panel.Padding = DefaultPadding;
-            BackgroundColor = Color.White;
-            scrollViewer.BackgroundColor = Color.White;
-            panel.BackgroundColor = Color.White;
+
+           /* var color = SystemColors.Control;
+
+            BackgroundColor = color;
+            scrollViewer.BackgroundColor = color;
+            panel.BackgroundColor = color;*/
         }
 
-        public LinkLabel Add(string text, Action? action)
+        public Control Add(string text, Action? action)
         {
             var label = CreateLabel(text);
 
             void LinkClicked(object? sender, CancelEventArgs e)
             {
                 e.Cancel = true;
-                action();
+                action?.Invoke();
             }
 
-            if(action is not null)
-                label.LinkClicked += LinkClicked;
+            void LinkClicked2(object? sender, EventArgs e)
+            {
+                action?.Invoke();
+            }
+
+            if (action is not null)
+            {
+                if (label is LinkLabel linkLabel)
+                    linkLabel.LinkClicked += LinkClicked;
+                if (label is Button linkButton)
+                    linkButton.Click += LinkClicked2;
+            }
+
             return label;
         }
 
-        public LinkLabel Add(string text, string url)
+        public Control Add(string text, string url)
         {
             var label = CreateLabel(text, url);
             return label;
@@ -64,10 +74,9 @@ namespace Alternet.UI
             return separator;
         }
 
-        private LinkLabel CreateLabel(string text, string? url = default)
+        private Control CreateLabel(string text, string? url = default)
         {
-            url ??= "https://www.alternet-ui.com/";
-            LinkLabel label = new()
+            Control label = new Button()
             {
                 Margin = DefaultItemMargin,
                 Text = text,
@@ -75,7 +84,11 @@ namespace Alternet.UI
             };
 
             if (url is not null)
-                label.Url = url;
+            {
+                if (label is LinkLabel linkLabel)
+                    linkLabel.Url = url;
+            }
+
             return label;
         }
     }
