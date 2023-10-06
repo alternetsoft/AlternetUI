@@ -310,7 +310,7 @@ namespace Alternet::UI
 
     void* Sizer::GetChildren(void* handle)
     {
-        return ((wxSizer*)handle)->GetChildren();
+        return nullptr /*((wxSizer*)handle)->GetChildren()*/;
     }
 
     void Sizer::SetDimension(void* handle, int x, int y, int width, int height)
