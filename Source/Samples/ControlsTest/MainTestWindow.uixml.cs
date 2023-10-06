@@ -9,6 +9,7 @@ namespace ControlsTest
         private readonly StatusBar statusbar = new();
         private readonly PanelTreeAndCards mainPanel = new();
         private readonly CardPanelItem? firstCard;
+        private readonly bool disableResize = true;
 
         static MainTestWindow()
         {
@@ -17,6 +18,18 @@ namespace ControlsTest
 
         public MainTestWindow()
         {
+            if (disableResize)
+            {
+                this.Resizable = false;
+                this.MaximizeEnabled = false;
+                this.MinimizeEnabled = false;
+                mainPanel.RightPane.Resizable(false).DockFixed(true).Fixed();
+                mainPanel.BottomPane.Resizable(false);
+                mainPanel.CenterPane.DockFixed(true).Fixed();
+                mainPanel.LeftPane.Resizable(false).DockFixed(true)
+                    .MaxSize(mainPanel.DefaultRightPaneBestSize).Fixed();
+            }
+
             Icon = ImageSet.FromUrlOrNull("embres:ControlsTest.Sample.ico");
 
             InitializeComponent();
@@ -57,9 +70,12 @@ namespace ControlsTest
             mainPanel.LeftTreeView.SelectedItem = mainPanel.LeftTreeView.FirstItem;
             mainPanel.Manager.Update();
 
-            mainPanel.SizeChanged += Log_SizeChanged;
-            mainPanel.CardPanel.SizeChanged += Log_SizeChanged;
-            mainPanel.CardPanel.LayoutUpdated += Log_LayoutUpdated;
+            if (!disableResize)
+            {
+                mainPanel.SizeChanged += Log_SizeChanged;
+                mainPanel.CardPanel.SizeChanged += Log_SizeChanged;
+                mainPanel.CardPanel.LayoutUpdated += Log_LayoutUpdated;
+            }
 
             mainPanel.Name = "mainPanel";
             Name = "MainTestWindow";
@@ -69,8 +85,12 @@ namespace ControlsTest
             {
                 firstCard = mainPanel.CardPanel.Cards[firstPageIndex];
                 firstCard.Control.Name = firstCard.Control.GetType().Name;
-                firstCard.Control.LayoutUpdated += Log_LayoutUpdated;
-                firstCard.Control.SizeChanged += Log_SizeChanged;
+
+                if (!disableResize)
+                {
+                    firstCard.Control.LayoutUpdated += Log_LayoutUpdated;
+                    firstCard.Control.SizeChanged += Log_SizeChanged;
+                }
             }
         }
 
@@ -97,7 +117,21 @@ namespace ControlsTest
 
         private int AddWebBrowserPage(string title)
         {
-            Control Fn() => new WebBrowserTestPage { PageName = title };
+            Control Fn()
+            {
+                var result = new WebBrowserTestPage
+                {
+                    PageName = title,
+                };
+
+                if (disableResize)
+                {
+                    result.PanelWebBrowser.RightPane.Resizable(false);
+                }
+
+                return result;
+            }
+
             return mainPanel.Add(title, Fn);
         }
     }
