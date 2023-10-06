@@ -69,8 +69,11 @@ namespace PropertyGridSample
             propValue ??= "NULL";
             string propName = PropGrid.EventPropName;
             string s = $"Event: {name}. PropName: <{propName}>. Value: <{propValue}>";
-            if (logAlways || panel.LogControl.LastItem?.ToString() != s)
+
+            if (logAlways)
                 panel.Log(s);
+            else
+                panel.LogReplace(s, s);
         }
 
         private void PGPropertySelected(object? sender, EventArgs e)

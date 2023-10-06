@@ -59,7 +59,7 @@ namespace Alternet.UI
         {
             if (string.IsNullOrEmpty(path))
                 return path;
-            var s = path.TrimEnd(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar);
+            var s = path?.TrimEnd(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar);
             return s;
         }
 

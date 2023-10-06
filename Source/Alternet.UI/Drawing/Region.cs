@@ -180,7 +180,6 @@ namespace Alternet.Drawing
                 throw new ObjectDisposedException(null);
         }
 
-        /// <inheritdoc/>
         private void Dispose(bool disposing)
         {
             if (!isDisposed)

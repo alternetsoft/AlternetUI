@@ -161,7 +161,7 @@ namespace ControlsSample
 
         public string? LastEventMessage => lastEventMessage;
 
-        public void LogEventSmart(string message, string? prefix)
+        public void LogEventSmart(string? message, string? prefix)
         {
             var s = lastEventMessage;
             var b = s?.StartsWith(prefix ?? string.Empty) ?? false;
@@ -177,14 +177,16 @@ namespace ControlsSample
                 LogEvent(message);
         }
 
-        private string ConstructMessage(string message)
+        private string ConstructMessage(string? message)
         {
             var s = $"{lastEventNumber++}. {message}";
             return s;
         }
 
-        public void LogEvent(string message)
+        public void LogEvent(string? message)
         {
+            if (message is null)
+                return;
             lastEventMessage = message;
 
             var item = new TreeViewItem(ConstructMessage(message));

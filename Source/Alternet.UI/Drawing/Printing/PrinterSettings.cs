@@ -1,5 +1,5 @@
-using Alternet.UI.Native;
 using System;
+using Alternet.UI.Native;
 
 namespace Alternet.Drawing.Printing
 {
@@ -26,8 +26,6 @@ namespace Alternet.Drawing.Printing
         {
             NativePrinterSettings = nativePrinterSettings;
         }
-
-        internal UI.Native.PrinterSettings NativePrinterSettings { get; private set; }
 
         /// <summary>
         /// Gets or sets the printer setting for double-sided printing.
@@ -297,6 +295,8 @@ namespace Alternet.Drawing.Printing
                 NativePrinterSettings.PrintFileName = value;
             }
         }
+
+        internal UI.Native.PrinterSettings NativePrinterSettings { get; private set; }
 
         /// <summary>
         /// Releases all resources used by the object.

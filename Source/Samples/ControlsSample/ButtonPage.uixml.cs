@@ -101,7 +101,11 @@ namespace ControlsSample
                     return;
                 if (textAlignComboBox.SelectedItem is not ListControlItem item)
                     return;
-                button.TextAlign = (GenericDirection)item.Value;
+
+                var direction = (GenericDirection?)item.Value;
+
+                if(direction is not null)
+                    button.TextAlign = direction.Value;
             }
 
             void ApplyImageAlign()
@@ -112,7 +116,9 @@ namespace ControlsSample
                     return;
                 if (imageAlignComboBox.SelectedItem is not ListControlItem item)
                     return;
-                button.SetImagePosition((GenericDirection)item.Value);
+                var direction = (GenericDirection?)item.Value;
+                if(direction is not null)
+                    button.SetImagePosition(direction.Value);
             }
 
             void ApplyFont()

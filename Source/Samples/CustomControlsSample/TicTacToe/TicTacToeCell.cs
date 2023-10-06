@@ -44,9 +44,9 @@ namespace CustomControlsSample
 
         public class CustomHandler : ControlHandler<TicTacToeCell>
         {
-            private SolidBrush winningCellBrush = new SolidBrush(Color.Parse("#FFD0BF"));
-            private Pen xPen = new Pen(Color.Red, 2);
-            private Pen oPen = new Pen(Color.Blue, 2);
+            private readonly SolidBrush winningCellBrush = new(Color.Parse("#FFD0BF"));
+            private readonly Pen xPen = new(Color.Red, 2);
+            private readonly Pen oPen = new(Color.Blue, 2);
 
             protected override bool NeedsPaint => true;
 
@@ -127,7 +127,7 @@ namespace CustomControlsSample
             {
             }
 
-            private Brush GetBackgroundBrush()
+            private Brush? GetBackgroundBrush()
             {
                 if (Control.IsWinningCell)
                     return winningCellBrush;

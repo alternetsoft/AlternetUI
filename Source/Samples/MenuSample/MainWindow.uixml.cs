@@ -297,8 +297,10 @@ namespace MenuSample
 
         private int lastEventNumber = 1;
 
-        void LogEvent(string message)
+        void LogEvent(string? message)
         {
+            if (message is null)
+                return;
             eventsListBox.Items.Add($"{lastEventNumber++}. {message}");
             eventsListBox.SelectedIndex = eventsListBox.Items.Count - 1;
         }

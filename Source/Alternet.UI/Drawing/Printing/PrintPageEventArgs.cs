@@ -15,8 +15,8 @@ namespace Alternet.Drawing.Printing
     /// </remarks>
     public class PrintPageEventArgs : CancelEventArgs
     {
-        private UI.Native.PrintDocument nativePrintDocument;
         private readonly DrawingContext drawingContext;
+        private readonly UI.Native.PrintDocument nativePrintDocument;
 
         internal PrintPageEventArgs(UI.Native.PrintDocument nativePrintDocument, DrawingContext drawingContext)
         {

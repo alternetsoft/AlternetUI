@@ -9,8 +9,21 @@ namespace Alternet.UI
     /// </summary>
     public abstract class ListViewHandler : ControlHandler
     {
-        /// <inheritdoc/>
+        /// <summary>
+        /// Gets a <see cref="ListView"/> this handler provides the implementation for.
+        /// </summary>
         public new ListView Control => (ListView)base.Control;
+
+        /// <summary>
+        /// Gets or sets an index of the focused item within the <see cref="ListView"/> control.
+        /// </summary>
+        public abstract long? FocusedItemIndex { get; set; }
+
+        /// <summary>
+        /// Gets or sets a boolean value which specifies whether the column header is visible in <see
+        /// cref="ListViewView.Details"/> view.
+        /// </summary>
+        public abstract bool ColumnHeaderVisible { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether the label text of the items can be edited.
@@ -27,6 +40,9 @@ namespace Alternet.UI
         /// Gets or sets the grid line display mode for this list view.
         /// </summary>
         public abstract ListViewGridLinesDisplayMode GridLinesDisplayMode { get; set; }
+
+        /// <inheritdoc/>
+        protected override bool VisualChildNeedsNativeControl => true;
 
         /// <summary>
         /// Provides list view item information, at a given client point, in device-independent units (1/96th inch per
@@ -75,23 +91,9 @@ namespace Alternet.UI
         public abstract void Clear();
 
         /// <summary>
-        /// Gets or sets a boolean value which specifies whether the column header is visible in <see
-        /// cref="ListViewView.Details"/> view.
-        /// </summary>
-        public abstract bool ColumnHeaderVisible { get; set; }
-
-        /// <inheritdoc/>
-        protected override bool VisualChildNeedsNativeControl => true;
-
-        /// <summary>
         /// Ensures that the specified item is visible within the control, scrolling the contents of the control, if necessary.
         /// </summary>
         public abstract void EnsureItemVisible(long itemIndex);
-
-        /// <summary>
-        /// Gets or sets an index of the focused item within the <see cref="ListView"/> control.
-        /// </summary>
-        public abstract long? FocusedItemIndex { get; set; }
 
         /// <summary>
         /// Gets or sets a list view item text.
