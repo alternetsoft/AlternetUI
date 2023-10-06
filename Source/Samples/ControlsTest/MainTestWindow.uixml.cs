@@ -4,11 +4,10 @@ using Alternet.UI;
 
 namespace ControlsTest
 {
-    internal partial class MainTestWindow : Window, ITestPageSite
+    internal partial class MainTestWindow : Window
     {
         private readonly StatusBar statusbar = new();
-        private readonly CardPanel pageContainer = new();
-        private readonly PanelAuiManager rootPanel = new();
+        private readonly PanelTreeAndCards mainPanel = new();
 
         static MainTestWindow()
         {
@@ -22,12 +21,8 @@ namespace ControlsTest
             InitializeComponent();
 
             this.StatusBar = statusbar;
-
-            rootPanel.LeftTreeView.Required();
-
-            Children.Add(rootPanel);
-
-            rootPanel.Manager.AddPane(pageContainer, rootPanel.CenterPane);
+            mainPanel.Parent = this;
+            mainPanel.BindApplicationLog();
 
             if (WebBrowser.IsBackendAvailable(WebBrowserBackend.Edge))
             {
@@ -52,42 +47,18 @@ namespace ControlsTest
             }
 
             if(AddCustomDrawPage)
-                Add("Custom Draw Test", new CustomDrawTestPage { Site = this });
+                mainPanel.Add("Custom Draw Test", new CustomDrawTestPage());
 
-            rootPanel.LeftTreeView.SelectionChanged += PagesListBox_SelectionChanged;
-
-            rootPanel.Manager.Update();
-
-            rootPanel.LeftTreeView.SelectedItem = rootPanel.LeftTreeView.FirstItem;
+            mainPanel.LeftTreeView.SelectedItem = mainPanel.LeftTreeView.FirstItem;
+            mainPanel.Manager.Update();
         }
 
-        internal static bool AddCustomDrawPage { get; set; } = false;
-
-        private void PagesListBox_SelectionChanged(object? sender, System.EventArgs e)
-        {
-            var tag = rootPanel.LeftTreeView.SelectedItem?.Tag;
-            pageContainer.SetActiveCard(tag as int?);
-        }
+        internal static bool AddCustomDrawPage { get; set; } = true;
 
         private void AddWebBrowserPage(string title)
         {
-            Control Fn() => new WebBrowserTestPage { Site = this, PageName = title };
-
-            Add(title, Fn);
-        }
-
-        private void Add(string title, Func<Control> fn)
-        {
-            var index = pageContainer.Add(title, fn);
-            var item = rootPanel.LeftTreeView.Add(title);
-            item.Tag = index;
-        }
-
-        private void Add(string title, Control control)
-        {
-            var index = pageContainer.Add(title, control);
-            var item = rootPanel.LeftTreeView.Add(title);
-            item.Tag = index;
+            Control Fn() => new WebBrowserTestPage { PageName = title };
+            mainPanel.Add(title, Fn);
         }
     }
 }

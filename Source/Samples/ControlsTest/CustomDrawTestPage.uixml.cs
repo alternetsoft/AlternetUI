@@ -12,8 +12,12 @@ namespace ControlsTest
 {
     internal partial class CustomDrawTestPage : Control
     {
-        private readonly CustomDrawControl customDrawControl;
-        private ITestPageSite? site;
+        private readonly CustomDrawControl customDrawControl = new()
+        {
+            SuggestedWidth = 500,
+            SuggestedHeight = 400,
+            Background = Brushes.White,
+        };
 
         static CustomDrawTestPage()
         {
@@ -23,25 +27,7 @@ namespace ControlsTest
         {
             InitializeComponent();
 
-            customDrawControl = new ()
-            {
-                SuggestedWidth = 500,
-                SuggestedHeight = 400,
-            };
-
-            mainPanel.Children.Add(customDrawControl);
-        }
-
-        public ITestPageSite? Site
-        {
-            get => site;
-
-            set
-            {
-                site = value;
-                customDrawControl.Site = value;
-                customDrawControl!.Background = new SolidBrush(Color.Yellow);
-            }
+            customDrawControl.Parent = mainPanel;
         }
     }
 }

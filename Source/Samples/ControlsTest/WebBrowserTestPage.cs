@@ -27,7 +27,6 @@ namespace ControlsTest
         private bool mappingSet = false;
         private bool pandaLoaded = false;
         private bool scriptMessageHandlerAdded = false;
-        private ITestPageSite? site;
 
         static WebBrowserTestPage()
         {
@@ -47,13 +46,10 @@ namespace ControlsTest
                 LogEvents = true,
                 DefaultRightPaneBestSize = new(150, 200),
                 DefaultRightPaneMinSize = new(150, 200),
+                Visible = false,
             };
-            rootPanel.Visible = false;
 
-            rootPanel.BindApplicationLogMessage();
-            rootPanel.LogControl.Required();
             rootPanel.ActionsControl.Required();
-            rootPanel.LogContextMenu.Required();
 
             var myListener = new CommonUtils.DebugTraceListener();
             Trace.Listeners.Add(myListener);
@@ -62,16 +58,6 @@ namespace ControlsTest
         public WebBrowser WebBrowser => rootPanel.WebBrowser;
 
         public string? PageName { get; set; }
-
-        public ITestPageSite? Site
-        {
-            get => site;
-
-            set
-            {
-                site = value;
-            }
-        }
 
         public static void HookExceptionEvents(Alternet.UI.Application a)
         {
@@ -295,7 +281,7 @@ namespace ControlsTest
 
         private static void HandleException(Exception e)
         {
-            CommonUtils.LogException(e);
+            LogUtils.LogException(e);
         }
 
         private static void Application_ThreadException(object sender, ThreadExceptionEventArgs e)
@@ -365,7 +351,7 @@ namespace ControlsTest
 
         private void Log(string s)
         {
-            rootPanel.Log(s);
+            Application.Log(s);
         }
 
         private void WebBrowser_TitleChanged(object? sender, WebBrowserEventArgs e)
@@ -397,18 +383,18 @@ namespace ControlsTest
                 Log("=======" + s);
 
                 LogUtils.LogProp(webBrowser, "HasSelection", "WebBrowser");
-                LogUtils.LogProp(webBrowser, "SelectedText", "WebBrowser");
-                LogUtils.LogProp(webBrowser, "SelectedSource", "WebBrowser");
+                LogUtils.LogPropLimitLength(webBrowser, "SelectedText", "WebBrowser");
+                LogUtils.LogPropLimitLength(webBrowser, "SelectedSource", "WebBrowser");
                 LogUtils.LogProp(webBrowser, "CanCut", "WebBrowser");
                 LogUtils.LogProp(webBrowser, "CanCopy", "WebBrowser");
                 LogUtils.LogProp(webBrowser, "CanPaste", "WebBrowser");
                 LogUtils.LogProp(webBrowser, "CanUndo", "WebBrowser");
                 LogUtils.LogProp(webBrowser, "CanRedo", "WebBrowser");
                 LogUtils.LogProp(webBrowser, "IsBusy", "WebBrowser");
-                LogUtils.LogProp(webBrowser, "PageSource", "WebBrowser");
+                LogUtils.LogPropLimitLength(webBrowser, "PageSource", "WebBrowser");
                 LogUtils.LogProp(webBrowser, "UserAgent", "WebBrowser");
 
-                LogUtils.LogProp(webBrowser, "PageText", "WebBrowser");
+                LogUtils.LogPropLimitLength(webBrowser, "PageText", "WebBrowser");
                 LogUtils.LogProp(webBrowser, "Zoom", "WebBrowser");
                 LogUtils.LogProp(webBrowser, "Editable", "WebBrowser");
                 LogUtils.LogProp(webBrowser, "ZoomType", "WebBrowser");

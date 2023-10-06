@@ -16,8 +16,6 @@ namespace ControlsTest
         {
         }
 
-        internal ITestPageSite? Site { get; set; }
-
         protected override void OnSizeChanged(EventArgs e)
         {
             base.OnSizeChanged(e);
@@ -31,6 +29,8 @@ namespace ControlsTest
             var brush = this.Background;
             if (brush != null)
                 dc.FillRectangle(brush, bounds);
+
+            dc.FillRectangle(Brushes.Gray, new Rect(50, 50, 250, 150));
         }
     }
 }
