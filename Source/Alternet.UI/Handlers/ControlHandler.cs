@@ -14,6 +14,7 @@ namespace Alternet.UI
     public abstract class ControlHandler : BaseObject
     {
         private int layoutSuspendCount;
+        private Rect reportedBounds;
 
         private bool inLayout;
 
@@ -111,17 +112,8 @@ namespace Alternet.UI
 
                 if (NativeControl != null)
                     NativeControl.Bounds = value;
-                else
-                    bounds = value;
-
-                if (oldBounds.Location != value.Location)
-                    Control.RaiseLocationChanged(EventArgs.Empty);
-
-                if (oldBounds.Size != value.Size)
-                    Control.RaiseSizeChanged(EventArgs.Empty);
-
-                if (oldBounds != Bounds)
-                    PerformLayout();
+                bounds = value;
+                ReportBoundsChanged(oldBounds, value);
             }
         }
 
@@ -1044,6 +1036,7 @@ namespace Alternet.UI
                 NativeControl.DragDrop -= NativeControl_DragDrop;
                 NativeControl.GotFocus -= NativeControl_GotFocus;
                 NativeControl.LostFocus -= NativeControl_LostFocus;
+                NativeControl.SizeChanged -= NativeControl_SizeChanged;
             }
         }
 
@@ -1117,6 +1110,7 @@ namespace Alternet.UI
             NativeControl.DragDrop += NativeControl_DragDrop;
             NativeControl.GotFocus += NativeControl_GotFocus;
             NativeControl.LostFocus += NativeControl_LostFocus;
+            NativeControl.SizeChanged += NativeControl_SizeChanged;
 
 #if DEBUG
             /*Debug.WriteLine($"{GetType()} {NativeControl.Id} {NativeControl.Name}");*/
@@ -1128,6 +1122,32 @@ namespace Alternet.UI
             // handlersByNativeControls.Remove(nativeControl);
             nativeControl.handler = null;
             nativeControl.Dispose();
+        }
+
+        private void NativeControl_SizeChanged(object? sender, EventArgs e)
+        {
+            var newBounds = Bounds;
+            if (newBounds != reportedBounds)
+            {
+            }
+        }
+
+        private void ReportBoundsChanged(Rect oldBounds, Rect newBounds)
+        {
+            var locationChanged = oldBounds.Location != newBounds.Location;
+            var sizeChanged = oldBounds.Size != newBounds.Size;
+
+            if (locationChanged)
+                Control.RaiseLocationChanged(EventArgs.Empty);
+
+            if (sizeChanged)
+                Control.RaiseSizeChanged(EventArgs.Empty);
+
+            if (locationChanged || sizeChanged)
+            {
+                reportedBounds = newBounds;
+                PerformLayout();
+            }
         }
 
         private void Control_ToolTipChanged(object? sender, EventArgs e)
