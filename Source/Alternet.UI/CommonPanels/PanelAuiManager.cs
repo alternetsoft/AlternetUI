@@ -92,6 +92,7 @@ namespace Alternet.UI
                         Parent = this,
                         HasBorder = false,
                         FullRowSelect = true,
+                        VariableRowHeight = true,
                     };
                     logPage = BottomNotebook.AddPage(
                         logControl,
@@ -522,8 +523,10 @@ namespace Alternet.UI
         /// Binds <see cref="LogControl"/> to show messages which are logged with
         /// <see cref="Application.Log"/>.
         /// </summary>
-        public virtual void BindApplicationLogMessage()
+        public virtual void BindApplicationLog()
         {
+            LogControl.Required();
+            LogContextMenu.Required();
             Application.Current.LogMessage += Application_LogMessage;
         }
 

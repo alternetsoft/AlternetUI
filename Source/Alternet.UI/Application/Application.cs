@@ -420,12 +420,30 @@ namespace Alternet.UI
         /// <summary>
         /// Calls <see cref="LogMessage"/> event.
         /// </summary>
-        /// <param name="msg">Message text.</param>
-        public static void Log(string msg)
+        /// <param name="obj">Message text or object to log.</param>
+        public static void Log(object? obj)
         {
+            var msg = obj?.ToString();
+
+            if (msg is null)
+                return;
+
             WriteToLogFileIfAllowed(msg);
-            Debug.WriteLine(msg);
-            Current?.LogMessage?.Invoke(Current, new LogMessageEventArgs(msg));
+
+            string[] result = msg.Split(StringUtils.StringSplitToArrayChars, StringSplitOptions.RemoveEmptyEntries);
+            var args = new LogMessageEventArgs();
+            var evt = Current?.LogMessage;
+
+            foreach (string s2 in result)
+            {
+                Debug.WriteLine(s2);
+
+                if(evt is not null)
+                {
+                    args.Message = s2;
+                    evt(Current, args);
+                }
+            }
         }
 
         /// <inheritdoc cref="Log"/>

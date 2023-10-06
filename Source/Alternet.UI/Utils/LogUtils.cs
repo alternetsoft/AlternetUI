@@ -16,6 +16,12 @@ namespace Alternet.UI
     public static class LogUtils
     {
         private static int id;
+        private static int logUseMaxLength;
+
+        /// <summary>
+        /// Gets or sets max property value length for the <see cref="LogPropLimitLength"/>
+        /// </summary>
+        public static int LogPropMaxLength { get; set; } = 80;
 
         /// <summary>
         /// Gets unique id for debug purposes.
@@ -70,7 +76,32 @@ namespace Alternet.UI
                 return;
             string? propValue = propInfo?.GetValue(obj)?.ToString();
 
+            if (logUseMaxLength > 0)
+                propValue = StringUtils.LimitLength(propValue, LogPropMaxLength);
+
             Application.Log(s + propName + " = " + propValue);
+        }
+
+        /// <summary>
+        /// Writes to log property value of the specified object.
+        /// </summary>
+        /// <param name="obj">Object instance.</param>
+        /// <param name="propName">Property name.</param>
+        /// <param name="prefix">Object name.</param>
+        /// <remarks>
+        /// Uses <see cref="LogPropMaxLength"/> to limit max length of the property value.
+        /// </remarks>
+        public static void LogPropLimitLength(object? obj, string propName, string? prefix = null)
+        {
+            logUseMaxLength++;
+            try
+            {
+                LogProp(obj, propName, prefix);
+            }
+            finally
+            {
+                logUseMaxLength--;
+            }
         }
 
         /// <summary>

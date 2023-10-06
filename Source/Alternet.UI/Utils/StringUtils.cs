@@ -25,6 +25,9 @@ namespace Alternet.UI
         public static string[] StringSplitToArrayChars { get; set; } = new string[]
         {
             Environment.NewLine,
+            "\r\n",
+            "\n\r",
+            "\n",
         };
 
         /// <summary>
@@ -39,6 +42,18 @@ namespace Alternet.UI
                 comparerObjectUsingToString ??= new ComparerUsingToString<object>();
                 return comparerObjectUsingToString;
             }
+        }
+
+        /// <summary>
+        /// Limits the length of text to a defined length.
+        /// </summary>
+        /// <param name="text">The source text.</param>
+        /// <param name="maxLength">The maximum limit of the string to return.</param>
+        public static string? LimitLength(string? text, int maxLength)
+        {
+            if (text is null || text.Length <= maxLength)
+                return text;
+            return text.Substring(0, maxLength);
         }
 
         /// <summary>

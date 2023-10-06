@@ -11,15 +11,15 @@ namespace Alternet.UI
     /// </summary>
     public class LogMessageEventArgs : EventArgs
     {
-        private readonly string message;
         private readonly string? prefix;
         private readonly bool replaceLast;
+        private string? message;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PropertyChangeEventArgs"/> class.
         /// </summary>
         /// <param name="message">Message that needs to be logged.</param>
-        public LogMessageEventArgs(string message)
+        public LogMessageEventArgs(string? message = null)
         {
             this.message = message;
         }
@@ -42,7 +42,7 @@ namespace Alternet.UI
         /// <summary>
         /// Message that needs to be logged.
         /// </summary>
-        public string Message => message;
+        public string Message { get => message; set => message = value; }
 
         /// <summary>
         /// Message text prefix.
