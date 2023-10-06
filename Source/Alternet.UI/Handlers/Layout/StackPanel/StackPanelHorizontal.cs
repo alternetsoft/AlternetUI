@@ -27,9 +27,11 @@ namespace Alternet.UI
                     maxHeight = Math.Max(maxHeight, preferredSize.Height + margin.Vertical);
                 }
 
+                var isNan = double.IsNaN(Control.SuggestedHeight);
+
                 return new Size(
                     width + stackPanelPadding.Horizontal,
-                    double.IsNaN(Control.SuggestedHeight) ? maxHeight + stackPanelPadding.Vertical : Control.SuggestedHeight);
+                    isNan ? maxHeight + stackPanelPadding.Vertical : Control.SuggestedHeight);
             }
 
             public override void Layout()

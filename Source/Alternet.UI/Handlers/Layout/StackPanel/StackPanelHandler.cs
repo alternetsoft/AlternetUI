@@ -7,7 +7,7 @@ namespace Alternet.UI
     {
         private OrientedLayout? layout = null;
 
-        OrientedLayout Layout => layout ??= CreateLayout();
+        private OrientedLayout Layout => layout ??= CreateLayout();
 
         public override void OnLayout() => Layout.Layout();
 
