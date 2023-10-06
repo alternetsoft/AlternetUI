@@ -6,6 +6,7 @@ namespace Alternet.UI
     internal class NativeScrollViewerHandler : ScrollViewerHandler
     {
         private bool settingLayoutOffset;
+        private bool scrollInfoValid;
 
         public new Native.Panel NativeControl => (Native.Panel)base.NativeControl!;
 
@@ -48,6 +49,12 @@ namespace Alternet.UI
                 NativeControl_VerticalScrollBarValueChanged;
             NativeControl.HorizontalScrollBarValueChanged -=
                 NativeControl_HorizontalScrollBarValueChanged;
+        }
+
+        protected override void OnLayoutChanged()
+        {
+            base.OnLayoutChanged();
+            scrollInfoValid = false;
         }
 
         private void LayoutCore()
@@ -96,14 +103,6 @@ namespace Alternet.UI
             }
         }
 
-        bool scrollInfoValid;
-
-        protected override void OnLayoutChanged()
-        {
-            base.OnLayoutChanged();
-            scrollInfoValid = false;
-        }
-
         private void SetScrollInfo()
         {
             var preferredSize = GetChildrenMaxPreferredSizePadded(
@@ -134,7 +133,7 @@ namespace Alternet.UI
                     (int)preferredSize.Height);
             }
 
-            LayoutOffset = new Size();
+            LayoutOffset = Size.Empty;
 
             scrollInfoValid = true;
         }
