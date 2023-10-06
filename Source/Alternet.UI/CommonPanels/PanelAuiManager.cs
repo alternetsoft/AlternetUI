@@ -32,7 +32,7 @@ namespace Alternet.UI
         private IAuiPaneInfo? toolbarPane;
         private PropertyGrid? propertyGrid;
         private PropertyGrid? eventGrid;
-        private TreeView? logControl;
+        private Control? logControl;
         private TreeView? leftTreeView;
         private ContextMenu? logContextMenu;
         private AuiToolbar? toolbar;
@@ -81,19 +81,33 @@ namespace Alternet.UI
         /// <summary>
         /// Gets control on the bottom pane which can be used for logging.
         /// </summary>
-        public TreeView LogControl
+        public Control LogControl
         {
             get
             {
                 if (logControl == null)
                 {
-                    logControl = new()
+                    var useTreeView = false;
+
+                    if (useTreeView)
                     {
-                        Parent = this,
-                        HasBorder = false,
-                        FullRowSelect = true,
-                        VariableRowHeight = true,
-                    };
+                        logControl = new TreeView()
+                        {
+                            Parent = this,
+                            HasBorder = false,
+                            FullRowSelect = true,
+                            VariableRowHeight = true,
+                        };
+                    }
+                    else
+                    {
+                        logControl = new ListBox()
+                        {
+                            Parent = this,
+                            HasBorder = false,
+                        };
+                    }
+
                     logPage = BottomNotebook.AddPage(
                         logControl,
                         CommonStrings.Default.NotebookTabTitleOutput);
@@ -429,8 +443,19 @@ namespace Alternet.UI
         /// <param name="message">Message text.</param>
         public virtual void Log(string? message)
         {
-            LogControl.Add(ConstructLogMessage(message));
-            LogControl.SelectAndShowItem(LogControl.LastRootItem);
+            // This is slow.
+            if(LogControl is TreeView logTreeView)
+            {
+                logTreeView.Add(ConstructLogMessage(message));
+                logTreeView.SelectAndShowItem(logTreeView.LastRootItem);
+            }
+
+            if (LogControl is ListBox logListBox)
+            {
+                logListBox.Add(ConstructLogMessage(message));
+                logListBox.SelectedIndex = logListBox.Items.Count - 1;
+            }
+
             Application.DoEvents();
         }
 
@@ -486,20 +511,40 @@ namespace Alternet.UI
         /// </remarks>
         public virtual void LogReplace(string? message, string? prefix)
         {
-            var lastItem = LogControl.LastRootItem;
-            if (lastItem is null)
+            string? s;
+
+            var listBox = LogControl as ListBox;
+            var treeView = LogControl as TreeView;
+
+            if (listBox is not null)
+                s = listBox.LastItem?.ToString();
+            else
+            if (treeView is not null)
+                s = treeView.LastRootItem?.Text;
+            else
+                s = null;
+
+            if (s is null)
             {
                 Log(message);
                 return;
             }
 
-            var s = lastItem.Text;
             var b = s?.StartsWith(prefix ?? string.Empty) ?? false;
 
             if (b)
             {
-                lastItem.Text = ConstructLogMessage(message);
-                LogControl.SelectAndShowItem(lastItem);
+                if (listBox is not null)
+                {
+                    listBox.LastItem = ConstructLogMessage(message);
+                    listBox.SelectedIndex = listBox.Items.Count - 1;
+                }
+                else
+                if (treeView is not null)
+                {
+                    treeView.LastRootItem!.Text = ConstructLogMessage(message);
+                    treeView.SelectAndShowItem(treeView.LastRootItem);
+                }
             }
             else
                 Log(message);
@@ -586,7 +631,16 @@ namespace Alternet.UI
 
         private void InitLogContextMenu()
         {
-            LogContextMenu.Add(new(CommonStrings.Default.ButtonClear, LogControl.RemoveAll));
+            void RemoveAll()
+            {
+                if (LogControl is ListBox listBox)
+                    listBox.RemoveAll();
+                else
+                if (LogControl is TreeView treeView)
+                    treeView.RemoveAll();
+            }
+
+            LogContextMenu.Add(new(CommonStrings.Default.ButtonClear, RemoveAll));
 
             LogContextMenu.Add(new("Open log file", LogUtils.OpenLogFile));
 
