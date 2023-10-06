@@ -43,9 +43,9 @@ namespace Alternet.UI
         {
         }
 
-        public static void Layout(Control container)
+        public static void Layout(Control container, Rect rect)
         {
-            LayoutDockedChildren(container);
+            LayoutDockedChildren(container, rect);
 
             // LayoutAnchoredChildren(container, controls);
             // return container.AutoSize;
@@ -87,33 +87,52 @@ namespace Alternet.UI
             return result;
         }
 
-        private static void LayoutDockedChildren(Control parent)
+        private static void LayoutDockedChildren(Control parent, Rect space)
         {
-            Rect space = GetDisplayRectangle(parent);
+            if (!parent.HasChildren)
+                return;
+            var children = parent.Children;
 
             // Deal with docking; go through in reverse, MS docs say that
             // lowest Z-order is closest to edge
-            for (int i = parent.Children.Count - 1; i >= 0; i--)
+            for (int i = children.Count - 1; i >= 0; i--)
             {
-                Control child = parent.Children[i];
-                Size child_size = child.Bounds.Size;
+                Control child = children[i];
+                if (!child.Visible)
+                    continue;
 
+                Size child_size = child.Bounds.Size;
                 DockStyle dock = LayoutPanel.GetDock(child);
                 bool autoSize = LayoutPanel.GetAutoSize(child);
-
-                if (!child.Visible || dock == DockStyle.None)
-                    continue;
 
                 switch (dock)
                 {
                     case DockStyle.None:
+                        /*
+                        var horizontalPosition =
+                            AlignedLayout.AlignHorizontal(
+                                space,
+                                child,
+                                child_size);
+                        var verticalPosition =
+                            AlignedLayout.AlignVertical(
+                                space,
+                                child,
+                                child_size);
+
+                        child.Handler.Bounds = new Rect(
+                            horizontalPosition.Origin,
+                            verticalPosition.Origin,
+                            horizontalPosition.Size,
+                            verticalPosition.Size);
+                          */
                         break;
 
                     case DockStyle.Left:
                         if (autoSize)
                         {
                             child_size =
-                                child.GetPreferredSize(
+                                child.GetPreferredSizeLimited(
                                     new Size(child_size.Width, space.Height));
                         }
 
@@ -131,7 +150,7 @@ namespace Alternet.UI
                         if (autoSize)
                         {
                             child_size =
-                                child.GetPreferredSize(
+                                child.GetPreferredSizeLimited(
                                     new Size(space.Width, child_size.Height));
                         }
 
@@ -149,7 +168,7 @@ namespace Alternet.UI
                         if (autoSize)
                         {
                             child_size =
-                                child.GetPreferredSize(
+                                child.GetPreferredSizeLimited(
                                     new Size(child_size.Width, space.Height));
                         }
 
@@ -166,7 +185,7 @@ namespace Alternet.UI
                         if (autoSize)
                         {
                             child_size =
-                                child.GetPreferredSize(
+                                child.GetPreferredSizeLimited(
                                     new Size(space.Width, child_size.Height));
                         }
 
@@ -180,11 +199,14 @@ namespace Alternet.UI
                         break;
 
                     case DockStyle.Fill:
+                        child_size = new Size(space.Width, space.Height);
+                        if (autoSize)
+                            child_size = child.GetPreferredSizeLimited(child_size);
                         child.SetBounds(
                             space.Left,
                             space.Top,
-                            space.Width,
-                            space.Height,
+                            child_size.Width,
+                            child_size.Height,
                             BoundsSpecified.All);
                         break;
                 }

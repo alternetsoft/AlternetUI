@@ -17,7 +17,7 @@ namespace Alternet.UI
         public override void OnLayout()
         {
             if(Control.Layout == LayoutPanelKind.Default)
-                DefaultLayout.Layout(Control);
+                DefaultLayout.Layout(Control, ChildrenLayoutBounds);
         }
 
         internal override Native.Control CreateNativeControl()
