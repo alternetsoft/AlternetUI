@@ -8,6 +8,7 @@ namespace ControlsTest
     {
         private readonly StatusBar statusbar = new();
         private readonly PanelTreeAndCards mainPanel = new();
+        private CardPanelItem? firstCard;
 
         static MainTestWindow()
         {
@@ -24,16 +25,18 @@ namespace ControlsTest
             mainPanel.Parent = this;
             mainPanel.BindApplicationLog();
 
+            int firstPageIndex = -1;
+
             if (WebBrowser.IsBackendAvailable(WebBrowserBackend.Edge))
             {
                 PanelWebBrowser.UseBackend = WebBrowserBackend.Edge;
-                AddWebBrowserPage("Web Browser Edge");
+                firstPageIndex = AddWebBrowserPage("Web Browser Edge");
             }
 
             if (WebBrowser.IsBackendAvailable(WebBrowserBackend.WebKit))
             {
                 PanelWebBrowser.UseBackend = WebBrowserBackend.WebKit;
-                AddWebBrowserPage("Web Browser WebKit");
+                firstPageIndex = AddWebBrowserPage("Web Browser WebKit");
                 AddWebBrowserPage("Web Browser WebKit2");
             }
 
@@ -41,7 +44,7 @@ namespace ControlsTest
                 !WebBrowser.IsBackendAvailable(WebBrowserBackend.Edge))
             {
                 PanelWebBrowser.UseBackend = WebBrowserBackend.IELatest;
-                AddWebBrowserPage("Web Browser IE");
+                firstPageIndex = AddWebBrowserPage("Web Browser IE");
                 AddWebBrowserPage("Web Browser IE2");
             }
 
@@ -54,27 +57,32 @@ namespace ControlsTest
             mainPanel.LeftTreeView.SelectedItem = mainPanel.LeftTreeView.FirstItem;
             mainPanel.Manager.Update();
 
-            this.LayoutUpdated += Log_LayoutUpdated;
-            this.SizeChanged += Log_SizeChanged;
-
-            mainPanel.LayoutUpdated += Log_LayoutUpdated;
             mainPanel.SizeChanged += Log_SizeChanged;
-
-            mainPanel.CardPanel.LayoutUpdated += Log_LayoutUpdated;
             mainPanel.CardPanel.SizeChanged += Log_SizeChanged;
+            mainPanel.CardPanel.LayoutUpdated += Log_LayoutUpdated;
 
             mainPanel.Name = "mainPanel";
             Name = "MainTestWindow";
             mainPanel.CardPanel.Name = "cardPanel";
+
+            if (firstPageIndex >= 0)
+            {
+                firstCard = mainPanel.CardPanel.Cards[firstPageIndex];
+                firstCard.Control.Name = firstCard.Control.GetType().Name;
+                firstCard.Control.LayoutUpdated += Log_LayoutUpdated;
+                firstCard.Control.SizeChanged += Log_SizeChanged;
+            }
         }
+
+        internal static bool AddCustomDrawPage { get; set; } = true;
+
+        internal static bool AddLinkLabelPage { get; set; } = false;
 
         private void LogSizeEvent(object? sender, string evName)
         {
             var control = sender as Control;
             var name = control?.Name;
             Application.Log($"{evName}: {name}, Bounds: {control!.Bounds}");
-
-            Application.Log(mainPanel.CardPanel.Bounds);
         }
 
         private void Log_SizeChanged(object? sender, EventArgs e)
@@ -87,14 +95,10 @@ namespace ControlsTest
             LogSizeEvent(sender, "LayoutUpdated");
         }
 
-        internal static bool AddCustomDrawPage { get; set; } = true;
-
-        internal static bool AddLinkLabelPage { get; set; } = false;
-
-        private void AddWebBrowserPage(string title)
+        private int AddWebBrowserPage(string title)
         {
             Control Fn() => new WebBrowserTestPage { PageName = title };
-            mainPanel.Add(title, Fn);
+            return mainPanel.Add(title, Fn);
         }
     }
 }

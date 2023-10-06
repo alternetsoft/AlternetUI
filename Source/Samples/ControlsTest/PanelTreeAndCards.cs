@@ -21,18 +21,20 @@ namespace Alternet.UI
 
         public CardPanel CardPanel => cardPanel;
 
-        public void Add(string title, Func<Control> fn)
+        public int Add(string title, Func<Control> fn)
         {
             var index = cardPanel.Add(title, fn);
             var item = LeftTreeView.Add(title);
             item.Tag = index;
+            return index;
         }
 
-        public void Add(string title, Control control)
+        public int Add(string title, Control control)
         {
             var index = cardPanel.Add(title, control);
             var item = LeftTreeView.Add(title);
             item.Tag = index;
+            return index;
         }
 
         private void LeftTreeView_SelectionChanged(object? sender, System.EventArgs e)
