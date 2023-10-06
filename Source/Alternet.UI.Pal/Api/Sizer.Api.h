@@ -13,13 +13,383 @@ ALTERNET_UI_API Sizer* Sizer_Create_()
     return new Sizer();
 }
 
-ALTERNET_UI_API void* Sizer_GetHandle_(Sizer* obj)
+ALTERNET_UI_API void* Sizer_AddWindow_(void* handle, void* window, int proportion, int flag, int border, void* userData)
 {
-    return obj->GetHandle();
+    return Sizer::AddWindow(handle, window, proportion, flag, border, userData);
 }
 
-ALTERNET_UI_API void* Sizer_AddWindow_(Sizer* obj, void* window, int proportion, int flag, int border, void* userData)
+ALTERNET_UI_API void* Sizer_AddSizer_(void* handle, void* sizer, int proportion, int flag, int border, void* userData)
 {
-    return obj->AddWindow(window, proportion, flag, border, userData);
+    return Sizer::AddSizer(handle, sizer, proportion, flag, border, userData);
+}
+
+ALTERNET_UI_API void* Sizer_AddCustomBox_(void* handle, int width, int height, int proportion, int flag, int border, void* userData)
+{
+    return Sizer::AddCustomBox(handle, width, height, proportion, flag, border, userData);
+}
+
+ALTERNET_UI_API void* Sizer_AddWindow2_(void* handle, void* window, void* sizerFlags)
+{
+    return Sizer::AddWindow2(handle, window, sizerFlags);
+}
+
+ALTERNET_UI_API void* Sizer_AddSizer2_(void* handle, void* sizer, void* sizerFlags)
+{
+    return Sizer::AddSizer2(handle, sizer, sizerFlags);
+}
+
+ALTERNET_UI_API void* Sizer_AddCustomBox2_(void* handle, int width, int height, void* sizerFlags)
+{
+    return Sizer::AddCustomBox2(handle, width, height, sizerFlags);
+}
+
+ALTERNET_UI_API void* Sizer_AddItem_(void* handle, void* item)
+{
+    return Sizer::AddItem(handle, item);
+}
+
+ALTERNET_UI_API void* Sizer_AddSpacer_(void* handle, int size)
+{
+    return Sizer::AddSpacer(handle, size);
+}
+
+ALTERNET_UI_API void* Sizer_AddStretchSpacer_(void* handle, int prop)
+{
+    return Sizer::AddStretchSpacer(handle, prop);
+}
+
+ALTERNET_UI_API void* Sizer_InsertWindow_(void* handle, int index, void* window, int proportion, int flag, int border, void* userData)
+{
+    return Sizer::InsertWindow(handle, index, window, proportion, flag, border, userData);
+}
+
+ALTERNET_UI_API void* Sizer_InsertSizer_(void* handle, int index, void* sizer, int proportion, int flag, int border, void* userData)
+{
+    return Sizer::InsertSizer(handle, index, sizer, proportion, flag, border, userData);
+}
+
+ALTERNET_UI_API void* Sizer_InsertCustomBox_(void* handle, int index, int width, int height, int proportion, int flag, int border, void* userData)
+{
+    return Sizer::InsertCustomBox(handle, index, width, height, proportion, flag, border, userData);
+}
+
+ALTERNET_UI_API void* Sizer_InsertWindow2_(void* handle, int index, void* window, void* sizerFlags)
+{
+    return Sizer::InsertWindow2(handle, index, window, sizerFlags);
+}
+
+ALTERNET_UI_API void* Sizer_InsertSizer2_(void* handle, int index, void* sizer, void* sizerFlags)
+{
+    return Sizer::InsertSizer2(handle, index, sizer, sizerFlags);
+}
+
+ALTERNET_UI_API void* Sizer_InsertCustomBox2_(void* handle, int index, int width, int height, void* sizerFlags)
+{
+    return Sizer::InsertCustomBox2(handle, index, width, height, sizerFlags);
+}
+
+ALTERNET_UI_API void* Sizer_InsertItem_(void* handle, int index, void* item)
+{
+    return Sizer::InsertItem(handle, index, item);
+}
+
+ALTERNET_UI_API void* Sizer_InsertSpacer_(void* handle, int index, int size)
+{
+    return Sizer::InsertSpacer(handle, index, size);
+}
+
+ALTERNET_UI_API void* Sizer_InsertStretchSpacer_(void* handle, int index, int prop)
+{
+    return Sizer::InsertStretchSpacer(handle, index, prop);
+}
+
+ALTERNET_UI_API void* Sizer_PrependWindow_(void* handle, void* window, int proportion, int flag, int border, void* userData)
+{
+    return Sizer::PrependWindow(handle, window, proportion, flag, border, userData);
+}
+
+ALTERNET_UI_API void* Sizer_PrependSizer_(void* handle, void* sizer, int proportion, int flag, int border, void* userData)
+{
+    return Sizer::PrependSizer(handle, sizer, proportion, flag, border, userData);
+}
+
+ALTERNET_UI_API void* Sizer_PrependCustomBox_(void* handle, int width, int height, int proportion, int flag, int border, void* userData)
+{
+    return Sizer::PrependCustomBox(handle, width, height, proportion, flag, border, userData);
+}
+
+ALTERNET_UI_API void* Sizer_PrependWindow2_(void* handle, void* window, void* sizerFlags)
+{
+    return Sizer::PrependWindow2(handle, window, sizerFlags);
+}
+
+ALTERNET_UI_API void* Sizer_PrependSizer2_(void* handle, void* sizer, void* sizerFlags)
+{
+    return Sizer::PrependSizer2(handle, sizer, sizerFlags);
+}
+
+ALTERNET_UI_API void* Sizer_PrependCustomBox2_(void* handle, int width, int height, void* sizerFlags)
+{
+    return Sizer::PrependCustomBox2(handle, width, height, sizerFlags);
+}
+
+ALTERNET_UI_API void* Sizer_PrependItem_(void* handle, void* item)
+{
+    return Sizer::PrependItem(handle, item);
+}
+
+ALTERNET_UI_API void* Sizer_PrependSpacer_(void* handle, int size)
+{
+    return Sizer::PrependSpacer(handle, size);
+}
+
+ALTERNET_UI_API void* Sizer_PrependStretchSpacer_(void* handle, int prop)
+{
+    return Sizer::PrependStretchSpacer(handle, prop);
+}
+
+ALTERNET_UI_API void Sizer_SetContainingWindow_(void* handle, void* window)
+{
+    Sizer::SetContainingWindow(handle, window);
+}
+
+ALTERNET_UI_API void* Sizer_GetContainingWindow_(void* handle)
+{
+    return Sizer::GetContainingWindow(handle);
+}
+
+ALTERNET_UI_API c_bool Sizer_Remove_(void* handle, void* sizer)
+{
+    return Sizer::Remove(handle, sizer);
+}
+
+ALTERNET_UI_API c_bool Sizer_Remove2_(void* handle, int index)
+{
+    return Sizer::Remove2(handle, index);
+}
+
+ALTERNET_UI_API c_bool Sizer_DetachWindow_(void* handle, void* window)
+{
+    return Sizer::DetachWindow(handle, window);
+}
+
+ALTERNET_UI_API c_bool Sizer_DetachSizer_(void* handle, void* sizer)
+{
+    return Sizer::DetachSizer(handle, sizer);
+}
+
+ALTERNET_UI_API c_bool Sizer_Detach_(void* handle, int index)
+{
+    return Sizer::Detach(handle, index);
+}
+
+ALTERNET_UI_API c_bool Sizer_ReplaceWindow_(void* handle, void* oldwin, void* newwin, c_bool recursive)
+{
+    return Sizer::ReplaceWindow(handle, oldwin, newwin, recursive);
+}
+
+ALTERNET_UI_API c_bool Sizer_ReplaceSizer_(void* handle, void* oldsz, void* newsz, c_bool recursive)
+{
+    return Sizer::ReplaceSizer(handle, oldsz, newsz, recursive);
+}
+
+ALTERNET_UI_API c_bool Sizer_ReplaceItem_(void* handle, int index, void* newitem)
+{
+    return Sizer::ReplaceItem(handle, index, newitem);
+}
+
+ALTERNET_UI_API void Sizer_Clear_(void* handle, c_bool delete_windows)
+{
+    Sizer::Clear(handle, delete_windows);
+}
+
+ALTERNET_UI_API void Sizer_DeleteWindows_(void* handle)
+{
+    Sizer::DeleteWindows(handle);
+}
+
+ALTERNET_UI_API c_bool Sizer_InformFirstDirection_(void* handle, int direction, int size, int availableOtherDir)
+{
+    return Sizer::InformFirstDirection(handle, direction, size, availableOtherDir);
+}
+
+ALTERNET_UI_API void Sizer_SetMinSize_(void* handle, int width, int height)
+{
+    Sizer::SetMinSize(handle, width, height);
+}
+
+ALTERNET_UI_API c_bool Sizer_SetWindowItemMinSize_(void* handle, void* window, int width, int height)
+{
+    return Sizer::SetWindowItemMinSize(handle, window, width, height);
+}
+
+ALTERNET_UI_API c_bool Sizer_SetSizerItemMinSize_(void* handle, void* sizer, int width, int height)
+{
+    return Sizer::SetSizerItemMinSize(handle, sizer, width, height);
+}
+
+ALTERNET_UI_API c_bool Sizer_SetCustomBoxItemMinSize_(void* handle, int index, int width, int height)
+{
+    return Sizer::SetCustomBoxItemMinSize(handle, index, width, height);
+}
+
+ALTERNET_UI_API Int32Size_C Sizer_GetSize_(void* handle)
+{
+    return Sizer::GetSize(handle);
+}
+
+ALTERNET_UI_API Int32Point_C Sizer_GetPosition_(void* handle)
+{
+    return Sizer::GetPosition(handle);
+}
+
+ALTERNET_UI_API Int32Size_C Sizer_GetMinSize_(void* handle)
+{
+    return Sizer::GetMinSize(handle);
+}
+
+ALTERNET_UI_API Int32Size_C Sizer_CalcMin_(void* handle)
+{
+    return Sizer::CalcMin(handle);
+}
+
+ALTERNET_UI_API void Sizer_RepositionChildren_(void* handle, Int32Size minSize)
+{
+    Sizer::RepositionChildren(handle, minSize);
+}
+
+ALTERNET_UI_API void Sizer_RecalcSizes_(void* handle)
+{
+    Sizer::RecalcSizes(handle);
+}
+
+ALTERNET_UI_API void Sizer_Layout_(void* handle)
+{
+    Sizer::Layout(handle);
+}
+
+ALTERNET_UI_API Int32Size_C Sizer_ComputeFittingClientSize_(void* handle, void* window)
+{
+    return Sizer::ComputeFittingClientSize(handle, window);
+}
+
+ALTERNET_UI_API Int32Size_C Sizer_ComputeFittingWindowSize_(void* handle, void* window)
+{
+    return Sizer::ComputeFittingWindowSize(handle, window);
+}
+
+ALTERNET_UI_API Int32Size_C Sizer_Fit_(void* handle, void* window)
+{
+    return Sizer::Fit(handle, window);
+}
+
+ALTERNET_UI_API void Sizer_FitInside_(void* handle, void* window)
+{
+    Sizer::FitInside(handle, window);
+}
+
+ALTERNET_UI_API void Sizer_SetSizeHints_(void* handle, void* window)
+{
+    Sizer::SetSizeHints(handle, window);
+}
+
+ALTERNET_UI_API void* Sizer_GetChildren_(void* handle)
+{
+    return Sizer::GetChildren(handle);
+}
+
+ALTERNET_UI_API void Sizer_SetDimension_(void* handle, int x, int y, int width, int height)
+{
+    Sizer::SetDimension(handle, x, y, width, height);
+}
+
+ALTERNET_UI_API int Sizer_GetItemCount_(void* handle)
+{
+    return Sizer::GetItemCount(handle);
+}
+
+ALTERNET_UI_API c_bool Sizer_IsEmpty_(void* handle)
+{
+    return Sizer::IsEmpty(handle);
+}
+
+ALTERNET_UI_API void* Sizer_GetItemWindow_(void* handle, void* window, c_bool recursive)
+{
+    return Sizer::GetItemWindow(handle, window, recursive);
+}
+
+ALTERNET_UI_API void* Sizer_GetItemSizer_(void* handle, void* sizer, c_bool recursive)
+{
+    return Sizer::GetItemSizer(handle, sizer, recursive);
+}
+
+ALTERNET_UI_API void* Sizer_GetItem_(void* handle, int index)
+{
+    return Sizer::GetItem(handle, index);
+}
+
+ALTERNET_UI_API void* Sizer_GetItemById_(void* handle, int id, c_bool recursive)
+{
+    return Sizer::GetItemById(handle, id, recursive);
+}
+
+ALTERNET_UI_API c_bool Sizer_ShowWindow_(void* handle, void* window, c_bool show, c_bool recursive)
+{
+    return Sizer::ShowWindow(handle, window, show, recursive);
+}
+
+ALTERNET_UI_API c_bool Sizer_ShowSizer_(void* handle, void* sizer, c_bool show, c_bool recursive)
+{
+    return Sizer::ShowSizer(handle, sizer, show, recursive);
+}
+
+ALTERNET_UI_API c_bool Sizer_ShowItem_(void* handle, int index, c_bool show)
+{
+    return Sizer::ShowItem(handle, index, show);
+}
+
+ALTERNET_UI_API c_bool Sizer_HideSizer_(void* handle, void* sizer, c_bool recursive)
+{
+    return Sizer::HideSizer(handle, sizer, recursive);
+}
+
+ALTERNET_UI_API c_bool Sizer_HideWindow_(void* handle, void* window, c_bool recursive)
+{
+    return Sizer::HideWindow(handle, window, recursive);
+}
+
+ALTERNET_UI_API c_bool Sizer_Hide_(void* handle, int index)
+{
+    return Sizer::Hide(handle, index);
+}
+
+ALTERNET_UI_API c_bool Sizer_IsShownWindow_(void* handle, void* window)
+{
+    return Sizer::IsShownWindow(handle, window);
+}
+
+ALTERNET_UI_API c_bool Sizer_IsShownSizer_(void* handle, void* sizer)
+{
+    return Sizer::IsShownSizer(handle, sizer);
+}
+
+ALTERNET_UI_API c_bool Sizer_IsShown_(void* handle, int index)
+{
+    return Sizer::IsShown(handle, index);
+}
+
+ALTERNET_UI_API void Sizer_ShowItems_(void* handle, c_bool show)
+{
+    Sizer::ShowItems(handle, show);
+}
+
+ALTERNET_UI_API void Sizer_Show_(void* handle, c_bool show)
+{
+    Sizer::Show(handle, show);
+}
+
+ALTERNET_UI_API c_bool Sizer_AreAnyItemsShown_(void* handle)
+{
+    return Sizer::AreAnyItemsShown(handle);
 }
 

@@ -4,162 +4,167 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Alternet.Drawing;
 
 namespace NativeApi.Api
 {
     //https://docs.wxwidgets.org/3.2/classwx_sizer.html
     public class Sizer
     {
-        public IntPtr Handle { get => throw new Exception(); }
-
-        public IntPtr AddWindow(IntPtr window,
+        public static IntPtr AddWindow(IntPtr handle, IntPtr window,
                              int proportion,
                              int flag,
                              int border,
-                             IntPtr userData) => throw new Exception();
-        /*public abstract IntPtr AddSizer(IntPtr sizer,
+                             IntPtr userData) => default;
+        public static IntPtr AddSizer(IntPtr handle, IntPtr sizer,
                          int proportion,
                          int flag,
                          int border,
-                         IntPtr userData);
-        public abstract IntPtr AddCustomBox(int width,
+                         IntPtr userData) => default;
+        public static IntPtr AddCustomBox(IntPtr handle, int width,
                          int height,
                          int proportion,
                          int flag,
                          int border,
-                         IntPtr userData);
-        public abstract IntPtr AddWindow2(IntPtr window, wxSizerFlags& flags);
-        public abstract IntPtr AddSizer2(IntPtr sizer, wxSizerFlags& flags);
-        public abstract IntPtr AddCustomBox2(int width, int height, wxSizerFlags& flags);
-        public abstract IntPtr AddItem(IntPtr item);
+                         IntPtr userData) => default;
+        public static IntPtr AddWindow2(IntPtr handle, IntPtr window, IntPtr sizerFlags) => default;
+        public static IntPtr AddSizer2(IntPtr handle, IntPtr sizer, IntPtr sizerFlags) => default;
+        public static IntPtr AddCustomBox2(IntPtr handle, int width, int height, IntPtr sizerFlags) => default;
+        public static IntPtr AddItem(IntPtr handle, IntPtr item) => default;
 
-        public abstract IntPtr AddSpacer(int size);
-        public abstract IntPtr AddStretchSpacer(int prop = 1);
+        public static IntPtr AddSpacer(IntPtr handle, int size) => default;
+        public static IntPtr AddStretchSpacer(IntPtr handle, int prop = 1) => default;
 
-        public abstract IntPtr InsertWindow(size_t index,
+        public static IntPtr InsertWindow(IntPtr handle, int index,
                             IntPtr window,
                             int proportion,
                             int flag,
                             int border,
-                            IntPtr userData);
-        public abstract IntPtr InsertSizer(size_t index,
+                            IntPtr userData) => default;
+        public static IntPtr InsertSizer(IntPtr handle, int index,
                             IntPtr sizer,
                             int proportion,
                             int flag,
                             int border,
-                            IntPtr userData);
-        public abstract IntPtr InsertCustomBox(size_t index,
+                            IntPtr userData) => default;
+        public static IntPtr InsertCustomBox(IntPtr handle, int index,
                             int width,
                             int height,
                             int proportion,
                             int flag,
                             int border,
-                            IntPtr userData);
-        public abstract IntPtr InsertWindow2(size_t index,
+                            IntPtr userData) => default;
+        public static IntPtr InsertWindow2(IntPtr handle, int index,
                             IntPtr window,
-                        wxSizerFlags& flags);
-        public abstract IntPtr InsertSizer2(size_t index,
+                        IntPtr sizerFlags) => default;
+        public static IntPtr InsertSizer2(IntPtr handle, int index,
                             IntPtr sizer,
-                            wxSizerFlags& flags);
-        public abstract IntPtr InsertCustomBox2(size_t index,
+                            IntPtr sizerFlags) => default;
+        public static IntPtr InsertCustomBox2(IntPtr handle, int index,
                             int width,
                             int height,
-                            wxSizerFlags& flags);
+                            IntPtr sizerFlags) => default;
 
-        public abstract IntPtr InsertItem(size_t index, IntPtr item);
+        public static IntPtr InsertItem(IntPtr handle, int index, IntPtr item) => default;
 
-        public abstract IntPtr InsertSpacer(size_t index, int size);
-        public abstract IntPtr InsertStretchSpacer(size_t index, int prop);
+        public static IntPtr InsertSpacer(IntPtr handle, int index, int size) => default;
+        public static IntPtr InsertStretchSpacer(IntPtr handle, int index, int prop) => default;
 
-        public abstract IntPtr PrependWindow(IntPtr window,
+        public static IntPtr PrependWindow(IntPtr handle, IntPtr window,
                              int proportion,
                              int flag,
                              int border,
-                             IntPtr userData);
-        public abstract IntPtr PrependSizer(IntPtr sizer,
+                             IntPtr userData) => default;
+        public static IntPtr PrependSizer(IntPtr handle, IntPtr sizer,
                              int proportion,
                              int flag,
                              int border,
-                             IntPtr userData);
-        public abstract IntPtr PrependCustomBox(int width,
+                             IntPtr userData) => default;
+        public static IntPtr PrependCustomBox(IntPtr handle, int width,
                              int height,
                              int proportion,
                              int flag,
                              int border,
-                             IntPtr userData);
-        public abstract IntPtr PrependWindow(IntPtr window, wxSizerFlags& flags);
-        public abstract IntPtr PrependSizer(IntPtr sizer, wxSizerFlags& flags);
-        public abstract IntPtr PrependCustomBox(int width, int height, wxSizerFlags& flags);
-        public abstract IntPtr PrependItem(IntPtr item);
+                             IntPtr userData) => default;
+        public static IntPtr PrependWindow2(IntPtr handle, IntPtr window, IntPtr sizerFlags) => default;
+        public static IntPtr PrependSizer2(IntPtr handle, IntPtr sizer, IntPtr sizerFlags) => default;
+        public static IntPtr PrependCustomBox2(IntPtr handle, int width, int height, IntPtr sizerFlags) => default;
+        public static IntPtr PrependItem(IntPtr handle, IntPtr item) => default;
 
-        public abstract IntPtr PrependSpacer(int size);
-        public abstract IntPtr PrependStretchSpacer(int prop = 1);
+        public static IntPtr PrependSpacer(IntPtr handle, int size) => default;
+        public static IntPtr PrependStretchSpacer(IntPtr handle, int prop = 1) => default;
 
-        public abstract void SetContainingWindow(IntPtr window);
-        public abstract IntPtr GetContainingWindow();
+        public static void SetContainingWindow(IntPtr handle, IntPtr window) { }
+        public static IntPtr GetContainingWindow(IntPtr handle) => default;
 
-        public abstract bool Remove(IntPtr sizer);
-        public abstract bool Remove(int index);
+        public static bool Remove(IntPtr handle, IntPtr sizer) => default;
+        public static bool Remove2(IntPtr handle, int index) => default;
 
-        public abstract bool DetachWindow(IntPtr window);
-        public abstract bool DetachSizer(IntPtr sizer);
-        public abstract bool Detach(int index);
+        public static bool DetachWindow(IntPtr handle, IntPtr window) => default;
+        public static bool DetachSizer(IntPtr handle, IntPtr sizer) => default;
+        public static bool Detach(IntPtr handle, int index) => default;
 
-        public abstract bool ReplaceWindow(IntPtr oldwin, IntPtr newwin, bool recursive);
-        public abstract bool ReplaceSizer(IntPtr oldsz, IntPtr newsz, bool recursive);
-        public abstract bool ReplaceItem(size_t index, IntPtr newitem);
+        public static bool ReplaceWindow(IntPtr handle, IntPtr oldwin, IntPtr newwin,
+            bool recursive) => default;
+        public static bool ReplaceSizer(IntPtr handle, IntPtr oldsz, IntPtr newsz,
+            bool recursive) => default;
+        public static bool ReplaceItem(IntPtr handle, int index, IntPtr newitem) => default;
 
-        public abstract void Clear(bool delete_windows);
-        public abstract void DeleteWindows();
+        public static void Clear(IntPtr handle, bool delete_windows) { }
+        public static void DeleteWindows(IntPtr handle) { }
 
-        public abstract bool InformFirstDirection(int direction, int size,
-            int availableOtherDir);
+        public static bool InformFirstDirection(IntPtr handle, int direction, int size,
+            int availableOtherDir) => default;
 
-        public abstract void SetMinSize(int width, int height);
+        public static void SetMinSize(IntPtr handle, int width, int height) { }
 
-        public abstract bool SetWindowItemMinSize(IntPtr window, int width, int height);
+        public static bool SetWindowItemMinSize(IntPtr handle, IntPtr window,
+            int width, int height) => default;
 
-        public abstract bool SetSizerItemMinSize(IntPtr sizer, int width, int height)
+        public static bool SetSizerItemMinSize(IntPtr handle, IntPtr sizer,
+            int width, int height) => default;
 
-        public abstract bool SetCustomBoxItemMinSize(size_t index, int width, int height);
+        public static bool SetCustomBoxItemMinSize(IntPtr handle, int index,
+            int width, int height) => default;
 
-        public abstract wxSize GetSize();
-        public abstract wxPoint GetPosition();
-        public abstract wxSize GetMinSize();
-        public abstract wxSize CalcMin();
-        public abstract void RepositionChildren(wxSize& minSize);
-        public abstract void RecalcSizes();
-        public abstract void Layout();
-        public abstract wxSize ComputeFittingClientSize(IntPtr window);
-        public abstract wxSize ComputeFittingWindowSize(IntPtr window);
-        public abstract wxSize Fit(IntPtr window);
-        public abstract void FitInside(IntPtr window);
-        public abstract void SetSizeHints(IntPtr window);
-        public abstract wxSizerItemList & GetChildren();
-        public abstract void SetDimension(int x, int y, int width, int height);
-        public abstract size_t GetItemCount();
-        public abstract bool IsEmpty();
-        public abstract IntPtr GetItemWindow(IntPtr window, bool recursive);
-        public abstract IntPtr GetItemSizer(IntPtr sizer, bool recursive);
-        public abstract IntPtr GetItem(size_t index);
-        public abstract IntPtr GetItemById(int id, bool recursive = false);
+        public static Int32Size GetSize(IntPtr handle) => default;
+        public static Int32Point GetPosition(IntPtr handle) => default;
+        public static Int32Size GetMinSize(IntPtr handle) => default;
+        public static Int32Size CalcMin(IntPtr handle) => default;
+        public static void RepositionChildren(IntPtr handle, Int32Size minSize) { }
+        public static void RecalcSizes(IntPtr handle) { }
+        public static void Layout(IntPtr handle) { }
+        public static Int32Size ComputeFittingClientSize(IntPtr handle, IntPtr window) => default;
+        public static Int32Size ComputeFittingWindowSize(IntPtr handle, IntPtr window) => default;
+        public static Int32Size Fit(IntPtr handle, IntPtr window) => default;
+        public static void FitInside(IntPtr handle, IntPtr window) { }
+        public static void SetSizeHints(IntPtr handle, IntPtr window) { }
+        public static IntPtr GetChildren(IntPtr handle) => default;
+        public static void SetDimension(IntPtr handle, int x, int y, int width, int height) { }
+        public static int GetItemCount(IntPtr handle) => default;
+        public static bool IsEmpty(IntPtr handle) => default;
+        public static IntPtr GetItemWindow(IntPtr handle, IntPtr window, bool recursive) => default;
+        public static IntPtr GetItemSizer(IntPtr handle, IntPtr sizer, bool recursive) => default;
+        public static IntPtr GetItem(IntPtr handle, int index) => default;
+        public static IntPtr GetItemById(IntPtr handle, int id, bool recursive = false) => default;
 
-        public abstract bool ShowWindow(IntPtr window, bool show, bool recursive);
-        public abstract bool ShowSizer(IntPtr sizer, bool show, bool recursive);
-        public abstract bool ShowItem(size_t index, bool show);
+        public static bool ShowWindow(IntPtr handle, IntPtr window, bool show,
+            bool recursive) => default;
+        public static bool ShowSizer(IntPtr handle, IntPtr sizer, bool show,
+            bool recursive) => default;
+        public static bool ShowItem(IntPtr handle, int index, bool show) => default;
 
-        public abstract bool HideSizer(IntPtr sizer, bool recursive);
-        public abstract bool HideWindow(IntPtr window, bool recursive);
-        public abstract bool Hide(size_t index);
+        public static bool HideSizer(IntPtr handle, IntPtr sizer, bool recursive) => default;
+        public static bool HideWindow(IntPtr handle, IntPtr window, bool recursive) => default;
+        public static bool Hide(IntPtr handle, int index) => default;
 
-        public abstract bool IsShownWindow(IntPtr window);
-        public abstract bool IsShownSizer(IntPtr sizer);
-        public abstract bool IsShown(size_t index);
-        public abstract void ShowItems(bool show);
+        public static bool IsShownWindow(IntPtr handle, IntPtr window) => default;
+        public static bool IsShownSizer(IntPtr handle, IntPtr sizer) => default;
+        public static bool IsShown(IntPtr handle, int index) => default;
+        public static void ShowItems(IntPtr handle, bool show) { }
 
-        public abstract void Show(bool show);
-        public abstract bool AreAnyItemsShown();
-        */
+        public static void Show(IntPtr handle, bool show) { }
+        public static bool AreAnyItemsShown(IntPtr handle) => default;
     }
 }
 

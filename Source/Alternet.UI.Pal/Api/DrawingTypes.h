@@ -72,6 +72,8 @@ namespace Alternet::UI
 
         operator Int32Size_C() { return Int32Size_C{ Width, Height }; }
 
+        operator wxSize() const { return wxSize(Width, Height); }
+
         bool operator==(const Int32Size& rhs) { return Width == rhs.Width && Height == rhs.Height; }
         bool operator!=(const Int32Size& rhs) { return !(*this == rhs); }
     };
