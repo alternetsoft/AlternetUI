@@ -1512,10 +1512,20 @@ namespace Alternet.UI
         /// Returns enumeration with the list of visible child controls.
         /// </summary>
         /// <seealso cref="GetVisibleChildOrNull"/>
-        public IEnumerable<Control> GetVisibleChildren()
+        public IReadOnlyList<Control> GetVisibleChildren()
         {
-            if(HasChildren)
-                return Children.Where(x => x.Visible);
+            if (HasChildren)
+            {
+                List<Control> result = new();
+                foreach(var item in Children)
+                {
+                    if (item.Visible)
+                        result.Add(item);
+                }
+
+                return result;
+            }
+
             return Array.Empty<Control>();
         }
 
@@ -1589,19 +1599,29 @@ namespace Alternet.UI
         public void Update() => Handler?.Update();
 
         /// <summary>
-        /// Sets the specified bounds of the control to the specified
-        /// location and size.
+        /// Sets the specified bounds of the control to new location and size.
+        /// </summary>
+        /// <param name="newBounds">New location and size.</param>
+        /// <param name="specified">Specifies which bounds to use when applying new
+        /// location and size.</param>
+        public void SetBounds(Rect newBounds, BoundsSpecified specified)
+        {
+            SetBounds(newBounds.X, newBounds.Y, newBounds.Width, newBounds.Height, specified);
+        }
+
+        /// <summary>
+        /// Sets the specified bounds of the control to new location and size.
         /// </summary>
         /// <param name="x">The new <see cref="Left"/> property value of
         /// the control.</param>
         /// <param name="y">The new <see cref="Top"/> property value
         /// of the control.</param>
-        /// <param name="width">The new <see cref="SuggestedWidth"/> property value
+        /// <param name="width">The new <see cref="Width"/> property value
         /// of the control.</param>
-        /// <param name="height">The new <see cref="SuggestedHeight"/> property value
+        /// <param name="height">The new <see cref="Height"/> property value
         /// of the control.</param>
-        /// <param name="specified">The new Width property value
-        /// of the control.</param>
+        /// <param name="specified">Specifies which bounds to use when applying new
+        /// location and size.</param>
         public void SetBounds(
             double x,
             double y,
