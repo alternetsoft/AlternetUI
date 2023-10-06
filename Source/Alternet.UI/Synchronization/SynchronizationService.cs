@@ -30,8 +30,7 @@ namespace Alternet.UI
 
         public static object? EndInvoke(IAsyncResult result)
         {
-            var invocation = result as Invocation;
-            if (invocation == null)
+            if (result is not Invocation invocation)
                 throw new ArgumentException("Invalid IAsyncResult.", nameof(result));
 
             result.AsyncWaitHandle.WaitOne();
@@ -54,16 +53,15 @@ namespace Alternet.UI
         {
             private readonly Delegate mTargetDelegate;
             private readonly object?[] mTargetDelegateArgs;
+            private readonly object mInvokeSyncObject = new();
+            private readonly bool mSynchronous;
             private ManualResetEvent? mCompletedSyncEvent;
-
-            private object mInvokeSyncObject = new();
-            private bool m_Synchronous;
 
             public Invocation(Delegate targetDelegate, object?[] targetDelegateArgs, bool synchronous)
             {
                 mTargetDelegate = targetDelegate;
                 mTargetDelegateArgs = targetDelegateArgs;
-                m_Synchronous = synchronous;
+                mSynchronous = synchronous;
             }
 
             ~Invocation()
@@ -98,7 +96,7 @@ namespace Alternet.UI
                 }
             }
 
-            public bool CompletedSynchronously => IsCompleted && m_Synchronous;
+            public bool CompletedSynchronously => IsCompleted && mSynchronous;
 
             public bool IsCompleted { get; private set; }
 
@@ -129,10 +127,7 @@ namespace Alternet.UI
                 lock (mInvokeSyncObject)
                 {
                     IsCompleted = true;
-                    if (mCompletedSyncEvent != null)
-                    {
-                        mCompletedSyncEvent.Set();
-                    }
+                    mCompletedSyncEvent?.Set();
                 }
             }
         }

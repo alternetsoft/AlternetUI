@@ -7,44 +7,44 @@ namespace Alternet.UI
     {
         private const char DefaultSeparatorChar = ',';
 
-        private readonly string _s;
-        private readonly int _length;
-        private readonly char _separator;
-        private readonly string? _exceptionMessage;
-        private readonly IFormatProvider _formatProvider;
-        private int _index;
-        private int _tokenIndex;
-        private int _tokenLength;
+        private readonly string mStr;
+        private readonly int mLength;
+        private readonly char mSeparator;
+        private readonly string? mExceptionMessage;
+        private readonly IFormatProvider mFormatProvider;
+        private int mIndex;
+        private int mtokenIndex;
+        private int mTokenLength;
 
         public StringTokenizer(string s, IFormatProvider formatProvider, string? exceptionMessage = null)
             : this(s, GetSeparatorFromFormatProvider(formatProvider), exceptionMessage)
         {
-            _formatProvider = formatProvider;
+            mFormatProvider = formatProvider;
         }
 
         public StringTokenizer(string s, char separator = DefaultSeparatorChar, string? exceptionMessage = null)
         {
-            _s = s ?? throw new ArgumentNullException(nameof(s));
-            _length = s?.Length ?? 0;
-            _separator = separator;
-            _exceptionMessage = exceptionMessage;
-            _formatProvider = CultureInfo.InvariantCulture;
-            _index = 0;
-            _tokenIndex = -1;
-            _tokenLength = 0;
+            mStr = s ?? throw new ArgumentNullException(nameof(s));
+            mLength = s?.Length ?? 0;
+            mSeparator = separator;
+            mExceptionMessage = exceptionMessage;
+            mFormatProvider = CultureInfo.InvariantCulture;
+            mIndex = 0;
+            mtokenIndex = -1;
+            mTokenLength = 0;
 
-            while (_index < _length && char.IsWhiteSpace(_s, _index))
+            while (mIndex < mLength && char.IsWhiteSpace(mStr, mIndex))
             {
-                _index++;
+                mIndex++;
             }
         }
 
         public readonly string? CurrentToken =>
-            _tokenIndex < 0 ? null : _s.Substring(_tokenIndex, _tokenLength);
+            mtokenIndex < 0 ? null : mStr.Substring(mtokenIndex, mTokenLength);
 
-        public void Dispose()
+        public readonly void Dispose()
         {
-            if (_index != _length)
+            if (mIndex != mLength)
             {
                 throw GetFormatException();
             }
@@ -53,7 +53,7 @@ namespace Alternet.UI
         public bool TryReadInt32(out int result, char? separator = null)
         {
             if (TryReadString(out var stringResult, separator) &&
-                int.TryParse(stringResult, NumberStyles.Integer, _formatProvider, out result))
+                int.TryParse(stringResult, NumberStyles.Integer, mFormatProvider, out result))
             {
                 return true;
             }
@@ -77,7 +77,7 @@ namespace Alternet.UI
         public bool TryReadDouble(out double result, char? separator = null)
         {
             if (TryReadString(out var stringResult, separator) &&
-                double.TryParse(stringResult, NumberStyles.Float, _formatProvider, out result))
+                double.TryParse(stringResult, NumberStyles.Float, mFormatProvider, out result))
             {
                 return true;
             }
@@ -101,7 +101,7 @@ namespace Alternet.UI
         public bool TryReadSingle(out double result, char? separator = null)
         {
             if (TryReadString(out var stringResult, separator) &&
-                double.TryParse(stringResult, NumberStyles.Float, _formatProvider, out result))
+                double.TryParse(stringResult, NumberStyles.Float, mFormatProvider, out result))
             {
                 return true;
             }
@@ -124,7 +124,7 @@ namespace Alternet.UI
 
         public bool TryReadString(out string? result, char? separator = null)
         {
-            var success = TryReadToken(separator ?? _separator);
+            var success = TryReadToken(separator ?? mSeparator);
             result = CurrentToken;
             return success;
         }
@@ -142,39 +142,55 @@ namespace Alternet.UI
             return result;
         }
 
+        private static char GetSeparatorFromFormatProvider(IFormatProvider provider)
+        {
+            var c = DefaultSeparatorChar;
+
+            var formatInfo = NumberFormatInfo.GetInstance(provider);
+            if (formatInfo.NumberDecimalSeparator.Length > 0
+                && c == formatInfo.NumberDecimalSeparator[0])
+            {
+                c = ';';
+            }
+
+            return c;
+        }
+
         private bool TryReadToken(char separator)
         {
-            _tokenIndex = -1;
+            mtokenIndex = -1;
 
-            if (_index >= _length)
+            if (mIndex >= mLength)
             {
                 return false;
             }
 
-            var c = _s[_index];
+#pragma warning disable
+            var c = mStr[mIndex];
+#pragma warning restore
 
-            var index = _index;
+            var index = mIndex;
             var length = 0;
 
-            while (_index < _length)
+            while (mIndex < mLength)
             {
-                c = _s[_index];
+                c = mStr[mIndex];
 
                 if (char.IsWhiteSpace(c) || c == separator)
                 {
                     break;
                 }
 
-                _index++;
+                mIndex++;
                 length++;
             }
 
             SkipToNextToken(separator);
 
-            _tokenIndex = index;
-            _tokenLength = length;
+            mtokenIndex = index;
+            mTokenLength = length;
 
-            if (_tokenLength < 1)
+            if (mTokenLength < 1)
             {
                 throw GetFormatException();
             }
@@ -184,9 +200,9 @@ namespace Alternet.UI
 
         private void SkipToNextToken(char separator)
         {
-            if (_index < _length)
+            if (mIndex < mLength)
             {
-                var c = _s[_index];
+                var c = mStr[mIndex];
 
                 if (c != separator && !char.IsWhiteSpace(c))
                 {
@@ -195,14 +211,14 @@ namespace Alternet.UI
 
                 var length = 0;
 
-                while (_index < _length)
+                while (mIndex < mLength)
                 {
-                    c = _s[_index];
+                    c = mStr[mIndex];
 
                     if (c == separator)
                     {
                         length++;
-                        _index++;
+                        mIndex++;
 
                         if (length > 1)
                         {
@@ -216,11 +232,11 @@ namespace Alternet.UI
                             break;
                         }
 
-                        _index++;
+                        mIndex++;
                     }
                 }
 
-                if (length > 0 && _index >= _length)
+                if (length > 0 && mIndex >= mLength)
                 {
                     throw GetFormatException();
                 }
@@ -228,19 +244,6 @@ namespace Alternet.UI
         }
 
         private readonly FormatException GetFormatException() =>
-            _exceptionMessage != null ? new FormatException(_exceptionMessage) : new FormatException();
-
-        private static char GetSeparatorFromFormatProvider(IFormatProvider provider)
-        {
-            var c = DefaultSeparatorChar;
-
-            var formatInfo = NumberFormatInfo.GetInstance(provider);
-            if (formatInfo.NumberDecimalSeparator.Length > 0 && c == formatInfo.NumberDecimalSeparator[0])
-            {
-                c = ';';
-            }
-
-            return c;
-        }
-    }
+            mExceptionMessage != null ? new FormatException(mExceptionMessage) : new FormatException();
+     }
 }

@@ -69,8 +69,7 @@ namespace Alternet.UI
             if (newOwner == oldOwner)
                 return;
 
-            if (oldOwner != null)
-                oldOwner.RemoveChild(NativeControl);
+            oldOwner?.RemoveChild(NativeControl);
 
             if (newOwner == null)
                 return;

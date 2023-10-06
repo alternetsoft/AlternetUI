@@ -16,8 +16,10 @@ namespace Alternet.UI.Integration
         private readonly string screenshotsDirectory;
 
         private Application? application;
+#pragma warning disable
         private Timer? queueTimer;
         private System.Threading.Timer? wakeUpIdleTimer;
+#pragma warning restore
 
         public UIXmlPreviewerService(
             Action<IDictionary<string, object>> onUixmlUpdateSuccess,
@@ -265,13 +267,13 @@ namespace Alternet.UI.Integration
 
                 [DllImport(nameof(User32), SetLastError = true)]
                 [return: MarshalAs(UnmanagedType.Bool)]
-#pragma warning disable SYSLIB1054 // Use 'LibraryImportAttribute' instead of 'DllImportAttribute' to generate P/Invoke marshalling code at compile time
+#pragma warning disable  // SYSLIB1054 Use 'LibraryImportAttribute' instead of 'DllImportAttribute' to generate P/Invoke marshalling code at compile time
                 public static extern bool GetWindowRect(IntPtr hWnd, out RECT lpRect);
-#pragma warning restore SYSLIB1054 // Use 'LibraryImportAttribute' instead of 'DllImportAttribute' to generate P/Invoke marshalling code at compile time
+#pragma warning restore
 
                 [DllImport(nameof(User32), SetLastError = true)]
                 [return: MarshalAs(UnmanagedType.Bool)]
-#pragma warning disable SYSLIB1054
+#pragma warning disable // SYSLIB1054
                 public static extern bool SetWindowPos(
                     IntPtr hWnd,
                     IntPtr hWndInsertAfter,
@@ -280,13 +282,13 @@ namespace Alternet.UI.Integration
                     int cx,
                     int cy,
                     SetWindowPosFlags uFlags);
-#pragma warning restore SYSLIB1054
+#pragma warning restore
 
                 [DllImport(nameof(User32), SetLastError = true)]
                 [return: MarshalAs(UnmanagedType.Bool)]
-#pragma warning disable SYSLIB1054
+#pragma warning disable // SYSLIB1054
                 public static extern bool UpdateWindow(IntPtr hWnd);
-#pragma warning restore SYSLIB1054
+#pragma warning restore
 
                 public struct RECT
                 {
