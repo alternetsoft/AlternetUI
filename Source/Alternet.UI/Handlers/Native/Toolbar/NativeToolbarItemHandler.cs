@@ -4,7 +4,7 @@ namespace Alternet.UI
 {
     internal class NativeToolbarItemHandler : ToolbarItemHandler
     {
-        Menu? dropDownMenu;
+        private Menu? dropDownMenu;
 
         public new Native.ToolbarItem NativeControl => (Native.ToolbarItem)base.NativeControl!;
 

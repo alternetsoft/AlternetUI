@@ -1,10 +1,10 @@
-﻿using Alternet.Drawing;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
+using Alternet.Drawing;
 
 namespace Alternet.UI.Integration
 {
@@ -174,21 +174,7 @@ namespace Alternet.UI.Integration
             window.Location = new Point(20000, 20000);
         }
 
-        public class UixmlUpdateFailure
-        {
-            public UixmlUpdateFailure(string message, Exception exception)
-            {
-                Message = message;
-                Exception = exception;
-            }
-
-            public string Message { get; }
-
-            public Exception Exception { get; }
-        }
-
 #if NETCOREAPP
-
         private Assembly? AssemblyLoadContext_Resolving(System.Runtime.Loader.AssemblyLoadContext context, AssemblyName name)
         {
             try
@@ -228,7 +214,7 @@ namespace Alternet.UI.Integration
         }
 #endif
 
-        Assembly? TryLoadAssemblyFromApplicationDirectory(AssemblyName name)
+        private Assembly? TryLoadAssemblyFromApplicationDirectory(AssemblyName name)
         {
             var directory = Path.GetDirectoryName(GetType().Assembly.Location) ?? throw new Exception();
             var file = Path.Combine(directory, name.Name + ".dll");
@@ -236,6 +222,19 @@ namespace Alternet.UI.Integration
                 return null;
 
             return Assembly.LoadFile(file);
+        }
+
+        public class UixmlUpdateFailure
+        {
+            public UixmlUpdateFailure(string message, Exception exception)
+            {
+                Message = message;
+                Exception = exception;
+            }
+
+            public string Message { get; }
+
+            public Exception Exception { get; }
         }
 
         private class PInvoke

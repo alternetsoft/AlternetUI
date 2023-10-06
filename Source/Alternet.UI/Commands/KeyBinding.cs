@@ -23,6 +23,26 @@ namespace Alternet.UI
     public class KeyBinding : InputBinding
     {
         /// <summary>
+        ///     Dependency Property for Modifiers
+        /// </summary>
+        public static readonly DependencyProperty ModifiersProperty =
+            DependencyProperty.Register("Modifiers", typeof(ModifierKeys), typeof(KeyBinding), new UIPropertyMetadata(ModifierKeys.None, new PropertyChangedCallback(OnModifiersPropertyChanged)));
+
+        /// <summary>
+        ///     Dependency Property for Key
+        /// </summary>
+        public static readonly DependencyProperty KeyProperty =
+            DependencyProperty.Register(
+                "Key",
+                typeof(Key),
+                typeof(KeyBinding),
+                new UIPropertyMetadata(
+                    Key.None,
+                    new PropertyChangedCallback(OnKeyPropertyChanged)));
+
+        private bool settingGesture = false;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="KeyBinding"/> class.
         /// </summary>
         public KeyBinding()
@@ -50,6 +70,22 @@ namespace Alternet.UI
         public KeyBinding(ICommand command, Key key, ModifierKeys modifiers)
             : this(command, new KeyGesture(key, modifiers))
         {
+        }
+
+        /// <summary>
+        ///     Key
+        /// </summary>
+        public Key Key
+        {
+            get
+            {
+                return (Key)GetValue(KeyProperty);
+            }
+
+            set
+            {
+                SetValue(KeyProperty, value);
+            }
         }
 
         /// <summary>
@@ -81,12 +117,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        ///     Dependency Property for Modifiers
-        /// </summary>
-        public static readonly DependencyProperty ModifiersProperty =
-            DependencyProperty.Register("Modifiers", typeof(ModifierKeys), typeof(KeyBinding), new UIPropertyMetadata(ModifierKeys.None, new PropertyChangedCallback(OnModifiersPropertyChanged)));
-
-        /// <summary>
         ///     Modifiers
         /// </summary>
         public ModifierKeys Modifiers
@@ -108,34 +138,6 @@ namespace Alternet.UI
             keyBinding.SynchronizeGestureFromProperties(keyBinding.Key, (ModifierKeys)e.NewValue);
         }
 
-        /// <summary>
-        ///     Dependency Property for Key
-        /// </summary>
-        public static readonly DependencyProperty KeyProperty =
-            DependencyProperty.Register(
-                "Key",
-                typeof(Key),
-                typeof(KeyBinding),
-                new UIPropertyMetadata(
-                    Key.None,
-                    new PropertyChangedCallback(OnKeyPropertyChanged)));
-
-        /// <summary>
-        ///     Key
-        /// </summary>
-        public Key Key
-        {
-            get
-            {
-                return (Key)GetValue(KeyProperty);
-            }
-
-            set
-            {
-                SetValue(KeyProperty, value);
-            }
-        }
-
         private static void OnKeyPropertyChanged(
             DependencyObject d,
             DependencyPropertyChangedEventArgs e)
@@ -149,9 +151,9 @@ namespace Alternet.UI
         /// </summary>
         private void SynchronizePropertiesFromGesture(KeyGesture keyGesture)
         {
-            if (!_settingGesture)
+            if (!settingGesture)
             {
-                _settingGesture = true;
+                settingGesture = true;
                 try
                 {
                     Key = keyGesture.Key;
@@ -159,7 +161,7 @@ namespace Alternet.UI
                 }
                 finally
                 {
-                    _settingGesture = false;
+                    settingGesture = false;
                 }
             }
         }
@@ -169,20 +171,18 @@ namespace Alternet.UI
         /// </summary>
         private void SynchronizeGestureFromProperties(Key key, ModifierKeys modifiers)
         {
-            if (!_settingGesture)
+            if (!settingGesture)
             {
-                _settingGesture = true;
+                settingGesture = true;
                 try
                 {
                     Gesture = new KeyGesture(key, modifiers, /*validateGesture = */ false);
                 }
                 finally
                 {
-                    _settingGesture = false;
+                    settingGesture = false;
                 }
             }
         }
-
-        private bool _settingGesture = false;
     }
 }

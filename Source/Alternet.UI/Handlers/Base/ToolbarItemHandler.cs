@@ -1,6 +1,6 @@
-using Alternet.Drawing;
 using System;
 using System.Collections.Generic;
+using Alternet.Drawing;
 
 namespace Alternet.UI
 {
@@ -9,7 +9,9 @@ namespace Alternet.UI
     /// </summary>
     public abstract class ToolbarItemHandler : ControlHandler
     {
-        /// <inheritdoc/>
+        /// <summary>
+        /// Gets a <see cref="ToolbarItem"/> this handler provides the implementation for.
+        /// </summary>
         public new ToolbarItem Control => (ToolbarItem)base.Control;
 
         /// <summary>

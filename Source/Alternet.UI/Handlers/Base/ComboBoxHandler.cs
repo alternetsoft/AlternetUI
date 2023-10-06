@@ -16,8 +16,6 @@ namespace Alternet.UI
         /// </summary>
         public new ComboBox Control => (ComboBox)base.Control;
 
-        internal abstract bool HasBorder { get; set; }
-
         /// <summary>
         /// Gets the starting index of text selected in the combo box.
         /// </summary>
@@ -31,6 +29,8 @@ namespace Alternet.UI
         /// </summary>
         /// <value>The number of characters selected in the combo box.</value>
         public abstract int TextSelectionLength { get; }
+
+        internal abstract bool HasBorder { get; set; }
 
         /// <inheritdoc/>
         protected override bool VisualChildNeedsNativeControl => true;

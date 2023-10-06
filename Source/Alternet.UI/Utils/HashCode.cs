@@ -1,3 +1,5 @@
+#pragma warning disable
+
 #if NETFRAMEWORK
 
 // Licensed to the .NET Foundation under one or more agreements.

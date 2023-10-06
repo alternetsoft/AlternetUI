@@ -5,7 +5,7 @@ namespace Alternet.UI.Native
 {
     internal partial class OutputStream
     {
-        Stream stream;
+        private Stream stream;
 
         public OutputStream(Stream stream)
         {

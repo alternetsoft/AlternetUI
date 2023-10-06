@@ -4,11 +4,6 @@ namespace Alternet.UI
 {
     internal class NativeSliderHandler : SliderHandler
     {
-        internal override Native.Control CreateNativeControl()
-        {
-            return new Native.Slider();
-        }
-
         public new Native.Slider NativeControl => (Native.Slider)base.NativeControl!;
 
         public override SliderOrientation Orientation
@@ -21,6 +16,11 @@ namespace Alternet.UI
         {
             get => (SliderTickStyle)NativeControl.TickStyle;
             set => NativeControl.TickStyle = (Native.SliderTickStyle)value;
+        }
+
+        internal override Native.Control CreateNativeControl()
+        {
+            return new Native.Slider();
         }
 
         protected override void OnAttach()
@@ -44,11 +44,6 @@ namespace Alternet.UI
             NativeControl.ValueChanged += NativeControl_ValueChanged;
         }
 
-        private void NativeControl_ValueChanged(object? sender, EventArgs e)
-        {
-            Control.Value = NativeControl.Value;
-        }
-
         protected override void OnDetach()
         {
             base.OnDetach();
@@ -61,6 +56,11 @@ namespace Alternet.UI
             Control.TickFrequencyChanged -= Control_TickFrequencyChanged;
 
             NativeControl.ValueChanged -= NativeControl_ValueChanged;
+        }
+
+        private void NativeControl_ValueChanged(object? sender, EventArgs e)
+        {
+            Control.Value = NativeControl.Value;
         }
 
         private void Control_ValueChanged(object? sender, System.EventArgs e)

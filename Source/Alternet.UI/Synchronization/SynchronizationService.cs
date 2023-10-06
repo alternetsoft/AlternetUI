@@ -3,7 +3,7 @@ using System.Threading;
 
 namespace Alternet.UI
 {
-    static class SynchronizationService
+    internal static class SynchronizationService
     {
         public static bool InvokeRequired
         {
@@ -50,26 +50,25 @@ namespace Alternet.UI
             return EndInvoke(BeginInvoke(method, args));
         }
 
-        class Invocation : IAsyncResult
+        internal class Invocation : IAsyncResult
         {
-            readonly Delegate m_TargetDelegate;
-            readonly object?[] m_TargetDelegateArgs;
-            ManualResetEvent? m_CompletedSyncEvent;
+            private readonly Delegate mTargetDelegate;
+            private readonly object?[] mTargetDelegateArgs;
+            private ManualResetEvent? mCompletedSyncEvent;
 
-            object m_InvokeSyncObject = new object();
-            bool m_Synchronous;
+            private object mInvokeSyncObject = new();
+            private bool m_Synchronous;
 
             public Invocation(Delegate targetDelegate, object?[] targetDelegateArgs, bool synchronous)
             {
-                m_TargetDelegate = targetDelegate;
-                m_TargetDelegateArgs = targetDelegateArgs;
+                mTargetDelegate = targetDelegate;
+                mTargetDelegateArgs = targetDelegateArgs;
                 m_Synchronous = synchronous;
             }
 
             ~Invocation()
             {
-                if (m_CompletedSyncEvent != null)
-                    m_CompletedSyncEvent.Close();
+                mCompletedSyncEvent?.Close();
             }
 
             public object? AsyncState => null;
@@ -82,20 +81,20 @@ namespace Alternet.UI
             {
                 get
                 {
-                    if (m_CompletedSyncEvent == null)
+                    if (mCompletedSyncEvent == null)
                     {
-                        lock (m_InvokeSyncObject)
+                        lock (mInvokeSyncObject)
                         {
-                            if (m_CompletedSyncEvent == null)
+                            if (mCompletedSyncEvent == null)
                             {
-                                m_CompletedSyncEvent = new ManualResetEvent(false);
+                                mCompletedSyncEvent = new ManualResetEvent(false);
                                 if (IsCompleted)
-                                    m_CompletedSyncEvent.Set();
+                                    mCompletedSyncEvent.Set();
                             }
                         }
                     }
 
-                    return m_CompletedSyncEvent;
+                    return mCompletedSyncEvent;
                 }
             }
 
@@ -110,7 +109,7 @@ namespace Alternet.UI
                     {
                         try
                         {
-                            ReturnValue = m_TargetDelegate.DynamicInvoke(m_TargetDelegateArgs);
+                            ReturnValue = mTargetDelegate.DynamicInvoke(mTargetDelegateArgs);
                         }
                         catch (Exception e)
                         {
@@ -125,14 +124,14 @@ namespace Alternet.UI
                 return sink;
             }
 
-            void Complete()
+            private void Complete()
             {
-                lock (m_InvokeSyncObject)
+                lock (mInvokeSyncObject)
                 {
                     IsCompleted = true;
-                    if (m_CompletedSyncEvent != null)
+                    if (mCompletedSyncEvent != null)
                     {
-                        m_CompletedSyncEvent.Set();
+                        mCompletedSyncEvent.Set();
                     }
                 }
             }

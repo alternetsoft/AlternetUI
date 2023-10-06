@@ -4,8 +4,8 @@
 // Description: KeyGestureValueSerializer - Serializes a KeyGesture to and from a string
 
 using System;
-using System.ComponentModel;    // for TypeConverter
-using System.Globalization;     // for CultureInfo
+using System.ComponentModel;
+using System.Globalization;
 using Alternet.UI.Markup;
 
 namespace Alternet.UI
@@ -15,25 +15,13 @@ namespace Alternet.UI
     /// </summary>
     public class KeyGestureValueSerializer : ValueSerializer
     {
-        /// <summary>
-        /// CanConvertFromString()
-        /// </summary>
-        /// <param name="value"></param>
-        /// <param name="context"></param>
-        /// <returns></returns>
-        /// <ExternalAPI/>
+        /// <inheritdoc/>
         public override bool CanConvertFromString(string value, IValueSerializerContext context)
         {
             return true;
         }
 
-        /// <summary>
-        /// CanConvertToString()
-        /// </summary>
-        /// <param name="value"></param>
-        /// <param name="context"></param>
-        /// <returns></returns>
-        /// <ExternalAPI/>
+        /// <inheritdoc/>
         public override bool CanConvertToString(object value, IValueSerializerContext context)
         {
 #pragma warning disable 6506
@@ -43,13 +31,8 @@ namespace Alternet.UI
 #pragma warning restore 6506
         }
 
-        /// <summary>
-        /// ConvertFromString()
-        /// </summary>
-        /// <param name="value"></param>
-        /// <param name="context"></param>
-        /// <returns></returns>
-        public override object ConvertFromString(string value, IValueSerializerContext context)
+        /// <inheritdoc/>
+        public override object? ConvertFromString(string value, IValueSerializerContext context)
         {
             TypeConverter converter = TypeDescriptor.GetConverter(typeof(KeyGesture));
             if (converter != null)
@@ -58,13 +41,8 @@ namespace Alternet.UI
                 return base.ConvertFromString(value, context);
         }
 
-        /// <summary>
-        /// ConvertToString()
-        /// </summary>
-        /// <param name="value"></param>
-        /// <param name="context"></param>
-        /// <returns></returns>
-        public override string ConvertToString(object value, IValueSerializerContext context)
+        /// <inheritdoc/>
+        public override string? ConvertToString(object value, IValueSerializerContext context)
         {
             TypeConverter converter = TypeDescriptor.GetConverter(typeof(KeyGesture));
             if (converter != null)

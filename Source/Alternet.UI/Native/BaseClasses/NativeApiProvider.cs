@@ -22,6 +22,9 @@ namespace Alternet.UI.Native
         private static GCHandle unhandledExceptionCallbackHandle;
         private static GCHandle caughtExceptionCallbackHandle;
 
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Unicode)]
+        public delegate void PInvokeCallbackActionType();
+
         public static void Initialize()
         {
             if (!initialized)
@@ -61,9 +64,6 @@ namespace Alternet.UI.Native
                 unhandledExceptionCallback,
             NativeExceptionsMarshal.NativeExceptionCallbackType
                 caughtExceptionCallback);
-
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Unicode)]
-        public delegate void PInvokeCallbackActionType();
 
         private class WindowsNativeModulesLocator
         {

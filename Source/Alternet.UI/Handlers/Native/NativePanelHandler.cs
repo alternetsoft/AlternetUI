@@ -10,13 +10,11 @@ namespace Alternet.UI
         protected override void OnAttach()
         {
             base.OnAttach();
-
         }
 
         protected override void OnDetach()
         {
             base.OnDetach();
-
         }
     }
 }

@@ -32,14 +32,6 @@ namespace Alternet.UI
             UpdateVisual();
         }
 
-        private void EditTextBox_TextChanged(object? sender, EventArgs? e)
-        {
-            if (editTextBox == null)
-                throw new InvalidOperationException();
-
-            Control.Text = editTextBox.Text;
-        }
-
         protected override void OnDetach()
         {
             base.OnDetach();
@@ -72,6 +64,14 @@ namespace Alternet.UI
         {
             base.OnMouseMove();
             UpdateVisual();
+        }
+
+        private void EditTextBox_TextChanged(object? sender, EventArgs? e)
+        {
+            if (editTextBox == null)
+                throw new InvalidOperationException();
+
+            Control.Text = editTextBox.Text;
         }
 
         private void UpdateVisual()

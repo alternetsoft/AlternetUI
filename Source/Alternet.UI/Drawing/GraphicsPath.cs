@@ -35,26 +35,6 @@ namespace Alternet.Drawing
             NativePath = nativePath;
         }
 
-        internal UI.Native.GraphicsPath NativePath { get; private set; }
-
-        /// <summary>
-        /// Appends a series of connected line segments to the end of this <see cref="GraphicsPath"/>.
-        /// </summary>
-        /// <param name="points">
-        /// An array of <see cref="Point"/> structures that represents the points that define the line segments to add.
-        /// </param>
-        /// <remarks>
-        /// If there are previous lines or curves in the figure, a line is added to connect the endpoint
-        /// of the previous segment the starting point of the line. The points parameter specifies an array of endpoints.
-        /// The first two specify the first line. Each additional point specifies the endpoint of a line segment
-        /// whose starting point is the endpoint of the previous line.
-        /// </remarks>
-        public void AddLines(Point[] points)
-        {
-            CheckDisposed();
-            NativePath.AddLines(points);
-        }
-
         /// <summary>
         /// Gets or sets a <see cref="FillMode"/> enumeration that determines how the interiors of shapes in this <see cref="GraphicsPath"/> are filled.
         /// </summary>
@@ -75,6 +55,26 @@ namespace Alternet.Drawing
                 CheckDisposed();
                 NativePath.FillMode = (UI.Native.FillMode)value;
             }
+        }
+
+        internal UI.Native.GraphicsPath NativePath { get; private set; }
+
+        /// <summary>
+        /// Appends a series of connected line segments to the end of this <see cref="GraphicsPath"/>.
+        /// </summary>
+        /// <param name="points">
+        /// An array of <see cref="Point"/> structures that represents the points that define the line segments to add.
+        /// </param>
+        /// <remarks>
+        /// If there are previous lines or curves in the figure, a line is added to connect the endpoint
+        /// of the previous segment the starting point of the line. The points parameter specifies an array of endpoints.
+        /// The first two specify the first line. Each additional point specifies the endpoint of a line segment
+        /// whose starting point is the endpoint of the previous line.
+        /// </remarks>
+        public void AddLines(Point[] points)
+        {
+            CheckDisposed();
+            NativePath.AddLines(points);
         }
 
         /// <summary>
@@ -241,7 +241,6 @@ namespace Alternet.Drawing
                 throw new ObjectDisposedException(null);
         }
 
-        /// <inheritdoc/>
         private void Dispose(bool disposing)
         {
             if (!isDisposed)

@@ -7,27 +7,22 @@ using Alternet.Drawing;
 
 namespace Alternet.UI
 {
-    internal interface IAssemblyDescriptorResolver
-    {
-        IAssemblyDescriptor GetAssembly(string name);
-    }
-
     internal class AssemblyDescriptorResolver : IAssemblyDescriptorResolver
     {
-        private readonly Dictionary<string, IAssemblyDescriptor> _assemblyNameCache = new ();
+        private readonly Dictionary<string, IAssemblyDescriptor> assemblyNameCache = new ();
 
         public IAssemblyDescriptor GetAssembly(string name)
         {
             if (name == null)
                 throw new ArgumentNullException(nameof(name));
 
-            if (!_assemblyNameCache.TryGetValue(name, out var rv))
+            if (!assemblyNameCache.TryGetValue(name, out var rv))
             {
                 var loadedAssemblies = AppDomain.CurrentDomain.GetAssemblies();
                 var match = loadedAssemblies.FirstOrDefault(a => a.GetName().Name == name);
                 if (match != null)
                 {
-                    _assemblyNameCache[name] = rv = new AssemblyDescriptor(match);
+                    assemblyNameCache[name] = rv = new AssemblyDescriptor(match);
                 }
                 else
                 {
@@ -39,11 +34,18 @@ namespace Alternet.UI
                     }
 #endif
                     name = Uri.UnescapeDataString(name);
-                    _assemblyNameCache[name] = rv = new AssemblyDescriptor(Assembly.Load(name));
+                    assemblyNameCache[name] = rv = new AssemblyDescriptor(Assembly.Load(name));
                 }
             }
 
             return rv;
         }
     }
+
+#pragma warning disable
+    internal interface IAssemblyDescriptorResolver
+    {
+        IAssemblyDescriptor GetAssembly(string name);
+    }
+#pragma warning restore
 }

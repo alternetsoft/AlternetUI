@@ -12,10 +12,6 @@ namespace Alternet.UI
     /// </summary>
     public interface IAuiToolbarArt : IDisposableObject
     {
-        internal void SetFlags(uint flags);
-
-        internal uint GetFlags();
-
         /// <summary>
         /// Gets or sets text orientation.
         /// </summary>
@@ -44,5 +40,9 @@ namespace Alternet.UI
         /// Provides opportunity for subclasses to recalculate colors
         /// </summary>
         internal void UpdateColorsFromSystem();
+
+        internal void SetFlags(uint flags);
+
+        internal uint GetFlags();
     }
 }

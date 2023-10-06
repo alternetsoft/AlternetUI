@@ -19,6 +19,20 @@ namespace Alternet.UI
             this.baseStream.Position = from;
         }
 
+        public override bool CanRead => true;
+
+        public override bool CanSeek => baseStream.CanRead;
+
+        public override bool CanWrite => false;
+
+        public override long Length { get; }
+
+        public override long Position
+        {
+            get => baseStream.Position - from;
+            set => baseStream.Position = value + from;
+        }
+
         public override void Flush()
         {
         }
@@ -44,20 +58,6 @@ namespace Alternet.UI
 
         public override void Write(byte[] buffer, int offset, int count) =>
             throw new NotSupportedException();
-
-        public override bool CanRead => true;
-
-        public override bool CanSeek => baseStream.CanRead;
-
-        public override bool CanWrite => false;
-
-        public override long Length { get; }
-
-        public override long Position
-        {
-            get => baseStream.Position - from;
-            set => baseStream.Position = value + from;
-        }
 
         public override void Close() => baseStream.Close();
 

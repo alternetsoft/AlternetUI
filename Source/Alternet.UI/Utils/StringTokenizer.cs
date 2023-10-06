@@ -3,7 +3,7 @@ using System.Globalization;
 
 namespace Alternet.UI
 {
-    struct StringTokenizer : IDisposable
+    internal struct StringTokenizer : IDisposable
     {
         private const char DefaultSeparatorChar = ',';
 
