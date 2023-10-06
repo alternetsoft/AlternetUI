@@ -37,6 +37,22 @@ namespace Alternet.UI
                             UpdateSourceTrigger.PropertyChanged));
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="CheckBox"/> class with the specified text.
+        /// </summary>
+        /// <param name="text"></param>
+        public CheckBox(string text)
+        {
+            Text = text;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CheckBox"/> class.
+        /// </summary>
+        public CheckBox()
+        {
+        }
+
+        /// <summary>
         /// Occurs when the value of the <see cref="IsChecked"/> property changes.
         /// </summary>
         public event EventHandler? CheckedChanged;
