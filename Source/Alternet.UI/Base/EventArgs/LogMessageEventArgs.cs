@@ -42,7 +42,7 @@ namespace Alternet.UI
         /// <summary>
         /// Message that needs to be logged.
         /// </summary>
-        public string Message { get => message; set => message = value; }
+        public string? Message { get => message; set => message = value; }
 
         /// <summary>
         /// Message text prefix.

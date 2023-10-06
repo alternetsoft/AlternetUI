@@ -1,6 +1,6 @@
-using Alternet.Drawing;
 using System;
 using System.Collections.Generic;
+using Alternet.Drawing;
 
 namespace Alternet.UI
 {
@@ -9,7 +9,9 @@ namespace Alternet.UI
     /// </summary>
     public abstract class ScrollViewerHandler : ControlHandler
     {
-        /// <inheritdoc/>
+        /// <summary>
+        /// Gets a <see cref="ScrollViewer"/> this handler provides the implementation for.
+        /// </summary>
         public new ScrollViewer Control => (ScrollViewer)base.Control;
 
         /// <inheritdoc/>

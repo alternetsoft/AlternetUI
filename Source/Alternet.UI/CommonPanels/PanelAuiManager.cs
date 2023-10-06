@@ -427,7 +427,7 @@ namespace Alternet.UI
         /// uses <see cref="LogControl"/> for the logging.
         /// </summary>
         /// <param name="message">Message text.</param>
-        public virtual void Log(string message)
+        public virtual void Log(string? message)
         {
             LogControl.Add(ConstructLogMessage(message));
             LogControl.SelectAndShowItem(LogControl.LastRootItem);
@@ -484,7 +484,7 @@ namespace Alternet.UI
         /// contains <paramref name="prefix"/>, last log item is replaced with
         /// <paramref name="message"/> instead of adding new log item.
         /// </remarks>
-        public virtual void LogReplace(string message, string? prefix)
+        public virtual void LogReplace(string? message, string? prefix)
         {
             var lastItem = LogControl.LastRootItem;
             if (lastItem is null)
@@ -548,7 +548,7 @@ namespace Alternet.UI
         /// <remarks>
         /// By default adds unique integer identifier to the end of the <paramref name="msg"/>.
         /// </remarks>
-        protected virtual string ConstructLogMessage(string msg)
+        protected virtual string ConstructLogMessage(string? msg)
         {
             return $"{msg} ({LogUtils.GenNewId()})";
         }

@@ -67,8 +67,10 @@ namespace Alternet.UI
                 }
 
                 var control = page.Control;
-                //control.HorizontalAlignment = HorizontalAlignment.Stretch;
-                //control.VerticalAlignment = VerticalAlignment.Stretch;
+
+                 /*control.HorizontalAlignment = HorizontalAlignment.Stretch;
+                 control.VerticalAlignment = VerticalAlignment.Stretch;*/
+
                 control.Parent = this;
                 control.Visible = true;
                 control.PerformLayout();

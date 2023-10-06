@@ -9,12 +9,10 @@ namespace LayoutSample
 {
     public partial class ScrollingWindow : Window
     {
-        private ImageControl imageControl;
+        private readonly ImageControl imageControl = new();
 
         public ScrollingWindow()
         {
-            imageControl = new();
-
             InitializeComponent();
 
             imageControl.Zoom = 2;

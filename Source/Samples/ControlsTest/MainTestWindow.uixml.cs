@@ -8,7 +8,7 @@ namespace ControlsTest
     {
         private readonly StatusBar statusbar = new();
         private readonly PanelTreeAndCards mainPanel = new();
-        private CardPanelItem? firstCard;
+        private readonly CardPanelItem? firstCard;
 
         static MainTestWindow()
         {
