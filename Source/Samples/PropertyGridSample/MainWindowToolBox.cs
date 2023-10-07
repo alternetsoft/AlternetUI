@@ -48,6 +48,7 @@ namespace PropertyGridSample
                   typeof(MainMenu),// can create some modal window? or add child window 
                   typeof(StatusBar),// can create some modal window? or add child window 
                   typeof(PropertyGrid),
+                  typeof(CheckListBox), // as empty items error
                   typeof(PanelWebBrowser),
                   typeof(CardPanel),
                   typeof(TabControl), // pages are not shown. Why?
