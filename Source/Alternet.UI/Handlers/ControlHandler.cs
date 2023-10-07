@@ -1166,7 +1166,7 @@ namespace Alternet.UI
             ApplyFont();
             RaiseLayoutChanged();
             PerformLayout();
-            Invalidate();
+            Refresh();
         }
 
         private void NativeControl_GotFocus(object? sender, EventArgs e)
