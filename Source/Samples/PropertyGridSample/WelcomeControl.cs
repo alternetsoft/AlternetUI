@@ -13,7 +13,7 @@ namespace PropertyGridSample
         private readonly VerticalStackPanel stackPanel = new()
         {
             Padding = new(10),
-            VerticalAlignment = VerticalAlignment.Top,
+            VerticalAlignment = VerticalAlignment.Stretch,
             HorizontalAlignment = HorizontalAlignment.Stretch,
         };
         private const string descText = "Specialized grid for editing properties.";
@@ -28,8 +28,40 @@ namespace PropertyGridSample
             Margin = new(0,5,0,15),
         };
 
+        /*private WebBrowser webBrowser;*/
+
+        private static string GetPandaFileName()
+        {
+            var s = PathUtils.GetAppFolder() +
+                "Resources/welcome.html";
+            return s;
+        }
+
+        private static string GetPandaUrl()
+        {
+            var s = WebBrowser.PrepareFileUrl(GetPandaFileName());
+            return s;
+        }
+
         public WelcomeControl()
         {
+            HorizontalAlignment = HorizontalAlignment.Stretch;
+            VerticalAlignment = VerticalAlignment.Stretch;
+            SuggestedHeight = 500;
+            SuggestedWidth = 500;
+
+            /*webBrowser = new(GetPandaUrl())
+            {
+                HasBorder = false,
+                Visible = false,
+                HorizontalAlignment = HorizontalAlignment.Stretch,
+                VerticalAlignment = VerticalAlignment.Stretch,
+                Parent = this,
+                SuggestedHeight = 500,
+                SuggestedWidth = 500,
+            };
+            webBrowser.Loaded += WebBrowser_Loaded;*/
+
             DoInsideLayout(() =>
             {
                 Children.Add(stackPanel);
@@ -37,5 +69,10 @@ namespace PropertyGridSample
                 stackPanel.Children.Add(desc);
             });
         }
+
+        /*private void WebBrowser_Loaded(object? sender, WebBrowserEventArgs e)
+        {
+            webBrowser.Visible = true;
+        } */
     }
 }

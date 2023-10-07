@@ -34,6 +34,13 @@
       <None Remove="Resources\ImageListIcons\Small\Pencil16.png" />
       <None Remove="Resources\ImageListIcons\Small\Photo16.png" />
       <None Remove="Resources\logo-128x128.png" />
+      <None Remove="Resources\welcome.html" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Content Include="Resources\welcome.html">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
     </ItemGroup>
 
     <ItemGroup>
