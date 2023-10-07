@@ -144,8 +144,8 @@ namespace Alternet.UI
 
             ComponentDesigner.InitDefault();
             ComponentDesigner.Default!.PropertyChanged += OnDesignerPropertyChanged;
-            SuggestedSize = new(600, 400);
-            MinimumSize = new(500, 300);
+            Size = new(750, 600);
+            MinimumSize = new(550, 350);
             rightPane.BestSize(defaultWidth + 1, 300).MinSize(defaultWidth + 1, 300);
             propertyGrid.SuggestedWidth = defaultWidth + 1;
             manager.Update();
