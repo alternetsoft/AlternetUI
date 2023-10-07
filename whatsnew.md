@@ -1,3 +1,25 @@
+# 0.9.403 (2023 October 7)
+
+- Added PanelWebBrowser, CardPanel controls.
+- Added WebBrowserSearchWindow.
+- Add to Control: MinimumSize, MaximumSize, MinHeight, MaxHeight, MinWidth, MaxWidth.
+- Add ControlSet class to perform group operations on controls.
+- Fixed exception in wxGetKeyStateGTK under Linux (Ubuntu 22 and higher).
+- Fixed crashes in button demo under Linux.
+- Fixed #11 and other bugs in PrintPreview.
+- Add WebBrowser/PanelWebBrowser constructor with url param. Now is possible to specify default url which will be opened.
+- Add to IAuiPaneInfo: GetBestSize, GetMinSize, GetMaxSize.
+- Add to LinkLabel: HoverColor, NormalColor, VisitedColor, Visited.
+- Add new Label, CheckBox, Button constructor with Text parameter.
+- Added Application new props and methods.
+- Fixed PropertyGrid color scheme bugs.
+- Improved Sample projects.
+- Add to PropertyGrid: different color props.
+- Add ComboBox.BindSelectedItem.
+- Add to Grid: AddAutoColumn, AddAutoRow.
+- Add to NotifyIcon: IsOk, IsAvailable, IsIconInstalled.
+- Removed many hints and warnings.
+
 # 0.9.402 (2023 September 28)
 
 - Border improvements: 
