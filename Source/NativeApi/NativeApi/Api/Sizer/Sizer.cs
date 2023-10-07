@@ -29,7 +29,8 @@ namespace NativeApi.Api
                          IntPtr userData) => default;
         public static IntPtr AddWindow2(IntPtr handle, IntPtr window, IntPtr sizerFlags) => default;
         public static IntPtr AddSizer2(IntPtr handle, IntPtr sizer, IntPtr sizerFlags) => default;
-        public static IntPtr AddCustomBox2(IntPtr handle, int width, int height, IntPtr sizerFlags) => default;
+        public static IntPtr AddCustomBox2(IntPtr handle, int width, int height,
+            IntPtr sizerFlags) => default;
         public static IntPtr AddItem(IntPtr handle, IntPtr item) => default;
 
         public static IntPtr AddSpacer(IntPtr handle, int size) => default;

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Alternet.Drawing;
 
 namespace NativeApi.Api
 {
@@ -14,7 +15,13 @@ namespace NativeApi.Api
     //added and items are added there.
     //So a wrap sizer has a primary orientation for adding items, and adds lines as needed
     //in the secondary direction.
-    public abstract class WrapSizer : BoxSizer
+    public class WrapSizer : BoxSizer
     {
+        public static int CreateWrapSizer(
+            int orient /*= wxHORIZONTAL*/, int flags /*= wxWRAPSIZER_DEFAULT_FLAGS*/) => default;
+
+        public static void RepositionChildren(IntPtr handle, Int32Size minSize){}
+
+        public static Int32Size CalcMin(IntPtr handle) => default;
     }
 }
