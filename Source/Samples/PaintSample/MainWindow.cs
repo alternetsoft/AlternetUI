@@ -142,6 +142,8 @@ namespace PaintSample
             toolbar.SetTools(Tools);
 
             UpdateControls();
+
+            PerformLayout();
         }
 
         void UpdateTitle()
