@@ -10,6 +10,7 @@ namespace ControlsSample
 {
     internal partial class SplitterPanelPage : Control
     {
+        private readonly CardPanelHeader panelHeader = new();
         private IPageSite? site;
         private readonly ListBox? control1;
         private readonly ListBox? control2;
@@ -28,6 +29,11 @@ namespace ControlsSample
         public SplitterPanelPage()
         {
             InitializeComponent();
+
+            panelHeader.Add("Actions", pageActions);
+            panelHeader.Add("Settings", pageProps);
+            pageControl.Children.Insert(0, panelHeader);
+            panelHeader.SelectedTab = panelHeader.Tabs[0];
 
             control1 = new()
             {
@@ -92,6 +98,14 @@ namespace ControlsSample
 
             Application.Current.Idle += Current_Idle;
 
+            LogMovingCheckbox.CheckedChanged += LogMovingCheckbox_CheckedChanged;
+        }
+
+        private void LogMovingCheckbox_CheckedChanged(object? sender, EventArgs e)
+        {
+            var log = LogMovingCheckbox.IsChecked;
+            label1.Visible = log;
+            label2.Visible = log;
         }
 
         private void Current_Idle(object? sender, EventArgs e)
@@ -151,12 +165,10 @@ namespace ControlsSample
                 e.Cancel = true;
             }
 
-            var s = "Splitter 1 Moving: ";
-
-            var s2 = $"Sash Pos: {e.SashPosition}/{splitterPanel.MaxSashPosition}/"+
-                $"W:{splitterPanel.ClientSize.Width}, "+
-                $"H:{splitterPanel.ClientSize.Height}";
-            info1 = s + s2;
+            var s2 = $"S1.SashPos: {e.SashPosition}/{splitterPanel.MaxSashPosition}/"+Environment.NewLine+
+                $"S1.Width: {splitterPanel.ClientSize.Width}" + Environment.NewLine +
+                $"S1.Height: {splitterPanel.ClientSize.Height}";
+            info1 = s2;
             info1Changed = true;
         }
 
@@ -170,12 +182,10 @@ namespace ControlsSample
                 e.Cancel = true;
             }
 
-            var s = "Splitter 2 Moving: ";
-
-            var s2 = $"Sash Pos: {e.SashPosition}/{splitterPanel2.MaxSashPosition}/" +
-                $"W:{splitterPanel2.ClientSize.Width}, " +
-                $"H:{splitterPanel2.ClientSize.Height}";
-            info2 = s + s2;
+            var s2 = $"S2.SashPos: {e.SashPosition}/{splitterPanel2.MaxSashPosition}/"+Environment.NewLine+
+                $"S2.Width: {splitterPanel2.ClientSize.Width}" + Environment.NewLine +
+                $"S2.Height: {splitterPanel2.ClientSize.Height}";
+            info2 = s2;
             info2Changed = true;
         }
 

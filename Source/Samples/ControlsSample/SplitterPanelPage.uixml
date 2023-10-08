@@ -3,50 +3,44 @@
         xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
         xmlns:local="clr-namespace:ControlsSample;assembly=ControlsSample" Padding="10,0,10,0">
 
-  <Grid Name="mainGrid">
-    <Grid.ColumnDefinitions>
-      <ColumnDefinition Width="*" />
-      <ColumnDefinition Width="Auto" />
-    </Grid.ColumnDefinitions>
-    <Grid.RowDefinitions>
-      <RowDefinition Height="*"/>
-      <RowDefinition Height="Auto"/>
-    </Grid.RowDefinitions>
+  <HorizontalStackPanel Name="mainPanel">
 
     <SplitterPanel SuggestedWidth="500" Name="splitterPanel">
     </SplitterPanel>
 
-    <VerticalStackPanel Grid.Column="1" Margin="10,0,0,0" >
-      <Button Text="Split Horizontal" Click="SplitHorizontalButton_Click"
-              Margin="0,0,0,5" Enabled="true"/>
-      <Button Text="Split Vertical" Click="SplitVerticalButton_Click"
-              Margin="0,0,0,5" Enabled="true"/>
-      <Button Text="Unsplit" Click="UnsplitButton_Click"
-              Margin="0,0,0,5" Enabled="true"/>
-      <Button Text="Replace Control" Click="ReplaceControlButton_Click"
-              Margin="0,0,0,5" Enabled="true"/>
-      <Button Text="Sash Visible" Click="SashVisibleButton_Click"
-              Margin="0,0,0,5" Enabled="true"/>
-      <Button Text="Set Min Pane Size" Click="SetMinPaneSizeButton_Click"
-              Margin="0,0,0,5" Enabled="true"/>
-      <Button Text="Set Sash Position" Click="SetSashPositionButton_Click"
-              Margin="0,0,0,5" Enabled="true"/>
-
+    <VerticalStackPanel Name="pageControl" Margin="10,0,0,0">     
+        <VerticalStackPanel Name="pageActions">
+          <Button Text="Split Horizontal" Click="SplitHorizontalButton_Click"
+                  Margin="0,0,0,5" Enabled="true"/>
+          <Button Text="Split Vertical" Click="SplitVerticalButton_Click"
+                  Margin="0,0,0,5" Enabled="true"/>
+          <Button Text="Unsplit" Click="UnsplitButton_Click"
+                  Margin="0,0,0,5" Enabled="true"/>
+          <Button Text="Replace Control" Click="ReplaceControlButton_Click"
+                  Margin="0,0,0,5" Enabled="true"/>
           <Button Text="Resize Pane 1" Click="SashGravity10Button_Click"
                   Margin="0,0,0,5" Enabled="true"/>
           <Button Text="Resize Pane 2" Click="SashGravity00Button_Click"
                   Margin="0,0,0,5" Enabled="true"/>
           <Button Text="Resize Panes Equal" Click="SashGravity05Button_Click"
                   Margin="0,0,0,5" Enabled="true"/>
+        </VerticalStackPanel>
 
-      <CheckBox Text="Log moving" Name="LogMovingCheckbox" 
-                IsChecked="false" Margin="0,5,0,5" />
+        <VerticalStackPanel Name="pageProps" Visible="false">
+          <Button Text="Sash Visible" Click="SashVisibleButton_Click"
+                  Margin="0,0,0,5" Enabled="true"/>
+          <Button Text="Set Min Pane Size" Click="SetMinPaneSizeButton_Click"
+                  Margin="0,0,0,5" Enabled="true"/>
+          <Button Text="Set Sash Position" Click="SetSashPositionButton_Click"
+                  Margin="0,0,0,5" Enabled="true"/>
+          <CheckBox Text="Log moving" Name="LogMovingCheckbox"
+                    IsChecked="false" Margin="0,5,0,5" />
+          <TextBox Name="label1" Margin="0,5,0,5" SuggestedHeight="100" SuggestedWidth="130"
+                   Multiline="true" ReadOnly="true" HasBorder="false" Visible="false"/>
+          <TextBox Name="label2" Margin="0,0,0,5" SuggestedHeight="100" SuggestedWidth="130"
+                   Multiline="true" ReadOnly="true" HasBorder="false" Visible="false"/>
+        </VerticalStackPanel>
+      
     </VerticalStackPanel>
-
-    <VerticalStackPanel Grid.Row="1">
-      <Label Name="label1" Margin="0,5,0,5" />
-      <Label Name="label2" Margin="0,0,0,5" />
-    </VerticalStackPanel>
-  </Grid>
-
+  </HorizontalStackPanel>
 </Control>
