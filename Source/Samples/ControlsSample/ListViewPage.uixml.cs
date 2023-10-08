@@ -10,7 +10,7 @@ namespace ControlsSample
 {
     internal partial class ListViewPage : Control
     {
-        private readonly CardsPanelHeader panelHeader = new();
+        private readonly CardPanelHeader panelHeader = new();
         private IPageSite? site;
         private bool? slowSettingsEnabled;
         private int newItemIndex = 0;
@@ -370,7 +370,7 @@ namespace ControlsSample
                 var i = 0;
                 foreach (var cell in item.Cells)
                 {
-                    cell.Text = cell.Text + i.ToString();
+                    cell.Text += i.ToString();
                     cell.ImageIndex = imageIndex;
                     i++;
                 }

@@ -8,7 +8,7 @@ namespace ControlsSample
 {
     internal partial class TreeViewPage : Control
     {
-        private readonly CardsPanelHeader panelHeader = new();
+        private readonly CardPanelHeader panelHeader = new();
         private IPageSite? site;
         private int supressExpandEvents = 0;
         private bool? slowSettingsEnabled;
