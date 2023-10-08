@@ -5,11 +5,17 @@ namespace LayoutSample
 {
     public partial class StackLayoutPropertiesWindow : Window
     {
+        private readonly CardPanelHeader panelHeader = new();
         private AlignmentControl containerAlignmentControl;
 
         public StackLayoutPropertiesWindow()
         {
             InitializeComponent();
+
+            panelHeader.Add("Container", containerStackPanel);
+            panelHeader.Add("Button", buttonPanel);
+            tabControlPanel.Children.Insert(0, panelHeader);
+            panelHeader.SelectedTab = panelHeader.Tabs[0];
 
             containerAlignmentControl = new AlignmentControl();
             containerStackPanel.Children.Add(containerAlignmentControl);
