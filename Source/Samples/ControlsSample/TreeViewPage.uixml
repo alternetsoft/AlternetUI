@@ -4,7 +4,7 @@
         xmlns:local="clr-namespace:ControlsSample;assembly=ControlsSample" Padding="10,0,10,0">
 
   <Control >
-    <StackPanel Orientation="Horizontal">
+    <HorizontalStackPanel>
       <TreeView SuggestedWidth="240" Name="treeView"
                 ExpandedChanged="TreeView_ExpandedChanged"
                 BeforeLabelEdit="TreeView_BeforeLabelEdit"
@@ -14,89 +14,126 @@
                 MouseLeftButtonDown="TreeView_MouseLeftButtonDown"
                 />
 
-      <StackPanel Orientation="Vertical" Margin="10,0,0,0" >
-        <Button Text="Add Item" Name="addItemButton" Click="AddItemButton_Click" />
-        <Button Text="Remove Item" Name="removeItemButton" Margin="0,3,0,0"
-                Click="RemoveItemButton_Click" />
-        <Button Text="Add 1000 Items" Name="addManyItemsButton" Margin="0,3,0,0"
-                Click="AddManyItemsButton_Click" />
-        <Button Text="Edit Label"
-                Name="beginSelectedLabelEditingButton" Margin="0,5,0,0"
-                Click="BeginSelectedLabelEditingButton_Click" Enabled="False" />
-        <CheckBox Text="Allow Edit Label" Name="allowLabelEditingCheckBox"
-                  Margin="0,5,0,0"
-                  CheckedChanged="AllowLabelEditingCheckBox_CheckedChanged"
-                  IsChecked="False" />
-        <CheckBox Text="Multiple Selection"
-                  Name="allowMultipleSelectionCheckBox" Margin="0,5,0,0"
-                  CheckedChanged="AllowMultipleSelectionCheckBox_CheckedChanged" />
-        <CheckBox Text="Enabled" Name="enabledCheckBox" Margin="0,5,0,0"
-                  CheckedChanged="EnabledCheckBox_CheckedChanged" IsChecked="True" />
-        <CheckBox Text="Show Root Lines" Name="showRootLinesCheckBox"
-                  Margin="0,5,0,0"
-                  CheckedChanged="ShowRootLinesCheckBox_CheckedChanged"
-                  IsChecked="True" />
-        <CheckBox Text="Show Lines" Name="showLinesCheckBox" Margin="0,5,0,0"
-                  CheckedChanged="ShowLinesCheckBox_CheckedChanged"
-                  IsChecked="False" />
-        <CheckBox Text="Show Expand Button" Name="showExpandButtonsCheckBox"
-                  Margin="0,5,0,0" CheckedChanged="ShowExpandButtons_CheckedChanged"
-                  IsChecked="True" />
-        <CheckBox Text="Full Row Select" Name="fullRowSelectCheckBox"
-                  Margin="0,5,0,0"
-                  CheckedChanged="FullRowSelectCheckBox_CheckedChanged"
-                  IsChecked="False" />
+      <VerticalStackPanel Name="pageControl" Margin="10,0,0,0" >
 
-        <GroupBox Title="Cancel Events" Margin="0,3,0,3" Padding="3" >
-          <VerticalStackPanel>
-            <CheckBox Text="BeforeExpand" Name="cancelBeforeExpandEventsCheckBox"
-                      IsChecked="False" />
-            <CheckBox Text="BeforeCollapse" Name="cancelBeforeCollapseEventsCheckBox"
-                      Margin="0,5,0,0"
-                      IsChecked="False" />
-            <CheckBox Text="BeforeLabelEdit" Name="cancelBeforeLabelEditEventsCheckBox"
-                      Margin="0,5,0,0"
-                      IsChecked="False" />
-            <CheckBox Text="AfterLabelEdit" Name="cancelAfterLabelEditEventsCheckBox"
-                      Margin="0,5,0,0"
-                      IsChecked="False" />
-          </VerticalStackPanel>
-        </GroupBox>
-      </StackPanel>
+        <!-- ========================= -->
+        <VerticalStackPanel Name="stackPanel1">
 
-      <StackPanel Orientation="Vertical" Margin="10,0,0,0" >
-        <Button Text="Expand All" Name="expandAllButton" Margin="0,0,0,0"
-                Click="ExpandAllButton_Click" />
-        <Button Text="Collapse All" Name="collapseAllButton" Margin="0,3,0,0"
-                Click="CollapseAllButton_Click" />
-        <Button Text="Expand All Childs" Name="expandAllChildrenButton" Margin="0,3,0,0"
-                Click="ExpandAllChildrenButton_Click" />
-        <Button Text="Collapse All Childs" Name="collapseAllChildrenButton" Margin="0,3,0,0"
-                Click="CollapseAllChildrenButton_Click" />
-        <Button Text="Clear Items" Margin="0,3,0,0"
-              Name="clearButton" Click="ClearItemsButton_Click"/>
-        <Button Text="Log Selected" Margin="0,3,0,0"
-                Name="viewSelectedButton" Click="TreeView_SelectionChanged"/>
-        <Button Text="Has Border" Margin="0,3,0,0" Name="hasBorderButton"
-                Click="HasBorderButton_Click"/>
-        <Button Text="Edit Items..." Margin="0,3,0,0" Name="EditorButton"
-                Click="EditorButton_Click"/>
-        <GroupBox Title="Last Item" Padding="3" Margin="0,3,0,3" >
-          <VerticalStackPanel>
+          <HorizontalStackPanel>
+            <Button Text="Add" Name="addItemButton" Click="AddItemButton_Click" />
+            <Button Text="Remove" Name="removeItemButton"
+                    Click="RemoveItemButton_Click" />
+          </HorizontalStackPanel>
+
+          <HorizontalStackPanel>
+            <Button Text="Add 1000" Name="addManyItemsButton" Margin="0,3,0,0"
+                    Click="AddManyItemsButton_Click" />
+            <Button Text="Clear" Margin="0,3,0,0"
+                  Name="clearButton" Click="ClearItemsButton_Click"/>
+          </HorizontalStackPanel>
+
+          <HorizontalStackPanel>
+            <Button Text="Expand All" Name="expandAllButton" Margin="0,3,0,0"
+                    Click="ExpandAllButton_Click" />
+            <Button Text="Collapse All" Name="collapseAllButton" Margin="0,3,0,0"
+                    Click="CollapseAllButton_Click" />
+          </HorizontalStackPanel>
+
+          <HorizontalStackPanel>
+            <Button Text="Expand Childs" Name="expandAllChildrenButton" Margin="0,3,0,0"
+                    Click="ExpandAllChildrenButton_Click" />
+            <Button Text="Collapse Childs" Name="collapseAllChildrenButton" Margin="0,3,0,0"
+                    Click="CollapseAllChildrenButton_Click" />
+          </HorizontalStackPanel>
+
+          <HorizontalStackPanel>
+            <Button Text="Edit Label"
+                    Name="beginSelectedLabelEditingButton" Margin="0,3,0,0"
+                    Click="BeginSelectedLabelEditingButton_Click" Enabled="False" />
+            <Button Text="Edit..." Margin="0,3,0,0" Name="editorButton"
+                    Click="EditorButton_Click"/>
+          </HorizontalStackPanel>
+
+          <Label Text="Last Item" Margin="0,10,0,0"/>
+          <Border BorderWidth="0,3,0,0" Margin="0,5,0,5"/>
+
+          <HorizontalStackPanel>
             <Button Text="Make Visible" Name="ensureLastItemVisibleButton"
                     Margin="0,0,0,0" Click="EnsureLastItemVisibleButton_Click" />
             <Button Text="To View" Name="scrollLastItemIntoViewButton"
-                    Margin="0,3,0,0" Click="ScrollLastItemIntoViewButton_Click" />
+                    Margin="0,0,0,0" Click="ScrollLastItemIntoViewButton_Click" />
+          </HorizontalStackPanel>
+
+          <HorizontalStackPanel>
             <Button Text="Focus" Name="focusLastItemButton" Margin="0,3,0,0"
                     Click="FocusLastItemButton_Click" />
             <Button Text="Modify" Name="modifyLastItemButton" Margin="0,3,0,0"
                     Click="ModifyLastItemButton_Click" />
+          </HorizontalStackPanel>
+
+          <HorizontalStackPanel>
             <Button Text="Add Sibling" Name="addLastItemSiblingButton" Margin="0,3,0,5"
                     Click="AddLastItemSiblingButton_Click" />
-          </VerticalStackPanel>
-        </GroupBox>
-      </StackPanel>
-    </StackPanel>
+            <Control Name="dummyButton" Margin="0,3,0,0"/>
+          </HorizontalStackPanel>
+
+        </VerticalStackPanel>
+
+        <!-- ========================= -->
+
+        <VerticalStackPanel Name="stackPanel2" Visible="false">
+          <CheckBox Text="Allow Edit Label" Name="allowLabelEditingCheckBox"
+                    Margin="0,5,0,0"
+                    CheckedChanged="AllowLabelEditingCheckBox_CheckedChanged"
+                    IsChecked="False" />
+          <CheckBox Text="Multiple Selection"
+                    Name="allowMultipleSelectionCheckBox" Margin="0,5,0,0"
+                    CheckedChanged="AllowMultipleSelectionCheckBox_CheckedChanged" />
+          <CheckBox Text="Enabled" Name="enabledCheckBox" Margin="0,5,0,0"
+                    CheckedChanged="EnabledCheckBox_CheckedChanged" IsChecked="True" />
+          <CheckBox Text="Show Root Lines" Name="showRootLinesCheckBox"
+                    Margin="0,5,0,0"
+                    CheckedChanged="ShowRootLinesCheckBox_CheckedChanged"
+                    IsChecked="True" />
+          <CheckBox Text="Show Lines" Name="showLinesCheckBox" Margin="0,5,0,0"
+                    CheckedChanged="ShowLinesCheckBox_CheckedChanged"
+                    IsChecked="False" />
+          <CheckBox Text="Show Expand Button" Name="showExpandButtonsCheckBox"
+                    Margin="0,5,0,0" CheckedChanged="ShowExpandButtons_CheckedChanged"
+                    IsChecked="True" />
+          <CheckBox Text="Full Row Select" Name="fullRowSelectCheckBox"
+                    Margin="0,5,0,0"
+                    CheckedChanged="FullRowSelectCheckBox_CheckedChanged"
+                    IsChecked="False" />
+          <Button Text="Has Border" Margin="0,5,0,5" Name="hasBorderButton"
+                  Click="HasBorderButton_Click"/>
+        </VerticalStackPanel>
+
+        <!-- ========================= -->
+
+        <VerticalStackPanel Name="stackPanel3" Visible="false">
+          <Button Text="Log Selected" Margin="0,3,0,0"
+                  Name="viewSelectedButton" Click="TreeView_SelectionChanged"/>
+          <GroupBox Title="Cancel Events" Margin="0,3,0,3" Padding="3" >
+            <VerticalStackPanel>
+              <CheckBox Text="BeforeExpand" Name="cancelBeforeExpandEventsCheckBox"
+                        IsChecked="False" />
+              <CheckBox Text="BeforeCollapse" Name="cancelBeforeCollapseEventsCheckBox"
+                        Margin="0,5,0,0"
+                        IsChecked="False" />
+              <CheckBox Text="BeforeLabelEdit" Name="cancelBeforeLabelEditEventsCheckBox"
+                        Margin="0,5,0,0"
+                        IsChecked="False" />
+              <CheckBox Text="AfterLabelEdit" Name="cancelAfterLabelEditEventsCheckBox"
+                        Margin="0,5,0,0"
+                        IsChecked="False" />
+            </VerticalStackPanel>
+          </GroupBox>
+        </VerticalStackPanel>
+        <!-- ========================= -->
+
+      </VerticalStackPanel>
+    </HorizontalStackPanel>
   </Control>
 
 </Control>

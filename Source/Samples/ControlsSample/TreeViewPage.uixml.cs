@@ -8,6 +8,7 @@ namespace ControlsSample
 {
     internal partial class TreeViewPage : Control
     {
+        private readonly CardsPanelHeader panelHeader = new();
         private IPageSite? site;
         private int supressExpandEvents = 0;
         private bool? slowSettingsEnabled;
@@ -16,7 +17,32 @@ namespace ControlsSample
         public TreeViewPage()
         {
             InitializeComponent();
-            
+
+            panelHeader.Add("Actions", stackPanel1);
+            panelHeader.Add("Settings", stackPanel2);
+            panelHeader.Add("Events", stackPanel3);
+            pageControl.Children.Insert(0, panelHeader);
+            panelHeader.SelectedTab = panelHeader.Tabs[0];
+
+            ControlSet buttons = new(
+                addItemButton,
+                removeItemButton,
+                addManyItemsButton,
+                clearButton,
+                expandAllButton,
+                collapseAllButton,
+                expandAllChildrenButton,
+                collapseAllChildrenButton,
+                beginSelectedLabelEditingButton,
+                ensureLastItemVisibleButton,
+                editorButton,
+                scrollLastItemIntoViewButton,
+                focusLastItemButton,
+                modifyLastItemButton,
+                addLastItemSiblingButton,
+                dummyButton);
+            buttons.SuggestedWidthToMax();
+
             treeView.Items.ItemInserted += Items_ItemInserted;
             treeView.Items.ItemRemoved += Items_ItemRemoved;
             treeView.MouseUp += TreeView_MouseUp;

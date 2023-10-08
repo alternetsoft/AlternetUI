@@ -20,16 +20,7 @@
       <!-- ========================= -->
       <StackPanel Margin="10,0,0,0" Padding="5" Name="tabControlPanel"
                   VerticalAlignment="Stretch">
-        <!-- 
-          <HorizontalStackPanel >
-            <Button Text="Actions" Name="ActionsButton"
-                    Click="ActionsButton_Click" HorizontalAlignment="Center"/>
-            <Button Text="Settings" Name="SettingsButton"
-                    Click="SettingsButton_Click" HorizontalAlignment="Center"/>
-          </HorizontalStackPanel>
-          <Border Name="scrollViewer1" VerticalAlignment="Stretch"  BorderWidth="0,3,0,0"
-                  Margin="0,5,0,0">
-                                       -->
+
         <!-- ========================= -->
         <StackPanel Orientation="Vertical"
                       VerticalAlignment="Stretch" Name="stackPanel1">
