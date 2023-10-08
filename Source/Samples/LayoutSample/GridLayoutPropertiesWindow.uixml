@@ -5,39 +5,38 @@
         Title="Alternet UI Grid Layout Properties" Width="800" Height="650"
         StartLocation="CenterScreen" >
 
-  <ScrollViewer Padding="10">
+  <Control Padding="10">
     <Grid >
       <Grid.ColumnDefinitions>
         <ColumnDefinition Width="Auto" />
         <ColumnDefinition Width="*" />
       </Grid.ColumnDefinitions>
 
-      <StackPanel Grid.Column="0" Margin="0,0,10,0">
-
-        <Label Text="Button" Margin="0,0,0,0" />
-        <Border BorderWidth="0,3,0,0" Margin="0,5,0,5"/>
-        <Button Text="Increase Margin" Click="IncreaseButtonMarginButton_Click" Margin="0,0,0,5" />
-        <Button Text="Increase Padding" Click="IncreaseButtonPaddingButton_Click" Margin="0,0,0,5" />
 
 
-        <VerticalStackPanel Name="containerStackPanel">
-          <Label Text="Container" Margin="0,10,0,0"/>
-          <Border BorderWidth="0,3,0,0" Margin="0,5,0,5"/>
-          <Button Text="Increase Margin" Click="IncreaseContainerMarginButton_Click" Margin="0,0,0,5" />
-          <Button Text="Increase Padding" Click="IncreaseContainerPaddingButton_Click" Margin="0,0,0,5" />
-        </VerticalStackPanel>
+      <StackPanel Grid.Column="0" Margin="0,0,10,0" Name="pageControl">
 
-        <VerticalStackPanel Name="gridStackPanel">
-          <Label Text="Grid" Margin="0,10,0,0"/>
-          <Border BorderWidth="0,3,0,0" Margin="0,5,0,5"/>
+        <VerticalStackPanel Name="gridStackPanel" Visible="true">
           <Button Text="Add Column" Click="AddGridColumnButton_Click"
                   Margin="0,0,0,5" />
           <Button Text="Add Row" Click="AddGridRowButton_Click"
                   Margin="0,0,0,5" />
         </VerticalStackPanel>
+
+        <VerticalStackPanel Name="containerStackPanel" Visible="false">
+          <Button Text="Increase Margin" Click="IncreaseContainerMarginButton_Click" Margin="0,0,0,5" />
+          <Button Text="Increase Padding" Click="IncreaseContainerPaddingButton_Click" Margin="0,0,0,5" />
+        </VerticalStackPanel>
+
+        <VerticalStackPanel Name="buttonStackPanel" Visible="false">
+          <Button Text="Increase Margin" Click="IncreaseButtonMarginButton_Click" Margin="0,0,0,5" />
+          <Button Text="Increase Padding" Click="IncreaseButtonPaddingButton_Click" Margin="0,0,0,5" />
+        </VerticalStackPanel>
+
+
       </StackPanel>
 
-      <GroupBox Grid.Column="1" Title="Subject Container" Name="subjectGroupBox"
+      <GroupBox Grid.Column="1" Title="Container" Name="subjectGroupBox"
                 Padding="5" Margin="0,0,5,5">
         <Grid Name="subjectGrid">
           <Grid.ColumnDefinitions>
@@ -78,7 +77,7 @@
           </Border>
 
           <Border Grid.Column="2" Grid.Row="2">
-            <Button Text="Subject Button" Name="subjectButton"/>
+            <Button Text="Button" Name="subjectButton"/>
           </Border>
 
           <Border Grid.Column="3" Grid.Row="2">
@@ -99,5 +98,5 @@
         </Grid>
       </GroupBox>
     </Grid>
-  </ScrollViewer>
+  </Control>
 </Window>
