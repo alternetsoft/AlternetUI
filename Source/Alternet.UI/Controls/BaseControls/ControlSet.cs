@@ -28,6 +28,34 @@ namespace Alternet.UI
         public IReadOnlyList<Control> Items => items;
 
         /// <summary>
+        /// Gets the maximum width among all controls in the set.
+        /// </summary>
+        public double MaxWidth
+        {
+            get
+            {
+                double result = 0;
+                foreach (var item in items)
+                    result = Math.Max(result, item.Width);
+                return result;
+            }
+        }
+
+        /// <summary>
+        /// Gets the maximum height among all controls in the set.
+        /// </summary>
+        public double MaxHeight
+        {
+            get
+            {
+                double result = 0;
+                foreach (var item in items)
+                    result = Math.Max(result, item.Height);
+                return result;
+            }
+        }
+
+        /// <summary>
         /// Gets or sets the element at the specified index.
         /// </summary>
         /// <param name="index">The zero-based index of the element
@@ -67,6 +95,45 @@ namespace Alternet.UI
         {
             foreach (var item in items)
                 item.VerticalAlignment = value;
+            return this;
+        }
+
+        /// <summary>
+        /// Sets suggested width for all the controls in the set.
+        /// </summary>
+        public ControlSet SuggestedWidthToMax()
+        {
+            return SuggestedWidth(MaxWidth);
+        }
+
+        /// <summary>
+        /// Sets suggested height for all the controls in the set.
+        /// </summary>
+        public ControlSet SuggestedHeightToMax()
+        {
+            return SuggestedHeight(MaxHeight);
+        }
+
+        /// <summary>
+        /// Sets the suggested width for all the controls in the set.
+        /// </summary>
+        public ControlSet SuggestedWidth(double width)
+        {
+            foreach (var item in items)
+            {
+                item.SuggestedWidth = width;
+            }
+
+            return this;
+        }
+
+        /// <summary>
+        /// Sets the suggested height for all the controls in the set.
+        /// </summary>
+        public ControlSet SuggestedHeight(double height)
+        {
+            foreach (var item in items)
+                item.SuggestedHeight = height;
             return this;
         }
 
