@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using static Alternet.UI.Markup.Xaml.XamlIl.CompilerExtensions.Transformers.UixmlPortXamlIlRootObjectScope;
 
 namespace Alternet.UI
 {
