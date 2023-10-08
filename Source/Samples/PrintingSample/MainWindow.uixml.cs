@@ -47,12 +47,14 @@ namespace PrintingSample
             dc.DrawRectangle(Pens.Red, cornerRectLeft);
             dc.DrawRectangle(Pens.Red, cornerRectRight);
 
+            var drawTextBounds = bounds.InflatedBy(-50, -50);
+
             dc.DrawText(
                 "The quick brown fox jumps over the lazy dog.",
                 font,
                 Brushes.Black,
-                bounds.OffsetBy(0, 50),
-                new TextFormat { Wrapping = TextWrapping.None });
+                drawTextBounds,
+                new TextFormat { Wrapping = TextWrapping.Word });
 
             dc.FillEllipse(Brushes.Gold, cornerRectLeft.InflatedBy(-5, -5));
             dc.FillEllipse(Brushes.Gold, cornerRectRight.InflatedBy(-5, -5));
