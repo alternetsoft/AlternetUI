@@ -45,6 +45,15 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="LinkLabel"/> class with the specified text.
+        /// </summary>
+        public LinkLabel(string text)
+            : base()
+        {
+            Text = text;
+        }
+
+        /// <summary>
         /// Occurs when the value of the <see cref="Text"/> property changes.
         /// </summary>
         public event TextChangedEventHandler TextChanged
