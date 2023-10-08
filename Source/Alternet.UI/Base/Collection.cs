@@ -129,6 +129,26 @@ namespace Alternet.Base.Collections
         }
 
         /// <summary>
+        /// Searches for the specified object and returns the zero-based index of the first
+        /// occurrence within the entire collection.
+        /// </summary>
+        /// <param name="item">
+        /// The object to locate in the collection.
+        /// The value can be null for reference types.
+        /// </param>
+        /// <returns>
+        /// The zero-based index of the first occurrence of item within the entire collection,
+        /// if found; otherwise, <c>null</c>.
+        /// </returns>
+        public int? IndexOfOrNull(T item)
+        {
+            var result = IndexOf(item);
+            if (result < 0)
+                return null;
+            return result;
+        }
+
+        /// <summary>
         /// Changes the number of elements in the collection.
         /// </summary>
         /// <param name="newCount">New </param>
