@@ -1,7 +1,7 @@
 <Window xmlns="http://schemas.alternetsoft.com/ui/2021"
         xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
         x:Class="InputSample.MouseInputWindow"
-		Width="600" Height="600"
+		MinWidth="700" MinHeight="700"
         Title="Mouse Input"
 		PreviewMouseMove="Window_PreviewMouseMove" MouseMove="Window_MouseMove"
 		PreviewMouseDown="Window_PreviewMouseDown" MouseDown="Window_MouseDown"
@@ -10,36 +10,58 @@
 		PreviewMouseLeftButtonDown="Window_PreviewMouseLeftButtonDown" MouseLeftButtonDown="Window_MouseLeftButtonDown"
 		PreviewMouseWheel="Window_PreviewMouseWheel" MouseWheel="Window_MouseWheel"
 		>
-	<StackPanel Orientation="Vertical"
-				PreviewMouseMove="StackPanel_PreviewMouseMove" MouseMove="StackPanel_MouseMove"
-				PreviewMouseDown="StackPanel_PreviewMouseDown" MouseDown="StackPanel_MouseDown"
-				PreviewMouseUp="StackPanel_PreviewMouseUp" MouseUp="StackPanel_MouseUp"
-				Padding="5">
-		<Button Name="helloButton" Text="Say Hello" Margin="10" Click="HelloButton_Click"
-				PreviewMouseMove="HelloButton_PreviewMouseMove" MouseMove="HelloButton_MouseMove"
-				PreviewMouseDown="HelloButton_PreviewMouseDown" MouseDown="HelloButton_MouseDown"
-				PreviewMouseUp="HelloButton_PreviewMouseUp" MouseUp="HelloButton_MouseUp"
-				/>
-		<Border Margin="10"
-				Name="mouseCaptureBorder"
-				MouseDown="MouseCaptureBorder_MouseDown" MouseUp="MouseCaptureBorder_MouseUp" MouseCaptureLost="MouseCaptureBorder_MouseCaptureLost"
-				MouseEnter="MouseCaptureBorder_MouseEnter" MouseLeave="MouseCaptureBorder_MouseLeave">
-			<Label Margin="10" Name="mouseCaptureLabel" />
-		</Border>
-		<TextBox Text="Sample Text Box" Margin="10"/>
-		<CheckBox Name="cancelMouseMoveInputCheckBox" Text="Cancel MouseMove Input" Margin="10"/>
-		
-		<StackPanel Orientation="Horizontal" Margin="5">
-			<Label Text="Mouse Buttons State:" />
-			<CheckBox Text="Left" Name="leftButtonDownCheckBox" Enabled="false" Margin="5,0,0,0"/>
-			<CheckBox Text="Middle" Name="middleButtonDownCheckBox" Enabled="false" Margin="5,0,0,0"/>
-			<CheckBox Text="Right" Name="rightButtonDownCheckBox" Enabled="false" Margin="5,0,0,0"/>
-			<CheckBox Text="Extended 1" Name="x1ButtonDownCheckBox" Enabled="false" Margin="5,0,0,0"/>
-			<CheckBox Text="Extended 2" Name="x2ButtonDownCheckBox" Enabled="false" Margin="5,0,0,0"/>
-		</StackPanel>
+  <Control>
 
-		<ListBox Name="lb" SuggestedHeight="200" Margin="5"/>
-        
-        <Label Name="mousePositionLabel" Margin="10" />
-	</StackPanel>
+    <VerticalStackPanel>
+
+
+      <GroupBox Margin="10" Padding="5">
+        <StackPanel Orientation="Vertical"
+                    PreviewMouseMove="StackPanel_PreviewMouseMove" MouseMove="StackPanel_MouseMove"
+                    PreviewMouseDown="StackPanel_PreviewMouseDown" MouseDown="StackPanel_MouseDown"
+                    PreviewMouseUp="StackPanel_PreviewMouseUp" MouseUp="StackPanel_MouseUp"
+                    Padding="5">
+          <Button Name="helloButton" Text="Say Hello" Margin="10" Click="HelloButton_Click"
+                  PreviewMouseMove="HelloButton_PreviewMouseMove" MouseMove="HelloButton_MouseMove"
+                  PreviewMouseDown="HelloButton_PreviewMouseDown" MouseDown="HelloButton_MouseDown"
+                  PreviewMouseUp="HelloButton_PreviewMouseUp" MouseUp="HelloButton_MouseUp"
+				/>
+          <Border Margin="10"
+                  Name="mouseCaptureBorder"
+                  MouseDown="MouseCaptureBorder_MouseDown" MouseUp="MouseCaptureBorder_MouseUp" MouseCaptureLost="MouseCaptureBorder_MouseCaptureLost"
+                  MouseEnter="MouseCaptureBorder_MouseEnter" MouseLeave="MouseCaptureBorder_MouseLeave">
+            <Label Margin="10" Name="mouseCaptureLabel" />
+          </Border>
+          <TextBox Text="Sample Text Box" Margin="10"/>
+          <CheckBox Name="cancelMouseMoveInputCheckBox" Text="Cancel MouseMove Input" Margin="10"/>
+
+          <Label Text="Mouse Buttons State:" Margin="5"/>
+
+          <TextBox Name="buttonInfo" Margin="5" ReadOnly="true" SuggestedWidth="350"/>
+
+          <HorizontalStackPanel>
+            <VerticalStackPanel>
+              <Label Text="Window:" Margin="5"/>
+              <ListBox Name="lbWindow" Margin="5"  SuggestedWidth="200"  SuggestedHeight="200" />
+            </VerticalStackPanel>
+
+            <VerticalStackPanel>
+              <Label Text="StackPanel:" Margin="5"/>
+              <ListBox Name="lbStackPanel" Margin="5"  SuggestedWidth="200"  SuggestedHeight="200" />
+            </VerticalStackPanel>
+
+            <VerticalStackPanel>
+              <Label Text="Button:" Margin="5"/>
+              <ListBox Name="lbButton" Margin="5"  SuggestedWidth="200"  SuggestedHeight="200" />
+            </VerticalStackPanel>
+          </HorizontalStackPanel>
+
+        </StackPanel>
+      </GroupBox>
+      
+      <Label Name="mousePositionLabel" Margin="10" SuggestedHeight="30"/>
+    
+    </VerticalStackPanel>
+  </Control>
+
 </Window>

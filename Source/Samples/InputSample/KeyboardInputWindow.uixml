@@ -1,7 +1,7 @@
 <Window xmlns="http://schemas.alternetsoft.com/ui/2021"
         xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
         x:Class="InputSample.KeyboardInputWindow"
-		Width="500" Height="600"
+		MinWidth="700" MinHeight="700"
         Title="Keyboard Input" PreviewKeyDown="Window_PreviewKeyDown" PreviewKeyUp="Window_PreviewKeyUp" 
 		KeyDown="Window_KeyDown" KeyUp="Window_KeyUp"
 		TextInput="Window_TextInput">
@@ -13,28 +13,33 @@
 				PreviewKeyDown="HelloButton_PreviewKeyDown" PreviewKeyUp="HelloButton_PreviewKeyUp"/>
 		<Button Text="Button 1" Margin="10" />
 		<TextBox Text="Sample Text Box" Margin="10"/>
-		<CheckBox Name="handlePreviewEventsCheckBox" Text="Handle Preview Events at StackPanel" Margin="10"/>
+		<CheckBox Name="handlePreviewEventsCheckBox"
+                  Text="Handle Preview Events at StackPanel" Margin="10"/>
 		<CheckBox Name="cancelF1KeyInputCheckBox" Text="Cancel F1 Key Input" Margin="10"/>
 		
 		<StackPanel Orientation="Horizontal" Margin="5">
 			<Label Text="Press Ctrl+Shift+D to change the color of this message." Name="messageLabel" />
 		</StackPanel>
-		
-		<StackPanel Orientation="Horizontal" Margin="5">
-			<Label Text="Modifier keys:" />
-			<CheckBox Text="Control" Name="controlPressedCheckBox" Enabled="false" Margin="5,0,0,0"/>
-			<CheckBox Text="Shift" Name="shiftPressedCheckBox" Enabled="false" Margin="5,0,0,0"/>
-			<CheckBox Text="Alt" Name="altPressedCheckBox" Enabled="false" Margin="5,0,0,0"/>
-			<CheckBox Text="Windows" Name="windowsPressedCheckBox" Enabled="false" Margin="5,0,0,0"/>
-		</StackPanel>
-		
-		<StackPanel Orientation="Horizontal" Margin="5" Name="macKeysPanel" Visible="false">
-			<Label Text="macOS modifier keys:" HorizontalAlignment="Center"/>
-			<CheckBox Text="Control" Name="macControlPressedCheckBox" Enabled="false" Margin="5,0,0,0"/>
-			<CheckBox Text="Option" Name="macOptionPressedCheckBox" Enabled="false" Margin="5,0,0,0"/>
-			<CheckBox Text="Command" Name="macCommandPressedCheckBox" Enabled="false" Margin="5,0,0,0"/>
-		</StackPanel>
 
-		<ListBox Name="lb" SuggestedHeight="200" Margin="5"/>
-	</StackPanel>
+      <Label Text="Modifier keys:" Margin="5"/>
+
+      <TextBox Name="buttonInfo" Margin="5" ReadOnly="true" SuggestedWidth="350"/>
+
+      <HorizontalStackPanel>
+        <VerticalStackPanel>
+          <Label Text="Window:" Margin="5"/>
+          <ListBox Name="lbWindow" Margin="5"  SuggestedWidth="200"  SuggestedHeight="200" />
+        </VerticalStackPanel>
+
+        <VerticalStackPanel>
+          <Label Text="StackPanel:" Margin="5"/>
+          <ListBox Name="lbStackPanel" Margin="5"  SuggestedWidth="200"  SuggestedHeight="200" />
+        </VerticalStackPanel>
+
+        <VerticalStackPanel>
+          <Label Text="Button:" Margin="5"/>
+          <ListBox Name="lbButton" Margin="5"  SuggestedWidth="200"  SuggestedHeight="200" />
+        </VerticalStackPanel>
+      </HorizontalStackPanel>
+    </StackPanel>
 </Window>
