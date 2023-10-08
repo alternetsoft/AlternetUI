@@ -35,7 +35,7 @@ namespace ControlsSample
                 HoveredImage = LoadImage("Hovered"),
                 PressedImage = LoadImage("Pressed"),
                 DisabledImage = LoadImage("Disabled"),
-				FocusedImage = LoadImage("Normal"),
+				FocusedImage = LoadImage("Focused"),
             };
         }
 

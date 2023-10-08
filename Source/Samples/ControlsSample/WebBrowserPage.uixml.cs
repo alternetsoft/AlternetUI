@@ -16,7 +16,7 @@ namespace ControlsSample
 
         private static string? headerText;
 
-        private readonly WebBrowser WebBrowser1;
+        private readonly WebBrowser webBrowser;
         private IPageSite? site;
         private bool historyCleared = false;
         private bool pandaLoaded = false;
@@ -34,13 +34,24 @@ namespace ControlsSample
 
             InitializeComponent();
 
-            WebBrowser1 = new(GetPandaUrl());
-            WebBrowser1.Navigated += WebBrowser1_Navigated;
-            WebBrowser1.Loaded += WebBrowser1_Loaded;
-            WebBrowser1.NewWindow += WebBrowser1_NewWindow;
-            WebBrowser1.DocumentTitleChanged += WebBrowser1_TitleChanged;
-            Alternet.UI.Grid.SetRowColumn(WebBrowser1, 2, 0);
-            mainGrid.Children.Add(WebBrowser1);
+            var width = BackButton.Height * 1.5;
+
+            BackButton.SuggestedWidth = width;
+            ForwardButton.SuggestedWidth = width;
+            ZoomInButton.SuggestedWidth = width;
+            ZoomOutButton.SuggestedWidth = width;
+            GoButton.SuggestedWidth = width;
+
+            webBrowser = new(GetPandaUrl())
+            {
+                Visible = false,
+            };
+            webBrowser.Navigated += WebBrowser1_Navigated;
+            webBrowser.Loaded += WebBrowser1_Loaded;
+            webBrowser.NewWindow += WebBrowser1_NewWindow;
+            webBrowser.DocumentTitleChanged += WebBrowser1_TitleChanged;
+            Grid.SetRowColumn(webBrowser, 2, 0);
+            mainGrid.Children.Add(webBrowser);
         }
 
         public IPageSite? Site
@@ -50,13 +61,13 @@ namespace ControlsSample
             set
             {
                 headerText = HeaderLabel.Text;
-                WebBrowser1.ZoomType = WebBrowserZoomType.Layout;
+                webBrowser.ZoomType = WebBrowserZoomType.Layout;
                 site = value;
                 UrlTextBox.Items.Add(SItemPanda);
                 UrlTextBox.Items.Add(SItemGoogle);
 
-                if (WebBrowser1.Backend != WebBrowserBackend.IE &&
-                    WebBrowser1.Backend != WebBrowserBackend.IELatest)
+                if (webBrowser.Backend != WebBrowserBackend.IE &&
+                    webBrowser.Backend != WebBrowserBackend.IELatest)
                     UrlTextBox.Items.Add(SItemPDF);
                 UrlTextBox.Items.Add(SItemImage);
             }
@@ -78,12 +89,12 @@ namespace ControlsSample
         private void FindClearButton_Click(object sender, EventArgs e)
         {
             FindTextBox.Text = string.Empty;
-            WebBrowser1.FindClearResult();
+            webBrowser.FindClearResult();
         }
 
         private void FindButton_Click(object sender, EventArgs e)
         {
-            int findResult = WebBrowser1.Find(FindTextBox.Text);
+            int findResult = webBrowser.Find(FindTextBox.Text);
             Log("Find Result = " + findResult.ToString());
         }
 
@@ -104,7 +115,7 @@ namespace ControlsSample
 
         private void WebBrowser1_Navigated(object? sender, WebBrowserEventArgs e)
         {
-            UrlTextBox.Text = WebBrowser1.GetCurrentURL();
+            UrlTextBox.Text = webBrowser.GetCurrentURL();
         }
 
         private void WebBrowser1_Loaded(object? sender, WebBrowserEventArgs e)
@@ -115,15 +126,16 @@ namespace ControlsSample
             // so we turn on Light scheme in browser.
             if (!pandaLoaded && Application.IsWindowsOS)
             {
-                WebBrowser1.PreferredColorScheme = WebBrowserPreferredColorScheme.Light;
+                webBrowser.PreferredColorScheme = WebBrowserPreferredColorScheme.Light;
             }
 
             pandaLoaded = true;
+            webBrowser.Visible = true;
         }
 
         private void WebBrowser1_NewWindow(object? sender, WebBrowserEventArgs e)
         {
-            WebBrowser1.LoadURL(e.Url);
+            webBrowser.LoadURL(e.Url);
         }
 
         private void WebBrowser1_TitleChanged(object? sender, WebBrowserEventArgs e)
@@ -148,7 +160,7 @@ namespace ControlsSample
         {
             if (s == null)
             {
-                WebBrowser1.LoadURL();
+                webBrowser.LoadURL();
                 return;
             }
 
@@ -178,50 +190,50 @@ namespace ControlsSample
 
             Log("==> LoadUrl: " + s);
 
-            WebBrowser1.LoadUrlOrSearch(s);
+            webBrowser.LoadUrlOrSearch(s);
         }
 
         private void UpdateZoomButtons()
         {
-            ZoomInButton.Enabled = WebBrowser1.CanZoomIn;
-            ZoomOutButton.Enabled = WebBrowser1.CanZoomOut;
+            ZoomInButton.Enabled = webBrowser.CanZoomIn;
+            ZoomOutButton.Enabled = webBrowser.CanZoomOut;
         }
 
         private void UpdateHistoryButtons()
         {
-            if (WebBrowser1 == null || BackButton == null || ForwardButton == null)
+            if (webBrowser == null || BackButton == null || ForwardButton == null)
                 return;
 
             if (!historyCleared)
             {
                 historyCleared = true;
-                WebBrowser1.ClearHistory();
+                webBrowser.ClearHistory();
             }
 
-            BackButton.Enabled = WebBrowser1.CanGoBack;
-            ForwardButton.Enabled = WebBrowser1.CanGoForward;
+            BackButton.Enabled = webBrowser.CanGoBack;
+            ForwardButton.Enabled = webBrowser.CanGoForward;
         }
 
         private void ZoomInButton_Click(object sender, EventArgs e)
         {
-            WebBrowser1.ZoomIn();
+            webBrowser.ZoomIn();
             UpdateZoomButtons();
         }
 
         private void ZoomOutButton_Click(object sender, EventArgs e)
         {
-            WebBrowser1.ZoomOut();
+            webBrowser.ZoomOut();
             UpdateZoomButtons();
         }
 
         private void BackButton_Click(object sender, EventArgs e)
         {
-            WebBrowser1.GoBack();
+            webBrowser.GoBack();
         }
 
         private void ForwardButton_Click(object sender, EventArgs e)
         {
-            WebBrowser1.GoForward();
+            webBrowser.GoForward();
         }
     }
 }

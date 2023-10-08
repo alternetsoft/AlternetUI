@@ -22,6 +22,7 @@
 
     <ItemGroup>
       <None Remove="Resources\ButtonImages\ButtonImageDisabled.png" />
+      <None Remove="Resources\ButtonImages\ButtonImageFocused.png" />
       <None Remove="Resources\ButtonImages\ButtonImageHovered.png" />
       <None Remove="Resources\ButtonImages\ButtonImageNormal.png" />
       <None Remove="Resources\ButtonImages\ButtonImagePressed.png" />
@@ -45,6 +46,7 @@
 
     <ItemGroup>
       <EmbeddedResource Include="Resources\ButtonImages\ButtonImageDisabled.png" />
+      <EmbeddedResource Include="Resources\ButtonImages\ButtonImageFocused.png" />
       <EmbeddedResource Include="Resources\ButtonImages\ButtonImageHovered.png" />
       <EmbeddedResource Include="Resources\ButtonImages\ButtonImageNormal.png" />
       <EmbeddedResource Include="Resources\ButtonImages\ButtonImagePressed.png" />

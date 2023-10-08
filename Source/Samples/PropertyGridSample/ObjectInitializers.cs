@@ -202,6 +202,7 @@ namespace PropertyGridSample
                 HoveredImage = LoadImage("Hovered"),
                 PressedImage = LoadImage("Pressed"),
                 DisabledImage = LoadImage("Disabled"),
+                FocusedImage = LoadImage("Focused"),
             };
         }
 

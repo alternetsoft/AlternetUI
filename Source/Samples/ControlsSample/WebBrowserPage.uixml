@@ -29,7 +29,7 @@
                KeyDown="UrlTextBox_KeyDown" IsEditable="true"
                   SelectedItemChanged="UrlTextBox_SelectedItemChanged"
 			/>
-        <Button Text="Go" Margin="0,10,0,5" Click="GoButton_Click" />
+        <Button Name="GoButton" Text="&#x25B7;" Margin="0,10,0,5" Click="GoButton_Click" />
       </StackPanel>
       <!-- ==================================== -->
 

@@ -43,13 +43,13 @@
         <VerticalStackPanel Margin="5" Padding="5">
           <GroupBox Title="Allow Date Range" Margin="0,0,0,5">
             <VerticalStackPanel Margin="5">
-              <Button Text="Allow Edit Any Date" Margin="0,0,0,5"
+              <Button Text="Allow Any Date" Margin="0,0,0,5"
                       Click="RangeAnyDate_Click" />
               <Button Text="Allow Dates &lt;= Tomorrow" Margin="0,0,0,5"
                       Click="RangeTomorrow_Click" />
               <Button Text="Allow Dates &gt;= Yesterday" Margin="0,0,0,5"
                       Click="RangeYesterday_Click" />
-              <Button Text="Allow Dates Yesterday..Tomorrow" Margin="0,0,0,5"
+              <Button Text="Allow Yesterday..Tomorrow" Margin="0,0,0,5"
                       Click="RangeYesterdayTomorrow_Click" />
             </VerticalStackPanel>
           </GroupBox>
