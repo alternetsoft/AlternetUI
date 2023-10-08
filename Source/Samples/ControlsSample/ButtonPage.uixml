@@ -9,35 +9,25 @@
     </Grid.RowDefinitions>
 
     <StackPanel Orientation="Vertical" Padding="10" Grid.Row="0">
-      <Label Text="Text: " Margin="0,0,0,3"/>
-      <TextBox Text="Test Button" Name="textTextBox"
-               TextChanged="Button_Changed"/>
 
       <HorizontalStackPanel>
 
         <VerticalStackPanel>
-          <CheckBox Text="Disabled" Name="disabledCheckBox" Margin="0,10,0,0" />
+          <CheckBox Text="Disabled" Name="disabledCheckBox" Margin="0,0,0,0" />
           <CheckBox Text="Image" Name="imageCheckBox" Margin="0,10,0,0" IsChecked="True" />
           <CheckBox Text="Default" Name="defaultCheckBox" Margin="0,10,0,0" />
           <CheckBox Text="Bold" Name="boldCheckBox" Margin="0,10,0,0" />
-          <CheckBox Text="Has Border" Name="hasBorderCheckBox" IsChecked="True" Margin="0,10,0,0" />
+          <CheckBox Text="Border" Name="hasBorderCheckBox" IsChecked="True" Margin="0,10,0,0" />
           <CheckBox Text="TabStop" Name="tabStopCheckBox" IsChecked="True" Margin="0,10,0,0" />
           <CheckBox Text="Show Text" Name="showTextCheckBox" IsChecked="True" Margin="0,10,0,0" />
           <CheckBox Text="Exact Fit" IsChecked="False" Name="exactFitCheckBox" Margin="0,10,0,0" />
         </VerticalStackPanel>
-        
-        <VerticalStackPanel Margin="10,0,0,0">
-          <Label Text="Text Align:" VerticalAlignment="Center" Margin="0,10,0,0"/>
-          <ComboBox IsEditable="false" Name="textAlignComboBox" Margin="0,3,0,0"/>
-
-          <Label Text="Image Align:" VerticalAlignment="Center" Margin="0,10,0,0"/>
-          <ComboBox IsEditable="false" Name="imageAlignComboBox" Margin="0,3,0,0"/>
-
-          <Label Text="Text Color:" Name="labelTextColor" Margin="0,10,0,0"/>
-          <ComboBox Name="comboBoxTextColor" Margin="0,5,0,0" IsEditable="false"/>
-        </VerticalStackPanel>
 
         <VerticalStackPanel Margin="10,0,0,0">
+          <Label Text="Text: " Margin="0,0,0,0" />
+          <TextBox Text="Test Button" Name="textTextBox" Margin="0,3,0,0"
+                   TextChanged="Button_Changed"/>
+
           <Label Text="Text Font:" Name="labelFont" Margin="0,10,0,0"/>
           <ComboBox Name="comboBoxFontName" IsEditable="false" Margin="0,3,0,0"/>
 
@@ -50,13 +40,24 @@
                     Margin="0,5,0,0" IsEditable="false"/>
         </VerticalStackPanel>
 
+        <VerticalStackPanel Margin="10,0,0,0">
+          <Label Text="Text Align:" VerticalAlignment="Center" Margin="0,0,0,0"/>
+          <ComboBox IsEditable="false" Name="textAlignComboBox" Margin="0,3,0,0"/>
+
+          <Label Text="Image Align:" VerticalAlignment="Center" Margin="0,10,0,0"/>
+          <ComboBox IsEditable="false" Name="imageAlignComboBox" Margin="0,3,0,0"/>
+
+          <Label Text="Text Color:" Name="labelTextColor" Margin="0,10,0,0"/>
+          <ComboBox Name="comboBoxTextColor" Margin="0,5,0,0" IsEditable="false"/>
+        </VerticalStackPanel>
+
       </HorizontalStackPanel>
 
     </StackPanel>
 
-    <Control Grid.Row="1" Margin="10">
+    <Control Grid.Row="1">
       <Button Name="button" VerticalAlignment="Center"
-              HorizontalAlignment="Center" Padding="10" Click="Button_Click"/>
+              HorizontalAlignment="Center" Padding="5" Click="Button_Click"/>
     </Control>
   </Grid>
 </Control>

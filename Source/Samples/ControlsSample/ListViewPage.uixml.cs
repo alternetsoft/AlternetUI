@@ -10,6 +10,7 @@ namespace ControlsSample
 {
     internal partial class ListViewPage : Control
     {
+        private readonly CardsPanelHeader panelHeader = new();
         private IPageSite? site;
         private bool? slowSettingsEnabled;
         private int newItemIndex = 0;
@@ -25,8 +26,31 @@ namespace ControlsSample
             listView.SelectionMode = ListViewSelectionMode.Multiple;
             listView.AllowLabelEdit = true;
 
-            ActionsButton.Enabled = false;
-            SettingsButton.Enabled = true;
+            ControlSet lastItemButtons = new(
+                ensureLastItemVisibleButton,
+                modifyLastItemButton,
+                focusLastItemButton,
+                addLastItemSiblingButton);
+            lastItemButtons.SuggestedWidthToMax();
+
+            ControlSet buttons = new(
+                addItemButton,
+                removeItemButton,
+                addManyItemsButton,
+                ClearButton,
+                AddColumnButton,
+                ModifyColumnTitleButton,
+                editItemsButton,
+                editColumnsButton,
+                beginSelectedLabelEditingButton,
+                hasBorderButton);
+            buttons.SuggestedWidthToMax();
+
+            panelHeader.Add("Actions", stackPanel1);
+            panelHeader.Add("Settings", stackPanel2);
+            panelHeader.Add("Events", stackPanel3);
+            tabControlPanel.Children.Insert(0, panelHeader);
+            panelHeader.SelectedTab = panelHeader.Tabs[0];
         }
 
         public IPageSite? Site
@@ -51,6 +75,7 @@ namespace ControlsSample
                 listView.Items.ItemRemoved += Items_ItemRemoved;
 
                 site = value;
+
             }
         }
 
@@ -139,40 +164,6 @@ namespace ControlsSample
 
             foreach (var column in listView!.Columns)
                 column.WidthMode = mode;
-        }
-
-        private void ActionsButton_Click(object? sender, EventArgs e)
-        {
-            scrollViewer2.Visible = false;
-            scrollViewer1.Visible = true;
-            ActionsButton.Enabled = false;
-            SettingsButton.Enabled = true;
-            UpdatePagesSize();
-        }
-
-        private void UpdatePagesSize()
-        {
-            var parent = scrollViewer2.Parent;
-
-            var maxWidth = Math.Max(
-                scrollViewer1.Bounds.Width,
-                scrollViewer1.Bounds.Width);
-
-            if (parent != null && Double.IsNaN(parent.SuggestedWidth))
-            {
-                parent.SuspendLayout();
-                parent.SuggestedWidth = Math.Max(maxWidth + 30, parent.Bounds.Width);
-                parent.ResumeLayout();
-            }
-        }
-
-        private void SettingsButton_Click(object? sender, EventArgs e)
-        {
-            scrollViewer1.Visible = false;
-            scrollViewer2.Visible = true;
-            ActionsButton.Enabled = true;
-            SettingsButton.Enabled = false;
-            UpdatePagesSize();
         }
 
         private void AddManyItemsButton_Click(object? sender, EventArgs e)

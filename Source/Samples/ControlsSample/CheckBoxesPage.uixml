@@ -5,7 +5,7 @@
   <StackPanel Orientation="Vertical" Padding="10" >
     <GroupBox Title="Option Group 1">
       <StackPanel Orientation="Vertical" Margin="5">
-        <CheckBox Text="Option 1.1" Margin="0,0,0,5" />
+        <CheckBox Text="Option 1.1" Margin="0,0,0,5" IsChecked="true"/>
         <CheckBox Text="Option 1.2" Margin="0,0,0,5" />
         <CheckBox Text="Option 1.3" Margin="0,0,0,5" />
       </StackPanel>

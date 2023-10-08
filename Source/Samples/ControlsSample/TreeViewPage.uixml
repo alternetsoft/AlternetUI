@@ -91,7 +91,7 @@
                     Click="FocusLastItemButton_Click" />
             <Button Text="Modify" Name="modifyLastItemButton" Margin="0,3,0,0"
                     Click="ModifyLastItemButton_Click" />
-            <Button Text="Add Sibling" Name="addLastItemSiblingButton" Margin="0,3,0,0"
+            <Button Text="Add Sibling" Name="addLastItemSiblingButton" Margin="0,3,0,5"
                     Click="AddLastItemSiblingButton_Click" />
           </VerticalStackPanel>
         </GroupBox>
