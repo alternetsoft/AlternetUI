@@ -1,5 +1,8 @@
+using System;
+using System.Diagnostics;
 using System.IO;
 using System.Reflection;
+using System.Xml;
 
 namespace Alternet.UI
 {
@@ -28,10 +31,27 @@ namespace Alternet.UI
         /// </summary>
         public void LoadExisting(Stream xamlStream, object existingObject)
         {
-            Markup.Xaml.UixmlPortRuntimeXamlLoader.Load(
-                xamlStream,
-                existingObject.GetType().Assembly,
-                existingObject);
+            try
+            {
+                Markup.Xaml.UixmlPortRuntimeXamlLoader.Load(
+                    xamlStream,
+                    existingObject.GetType().Assembly,
+                    existingObject);
+
+            }
+            catch (Exception e)
+            {
+                if(e is XmlException xmlException)
+                {
+                    int lineNumber = xmlException.LineNumber;
+                    int linePos = xmlException.LinePosition;
+                    string sourceUri = xmlException.SourceUri;
+                }
+
+                Debug.WriteLine(e.Message);
+
+                throw e;
+            }
         }
     }
 }
