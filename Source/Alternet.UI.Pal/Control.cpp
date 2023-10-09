@@ -96,6 +96,8 @@ namespace Alternet::UI
 
     optional<Size> Control::CoerceSize(const Size& value)
     {
+        return nullopt;
+
         auto minSize = GetMinimumSize();
         auto maxSize = GetMaximumSize();
 
