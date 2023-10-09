@@ -269,6 +269,8 @@ namespace Alternet::UI
     void Window::ApplyMenu(MainMenu* const& value)
     {
         _frame->SetMenuBar(value == nullptr ? nullptr : value->GetWxMenuBar());
+        _frame->Layout();
+        _frame->PostSizeEvent();
     }
 
     Toolbar* Window::RetrieveToolbar()
@@ -281,6 +283,8 @@ namespace Alternet::UI
         if (value != nullptr)
             value->SetOwnerWindow(this);
         _frame->SetToolBar(value == nullptr ? nullptr : value->GetWxToolBar());
+        _frame->Layout();
+        _frame->PostSizeEvent();
     }
 
     StatusBar* Window::RetrieveStatusBar()
@@ -343,7 +347,6 @@ namespace Alternet::UI
         wxWindow->Unbind(wxEVT_CHAR_HOOK, &Window::OnCharHook, this);
 
         _frame = nullptr;
-        //_panel = nullptr;
     }
 
     void Window::ApplyBounds(const Rect& value)
@@ -530,14 +533,6 @@ namespace Alternet::UI
         _frame->Bind(wxEVT_ICONIZE, &Window::OnIconize, this);
         _frame->Bind(wxEVT_MENU, &Window::OnCommand, this);
         _frame->Bind(wxEVT_CHAR_HOOK, &Window::OnCharHook, this);
-
-        //_panel = new wxPanel(_frame);
-
-        /*_panel = new wxPanel(_frame,
-            wxID_ANY,
-            wxDefaultPosition,
-            wxDefaultSize,
-            wxTAB_TRAVERSAL | wxNO_BORDER | wxFULL_REPAINT_ON_RESIZE);*/
 
         auto panelColor =
             wxSystemSettings::GetColour(wxSystemColour::wxSYS_COLOUR_BTNFACE);
