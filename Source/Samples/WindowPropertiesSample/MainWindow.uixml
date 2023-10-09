@@ -41,7 +41,6 @@
       </HorizontalStackPanel>
       <!-- ========================= -->
       <HorizontalStackPanel Name="settingsPanel" Visible="false">
-        <GroupBox Title="Properties" Margin="5">
           <StackPanel Padding="10" >
             <CheckBox Text="Show In Taskbar" Name="showInTaskBarCheckBox"
                       CheckedChanged="ShowInTaskBarCheckBox_CheckedChanged"
@@ -58,28 +57,28 @@
 
             <CheckBox Text="Always On Top" Name="alwaysOnTopCheckBox" Margin="0,0,0,5"
               CheckedChanged="AlwaysOnTopCheckBox_CheckedChanged" IsChecked="False" />
-            <CheckBox Text="Tool Window" Name="isToolWindowCheckBox" Margin="0,0,0,5"
-                      CheckedChanged="IsToolWindowCheckBox_CheckedChanged" IsChecked="False"/>
-            <CheckBox Text="Resizable" Name="resizableCheckBox" Margin="0,0,0,5"
-                      CheckedChanged="ResizableCheckBox_CheckedChanged" IsChecked="True"/>
-            <CheckBox Text="Has Border" Name="hasBorderCheckBox" Margin="0,0,0,5"
-                      CheckedChanged="HasBorderCheckBox_CheckedChanged" IsChecked="True"/>
-            <CheckBox Text="Has Title Bar" Name="hasTitleBarCheckBox" Margin="0,0,0,5"
-                      CheckedChanged="HasTitleBarCheckBox_CheckedChanged" IsChecked="True"/>
           </StackPanel>
-        </GroupBox>
 
-        <GroupBox Title="State" Margin="5">
-          <StackPanel Padding="10" >
+        <StackPanel Padding="10" >
+          <CheckBox Text="Tool Window" Name="isToolWindowCheckBox" Margin="0,0,0,5"
+                    CheckedChanged="IsToolWindowCheckBox_CheckedChanged" IsChecked="False"/>
+          <CheckBox Text="Resizable" Name="resizableCheckBox" Margin="0,0,0,5"
+                    CheckedChanged="ResizableCheckBox_CheckedChanged" IsChecked="True"/>
+          <CheckBox Text="Has Border" Name="hasBorderCheckBox" Margin="0,0,0,5"
+                    CheckedChanged="HasBorderCheckBox_CheckedChanged" IsChecked="True"/>
+          <CheckBox Text="Has Title Bar" Name="hasTitleBarCheckBox" Margin="0,0,0,5"
+                    CheckedChanged="HasTitleBarCheckBox_CheckedChanged" IsChecked="True"/>
+        </StackPanel>
+
+        <StackPanel Padding="10" >
             <Label Text="Window State:" Margin="0,0,0,3"/>
             <ComboBox IsEditable="false" Name="stateComboBox"
                 SelectedItemChanged="StateComboBox_SelectedItemChanged"/>
             <CheckBox Text="Hide Window" Name="hideWindowCheckBox" Margin="0,10,0,0"
                 CheckedChanged="HideWindowCheckBox_CheckedChanged"/>
           </StackPanel>
-        </GroupBox>
 
-          <GroupBox Title="Icon"  Margin="5">
+          <GroupBox Title="Icon"  Margin="5" VerticalAlignment="Top">
             <HorizontalStackPanel Padding="10" >
               <Button Text="Set 1" Name="setIcon1Button" Click="SetIcon1Button_Click"/>
               <Button Text="Set 2" Name="setIcon2Button" Click="SetIcon2Button_Click" />
