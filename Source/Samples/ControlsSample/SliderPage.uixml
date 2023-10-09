@@ -2,83 +2,106 @@
         xmlns="http://schemas.alternetsoft.com/ui/2021"
         xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
         xmlns:local="clr-namespace:ControlsSample;assembly=ControlsSample">
-    <StackPanel Orientation="Vertical" Padding="10">
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
+  <StackPanel Orientation="Vertical" Padding="10">
+    <Grid>
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="*"/>
+        <ColumnDefinition Width="*"/>
+      </Grid.ColumnDefinitions>
 
-            <GroupBox Title="Horizontal Sliders" Grid.Column="0" Margin="0,0,10,0">
-                <StackPanel Orientation="Vertical" Margin="5" Name="horizontalSlidersPanel">
-                    <Label Text="0 [0..10]" Margin="0,0,0,5" />
-                    <Slider Value="0" Margin="0,0,0,10" ValueChanged="Slider_ValueChanged" />
+      <GroupBox Title="Horizontal Sliders" Grid.Column="0" Margin="0,0,10,0">
+        <Grid Margin="5" Name="horizontalSlidersPanel">
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+          </Grid.ColumnDefinitions>
+          <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+          </Grid.RowDefinitions>
+          <Label Text="0 [0..10]" Margin="0,0,0,5" Grid.Column="0" Grid.Row="0"
+                 VerticalAlignment="Center"/>
+          <Slider Value="0" Margin="5,0,0,5" ValueChanged="Slider_ValueChanged"
+                  Grid.Column="1" Grid.Row="0" SuggestedWidth ="200" VerticalAlignment="Center"/>
 
-                    <Label Text="5 [0..20]" Margin="0,0,0,5" />
-                    <Slider Maximum="20" Value="5" Margin="0,0,0,10" ValueChanged="Slider_ValueChanged" />
+          <Label Text="5 [0..20]" Margin="0,0,0,5" Grid.Column="0" Grid.Row="1"
+                 VerticalAlignment="Center"/>
+          <Slider Maximum="20" Value="5" Margin="5,0,0,5" ValueChanged="Slider_ValueChanged"
+                  Grid.Column="1" Grid.Row="1" SuggestedWidth ="200" VerticalAlignment="Center"/>
 
-                    <Label Text="100 [0..100]" Margin="0,0,0,5" />
-                    <Slider Maximum="100" Value="100" Margin="0,0,0,10" ValueChanged="Slider_ValueChanged" />
+          <Label Text="100 [0..100]" Margin="0,0,0,5" Grid.Column="0" Grid.Row="2"
+                 VerticalAlignment="Center"/>
+          <Slider Maximum="100" Value="100" Margin="5,0,0,5" ValueChanged="Slider_ValueChanged"
+                  Grid.Column="1" Grid.Row="2" SuggestedWidth ="200" VerticalAlignment="Center"/>
 
-                    <Label Text="125 [50..200]" Margin="0,0,0,5" />
-                    <Slider Minimum="50" Maximum="200" Value="125" Margin="0,0,0,5" 
-                        ValueChanged="Slider_ValueChanged" />
-                </StackPanel>
-            </GroupBox>
-            <GroupBox Title="Vertical Sliders" Grid.Column="1" Margin="0,0,5,0">
-                <Grid Name="verticalSlidersGrid">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
-
-                    <Label Text="0 [0..10]" Margin="0,0,0,5"
-                            Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center"/>
-                    <Slider Value="0" Margin="0,0,0,5" ValueChanged="Slider_ValueChanged" Orientation="Vertical" HorizontalAlignment="Center"
-                            Grid.Column="0" Grid.Row="1"/>
-
-                    <Label Text="5 [0..20]" Margin="0,0,0,5" 
-                        Grid.Column="1" Grid.Row="0" HorizontalAlignment="Center"/>
-                    <Slider Maximum="20" Value="5" Margin="0,0,0,5" ValueChanged="Slider_ValueChanged" 
-                            Orientation="Vertical" HorizontalAlignment="Center"
-                            Grid.Column="1" Grid.Row="1"/>
-
-                    <Label Text="100 [0..100]" Margin="0,0,0,5" 
-                        Grid.Column="2" Grid.Row="0" HorizontalAlignment="Center"/>
-                    <Slider Maximum="100" Value="100" Margin="0,0,0,5" ValueChanged="Slider_ValueChanged" HorizontalAlignment="Center"
-                        Orientation="Vertical"
-                        Grid.Column="2" Grid.Row="1"/>
-
-                    <Label Text="125 [50..200]" Margin="0,0,0,5" 
-                        Grid.Column="3" Grid.Row="0" HorizontalAlignment="Center"/>
-                    <Slider Minimum="50" Maximum="200" Value="125" Margin="0,0,0,5" 
-                        ValueChanged="Slider_ValueChanged" Orientation="Vertical"
-                            HorizontalAlignment="Center"
-                        Grid.Column="3" Grid.Row="1"/>
-                </Grid>
-            </GroupBox>
+          <Label Text="125 [50..200]" Margin="0,0,0,5" Grid.Column="0" Grid.Row="3"
+                 VerticalAlignment="Center"/>
+          <Slider Minimum="50" Maximum="200" Value="125" Margin="5,0,0,5"
+              ValueChanged="Slider_ValueChanged" Grid.Column="1" Grid.Row="3"
+                  VerticalAlignment="Center" SuggestedWidth ="200"/>
         </Grid>
+      </GroupBox>
+      <GroupBox Title="Vertical Sliders" Grid.Column="1" Margin="0,0,5,0">
+        <Grid Name="verticalSlidersGrid">
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+          </Grid.ColumnDefinitions>
+          <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+          </Grid.RowDefinitions>
 
-        <Button Text="Increase All" Margin="0,10,0,5" Name="increaseAllButton" Click="IncreaseAllButton_Click" />
-        
-        <GroupBox Title="Linked Progress Bar">
-            <StackPanel Orientation="Vertical" Margin="5">
-                <Slider Margin="0,0,0,10" Name="progressBarControlSlider" 
-                    ValueChanged="ProgressBarControlSlider_ValueChanged" />
-                <ProgressBar Maximum="10" Margin="0,0,0,10" Name="progressBar" />
-            </StackPanel>
-        </GroupBox>
+          <Label Text="0 [0..10]" Margin="0,0,0,5"
+                  Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center"/>
+          <Slider Value="0" Margin="0,0,0,5" ValueChanged="Slider_ValueChanged"
+                  Orientation="Vertical" HorizontalAlignment="Center"
+                  Grid.Column="0" Grid.Row="1" SuggestedHeight="200"/>
 
-        <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
-            <Label Text="Tick Style:" VerticalAlignment="Center"/>
-            <ComboBox IsEditable="false" Name="tickStyleComboBox" Margin="5,0,0,0" 
-                SelectedItemChanged="TickStyleComboBox_SelectedItemChanged"/>
-        </StackPanel>
+          <Label Text="5 [0..20]" Margin="0,0,0,5"
+              Grid.Column="1" Grid.Row="0" HorizontalAlignment="Center"/>
+          <Slider Maximum="20" Value="5" Margin="0,0,0,5" ValueChanged="Slider_ValueChanged"
+                  Orientation="Vertical" HorizontalAlignment="Center"
+                  Grid.Column="1" Grid.Row="1" SuggestedHeight="200"/>
+
+          <Label Text="100 [0..100]" Margin="0,0,0,5"
+              Grid.Column="2" Grid.Row="0" HorizontalAlignment="Center"/>
+          <Slider Maximum="100" Value="100" Margin="0,0,0,5" ValueChanged="Slider_ValueChanged"
+                  HorizontalAlignment="Center"
+              Orientation="Vertical" SuggestedHeight="200"
+              Grid.Column="2" Grid.Row="1"/>
+
+          <Label Text="125 [50..200]" Margin="0,0,0,5"
+              Grid.Column="3" Grid.Row="0" HorizontalAlignment="Center"/>
+          <Slider Minimum="50" Maximum="200" Value="125" Margin="0,0,0,5"
+              ValueChanged="Slider_ValueChanged" Orientation="Vertical"
+                  HorizontalAlignment="Center" SuggestedHeight="200"
+              Grid.Column="3" Grid.Row="1"/>
+        </Grid>
+      </GroupBox>
+    </Grid>
+
+    <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+      <Button Text="Increase All" Margin="0,0,0,0" Name="increaseAllButton"
+      Click="IncreaseAllButton_Click" />
+
+      <Label Text="Tick Style:" VerticalAlignment="Center" Margin="20,0,0,0"/>
+      <ComboBox IsEditable="false" Name="tickStyleComboBox" Margin="5,0,0,0"
+          SelectedItemChanged="TickStyleComboBox_SelectedItemChanged"/>
     </StackPanel>
+
+    <GroupBox Title="Linked Progress Bar" Margin="0,10,0,0">
+      <StackPanel Orientation="Horizontal" Margin="5">
+        <Slider Margin="0,0,0,10" Name="progressBarControlSlider" TickStyle="None"
+            ValueChanged="ProgressBarControlSlider_ValueChanged" SuggestedWidth="200"/>
+        <ProgressBar Maximum="10" Margin="10,0,0,10" Name="progressBar"
+                     SuggestedWidth="200"/>
+      </StackPanel>
+    </GroupBox>
+
+  </StackPanel>
 </Control>

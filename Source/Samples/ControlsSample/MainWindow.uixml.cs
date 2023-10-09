@@ -90,7 +90,6 @@ namespace ControlsSample
             AddPage("List Box", CreateListBoxPage);
             AddPage("Combo Box", CreateComboBoxPage);
             AddPage("Check List Box", CreateCheckListBoxPage);
-            AddPage("Tab Control", CreateTabControlPage);
             AddPage("Progress Bar", CreateProgressBarPage);
             AddPage("Button", CreateButtonPage);
             AddPage("Slider", CreateSliderPage);
@@ -105,6 +104,7 @@ namespace ControlsSample
             AddPage("Web Browser", CreateWebBrowserPage);
             AddPage("Splitter Panel", CreateSplitterPanelPage);
             AddPage("Layout Panel", CreateLayoutPanelPage);
+            AddPage("Tab Control", CreateTabControlPage);
             AddPage("All Samples", CreateAllSamplesPage);
 
             pageContainer.SelectedIndex = 0;
