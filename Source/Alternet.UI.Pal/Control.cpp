@@ -81,17 +81,19 @@ namespace Alternet::UI
 
     void Control::ApplyMinimumSize(const Size& value)
     {
-        LogMethod("ApplyMinimumSize", value);
+        LogMethod("Before ApplyMinimumSize", value);
         //return; // !!
         auto window = GetWxWindow();
         if (value.Width <= 0 && value.Height <= 0)
         {
             window->SetMinSize(wxDefaultSize);
+            LogMethod("After ApplyMinimumSize", value);
             return;
         }
 
         auto size = fromDip(value, window);
         window->SetMinSize(size == wxSize() ? wxDefaultSize : size);
+        LogMethod("After2 ApplyMinimumSize", value);
     }
 
     Size Control::GetMinimumSize()
@@ -177,10 +179,12 @@ namespace Alternet::UI
         if (value.Width <= 0 && value.Height <= 0)
         {
             window->SetMaxSize(wxDefaultSize);
+            LogMethod("After ApplyMaximumSize", value);
             return;
         }
         auto size = fromDip(value, window);
         window->SetMaxSize(size == wxSize() ? wxDefaultSize : size);
+        LogMethod("After2 ApplyMaximumSize", value);
     }
 
     int Control::GetId()
