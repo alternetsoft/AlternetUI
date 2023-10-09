@@ -30,6 +30,7 @@ namespace Alternet.UI
             Margin = new(0, 0, 0, 5),
         };
 
+        private Size additionalSpace = new(30, 30);
         private CardPanelHeaderItem? selectedTab;
 
         /// <summary>
@@ -52,6 +53,23 @@ namespace Alternet.UI
         public IReadOnlyList<CardPanelHeaderItem> Tabs => tabs;
 
         /// <summary>
+        /// Gets or sets size of the additional space which is added when
+        /// <see cref="UpdateCardsMode"/> is not <see cref="WindowSizeToContentMode.None"/>.
+        /// </summary>
+        public Size AdditionalSpace
+        {
+            get
+            {
+                return additionalSpace;
+            }
+
+            set
+            {
+                additionalSpace = value;
+            }
+        }
+
+        /// <summary>
         /// Gets or sets whether to update visibility of the cards when selected tab is changed.
         /// </summary>
         public bool UpdateCardsVisible { get; set; } = true;
@@ -59,7 +77,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets whether to update width of the cards when selected tab is changed.
         /// </summary>
-        public bool UpdateCardsWidth { get; set; } = true;
+        public WindowSizeToContentMode UpdateCardsMode { get; set; } = WindowSizeToContentMode.WidthAndHeight;
 
         /// <summary>
         /// Gets selected tab.
@@ -117,22 +135,67 @@ namespace Alternet.UI
         /// <summary>
         /// Calculates maximal width of cards.
         /// </summary>
-        public virtual double GetMaxCardWidth()
+        public virtual Size GetMaxCardSize()
         {
-            return MathUtils.Max(GetCardWidths());
+            return Size.MaxWidthHeight(GetCardSizes());
         }
 
         /// <summary>
-        /// Sets width of all cards to value obtained with <see cref="GetMaxCardWidth"/>.
+        /// Sets width of all cards to value obtained with <see cref="GetMaxCardSize"/>.
         /// </summary>
-        public virtual void CardsWidthToMax()
+        public virtual void CardsWidthToMax(WindowSizeToContentMode mode)
         {
+            if (mode == WindowSizeToContentMode.None)
+                return;
+
             var parent = GetCardsParent();
-            if (parent != null && double.IsNaN(parent.SuggestedWidth))
+
+            if (parent is null)
+                return;
+
+            var update = false;
+
+            switch (mode)
             {
-                var maxWidth = GetMaxCardWidth();
+                case WindowSizeToContentMode.Width:
+                    update = double.IsNaN(parent.SuggestedWidth);
+                    break;
+                case WindowSizeToContentMode.Height:
+                    update = double.IsNaN(parent.SuggestedHeight);
+                    break;
+                case WindowSizeToContentMode.WidthAndHeight:
+                    update = Size.AnyIsNaN(parent.SuggestedSize);
+                    break;
+            }
+
+            if (update)
+            {
+                var maxSize = GetMaxCardSize();
                 parent.SuspendLayout();
-                parent.SuggestedWidth = Math.Max(maxWidth + 30, parent.Bounds.Width);
+
+                var newWidth = Math.Max(
+                    maxSize.Width + additionalSpace.Width,
+                    parent.Bounds.Width);
+                var newHeight = Math.Max(
+                    maxSize.Height + this.Bounds.Height + this.Margin.Vertical + additionalSpace.Height,
+                    parent.Bounds.Height);
+
+                switch (mode)
+                {
+                    case WindowSizeToContentMode.Width:
+                        parent.SuggestedWidth = newWidth;
+                        parent.MinWidth = newWidth;
+                        break;
+                    case WindowSizeToContentMode.Height:
+                        parent.SuggestedHeight = newHeight;
+                        parent.MinHeight = newHeight;
+                        break;
+                    case WindowSizeToContentMode.WidthAndHeight:
+                        parent.SuggestedSize = new Size(newWidth, newHeight);
+                        parent.MinimumSize = parent.SuggestedSize;
+                        break;
+                }
+
                 parent.ResumeLayout();
             }
         }
@@ -176,17 +239,17 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets card widths.
+        /// Gets cards width and height.
         /// </summary>
-        public virtual double[] GetCardWidths()
+        public virtual Size[] GetCardSizes()
         {
-            double[] result = new double[tabs.Count];
+            Size[] result = new Size[tabs.Count];
             for (int i = 0; i < tabs.Count; i++)
             {
                 var control = tabs[i].CardControl;
                 if (control is null)
                     continue;
-                result[i] = control.Bounds.Width;
+                result[i] = control.Bounds.Size;
             }
 
             return result;
@@ -200,7 +263,7 @@ namespace Alternet.UI
                 {
                     SelectedTab = tab;
                     if(UpdateCardsVisible) SetCardsVisible();
-                    if(UpdateCardsWidth) CardsWidthToMax();
+                    CardsWidthToMax(UpdateCardsMode);
                     TabClick?.Invoke(this, EventArgs.Empty);
                 }
             }
