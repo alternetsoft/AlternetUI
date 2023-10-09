@@ -114,6 +114,19 @@ namespace Alternet.UI.Native
             
         }
         
+        public static bool UseChoiceControl
+        {
+            get
+            {
+                return NativeApi.ComboBox_GetUseChoiceControl_();
+            }
+            
+            set
+            {
+                NativeApi.ComboBox_SetUseChoiceControl_(value);
+            }
+        }
+        
         public System.IntPtr CreateItemsInsertion()
         {
             CheckDisposed();
@@ -257,6 +270,12 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern int ComboBox_GetTextSelectionLength_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool ComboBox_GetUseChoiceControl_();
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void ComboBox_SetUseChoiceControl_(bool value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern System.IntPtr ComboBox_CreateItemsInsertion_(IntPtr obj);

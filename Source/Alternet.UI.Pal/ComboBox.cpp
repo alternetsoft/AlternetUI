@@ -6,12 +6,21 @@ namespace Alternet::UI
     // This seems to be a known problem, 
     // see https://gitlab.gnome.org/GNOME/gtk/-/issues/1910
 
-    constexpr bool UseChoiceControlForReadOnlyComboBox = false;
+    bool UseChoiceControlForReadOnlyComboBox = false;
 //#ifdef __WXMSW__
 //    constexpr bool UseChoiceControlForReadOnlyComboBox = false;
 //#else
 //    constexpr bool UseChoiceControlForReadOnlyComboBox = true;
 //#endif
+
+    bool ComboBox::GetUseChoiceControl()
+    {
+        return UseChoiceControlForReadOnlyComboBox;
+    }
+    void ComboBox::SetUseChoiceControl(bool value)
+    {
+        UseChoiceControlForReadOnlyComboBox = value;
+    }
 
     ComboBox::ComboBox() :
         _selectedIndex(*this, -1, &Control::IsWxWindowCreated, 

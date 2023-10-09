@@ -100,6 +100,25 @@ namespace Alternet.UI
         public event EventHandler? IsEditableChanged;
 
         /// <summary>
+        /// Gets or sets whether to use choice controls as readonly comboboxes.
+        /// </summary>
+        /// <remarks>
+        /// This property may be useful under Linux or MacOs.
+        /// </remarks>
+        public static bool UseChoiceControl
+        {
+            get
+            {
+                return Native.ComboBox.UseChoiceControl;
+            }
+
+            set
+            {
+                Native.ComboBox.UseChoiceControl = value;
+            }
+        }
+
+        /// <summary>
         /// Gets the starting index of text selected in the combo box.
         /// </summary>
         /// <value>The zero-based index of the first character in the string

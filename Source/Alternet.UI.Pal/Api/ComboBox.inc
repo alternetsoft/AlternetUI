@@ -25,6 +25,10 @@ int GetTextSelectionStart();
 
 int GetTextSelectionLength();
 
+
+static bool GetUseChoiceControl();
+static void SetUseChoiceControl(bool value);
+
 void* CreateItemsInsertion();
 void AddItemToInsertion(void* insertion, const string& item);
 void CommitItemsInsertion(void* insertion, int index);

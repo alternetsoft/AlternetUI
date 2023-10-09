@@ -16,6 +16,8 @@ namespace NativeApi.Api
         public int TextSelectionStart { get; }
         public int TextSelectionLength { get; }
 
+        public static bool UseChoiceControl { get; set; }
+
         public IntPtr CreateItemsInsertion() => default;
         public void AddItemToInsertion(IntPtr insertion, string item) { }
         public void CommitItemsInsertion(IntPtr insertion, int index) { }

@@ -68,6 +68,16 @@ ALTERNET_UI_API int ComboBox_GetTextSelectionLength_(ComboBox* obj)
     return obj->GetTextSelectionLength();
 }
 
+ALTERNET_UI_API c_bool ComboBox_GetUseChoiceControl_()
+{
+    return ComboBox::GetUseChoiceControl();
+}
+
+ALTERNET_UI_API void ComboBox_SetUseChoiceControl_(c_bool value)
+{
+    ComboBox::SetUseChoiceControl(value);
+}
+
 ALTERNET_UI_API void* ComboBox_CreateItemsInsertion_(ComboBox* obj)
 {
     return obj->CreateItemsInsertion();
