@@ -10,7 +10,7 @@ namespace ControlsSample
 
         public DateTimePage()
         {
-            Application.LogFileIsEnabled = true;
+            //Application.LogFileIsEnabled = true;
             InitializeComponent();
             datePicker.Value = DateTime.Now;
             timePicker.Value = DateTime.Now;

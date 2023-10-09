@@ -81,20 +81,20 @@ namespace Alternet::UI
 
     void Control::ApplyMinimumSize(const Size& value)
     {
-        LogMethod("Before ApplyMinimumSize", value);
+        //LogMethod("Before ApplyMinimumSize", value);
         //return; // !!
         auto window = GetWxWindow();
         if (value.Width <= 0 && value.Height <= 0)
         {
             if (window->GetMinSize() != wxDefaultSize)
                 window->SetMinSize(wxDefaultSize);
-            LogMethod("After ApplyMinimumSize", value);
+            //LogMethod("After ApplyMinimumSize", value);
             return;
         }
 
         auto size = fromDip(value, window);
         window->SetMinSize(size);
-        LogMethod("After2 ApplyMinimumSize", value);
+        //LogMethod("After2 ApplyMinimumSize", value);
     }
 
     Size Control::GetMinimumSize()
@@ -104,7 +104,7 @@ namespace Alternet::UI
 
     void Control::SetMinimumSize(const Size& value)
     {
-        LogMethod("SetMinimumSize", value);
+        //LogMethod("SetMinimumSize", value);
         //return; // !!
         _minimumSize.Set(value);
         _appliedMinimumSize = value;
@@ -158,7 +158,7 @@ namespace Alternet::UI
 
     void Control::SetMaximumSize(const Size& value)
     {
-        LogMethod("SetMaximumSize", value);
+        //LogMethod("SetMaximumSize", value);
         //return; // !!
         _maximumSize.Set(value);
         _appliedMaximumSize = value;
@@ -174,19 +174,19 @@ namespace Alternet::UI
 
     void Control::ApplyMaximumSize(const Size& value)
     {
-        LogMethod("ApplyMaximumSize", value);
+        //LogMethod("ApplyMaximumSize", value);
         //return; // !!
         auto window = GetWxWindow();
         if (value.Width <= 0 && value.Height <= 0)
         {
             if(window->GetMaxSize() != wxDefaultSize)
                 window->SetMaxSize(wxDefaultSize);
-            LogMethod("After ApplyMaximumSize", value);
+            //LogMethod("After ApplyMaximumSize", value);
             return;
         }
         auto size = fromDip(value, window);
         window->SetMaxSize(size);
-        LogMethod("After2 ApplyMaximumSize", value);
+        //LogMethod("After2 ApplyMaximumSize", value);
     }
 
     int Control::GetId()
