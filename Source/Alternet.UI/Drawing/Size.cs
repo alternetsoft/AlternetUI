@@ -268,6 +268,47 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Returns an array filled with widths of the specified <see cref="Size"/> values.
+        /// </summary>
+        /// <param name="sizes">Array of <see cref="Size"/> values.</param>
+        public static double[] GetWidths(Size[] sizes)
+        {
+            double[] result = new double[sizes.Length];
+            for(int i = 0; i < sizes.Length; i++)
+                result[i] = sizes[i].Width;
+            return result;
+        }
+
+        /// <summary>
+        /// Returns an array filled with heights of the specified <see cref="Size"/> values.
+        /// </summary>
+        /// <param name="sizes">Array of <see cref="Size"/> values.</param>
+        public static double[] GetHeights(Size[] sizes)
+        {
+            double[] result = new double[sizes.Length];
+            for (int i = 0; i < sizes.Length; i++)
+                result[i] = sizes[i].Height;
+            return result;
+        }
+
+        /// <summary>
+        /// Returns the larger of the specified <see cref="Size"/> values.
+        /// </summary>
+        /// <param name="sizes">Array of <see cref="Size"/> values.</param>
+        /// <exception cref="ArgumentOutOfRangeException">if <paramref name="sizes"/> is
+        /// an empty array.</exception>
+        public static Size MaxWidthHeight(Size[] sizes)
+        {
+            var widths = GetWidths(sizes);
+            var heights = GetHeights(sizes);
+
+            var width = MathUtils.Max(widths);
+            var height = MathUtils.Max(heights);
+
+            return new(width, height);
+        }
+
+        /// <summary>
         /// Gets size with applied minimal and maximal limitations.
         /// </summary>
         /// <param name="min">Minimal width and height.</param>
