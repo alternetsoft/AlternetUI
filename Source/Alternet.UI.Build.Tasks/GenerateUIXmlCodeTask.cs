@@ -88,12 +88,36 @@ namespace Alternet.UI.Build.Tasks
         }
 
         private void LogDebug(string message) =>
-            Log.LogMessage(LogSubcategory, null, null, null, 0, 0, 0, 0, MessageImportance.Low, message, null);
+            Log.LogMessage(
+                LogSubcategory,
+                null,
+                null,
+                null,
+                0,
+                0,
+                0,
+                0,
+                MessageImportance.Low,
+                message, null);
 
         private void LogDebugHigh(string message) =>
             Log.LogMessage(LogSubcategory, null, null, null, 0, 0, 0, 0, MessageImportance.High, message, null);
 
-        private void LogError(ITaskItem? inputFile, string message, int lineNumber = 0, int columnNumber = 0) =>
-            Log.LogError(LogSubcategory, null, null, inputFile?.ItemSpec, lineNumber, columnNumber, 0, 0, message, null);
+        private void LogError(
+            ITaskItem? inputFile,
+            string message,
+            int lineNumber = 0,
+            int columnNumber = 0) =>
+            Log.LogError(
+                LogSubcategory,
+                null,
+                null,
+                inputFile?.ItemSpec,
+                lineNumber,
+                columnNumber,
+                0,
+                0,
+                message,
+                null);
     }
 }

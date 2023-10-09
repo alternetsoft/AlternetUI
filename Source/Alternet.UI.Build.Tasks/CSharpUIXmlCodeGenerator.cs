@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Alternet.UI.Build.Tasks
 {
-    static class CSharpUIXmlCodeGenerator
+    public static class CSharpUIXmlCodeGenerator
     {
         public static string Generate(UIXmlDocument document)
         {

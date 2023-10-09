@@ -7,7 +7,7 @@ using System.Xml.Linq;
 
 namespace Alternet.UI.Build.Tasks
 {
-    internal class ApiInfoProvider
+    public class ApiInfoProvider
     {
         private readonly ApiInfo apiInfo;
 

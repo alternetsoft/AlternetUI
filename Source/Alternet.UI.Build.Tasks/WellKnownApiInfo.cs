@@ -5,7 +5,7 @@ using System.Reflection;
 
 namespace Alternet.UI.Build.Tasks
 {
-    internal static class WellKnownApiInfo
+    public static class WellKnownApiInfo
     {
         private static ApiInfoProvider? provider;
 

@@ -6,7 +6,7 @@ using System.Xml.Linq;
 
 namespace Alternet.UI.Build.Tasks
 {
-    internal class UIXmlDocument
+    public class UIXmlDocument
     {
         private const string UINamespace = "http://schemas.alternetsoft.com/ui/2021";
         private const string UIXmlNamespace = "http://schemas.alternetsoft.com/ui/2021/uixml";
