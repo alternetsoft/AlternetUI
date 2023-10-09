@@ -7,9 +7,9 @@ namespace ControlsTest
     internal partial class MainTestWindow : Window
     {
         private readonly StatusBar statusbar = new();
-        private readonly PanelTreeAndCards mainPanel = new();
         private readonly CardPanelItem? firstCard;
         private readonly bool disableResize = true;
+        private PanelTreeAndCards mainPanel;
 
         static MainTestWindow()
         {
@@ -18,6 +18,8 @@ namespace ControlsTest
 
         public MainTestWindow()
         {
+            mainPanel = new(InitPanel);
+
             if (disableResize)
             {
                 this.Resizable = false;
@@ -97,6 +99,11 @@ namespace ControlsTest
         internal static bool AddCustomDrawPage { get; set; } = true;
 
         internal static bool AddLinkLabelPage { get; set; } = false;
+
+        private void InitPanel(PanelAuiManager panel)
+        {
+            panel.LeftTreeViewAsListBox = true;
+        }
 
         private void LogSizeEvent(object? sender, string evName)
         {

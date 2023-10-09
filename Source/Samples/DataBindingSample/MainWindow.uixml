@@ -2,7 +2,7 @@
         xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
         x:Class="HelloWorldSample.MainWindow"
         Title="Alternet UI Data Binding Sample"
-		StartLocation="CenterScreen">
+		StartLocation="CenterScreen" MinWidth="750" MinHeight="600">
 	<StackPanel Orientation="Vertical" Padding="10" Margin="10">
 
 		<Label Text="MyData:" Margin="0,0,0,0" />
