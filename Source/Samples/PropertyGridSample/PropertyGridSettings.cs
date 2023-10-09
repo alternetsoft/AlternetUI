@@ -62,6 +62,8 @@ namespace PropertyGridSample
             {
                 if (colorScheme == value)
                     return;
+                if (!Application.IsWindowsOS)
+                    return;
                 colorScheme = value;
                 propertyGrid.ApplyKnownColors(colorScheme);
                 eventGrid.ApplyKnownColors(colorScheme);

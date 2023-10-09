@@ -66,7 +66,7 @@ namespace EmployeeFormSample
             // We need to increase height of all window's TextBoxes.
             LayoutFactory.AdjustTextBoxesHeight(this);
 
-            this.MinimumSize = new(750, 500);
+            this.MinimumSize = new(900, 700);
             this.SetSizeToContent();
         }
 

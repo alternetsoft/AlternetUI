@@ -100,6 +100,7 @@ namespace PropertyGridSample
             PropGrid.ProcessException += PropertyGrid_ProcessException;
             InitIgnorePropNames(PropGrid.IgnorePropNames);
             PropGrid.CreateStyleEx = PropertyGridCreateStyleEx.AlwaysAllowFocus;
+            panel.EventGrid.Required();
 
             Icon = ImageSet.FromUrlOrNull("embres:PropertyGridSample.Sample.ico");
 
