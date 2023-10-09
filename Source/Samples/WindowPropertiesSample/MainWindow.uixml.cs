@@ -6,6 +6,7 @@ namespace WindowPropertiesSample
 {
     public partial class MainWindow : Window
     {
+        private readonly CardPanelHeader panelHeader = new();
         private TestWindow? testWindow;
 
         private int lastEventNumber = 1;
@@ -23,7 +24,12 @@ namespace WindowPropertiesSample
             sizeToContentModeComboBox.AddEnumValues(typeof(WindowSizeToContentMode),
                 WindowSizeToContentMode.WidthAndHeight);
             UpdateControls();
-            this.SetSizeToContent();
+
+            panelHeader.Add("Actions", actionsPanel);
+            panelHeader.Add("Settings", settingsPanel);
+            panelHeader.Add("Bounds", boundsPanel);
+            pageControl.Children.Insert(0, panelHeader);
+            panelHeader.SelectedTab = panelHeader.Tabs[0];
         }
 
         private void CreateAndShowWindowButton_Click(object sender, EventArgs e)
