@@ -177,6 +177,12 @@ namespace PropertyGridSample
                 control.Value = 50;
             });
 
+            Actions.Add(typeof(TextBox), (c) =>
+            {
+                TextBox control = (c as TextBox)!;
+                control.Text = "some text";
+            });
+
             Actions.Add(typeof(PanelOkCancelButtons), (c) =>
             {
                 PanelOkCancelButtons control = (c as PanelOkCancelButtons)!;
