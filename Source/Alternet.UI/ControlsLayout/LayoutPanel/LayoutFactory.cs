@@ -134,36 +134,35 @@ namespace Alternet.UI
 
             var maxHeight = Math.Max(comboBoxHeight, textBoxHeight);
 
-            container.SuspendLayout();
+            if (maxHeight <= 0)
+                return;
 
-            try
+            var editors = new List<Control>();
+            AddTextEditors(container);
+
+            void AddTextEditors(Control container)
             {
-                var editors = new Collection<Control>();
-                AddTextEditors(container);
-
-                foreach (Control control in editors)
-                    control.SuggestedHeight = maxHeight;
-
-                /*control.SetBounds(0, 0, 0, maxHeight, BoundsSpecified.Height);*/
-
-                void AddTextEditors(Control container)
+                if (!container.HasChildren)
+                    return;
+                foreach (Control control in container.Children)
                 {
-                    foreach (Control control in container.Children)
+                    if (control is TextBox || control is ComboBox)
                     {
-                        if (control is TextBox || control is ComboBox)
-                        {
-                            if (control.Bounds.Height < maxHeight)
-                                editors.Add(control);
-                        }
-                        else
-                            AddTextEditors(control);
+                        if (control.Bounds.Height < maxHeight)
+                            editors.Add(control);
                     }
+                    else
+                        AddTextEditors(control);
                 }
             }
-            finally
+
+            if (editors.Count == 0)
+                return;
+            container.DoInsideLayout(() =>
             {
-                container.ResumeLayout(true);
-            }
+                foreach (Control control in editors)
+                    control.SuggestedHeight = maxHeight;
+            });
         }
     }
 }
