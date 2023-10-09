@@ -86,13 +86,14 @@ namespace Alternet::UI
         auto window = GetWxWindow();
         if (value.Width <= 0 && value.Height <= 0)
         {
-            window->SetMinSize(wxDefaultSize);
+            if (window->GetMinSize() != wxDefaultSize)
+                window->SetMinSize(wxDefaultSize);
             LogMethod("After ApplyMinimumSize", value);
             return;
         }
 
         auto size = fromDip(value, window);
-        window->SetMinSize(size == wxSize() ? wxDefaultSize : size);
+        window->SetMinSize(size);
         LogMethod("After2 ApplyMinimumSize", value);
     }
 
@@ -178,12 +179,13 @@ namespace Alternet::UI
         auto window = GetWxWindow();
         if (value.Width <= 0 && value.Height <= 0)
         {
-            window->SetMaxSize(wxDefaultSize);
+            if(window->GetMaxSize() != wxDefaultSize)
+                window->SetMaxSize(wxDefaultSize);
             LogMethod("After ApplyMaximumSize", value);
             return;
         }
         auto size = fromDip(value, window);
-        window->SetMaxSize(size == wxSize() ? wxDefaultSize : size);
+        window->SetMaxSize(size);
         LogMethod("After2 ApplyMaximumSize", value);
     }
 
