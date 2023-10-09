@@ -21,6 +21,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <None Remove="MainWindow.uixml" />
       <None Remove="ColorSelector\ColorSelector.uixml" />
       <None Remove="Resources\CommandIcons\Redo.png" />
       <None Remove="Resources\CommandIcons\Undo.png" />
