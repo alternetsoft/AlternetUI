@@ -2,44 +2,64 @@
         xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
         x:Class="InputSample.KeyboardInputWindow"
 		MinWidth="700" MinHeight="700"
-        Title="Keyboard Input" PreviewKeyDown="Window_PreviewKeyDown" PreviewKeyUp="Window_PreviewKeyUp" 
+        Title="Keyboard Input" PreviewKeyDown="Window_PreviewKeyDown" PreviewKeyUp="Window_PreviewKeyUp"
 		KeyDown="Window_KeyDown" KeyUp="Window_KeyUp"
 		TextInput="Window_TextInput">
-	<StackPanel Orientation="Vertical" KeyDown="StackPanel_KeyDown" KeyUp="StackPanel_KeyUp" 
-		PreviewKeyDown="StackPanel_PreviewKeyDown" PreviewKeyUp="StackPanel_PreviewKeyUp" Padding="5">
-		
-		<Button Name="helloButton" Text="Say Hello" Margin="10" Click="HelloButton_Click"
-				KeyDown="HelloButton_KeyDown" KeyUp="HelloButton_KeyUp" 
-				PreviewKeyDown="HelloButton_PreviewKeyDown" PreviewKeyUp="HelloButton_PreviewKeyUp"/>
-		<Button Text="Button 1" Margin="10" />
-		<TextBox Text="Sample Text Box" Margin="10"/>
-		<CheckBox Name="handlePreviewEventsCheckBox"
-                  Text="Handle Preview Events at StackPanel" Margin="10"/>
-		<CheckBox Name="cancelF1KeyInputCheckBox" Text="Cancel F1 Key Input" Margin="10"/>
-		
-		<StackPanel Orientation="Horizontal" Margin="5">
-			<Label Text="Press Ctrl+Shift+D to change the color of this message." Name="messageLabel" />
-		</StackPanel>
+  <StackPanel Orientation="Vertical" KeyDown="StackPanel_KeyDown" KeyUp="StackPanel_KeyUp"
+      PreviewKeyDown="StackPanel_PreviewKeyDown" PreviewKeyUp="StackPanel_PreviewKeyUp" Padding="5">
 
-      <Label Text="Modifier keys:" Margin="5"/>
+    <HorizontalStackPanel>
+      <Button Name="helloButton" Text="Say Hello" Margin="10" Click="HelloButton_Click"
+                KeyDown="HelloButton_KeyDown" KeyUp="HelloButton_KeyUp" SuggestedWidth="150"
+                PreviewKeyDown="HelloButton_PreviewKeyDown" PreviewKeyUp="HelloButton_PreviewKeyUp"/>
+      <Button Text="Button 1" Margin="10" SuggestedWidth="150"/>
+      <TextBox Text="Sample Text Box" Margin="10" SuggestedWidth="150"/>
+    </HorizontalStackPanel>
 
-      <TextBox Name="buttonInfo" Margin="5" ReadOnly="true" SuggestedWidth="350"/>
+    <HorizontalStackPanel>
+      <CheckBox Name="handlePreviewEventsCheckBox"
+                  Text="Handle Preview Events at StackPanel" Margin="5"/>
+      <CheckBox Name="cancelF1KeyInputCheckBox" Text="Cancel F1 Key Input" Margin="5"/>
+    </HorizontalStackPanel>
 
-      <HorizontalStackPanel>
-        <VerticalStackPanel>
-          <Label Text="Window:" Margin="5"/>
-          <ListBox Name="lbWindow" Margin="5"  SuggestedWidth="200"  SuggestedHeight="200" />
-        </VerticalStackPanel>
-
-        <VerticalStackPanel>
-          <Label Text="StackPanel:" Margin="5"/>
-          <ListBox Name="lbStackPanel" Margin="5"  SuggestedWidth="200"  SuggestedHeight="200" />
-        </VerticalStackPanel>
-
-        <VerticalStackPanel>
-          <Label Text="Button:" Margin="5"/>
-          <ListBox Name="lbButton" Margin="5"  SuggestedWidth="200"  SuggestedHeight="200" />
-        </VerticalStackPanel>
-      </HorizontalStackPanel>
+    <StackPanel Orientation="Horizontal" Margin="5">
+      <Label Text="Press Ctrl+Shift+D to change the color of this message." Name="messageLabel" />
     </StackPanel>
+
+
+    <Grid>
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="Auto" />
+        <ColumnDefinition Width="Auto" />
+      </Grid.ColumnDefinitions>
+      <Grid.RowDefinitions>
+        <RowDefinition Height="Auto"/>
+        <RowDefinition Height="Auto"/>
+        <RowDefinition Height="Auto"/>
+        <RowDefinition Height="Auto"/>
+      </Grid.RowDefinitions>
+
+      <Label Grid.Column="0" Grid.Row="0"
+        Text="Modifier keys:" Margin="5" VerticalAlignment="Center" Name="labelInfo"/>
+      <TextBox Grid.Column="1" Grid.Row="0"
+        Name="buttonInfo" Margin="5" ReadOnly="true" SuggestedWidth="300"/>
+
+      <Label  Grid.Column="0" Grid.Row="1"
+        Text="Window:" Margin="5" Name="labelWindow"/>
+      <ListBox  Grid.Column="1" Grid.Row="1"
+        Name="lbWindow" Margin="5"  SuggestedWidth="300"  SuggestedHeight="150" />
+
+      <Label  Grid.Column="0" Grid.Row="2"
+        Text="StackPanel:" Margin="5" Name="labelStackPanel"/>
+      <ListBox  Grid.Column="1" Grid.Row="2"
+        Name="lbStackPanel" Margin="5"  SuggestedWidth="300"  SuggestedHeight="150" />
+
+      <Label  Grid.Column="0" Grid.Row="3"
+        Text="Button:" Margin="5" Name="labelButton"/>
+      <ListBox  Grid.Column="1" Grid.Row="3"
+        Name="lbButton" Margin="5"  SuggestedWidth="300"  SuggestedHeight="150" />
+    </Grid>
+
+
+  </StackPanel>
 </Window>

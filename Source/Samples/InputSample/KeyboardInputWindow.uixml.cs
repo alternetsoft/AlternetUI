@@ -6,6 +6,13 @@ namespace InputSample
 {
     public partial class KeyboardInputWindow : Window
     {
+        private const int PreviewKeyDownIndex = 0;
+        private const int KeyDownIndex = 1;
+        private const int PreviewKeyUpIndex = 2;
+        private const int KeyUpIndex = 3;
+        private const int TextInputIndex = 4;
+        private const int lbCount = 5;
+
         public KeyboardInputWindow()
         {
             InitializeComponent();
@@ -13,6 +20,21 @@ namespace InputSample
             PlatformSpecificInitialize();
             InputManager.Current.PreProcessInput += InputManager_PreProcessInput;
 
+            SetSizeToContent();
+
+            static object CreateItem() => string.Empty;
+
+            lbButton.Items.SetCount(lbCount, CreateItem);
+            lbStackPanel.Items.SetCount(lbCount, CreateItem);
+            lbWindow.Items.SetCount(lbCount, CreateItem);
+
+            ControlSet labels = new(
+                labelInfo,
+                labelWindow,
+                labelStackPanel,
+                labelButton);
+            labels.SuggestedWidthToMax();
+            PerformLayout();
             SetSizeToContent();
         }
 
@@ -102,63 +124,62 @@ namespace InputSample
 
         int messageNumber;
 
-        private void LogMessage(ListBox lb, string m)
+        private void LogMessage(int index, ListBox lb, string m)
         {
-            lb.Items.Add(m);
-            lb.SelectedIndex = lb.Items.Count - 1;
+            lb.Items[index] = m;
             Application.DoEvents();
         }
 
         private void Window_TextInput(object sender, TextInputEventArgs e) =>
-            LogTextInput(lbWindow, e, "Window", "TextInput");
+            LogTextInput(TextInputIndex, lbWindow, e, "Window", "TextInput");
 
-        private void LogKey(ListBox lb, KeyEventArgs e, string objectName, string eventName) =>
-            LogMessage(lb, $"{++messageNumber} {eventName} [{e.Key}], Repeat: {e.IsRepeat}");
-        private void LogTextInput(ListBox lb, TextInputEventArgs e, string objectName, string eventName) =>
-            LogMessage(lb, $"{++messageNumber} {eventName} '{e.KeyChar}'");
+        private void LogKey(int index, ListBox lb, KeyEventArgs e, string objectName, string eventName) =>
+            LogMessage(index, lb, $"{++messageNumber} {eventName} [{e.Key}], Repeat: {e.IsRepeat}");
+        private void LogTextInput(int index, ListBox lb, TextInputEventArgs e, string objectName, string eventName) =>
+            LogMessage(index, lb, $"{++messageNumber} {eventName} '{e.KeyChar}'");
 
         private void HelloButton_KeyDown(object sender, KeyEventArgs e) =>
-            LogKey(lbButton, e, "HelloButton", "KeyDown");
+            LogKey(KeyDownIndex, lbButton, e, "HelloButton", "KeyDown");
 
         private void StackPanel_KeyDown(object sender, KeyEventArgs e) =>
-            LogKey(lbStackPanel, e, "StackPanel", "KeyDown");
+            LogKey(KeyDownIndex, lbStackPanel, e, "StackPanel", "KeyDown");
 
         private void Window_KeyDown(object sender, KeyEventArgs e) =>
-            LogKey(lbWindow, e, "Window", "KeyDown");
+            LogKey(KeyDownIndex, lbWindow, e, "Window", "KeyDown");
 
         private void HelloButton_KeyUp(object sender, KeyEventArgs e) =>
-            LogKey(lbButton, e, "HelloButton", "KeyUp");
+            LogKey(KeyUpIndex, lbButton, e, "HelloButton", "KeyUp");
 
         private void StackPanel_KeyUp(object sender, KeyEventArgs e) =>
-            LogKey(lbStackPanel, e, "StackPanel", "KeyUp");
+            LogKey(KeyUpIndex, lbStackPanel, e, "StackPanel", "KeyUp");
 
         private void Window_KeyUp(object sender, KeyEventArgs e) =>
-            LogKey(lbWindow, e, "Window", "KeyUp");
+            LogKey(KeyUpIndex, lbWindow, e, "Window", "KeyUp");
 
         private void HelloButton_PreviewKeyDown(object sender, KeyEventArgs e) =>
-            LogKey(lbButton, e, "HelloButton", "PreviewKeyDown");
+            LogKey(PreviewKeyDownIndex, lbButton, e, "HelloButton", "PreviewKeyDown");
 
         private void StackPanel_PreviewKeyDown(object sender, KeyEventArgs e)
         {
-            LogKey(lbStackPanel, e, "StackPanel", "PreviewKeyDown");
+            LogKey(PreviewKeyDownIndex, lbStackPanel, e, "StackPanel", "PreviewKeyDown");
             if (handlePreviewEventsCheckBox.IsChecked)
                 e.Handled = true;
         }
 
         private void Window_PreviewKeyDown(object sender, KeyEventArgs e) =>
-            LogKey(lbWindow, e, "Window", "PreviewKeyDown");
+            LogKey(PreviewKeyDownIndex, lbWindow, e, "Window", "PreviewKeyDown");
 
         private void HelloButton_PreviewKeyUp(object sender, KeyEventArgs e) =>
-            LogKey(lbButton, e, "HelloButton", "PreviewKeyUp");
+            LogKey(PreviewKeyUpIndex, lbButton, e, "HelloButton", "PreviewKeyUp");
 
         private void StackPanel_PreviewKeyUp(object sender, KeyEventArgs e)
         {
-            LogKey(lbStackPanel, e, "StackPanel", "PreviewKeyUp");
+            LogKey(PreviewKeyUpIndex, lbStackPanel, e, "StackPanel", "PreviewKeyUp");
             if (handlePreviewEventsCheckBox.IsChecked)
                 e.Handled = true;
         }
 
         private void Window_PreviewKeyUp(object sender, KeyEventArgs e) =>
-            LogKey(lbWindow, e, "Window", "PreviewKeyUp");
+            LogKey(PreviewKeyUpIndex, lbWindow, e, "Window", "PreviewKeyUp");
     }
 }
