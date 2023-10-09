@@ -53,6 +53,16 @@ namespace ControlsSample
             ListControlUtils.AddColorNames(comboBoxBackColor, false);
             comboBoxTextColor.SelectedIndex = comboBoxTextColor.FindStringExact("Default");
             comboBoxBackColor.SelectedIndex = comboBoxBackColor.FindStringExact("Default");
+
+            ControlSet editors = new(
+                textTextBox,
+                comboBoxFontName,
+                comboBoxFontSize,
+                comboBoxBackColor,
+                textAlignComboBox,
+                imageAlignComboBox,
+                comboBoxTextColor);
+            editors.SuggestedHeightToMax();
         }
 
         public IPageSite? Site
@@ -104,7 +114,7 @@ namespace ControlsSample
 
                 var direction = (GenericDirection?)item.Value;
 
-                if(direction is not null)
+                if (direction is not null)
                     button.TextAlign = direction.Value;
             }
 
@@ -117,7 +127,7 @@ namespace ControlsSample
                 if (imageAlignComboBox.SelectedItem is not ListControlItem item)
                     return;
                 var direction = (GenericDirection?)item.Value;
-                if(direction is not null)
+                if (direction is not null)
                     button.SetImagePosition(direction.Value);
             }
 
@@ -157,9 +167,9 @@ namespace ControlsSample
                 button.ForegroundColor = color;
                 color = GetColor(comboBoxBackColor);
                 button.BackgroundColor = color;
-				button.StateImages = ControlStateImages.Empty;
-				if(imageCheckBox.IsChecked)
-					button.StateImages = ResourceLoader.ButtonImages;
+                button.StateImages = ControlStateImages.Empty;
+                if (imageCheckBox.IsChecked)
+                    button.StateImages = ResourceLoader.ButtonImages;
                 ApplyImageAlign();
                 button.Enabled = !disabledCheckBox.IsChecked;
             });
