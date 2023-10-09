@@ -24,7 +24,7 @@ namespace CustomControlsSample
                 Refresh();
 
                 // Popup hangs complete Linux system
-                if (WebBrowser.GetBackendOS() != WebBrowserBackendOS.Windows)
+                if (!Application.IsWindowsOS && MainWindow.DisableCustomColorPopup)
                     return;
 
                 if (isPressed)

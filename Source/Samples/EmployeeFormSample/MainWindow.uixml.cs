@@ -10,6 +10,9 @@ namespace EmployeeFormSample
 {
     public partial class MainWindow : Window
     {
+/*
+        private readonly CardPanelHeader panelHeader = new();
+*/
         public MainWindow()
         {
             Icon = ImageSet.FromUrlOrNull("embres:EmployeeFormSample.Sample.ico");
@@ -65,7 +68,13 @@ namespace EmployeeFormSample
             // On Linux height of the ComboBox is greater than height of the TextBox.
             // We need to increase height of all window's TextBoxes.
             LayoutFactory.AdjustTextBoxesHeight(this);
-
+/*
+            panelHeader.Add("Information", infoPanel);
+            panelHeader.Add("Contacts", contactsPanel);
+            panelHeader.Add("Evaluations", evalPanel);
+            tabControlPanel.Children.Insert(0, panelHeader);
+            panelHeader.SelectedTab = panelHeader.Tabs[0];
+*/
             this.MinimumSize = new(900, 700);
             this.SetSizeToContent();
         }

@@ -104,7 +104,8 @@ namespace ControlsSample
             AddPage("Web Browser", CreateWebBrowserPage);
             AddPage("Splitter Panel", CreateSplitterPanelPage);
             AddPage("Layout Panel", CreateLayoutPanelPage);
-            AddPage("Tab Control", CreateTabControlPage);
+            if(Application.IsWindowsOS)
+                AddPage("Tab Control", CreateTabControlPage);
             AddPage("All Samples", CreateAllSamplesPage);
 
             pageContainer.SelectedIndex = 0;

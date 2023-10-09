@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
         xmlns:local="clr-namespace:CustomControlsSample;assembly=CustomControlsSample"
         Title="Alternet UI Custom Controls Sample"
-        Width="700" Height="600" StartLocation="CenterScreen">
+        MinWidth="800" MinHeight="700" StartLocation="CenterScreen">
     
   <StackPanel Orientation="Vertical" VerticalAlignment="Stretch" Padding="10"
               HorizontalAlignment="Stretch">
