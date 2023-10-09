@@ -9,6 +9,7 @@ namespace MenuSample
     public partial class MainWindow : Window
     {
         private const string ResPrefix = "embres:MenuSample.Resources.Icons.Small.";
+        private readonly CardPanelHeader panelHeader = new();
         private int newItemIndex = 0;
         Toolbar? toolbar;
         ToolbarItem? dynamicToolbarItemsSeparator;
@@ -46,10 +47,17 @@ namespace MenuSample
             this.Closing += MainWindow_Closing;
 
             contextMenuBorder.BorderColor = Color.Red;
-            contextMenuBorder.BorderWidth = new Thickness(0, 1, 0, 1);
+            contextMenuBorder.BorderWidth = new Thickness(2, 2, 2, 2);
 
             contextMenuLabel.Font = Control.DefaultFont.AsBold;
             contextMenuBorder.PerformLayout();
+
+            panelHeader.Add("Menu", menuPanel);
+            panelHeader.Add("ToolBar", toolbarPanel);
+            panelHeader.Add("StatusBar", statusPanel);
+            mainPanel.Children.Insert(0, panelHeader);
+            panelHeader.SelectedTab = panelHeader.Tabs[0];
+
         }
 
         private void ImageTextVertical()

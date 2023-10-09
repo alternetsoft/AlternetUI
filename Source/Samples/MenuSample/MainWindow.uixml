@@ -2,20 +2,20 @@
         xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
         x:Class="MenuSample.MainWindow"
         Width="900"
-        Height="600" 
+        Height="600"
         Title="Alternet UI Menu Sample" StartLocation="CenterScreen">
-  
+
   <Window.InputBindings>
     <KeyBinding Gesture="Ctrl+Shift+A" Command="{Binding ExportToPngCommand}" />
   </Window.InputBindings>
   <Window.Menu>
     <MainMenu>
       <MenuItem Text="_File">
-        <MenuItem Text="_Open..." Name="openMenuItem" 
+        <MenuItem Text="_Open..." Name="openMenuItem"
                   Click="OpenMenuItem_Click" Shortcut="Ctrl+O" />
-        <MenuItem Text="_Save..." Name="saveMenuItem" 
+        <MenuItem Text="_Save..." Name="saveMenuItem"
                   Command="{Binding SaveCommand}" Shortcut="Ctrl+S"/>
-        <MenuItem Text="_Save Enabled" Name="saveEnabledMenuItem" 
+        <MenuItem Text="_Save Enabled" Name="saveEnabledMenuItem"
                   Click="SaveEnabledMenuItem_Click" Checked="True" />
         <MenuItem Text="-" Name="separatorMenuItem" />
         <MenuItem Text="_Export">
@@ -48,145 +48,140 @@
   <Window.Toolbar>
     <Toolbar NoDivider="true">
     </Toolbar>
-  </Window.Toolbar>    
- <Window.StatusBar>
+  </Window.Toolbar>
+  <Window.StatusBar>
     <StatusBar Name="statusBar">
       <StatusBarPanel Text="Ready" />
       <StatusBarPanel Name="clockStatusBarPanel" />
     </StatusBar>
-  </Window.StatusBar>  
-  
-    <Grid Name="mainGrid">
-        <Grid.ColumnDefinitions>
-          <ColumnDefinition Width="Auto"/>
-          <ColumnDefinition Width="*"/>
-          <ColumnDefinition Width="Auto"/>
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-          <RowDefinition Height="Auto"/>
-          <RowDefinition Height="Auto"/>
-          <RowDefinition Height="*"/>
-          <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
+  </Window.StatusBar>
 
-      <Border Grid.Column="1" Grid.Row="1" BorderWidth="0,1,0,0">
-      <ScrollViewer >  
-      <StackPanel Orientation="Horizontal" Name="mainPanel" Margin="5"
-                  Padding="5">
-        <GroupBox Title="Menu" Margin="5" VerticalAlignment="Stretch" Padding="5">
-          <StackPanel Padding="10"  >
-            <Button Text="Add Menu Item" 
-                    Name="addDynamicMenuItemMenuItem"
-                    Click="AddDynamicMenuItemMenuItem_Click" 
-                    Margin="0,0,0,10" />
-            
+  <!-- ========================= -->
+
+  <VerticalStackPanel Name="mainGrid">
+
+    <Border Grid.Column="1" Grid.Row="1" BorderWidth="0,1,0,0">
+
+      <StackPanel Orientation="Vertical" Name="mainPanel" Margin="5" VerticalAlignment="Top">
+        <!-- ========================= -->
+        <HorizontalStackPanel Margin="5" Padding="5" Name="menuPanel" HorizontalAlignment="Left"
+                 VerticalAlignment="Top">
+          <VerticalStackPanel>
+            <Button Text="Add Menu Item"
+                      Name="addDynamicMenuItemMenuItem"
+                      Click="AddDynamicMenuItemMenuItem_Click"
+                      Margin="0,0,0,10" />
+
             <Button Text="Remove Menu Item"
                     Name="removeLastDynamicMenuItemMenuItem"
                     Click="RemoveLastDynamicMenuItemMenuItem_Click"
                     Margin="0,0,0,10" />
-            
+
             <Button Name="toggleExitEnabledMenuItem"
                     Click="ToggleExitEnabledMenuItem_Click" Margin="0,0,0,10" />
-            
+
             <Button Name="toggleSeparatorMenuItem"
                     Click="ToggleSeparatorMenuItem_Click" Margin="0,0,0,10" />
-            
-            <StackPanel Name="roleControlsPanel">
-              <Button Text="Set About Item Role to None"
-                      Name="setAboutMenuItemRoleToNone" 
-                      Click="SetAboutMenuItemRoleToNone_Click" Margin="0,0,0,10" />
-              <Button Text="Set Options Item Role to None"
-                      Click="SetOptionsMenuItemRoleToNone_Click"
-                      Margin="0,0,0,10" />
-              <Button Text="Set Options Item Role to Preferences"
-                      Click="SetOptionsMenuItemRoleToPreferences_Click"
-                      Margin="0,0,0,10" />
-            </StackPanel>
+          </VerticalStackPanel>
+
+          <VerticalStackPanel Name="roleControlsPanel">
+            <Button Text="Set About Item Role to None"
+                    Name="setAboutMenuItemRoleToNone"
+                    Click="SetAboutMenuItemRoleToNone_Click" Margin="0,0,0,10" />
+            <Button Text="Set Options Item Role to None"
+                    Click="SetOptionsMenuItemRoleToNone_Click"
+                    Margin="0,0,0,10" />
+            <Button Text="Set Options Item Role to Preferences"
+                    Click="SetOptionsMenuItemRoleToPreferences_Click"
+                    Margin="0,0,0,10" />
+          </VerticalStackPanel>
+
+          <VerticalStackPanel>
             <Border Name="contextMenuBorder"
-                    MouseRightButtonUp="ContextMenuBorder_MouseRightButtonUp"
-                    Margin="0,0,0,5">
+                      MouseRightButtonUp="ContextMenuBorder_MouseRightButtonUp"
+                      Margin="10">
               <Label Margin="5" Text="Right-click shows context menu"
                      Name="contextMenuLabel"/>
             </Border>
-          </StackPanel>
-        </GroupBox>
-
-        <GroupBox Title="Toolbar" VerticalAlignment="Stretch" Margin="5,5,5,5" >
-          <HorizontalStackPanel>
-            <StackPanel Padding="10"  >
-              <Button Text="Toggle item check"
-                      Name="toggleToolbarItemCheckButton"
-                      Click="ToggleToolbarItemCheckButton_Click"
-                      Margin="5,5,0,5" />
-              <Button Text="Toggle item enabled"
-                      Name="toggleFirstToolbarEnabledButton"
-                      Click="ToggleFirstToolbarEnabledButton_Click"
-                  Margin="5,5,0,5" />
-              <Button Text="Add item"
-                      Name="addDynamicToolbarItemButton"
-                      Click="AddDynamicToolbarItemButton_Click"
-                      Margin="5,5,0,5" />
-              <Button Text="Remove item"
-                      Name="removeLastDynamicToolbarItemButton"
-                      Click="RemoveLastDynamicToolbarItemButton_Click"
-                      Margin="5,5,0,5" />
-              <Label Text="Image to Text:" Margin="5,5,0,3"/>
-              <ComboBox IsEditable="false"
-                  Name="imageToTextDisplayModeComboBox"
-                  SelectedItemChanged=
-                        "ImageToTextDisplayModeComboBox_SelectedItemChanged"
-                  Margin="5,5,0,5"/>
-            </StackPanel>
-
-            <StackPanel Padding="10"  >
-              <CheckBox Text="No divider" Name="noDividerCheckBox"
-                  CheckedChanged="NoDividerCheckBox_Changed" IsChecked="True"
-                  Margin="5,5,0,5"/>
-              <CheckBox Text="Vertical" Name="verticalCheckBox"
-                  CheckedChanged="VerticalCheckBox_Changed"
-                  Margin="5,5,0,5" IsChecked="false"/>
-              <CheckBox Text="Is Right" Name="isRightCheckBox"
-                  CheckedChanged="IsRightCheckBox_Changed"
-                  Margin="5,5,0,5" IsChecked="false"/>
-              <CheckBox Text="Is Bottom" Name="isBottomCheckBox"
-                  CheckedChanged="IsBottomCheckBox_Changed"
-                  Margin="5,5,0,5" IsChecked="false"/>
-              <CheckBox Text="Show text" Name="showToolbarTextCheckBox"
-                  CheckedChanged="ShowToolbarTextCheckBox_CheckedChanged"
-                        Margin="5,5,0,5" IsChecked="True" />
-              <CheckBox Text="Show images" Name="showToolbarImagesCheckBox"
-                  CheckedChanged="ShowToolbarImagesCheckBox_CheckedChanged"
-                  Margin="5,5,0,5" IsChecked="True"/>
-            </StackPanel>
-          </HorizontalStackPanel>
-        </GroupBox>
-
-        <GroupBox Title="Status Bar" VerticalAlignment="Stretch" Padding="5"  
-                  Margin="5,5,10,5">
-          <StackPanel Padding="10"  >
-            <CheckBox
-              Text="Show Grip"
-              Name="showSizingGripCheckBox"
-              CheckedChanged="ShowSizingGripCheckBox_CheckedChanged"
-              Margin="0,0,0,10" IsChecked="True" />
-            
+          </VerticalStackPanel>
+        </HorizontalStackPanel>
+        <!-- ========================= -->
+        <HorizontalStackPanel VerticalAlignment="Top"
+                  Margin="5,5,5,5" Visible="false" Name="toolbarPanel">
+          <StackPanel>
+            <Button Text="Toggle item check"
+                    Name="toggleToolbarItemCheckButton"
+                    Click="ToggleToolbarItemCheckButton_Click"
+                    Margin="5,5,0,5" />
+            <Button Text="Toggle item enabled"
+                    Name="toggleFirstToolbarEnabledButton"
+                    Click="ToggleFirstToolbarEnabledButton_Click"
+                Margin="5,5,0,5" />
             <Button Text="Add item"
-                    Name="addDynamicStatusBarPanelButton"
-                    Click="AddDynamicStatusBarPanelButton_Click"
-                    Margin="0,0,0,10" />
-            
+                    Name="addDynamicToolbarItemButton"
+                    Click="AddDynamicToolbarItemButton_Click"
+                    Margin="5,5,0,5" />
             <Button Text="Remove item"
-                    Name="removeLastDynamicStatusBarPanelButton"
-                    Click="RemoveLastDynamicStatusBarPanelButton_Click"
-                    Margin="0,0,0,10" />
+                    Name="removeLastDynamicToolbarItemButton"
+                    Click="RemoveLastDynamicToolbarItemButton_Click"
+                    Margin="5,5,0,5" />
           </StackPanel>
-        </GroupBox>
+
+          <StackPanel Margin="10,0,0,0">
+            <CheckBox Text="No divider" Name="noDividerCheckBox"
+                CheckedChanged="NoDividerCheckBox_Changed" IsChecked="True"
+                Margin="5,5,0,5"/>
+            <CheckBox Text="Vertical" Name="verticalCheckBox"
+                CheckedChanged="VerticalCheckBox_Changed"
+                Margin="5,5,0,5" IsChecked="false"/>
+            <CheckBox Text="Is Right" Name="isRightCheckBox"
+                CheckedChanged="IsRightCheckBox_Changed"
+                Margin="5,5,0,5" IsChecked="false"/>
+            <CheckBox Text="Is Bottom" Name="isBottomCheckBox"
+                CheckedChanged="IsBottomCheckBox_Changed"
+                Margin="5,5,0,5" IsChecked="false"/>
+            <CheckBox Text="Show text" Name="showToolbarTextCheckBox"
+                CheckedChanged="ShowToolbarTextCheckBox_CheckedChanged"
+                      Margin="5,5,0,5" IsChecked="True" />
+            <CheckBox Text="Show images" Name="showToolbarImagesCheckBox"
+                CheckedChanged="ShowToolbarImagesCheckBox_CheckedChanged"
+                Margin="5,5,0,5" IsChecked="True"/>
+          </StackPanel>
+          <StackPanel Margin="10,0,0,0">
+            <Label Text="Image to Text:" Margin="5,5,0,3"/>
+            <ComboBox IsEditable="false"
+                Name="imageToTextDisplayModeComboBox"
+                SelectedItemChanged=
+                        "ImageToTextDisplayModeComboBox_SelectedItemChanged"
+                Margin="5,5,0,5"/>
+          </StackPanel>
+        </HorizontalStackPanel>
+        <!-- ========================= -->
+        <StackPanel Padding="5"  VerticalAlignment="Top"
+                  Margin="5,5,10,5" Visible="false" Name="statusPanel" HorizontalAlignment="Left">
+          <CheckBox
+            Text="Show Grip"
+            Name="showSizingGripCheckBox"
+            CheckedChanged="ShowSizingGripCheckBox_CheckedChanged"
+            Margin="0,0,0,10" IsChecked="True" />
+
+          <Button Text="Add item"
+                  Name="addDynamicStatusBarPanelButton"
+                  Click="AddDynamicStatusBarPanelButton_Click"
+                  Margin="0,0,0,10" />
+
+          <Button Text="Remove item"
+                  Name="removeLastDynamicStatusBarPanelButton"
+                  Click="RemoveLastDynamicStatusBarPanelButton_Click"
+                  Margin="0,0,0,10" />
+        </StackPanel>
+        <!-- ========================= -->
 
       </StackPanel>
-      </ScrollViewer>
-      </Border>  
 
-      <ListBox Name="eventsListBox" Grid.Column="1" Grid.Row="2" Margin="10,0,10,10"/>
-    </Grid>
-  
+    </Border>
+
+    <ListBox Name="eventsListBox" Margin="10,5,10,10" MinHeight="200"/>
+  </VerticalStackPanel>
+
 </Window>
