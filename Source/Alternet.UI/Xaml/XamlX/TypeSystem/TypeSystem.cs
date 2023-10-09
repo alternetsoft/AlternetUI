@@ -405,7 +405,8 @@ namespace XamlX.TypeSystem
 #endif
     static class XamlTypeSystemExtensions
     {
-        public static string GetFqn(this IXamlType type) => $"{type.Assembly?.Name}:{type.Namespace}.{type.Name}";
+        public static string GetFqn(this IXamlType type) =>
+            $"{type.Assembly?.Name}:{type.Namespace}.{type.Name}";
 
         public static string GetFullName(this IXamlType type)
         {
