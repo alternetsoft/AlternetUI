@@ -42,10 +42,9 @@ namespace Alternet::UI
                 &Control::RetrieveVerticalScrollBarInfo, &Control::ApplyVerticalScrollBarInfo),
             _delayedValues({&_delayedFlags, &_bounds, &_backgroundColor,
                 &_foregroundColor,&_horizontalScrollBarInfo,
-                &_verticalScrollBarInfo })
+                &_verticalScrollBarInfo,&_minimumSize,&_maximumSize})
     {
-        GetDelayedValues().Add(&_minimumSize);
-        GetDelayedValues().Add(&_maximumSize);
+        // GetDelayedValues().Add();
     }
 
     bool Control::GetIsFocusable()
