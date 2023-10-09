@@ -52,7 +52,10 @@ namespace Alternet.UI
         /// The number of elements actually contained in the <see cref="Items"/>.
         /// </returns>
         [Browsable(false)]
-        public int Count => Items.Count;
+        public int Count
+        {
+            get => Items.Count;
+        }
 
         /// <summary>
         /// Gets last item in the control or <c>null</c> if there are no items.
