@@ -67,9 +67,22 @@ namespace Alternet::UI
         return _appliedMinimumSize;
     }
 
+    void Control::LogMethod(std::string methodName, const Size& value)
+    {
+        auto window = GetWxWindow();
+        if (window->GetName() != wxDatePickerCtrlNameStr)
+            return;
+        auto minSize = Size(window->GetMinSize());
+        auto maxSize = Size(window->GetMaxSize());
+        auto s = methodName + ": " + value.ToString() + ", minSize: " + minSize.ToString() + 
+            ", maxSize: " + maxSize.ToString();
+        Application::Log(s);
+    }
+
     void Control::ApplyMinimumSize(const Size& value)
     {
-        return; // !!
+        LogMethod("ApplyMinimumSize", value);
+        //return; // !!
         auto window = GetWxWindow();
         if (value.Width <= 0 && value.Height <= 0)
         {
@@ -88,7 +101,8 @@ namespace Alternet::UI
 
     void Control::SetMinimumSize(const Size& value)
     {
-        return; // !!
+        LogMethod("SetMinimumSize", value);
+        //return; // !!
         _minimumSize.Set(value);
         _appliedMinimumSize = value;
         auto limited = CoerceSize(GetSize());
@@ -98,8 +112,6 @@ namespace Alternet::UI
 
     optional<Size> Control::CoerceSize(const Size& value)
     {
-        return nullopt; // !!
-
         auto minSize = GetMinimumSize();
         auto maxSize = GetMaximumSize();
 
@@ -143,7 +155,8 @@ namespace Alternet::UI
 
     void Control::SetMaximumSize(const Size& value)
     {
-        return; // !!
+        LogMethod("SetMaximumSize", value);
+        //return; // !!
         _maximumSize.Set(value);
         _appliedMaximumSize = value;
         auto limited = CoerceSize(GetSize());
@@ -158,7 +171,8 @@ namespace Alternet::UI
 
     void Control::ApplyMaximumSize(const Size& value)
     {
-        return; // !!
+        LogMethod("ApplyMaximumSize", value);
+        //return; // !!
         auto window = GetWxWindow();
         if (value.Width <= 0 && value.Height <= 0)
         {

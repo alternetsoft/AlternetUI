@@ -101,6 +101,21 @@ namespace Alternet::UI
 
         bool operator==(const Size& rhs) { return Width == rhs.Width && Height == rhs.Height; }
         bool operator!=(const Size& rhs) { return !(*this == rhs); }
+
+    public:
+        std::string ToString() const
+        {
+            std::string w = std::to_string(Width);
+            std::string h = std::to_string(Height);
+
+            std::string prefix("(");
+            std::string suffix(")");
+            std::string comma(",");
+
+            std::string result = prefix + w + comma + h + suffix;
+
+            return result;
+        }
     };
 
     struct Int32Point

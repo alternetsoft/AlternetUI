@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using Alternet.UI;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace ControlsSample
 {
@@ -11,6 +10,7 @@ namespace ControlsSample
 
         public DateTimePage()
         {
+            Application.LogFileIsEnabled = true;
             InitializeComponent();
             datePicker.Value = DateTime.Now;
             timePicker.Value = DateTime.Now;
