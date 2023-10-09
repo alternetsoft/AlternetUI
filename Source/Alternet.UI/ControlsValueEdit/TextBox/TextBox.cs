@@ -232,9 +232,10 @@ namespace Alternet.UI
             }
         }
 
-       /// <summary>
-       /// Gets whether control has selected text.
-       /// </summary>
+        /// <summary>
+        /// Gets whether control has selected text.
+        /// </summary>
+        [Browsable(false)]
         public bool HasSelection
         {
             get
@@ -246,6 +247,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets whether text is modified in the control.
         /// </summary>
+        [Browsable(false)]
         public bool IsModified
         {
             get
@@ -267,6 +269,7 @@ namespace Alternet.UI
         /// <see langword = "true" /> if the current selection can be copied;
         /// otherwise, <see langword = "false" />.
         /// </returns>
+        [Browsable(false)]
         public bool CanCopy
         {
             get
@@ -283,6 +286,7 @@ namespace Alternet.UI
         /// <see langword = "true" /> if the current selection can be cut;
         /// otherwise, <see langword = "false" />.
         /// </returns>
+        [Browsable(false)]
         public bool CanCut
         {
             get
@@ -300,6 +304,7 @@ namespace Alternet.UI
         /// <see langword = "true" /> if the data can be pasted;
         /// otherwise, <see langword = "false" />.
         /// </returns>
+        [Browsable(false)]
         public bool CanPaste
         {
             get
@@ -317,6 +322,7 @@ namespace Alternet.UI
         /// operation performed
         /// in the control; otherwise, <see langword = "false" />.
         /// </returns>
+        [Browsable(false)]
         public bool CanRedo
         {
             get
@@ -490,6 +496,7 @@ namespace Alternet.UI
         /// operation performed
         /// in the control; otherwise, <see langword = "false" />.
         /// </returns >
+        [Browsable(false)]
         public bool CanUndo
         {
             get
@@ -501,6 +508,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets whether control contains text.
         /// </summary>
+        [Browsable(false)]
         public bool IsEmpty
         {
             get
