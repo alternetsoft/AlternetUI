@@ -69,6 +69,7 @@ namespace Alternet::UI
 
     void Control::ApplyMinimumSize(const Size& value)
     {
+        return; // !!
         auto window = GetWxWindow();
         if (value.Width <= 0 && value.Height <= 0)
         {
@@ -87,6 +88,7 @@ namespace Alternet::UI
 
     void Control::SetMinimumSize(const Size& value)
     {
+        return; // !!
         _minimumSize.Set(value);
         _appliedMinimumSize = value;
         auto limited = CoerceSize(GetSize());
@@ -96,7 +98,7 @@ namespace Alternet::UI
 
     optional<Size> Control::CoerceSize(const Size& value)
     {
-        return nullopt;
+        return nullopt; // !!
 
         auto minSize = GetMinimumSize();
         auto maxSize = GetMaximumSize();
@@ -141,6 +143,7 @@ namespace Alternet::UI
 
     void Control::SetMaximumSize(const Size& value)
     {
+        return; // !!
         _maximumSize.Set(value);
         _appliedMaximumSize = value;
         auto limited = CoerceSize(GetSize());
@@ -155,6 +158,7 @@ namespace Alternet::UI
 
     void Control::ApplyMaximumSize(const Size& value)
     {
+        return; // !!
         auto window = GetWxWindow();
         if (value.Width <= 0 && value.Height <= 0)
         {
