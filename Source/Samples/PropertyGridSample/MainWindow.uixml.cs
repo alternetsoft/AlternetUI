@@ -64,6 +64,8 @@ namespace PropertyGridSample
 
         private static void InitIgnorePropNames(ICollection<string> items)
         {
+            if (Application.IsLinuxOS)
+                return;
             items.Add("Width");
             items.Add("Height");
             items.Add("Left");
