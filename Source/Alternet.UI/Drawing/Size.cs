@@ -5,6 +5,7 @@ using System;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Numerics;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using Alternet.UI;
 using Alternet.UI.Localization;
@@ -39,6 +40,12 @@ namespace Alternet.Drawing
         /// Gets <see cref="Size"/> with width and height equal to -1.
         /// </summary>
         public static readonly Size Default = new(-1);
+
+        /// <summary>
+        /// Gets <see cref="Size"/> with width and height equal to
+        /// (<see cref="double.NaN"/>, <see cref="double.NaN"/>).
+        /// </summary>
+        public static readonly Size NaN = new(double.NaN, double.NaN);
 
         private double width; // Do not rename (binary serialization)
         private double height; // Do not rename (binary serialization)
@@ -266,6 +273,15 @@ namespace Alternet.Drawing
         {
             return new Size(Math.Max(v1.width, v2.width), Math.Max(v1.height, v2.height));
         }
+
+        /// <summary>Determines whether the specified value is (NaN, NaN).</summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool IsNaN(Size d) => double.IsNaN(d.width) && double.IsNaN(d.height);
+
+        /// <summary>Determines whether the specified value has width or height
+        /// equal to <see cref="double.NaN"/>.</summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool AnyIsNaN(Size d) => double.IsNaN(d.width) || double.IsNaN(d.height);
 
         /// <summary>
         /// Returns an array filled with widths of the specified <see cref="Size"/> values.
