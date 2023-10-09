@@ -27,9 +27,34 @@ namespace Alternet.UI
 
         /// <summary>
         /// Populates an existing root object with the object property values created
+        /// from the specified resource with XAML.
+        /// </summary>
+        public void LoadExisting(string resName, object existingObject)
+        {
+            try
+            {
+                var uixmlStream = Assembly.GetExecutingAssembly().GetManifestResourceStream(resName);
+                if (uixmlStream == null)
+                    throw new InvalidOperationException();
+                LoadExisting(uixmlStream, this, false, resName);
+            }
+            catch (Exception e)
+            {
+                ReportException(e, resName);
+                throw;
+            }
+
+        }
+
+        /// <summary>
+        /// Populates an existing root object with the object property values created
         /// from a source XAML.
         /// </summary>
-        public void LoadExisting(Stream xamlStream, object existingObject)
+        public void LoadExisting(
+            Stream xamlStream,
+            object existingObject,
+            bool report = true,
+            string? resName = default)
         {
             try
             {
@@ -41,17 +66,30 @@ namespace Alternet.UI
             }
             catch (Exception e)
             {
-                if(e is XmlException xmlException)
-                {
-                    int lineNumber = xmlException.LineNumber;
-                    int linePos = xmlException.LinePosition;
-                    string sourceUri = xmlException.SourceUri;
-                }
-
-                Debug.WriteLine(e.Message);
-
+                if(report)
+                    ReportException(e, resName);
                 throw e;
             }
+        }
+
+        private void ReportException(Exception e, string? resName)
+        {
+            string sourceUri = resName;
+
+            if (e is XmlException xmlException)
+            {
+                int lineNumber = xmlException.LineNumber;
+                int linePos = xmlException.LinePosition;
+                sourceUri = sourceUri ?? xmlException.SourceUri;
+            }
+
+            if(sourceUri is null)
+            {
+                Debug.WriteLine(e.Message);
+                return;
+            }
+
+            Debug.WriteLine($"{e.Message}. Uri: {sourceUri}");
         }
     }
 }
