@@ -103,7 +103,8 @@ namespace Alternet.UI
         /// </summary>
         public ControlSet SuggestedWidthToMax()
         {
-            return SuggestedWidth(MaxWidth);
+            var v = MaxWidth;
+            return SuggestedWidth(v);
         }
 
         /// <summary>
