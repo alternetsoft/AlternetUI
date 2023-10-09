@@ -14,6 +14,7 @@ namespace ControlsTest
         static MainTestWindow()
         {
             AuiNotebook.DefaultCreateStyle = AuiNotebookCreateStyle.Top;
+            Test.DoTests();
         }
 
         public MainTestWindow()
