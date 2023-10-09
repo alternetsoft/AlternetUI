@@ -45,12 +45,14 @@ namespace PaintSample
 
         public MainWindow()
         {
+            InitializeComponent();
+
             Title = "AlterNET UI Paint Sample";
             Width = 750;
             Height = 700;
             StartLocation = WindowStartLocation.CenterScreen;
 
-            var menu = new MainMenu();
+            var menu = Menu!;
 
             fileMainMenu = "_File";
             menu.Items.Add(fileMainMenu);
@@ -92,8 +94,6 @@ namespace PaintSample
 
             aboutMenuItem = new("_About", AboutMenuItem_Click);
             helpMainMenu.Items.Add(aboutMenuItem);
-
-            Menu = menu;
 
             mainGrid = new();
             Children.Add(mainGrid);
