@@ -10,7 +10,8 @@ namespace Alternet.UI
     {
         private readonly CardPanel cardPanel = new();
 
-        public PanelTreeAndCards()
+        public PanelTreeAndCards(Action<PanelAuiManager>? initAction = null)
+            : base(initAction)
         {
             LeftTreeView.Required();
             Manager.AddPane(cardPanel, CenterPane);

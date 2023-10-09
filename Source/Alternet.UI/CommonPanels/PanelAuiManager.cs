@@ -48,8 +48,10 @@ namespace Alternet.UI
         /// <summary>
         /// Initializes a new instance of the <see cref="PanelAuiManager"/> class.
         /// </summary>
-        public PanelAuiManager()
+        public PanelAuiManager(Action<PanelAuiManager>? initAction = null)
+            : base()
         {
+            initAction?.Invoke(this);
             defaultToolbarStyle = InitDefaultToolbarStyle();
         }
 
@@ -133,6 +135,8 @@ namespace Alternet.UI
                         HasBorder = false,
                         FullRowSelect = true,
                     };
+                    if (LeftTreeViewAsListBox)
+                        leftTreeView.MakeAsListBox();
                     leftTreeViewPage = LeftNotebook.AddPage(
                         leftTreeView,
                         CommonStrings.Default.NotebookTabTitleActivity);
@@ -141,6 +145,14 @@ namespace Alternet.UI
                 return leftTreeView;
             }
         }
+
+        /// <summary>
+        /// Gets or sets whether <see cref="LeftTreeView"/> should look like <see cref="ListBox"/>.
+        /// </summary>
+        /// <remarks>
+        /// This property must be assigned before first use of <see cref="LeftTreeView"/>
+        /// </remarks>
+        public bool LeftTreeViewAsListBox { get; set; } = false;
 
         /// <summary>
         /// Gets context menu for the <see cref="LogControl"/>.
