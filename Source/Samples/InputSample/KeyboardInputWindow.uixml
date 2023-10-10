@@ -42,22 +42,22 @@
       <Label Grid.Column="0" Grid.Row="0"
         Text="Modifier keys:" Margin="5" VerticalAlignment="Center" Name="labelInfo"/>
       <TextBox Grid.Column="1" Grid.Row="0"
-        Name="buttonInfo" Margin="5" ReadOnly="true" SuggestedWidth="300"/>
+        Name="buttonInfo" Margin="5" ReadOnly="true" SuggestedWidth="400"/>
 
       <Label  Grid.Column="0" Grid.Row="1"
         Text="Window:" Margin="5" Name="labelWindow"/>
       <ListBox  Grid.Column="1" Grid.Row="1"
-        Name="lbWindow" Margin="5"  SuggestedWidth="300"  SuggestedHeight="150" />
+        Name="lbWindow" Margin="5"  SuggestedWidth="400"  SuggestedHeight="150" />
 
       <Label  Grid.Column="0" Grid.Row="2"
         Text="StackPanel:" Margin="5" Name="labelStackPanel"/>
       <ListBox  Grid.Column="1" Grid.Row="2"
-        Name="lbStackPanel" Margin="5"  SuggestedWidth="300"  SuggestedHeight="150" />
+        Name="lbStackPanel" Margin="5"  SuggestedWidth="400"  SuggestedHeight="150" />
 
       <Label  Grid.Column="0" Grid.Row="3"
         Text="Button:" Margin="5" Name="labelButton"/>
       <ListBox  Grid.Column="1" Grid.Row="3"
-        Name="lbButton" Margin="5"  SuggestedWidth="300"  SuggestedHeight="150" />
+        Name="lbButton" Margin="5"  SuggestedWidth="400"  SuggestedHeight="150" />
     </Grid>
 
 
