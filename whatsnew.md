@@ -1,3 +1,13 @@
+# 0.9.404 (2023 October 10)
+
+- Add CardsPanelHeader control.
+- Improved Samples, fixed Linux and MacOs related problems.
+- Add to Size: GetWidths, GetHeights, MaxWidthHeight, NaN, IsNan, AnyIsNan.
+- Add ComboBox.UseChoiceControl.
+- Fixed "Unrecognised keycode 393,394" under MacOs.
+- Fixed DateTimePicker bugs on Linux.
+- Add to LinkLabel: UseGenericVersion, UseShellExecute.
+
 # 0.9.403 (2023 October 7)
 
 - Added PanelWebBrowser, CardPanel controls.
