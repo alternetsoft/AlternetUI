@@ -15,42 +15,42 @@ namespace NativeApi.Api
     //each field is the height of the tallest child.
     public class GridSizer : Sizer
     {
-        // Returns the number of columns that has been specified for the sizer.
-        public static int GetCols(IntPtr handle) => default;
+        //// Returns the number of columns that has been specified for the sizer.
+        //public static int GetCols(IntPtr handle) => default;
 
-        // Returns the number of rows that has been specified for the sizer.
-        public static int GetRows(IntPtr handle) => default;
+        //// Returns the number of rows that has been specified for the sizer.
+        //public static int GetRows(IntPtr handle) => default;
 
-        // Returns the number of columns currently used by the sizer.
-        public static int GetEffectiveColsCount(IntPtr handle) => default;
+        //// Returns the number of columns currently used by the sizer.
+        //public static int GetEffectiveColsCount(IntPtr handle) => default;
 
-        // Returns the number of rows currently used by the sizer.
-        public static int GetEffectiveRowsCount(IntPtr handle) => default;
+        //// Returns the number of rows currently used by the sizer.
+        //public static int GetEffectiveRowsCount(IntPtr handle) => default;
 
-        // Returns the horizontal gap(in pixels) between cells in the sizer.
-        public static int GetHGap(IntPtr handle) => default;
+        //// Returns the horizontal gap(in pixels) between cells in the sizer.
+        //public static int GetHGap(IntPtr handle) => default;
 
-        // Returns the vertical gap(in pixels) between the cells in the sizer.
-        public static int GetVGap(IntPtr handle) => default;
+        //// Returns the vertical gap(in pixels) between the cells in the sizer.
+        //public static int GetVGap(IntPtr handle) => default;
 
-        // Sets the number of columns in the sizer. 
-        public static void SetCols(IntPtr handle, int cols) { }
+        //// Sets the number of columns in the sizer. 
+        //public static void SetCols(IntPtr handle, int cols) { }
 
-        // Sets the horizontal gap (in pixels) between cells in the sizer.
-        public static void SetHGap(IntPtr handle, int gap) { }
+        //// Sets the horizontal gap (in pixels) between cells in the sizer.
+        //public static void SetHGap(IntPtr handle, int gap) { }
 
-        // Sets the number of rows in the sizer. 
-        public static void SetRows(IntPtr handle, int rows) { }
+        //// Sets the number of rows in the sizer. 
+        //public static void SetRows(IntPtr handle, int rows) { }
 
-        // Sets the vertical gap (in pixels) between the cells in the sizer.
-        public static void SetVGap(IntPtr handle, int gap) { }
+        //// Sets the vertical gap (in pixels) between the cells in the sizer.
+        //public static void SetVGap(IntPtr handle, int gap) { }
 
-        public static Int32Size CalcMin(IntPtr handle) => default;
+        //public static Int32Size CalcMin(IntPtr handle) => default;
 
-        public static void RepositionChildren(IntPtr handle, Int32Size minSize) { }
+        //public static void RepositionChildren(IntPtr handle, Int32Size minSize) { }
 
-        public static IntPtr CreateGridSizer(int cols, int vgap, int hgap) => default;
+        //public static IntPtr CreateGridSizer(int cols, int vgap, int hgap) => default;
 
-        public static IntPtr CreateGridSizer2(int rows, int cols, int vgap, int hgap) => default;
+        //public static IntPtr CreateGridSizer2(int rows, int cols, int vgap, int hgap) => default;
     }
 }

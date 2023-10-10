@@ -14,7 +14,7 @@ namespace NativeApi.Api
     //of either.
     public class BoxSizer : Sizer
     {
-        public static IntPtr CreateBoxSizer(int orient) => default;
+/*        public static IntPtr CreateBoxSizer(int orient) => default;
 
         // Adds non-stretchable space to the main orientation of the sizer only.
         public static IntPtr AddSpacer(IntPtr handle, int size) => default;
@@ -29,5 +29,5 @@ namespace NativeApi.Api
         public static void SetOrientation(IntPtr handle, int orient) { }
 
         public static void RepositionChildren(IntPtr handle, Int32Size minSize) { }
-    }
+*/    }
 }

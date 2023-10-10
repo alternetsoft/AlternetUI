@@ -2,4 +2,12 @@
 
 namespace Alternet::UI
 {
+    WrapSizer::WrapSizer()
+    {
+    }
+
+    WrapSizer::~WrapSizer()
+    {
+    }
+
 }

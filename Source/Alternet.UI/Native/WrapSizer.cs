@@ -8,14 +8,15 @@ using System.ComponentModel;
 using System.Security;
 namespace Alternet.UI.Native
 {
-    internal abstract class WrapSizer : BoxSizer
+    internal class WrapSizer : BoxSizer
     {
         static WrapSizer()
         {
         }
         
-        protected WrapSizer()
+        public WrapSizer()
         {
+            SetNativePointer(NativeApi.WrapSizer_Create_());
         }
         
         public WrapSizer(IntPtr nativePointer) : base(nativePointer)
@@ -27,6 +28,9 @@ namespace Alternet.UI.Native
         public class NativeApi : NativeApiProvider
         {
             static NativeApi() => Initialize();
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern IntPtr WrapSizer_Create_();
             
         }
     }

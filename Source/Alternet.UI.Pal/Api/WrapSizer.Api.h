@@ -2,9 +2,14 @@
 
 #pragma once
 
-
+#include "WrapSizer.h"
 #include "ApiUtils.h"
 #include "Exceptions.h"
 
 using namespace Alternet::UI;
+
+ALTERNET_UI_API WrapSizer* WrapSizer_Create_()
+{
+    return new WrapSizer();
+}
 
