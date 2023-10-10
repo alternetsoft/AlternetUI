@@ -18,7 +18,7 @@ namespace Alternet::UI
         DelayedValue<LinkLabel, string> _text;
         DelayedValue<LinkLabel, string> _url;
 
-        wxHyperlinkCtrl* GetStaticText();
+        wxHyperlinkCtrlBase* GetStaticText();
         void OnHyperlinkClick(wxHyperlinkEvent& event);
 
         string RetrieveText();

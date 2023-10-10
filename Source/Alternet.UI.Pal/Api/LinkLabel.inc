@@ -24,6 +24,10 @@ void SetText(const string& value);
 string GetUrl();
 void SetUrl(const string& value);
 
+
+static bool GetUseGenericControl();
+static void SetUseGenericControl(bool value);
+
 public:
 enum class LinkLabelEvent
 {

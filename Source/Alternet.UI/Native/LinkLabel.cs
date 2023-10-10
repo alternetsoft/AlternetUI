@@ -114,6 +114,19 @@ namespace Alternet.UI.Native
             }
         }
         
+        public static bool UseGenericControl
+        {
+            get
+            {
+                return NativeApi.LinkLabel_GetUseGenericControl_();
+            }
+            
+            set
+            {
+                NativeApi.LinkLabel_SetUseGenericControl_(value);
+            }
+        }
+        
         static GCHandle eventCallbackGCHandle;
         
         static void SetEventCallback()
@@ -204,6 +217,12 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void LinkLabel_SetUrl_(IntPtr obj, string value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool LinkLabel_GetUseGenericControl_();
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void LinkLabel_SetUseGenericControl_(bool value);
             
         }
     }

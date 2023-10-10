@@ -2,6 +2,28 @@
 
 namespace Alternet::UI
 {
+#ifdef  __WXMSW__
+	bool UseGenericLinkLabel = false;
+#endif
+#ifdef __WXOSX__
+	bool UseGenericLinkLabel = false;
+#endif
+#ifdef __WXGTK__
+	// On Ubuntu 23 non generic version shows an error when clicked.
+	// so we switch to generic version
+	bool UseGenericLinkLabel = true;
+#endif
+
+	bool LinkLabel::GetUseGenericControl()
+	{
+		return UseGenericLinkLabel;
+	}
+
+	void LinkLabel::SetUseGenericControl(bool value)
+	{
+		UseGenericLinkLabel = value;
+	}
+
 	LinkLabel::LinkLabel() :
 		_text(*this, u"", &Control::IsWxWindowCreated, &LinkLabel::RetrieveText,
 			&LinkLabel::ApplyText),
@@ -74,19 +96,45 @@ namespace Alternet::UI
 		EVT_ERASE_BACKGROUND(wxHyperlinkCtrl2::OnEraseBackGround)
 		END_EVENT_TABLE()
 
+	class wxGenericHyperlinkCtrl2 : public wxGenericHyperlinkCtrl, public wxWidgetExtender
+	{
+	public:
+		wxGenericHyperlinkCtrl2(wxWindow* parent,
+			wxWindowID id,
+			const wxString& label, const wxString& url,
+			const wxPoint& pos = wxDefaultPosition,
+			const wxSize& size = wxDefaultSize,
+			long style = wxHL_DEFAULT_STYLE,
+			const wxString& name = wxASCII_STR(wxHyperlinkCtrlNameStr))
+		{
+			Create(parent, id, label, url, pos, size, style, name);
+		}
+	};
+
 	wxWindow* LinkLabel::CreateWxWindowCore(wxWindow* parent)
 	{
+		wxWindow* staticText;
+
 		// Text must be " " (space) to avoid exception on Linux
-		auto staticText = new wxHyperlinkCtrl2(
-			parent, wxID_ANY, " ", wxEmptyString);
+		if (UseGenericLinkLabel)
+		{
+			staticText = new wxGenericHyperlinkCtrl2(
+				parent, wxID_ANY, " ", wxEmptyString);
+		}
+		else
+		{
+			staticText = new wxHyperlinkCtrl2(
+				parent, wxID_ANY, " ", wxEmptyString);
+		}
+
 		staticText->Bind(wxEVT_HYPERLINK,
 			&LinkLabel::OnHyperlinkClick, this);
 		return staticText;
 	}
 
-	wxHyperlinkCtrl* LinkLabel::GetStaticText()
+	wxHyperlinkCtrlBase* LinkLabel::GetStaticText()
 	{
-		return dynamic_cast<wxHyperlinkCtrl*>(GetWxWindow());
+		return dynamic_cast<wxHyperlinkCtrlBase*>(GetWxWindow());
 	}
 
 	string LinkLabel::RetrieveUrl()

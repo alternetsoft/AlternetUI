@@ -15,6 +15,8 @@ namespace NativeApi.Api
         public string Text { get; set; }
         public string Url { get; set; }
 
+        public static bool UseGenericControl { get; set; }
+
         [NativeEvent(cancellable: true)]
         public event EventHandler? HyperlinkClick;
     }

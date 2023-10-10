@@ -74,6 +74,12 @@ namespace Alternet.UI
         /// </summary>
         public event CancelEventHandler? LinkClicked;
 
+        public static bool UseGenericControl
+        {
+            get => Native.LinkLabel.UseGenericControl;
+            set => Native.LinkLabel.UseGenericControl = value;
+        }
+
         /// <summary>
         /// Gets or sets the text displayed on this label.
         /// </summary>
