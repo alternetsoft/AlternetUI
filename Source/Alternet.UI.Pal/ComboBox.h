@@ -13,6 +13,9 @@ namespace Alternet::UI
         void OnSelectedItemChanged(wxCommandEvent& event);
         void OnTextChanged(wxCommandEvent& event);
 
+        void ApplyMinimumSize(const Size& value) override {}
+        void ApplyMaximumSize(const Size& value) override {}
+
     protected:
         void OnWxWindowCreated() override;
         void OnBeforeDestroyWxWindow() override;
