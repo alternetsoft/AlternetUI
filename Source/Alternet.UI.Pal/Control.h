@@ -124,10 +124,9 @@ namespace Alternet::UI
         virtual void ApplyBackgroundColor(const Color& value);
 
         Size RetrieveMinimumSize();
-        void ApplyMinimumSize(const Size& value);
-
         Size RetrieveMaximumSize();
-        void ApplyMaximumSize(const Size& value);
+        virtual void ApplyMinimumSize(const Size& value);
+        virtual void ApplyMaximumSize(const Size& value);
 
         virtual Color RetrieveForegroundColor();
         virtual void ApplyForegroundColor(const Color& value);
