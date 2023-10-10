@@ -3,12 +3,18 @@
         x:Class="InputSample.MouseInputWindow"
 		MinWidth="700" MinHeight="700"
         Title="Mouse Input"
-		PreviewMouseMove="Window_PreviewMouseMove" MouseMove="Window_MouseMove"
-		PreviewMouseDown="Window_PreviewMouseDown" MouseDown="Window_MouseDown"
-		PreviewMouseUp="Window_PreviewMouseUp" MouseUp="Window_MouseUp"
-		PreviewMouseDoubleClick="Window_PreviewMouseDoubleClick" MouseDoubleClick="Window_MouseDoubleClick"
-		PreviewMouseLeftButtonDown="Window_PreviewMouseLeftButtonDown" MouseLeftButtonDown="Window_MouseLeftButtonDown"
-		PreviewMouseWheel="Window_PreviewMouseWheel" MouseWheel="Window_MouseWheel"
+		PreviewMouseMove="Window_PreviewMouseMove"
+        MouseMove="Window_MouseMove"
+		PreviewMouseDown="Window_PreviewMouseDown"
+        MouseDown="Window_MouseDown"
+		PreviewMouseUp="Window_PreviewMouseUp"
+        MouseUp="Window_MouseUp"
+		PreviewMouseDoubleClick="Window_PreviewMouseDoubleClick"
+        MouseDoubleClick="Window_MouseDoubleClick"
+		PreviewMouseLeftButtonDown="Window_PreviewMouseLeftButtonDown"
+        MouseLeftButtonDown="Window_MouseLeftButtonDown"
+		PreviewMouseWheel="Window_PreviewMouseWheel"
+        MouseWheel="Window_MouseWheel"
 		>
   <Control>
 
@@ -39,28 +45,31 @@
 
           <TextBox Name="buttonInfo" Margin="5" ReadOnly="true" SuggestedWidth="350"/>
 
+          <Label Name="mousePositionLabel" Margin="10" SuggestedHeight="30"/>
+
           <HorizontalStackPanel>
             <VerticalStackPanel>
               <Label Text="Window:" Margin="5"/>
-              <ListBox Name="lbWindow" Margin="5"  SuggestedWidth="200"  SuggestedHeight="200" />
+              <ListBox Name="lbWindow" Margin="5"  SuggestedWidth="200"  SuggestedHeight="200"
+                       MaxHeight="200" MinHeight="200"/>
             </VerticalStackPanel>
 
             <VerticalStackPanel>
               <Label Text="StackPanel:" Margin="5"/>
-              <ListBox Name="lbStackPanel" Margin="5"  SuggestedWidth="200"  SuggestedHeight="200" />
+              <ListBox Name="lbStackPanel" Margin="5"  SuggestedWidth="200"  SuggestedHeight="200"
+                       MaxHeight="200" MinHeight="200"/>
             </VerticalStackPanel>
 
             <VerticalStackPanel>
               <Label Text="Button:" Margin="5"/>
-              <ListBox Name="lbButton" Margin="5"  SuggestedWidth="200"  SuggestedHeight="200" />
+              <ListBox Name="lbButton" Margin="5"  SuggestedWidth="200"  SuggestedHeight="200"
+                       MaxHeight="200" MinHeight="200"/>
             </VerticalStackPanel>
           </HorizontalStackPanel>
 
         </StackPanel>
       </GroupBox>
       
-      <Label Name="mousePositionLabel" Margin="10" SuggestedHeight="30"/>
-    
     </VerticalStackPanel>
   </Control>
 
