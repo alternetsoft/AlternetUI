@@ -74,6 +74,9 @@ namespace Alternet.UI
         /// </summary>
         public event CancelEventHandler? LinkClicked;
 
+        /// <summary>
+        /// Gets or sets whether to use generic or native control for <see cref="LinkLabel"/>.
+        /// </summary>
         public static bool UseGenericControl
         {
             get => Native.LinkLabel.UseGenericControl;
