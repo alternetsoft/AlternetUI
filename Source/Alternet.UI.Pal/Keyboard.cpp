@@ -252,7 +252,10 @@ namespace Alternet::UI
             return { WXK_WINDOWS_MENU, WXK_MENU };
         if (value == Key::Windows)
 #ifdef __WXOSX__
-            return { WXK_WINDOWS_LEFT, WXK_WINDOWS_RIGHT, WXK_RAW_CONTROL };
+            // Commented out as shows error:
+            // Debug: Unrecognised keycode 393
+            // Debug : Unrecognised keycode 394
+            return { /*WXK_WINDOWS_LEFT, WXK_WINDOWS_RIGHT,*/ WXK_RAW_CONTROL};
 #else
             return { WXK_WINDOWS_LEFT, WXK_WINDOWS_RIGHT };
 #endif
