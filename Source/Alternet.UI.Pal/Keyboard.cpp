@@ -255,7 +255,7 @@ namespace Alternet::UI
             // Commented out as shows error:
             // Debug: Unrecognised keycode 393
             // Debug : Unrecognised keycode 394
-            return { /*WXK_WINDOWS_LEFT, WXK_WINDOWS_RIGHT,*/ WXK_RAW_CONTROL};
+            return { /*WXK_WINDOWS_LEFT, WXK_WINDOWS_RIGHT, WXK_RAW_CONTROL*/ };
 #else
             return { WXK_WINDOWS_LEFT, WXK_WINDOWS_RIGHT };
 #endif
