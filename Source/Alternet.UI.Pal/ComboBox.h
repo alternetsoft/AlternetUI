@@ -13,6 +13,12 @@ namespace Alternet::UI
         void OnSelectedItemChanged(wxCommandEvent& event);
         void OnTextChanged(wxCommandEvent& event);
 
+        /* Fixed for MACOS ControlsSample[2411:15866] This application is trying
+        to draw a very large combo box, 30 points tall.Vertically resizable combo
+        boxes are not supported, but it happens that 10.4 and previous drew
+        something that looked kind of sort of okay.The art in 10.5 does
+        not break up in a way that supports that drawing.This application should be
+        revised to stop using large combo boxes.This warning will appear once per app launch.*/
         void ApplyMinimumSize(const Size& value) override {}
         void ApplyMaximumSize(const Size& value) override {}
 
