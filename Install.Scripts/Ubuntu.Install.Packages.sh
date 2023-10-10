@@ -2,14 +2,13 @@ sudo apt -y update
 sudo apt -y upgrade 
 
 sudo apt -y install dotnet-sdk-7.0
-sudo apt -y install dotnet-sdk-6.0
-   
+sudo apt -y install dotnet-sdk-6.0   
 
 sudo apt-get -y install libgtk-3-dev 
 sudo apt-get -y install build-essential gdb
 sudo apt-get -y install cmake
 
-sudo apt-get install -y freeglut3-dev libsecret-1-dev libgspell-1-dev 
+sudo apt-get install -y freeglut3-dev libsecret-1-dev libgspell-1-dev libcanberra-gtk-module libcanberra-gtk3-module
 sudo apt-get install -y libnotify-dev libcurl4-openssl-dev libwebkit2gtk-4.0-dev 
 
 sudo apt-get install -y libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev 
