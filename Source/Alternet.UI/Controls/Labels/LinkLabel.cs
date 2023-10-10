@@ -84,6 +84,16 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets whether to use our <see cref="AppUtils.ShellExecute"/>
+        /// for opening the <see cref="Url"/> or allow native control to open it.
+        /// </summary>
+        /// <remarks>
+        /// On Linux (Ubuntu 23) native control has errors with opening urls, so
+        /// this property is <c>true</c> by default and we do not use it.
+        /// </remarks>
+        public static bool UseShellExecute { get; set; } = true;
+
+        /// <summary>
         /// Gets or sets the text displayed on this label.
         /// </summary>
         [DefaultValue("")]
@@ -170,6 +180,11 @@ namespace Alternet.UI
             OnLinkClicked(e);
             if (!e.Cancel)
                 LinkClicked?.Invoke(this, e);
+            if (!e.Cancel && UseShellExecute)
+            {
+                e.Cancel = true;
+                AppUtils.ShellExecute(Url);
+            }
         }
 
         /// <inheritdoc/>

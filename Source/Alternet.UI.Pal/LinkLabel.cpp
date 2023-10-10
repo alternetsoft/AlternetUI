@@ -9,9 +9,12 @@ namespace Alternet::UI
 	bool UseGenericLinkLabel = false;
 #endif
 #ifdef __WXGTK__
-	// On Ubuntu 23 non generic version shows an error when clicked.
-	// so we switch to generic version
-	bool UseGenericLinkLabel = true;
+	// Error if FALSE:
+	//  On Ubuntu 23 non generic version shows an error when clicked.
+	// Error if TRUE:
+	// EXEC : libEGL warning : DRI2: failed to authenticate 
+	// ATTENTION: default value of option mesa_glthread overridden by environment.
+	bool UseGenericLinkLabel = false;
 #endif
 
 	bool LinkLabel::GetUseGenericControl()
