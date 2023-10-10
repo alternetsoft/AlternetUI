@@ -109,7 +109,7 @@
           <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <Label Text="Department" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center_"
+        <Label Text="Department" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center"
                Margin="0,0,10,5"/>
         <ComboBox SelectedItem="{Binding Department}" Name="departmentComboBox" Grid.Row="0"
                   Grid.Column="1" IsEditable="false"
