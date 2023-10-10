@@ -81,7 +81,11 @@ namespace Alternet.UI
         /// Gets last root item in the control or <c>null</c> if there are no items.
         /// </summary>
         [Browsable(false)]
-        public object? LastRootItem => LastItem;
+        public object? LastRootItem
+        {
+            get => LastItem;
+            set => LastItem = value;
+        }
 
         /// <summary>
         /// Gets or sets the <see cref="Items"/> element at the specified index.
