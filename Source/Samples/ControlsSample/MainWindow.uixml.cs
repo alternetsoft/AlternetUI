@@ -7,7 +7,7 @@ namespace ControlsSample
     internal partial class MainWindow : Window, IPageSite
     {
         private readonly PageContainer pageContainer = new();
-        private readonly TreeView eventsControl = new();
+        private readonly ListBox eventsControl = new();
         private readonly Grid mainGrid = new();
         private readonly Control mainGridParent = new();
         private readonly LinkLabel? linkLabel;
@@ -21,8 +21,6 @@ namespace ControlsSample
 
             Icon = ImageSet.FromUrlOrNull("embres:ControlsSample.Sample.ico");
             InitializeComponent();
-
-            eventsControl.MakeAsListBox();
 
             mainGrid.RowDefinitions.Add(new RowDefinition
             {
@@ -171,8 +169,8 @@ namespace ControlsSample
 
             if (b && item is not null)
             {
-                item.Text = ConstructMessage(message);
-                eventsControl.SelectAndShowItem(item);
+                eventsControl.LastRootItem = ConstructMessage(message);
+                eventsControl.SelectedIndex = eventsControl.Items.Count-1;
             }
             else
                 LogEvent(message);
@@ -192,7 +190,7 @@ namespace ControlsSample
 
             var item = new TreeViewItem(ConstructMessage(message));
             eventsControl.Items.Add(item);
-            eventsControl.SelectAndShowItem(item);
+            eventsControl.SelectedItem = eventsControl.LastRootItem;
         }
     }
 }

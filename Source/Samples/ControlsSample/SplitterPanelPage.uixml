@@ -5,7 +5,7 @@
 
   <HorizontalStackPanel Name="mainPanel">
 
-    <SplitterPanel SuggestedWidth="500" Name="splitterPanel">
+    <SplitterPanel SuggestedWidth="400" Name="splitterPanel">
     </SplitterPanel>
 
     <VerticalStackPanel Name="pageControl" Margin="10,0,0,0">     

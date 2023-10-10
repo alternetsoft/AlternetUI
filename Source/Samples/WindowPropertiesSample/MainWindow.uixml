@@ -121,7 +121,7 @@
 
     </VerticalStackPanel>
 
-    <ListBox Name="eventsListBox"  MinHeight="250" Margin="5" VerticalAlignment="Stretch"/>
+    <ListBox Name="eventsListBox"  MinHeight="150" Margin="5" VerticalAlignment="Stretch"/>
 
   </VerticalStackPanel>
 </Window>
