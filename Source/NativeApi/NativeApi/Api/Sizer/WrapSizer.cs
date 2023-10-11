@@ -17,11 +17,11 @@ namespace NativeApi.Api
     //in the secondary direction.
     public class WrapSizer : BoxSizer
     {
-        //public static int CreateWrapSizer(
-        //    int orient /*= wxHORIZONTAL*/, int flags /*= wxWRAPSIZER_DEFAULT_FLAGS*/) => default;
+        public static IntPtr CreateWrapSizer(
+            int orient /*= wxHORIZONTAL*/, int flags /*= wxWRAPSIZER_DEFAULT_FLAGS*/) => default;
 
-        //public static void RepositionChildren(IntPtr handle, Int32Size minSize){}
+        public static void RepositionChildren(IntPtr handle, Int32Size minSize){}
 
-        //public static Int32Size CalcMin(IntPtr handle) => default;
+        public static Int32Size CalcMin(IntPtr handle) => default;
     }
 }

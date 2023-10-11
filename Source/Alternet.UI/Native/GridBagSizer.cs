@@ -23,6 +23,151 @@ namespace Alternet.UI.Native
         {
         }
         
+        public static System.IntPtr CreateGridBagSizer(int vgap, int hgap)
+        {
+            return NativeApi.GridBagSizer_CreateGridBagSizer_(vgap, hgap);
+        }
+        
+        public static Alternet.Drawing.Int32Size CalcMin(System.IntPtr handle)
+        {
+            return NativeApi.GridBagSizer_CalcMin_(handle);
+        }
+        
+        public static System.IntPtr FindItemAtPoint(System.IntPtr handle, Alternet.Drawing.Int32Point pt)
+        {
+            return NativeApi.GridBagSizer_FindItemAtPoint_(handle, pt);
+        }
+        
+        public static System.IntPtr FindItemAtPosition(System.IntPtr handle, Alternet.Drawing.Int32Point pos)
+        {
+            return NativeApi.GridBagSizer_FindItemAtPosition_(handle, pos);
+        }
+        
+        public static System.IntPtr FindItemWithData(System.IntPtr handle, System.IntPtr userData)
+        {
+            return NativeApi.GridBagSizer_FindItemWithData_(handle, userData);
+        }
+        
+        public static Alternet.Drawing.Int32Size GetCellSize(System.IntPtr handle, int row, int col)
+        {
+            return NativeApi.GridBagSizer_GetCellSize_(handle, row, col);
+        }
+        
+        public static Alternet.Drawing.Int32Size GetEmptyCellSize(System.IntPtr handle)
+        {
+            return NativeApi.GridBagSizer_GetEmptyCellSize_(handle);
+        }
+        
+        public static void RepositionChildren(System.IntPtr handle, Alternet.Drawing.Int32Size minSize)
+        {
+            NativeApi.GridBagSizer_RepositionChildren_(handle, minSize);
+        }
+        
+        public static void SetEmptyCellSize(System.IntPtr handle, Alternet.Drawing.Int32Size sz)
+        {
+            NativeApi.GridBagSizer_SetEmptyCellSize_(handle, sz);
+        }
+        
+        public static System.IntPtr Add(System.IntPtr handle, System.IntPtr window, Alternet.Drawing.Int32Point pos, Alternet.Drawing.Int32Size span, int flag, int border, System.IntPtr userData)
+        {
+            return NativeApi.GridBagSizer_Add_(handle, window, pos, span, flag, border, userData);
+        }
+        
+        public static System.IntPtr Add2(System.IntPtr handle, System.IntPtr sizer, Alternet.Drawing.Int32Point pos, Alternet.Drawing.Int32Size span, int flag, int border, System.IntPtr userData)
+        {
+            return NativeApi.GridBagSizer_Add2_(handle, sizer, pos, span, flag, border, userData);
+        }
+        
+        public static System.IntPtr Add3(System.IntPtr handle, System.IntPtr item)
+        {
+            return NativeApi.GridBagSizer_Add3_(handle, item);
+        }
+        
+        public static System.IntPtr Add4(System.IntPtr handle, int width, int height, Alternet.Drawing.Int32Point pos, Alternet.Drawing.Int32Size span, int flag, int border, System.IntPtr userData)
+        {
+            return NativeApi.GridBagSizer_Add4_(handle, width, height, pos, span, flag, border, userData);
+        }
+        
+        public static bool CheckForIntersection(System.IntPtr handle, System.IntPtr item, System.IntPtr excludeItem)
+        {
+            return NativeApi.GridBagSizer_CheckForIntersection_(handle, item, excludeItem);
+        }
+        
+        public static bool CheckForIntersection2(System.IntPtr handle, Alternet.Drawing.Int32Point pos, Alternet.Drawing.Int32Size span, System.IntPtr excludeItem)
+        {
+            return NativeApi.GridBagSizer_CheckForIntersection2_(handle, pos, span, excludeItem);
+        }
+        
+        public static System.IntPtr FindItem(System.IntPtr handle, System.IntPtr window)
+        {
+            return NativeApi.GridBagSizer_FindItem_(handle, window);
+        }
+        
+        public static System.IntPtr FindItem2(System.IntPtr handle, System.IntPtr sizer)
+        {
+            return NativeApi.GridBagSizer_FindItem2_(handle, sizer);
+        }
+        
+        public static Alternet.Drawing.Int32Point GetItemPosition(System.IntPtr handle, System.IntPtr window)
+        {
+            return NativeApi.GridBagSizer_GetItemPosition_(handle, window);
+        }
+        
+        public static Alternet.Drawing.Int32Point GetItemPosition2(System.IntPtr handle, System.IntPtr sizer)
+        {
+            return NativeApi.GridBagSizer_GetItemPosition2_(handle, sizer);
+        }
+        
+        public static Alternet.Drawing.Int32Point GetItemPosition3(System.IntPtr handle, int index)
+        {
+            return NativeApi.GridBagSizer_GetItemPosition3_(handle, index);
+        }
+        
+        public static Alternet.Drawing.Int32Point GetItemSpan(System.IntPtr handle, System.IntPtr window)
+        {
+            return NativeApi.GridBagSizer_GetItemSpan_(handle, window);
+        }
+        
+        public static Alternet.Drawing.Int32Point GetItemSpan2(System.IntPtr handle, System.IntPtr sizer)
+        {
+            return NativeApi.GridBagSizer_GetItemSpan2_(handle, sizer);
+        }
+        
+        public static Alternet.Drawing.Int32Point GetItemSpan3(System.IntPtr handle, int index)
+        {
+            return NativeApi.GridBagSizer_GetItemSpan3_(handle, index);
+        }
+        
+        public static bool SetItemPosition(System.IntPtr handle, System.IntPtr window, Alternet.Drawing.Int32Point pos)
+        {
+            return NativeApi.GridBagSizer_SetItemPosition_(handle, window, pos);
+        }
+        
+        public static bool SetItemPosition2(System.IntPtr handle, System.IntPtr sizer, Alternet.Drawing.Int32Point pos)
+        {
+            return NativeApi.GridBagSizer_SetItemPosition2_(handle, sizer, pos);
+        }
+        
+        public static bool SetItemPosition3(System.IntPtr handle, int index, Alternet.Drawing.Int32Point pos)
+        {
+            return NativeApi.GridBagSizer_SetItemPosition3_(handle, index, pos);
+        }
+        
+        public static bool SetItemSpan(System.IntPtr handle, System.IntPtr window, Alternet.Drawing.Int32Size span)
+        {
+            return NativeApi.GridBagSizer_SetItemSpan_(handle, window, span);
+        }
+        
+        public static bool SetItemSpan2(System.IntPtr handle, System.IntPtr sizer, Alternet.Drawing.Int32Size span)
+        {
+            return NativeApi.GridBagSizer_SetItemSpan2_(handle, sizer, span);
+        }
+        
+        public static bool SetItemSpan3(System.IntPtr handle, int index, Alternet.Drawing.Int32Size span)
+        {
+            return NativeApi.GridBagSizer_SetItemSpan3_(handle, index, span);
+        }
+        
         
         [SuppressUnmanagedCodeSecurity]
         public class NativeApi : NativeApiProvider
@@ -31,6 +176,93 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern IntPtr GridBagSizer_Create_();
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr GridBagSizer_CreateGridBagSizer_(int vgap, int hgap);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern Alternet.Drawing.Int32Size GridBagSizer_CalcMin_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr GridBagSizer_FindItemAtPoint_(System.IntPtr handle, Alternet.Drawing.Int32Point pt);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr GridBagSizer_FindItemAtPosition_(System.IntPtr handle, Alternet.Drawing.Int32Point pos);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr GridBagSizer_FindItemWithData_(System.IntPtr handle, System.IntPtr userData);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern Alternet.Drawing.Int32Size GridBagSizer_GetCellSize_(System.IntPtr handle, int row, int col);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern Alternet.Drawing.Int32Size GridBagSizer_GetEmptyCellSize_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void GridBagSizer_RepositionChildren_(System.IntPtr handle, Alternet.Drawing.Int32Size minSize);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void GridBagSizer_SetEmptyCellSize_(System.IntPtr handle, Alternet.Drawing.Int32Size sz);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr GridBagSizer_Add_(System.IntPtr handle, System.IntPtr window, Alternet.Drawing.Int32Point pos, Alternet.Drawing.Int32Size span, int flag, int border, System.IntPtr userData);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr GridBagSizer_Add2_(System.IntPtr handle, System.IntPtr sizer, Alternet.Drawing.Int32Point pos, Alternet.Drawing.Int32Size span, int flag, int border, System.IntPtr userData);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr GridBagSizer_Add3_(System.IntPtr handle, System.IntPtr item);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr GridBagSizer_Add4_(System.IntPtr handle, int width, int height, Alternet.Drawing.Int32Point pos, Alternet.Drawing.Int32Size span, int flag, int border, System.IntPtr userData);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool GridBagSizer_CheckForIntersection_(System.IntPtr handle, System.IntPtr item, System.IntPtr excludeItem);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool GridBagSizer_CheckForIntersection2_(System.IntPtr handle, Alternet.Drawing.Int32Point pos, Alternet.Drawing.Int32Size span, System.IntPtr excludeItem);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr GridBagSizer_FindItem_(System.IntPtr handle, System.IntPtr window);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr GridBagSizer_FindItem2_(System.IntPtr handle, System.IntPtr sizer);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern Alternet.Drawing.Int32Point GridBagSizer_GetItemPosition_(System.IntPtr handle, System.IntPtr window);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern Alternet.Drawing.Int32Point GridBagSizer_GetItemPosition2_(System.IntPtr handle, System.IntPtr sizer);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern Alternet.Drawing.Int32Point GridBagSizer_GetItemPosition3_(System.IntPtr handle, int index);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern Alternet.Drawing.Int32Point GridBagSizer_GetItemSpan_(System.IntPtr handle, System.IntPtr window);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern Alternet.Drawing.Int32Point GridBagSizer_GetItemSpan2_(System.IntPtr handle, System.IntPtr sizer);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern Alternet.Drawing.Int32Point GridBagSizer_GetItemSpan3_(System.IntPtr handle, int index);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool GridBagSizer_SetItemPosition_(System.IntPtr handle, System.IntPtr window, Alternet.Drawing.Int32Point pos);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool GridBagSizer_SetItemPosition2_(System.IntPtr handle, System.IntPtr sizer, Alternet.Drawing.Int32Point pos);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool GridBagSizer_SetItemPosition3_(System.IntPtr handle, int index, Alternet.Drawing.Int32Point pos);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool GridBagSizer_SetItemSpan_(System.IntPtr handle, System.IntPtr window, Alternet.Drawing.Int32Size span);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool GridBagSizer_SetItemSpan2_(System.IntPtr handle, System.IntPtr sizer, Alternet.Drawing.Int32Size span);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool GridBagSizer_SetItemSpan3_(System.IntPtr handle, int index, Alternet.Drawing.Int32Size span);
             
         }
     }

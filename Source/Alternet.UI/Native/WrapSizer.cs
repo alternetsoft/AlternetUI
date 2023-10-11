@@ -23,6 +23,21 @@ namespace Alternet.UI.Native
         {
         }
         
+        public static System.IntPtr CreateWrapSizer(int orient, int flags)
+        {
+            return NativeApi.WrapSizer_CreateWrapSizer_(orient, flags);
+        }
+        
+        public static void RepositionChildren(System.IntPtr handle, Alternet.Drawing.Int32Size minSize)
+        {
+            NativeApi.WrapSizer_RepositionChildren_(handle, minSize);
+        }
+        
+        public static Alternet.Drawing.Int32Size CalcMin(System.IntPtr handle)
+        {
+            return NativeApi.WrapSizer_CalcMin_(handle);
+        }
+        
         
         [SuppressUnmanagedCodeSecurity]
         public class NativeApi : NativeApiProvider
@@ -31,6 +46,15 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern IntPtr WrapSizer_Create_();
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr WrapSizer_CreateWrapSizer_(int orient, int flags);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void WrapSizer_RepositionChildren_(System.IntPtr handle, Alternet.Drawing.Int32Size minSize);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern Alternet.Drawing.Int32Size WrapSizer_CalcMin_(System.IntPtr handle);
             
         }
     }

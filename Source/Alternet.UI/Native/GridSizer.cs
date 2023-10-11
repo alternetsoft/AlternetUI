@@ -23,6 +23,76 @@ namespace Alternet.UI.Native
         {
         }
         
+        public static int GetCols(System.IntPtr handle)
+        {
+            return NativeApi.GridSizer_GetCols_(handle);
+        }
+        
+        public static int GetRows(System.IntPtr handle)
+        {
+            return NativeApi.GridSizer_GetRows_(handle);
+        }
+        
+        public static int GetEffectiveColsCount(System.IntPtr handle)
+        {
+            return NativeApi.GridSizer_GetEffectiveColsCount_(handle);
+        }
+        
+        public static int GetEffectiveRowsCount(System.IntPtr handle)
+        {
+            return NativeApi.GridSizer_GetEffectiveRowsCount_(handle);
+        }
+        
+        public static int GetHGap(System.IntPtr handle)
+        {
+            return NativeApi.GridSizer_GetHGap_(handle);
+        }
+        
+        public static int GetVGap(System.IntPtr handle)
+        {
+            return NativeApi.GridSizer_GetVGap_(handle);
+        }
+        
+        public static void SetCols(System.IntPtr handle, int cols)
+        {
+            NativeApi.GridSizer_SetCols_(handle, cols);
+        }
+        
+        public static void SetHGap(System.IntPtr handle, int gap)
+        {
+            NativeApi.GridSizer_SetHGap_(handle, gap);
+        }
+        
+        public static void SetRows(System.IntPtr handle, int rows)
+        {
+            NativeApi.GridSizer_SetRows_(handle, rows);
+        }
+        
+        public static void SetVGap(System.IntPtr handle, int gap)
+        {
+            NativeApi.GridSizer_SetVGap_(handle, gap);
+        }
+        
+        public static Alternet.Drawing.Int32Size CalcMin(System.IntPtr handle)
+        {
+            return NativeApi.GridSizer_CalcMin_(handle);
+        }
+        
+        public static void RepositionChildren(System.IntPtr handle, Alternet.Drawing.Int32Size minSize)
+        {
+            NativeApi.GridSizer_RepositionChildren_(handle, minSize);
+        }
+        
+        public static System.IntPtr CreateGridSizer(int cols, int vgap, int hgap)
+        {
+            return NativeApi.GridSizer_CreateGridSizer_(cols, vgap, hgap);
+        }
+        
+        public static System.IntPtr CreateGridSizer2(int rows, int cols, int vgap, int hgap)
+        {
+            return NativeApi.GridSizer_CreateGridSizer2_(rows, cols, vgap, hgap);
+        }
+        
         
         [SuppressUnmanagedCodeSecurity]
         public class NativeApi : NativeApiProvider
@@ -31,6 +101,48 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern IntPtr GridSizer_Create_();
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int GridSizer_GetCols_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int GridSizer_GetRows_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int GridSizer_GetEffectiveColsCount_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int GridSizer_GetEffectiveRowsCount_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int GridSizer_GetHGap_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int GridSizer_GetVGap_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void GridSizer_SetCols_(System.IntPtr handle, int cols);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void GridSizer_SetHGap_(System.IntPtr handle, int gap);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void GridSizer_SetRows_(System.IntPtr handle, int rows);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void GridSizer_SetVGap_(System.IntPtr handle, int gap);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern Alternet.Drawing.Int32Size GridSizer_CalcMin_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void GridSizer_RepositionChildren_(System.IntPtr handle, Alternet.Drawing.Int32Size minSize);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr GridSizer_CreateGridSizer_(int cols, int vgap, int hgap);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr GridSizer_CreateGridSizer2_(int rows, int cols, int vgap, int hgap);
             
         }
     }

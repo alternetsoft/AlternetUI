@@ -13,3 +13,73 @@ ALTERNET_UI_API GridSizer* GridSizer_Create_()
     return new GridSizer();
 }
 
+ALTERNET_UI_API int GridSizer_GetCols_(void* handle)
+{
+    return GridSizer::GetCols(handle);
+}
+
+ALTERNET_UI_API int GridSizer_GetRows_(void* handle)
+{
+    return GridSizer::GetRows(handle);
+}
+
+ALTERNET_UI_API int GridSizer_GetEffectiveColsCount_(void* handle)
+{
+    return GridSizer::GetEffectiveColsCount(handle);
+}
+
+ALTERNET_UI_API int GridSizer_GetEffectiveRowsCount_(void* handle)
+{
+    return GridSizer::GetEffectiveRowsCount(handle);
+}
+
+ALTERNET_UI_API int GridSizer_GetHGap_(void* handle)
+{
+    return GridSizer::GetHGap(handle);
+}
+
+ALTERNET_UI_API int GridSizer_GetVGap_(void* handle)
+{
+    return GridSizer::GetVGap(handle);
+}
+
+ALTERNET_UI_API void GridSizer_SetCols_(void* handle, int cols)
+{
+    GridSizer::SetCols(handle, cols);
+}
+
+ALTERNET_UI_API void GridSizer_SetHGap_(void* handle, int gap)
+{
+    GridSizer::SetHGap(handle, gap);
+}
+
+ALTERNET_UI_API void GridSizer_SetRows_(void* handle, int rows)
+{
+    GridSizer::SetRows(handle, rows);
+}
+
+ALTERNET_UI_API void GridSizer_SetVGap_(void* handle, int gap)
+{
+    GridSizer::SetVGap(handle, gap);
+}
+
+ALTERNET_UI_API Int32Size_C GridSizer_CalcMin_(void* handle)
+{
+    return GridSizer::CalcMin(handle);
+}
+
+ALTERNET_UI_API void GridSizer_RepositionChildren_(void* handle, Int32Size minSize)
+{
+    GridSizer::RepositionChildren(handle, minSize);
+}
+
+ALTERNET_UI_API void* GridSizer_CreateGridSizer_(int cols, int vgap, int hgap)
+{
+    return GridSizer::CreateGridSizer(cols, vgap, hgap);
+}
+
+ALTERNET_UI_API void* GridSizer_CreateGridSizer2_(int rows, int cols, int vgap, int hgap)
+{
+    return GridSizer::CreateGridSizer2(rows, cols, vgap, hgap);
+}
+

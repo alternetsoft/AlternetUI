@@ -70,12 +70,12 @@ namespace Alternet::UI
 
         Int32Size(int width, int height) : Width(width), Height(height) {}
 
-        operator Int32Size_C() { return Int32Size_C{ Width, Height }; }
+        inline operator Int32Size_C() { return Int32Size_C{ Width, Height }; }
 
-        operator wxSize() const { return wxSize(Width, Height); }
+        inline operator wxSize() const { return wxSize(Width, Height); }
 
-        bool operator==(const Int32Size& rhs) { return Width == rhs.Width && Height == rhs.Height; }
-        bool operator!=(const Int32Size& rhs) { return !(*this == rhs); }
+        inline bool operator==(const Int32Size& rhs) { return Width == rhs.Width && Height == rhs.Height; }
+        inline bool operator!=(const Int32Size& rhs) { return !(*this == rhs); }
     };
 
     struct Size
@@ -97,10 +97,10 @@ namespace Alternet::UI
             return *this;
         }
 
-        operator Size_C() { return Size_C{ Width, Height }; }
+        inline operator Size_C() { return Size_C{ Width, Height }; }
 
-        bool operator==(const Size& rhs) { return Width == rhs.Width && Height == rhs.Height; }
-        bool operator!=(const Size& rhs) { return !(*this == rhs); }
+        inline bool operator==(const Size& rhs) { return Width == rhs.Width && Height == rhs.Height; }
+        inline bool operator!=(const Size& rhs) { return !(*this == rhs); }
 
     public:
         std::string ToString() const
@@ -128,10 +128,12 @@ namespace Alternet::UI
 
         Int32Point(wxPoint p) : X(p.x), Y(p.y) {}
 
-        operator Int32Point_C() const { return Int32Point_C{ X, Y }; }
+        inline operator Int32Point_C() const { return Int32Point_C{ X, Y }; }
 
-        bool operator==(const Int32Point& rhs) { return X == rhs.X && Y == rhs.Y; }
-        bool operator!=(const Int32Point& rhs) { return !(*this == rhs); }
+        inline operator wxPoint() const { return wxPoint{ X, Y }; }
+
+        inline bool operator==(const Int32Point& rhs) { return X == rhs.X && Y == rhs.Y; }
+        inline bool operator!=(const Int32Point& rhs) { return !(*this == rhs); }
     };
 
     struct Point
@@ -142,15 +144,15 @@ namespace Alternet::UI
 
         Point(double x, double y) : X(x), Y(y) {}
 
-        operator Point_C() const { return Point_C{ X, Y }; }
+        inline operator Point_C() const { return Point_C{ X, Y }; }
 
         inline Point operator+(const Size& value) const {
             return Point(X + value.Width, Y + value.Height); }
         inline Point operator-(const Size& value) const {
             return Point(X - value.Width, Y - value.Height); }
 
-        bool operator==(const Point& rhs) { return X == rhs.X && Y == rhs.Y; }
-        bool operator!=(const Point& rhs) { return !(*this == rhs); }
+        inline bool operator==(const Point& rhs) { return X == rhs.X && Y == rhs.Y; }
+        inline bool operator!=(const Point& rhs) { return !(*this == rhs); }
     };
 
     struct Int32Rect
@@ -169,12 +171,12 @@ namespace Alternet::UI
         inline Int32Point GetLocation() const { return Int32Point(X, Y); };
         inline Int32Size GetSize() const { return Int32Size(Width, Height); };
 
-        operator Int32Rect_C() { return Int32Rect_C{ X, Y, Width, Height }; }
+        inline operator Int32Rect_C() { return Int32Rect_C{ X, Y, Width, Height }; }
 
-        bool operator==(const Int32Rect& rhs)
+        inline bool operator==(const Int32Rect& rhs)
         { return X == rhs.X && Y == rhs.Y && Width == rhs.Width && Height == rhs.Height; }
         
-        bool operator!=(const Int32Rect& rhs) { return !(*this == rhs); }
+        inline bool operator!=(const Int32Rect& rhs) { return !(*this == rhs); }
     };
 
     struct Rect
@@ -199,12 +201,12 @@ namespace Alternet::UI
         inline Rect Offset(const Size& value) const
         { return Rect(X + value.Width, Y + value.Height, Width, Height); }
 
-        operator Rect_C() { return Rect_C{ X, Y, Width, Height }; }
+        inline operator Rect_C() { return Rect_C{ X, Y, Width, Height }; }
 
-        bool operator==(const Rect& rhs)
+        inline bool operator==(const Rect& rhs)
         { return X == rhs.X && Y == rhs.Y && Width == rhs.Width && Height == rhs.Height; }
         
-        bool operator!=(const Rect& rhs) { return !(*this == rhs); }
+        inline bool operator!=(const Rect& rhs) { return !(*this == rhs); }
     };
 
     struct Thickness
@@ -216,11 +218,11 @@ namespace Alternet::UI
         Thickness(double left, double top, double right, double bottom)
             : Left(left), Top(top), Right(right), Bottom(bottom) {}
 
-        operator Thickness_C() { return Thickness_C{ Left, Top, Right, Bottom }; }
+        inline operator Thickness_C() { return Thickness_C{ Left, Top, Right, Bottom }; }
 
-        bool operator==(const Thickness& rhs) { return Left == rhs.Left
+        inline bool operator==(const Thickness& rhs) { return Left == rhs.Left
             && Top == rhs.Top && Right == rhs.Right && Bottom == rhs.Bottom; }
-        bool operator!=(const Thickness& rhs) { return !(*this == rhs); }
+        inline bool operator!=(const Thickness& rhs) { return !(*this == rhs); }
     };   
 
 
@@ -231,7 +233,7 @@ namespace Alternet::UI
     private:
         uint8_t state = 0;
     public:
-        bool IsEmpty() const { return state == 0; }
+        inline bool IsEmpty() const { return state == 0; }
 
         Color(uint8_t alpha, uint8_t red, uint8_t green, uint8_t blue) :
             R(red), G(green), B(blue), A(alpha), state(1)
@@ -247,7 +249,7 @@ namespace Alternet::UI
         {
         }
 
-        operator Color_C() { return Color_C{ R, G, B, A, state}; }
+        inline operator Color_C() { return Color_C{ R, G, B, A, state}; }
 
         bool operator==(const Color& rhs) 
         { 
@@ -255,7 +257,7 @@ namespace Alternet::UI
                 state == rhs.state;         
         }
 
-        bool operator!=(const struct Color& rhs) { return !(*this == rhs); }
+        inline bool operator!=(const struct Color& rhs) { return !(*this == rhs); }
 
         operator wxColor() const
         {
@@ -308,9 +310,9 @@ namespace Alternet::UI
             return Hour == rhs.Hour && Minute == rhs.Minute && Second == rhs.Second 
                 && Millisecond == rhs.Millisecond && Year == rhs.Year && 
                 Month == rhs.Month && Day == rhs.Day; }
-        bool operator!=(const DateTime& rhs) { return !(*this == rhs); }
+        inline bool operator!=(const DateTime& rhs) { return !(*this == rhs); }
 
-        operator wxDateTime() const { 
+        inline operator wxDateTime() const {
 
             /*
             inline wxDateTime::wxDateTime(wxDateTime_t day,
