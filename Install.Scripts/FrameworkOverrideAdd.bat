@@ -1,5 +1,7 @@
 SETLOCAL EnableDelayedExpansion
 
+call Install.Clean.All.Samples.bat
+
 set SCRIPT_HOME=%~dp0.
 set SOURCE_DIR=%SCRIPT_HOME%\..\Source
 

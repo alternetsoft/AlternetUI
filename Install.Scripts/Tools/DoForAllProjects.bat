@@ -2,25 +2,7 @@ set tool=%1
 
 set SCRIPT_HOME=%~dp0.
 
-call %tool% "%SCRIPT_HOME%\..\..\Source\Samples\CommonDialogsSample"
-call %tool% "%SCRIPT_HOME%\..\..\Source\Samples\ControlsSample"
-call %tool% "%SCRIPT_HOME%\..\..\Source\Samples\ControlsTest"
-call %tool% "%SCRIPT_HOME%\..\..\Source\Samples\CustomControlsSample"
-call %tool% "%SCRIPT_HOME%\..\..\Source\Samples\DataBindingSample"
-call %tool% "%SCRIPT_HOME%\..\..\Source\Samples\DragAndDropSample"
-call %tool% "%SCRIPT_HOME%\..\..\Source\Samples\DrawingSample"
-call %tool% "%SCRIPT_HOME%\..\..\Source\Samples\EmployeeFormSample"
-call %tool% "%SCRIPT_HOME%\..\..\Source\Samples\ExplorerUISample"
-call %tool% "%SCRIPT_HOME%\..\..\Source\Samples\HelloWorldSample"
-call %tool% "%SCRIPT_HOME%\..\..\Source\Samples\InputSample"
-call %tool% "%SCRIPT_HOME%\..\..\Source\Samples\LayoutSample"
-call %tool% "%SCRIPT_HOME%\..\..\Source\Samples\MenuSample"
-call %tool% "%SCRIPT_HOME%\..\..\Source\Samples\PaintSample"
-call %tool% "%SCRIPT_HOME%\..\..\Source\Samples\PrintingSample"
-call %tool% "%SCRIPT_HOME%\..\..\Source\Samples\ThreadingSample"
-call %tool% "%SCRIPT_HOME%\..\..\Source\Samples\WindowPropertiesSample"
-
-call %tool% "%SCRIPT_HOME%\..\..\Source\Tests\ControlsTest"
+call DoForAllSamples.bat %tool%
 
 call %tool% "%SCRIPT_HOME%\..\..\Source\Alternet.UI"
 call %tool% "%SCRIPT_HOME%\..\..\Source\Alternet.UI.Build.Tasks"
@@ -47,3 +29,4 @@ call %tool% "%SCRIPT_HOME%\..\..\Source\Tools\Versioning\Alternet.UI.Versioning"
 call %tool% "%SCRIPT_HOME%\..\..\Source\Tools\Versioning\Alternet.UI.VersionTool"
 call %tool% "%SCRIPT_HOME%\..\..\Source\Tools\Versioning\Alternet.UI.VersionTool.Cli"
 call %tool% "%SCRIPT_HOME%\..\..\Source\Tools\Alternet.UI.CommonUtils"
+call %tool% "%SCRIPT_HOME%\..\..\Source\Tools\Alternet.UI.Build.Test"
