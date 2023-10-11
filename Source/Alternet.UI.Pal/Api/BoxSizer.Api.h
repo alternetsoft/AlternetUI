@@ -13,3 +13,33 @@ ALTERNET_UI_API BoxSizer* BoxSizer_Create_()
     return new BoxSizer();
 }
 
+ALTERNET_UI_API void* BoxSizer_CreateBoxSizer_(int orient)
+{
+    return BoxSizer::CreateBoxSizer(orient);
+}
+
+ALTERNET_UI_API void* BoxSizer_AddSpacer_(void* handle, int size)
+{
+    return BoxSizer::AddSpacer(handle, size);
+}
+
+ALTERNET_UI_API Int32Size_C BoxSizer_CalcMin_(void* handle)
+{
+    return BoxSizer::CalcMin(handle);
+}
+
+ALTERNET_UI_API int BoxSizer_GetOrientation_(void* handle)
+{
+    return BoxSizer::GetOrientation(handle);
+}
+
+ALTERNET_UI_API void BoxSizer_SetOrientation_(void* handle, int orient)
+{
+    BoxSizer::SetOrientation(handle, orient);
+}
+
+ALTERNET_UI_API void BoxSizer_RepositionChildren_(void* handle, Int32Size minSize)
+{
+    BoxSizer::RepositionChildren(handle, minSize);
+}
+

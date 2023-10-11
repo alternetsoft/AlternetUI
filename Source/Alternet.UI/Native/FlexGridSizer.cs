@@ -23,6 +23,86 @@ namespace Alternet.UI.Native
         {
         }
         
+        public static void AddGrowableCol(System.IntPtr handle, int idx, int proportion)
+        {
+            NativeApi.FlexGridSizer_AddGrowableCol_(handle, idx, proportion);
+        }
+        
+        public static void AddGrowableRow(System.IntPtr handle, int idx, int proportion)
+        {
+            NativeApi.FlexGridSizer_AddGrowableRow_(handle, idx, proportion);
+        }
+        
+        public static int GetFlexibleDirection(System.IntPtr handle)
+        {
+            return NativeApi.FlexGridSizer_GetFlexibleDirection_(handle);
+        }
+        
+        public static int GetNonFlexibleGrowMode(System.IntPtr handle)
+        {
+            return NativeApi.FlexGridSizer_GetNonFlexibleGrowMode_(handle);
+        }
+        
+        public static bool IsColGrowable(System.IntPtr handle, int idx)
+        {
+            return NativeApi.FlexGridSizer_IsColGrowable_(handle, idx);
+        }
+        
+        public static bool IsRowGrowable(System.IntPtr handle, int idx)
+        {
+            return NativeApi.FlexGridSizer_IsRowGrowable_(handle, idx);
+        }
+        
+        public static void RemoveGrowableCol(System.IntPtr handle, int idx)
+        {
+            NativeApi.FlexGridSizer_RemoveGrowableCol_(handle, idx);
+        }
+        
+        public static void RemoveGrowableRow(System.IntPtr handle, int idx)
+        {
+            NativeApi.FlexGridSizer_RemoveGrowableRow_(handle, idx);
+        }
+        
+        public static void SetFlexibleDirection(System.IntPtr handle, int direction)
+        {
+            NativeApi.FlexGridSizer_SetFlexibleDirection_(handle, direction);
+        }
+        
+        public static void SetNonFlexibleGrowMode(System.IntPtr handle, int mode)
+        {
+            NativeApi.FlexGridSizer_SetNonFlexibleGrowMode_(handle, mode);
+        }
+        
+        public static System.IntPtr GetRowHeights(System.IntPtr handle)
+        {
+            return NativeApi.FlexGridSizer_GetRowHeights_(handle);
+        }
+        
+        public static System.IntPtr GetColWidths(System.IntPtr handle)
+        {
+            return NativeApi.FlexGridSizer_GetColWidths_(handle);
+        }
+        
+        public static void RepositionChildren(System.IntPtr handle, Alternet.Drawing.Int32Size minSize)
+        {
+            NativeApi.FlexGridSizer_RepositionChildren_(handle, minSize);
+        }
+        
+        public static Alternet.Drawing.Int32Size CalcMin(System.IntPtr handle)
+        {
+            return NativeApi.FlexGridSizer_CalcMin_(handle);
+        }
+        
+        public static System.IntPtr CreateFlexGridSizer(int cols, int vgap, int hgap)
+        {
+            return NativeApi.FlexGridSizer_CreateFlexGridSizer_(cols, vgap, hgap);
+        }
+        
+        public static System.IntPtr CreateFlexGridSizer2(int rows, int cols, int vgap, int hgap)
+        {
+            return NativeApi.FlexGridSizer_CreateFlexGridSizer2_(rows, cols, vgap, hgap);
+        }
+        
         
         [SuppressUnmanagedCodeSecurity]
         public class NativeApi : NativeApiProvider
@@ -31,6 +111,54 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern IntPtr FlexGridSizer_Create_();
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void FlexGridSizer_AddGrowableCol_(System.IntPtr handle, int idx, int proportion);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void FlexGridSizer_AddGrowableRow_(System.IntPtr handle, int idx, int proportion);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int FlexGridSizer_GetFlexibleDirection_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int FlexGridSizer_GetNonFlexibleGrowMode_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool FlexGridSizer_IsColGrowable_(System.IntPtr handle, int idx);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool FlexGridSizer_IsRowGrowable_(System.IntPtr handle, int idx);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void FlexGridSizer_RemoveGrowableCol_(System.IntPtr handle, int idx);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void FlexGridSizer_RemoveGrowableRow_(System.IntPtr handle, int idx);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void FlexGridSizer_SetFlexibleDirection_(System.IntPtr handle, int direction);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void FlexGridSizer_SetNonFlexibleGrowMode_(System.IntPtr handle, int mode);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr FlexGridSizer_GetRowHeights_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr FlexGridSizer_GetColWidths_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void FlexGridSizer_RepositionChildren_(System.IntPtr handle, Alternet.Drawing.Int32Size minSize);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern Alternet.Drawing.Int32Size FlexGridSizer_CalcMin_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr FlexGridSizer_CreateFlexGridSizer_(int cols, int vgap, int hgap);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr FlexGridSizer_CreateFlexGridSizer2_(int rows, int cols, int vgap, int hgap);
             
         }
     }
