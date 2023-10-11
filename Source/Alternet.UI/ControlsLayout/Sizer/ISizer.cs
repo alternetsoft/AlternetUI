@@ -8,164 +8,162 @@ using Alternet.Drawing;
 namespace Alternet.UI
 {
     // https://docs.wxwidgets.org/3.2/classwx_sizer.html
-    internal interface ISizer : IDisposable
+    internal interface ISizer : IDisposableObject
     {
 /*
-        public static IntPtr AddWindow(IntPtr handle, IntPtr window,
+        IntPtr AddWindow(Control window,
                              int proportion,
                              int flag,
                              int border,
-                             IntPtr userData) => default;
-        public static IntPtr AddSizer(IntPtr handle, IntPtr sizer,
+                             IntPtr userData);
+        IntPtr AddSizer(ISizer sizer,
                          int proportion,
                          int flag,
                          int border,
-                         IntPtr userData) => default;
-        public static IntPtr AddCustomBox(IntPtr handle, int width,
+                         IntPtr userData);
+        IntPtr AddCustomBox(int width,
                          int height,
                          int proportion,
                          int flag,
                          int border,
-                         IntPtr userData) => default;
-        public static IntPtr AddWindow2(IntPtr handle, IntPtr window, IntPtr sizerFlags) => default;
-        public static IntPtr AddSizer2(IntPtr handle, IntPtr sizer, IntPtr sizerFlags) => default;
-        public static IntPtr AddCustomBox2(IntPtr handle, int width, int height,
-            IntPtr sizerFlags) => default;
-        public static IntPtr AddItem(IntPtr handle, IntPtr item) => default;
+                         IntPtr userData);
+        IntPtr AddWindow(IntPtr window, IntPtr sizerFlags);
+        IntPtr AddSizer(IntPtr sizer, IntPtr sizerFlags);
+        IntPtr AddCustomBox(int width, int height,
+            IntPtr sizerFlags);
+        IntPtr AddItem(IntPtr item);
 
-        public static IntPtr AddSpacer(IntPtr handle, int size) => default;
-        public static IntPtr AddStretchSpacer(IntPtr handle, int prop = 1) => default;
+        IntPtr AddSpacer(int size);
+        IntPtr AddStretchSpacer(int prop = 1);
 
-        public static IntPtr InsertWindow(IntPtr handle, int index,
-                            IntPtr window,
+        IntPtr InsertWindow(int index,
+                            Control window,
                             int proportion,
                             int flag,
                             int border,
-                            IntPtr userData) => default;
-        public static IntPtr InsertSizer(IntPtr handle, int index,
-                            IntPtr sizer,
+                            IntPtr userData);
+        IntPtr InsertSizer(int index,
+                            ISizer sizer,
                             int proportion,
                             int flag,
                             int border,
-                            IntPtr userData) => default;
-        public static IntPtr InsertCustomBox(IntPtr handle, int index,
+                            IntPtr userData);
+        IntPtr InsertCustomBox(int index,
                             int width,
                             int height,
                             int proportion,
                             int flag,
                             int border,
-                            IntPtr userData) => default;
-        public static IntPtr InsertWindow2(IntPtr handle, int index,
+                            IntPtr userData);
+        IntPtr InsertWindow(int index,
                             IntPtr window,
-                        IntPtr sizerFlags) => default;
-        public static IntPtr InsertSizer2(IntPtr handle, int index,
+                        IntPtr sizerFlags);
+        IntPtr InsertSizer(int index,
                             IntPtr sizer,
-                            IntPtr sizerFlags) => default;
-        public static IntPtr InsertCustomBox2(IntPtr handle, int index,
+                            IntPtr sizerFlags);
+        IntPtr InsertCustomBox(int index,
                             int width,
                             int height,
-                            IntPtr sizerFlags) => default;
+                            IntPtr sizerFlags);
 
-        public static IntPtr InsertItem(IntPtr handle, int index, IntPtr item) => default;
+        IntPtr InsertItem(int index, IntPtr item);
 
-        public static IntPtr InsertSpacer(IntPtr handle, int index, int size) => default;
-        public static IntPtr InsertStretchSpacer(IntPtr handle, int index, int prop) => default;
+        IntPtr InsertSpacer(int index, int size);
+        IntPtr InsertStretchSpacer(int index, int prop);
 
-        public static IntPtr PrependWindow(IntPtr handle, IntPtr window,
+        IntPtr PrependWindow(Control window,
                              int proportion,
                              int flag,
                              int border,
-                             IntPtr userData) => default;
-        public static IntPtr PrependSizer(IntPtr handle, IntPtr sizer,
+                             IntPtr userData);
+        IntPtr PrependSizer(ISizer sizer,
                              int proportion,
                              int flag,
                              int border,
-                             IntPtr userData) => default;
-        public static IntPtr PrependCustomBox(IntPtr handle, int width,
+                             IntPtr userData);
+        IntPtr PrependCustomBox(int width,
                              int height,
                              int proportion,
                              int flag,
                              int border,
-                             IntPtr userData) => default;
-        public static IntPtr PrependWindow2(IntPtr handle, IntPtr window, IntPtr sizerFlags) => default;
-        public static IntPtr PrependSizer2(IntPtr handle, IntPtr sizer, IntPtr sizerFlags) => default;
-        public static IntPtr PrependCustomBox2(IntPtr handle, int width, int height, IntPtr sizerFlags) => default;
-        public static IntPtr PrependItem(IntPtr handle, IntPtr item) => default;
+                             IntPtr userData);
+        IntPtr PrependWindow2(IntPtr window, IntPtr sizerFlags);
+        IntPtr PrependSizer2(IntPtr sizer, IntPtr sizerFlags);
+        IntPtr PrependCustomBox2(int width, int height, IntPtr sizerFlags);
+        IntPtr PrependItem(IntPtr item);
 
-        public static IntPtr PrependSpacer(IntPtr handle, int size) => default;
-        public static IntPtr PrependStretchSpacer(IntPtr handle, int prop = 1) => default;
+        IntPtr PrependSpacer(int size);
+        IntPtr PrependStretchSpacer(int prop = 1);
 
-        public static void SetContainingWindow(IntPtr handle, IntPtr window) { }
-        public static IntPtr GetContainingWindow(IntPtr handle) => default;
+        void SetContainingWindow(Control window);
+        IntPtr GetContainingWindow();
 
-        public static bool Remove(IntPtr handle, IntPtr sizer) => default;
-        public static bool Remove2(IntPtr handle, int index) => default;
+        bool Remove(IntPtr sizer);
+        bool Remove2(int index);
 
-        public static bool DetachWindow(IntPtr handle, IntPtr window) => default;
-        public static bool DetachSizer(IntPtr handle, IntPtr sizer) => default;
-        public static bool Detach(IntPtr handle, int index) => default;
+        bool DetachWindow(IntPtr window);
+        bool DetachSizer(IntPtr sizer);
+        bool Detach(int index);
 
-        public static bool ReplaceWindow(IntPtr handle, IntPtr oldwin, IntPtr newwin,
-            bool recursive) => default;
-        public static bool ReplaceSizer(IntPtr handle, IntPtr oldsz, IntPtr newsz,
-            bool recursive) => default;
-        public static bool ReplaceItem(IntPtr handle, int index, IntPtr newitem) => default;
+        bool ReplaceWindow(Control oldwin, Control newwin, bool recursive);
+        bool ReplaceSizer(ISizer oldsz, ISizer newsz, bool recursive);
+        bool ReplaceItem(int index, IntPtr newitem);
 
-        public static void Clear(IntPtr handle, bool delete_windows) { }
-        public static void DeleteWindows(IntPtr handle) { }
+        void Clear(bool delete_windows);
+        void DeleteWindows();
 
-        public static bool InformFirstDirection(IntPtr handle, int direction, int size,
-            int availableOtherDir) => default;
+        bool InformFirstDirection(int direction, int size,
+            int availableOtherDir);
 
-        public static void SetMinSize(IntPtr handle, int width, int height) { }
+        void SetMinSize(int width, int height);
 
-        public static bool SetWindowItemMinSize(IntPtr handle, IntPtr window,
-            int width, int height) => default;
+        bool SetWindowItemMinSize(IntPtr window,
+            int width, int height);
 
-        public static bool SetSizerItemMinSize(IntPtr handle, IntPtr sizer,
-            int width, int height) => default;
+        bool SetSizerItemMinSize(IntPtr sizer,
+            int width, int height);
 
-        public static bool SetCustomBoxItemMinSize(IntPtr handle, int index,
-            int width, int height) => default;
+        bool SetCustomBoxItemMinSize(int index,
+            int width, int height);
 
-        public static Int32Size GetSize(IntPtr handle) => default;
-        public static Int32Point GetPosition(IntPtr handle) => default;
-        public static Int32Size GetMinSize(IntPtr handle) => default;
-        public static Int32Size CalcMin(IntPtr handle) => default;
-        public static void RepositionChildren(IntPtr handle, Int32Size minSize) { }
-        public static void RecalcSizes(IntPtr handle) { }
-        public static void Layout(IntPtr handle) { }
-        public static Int32Size ComputeFittingClientSize(IntPtr handle, IntPtr window) => default;
-        public static Int32Size ComputeFittingWindowSize(IntPtr handle, IntPtr window) => default;
-        public static Int32Size Fit(IntPtr handle, IntPtr window) => default;
-        public static void FitInside(IntPtr handle, IntPtr window) { }
-        public static void SetSizeHints(IntPtr handle, IntPtr window) { }
-        public static IntPtr GetChildren(IntPtr handle) => default;
-        public static void SetDimension(IntPtr handle, int x, int y, int width, int height) { }
-        public static int GetItemCount(IntPtr handle) => default;
-        public static bool IsEmpty(IntPtr handle) => default;
-        public static IntPtr GetItemWindow(IntPtr handle, IntPtr window, bool recursive) => default;
-        public static IntPtr GetItemSizer(IntPtr handle, IntPtr sizer, bool recursive) => default;
-        public static IntPtr GetItem(IntPtr handle, int index) => default;
-        public static IntPtr GetItemById(IntPtr handle, int id, bool recursive = false) => default;
+        Int32Size GetSize();
+        Int32Point GetPosition();
+        Int32Size GetMinSize();
+        Int32Size CalcMin();
+        void RepositionChildren(Int32Size minSize);
+        void RecalcSizes();
+        void Layout();
+        Int32Size ComputeFittingClientSize(IntPtr window);
+        Int32Size ComputeFittingWindowSize(IntPtr window);
+        Int32Size Fit(IntPtr window);
+        void FitInside(IntPtr window);
+        void SetSizeHints(IntPtr window);
+        IntPtr GetChildren();
+        void SetDimension(int x, int y, int width, int height);
+        int GetItemCount();
+        bool IsEmpty();
+        IntPtr GetItemWindow(IntPtr window, bool recursive);
+        IntPtr GetItemSizer(IntPtr sizer, bool recursive);
+        IntPtr GetItem(int index);
+        IntPtr GetItemById(int id, bool recursive = false);
 
-        public static bool ShowWindow(IntPtr handle, IntPtr window, bool show,
-            bool recursive) => default;
-        public static bool ShowSizer(IntPtr handle, IntPtr sizer, bool show,
-            bool recursive) => default;
-        public static bool ShowItem(IntPtr handle, int index, bool show) => default;
+        bool ShowWindow(Control window, bool show,
+            bool recursive);
+        bool ShowSizer(ISizer sizer, bool show,
+            bool recursive);
+        bool ShowItem(int index, bool show);
 
-        public static bool HideSizer(IntPtr handle, IntPtr sizer, bool recursive) => default;
-        public static bool HideWindow(IntPtr handle, IntPtr window, bool recursive) => default;
-        public static bool Hide(IntPtr handle, int index) => default;
+        bool HideSizer(ISizer sizer, bool recursive);
+        bool HideWindow(Contol window, bool recursive);
+        bool Hide(int index);
 
-        public static bool IsShownWindow(IntPtr handle, IntPtr window) => default;
-        public static bool IsShownSizer(IntPtr handle, IntPtr sizer) => default;
-        public static bool IsShown(IntPtr handle, int index) => default;
-        public static void ShowItems(IntPtr handle, bool show) { }
+        bool IsShownWindow(Control window);
+        bool IsShownSizer(ISizer sizer);
+        bool IsShown(int index);
+        void ShowItems(bool show);
 
-        public static void Show(IntPtr handle, bool show) { }
-        public static bool AreAnyItemsShown(IntPtr handle) => default;
+        void Show(bool show);
+        bool AreAnyItemsShown();
 */
     }
 }

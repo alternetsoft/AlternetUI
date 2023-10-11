@@ -13,22 +13,15 @@ namespace Alternet.UI
     // of either.
     internal interface IBoxSizer : ISizer
     {
-/*
-        public static IntPtr CreateBoxSizer(int orient) => default;
+        // Returns the orientation of the box sizer, either wxVERTICAL or wxHORIZONTAL.
+        bool IsVertical { get; set; }
 
         // Adds non-stretchable space to the main orientation of the sizer only.
-        public static IntPtr AddSpacer(IntPtr handle, int size) => default;
+        IntPtr AddSpacer(int size);
 
         // Implements the calculation of a box sizer's minimal.
-        public static Int32Size CalcMin(IntPtr handle) => default;
+        Int32Size CalcMin();
 
-        // Returns the orientation of the box sizer, either wxVERTICAL or wxHORIZONTAL.
-        public static int GetOrientation(IntPtr handle) => default;
-
-        // Sets the orientation of the box sizer, either wxVERTICAL or wxHORIZONTAL.
-        public static void SetOrientation(IntPtr handle, int orient) { }
-
-        public static void RepositionChildren(IntPtr handle, Int32Size minSize) { }
-*/
+        void RepositionChildren(Int32Size minSize);
     }
 }

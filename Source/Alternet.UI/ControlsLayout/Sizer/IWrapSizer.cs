@@ -16,11 +16,8 @@ namespace Alternet.UI
     // in the secondary direction.
     internal interface IWrapSizer : IBoxSizer
     {
-        // public static IntPtr CreateWrapSizer(
-        //    int orient /*= wxHORIZONTAL*/, int flags /*= wxWRAPSIZER_DEFAULT_FLAGS*/) => default;
+        void RepositionChildren(Int32Size minSize);
 
-        // public static void RepositionChildren(IntPtr handle, Int32Size minSize){}
-
-        // public static Int32Size CalcMin(IntPtr handle) => default;
+        Int32Size CalcMin();
     }
 }
