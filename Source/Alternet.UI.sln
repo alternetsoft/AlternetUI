@@ -88,7 +88,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Alternet.UI.RunCmd", "Tools
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ControlsTest", "Samples\ControlsTest\ControlsTest.csproj", "{237A7C84-F2F8-485B-A153-D6B61805028F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuiManagerSample", "Samples\AuiManager\AuiManagerSample.csproj", "{53189757-746A-45BB-979F-D463151DC856}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuiManagerSample", "Samples\AuiManagerSample\AuiManagerSample.csproj", "{53189757-746A-45BB-979F-D463151DC856}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PropertyGridSample", "Samples\PropertyGridSample\PropertyGridSample.csproj", "{95AC7440-7C78-477C-829E-59A73449D447}"
 EndProject
