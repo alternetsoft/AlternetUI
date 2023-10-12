@@ -1,10 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
+using Alternet.Drawing;
 
 namespace Alternet.UI
 {
@@ -96,8 +96,9 @@ namespace Alternet.UI
 
             if (value.GetDataPresent(DataFormats.Bitmap))
             {
-                var bitmap = (Image)value.GetData(DataFormats.Bitmap)!;
-                result.AppendLine($"Bitmap: {bitmap.Size.Width}x{bitmap.Size.Height}");
+                var data = value.GetData(DataFormats.Bitmap);
+                var bitmap = data as Image;
+                result.AppendLine($"Bitmap: {bitmap?.Size}");
             }
 
             result.AppendLine().AppendLine("All formats: "

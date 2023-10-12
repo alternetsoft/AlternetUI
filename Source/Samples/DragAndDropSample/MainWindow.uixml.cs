@@ -13,7 +13,7 @@ namespace DragAndDropSample
         private static readonly string[] SupportedFormats =
             new[] { DataFormats.Text, DataFormats.Files, DataFormats.Bitmap };
 
-        private Image testBitmap;
+        private Bitmap testBitmap;
 
         public MainWindow()
         {
@@ -24,11 +24,6 @@ namespace DragAndDropSample
             testBitmap = new Bitmap(new Size(64, 64));
 
             SetSizeToContent();
-        }
-
-        private void CopyButton_Click(object sender, System.EventArgs e)
-        {
-            Clipboard.SetDataObject(GetDataObject());
         }
 
         private DragDropEffects GetDropEffect(DragDropEffects defaultEffect)
@@ -113,23 +108,37 @@ namespace DragAndDropSample
                 LogEvent(message);
         }
 
+        private void PasteButton_Click(object sender, System.EventArgs e)
+        {
+            var value = Clipboard.GetDataObject();
+            if (IsDataObjectSupported(value))
+                LogEvent($"Pasted Data: {GetStringFromDropResultObject((object?)value)}");
+            else
+                LogEvent("Clipboard doesn't contain data in a supported format.");
+        }
+
+        private void CopyButton_Click(object sender, System.EventArgs e)
+        {
+            var dataObject = GetDataObject();
+            Clipboard.SetDataObject(dataObject);
+        }
+
         private IDataObject GetDataObject()
         {
             var result = new DataObject();
 
             if (textFormatCheckBox!.IsChecked)
-                result.SetData(DataFormats.Text, "Test data string.");
+                result.SetText("Test data string.");
 
             if (filesFormatCheckBox!.IsChecked)
-                result.SetData(DataFormats.Files,
-                    new string[]
+                result.SetFiles(new string[]
                     {
                         (Assembly.GetEntryAssembly() ?? throw new Exception()).Location,
                         typeof(Application).Assembly.Location
                     });
 
             if (bitmapFormatCheckBox!.IsChecked)
-                result.SetData(DataFormats.Bitmap, testBitmap);
+                result.SetBitmap(testBitmap);
 
             return result;
         }
@@ -149,15 +158,6 @@ namespace DragAndDropSample
                 IDataObject d => SupportedFormats.Any(f => d.GetDataPresent(f)),
                 _ => false,
             };
-        }
-
-        private void PasteButton_Click(object sender, System.EventArgs e)
-        {
-            var value = Clipboard.GetDataObject();
-            if (IsDataObjectSupported(value))
-                LogEvent($"Pasted Data: {GetStringFromDropResultObject((object?)value)}");
-            else
-                LogEvent("Clipboard doesn't contain data in a supported format.");
         }
 
         bool isDragging = false;
