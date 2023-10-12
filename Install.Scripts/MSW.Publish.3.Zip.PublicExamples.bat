@@ -21,6 +21,8 @@ call Tools\CleanProject.bat "%PUBLIC_EXAMPLES_DIR%\PublicExamples\PaintSample"
 call Tools\CleanProject.bat "%PUBLIC_EXAMPLES_DIR%\PublicExamples\PrintingSample"
 call Tools\CleanProject.bat "%PUBLIC_EXAMPLES_DIR%\PublicExamples\ThreadingSample"
 call Tools\CleanProject.bat "%PUBLIC_EXAMPLES_DIR%\PublicExamples\WindowPropertiesSample"
+call Tools\CleanProject.bat "%PUBLIC_EXAMPLES_DIR%\PublicExamples\PropertyGridSample"
+call Tools\CleanProject.bat "%PUBLIC_EXAMPLES_DIR%\PublicExamples\AuiManagerSample"
 
 pushd %PUBLIC_EXAMPLES_DIR%
 

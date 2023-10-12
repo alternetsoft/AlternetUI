@@ -35,6 +35,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ThreadingSample", "Threadin
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PrintingSample", "PrintingSample\PrintingSample.csproj", "{E31A1D08-D2B9-4D63-BE5B-EBFE55446AAE}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuiManagerSample", "AuiManagerSample\AuiManagerSample.csproj", "{53189757-746A-45BB-979F-D463151DC856}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PropertyGridSample", "PropertyGridSample\PropertyGridSample.csproj", "{95AC7440-7C78-477C-829E-59A73449D447}"
+EndProject
+
+
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
