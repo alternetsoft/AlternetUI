@@ -1,0 +1,12 @@
+﻿<Control x:Class="ControlsTest.SizerTestPage"
+        xmlns="http://schemas.alternetsoft.com/ui/2021"
+        xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
+        xmlns:local="clr-namespace:ControlsTest;assembly=ControlsTest">
+
+  <StackPanel Margin="5,5,5,5" Name="mainPanel"
+              Orientation="Vertical" HorizontalAlignment="Stretch">
+    <Label  
+      Text="Sizer Test" Margin="5,5,5,5" Name="HeaderLabel"/>
+  </StackPanel>
+
+</Control>

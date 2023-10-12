@@ -70,6 +70,8 @@ namespace ControlsTest
             if(AddLinkLabelPage)
                 mainPanel.Add("PanelLinkLabels Test", new PanelLinkLabelsPage());
 
+            mainPanel.Add("Sizer Test", new SizerTestPage());
+
             mainPanel.LeftTreeView.SelectedItem = mainPanel.LeftTreeView.FirstItem;
             mainPanel.Manager.Update();
 
