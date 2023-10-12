@@ -10,6 +10,9 @@ namespace Alternet.UI
     {
         private readonly CardPanel cardPanel = new();
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PanelTreeAndCards"/> class.
+        /// </summary>
         public PanelTreeAndCards(Action<PanelAuiManager>? initAction = null)
             : base(initAction)
         {
@@ -20,6 +23,9 @@ namespace Alternet.UI
             Manager.Update();
         }
 
+        /// <summary>
+        /// Gets used <see cref="CardPanel"/> control.
+        /// </summary>
         public CardPanel CardPanel => cardPanel;
 
         public int Add(string title, Func<Control> fn)
