@@ -15,7 +15,6 @@ namespace ControlsTest
             var application = new Application();
             var window = new MainTestWindow();
 
-            WebBrowserTestPage.HookExceptionEvents(application);
             application.Run(window);
 
             window.Dispose();

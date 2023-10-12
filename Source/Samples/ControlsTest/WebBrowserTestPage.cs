@@ -17,10 +17,7 @@ namespace ControlsTest
 
         private static readonly string ZipSchemeName = "zipfs";
         private static readonly bool SetDefaultUserAgent = false;
-        private static bool insideUnhandledException;
-
         private readonly PanelWebBrowser rootPanel;
-
         private readonly string headerLabelText = "Web Browser Control";
 
         private bool pandaInMemory = false;
@@ -61,16 +58,6 @@ namespace ControlsTest
         public WebBrowser WebBrowser => rootPanel.WebBrowser;
 
         public string? PageName { get; set; }
-
-        public static void HookExceptionEvents(Alternet.UI.Application a)
-        {
-            if (!CommonUtils.CmdLineTest)
-                return;
-            a.ThreadException += Application_ThreadException;
-            a.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
-            AppDomain.CurrentDomain.UnhandledException +=
-                CurrentDomain_UnhandledException;
-        }
 
         internal void DoTestIEShowPrintPreviewDialog()
         {
@@ -280,28 +267,6 @@ namespace ControlsTest
 
             WebBrowser.Loaded += WebBrowser_Loaded;
             WebBrowser.DocumentTitleChanged += WebBrowser_TitleChanged;
-        }
-
-        private static void HandleException(Exception e)
-        {
-            LogUtils.LogException(e);
-        }
-
-        private static void Application_ThreadException(object sender, ThreadExceptionEventArgs e)
-        {
-            HandleException(e.Exception);
-        }
-
-        private static void CurrentDomain_UnhandledException(
-            object? sender,
-            UnhandledExceptionEventArgs e)
-        {
-            if (!insideUnhandledException)
-            {
-                insideUnhandledException = true;
-                HandleException((e.ExceptionObject as Exception)!);
-                insideUnhandledException = false;
-            }
         }
 
         private static string GetPandaFileName()
