@@ -54,9 +54,5 @@ namespace Alternet.UI
 
         // Returns a read-only array containing the widths of the columns in the sizer.
         // IntPtr GetColWidths();
-
-        void RepositionChildren(Int32Size minSize);
-
-        Int32Size CalcMin();
     }
 }

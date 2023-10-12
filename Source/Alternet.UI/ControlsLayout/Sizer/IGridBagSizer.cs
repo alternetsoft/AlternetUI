@@ -31,9 +31,6 @@ namespace Alternet.UI
         // Get the size used for cells in the grid with no item.
         Int32Size GetEmptyCellSize();
 
-        // Called when the managed size of the sizer is needed or when layout needs done.
-        void RepositionChildren(Int32Size minSize);
-
         // Set the size used for cells in the grid with no item.
         void SetEmptyCellSize(Int32Size sz);
 

@@ -16,8 +16,5 @@ namespace Alternet.UI
     // in the secondary direction.
     internal interface IWrapSizer : IBoxSizer
     {
-        void RepositionChildren(Int32Size minSize);
-
-        Int32Size CalcMin();
     }
 }
