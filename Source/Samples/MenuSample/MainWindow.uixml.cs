@@ -16,6 +16,10 @@ namespace MenuSample
         ToolbarItem? checkableToolbarItem;
         private readonly bool IsDebugBackground = false;
 
+        static MainWindow()
+        {
+        }
+
         public MainWindow()
         {
             Icon = ImageSet.FromUrlOrNull("embres:MenuSample.Sample.ico");
@@ -249,12 +253,14 @@ namespace MenuSample
         {
             continousScrollingMenuItem.Checked = true;
             pageScrollingMenuItem.Checked = false;
+            LogEvent("Continous Scrolling Clicked");
         }
 
         private void PageScrollingMenuItem_Click(object? sender, EventArgs e)
         {
             continousScrollingMenuItem.Checked = false;
             pageScrollingMenuItem.Checked = true;
+            LogEvent("Page Scrolling Clicked");
         }
 
         private void GridMenuItem_Click(object sender, EventArgs e)

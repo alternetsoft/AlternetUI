@@ -39,6 +39,8 @@ namespace Alternet::UI
     {
         event.Skip();
         auto item = MenuItem::GetMenuItemById(event.GetId());
+        if (item == nullptr)
+            return;
         item->RaiseClick();
     }
 
