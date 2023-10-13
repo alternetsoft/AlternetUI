@@ -8,15 +8,24 @@ using Alternet.Drawing;
 namespace Alternet.UI
 {
     // https://docs.wxwidgets.org/3.2/classwx_box_sizer.html
-    // The basic idea behind a box sizer is that windows will most often be laid out in
-    // rather simple basic geometry, typically in a row or a column or several hierarchies
-    // of either.
-    internal interface IBoxSizer : ISizer
+
+    /// <summary>
+    /// The basic idea behind a box sizer is that windows will most often be laid out in
+    /// rather simple basic geometry, typically in a row or a column or several hierarchies
+    /// of either.
+    /// </summary>
+    public interface IBoxSizer : ISizer
     {
-        // Returns the orientation of the box sizer, either wxVERTICAL or wxHORIZONTAL.
+        /// <summary>
+        /// Returns the orientation of the box sizer.
+        /// </summary>
         bool IsVertical { get; set; }
 
-        // Adds non-stretchable space to the main orientation of the sizer only.
+        /// <summary>
+        /// Adds non-stretchable space to the main orientation of the sizer only.
+        /// </summary>
+        /// <param name="size"></param>
+        /// <returns></returns>
         IntPtr AddSpacer(int size);
     }
 }

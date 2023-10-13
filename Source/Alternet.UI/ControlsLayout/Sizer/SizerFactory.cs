@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Alternet.UI
 {
-    internal class SizerFactory : ISizerFactory
+    public class SizerFactory : ISizerFactory
     {
         private readonly bool disposeHandle;
 

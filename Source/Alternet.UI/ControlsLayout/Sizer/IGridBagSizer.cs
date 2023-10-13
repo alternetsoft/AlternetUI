@@ -8,10 +8,13 @@ using Alternet.Drawing;
 namespace Alternet.UI
 {
     // https://docs.wxwidgets.org/3.2/classwx_grid_bag_sizer.html
-    // A wxSizer that can lay out items in a virtual grid like a wxFlexGridSizer but in
-    // this case explicit positioning of the items is allowed using wxGBPosition,
-    // and items can optionally span more than one row and/or column using wxGBSpan.
-    internal interface IGridBagSizer : IFlexGridSizer
+
+    /// <summary>
+    /// A sizer that can lay out items in a virtual grid like a <see cref="IFlexGridSizer"/> but in
+    /// this case explicit positioning of the items is allowed,
+    /// and items can optionally span more than one row and/or column.
+    /// </summary>
+    public interface IGridBagSizer : IFlexGridSizer
     {
         // Return the sizer item located at the point given in pt, or NULL if there is
         // no item at that point.

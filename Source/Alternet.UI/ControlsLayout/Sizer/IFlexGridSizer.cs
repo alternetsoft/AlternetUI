@@ -8,11 +8,14 @@ using Alternet.Drawing;
 namespace Alternet.UI
 {
     // https://docs.wxwidgets.org/3.2/classwx_flex_grid_sizer.html
-    // A flex grid sizer is a sizer which lays out its children in a two-dimensional
-    // table with all table fields in one row having the same height and all fields
-    // in one column having the same width, but all rows or all columns are not
-    // necessarily the same height or width as in the wxGridSizer.
-    internal interface IFlexGridSizer : IGridSizer
+
+    /// <summary>
+    /// A flex grid sizer is a sizer which lays out its children in a two-dimensional
+    /// table with all table fields in one row having the same height and all fields
+    /// in one column having the same width, but all rows or all columns are not
+    /// necessarily the same height or width as in the <see cref="IGridSizer"/>.
+    /// </summary>
+    public interface IFlexGridSizer : IGridSizer
     {
         // Specifies that column idx(starting from zero) should be grown if there
         // is extra space available to the sizer.

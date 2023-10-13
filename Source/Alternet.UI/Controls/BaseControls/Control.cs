@@ -1676,6 +1676,56 @@ namespace Alternet.UI
             Handler?.SuspendLayout();
         }
 
+        public ISizer? GetContainingSizer()
+        {
+            var nativeControl = Handler?.NativeControl;
+
+            if (nativeControl is null)
+                return null;
+
+            var sizer = nativeControl.GetContainingSizer();
+
+            if (sizer == IntPtr.Zero)
+                return null;
+
+            return new Sizer(sizer, false);
+        }
+
+        public ISizer? GetSizer()
+        {
+            var nativeControl = Handler?.NativeControl;
+
+            if (nativeControl is null)
+                return null;
+
+            var sizer = nativeControl.GetSizer();
+
+            if (sizer == IntPtr.Zero)
+                return null;
+
+            return new Sizer(sizer, false);
+        }
+
+        public void SetSizer(ISizer sizer, bool deleteOld)
+        {
+            var nativeControl = Handler?.NativeControl;
+
+            if (nativeControl is null)
+                return;
+
+            nativeControl.SetSizer(sizer.Handle, deleteOld);
+        }
+
+        public void SetSizerAndFit(ISizer sizer, bool deleteOld)
+        {
+            var nativeControl = Handler?.NativeControl;
+
+            if (nativeControl is null)
+                return;
+
+            nativeControl.SetSizerAndFit(sizer.Handle, deleteOld);
+        }
+
         /// <summary>
         /// Converts the screen coordinates of a specified point on the screen
         /// to client-area coordinates.

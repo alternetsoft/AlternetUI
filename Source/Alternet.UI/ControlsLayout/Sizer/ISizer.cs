@@ -8,11 +8,16 @@ using Alternet.Drawing;
 namespace Alternet.UI
 {
     // https://docs.wxwidgets.org/3.2/classwx_sizer.html
-    internal interface ISizer : IDisposableObject
-    {
-        Int32Size CalcMin();
 
-        void RepositionChildren(Int32Size minSize);
+    /// <summary>
+    /// Provides methods and properties used for laying out sub-controls in a control.
+    /// </summary>
+    public interface ISizer : IDisposableObject
+    {
+        /// <summary>
+        /// Does the actual calculation of children's minimal sizes.
+        /// </summary>
+        Int32Size CalcMin();
 
         /*
                 IntPtr AddWindow(Control window,

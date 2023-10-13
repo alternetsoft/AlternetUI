@@ -6,14 +6,25 @@ using System.Threading.Tasks;
 
 namespace Alternet.UI
 {
+    /// <summary>
+    /// Enumerates flags for <see cref="IWrapSizer"/>.
+    /// </summary>
     [Flags]
-    internal enum WrapSizerFlags
+    public enum WrapSizerFlags
     {
+        /// <summary>
+        /// Causes the last item on each line to use any remaining space on that line.
+        /// </summary>
         ExtendLastOnEachLine = 1,
 
-        // don't leave spacers in the beginning of a new row
+        /// <summary>
+        /// Removes any spacer elements from the beginning of a row.
+        /// </summary>
         RemoveLeadingSpaces = 2,
 
+        /// <summary>
+        /// Default value.
+        /// </summary>
         Default = ExtendLastOnEachLine | RemoveLeadingSpaces,
     }
 }
