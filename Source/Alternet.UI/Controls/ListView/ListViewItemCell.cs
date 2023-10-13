@@ -110,7 +110,7 @@ namespace Alternet.UI
             }
         }
 
-        /// <inheritdoc/>
+        /// <inheritdoc cref="ListControlItem.ToString"/>
         public override string ToString()
         {
             if (string.IsNullOrWhiteSpace(Text))

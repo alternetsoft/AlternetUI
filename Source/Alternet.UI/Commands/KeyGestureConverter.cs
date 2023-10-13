@@ -81,7 +81,10 @@ namespace Alternet.UI
             return null;
         }
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Gets a value indicating whether this converter can convert an object in the given
+        /// source type to the native type of the converter using the context.
+        /// </summary>
         public override bool CanConvertFrom(
             ITypeDescriptorContext? context,
             Type? sourceType)
@@ -97,7 +100,10 @@ namespace Alternet.UI
             }
         }
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Gets a value indicating whether this converter can convert an object to the given
+        /// destination type using the context.
+        /// </summary>
         public override bool CanConvertTo(
             ITypeDescriptorContext? context,
             Type? destinationType)
@@ -127,7 +133,7 @@ namespace Alternet.UI
             CultureInfo? culture,
             object? source)
         {
-            if (source != null && source is string)
+            if (source is not null and string)
             {
                 object? result = FromString((string)source);
                 if (result != null)
@@ -137,7 +143,9 @@ namespace Alternet.UI
             throw GetConvertFromException(source);
         }
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Converts the given object to the converter's native type.
+        /// </summary>
         public override object ConvertTo(
             ITypeDescriptorContext? context,
             CultureInfo? culture,
@@ -151,8 +159,7 @@ namespace Alternet.UI
             {
                 if (value != null)
                 {
-                    var keyGesture = value as KeyGesture;
-                    if (keyGesture != null)
+                    if (value is KeyGesture keyGesture)
                     {
                         if (keyGesture.Key == Key.None)
                             return string.Empty;

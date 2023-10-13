@@ -93,7 +93,7 @@ namespace Alternet.UI
             return Native.AuiManager.AlwaysUsesLiveResize();
         }
 
-        /// <inheritdoc cref="IDisposable.Dispose"/>
+        /// <inheritdoc cref="DisposableObject.Dispose()"/>
         public void Dispose()
         {
             UnInit();

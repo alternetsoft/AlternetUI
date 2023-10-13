@@ -9,7 +9,7 @@ namespace Alternet.UI
     /// </summary>
     public class MenuItemRoleConverter : TypeConverter
     {
-        /// <inheritdoc/>
+        /// <inheritdoc cref="KeyGestureConverter.CanConvertFrom(ITypeDescriptorContext?, Type?)"/>
         public override bool CanConvertFrom(
             ITypeDescriptorContext? context,
             Type? sourceType)
@@ -17,7 +17,7 @@ namespace Alternet.UI
             return sourceType == typeof(string);
         }
 
-        /// <inheritdoc/>
+        /// <inheritdoc cref="KeyGestureConverter.CanConvertTo(ITypeDescriptorContext?, Type?)"/>
         public override bool CanConvertTo(
             ITypeDescriptorContext? context,
             Type? destinationType)
@@ -36,7 +36,7 @@ namespace Alternet.UI
             return false;
         }
 
-        /// <inheritdoc/>
+        /// <inheritdoc cref="KeyGestureConverter.ConvertFrom(ITypeDescriptorContext?, CultureInfo?, object?)"/>
         public override object ConvertFrom(
             ITypeDescriptorContext? context,
             CultureInfo? culture,
@@ -48,7 +48,7 @@ namespace Alternet.UI
             throw GetConvertFromException(source);
         }
 
-        /// <inheritdoc/>
+        /// <inheritdoc cref="KeyGestureConverter.ConvertTo(ITypeDescriptorContext?, CultureInfo?, object?, Type?)"/>
         public override object ConvertTo(
             ITypeDescriptorContext? context,
             CultureInfo?culture,
