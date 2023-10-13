@@ -12,7 +12,9 @@ namespace Alternet.UI
     // #if !BUILDTASK
     //    public
     // #endif
+#pragma warning disable
     internal static class ResourcesIndexReaderWriter
+#pragma warning restore
     {
         private const int LastKnownVersion = 1;
 
@@ -83,7 +85,9 @@ namespace Alternet.UI
     //    public
     // #endif
     [DataContract]
+#pragma warning disable
     internal class UIResourcesIndex
+#pragma warning restore
     {
         [DataMember]
         public List<UIResourcesIndexEntry> Entries { get; set; } = new List<UIResourcesIndexEntry>();
@@ -93,7 +97,9 @@ namespace Alternet.UI
     //    public
     // #endif
     [DataContract]
+#pragma warning disable
     internal class UIResourcesIndexEntry
+#pragma warning restore
     {
         [DataMember]
         public string? Path { get; set; }

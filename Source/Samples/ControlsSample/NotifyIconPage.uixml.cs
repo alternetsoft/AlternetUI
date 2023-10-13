@@ -11,7 +11,7 @@ namespace ControlsSample
 
         private IPageSite? site;
 
-        private NotifyIcon notifyIcon;
+        private readonly NotifyIcon notifyIcon;
 
         public NotifyIconPage()
         {

@@ -156,7 +156,7 @@ namespace Alternet.UI
             if (command != null)
             {
                 var parameter = commandSource.CommandParameter;
-                var target = commandSource.CommandTarget;
+                /*var target = commandSource.CommandTarget;*/
 
                 /* RoutedCommand routed = command as RoutedCommand;
                 if (routed != null)

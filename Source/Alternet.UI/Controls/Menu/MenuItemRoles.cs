@@ -14,7 +14,7 @@ namespace Alternet.UI
         /// <summary>
         /// No role is defined for the menu item. On macOS, the item will appear exactly as defined in the menu.
         /// </summary>
-        public static readonly MenuItemRole None = new MenuItemRole("None");
+        public static readonly MenuItemRole None = new("None");
 
         /// <summary>
         /// The menu item role will be automatically deduced from the item text.
@@ -23,7 +23,7 @@ namespace Alternet.UI
         /// Setting <see cref="MenuItem.Role"/> to <see langword="null"/>
         /// has the same effect as the <see cref="Auto"/> value. <see langword="null"/> is the default <see cref="MenuItem.Role"/> property value.
         /// </remarks>
-        public static readonly MenuItemRole Auto = new MenuItemRole("Auto");
+        public static readonly MenuItemRole Auto = new("Auto");
 
         /// <summary>
         /// "About" menu item role.
@@ -32,7 +32,7 @@ namespace Alternet.UI
         /// This role is deduced from the <see cref="MenuItem.Text"/> when its value starts with "About".
         /// On macOS, a menu item with the "About" role is placed in the application menu with a display text of "About [appname]...".
         /// </remarks>
-        public static readonly MenuItemRole About = new MenuItemRole("About");
+        public static readonly MenuItemRole About = new("About");
 
         /// <summary>
         /// "Exit" menu item role.
@@ -42,7 +42,7 @@ namespace Alternet.UI
         /// On macOS, a menu item with the "Exit" role is placed in the application menu with a display text of "Quit"
         /// and a shortcut of "Cmd+Q".
         /// </remarks>
-        public static readonly MenuItemRole Exit = new MenuItemRole("Exit");
+        public static readonly MenuItemRole Exit = new("Exit");
 
         /// <summary>
         /// "Exit" menu item role.
@@ -53,6 +53,6 @@ namespace Alternet.UI
         /// On macOS, a menu item with the "Preferences" role is placed in the application menu with a display text of "Preferences..."
         /// and a shortcut of "Cmd+,".
         /// </remarks>
-        public static readonly MenuItemRole Preferences = new MenuItemRole("Preferences");
+        public static readonly MenuItemRole Preferences = new("Preferences");
     }
 }

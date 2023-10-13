@@ -18,12 +18,12 @@ namespace Alternet.UI
         private readonly string defaultLabel;
         private readonly object? defaultValue;
         private readonly PropertyGrid owner;
+        private readonly IPropertyGridNewItemParams? prm;
         private bool isCategory = false;
         private object? instance;
         private PropertyInfo? propInfo;
         private Collection<IPropertyGridItem>? children;
         private IPropertyGridItem? parent;
-        private IPropertyGridNewItemParams? prm;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PropertyGridItem"/> class.

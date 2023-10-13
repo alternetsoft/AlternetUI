@@ -8,7 +8,7 @@ namespace PaintSample
 {
     internal class DropoutStack<T>
     {
-        private Stack<T> stack = new Stack<T>();
+        private Stack<T> stack = new();
 
         public DropoutStack(int maxCount)
         {

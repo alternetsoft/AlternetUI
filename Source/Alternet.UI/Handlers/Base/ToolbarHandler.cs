@@ -51,10 +51,10 @@ namespace Alternet.UI
         /// </summary>
         public abstract ToolbarImageToText ImageToText { get; set; }
 
-        /// <inheritdoc cref="Toolbar.Realize"/>
-        public abstract void Realize();
-
         /// <inheritdoc/>
         protected override bool VisualChildNeedsNativeControl => true;
+
+        /// <inheritdoc cref="Toolbar.Realize"/>
+        public abstract void Realize();
     }
 }

@@ -175,11 +175,9 @@ namespace Alternet.UI
                     VerticalAlignment = VerticalAlignment.Top,
                     HorizontalAlignment = HorizontalAlignment.Left,
                     Margin = new Thickness(0, 0, 10, 0),
+                    Image = LoadImage(
+                        "Alternet.UI.Application.ThreadException.Resources.ErrorImage.png"),
                 };
-
-                errorImagePictureBox.Image =
-                    LoadImage(
-                    "Alternet.UI.Application.ThreadException.Resources.ErrorImage.png");
                 messageGrid.Children.Add(errorImagePictureBox);
 
                 var stackPanel = new StackPanel

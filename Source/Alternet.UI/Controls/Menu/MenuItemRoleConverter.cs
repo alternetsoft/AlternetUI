@@ -42,7 +42,7 @@ namespace Alternet.UI
             CultureInfo? culture,
             object? source)
         {
-            if (source != null && source is string)
+            if (source is not null and string)
                 return new MenuItemRole((string)source);
 
             throw GetConvertFromException(source);

@@ -34,8 +34,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override bool Equals(object? obj)
         {
-            var other = obj as MenuItemRole;
-            if (other == null)
+            if (obj is not MenuItemRole other)
                 return false;
 
             return Name == other.Name;

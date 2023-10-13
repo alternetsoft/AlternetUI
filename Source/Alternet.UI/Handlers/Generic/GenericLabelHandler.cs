@@ -18,8 +18,8 @@ namespace Alternet.UI
             if (text == null)
                 return new Size();
 
-            using (var dc = Control.CreateDrawingContext())
-                return dc.MeasureText(text, Control.Font ?? UI.Control.DefaultFont) + Control.Padding.Size;
+            using var dc = Control.CreateDrawingContext();
+            return dc.MeasureText(text, Control.Font ?? UI.Control.DefaultFont) + Control.Padding.Size;
         }
 
         protected override void OnAttach()

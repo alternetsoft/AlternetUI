@@ -9,7 +9,7 @@ namespace ControlsTest
         private readonly StatusBar statusbar = new();
         private readonly CardPanelItem? firstCard;
         private readonly bool disableResize = true;
-        private PanelTreeAndCards mainPanel;
+        private readonly PanelTreeAndCards mainPanel;
 
         static MainTestWindow()
         {

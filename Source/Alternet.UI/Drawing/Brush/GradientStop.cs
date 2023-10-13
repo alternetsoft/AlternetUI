@@ -116,9 +116,7 @@ namespace Alternet.Drawing
         /// otherwise, <c>false</c>.</returns>
         public override bool Equals(object? obj)
         {
-            var o = obj as GradientStop;
-
-            if (o is null)
+            if (obj is not GradientStop o)
                 return false;
 
             if (GetType() != obj?.GetType())

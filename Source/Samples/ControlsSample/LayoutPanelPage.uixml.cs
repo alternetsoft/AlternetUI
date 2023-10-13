@@ -96,7 +96,7 @@ namespace ControlsSample
 
         }
 
-        private void LogEventOnce(string s, bool once = true)
+        internal void LogEventOnce(string s, bool once = true)
         {
             if (site == null)
                 return;

@@ -109,8 +109,7 @@ namespace Alternet.UI
                 // string only for known type
                 if (context != null && context.Instance != null)
                 {
-                    var keyGesture = context.Instance as KeyGesture;
-                    if (keyGesture != null)
+                    if (context.Instance is KeyGesture keyGesture)
                     {
                         return ModifierKeysConverter.IsDefinedModifierKeys(
                             keyGesture.Modifiers)

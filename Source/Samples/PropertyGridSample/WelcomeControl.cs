@@ -30,16 +30,16 @@ namespace PropertyGridSample
 
         /*private WebBrowser webBrowser;*/
 
+        internal static string GetPandaUrl()
+        {
+            var s = WebBrowser.PrepareFileUrl(GetPandaFileName());
+            return s;
+        }
+
         private static string GetPandaFileName()
         {
             var s = PathUtils.GetAppFolder() +
                 "Resources/welcome.html";
-            return s;
-        }
-
-        private static string GetPandaUrl()
-        {
-            var s = WebBrowser.PrepareFileUrl(GetPandaFileName());
             return s;
         }
 

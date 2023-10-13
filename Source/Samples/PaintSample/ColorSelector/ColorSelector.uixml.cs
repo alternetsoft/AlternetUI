@@ -20,7 +20,7 @@ namespace PaintSample
             Color.White,
         };
 
-        private List<ColorSwatch> swatches = new List<ColorSwatch>();
+        private List<ColorSwatch> swatches = new();
         private SelectedColorDisplay selectedColorDisplay = new ();
 
         public ColorSelector()

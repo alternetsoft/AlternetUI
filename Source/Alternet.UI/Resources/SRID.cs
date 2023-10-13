@@ -1,5 +1,7 @@
 #nullable disable
+#pragma warning disable IDE0079
 #pragma warning disable SA1310 // Field names should not contain underscore
+
 using System.Resources;
 
 namespace Alternet.UI

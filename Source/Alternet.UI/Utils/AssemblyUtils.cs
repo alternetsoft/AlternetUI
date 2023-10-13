@@ -73,8 +73,10 @@ namespace Alternet.UI
         /// Gets whether <see cref="Type"/> is struct.
         /// </summary>
         /// <param name="type">Object type.</param>
-        public static bool IsStruct(Type type)
+        public static bool IsStruct(Type? type)
         {
+            if (type is null)
+                return false;
             var realType = AssemblyUtils.GetRealType(type);
             TypeCode typeCode = Type.GetTypeCode(realType);
             var result = (typeCode == TypeCode.Object) && realType.IsValueType && !realType.IsEnum;

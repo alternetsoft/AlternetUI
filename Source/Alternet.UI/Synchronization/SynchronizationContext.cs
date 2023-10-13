@@ -153,17 +153,19 @@ namespace Alternet.UI
         {
             if (AutoInstall)
             {
-                if (AsyncOperationManager.SynchronizationContext is SynchronizationContext syncContext)
+                if (AsyncOperationManager.SynchronizationContext is SynchronizationContext)
                 {
                     try
                     {
                         if (previousSynchronizationContext == null)
                         {
-                            AsyncOperationManager.SynchronizationContext = new System.Threading.SynchronizationContext();
+                            AsyncOperationManager.SynchronizationContext =
+                                new System.Threading.SynchronizationContext();
                         }
                         else
                         {
-                            AsyncOperationManager.SynchronizationContext = previousSynchronizationContext;
+                            AsyncOperationManager.SynchronizationContext =
+                                previousSynchronizationContext;
                         }
                     }
                     finally

@@ -45,6 +45,8 @@ namespace Alternet.UI
 
     internal interface IUIElementInternal
     {
+        EventHandlersStore? EventHandlersStore { get; }
+
         void OnRemoveHandler(RoutedEvent routedEvent, Delegate handler);
 
         void EnsureEventHandlersStore();
@@ -54,8 +56,6 @@ namespace Alternet.UI
         bool ReadFlag(CoreFlags field);
 
         void OnAddHandler(RoutedEvent routedEvent, Delegate handler);
-
-        EventHandlersStore? EventHandlersStore { get; }
 
         void RaiseLayoutUpdated();
 

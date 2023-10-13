@@ -9,9 +9,9 @@ namespace PaintSample
 
         const int StackSize = 20;
 
-        private DropoutStack<Bitmap> undoStack = new DropoutStack<Bitmap>(StackSize);
+        private DropoutStack<Bitmap> undoStack = new(StackSize);
 
-        private DropoutStack<Bitmap> redoStack = new DropoutStack<Bitmap>(StackSize);
+        private DropoutStack<Bitmap> redoStack = new(StackSize);
 
         public event EventHandler? Changed;
 

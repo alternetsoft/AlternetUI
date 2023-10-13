@@ -7,7 +7,7 @@ namespace Alternet.UI
     /// </summary>
     public enum ControlId
     {
-#pragma warning disable CS1591
+#pragma warning disable
         Control,
         Button,
         Border,

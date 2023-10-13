@@ -6,8 +6,8 @@ namespace WindowPropertiesSample
 {
     internal static class Icons
     {
-        public static ImageSet Icon1 = new ImageSet(LoadImage("TestIcon1.ico"));
-        public static ImageSet Icon2 = new ImageSet(LoadImage("TestIcon2.ico"));
+        public static ImageSet Icon1 = new(LoadImage("TestIcon1.ico"));
+        public static ImageSet Icon2 = new(LoadImage("TestIcon2.ico"));
 
         private static Stream LoadImage(string name)
         {

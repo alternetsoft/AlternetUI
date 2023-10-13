@@ -6,7 +6,7 @@ namespace Alternet.Drawing
     /// <summary>Specifies the file format of the image. Not inheritable.</summary>
     public sealed class ImageFormat
     {
-        private Guid guid;
+        private readonly Guid guid;
 
         /// <summary>Initializes a new instance of the
         /// <see cref="System.Drawing.Imaging.ImageFormat" /> class by using
