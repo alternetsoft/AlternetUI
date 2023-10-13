@@ -8,11 +8,12 @@ The application will display a message box in response to a button click.
 1. Download and install [.NET SDK](https://dotnet.microsoft.com/download/dotnet). The minimum supported SDK version is .NET 6.0.
 1. Install AlterNET UI project templates by running
     ```dos
-    dotnet new --install Alternet.UI.Templates
+    dotnet new install Alternet.UI.Templates
     ```
 1. Download and install [Visual Studio Code](https://code.visualstudio.com/download)
 1. In Visual Studio Code, ensure the [C# extension](https://marketplace.visualstudio.com/items?itemName=ms-dotnettools.csharp) is installed. For
    information about how to install extensions on Visual Studio Code, see [VS Code Extension Marketplace](https://code.visualstudio.com/docs/editor/extension-gallery).
+1. If you develop under Linux, please install required packages as described at the end of this page.
 
 ### Create New Project
 
@@ -99,8 +100,18 @@ The application will start and display its window:
 
    ![MessageBox on Click](images/message-box-on-click-macos-window.png)
 
-> [!NOTE]
-> The application created in this tutorial can be compiled and run without modifications on all the supported platforms: Windows, macOS, and Linux.
+[!NOTE]
+The application created in this tutorial can be compiled and run without source code modifications
+ on all the supported platforms: Windows, macOS, and Linux.
+
+### Linux
+
+Before running Alternet.UI applications on Linux, you need to install
+required packages. There is special installation script for Ubuntu.
+You can download it from the 
+[GitHub repository](https://github.com/alternetsoft/AlternetUI)
+ (File: Install.Scripts/Ubuntu.Install.Packages.sh).
+This is development packages, end-users do not need to install all of them.
 
 ---
 *Congratulations, you have completed the "Hello, World" tutorial using command line tools and Visual Studio Code.*
