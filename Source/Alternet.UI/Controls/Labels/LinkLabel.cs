@@ -120,6 +120,7 @@ namespace Alternet.UI
         /// Gets or sets the color used to draw the label of the hyperlink when the mouse is
         /// over the control.
         /// </summary>
+        [Browsable(false)]
         public Color HoverColor
         {
             get => Handler.HoverColor;
@@ -131,6 +132,7 @@ namespace Alternet.UI
         /// clicked before (i.e. the link has not been visited) and the mouse is
         /// not over the control.
         /// </summary>
+        [Browsable(false)]
         public Color NormalColor
         {
             get => Handler.NormalColor;
@@ -142,6 +144,7 @@ namespace Alternet.UI
         /// control and the link has already been clicked
         /// before (i.e. the link has been visited).
         /// </summary>
+        [Browsable(false)]
         public Color VisitedColor
         {
             get => Handler.VisitedColor;
@@ -152,6 +155,7 @@ namespace Alternet.UI
         /// Gets or sets whether the hyperlink has already been clicked by
         /// the user at least one time.
         /// </summary>
+        [Browsable(false)]
         public bool Visited
         {
             get => Handler.Visited;
