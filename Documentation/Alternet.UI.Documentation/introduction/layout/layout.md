@@ -1,6 +1,7 @@
 # Layout
 
-This topic describes the AlterNET UI layout system. Understanding how and when layout calculations occur is essential for creating user interfaces in AlterNET UI.
+This topic describes the AlterNET UI layout system. Understanding how and when layout calculations occur
+ is essential for creating user interfaces in AlterNET UI.
 
 ## Control Bounding Boxes
 
@@ -13,7 +14,8 @@ constraints, layout-specific properties (such as margin and padding), and the
 individual behavior of the parent control.
 By processing this data, the layout system can calculate the position of all
 the children of a particular <xref:Alternet.UI.Control>. It is
-important to remember that sizing characteristics, defined on the parent control, such as a <xref:Alternet.UI.Border>, affect its children.
+important to remember that sizing characteristics, defined on the parent control, such as a <xref:Alternet.UI.Border>,
+ affect its children.
 
 The following illustration shows a simple layout.
 
@@ -43,7 +45,7 @@ appears. As additional controls are added to the
 depending on the type and size of controls that are added.
 
 The layout bounds of the <xref:Alternet.UI.Border> are highlighted
-by setting the <xref:Alternet.UI.Control.BorderBrush> property.
+by setting the <xref:Alternet.UI.Border.BorderColor> property.
 
 [!code-csharp[](./snippets/BoundingBox.cs)]
 
