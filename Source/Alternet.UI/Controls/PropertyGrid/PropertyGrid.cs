@@ -172,6 +172,13 @@ namespace Alternet.UI
         /// </summary>
         public event EventHandler? ColEndDrag;
 
+        [Flags]
+        private enum StaticStateFlags
+        {
+            CollectionEditorsRegistered = 1,
+            KnownColorsAdded = 2,
+        }
+
         /// <summary>
         /// Defines default style for the newly created
         /// <see cref="PropertyGrid"/> controls.
@@ -2011,26 +2018,6 @@ namespace Alternet.UI
             return prop;
         }
 
-        /// <param name="label">Property label.</param>
-        /// <param name="name">Property name.</param>
-        /// <param name="instance">Object instance which contains the property.</param>
-        /// <param name="propInfo">Property information.</param>
-        /// <returns>Property declaration for use with <see cref="PropertyGrid.Add"/>.</returns>
-        /// <remarks>
-        /// If <paramref name="label"/> or <paramref name="name"/> is null,
-        /// <paramref name="propInfo"/> is used to get them.
-        /// </remarks>
-#pragma warning disable
-        private IPropertyGridItem CreatePropertyAsDummy(
-                    string label,
-                    string? name,
-                    object instance,
-                    PropertyInfo propInfo)
-        {
-            return null;
-        }
-#pragma warning enable
-
         /// <summary>
         /// Creates <see cref="bool"/> property.
         /// </summary>
@@ -2409,10 +2396,7 @@ namespace Alternet.UI
             bool isFlags = AssemblyUtils.EnumIsFlags(realType);
             var choices = PropertyGrid.CreateChoicesOnce(realType);
             bool isNullable = AssemblyUtils.GetNullable(propInfo);
-            if (propValue is null)
-            {
-                propValue = 0;
-            }
+            propValue ??= 0;
             var prm = ConstructNewItemParams(instance, propInfo);
             if (isFlags)
             {
@@ -2446,6 +2430,7 @@ namespace Alternet.UI
         /// <param name="name">Property name.</param>
         /// <param name="choices">Enumeration elements.</param>
         /// <param name="value">Default property value.</param>
+        /// <param name="prm">Property item create parameters.</param>
         /// <returns>Property declaration for use with <see cref="PropertyGrid.Add"/>.</returns>
         public virtual IPropertyGridItem CreateChoicesItem(
             string label,
@@ -2476,6 +2461,7 @@ namespace Alternet.UI
         /// <param name="name">Property name.</param>
         /// <param name="choices">Enumeration elements.</param>
         /// <param name="value">Default property value.</param>
+        /// <param name="prm">Property item create parameters.</param>
         /// <returns>Property declaration for use with <see cref="PropertyGrid.Add"/>.</returns>
         public virtual IPropertyGridItem CreateEditEnumItem(
             string label,
@@ -2506,6 +2492,7 @@ namespace Alternet.UI
         /// <param name="name">Property name.</param>
         /// <param name="choices">Elements.</param>
         /// <param name="value">Default property value.</param>
+        /// <param name="prm">Property item create parameters.</param>
         /// <returns>Property declaration for use with <see cref="PropertyGrid.Add"/>.</returns>
         public virtual IPropertyGridItem CreateFlagsItem(
             string label,
@@ -2580,7 +2567,7 @@ namespace Alternet.UI
             void SetAsCheckBox(IPropertyGridItem p)
             {
                 var kind = p.PropertyEditorKind;
-                var kindIsOk = (kind == PropertyGridEditKindAll.Bool || p.IsFlags);
+                var kindIsOk = kind == PropertyGridEditKindAll.Bool || p.IsFlags;
 
                 if (BoolAsCheckBox && kindIsOk)
                 {
@@ -3284,20 +3271,25 @@ namespace Alternet.UI
             LineColor = CellBackgroundColor;
         }
 
+        /// <summary>
+        /// Creates <see cref="IPropertyGridColors"/> with current colors
+        /// of the <see cref="PropertyGrid"/>.
+        /// </summary>
         public virtual IPropertyGridColors GetCurrentColors()
         {
-            var result = new PropertyGridColors();
-
-            result.CaptionBackgroundColor = CaptionBackgroundColor;
-            result.CaptionForegroundColor = CaptionForegroundColor;
-            result.CellBackgroundColor = CellBackgroundColor;
-            result.CellDisabledTextColor = CellDisabledTextColor;
-            result.CellTextColor = CellTextColor;
-            result.EmptySpaceColor = EmptySpaceColor;
-            result.LineColor = LineColor;
-            result.MarginColor = MarginColor;
-            result.SelectionBackgroundColor = SelectionBackgroundColor;
-            result.SelectionForegroundColor = SelectionForegroundColor;
+            var result = new PropertyGridColors
+            {
+                CaptionBackgroundColor = this.CaptionBackgroundColor,
+                CaptionForegroundColor = this.CaptionForegroundColor,
+                CellBackgroundColor = this.CellBackgroundColor,
+                CellDisabledTextColor = this.CellDisabledTextColor,
+                CellTextColor = this.CellTextColor,
+                EmptySpaceColor = this.EmptySpaceColor,
+                LineColor = this.LineColor,
+                MarginColor = this.MarginColor,
+                SelectionBackgroundColor = this.SelectionBackgroundColor,
+                SelectionForegroundColor = this.SelectionForegroundColor,
+            };
 
             return result;
         }
@@ -4028,9 +4020,16 @@ namespace Alternet.UI
             NativeControl.SetPropertyValidator(prop.Handle, ptr);
         }
 
+        /// <summary>
+        /// Sets flag value for the specified property.
+        /// </summary>
+        /// <param name="prop">Property item.</param>
+        /// <param name="flag">Flag to set.</param>
+        /// <param name="value">New value of the flag.</param>
         public virtual void SetPropertyFlag(
             IPropertyGridItem prop,
-            PropertyGridItemFlags flag, bool value)
+            PropertyGridItemFlags flag,
+            bool value)
         {
             NativeControl.SetPropertyFlag(prop.Handle, (int)flag, value);
         }
@@ -4054,8 +4053,8 @@ namespace Alternet.UI
 
         /// <summary>
         /// Gets <see cref="IPropertyGridItem"/> added to the control filtered by
-        /// <see cref="IPropertyGridItem.Instance"/> (<paramref name="instance"/> param) and
-        /// <see cref="IPropertyGridItem.PropInfo"/> (<paramref name="propInfo"/> param).
+        /// <see cref="IPropInfoAndInstance.Instance"/> (<paramref name="instance"/> param) and
+        /// <see cref="IPropInfoAndInstance.PropInfo"/> (<paramref name="propInfo"/> param).
         /// </summary>
         /// <param name="instance">Instance filter parameter. Ignored if <c>null</c>.</param>
         /// <param name="propInfo">Property information filter parameter.
@@ -4108,9 +4107,11 @@ namespace Alternet.UI
             {
                 EndUpdate();
             }
-
         }
 
+        /// <summary>
+        /// Gets all added property categories.
+        /// </summary>
         public IEnumerable<IPropertyGridItem> GetCategories()
         {
             List<IPropertyGridItem> result = new();
@@ -4119,12 +4120,23 @@ namespace Alternet.UI
                 if (item.IsCategory)
                     result.Add(item);
             }
+
             return result;
         }
 
+        /// <summary>
+        /// Executes specified action for all property items in <paramref name="props"/> collection.
+        /// </summary>
+        /// <typeparam name="T">Type of the action parameter.</typeparam>
+        /// <param name="props">Collection of the properties.</param>
+        /// <param name="action">Action to execute.</param>
+        /// <param name="prmValue">Value of the first parameter.</param>
+        /// <param name="suspendUpdate">if <c>true</c>, updates will be suspended.</param>
         public void DoActionOnProperties<T>(
             IEnumerable<IPropertyGridItem> props,
-            Action<IPropertyGridItem, T> action, T prmValue, bool suspendUpdate = true)
+            Action<IPropertyGridItem, T> action,
+            T prmValue,
+            bool suspendUpdate = true)
         {
             if (suspendUpdate) BeginUpdate();
             try
@@ -4140,6 +4152,16 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Executes specified action for all property items in <paramref name="props"/> collection.
+        /// </summary>
+        /// <typeparam name="T1">Type of the first action parameter.</typeparam>
+        /// <typeparam name="T2">Type of the second action parameter.</typeparam>
+        /// <param name="props">Collection of the properties.</param>
+        /// <param name="action">Action to execute.</param>
+        /// <param name="prmValue1">Value of the first parameter.</param>
+        /// <param name="prmValue2">Value of the second parameter.</param>
+        /// <param name="suspendUpdate">if <c>true</c>, updates will be suspended.</param>
         public void DoActionOnProperties<T1, T2>(
             IEnumerable<IPropertyGridItem> props,
             Action<IPropertyGridItem, T1, T2> action,
@@ -4161,11 +4183,20 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Sets background color for all added property categories.
+        /// </summary>
+        /// <param name="color">Color value.</param>
         public void SetCategoriesBackgroundColor(Color color)
         {
             SetPropertiesBackgroundColor(GetCategories(), color);
         }
 
+        /// <summary>
+        /// Sets background color for all properties in <paramref name="items"/> collection.
+        /// </summary>
+        /// <param name="color">Color value.</param>
+        /// <param name="items">Collection of the property items.</param>
         public void SetPropertiesBackgroundColor(IEnumerable<IPropertyGridItem> items, Color color)
         {
             DoActionOnProperties<Color, bool>(items, SetPropertyBackgroundColor, color, false);
@@ -4173,8 +4204,8 @@ namespace Alternet.UI
 
         /// <summary>
         /// Reloads value of the <see cref="IPropertyGridItem"/> item if it is attached
-        /// to the external object (<see cref="IPropertyGridItem.Instance"/> and 
-        /// <see cref="IPropertyGridItem.PropInfo"/>) are not null.
+        /// to the external object (<see cref="IPropInfoAndInstance.Instance"/> and
+        /// <see cref="IPropInfoAndInstance.PropInfo"/>) are not null.
         /// </summary>
         public void ReloadPropertyValue(IPropertyGridItem item)
         {
@@ -4188,8 +4219,7 @@ namespace Alternet.UI
                 object? propValue;
                 var reloadFunc = item.GetValueFuncForReload;
                 var realInstance = GetRealInstance(item);
-                if (realInstance == null)
-                    realInstance = instance;
+                realInstance ??= instance;
                 if (reloadFunc == null)
                 {
                     propValue = p.GetValue(realInstance);
@@ -4200,6 +4230,7 @@ namespace Alternet.UI
                     propValue = reloadFunc(item, realInstance, p);
                     variant.AsObject = propValue;
                 }
+
                 SetPropertyValueAsVariant(item, variant);
             });
 
@@ -4251,6 +4282,55 @@ namespace Alternet.UI
             }
 
             return kind;
+        }
+
+        internal static void KnownColorsClear()
+        {
+            Native.PropertyGrid.KnownColorsClear();
+        }
+
+        internal static void KnownColorsAdd()
+        {
+            if (staticStateFlags.HasFlag(StaticStateFlags.KnownColorsAdded))
+                return;
+            staticStateFlags |= StaticStateFlags.KnownColorsAdded;
+
+            var items = ColorUtils.GetColorInfos();
+
+            KnownColorsClear();
+
+            foreach (var item in items)
+            {
+                if (!item.Visible)
+                    continue;
+                KnownColorsAdd(
+                            item.Label,
+                            item.LabelLocalized,
+                            item.Value,
+                            item.KnownColor);
+            }
+
+            KnownColorsApply();
+        }
+
+        internal static void KnownColorsAdd(
+            string name,
+            string title,
+            Color value,
+            KnownColor knownColor)
+        {
+            Native.PropertyGrid.KnownColorsAdd(name, title, value, (int)knownColor);
+        }
+
+        internal static void KnownColorsApply()
+        {
+            Native.PropertyGrid.KnownColorsApply();
+        }
+
+        internal static IPropertyGridNewItemParams CreateNewItemParams(
+           IPropertyGridPropInfoRegistry? owner, PropertyInfo? propInfo = null)
+        {
+            return new PropertyGridNewItemParams(owner, propInfo);
         }
 
         internal IntPtr GetPropertyValidator(IPropertyGridItem prop)
@@ -4386,12 +4466,6 @@ namespace Alternet.UI
             ItemCollapsed?.Invoke(this, e);
         }
 
-        internal static IPropertyGridNewItemParams CreateNewItemParams(
-           IPropertyGridPropInfoRegistry? owner, PropertyInfo? propInfo = null)
-        {
-            return new PropertyGridNewItemParams(owner, propInfo);
-        }
-
         internal void RaiseItemExpanded(EventArgs e)
         {
             OnItemExpanded(e);
@@ -4423,7 +4497,7 @@ namespace Alternet.UI
                 return;
             AvoidException(() =>
             {
-                prm.RaiseButtonClick(prop);
+                prm.RaiseButtonClick(prop!);
             });
         }
 
@@ -4431,49 +4505,6 @@ namespace Alternet.UI
         {
             OnColDragging(e);
             ColDragging?.Invoke(this, e);
-        }
-
-        internal static void KnownColorsClear()
-        {
-            Native.PropertyGrid.KnownColorsClear();
-        }
-
-        internal static void KnownColorsAdd()
-        {
-            if (staticStateFlags.HasFlag(StaticStateFlags.KnownColorsAdded))
-                return;
-            staticStateFlags |= StaticStateFlags.KnownColorsAdded;
-
-            var items = ColorUtils.GetColorInfos();
-
-            KnownColorsClear();
-
-            foreach (var item in items)
-            {
-                if (!item.Visible)
-                    continue;
-                KnownColorsAdd(
-                            item.Label,
-                            item.LabelLocalized,
-                            item.Value,
-                            item.KnownColor);
-            }
-
-            KnownColorsApply();
-        }
-
-        internal static void KnownColorsAdd(
-            string Name,
-            string Title,
-            Color value,
-            KnownColor knownColor)
-	    {
-            Native.PropertyGrid.KnownColorsAdd(Name, Title, value, (int)knownColor);
-        }
-
-        internal static void KnownColorsApply()
-        {
-            Native.PropertyGrid.KnownColorsApply();
         }
 
         internal void EndAddChildren(IPropertyGridItem prop)
@@ -4535,6 +4566,7 @@ namespace Alternet.UI
         /// <param name="item">Property item.</param>
         /// <param name="instance">Instance that contains the property.</param>
         /// <param name="propInfo">Property info.</param>
+        /// <param name="prm">Property item create parameters.</param>
         protected virtual void OnPropertyCreated(
             IPropertyGridItem item,
             object instance,
@@ -4555,7 +4587,7 @@ namespace Alternet.UI
                 else
                     SetPropertyReadOnly(item, true);
             }
-            
+
             if (!item.IsFlags && AssemblyUtils.GetNullable(propInfo))
             {
                 var value = propInfo.GetValue(instance);
@@ -4568,6 +4600,7 @@ namespace Alternet.UI
         /// Called after <see cref="IPropertyGridItem"/> created.
         /// </summary>
         /// <param name="item">Property item.</param>
+        /// <param name="prm">Property item create parameters.</param>
         protected virtual void OnPropertyCreated(
             IPropertyGridItem item,
             IPropertyGridNewItemParams? prm)
@@ -4755,10 +4788,10 @@ namespace Alternet.UI
                     return;
                 var parentInstance = parent.Instance;
                 var parentPropInfo = parent.PropInfo;
-                var parentIsStruct = AssemblyUtils.IsStruct(parentPropInfo.PropertyType);
+                var parentIsStruct = AssemblyUtils.IsStruct(parentPropInfo?.PropertyType);
                 if (!parentIsStruct)
                     return;
-                parentPropInfo.SetValue(parentInstance, instance);
+                parentPropInfo?.SetValue(parentInstance, instance);
             }
         }
 
@@ -4849,7 +4882,7 @@ namespace Alternet.UI
 
         private string CorrectPropLabel(string label, IPropertyGridNewItemParams? prm)
         {
-            string fn(string s)
+            string Fn(string s)
             {
                 if (prm != null)
                 {
@@ -4857,8 +4890,11 @@ namespace Alternet.UI
                     {
                         var addQuestion = (prm.IsNullable is not null) && prm.IsNullable.Value;
                         if (!addQuestion)
+                        {
                             addQuestion = (prm.PropInfo is not null)
                                 && AssemblyUtils.GetNullable(prm.PropInfo);
+                        }
+
                         if (addQuestion)
                             return s + "?";
                     }
@@ -4869,9 +4905,9 @@ namespace Alternet.UI
 
             string? customLabel = prm?.Label;
             if (customLabel == null)
-                return fn(label);
+                return Fn(label);
             else
-                return fn(customLabel);
+                return Fn(customLabel);
         }
 
         private string CorrectPropName(string? name)
@@ -4897,7 +4933,7 @@ namespace Alternet.UI
             return null;
         }
 
-        private object GetRealInstance(IPropertyGridItem item)
+        private object? GetRealInstance(IPropertyGridItem item)
         {
             var parent = item.Parent;
             var propInfo = item.PropInfo;
@@ -4926,11 +4962,24 @@ namespace Alternet.UI
                 return instance;
         }
 
-        [Flags]
-        private enum StaticStateFlags
+        /// <param name="label">Property label.</param>
+        /// <param name="name">Property name.</param>
+        /// <param name="instance">Object instance which contains the property.</param>
+        /// <param name="propInfo">Property information.</param>
+        /// <returns>Property declaration for use with <see cref="PropertyGrid.Add"/>.</returns>
+        /// <remarks>
+        /// If <paramref name="label"/> or <paramref name="name"/> is null,
+        /// <paramref name="propInfo"/> is used to get them.
+        /// </remarks>
+#pragma warning disable
+        private IPropertyGridItem CreatePropertyAsDummy(
+                    string label,
+                    string? name,
+                    object instance,
+                    PropertyInfo propInfo)
         {
-            CollectionEditorsRegistered = 1,
-            KnownColorsAdded = 2,
+            return null;
         }
+#pragma warning restore
     }
 }

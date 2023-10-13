@@ -240,7 +240,7 @@ namespace Alternet.UI
         public event EventHandler? DragLeave;
 
         /// <summary>
-        /// Occurs when the value of the <see cref="BorderBrush"/> property changes.
+        /// Occurs when the value of the "BorderBrush" property changes.
         /// </summary>
         internal event EventHandler? BorderBrushChanged;
 

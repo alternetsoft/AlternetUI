@@ -87,7 +87,9 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="title">Page title.</param>
         /// <param name="control">Control.</param>
-        /// <returns></returns>
+        /// <returns>
+        /// Created page index.
+        /// </returns>
         public int Add(string title, Control control)
         {
             Cards.Add(new CardPanelItem(title, control));
@@ -99,7 +101,9 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="title">Page title.</param>
         /// <param name="fnCreate">Function which creates the control.</param>
-        /// <returns></returns>
+        /// <returns>
+        /// Created page index.
+        /// </returns>
         public int Add(string title, Func<Control> fnCreate)
         {
             Cards.Add(new CardPanelItem(title, fnCreate));

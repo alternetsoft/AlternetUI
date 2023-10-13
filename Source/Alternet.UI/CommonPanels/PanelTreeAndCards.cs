@@ -6,6 +6,10 @@ using System.Threading.Tasks;
 
 namespace Alternet.UI
 {
+    /// <summary>
+    /// Implements panel with <see cref="TreeView"/> on the left and
+    /// <see cref="CardPanel"/> on the right separated with splitter.
+    /// </summary>
     public class PanelTreeAndCards : PanelAuiManager
     {
         private readonly CardPanel cardPanel = new();
@@ -28,14 +32,30 @@ namespace Alternet.UI
         /// </summary>
         public CardPanel CardPanel => cardPanel;
 
-        public int Add(string title, Func<Control> fn)
+        /// <summary>
+        /// Adds new page.
+        /// </summary>
+        /// <param name="title">Page title.</param>
+        /// <param name="fnCreate">Function which creates the control.</param>
+        /// <returns>
+        /// Created page index.
+        /// </returns>
+        public int Add(string title, Func<Control> fnCreate)
         {
-            var index = cardPanel.Add(title, fn);
+            var index = cardPanel.Add(title, fnCreate);
             var item = LeftTreeView.Add(title);
             item.Tag = index;
             return index;
         }
 
+        /// <summary>
+        /// Adds new page.
+        /// </summary>
+        /// <param name="title">Page title.</param>
+        /// <param name="control">Control.</param>
+        /// <returns>
+        /// Created page index.
+        /// </returns>
         public int Add(string title, Control control)
         {
             var index = cardPanel.Add(title, control);
