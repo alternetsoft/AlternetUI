@@ -40,6 +40,9 @@ namespace ControlsTest
             this.StatusBar = statusbar;
             mainPanel.Parent = this;
             mainPanel.BindApplicationLog();
+            mainPanel.BackgroundColor = Color.Beige;
+
+            this.SetSizer(SizerFactory.Default.CreateBoxSizer(true));
 
             void CreateWebBrowserPages()
             {
@@ -108,6 +111,8 @@ namespace ControlsTest
                 }
             }
         }
+
+        internal PanelTreeAndCards MainPanel => mainPanel;
 
         internal static bool AddLinkLabelPage { get; set; } = false;
 

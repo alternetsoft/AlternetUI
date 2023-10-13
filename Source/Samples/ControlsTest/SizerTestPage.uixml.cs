@@ -41,6 +41,57 @@ namespace ControlsTest
             panel.Parent = mainControl;
 
             panel.PerformLayout();
+
+            void ApplySizer(ISizer sizer)
+            {
+                panel.SetSizerAndFit(sizer, false);
+            }
+
+            MainTestWindow? mainWindow = Application.FirstWindow<MainTestWindow>();
+            if (mainWindow is null)
+                return;
+
+            mainWindow.MainPanel.AddAction("WrapSizer(Vertical)", () =>
+            {
+                var sizer = SizerFactory.Default.CreateWrapSizer(true);
+                ApplySizer(sizer);
+            });
+
+            mainWindow.MainPanel.AddAction("WrapSizer(Horizontal)", () =>
+            {
+                var sizer = SizerFactory.Default.CreateWrapSizer(false);
+                ApplySizer(sizer);
+            });
+
+            mainWindow.MainPanel.AddAction("FlexGridSizer(2,10,10)", () =>
+            {
+                var sizer = SizerFactory.Default.CreateFlexGridSizer(2, 10, 10);
+                ApplySizer(sizer);
+            });
+
+            mainWindow.MainPanel.AddAction("GridBagSizer(10, 10)", () =>
+            {
+                var sizer = SizerFactory.Default.CreateGridBagSizer(10, 10);
+                ApplySizer(sizer);
+            });
+
+            mainWindow.MainPanel.AddAction("BoxSizer(Vertical)", () =>
+            {
+                var sizer = SizerFactory.Default.CreateBoxSizer(true);
+                ApplySizer(sizer);
+            });
+
+            mainWindow.MainPanel.AddAction("BoxSizer(Horizontal)", () =>
+            {
+                var sizer = SizerFactory.Default.CreateBoxSizer(false);
+                ApplySizer(sizer);
+            });
+
+            mainWindow.MainPanel.AddAction("GridSizer(2, 10, 10)", () =>
+            {
+                var sizer = SizerFactory.Default.CreateGridSizer(2, 10, 10);
+                ApplySizer(sizer);
+            });
         }
     }
 }
