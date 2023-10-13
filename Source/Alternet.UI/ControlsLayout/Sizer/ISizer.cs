@@ -19,209 +19,162 @@ namespace Alternet.UI
         /// </summary>
         Int32Size CalcMin();
 
-        /*
-                IntPtr AddWindow(Control window,
-                                     int proportion,
-                                     int flag,
-                                     int border,
-                                     IntPtr userData);
+        void Add(Control window, int proportion, int flag, int border);
 
-                IntPtr AddSizer(ISizer sizer,
-                                 int proportion,
-                                 int flag,
-                                 int border,
-                                 IntPtr userData);
+        void Add(ISizer sizer, int proportion, int flag, int border);
 
-                IntPtr AddCustomBox(int width,
-                                 int height,
-                                 int proportion,
-                                 int flag,
-                                 int border,
-                                 IntPtr userData);
+        void Add(int width, int height, int proportion, int flag, int border);
 
-                IntPtr AddWindow(IntPtr window, IntPtr sizerFlags);
+        void AddSpacer(int size);
 
-                IntPtr AddSizer(IntPtr sizer, IntPtr sizerFlags);
+        void AddStretchSpacer(int prop = 1);
 
-                IntPtr AddCustomBox(int width, int height,
-                    IntPtr sizerFlags);
+        void Insert(
+            int index,
+            Control window,
+            int proportion,
+            int flag,
+            int border);
 
-                IntPtr AddItem(IntPtr item);
+        void Insert(
+            int index,
+            ISizer sizer,
+            int proportion,
+            int flag,
+            int border);
 
-                IntPtr AddSpacer(int size);
-                IntPtr AddStretchSpacer(int prop = 1);
+        void Insert(
+            int index,
+            int width,
+            int height,
+            int proportion,
+            int flag,
+            int border);
 
-                IntPtr InsertWindow(int index,
-                                    Control window,
-                                    int proportion,
-                                    int flag,
-                                    int border,
-                                    IntPtr userData);
+        void InsertSpacer(int index, int size);
 
-                IntPtr InsertSizer(int index,
-                                    ISizer sizer,
-                                    int proportion,
-                                    int flag,
-                                    int border,
-                                    IntPtr userData);
+        void InsertStretchSpacer(int index, int prop);
 
-                IntPtr InsertCustomBox(int index,
-                                    int width,
-                                    int height,
-                                    int proportion,
-                                    int flag,
-                                    int border,
-                                    IntPtr userData);
+        void Prepend(
+            Control window,
+            int proportion,
+            int flag,
+            int border);
 
-                IntPtr InsertWindow(int index,
-                                    IntPtr window,
-                                IntPtr sizerFlags);
+        void Prepend(
+            ISizer sizer,
+            int proportion,
+            int flag,
+            int border);
 
-                IntPtr InsertSizer(int index,
-                                    IntPtr sizer,
-                                    IntPtr sizerFlags);
+        void Prepend(
+            int width,
+            int height,
+            int proportion,
+            int flag,
+            int border);
 
-                IntPtr InsertCustomBox(int index,
-                                    int width,
-                                    int height,
-                                    IntPtr sizerFlags);
+        void PrependSpacer(int size);
 
-                IntPtr InsertItem(int index, IntPtr item);
+        void PrependStretchSpacer(int prop = 1);
 
-                IntPtr InsertSpacer(int index, int size);
+        bool Remove(ISizer sizer);
 
-                IntPtr InsertStretchSpacer(int index, int prop);
+        bool Remove(int index);
 
-                IntPtr PrependWindow(Control window,
-                                     int proportion,
-                                     int flag,
-                                     int border,
-                                     IntPtr userData);
+        bool Detach(Control window);
 
-                IntPtr PrependSizer(ISizer sizer,
-                                     int proportion,
-                                     int flag,
-                                     int border,
-                                     IntPtr userData);
+        bool Detach(ISizer sizer);
 
-                IntPtr PrependCustomBox(int width,
-                                     int height,
-                                     int proportion,
-                                     int flag,
-                                     int border,
-                                     IntPtr userData);
+        bool Detach(int index);
 
-                IntPtr PrependWindow(IntPtr window, IntPtr sizerFlags);
+        bool Replace(Control oldwin, Control newwin, bool recursive);
 
-                IntPtr PrependSizer(IntPtr sizer, IntPtr sizerFlags);
+        bool Replace(ISizer oldsz, ISizer newsz, bool recursive);
 
-                IntPtr PrependCustomBox(int width, int height, IntPtr sizerFlags);
+        void Clear(bool delete_windows);
 
-                IntPtr PrependItem(IntPtr item);
+        void DeleteWindows();
 
-                IntPtr PrependSpacer(int size);
+        bool InformFirstDirection(int direction, int size, int availableOtherDir);
 
-                IntPtr PrependStretchSpacer(int prop = 1);
+        void SetMinSize(int width, int height);
 
-                void SetContainingWindow(Control window);
+        bool SetItemMinSize(Control window, int width, int height);
 
-                IntPtr GetContainingWindow();
+        bool SetItemMinSize(ISizer sizer, int width, int height);
 
-                bool Remove(IntPtr sizer);
+        bool SetItemMinSize(int index, int width, int height);
 
-                bool Remove(int index);
+        Int32Size GetSize();
 
-                bool DetachWindow(IntPtr window);
+        Int32Point GetPosition();
 
-                bool DetachSizer(IntPtr sizer);
+        Int32Size GetMinSize();
 
-                bool Detach(int index);
+        void RecalcSizes();
 
-                bool ReplaceWindow(Control oldwin, Control newwin, bool recursive);
+        void Layout();
 
-                bool ReplaceSizer(ISizer oldsz, ISizer newsz, bool recursive);
+        Int32Size ComputeFittingClientSize(Control window);
 
-                bool ReplaceItem(int index, IntPtr newitem);
+        Int32Size ComputeFittingWindowSize(Control window);
 
-                void Clear(bool delete_windows);
+        Int32Size Fit(Control window);
 
-                void DeleteWindows();
+        void FitInside(Control window);
 
-                bool InformFirstDirection(int direction, int size,
-                    int availableOtherDir);
+        void SetSizeHints(Control window);
 
-                void SetMinSize(int width, int height);
+        void SetDimension(int x, int y, int width, int height);
 
-                bool SetWindowItemMinSize(IntPtr window,
-                    int width, int height);
+        int GetItemCount();
 
-                bool SetSizerItemMinSize(IntPtr sizer,
-                    int width, int height);
+        bool IsEmpty();
 
-                bool SetCustomBoxItemMinSize(int index,
-                    int width, int height);
+        bool Show(Control window, bool show, bool recursive);
 
-                Int32Size GetSize();
+        bool Show(ISizer sizer, bool show, bool recursive);
 
-                Int32Point GetPosition();
+        bool Show(int index, bool show);
 
-                Int32Size GetMinSize();
+        bool Hide(ISizer sizer, bool recursive);
 
-                void RecalcSizes();
+        bool Hide(Control window, bool recursive);
 
-                void Layout();
+        bool Hide(int index);
 
-                Int32Size ComputeFittingClientSize(IntPtr window);
+        bool IsShown(Control window);
 
-                Int32Size ComputeFittingWindowSize(IntPtr window);
+        bool IsShown(ISizer sizer);
 
-                Int32Size Fit(IntPtr window);
+        bool IsShown(int index);
 
-                void FitInside(IntPtr window);
+        void ShowItems(bool show);
 
-                void SetSizeHints(IntPtr window);
+        void Show(bool show);
 
-                IntPtr GetChildren();
+        bool AreAnyItemsShown();
 
-                void SetDimension(int x, int y, int width, int height);
-
-                int GetItemCount();
-
-                bool IsEmpty();
-
-                IntPtr GetItemWindow(IntPtr window, bool recursive);
-
-                IntPtr GetItemSizer(IntPtr sizer, bool recursive);
-
-                IntPtr GetItem(int index);
-
-                IntPtr GetItemById(int id, bool recursive = false);
-
-                bool ShowWindow(Control window, bool show,
-                    bool recursive);
-
-                bool ShowSizer(ISizer sizer, bool show,
-                    bool recursive);
-
-                bool ShowItem(int index, bool show);
-
-                bool HideSizer(ISizer sizer, bool recursive);
-
-                bool HideWindow(Contol window, bool recursive);
-
-                bool Hide(int index);
-
-                bool IsShownWindow(Control window);
-
-                bool IsShownSizer(ISizer sizer);
-
-                bool IsShown(int index);
-
-                void ShowItems(bool show);
-
-                void Show(bool show);
-
-                bool AreAnyItemsShown();
-        */
+        // void Prepend(Control window, IntPtr sizerFlags);
+        // void Prepend(ISizer sizer, IntPtr sizerFlags);
+        // void Prepend(int width, int height, IntPtr sizerFlags);
+        // void Prepend(IntPtr item);
+        // IntPtr Insert(int index, Control window, IntPtr sizerFlags);
+        // IntPtr Insert(int index, ISizer sizer, IntPtr sizerFlags);
+        // IntPtr Insert(int index, int width, int height, IntPtr sizerFlags);
+        // IntPtr Insert(int index, IntPtr item);
+        // void Add(Control window, IntPtr sizerFlags);
+        // void AddSizer(ISizer sizer, IntPtr sizerFlags);
+        // void Add(int width, int height, IntPtr sizerFlags);
+        // void AddItem(IntPtr item);
+        // bool ReplaceItem(int index, IntPtr newitem);
+        // IntPtr GetChildren();
+        // IntPtr GetItemWindow(Control window, bool recursive);
+        // IntPtr GetItemSizer(ISizer sizer, bool recursive);
+        // IntPtr GetItem(int index);
+        // IntPtr GetItemById(int id, bool recursive = false);
+        // void SetContainingWindow(Control window);
+        // IntPtr GetContainingWindow();
     }
 }
