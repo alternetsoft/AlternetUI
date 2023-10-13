@@ -85,7 +85,8 @@ namespace Alternet.UI
             protected set => disposeHandle = value;
         }
 
-        /// <inheritdoc/>
+        /// Performs application-defined tasks associated with freeing, releasing, or resetting
+        /// unmanaged resources.
         public void Dispose()
         {
             Dispose(disposing: true);
