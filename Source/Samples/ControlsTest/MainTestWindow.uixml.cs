@@ -7,7 +7,6 @@ namespace ControlsTest
     internal partial class MainTestWindow : Window
     {
         private readonly StatusBar statusbar = new();
-        private readonly CardPanelItem? firstCard;
         private readonly bool disableResize = true;
         private readonly PanelTreeAndCards mainPanel;
 
@@ -20,6 +19,7 @@ namespace ControlsTest
         public MainTestWindow()
         {
             mainPanel = new(InitPanel);
+            mainPanel.ActionsControl.Required();
 
             if (disableResize)
             {
@@ -41,34 +41,43 @@ namespace ControlsTest
             mainPanel.Parent = this;
             mainPanel.BindApplicationLog();
 
-            int firstPageIndex = -1;
-
-            if (WebBrowser.IsBackendAvailable(WebBrowserBackend.Edge))
+            void CreateWebBrowserPages()
             {
-                PanelWebBrowser.UseBackend = WebBrowserBackend.Edge;
-                firstPageIndex = AddWebBrowserPage("Web Browser Edge");
+                if (WebBrowser.IsBackendAvailable(WebBrowserBackend.Edge))
+                {
+                    PanelWebBrowser.UseBackend = WebBrowserBackend.Edge;
+                    AddWebBrowserPage("Web Browser Edge");
+                }
+
+                if (WebBrowser.IsBackendAvailable(WebBrowserBackend.WebKit))
+                {
+                    PanelWebBrowser.UseBackend = WebBrowserBackend.WebKit;
+                    AddWebBrowserPage("Web Browser WebKit");
+                    AddWebBrowserPage("Web Browser WebKit2");
+                }
+
+                if (WebBrowser.IsBackendAvailable(WebBrowserBackend.IELatest) &&
+                    !WebBrowser.IsBackendAvailable(WebBrowserBackend.Edge))
+                {
+                    PanelWebBrowser.UseBackend = WebBrowserBackend.IELatest;
+                    AddWebBrowserPage("Web Browser IE");
+                    AddWebBrowserPage("Web Browser IE2");
+                }
             }
 
-            if (WebBrowser.IsBackendAvailable(WebBrowserBackend.WebKit))
+            mainPanel.AddAction("Create WebBrowser", CreateWebBrowserPages);
+            mainPanel.AddAction("Create CustomDraw", () =>
             {
-                PanelWebBrowser.UseBackend = WebBrowserBackend.WebKit;
-                firstPageIndex = AddWebBrowserPage("Web Browser WebKit");
-                AddWebBrowserPage("Web Browser WebKit2");
-            }
-
-            if (WebBrowser.IsBackendAvailable(WebBrowserBackend.IELatest) &&
-                !WebBrowser.IsBackendAvailable(WebBrowserBackend.Edge))
-            {
-                PanelWebBrowser.UseBackend = WebBrowserBackend.IELatest;
-                firstPageIndex = AddWebBrowserPage("Web Browser IE");
-                AddWebBrowserPage("Web Browser IE2");
-            }
-
-            if(AddCustomDrawPage)
                 mainPanel.Add("Custom Draw Test", new CustomDrawTestPage());
+            });
 
-            if(AddLinkLabelPage)
-                mainPanel.Add("PanelLinkLabels Test", new PanelLinkLabelsPage());
+            if (AddLinkLabelPage)
+            {
+                mainPanel.AddAction("Create LinkLabels", () =>
+                {
+                    mainPanel.Add("PanelLinkLabels Test", new PanelLinkLabelsPage());
+                });
+            }
 
             mainPanel.Add("Sizer Test", new SizerTestPage());
 
@@ -86,9 +95,10 @@ namespace ControlsTest
             Name = "MainTestWindow";
             mainPanel.CardPanel.Name = "cardPanel";
 
-            if (firstPageIndex >= 0)
+            var firstCard = mainPanel.CardPanel.Cards[0];
+
+            if (firstCard is not null)
             {
-                firstCard = mainPanel.CardPanel.Cards[firstPageIndex];
                 firstCard.Control.Name = firstCard.Control.GetType().Name;
 
                 if (!disableResize)
@@ -99,13 +109,13 @@ namespace ControlsTest
             }
         }
 
-        internal static bool AddCustomDrawPage { get; set; } = true;
-
         internal static bool AddLinkLabelPage { get; set; } = false;
 
         private void InitPanel(PanelAuiManager panel)
         {
             panel.LeftTreeViewAsListBox = true;
+            panel.DefaultRightPaneMinSize = new(150, 150);
+            panel.DefaultRightPaneBestSize = new(150, 150);
         }
 
         private void LogSizeEvent(object? sender, string evName)
