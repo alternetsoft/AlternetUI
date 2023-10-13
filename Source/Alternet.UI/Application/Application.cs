@@ -118,6 +118,21 @@ namespace Alternet.UI
             Path.ChangeExtension(Assembly.GetExecutingAssembly().Location, ".log");
 
         /// <summary>
+        /// Returns first window or <c>null</c> if there are no windows or window is not
+        /// of the <typeparamref name="T"/> type.
+        /// </summary>
+        /// <typeparam name="T">Type of the window to return.</typeparam>
+        public static T? FirstWindow<T>()
+            where T : class
+        {
+            var windows = Current.Windows;
+
+            if (windows.Count == 0)
+                return null;
+            return windows[0] as T;
+        }
+
+        /// <summary>
         /// Gets or sets whether to write all log messages to file.
         /// </summary>
         /// <remarks>
