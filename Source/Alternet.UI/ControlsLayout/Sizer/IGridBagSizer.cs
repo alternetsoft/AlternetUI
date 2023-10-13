@@ -63,7 +63,7 @@ namespace Alternet.UI
         ISizer FindItem(Control window);
 
         // Find the sizer item for the given window or subsizer, returns NULL if not found.
-        ISizer FindItem2(ISizer sizer);
+        ISizer FindItem(ISizer sizer);
 
         // Get the grid position of the specified item.
         Int32Point GetItemPosition(Control window);

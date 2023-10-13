@@ -18,8 +18,8 @@ namespace Alternet.UI
 
         IGridSizer CreateGridSizer(int cols, int vgap, int hgap);
 
-        IGridSizer CreateGridSizer2(int rows, int cols, int vgap, int hgap);
+        IGridSizer CreateGridSizer(int rows, int cols, int vgap, int hgap);
 
-        IWrapSizer CreateWrapSizer(bool isVertical, int flags /*= wxWRAPSIZER_DEFAULT_FLAGS*/);
+        IWrapSizer CreateWrapSizer(bool isVertical, WrapSizerFlags flags = WrapSizerFlags.Default);
     }
 }

@@ -31,9 +31,5 @@ namespace Alternet.UI
 
         // Returns the vertical gap(in pixels) between the cells in the sizer.
         int VGap { get; set; }
-
-        Int32Size CalcMin();
-
-        void RepositionChildren(Int32Size minSize);
     }
 }

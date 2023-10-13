@@ -18,10 +18,5 @@ namespace Alternet.UI
 
         // Adds non-stretchable space to the main orientation of the sizer only.
         IntPtr AddSpacer(int size);
-
-        // Implements the calculation of a box sizer's minimal.
-        Int32Size CalcMin();
-
-        void RepositionChildren(Int32Size minSize);
     }
 }
