@@ -100,9 +100,9 @@ The application will start and display its window:
 
    ![MessageBox on Click](images/message-box-on-click-macos-window.png)
 
-[!NOTE]
-The application created in this tutorial can be compiled and run without source code modifications
- on all the supported platforms: Windows, macOS, and Linux.
+> [!NOTE]
+> The application created in this tutorial can be compiled and run without source code modifications
+>  on all the supported platforms: Windows, macOS, and Linux.
 
 ### Linux
 
