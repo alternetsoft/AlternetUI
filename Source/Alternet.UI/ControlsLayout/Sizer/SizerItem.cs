@@ -8,5 +8,9 @@ namespace Alternet.UI
 {
     internal class SizerItem : DisposableObject, ISizerItem
     {
+        public SizerItem(IntPtr handle, bool disposeHandle)
+            : base(handle, disposeHandle)
+        {
+        }
     }
 }

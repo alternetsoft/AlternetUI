@@ -66,7 +66,7 @@ namespace Alternet.UI
         /// <inheritdoc cref="ISizerFactory.CreateWrapSizer"/>
         public virtual IWrapSizer CreateWrapSizer(
             bool isVertical,
-            WrapSizerFlags flags = WrapSizerFlags.Default)
+            WrapSizerFlag flags = WrapSizerFlag.Default)
         {
             return new WrapSizer(isVertical, flags, disposeHandle);
         }

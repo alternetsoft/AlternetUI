@@ -19,11 +19,11 @@ namespace Alternet.UI
         /// </summary>
         Int32Size CalcMin();
 
-        ISizerItem Add(Control window, int proportion, int flag, int border);
+        ISizerItem Add(Control window, int proportion = 0, SizerFlag flag = 0, int border = 0);
 
-        ISizerItem Add(ISizer sizer, int proportion, int flag, int border);
+        ISizerItem Add(ISizer sizer, int proportion = 0, SizerFlag flag = 0, int border = 0);
 
-        ISizerItem Add(int width, int height, int proportion, int flag, int border);
+        ISizerItem Add(int width, int height, int proportion = 0, SizerFlag flag = 0, int border = 0);
 
         ISizerItem AddSpacer(int size);
 
@@ -32,24 +32,24 @@ namespace Alternet.UI
         ISizerItem Insert(
             int index,
             Control window,
-            int proportion,
-            int flag,
-            int border);
+            int proportion = 0,
+            SizerFlag flag = 0,
+            int border = 0);
 
         ISizerItem Insert(
             int index,
             ISizer sizer,
-            int proportion,
-            int flag,
-            int border);
+            int proportion = 0,
+            SizerFlag flag = 0,
+            int border = 0);
 
         ISizerItem Insert(
             int index,
             int width,
             int height,
-            int proportion,
-            int flag,
-            int border);
+            int proportion = 0,
+            SizerFlag flag = 0,
+            int border = 0);
 
         ISizerItem InsertSpacer(int index, int size);
 
@@ -57,22 +57,22 @@ namespace Alternet.UI
 
         ISizerItem Prepend(
             Control window,
-            int proportion,
-            int flag,
-            int border);
+            int proportion = 0,
+            SizerFlag flag = 0,
+            int border = 0);
 
         ISizerItem Prepend(
             ISizer sizer,
-            int proportion,
-            int flag,
-            int border);
+            int proportion = 0,
+            SizerFlag flag = 0,
+            int border = 0);
 
         ISizerItem Prepend(
             int width,
             int height,
-            int proportion,
-            int flag,
-            int border);
+            int proportion = 0,
+            SizerFlag flag = 0,
+            int border = 0);
 
         ISizerItem PrependSpacer(int size);
 
@@ -158,11 +158,11 @@ namespace Alternet.UI
 
         ISizerItem Insert(int index, ISizerItem item);
 
-        void Prepend(ISizerItem item);
+        ISizerItem Prepend(ISizerItem item);
 
-        void AddItem(ISizerItem item);
+        ISizerItem Add(ISizerItem item);
 
-        bool ReplaceItem(int index, ISizerItem newitem);
+        bool Replace(int index, ISizerItem newitem);
 
         ISizerItem GetItem(Control window, bool recursive);
 
@@ -172,11 +172,11 @@ namespace Alternet.UI
 
         ISizerItem GetItemById(int id, bool recursive = false);
 
-        void Prepend(Control window, ISizerFlags sizerFlags);
+        ISizerItem Prepend(Control window, ISizerFlags sizerFlags);
 
-        void Prepend(ISizer sizer, ISizerFlags sizerFlags);
+        ISizerItem Prepend(ISizer sizer, ISizerFlags sizerFlags);
 
-        void Prepend(int width, int height, ISizerFlags sizerFlags);
+        ISizerItem Prepend(int width, int height, ISizerFlags sizerFlags);
 
         ISizerItem Insert(int index, Control window, ISizerFlags sizerFlags);
 

@@ -10,7 +10,7 @@ namespace Alternet.UI
     /// Enumerates flags for <see cref="IWrapSizer"/>.
     /// </summary>
     [Flags]
-    public enum WrapSizerFlags
+    public enum WrapSizerFlag
     {
         /// <summary>
         /// Causes the last item on each line to use any remaining space on that line.

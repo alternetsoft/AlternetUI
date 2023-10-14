@@ -13,7 +13,7 @@ namespace NativeApi.Api
     }
 }
 
-/*  
+/*        SizerFlag
  
     // construct the flags object initialized with the given proportion (0 by
     // default)

@@ -93,6 +93,6 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="isVertical">Specifies whether sizer is vertical or horizontal.</param>
         /// <param name="flags">Sizer flags.</param>
-        IWrapSizer CreateWrapSizer(bool isVertical, WrapSizerFlags flags = WrapSizerFlags.Default);
+        IWrapSizer CreateWrapSizer(bool isVertical, WrapSizerFlag flags = WrapSizerFlag.Default);
     }
 }
