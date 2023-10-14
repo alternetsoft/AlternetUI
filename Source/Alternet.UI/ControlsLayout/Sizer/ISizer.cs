@@ -19,31 +19,31 @@ namespace Alternet.UI
         /// </summary>
         Int32Size CalcMin();
 
-        void Add(Control window, int proportion, int flag, int border);
+        ISizerItem Add(Control window, int proportion, int flag, int border);
 
-        void Add(ISizer sizer, int proportion, int flag, int border);
+        ISizerItem Add(ISizer sizer, int proportion, int flag, int border);
 
-        void Add(int width, int height, int proportion, int flag, int border);
+        ISizerItem Add(int width, int height, int proportion, int flag, int border);
 
-        void AddSpacer(int size);
+        ISizerItem AddSpacer(int size);
 
-        void AddStretchSpacer(int prop = 1);
+        ISizerItem AddStretchSpacer(int prop = 1);
 
-        void Insert(
+        ISizerItem Insert(
             int index,
             Control window,
             int proportion,
             int flag,
             int border);
 
-        void Insert(
+        ISizerItem Insert(
             int index,
             ISizer sizer,
             int proportion,
             int flag,
             int border);
 
-        void Insert(
+        ISizerItem Insert(
             int index,
             int width,
             int height,
@@ -51,32 +51,32 @@ namespace Alternet.UI
             int flag,
             int border);
 
-        void InsertSpacer(int index, int size);
+        ISizerItem InsertSpacer(int index, int size);
 
-        void InsertStretchSpacer(int index, int prop);
+        ISizerItem InsertStretchSpacer(int index, int prop);
 
-        void Prepend(
+        ISizerItem Prepend(
             Control window,
             int proportion,
             int flag,
             int border);
 
-        void Prepend(
+        ISizerItem Prepend(
             ISizer sizer,
             int proportion,
             int flag,
             int border);
 
-        void Prepend(
+        ISizerItem Prepend(
             int width,
             int height,
             int proportion,
             int flag,
             int border);
 
-        void PrependSpacer(int size);
+        ISizerItem PrependSpacer(int size);
 
-        void PrependStretchSpacer(int prop = 1);
+        ISizerItem PrependStretchSpacer(int prop = 1);
 
         bool Remove(ISizer sizer);
 
@@ -156,24 +156,41 @@ namespace Alternet.UI
 
         bool AreAnyItemsShown();
 
-        // void Prepend(Control window, IntPtr sizerFlags);
-        // void Prepend(ISizer sizer, IntPtr sizerFlags);
-        // void Prepend(int width, int height, IntPtr sizerFlags);
-        // void Prepend(IntPtr item);
-        // IntPtr Insert(int index, Control window, IntPtr sizerFlags);
-        // IntPtr Insert(int index, ISizer sizer, IntPtr sizerFlags);
-        // IntPtr Insert(int index, int width, int height, IntPtr sizerFlags);
-        // IntPtr Insert(int index, IntPtr item);
-        // void Add(Control window, IntPtr sizerFlags);
-        // void AddSizer(ISizer sizer, IntPtr sizerFlags);
-        // void Add(int width, int height, IntPtr sizerFlags);
-        // void AddItem(IntPtr item);
-        // bool ReplaceItem(int index, IntPtr newitem);
+        ISizerItem Insert(int index, ISizerItem item);
+
+        void Prepend(ISizerItem item);
+
+        void AddItem(ISizerItem item);
+
+        bool ReplaceItem(int index, ISizerItem newitem);
+
+        ISizerItem GetItem(Control window, bool recursive);
+
+        ISizerItem GetItem(ISizer sizer, bool recursive);
+
+        ISizerItem GetItem(int index);
+
+        ISizerItem GetItemById(int id, bool recursive = false);
+
+        void Prepend(Control window, ISizerFlags sizerFlags);
+
+        void Prepend(ISizer sizer, ISizerFlags sizerFlags);
+
+        void Prepend(int width, int height, ISizerFlags sizerFlags);
+
+        ISizerItem Insert(int index, Control window, ISizerFlags sizerFlags);
+
+        ISizerItem Insert(int index, ISizer sizer, ISizerFlags sizerFlags);
+
+        ISizerItem Insert(int index, int width, int height, ISizerFlags sizerFlags);
+
+        ISizerItem Add(Control window, ISizerFlags sizerFlags);
+
+        ISizerItem Add(ISizer sizer, ISizerFlags sizerFlags);
+
+        ISizerItem Add(int width, int height, ISizerFlags sizerFlags);
+
         // IntPtr GetChildren();
-        // IntPtr GetItemWindow(Control window, bool recursive);
-        // IntPtr GetItemSizer(ISizer sizer, bool recursive);
-        // IntPtr GetItem(int index);
-        // IntPtr GetItemById(int id, bool recursive = false);
         // void SetContainingWindow(Control window);
         // IntPtr GetContainingWindow();
     }
