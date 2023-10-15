@@ -16,6 +16,7 @@ namespace ControlsTest
         private readonly Button button1 = new("Button 1");
         private readonly Button button2 = new("Button 2");
         private readonly Button button3 = new("Button 3");
+        private ISizer? oldSizer;
 
         static SizerTestPage()
         {
@@ -44,36 +45,23 @@ namespace ControlsTest
 
             void ApplySizer(ISizer sizer)
             {
+                if(oldSizer is not null)
+                {
+                    oldSizer.Detach(button1);
+                    oldSizer.Detach(button2);
+                    oldSizer.Detach(button3);
+                }
+
+                sizer.Add(button1);
+                sizer.Add(button2);
+                sizer.Add(button3);
                 panel.SetSizerAndFit(sizer, false);
+                oldSizer = sizer;
             }
 
             MainTestWindow? mainWindow = Application.FirstWindow<MainTestWindow>();
             if (mainWindow is null)
                 return;
-
-            mainWindow.MainPanel.AddAction("WrapSizer(Vertical)", () =>
-            {
-                var sizer = SizerFactory.Default.CreateWrapSizer(true);
-                ApplySizer(sizer);
-            });
-
-            mainWindow.MainPanel.AddAction("WrapSizer(Horizontal)", () =>
-            {
-                var sizer = SizerFactory.Default.CreateWrapSizer(false);
-                ApplySizer(sizer);
-            });
-
-            mainWindow.MainPanel.AddAction("FlexGridSizer(2,10,10)", () =>
-            {
-                var sizer = SizerFactory.Default.CreateFlexGridSizer(2, 10, 10);
-                ApplySizer(sizer);
-            });
-
-            mainWindow.MainPanel.AddAction("GridBagSizer(10, 10)", () =>
-            {
-                var sizer = SizerFactory.Default.CreateGridBagSizer(10, 10);
-                ApplySizer(sizer);
-            });
 
             mainWindow.MainPanel.AddAction("BoxSizer(Vertical)", () =>
             {
@@ -92,6 +80,32 @@ namespace ControlsTest
                 var sizer = SizerFactory.Default.CreateGridSizer(2, 10, 10);
                 ApplySizer(sizer);
             });
+/*
+            mainWindow.MainPanel.AddAction("WrapSizer(Vertical)", () =>
+            {
+                var sizer = SizerFactory.Default.CreateWrapSizer(true);
+                ApplySizer(sizer);
+            });
+
+            mainWindow.MainPanel.AddAction("WrapSizer(Horizontal)", () =>
+            {
+                var sizer = SizerFactory.Default.CreateWrapSizer(false);
+                ApplySizer(sizer);
+            });
+*/
+            mainWindow.MainPanel.AddAction("FlexGridSizer(2,10,10)", () =>
+            {
+                var sizer = SizerFactory.Default.CreateFlexGridSizer(2, 10, 10);
+                ApplySizer(sizer);
+            });
+
+            /*
+            mainWindow.MainPanel.AddAction("GridBagSizer(10, 10)", () =>
+            {
+                var sizer = SizerFactory.Default.CreateGridBagSizer(10, 10);
+                ApplySizer(sizer);
+            });*/
+
         }
     }
 }

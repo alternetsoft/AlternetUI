@@ -105,26 +105,43 @@ namespace Alternet.UI
 
         public ISizerItem PrependStretchSpacer(int prop = 1) => default;
 
-        public bool Remove(ISizer sizer) => default;
+        public bool Remove(ISizer sizer)
+        {
+            return Native.Sizer.Remove(Handle, sizer.Handle);
+        }
 
-        public bool Remove(int index) => default;
+        public bool Remove(int index)
+        {
+            return Native.Sizer.Remove2(Handle, index);
+        }
 
-        public bool Detach(Control window) => default;
+        public bool Detach(Control window)
+        {
+            return Native.Sizer.DetachWindow(Handle, window.WxWidget);
+        }
 
-        public bool Detach(ISizer sizer) => default;
+        public bool Detach(ISizer sizer)
+        {
+            return Native.Sizer.DetachSizer(Handle, sizer.Handle);
+        }
 
-        public bool Detach(int index) => default;
+        public bool Detach(int index)
+        {
+            return Native.Sizer.Detach(Handle, index);
+        }
 
         public bool Replace(Control oldwin, Control newwin, bool recursive) => default;
 
         public bool Replace(ISizer oldsz, ISizer newsz, bool recursive) => default;
 
-        public void Clear(bool delete_windows)
+        public void Clear()
         {
+            Native.Sizer.Clear(Handle, false);
         }
 
         public void DeleteWindows()
         {
+            Native.Sizer.DeleteWindows(Handle);
         }
 
         public bool InformFirstDirection(int direction, int size, int availableOtherDir) => default;

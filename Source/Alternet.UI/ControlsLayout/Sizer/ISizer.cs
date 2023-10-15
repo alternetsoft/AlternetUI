@@ -92,9 +92,9 @@ namespace Alternet.UI
 
         bool Replace(ISizer oldsz, ISizer newsz, bool recursive);
 
-        void Clear(bool delete_windows);
+        void Clear();
 
-        void DeleteWindows();
+        internal void DeleteWindows();
 
         bool InformFirstDirection(int direction, int size, int availableOtherDir);
 
