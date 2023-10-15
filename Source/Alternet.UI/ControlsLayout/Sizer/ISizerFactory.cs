@@ -103,12 +103,12 @@ namespace Alternet.UI
 
         /// <summary>
         /// Creates default <see cref="ISizerItem"/> implementation with the specified parameters.
+        /// Constructs a sizer item for tracking a control.
         /// </summary>
-        /// <param name="control"></param>
+        /// <param name="control">Control which will be affected by the item.</param>
         /// <param name="proportion"></param>
         /// <param name="flag">Sizer flags.</param>
         /// <param name="border"></param>
-        /// <returns></returns>
         ISizerItem CreateSizerItem(
             Control control,
             int proportion = 0,
@@ -117,20 +117,20 @@ namespace Alternet.UI
 
         /// <summary>
         /// Creates default <see cref="ISizerItem"/> implementation with the specified parameters.
+        /// Constructs a sizer item for tracking a control.
         /// </summary>
-        /// <param name="control"></param>
+        /// <param name="control">Control which will be affected by the item.</param>
         /// <param name="flags">Sizer flags.</param>
-        /// <returns></returns>
         ISizerItem CreateSizerItem(Control control, ISizerFlags flags);
 
         /// <summary>
         /// Creates default <see cref="ISizerItem"/> implementation with the specified parameters.
+        /// Constructs a sizer item for tracking a subsizer.
         /// </summary>
-        /// <param name="sizer"></param>
+        /// <param name="sizer">Sub-sizer.</param>
         /// <param name="proportion"></param>
-        /// <param name="flag"></param>
+        /// <param name="flag">Sizer flags.</param>
         /// <param name="border"></param>
-        /// <returns></returns>
         ISizerItem CreateSizerItem(
             ISizer sizer,
             int proportion = 0,
@@ -139,21 +139,21 @@ namespace Alternet.UI
 
         /// <summary>
         /// Creates default <see cref="ISizerItem"/> implementation with the specified parameters.
+        /// Constructs a sizer item for tracking a subsizer.
         /// </summary>
-        /// <param name="sizer"></param>
+        /// <param name="sizer">Sub-sizer.</param>
         /// <param name="flags">Sizer flags.</param>
-        /// <returns></returns>
         ISizerItem CreateSizerItem(ISizer sizer, ISizerFlags flags);
 
         /// <summary>
         /// Creates default <see cref="ISizerItem"/> implementation with the specified parameters.
+        /// Constructs a sizer item for tracking a spacer.
         /// </summary>
         /// <param name="width"></param>
         /// <param name="height"></param>
         /// <param name="proportion"></param>
         /// <param name="flags">Sizer flags.</param>
         /// <param name="border"></param>
-        /// <returns></returns>
         ISizerItem CreateSizerItem(
             int width,
             int height,
@@ -163,11 +163,11 @@ namespace Alternet.UI
 
         /// <summary>
         /// Creates default <see cref="ISizerItem"/> implementation with the specified parameters.
+        /// Constructs a sizer item for tracking a spacer.
         /// </summary>
         /// <param name="width"></param>
         /// <param name="height"></param>
         /// <param name="sizerFlags"></param>
-        /// <returns></returns>
         ISizerItem CreateSizerItem(int width, int height, ISizerFlags sizerFlags);
 
         /// <summary>
