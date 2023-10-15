@@ -12,6 +12,12 @@ namespace Alternet.UI
     public interface ISizerFactory
     {
         /// <summary>
+        /// Creates default <see cref="ISizerFlags"/> implementation.
+        /// </summary>
+        /// <param name="proportion"></param>
+        ISizerFlags CreateSizerFlags(int proportion = 0);
+
+        /// <summary>
         /// Creates default <see cref="IFlexGridSizer"/> implementation.
         /// </summary>
         /// <param name="cols">Number of columns.</param>
@@ -94,5 +100,79 @@ namespace Alternet.UI
         /// <param name="isVertical">Specifies whether sizer is vertical or horizontal.</param>
         /// <param name="flags">Sizer flags.</param>
         IWrapSizer CreateWrapSizer(bool isVertical, WrapSizerFlag flags = WrapSizerFlag.Default);
+
+        /// <summary>
+        /// Creates default <see cref="ISizerItem"/> implementation with the specified parameters.
+        /// </summary>
+        /// <param name="control"></param>
+        /// <param name="proportion"></param>
+        /// <param name="flag">Sizer flags.</param>
+        /// <param name="border"></param>
+        /// <returns></returns>
+        ISizerItem CreateSizerItem(
+            Control control,
+            int proportion = 0,
+            SizerFlag flag = 0,
+            int border = 0);
+
+        /// <summary>
+        /// Creates default <see cref="ISizerItem"/> implementation with the specified parameters.
+        /// </summary>
+        /// <param name="control"></param>
+        /// <param name="flags">Sizer flags.</param>
+        /// <returns></returns>
+        ISizerItem CreateSizerItem(Control control, ISizerFlags flags);
+
+        /// <summary>
+        /// Creates default <see cref="ISizerItem"/> implementation with the specified parameters.
+        /// </summary>
+        /// <param name="sizer"></param>
+        /// <param name="proportion"></param>
+        /// <param name="flag"></param>
+        /// <param name="border"></param>
+        /// <returns></returns>
+        ISizerItem CreateSizerItem(
+            ISizer sizer,
+            int proportion = 0,
+            SizerFlag flag = 0,
+            int border = 0);
+
+        /// <summary>
+        /// Creates default <see cref="ISizerItem"/> implementation with the specified parameters.
+        /// </summary>
+        /// <param name="sizer"></param>
+        /// <param name="flags">Sizer flags.</param>
+        /// <returns></returns>
+        ISizerItem CreateSizerItem(ISizer sizer, ISizerFlags flags);
+
+        /// <summary>
+        /// Creates default <see cref="ISizerItem"/> implementation with the specified parameters.
+        /// </summary>
+        /// <param name="width"></param>
+        /// <param name="height"></param>
+        /// <param name="proportion"></param>
+        /// <param name="flags">Sizer flags.</param>
+        /// <param name="border"></param>
+        /// <returns></returns>
+        ISizerItem CreateSizerItem(
+            int width,
+            int height,
+            int proportion = 0,
+            SizerFlag flags = 0,
+            int border = 0);
+
+        /// <summary>
+        /// Creates default <see cref="ISizerItem"/> implementation with the specified parameters.
+        /// </summary>
+        /// <param name="width"></param>
+        /// <param name="height"></param>
+        /// <param name="sizerFlags"></param>
+        /// <returns></returns>
+        ISizerItem CreateSizerItem(int width, int height, ISizerFlags sizerFlags);
+
+        /// <summary>
+        /// Creates default <see cref="ISizerItem"/> implementation.
+        /// </summary>
+        ISizerItem CreateSizerItem();
     }
 }

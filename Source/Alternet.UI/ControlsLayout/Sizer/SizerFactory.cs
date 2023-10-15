@@ -27,6 +27,12 @@ namespace Alternet.UI
         /// </summary>
         public static ISizerFactory Default { get; set; } = new SizerFactory(false);
 
+        /// <inheritdoc cref="ISizerFactory.CreateSizerFlags"/>
+        public virtual ISizerFlags CreateSizerFlags(int proportion = 0)
+        {
+            return new SizerFlags(proportion);
+        }
+
         /// <inheritdoc cref="ISizerFactory.CreateFlexGridSizer(int, int, int)"/>
         public virtual IFlexGridSizer CreateFlexGridSizer(int cols, int vgap, int hgap)
         {
@@ -69,6 +75,54 @@ namespace Alternet.UI
             WrapSizerFlag flags = WrapSizerFlag.Default)
         {
             return new WrapSizer(isVertical, flags, disposeHandle);
+        }
+
+        public virtual ISizerItem CreateSizerItem(
+            Control window,
+            int proportion = 0,
+            SizerFlag flag = 0,
+            int border = 0)
+        {
+            return new SizerItem(window, proportion, flag, border);
+        }
+
+        public virtual ISizerItem CreateSizerItem(Control window, ISizerFlags sizerFlags)
+        {
+            return new SizerItem(window, sizerFlags);
+        }
+
+        public virtual ISizerItem CreateSizerItem(
+            ISizer sizer,
+            int proportion = 0,
+            SizerFlag flag = 0,
+            int border = 0)
+        {
+            return new SizerItem(sizer, proportion, flag, border);
+        }
+
+        public virtual ISizerItem CreateSizerItem(ISizer sizer, ISizerFlags sizerFlags)
+        {
+            return new SizerItem(sizer, sizerFlags);
+        }
+
+        public virtual ISizerItem CreateSizerItem(
+            int width,
+            int height,
+            int proportion = 0,
+            SizerFlag flag = 0,
+            int border = 0)
+        {
+            return new SizerItem(width, height, proportion, flag, border);
+        }
+
+        public virtual ISizerItem CreateSizerItem(int width, int height, ISizerFlags sizerFlags)
+        {
+            return new SizerItem(width, height, sizerFlags);
+        }
+
+        public virtual ISizerItem CreateSizerItem()
+        {
+            return new SizerItem();
         }
     }
 }

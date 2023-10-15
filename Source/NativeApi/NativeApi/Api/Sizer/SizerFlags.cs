@@ -8,6 +8,7 @@ using Alternet.Drawing;
 
 namespace NativeApi.Api
 {
+    // https://docs.wxwidgets.org/3.2/classwx_sizer_flags.html
     public class SizerFlags
     {
         public static IntPtr CreateSizerFlags(int proportion = 0) => default;
