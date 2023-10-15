@@ -73,5 +73,10 @@ namespace Alternet.UI
         /// Top and Right directions are specified.
         /// </summary>
         TopRight = Top | Right,
+
+        /// <summary>
+        /// All directions are specified.
+        /// </summary>
+        All = Top | Bottom | Right | Left,
     }
 }
