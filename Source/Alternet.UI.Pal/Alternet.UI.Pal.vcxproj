@@ -272,6 +272,8 @@
     <ClCompile Include="Region.cpp" />
     <ClCompile Include="SelectDirectoryDialog.cpp" />
     <ClCompile Include="Sizer.cpp" />
+    <ClCompile Include="SizerFlags.cpp" />
+    <ClCompile Include="SizerItem.cpp" />
     <ClCompile Include="Slider.cpp" />
     <ClCompile Include="SolidBrush.cpp" />
     <ClCompile Include="SplitterPanel.cpp" />
@@ -390,6 +392,8 @@
     <ClInclude Include="Api\Region.Api.h" />
     <ClInclude Include="Api\SelectDirectoryDialog.Api.h" />
     <ClInclude Include="Api\Sizer.Api.h" />
+    <ClInclude Include="Api\SizerFlags.Api.h" />
+    <ClInclude Include="Api\SizerItem.Api.h" />
     <ClInclude Include="Api\Slider.Api.h" />
     <ClInclude Include="Api\SolidBrush.Api.h" />
     <ClInclude Include="Api\SplitterPanel.Api.h" />
@@ -510,6 +514,8 @@
     <ClInclude Include="Screenshot.h" />
     <ClInclude Include="SelectDirectoryDialog.h" />
     <ClInclude Include="Sizer.h" />
+    <ClInclude Include="SizerFlags.h" />
+    <ClInclude Include="SizerItem.h" />
     <ClInclude Include="Slider.h" />
     <ClInclude Include="SolidBrush.h" />
     <ClInclude Include="SplitterPanel.h" />
@@ -620,6 +626,8 @@
     <None Include="Api\Region.inc" />
     <None Include="Api\SelectDirectoryDialog.inc" />
     <None Include="Api\Sizer.inc" />
+    <None Include="Api\SizerFlags.inc" />
+    <None Include="Api\SizerItem.inc" />
     <None Include="Api\Slider.inc" />
     <None Include="Api\SolidBrush.inc" />
     <None Include="Api\SplitterPanel.inc" />

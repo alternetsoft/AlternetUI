@@ -64,15 +64,15 @@ namespace NativeApi.Api
         // if either of dimensions is zero, ratio is assumed to be 1
         // to avoid "divide by zero" errors
         public static void SetRatio(IntPtr handle, int width, int height) { }
-        public static void SetRatio(IntPtr handle, float ratio) { }
+        public static void SetRatio2(IntPtr handle, float ratio) { }
         public static float GetRatio(IntPtr handle) => default;
 
         public static Int32Rect GetRect(IntPtr handle) => default;
 
         // set a sizer item id (different from a window id, all sizer items,
         // including spacers, can have an associated id)
-        public static void SetId(IntPtr handle, int id)
-    public static int GetId(IntPtr handle) => default;
+        public static void SetId(IntPtr handle, int id) { }
+        public static int GetId(IntPtr handle) => default;
 
         public static bool IsWindow(IntPtr handle) => default;
         public static bool IsSizer(IntPtr handle) => default;

@@ -75,6 +75,8 @@
 #include "Api/GridBagSizer.Api.h"
 #include "Api/GridSizer.Api.h"
 #include "Api/Sizer.Api.h"
+#include "Api/SizerFlags.Api.h"
+#include "Api/SizerItem.Api.h"
 #include "Api/StaticBoxSizer.Api.h"
 #include "Api/StdDialogButtonSizer.Api.h"
 #include "Api/WrapSizer.Api.h"

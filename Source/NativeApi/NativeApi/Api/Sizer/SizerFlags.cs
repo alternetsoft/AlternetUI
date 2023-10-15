@@ -29,7 +29,7 @@ namespace NativeApi.Api
         public static void Right(IntPtr handle) { }
         public static void Bottom(IntPtr handle) { }
         public static void Border(IntPtr handle, int direction, int borderInPixels) { } // wxDirection
-        public static void Border(IntPtr handle, int direction /*= wxALL*/) { }
+        public static void Border2(IntPtr handle, int direction /*= wxALL*/) { }
         public static void DoubleBorder(IntPtr handle, int direction /*= wxALL*/) { }
         public static void TripleBorder(IntPtr handle, int direction /*= wxALL*/) { }
         public static void HorzBorder(IntPtr handle) { }
