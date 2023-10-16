@@ -20,12 +20,5 @@ namespace Alternet.UI
         /// Returns the orientation of the box sizer.
         /// </summary>
         bool IsVertical { get; set; }
-
-        /// <summary>
-        /// Adds non-stretchable space to the main orientation of the sizer only.
-        /// </summary>
-        /// <param name="size"></param>
-        /// <returns></returns>
-        IntPtr AddSpacer(int size);
     }
 }

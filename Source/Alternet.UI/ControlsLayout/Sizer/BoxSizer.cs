@@ -36,11 +36,6 @@ namespace Alternet.UI
             }
         }
 
-        public IntPtr AddSpacer(int size)
-        {
-            return Native.BoxSizer.AddSpacer(Handle, size);
-        }
-
         internal static int GetIntOrientation(bool isVertical)
         {
             if (isVertical)

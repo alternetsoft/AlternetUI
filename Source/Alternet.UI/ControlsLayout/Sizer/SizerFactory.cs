@@ -77,6 +77,7 @@ namespace Alternet.UI
             return new WrapSizer(isVertical, flags, disposeHandle);
         }
 
+        /// <inheritdoc cref="ISizerFactory.CreateSizerItem(Control, int, SizerFlag, int)"/>
         public virtual ISizerItem CreateSizerItem(
             Control window,
             int proportion = 0,
@@ -86,11 +87,13 @@ namespace Alternet.UI
             return new SizerItem(window, proportion, flag, border);
         }
 
+        /// <inheritdoc cref="ISizerFactory.CreateSizerItem(Control, ISizerFlags)"/>
         public virtual ISizerItem CreateSizerItem(Control window, ISizerFlags sizerFlags)
         {
             return new SizerItem(window, sizerFlags);
         }
 
+        /// <inheritdoc cref="ISizerFactory.CreateSizerItem(ISizer, int, SizerFlag, int)"/>
         public virtual ISizerItem CreateSizerItem(
             ISizer sizer,
             int proportion = 0,
@@ -100,11 +103,13 @@ namespace Alternet.UI
             return new SizerItem(sizer, proportion, flag, border);
         }
 
+        /// <inheritdoc cref="ISizerFactory.CreateSizerItem(ISizer, ISizerFlags)"/>
         public virtual ISizerItem CreateSizerItem(ISizer sizer, ISizerFlags sizerFlags)
         {
             return new SizerItem(sizer, sizerFlags);
         }
 
+        /// <inheritdoc cref="ISizerFactory.CreateSizerItem(int, int, int, SizerFlag, int)"/>
         public virtual ISizerItem CreateSizerItem(
             int width,
             int height,
@@ -115,11 +120,13 @@ namespace Alternet.UI
             return new SizerItem(width, height, proportion, flag, border);
         }
 
+        /// <inheritdoc cref="ISizerFactory.CreateSizerItem(int, int, ISizerFlags)"/>
         public virtual ISizerItem CreateSizerItem(int width, int height, ISizerFlags sizerFlags)
         {
             return new SizerItem(width, height, sizerFlags);
         }
 
+        /// <inheritdoc cref="ISizerFactory.CreateSizerItem()"/>
         public virtual ISizerItem CreateSizerItem()
         {
             return new SizerItem();

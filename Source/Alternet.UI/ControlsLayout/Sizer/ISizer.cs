@@ -25,6 +25,10 @@ namespace Alternet.UI
 
         ISizerItem Add(int width, int height, int proportion = 0, SizerFlag flag = 0, int border = 0);
 
+        /// <summary>
+        /// Adds non-stretchable space to the main orientation of the sizer only.
+        /// </summary>
+        /// <param name="size"></param>
         ISizerItem AddSpacer(int size);
 
         ISizerItem AddStretchSpacer(int prop = 1);
