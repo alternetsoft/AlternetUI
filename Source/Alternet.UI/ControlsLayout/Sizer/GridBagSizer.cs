@@ -16,31 +16,34 @@ namespace Alternet.UI
         {
         }
 
+        public Int32Size EmptyCellSize
+        {
+            get
+            {
+                return Native.GridBagSizer.GetEmptyCellSize(Handle);
+            }
+
+            set
+            {
+                Native.GridBagSizer.SetEmptyCellSize(Handle, value);
+            }
+        }
+
         public Int32Size GetCellSize(int row, int col)
         {
             return Native.GridBagSizer.GetCellSize(Handle, row, col);
         }
 
-        public Int32Size GetEmptyCellSize()
-        {
-            return Native.GridBagSizer.GetEmptyCellSize(Handle);
-        }
-
-        public void SetEmptyCellSize(Int32Size sz)
-        {
-            Native.GridBagSizer.SetEmptyCellSize(Handle, sz);
-        }
-
-        public ISizer FindItem(Control window)
+        public ISizerItem FindItem(Control window)
         {
             var itemHandle = Native.GridBagSizer.FindItem(Handle, window.WxWidget);
-            return new Sizer(itemHandle, false);
+            return new SizerItem(itemHandle, false);
         }
 
-        public ISizer FindItem(ISizer sizer)
+        public ISizerItem FindItem(ISizer sizer)
         {
             var itemHandle = Native.GridBagSizer.FindItem2(Handle, sizer.Handle);
-            return new Sizer(itemHandle, false);
+            return new SizerItem(itemHandle, false);
         }
 
         public Int32Point GetItemPosition(Control window)
@@ -101,6 +104,92 @@ namespace Alternet.UI
         public bool SetItemSpan(int index, Int32Size span)
         {
             return Native.GridBagSizer.SetItemSpan3(Handle, index, span);
+        }
+
+        public ISizerItem? FindItemAtPoint(Int32Point pt)
+        {
+            var result = Native.GridBagSizer.FindItemAtPoint(Handle, pt);
+            if (result == IntPtr.Zero)
+                return null;
+            return new SizerItem(result, false);
+        }
+
+        public ISizerItem? FindItemAtPosition(Int32Point pos)
+        {
+            var result = Native.GridBagSizer.FindItemAtPosition(Handle, pos);
+            if (result == IntPtr.Zero)
+                return null;
+            return new SizerItem(result, false);
+        }
+
+        public ISizerItem Add(
+            Control control,
+            Int32Point pos,
+            Int32Size span,
+            SizerFlag flag = 0,
+            int border = 0)
+        {
+            var result = Native.GridBagSizer.Add(
+                Handle,
+                control.WxWidget,
+                pos,
+                span,
+                (int)flag,
+                border,
+                default);
+            return new SizerItem(result, false);
+        }
+
+        public ISizerItem Add(
+            ISizer sizer,
+            Int32Point pos,
+            Int32Size span,
+            SizerFlag flag = 0,
+            int border = 0)
+        {
+            var result = Native.GridBagSizer.Add2(
+                Handle,
+                sizer.Handle,
+                pos,
+                span,
+                (int)flag,
+                border,
+                default);
+            return new SizerItem(result, false);
+        }
+
+        public ISizerItem Add(
+            int width,
+            int height,
+            Int32Point pos,
+            Int32Size span,
+            SizerFlag flag = 0,
+            int border = 0)
+        {
+            var result = Native.GridBagSizer.Add4(
+                Handle,
+                width,
+                height,
+                pos,
+                span,
+                (int)flag,
+                border,
+                default);
+            return new SizerItem(result, false);
+        }
+
+        public bool CheckForIntersection(ISizerItem item, ISizerItem? excludeItem)
+        {
+            if(excludeItem is null)
+                return Native.GridBagSizer.CheckForIntersection(Handle, item.Handle, default);
+            return Native.GridBagSizer.CheckForIntersection(Handle, item.Handle, excludeItem.Handle);
+        }
+
+        public bool CheckForIntersection(Int32Point pos, Int32Size span, ISizerItem? excludeItem)
+        {
+            if (excludeItem is null)
+                return Native.GridBagSizer.CheckForIntersection2(Handle, pos, span, default);
+            return Native.GridBagSizer.CheckForIntersection2(Handle, pos, span, excludeItem.Handle);
         }
     }
 }

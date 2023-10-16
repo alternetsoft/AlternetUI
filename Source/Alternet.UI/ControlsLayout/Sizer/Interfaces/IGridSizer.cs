@@ -17,22 +17,34 @@ namespace Alternet.UI
     /// </summary>
     public interface IGridSizer : ISizer
     {
-        // Returns the number of columns that has been specified for the sizer.
+        /// <summary>
+        /// Gets or sets the number of columns that has been specified for the sizer.
+        /// </summary>
         int ColCount { get; set; }
 
-        // Returns the number of rows that has been specified for the sizer.
+        /// <summary>
+        /// Gets or sets the number of rows that has been specified for the sizer.
+        /// </summary>
         int RowCount { get; set; }
 
-        // Returns the number of columns currently used by the sizer.
+        /// <summary>
+        /// Gets the number of columns currently used by the sizer.
+        /// </summary>
         int EffectiveColsCount { get; }
 
-        // Returns the number of rows currently used by the sizer.
+        /// <summary>
+        /// Gets the number of rows currently used by the sizer.
+        /// </summary>
         int EffectiveRowsCount { get; }
 
-        // Returns the horizontal gap(in pixels) between cells in the sizer.
+        /// <summary>
+        /// Gets or sets the horizontal gap(in pixels) between cells in the sizer.
+        /// </summary>
         int HGap { get; set; }
 
-        // Returns the vertical gap(in pixels) between the cells in the sizer.
+        /// <summary>
+        /// Gets the vertical gap(in pixels) between the cells in the sizer.
+        /// </summary>
         int VGap { get; set; }
     }
 }
