@@ -17,42 +17,58 @@ namespace Alternet.UI
     /// </summary>
     public interface IFlexGridSizer : IGridSizer
     {
-        // Specifies that column idx(starting from zero) should be grown if there
-        // is extra space available to the sizer.
+        /// <summary>
+        /// Gets or sets whether the sizer flexibly resizes its columns, rows, or both(default).
+        /// </summary>
+        GenericOrientation FlexibleDirection { get; set; }
+
+        /// <summary>
+        /// Gets or sets how the sizer should grow in the non-flexible direction if there
+        /// is one (so <see cref="FlexibleDirection"/> must have been set previously).
+        /// </summary>
+        FlexSizerGrowMode NonFlexibleGrowMode { get; set; }
+
+        /// <summary>
+        /// Specifies that column should be grown if there
+        /// is extra space available to the sizer.
+        /// </summary>
+        /// <param name="idx">Column index (starting from zero).</param>
+        /// <param name="proportion">Grow proportion.</param>
         void AddGrowableCol(int idx, int proportion = 0);
 
-        // Specifies that row idx(starting from zero) should be grown if there
-        // is extra space available to the sizer.
+        /// <summary>
+        /// Specifies that row should be grown if there
+        /// is extra space available to the sizer.
+        /// </summary>
+        /// <param name="idx">Row index (starting from zero).</param>
+        /// <param name="proportion">Grow proportion.</param>
         void AddGrowableRow(int idx, int proportion = 0);
 
-        // Returns a wxOrientation value that specifies whether the sizer flexibly
-        // resizes its columns, rows, or both(default).
-        // int GetFlexibleDirection();
-
-        // Returns the value that specifies how the sizer grows in the "non-flexible"
-        // direction if there is one.
-        // /*wxFlexSizerGrowMode*/ int GetNonFlexibleGrowMode();
-
-        // Returns true if column idx is growable.
+        /// <summary>
+        /// Returns <c>true</c> if column is growable.
+        /// </summary>
+        /// <param name="idx">Column index.</param>
         bool IsColGrowable(int idx);
 
-        // Returns true if row idx is growable.
+        /// <summary>
+        /// Returns <c>true</c> if row is growable.
+        /// </summary>
+        /// <param name="idx">Row index.</param>
         bool IsRowGrowable(int idx);
 
-        // Specifies that the idx column index is no longer growable.
+        /// <summary>
+        /// Specifies that the column is no longer growable.
+        /// </summary>
+        /// <param name="idx">Column index.</param>
         void RemoveGrowableCol(int idx);
 
-        // Specifies that the idx row index is no longer growable.
+        /// <summary>
+        /// Specifies that the row is no longer growable.
+        /// </summary>
+        /// <param name="idx">Row index.</param>
         void RemoveGrowableRow(int idx);
 
-        // Specifies whether the sizer should flexibly resize its columns, rows, or both.
-        // void SetFlexibleDirection(int direction);
-
-        // Specifies how the sizer should grow in the non-flexible direction if there
-        // is one (so SetFlexibleDirection() must have been called previously).
-        // void SetNonFlexibleGrowMode(int /*wxFlexSizerGrowMode*/ mode);
-
-        // Returns a wxArrayInt read-only array containing the heights of the rows in the sizer.
+         // Returns a wxArrayInt read-only array containing the heights of the rows in the sizer.
         // IntPtr GetRowHeights();
 
         // Returns a read-only array containing the widths of the columns in the sizer.

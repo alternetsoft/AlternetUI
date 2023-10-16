@@ -27,6 +27,32 @@ namespace Alternet.UI
         {
         }
 
+        public GenericOrientation FlexibleDirection
+        {
+            get
+            {
+                return (GenericOrientation)Native.FlexGridSizer.GetFlexibleDirection(Handle);
+            }
+
+            set
+            {
+                Native.FlexGridSizer.SetFlexibleDirection(Handle, (int)value);
+            }
+        }
+
+        public FlexSizerGrowMode NonFlexibleGrowMode
+        {
+            get
+            {
+                return (FlexSizerGrowMode)Native.FlexGridSizer.GetNonFlexibleGrowMode(Handle);
+            }
+
+            set
+            {
+                Native.FlexGridSizer.SetNonFlexibleGrowMode(Handle, (int)value);
+            }
+        }
+
         public void AddGrowableCol(int idx, int proportion = 0)
         {
             Native.FlexGridSizer.AddGrowableCol(Handle, idx, proportion);
