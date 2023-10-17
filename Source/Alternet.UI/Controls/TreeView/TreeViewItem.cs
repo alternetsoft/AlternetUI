@@ -64,6 +64,8 @@ namespace Alternet.UI
         private int? imageIndex;
         private Collection<TreeViewItem>? items;
         private bool isBold;
+        private Color? textColor;
+        private Color? backgroundColor;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TreeViewItem"/> class
@@ -121,6 +123,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets whether item is shown in bold font.
         /// </summary>
+        [Browsable(false)]
         public bool IsBold
         {
             get
@@ -135,6 +138,46 @@ namespace Alternet.UI
                 isBold = value;
 
                 treeView?.Handler.SetItemIsBold(this, isBold);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets background color of the item.
+        /// </summary>
+        [Browsable(false)]
+        public Color? BackgroundColor
+        {
+            get
+            {
+                return backgroundColor;
+            }
+
+            set
+            {
+                if (backgroundColor == value)
+                    return;
+                backgroundColor = value;
+                treeView?.Handler.SetItemBackgroundColor(this, value);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets text color of the item.
+        /// </summary>
+        [Browsable(false)]
+        public Color? TextColor
+        {
+            get
+            {
+                return textColor;
+            }
+
+            set
+            {
+                if (textColor == value)
+                    return;
+                textColor = value;
+                treeView?.Handler.SetItemTextColor(this, value);
             }
         }
 

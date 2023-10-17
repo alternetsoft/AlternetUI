@@ -145,9 +145,19 @@ namespace Alternet.UI
         public abstract void SetItemText(TreeViewItem treeViewItem, string text);
 
         /// <summary>
-        /// Sets the specified item text.
+        /// Sets whether item is shown in bold font.
         /// </summary>
         public abstract void SetItemIsBold(TreeViewItem treeViewItem, bool isBold);
+
+        /// <summary>
+        /// Sets background color of the specified item.
+        /// </summary>
+        public abstract void SetItemBackgroundColor(TreeViewItem treeViewItem, Color? color);
+
+        /// <summary>
+        /// Sets text color of the specified item.
+        /// </summary>
+        public abstract void SetItemTextColor(TreeViewItem treeViewItem, Color? color);
 
         /// <summary>
         /// Sets the specified item image index.

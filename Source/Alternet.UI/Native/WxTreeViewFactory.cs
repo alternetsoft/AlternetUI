@@ -48,6 +48,16 @@ namespace Alternet.UI.Native
             NativeApi.WxTreeViewFactory_SetItemBackgroundColor_(handle, item, color);
         }
         
+        public static void ResetItemTextColor(System.IntPtr handle, System.IntPtr item)
+        {
+            NativeApi.WxTreeViewFactory_ResetItemTextColor_(handle, item);
+        }
+        
+        public static void ResetItemBackgroundColor(System.IntPtr handle, System.IntPtr item)
+        {
+            NativeApi.WxTreeViewFactory_ResetItemBackgroundColor_(handle, item);
+        }
+        
         
         [SuppressUnmanagedCodeSecurity]
         public class NativeApi : NativeApiProvider
@@ -71,6 +81,12 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void WxTreeViewFactory_SetItemBackgroundColor_(System.IntPtr handle, System.IntPtr item, NativeApiTypes.Color color);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void WxTreeViewFactory_ResetItemTextColor_(System.IntPtr handle, System.IntPtr item);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void WxTreeViewFactory_ResetItemBackgroundColor_(System.IntPtr handle, System.IntPtr item);
             
         }
     }

@@ -5,6 +5,8 @@ static Color GetItemTextColor(void* handle, void* item);
 static Color GetItemBackgroundColor(void* handle, void* item);
 static void SetItemTextColor(void* handle, void* item, const Color& color);
 static void SetItemBackgroundColor(void* handle, void* item, const Color& color);
+static void ResetItemTextColor(void* handle, void* item);
+static void ResetItemBackgroundColor(void* handle, void* item);
 public:
 WxTreeViewFactory();
 protected:

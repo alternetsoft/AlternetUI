@@ -21,6 +21,11 @@ namespace NativeApi.Api
         public static void SetItemTextColor(IntPtr handle, IntPtr item, Color color) {}
 
         public static void SetItemBackgroundColor(IntPtr handle, IntPtr item, Color color) { }
+
+        public static void ResetItemTextColor(IntPtr handle, IntPtr item) { }
+
+        public static void ResetItemBackgroundColor(IntPtr handle, IntPtr item) { }
+
     }
 }
 

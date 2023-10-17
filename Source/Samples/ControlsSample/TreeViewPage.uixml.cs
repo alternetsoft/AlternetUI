@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Alternet.UI;
 using Alternet.Base.Collections;
+using Alternet.Drawing;
 
 namespace ControlsSample
 {
@@ -74,6 +75,10 @@ namespace ControlsSample
                 treeView.ImageList = ResourceLoader.LoadImageLists().Small;
                 AddDefaultItems();
                 treeView.Items[2].IsBold = true;
+
+                var item = treeView.Items[4];
+                item.TextColor = Color.White;
+                item.BackgroundColor = Color.Gray;
                 site = value;
             }
         }

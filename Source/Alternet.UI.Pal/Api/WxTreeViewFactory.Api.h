@@ -38,3 +38,13 @@ ALTERNET_UI_API void WxTreeViewFactory_SetItemBackgroundColor_(void* handle, voi
     WxTreeViewFactory::SetItemBackgroundColor(handle, item, color);
 }
 
+ALTERNET_UI_API void WxTreeViewFactory_ResetItemTextColor_(void* handle, void* item)
+{
+    WxTreeViewFactory::ResetItemTextColor(handle, item);
+}
+
+ALTERNET_UI_API void WxTreeViewFactory_ResetItemBackgroundColor_(void* handle, void* item)
+{
+    WxTreeViewFactory::ResetItemBackgroundColor(handle, item);
+}
+

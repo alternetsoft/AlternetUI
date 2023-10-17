@@ -275,6 +275,28 @@ namespace Alternet.UI
             Native.WxTreeViewFactory.SetItemBold(NativeControl.WxWidget, p, isBold);
         }
 
+        public override void SetItemBackgroundColor(TreeViewItem item, Color? color)
+        {
+            var p = GetHandleFromItem(item);
+            if (p == IntPtr.Zero)
+                return;
+            if(color is null)
+                Native.WxTreeViewFactory.ResetItemBackgroundColor(NativeControl.WxWidget, p);
+            else
+                Native.WxTreeViewFactory.SetItemBackgroundColor(NativeControl.WxWidget, p, color.Value);
+        }
+
+        public override void SetItemTextColor(TreeViewItem item, Color? color)
+        {
+            var p = GetHandleFromItem(item);
+            if (p == IntPtr.Zero)
+                return;
+            if (color is null)
+                Native.WxTreeViewFactory.ResetItemTextColor(NativeControl.WxWidget, p);
+            else
+                Native.WxTreeViewFactory.SetItemTextColor(NativeControl.WxWidget, p, color.Value);
+        }
+
         public override void SetItemText(TreeViewItem item, string text)
         {
             if (skipSetItemText)
