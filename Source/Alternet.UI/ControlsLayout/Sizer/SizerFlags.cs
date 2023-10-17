@@ -51,7 +51,7 @@ namespace Alternet.UI
 
         public ISizerFlags Proportion(int proportion)
         {
-            Native.SizerFlags.Proportion(Handle,proportion);
+            Native.SizerFlags.Proportion(Handle, proportion);
             return this;
         }
 
@@ -63,7 +63,7 @@ namespace Alternet.UI
 
         public ISizerFlags Align(GenericAlignment alignment)
         {
-            Native.SizerFlags.Align(Handle,(int)alignment);
+            Native.SizerFlags.Align(Handle, (int)alignment);
             return this;
         }
 

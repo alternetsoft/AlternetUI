@@ -12,16 +12,245 @@ namespace Alternet.UI
     /// </summary>
     public class UIElement : DependencyObject, IInputElement, IUIElement
     {
-        static UIElement()
-        {
-            RegisterEvents(typeof(UIElement));
-        }
+        /// <summary>
+        ///     Alias to the Mouse.PreviewMouseWheelEvent.
+        /// </summary>
+        public static readonly RoutedEvent PreviewMouseWheelEvent =
+            Mouse.PreviewMouseWheelEvent.AddOwner(typeof(UIElement));
+
+        /// <summary>
+        ///     The DependencyProperty for the Focusable property.
+        /// </summary>
+        [CommonDependencyProperty]
+        public static readonly DependencyProperty FocusableProperty =
+                DependencyProperty.Register(
+                        "Focusable",
+                        typeof(bool),
+                        typeof(UIElement),
+                        new UIPropertyMetadata(
+                                BooleanBoxes.FalseBox, // default value
+                                new PropertyChangedCallback(OnFocusableChanged)));
+
+        /// <summary>
+        ///     Alias to the Mouse.PreviewMouseMoveEvent.
+        /// </summary>
+        public static readonly RoutedEvent PreviewMouseMoveEvent =
+            Mouse.PreviewMouseMoveEvent.AddOwner(typeof(UIElement));
+
+        /// <summary>
+        ///     Alias to the Mouse.MouseMoveEvent.
+        /// </summary>
+        public static readonly RoutedEvent MouseMoveEvent =
+            Mouse.MouseMoveEvent.AddOwner(typeof(UIElement));
+
+        /// <summary>
+        ///     Alias to the Mouse.MouseDownEvent.
+        /// </summary>
+        public static readonly RoutedEvent MouseDownEvent =
+            Mouse.MouseDownEvent.AddOwner(typeof(UIElement));
+
+        /// <summary>
+        ///     Declaration of the routed event reporting the right mouse button was released
+        /// </summary>
+        public static readonly RoutedEvent PreviewMouseRightButtonUpEvent =
+            EventManager.RegisterRoutedEvent(
+                "PreviewMouseRightButtonUp",
+                RoutingStrategy.Direct,
+                typeof(MouseButtonEventHandler),
+                typeof(UIElement));
+
+        /// <summary>
+        ///     Declaration of the routed event reporting the left mouse button was released
+        /// </summary>
+        public static readonly RoutedEvent PreviewMouseLeftButtonUpEvent =
+            EventManager.RegisterRoutedEvent(
+                "PreviewMouseLeftButtonUp",
+                RoutingStrategy.Direct,
+                typeof(MouseButtonEventHandler),
+                typeof(UIElement));
+
+        /// <summary>
+        ///     The DependencyProperty for the IsFocused property.
+        /// </summary>
+        internal static readonly DependencyPropertyKey IsFocusedPropertyKey =
+                    DependencyProperty.RegisterReadOnly(
+                                "IsFocused",
+                                typeof(bool),
+                                typeof(UIElement),
+                                new PropertyMetadata(
+                                            BooleanBoxes.FalseBox, // default value
+                                            new PropertyChangedCallback(IsFocused_Changed)));
+
+        /// <summary>
+        ///     The DependencyProperty for IsFocused.
+        ///     Flags:              None
+        ///     Read-Only:          true
+        /// </summary>
+        public static readonly DependencyProperty IsFocusedProperty
+            = IsFocusedPropertyKey!.DependencyProperty;
+
+        /// <summary>
+        ///     Declaration of the routed event reporting the right mouse button was pressed
+        /// </summary>
+        public static readonly RoutedEvent PreviewMouseRightButtonDownEvent =
+            EventManager.RegisterRoutedEvent(
+                "PreviewMouseRightButtonDown",
+                RoutingStrategy.Direct,
+                typeof(MouseButtonEventHandler),
+                typeof(UIElement));
+
+        /// <summary>
+        ///     Declaration of the routed event reporting the left mouse button was released
+        /// </summary>
+        public static readonly RoutedEvent MouseLeftButtonUpEvent =
+            EventManager.RegisterRoutedEvent(
+                "MouseLeftButtonUp",
+                RoutingStrategy.Direct,
+                typeof(MouseButtonEventHandler),
+                typeof(UIElement));
+
+        /// <summary>
+        ///     Alias to the Mouse.MouseUpEvent.
+        /// </summary>
+        public static readonly RoutedEvent MouseUpEvent =
+            Mouse.MouseUpEvent.AddOwner(typeof(UIElement));
+
+        /// <summary>
+        ///     Alias to the Mouse.MouseDoubleClickEvent.
+        /// </summary>
+        public static readonly RoutedEvent MouseDoubleClickEvent =
+            Mouse.MouseDoubleClickEvent.AddOwner(typeof(UIElement));
+
+        /// <summary>
+        ///     Declaration of the routed event reporting the right mouse button was released
+        /// </summary>
+        public static readonly RoutedEvent MouseRightButtonUpEvent =
+            EventManager.RegisterRoutedEvent(
+                "MouseRightButtonUp",
+                RoutingStrategy.Direct,
+                typeof(MouseButtonEventHandler),
+                typeof(UIElement));
+
+        /// <summary>
+        ///     Alias to the Mouse.MouseWheelEvent.
+        /// </summary>
+        public static readonly RoutedEvent MouseWheelEvent =
+            Mouse.MouseWheelEvent.AddOwner(typeof(UIElement));
+
+        /// <summary>
+        ///     Declaration of the routed event reporting the left mouse button was pressed
+        /// </summary>
+        public static readonly RoutedEvent MouseLeftButtonDownEvent =
+            EventManager.RegisterRoutedEvent(
+                "MouseLeftButtonDown",
+                RoutingStrategy.Direct,
+                typeof(MouseButtonEventHandler),
+                typeof(UIElement));
+
+        /// <summary>
+        ///     Declaration of the routed event reporting the left mouse button was pressed
+        /// </summary>
+        public static readonly RoutedEvent PreviewMouseLeftButtonDownEvent =
+            EventManager.RegisterRoutedEvent(
+                "PreviewMouseLeftButtonDown",
+                RoutingStrategy.Direct,
+                typeof(MouseButtonEventHandler),
+                typeof(UIElement));
+
+        /// <summary>
+        ///     Declaration of the routed event reporting the right mouse button was pressed
+        /// </summary>
+        public static readonly RoutedEvent MouseRightButtonDownEvent =
+            EventManager.RegisterRoutedEvent(
+                "MouseRightButtonDown",
+                RoutingStrategy.Direct,
+                typeof(MouseButtonEventHandler),
+                typeof(UIElement));
+
+        /// <summary>
+        ///     Alias to the Mouse.PreviewMouseUpEvent.
+        /// </summary>
+        public static readonly RoutedEvent PreviewMouseUpEvent =
+            Mouse.PreviewMouseUpEvent.AddOwner(typeof(UIElement));
+
+        /// <summary>
+        ///     Alias to the Mouse.PreviewMouseDoubleClickEvent.
+        /// </summary>
+        public static readonly RoutedEvent PreviewMouseDoubleClickEvent =
+            Mouse.PreviewMouseDoubleClickEvent.AddOwner(typeof(UIElement));
+
+        /// <summary>
+        ///     Alias to the Mouse.PreviewMouseDownEvent.
+        /// </summary>
+        public static readonly RoutedEvent PreviewMouseDownEvent =
+            Mouse.PreviewMouseDownEvent.AddOwner(typeof(UIElement));
+
+        /// <summary>
+        ///     GotFocus event
+        /// </summary>
+        public static readonly RoutedEvent GotFocusEvent =
+            FocusManager.GotFocusEvent.AddOwner(typeof(UIElement));
+
+        /// <summary>
+        ///     LostFocus event
+        /// </summary>
+        public static readonly RoutedEvent LostFocusEvent =
+            FocusManager.LostFocusEvent.AddOwner(typeof(UIElement));
+
+        /// <summary>
+        ///     Alias to the Keyboard.PreviewKeyUpEvent.
+        /// </summary>
+        public static readonly RoutedEvent PreviewKeyUpEvent =
+            Keyboard.PreviewKeyUpEvent.AddOwner(typeof(UIElement));
+
+        /// <summary>
+        ///     Alias to the Keyboard.KeyUpEvent.
+        /// </summary>
+        public static readonly RoutedEvent KeyUpEvent =
+            Keyboard.KeyUpEvent.AddOwner(typeof(UIElement));
+
+        /// <summary>
+        ///     Alias to the Keyboard.KeyDownEvent.
+        /// </summary>
+        public static readonly RoutedEvent KeyDownEvent =
+            Keyboard.KeyDownEvent.AddOwner(typeof(UIElement));
+
+        /// <summary>
+        ///     Alias to the Keyboard.PreviewTextInputEvent.
+        /// </summary>
+        public static readonly RoutedEvent PreviewTextInputEvent =
+            Keyboard.PreviewTextInputEvent.AddOwner(typeof(UIElement));
+
+        /// <summary>
+        ///     Alias to the Keyboard.TextInputEvent.
+        /// </summary>
+        public static readonly RoutedEvent TextInputEvent =
+            Keyboard.TextInputEvent.AddOwner(typeof(UIElement));
 
         /// <summary>
         ///     Alias to the Keyboard.PreviewKeyDownEvent.
         /// </summary>
         public static readonly RoutedEvent PreviewKeyDownEvent =
             Keyboard.PreviewKeyDownEvent.AddOwner(typeof(UIElement));
+
+        internal const int MAXELEMENTSINROUTE = 4096;
+
+        // Used by ContentElement
+        internal static readonly EventPrivateKey FocusableChangedKey = new();
+
+        static UIElement()
+        {
+            RegisterEvents(typeof(UIElement));
+        }
+
+        /// <summary>
+        ///     FocusableChanged event
+        /// </summary>
+        public event DependencyPropertyChangedEventHandler FocusableChanged
+        {
+            add { EventHandlersStoreAdd(FocusableChangedKey, value); }
+            remove { EventHandlersStoreRemove(FocusableChangedKey, value); }
+        }
 
         /// <summary>
         ///     Event reporting a key was pressed
@@ -33,10 +262,126 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        ///     Alias to the Keyboard.KeyDownEvent.
+        ///     Event reporting a mouse move
         /// </summary>
-        public static readonly RoutedEvent KeyDownEvent =
-            Keyboard.KeyDownEvent.AddOwner(typeof(UIElement));
+        public event MouseEventHandler MouseMove
+        {
+            add { AddHandler(Mouse.MouseMoveEvent, value, false); }
+            remove { RemoveHandler(Mouse.MouseMoveEvent, value); }
+        }
+
+        /// <summary>
+        ///     Event reporting the mouse button was pressed
+        /// </summary>
+        public event MouseButtonEventHandler PreviewMouseDown
+        {
+            add { AddHandler(Mouse.PreviewMouseDownEvent, value, false); }
+            remove { RemoveHandler(Mouse.PreviewMouseDownEvent, value); }
+        }
+
+        /// <summary>
+        ///     Event reporting the mouse button was pressed
+        /// </summary>
+        public event MouseButtonEventHandler MouseDown
+        {
+            add { AddHandler(Mouse.MouseDownEvent, value, false); }
+            remove { RemoveHandler(Mouse.MouseDownEvent, value); }
+        }
+
+        /// <summary>
+        /// Occurs when the layout of the various visual elements changes.
+        /// </summary>
+        public event EventHandler? LayoutUpdated;
+
+        /// <summary>
+        ///     Event reporting the left mouse button was pressed
+        /// </summary>
+        public event MouseButtonEventHandler MouseLeftButtonDown
+        {
+            add { AddHandler(UIElement.MouseLeftButtonDownEvent, value, false); }
+            remove { RemoveHandler(UIElement.MouseLeftButtonDownEvent, value); }
+        }
+
+        /// <summary>
+        ///     Event reporting the left mouse button was released
+        /// </summary>
+        public event MouseButtonEventHandler PreviewMouseLeftButtonUp
+        {
+            add { AddHandler(UIElement.PreviewMouseLeftButtonUpEvent, value, false); }
+            remove { RemoveHandler(UIElement.PreviewMouseLeftButtonUpEvent, value); }
+        }
+
+        /// <summary>
+        ///     Event reporting the right mouse button was pressed
+        /// </summary>
+        public event MouseButtonEventHandler MouseRightButtonDown
+        {
+            add { AddHandler(UIElement.MouseRightButtonDownEvent, value, false); }
+            remove { RemoveHandler(UIElement.MouseRightButtonDownEvent, value); }
+        }
+
+        /// <summary>
+        ///     Event reporting the right mouse button was released
+        /// </summary>
+        public event MouseButtonEventHandler PreviewMouseRightButtonUp
+        {
+            add { AddHandler(UIElement.PreviewMouseRightButtonUpEvent, value, false); }
+            remove { RemoveHandler(UIElement.PreviewMouseRightButtonUpEvent, value); }
+        }
+
+        /// <summary>
+        ///     Event reporting a mouse move
+        /// </summary>
+        public event MouseEventHandler PreviewMouseMove
+        {
+            add { AddHandler(Mouse.PreviewMouseMoveEvent, value, false); }
+            remove { RemoveHandler(Mouse.PreviewMouseMoveEvent, value); }
+        }
+
+        /// <summary>
+        ///     Event reporting the mouse button was released
+        /// </summary>
+        public event MouseButtonEventHandler MouseUp
+        {
+            add { AddHandler(Mouse.MouseUpEvent, value, false); }
+            remove { RemoveHandler(Mouse.MouseUpEvent, value); }
+        }
+
+        /// <summary>
+        ///     An event announcing that IsFocused changed to true.
+        /// </summary>
+        public event RoutedEventHandler GotFocus
+        {
+            add { AddHandler(GotFocusEvent, value); }
+            remove { RemoveHandler(GotFocusEvent, value); }
+        }
+
+        /// <summary>
+        ///     An event announcing that IsFocused changed to false.
+        /// </summary>
+        public event RoutedEventHandler LostFocus
+        {
+            add { AddHandler(LostFocusEvent, value); }
+            remove { RemoveHandler(LostFocusEvent, value); }
+        }
+
+        /// <summary>
+        ///     Event reporting the right mouse button was released
+        /// </summary>
+        public event MouseButtonEventHandler MouseRightButtonUp
+        {
+            add { AddHandler(UIElement.MouseRightButtonUpEvent, value, false); }
+            remove { RemoveHandler(UIElement.MouseRightButtonUpEvent, value); }
+        }
+
+        /// <summary>
+        ///     Event reporting the left mouse button was pressed
+        /// </summary>
+        public event MouseButtonEventHandler PreviewMouseLeftButtonDown
+        {
+            add { AddHandler(UIElement.PreviewMouseLeftButtonDownEvent, value, false); }
+            remove { RemoveHandler(UIElement.PreviewMouseLeftButtonDownEvent, value); }
+        }
 
         /// <summary>
         ///     Event reporting a key was pressed
@@ -48,10 +393,31 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        ///     Alias to the Keyboard.PreviewTextInputEvent.
+        ///     Event reporting the mouse button was pressed
         /// </summary>
-        public static readonly RoutedEvent PreviewTextInputEvent =
-            Keyboard.PreviewTextInputEvent.AddOwner(typeof(UIElement));
+        public event MouseButtonEventHandler PreviewMouseDoubleClick
+        {
+            add { AddHandler(Mouse.PreviewMouseDoubleClickEvent, value, false); }
+            remove { RemoveHandler(Mouse.PreviewMouseDoubleClickEvent, value); }
+        }
+
+        /// <summary>
+        ///     Event reporting the mouse button was pressed
+        /// </summary>
+        public event MouseButtonEventHandler MouseDoubleClick
+        {
+            add { AddHandler(Mouse.MouseDoubleClickEvent, value, false); }
+            remove { RemoveHandler(Mouse.MouseDoubleClickEvent, value); }
+        }
+
+        /// <summary>
+        ///     Event reporting the mouse button was released
+        /// </summary>
+        public event MouseButtonEventHandler PreviewMouseUp
+        {
+            add { AddHandler(Mouse.PreviewMouseUpEvent, value, false); }
+            remove { RemoveHandler(Mouse.PreviewMouseUpEvent, value); }
+        }
 
         /// <summary>
         ///     Event reporting a key was pressed
@@ -63,12 +429,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        ///     Alias to the Keyboard.TextInputEvent.
-        /// </summary>
-        public static readonly RoutedEvent TextInputEvent =
-            Keyboard.TextInputEvent.AddOwner(typeof(UIElement));
-
-        /// <summary>
         ///     Event reporting a key was pressed
         /// </summary>
         public event TextInputEventHandler TextInput
@@ -76,12 +436,6 @@ namespace Alternet.UI
             add { AddHandler(Keyboard.TextInputEvent, value, false); }
             remove { RemoveHandler(Keyboard.TextInputEvent, value); }
         }
-
-        /// <summary>
-        ///     Alias to the Keyboard.PreviewKeyUpEvent.
-        /// </summary>
-        public static readonly RoutedEvent PreviewKeyUpEvent =
-            Keyboard.PreviewKeyUpEvent.AddOwner(typeof(UIElement));
 
         /// <summary>
         ///     Event reporting a key was released
@@ -93,10 +447,40 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        ///     Alias to the Keyboard.KeyUpEvent.
+        ///     Event reporting the right mouse button was pressed
         /// </summary>
-        public static readonly RoutedEvent KeyUpEvent =
-            Keyboard.KeyUpEvent.AddOwner(typeof(UIElement));
+        public event MouseButtonEventHandler PreviewMouseRightButtonDown
+        {
+            add { AddHandler(UIElement.PreviewMouseRightButtonDownEvent, value, false); }
+            remove { RemoveHandler(UIElement.PreviewMouseRightButtonDownEvent, value); }
+        }
+
+        /// <summary>
+        ///     Event reporting a mouse wheel rotation
+        /// </summary>
+        public event MouseWheelEventHandler PreviewMouseWheel
+        {
+            add { AddHandler(Mouse.PreviewMouseWheelEvent, value, false); }
+            remove { RemoveHandler(Mouse.PreviewMouseWheelEvent, value); }
+        }
+
+        /// <summary>
+        ///     Event reporting a mouse wheel rotation
+        /// </summary>
+        public event MouseWheelEventHandler MouseWheel
+        {
+            add { AddHandler(Mouse.MouseWheelEvent, value, false); }
+            remove { RemoveHandler(Mouse.MouseWheelEvent, value); }
+        }
+
+        /// <summary>
+        ///     Event reporting the left mouse button was released
+        /// </summary>
+        public event MouseButtonEventHandler MouseLeftButtonUp
+        {
+            add { AddHandler(UIElement.MouseLeftButtonUpEvent, value, false); }
+            remove { RemoveHandler(UIElement.MouseLeftButtonUpEvent, value); }
+        }
 
         /// <summary>
         ///     Event reporting a key was released
@@ -105,6 +489,408 @@ namespace Alternet.UI
         {
             add { AddHandler(Keyboard.KeyUpEvent, value, false); }
             remove { RemoveHandler(Keyboard.KeyUpEvent, value); }
+        }
+
+        /// <summary>
+        ///     Gettor and Settor for Focusable Property
+        /// </summary>
+        [Browsable(false)]
+        public bool Focusable
+        {
+            get { return (bool)GetValue(FocusableProperty); }
+            set { SetValue(FocusableProperty, BooleanBoxes.Box(value)); }
+        }
+
+        /// <summary>
+        ///     Raise the events specified by
+        ///     <see cref="RoutedEventArgs.RoutedEvent"/>
+        /// </summary>
+        /// <param name="e">
+        ///     <see cref="RoutedEventArgs"/> for the event to
+        ///     be raised
+        /// </param>
+        public void RaiseEvent(RoutedEventArgs e)
+        {
+            /* VerifyAccess();*/
+
+            if (e == null)
+            {
+                throw new ArgumentNullException(nameof(e));
+            }
+
+            e.ClearUserInitiated();
+
+            UIElement.RaiseEventImpl(this, e);
+        }
+
+        /// <summary>
+        ///     Add the event handlers for this element to the route.
+        /// </summary>
+        public void AddToEventRoute(EventRoute route, RoutedEventArgs e)
+        {
+            if (route == null)
+            {
+                throw new ArgumentNullException(nameof(route));
+            }
+
+            if (e == null)
+            {
+                throw new ArgumentNullException(nameof(e));
+            }
+
+            // Get class listeners for this UIElement
+            RoutedEventHandlerInfoList classListeners =
+                GlobalEventManager.GetDTypedClassListeners(this.DependencyObjectType, e.RoutedEvent);
+
+            // Add all class listeners for this UIElement
+            while (classListeners != null)
+            {
+                for (int i = 0; i < classListeners.Handlers.Length; i++)
+                {
+                    route.Add(
+                        this,
+                        classListeners.Handlers[i].Handler,
+                        classListeners.Handlers[i].InvokeHandledEventsToo);
+                }
+
+                classListeners = classListeners.Next;
+            }
+
+            var store = EventHandlersStore;
+            if (store != null)
+            {
+                // Get instance listeners for this UIElement
+                FrugalObjectList<RoutedEventHandlerInfo>? instanceListeners = store[e.RoutedEvent];
+
+                // Add all instance listeners for this UIElement
+                if (instanceListeners != null)
+                {
+                    for (int i = 0; i < instanceListeners.Count; i++)
+                    {
+                        route.Add(
+                            this,
+                            instanceListeners[i].Handler,
+                            instanceListeners[i].InvokeHandledEventsToo);
+                    }
+                }
+            }
+
+            // Allow Framework to add event handlers in styles
+            AddToEventRouteCore(route, e);
+        }
+
+        /// <summary>
+        ///     Adds a handler for the given attached event
+        /// </summary>
+        [FriendAccessAllowed] // Built into Core, also used by Framework.
+        internal static void AddHandler(
+            DependencyObject d,
+            RoutedEvent routedEvent,
+            Delegate handler)
+        {
+            if (d == null)
+            {
+                throw new ArgumentNullException(nameof(d));
+            }
+
+            if (routedEvent is null)
+            {
+                throw new ArgumentNullException(nameof(routedEvent));
+            }
+
+            if (d is UIElement uiElement)
+            {
+                uiElement.AddHandler(routedEvent, handler);
+            }
+            else
+                throw new ArgumentException(SR.Get(SRID.Invalid_IInputElement, d.GetType()));
+
+            // {
+            //    ContentElement contentElement = d as ContentElement;
+            //    if (contentElement != null)
+            //    {
+            //        contentElement.AddHandler(routedEvent, handler);
+            //    }
+            //    else
+            //    {
+            //        UIElement3D uiElement3D = d as UIElement3D;
+            //        if (uiElement3D != null)
+            //        {
+            //            uiElement3D.AddHandler(routedEvent, handler);
+            //        }
+            //        else
+            //        {
+            //            throw new ArgumentException(SR.Get(SRID.Invalid_IInputElement,
+            //            d.GetType()));
+            //        }
+            //    }
+            // }
+        }
+
+        /// <summary>
+        ///     Removes a handler for the given attached event
+        /// </summary>
+        [FriendAccessAllowed] // Built into Core, also used by Framework.
+        internal static void RemoveHandler(
+            DependencyObject d,
+            RoutedEvent routedEvent,
+            Delegate handler)
+        {
+            if (d == null)
+            {
+                throw new ArgumentNullException(nameof(d));
+            }
+
+            if (routedEvent is null)
+            {
+                throw new ArgumentNullException(nameof(routedEvent));
+            }
+
+            if (d is UIElement uiElement)
+                uiElement.RemoveHandler(routedEvent, handler);
+            else
+                throw new ArgumentException(SR.Get(SRID.Invalid_IInputElement, d.GetType()));
+
+            // else
+            // {
+            //    ContentElement contentElement = d as ContentElement;
+            //    if (contentElement != null)
+            //    {
+            //        contentElement.RemoveHandler(routedEvent, handler);
+            //    }
+            //    else
+            //    {
+            //        UIElement3D uiElement3D = d as UIElement3D;
+            //        if (uiElement3D != null)
+            //        {
+            //            uiElement3D.RemoveHandler(routedEvent, handler);
+            //        }
+            //        else
+            //        {
+            //            throw new ArgumentException(SR.Get(SRID.Invalid_IInputElement,
+            //            d.GetType()));
+            //        }
+            //    }
+            // }
+        }
+
+        /// <summary>
+        ///     Implementation of RaiseEvent.
+        ///     Called by both the trusted and non-trusted flavors of RaiseEvent.
+        /// </summary>
+        internal static void RaiseEventImpl(DependencyObject sender, RoutedEventArgs args)
+        {
+            EventRoute route = EventRouteFactory.FetchObject(args.RoutedEvent);
+
+            if (TraceRoutedEvent.IsEnabled)
+            {
+                TraceRoutedEvent.Trace(
+                    TraceEventType.Start,
+                    TraceRoutedEvent.RaiseEvent,
+                    args.RoutedEvent,
+                    sender,
+                    args,
+                    args.Handled);
+            }
+
+            try
+            {
+                // Set Source
+                args.Source = sender;
+
+                UIElement.BuildRouteHelper(sender, route, args);
+
+                route.InvokeHandlers(sender, args);
+
+                // Reset Source to OriginalSource
+                args.Source = args.OriginalSource;
+            }
+            finally
+            {
+                if (TraceRoutedEvent.IsEnabled)
+                {
+                    TraceRoutedEvent.Trace(
+                        TraceEventType.Stop,
+                        TraceRoutedEvent.RaiseEvent,
+                        args.RoutedEvent,
+                        sender,
+                        args,
+                        args.Handled);
+                }
+            }
+
+            EventRouteFactory.RecycleObject(route);
+        }
+
+        internal static void BuildRouteHelper(
+            DependencyObject? e,
+            EventRoute route,
+            RoutedEventArgs args)
+        {
+            if (route == null)
+            {
+                throw new ArgumentNullException(nameof(route));
+            }
+
+            if (args == null)
+            {
+                throw new ArgumentNullException(nameof(args));
+            }
+
+            if (args.Source == null)
+            {
+                throw new ArgumentException(SR.Get(SRID.SourceNotSet));
+            }
+
+            if (args.RoutedEvent != route.RoutedEvent)
+            {
+                throw new ArgumentException(SR.Get(SRID.Mismatched_RoutedEvent));
+            }
+
+            // Route via visual tree
+            if (args.RoutedEvent.RoutingStrategy == RoutingStrategy.Direct)
+            {
+                // Add this element to route
+                if (e is UIElement uiElement)
+                {
+                    uiElement.AddToEventRoute(route, args);
+                }
+            }
+            else
+            {
+                int cElements = 0;
+
+                while (e != null)
+                {
+                    var uiElement = e as UIElement;
+
+                    // Protect against infinite loops by limiting the number of elements
+                    // that we will process.
+                    if (cElements++ > MAXELEMENTSINROUTE)
+                    {
+                        throw new InvalidOperationException(SR.Get(SRID.TreeLoop));
+                    }
+
+                    // Allow the element to adjust source
+                    object? newSource = null;
+                    if (uiElement != null)
+                    {
+                        newSource = uiElement.AdjustEventSource(args);
+                    }
+
+                    // Add changed source information to the route
+                    if (newSource != null)
+                    {
+                        route.AddSource(newSource);
+                    }
+
+                    // Invoke BuildRouteCore
+                    if (uiElement != null)
+                    {
+                        /* yezo
+                        // Add a Synchronized input pre-opportunity handler just before the class
+                        // and instance handlers
+                        uiElement.AddSynchronizedInputPreOpportunityHandler(route, args);
+                        */
+
+                        bool continuePastVisualTree = uiElement.BuildRouteCore(route, args);
+
+                        // Add this element to route
+                        uiElement.AddToEventRoute(route, args);
+
+                        /* yezo
+                        // Add a Synchronized input post-opportunity handler just after class
+                        // and instance handlers
+                        uiElement.AddSynchronizedInputPostOpportunityHandler(route, args);*/
+
+                        // Get element's visual parent
+                        e = uiElement.GetUIParent(continuePastVisualTree);
+                    }
+
+                    // If the BuildRouteCore implementation changed the
+                    // args.Source to the route parent, respect it in
+                    // the actual route.
+                    if (e == args.Source)
+                    {
+                        route.AddSource(e);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        ///     Allows UIElement to augment the
+        ///     <see cref="EventRoute"/>
+        /// </summary>
+        /// <remarks>
+        ///     Sub-classes of UIElement can override
+        ///     this method to custom augment the route
+        /// </remarks>
+        /// <param name="route">
+        ///     The <see cref="EventRoute"/> to be
+        ///     augmented
+        /// </param>
+        /// <param name="args">
+        ///     <see cref="RoutedEventArgs"/> for the
+        ///     RoutedEvent to be raised post building
+        ///     the route
+        /// </param>
+        /// <returns>
+        ///     Whether or not the route should continue past the visual tree.
+        ///     If this is true, and there are no more visual parents, the route
+        ///     building code will call the GetUIParentCore method to find the
+        ///     next non-visual parent.
+        /// </returns>
+        internal virtual bool BuildRouteCore(EventRoute route, RoutedEventArgs args)
+        {
+            return false;
+        }
+
+        /// <summary>
+        ///     This virtual method is to be overridden in Framework
+        ///     to be able to add handlers for styles
+        /// </summary>
+        internal virtual void AddToEventRouteCore(EventRoute route, RoutedEventArgs args)
+        {
+        }
+
+        /// <summary>
+        ///     Allows adjustment to the event source
+        /// </summary>
+        /// <remarks>
+        ///     Subclasses must override this method
+        ///     to be able to adjust the source during
+        ///     route invocation <para/>
+        ///
+        ///     NOTE: Expected to return null when no
+        ///     change is made to source
+        /// </remarks>
+        /// <param name="args">
+        ///     Routed Event Args
+        /// </param>
+        /// <returns>
+        ///     Returns new source
+        /// </returns>
+        internal virtual object? AdjustEventSource(RoutedEventArgs args)
+        {
+            return null;
+        }
+
+        internal virtual DependencyObject? GetUIParentCore()
+        {
+            return null;
+        }
+
+#pragma warning disable
+        internal DependencyObject? GetUIParent(bool v)
+#pragma warning enable
+        {
+            return GetUIParentCore();
+        }
+
+        internal void RaiseLayoutUpdated()
+        {
+            LayoutUpdated?.Invoke(this, EventArgs.Empty);
         }
 
         /// <summary>
@@ -150,18 +936,21 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        ///     Alias to the Mouse.PreviewMouseDownEvent.
+        ///     This method is invoked when the IsFocused property changes to true
         /// </summary>
-        public static readonly RoutedEvent PreviewMouseDownEvent =
-            Mouse.PreviewMouseDownEvent.AddOwner(typeof(UIElement));
+        /// <param name="e">RoutedEventArgs</param>
+        protected virtual void OnGotFocus(RoutedEventArgs e)
+        {
+            RaiseEvent(e);
+        }
 
         /// <summary>
-        ///     Event reporting the mouse button was pressed
+        ///     This method is invoked when the IsFocused property changes to false
         /// </summary>
-        public event MouseButtonEventHandler PreviewMouseDown
+        /// <param name="e">RoutedEventArgs</param>
+        protected virtual void OnLostFocus(RoutedEventArgs e)
         {
-            add { AddHandler(Mouse.PreviewMouseDownEvent, value, false); }
-            remove { RemoveHandler(Mouse.PreviewMouseDownEvent, value); }
+            RaiseEvent(e);
         }
 
         /// <summary>
@@ -172,40 +961,10 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        ///     Alias to the Mouse.MouseDownEvent.
-        /// </summary>
-        public static readonly RoutedEvent MouseDownEvent =
-            Mouse.MouseDownEvent.AddOwner(typeof(UIElement));
-
-        /// <summary>
-        ///     Event reporting the mouse button was pressed
-        /// </summary>
-        public event MouseButtonEventHandler MouseDown
-        {
-            add { AddHandler(Mouse.MouseDownEvent, value, false); }
-            remove { RemoveHandler(Mouse.MouseDownEvent, value); }
-        }
-
-        /// <summary>
         ///     Virtual method reporting the mouse button was pressed
         /// </summary>
         protected virtual void OnMouseDown(MouseButtonEventArgs e)
         {
-        }
-
-        /// <summary>
-        ///     Alias to the Mouse.PreviewMouseDoubleClickEvent.
-        /// </summary>
-        public static readonly RoutedEvent PreviewMouseDoubleClickEvent =
-            Mouse.PreviewMouseDoubleClickEvent.AddOwner(typeof(UIElement));
-
-        /// <summary>
-        ///     Event reporting the mouse button was pressed
-        /// </summary>
-        public event MouseButtonEventHandler PreviewMouseDoubleClick
-        {
-            add { AddHandler(Mouse.PreviewMouseDoubleClickEvent, value, false); }
-            remove { RemoveHandler(Mouse.PreviewMouseDoubleClickEvent, value); }
         }
 
         /// <summary>
@@ -216,40 +975,10 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        ///     Alias to the Mouse.MouseDoubleClickEvent.
-        /// </summary>
-        public static readonly RoutedEvent MouseDoubleClickEvent =
-            Mouse.MouseDoubleClickEvent.AddOwner(typeof(UIElement));
-
-        /// <summary>
-        ///     Event reporting the mouse button was pressed
-        /// </summary>
-        public event MouseButtonEventHandler MouseDoubleClick
-        {
-            add { AddHandler(Mouse.MouseDoubleClickEvent, value, false); }
-            remove { RemoveHandler(Mouse.MouseDoubleClickEvent, value); }
-        }
-
-        /// <summary>
         ///     Virtual method reporting the mouse button was pressed
         /// </summary>
         protected virtual void OnMouseDoubleClick(MouseButtonEventArgs e)
         {
-        }
-
-        /// <summary>
-        ///     Alias to the Mouse.PreviewMouseUpEvent.
-        /// </summary>
-        public static readonly RoutedEvent PreviewMouseUpEvent =
-            Mouse.PreviewMouseUpEvent.AddOwner(typeof(UIElement));
-
-        /// <summary>
-        ///     Event reporting the mouse button was released
-        /// </summary>
-        public event MouseButtonEventHandler PreviewMouseUp
-        {
-            add { AddHandler(Mouse.PreviewMouseUpEvent, value, false); }
-            remove { RemoveHandler(Mouse.PreviewMouseUpEvent, value); }
         }
 
         /// <summary>
@@ -260,44 +989,10 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        ///     Alias to the Mouse.MouseUpEvent.
-        /// </summary>
-        public static readonly RoutedEvent MouseUpEvent =
-            Mouse.MouseUpEvent.AddOwner(typeof(UIElement));
-
-        /// <summary>
-        ///     Event reporting the mouse button was released
-        /// </summary>
-        public event MouseButtonEventHandler MouseUp
-        {
-            add { AddHandler(Mouse.MouseUpEvent, value, false); }
-            remove { RemoveHandler(Mouse.MouseUpEvent, value); }
-        }
-
-        /// <summary>
         ///     Virtual method reporting the mouse button was released
         /// </summary>
         protected virtual void OnMouseUp(MouseButtonEventArgs e)
         {
-        }
-
-        /// <summary>
-        ///     Declaration of the routed event reporting the left mouse button was pressed
-        /// </summary>
-        public static readonly RoutedEvent PreviewMouseLeftButtonDownEvent =
-            EventManager.RegisterRoutedEvent(
-                "PreviewMouseLeftButtonDown",
-                RoutingStrategy.Direct,
-                typeof(MouseButtonEventHandler),
-                typeof(UIElement));
-
-        /// <summary>
-        ///     Event reporting the left mouse button was pressed
-        /// </summary>
-        public event MouseButtonEventHandler PreviewMouseLeftButtonDown
-        {
-            add { AddHandler(UIElement.PreviewMouseLeftButtonDownEvent, value, false); }
-            remove { RemoveHandler(UIElement.PreviewMouseLeftButtonDownEvent, value); }
         }
 
         /// <summary>
@@ -308,48 +1003,10 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        ///     Declaration of the routed event reporting the left mouse button was pressed
-        /// </summary>
-        public static readonly RoutedEvent MouseLeftButtonDownEvent =
-            EventManager.RegisterRoutedEvent(
-                "MouseLeftButtonDown",
-                RoutingStrategy.Direct,
-                typeof(MouseButtonEventHandler),
-                typeof(UIElement));
-
-        /// <summary>
-        ///     Event reporting the left mouse button was pressed
-        /// </summary>
-        public event MouseButtonEventHandler MouseLeftButtonDown
-        {
-            add { AddHandler(UIElement.MouseLeftButtonDownEvent, value, false); }
-            remove { RemoveHandler(UIElement.MouseLeftButtonDownEvent, value); }
-        }
-
-        /// <summary>
         ///     Virtual method reporting the left mouse button was pressed
         /// </summary>
         protected virtual void OnMouseLeftButtonDown(MouseButtonEventArgs e)
         {
-        }
-
-        /// <summary>
-        ///     Declaration of the routed event reporting the left mouse button was released
-        /// </summary>
-        public static readonly RoutedEvent PreviewMouseLeftButtonUpEvent =
-            EventManager.RegisterRoutedEvent(
-                "PreviewMouseLeftButtonUp",
-                RoutingStrategy.Direct,
-                typeof(MouseButtonEventHandler),
-                typeof(UIElement));
-
-        /// <summary>
-        ///     Event reporting the left mouse button was released
-        /// </summary>
-        public event MouseButtonEventHandler PreviewMouseLeftButtonUp
-        {
-            add { AddHandler(UIElement.PreviewMouseLeftButtonUpEvent, value, false); }
-            remove { RemoveHandler(UIElement.PreviewMouseLeftButtonUpEvent, value); }
         }
 
         /// <summary>
@@ -360,22 +1017,17 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        ///     Declaration of the routed event reporting the left mouse button was released
+        ///     Virtual method reporting a mouse wheel rotation
         /// </summary>
-        public static readonly RoutedEvent MouseLeftButtonUpEvent =
-            EventManager.RegisterRoutedEvent(
-                "MouseLeftButtonUp",
-                RoutingStrategy.Direct,
-                typeof(MouseButtonEventHandler),
-                typeof(UIElement));
+        protected virtual void OnPreviewMouseWheel(MouseWheelEventArgs e)
+        {
+        }
 
         /// <summary>
-        ///     Event reporting the left mouse button was released
+        ///     Virtual method reporting a mouse wheel rotation
         /// </summary>
-        public event MouseButtonEventHandler MouseLeftButtonUp
+        protected virtual void OnMouseWheel(MouseWheelEventArgs e)
         {
-            add { AddHandler(UIElement.MouseLeftButtonUpEvent, value, false); }
-            remove { RemoveHandler(UIElement.MouseLeftButtonUpEvent, value); }
         }
 
         /// <summary>
@@ -386,25 +1038,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        ///     Declaration of the routed event reporting the right mouse button was pressed
-        /// </summary>
-        public static readonly RoutedEvent PreviewMouseRightButtonDownEvent =
-            EventManager.RegisterRoutedEvent(
-                "PreviewMouseRightButtonDown",
-                RoutingStrategy.Direct,
-                typeof(MouseButtonEventHandler),
-                typeof(UIElement));
-
-        /// <summary>
-        ///     Event reporting the right mouse button was pressed
-        /// </summary>
-        public event MouseButtonEventHandler PreviewMouseRightButtonDown
-        {
-            add { AddHandler(UIElement.PreviewMouseRightButtonDownEvent, value, false); }
-            remove { RemoveHandler(UIElement.PreviewMouseRightButtonDownEvent, value); }
-        }
-
-        /// <summary>
         ///     Virtual method reporting the right mouse button was pressed
         /// </summary>
         protected virtual void OnPreviewMouseRightButtonDown(MouseButtonEventArgs e)
@@ -412,22 +1045,17 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        ///     Declaration of the routed event reporting the right mouse button was pressed
+        ///     Virtual method reporting a mouse move
         /// </summary>
-        public static readonly RoutedEvent MouseRightButtonDownEvent =
-            EventManager.RegisterRoutedEvent(
-                "MouseRightButtonDown",
-                RoutingStrategy.Direct,
-                typeof(MouseButtonEventHandler),
-                typeof(UIElement));
+        protected virtual void OnPreviewMouseMove(MouseEventArgs e)
+        {
+        }
 
         /// <summary>
-        ///     Event reporting the right mouse button was pressed
+        ///     Virtual method reporting a mouse move
         /// </summary>
-        public event MouseButtonEventHandler MouseRightButtonDown
+        protected virtual void OnMouseMove(MouseEventArgs e)
         {
-            add { AddHandler(UIElement.MouseRightButtonDownEvent, value, false); }
-            remove { RemoveHandler(UIElement.MouseRightButtonDownEvent, value); }
         }
 
         /// <summary>
@@ -438,48 +1066,10 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        ///     Declaration of the routed event reporting the right mouse button was released
-        /// </summary>
-        public static readonly RoutedEvent PreviewMouseRightButtonUpEvent =
-            EventManager.RegisterRoutedEvent(
-                "PreviewMouseRightButtonUp",
-                RoutingStrategy.Direct,
-                typeof(MouseButtonEventHandler),
-                typeof(UIElement));
-
-        /// <summary>
-        ///     Event reporting the right mouse button was released
-        /// </summary>
-        public event MouseButtonEventHandler PreviewMouseRightButtonUp
-        {
-            add { AddHandler(UIElement.PreviewMouseRightButtonUpEvent, value, false); }
-            remove { RemoveHandler(UIElement.PreviewMouseRightButtonUpEvent, value); }
-        }
-
-        /// <summary>
         ///     Virtual method reporting the right mouse button was released
         /// </summary>
         protected virtual void OnPreviewMouseRightButtonUp(MouseButtonEventArgs e)
         {
-        }
-
-        /// <summary>
-        ///     Declaration of the routed event reporting the right mouse button was released
-        /// </summary>
-        public static readonly RoutedEvent MouseRightButtonUpEvent =
-            EventManager.RegisterRoutedEvent(
-                "MouseRightButtonUp",
-                RoutingStrategy.Direct,
-                typeof(MouseButtonEventHandler),
-                typeof(UIElement));
-
-        /// <summary>
-        ///     Event reporting the right mouse button was released
-        /// </summary>
-        public event MouseButtonEventHandler MouseRightButtonUp
-        {
-            add { AddHandler(UIElement.MouseRightButtonUpEvent, value, false); }
-            remove { RemoveHandler(UIElement.MouseRightButtonUpEvent, value); }
         }
 
         /// <summary>
@@ -525,50 +1115,6 @@ namespace Alternet.UI
         private static void OnKeyUpThunk(object sender, KeyEventArgs e)
         {
             (sender as UIElement)?.OnKeyUp(e);
-        }
-
-        /// <summary>
-        ///     Alias to the Mouse.PreviewMouseWheelEvent.
-        /// </summary>
-        public static readonly RoutedEvent PreviewMouseWheelEvent =
-            Mouse.PreviewMouseWheelEvent.AddOwner(typeof(UIElement));
-
-        /// <summary>
-        ///     Event reporting a mouse wheel rotation
-        /// </summary>
-        public event MouseWheelEventHandler PreviewMouseWheel
-        {
-            add { AddHandler(Mouse.PreviewMouseWheelEvent, value, false); }
-            remove { RemoveHandler(Mouse.PreviewMouseWheelEvent, value); }
-        }
-
-        /// <summary>
-        ///     Virtual method reporting a mouse wheel rotation
-        /// </summary>
-        protected virtual void OnPreviewMouseWheel(MouseWheelEventArgs e)
-        {
-        }
-
-        /// <summary>
-        ///     Alias to the Mouse.MouseWheelEvent.
-        /// </summary>
-        public static readonly RoutedEvent MouseWheelEvent =
-            Mouse.MouseWheelEvent.AddOwner(typeof(UIElement));
-
-        /// <summary>
-        ///     Event reporting a mouse wheel rotation
-        /// </summary>
-        public event MouseWheelEventHandler MouseWheel
-        {
-            add { AddHandler(Mouse.MouseWheelEvent, value, false); }
-            remove { RemoveHandler(Mouse.MouseWheelEvent, value); }
-        }
-
-        /// <summary>
-        ///     Virtual method reporting a mouse wheel rotation
-        /// </summary>
-        protected virtual void OnMouseWheel(MouseWheelEventArgs e)
-        {
         }
 
         private static void CrackMouseButtonEventAndReRaiseEvent(
@@ -677,72 +1223,6 @@ namespace Alternet.UI
             return newEvent;
         }
 
-        private static void OnPreviewMouseDownThunk(object sender, MouseButtonEventArgs e)
-        {
-            if (!e.Handled)
-                (sender as UIElement)?.OnPreviewMouseDown(e);
-
-            // Always raise this sub-event, but we pass along the handledness.
-            UIElement.CrackMouseButtonEventAndReRaiseEvent((DependencyObject)sender, e);
-        }
-
-        private static void OnMouseDownThunk(object sender, MouseButtonEventArgs e)
-        {
-            // if (!e.Handled)
-            // {
-            //    CommandManager.TranslateInput((IInputElement)sender, e);
-            // }
-            if (!e.Handled)
-                (sender as UIElement)?.OnMouseDown(e);
-
-            // Always raise this sub-event, but we pass along the handledness.
-            UIElement.CrackMouseButtonEventAndReRaiseEvent((DependencyObject)sender, e);
-        }
-
-        private static void OnPreviewMouseDoubleClickThunk(object sender, MouseButtonEventArgs e)
-        {
-            if (!e.Handled)
-                (sender as UIElement)?.OnPreviewMouseDoubleClick(e);
-        }
-
-        private static void OnMouseDoubleClickThunk(object sender, MouseButtonEventArgs e)
-        {
-            if (!e.Handled)
-                (sender as UIElement)?.OnMouseDoubleClick(e);
-        }
-
-        private static void OnPreviewMouseUpThunk(object sender, MouseButtonEventArgs e)
-        {
-            if (!e.Handled)
-                (sender as UIElement)?.OnPreviewMouseUp(e);
-
-            // Always raise this sub-event, but we pass along the handledness.
-            UIElement.CrackMouseButtonEventAndReRaiseEvent((DependencyObject)sender, e);
-        }
-
-        private static void OnMouseUpThunk(object sender, MouseButtonEventArgs e)
-        {
-            if (!e.Handled)
-                (sender as UIElement)?.OnMouseUp(e);
-
-            // Always raise this sub-event, but we pass along the handledness.
-            UIElement.CrackMouseButtonEventAndReRaiseEvent((DependencyObject)sender, e);
-        }
-
-        private static void OnPreviewMouseLeftButtonDownThunk(object sender, MouseButtonEventArgs e)
-        {
-            Invariant.Assert(!e.Handled, ErrorMessages.Default.EventHasAlreadyBeenHandled);
-
-            (sender as UIElement)?.OnPreviewMouseLeftButtonDown(e);
-        }
-
-        private static void OnMouseLeftButtonDownThunk(object sender, MouseButtonEventArgs e)
-        {
-            Invariant.Assert(!e.Handled, ErrorMessages.Default.EventHasAlreadyBeenHandled);
-
-            (sender as UIElement)?.OnMouseLeftButtonDown(e);
-        }
-
         private static void OnPreviewMouseLeftButtonUpThunk(object sender, MouseButtonEventArgs e)
         {
             Invariant.Assert(!e.Handled, ErrorMessages.Default.EventHasAlreadyBeenHandled);
@@ -799,50 +1279,6 @@ namespace Alternet.UI
             // CommandManager.TranslateInput((IInputElement)sender, e);
             if (!e.Handled)
                 (sender as UIElement)?.OnMouseWheel(e);
-        }
-
-        /// <summary>
-        ///     Alias to the Mouse.PreviewMouseMoveEvent.
-        /// </summary>
-        public static readonly RoutedEvent PreviewMouseMoveEvent =
-            Mouse.PreviewMouseMoveEvent.AddOwner(typeof(UIElement));
-
-        /// <summary>
-        ///     Event reporting a mouse move
-        /// </summary>
-        public event MouseEventHandler PreviewMouseMove
-        {
-            add { AddHandler(Mouse.PreviewMouseMoveEvent, value, false); }
-            remove { RemoveHandler(Mouse.PreviewMouseMoveEvent, value); }
-        }
-
-        /// <summary>
-        ///     Virtual method reporting a mouse move
-        /// </summary>
-        protected virtual void OnPreviewMouseMove(MouseEventArgs e)
-        {
-        }
-
-        /// <summary>
-        ///     Alias to the Mouse.MouseMoveEvent.
-        /// </summary>
-        public static readonly RoutedEvent MouseMoveEvent =
-            Mouse.MouseMoveEvent.AddOwner(typeof(UIElement));
-
-        /// <summary>
-        ///     Event reporting a mouse move
-        /// </summary>
-        public event MouseEventHandler MouseMove
-        {
-            add { AddHandler(Mouse.MouseMoveEvent, value, false); }
-            remove { RemoveHandler(Mouse.MouseMoveEvent, value); }
-        }
-
-        /// <summary>
-        ///     Virtual method reporting a mouse move
-        /// </summary>
-        protected virtual void OnMouseMove(MouseEventArgs e)
-        {
         }
 
         private static void OnPreviewMouseMoveThunk(object sender, MouseEventArgs e)
@@ -1108,41 +1544,6 @@ namespace Alternet.UI
             // new EventHandler<TouchEventArgs>(UIElement.OnTouchLeaveThunk), false);
         }
 
-        /// <summary>
-        ///     The DependencyProperty for the Focusable property.
-        /// </summary>
-        [CommonDependencyProperty]
-        public static readonly DependencyProperty FocusableProperty =
-                DependencyProperty.Register(
-                        "Focusable",
-                        typeof(bool),
-                        typeof(UIElement),
-                        new UIPropertyMetadata(
-                                BooleanBoxes.FalseBox, // default value
-                                new PropertyChangedCallback(OnFocusableChanged)));
-
-        /// <summary>
-        ///     Gettor and Settor for Focusable Property
-        /// </summary>
-        [Browsable(false)]
-        public bool Focusable
-        {
-            get { return (bool)GetValue(FocusableProperty); }
-            set { SetValue(FocusableProperty, BooleanBoxes.Box(value)); }
-        }
-
-        /// <summary>
-        ///     FocusableChanged event
-        /// </summary>
-        public event DependencyPropertyChangedEventHandler FocusableChanged
-        {
-            add { EventHandlersStoreAdd(FocusableChangedKey, value); }
-            remove { EventHandlersStoreRemove(FocusableChangedKey, value); }
-        }
-
-        // Used by ContentElement
-        internal static readonly EventPrivateKey FocusableChangedKey = new ();
-
         private static void OnFocusableChanged(
             DependencyObject d,
             DependencyPropertyChangedEventArgs e)
@@ -1152,26 +1553,6 @@ namespace Alternet.UI
             // Raise the public changed event.
             uie.RaiseDependencyPropertyChanged(FocusableChangedKey, e);
         }
-
-        /// <summary>
-        ///     The DependencyProperty for the IsFocused property.
-        /// </summary>
-        internal static readonly DependencyPropertyKey IsFocusedPropertyKey =
-                    DependencyProperty.RegisterReadOnly(
-                                "IsFocused",
-                                typeof(bool),
-                                typeof(UIElement),
-                                new PropertyMetadata(
-                                            BooleanBoxes.FalseBox, // default value
-                                            new PropertyChangedCallback(IsFocused_Changed)));
-
-        /// <summary>
-        ///     The DependencyProperty for IsFocused.
-        ///     Flags:              None
-        ///     Read-Only:          true
-        /// </summary>
-        public static readonly DependencyProperty IsFocusedProperty
-            = IsFocusedPropertyKey.DependencyProperty;
 
         private static void IsFocused_Changed(
             DependencyObject d,
@@ -1189,52 +1570,70 @@ namespace Alternet.UI
             }
         }
 
-        /// <summary>
-        ///     This method is invoked when the IsFocused property changes to true
-        /// </summary>
-        /// <param name="e">RoutedEventArgs</param>
-        protected virtual void OnGotFocus(RoutedEventArgs e)
+        private static void OnPreviewMouseDownThunk(object sender, MouseButtonEventArgs e)
         {
-            RaiseEvent(e);
+            if (!e.Handled)
+                (sender as UIElement)?.OnPreviewMouseDown(e);
+
+            // Always raise this sub-event, but we pass along the handledness.
+            UIElement.CrackMouseButtonEventAndReRaiseEvent((DependencyObject)sender, e);
         }
 
-        /// <summary>
-        ///     This method is invoked when the IsFocused property changes to false
-        /// </summary>
-        /// <param name="e">RoutedEventArgs</param>
-        protected virtual void OnLostFocus(RoutedEventArgs e)
+        private static void OnMouseDownThunk(object sender, MouseButtonEventArgs e)
         {
-            RaiseEvent(e);
+            // if (!e.Handled)
+            // {
+            //    CommandManager.TranslateInput((IInputElement)sender, e);
+            // }
+            if (!e.Handled)
+                (sender as UIElement)?.OnMouseDown(e);
+
+            // Always raise this sub-event, but we pass along the handledness.
+            UIElement.CrackMouseButtonEventAndReRaiseEvent((DependencyObject)sender, e);
         }
 
-        /// <summary>
-        ///     GotFocus event
-        /// </summary>
-        public static readonly RoutedEvent GotFocusEvent =
-            FocusManager.GotFocusEvent.AddOwner(typeof(UIElement));
-
-        /// <summary>
-        ///     An event announcing that IsFocused changed to true.
-        /// </summary>
-        public event RoutedEventHandler GotFocus
+        private static void OnPreviewMouseDoubleClickThunk(object sender, MouseButtonEventArgs e)
         {
-            add { AddHandler(GotFocusEvent, value); }
-            remove { RemoveHandler(GotFocusEvent, value); }
+            if (!e.Handled)
+                (sender as UIElement)?.OnPreviewMouseDoubleClick(e);
         }
 
-        /// <summary>
-        ///     LostFocus event
-        /// </summary>
-        public static readonly RoutedEvent LostFocusEvent =
-            FocusManager.LostFocusEvent.AddOwner(typeof(UIElement));
-
-        /// <summary>
-        ///     An event announcing that IsFocused changed to false.
-        /// </summary>
-        public event RoutedEventHandler LostFocus
+        private static void OnMouseDoubleClickThunk(object sender, MouseButtonEventArgs e)
         {
-            add { AddHandler(LostFocusEvent, value); }
-            remove { RemoveHandler(LostFocusEvent, value); }
+            if (!e.Handled)
+                (sender as UIElement)?.OnMouseDoubleClick(e);
+        }
+
+        private static void OnPreviewMouseUpThunk(object sender, MouseButtonEventArgs e)
+        {
+            if (!e.Handled)
+                (sender as UIElement)?.OnPreviewMouseUp(e);
+
+            // Always raise this sub-event, but we pass along the handledness.
+            UIElement.CrackMouseButtonEventAndReRaiseEvent((DependencyObject)sender, e);
+        }
+
+        private static void OnMouseUpThunk(object sender, MouseButtonEventArgs e)
+        {
+            if (!e.Handled)
+                (sender as UIElement)?.OnMouseUp(e);
+
+            // Always raise this sub-event, but we pass along the handledness.
+            UIElement.CrackMouseButtonEventAndReRaiseEvent((DependencyObject)sender, e);
+        }
+
+        private static void OnPreviewMouseLeftButtonDownThunk(object sender, MouseButtonEventArgs e)
+        {
+            Invariant.Assert(!e.Handled, ErrorMessages.Default.EventHasAlreadyBeenHandled);
+
+            (sender as UIElement)?.OnPreviewMouseLeftButtonDown(e);
+        }
+
+        private static void OnMouseLeftButtonDownThunk(object sender, MouseButtonEventArgs e)
+        {
+            Invariant.Assert(!e.Handled, ErrorMessages.Default.EventHasAlreadyBeenHandled);
+
+            (sender as UIElement)?.OnMouseLeftButtonDown(e);
         }
 
         // Helper method to retrieve and fire Clr Event handlers for DependencyPropertyChanged event
@@ -1272,405 +1671,6 @@ namespace Alternet.UI
                     WriteFlag(CoreFlags.ExistsEventHandlersStore, false);
                 }
             }
-        }
-
-        /// <summary>
-        /// Occurs when the layout of the various visual elements changes.
-        /// </summary>
-        public event EventHandler? LayoutUpdated;
-
-        internal void RaiseLayoutUpdated()
-        {
-            LayoutUpdated?.Invoke(this, EventArgs.Empty);
-        }
-
-        /// <summary>
-        ///     Adds a handler for the given attached event
-        /// </summary>
-        [FriendAccessAllowed] // Built into Core, also used by Framework.
-        internal static void AddHandler(
-            DependencyObject d,
-            RoutedEvent routedEvent,
-            Delegate handler)
-        {
-            if (d == null)
-            {
-                throw new ArgumentNullException(nameof(d));
-            }
-
-            if (routedEvent is null)
-            {
-                throw new ArgumentNullException(nameof(routedEvent));
-            }
-
-            if (d is UIElement uiElement)
-            {
-                uiElement.AddHandler(routedEvent, handler);
-            }
-            else
-                throw new ArgumentException(SR.Get(SRID.Invalid_IInputElement, d.GetType()));
-
-            // {
-            //    ContentElement contentElement = d as ContentElement;
-            //    if (contentElement != null)
-            //    {
-            //        contentElement.AddHandler(routedEvent, handler);
-            //    }
-            //    else
-            //    {
-            //        UIElement3D uiElement3D = d as UIElement3D;
-            //        if (uiElement3D != null)
-            //        {
-            //            uiElement3D.AddHandler(routedEvent, handler);
-            //        }
-            //        else
-            //        {
-            //            throw new ArgumentException(SR.Get(SRID.Invalid_IInputElement,
-            //            d.GetType()));
-            //        }
-            //    }
-            // }
-        }
-
-        /// <summary>
-        ///     Removes a handler for the given attached event
-        /// </summary>
-        [FriendAccessAllowed] // Built into Core, also used by Framework.
-        internal static void RemoveHandler(
-            DependencyObject d,
-            RoutedEvent routedEvent,
-            Delegate handler)
-        {
-            if (d == null)
-            {
-                throw new ArgumentNullException(nameof(d));
-            }
-
-            if (routedEvent is null)
-            {
-                throw new ArgumentNullException(nameof(routedEvent));
-            }
-
-            if (d is UIElement uiElement)
-                uiElement.RemoveHandler(routedEvent, handler);
-            else
-                throw new ArgumentException(SR.Get(SRID.Invalid_IInputElement, d.GetType()));
-
-            // else
-            // {
-            //    ContentElement contentElement = d as ContentElement;
-            //    if (contentElement != null)
-            //    {
-            //        contentElement.RemoveHandler(routedEvent, handler);
-            //    }
-            //    else
-            //    {
-            //        UIElement3D uiElement3D = d as UIElement3D;
-            //        if (uiElement3D != null)
-            //        {
-            //            uiElement3D.RemoveHandler(routedEvent, handler);
-            //        }
-            //        else
-            //        {
-            //            throw new ArgumentException(SR.Get(SRID.Invalid_IInputElement,
-            //            d.GetType()));
-            //        }
-            //    }
-            // }
-        }
-
-        /// <summary>
-        ///     Raise the events specified by
-        ///     <see cref="RoutedEventArgs.RoutedEvent"/>
-        /// </summary>
-        /// <param name="e">
-        ///     <see cref="RoutedEventArgs"/> for the event to
-        ///     be raised
-        /// </param>
-        public void RaiseEvent(RoutedEventArgs e)
-        {
-            /* VerifyAccess();*/
-
-            if (e == null)
-            {
-                throw new ArgumentNullException(nameof(e));
-            }
-
-            e.ClearUserInitiated();
-
-            UIElement.RaiseEventImpl(this, e);
-        }
-
-        internal const int MAXELEMENTSINROUTE = 4096;
-
-        /// <summary>
-        ///     Add the event handlers for this element to the route.
-        /// </summary>
-        public void AddToEventRoute(EventRoute route, RoutedEventArgs e)
-        {
-            if (route == null)
-            {
-                throw new ArgumentNullException(nameof(route));
-            }
-
-            if (e == null)
-            {
-                throw new ArgumentNullException(nameof(e));
-            }
-
-            // Get class listeners for this UIElement
-            RoutedEventHandlerInfoList classListeners =
-                GlobalEventManager.GetDTypedClassListeners(this.DependencyObjectType, e.RoutedEvent);
-
-            // Add all class listeners for this UIElement
-            while (classListeners != null)
-            {
-                for (int i = 0; i < classListeners.Handlers.Length; i++)
-                {
-                    route.Add(
-                        this,
-                        classListeners.Handlers[i].Handler,
-                        classListeners.Handlers[i].InvokeHandledEventsToo);
-                }
-
-                classListeners = classListeners.Next;
-            }
-
-            var store = EventHandlersStore;
-            if (store != null)
-            {
-                // Get instance listeners for this UIElement
-                FrugalObjectList<RoutedEventHandlerInfo>? instanceListeners = store[e.RoutedEvent];
-
-                // Add all instance listeners for this UIElement
-                if (instanceListeners != null)
-                {
-                    for (int i = 0; i < instanceListeners.Count; i++)
-                    {
-                        route.Add(
-                            this,
-                            instanceListeners[i].Handler,
-                            instanceListeners[i].InvokeHandledEventsToo);
-                    }
-                }
-            }
-
-            // Allow Framework to add event handlers in styles
-            AddToEventRouteCore(route, e);
-        }
-
-        /// <summary>
-        ///     This virtual method is to be overridden in Framework
-        ///     to be able to add handlers for styles
-        /// </summary>
-        internal virtual void AddToEventRouteCore(EventRoute route, RoutedEventArgs args)
-        {
-        }
-
-        internal static void BuildRouteHelper(
-            DependencyObject? e,
-            EventRoute route,
-            RoutedEventArgs args)
-        {
-            if (route == null)
-            {
-                throw new ArgumentNullException(nameof(route));
-            }
-
-            if (args == null)
-            {
-                throw new ArgumentNullException(nameof(args));
-            }
-
-            if (args.Source == null)
-            {
-                throw new ArgumentException(SR.Get(SRID.SourceNotSet));
-            }
-
-            if (args.RoutedEvent != route.RoutedEvent)
-            {
-                throw new ArgumentException(SR.Get(SRID.Mismatched_RoutedEvent));
-            }
-
-            // Route via visual tree
-            if (args.RoutedEvent.RoutingStrategy == RoutingStrategy.Direct)
-            {
-                // Add this element to route
-                if (e is UIElement uiElement)
-                {
-                    uiElement.AddToEventRoute(route, args);
-                }
-            }
-            else
-            {
-                int cElements = 0;
-
-                while (e != null)
-                {
-                    var uiElement = e as UIElement;
-
-                    // Protect against infinite loops by limiting the number of elements
-                    // that we will process.
-                    if (cElements++ > MAXELEMENTSINROUTE)
-                    {
-                        throw new InvalidOperationException(SR.Get(SRID.TreeLoop));
-                    }
-
-                    // Allow the element to adjust source
-                    object? newSource = null;
-                    if (uiElement != null)
-                    {
-                        newSource = uiElement.AdjustEventSource(args);
-                    }
-
-                    // Add changed source information to the route
-                    if (newSource != null)
-                    {
-                        route.AddSource(newSource);
-                    }
-
-                    // Invoke BuildRouteCore
-                    if (uiElement != null)
-                    {
-                        /* yezo
-                        // Add a Synchronized input pre-opportunity handler just before the class
-                        // and instance handlers
-                        uiElement.AddSynchronizedInputPreOpportunityHandler(route, args);
-                        */
-
-                        bool continuePastVisualTree = uiElement.BuildRouteCore(route, args);
-
-                        // Add this element to route
-                        uiElement.AddToEventRoute(route, args);
-
-                        /* yezo
-                        // Add a Synchronized input post-opportunity handler just after class
-                        // and instance handlers
-                        uiElement.AddSynchronizedInputPostOpportunityHandler(route, args);*/
-
-                        // Get element's visual parent
-                        e = uiElement.GetUIParent(continuePastVisualTree);
-                    }
-
-                    // If the BuildRouteCore implementation changed the
-                    // args.Source to the route parent, respect it in
-                    // the actual route.
-                    if (e == args.Source)
-                    {
-                        route.AddSource(e);
-                    }
-                }
-            }
-        }
-
-        /// <summary>
-        ///     Allows UIElement to augment the
-        ///     <see cref="EventRoute"/>
-        /// </summary>
-        /// <remarks>
-        ///     Sub-classes of UIElement can override
-        ///     this method to custom augment the route
-        /// </remarks>
-        /// <param name="route">
-        ///     The <see cref="EventRoute"/> to be
-        ///     augmented
-        /// </param>
-        /// <param name="args">
-        ///     <see cref="RoutedEventArgs"/> for the
-        ///     RoutedEvent to be raised post building
-        ///     the route
-        /// </param>
-        /// <returns>
-        ///     Whether or not the route should continue past the visual tree.
-        ///     If this is true, and there are no more visual parents, the route
-        ///     building code will call the GetUIParentCore method to find the
-        ///     next non-visual parent.
-        /// </returns>
-        internal virtual bool BuildRouteCore(EventRoute route, RoutedEventArgs args)
-        {
-            return false;
-        }
-
-        /// <summary>
-        ///     Allows adjustment to the event source
-        /// </summary>
-        /// <remarks>
-        ///     Subclasses must override this method
-        ///     to be able to adjust the source during
-        ///     route invocation <para/>
-        ///
-        ///     NOTE: Expected to return null when no
-        ///     change is made to source
-        /// </remarks>
-        /// <param name="args">
-        ///     Routed Event Args
-        /// </param>
-        /// <returns>
-        ///     Returns new source
-        /// </returns>
-        internal virtual object? AdjustEventSource(RoutedEventArgs args)
-        {
-            return null;
-        }
-
-        /// <summary>
-        ///     Implementation of RaiseEvent.
-        ///     Called by both the trusted and non-trusted flavors of RaiseEvent.
-        /// </summary>
-        internal static void RaiseEventImpl(DependencyObject sender, RoutedEventArgs args)
-        {
-            EventRoute route = EventRouteFactory.FetchObject(args.RoutedEvent);
-
-            if (TraceRoutedEvent.IsEnabled)
-            {
-                TraceRoutedEvent.Trace(
-                    TraceEventType.Start,
-                    TraceRoutedEvent.RaiseEvent,
-                    args.RoutedEvent,
-                    sender,
-                    args,
-                    args.Handled);
-            }
-
-            try
-            {
-                // Set Source
-                args.Source = sender;
-
-                UIElement.BuildRouteHelper(sender, route, args);
-
-                route.InvokeHandlers(sender, args);
-
-                // Reset Source to OriginalSource
-                args.Source = args.OriginalSource;
-            }
-            finally
-            {
-                if (TraceRoutedEvent.IsEnabled)
-                {
-                    TraceRoutedEvent.Trace(
-                        TraceEventType.Stop,
-                        TraceRoutedEvent.RaiseEvent,
-                        args.RoutedEvent,
-                        sender,
-                        args,
-                        args.Handled);
-                }
-            }
-
-            EventRouteFactory.RecycleObject(route);
-        }
-
-        internal virtual DependencyObject? GetUIParentCore()
-        {
-            return null;
-        }
-
-#pragma warning disable
-        internal DependencyObject? GetUIParent(bool v)
-#pragma warning enable
-        {
-            return GetUIParentCore();
         }
 
         /// <summary>

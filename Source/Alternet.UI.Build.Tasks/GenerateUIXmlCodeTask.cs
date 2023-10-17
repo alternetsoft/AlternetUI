@@ -8,7 +8,7 @@ namespace Alternet.UI.Build.Tasks
 {
     public class GenerateUIXmlCodeTask : Task
     {
-        private static readonly string MyLogFilePath =
+        internal static readonly string MyLogFilePath =
             Path.ChangeExtension(typeof(GenerateUIXmlCodeTask).Assembly.Location, ".log");
 
         private const string LogSubcategory = "Alternet.UI.UIXml.CodeGeneration";
@@ -34,9 +34,9 @@ namespace Alternet.UI.Build.Tasks
 
         public override bool Execute()
         {
-            string xmlPath = WellKnownApiInfo.GetXmlPath();
-            bool xmlPathExists = File.Exists(xmlPath);
-            //LogToFile($"===> XmlPath({xmlPathExists}): {xmlPath}");
+            // string xmlPath = WellKnownApiInfo.GetXmlPath();
+            // bool xmlPathExists = File.Exists(xmlPath);
+            // LogToFile($"===> XmlPath({xmlPathExists}): {xmlPath}");
 
             try
             {
@@ -108,7 +108,7 @@ namespace Alternet.UI.Build.Tasks
                 MessageImportance.Low,
                 message, null);
 
-        private void LogDebugHigh(string message) =>
+        internal void LogDebugHigh(string message) =>
             Log.LogMessage(LogSubcategory, null, null, null, 0, 0, 0, 0, MessageImportance.High, message, null);
 
         private void LogError(
