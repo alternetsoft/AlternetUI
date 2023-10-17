@@ -2,6 +2,7 @@
 using Microsoft.Build.Utilities;
 using System;
 using System.IO;
+using System.Xml;
 
 namespace Alternet.UI.Build.Tasks
 {
@@ -47,7 +48,14 @@ namespace Alternet.UI.Build.Tasks
                     }
                     catch (Exception ex)
                     {
-                        LogError(inputFile, $"Error generating file: {ex}");
+                        if (ex is XmlException xmlException)
+                        {
+                            var lineNumber = xmlException.LineNumber;
+                            var linePos = xmlException.LinePosition;
+                            LogError(inputFile, $"Error generating file: {ex}", lineNumber, linePos);
+                        }
+                        else
+                            LogError(inputFile, $"Error generating file: {ex}");
                     }
                 }
             }
@@ -115,8 +123,8 @@ namespace Alternet.UI.Build.Tasks
                 inputFile?.ItemSpec,
                 lineNumber,
                 columnNumber,
-                0,
-                0,
+                lineNumber,
+                columnNumber,
                 message,
                 null);
     }
