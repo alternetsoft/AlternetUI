@@ -56,6 +56,44 @@ namespace Alternet.UI.Integration.VisualStudio
     [ProvideOptionPage(typeof(OptionsDialogPage), Name, "General", 113, 0, supportsAutomation: true)]
     internal sealed class AlternetUIPackage : AsyncPackage
     {
+        private static ErrorListProvider _errorListProvider;
+
+        public static void InitializeMsg(IServiceProvider serviceProvider)
+        {
+            _errorListProvider = new ErrorListProvider(serviceProvider);
+        }
+
+        public static void AddError(string message, int line = -1, int column = -1)
+        {
+            AddMsgTask(message, TaskErrorCategory.Error, line, column);
+        }
+
+        public static void AddWarning(string message, int line = -1, int column = -1)
+        {
+            AddMsgTask(message, TaskErrorCategory.Warning, line, column);
+        }
+
+        public static void AddMessage(string message, int line = -1, int column = -1)
+        {
+            AddMsgTask(message, TaskErrorCategory.Message, line, column);
+        }
+
+        private static void AddMsgTask(
+            string message,
+            TaskErrorCategory category,
+            int line = -1,
+            int column = -1)
+        {
+            _errorListProvider.Tasks.Add(new ErrorTask
+            {
+                Category = TaskCategory.User,
+                ErrorCategory = category,
+                Text = message,
+                Line = line,
+                Column = column,
+            });
+        }
+
         public const string PackageGuidString = "aaaba8d5-1180-4bf8-8821-345f72a4cb79";
         public const string Name = "Alternet.UI.Integration.VisualStudio";
 
