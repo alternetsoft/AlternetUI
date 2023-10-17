@@ -107,6 +107,28 @@ namespace Alternet.UI.Integration.VisualStudio.Services
         /// </summary>
         public event EventHandler ProcessExited;
 
+        public void LogError<T>(string messageTemplate, T propertyValue)
+        {
+            _log.Error<T>(messageTemplate, propertyValue);
+        }
+
+        public void LogError(Exception exception, string messageTemplate)
+        {
+            _log.Error(exception, messageTemplate);
+        }
+
+        public void LogErrorVS(Exception exception, string messageTemplate)
+        {
+            _log.Error(exception, messageTemplate);
+
+            if(exception is XamlException xamplE)
+            {
+                var lineNumber = xamplE.LineNumber;
+                var linePos = xamplE.LinePosition;
+            }
+
+        }
+
         /// <summary>
         /// Starts the previewer process.
         /// </summary>
@@ -189,7 +211,7 @@ namespace Alternet.UI.Integration.VisualStudio.Services
                     }
                     catch (Exception ex)
                     {
-                        _log.Error(ex, "Error initializing connection");
+                        LogError(ex, "Error initializing connection");
                         tcs.TrySetException(ex);
                     }
                 });
@@ -469,7 +491,12 @@ namespace Alternet.UI.Integration.VisualStudio.Services
 
                     if (exception != null)
                     {
-                        _log.Error(new XamlException(exception.Message + "\n" + exception.StackTrace, null, exception.UixmlLineNumber ?? 0, exception.UixmlLinePosition ?? 0), "UpdateXamlResult error");
+                        LogErrorVS(new XamlException(
+                            exception.Message + "\n" + exception.StackTrace,
+                            null,
+                            exception.UixmlLineNumber ?? 0,
+                            exception.UixmlLinePosition ?? 0),
+                            "UpdateXamlResult error");
                     }
 
                     break;
@@ -484,9 +511,11 @@ namespace Alternet.UI.Integration.VisualStudio.Services
             OnMessageAsync(message).FireAndForget();
         }
 
-        private void ConnectionExceptionReceived(IAlternetUIRemoteTransportConnection connection, Exception ex)
+        private void ConnectionExceptionReceived(
+            IAlternetUIRemoteTransportConnection connection,
+            Exception ex)
         {
-            _log.Error(ex, "Connection error");
+            LogError(ex, "Connection error");
         }
 
         private void OnProcessOutputReceived(object sender, DataReceivedEventArgs e)
@@ -501,7 +530,7 @@ namespace Alternet.UI.Integration.VisualStudio.Services
         {
             if (!string.IsNullOrWhiteSpace(e.Data))
             {
-                _log.Error("<= {Data}", e.Data);
+                LogError("<= {Data}", e.Data);
             }
         }
 
