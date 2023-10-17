@@ -9,6 +9,8 @@
 - Improved Xml documentation in cs files.
 - Improved handling of Uixml errors (not finished).
 
+---
+
 # 0.9.404 (2023 October 10)
 
 - Add CardsPanelHeader control.
@@ -116,6 +118,8 @@ for Aui toolbars and panes.
 - Added to ResourceLoader: Default, StreamFromUrl, etc.
 - Fixed bug in application exit if no visible form.
 
+---
+
 # 0.9.300 (2023 August 9)
 
 - Added LinkLabel, SplitterPanel, LayoutPanel controls.
@@ -143,6 +147,7 @@ Control.EndIgnoreRecreate
 and other properties and methods.
 - Improved work on Linux and MacOs.
 
+---
 
 # 0.9.201 (2023 July 9)
 
