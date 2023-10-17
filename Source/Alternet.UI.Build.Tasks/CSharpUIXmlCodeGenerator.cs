@@ -42,7 +42,16 @@ using System;
                 w.WriteLine($"private {namedObject.TypeFullName} {namedObject.Name};");
         }
 
-        private static void WriteInitializeComponent(UIXmlDocument document, IndentedTextWriter w, IReadOnlyList<UIXmlDocument.NamedObject> namedObjects)
+        public static void WriteLineIndented(this IndentedTextWriter w, string s)
+        {
+            using (new LineIndent(w))
+                w.WriteLine(s);
+        }
+
+        private static void WriteInitializeComponent(
+            UIXmlDocument document,
+            IndentedTextWriter w,
+            IReadOnlyList<UIXmlDocument.NamedObject> namedObjects)
         {
             w.WriteLine();
             w.WriteLine("private bool contentLoaded;");
@@ -52,18 +61,17 @@ using System;
             using (new BlockIndent(w))
             {
                 w.WriteLine("if (Alternet.UI.UixmlLoader.DisableComponentInitialization)");
-                using (new LineIndent(w))
-                    w.WriteLine("return;");
+                    w.WriteLineIndented("return;");
                 w.WriteLine("if (contentLoaded)");
-                using (new LineIndent(w))
-                    w.WriteLine("return;");
+                    w.WriteLineIndented("return;");
                 w.WriteLine("contentLoaded = true;");
-
+/*
                 w.WriteLine($"var uixmlStream = System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceStream(\"{document.ResourceName}\");");
                 w.WriteLine("if (uixmlStream == null)");
-                using (new LineIndent(w))
-                    w.WriteLine("throw new InvalidOperationException();");
+                    w.WriteLineIndented("throw new InvalidOperationException();");
                 w.WriteLine("new Alternet.UI.UixmlLoader().LoadExisting(uixmlStream, this);");
+*/
+                w.WriteLine($"Alternet.UI.UixmlLoader.LoadExisting(\"{document.ResourceName}\", this);");
 
                 w.WriteLine();
                 foreach (var namedObject in namedObjects)

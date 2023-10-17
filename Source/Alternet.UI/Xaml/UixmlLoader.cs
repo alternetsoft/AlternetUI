@@ -29,14 +29,14 @@ namespace Alternet.UI
         /// Populates an existing root object with the object property values created
         /// from the specified resource with XAML.
         /// </summary>
-        public void LoadExisting(string resName, object existingObject)
+        public static void LoadExisting(string resName, object existingObject)
         {
             try
             {
-                var uixmlStream = Assembly.GetExecutingAssembly().GetManifestResourceStream(resName);
+                var uixmlStream = existingObject.GetType().Assembly.GetManifestResourceStream(resName);
                 if (uixmlStream == null)
                     throw new InvalidOperationException();
-                LoadExistingEx(uixmlStream, this, false, resName);
+                LoadExistingEx(uixmlStream, existingObject, false, resName);
             }
             catch (Exception e)
             {
@@ -59,7 +59,7 @@ namespace Alternet.UI
         /// Populates an existing root object with the object property values created
         /// from a source XAML.
         /// </summary>
-        internal void LoadExistingEx(
+        internal static void LoadExistingEx(
             Stream xamlStream,
             object existingObject,
             bool report = true,
@@ -81,7 +81,7 @@ namespace Alternet.UI
             }
         }
 
-        private void ReportException(Exception e, string? resName)
+        private static void ReportException(Exception e, string? resName)
         {
             string sourceUri = resName;
 
