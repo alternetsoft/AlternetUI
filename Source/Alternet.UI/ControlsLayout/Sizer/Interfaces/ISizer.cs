@@ -561,157 +561,185 @@ namespace Alternet.UI
         Int32Size ComputeFittingWindowSize(Control control);
 
         /// <summary>
-        /// 
+        /// Tells the sizer to resize the control so that its client area matches the sizer's
+        /// minimal size (<see cref="ComputeFittingClientSize"/> is called to determine it).
         /// </summary>
-        /// <param name="control">Control</param>
-        /// <returns></returns>
+        /// <param name="control">Affected control.</param>
+        /// <returns>The new window size.</returns>
+        /// <remarks>
+        /// This is commonly done in the constructor of the control itself.
+        /// </remarks>
         Int32Size Fit(Control control);
 
         /// <summary>
-        /// 
+        /// Tell the sizer to resize the virtual size of the control to match the sizer's minimal size.
         /// </summary>
-        /// <param name="control">Control</param>
+        /// <param name="control">Affected control.</param>
+        /// <remarks>
+        /// This will not alter the on screen size of the control, but may cause the
+        /// addition/removal/alteration of scrollbars required to view the virtual area
+        /// in controls which manage it.
+        /// </remarks>
         void FitInside(Control control);
 
         /// <summary>
-        /// 
+        /// This method first calls <see cref="Fit"/> and then SetSizeHints() on the control passed to it.
         /// </summary>
-        /// <param name="control">Control</param>
+        /// <param name="control">Affected control.</param>
+        /// <remarks>
+        /// This function is only when control is actually a <see cref="Window"/>, since
+        /// SetSizeHints only has any effect in these classes. It does nothing in normal controls.
+        /// </remarks>
+        /// <remarks>
+        /// Note that window does not need to be attached to this sizer and it is,
+        /// in fact, common to call this function on the sizer associated with the panel
+        /// covering the client area of a window passing it the window object,
+        /// as this has the desired effect of adjusting the window size to the
+        /// size fitting the panel.
+        /// </remarks>
         void SetSizeHints(Control control);
 
         /// <summary>
-        /// 
+        /// Call this to force the sizer to take the given dimension and thus force the
+        /// items owned by the sizer to resize themselves according to the rules defined by
+        /// its parameters.
         /// </summary>
-        /// <param name="x"></param>
-        /// <param name="y"></param>
-        /// <param name="width"></param>
-        /// <param name="height"></param>
+        /// <param name="x">Left position.</param>
+        /// <param name="y">Top position.</param>
+        /// <param name="width">Width.</param>
+        /// <param name="height">Height.</param>
         void SetDimension(int x, int y, int width, int height);
 
         /// <summary>
-        /// 
+        /// Gets number of added sizer items.
         /// </summary>
-        /// <returns></returns>
         int GetItemCount();
 
         /// <summary>
-        /// 
+        /// Gets whether sizer is empty and there are no items added to it.
         /// </summary>
-        /// <returns></returns>
         bool IsEmpty();
 
         /// <summary>
-        /// 
+        /// Shows or hides item with the attached control.
         /// </summary>
-        /// <param name="control"></param>
-        /// <param name="show"></param>
-        /// <param name="recursive"></param>
+        /// <param name="control">Affected control.</param>
+        /// <param name="show"><c>true</c> to show item; <c>false</c> to hide it.</param>
+        /// <param name="recursive">Use to show or hide elements found in subitems.</param>
         /// <returns><c>true</c> if the child item was found, <c>false</c> otherwise.</returns>
+        /// <remarks>
+        /// To make an item disappear or reappear, use <see cref="Show(Control,bool,bool)"/>
+        /// followed by <see cref="Layout"/>.
+        /// </remarks>
         bool Show(Control control, bool show, bool recursive);
 
         /// <summary>
-        /// 
+        /// Shows or hides item with the attached sizer.
         /// </summary>
-        /// <param name="sizer"></param>
-        /// <param name="show"></param>
-        /// <param name="recursive"></param>
+        /// <param name="sizer">Affected sizer.</param>
+        /// <param name="show"><c>true</c> to show item; <c>false</c> to hide it.</param>
+        /// <param name="recursive">Use to show or hide elements found in subsizers.</param>
         /// <returns><c>true</c> if the child item was found, <c>false</c> otherwise.</returns>
+        /// <remarks>
+        /// To make a sizer item disappear or reappear, use <see cref="Show(ISizer,bool,bool)"/>
+        /// followed by <see cref="Layout"/>.
+        /// </remarks>
         bool Show(ISizer sizer, bool show, bool recursive);
 
         /// <summary>
-        /// 
+        /// Shows the item at the specified index.
         /// </summary>
         /// <param name="index">Item index.</param>
-        /// <param name="show"></param>
+        /// <param name="show"><c>true</c> to show item; <c>false</c> to hide it.</param>
         /// <returns><c>true</c> if the child item was found, <c>false</c> otherwise.</returns>
+        /// <remarks>
+        /// To make an item disappear or reappear, use <see cref="Show(int,bool)"/>
+        /// followed by <see cref="Layout"/>.
+        /// </remarks>
         bool Show(int index, bool show);
 
         /// <summary>
-        /// 
+        /// Hides item with the attached sizer.
         /// </summary>
-        /// <param name="sizer"></param>
-        /// <param name="recursive"></param>
+        /// <param name="sizer">Affected sizer.</param>
+        /// <param name="recursive">Use to show or hide elements found in subitems.</param>
         /// <returns><c>true</c> if the child item was found, <c>false</c> otherwise.</returns>
         bool Hide(ISizer sizer, bool recursive);
 
         /// <summary>
-        /// 
+        /// Hides item with the attached control.
         /// </summary>
-        /// <param name="control"></param>
-        /// <param name="recursive"></param>
+        /// <param name="control">Affected control.</param>
+        /// <param name="recursive">Use to show or hide elements found in subitems.</param>
         /// <returns><c>true</c> if the child item was found, <c>false</c> otherwise.</returns>
         bool Hide(Control control, bool recursive);
 
         /// <summary>
-        /// 
+        /// Hides the item at the specified index.
         /// </summary>
         /// <param name="index">Item index.</param>
         /// <returns><c>true</c> if the child item was found, <c>false</c> otherwise.</returns>
         bool Hide(int index);
 
         /// <summary>
-        /// 
+        /// Gets whether item with the attached control is shown.
         /// </summary>
-        /// <param name="control"></param>
-        /// <returns></returns>
+        /// <param name="control">Control.</param>
+        /// <returns><c>true</c> if control is shown; <c>false</c> otherwise.</returns>
         bool IsShown(Control control);
 
         /// <summary>
-        /// 
+        /// Gets whether item with the attached sizer is shown.
         /// </summary>
-        /// <param name="sizer"></param>
-        /// <returns></returns>
+        /// <param name="sizer">Sizer.</param>
+        /// <returns><c>true</c> if sizer is shown; <c>false</c> otherwise.</returns>
         bool IsShown(ISizer sizer);
 
         /// <summary>
-        /// 
+        /// Gets whether item with the specified index is shown.
         /// </summary>
         /// <param name="index">Item index.</param>
-        /// <returns></returns>
+        /// <returns><c>true</c> if item is shown; <c>false</c> otherwise.</returns>
         bool IsShown(int index);
 
         /// <summary>
-        /// 
+        /// Show or hide all items managed by the sizer.
         /// </summary>
-        /// <param name="show"></param>
-        void ShowItems(bool show);
+        /// <param name="show"><c>true</c> to show items; <c>false</c> to hide them.</param>
+        void ShowItems(bool show = true);
 
         /// <summary>
-        /// 
+        /// Show or hide all items managed by the sizer.
         /// </summary>
-        /// <param name="show"></param>
-        void Show(bool show);
+        /// <param name="show"><c>true</c> to show items; <c>false</c> to hide them.</param>
+        void Show(bool show = true);
 
         /// <summary>
-        /// 
+        /// Gets whether any items are shown.
         /// </summary>
-        /// <returns></returns>
         bool AreAnyItemsShown();
 
         /// <summary>
-        /// 
+        /// Inserts sizer item at the specified index.
         /// </summary>
         /// <param name="index">Item index.</param>
         /// <param name="item">Sizer item.</param>
-        /// <returns></returns>
         ISizerItem Insert(int index, ISizerItem item);
 
         /// <summary>
-        /// 
+        /// Inserts sizer item at the beginning of the items list.
         /// </summary>
         /// <param name="item">Sizer item.</param>
-        /// <returns></returns>
         ISizerItem Prepend(ISizerItem item);
 
         /// <summary>
-        /// 
+        /// Adds sizer item.
         /// </summary>
         /// <param name="item">Sizer item.</param>
-        /// <returns></returns>
         ISizerItem Add(ISizerItem item);
 
         /// <summary>
-        /// 
+        /// Replaces sizer item at the specified index.
         /// </summary>
         /// <param name="index">Item index.</param>
         /// <param name="newitem">Sizer item.</param>
@@ -724,40 +752,49 @@ namespace Alternet.UI
         bool Replace(int index, ISizerItem newitem);
 
         /// <summary>
-        /// 
+        /// Finds the <see cref="ISizerItem"/> which holds the given control.
         /// </summary>
-        /// <param name="control"></param>
-        /// <param name="recursive"></param>
-        /// <returns></returns>
-        ISizerItem GetItem(Control control, bool recursive);
+        /// <param name="control">Control.</param>
+        /// <param name="recursive"><c>true</c> to search in subsizers too.</param>
+        /// <returns><see cref="ISizerItem"/> or <c>null</c> if there is no item with
+        /// the specified control.</returns>
+        ISizerItem? GetItem(Control control, bool recursive);
 
         /// <summary>
-        /// 
+        /// Finds the <see cref="ISizerItem"/> which holds the given subsizer.
         /// </summary>
-        /// <param name="sizer"></param>
-        /// <param name="recursive"></param>
-        /// <returns></returns>
-        ISizerItem GetItem(ISizer sizer, bool recursive);
+        /// <param name="sizer">Sizer</param>
+        /// <param name="recursive"><c>true</c> to search in subsizers too.</param>
+        /// <returns><see cref="ISizerItem"/> or <c>null</c> if there is no item with
+        /// the specified sizer.</returns>
+        ISizerItem? GetItem(ISizer sizer, bool recursive);
 
         /// <summary>
-        /// 
+        /// Gets item with the specified index.
         /// </summary>
-        /// <param name="index"></param>
-        /// <returns></returns>
-        ISizerItem GetItem(int index);
+        /// <param name="index">Item index.</param>
+        /// <returns><see cref="ISizerItem"/> or <c>null</c> if there is no item with
+        /// the specified index.</returns>
+        ISizerItem? GetItem(int index);
 
         /// <summary>
-        /// 
+        /// Finds the <see cref="ISizerItem"/> with the specified id.
         /// </summary>
         /// <param name="id">Item identifier.</param>
-        /// <param name="recursive"></param>
-        /// <returns></returns>
-        ISizerItem GetItemById(int id, bool recursive = false);
+        /// <param name="recursive"><c>true</c> to search in subsizers too.</param>
+        /// <returns><see cref="ISizerItem"/> or <c>null</c> if there is no item with
+        /// the specified id.</returns>
+        ISizerItem? GetItemById(int id, bool recursive = false);
 
         /// <summary>
-        /// 
+        /// Same as adding of the item, but prepends the items to the beginning of the
+        /// list of items owned by this sizer.
         /// </summary>
-        /// <param name="control"></param>
+        /// <param name="control">
+        /// The control to be added to the sizer. Its initial size (either set explicitly by
+        /// the user or calculated internally when using default size) is interpreted as the
+        /// minimal and in many cases also the initial size.
+        /// </param>
         /// <param name="sizerFlags">
         /// A <see cref="ISizerFlags"/> object that enables you
         /// to specify most of the other parameters more conveniently.
@@ -765,9 +802,14 @@ namespace Alternet.UI
         ISizerItem Prepend(Control control, ISizerFlags sizerFlags);
 
         /// <summary>
-        /// 
+        /// Same as adding of the item, but prepends the items to the beginning of the
+        /// list of items owned by this sizer.
         /// </summary>
-        /// <param name="sizer"></param>
+        /// <param name="sizer">
+        /// The (child-)sizer to be added to the sizer. This allows placing a child sizer
+        /// in a sizer and thus to create hierarchies of sizers (typically a vertical box
+        /// as the top sizer and several horizontal boxes on the level beneath).
+        /// </param>
         /// <param name="sizerFlags">
         /// A <see cref="ISizerFlags"/> object that enables you
         /// to specify most of the other parameters more conveniently.
@@ -775,10 +817,11 @@ namespace Alternet.UI
         ISizerItem Prepend(ISizer sizer, ISizerFlags sizerFlags);
 
         /// <summary>
-        /// 
+        /// Same as adding of the item, but prepends the items to the beginning of the
+        /// list of items owned by this sizer.
         /// </summary>
-        /// <param name="width"></param>
-        /// <param name="height"></param>
+        /// <param name="width">Width of the spacer.</param>
+        /// <param name="height">Height of the spacer.</param>
         /// <param name="sizerFlags">
         /// A <see cref="ISizerFlags"/> object that enables you
         /// to specify most of the other parameters more conveniently.
@@ -786,7 +829,7 @@ namespace Alternet.UI
         ISizerItem Prepend(int width, int height, ISizerFlags sizerFlags);
 
         /// <summary>
-        /// 
+        /// Insert a child into the sizer before any existing item at the specified index.
         /// </summary>
         /// <param name="index">Item index.</param>
         /// <param name="control">
@@ -801,10 +844,14 @@ namespace Alternet.UI
         ISizerItem Insert(int index, Control control, ISizerFlags sizerFlags);
 
         /// <summary>
-        /// 
+        /// Insert a child into the sizer before any existing item at the specified index.
         /// </summary>
         /// <param name="index">Item index.</param>
-        /// <param name="sizer"></param>
+        /// <param name="sizer">
+        /// The (child-)sizer to be added to the sizer. This allows placing a child sizer
+        /// in a sizer and thus to create hierarchies of sizers (typically a vertical box
+        /// as the top sizer and several horizontal boxes on the level beneath).
+        /// </param>
         /// <param name="sizerFlags">
         /// A <see cref="ISizerFlags"/> object that enables you
         /// to specify most of the other parameters more conveniently.
@@ -812,7 +859,7 @@ namespace Alternet.UI
         ISizerItem Insert(int index, ISizer sizer, ISizerFlags sizerFlags);
 
         /// <summary>
-        /// 
+        /// Insert a child into the sizer before any existing item at the specified index.
         /// </summary>
         /// <param name="index">Item index.</param>
         /// <param name="width">Width of the spacer.</param>
@@ -824,7 +871,7 @@ namespace Alternet.UI
         ISizerItem Insert(int index, int width, int height, ISizerFlags sizerFlags);
 
         /// <summary>
-        /// 
+        /// Appends a child to the sizer.
         /// </summary>
         /// <param name="control">
         /// The control to be added to the sizer. Its initial size (either set explicitly by
@@ -838,9 +885,13 @@ namespace Alternet.UI
         ISizerItem Add(Control control, ISizerFlags sizerFlags);
 
         /// <summary>
-        /// 
+        /// Appends a child to the sizer.
         /// </summary>
-        /// <param name="sizer"></param>
+        /// <param name="sizer">
+        /// The (child-)sizer to be added to the sizer. This allows placing a child sizer
+        /// in a sizer and thus to create hierarchies of sizers (typically a vertical box
+        /// as the top sizer and several horizontal boxes on the level beneath).
+        /// </param>
         /// <param name="sizerFlags">
         /// A <see cref="ISizerFlags"/> object that enables you
         /// to specify most of the other parameters more conveniently.

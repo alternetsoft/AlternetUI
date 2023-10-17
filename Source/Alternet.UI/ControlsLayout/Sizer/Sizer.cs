@@ -423,27 +423,35 @@ namespace Alternet.UI
             return Native.Sizer.ReplaceItem(Handle, index, newitem.Handle);
         }
 
-        public ISizerItem GetItem(Control window, bool recursive)
+        public ISizerItem? GetItem(Control window, bool recursive)
         {
             var result = Native.Sizer.GetItemWindow(Handle, window.WxWidget, recursive);
+            if (result == default)
+                return null;
             return new SizerItem(result, DisposeItemHandle);
         }
 
-        public ISizerItem GetItem(ISizer sizer, bool recursive)
+        public ISizerItem? GetItem(ISizer sizer, bool recursive)
         {
             var result = Native.Sizer.GetItemSizer(Handle, sizer.Handle, recursive);
+            if (result == default)
+                return null;
             return new SizerItem(result, DisposeItemHandle);
         }
 
-        public ISizerItem GetItem(int index)
+        public ISizerItem? GetItem(int index)
         {
             var result = Native.Sizer.GetItem(Handle, index);
+            if (result == default)
+                return null;
             return new SizerItem(result, DisposeItemHandle);
         }
 
-        public ISizerItem GetItemById(int id, bool recursive = false)
+        public ISizerItem? GetItemById(int id, bool recursive = false)
         {
             var result = Native.Sizer.GetItemById(Handle, id, recursive);
+            if (result == default)
+                return null;
             return new SizerItem(result, DisposeItemHandle);
         }
 
