@@ -84,21 +84,33 @@ namespace Alternet.UI
         private static void ReportException(Exception e, string? resName)
         {
             string sourceUri = resName;
+            int lineNumber = -1;
+            int linePos = -1;
 
             if (e is XmlException xmlException)
             {
-                int lineNumber = xmlException.LineNumber;
-                int linePos = xmlException.LinePosition;
+                lineNumber = xmlException.LineNumber;
+                linePos = xmlException.LinePosition;
                 sourceUri = sourceUri ?? xmlException.SourceUri;
             }
 
-            if(sourceUri is null)
+            Debug.WriteLine($"Error reading Uixml: {e.Message}");
+            Debug.Indent();
+            if (sourceUri is not null)
             {
-                Debug.WriteLine(e.Message);
-                return;
+                string lineStr = string.Empty;
+                string charStr = string.Empty;
+                if (linePos > 0)
+                    charStr = $" Ch: {linePos}";
+                if(lineNumber > 0)
+                    lineStr = $" Ln: {lineNumber}{charStr}";
+
+                Debug.WriteLine($"File: {sourceUri}{lineStr}");
             }
 
-            Debug.WriteLine($"{e.Message}. Uri: {sourceUri}");
+            Debug.WriteLine($"Exception type: {e.GetType()}");
+            Debug.Unindent();
+
         }
     }
 }
