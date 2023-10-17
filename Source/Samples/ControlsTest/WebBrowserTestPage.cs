@@ -13,8 +13,6 @@ namespace ControlsTest
 {
     internal partial class WebBrowserTestPage : Control
     {
-        internal static readonly Destructor MyDestructor = new();
-
         private static readonly string ZipSchemeName = "zipfs";
         private static readonly bool SetDefaultUserAgent = false;
         private readonly PanelWebBrowser rootPanel;
@@ -32,8 +30,6 @@ namespace ControlsTest
             if (SetDefaultUserAgent)
                 WebBrowser.SetDefaultUserAgent("Mozilla");
             PanelWebBrowser.SetBackendPathSmart("Edge");
-
-            LogUtils.LogToFileAppStarted();
         }
 
         public WebBrowserTestPage()
@@ -528,14 +524,6 @@ namespace ControlsTest
             }
 
             pandaLoaded = true;
-        }
-
-        internal sealed class Destructor
-        {
-            ~Destructor()
-            {
-                LogUtils.LogToFileAppFinished();
-            }
         }
 
         private class WeatherForecast

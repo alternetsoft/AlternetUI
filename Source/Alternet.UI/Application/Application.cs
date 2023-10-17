@@ -18,6 +18,8 @@ namespace Alternet.UI
     [System.ComponentModel.DesignerCategory("Code")]
     public partial class Application : IDisposable
     {
+        internal static readonly Destructor MyDestructor = new();
+
         private static bool terminating = false;
         private static bool logFileIsEnabled;
         private static Application? current;
@@ -779,6 +781,15 @@ namespace Alternet.UI
         {
             if (IsDisposed)
                 throw new ObjectDisposedException(null);
+        }
+
+        internal sealed class Destructor
+        {
+            ~Destructor()
+            {
+                if(logFileIsEnabled)
+                    LogUtils.LogToFileAppFinished();
+            }
         }
     }
 }

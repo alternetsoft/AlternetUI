@@ -17,6 +17,14 @@ namespace Alternet.UI
     {
         private static int id;
         private static int logUseMaxLength;
+        private static Flags flags;
+
+        [Flags]
+        internal enum Flags
+        {
+            AppStartLogged = 1,
+            AppFinishLogged = 2,
+        }
 
         /// <summary>
         /// Gets or sets max property value length for the <see cref="LogPropLimitLength"/>
@@ -105,44 +113,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Writes to log file "Application started" header text.
-        /// </summary>
-        public static void LogToFileAppStarted()
-        {
-            try
-            {
-                LogUtils.LogToFile(string.Empty);
-                LogUtils.LogToFile(string.Empty);
-                LogToFile("======================================");
-                LogToFile("Application log started");
-                LogToFile("======================================");
-                LogUtils.LogToFile(string.Empty);
-            }
-            catch
-            {
-            }
-        }
-
-        /// <summary>
-        /// Writes to log file "Application finished" header text.
-        /// </summary>
-        public static void LogToFileAppFinished()
-        {
-            try
-            {
-                LogUtils.LogToFile(string.Empty);
-                LogUtils.LogToFile(string.Empty);
-                LogToFile("======================================");
-                LogToFile("Application log finished");
-                LogToFile("======================================");
-                LogUtils.LogToFile(string.Empty);
-            }
-            catch
-            {
-            }
-        }
-
-        /// <summary>
         /// Deletes application log file (specified in <see cref="Application.LogFilePath"/>).
         /// </summary>
         public static void DeleteLog()
@@ -194,6 +164,50 @@ namespace Alternet.UI
                 LogToFileAppStarted();
 
             AppUtils.ShellExecute(Application.LogFilePath);
+        }
+
+        /// <summary>
+        /// Writes to log file "Application started" header text.
+        /// </summary>
+        internal static void LogToFileAppStarted()
+        {
+            if (flags.HasFlag(Flags.AppStartLogged))
+                return;
+            try
+            {
+                flags |= Flags.AppStartLogged;
+                LogUtils.LogToFile(string.Empty);
+                LogUtils.LogToFile(string.Empty);
+                LogToFile("======================================");
+                LogToFile("Application log started");
+                LogToFile("======================================");
+                LogUtils.LogToFile(string.Empty);
+            }
+            catch
+            {
+            }
+        }
+
+        /// <summary>
+        /// Writes to log file "Application finished" header text.
+        /// </summary>
+        internal static void LogToFileAppFinished()
+        {
+            if (flags.HasFlag(Flags.AppFinishLogged))
+                return;
+            try
+            {
+                flags |= Flags.AppFinishLogged;
+                LogUtils.LogToFile(string.Empty);
+                LogUtils.LogToFile(string.Empty);
+                LogToFile("======================================");
+                LogToFile("Application log finished");
+                LogToFile("======================================");
+                LogUtils.LogToFile(string.Empty);
+            }
+            catch
+            {
+            }
         }
     }
 }
