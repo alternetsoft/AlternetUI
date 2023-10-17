@@ -1,3 +1,14 @@
+# 0.9.405 (not released, work in progress)
+
+- Implemented Sizer functionality. It allows to implement complex controls layouts.
+- Add to TreeViewItem: TextColor, BackgroundColor, IsBold.
+- TreeView speedup (removed handlesByItems usage).
+- Fixed exceptions in menu and toolbar.
+- Fixed exception in DragAndDropSample.
+- Moved PanelTreeAndCards control to the main library.
+- Improved Xml documentation in cs files.
+- Improved handling of Uixml errors (not finished).
+
 # 0.9.404 (2023 October 10)
 
 - Add CardsPanelHeader control.
