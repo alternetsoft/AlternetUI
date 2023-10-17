@@ -69,6 +69,8 @@ namespace Alternet.UI
                 typeof(MouseButtonEventHandler),
                 typeof(UIElement));
 
+        // !!!!! IsFocusedPropertyKey must be before IsFocusedProperty
+
         /// <summary>
         ///     The DependencyProperty for the IsFocused property.
         /// </summary>
