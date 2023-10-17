@@ -3,6 +3,7 @@
 #include "ApiTypes.h"
 #include "Object.h"
 #include "Control.h"
+#include "wx/treectrl.h"
 
 namespace Alternet::UI
 {
