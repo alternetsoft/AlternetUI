@@ -1,104 +1,108 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
-    <Import Project="../Alternet.UI.Common/Alternet.UI.Common.props"/>
+  <Import Project="../Alternet.UI.Common/Alternet.UI.Common.props"/>
 
-    <PropertyGroup>
-		<DotNetBuildCmd>dotnet build --nologo --property WarningLevel=0</DotNetBuildCmd>
-		<DotNetBuildDebugCmd>dotnet build --configuration Debug --nologo --property WarningLevel=0</DotNetBuildDebugCmd>
-		<DotNetBuildReleaseCmd>dotnet build --configuration Release --nologo --property WarningLevel=0</DotNetBuildReleaseCmd>
+  <PropertyGroup>
+    <DotNetBuildCmd>dotnet build --nologo --property WarningLevel=0</DotNetBuildCmd>
+    <DotNetBuildDebugCmd>dotnet build --configuration Debug --nologo --property WarningLevel=0</DotNetBuildDebugCmd>
+    <DotNetBuildReleaseCmd>dotnet build --configuration Release --nologo --property WarningLevel=0</DotNetBuildReleaseCmd>
 
-		<DotNetBuildDebugCmdNoIncremental>$(DotNetBuildDebugCmd) --no-incremental</DotNetBuildDebugCmdNoIncremental>
-		<DotNetBuildReleaseCmdNoIncremental>$(DotNetBuildReleaseCmd) --no-incremental</DotNetBuildReleaseCmdNoIncremental>
+    <DotNetBuildDebugCmdNoIncremental>$(DotNetBuildDebugCmd) --no-incremental</DotNetBuildDebugCmdNoIncremental>
+    <DotNetBuildReleaseCmdNoIncremental>$(DotNetBuildReleaseCmd) --no-incremental</DotNetBuildReleaseCmdNoIncremental>
 
-		<DotNetRunCmd>dotnet run --nologo --property WarningLevel=0 --framework net6.0</DotNetRunCmd>
-        <ManagedBuildConfiguration>Release</ManagedBuildConfiguration>
-        <NativeBuildConfiguration>Release</NativeBuildConfiguration>
-        <RootDirectoryPath>$(MSBuildProjectDirectory)\..\..\..\</RootDirectoryPath>
-        <BinDirectoryPath>$(MSBuildProjectDirectory)\bin\</BinDirectoryPath>
-        <_OutputDirectoryPath_X86>$(BinDirectoryPath)\$(BuildPlatform)\$(ManagedBuildConfiguration)\x86\</_OutputDirectoryPath_X86>
-        <_OutputDirectoryPath_X64>$(BinDirectoryPath)\$(BuildPlatform)\$(ManagedBuildConfiguration)\x64\</_OutputDirectoryPath_X64>
+    <DotNetRunCmd>dotnet run --nologo --property WarningLevel=0 --framework net6.0</DotNetRunCmd>
+    <ManagedBuildConfiguration>Release</ManagedBuildConfiguration>
+    <NativeBuildConfiguration>Release</NativeBuildConfiguration>
+    <RootDirectoryPath>$(MSBuildProjectDirectory)\..\..\..\</RootDirectoryPath>
+    <BinDirectoryPath>$(MSBuildProjectDirectory)\bin\</BinDirectoryPath>
+    <_OutputDirectoryPath_X86>$(BinDirectoryPath)\$(BuildPlatform)\$(ManagedBuildConfiguration)\x86\</_OutputDirectoryPath_X86>
+    <_OutputDirectoryPath_X64>$(BinDirectoryPath)\$(BuildPlatform)\$(ManagedBuildConfiguration)\x64\</_OutputDirectoryPath_X64>
 
-        <OutputDirectoryPath_X86_Release>$(BinDirectoryPath)\$(BuildPlatform)\x86\Release\</OutputDirectoryPath_X86_Release>
-        <OutputDirectoryPath_X86_Debug>$(BinDirectoryPath)\$(BuildPlatform)\x86\Debug\</OutputDirectoryPath_X86_Debug>
-        <OutputDirectoryPath_X64_Release>$(BinDirectoryPath)\$(BuildPlatform)\x64\Release\</OutputDirectoryPath_X64_Release>
-        <OutputDirectoryPath_X64_Debug>$(BinDirectoryPath)\$(BuildPlatform)\x64\Debug\</OutputDirectoryPath_X64_Debug>
+    <OutputDirectoryPath_X86_Release>$(BinDirectoryPath)\$(BuildPlatform)\x86\Release\</OutputDirectoryPath_X86_Release>
+    <OutputDirectoryPath_X86_Debug>$(BinDirectoryPath)\$(BuildPlatform)\x86\Debug\</OutputDirectoryPath_X86_Debug>
+    <OutputDirectoryPath_X64_Release>$(BinDirectoryPath)\$(BuildPlatform)\x64\Release\</OutputDirectoryPath_X64_Release>
+    <OutputDirectoryPath_X64_Debug>$(BinDirectoryPath)\$(BuildPlatform)\x64\Debug\</OutputDirectoryPath_X64_Debug>
 
-        <BuildContentFilesDirectoryPath>$(MSBuildProjectDirectory)\Content</BuildContentFilesDirectoryPath>
-    </PropertyGroup>
+    <BuildContentFilesDirectoryPath>$(MSBuildProjectDirectory)\Content</BuildContentFilesDirectoryPath>
+  </PropertyGroup>
 
-    <PropertyGroup>
-        <Bindings_RootDirectoryPath>$(RootDirectoryPath)\Source\</Bindings_RootDirectoryPath>
-         <Bindings_NativeProjectDirectoryPath>$(Bindings_RootDirectoryPath)\Alternet.UI.Pal\</Bindings_NativeProjectDirectoryPath>
-        <Bindings_NativeVcProjectFilePath>$(Bindings_NativeProjectDirectoryPath)\Alternet.UI.Pal.vcxproj</Bindings_NativeVcProjectFilePath>
-        <_Bindings_NativeUnixProjectOutputDirectoryPath>$(Bindings_NativeProjectDirectoryPath)\bin\x64\$(NativeBuildConfiguration)</_Bindings_NativeUnixProjectOutputDirectoryPath>
-        <Bindings_NativeUnixProjectBuildPath>$(Bindings_NativeProjectDirectoryPath)\build</Bindings_NativeUnixProjectBuildPath>
+  <PropertyGroup>
+    <Bindings_RootDirectoryPath>$(RootDirectoryPath)\Source\</Bindings_RootDirectoryPath>
+    <Bindings_NativeProjectDirectoryPath>$(Bindings_RootDirectoryPath)\Alternet.UI.Pal\</Bindings_NativeProjectDirectoryPath>
+    <Bindings_NativeVcProjectFilePath>$(Bindings_NativeProjectDirectoryPath)\Alternet.UI.Pal.vcxproj</Bindings_NativeVcProjectFilePath>
+    <_Bindings_NativeUnixProjectOutputDirectoryPath>$(Bindings_NativeProjectDirectoryPath)\bin\x64\$(NativeBuildConfiguration)</_Bindings_NativeUnixProjectOutputDirectoryPath>
+    <Bindings_NativeUnixProjectBuildPath>$(Bindings_NativeProjectDirectoryPath)\build</Bindings_NativeUnixProjectBuildPath>
 
-        <Bindings_NativeUnixProjectOutputDirectoryPath_Release>$(Bindings_NativeProjectDirectoryPath)\bin\x64\Release</Bindings_NativeUnixProjectOutputDirectoryPath_Release>
-        <Bindings_NativeUnixProjectOutputDirectoryPath_Debug>$(Bindings_NativeProjectDirectoryPath)\bin\x64\Debug</Bindings_NativeUnixProjectOutputDirectoryPath_Debug>
-    </PropertyGroup>
+    <Bindings_NativeUnixProjectOutputDirectoryPath_Release>$(Bindings_NativeProjectDirectoryPath)\bin\x64\Release</Bindings_NativeUnixProjectOutputDirectoryPath_Release>
+    <Bindings_NativeUnixProjectOutputDirectoryPath_Debug>$(Bindings_NativeProjectDirectoryPath)\bin\x64\Debug</Bindings_NativeUnixProjectOutputDirectoryPath_Debug>
+  </PropertyGroup>
 
-    <ItemGroup>
-        <SupportedTargetFrameworkMoniker Condition="$([MSBuild]::IsOsPlatform('Windows'))" Include="$(DotNetPlatformMoniker)" />
-        <SupportedTargetFrameworkMoniker Include="$(DotNetCorePlatformMoniker)" />
-    </ItemGroup>
+  <ItemGroup>
+    <SupportedTargetFrameworkMoniker Condition="$([MSBuild]::IsOsPlatform('Windows'))" Include="$(DotNetPlatformMoniker)" />
+    <SupportedTargetFrameworkMoniker Include="$(DotNetCorePlatformMoniker)" />
+  </ItemGroup>
 
-    <PropertyGroup>
-        <ExternalComponentsDirectory>$(RootDirectoryPath)\External\</ExternalComponentsDirectory>
+  <PropertyGroup>
+    <ExternalComponentsDirectory>$(RootDirectoryPath)\External\</ExternalComponentsDirectory>
     <!-- ========================================== -->
-        <WebViewDirectory>$(ExternalComponentsDirectory)\WxWidgets\3rdparty\webview2</WebViewDirectory>
-        <WebViewDownloadUrl>https://alternetsoftware.blob.core.windows.net/alternet-ui/microsoft.web.webview2.1.0.1774.30.zip</WebViewDownloadUrl>
-        <WebViewDownloadDirectory>$(ExternalComponentsDirectory)</WebViewDownloadDirectory>
-        <WebViewDownloadFileName>WebView.zip</WebViewDownloadFileName>
-        <WebViewDownloadTargetPath>$(WebViewDownloadDirectory)\$(WebViewDownloadFileName)</WebViewDownloadTargetPath>
+    <WebViewDirectory>$(ExternalComponentsDirectory)\WxWidgets\3rdparty\webview2</WebViewDirectory>
+    <WebViewDownloadUrlOld>https://alternetsoftware.blob.core.windows.net/alternet-ui/microsoft.web.webview2.1.0.1774.30.zip</WebViewDownloadUrlOld>
+    <WebViewDownloadUrl>https://alternetsoftware.blob.core.windows.net/alternet-ui/microsoft.web.webview2.1.0.1774.30.zip</WebViewDownloadUrl>
+    <WebViewDownloadUrlNew>https://alternetsoftware.blob.core.windows.net/alternet-ui/microsoft.web.webview2.1.0.2045.28.zip</WebViewDownloadUrlNew>
+    <WebViewDownloadDirectory>$(ExternalComponentsDirectory)</WebViewDownloadDirectory>
+    <WebViewDownloadFileName>WebView.zip</WebViewDownloadFileName>
+    <WebViewDownloadTargetPath>$(WebViewDownloadDirectory)\$(WebViewDownloadFileName)</WebViewDownloadTargetPath>
     <!-- ========================================== -->
-        <WxWidgetsDirectory>$(ExternalComponentsDirectory)\WxWidgets</WxWidgetsDirectory>
-        <WxWidgetsDownloadUrl>https://alternetsoftware.blob.core.windows.net/alternet-ui/wxWidgets-3.2.2.1.zip</WxWidgetsDownloadUrl>
-        <WxWidgetsDownloadDirectory>$(ExternalComponentsDirectory)</WxWidgetsDownloadDirectory>
-        <WxWidgetsDownloadFileName>WxWidgets.zip</WxWidgetsDownloadFileName>
-        <WxWidgetsDownloadTargetPath>$(WxWidgetsDownloadDirectory)\$(WxWidgetsDownloadFileName)</WxWidgetsDownloadTargetPath>
-        <VCVarsAllPath>C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Auxiliary\Build\vcvarsall.bat</VCVarsAllPath>
+    <WxWidgetsDirectory>$(ExternalComponentsDirectory)\WxWidgets</WxWidgetsDirectory>
+    <WxWidgetsDownloadUrlOld>https://alternetsoftware.blob.core.windows.net/alternet-ui/wxWidgets-3.2.2.1.zip</WxWidgetsDownloadUrlOld>
+    <WxWidgetsDownloadUrl>https://alternetsoftware.blob.core.windows.net/alternet-ui/wxWidgets-3.2.2.1.zip</WxWidgetsDownloadUrl>
+    <WxWidgetsDownloadUrlNew>https://alternetsoftware.blob.core.windows.net/alternet-ui/wxWidgets-3.2.3.zip</WxWidgetsDownloadUrlNew>
+    <WxWidgetsDownloadDirectory>$(ExternalComponentsDirectory)</WxWidgetsDownloadDirectory>
+    <WxWidgetsDownloadFileName>WxWidgets.zip</WxWidgetsDownloadFileName>
+    <WxWidgetsDownloadTargetPath>$(WxWidgetsDownloadDirectory)\$(WxWidgetsDownloadFileName)</WxWidgetsDownloadTargetPath>
+    <VCVarsAllPath>C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Auxiliary\Build\vcvarsall.bat</VCVarsAllPath>
     <!-- ========================================== -->
-        <WxWidgetsBinDownloadUrlWindowsZip>https://alternetsoftware.blob.core.windows.net/alternet-ui/wxWidgets-bin-noobjpch-3.2.2.1.zip</WxWidgetsBinDownloadUrlWindowsZip>
-        <WxWidgetsBinDownloadUrlWindows7z>https://alternetsoftware.blob.core.windows.net/alternet-ui/wxWidgets-bin-noobjpch-3.2.2.1.7z</WxWidgetsBinDownloadUrlWindows7z>
-        <WxWidgetsBinDownloadUrlWindows>$(WxWidgetsBinDownloadUrlWindowsZip)</WxWidgetsBinDownloadUrlWindows>
+    <WxWidgetsBinDownloadUrlWindowsZip>https://alternetsoftware.blob.core.windows.net/alternet-ui/wxWidgets-bin-noobjpch-3.2.2.1.zip</WxWidgetsBinDownloadUrlWindowsZip>
+    <WxWidgetsBinDownloadUrlWindows7z>https://alternetsoftware.blob.core.windows.net/alternet-ui/wxWidgets-bin-noobjpch-3.2.2.1.7z</WxWidgetsBinDownloadUrlWindows7z>
+    <WxWidgetsBinDownloadUrlWindows>$(WxWidgetsBinDownloadUrlWindowsZip)</WxWidgetsBinDownloadUrlWindows>
     <!-- ========================================== -->
-        <WxWidgetsBinDownloadUrlMacOSZip>https://alternetsoftware.blob.core.windows.net/alternet-ui/wxWidgets-bin-macos-3.2.2.1.zip</WxWidgetsBinDownloadUrlMacOSZip>
-        <WxWidgetsBinDownloadUrlMacOSLocalHost></WxWidgetsBinDownloadUrlMacOSLocalHost>
-        <WxWidgetsBinDownloadUrlMacOSTest></WxWidgetsBinDownloadUrlMacOSTest>
-        <WxWidgetsBinDownloadUrlMacOS>$(WxWidgetsBinDownloadUrlMacOSZip)</WxWidgetsBinDownloadUrlMacOS>
+    <WxWidgetsBinDownloadUrlMacOSZip>https://alternetsoftware.blob.core.windows.net/alternet-ui/wxWidgets-bin-macos-3.2.2.1.zip</WxWidgetsBinDownloadUrlMacOSZip>
+    <WxWidgetsBinDownloadUrlMacOSLocalHost></WxWidgetsBinDownloadUrlMacOSLocalHost>
+    <WxWidgetsBinDownloadUrlMacOSTest></WxWidgetsBinDownloadUrlMacOSTest>
+    <WxWidgetsBinDownloadUrlMacOS>$(WxWidgetsBinDownloadUrlMacOSZip)</WxWidgetsBinDownloadUrlMacOS>
 
-        <WxWidgetsBinDownloadDirectoryMacOS>$(ExternalComponentsDirectory)</WxWidgetsBinDownloadDirectoryMacOS>
-        <WxWidgetsBinDownloadFileNameMacOS>WxWidgetsBinMacOs.zip</WxWidgetsBinDownloadFileNameMacOS>
-        <WxWidgetsBinDownloadTargetPathMacOS>$(WxWidgetsBinDownloadDirectoryMacOS)\$(WxWidgetsBinDownloadFileNameMacOS)</WxWidgetsBinDownloadTargetPathMacOS>
+    <WxWidgetsBinDownloadDirectoryMacOS>$(ExternalComponentsDirectory)</WxWidgetsBinDownloadDirectoryMacOS>
+    <WxWidgetsBinDownloadFileNameMacOS>WxWidgetsBinMacOs.zip</WxWidgetsBinDownloadFileNameMacOS>
+    <WxWidgetsBinDownloadTargetPathMacOS>$(WxWidgetsBinDownloadDirectoryMacOS)\$(WxWidgetsBinDownloadFileNameMacOS)</WxWidgetsBinDownloadTargetPathMacOS>
     <!-- ========================================== -->
-        <WxWidgetsBinDownloadUrlLinuxZip>https://alternetsoftware.blob.core.windows.net/alternet-ui/wxWidgets-bin-linux-3.2.2.1.zip</WxWidgetsBinDownloadUrlLinuxZip>
-        <WxWidgetsBinDownloadUrlLinuxLocalHost></WxWidgetsBinDownloadUrlLinuxLocalHost>
-        <WxWidgetsBinDownloadUrlLinuxTest></WxWidgetsBinDownloadUrlLinuxTest>
-        <WxWidgetsBinDownloadUrlLinux>$(WxWidgetsBinDownloadUrlLinuxZip)</WxWidgetsBinDownloadUrlLinux>
+    <WxWidgetsBinDownloadUrlLinuxZip>https://alternetsoftware.blob.core.windows.net/alternet-ui/wxWidgets-bin-linux-3.2.2.1.zip</WxWidgetsBinDownloadUrlLinuxZip>
+    <WxWidgetsBinDownloadUrlLinuxLocalHost></WxWidgetsBinDownloadUrlLinuxLocalHost>
+    <WxWidgetsBinDownloadUrlLinuxTest></WxWidgetsBinDownloadUrlLinuxTest>
+    <WxWidgetsBinDownloadUrlLinux>$(WxWidgetsBinDownloadUrlLinuxZip)</WxWidgetsBinDownloadUrlLinux>
 
-        <WxWidgetsBinDownloadDirectoryLinux>$(ExternalComponentsDirectory)</WxWidgetsBinDownloadDirectoryLinux>
-        <WxWidgetsBinDownloadFileNameLinux>WxWidgetsBinLinux.zip</WxWidgetsBinDownloadFileNameLinux>
-        <WxWidgetsBinDownloadTargetPathLinux>$(WxWidgetsBinDownloadDirectoryLinux)\$(WxWidgetsBinDownloadFileNameLinux)</WxWidgetsBinDownloadTargetPathLinux>
+    <WxWidgetsBinDownloadDirectoryLinux>$(ExternalComponentsDirectory)</WxWidgetsBinDownloadDirectoryLinux>
+    <WxWidgetsBinDownloadFileNameLinux>WxWidgetsBinLinux.zip</WxWidgetsBinDownloadFileNameLinux>
+    <WxWidgetsBinDownloadTargetPathLinux>$(WxWidgetsBinDownloadDirectoryLinux)\$(WxWidgetsBinDownloadFileNameLinux)</WxWidgetsBinDownloadTargetPathLinux>
     <!-- ========================================== -->
-        <WxWidgetsWindowsBuildDirectoryNameParent>build</WxWidgetsWindowsBuildDirectoryNameParent>
-        <WxWidgetsWindowsBuildDirectoryName>msw</WxWidgetsWindowsBuildDirectoryName>
-        <WxWidgetsWindowsBuildDirectory>$(WxWidgetsDirectory)\$(WxWidgetsWindowsBuildDirectoryNameParent)\$(WxWidgetsWindowsBuildDirectoryName)</WxWidgetsWindowsBuildDirectory>
-        <WxWidgetsWindowsBuildDirectoryParent>$(WxWidgetsDirectory)\$(WxWidgetsWindowsBuildDirectoryNameParent)</WxWidgetsWindowsBuildDirectoryParent>
+    <WxWidgetsWindowsBuildDirectoryNameParent>build</WxWidgetsWindowsBuildDirectoryNameParent>
+    <WxWidgetsWindowsBuildDirectoryName>msw</WxWidgetsWindowsBuildDirectoryName>
+    <WxWidgetsWindowsBuildDirectory>$(WxWidgetsDirectory)\$(WxWidgetsWindowsBuildDirectoryNameParent)\$(WxWidgetsWindowsBuildDirectoryName)</WxWidgetsWindowsBuildDirectory>
+    <WxWidgetsWindowsBuildDirectoryParent>$(WxWidgetsDirectory)\$(WxWidgetsWindowsBuildDirectoryNameParent)</WxWidgetsWindowsBuildDirectoryParent>
     <!-- ========================================== -->
-	<WxWidgetsWindowsBuildDirectory_vc_mswu>$(WxWidgetsWindowsBuildDirectory)\vc_mswu</WxWidgetsWindowsBuildDirectory_vc_mswu>
-	<WxWidgetsWindowsBuildDirectory_vc_x64_mswu>$(WxWidgetsWindowsBuildDirectory)\vc_x64_mswu</WxWidgetsWindowsBuildDirectory_vc_x64_mswu>
-	<WxWidgetsWindowsBuildDirectory_vc_mswud>$(WxWidgetsWindowsBuildDirectory)\vc_mswud</WxWidgetsWindowsBuildDirectory_vc_mswud>
-	<WxWidgetsWindowsBuildDirectory_vc_x64_mswud>$(WxWidgetsWindowsBuildDirectory)\vc_x64_mswud</WxWidgetsWindowsBuildDirectory_vc_x64_mswud>
-	<WxWidgetsWindowsBuildDirectory_vc_lib>$(WxWidgetsDirectory)\lib\vc_lib</WxWidgetsWindowsBuildDirectory_vc_lib>
-	<WxWidgetsWindowsBuildDirectory_vc_x64_lib>$(WxWidgetsDirectory)\lib\vc_x64_lib</WxWidgetsWindowsBuildDirectory_vc_x64_lib>
+    <WxWidgetsWindowsBuildDirectory_vc_mswu>$(WxWidgetsWindowsBuildDirectory)\vc_mswu</WxWidgetsWindowsBuildDirectory_vc_mswu>
+    <WxWidgetsWindowsBuildDirectory_vc_x64_mswu>$(WxWidgetsWindowsBuildDirectory)\vc_x64_mswu</WxWidgetsWindowsBuildDirectory_vc_x64_mswu>
+    <WxWidgetsWindowsBuildDirectory_vc_mswud>$(WxWidgetsWindowsBuildDirectory)\vc_mswud</WxWidgetsWindowsBuildDirectory_vc_mswud>
+    <WxWidgetsWindowsBuildDirectory_vc_x64_mswud>$(WxWidgetsWindowsBuildDirectory)\vc_x64_mswud</WxWidgetsWindowsBuildDirectory_vc_x64_mswud>
+    <WxWidgetsWindowsBuildDirectory_vc_lib>$(WxWidgetsDirectory)\lib\vc_lib</WxWidgetsWindowsBuildDirectory_vc_lib>
+    <WxWidgetsWindowsBuildDirectory_vc_x64_lib>$(WxWidgetsDirectory)\lib\vc_x64_lib</WxWidgetsWindowsBuildDirectory_vc_x64_lib>
     <!-- ========================================== -->
-        <WxWidgetsGtkBuildDirectoryName>gtk-build</WxWidgetsGtkBuildDirectoryName>
-        <WxWidgetsGtkBuildDirectory>$(WxWidgetsDirectory)\$(WxWidgetsGtkBuildDirectoryName)</WxWidgetsGtkBuildDirectory>
+    <WxWidgetsGtkBuildDirectoryName>gtk-build</WxWidgetsGtkBuildDirectoryName>
+    <WxWidgetsGtkBuildDirectory>$(WxWidgetsDirectory)\$(WxWidgetsGtkBuildDirectoryName)</WxWidgetsGtkBuildDirectory>
     <!-- ========================================== -->
-        <WxWidgetsMacOSBuildDirectoryName>macos-build</WxWidgetsMacOSBuildDirectoryName>
-        <WxWidgetsMacOSBuildDirectory>$(WxWidgetsDirectory)\$(WxWidgetsMacOSBuildDirectoryName)</WxWidgetsMacOSBuildDirectory>
+    <WxWidgetsMacOSBuildDirectoryName>macos-build</WxWidgetsMacOSBuildDirectoryName>
+    <WxWidgetsMacOSBuildDirectory>$(WxWidgetsDirectory)\$(WxWidgetsMacOSBuildDirectoryName)</WxWidgetsMacOSBuildDirectory>
     <!-- ========================================== -->
-    </PropertyGroup>
+  </PropertyGroup>
 
 </Project>
