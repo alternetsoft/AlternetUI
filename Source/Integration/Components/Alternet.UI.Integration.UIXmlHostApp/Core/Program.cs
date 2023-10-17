@@ -59,7 +59,8 @@ namespace Alternet.UI.Integration.UIXmlHostApp
 
         private static string GetUIAssemblyPath()
         {
-            var uiAssemblyPath = Path.Combine(Path.GetDirectoryName(commandLineArgs.AppPath), "Alternet.UI.dll");
+            var uiAssemblyPath =
+                Path.Combine(Path.GetDirectoryName(commandLineArgs.AppPath), "Alternet.UI.dll");
             if (!File.Exists(uiAssemblyPath))
                 Die("Alternet.UI.dll not found.");
             return uiAssemblyPath;
