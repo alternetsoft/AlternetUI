@@ -267,6 +267,14 @@ namespace Alternet.UI
             return NativeControl.IsItemFocused(p);
         }
 
+        public override void SetItemIsBold(TreeViewItem item, bool isBold)
+        {
+            var p = GetHandleFromItem(item);
+            if (p == IntPtr.Zero)
+                return;
+            Native.WxTreeViewFactory.SetItemBold(NativeControl.WxWidget, p, isBold);
+        }
+
         public override void SetItemText(TreeViewItem item, string text)
         {
             if (skipSetItemText)

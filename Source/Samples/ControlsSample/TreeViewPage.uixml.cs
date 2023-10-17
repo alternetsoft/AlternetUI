@@ -73,6 +73,7 @@ namespace ControlsSample
             {
                 treeView.ImageList = ResourceLoader.LoadImageLists().Small;
                 AddDefaultItems();
+                treeView.Items[2].IsBold = true;
                 site = value;
             }
         }

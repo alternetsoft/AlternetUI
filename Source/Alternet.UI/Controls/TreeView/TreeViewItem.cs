@@ -63,6 +63,7 @@ namespace Alternet.UI
         private TreeView? treeView;
         private int? imageIndex;
         private Collection<TreeViewItem>? items;
+        private bool isBold;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TreeViewItem"/> class
@@ -116,6 +117,26 @@ namespace Alternet.UI
         /// </remarks>
         [Browsable(false)]
         public object? Tag { get; set; }
+
+        /// <summary>
+        /// Gets or sets whether item is shown in bold font.
+        /// </summary>
+        public bool IsBold
+        {
+            get
+            {
+                return isBold;
+            }
+
+            set
+            {
+                if (isBold == value)
+                    return;
+                isBold = value;
+
+                treeView?.Handler.SetItemIsBold(this, isBold);
+            }
+        }
 
         /// <summary>
         /// Gets the parent tree item of the current item.

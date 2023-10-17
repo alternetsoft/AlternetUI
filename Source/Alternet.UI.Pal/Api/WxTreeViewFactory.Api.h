@@ -13,3 +13,28 @@ ALTERNET_UI_API WxTreeViewFactory* WxTreeViewFactory_Create_()
     return new WxTreeViewFactory();
 }
 
+ALTERNET_UI_API void WxTreeViewFactory_SetItemBold_(void* handle, void* item, c_bool bold)
+{
+    WxTreeViewFactory::SetItemBold(handle, item, bold);
+}
+
+ALTERNET_UI_API Color_C WxTreeViewFactory_GetItemTextColor_(void* handle, void* item)
+{
+    return WxTreeViewFactory::GetItemTextColor(handle, item);
+}
+
+ALTERNET_UI_API Color_C WxTreeViewFactory_GetItemBackgroundColor_(void* handle, void* item)
+{
+    return WxTreeViewFactory::GetItemBackgroundColor(handle, item);
+}
+
+ALTERNET_UI_API void WxTreeViewFactory_SetItemTextColor_(void* handle, void* item, Color color)
+{
+    WxTreeViewFactory::SetItemTextColor(handle, item, color);
+}
+
+ALTERNET_UI_API void WxTreeViewFactory_SetItemBackgroundColor_(void* handle, void* item, Color color)
+{
+    WxTreeViewFactory::SetItemBackgroundColor(handle, item, color);
+}
+

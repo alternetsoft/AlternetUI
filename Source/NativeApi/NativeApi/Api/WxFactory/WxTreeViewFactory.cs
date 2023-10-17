@@ -12,12 +12,19 @@ namespace NativeApi.Api
     // https://docs.wxwidgets.org/3.2/classwx_tree_ctrl.html
     public class WxTreeViewFactory
     {
+        public static void SetItemBold(IntPtr handle, IntPtr item, bool bold = true) { }
+
+        public static Color GetItemTextColor(IntPtr handle, IntPtr item) => default;
+
+        public static Color GetItemBackgroundColor(IntPtr handle, IntPtr item) => default;
+
+        public static void SetItemTextColor(IntPtr handle, IntPtr item, Color color) {}
+
+        public static void SetItemBackgroundColor(IntPtr handle, IntPtr item, Color color) { }
     }
 }
 
 /*
-
-
         // get the total number of items in the control
     virtual unsigned int GetCount() const = 0;
 
@@ -37,24 +44,15 @@ namespace NativeApi.Api
         // list that can be used to show a state icon corresponding to an
         // app-defined item state (for example, checked/unchecked).
     wxImageList *GetStateImageList() const
-    {
-        return m_imagesState.GetImageList();
-    }
-    virtual void SetStateImageList(wxImageList *imageList) = 0;
-    void AssignStateImageList(wxImageList *imageList)
-    {
-        SetStateImageList(imageList);
-        m_imagesState.TakeOwnership();
-    }
 
+    virtual void SetStateImageList(wxImageList *imageList) = 0;
+
+    void AssignStateImageList(wxImageList *imageList)
 
     // Functions to work with tree ctrl items. Unfortunately, they can _not_ be
     // member functions of wxTreeItem because they must know the tree the item
     // belongs to for Windows implementation and storing the pointer to
     // wxTreeCtrl in each wxTreeItem is just too much waste.
-
-    // accessors
-    // ---------
 
         // retrieve items label
     virtual wxString GetItemText(const wxTreeItemId& item) const = 0;
@@ -64,23 +62,10 @@ namespace NativeApi.Api
         // get the data associated with the item
     virtual wxTreeItemData *GetItemData(const wxTreeItemId& item) const = 0;
 
-        // get the item's text colour
-    virtual wxColour GetItemTextColour(const wxTreeItemId& item) const = 0;
-
-        // get the item's background colour
-    virtual wxColour GetItemBackgroundColour(const wxTreeItemId& item) const = 0;
-
-        // get the item's font
     virtual wxFont GetItemFont(const wxTreeItemId& item) const = 0;
 
         // get the items state
     int GetItemState(const wxTreeItemId& item) const
-    {
-        return DoGetItemState(item);
-    }
-
-    // modifiers
-    // ---------
 
         // set items label
     virtual void SetItemText(const wxTreeItemId& item, const wxString& text) = 0;
@@ -98,20 +83,9 @@ namespace NativeApi.Api
     virtual void SetItemHasChildren(const wxTreeItemId& item,
                                     bool has = true) = 0;
 
-        // the item will be shown in bold
-    virtual void SetItemBold(const wxTreeItemId& item, bool bold = true) = 0;
-
         // the item will be shown with a drop highlight
     virtual void SetItemDropHighlight(const wxTreeItemId& item,
                                       bool highlight = true) = 0;
-
-        // set the items text colour
-    virtual void SetItemTextColour(const wxTreeItemId& item,
-                                   const wxColour& col) = 0;
-
-        // set the items background colour
-    virtual void SetItemBackgroundColour(const wxTreeItemId& item,
-                                         const wxColour& col) = 0;
 
         // set the items font (should be of the same height for all items)
     virtual void SetItemFont(const wxTreeItemId& item,
@@ -119,9 +93,6 @@ namespace NativeApi.Api
 
         // set the items state (special state values: wxTREE_ITEMSTATE_NONE/NEXT/PREV)
     void SetItemState(const wxTreeItemId& item, int state);
-
-    // item status inquiries
-    // ---------------------
 
         // is the item visible (it might be outside the view or not expanded)?
     virtual bool IsVisible(const wxTreeItemId& item) const = 0;
@@ -140,16 +111,10 @@ namespace NativeApi.Api
     bool IsEmpty() const;
 
 
-    // number of children
-    // ------------------
-
         // if 'recursively' is false, only immediate children count, otherwise
         // the returned number is the number of all items in this branch
     virtual size_t GetChildrenCount(const wxTreeItemId& item,
                                     bool recursively = true) const = 0;
-
-    // navigation
-    // ----------
 
     // wxTreeItemId.IsOk() will return false if there is no such item
 
@@ -169,12 +134,10 @@ namespace NativeApi.Api
         // equivalent to GetSelection() if not wxTR_MULTIPLE
     virtual wxTreeItemId GetFocusedItem() const = 0;
 
-
         // Clears the currently focused item
     virtual void ClearFocusedItem() = 0;
         // Sets the currently focused item. Item should be valid
     virtual void SetFocusedItem(const wxTreeItemId& item) = 0;
-
 
         // get the parent of this item (may return NULL if root)
     virtual wxTreeItemId GetItemParent(const wxTreeItemId& item) const = 0;
@@ -208,9 +171,6 @@ namespace NativeApi.Api
         // get the previous visible item: item must be visible itself!
     virtual wxTreeItemId GetPrevVisible(const wxTreeItemId& item) const = 0;
 
-    // operations
-    // ----------
-
         // add the root node to the tree
     virtual wxTreeItemId AddRoot(const wxString& text,
                                  int image = -1, int selImage = -1,
@@ -221,9 +181,6 @@ namespace NativeApi.Api
                              const wxString& text,
                              int image = -1, int selImage = -1,
                              wxTreeItemData *data = NULL)
-    {
-        return DoInsertItem(parent, 0u, text, image, selImage, data);
-    }
 
         // insert a new item after a given one
     wxTreeItemId InsertItem(const wxTreeItemId& parent,
@@ -250,9 +207,6 @@ namespace NativeApi.Api
                             const wxString& text,
                             int image = -1, int selImage = -1,
                             wxTreeItemData *data = NULL)
-    {
-        return DoInsertItem(parent, (size_t)-1, text, image, selImage, data);
-    }
 
         // delete this item and associated data if any
     virtual void Delete(const wxTreeItemId& item) = 0;
@@ -293,9 +247,6 @@ namespace NativeApi.Api
     void UnselectItem(const wxTreeItemId& item) { SelectItem(item, false); }
         // toggle item selection
     void ToggleItemSelection(const wxTreeItemId& item)
-    {
-        SelectItem(item, !IsSelected(item));
-    }
 
         // make sure this item is visible (expanding the parent item and/or
         // scrolling to this item if necessary)
@@ -339,9 +290,6 @@ namespace NativeApi.Api
         // NB: this function is not reentrant and not MT-safe (FIXME)!
     virtual void SortChildren(const wxTreeItemId& item) = 0;
 
-    // items geometry
-    // --------------
-
         // determine to which item (if any) belongs the given point (the
         // coordinates specified are relative to the client area of tree ctrl)
         // and, in the second variant, fill the flags parameter with a bitmask
@@ -357,14 +305,4 @@ namespace NativeApi.Api
                                  bool textOnly = false) const = 0;
 
 
-    // implementation
-    // --------------
-
-    virtual bool ShouldInheritColours() const wxOVERRIDE { return false; }
-
-    // hint whether to calculate best size quickly or accurately
-    void SetQuickBestSize(bool q) { m_quickBestSize = q; }
-    bool GetQuickBestSize() const { return m_quickBestSize; }
- 
- 
  */
