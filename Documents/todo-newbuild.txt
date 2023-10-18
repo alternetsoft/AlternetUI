@@ -1,8 +1,10 @@
 Top priority controls:
 
-- panelwebbrowser/panelrichedit
+- panelrichedit
 
-- Calendar
+- animation (https://docs.wxwidgets.org/3.2/classwx_animation_ctrl.html)
+
+- Calendar (https://docs.wxwidgets.org/3.2/classwx_calendar_ctrl.html)
 
 - DataGrid
 
@@ -46,24 +48,9 @@ and if not disposed app behaves incorrectly. (seen in list edit after it closed)
 
 - Add init event for each control in Platform Default props.
 
-- LayoutFactory.AdjustTextBoxesHeight(Control container);
-test auimanager demo under linux
-? First need to import control methods related to sizing
-
-- CONTROL: Calendar
-
-- CONTROL: DataGrid
-
 - Check mouse move events are really coming (as i disabled them)
 
 - PROPERTY: Direction or TextAlign in TextEdit, Label, LinkLabel, Numeric, DateTime, CheckBox, RadioButton
-
-- We need log() in cpp and ui
-
-- BUG: Printpreview maxpage 32000 why?
-See in cpp
-https://docs.wxwidgets.org/3.0/classwx_print_preview.html
-wxPrintDialogData
 
 - CONTROL: AdvLabel as label is limited
 
@@ -82,15 +69,9 @@ Implement LogUtils
     <KeyBinding Gesture="Ctrl+Shift+A" Command="{Binding ExportToPngCommand}" />
   </Window.InputBindings>
 
-- Treeview item bold
-
-- Color picker add text
-
 - Set label color on linux for prop grid demo to black
 
 - find where binding is read from xml (or even prop)
-
-- Datetimepicker where style props in propgrid linux 
 
 - Statusbar panel not read from uixml, seen in propgrid demo linux
 
@@ -99,8 +80,6 @@ Implement LogUtils
 - setcustomattr/getcustomattr
 
 - Use custom flags for eventGrid
-
-- SPEED SetEventCallback() in Applicatio no try catch
 
 - Redo disposable from DisposableObject // also all other
 C:\DIMA\AlternetUI\Source\Alternet.UI\CommonDialogs\CommonDialog.cs
@@ -118,11 +97,9 @@ And shows main form but it is disabled.
 
 - AuiManager sample on exit we have silent exception ??
 
-- Webbrowswer test page use new toolbars and remove hints
-
 - SPEED NativeObject.cs InstancesByNativePointers
 
-- SPEED TreView 2 dictionaries in NativeHandler
+- SPEED TreView dictionary in NativeHandler
 
 - compare class and interface methods need for intf support of all class methods
 
