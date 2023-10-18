@@ -3,6 +3,8 @@
 - Implemented Sizer functionality. It allows to implement complex controls layouts.
 - Add to TreeViewItem: TextColor, BackgroundColor, IsBold.
 - TreeView speedup (removed handlesByItems usage).
+- Updated webview to 2.1.0.2045.28.
+- Updated wxWidgets to 3.2.3.
 - Fixed exceptions in menu and toolbar.
 - Fixed exception in DragAndDropSample.
 - Moved PanelTreeAndCards control to the main library.
