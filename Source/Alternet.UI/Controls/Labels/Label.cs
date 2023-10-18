@@ -144,6 +144,17 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Binds <see cref="Text"/> to the specified property of the
+        /// <see cref="FrameworkElement.DataContext"/>
+        /// </summary>
+        /// <param name="propName">Property name.</param>
+        public void BindText(string propName)
+        {
+            Binding myBinding = new(propName) { Mode = BindingMode.TwoWay };
+            BindingOperations.SetBinding(this, Label.TextProperty, myBinding);
+        }
+
+        /// <summary>
         /// Called when content in this Control changes.
         /// Raises the TextChanged event.
         /// </summary>
