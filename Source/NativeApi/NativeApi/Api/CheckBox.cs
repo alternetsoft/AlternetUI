@@ -4,12 +4,21 @@ using System;
 
 namespace NativeApi.Api
 {
+    // https://docs.wxwidgets.org/3.2/classwx_check_box.html
     public class CheckBox : Control
     {
-        public string Text { get => throw new Exception(); set => throw new Exception(); }
+        public string Text { get; set; }
 
         public bool IsChecked { get; set; }
 
-        public event EventHandler? CheckedChanged { add => throw new Exception(); remove => throw new Exception(); }
+        public int CheckState { get; set; }
+
+        public bool ThreeState { get; set; }
+
+        public bool AlignRight { get; set; }
+
+        public bool AllowAllStatesForUser { get; set; }
+
+        public event EventHandler? CheckedChanged;
     }
 }

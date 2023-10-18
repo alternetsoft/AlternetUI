@@ -3,8 +3,10 @@
 namespace Alternet::UI
 {
     CheckBox::CheckBox() :
-        _text(*this, u"", &Control::IsWxWindowCreated, &CheckBox::RetrieveText, &CheckBox::ApplyText),
-        _state(*this, wxCheckBoxState::wxCHK_UNCHECKED, &Control::IsWxWindowCreated, &CheckBox::RetrieveState, &CheckBox::ApplyState)
+        _text(*this, u"", &Control::IsWxWindowCreated,
+            &CheckBox::RetrieveText, &CheckBox::ApplyText),
+        _state(*this, wxCheckBoxState::wxCHK_UNCHECKED,
+            &Control::IsWxWindowCreated, &CheckBox::RetrieveState, &CheckBox::ApplyState)
     {
         GetDelayedValues().Add(&_text);
         GetDelayedValues().Add(&_state);
@@ -51,12 +53,23 @@ namespace Alternet::UI
 
     wxWindow* CheckBox::CreateWxWindowCore(wxWindow* parent)
     {
+        long style = 0;
+
+        if (_threeState)
+            style |= wxCHK_3STATE;
+        
+        if(_alignRight)
+            style |= wxALIGN_RIGHT;
+
+        if (_allowAllStatesForUser)
+            style |= wxCHK_ALLOW_3RD_STATE_FOR_USER;
+
         auto checkBox = new wxCheckBox2(parent,
             wxID_ANY,
             wxStr(_text.Get()),
             wxDefaultPosition,
             wxDefaultSize,
-            0,
+            style,
             wxDefaultValidator,
             wxASCII_STR(wxCheckBoxNameStr));
 
@@ -98,6 +111,55 @@ namespace Alternet::UI
     bool CheckBox::GetIsChecked()
     {
         return _state.Get() == wxCheckBoxState::wxCHK_CHECKED;
+    }
+
+    int CheckBox::GetCheckState()
+    {
+        return _state.Get();
+    }
+
+    void CheckBox::SetCheckState(int value)
+    {
+        _state.Set((wxCheckBoxState)value);
+    }
+
+    bool CheckBox::GetThreeState()
+    {
+        return _threeState;
+    }
+
+    void CheckBox::SetThreeState(bool value)
+    {
+        if (_threeState == value)
+            return;
+        _threeState = value;
+        RecreateWxWindowIfNeeded();
+    }
+
+    bool CheckBox::GetAlignRight()
+    {
+        return _alignRight;
+    }
+
+    void CheckBox::SetAlignRight(bool value)
+    {
+        if (_alignRight == value)
+            return;
+        _alignRight = value;
+        RecreateWxWindowIfNeeded();
+    }
+
+    bool CheckBox::GetAllowAllStatesForUser()
+    {
+        return _allowAllStatesForUser;
+    }
+
+    void CheckBox::SetAllowAllStatesForUser(bool value)
+    {
+        if (_allowAllStatesForUser == value)
+            return;
+        _allowAllStatesForUser = value;
+        RecreateWxWindowIfNeeded();
     }
     
     void CheckBox::SetIsChecked(bool value)

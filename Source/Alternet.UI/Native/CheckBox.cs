@@ -54,6 +54,66 @@ namespace Alternet.UI.Native
             }
         }
         
+        public int CheckState
+        {
+            get
+            {
+                CheckDisposed();
+                return NativeApi.CheckBox_GetCheckState_(NativePointer);
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.CheckBox_SetCheckState_(NativePointer, value);
+            }
+        }
+        
+        public bool ThreeState
+        {
+            get
+            {
+                CheckDisposed();
+                return NativeApi.CheckBox_GetThreeState_(NativePointer);
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.CheckBox_SetThreeState_(NativePointer, value);
+            }
+        }
+        
+        public bool AlignRight
+        {
+            get
+            {
+                CheckDisposed();
+                return NativeApi.CheckBox_GetAlignRight_(NativePointer);
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.CheckBox_SetAlignRight_(NativePointer, value);
+            }
+        }
+        
+        public bool AllowAllStatesForUser
+        {
+            get
+            {
+                CheckDisposed();
+                return NativeApi.CheckBox_GetAllowAllStatesForUser_(NativePointer);
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.CheckBox_SetAllowAllStatesForUser_(NativePointer, value);
+            }
+        }
+        
         static GCHandle eventCallbackGCHandle;
         
         static void SetEventCallback()
@@ -116,6 +176,30 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void CheckBox_SetIsChecked_(IntPtr obj, bool value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int CheckBox_GetCheckState_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void CheckBox_SetCheckState_(IntPtr obj, int value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool CheckBox_GetThreeState_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void CheckBox_SetThreeState_(IntPtr obj, bool value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool CheckBox_GetAlignRight_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void CheckBox_SetAlignRight_(IntPtr obj, bool value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool CheckBox_GetAllowAllStatesForUser_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void CheckBox_SetAllowAllStatesForUser_(IntPtr obj, bool value);
             
         }
     }

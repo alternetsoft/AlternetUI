@@ -33,6 +33,46 @@ ALTERNET_UI_API void CheckBox_SetIsChecked_(CheckBox* obj, c_bool value)
     obj->SetIsChecked(value);
 }
 
+ALTERNET_UI_API int CheckBox_GetCheckState_(CheckBox* obj)
+{
+    return obj->GetCheckState();
+}
+
+ALTERNET_UI_API void CheckBox_SetCheckState_(CheckBox* obj, int value)
+{
+    obj->SetCheckState(value);
+}
+
+ALTERNET_UI_API c_bool CheckBox_GetThreeState_(CheckBox* obj)
+{
+    return obj->GetThreeState();
+}
+
+ALTERNET_UI_API void CheckBox_SetThreeState_(CheckBox* obj, c_bool value)
+{
+    obj->SetThreeState(value);
+}
+
+ALTERNET_UI_API c_bool CheckBox_GetAlignRight_(CheckBox* obj)
+{
+    return obj->GetAlignRight();
+}
+
+ALTERNET_UI_API void CheckBox_SetAlignRight_(CheckBox* obj, c_bool value)
+{
+    obj->SetAlignRight(value);
+}
+
+ALTERNET_UI_API c_bool CheckBox_GetAllowAllStatesForUser_(CheckBox* obj)
+{
+    return obj->GetAllowAllStatesForUser();
+}
+
+ALTERNET_UI_API void CheckBox_SetAllowAllStatesForUser_(CheckBox* obj, c_bool value)
+{
+    obj->SetAllowAllStatesForUser(value);
+}
+
 ALTERNET_UI_API void CheckBox_SetEventCallback_(CheckBox::CheckBoxEventCallbackType callback)
 {
     CheckBox::SetEventCallback(callback);

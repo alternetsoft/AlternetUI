@@ -8,6 +8,22 @@ void SetText(const string& value);
 bool GetIsChecked();
 void SetIsChecked(bool value);
 
+
+int GetCheckState();
+void SetCheckState(int value);
+
+
+bool GetThreeState();
+void SetThreeState(bool value);
+
+
+bool GetAlignRight();
+void SetAlignRight(bool value);
+
+
+bool GetAllowAllStatesForUser();
+void SetAllowAllStatesForUser(bool value);
+
 public:
 enum class CheckBoxEvent
 {

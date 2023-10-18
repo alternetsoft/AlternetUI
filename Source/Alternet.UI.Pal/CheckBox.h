@@ -19,6 +19,9 @@ namespace Alternet::UI
 
         DelayedValue<CheckBox, string> _text;
         DelayedValue<CheckBox, wxCheckBoxState> _state;
+        bool _threeState = false;
+        bool _alignRight = false;
+        bool _allowAllStatesForUser = false;
 
         string RetrieveText();
         void ApplyText(const string& value);
