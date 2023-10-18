@@ -48,7 +48,7 @@
     <!-- ========================================== -->
     <WebViewDirectory>$(ExternalComponentsDirectory)\WxWidgets\3rdparty\webview2</WebViewDirectory>
     <WebViewDownloadUrlOld>https://alternetsoftware.blob.core.windows.net/alternet-ui/microsoft.web.webview2.1.0.1774.30.zip</WebViewDownloadUrlOld>
-    <WebViewDownloadUrl>https://alternetsoftware.blob.core.windows.net/alternet-ui/microsoft.web.webview2.1.0.1774.30.zip</WebViewDownloadUrl>
+    <WebViewDownloadUrl>https://alternetsoftware.blob.core.windows.net/alternet-ui/microsoft.web.webview2.1.0.2045.28.zip</WebViewDownloadUrl>
     <WebViewDownloadUrlNew>https://alternetsoftware.blob.core.windows.net/alternet-ui/microsoft.web.webview2.1.0.2045.28.zip</WebViewDownloadUrlNew>
     <WebViewDownloadDirectory>$(ExternalComponentsDirectory)</WebViewDownloadDirectory>
     <WebViewDownloadFileName>WebView.zip</WebViewDownloadFileName>
@@ -56,13 +56,15 @@
     <!-- ========================================== -->
     <WxWidgetsDirectory>$(ExternalComponentsDirectory)\WxWidgets</WxWidgetsDirectory>
     <WxWidgetsDownloadUrlOld>https://alternetsoftware.blob.core.windows.net/alternet-ui/wxWidgets-3.2.2.1.zip</WxWidgetsDownloadUrlOld>
-    <WxWidgetsDownloadUrl>https://alternetsoftware.blob.core.windows.net/alternet-ui/wxWidgets-3.2.2.1.zip</WxWidgetsDownloadUrl>
+    <WxWidgetsDownloadUrlLocalHost>http://localhost/wxWidgets-3.2.3.zip</WxWidgetsDownloadUrlLocalHost>
     <WxWidgetsDownloadUrlNew>https://alternetsoftware.blob.core.windows.net/alternet-ui/wxWidgets-3.2.3.zip</WxWidgetsDownloadUrlNew>
+    <WxWidgetsDownloadUrl>$(WxWidgetsDownloadUrlLocalHost)</WxWidgetsDownloadUrl>
     <WxWidgetsDownloadDirectory>$(ExternalComponentsDirectory)</WxWidgetsDownloadDirectory>
     <WxWidgetsDownloadFileName>WxWidgets.zip</WxWidgetsDownloadFileName>
     <WxWidgetsDownloadTargetPath>$(WxWidgetsDownloadDirectory)\$(WxWidgetsDownloadFileName)</WxWidgetsDownloadTargetPath>
     <VCVarsAllPath>C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Auxiliary\Build\vcvarsall.bat</VCVarsAllPath>
     <!-- ========================================== -->
+    <WxWidgetsBinDownloadUrlWindowsZipNew>https://alternetsoftware.blob.core.windows.net/alternet-ui/wxWidgets-bin-noobjpch-3.2.3.zip</WxWidgetsBinDownloadUrlWindowsZipNew>
     <WxWidgetsBinDownloadUrlWindowsZip>https://alternetsoftware.blob.core.windows.net/alternet-ui/wxWidgets-bin-noobjpch-3.2.2.1.zip</WxWidgetsBinDownloadUrlWindowsZip>
     <WxWidgetsBinDownloadUrlWindows7z>https://alternetsoftware.blob.core.windows.net/alternet-ui/wxWidgets-bin-noobjpch-3.2.2.1.7z</WxWidgetsBinDownloadUrlWindows7z>
     <WxWidgetsBinDownloadUrlWindows>$(WxWidgetsBinDownloadUrlWindowsZip)</WxWidgetsBinDownloadUrlWindows>

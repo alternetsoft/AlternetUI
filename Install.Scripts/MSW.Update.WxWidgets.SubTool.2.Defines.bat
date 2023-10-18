@@ -1,4 +1,11 @@
-set PATH1="..\..\..\External\wxWidgets\include\wx\msw"
+ECHO ===============================
+ECHO ===============================
+
+SETLOCAL EnableDelayedExpansion
+
+set SCRIPT_HOME=%~dp0.
+
+set PATH1="%SCRIPT_HOME%\..\External\wxWidgets\include\wx\msw"
 set FILENAME="%PATH1%\setup.h"
 set OLDFILENAME="%PATH1%\setup.h.old"
 
