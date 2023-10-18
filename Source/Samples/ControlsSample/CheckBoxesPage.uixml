@@ -3,19 +3,36 @@
         xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
         xmlns:local="clr-namespace:ControlsSample;assembly=ControlsSample">
   <StackPanel Orientation="Vertical" Padding="10" >
-    <GroupBox Title="Option Group 1">
+    <GroupBox Title="CheckBox" Padding="5">
       <StackPanel Orientation="Vertical" Margin="5">
-        <CheckBox Text="Option 1.1" Margin="0,0,0,5" IsChecked="true"/>
-        <CheckBox Text="Option 1.2" Margin="0,0,0,5" />
-        <CheckBox Text="Option 1.3" Margin="0,0,0,5" />
+        <CheckBox Text="Some Text" Margin="0,0,0,5" IsChecked="true" Name="checkBox"/>
       </StackPanel>
     </GroupBox>
-    <GroupBox Title="Option Group 2" Margin="0,10,0,0">
+    <GroupBox Title="Options" Margin="0,5,0,0" Padding="5">
+      <VerticalStackPanel>
+        <StackPanel Orientation="Horizontal" Margin="5">
+          <CheckBox Text="Three States" Margin="0,0,0,0" IsChecked="false" Name="threeStatesCheckBox"/>
+          <CheckBox Text="Align Right" Margin="5,0,0,0" IsChecked="false" Name="alignRightCheckBox"/>
+          <CheckBox Text="Allow All States For User" Margin="5,0,0,0" IsChecked="false"
+                    Name="allowAllStatesForUserCheckBox"/>
+        </StackPanel>
+        <HorizontalStackPanel>
+          <Button Text="IsChecked = false" Margin="5" Name="isCheckedFalseButton"/>
+          <Button Text="IsChecked = true" Margin="5" Name="isCheckedTrueButton"/>
+          <Button Text="Text = empty" Margin="5" Name="textEmptyButton"/>
+        </HorizontalStackPanel>
+        <HorizontalStackPanel>
+          <Button Text="CheckState = Unchecked" Margin="5" Name="checkStateUncheckedButton"/>
+          <Button Text="CheckState = Checked" Margin="5" Name="checkStateCheckedButton"/>
+          <Button Text="CheckState = Indeterminate" Margin="5" Name="checkStateIndeterminateButton"/>
+        </HorizontalStackPanel>
+      </VerticalStackPanel>
+    </GroupBox>
+    <GroupBox Title="Binding" Margin="0,5,0,0">
       <StackPanel Orientation="Vertical" Margin="5">
-        <CheckBox Text="Option 2.1" Margin="0,0,0,5" />
-        <CheckBox Text="Option 2.2" Margin="0,0,0,5" />
-        <CheckBox Text="Option 2.3" Margin="0,0,0,5" />
+        <Label Name="boundLabel"></Label>
       </StackPanel>
     </GroupBox>
+
   </StackPanel>
-  </Control>
+</Control>

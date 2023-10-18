@@ -1,3 +1,5 @@
+using System;
+
 namespace Alternet.UI
 {
     internal class NativeCheckBoxHandler : NativeControlHandler<CheckBox, Native.CheckBox>
@@ -30,25 +32,15 @@ namespace Alternet.UI
 
         private void Control_CheckedChanged(object? sender, System.EventArgs? e)
         {
-            if (e is null)
-                throw new System.ArgumentNullException(nameof(e));
-
-            NativeControl.IsChecked = Control.IsChecked;
         }
 
         private void NativeControl_CheckedChanged(object? sender, System.EventArgs? e)
         {
-            if (e is null)
-                throw new System.ArgumentNullException(nameof(e));
-
-            Control.IsChecked = NativeControl.IsChecked;
+            Control.RaiseCheckedChanged(EventArgs.Empty);
         }
 
         private void Control_TextChanged(object? sender, System.EventArgs? e)
         {
-            if (e is null)
-                throw new System.ArgumentNullException(nameof(e));
-
             NativeControl.Text = Control.Text;
         }
     }

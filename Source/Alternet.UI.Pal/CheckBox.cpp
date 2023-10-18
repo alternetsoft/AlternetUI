@@ -57,11 +57,13 @@ namespace Alternet::UI
 
         if (_threeState)
             style |= wxCHK_3STATE;
+        else
+            style |= wxCHK_2STATE;
         
         if(_alignRight)
             style |= wxALIGN_RIGHT;
 
-        if (_allowAllStatesForUser)
+        if (_allowAllStatesForUser && _threeState)
             style |= wxCHK_ALLOW_3RD_STATE_FOR_USER;
 
         auto checkBox = new wxCheckBox2(parent,

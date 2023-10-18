@@ -36,6 +36,11 @@ namespace Alternet.UI
                             isAnimationProhibited: true,
                             UpdateSourceTrigger.PropertyChanged));
 
+        private bool allowAllStatesForUser;
+        private bool alignRight;
+        private bool threeState;
+        private bool ignoreEvent;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="CheckBox"/> class with the specified text.
         /// </summary>
@@ -58,6 +63,117 @@ namespace Alternet.UI
         public event EventHandler? CheckedChanged;
 
         /// <summary>
+        /// Gets or sets the state of the <see cref="CheckBox" />.
+        /// </summary>
+        /// <returns>
+        /// One of the <see cref="UI.CheckState"/> enumeration values. The default value
+        /// is <see cref="CheckState.Unchecked"/>.
+        /// </returns>
+        [DefaultValue(CheckState.Unchecked)]
+        [RefreshProperties(RefreshProperties.All)]
+        public CheckState CheckState
+        {
+            get
+            {
+                if (NativeControl is not null)
+                    return (CheckState)NativeControl.CheckState;
+                return CheckState.Unchecked;
+            }
+
+            set
+            {
+                if (!threeState && value == CheckState.Indeterminate)
+                    value = CheckState.Unchecked;
+                if (CheckState == value)
+                    return;
+                if (NativeControl is not null)
+                    NativeControl.CheckState = (int)value;
+                RaiseCheckedChanged(EventArgs.Empty);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the <see cref="CheckBox" /> will
+        /// allow three check states rather than two.
+        /// </summary>
+        /// <returns>
+        /// <see langword="true"/> if the <see cref="CheckBox" /> is able to display
+        /// three check states; otherwise, <see langword="false" />. The default value
+        /// is <see langword="false"/>.
+        /// </returns>
+        [DefaultValue(false)]
+        public bool ThreeState
+        {
+            get
+            {
+                return threeState;
+            }
+
+            set
+            {
+                if (threeState == value)
+                    return;
+                if (!value && CheckState == CheckState.Indeterminate)
+                {
+                    CheckState = CheckState.Unchecked;
+                }
+
+                threeState = value;
+
+                if(NativeControl is not null)
+                    NativeControl.ThreeState = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets whether to align check box on the right side of the text.
+        /// </summary>
+        [DefaultValue(false)]
+        public bool AlignRight
+        {
+            get
+            {
+                return alignRight;
+            }
+
+            set
+            {
+                if (alignRight == value)
+                    return;
+                alignRight = value;
+                if(NativeControl is not null)
+                    NativeControl.AlignRight = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets whether user can set the checkbox to
+        /// the third state by clicking.
+        /// </summary>
+        /// <remarks>
+        /// By default a user can't set a 3-state checkbox to the third state. It can only
+        /// be done from code. Using this flags allows the user to set the checkbox to
+        /// the third state by clicking.
+        /// </remarks>
+        [DefaultValue(false)]
+        public bool AllowAllStatesForUser
+        {
+            get
+            {
+                return allowAllStatesForUser;
+            }
+
+            set
+            {
+                if (allowAllStatesForUser == value)
+                    return;
+                allowAllStatesForUser = value;
+                if (NativeControl is not null)
+                    NativeControl.AllowAllStatesForUser = value;
+            }
+        }
+
+        /// <summary>
         /// Gets or set a value indicating whether the <see cref="CheckBox"/> is
         /// in the checked state.
         /// </summary>
@@ -69,12 +185,62 @@ namespace Alternet.UI
         [DefaultValue(false)]
         public bool IsChecked
         {
-            get { return (bool)GetValue(IsCheckedProperty); }
-            set { SetValue(IsCheckedProperty, value); }
+            get
+            {
+                return CheckState == CheckState.Checked;
+            }
+
+            set
+            {
+                if (value)
+                    CheckState = CheckState.Checked;
+                else
+                    CheckState = CheckState.Unchecked;
+            }
         }
 
         /// <inheritdoc/>
         public override ControlId ControlKind => ControlId.CheckBox;
+
+        /// <summary>
+        /// Binds <see cref="IsChecked"/> to the specified property of the
+        /// <see cref="FrameworkElement.DataContext"/>
+        /// </summary>
+        /// <param name="propName">Property name.</param>
+        public void BindIsChecked(string propName)
+        {
+            Binding myBinding = new(propName) { Mode = BindingMode.TwoWay };
+            BindingOperations.SetBinding(this, CheckBox.IsCheckedProperty, myBinding);
+        }
+
+        /// <summary>
+        /// Gets a <see cref="ControlHandler"/> associated with this class.
+        /// </summary>
+        [Browsable(false)]
+        internal NativeCheckBoxHandler? NativeHandler => Handler as NativeCheckBoxHandler;
+
+        internal Native.CheckBox? NativeControl => Handler.NativeControl as Native.CheckBox;
+
+        /// <summary>
+        /// Raises the <see cref="CheckedChanged"/> event and calls
+        /// <see cref="OnCheckedChanged(EventArgs)"/>.
+        /// </summary>
+        /// <param name="e">An <see cref="EventArgs"/> that contains the
+        /// event data.</param>
+        internal void RaiseCheckedChanged(EventArgs e)
+        {
+            OnCheckedChanged(e);
+            CheckedChanged?.Invoke(this, e);
+            ignoreEvent = true;
+            try
+            {
+                SetValue(IsCheckedProperty, IsChecked);
+            }
+            finally
+            {
+                ignoreEvent = false;
+            }
+        }
 
         /// <summary>
         /// Called when the value of the <see cref="IsChecked"/> property changes.
@@ -99,31 +265,11 @@ namespace Alternet.UI
             DependencyPropertyChangedEventArgs e)
         {
             CheckBox control = (CheckBox)d;
-            control.OnIsCheckedPropertyChanged((bool)e.OldValue, (bool)e.NewValue);
+            if (control.ignoreEvent)
+                return;
+            control.IsChecked = (bool)e.NewValue;
         }
 
         private static object CoerceIsChecked(DependencyObject d, object value) => value;
-
-#pragma warning disable IDE0060 // Remove unused parameter
-        private void OnIsCheckedPropertyChanged(bool oldValue, bool newValue)
-#pragma warning restore IDE0060 // Remove unused parameter
-        {
-            RaiseCheckedChanged(EventArgs.Empty);
-        }
-
-        /// <summary>
-        /// Raises the <see cref="CheckedChanged"/> event and calls
-        /// <see cref="OnCheckedChanged(EventArgs)"/>.
-        /// </summary>
-        /// <param name="e">An <see cref="EventArgs"/> that contains the
-        /// event data.</param>
-        private void RaiseCheckedChanged(EventArgs e)
-        {
-            if (e == null)
-                throw new ArgumentNullException(nameof(e));
-
-            OnCheckedChanged(e);
-            CheckedChanged?.Invoke(this, e);
-        }
     }
 }
