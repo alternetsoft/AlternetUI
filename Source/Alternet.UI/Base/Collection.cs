@@ -129,6 +129,13 @@ namespace Alternet.Base.Collections
         }
 
         /// <summary>
+        /// Same as adding of the item, but prepends the items to the beginning of the
+        /// list of items owned by this collection.
+        /// </summary>
+        /// <param name="item">The object to insert.</param>
+        public void Prepend(T item) => Insert(0, item);
+
+        /// <summary>
         /// Searches for the specified object and returns the zero-based index of the first
         /// occurrence within the entire collection.
         /// </summary>
