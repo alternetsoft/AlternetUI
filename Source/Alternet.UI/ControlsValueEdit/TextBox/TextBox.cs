@@ -177,6 +177,7 @@ namespace Alternet.UI
                 if (textWrap == value)
                     return;
                 textWrap = value;
+                Handler.TextWrap = value;
             }
         }
 
@@ -203,6 +204,7 @@ namespace Alternet.UI
                 if (textAlign == value)
                     return;
                 textAlign = value;
+                Handler.TextAlign = value;
             }
         }
 

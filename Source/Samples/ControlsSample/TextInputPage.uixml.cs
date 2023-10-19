@@ -10,7 +10,8 @@ namespace ControlsSample
     {
         private const string LoremIpsum =
             "Lorem ipsum dolor sit amet,\nconsectetur adipiscing elit. Suspendisse tincidunt orci vitae arcu congue commodo. Proin fermentum rhoncus dictum.";
-        
+
+        private readonly CardPanelHeader panelHeader = new();
         private IPageSite? site;
 
         public TextInputPage()
@@ -19,6 +20,42 @@ namespace ControlsSample
             textBox1.EmptyTextHint = "Sample Hint";
             multiLineTextBox.Text = LoremIpsum;
             multiLineTextBox.TextUrl += MultiLineTextBox_TextUrl;
+
+            panelHeader.Add("TextBox", tab1);
+            panelHeader.Add("Memo", tab2);
+            panelHeader.Add("RichEdit", tab3);
+            tabControl.Children.Prepend(panelHeader);
+            panelHeader.SelectedTab = panelHeader.Tabs[0];
+
+            wordWrapComboBox.IsEditable = false;
+            wordWrapComboBox.AddEnumValues<TextBoxTextWrap>();
+            wordWrapComboBox.SelectFirstItem();
+            wordWrapComboBox.SelectedItemChanged += WordWrapComboBox_SelectedItemChanged;
+
+            textAlignComboBox.IsEditable = false;
+            textAlignComboBox.Add(GenericAlignment.Left);
+            textAlignComboBox.Add(GenericAlignment.Right);
+            textAlignComboBox.Add(GenericAlignment.CenterHorizontal);
+            textAlignComboBox.SelectFirstItem();
+            textAlignComboBox.SelectedItemChanged += TextAlignComboBox_SelectedItemChanged;
+
+            RichEditButton_Click(null, EventArgs.Empty);     
+        }
+
+        private void TextAlignComboBox_SelectedItemChanged(object? sender, EventArgs e)
+        {
+            var item = textAlignComboBox.SelectedItem;
+            if (item is null)
+                return;
+            multiLineTextBox.TextAlign = (GenericAlignment)item;
+        }
+
+        private void WordWrapComboBox_SelectedItemChanged(object? sender, EventArgs e)
+        {
+            var item = wordWrapComboBox.SelectedItem;
+            if (item is null)
+                return;
+            multiLineTextBox.TextWrap = (TextBoxTextWrap)item;
         }
 
         private void ReadOnlyCheckBox_Changed(object? sender, EventArgs e) 
@@ -129,12 +166,12 @@ namespace ControlsSample
                 "This is url: ", taUrl, homePage, taDefault, ".\n",
             };
 
-            multiLineTextBox.Clear();
-            multiLineTextBox.AutoUrl = true;
-            multiLineTextBox.IsRichEdit = true;
+            richEdit.Clear();
+            richEdit.AutoUrl = true;
+            richEdit.IsRichEdit = true;
 
-            multiLineTextBox.AppendTextAndStyles(list);
-            multiLineTextBox.AppendNewLine();
+            richEdit.AppendTextAndStyles(list);
+            richEdit.AppendNewLine();
 
             /*
             const string sUnorderedListItem = "Unordered List Item";
