@@ -78,6 +78,26 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets first item in the control or <c>null</c> if there are no items.
+        /// </summary>
+        [Browsable(false)]
+        public object? FirstItem
+        {
+            get
+            {
+                if (Count > 0)
+                    return Items[0];
+                return null;
+            }
+
+            set
+            {
+                if (Count > 0 && value is not null)
+                    Items[0] = value;
+            }
+        }
+
+        /// <summary>
         /// Gets last root item in the control or <c>null</c> if there are no items.
         /// </summary>
         [Browsable(false)]
@@ -143,6 +163,14 @@ namespace Alternet.UI
                 string s => s,
                 _ => Convert.ToString(item, CultureInfo.CurrentCulture) ?? string.Empty
             };
+        }
+
+        /// <summary>
+        /// Selects first item in the control.
+        /// </summary>
+        public virtual void SelectFirstItem()
+        {
+            SelectedItem = FirstItem;
         }
 
         /// <summary>
