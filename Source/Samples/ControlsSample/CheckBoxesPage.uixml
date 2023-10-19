@@ -22,9 +22,9 @@
           <Button Text="Text = empty" Margin="5" Name="textEmptyButton"/>
         </HorizontalStackPanel>
         <HorizontalStackPanel>
-          <Button Text="CheckState = Unchecked" Margin="5" Name="checkStateUncheckedButton"/>
-          <Button Text="CheckState = Checked" Margin="5" Name="checkStateCheckedButton"/>
-          <Button Text="CheckState = Indeterminate" Margin="5" Name="checkStateIndeterminateButton"/>
+          <Button Text="State = Unchecked" Margin="5" Name="checkStateUncheckedButton"/>
+          <Button Text="State = Checked" Margin="5" Name="checkStateCheckedButton"/>
+          <Button Text="State = Indeterm" Margin="5" Name="checkStateIndeterminateButton"/>
         </HorizontalStackPanel>
       </VerticalStackPanel>
     </GroupBox>
