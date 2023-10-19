@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Specifies word wrap style fot the multiline <see cref="TextBox"/> controls.
+    /// Specifies text wrap style fot the multiline <see cref="TextBox"/> controls.
     /// </summary>
     public enum TextBoxTextWrap
     {

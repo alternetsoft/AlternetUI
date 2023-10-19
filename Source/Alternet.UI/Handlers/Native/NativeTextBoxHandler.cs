@@ -175,6 +175,32 @@ namespace Alternet.UI
             }
         }
 
+        public TextBoxTextWrap TextWrap
+        {
+            get
+            {
+                return (TextBoxTextWrap)NativeControl.TextWrap;
+            }
+
+            set
+            {
+                NativeControl.TextWrap = (int)value;
+            }
+        }
+
+        public GenericAlignment TextAlign
+        {
+            get
+            {
+                return (GenericAlignment)NativeControl.TextAlign;
+            }
+
+            set
+            {
+                NativeControl.TextAlign = (int)value;
+            }
+        }
+
         public bool IsRichEdit
         {
             get

@@ -46,6 +46,8 @@ namespace Alternet.UI
         private bool multiline = false;
         private bool readOnly = false;
         private bool isRichEdit = false;
+        private TextBoxTextWrap textWrap;
+        private GenericAlignment textAlign;
 
         /// <summary>
         /// Occurs when <see cref="Multiline"/> property value changes.
@@ -119,8 +121,15 @@ namespace Alternet.UI
         [Localizability(LocalizationCategory.Text)]
         public string Text
         {
-            get { return (string)GetValue(TextProperty); }
-            set { SetValue(TextProperty, value); }
+            get
+            {
+                return (string)GetValue(TextProperty);
+            }
+
+            set
+            {
+                SetValue(TextProperty, value);
+            }
         }
 
         /// <inheritdoc/>
@@ -146,6 +155,54 @@ namespace Alternet.UI
                     return;
                 isRichEdit = value;
                 Handler.IsRichEdit = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets text wrap style fot the multiline <see cref="TextBox"/> controls.
+        /// </summary>
+        /// <remarks>
+        /// Default value is TextBoxTextWrap.Best. Some platforms do not support all wrap styles.
+        /// </remarks>
+        [DefaultValue(TextBoxTextWrap.Best)]
+        public TextBoxTextWrap TextWrap
+        {
+            get
+            {
+                return textWrap;
+            }
+
+            set
+            {
+                if (textWrap == value)
+                    return;
+                textWrap = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets text alignment for the <see cref="TextBox"/> control.
+        /// </summary>
+        /// <remarks>
+        /// Only <see cref="GenericAlignment.Left"/>, <see cref="GenericAlignment.Right"/>
+        /// and <see cref="GenericAlignment.CenterHorizontal"/> are supported.
+        /// </remarks>
+        /// <remarks>
+        /// Default value is <see cref="GenericAlignment.Left"/>.
+        /// </remarks>
+        [DefaultValue(GenericAlignment.Left)]
+        public GenericAlignment TextAlign
+        {
+            get
+            {
+                return textAlign;
+            }
+
+            set
+            {
+                if (textAlign == value)
+                    return;
+                textAlign = value;
             }
         }
 
