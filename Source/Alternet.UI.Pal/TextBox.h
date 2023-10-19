@@ -29,6 +29,8 @@ namespace Alternet::UI
         bool _noVScroll = false;
         bool _autoUrl = false;
         bool _noHideSel = false;
+        int _textAlign = 0;
+        int _textWrap = 0;
         string _eventUrl = wxStr(wxEmptyString);
 
         int _alignment = 0;

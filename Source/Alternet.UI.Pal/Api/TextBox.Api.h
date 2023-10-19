@@ -13,6 +13,26 @@ ALTERNET_UI_API TextBox* TextBox_Create_()
     return new TextBox();
 }
 
+ALTERNET_UI_API int TextBox_GetTextWrap_(TextBox* obj)
+{
+    return obj->GetTextWrap();
+}
+
+ALTERNET_UI_API void TextBox_SetTextWrap_(TextBox* obj, int value)
+{
+    obj->SetTextWrap(value);
+}
+
+ALTERNET_UI_API int TextBox_GetTextAlign_(TextBox* obj)
+{
+    return obj->GetTextAlign();
+}
+
+ALTERNET_UI_API void TextBox_SetTextAlign_(TextBox* obj, int value)
+{
+    obj->SetTextAlign(value);
+}
+
 ALTERNET_UI_API char16_t* TextBox_GetText_(TextBox* obj)
 {
     return AllocPInvokeReturnString(obj->GetText());

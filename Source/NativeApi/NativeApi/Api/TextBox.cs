@@ -7,6 +7,9 @@ namespace NativeApi.Api
 {
     public class TextBox : Control
     {
+        public int TextWrap { get; set; }
+        public int TextAlign { get; set; }
+
         public static IntPtr CreateTextBox(IntPtr validator) => default;
 
         public event EventHandler? TextChanged;

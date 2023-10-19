@@ -24,6 +24,36 @@ namespace Alternet.UI.Native
         {
         }
         
+        public int TextWrap
+        {
+            get
+            {
+                CheckDisposed();
+                return NativeApi.TextBox_GetTextWrap_(NativePointer);
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.TextBox_SetTextWrap_(NativePointer, value);
+            }
+        }
+        
+        public int TextAlign
+        {
+            get
+            {
+                CheckDisposed();
+                return NativeApi.TextBox_GetTextAlign_(NativePointer);
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.TextBox_SetTextAlign_(NativePointer, value);
+            }
+        }
+        
         public string Text
         {
             get
@@ -582,6 +612,18 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern IntPtr TextBox_Create_();
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int TextBox_GetTextWrap_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void TextBox_SetTextWrap_(IntPtr obj, int value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int TextBox_GetTextAlign_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void TextBox_SetTextAlign_(IntPtr obj, int value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern string TextBox_GetText_(IntPtr obj);
