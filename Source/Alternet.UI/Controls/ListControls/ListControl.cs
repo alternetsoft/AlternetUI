@@ -136,9 +136,10 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="item">The object to be added to the end of the
         /// <see cref="Items"/> collection.</param>
-        public virtual void Add(object item)
+        public virtual int Add(object item)
         {
             Items.Add(item);
+            return Items.Count - 1;
         }
 
         /// <summary>
