@@ -48,6 +48,7 @@ namespace Alternet.UI
         private bool isRichEdit = false;
         private TextBoxTextWrap textWrap;
         private GenericAlignment textAlign;
+        private IValueValidator? validator;
 
         static TextBox()
         {
@@ -116,7 +117,24 @@ namespace Alternet.UI
         /// Gets or sets validator for the <see cref="TextBox"/> control.
         /// </summary>
         [Browsable(false)]
-        public IValueValidator? Validator { get; set; }
+        public IValueValidator? Validator
+        {
+            get
+            {
+                return validator;
+            }
+
+            set
+            {
+                if (validator == value)
+                    return;
+                validator = value;
+                if (validator == null)
+                    Handler.NativeControl.Validator = IntPtr.Zero;
+                else
+                    Handler.NativeControl.Validator = validator.Handle;
+            }
+        }
 
         /// <summary>
         /// Gets or sets the text contents of the text box.

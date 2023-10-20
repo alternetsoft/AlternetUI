@@ -68,6 +68,16 @@ ALTERNET_UI_API void TextBox_SetReadOnly_(TextBox* obj, c_bool value)
     obj->SetReadOnly(value);
 }
 
+ALTERNET_UI_API void* TextBox_GetValidator_(TextBox* obj)
+{
+    return obj->GetValidator();
+}
+
+ALTERNET_UI_API void TextBox_SetValidator_(TextBox* obj, void* value)
+{
+    obj->SetValidator(value);
+}
+
 ALTERNET_UI_API c_bool TextBox_GetMultiline_(TextBox* obj)
 {
     return obj->GetMultiline();

@@ -24,6 +24,10 @@ bool GetReadOnly();
 void SetReadOnly(bool value);
 
 
+void* GetValidator();
+void SetValidator(void* value);
+
+
 bool GetMultiline();
 void SetMultiline(bool value);
 

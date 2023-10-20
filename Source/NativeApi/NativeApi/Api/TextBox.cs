@@ -25,6 +25,8 @@ namespace NativeApi.Api
 
         public bool ReadOnly { get; set; }
 
+        public IntPtr Validator { get; set; }
+
         public bool Multiline { get; set; }
 
         public bool IsRichEdit { get; set; }

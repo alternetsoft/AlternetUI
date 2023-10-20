@@ -44,15 +44,37 @@ namespace Alternet::UI
 		return new TextBox(validator);
 	}
 
+	void* TextBox::GetValidator()
+	{
+		return _validator;
+	}
+
+	void TextBox::SetValidator(void* value)
+	{
+		if (_validator == value)
+			return;
+		_validator = value;
+		GetTextCtrl()->SetValidator(*(wxValidator*)_validator);
+	}
+
 	wxWindow* TextBox::CreateWxWindowCore(wxWindow* parent)
 	{
 		long style = GetCreateStyle() | GetBorderStyle();
 
-		auto& validator = wxDefaultValidator;
+		TextCtrlEx* textCtrl;
 
-		auto textCtrl = new TextCtrlEx(
-			parent, wxID_ANY, wxEmptyString, wxDefaultPosition,
-			wxDefaultSize, style, validator);
+		if (_validator == nullptr)
+		{
+			textCtrl = new TextCtrlEx(
+				parent, wxID_ANY, wxEmptyString, wxDefaultPosition,
+				wxDefaultSize, style, wxDefaultValidator);
+		}
+		else
+		{
+			textCtrl = new TextCtrlEx(
+				parent, wxID_ANY, wxEmptyString, wxDefaultPosition,
+				wxDefaultSize, style, *((wxValidator*)_validator));
+		}
 
 #ifdef __WXOSX__
 		// todo: port all platforms to the latest wx version, and then the ifdef
@@ -145,8 +167,6 @@ namespace Alternet::UI
 
 		if (_noVScroll)
 			style |= wxTE_NO_VSCROLL;
-
-		style |= _alignment;
 
 		if (_autoUrl)
 			style |= wxTE_AUTO_URL;

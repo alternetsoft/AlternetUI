@@ -109,6 +109,21 @@ namespace Alternet.UI.Native
             }
         }
         
+        public System.IntPtr Validator
+        {
+            get
+            {
+                CheckDisposed();
+                return NativeApi.TextBox_GetValidator_(NativePointer);
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.TextBox_SetValidator_(NativePointer, value);
+            }
+        }
+        
         public bool Multiline
         {
             get
@@ -645,6 +660,12 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void TextBox_SetReadOnly_(IntPtr obj, bool value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr TextBox_GetValidator_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void TextBox_SetValidator_(IntPtr obj, System.IntPtr value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool TextBox_GetMultiline_(IntPtr obj);

@@ -33,11 +33,6 @@ namespace Alternet::UI
         int _textWrap = 0;
         string _eventUrl = wxStr(wxEmptyString);
 
-        int _alignment = 0;
-        //wxTE_LEFT           0x0000                    
-        //wxTE_CENTER         0x0100
-        //wxTE_RIGHT          0x0200
-
         DelayedValue<TextBox, string> _text;
 
         wxTextCtrl* GetTextCtrl();
