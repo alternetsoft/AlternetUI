@@ -13,14 +13,12 @@
       <VerticalStackPanel Margin="5" HorizontalAlignment="Left">
         <Button Text="Add Letter &quot;A&quot;" Margin="0,0,0,5"
                 Click="AddLetterAButton_Click" />
-        <Button Text="Has Border" Margin="0,0,0,5" Click="HasBorderButton_Click" />
       </VerticalStackPanel>
 
       <VerticalStackPanel Margin="5" HorizontalAlignment="Left">
-        <CheckBox Name="readOnlyCheckBox" Text="ReadOnly" Margin="0,0,0,5"
-                  CheckedChanged="ReadOnlyCheckBox_Changed"/>
-        <CheckBox Name="passwordCheckBox" Text="Password" Margin="0,0,0,5"
-                  CheckedChanged="PasswordCheckBox_Changed"/>
+        <CheckBox Name="readOnlyCheckBox" Text="ReadOnly" Margin="0,0,0,5"/>
+        <CheckBox Name="passwordCheckBox" Text="Password" Margin="0,0,0,5"/>
+        <CheckBox Name="hasBorderCheckBox" Text="Has Border" Margin="0,0,0,5"/>
         <Label Text="Text Align:" Margin="0,0,0,5"/>
         <ComboBox Name="textAlignComboBox" Margin="0,0,0,5"/>
       </VerticalStackPanel>

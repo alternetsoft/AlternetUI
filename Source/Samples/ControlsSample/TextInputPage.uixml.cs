@@ -30,17 +30,11 @@ namespace ControlsSample
 
             wordWrapComboBox.BindEnumProp(multiLineTextBox, nameof(TextBox.TextWrap));
             textAlignComboBox.BindEnumProp(textBox1, nameof(TextBox.TextAlign));
-            RichEditButton_Click(null, EventArgs.Empty);     
-        }
+            RichEditButton_Click(null, EventArgs.Empty);
 
-        private void ReadOnlyCheckBox_Changed(object? sender, EventArgs e) 
-        {
-            textBox1.ReadOnly = readOnlyCheckBox.IsChecked;
-        }
-        
-        private void PasswordCheckBox_Changed(object? sender, EventArgs e)
-        {
-            textBox1.IsPassword = passwordCheckBox.IsChecked;
+            readOnlyCheckBox.BindBoolProp(textBox1, nameof(TextBox.ReadOnly));
+            passwordCheckBox.BindBoolProp(textBox1, nameof(TextBox.IsPassword));
+            hasBorderCheckBox.BindBoolProp(textBox1, nameof(TextBox.HasBorder));
         }
 
         private void MultiLineTextBox_TextUrl(object? sender, EventArgs e)
@@ -62,11 +56,6 @@ namespace ControlsSample
         private void TextBox_ValueChanged(object? sender, TextChangedEventArgs e)
         {
             site?.LogEvent("New TextBox value is: " + ((TextBox)sender!).Text);
-        }
-
-        private void HasBorderButton_Click(object? sender, EventArgs e)
-        {
-            textBox1.HasBorder = !textBox1.HasBorder;
         }
 
         private void AddLetterAButton_Click(object? sender, EventArgs e)
@@ -173,12 +162,6 @@ namespace ControlsSample
     }
 
     public static class Extensions
-    {
-        public static void BindProp(this CheckBox editor, object instance, string propName)
-        {
-
-        }
-
- 
+    { 
     }
 }

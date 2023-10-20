@@ -203,6 +203,32 @@ namespace Alternet.UI
         public override ControlId ControlKind => ControlId.CheckBox;
 
         /// <summary>
+        /// Binds property specified with <paramref name="instance"/> and
+        /// <paramref name="propName"/> to the <see cref="CheckBox"/>.
+        /// After binding <see cref="CheckBox"/> will edit the specified property.
+        /// </summary>
+        /// <param name="instance">Object.</param>
+        /// <param name="propName">Property name.</param>
+        /// <remarks>Property must have the <see cref="bool"/> type. Value of the binded
+        /// property will be changed automatically after <see cref="IsChecked"/> is changed.</remarks>
+        public void BindBoolProp(object instance, string propName)
+        {
+            var propInfo = AssemblyUtils.GetPropInfo(instance, propName);
+            if (propInfo is null)
+                return;
+            object? result = propInfo?.GetValue(instance, null);
+            IsChecked = result is true;
+
+            CheckedChanged += Editor_CheckedChanged;
+
+            void Editor_CheckedChanged(object? sender, EventArgs e)
+            {
+                var value = (sender as CheckBox)?.IsChecked;
+                propInfo?.SetValue(instance, value);
+            }
+        }
+
+        /// <summary>
         /// Binds <see cref="IsChecked"/> to the specified property of the
         /// <see cref="FrameworkElement.DataContext"/>
         /// </summary>
