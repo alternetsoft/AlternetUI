@@ -14,6 +14,7 @@ namespace Alternet.UI
 
         private readonly IPropertyGridPropInfoRegistry? owner;
         private PropertyInfo? propInfo;
+        private IPropertyGridChoices? choices;
         private IPropertyGridNewItemParams? constructed;
 
         public PropertyGridNewItemParams(IPropertyGridPropInfoRegistry? owner, PropertyInfo? propInfo)
@@ -23,6 +24,19 @@ namespace Alternet.UI
         }
 
         public event EventHandler? ButtonClick;
+
+        public IPropertyGridChoices? Choices
+        {
+            get
+            {
+                return choices;
+            }
+
+            set
+            {
+                choices = value;
+            }
+        }
 
         public IPropertyGridNewItemParams Constructed
         {
@@ -40,6 +54,12 @@ namespace Alternet.UI
         public PropertyInfo? PropInfo { get => propInfo; set => propInfo = value; }
 
         public string? Label { get; set; }
+
+        public bool? EnumIsFlags
+        {
+            get;
+            set;
+        }
 
         public bool? IsNullable { get; set; }
 
@@ -108,6 +128,30 @@ namespace Alternet.UI
             {
                 get => owner.PropInfo;
                 set { }
+            }
+
+            public bool? EnumIsFlags
+            {
+                get
+                {
+                    return owner.EnumIsFlags;
+                }
+
+                set
+                {
+                }
+            }
+
+            public IPropertyGridChoices? Choices
+            {
+                get
+                {
+                    return owner.Choices;
+                }
+
+                set
+                {
+                }
             }
 
             public string? Label

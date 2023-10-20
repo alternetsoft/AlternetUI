@@ -76,6 +76,11 @@ namespace Alternet.UI
         bool? HasEllipsis { get; set; }
 
         /// <summary>
+        /// Gets or sets <see cref="IPropertyGridChoices"/> registered for this property.
+        /// </summary>
+        IPropertyGridChoices? Choices { get; set; }
+
+        /// <summary>
         /// Gets or sets whether property editor is readonly.
         /// </summary>
         /// <remarks>
@@ -94,6 +99,14 @@ namespace Alternet.UI
         /// when property specified in <see cref="PropInfo"/> is not writable.
         /// </remarks>
         bool? OnlyTextReadOnly { get; set; }
+
+        /// <summary>
+        /// Gets or sets whether enum property is flags.
+        /// </summary>
+        /// <remarks>
+        /// This setting allows to override "Flags" atribute specified for the enum type.
+        /// </remarks>
+        bool? EnumIsFlags { get; set; }
 
         /// <summary>
         /// Raises <see cref="ButtonClick"/> event.
