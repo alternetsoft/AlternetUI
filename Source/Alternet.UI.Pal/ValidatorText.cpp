@@ -16,7 +16,7 @@ namespace Alternet::UI
 	{
 		return new wxTextValidator((long)style);
 	}
-	
+
 	ValidatorText::ValidatorText() 
 	{
 
@@ -24,6 +24,11 @@ namespace Alternet::UI
 	
 	ValidatorText::~ValidatorText()
 	{
+	}
+
+	string ValidatorText::IsValid(void* handle, const string& val)
+	{
+		return wxStr(ToTextValidator(handle)->IsValid(wxStr(val)));
 	}
 
 	int64_t ValidatorText::GetStyle(void* handle)

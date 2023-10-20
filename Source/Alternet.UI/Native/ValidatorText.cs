@@ -93,6 +93,11 @@ namespace Alternet.UI.Native
             NativeApi.ValidatorText_ClearIncludes_(handle);
         }
         
+        public static string IsValid(System.IntPtr handle, string val)
+        {
+            return NativeApi.ValidatorText_IsValid_(handle, val);
+        }
+        
         
         [SuppressUnmanagedCodeSecurity]
         public class NativeApi : NativeApiProvider
@@ -143,6 +148,9 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void ValidatorText_ClearIncludes_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern string ValidatorText_IsValid_(System.IntPtr handle, string val);
             
         }
     }

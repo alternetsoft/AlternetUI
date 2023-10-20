@@ -14,6 +14,7 @@ static void AddCharExcludes(void* handle, const string& chars);
 static string GetCharExcludes(void* handle);
 static void ClearExcludes(void* handle);
 static void ClearIncludes(void* handle);
+static string IsValid(void* handle, const string& val);
 public:
 ValidatorText();
 protected:

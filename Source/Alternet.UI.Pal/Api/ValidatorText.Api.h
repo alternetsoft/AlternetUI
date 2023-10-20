@@ -83,3 +83,8 @@ ALTERNET_UI_API void ValidatorText_ClearIncludes_(void* handle)
     ValidatorText::ClearIncludes(handle);
 }
 
+ALTERNET_UI_API char16_t* ValidatorText_IsValid_(void* handle, const char16_t* val)
+{
+    return AllocPInvokeReturnString(ValidatorText::IsValid(handle, val));
+}
+

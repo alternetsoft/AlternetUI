@@ -167,5 +167,12 @@ namespace Alternet.UI
         /// Clears the list of included values.
         /// </summary>
         void ClearIncludes();
+
+        /// <summary>
+        /// Returns the error message if the contents of <paramref name="val"/> are invalid or
+        /// the empty string if <paramref name="val"/> is valid.
+        /// </summary>
+        /// <param name="val">String value.</param>
+        string IsValid(string val);
     }
 }

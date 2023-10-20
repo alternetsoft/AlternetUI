@@ -259,6 +259,12 @@ namespace Alternet.UI
             Native.ValidatorText.AddCharExcludes(Handle, chars);
         }
 
+        /// <inheritdoc cref="IValueValidatorText.IsValid"/>
+        public string IsValid(string val)
+        {
+            return Native.ValidatorText.IsValid(Handle, val);
+        }
+
         /// <summary>
         /// Sets <see cref="Style"/> flag on/off.
         /// </summary>

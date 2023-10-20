@@ -29,5 +29,9 @@ namespace NativeApi.Api
 
         public static void ClearExcludes(IntPtr handle) { }
         public static void ClearIncludes(IntPtr handle) { }
+
+        // Returns the error message if the contents of val are invalid or
+        // the empty string if val is valid.
+        public static string IsValid(IntPtr handle, string val) => default;
     }
 }
