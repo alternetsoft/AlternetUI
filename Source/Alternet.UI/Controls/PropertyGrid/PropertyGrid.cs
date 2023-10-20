@@ -924,6 +924,26 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Returns <see cref="IPropertyGridChoices"/> for the specified <paramref name="instance"/>
+        /// and <paramref name="propName"/>.
+        /// </summary>
+        /// <param name="instance">Object.</param>
+        /// <param name="propName">Property name.</param>
+        /// <returns></returns>
+        public static IPropertyGridChoices? GetPropChoices(object instance, string propName)
+        {
+            var propInfo = AssemblyUtils.GetPropInfo(instance, propName);
+            if (propInfo is null)
+                return null;
+            var propType = propInfo.PropertyType;
+            var prm = PropertyGrid.ConstructNewItemParams(instance, propInfo);
+            var choices = prm.Choices;
+            var realType = AssemblyUtils.GetRealType(propType);
+            choices ??= PropertyGrid.CreateChoicesOnce(realType);
+            return choices;
+        }
+
+        /// <summary>
         /// Returns <see cref="IPropertyGridChoices"/> for the given enumeration type.
         /// </summary>
         /// <typeparam name="T">Type of the enumeration.</typeparam>
@@ -2393,11 +2413,17 @@ namespace Alternet.UI
             label ??= propName;
             object? propValue = propInfo.GetValue(instance, null);
             var realType = AssemblyUtils.GetRealType(propType);
-            bool isFlags = AssemblyUtils.EnumIsFlags(realType);
-            var choices = PropertyGrid.CreateChoicesOnce(realType);
+            var prm = ConstructNewItemParams(instance, propInfo);
+            var choices = prm.Choices;
+            bool isFlags;
+            if (prm.EnumIsFlags is null)
+                isFlags = AssemblyUtils.EnumIsFlags(realType);
+            else
+                isFlags = prm.EnumIsFlags.Value;
+
+            choices ??= CreateChoicesOnce(realType);
             bool isNullable = AssemblyUtils.GetNullable(propInfo);
             propValue ??= 0;
-            var prm = ConstructNewItemParams(instance, propInfo);
             if (isFlags)
             {
                 prop = CreateFlagsItem(
