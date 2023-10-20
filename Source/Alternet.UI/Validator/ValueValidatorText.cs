@@ -25,8 +25,176 @@ namespace Alternet.UI
         {
         }
 
+        /// <inheritdoc cref="IValueValidatorText.ExcludeNonAscii"/>
+        public bool ExcludeNonAscii
+        {
+            get
+            {
+                return Style.HasFlag(ValueValidatorTextStyle.Ascii);
+            }
+
+            set
+            {
+                SetStyleFLag(ValueValidatorTextStyle.Ascii, value);
+            }
+        }
+
+        /// <inheritdoc cref="IValueValidatorText.ExcludeNonAlpha"/>
+        public bool ExcludeNonAlpha
+        {
+            get
+            {
+                return Style.HasFlag(ValueValidatorTextStyle.Alpha);
+            }
+
+            set
+            {
+                SetStyleFLag(ValueValidatorTextStyle.Alpha, value);
+            }
+        }
+
+        /// <inheritdoc cref="IValueValidatorText.ExcludeNonAlphaNumeric"/>
+        public bool ExcludeNonAlphaNumeric
+        {
+            get
+            {
+                return Style.HasFlag(ValueValidatorTextStyle.Numeric);
+            }
+
+            set
+            {
+                SetStyleFLag(ValueValidatorTextStyle.Numeric, value);
+            }
+        }
+
+        /// <inheritdoc cref="IValueValidatorText.ExcludeNonDigits"/>
+        public bool ExcludeNonDigits
+        {
+            get
+            {
+                return Style.HasFlag(ValueValidatorTextStyle.Digits);
+            }
+
+            set
+            {
+                SetStyleFLag(ValueValidatorTextStyle.Digits, value);
+            }
+        }
+
+        /// <inheritdoc cref="IValueValidatorText.ExcludeNonNumeric"/>
+        public bool ExcludeNonNumeric
+        {
+            get
+            {
+                return Style.HasFlag(ValueValidatorTextStyle.Numeric);
+            }
+
+            set
+            {
+                SetStyleFLag(ValueValidatorTextStyle.Numeric, value);
+            }
+        }
+
+        /// <inheritdoc cref="IValueValidatorText.ExcludeNonHexDigits"/>
+        public bool ExcludeNonHexDigits
+        {
+            get
+            {
+                return Style.HasFlag(ValueValidatorTextStyle.XDigits);
+            }
+
+            set
+            {
+                SetStyleFLag(ValueValidatorTextStyle.XDigits, value);
+            }
+        }
+
+        /// <inheritdoc cref="IValueValidatorText.UseIncludeList"/>
+        public bool UseIncludeList
+        {
+            get
+            {
+                return Style.HasFlag(ValueValidatorTextStyle.IncludeList);
+            }
+
+            set
+            {
+                SetStyleFLag(ValueValidatorTextStyle.IncludeList, value);
+            }
+        }
+
+        /// <inheritdoc cref="IValueValidatorText.ExcludeEmptyStr"/>
+        public bool ExcludeEmptyStr
+        {
+            get
+            {
+                return Style.HasFlag(ValueValidatorTextStyle.Empty);
+            }
+
+            set
+            {
+                SetStyleFLag(ValueValidatorTextStyle.Empty, value);
+            }
+        }
+
+        /// <inheritdoc cref="IValueValidatorText.UseIncludeCharList"/>
+        public bool UseIncludeCharList
+        {
+            get
+            {
+                return Style.HasFlag(ValueValidatorTextStyle.IncludeCharList);
+            }
+
+            set
+            {
+                SetStyleFLag(ValueValidatorTextStyle.IncludeCharList, value);
+            }
+        }
+
+        /// <inheritdoc cref="IValueValidatorText.UseExcludeList"/>
+        public bool UseExcludeList
+        {
+            get
+            {
+                return Style.HasFlag(ValueValidatorTextStyle.ExcludeList);
+            }
+
+            set
+            {
+                SetStyleFLag(ValueValidatorTextStyle.ExcludeList, value);
+            }
+        }
+
+        /// <inheritdoc cref="IValueValidatorText.UseExcludeCharList"/>
+        public bool UseExcludeCharList
+        {
+            get
+            {
+                return Style.HasFlag(ValueValidatorTextStyle.ExcludeCharList);
+            }
+
+            set
+            {
+                SetStyleFLag(ValueValidatorTextStyle.ExcludeCharList, value);
+            }
+        }
+
+        /// <inheritdoc cref="IValueValidatorText.AllowSpaceChar"/>
+        public virtual bool AllowSpaceChar
+        {
+            get
+            {
+                return Style.HasFlag(ValueValidatorTextStyle.Space);
+            }
+
+            set
+            {
+                SetStyleFLag(ValueValidatorTextStyle.Space, value);
+            }
+        }
+
         /// <inheritdoc cref="IValueValidatorText.CharExcludes"/>
-        public string CharExcludes
+        public virtual string CharExcludes
         {
             get
             {
@@ -40,7 +208,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc cref="IValueValidatorText.Style"/>
-        public ValueValidatorTextStyle Style
+        public virtual ValueValidatorTextStyle Style
         {
             get
             {
@@ -54,7 +222,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc cref="IValueValidatorText.CharIncludes"/>
-        public string CharIncludes
+        public virtual string CharIncludes
         {
             get
             {
@@ -68,37 +236,50 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc cref="IValueValidatorText.AddCharIncludes"/>
-        public void AddCharIncludes(string chars)
+        public virtual void AddCharIncludes(string chars)
         {
             Native.ValidatorText.AddCharIncludes(Handle, chars);
         }
 
         /// <inheritdoc cref="IValueValidatorText.AddInclude"/>
-        public void AddInclude(string include)
+        public virtual void AddInclude(string include)
         {
             Native.ValidatorText.AddInclude(Handle, include);
         }
 
         /// <inheritdoc cref="IValueValidatorText.AddExclude"/>
-        public void AddExclude(string exclude)
+        public virtual void AddExclude(string exclude)
         {
             Native.ValidatorText.AddExclude(Handle, exclude);
         }
 
         /// <inheritdoc cref="IValueValidatorText.AddCharExcludes"/>
-        public void AddCharExcludes(string chars)
+        public virtual void AddCharExcludes(string chars)
         {
             Native.ValidatorText.AddCharExcludes(Handle, chars);
         }
 
+        /// <summary>
+        /// Sets <see cref="Style"/> flag on/off.
+        /// </summary>
+        /// <param name="styleFlag">Style flag to set.</param>
+        /// <param name="value"><c>true</c> to turn on, <c>false</c> to turn off.</param>
+        public virtual void SetStyleFLag(ValueValidatorTextStyle styleFlag, bool value)
+        {
+            if (value)
+                Style |= styleFlag;
+            else
+                Style &= ~styleFlag;
+        }
+
         /// <inheritdoc cref="IValueValidatorText.ClearExcludes"/>
-        public void ClearExcludes()
+        public virtual void ClearExcludes()
         {
             Native.ValidatorText.ClearExcludes(Handle);
         }
 
         /// <inheritdoc cref="IValueValidatorText.ClearIncludes"/>
-        public void ClearIncludes()
+        public virtual void ClearIncludes()
         {
             Native.ValidatorText.ClearIncludes(Handle);
         }
