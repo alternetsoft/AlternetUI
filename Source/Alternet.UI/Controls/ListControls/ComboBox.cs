@@ -340,8 +340,16 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="instance">Object.</param>
         /// <param name="propName">Property name.</param>
-        /// <remarks>Property must have the <see cref="Enum"/> type. Value of the binded
-        /// property will be changed automatically after <see cref="SelectedItem"/> is changed.</remarks>
+        /// <remarks>
+        /// Property must have the <see cref="Enum"/> type. Value of the binded
+        /// property will be changed automatically after <see cref="SelectedItem"/>
+        /// is changed.
+        /// </remarks>
+        /// <remarks>
+        /// Items property of the <see cref="ComboBox"/> is filled with <see cref="Enum"/>
+        /// elements using <see cref="PropertyGrid.GetPropChoices"/>. So, it is possible
+        /// to localize labels and limit displayed enum elements.
+        /// </remarks>
         public void BindEnumProp(object instance, string propName)
         {
             var choices = PropertyGrid.GetPropChoices(instance, propName);
