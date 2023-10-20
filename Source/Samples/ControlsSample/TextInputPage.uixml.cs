@@ -18,6 +18,7 @@ namespace ControlsSample
         {
             InitializeComponent();
             textBox1.EmptyTextHint = "Sample Hint";
+            textBox1.Text = "sample text";
             multiLineTextBox.Text = LoremIpsum;
             multiLineTextBox.TextUrl += MultiLineTextBox_TextUrl;
 
@@ -27,35 +28,9 @@ namespace ControlsSample
             tabControl.Children.Prepend(panelHeader);
             panelHeader.SelectedTab = panelHeader.Tabs[0];
 
-            wordWrapComboBox.IsEditable = false;
-            wordWrapComboBox.AddEnumValues<TextBoxTextWrap>();
-            wordWrapComboBox.SelectFirstItem();
-            wordWrapComboBox.SelectedItemChanged += WordWrapComboBox_SelectedItemChanged;
-
-            textAlignComboBox.IsEditable = false;
-            textAlignComboBox.Add(GenericAlignment.Left);
-            textAlignComboBox.Add(GenericAlignment.Right);
-            textAlignComboBox.Add(GenericAlignment.CenterHorizontal);
-            textAlignComboBox.SelectFirstItem();
-            textAlignComboBox.SelectedItemChanged += TextAlignComboBox_SelectedItemChanged;
-
+            wordWrapComboBox.BindEnumProp(multiLineTextBox, nameof(TextBox.TextWrap));
+            textAlignComboBox.BindEnumProp(textBox1, nameof(TextBox.TextAlign));
             RichEditButton_Click(null, EventArgs.Empty);     
-        }
-
-        private void TextAlignComboBox_SelectedItemChanged(object? sender, EventArgs e)
-        {
-            var item = textAlignComboBox.SelectedItem;
-            if (item is null)
-                return;
-            multiLineTextBox.TextAlign = (GenericAlignment)item;
-        }
-
-        private void WordWrapComboBox_SelectedItemChanged(object? sender, EventArgs e)
-        {
-            var item = wordWrapComboBox.SelectedItem;
-            if (item is null)
-                return;
-            multiLineTextBox.TextWrap = (TextBoxTextWrap)item;
         }
 
         private void ReadOnlyCheckBox_Changed(object? sender, EventArgs e) 
@@ -195,5 +170,15 @@ namespace ControlsSample
             }
             multiLineTextBox.SetDefaultStyle(taDefault);*/
         }
+    }
+
+    public static class Extensions
+    {
+        public static void BindProp(this CheckBox editor, object instance, string propName)
+        {
+
+        }
+
+ 
     }
 }

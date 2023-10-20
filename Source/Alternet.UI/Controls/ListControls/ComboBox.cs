@@ -334,6 +334,57 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Binds property specified with <paramref name="instance"/> and
+        /// <paramref name="propName"/> to the <see cref="ComboBox"/>.
+        /// After binding <see cref="ComboBox"/> will edit the specified property.
+        /// </summary>
+        /// <param name="instance">Object.</param>
+        /// <param name="propName">Property name.</param>
+        /// <remarks>Property must have the <see cref="Enum"/> type.</remarks>
+        public void BindEnumProp(object instance, string propName)
+        {
+            var choices = PropertyGrid.GetPropChoices(instance, propName);
+            if (choices is null)
+                return;
+            IsEditable = false;
+
+            var propInfo = AssemblyUtils.GetPropInfo(instance, propName);
+            object? result = propInfo?.GetValue(instance, null);
+            int selectIndex = -1;
+
+            for (int i = 0; i < choices.Count; i++)
+            {
+                var label = choices.GetLabel(i);
+                var value = choices.GetValue(i);
+                var item = new ListControlItem(label, value);
+                var index = Add(item);
+                if (result is not null)
+                {
+                    if (value == (int)result)
+                        selectIndex = index;
+                }
+            }
+
+            if (selectIndex >= 0)
+                SelectedIndex = selectIndex;
+
+            SelectedItemChanged += Editor_SelectedItemChanged;
+
+            void Editor_SelectedItemChanged(object? sender, EventArgs e)
+            {
+                var item = (sender as ComboBox)?.SelectedItem;
+                if (item is null)
+                    return;
+                object? value = null;
+                if (item is ListControlItem lcItem)
+                    value = lcItem.Value;
+                else
+                    value = item;
+                propInfo?.SetValue(instance, value);
+            }
+        }
+
+        /// <summary>
         /// Raises the <see cref="TextChanged"/> event and calls
         /// <see cref="OnTextChanged(EventArgs)"/>.
         /// </summary>

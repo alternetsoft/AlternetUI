@@ -21,6 +21,8 @@
                   CheckedChanged="ReadOnlyCheckBox_Changed"/>
         <CheckBox Name="passwordCheckBox" Text="Password" Margin="0,0,0,5"
                   CheckedChanged="PasswordCheckBox_Changed"/>
+        <Label Text="Text Align:" Margin="0,0,0,5"/>
+        <ComboBox Name="textAlignComboBox" Margin="0,0,0,5"/>
       </VerticalStackPanel>
 
     </VerticalStackPanel>
@@ -29,10 +31,8 @@
       <VerticalStackPanel>
         <TextBox Name="multiLineTextBox" Multiline="true" SuggestedWidth="350" SuggestedHeight="130"
                  Margin="5"/>
-        <Label Text="Word Wrap" Margin="5,0,0,0"/>
+        <Label Text="Word Wrap:" Margin="5,0,0,0"/>
         <ComboBox Name="wordWrapComboBox" Margin="5"/>
-        <Label Text="Text Align" Margin="5,0,0,0"/>
-        <ComboBox Name="textAlignComboBox" Margin="5"/>
       </VerticalStackPanel>
     </HorizontalStackPanel>
 
