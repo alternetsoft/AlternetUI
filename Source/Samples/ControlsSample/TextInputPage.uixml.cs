@@ -12,13 +12,13 @@ namespace ControlsSample
             "Lorem ipsum dolor sit amet,\nconsectetur adipiscing elit. Suspendisse tincidunt orci vitae arcu congue commodo. Proin fermentum rhoncus dictum.";
 
         private readonly IValueValidatorText ValidatorNumberSigned =
-            ValueValidatorFactory.CreateValueValidatorNum(ValueValidatorNumStyle.Signed);
+            ValueValidatorFactory.Default.CreateValueValidatorNum(ValueValidatorNumStyle.Signed);
         private readonly IValueValidatorText ValidatorNumberUnsigned =
-            ValueValidatorFactory.CreateValueValidatorNum(ValueValidatorNumStyle.Unsigned);
+            ValueValidatorFactory.Default.CreateValueValidatorNum(ValueValidatorNumStyle.Unsigned);
         private readonly IValueValidatorText ValidatorNumberFloat =
-            ValueValidatorFactory.CreateValueValidatorNum(ValueValidatorNumStyle.Float);
+            ValueValidatorFactory.Default.CreateValueValidatorNum(ValueValidatorNumStyle.Float);
         private readonly IValueValidatorText ValidatorNumberHex =
-            ValueValidatorFactory.CreateValueValidatorNum(ValueValidatorNumStyle.Unsigned, 16);
+            ValueValidatorFactory.Default.CreateValueValidatorNum(ValueValidatorNumStyle.Unsigned, 16);
         private readonly CardPanelHeader panelHeader = new();
         private IPageSite? site;
 
@@ -54,6 +54,8 @@ namespace ControlsSample
             numberUnsignedTextBox.TextChanged += TextBox_ValueChanged;
             numberFloatTextBox.TextChanged += TextBox_ValueChanged;
             numberHexTextBox.TextChanged += TextBox_ValueChanged;
+
+            noBellOnErrorCheckBox.BindBoolProp(ValueValidatorFactory.Default, nameof(ValueValidatorFactory.IsSilent));
         }
 
         private void MultiLineTextBox_TextUrl(object? sender, EventArgs e)

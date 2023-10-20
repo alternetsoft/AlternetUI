@@ -1745,7 +1745,7 @@ namespace Alternet.UI
             IPropertyGridNewItemParams? prm = null)
         {
             var result = CreateStringItemWithKind(label, name, value.ToString(), prm);
-            SetPropertyValidator(result, ValueValidatorFactory.DecimalValidator);
+            SetPropertyValidator(result, ValueValidatorFactory.Default.DecimalValidator);
             return result;
         }
 
