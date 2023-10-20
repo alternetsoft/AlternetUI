@@ -11,30 +11,49 @@ namespace ControlsSample
         private const string LoremIpsum =
             "Lorem ipsum dolor sit amet,\nconsectetur adipiscing elit. Suspendisse tincidunt orci vitae arcu congue commodo. Proin fermentum rhoncus dictum.";
 
+        private readonly IValueValidatorText ValidatorNumberSigned =
+            ValueValidatorFactory.CreateValueValidatorNum(ValueValidatorNumStyle.Signed);
+        private readonly IValueValidatorText ValidatorNumberUnsigned =
+            ValueValidatorFactory.CreateValueValidatorNum(ValueValidatorNumStyle.Unsigned);
+        private readonly IValueValidatorText ValidatorNumberFloat =
+            ValueValidatorFactory.CreateValueValidatorNum(ValueValidatorNumStyle.Float);
+        private readonly IValueValidatorText ValidatorNumberHex =
+            ValueValidatorFactory.CreateValueValidatorNum(ValueValidatorNumStyle.Unsigned, 16);
         private readonly CardPanelHeader panelHeader = new();
         private IPageSite? site;
 
         public TextInputPage()
         {
             InitializeComponent();
-            textBox1.EmptyTextHint = "Sample Hint";
-            textBox1.Text = "sample text";
+            textBox.EmptyTextHint = "Sample Hint";
+            textBox.Text = "sample text";
             multiLineTextBox.Text = LoremIpsum;
             multiLineTextBox.TextUrl += MultiLineTextBox_TextUrl;
 
             panelHeader.Add("TextBox", tab1);
             panelHeader.Add("Memo", tab2);
             panelHeader.Add("RichEdit", tab3);
+            panelHeader.Add("Numbers", tab4);
             tabControl.Children.Prepend(panelHeader);
             panelHeader.SelectedTab = panelHeader.Tabs[0];
 
             wordWrapComboBox.BindEnumProp(multiLineTextBox, nameof(TextBox.TextWrap));
-            textAlignComboBox.BindEnumProp(textBox1, nameof(TextBox.TextAlign));
+            textAlignComboBox.BindEnumProp(textBox, nameof(TextBox.TextAlign));
             RichEditButton_Click(null, EventArgs.Empty);
 
-            readOnlyCheckBox.BindBoolProp(textBox1, nameof(TextBox.ReadOnly));
-            passwordCheckBox.BindBoolProp(textBox1, nameof(TextBox.IsPassword));
-            hasBorderCheckBox.BindBoolProp(textBox1, nameof(TextBox.HasBorder));
+            readOnlyCheckBox.BindBoolProp(textBox, nameof(TextBox.ReadOnly));
+            passwordCheckBox.BindBoolProp(textBox, nameof(TextBox.IsPassword));
+            hasBorderCheckBox.BindBoolProp(textBox, nameof(TextBox.HasBorder));
+
+            numberSignedTextBox.Validator = ValidatorNumberSigned;
+            numberUnsignedTextBox.Validator = ValidatorNumberUnsigned;
+            numberFloatTextBox.Validator = ValidatorNumberFloat;
+            numberHexTextBox.Validator = ValidatorNumberHex;
+
+            numberSignedTextBox.TextChanged += TextBox_ValueChanged;
+            numberUnsignedTextBox.TextChanged += TextBox_ValueChanged;
+            numberFloatTextBox.TextChanged += TextBox_ValueChanged;
+            numberHexTextBox.TextChanged += TextBox_ValueChanged;
         }
 
         private void MultiLineTextBox_TextUrl(object? sender, EventArgs e)
@@ -55,12 +74,17 @@ namespace ControlsSample
 
         private void TextBox_ValueChanged(object? sender, TextChangedEventArgs e)
         {
-            site?.LogEvent("New TextBox value is: " + ((TextBox)sender!).Text);
+            var name = (sender as Control)?.Name;
+            var value = ((TextBox)sender!).Text;
+            if (name is null)
+                site?.LogEvent($"TextBox: {value}");
+            else
+                site?.LogEvent($"{name}: {value}");
         }
 
         private void AddLetterAButton_Click(object? sender, EventArgs e)
         {
-            textBox1.Text += "A";
+            textBox.Text += "A";
         }
 
         internal static void GetWordIndex(

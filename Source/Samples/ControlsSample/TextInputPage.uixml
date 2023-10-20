@@ -7,7 +7,7 @@
 
     <VerticalStackPanel Name="tab1">
 
-      <TextBox Text="" Margin="5" Name="textBox1" SuggestedWidth="350"
+      <TextBox Text="" Margin="5" Name="textBox" SuggestedWidth="350"
                TextChanged="TextBox_ValueChanged" />
 
       <VerticalStackPanel Margin="5" HorizontalAlignment="Left">
@@ -41,6 +41,18 @@
       </VerticalStackPanel>
     </HorizontalStackPanel>
 
+    <HorizontalStackPanel Name="tab4" Visible="false">
+      <VerticalStackPanel  Margin="5" >
+        <Label Text="Signed number:" Margin="0,0,0,5"/>
+        <TextBox Name="numberSignedTextBox" SuggestedWidth="350" Margin="0,0,0,5"/>
+        <Label Text="Unsigned number:" Margin="0,0,0,5"/>
+        <TextBox Name="numberUnsignedTextBox" SuggestedWidth="350" Margin="0,0,0,5"/>
+        <Label Text="Float number:" Margin="0,0,0,5"/>
+        <TextBox Name="numberFloatTextBox" SuggestedWidth="350" Margin="0,0,0,5"/>
+        <Label Text="Hex number:" Margin="0,0,0,5"/>
+        <TextBox Name="numberHexTextBox" SuggestedWidth="350" Margin="0,0,0,5"/>
+      </VerticalStackPanel>
+    </HorizontalStackPanel>
 
   </VerticalStackPanel>
 </Control>
