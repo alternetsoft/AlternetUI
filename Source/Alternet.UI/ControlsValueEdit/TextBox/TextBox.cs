@@ -49,6 +49,17 @@ namespace Alternet.UI
         private TextBoxTextWrap textWrap;
         private GenericAlignment textAlign;
 
+        static TextBox()
+        {
+            var choices = PropertyGrid.CreateChoices();
+            choices.Add(GenericAlignment.Left);
+            choices.Add(GenericAlignment.Right);
+            choices.Add(GenericAlignment.CenterHorizontal);
+            var prm = PropertyGrid.GetNewItemParams(typeof(TextBox), nameof(TextBox.TextAlign));
+            prm.EnumIsFlags = false;
+            prm.Choices = choices;
+        }
+
         /// <summary>
         /// Occurs when <see cref="Multiline"/> property value changes.
         /// </summary>
