@@ -194,6 +194,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AnimationControl.cpp" />
     <ClCompile Include="Api.cpp" />
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="AuiDefaultTabArt.cpp" />
@@ -215,6 +216,7 @@
     <ClCompile Include="BoxSizer.cpp" />
     <ClCompile Include="Brush.cpp" />
     <ClCompile Include="Button.cpp" />
+    <ClCompile Include="Calendar.cpp" />
     <ClCompile Include="CheckBox.cpp" />
     <ClCompile Include="CheckListBox.cpp" />
     <ClCompile Include="Clipboard.cpp" />
@@ -308,8 +310,10 @@
     <ClCompile Include="WxTreeViewFactory.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AnimationControl.h" />
     <ClInclude Include="ApiUtils.h" />
     <ClInclude Include="ApiTypes.h" />
+    <ClInclude Include="Api\AnimationControl.Api.h" />
     <ClInclude Include="Api\Application.Api.h" />
     <ClInclude Include="Api\AuiDefaultTabArt.Api.h" />
     <ClInclude Include="Api\AuiDefaultToolBarArt.Api.h" />
@@ -330,6 +334,7 @@
     <ClInclude Include="Api\BoxSizer.Api.h" />
     <ClInclude Include="Api\Brush.Api.h" />
     <ClInclude Include="Api\Button.Api.h" />
+    <ClInclude Include="Api\Calendar.Api.h" />
     <ClInclude Include="Api\CheckBox.Api.h" />
     <ClInclude Include="Api\CheckListBox.Api.h" />
     <ClInclude Include="Api\Clipboard.Api.h" />
@@ -444,6 +449,7 @@
     <ClInclude Include="BoxSizer.h" />
     <ClInclude Include="Brush.h" />
     <ClInclude Include="Button.h" />
+    <ClInclude Include="Calendar.h" />
     <ClInclude Include="CheckBox.h" />
     <ClInclude Include="CheckListBox.h" />
     <ClInclude Include="Clipboard.h" />
@@ -553,6 +559,7 @@
     <ClInclude Include="WxTreeViewFactory.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Api\AnimationControl.inc" />
     <None Include="Api\Application.inc" />
     <None Include="Api\AuiDefaultTabArt.inc" />
     <None Include="Api\AuiDefaultToolBarArt.inc" />
@@ -573,6 +580,7 @@
     <None Include="Api\BoxSizer.inc" />
     <None Include="Api\Brush.inc" />
     <None Include="Api\Button.inc" />
+    <None Include="Api\Calendar.inc" />
     <None Include="Api\CheckBox.inc" />
     <None Include="Api\CheckListBox.inc" />
     <None Include="Api\Clipboard.inc" />

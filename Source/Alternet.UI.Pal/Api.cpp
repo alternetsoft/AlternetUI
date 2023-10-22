@@ -1,3 +1,4 @@
+#include "Api/AnimationControl.Api.h"
 #include "Api/Application.Api.h"
 #include "Api/AuiDefaultTabArt.Api.h"
 #include "Api/AuiDefaultToolBarArt.Api.h"
@@ -16,6 +17,7 @@
 #include "Api/AuiToolBarEvent.Api.h"
 #include "Api/AuiToolBarItem.Api.h"
 #include "Api/Button.Api.h"
+#include "Api/Calendar.Api.h"
 #include "Api/CheckBox.Api.h"
 #include "Api/CheckListBox.Api.h"
 #include "Api/Clipboard.Api.h"
