@@ -10,25 +10,35 @@ namespace NativeApi.Api
 {
     // https://docs.wxwidgets.org/3.2/classwx_calendar_ctrl.html
     // #include <wx/calctrl.h>
-    public class Calendar
+    public class Calendar : Control
     {
+        public bool SundayFirst { get; set; }
+        public bool ShowHolidays { get; set; }
+        public bool NoYearChange { get; set; }
+        public bool NoMonthChange { get; set; }
+        public bool SequentalMonthSelect { get; set; }
+        public bool ShowSurroundWeeks { get; set; }
+        public bool ShowWeekNumbers { get; set; }
+
+        public event EventHandler? ValueChanged;
+
         public Alternet.UI.DateTime Value { get; set; }
         public Alternet.UI.DateTime MinValue { get; set; }
         public Alternet.UI.DateTime MaxValue { get; set; }
 
         public void SetRange(bool useMinValue, bool useMaxValue) { }
 
-        public void SetHolidayColours(Color colFg, Color colBg) { }
+        public void SetHolidayColours(Color colorFg, Color colorBg) { }
 
         public Color GetHolidayColourFg() => default;
         public Color GetHolidayColourBg() => default;
 
-        public void SetHeaderColours(Color colFg, Color colBg) { }
+        public void SetHeaderColours(Color colorFg, Color colorBg) { }
 
         public Color GetHeaderColourFg() => default;
         public Color GetHeaderColourBg() => default;
 
-        public void SetHighlightColours(Color colFg, Color colBg) { }
+        public void SetHighlightColours(Color colorFg, Color colorBg) { }
 
         public Color GetHighlightColourFg() => default;
         public Color GetHighlightColourBg() => default;
@@ -43,55 +53,30 @@ namespace NativeApi.Api
 
         public void EnableHolidayDisplay(bool display = true) { }
         public void SetHoliday(int day) { }
+
+        public static IntPtr GetMarkDateAttr() => default; /* real static */
+        public static void SetMarkDateAttr(IntPtr dateAttr) { } /* real static */
+        public static IntPtr CreateDateAttr(int border = 0) => default;
+
+        public static void DateAttrSetTextColour(IntPtr handle, Color colText) { }
+        public static void DateAttrSetBackgroundColour(IntPtr handle, Color colBack) { }
+        public static void DateAttrSetBorderColour(IntPtr handle, Color color) { }
+        public static void DateAttrSetFont(IntPtr handle, IntPtr font) { }
+        public static void DateAttrSetBorder(IntPtr handle, int border) { }
+        public static void DateAttrSetHoliday(IntPtr handle, bool holiday) { }
+
+        public static bool DateAttrHasTextColor(IntPtr handle) => default;
+        public static bool DateAttrHasBackgroundColor(IntPtr handle) => default;
+        public static bool DateAttrHasBorderColor(IntPtr handle) => default;
+        public static bool DateAttrHasFont(IntPtr handle) => default;
+        public static bool DateAttrHasBorder(IntPtr handle) => default;
+
+        public static bool DateAttrIsHoliday(IntPtr handle) => default;
+
+        public static Color DateAttrGetTextColor(IntPtr handle) => default;
+        public static Color DateAttrGetBackgroundColor(IntPtr handle) => default;
+        public static Color DateAttrGetBorderColor(IntPtr handle) => default;
+        public static IntPtr DateAttrGetFont(IntPtr handle) => default;
+        public static int DateAttrGetBorder(IntPtr handle) => default;
     }
 }
-
-/*
-
-    wxCalendarDateAttr(const wxColour& colText = wxNullColour,
-                       const wxColour& colBack = wxNullColour,
-                       const wxColour& colBorder = wxNullColour,
-                       const wxFont& font = wxNullFont,
-                       wxCalendarDateBorder border = wxCAL_BORDER_NONE)
-        : m_colText(colText), m_colBack(colBack),
-          m_colBorder(colBorder), m_font(font)
-    {
-        Init(border);
-    }
-    wxCalendarDateAttr(wxCalendarDateBorder border,
-                       const wxColour& colBorder = wxNullColour)
-        : m_colBorder(colBorder)
-    {
-        Init(border);
-    }
-
-    // setters
-    void SetTextColour(const wxColour& colText) { m_colText = colText; }
-    void SetBackgroundColour(const wxColour& colBack) { m_colBack = colBack; }
-    void SetBorderColour(const wxColour& col) { m_colBorder = col; }
-    void SetFont(const wxFont& font) { m_font = font; }
-    void SetBorder(wxCalendarDateBorder border) { m_border = border; }
-    void SetHoliday(bool holiday) { m_holiday = holiday; }
-
-    // accessors
-    bool HasTextColour() const { return m_colText.IsOk(); }
-    bool HasBackgroundColour() const { return m_colBack.IsOk(); }
-    bool HasBorderColour() const { return m_colBorder.IsOk(); }
-    bool HasFont() const { return m_font.IsOk(); }
-    bool HasBorder() const { return m_border != wxCAL_BORDER_NONE; }
-
-    bool IsHoliday() const { return m_holiday; }
-
-    const wxColour& GetTextColour() const { return m_colText; }
-    const wxColour& GetBackgroundColour() const { return m_colBack; }
-    const wxColour& GetBorderColour() const { return m_colBorder; }
-    const wxFont& GetFont() const { return m_font; }
-    wxCalendarDateBorder GetBorder() const { return m_border; }
-
-    // get or change the "mark" attribute, i.e. the one used for the items
-    // marked with wxCalendarCtrl::Mark()
-    static const wxCalendarDateAttr& GetMark() { return m_mark; }
-    static void SetMark(wxCalendarDateAttr const& m) { m_mark = m; }
- 
- 
- */
