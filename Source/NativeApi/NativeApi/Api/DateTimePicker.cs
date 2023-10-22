@@ -9,11 +9,7 @@ namespace NativeApi.Api
     {
         public bool HasBorder { get; set; }
 
-        public event EventHandler? ValueChanged 
-        { 
-            add => throw new Exception(); 
-            remove => throw new Exception(); 
-        }
+        public event EventHandler? ValueChanged;
 
         public Alternet.UI.DateTime Value { get; set; }
         public Alternet.UI.DateTime MinValue { get; set; }
