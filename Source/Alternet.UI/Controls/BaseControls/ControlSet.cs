@@ -16,8 +16,17 @@ namespace Alternet.UI
         /// <summary>
         /// Initializes a new instance of the <see cref="ControlSet"/> class.
         /// </summary>
-        /// <param name="controls"></param>
+        /// <param name="controls">Controls.</param>
         public ControlSet(params Control[] controls)
+        {
+            items = controls;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ControlSet"/> class.
+        /// </summary>
+        /// <param name="controls">Controls.</param>
+        public ControlSet(IReadOnlyList<Control> controls)
         {
             items = controls;
         }
