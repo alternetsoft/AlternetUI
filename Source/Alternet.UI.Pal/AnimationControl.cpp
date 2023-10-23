@@ -11,9 +11,9 @@ namespace Alternet::UI
 	{
 	}
 
-    wxAnimationCtrl* AnimationControl::GetAnimation()
+    wxAnimationCtrlBase* AnimationControl::GetAnimation()
     {
-        return dynamic_cast<wxAnimationCtrl*>(GetWxWindow());
+        return dynamic_cast<wxAnimationCtrlBase*>(GetWxWindow());
     }
 
     bool AnimationControl::Play()
@@ -29,6 +29,19 @@ namespace Alternet::UI
     bool AnimationControl::IsPlaying()
     {
         return GetAnimation()->IsPlaying();
+    }
+
+    bool AnimationControl::GetUseGeneric()
+    {
+        return _useGeneric;
+    }
+
+    void AnimationControl::SetUseGeneric(bool value)
+    {
+        if (_useGeneric == value)
+            return;
+        _useGeneric = value;
+        RecreateWxWindowIfNeeded();
     }
 
     bool AnimationControl::LoadFile(const string& filename, int type)
@@ -62,16 +75,44 @@ namespace Alternet::UI
         {}
     };
 
+    class wxGenericAnimationCtrl2 : public wxGenericAnimationCtrl, public wxWidgetExtender
+    {
+    public:
+        wxGenericAnimationCtrl2(wxWindow* parent,
+            wxWindowID id,
+            const wxAnimation& anim = wxNullAnimation,
+            const wxPoint& pos = wxDefaultPosition,
+            const wxSize& size = wxDefaultSize,
+            long style = wxAC_DEFAULT_STYLE,
+            const wxString& name = wxASCII_STR(wxAnimationCtrlNameStr))
+            : wxGenericAnimationCtrl(parent, id, anim, pos, size, style, name)
+        {}
+    };
+
     wxWindow* AnimationControl::CreateWxWindowCore(wxWindow* parent)
     {
         long style = wxAC_DEFAULT_STYLE;
 
-        auto control = new wxAnimationCtrl2(parent,
-            wxID_ANY,
-            wxNullAnimation,
-            wxDefaultPosition,
-            wxDefaultSize,
-            style);
+        wxWindow* control;
+
+        if (_useGeneric)
+        {
+            control = new wxGenericAnimationCtrl2(parent,
+                wxID_ANY,
+                wxNullAnimation,
+                wxDefaultPosition,
+                wxDefaultSize,
+                style);
+        }
+        else
+        {
+            control = new wxAnimationCtrl2(parent,
+                wxID_ANY,
+                wxNullAnimation,
+                wxDefaultPosition,
+                wxDefaultSize,
+                style);
+        }
 
         return control;
     }

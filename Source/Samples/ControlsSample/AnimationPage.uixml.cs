@@ -27,6 +27,7 @@ namespace ControlsSample
 
             InitializeComponent();
             animation.Parent = mainPanel;
+            animation.UseGeneric = true;
             animation.LoadFromUrl(defaultAnimationUrl, AnimationType.Gif);
             animation.Play();
 

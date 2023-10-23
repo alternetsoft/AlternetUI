@@ -16,7 +16,9 @@ namespace Alternet::UI
     public:
         wxWindow* CreateWxWindowCore(wxWindow* parent) override;
 
+        bool _useGeneric = false;
+
     private:
-        wxAnimationCtrl* GetAnimation();
+        wxAnimationCtrlBase* GetAnimation();
     };
 }

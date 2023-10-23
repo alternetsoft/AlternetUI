@@ -23,6 +23,21 @@ namespace Alternet.UI.Native
         {
         }
         
+        public bool UseGeneric
+        {
+            get
+            {
+                CheckDisposed();
+                return NativeApi.AnimationControl_GetUseGeneric_(NativePointer);
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.AnimationControl_SetUseGeneric_(NativePointer, value);
+            }
+        }
+        
         public bool Play()
         {
             CheckDisposed();
@@ -67,6 +82,12 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern IntPtr AnimationControl_Create_();
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool AnimationControl_GetUseGeneric_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void AnimationControl_SetUseGeneric_(IntPtr obj, bool value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool AnimationControl_Play_(IntPtr obj);

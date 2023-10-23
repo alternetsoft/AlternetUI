@@ -14,6 +14,7 @@ namespace NativeApi.Api
     {
         public bool Play() => default;
         public void Stop() { }
+        public bool UseGeneric { get; set; }
 
         public bool IsPlaying() => default;
 

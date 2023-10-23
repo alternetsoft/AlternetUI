@@ -15,6 +15,16 @@ ALTERNET_UI_API AnimationControl* AnimationControl_Create_()
     return new AnimationControl();
 }
 
+ALTERNET_UI_API c_bool AnimationControl_GetUseGeneric_(AnimationControl* obj)
+{
+    return obj->GetUseGeneric();
+}
+
+ALTERNET_UI_API void AnimationControl_SetUseGeneric_(AnimationControl* obj, c_bool value)
+{
+    obj->SetUseGeneric(value);
+}
+
 ALTERNET_UI_API c_bool AnimationControl_Play_(AnimationControl* obj)
 {
     return obj->Play();
