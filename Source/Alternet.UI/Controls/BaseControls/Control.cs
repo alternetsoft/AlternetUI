@@ -2099,6 +2099,40 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Creates new <see cref="CheckBox"/> and adds it to the <see cref="Children"/>.
+        /// </summary>
+        public virtual CheckBox AddCheckBox(string text, Action? action = null)
+        {
+            var result = new CheckBox(text)
+            {
+                Parent = this,
+            };
+
+            if (action is not null)
+                result.CheckedChanged += Result_CheckedChanged;
+
+            return result;
+
+            void Result_CheckedChanged(object? sender, EventArgs e)
+            {
+                action.Invoke();
+            }
+        }
+
+        /// <summary>
+        /// Creates new <see cref="Label"/> and adds it to the <see cref="Children"/>.
+        /// </summary>
+        public virtual Label AddLabel(string text)
+        {
+            var result = new Label(text)
+            {
+                Parent = this,
+            };
+
+            return result;
+        }
+
+        /// <summary>
         /// Creates new <see cref="VerticalStackPanel"/> and adds it to the <see cref="Children"/>.
         /// </summary>
         public virtual VerticalStackPanel AddVerticalStackPanel()
