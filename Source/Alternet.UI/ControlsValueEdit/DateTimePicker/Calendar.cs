@@ -11,8 +11,207 @@ namespace Alternet.UI
     /// <summary>
     /// The calendar control allows the user to pick a date.
     /// </summary>
+    /// <remarks>
+    /// The user can move the current selection using the keyboard and select the date
+    /// by pressing "Return" or double clicking it.
+    /// </remarks>
+    /// Generic calendar has advanced possibilities for the customization of its display,
+    /// described below.If you want to use these possibilities on every platform,
+    /// set UseGeneric property.
+    /// <remarks>
+    /// All global settings (such as colours and fonts used) can, of course, be changed.
+    /// But also, the display style for each day in the month can be set independently.
+    /// </remarks>
+    /// <remarks>
+    /// An item without custom attributes is drawn with the default colors and font and without
+    /// border, but setting custom attributes allows modifying its appearance.
+    /// Just create a custom attribute object and set it for the day you want to be
+    /// displayed specially.
+    /// </remarks>
+    /// <remarks>
+    /// A day may be marked as being a holiday using the SetHoliday() method.
+    /// </remarks>
+    /// <remarks>
+    /// As the attributes are specified for each day, they may change when the month is changed,
+    /// so you will often want to update them in PageChanged event handler.
+    /// </remarks>
+    /// <remarks>
+    /// If <see cref="FirstDayOfWeek"/> is <c>null</c> (default),
+    /// the first day of the week is determined from operating system's settings,
+    /// if possible.The native Linux calendar chooses the first weekday based on
+    /// locale, and these styles have no effect on it.
+    /// </remarks>
     public class Calendar : Control
     {
+        /// <summary>
+        /// Occurs when the selected date changed.
+        /// </summary>
+        public event EventHandler? SelectionChanged;
+
+        /// <summary>
+        /// Occurs when the selected month (and/or year) changed.
+        /// </summary>
+        public event EventHandler? PageChanged;
+
+        /// <summary>
+        /// Occurs when the user clicked on the week of the year number
+        /// (fired only in generic calendar).
+        /// </summary>
+        public event EventHandler? WeekNumberClick;
+
+        /// <summary>
+        /// Occurs when the user clicked on the week day header (fired only in generic calendar).
+        /// </summary>
+        public event EventHandler? DayHeaderClick;
+
+        /// <summary>
+        /// Occurs when a day was double clicked in the calendar.
+        /// </summary>
+        public event EventHandler? DayDoubleClick;
+
+        /// <summary>
+        /// Gets or sets a value indicating whether to highlight holidays in the calendar
+        /// </summary>
+        /// <remarks>
+        /// This feature is implemented only in generic calendar. In order to use
+        /// generic calendar, set <see cref="UseGeneric"/> property.
+        /// </remarks>
+        public bool ShowHolidays
+        {
+            get
+            {
+                return NativeControl.ShowHolidays;
+            }
+
+            set
+            {
+                NativeControl.ShowHolidays = value;
+                PerformLayout();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether to disable the month
+        /// (and, implicitly, the year) changing.
+        /// </summary>
+        public bool NoMonthChange
+        {
+            get
+            {
+                return NativeControl.NoMonthChange;
+            }
+
+            set
+            {
+                NativeControl.NoMonthChange = value;
+                PerformLayout();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether to use alternative, more compact,
+        /// style for the month and year selection controls.
+        /// </summary>
+        /// <remarks>
+        /// This feature is implemented only in generic calendar. In order to use
+        /// generic calendar, set <see cref="UseGeneric"/> property.
+        /// </remarks>
+        public bool SequentalMonthSelect
+        {
+            get
+            {
+                return NativeControl.SequentalMonthSelect;
+            }
+
+            set
+            {
+                NativeControl.SequentalMonthSelect = value;
+                PerformLayout();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether to show the neighbouring weeks in the
+        /// previous and next months. (only generic, always on for the native controls)
+        /// </summary>
+        /// <remarks>
+        /// This feature is implemented only in generic calendar. In order to use
+        /// generic calendar, set <see cref="UseGeneric"/> property.
+        /// </remarks>
+        /// <remarks>
+        /// In the native calendar neighbouring weeks for the
+        /// previous and next months are always shown.
+        /// </remarks>
+        public bool ShowSurroundWeeks
+        {
+            get
+            {
+                return NativeControl.ShowSurroundWeeks;
+            }
+
+            set
+            {
+                NativeControl.ShowSurroundWeeks = value;
+                PerformLayout();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether to show week numbers on the left side
+        /// of the calendar.
+        /// </summary>
+        /// <remarks>
+        /// This feature is implemented only in the native calendar. In order to use
+        /// native calendar, set <see cref="UseGeneric"/> property to <c>false</c>.
+        /// </remarks>
+        public bool ShowWeekNumbers
+        {
+            get
+            {
+                return NativeControl.ShowWeekNumbers;
+            }
+
+            set
+            {
+                NativeControl.ShowWeekNumbers = value;
+                PerformLayout();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether to use generic calendar or native calendar.
+        /// </summary>
+        public bool UseGeneric
+        {
+            get
+            {
+                return NativeControl.UseGeneric;
+            }
+
+            set
+            {
+                NativeControl.UseGeneric = value;
+                PerformLayout();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the control has a border.
+        /// </summary>
+        public bool HasBorder
+        {
+            get
+            {
+                return NativeControl.HasBorder;
+            }
+
+            set
+            {
+                NativeControl.HasBorder = value;
+                PerformLayout();
+            }
+        }
+
         /// <summary>
         /// Gets or sets the day that is considered the beginning of the week.
         /// </summary>
@@ -75,6 +274,82 @@ namespace Alternet.UI
         internal DayOfWeek FirstDayOfWeekUseGlobalization =>
             System.Globalization.DateTimeFormatInfo.CurrentInfo.FirstDayOfWeek;
 
+        internal void RaiseSelectionChanged(EventArgs e)
+        {
+            OnSelectionChanged(e);
+            SelectionChanged?.Invoke(this, e);
+        }
+
+        internal void RaisePageChanged(EventArgs e)
+        {
+            OnPageChanged(e);
+            PageChanged?.Invoke(this, e);
+        }
+
+        internal void RaiseWeekNumberClick(EventArgs e)
+        {
+            OnWeekNumberClick(e);
+            WeekNumberClick?.Invoke(this, e);
+        }
+
+        internal void RaiseDayHeaderClick(EventArgs e)
+        {
+            OnDayHeaderClick(e);
+            DayHeaderClick?.Invoke(this, e);
+        }
+
+        internal void RaiseDayDoubleClick(EventArgs e)
+        {
+            OnDayDoubleClick(e);
+            DayDoubleClick?.Invoke(this, e);
+        }
+
+        /// <summary>
+        /// Called when a day was double clicked in the calendar.
+        /// </summary>
+        /// <param name="e">An <see cref="EventArgs"/> that contains
+        /// the event data.</param>
+        protected virtual void OnDayDoubleClick(EventArgs e)
+        {
+        }
+
+        /// <summary>
+        /// Called when the user clicked on the week day header (fired only in generic calendar).
+        /// </summary>
+        /// <param name="e">An <see cref="EventArgs"/> that contains
+        /// the event data.</param>
+        protected virtual void OnDayHeaderClick(EventArgs e)
+        {
+        }
+
+        /// <summary>
+        /// Called when the user clicked on the week of the year number
+        /// (fired only in generic calendar).
+        /// </summary>
+        /// <param name="e">An <see cref="EventArgs"/> that contains
+        /// the event data.</param>
+        protected virtual void OnWeekNumberClick(EventArgs e)
+        {
+        }
+
+        /// <summary>
+        /// Called when the selected month (and/or year) changed.
+        /// </summary>
+        /// <param name="e">An <see cref="EventArgs"/> that contains
+        /// the event data.</param>
+        protected virtual void OnPageChanged(EventArgs e)
+        {
+        }
+
+        /// <summary>
+        /// Called when the selected date changed.
+        /// </summary>
+        /// <param name="e">An <see cref="EventArgs"/> that contains
+        /// the event data.</param>
+        protected virtual void OnSelectionChanged(EventArgs e)
+        {
+        }
+
         /// <inheritdoc/>
         protected override ControlHandler CreateHandler()
         {
@@ -82,35 +357,3 @@ namespace Alternet.UI
         }
     }
 }
-
-
-/*
-
-The user can move the current selection using the keyboard and select the date
-    by pressing <Return> or double clicking it.
-
-Generic calendar has advanced possibilities for the customization of its display,
-described below. If you want to use these possibilities on every platform,
-set UseGeneric property.
-
-All global settings (such as colours and fonts used) can, of course, be changed.
-    But also, the display style for each day in the month can be set independently.
-
-An item without custom attributes is drawn with the default colours and font and without
-    border, but setting custom attributes with SetAttr() allows
-    modifying its appearance. Just create a custom attribute object and
-    set it for the day you want to be displayed specially (note that the control
-    will take ownership of the pointer, i.e. it will delete it itself).
-
-    A day may be marked as being a holiday, even if it is not recognized
-    as one by wxDateTime using the wxCalendarDateAttr::SetHoliday() method.
-
-As the attributes are specified for each day, they may change when the month is changed,
-so you will often want to update them in EVT_CALENDAR_PAGE_CHANGED event handler.
-
-If neither the wxCAL_SUNDAY_FIRST or wxCAL_MONDAY_FIRST style is given,
-the first day of the week is determined from operating system's settings,
-if possible. The native wxGTK calendar chooses the first weekday based on
-locale, and these styles have no effect on it.
-
-*/
