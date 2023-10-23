@@ -83,6 +83,7 @@ namespace ControlsSample
                 pages.Add(item);
             }
 
+            AddPage("Text Input", CreateTextInputPage);
             AddPage("Tree View", CreateTreeViewPage);
             AddPage("List View", CreateListViewPage);
             AddPage("List Box", CreateListBoxPage);
@@ -95,7 +96,6 @@ namespace ControlsSample
             AddPage("Numeric Input", CreateNumericInputPage);
             AddPage("Radio Button", CreateRadioButtonsPage);
             AddPage("Check Box", CreateCheckBoxesPage);
-            AddPage("Text Input", CreateTextInputPage);
             AddPage("Date Time", CreateDateTimePage);
             AddPage("Web Browser", CreateWebBrowserPage);
             AddPage("Splitter Panel", CreateSplitterPanelPage);
