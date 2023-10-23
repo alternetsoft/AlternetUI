@@ -103,6 +103,12 @@ namespace Alternet.UI
             return NativeControl.Load(inputStream, (int)type);
         }
 
+        public virtual bool LoadFromUrl(string url, AnimationType type = AnimationType.Any)
+        {
+            using var stream = ResourceLoader.StreamFromUrl(url);
+            return Load(stream, type);
+        }
+
         /// <summary>
         /// Sets the bitmap to show on the control when it's not playing an animation.
         /// </summary>

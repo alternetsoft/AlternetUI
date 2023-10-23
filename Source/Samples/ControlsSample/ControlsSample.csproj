@@ -33,6 +33,8 @@
       <None Remove="Html\SampleArchive\Images\panda2.jpg" />
       <None Remove="Html\SampleArchive\root.html" />
       <None Remove="Html\SampleArchive\Styles\default.css" />
+      <None Remove="Resources\Animation\HourGlass.gif" />
+      <None Remove="Resources\Animation\Spinner.gif" />
       <None Remove="Resources\ButtonImages\ButtonImageFocused.png" />
       <None Remove="Resources\SamplePandaPdf.pdf" />
       <None Remove="Resources\Svg\arrow-left.svg" />
@@ -71,6 +73,9 @@
     </ItemGroup>
 
     <ItemGroup>
+      <EmbeddedResource Include="Resources\Animation\HourGlass.gif" />
+      <EmbeddedResource Include="Resources\Animation\Plant.gif" />
+      <EmbeddedResource Include="Resources\Animation\Spinner.gif" />
       <EmbeddedResource Include="Resources\ButtonImages\ButtonImageDisabled.png" />
       <EmbeddedResource Include="Resources\ButtonImages\ButtonImageFocused.png" />
       <EmbeddedResource Include="Resources\ButtonImages\ButtonImageHovered.png" />

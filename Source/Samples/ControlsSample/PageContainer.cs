@@ -26,8 +26,15 @@ namespace ControlsSample
             Margin = new Thickness(100, 100, 0, 0),
         };
 
+        private readonly AnimationControl waitAnination = new()
+        {
+            Margin = new Thickness(100, 100, 0, 0),
+        };
+
         public PageContainer()
         {
+            waitAnination.LoadFromUrl(AnimationPage.AnimationHourGlass);
+
             grid = new Grid();
             grid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
             grid.ColumnDefinitions.Add(new ColumnDefinition
@@ -94,7 +101,7 @@ namespace ControlsSample
                 {
                     waitLabelContainer.Parent = activePageHolder;
                     waitLabelContainer.Visible = true;
-                    waitLabelContainer.Refresh();
+                    waitLabelContainer.Update();
                     Application.DoEvents();
                 }
 
