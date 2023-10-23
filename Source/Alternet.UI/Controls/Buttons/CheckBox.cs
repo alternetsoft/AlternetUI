@@ -211,11 +211,11 @@ namespace Alternet.UI
         /// <param name="propName">Property name.</param>
         /// <remarks>Property must have the <see cref="bool"/> type. Value of the binded
         /// property will be changed automatically after <see cref="IsChecked"/> is changed.</remarks>
-        public void BindBoolProp(object instance, string propName)
+        public CheckBox BindBoolProp(object instance, string propName)
         {
             var propInfo = AssemblyUtils.GetPropInfo(instance, propName);
             if (propInfo is null)
-                return;
+                return this;
             object? result = propInfo?.GetValue(instance, null);
             IsChecked = result is true;
 
@@ -226,6 +226,8 @@ namespace Alternet.UI
                 var value = (sender as CheckBox)?.IsChecked;
                 propInfo?.SetValue(instance, value);
             }
+
+            return this;
         }
 
         /// <summary>
