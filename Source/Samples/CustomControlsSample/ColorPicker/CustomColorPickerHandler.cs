@@ -50,7 +50,7 @@ namespace CustomControlsSample
             }
         }
 
-        Color[] colors = new[]
+        private readonly Color[] colors = new[]
         {
             Color.IndianRed,
             Color.LightSalmon,
