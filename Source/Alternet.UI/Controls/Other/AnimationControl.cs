@@ -4,27 +4,26 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Alternet.Drawing;
 
 namespace Alternet.UI
 {
-    internal class Calendar : Control
+    internal class AnimationControl : Control
     {
         [Browsable(false)]
-        internal new NativeCalendarHandler Handler
+        internal new NativeAnimationControlHandler Handler
         {
             get
             {
                 CheckDisposed();
-                return (NativeCalendarHandler)base.Handler;
+                return (NativeAnimationControlHandler)base.Handler;
             }
         }
 
-        internal Native.Calendar NativeControl => Handler.NativeControl;
+        internal Native.AnimationControl NativeControl => Handler.NativeControl;
 
         protected override ControlHandler CreateHandler()
         {
-            return new NativeCalendarHandler();
+            return new NativeAnimationControlHandler();
         }
     }
 }

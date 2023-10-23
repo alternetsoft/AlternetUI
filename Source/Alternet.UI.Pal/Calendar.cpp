@@ -39,14 +39,43 @@ namespace Alternet::UI
 
     wxWindow* Calendar::CreateWxWindowCore(wxWindow* parent)
     {
-        long style = wxCAL_SHOW_HOLIDAYS;
+        long style = 0;
 
-        auto window = new wxCalendarCtrl2(parent,
-            wxID_ANY,
-            wxDefaultDateTime,
-            wxDefaultPosition,
-            wxDefaultSize,
-            style);
+        if (_showHolidays)
+            style |= wxCAL_SHOW_HOLIDAYS;
+        if (_sundayFirst)
+            style |= wxCAL_SUNDAY_FIRST;
+        else
+            style |= wxCAL_MONDAY_FIRST;
+        if (_noMonthChange)
+            style |= wxCAL_NO_MONTH_CHANGE;
+        if (_sequentalMonthSelect)
+            style |= wxCAL_SEQUENTIAL_MONTH_SELECTION;
+        if (_showSurroundWeeks)
+            style |= wxCAL_SHOW_SURROUNDING_WEEKS;
+        if (_showWeekNumbers)
+            style |= wxCAL_SHOW_WEEK_NUMBERS;
+
+        wxWindow* window;
+
+        if (_useGeneric)
+        {
+            window = new wxGenericCalendarCtrl2(parent,
+                wxID_ANY,
+                wxDefaultDateTime,
+                wxDefaultPosition,
+                wxDefaultSize,
+                style);
+        }
+        else
+        {
+            window = new wxCalendarCtrl2(parent,
+                wxID_ANY,
+                wxDefaultDateTime,
+                wxDefaultPosition,
+                wxDefaultSize,
+                style);
+        }
 
         window->Bind(wxEVT_CALENDAR_DOUBLECLICKED, &Calendar::OnEventDoubleClick, this);
         window->Bind(wxEVT_CALENDAR_SEL_CHANGED, &Calendar::OnEventSelChanged, this);
