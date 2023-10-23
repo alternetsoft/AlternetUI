@@ -26,6 +26,7 @@ namespace Alternet::UI
         bool _showSurroundWeeks = true;
         bool _showWeekNumbers = false;
         bool _useGeneric = false;
+        bool _hasBorder = false;
         DateTime _minValue = DateTime();
         DateTime _maxValue = DateTime();
 

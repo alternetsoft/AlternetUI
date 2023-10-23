@@ -103,6 +103,16 @@ ALTERNET_UI_API void Calendar_SetUseGeneric_(Calendar* obj, c_bool value)
     obj->SetUseGeneric(value);
 }
 
+ALTERNET_UI_API c_bool Calendar_GetHasBorder_(Calendar* obj)
+{
+    return obj->GetHasBorder();
+}
+
+ALTERNET_UI_API void Calendar_SetHasBorder_(Calendar* obj, c_bool value)
+{
+    obj->SetHasBorder(value);
+}
+
 ALTERNET_UI_API DateTime_C Calendar_GetValue_(Calendar* obj)
 {
     return obj->GetValue();

@@ -37,6 +37,10 @@ bool GetUseGeneric();
 void SetUseGeneric(bool value);
 
 
+bool GetHasBorder();
+void SetHasBorder(bool value);
+
+
 DateTime GetValue();
 void SetValue(const DateTime& value);
 

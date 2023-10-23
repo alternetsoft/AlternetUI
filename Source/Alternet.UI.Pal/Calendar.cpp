@@ -37,9 +37,25 @@ namespace Alternet::UI
         }
     };
 
+    bool Calendar::GetHasBorder()
+    {
+        return _hasBorder;
+    }
+
+    void Calendar::SetHasBorder(bool value)
+    {
+        if (_hasBorder == value)
+            return;
+        _hasBorder = value;
+        RecreateWxWindowIfNeeded();
+    }
+
     wxWindow* Calendar::CreateWxWindowCore(wxWindow* parent)
     {
         long style = 0;
+
+        if (!_hasBorder)
+            style = style | wxBORDER_NONE;
 
         if (_showHolidays)
             style |= wxCAL_SHOW_HOLIDAYS;

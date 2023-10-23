@@ -159,6 +159,21 @@ namespace Alternet.UI.Native
             }
         }
         
+        public bool HasBorder
+        {
+            get
+            {
+                CheckDisposed();
+                return NativeApi.Calendar_GetHasBorder_(NativePointer);
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.Calendar_SetHasBorder_(NativePointer, value);
+            }
+        }
+        
         public DateTime Value
         {
             get
@@ -545,6 +560,12 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Calendar_SetUseGeneric_(IntPtr obj, bool value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool Calendar_GetHasBorder_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Calendar_SetHasBorder_(IntPtr obj, bool value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern NativeApiTypes.DateTime Calendar_GetValue_(IntPtr obj);

@@ -21,6 +21,7 @@ namespace NativeApi.Api
         public bool ShowSurroundWeeks { get; set; }
         public bool ShowWeekNumbers { get; set; }
         public bool UseGeneric { get; set; }
+        public bool HasBorder { get; set; }
 
         public event EventHandler? SelectionChanged;
         public event EventHandler? PageChanged;
