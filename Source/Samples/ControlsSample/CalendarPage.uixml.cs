@@ -46,8 +46,12 @@ namespace ControlsSample
             checkboxPanel.ChildrenSet.Margin(5);
 
             var buttonPanel = optionsPanel.AddVerticalStackPanel();
-            var setDayColorsButton = buttonPanel.AddButton("Set day colors", SetDayColors);
+            var setDayColorsButton = buttonPanel.AddButton("Set days (5, 7) style", SetDayColors);
             setDayColorsButton.Enabled = useGenericCheckBox.IsChecked;
+
+            buttonPanel.AddButton("Mark days (2, 3)", SelectDay);
+
+            buttonPanel.ChildrenSet.Margin(5);
 
             useGenericCheckBox.BindBoolProp(setDayColorsButton, nameof(Button.Enabled));
             useGenericCheckBox.BindBoolProp(sequentalMonthSelectCheckBox, nameof(Button.Enabled));
@@ -55,6 +59,12 @@ namespace ControlsSample
 
             calendar.Parent = mainPanel;
             calendar.PerformLayout();
+
+            void SelectDay()
+            {
+                calendar.Mark(2);
+                calendar.Mark(3);
+            }
 
             void SetDayColors()
             {
@@ -65,7 +75,8 @@ namespace ControlsSample
                 dateAttr.BackgroundColor = Color.LightSkyBlue;
                 dateAttr.TextColor = Color.Navy;
 
-                calendar.SetAttr(2, dateAttr);
+                calendar.SetAttr(5, dateAttr);
+                calendar.SetAttr(7, dateAttr);
                 calendar.Refresh();
             }
         }
