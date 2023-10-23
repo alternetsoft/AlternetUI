@@ -19,6 +19,8 @@ namespace ControlsSample
             calendar.DayHeaderClick += Calendar_DayHeaderClick;
             calendar.DayDoubleClick += Calendar_DayDoubleClick;
             calendar.Margin = 5;
+            calendar.HorizontalAlignment = HorizontalAlignment.Left;
+            calendar.VerticalAlignment = VerticalAlignment.Top;
 
             var optionsPanel = mainPanel.AddHorizontalStackPanel();
             var checkboxPanel = optionsPanel.AddVerticalStackPanel();
