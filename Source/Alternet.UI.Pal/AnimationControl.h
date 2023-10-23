@@ -7,6 +7,7 @@
 #include "Api/InputStream.h"
 #include "ManagedInputStream.h"
 #include "wx/animate.h"
+#include "wx/generic/animate.h"
 
 namespace Alternet::UI
 {
