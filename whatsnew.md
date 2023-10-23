@@ -1,15 +1,23 @@
 # 0.9.405 (not released, work in progress)
 
+- Added Calendar and AnimationControl.
 - Implemented Sizer functionality. It allows to implement complex controls layouts.
 - Add to TreeViewItem: TextColor, BackgroundColor, IsBold.
 - TreeView speedup (removed handlesByItems usage).
 - Updated webview to 2.1.0.2045.28.
 - Updated wxWidgets to 3.2.3.
+- Improvements in Validators, added number validator demo to ControlsSample.
+- Fixed TextBox.Validator
 - Fixed exceptions in menu and toolbar.
 - Fixed exception in DragAndDropSample.
 - Moved PanelTreeAndCards control to the main library.
 - Improved Xml documentation in cs files.
 - Improved handling of Uixml errors (not finished).
+- Add to CheckBox: CheckState, ThreeState, AlignRight, AllowAllStatesForUser.
+- Add Label.BindText, ComboBox.BindEnumProp, CheckBox.BindBoolProp.
+- Add to TextBox: TextAlign, TextWrap.
+- Add to ListControl: FirstItem, SelectFirstItem().
+- Minor improvements in PropertyGrid.
 
 ---
 
