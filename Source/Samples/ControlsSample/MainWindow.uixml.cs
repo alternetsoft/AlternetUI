@@ -101,7 +101,7 @@ namespace ControlsSample
             AddPage("Splitter Panel", CreateSplitterPanelPage);
             AddPage("Layout Panel", CreateLayoutPanelPage);
             AddPage("Calendar", CreateCalendarPage);
-            //AddPage("Animation", CreateAnimationPage);
+            AddPage("Animation", CreateAnimationPage);
 
             if (NotifyIcon.IsAvailable)
                 AddPage("Notify Icon", CreateNotifyIconPage);
