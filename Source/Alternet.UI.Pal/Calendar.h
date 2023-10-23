@@ -15,7 +15,7 @@ namespace Alternet::UI
         wxWindow* CreateWxWindowCore(wxWindow* parent) override;
 
     private:
-        wxCalendarCtrl* GetCalendar();
+        wxCalendarCtrlBase* GetCalendar();
 
         bool _showHolidays = false;
         bool _sundayFirst = false;

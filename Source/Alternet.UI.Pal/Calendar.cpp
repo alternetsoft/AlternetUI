@@ -104,9 +104,9 @@ namespace Alternet::UI
         return window;
     }
 
-    wxCalendarCtrl* Calendar::GetCalendar()
+    wxCalendarCtrlBase* Calendar::GetCalendar()
     {
-        return dynamic_cast<wxCalendarCtrl*>(GetWxWindow());
+        return dynamic_cast<wxCalendarCtrlBase*>(GetWxWindow());
     }
 
     Calendar::~Calendar()

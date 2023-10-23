@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using Alternet.UI;
+using Alternet.Drawing;
 
 namespace ControlsSample
 {
@@ -29,18 +30,44 @@ namespace ControlsSample
                 .BindBoolProp(calendar,nameof(Calendar.ShowHolidays));
             checkboxPanel.AddCheckBox("No Month Change")
                 .BindBoolProp(calendar, nameof(Calendar.NoMonthChange));
-            checkboxPanel.AddCheckBox("Use Generic")
+            var useGenericCheckBox = checkboxPanel.AddCheckBox("Use Generic")
                 .BindBoolProp(calendar, nameof(Calendar.UseGeneric));
-            checkboxPanel.AddCheckBox("Generic: Sequental Month Select")
+            
+            var sequentalMonthSelectCheckBox = checkboxPanel.AddCheckBox("Generic: Sequental Month Select")
                 .BindBoolProp(calendar, nameof(Calendar.SequentalMonthSelect));
-            checkboxPanel.AddCheckBox("Generic: Show Surround Weeks")
+            sequentalMonthSelectCheckBox.Enabled = useGenericCheckBox.IsChecked;
+            
+            var showSurroundWeeksCheckBox = checkboxPanel.AddCheckBox("Generic: Show Surround Weeks")
                 .BindBoolProp(calendar, nameof(Calendar.ShowSurroundWeeks));
+            showSurroundWeeksCheckBox.Enabled = useGenericCheckBox.IsChecked;
+            
             checkboxPanel.AddCheckBox("Native: Week Numbers")
                 .BindBoolProp(calendar, nameof(Calendar.ShowWeekNumbers));
             checkboxPanel.ChildrenSet.Margin(5);
 
+            var buttonPanel = optionsPanel.AddVerticalStackPanel();
+            var setDayColorsButton = buttonPanel.AddButton("Set day colors", SetDayColors);
+            setDayColorsButton.Enabled = useGenericCheckBox.IsChecked;
+
+            useGenericCheckBox.BindBoolProp(setDayColorsButton, nameof(Button.Enabled));
+            useGenericCheckBox.BindBoolProp(sequentalMonthSelectCheckBox, nameof(Button.Enabled));
+            useGenericCheckBox.BindBoolProp(showSurroundWeeksCheckBox, nameof(Button.Enabled));
+
             calendar.Parent = mainPanel;
             calendar.PerformLayout();
+
+            void SetDayColors()
+            {
+                var dateAttr = Calendar.CreateDateAttr();
+
+                dateAttr.Border = CalendarDateBorder.Round;
+                dateAttr.BorderColor = Color.Red;
+                dateAttr.BackgroundColor = Color.LightSkyBlue;
+                dateAttr.TextColor = Color.Navy;
+
+                calendar.SetAttr(2, dateAttr);
+                calendar.Refresh();
+            }
         }
 
         private void Calendar_DayDoubleClick(object? sender, EventArgs e)
