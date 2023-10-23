@@ -92,7 +92,7 @@ namespace Alternet.UI
 
         /// <summary>
         /// Gets or sets a value indicating whether to disable the month
-        /// (and, implicitly, the year) changing.
+        /// (and, implicitly, the year) changing. Not implemented on all platforms.
         /// </summary>
         public bool NoMonthChange
         {
@@ -273,6 +273,89 @@ namespace Alternet.UI
 
         internal DayOfWeek FirstDayOfWeekUseGlobalization =>
             System.Globalization.DateTimeFormatInfo.CurrentInfo.FirstDayOfWeek;
+
+        public Color HolidayColorFg => NativeControl.GetHolidayColorFg();
+
+        public Color HolidayColorBg => NativeControl.GetHolidayColorBg();
+
+        public Color HeaderColorFg => NativeControl.GetHeaderColorFg();
+
+        public Color HeaderColorBg => NativeControl.GetHeaderColorBg();
+
+        public Color HighlightColorFg => NativeControl.GetHighlightColorFg();
+
+        public Color HighlightColorBg => NativeControl.GetHighlightColorBg();
+
+        public bool AllowMonthChange() => NativeControl.AllowMonthChange();
+
+        public bool EnableMonthChange(bool enable = true) => NativeControl.EnableMonthChange(enable);
+
+        public void Mark(int day, bool mark) => NativeControl.Mark(day, mark);
+
+        public void ResetAttr(int day) => NativeControl.ResetAttr(day);
+
+        public void EnableHolidayDisplay(bool display = true) => NativeControl.EnableHolidayDisplay(display);
+
+        public void SetHoliday(int day) => NativeControl.SetHoliday(day);
+
+        public void SetHighlightColors(Color? colorFg, Color? colorBg)
+        {
+            colorFg ??= Color.Empty;
+            colorBg ??= Color.Empty;
+            NativeControl.SetHighlightColors(colorFg.Value, colorBg.Value);
+        }
+
+        public void SetHolidayColors(Color? colorFg, Color? colorBg)
+        {
+            colorFg ??= Color.Empty;
+            colorBg ??= Color.Empty;
+            NativeControl.SetHolidayColors(colorFg.Value, colorBg.Value);
+        }
+
+        public void SetHeaderColors(Color? colorFg, Color? colorBg)
+        {
+            colorFg ??= Color.Empty;
+            colorBg ??= Color.Empty;
+            NativeControl.SetHeaderColors(colorFg.Value, colorBg.Value);
+        }
+
+        public static ICalendarDateAttr? GetMarkDateAttr()
+        {
+            var result = Native.Calendar.GetMarkDateAttr();
+            if (result == default)
+                return null;
+            return new CalendarDateAttr(result, false);
+        }
+
+        public ICalendarDateAttr? GetAttr(int day)
+        {
+            var result = NativeControl.GetAttr(day);
+            if (result == default)
+                return null;
+            return new CalendarDateAttr(result, false);
+        }
+
+        public void SetAttr(int day, ICalendarDateAttr? dateAttr)
+        {
+            if (dateAttr is null)
+                NativeControl.SetAttr(day, default);
+            else
+                NativeControl.SetAttr(day, dateAttr.Handle);
+        }
+
+        public static void SetMarkDateAttr(ICalendarDateAttr? dateAttr)
+        {
+            if (dateAttr is null)
+                Native.Calendar.SetMarkDateAttr(default);
+            else
+                Native.Calendar.SetMarkDateAttr(dateAttr.Handle);
+        }
+
+        public static ICalendarDateAttr CreateDateAttr(int border = 0)
+        {
+            var result = Native.Calendar.CreateDateAttr(border);
+            return new CalendarDateAttr(result, false);
+        }
 
         internal void RaiseSelectionChanged(EventArgs e)
         {
