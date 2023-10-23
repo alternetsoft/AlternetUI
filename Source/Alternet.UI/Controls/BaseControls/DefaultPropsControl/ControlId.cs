@@ -9,6 +9,8 @@ namespace Alternet.UI
     {
 #pragma warning disable
         Control,
+        AnimationPlayer,
+        Calendar,
         Button,
         Border,
         ContextMenu,
