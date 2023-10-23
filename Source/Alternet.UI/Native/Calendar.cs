@@ -129,6 +129,21 @@ namespace Alternet.UI.Native
             }
         }
         
+        public bool UseGeneric
+        {
+            get
+            {
+                CheckDisposed();
+                return NativeApi.Calendar_GetUseGeneric_(NativePointer);
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.Calendar_SetUseGeneric_(NativePointer, value);
+            }
+        }
+        
         public DateTime Value
         {
             get
@@ -174,64 +189,64 @@ namespace Alternet.UI.Native
             }
         }
         
-        public void SetRange(bool useMinValue, bool useMaxValue)
+        public bool SetRange(bool useMinValue, bool useMaxValue)
         {
             CheckDisposed();
-            NativeApi.Calendar_SetRange_(NativePointer, useMinValue, useMaxValue);
+            return NativeApi.Calendar_SetRange_(NativePointer, useMinValue, useMaxValue);
         }
         
-        public void SetHolidayColours(Alternet.Drawing.Color colorFg, Alternet.Drawing.Color colorBg)
+        public void SetHolidayColors(Alternet.Drawing.Color colorFg, Alternet.Drawing.Color colorBg)
         {
             CheckDisposed();
-            NativeApi.Calendar_SetHolidayColours_(NativePointer, colorFg, colorBg);
+            NativeApi.Calendar_SetHolidayColors_(NativePointer, colorFg, colorBg);
         }
         
-        public Alternet.Drawing.Color GetHolidayColourFg()
+        public Alternet.Drawing.Color GetHolidayColorFg()
         {
             CheckDisposed();
-            return NativeApi.Calendar_GetHolidayColourFg_(NativePointer);
+            return NativeApi.Calendar_GetHolidayColorFg_(NativePointer);
         }
         
-        public Alternet.Drawing.Color GetHolidayColourBg()
+        public Alternet.Drawing.Color GetHolidayColorBg()
         {
             CheckDisposed();
-            return NativeApi.Calendar_GetHolidayColourBg_(NativePointer);
+            return NativeApi.Calendar_GetHolidayColorBg_(NativePointer);
         }
         
-        public void SetHeaderColours(Alternet.Drawing.Color colorFg, Alternet.Drawing.Color colorBg)
+        public void SetHeaderColors(Alternet.Drawing.Color colorFg, Alternet.Drawing.Color colorBg)
         {
             CheckDisposed();
-            NativeApi.Calendar_SetHeaderColours_(NativePointer, colorFg, colorBg);
+            NativeApi.Calendar_SetHeaderColors_(NativePointer, colorFg, colorBg);
         }
         
-        public Alternet.Drawing.Color GetHeaderColourFg()
+        public Alternet.Drawing.Color GetHeaderColorFg()
         {
             CheckDisposed();
-            return NativeApi.Calendar_GetHeaderColourFg_(NativePointer);
+            return NativeApi.Calendar_GetHeaderColorFg_(NativePointer);
         }
         
-        public Alternet.Drawing.Color GetHeaderColourBg()
+        public Alternet.Drawing.Color GetHeaderColorBg()
         {
             CheckDisposed();
-            return NativeApi.Calendar_GetHeaderColourBg_(NativePointer);
+            return NativeApi.Calendar_GetHeaderColorBg_(NativePointer);
         }
         
-        public void SetHighlightColours(Alternet.Drawing.Color colorFg, Alternet.Drawing.Color colorBg)
+        public void SetHighlightColors(Alternet.Drawing.Color colorFg, Alternet.Drawing.Color colorBg)
         {
             CheckDisposed();
-            NativeApi.Calendar_SetHighlightColours_(NativePointer, colorFg, colorBg);
+            NativeApi.Calendar_SetHighlightColors_(NativePointer, colorFg, colorBg);
         }
         
-        public Alternet.Drawing.Color GetHighlightColourFg()
+        public Alternet.Drawing.Color GetHighlightColorFg()
         {
             CheckDisposed();
-            return NativeApi.Calendar_GetHighlightColourFg_(NativePointer);
+            return NativeApi.Calendar_GetHighlightColorFg_(NativePointer);
         }
         
-        public Alternet.Drawing.Color GetHighlightColourBg()
+        public Alternet.Drawing.Color GetHighlightColorBg()
         {
             CheckDisposed();
-            return NativeApi.Calendar_GetHighlightColourBg_(NativePointer);
+            return NativeApi.Calendar_GetHighlightColorBg_(NativePointer);
         }
         
         public bool AllowMonthChange()
@@ -297,19 +312,24 @@ namespace Alternet.UI.Native
             return NativeApi.Calendar_CreateDateAttr_(border);
         }
         
-        public static void DateAttrSetTextColour(System.IntPtr handle, Alternet.Drawing.Color colText)
+        public static void DeleteDateAttr(System.IntPtr handle)
         {
-            NativeApi.Calendar_DateAttrSetTextColour_(handle, colText);
+            NativeApi.Calendar_DeleteDateAttr_(handle);
         }
         
-        public static void DateAttrSetBackgroundColour(System.IntPtr handle, Alternet.Drawing.Color colBack)
+        public static void DateAttrSetTextColor(System.IntPtr handle, Alternet.Drawing.Color colText)
         {
-            NativeApi.Calendar_DateAttrSetBackgroundColour_(handle, colBack);
+            NativeApi.Calendar_DateAttrSetTextColor_(handle, colText);
         }
         
-        public static void DateAttrSetBorderColour(System.IntPtr handle, Alternet.Drawing.Color color)
+        public static void DateAttrSetBackgroundColor(System.IntPtr handle, Alternet.Drawing.Color colBack)
         {
-            NativeApi.Calendar_DateAttrSetBorderColour_(handle, color);
+            NativeApi.Calendar_DateAttrSetBackgroundColor_(handle, colBack);
+        }
+        
+        public static void DateAttrSetBorderColor(System.IntPtr handle, Alternet.Drawing.Color color)
+        {
+            NativeApi.Calendar_DateAttrSetBorderColor_(handle, color);
         }
         
         public static void DateAttrSetFont(System.IntPtr handle, System.IntPtr font)
@@ -404,15 +424,35 @@ namespace Alternet.UI.Native
         {
             switch (e)
             {
-                case NativeApi.CalendarEvent.ValueChanged:
+                case NativeApi.CalendarEvent.SelectionChanged:
                 {
-                    ValueChanged?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                    SelectionChanged?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                }
+                case NativeApi.CalendarEvent.PageChanged:
+                {
+                    PageChanged?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                }
+                case NativeApi.CalendarEvent.WeekNumberClick:
+                {
+                    WeekNumberClick?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                }
+                case NativeApi.CalendarEvent.DayHeaderClick:
+                {
+                    DayHeaderClick?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                }
+                case NativeApi.CalendarEvent.DayDoubleClick:
+                {
+                    DayDoubleClick?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
                 }
                 default: throw new Exception("Unexpected CalendarEvent value: " + e);
             }
         }
         
-        public event EventHandler? ValueChanged;
+        public event EventHandler? SelectionChanged;
+        public event EventHandler? PageChanged;
+        public event EventHandler? WeekNumberClick;
+        public event EventHandler? DayHeaderClick;
+        public event EventHandler? DayDoubleClick;
         
         [SuppressUnmanagedCodeSecurity]
         public class NativeApi : NativeApiProvider
@@ -424,7 +464,11 @@ namespace Alternet.UI.Native
             
             public enum CalendarEvent
             {
-                ValueChanged,
+                SelectionChanged,
+                PageChanged,
+                WeekNumberClick,
+                DayHeaderClick,
+                DayDoubleClick,
             }
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
@@ -476,6 +520,12 @@ namespace Alternet.UI.Native
             public static extern void Calendar_SetShowWeekNumbers_(IntPtr obj, bool value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool Calendar_GetUseGeneric_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Calendar_SetUseGeneric_(IntPtr obj, bool value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern NativeApiTypes.DateTime Calendar_GetValue_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
@@ -494,34 +544,34 @@ namespace Alternet.UI.Native
             public static extern void Calendar_SetMaxValue_(IntPtr obj, NativeApiTypes.DateTime value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Calendar_SetRange_(IntPtr obj, bool useMinValue, bool useMaxValue);
+            public static extern bool Calendar_SetRange_(IntPtr obj, bool useMinValue, bool useMaxValue);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Calendar_SetHolidayColours_(IntPtr obj, NativeApiTypes.Color colorFg, NativeApiTypes.Color colorBg);
+            public static extern void Calendar_SetHolidayColors_(IntPtr obj, NativeApiTypes.Color colorFg, NativeApiTypes.Color colorBg);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern NativeApiTypes.Color Calendar_GetHolidayColourFg_(IntPtr obj);
+            public static extern NativeApiTypes.Color Calendar_GetHolidayColorFg_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern NativeApiTypes.Color Calendar_GetHolidayColourBg_(IntPtr obj);
+            public static extern NativeApiTypes.Color Calendar_GetHolidayColorBg_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Calendar_SetHeaderColours_(IntPtr obj, NativeApiTypes.Color colorFg, NativeApiTypes.Color colorBg);
+            public static extern void Calendar_SetHeaderColors_(IntPtr obj, NativeApiTypes.Color colorFg, NativeApiTypes.Color colorBg);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern NativeApiTypes.Color Calendar_GetHeaderColourFg_(IntPtr obj);
+            public static extern NativeApiTypes.Color Calendar_GetHeaderColorFg_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern NativeApiTypes.Color Calendar_GetHeaderColourBg_(IntPtr obj);
+            public static extern NativeApiTypes.Color Calendar_GetHeaderColorBg_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Calendar_SetHighlightColours_(IntPtr obj, NativeApiTypes.Color colorFg, NativeApiTypes.Color colorBg);
+            public static extern void Calendar_SetHighlightColors_(IntPtr obj, NativeApiTypes.Color colorFg, NativeApiTypes.Color colorBg);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern NativeApiTypes.Color Calendar_GetHighlightColourFg_(IntPtr obj);
+            public static extern NativeApiTypes.Color Calendar_GetHighlightColorFg_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern NativeApiTypes.Color Calendar_GetHighlightColourBg_(IntPtr obj);
+            public static extern NativeApiTypes.Color Calendar_GetHighlightColorBg_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool Calendar_AllowMonthChange_(IntPtr obj);
@@ -557,13 +607,16 @@ namespace Alternet.UI.Native
             public static extern System.IntPtr Calendar_CreateDateAttr_(int border);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Calendar_DateAttrSetTextColour_(System.IntPtr handle, NativeApiTypes.Color colText);
+            public static extern void Calendar_DeleteDateAttr_(System.IntPtr handle);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Calendar_DateAttrSetBackgroundColour_(System.IntPtr handle, NativeApiTypes.Color colBack);
+            public static extern void Calendar_DateAttrSetTextColor_(System.IntPtr handle, NativeApiTypes.Color colText);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Calendar_DateAttrSetBorderColour_(System.IntPtr handle, NativeApiTypes.Color color);
+            public static extern void Calendar_DateAttrSetBackgroundColor_(System.IntPtr handle, NativeApiTypes.Color colBack);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Calendar_DateAttrSetBorderColor_(System.IntPtr handle, NativeApiTypes.Color color);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Calendar_DateAttrSetFont_(System.IntPtr handle, System.IntPtr font);

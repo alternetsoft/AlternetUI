@@ -29,6 +29,10 @@ bool GetShowWeekNumbers();
 void SetShowWeekNumbers(bool value);
 
 
+bool GetUseGeneric();
+void SetUseGeneric(bool value);
+
+
 DateTime GetValue();
 void SetValue(const DateTime& value);
 
@@ -40,16 +44,16 @@ void SetMinValue(const DateTime& value);
 DateTime GetMaxValue();
 void SetMaxValue(const DateTime& value);
 
-void SetRange(bool useMinValue, bool useMaxValue);
-void SetHolidayColours(const Color& colorFg, const Color& colorBg);
-Color GetHolidayColourFg();
-Color GetHolidayColourBg();
-void SetHeaderColours(const Color& colorFg, const Color& colorBg);
-Color GetHeaderColourFg();
-Color GetHeaderColourBg();
-void SetHighlightColours(const Color& colorFg, const Color& colorBg);
-Color GetHighlightColourFg();
-Color GetHighlightColourBg();
+bool SetRange(bool useMinValue, bool useMaxValue);
+void SetHolidayColors(const Color& colorFg, const Color& colorBg);
+Color GetHolidayColorFg();
+Color GetHolidayColorBg();
+void SetHeaderColors(const Color& colorFg, const Color& colorBg);
+Color GetHeaderColorFg();
+Color GetHeaderColorBg();
+void SetHighlightColors(const Color& colorFg, const Color& colorBg);
+Color GetHighlightColorFg();
+Color GetHighlightColorBg();
 bool AllowMonthChange();
 bool EnableMonthChange(bool enable);
 void Mark(int day, bool mark);
@@ -61,9 +65,10 @@ void SetHoliday(int day);
 static void* GetMarkDateAttr();
 static void SetMarkDateAttr(void* dateAttr);
 static void* CreateDateAttr(int border);
-static void DateAttrSetTextColour(void* handle, const Color& colText);
-static void DateAttrSetBackgroundColour(void* handle, const Color& colBack);
-static void DateAttrSetBorderColour(void* handle, const Color& color);
+static void DeleteDateAttr(void* handle);
+static void DateAttrSetTextColor(void* handle, const Color& colText);
+static void DateAttrSetBackgroundColor(void* handle, const Color& colBack);
+static void DateAttrSetBorderColor(void* handle, const Color& color);
 static void DateAttrSetFont(void* handle, void* font);
 static void DateAttrSetBorder(void* handle, int border);
 static void DateAttrSetHoliday(void* handle, bool holiday);
@@ -81,7 +86,11 @@ static int DateAttrGetBorder(void* handle);
 public:
 enum class CalendarEvent
 {
-    ValueChanged,
+    SelectionChanged,
+    PageChanged,
+    WeekNumberClick,
+    DayHeaderClick,
+    DayDoubleClick,
 };
 typedef void* (*CalendarEventCallbackType)(Calendar* obj, CalendarEvent event, void* param);
 static void SetEventCallback(CalendarEventCallbackType value) { eventCallback = value; }

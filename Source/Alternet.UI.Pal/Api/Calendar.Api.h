@@ -83,6 +83,16 @@ ALTERNET_UI_API void Calendar_SetShowWeekNumbers_(Calendar* obj, c_bool value)
     obj->SetShowWeekNumbers(value);
 }
 
+ALTERNET_UI_API c_bool Calendar_GetUseGeneric_(Calendar* obj)
+{
+    return obj->GetUseGeneric();
+}
+
+ALTERNET_UI_API void Calendar_SetUseGeneric_(Calendar* obj, c_bool value)
+{
+    obj->SetUseGeneric(value);
+}
+
 ALTERNET_UI_API DateTime_C Calendar_GetValue_(Calendar* obj)
 {
     return obj->GetValue();
@@ -113,54 +123,54 @@ ALTERNET_UI_API void Calendar_SetMaxValue_(Calendar* obj, DateTime value)
     obj->SetMaxValue(value);
 }
 
-ALTERNET_UI_API void Calendar_SetRange_(Calendar* obj, c_bool useMinValue, c_bool useMaxValue)
+ALTERNET_UI_API c_bool Calendar_SetRange_(Calendar* obj, c_bool useMinValue, c_bool useMaxValue)
 {
-    obj->SetRange(useMinValue, useMaxValue);
+    return obj->SetRange(useMinValue, useMaxValue);
 }
 
-ALTERNET_UI_API void Calendar_SetHolidayColours_(Calendar* obj, Color colorFg, Color colorBg)
+ALTERNET_UI_API void Calendar_SetHolidayColors_(Calendar* obj, Color colorFg, Color colorBg)
 {
-    obj->SetHolidayColours(colorFg, colorBg);
+    obj->SetHolidayColors(colorFg, colorBg);
 }
 
-ALTERNET_UI_API Color_C Calendar_GetHolidayColourFg_(Calendar* obj)
+ALTERNET_UI_API Color_C Calendar_GetHolidayColorFg_(Calendar* obj)
 {
-    return obj->GetHolidayColourFg();
+    return obj->GetHolidayColorFg();
 }
 
-ALTERNET_UI_API Color_C Calendar_GetHolidayColourBg_(Calendar* obj)
+ALTERNET_UI_API Color_C Calendar_GetHolidayColorBg_(Calendar* obj)
 {
-    return obj->GetHolidayColourBg();
+    return obj->GetHolidayColorBg();
 }
 
-ALTERNET_UI_API void Calendar_SetHeaderColours_(Calendar* obj, Color colorFg, Color colorBg)
+ALTERNET_UI_API void Calendar_SetHeaderColors_(Calendar* obj, Color colorFg, Color colorBg)
 {
-    obj->SetHeaderColours(colorFg, colorBg);
+    obj->SetHeaderColors(colorFg, colorBg);
 }
 
-ALTERNET_UI_API Color_C Calendar_GetHeaderColourFg_(Calendar* obj)
+ALTERNET_UI_API Color_C Calendar_GetHeaderColorFg_(Calendar* obj)
 {
-    return obj->GetHeaderColourFg();
+    return obj->GetHeaderColorFg();
 }
 
-ALTERNET_UI_API Color_C Calendar_GetHeaderColourBg_(Calendar* obj)
+ALTERNET_UI_API Color_C Calendar_GetHeaderColorBg_(Calendar* obj)
 {
-    return obj->GetHeaderColourBg();
+    return obj->GetHeaderColorBg();
 }
 
-ALTERNET_UI_API void Calendar_SetHighlightColours_(Calendar* obj, Color colorFg, Color colorBg)
+ALTERNET_UI_API void Calendar_SetHighlightColors_(Calendar* obj, Color colorFg, Color colorBg)
 {
-    obj->SetHighlightColours(colorFg, colorBg);
+    obj->SetHighlightColors(colorFg, colorBg);
 }
 
-ALTERNET_UI_API Color_C Calendar_GetHighlightColourFg_(Calendar* obj)
+ALTERNET_UI_API Color_C Calendar_GetHighlightColorFg_(Calendar* obj)
 {
-    return obj->GetHighlightColourFg();
+    return obj->GetHighlightColorFg();
 }
 
-ALTERNET_UI_API Color_C Calendar_GetHighlightColourBg_(Calendar* obj)
+ALTERNET_UI_API Color_C Calendar_GetHighlightColorBg_(Calendar* obj)
 {
-    return obj->GetHighlightColourBg();
+    return obj->GetHighlightColorBg();
 }
 
 ALTERNET_UI_API c_bool Calendar_AllowMonthChange_(Calendar* obj)
@@ -218,19 +228,24 @@ ALTERNET_UI_API void* Calendar_CreateDateAttr_(int border)
     return Calendar::CreateDateAttr(border);
 }
 
-ALTERNET_UI_API void Calendar_DateAttrSetTextColour_(void* handle, Color colText)
+ALTERNET_UI_API void Calendar_DeleteDateAttr_(void* handle)
 {
-    Calendar::DateAttrSetTextColour(handle, colText);
+    Calendar::DeleteDateAttr(handle);
 }
 
-ALTERNET_UI_API void Calendar_DateAttrSetBackgroundColour_(void* handle, Color colBack)
+ALTERNET_UI_API void Calendar_DateAttrSetTextColor_(void* handle, Color colText)
 {
-    Calendar::DateAttrSetBackgroundColour(handle, colBack);
+    Calendar::DateAttrSetTextColor(handle, colText);
 }
 
-ALTERNET_UI_API void Calendar_DateAttrSetBorderColour_(void* handle, Color color)
+ALTERNET_UI_API void Calendar_DateAttrSetBackgroundColor_(void* handle, Color colBack)
 {
-    Calendar::DateAttrSetBorderColour(handle, color);
+    Calendar::DateAttrSetBackgroundColor(handle, colBack);
+}
+
+ALTERNET_UI_API void Calendar_DateAttrSetBorderColor_(void* handle, Color color)
+{
+    Calendar::DateAttrSetBorderColor(handle, color);
 }
 
 ALTERNET_UI_API void Calendar_DateAttrSetFont_(void* handle, void* font)

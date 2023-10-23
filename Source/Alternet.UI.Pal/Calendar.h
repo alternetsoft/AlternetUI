@@ -4,6 +4,7 @@
 #include "Object.h"
 #include "Control.h"
 #include "wx/calctrl.h"
+#include "wx/generic/calctrlg.h"
 
 namespace Alternet::UI
 {
@@ -16,5 +17,21 @@ namespace Alternet::UI
     private:
         wxCalendarCtrl* GetCalendar();
 
+        bool _showHolidays = false;
+        bool _sundayFirst = true;
+        bool _noYearChange = false;
+        bool _noMonthChange = false;
+        bool _sequentalMonthSelect = false;
+        bool _showSurroundWeeks = true;
+        bool _showWeekNumbers = false;
+        bool _useGeneric = false;
+        DateTime _minValue = DateTime();
+        DateTime _maxValue = DateTime();
+
+        void OnEventDoubleClick(wxCalendarEvent& event);
+        void OnEventSelChanged(wxCalendarEvent& event);
+        void OnEventPageChanged(wxCalendarEvent& event);
+        void OnEventDayHeaderClick(wxCalendarEvent& event);
+        void OnEventWeekNumberClick(wxCalendarEvent& event);
     };
 }

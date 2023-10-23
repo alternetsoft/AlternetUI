@@ -19,29 +19,34 @@ namespace NativeApi.Api
         public bool SequentalMonthSelect { get; set; }
         public bool ShowSurroundWeeks { get; set; }
         public bool ShowWeekNumbers { get; set; }
+        public bool UseGeneric { get; set; }
 
-        public event EventHandler? ValueChanged;
+        public event EventHandler? SelectionChanged;
+        public event EventHandler? PageChanged;
+        public event EventHandler? WeekNumberClick;
+        public event EventHandler? DayHeaderClick;
+        public event EventHandler? DayDoubleClick;
 
         public Alternet.UI.DateTime Value { get; set; }
         public Alternet.UI.DateTime MinValue { get; set; }
         public Alternet.UI.DateTime MaxValue { get; set; }
 
-        public void SetRange(bool useMinValue, bool useMaxValue) { }
+        public bool SetRange(bool useMinValue, bool useMaxValue) => default;
 
-        public void SetHolidayColours(Color colorFg, Color colorBg) { }
+        public void SetHolidayColors(Color colorFg, Color colorBg) { }
 
-        public Color GetHolidayColourFg() => default;
-        public Color GetHolidayColourBg() => default;
+        public Color GetHolidayColorFg() => default;
+        public Color GetHolidayColorBg() => default;
 
-        public void SetHeaderColours(Color colorFg, Color colorBg) { }
+        public void SetHeaderColors(Color colorFg, Color colorBg) { }
 
-        public Color GetHeaderColourFg() => default;
-        public Color GetHeaderColourBg() => default;
+        public Color GetHeaderColorFg() => default;
+        public Color GetHeaderColorBg() => default;
 
-        public void SetHighlightColours(Color colorFg, Color colorBg) { }
+        public void SetHighlightColors(Color colorFg, Color colorBg) { }
 
-        public Color GetHighlightColourFg() => default;
-        public Color GetHighlightColourBg() => default;
+        public Color GetHighlightColorFg() => default;
+        public Color GetHighlightColorBg() => default;
 
         public bool AllowMonthChange() => default;
         public bool EnableMonthChange(bool enable = true) => default;
@@ -57,10 +62,11 @@ namespace NativeApi.Api
         public static IntPtr GetMarkDateAttr() => default; /* real static */
         public static void SetMarkDateAttr(IntPtr dateAttr) { } /* real static */
         public static IntPtr CreateDateAttr(int border = 0) => default;
+        public static void DeleteDateAttr(IntPtr handle) { }
 
-        public static void DateAttrSetTextColour(IntPtr handle, Color colText) { }
-        public static void DateAttrSetBackgroundColour(IntPtr handle, Color colBack) { }
-        public static void DateAttrSetBorderColour(IntPtr handle, Color color) { }
+        public static void DateAttrSetTextColor(IntPtr handle, Color colText) { }
+        public static void DateAttrSetBackgroundColor(IntPtr handle, Color colBack) { }
+        public static void DateAttrSetBorderColor(IntPtr handle, Color color) { }
         public static void DateAttrSetFont(IntPtr handle, IntPtr font) { }
         public static void DateAttrSetBorder(IntPtr handle, int border) { }
         public static void DateAttrSetHoliday(IntPtr handle, bool holiday) { }
