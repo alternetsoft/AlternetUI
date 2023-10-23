@@ -980,6 +980,11 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Returns <see cref="ControlSet"/> filled with <see cref="Children"/>.
+        /// </summary>
+        public virtual ControlSet ChildrenSet => new(Children);
+
+        /// <summary>
         /// Gets real background color for the control.
         /// </summary>
         /// <remarks>
@@ -2058,6 +2063,71 @@ namespace Alternet.UI
         public virtual void BeginIgnoreRecreate()
         {
             Handler?.BeginIgnoreRecreate();
+        }
+
+        /// <summary>
+        /// Creates new <see cref="HorizontalStackPanel"/> and adds it to the <see cref="Children"/>.
+        /// </summary>
+        public virtual HorizontalStackPanel AddHorizontalStackPanel()
+        {
+            var result = new HorizontalStackPanel
+            {
+                Parent = this,
+            };
+            return result;
+        }
+
+        /// <summary>
+        /// Creates new <see cref="Button"/> and adds it to the <see cref="Children"/>.
+        /// </summary>
+        public virtual Button AddButton(string text, Action? action = null)
+        {
+            var result = new Button(text)
+            {
+                Parent = this,
+            };
+
+            if(action is not null)
+                result.Click += Result_Click;
+
+            return result;
+
+            void Result_Click(object? sender, EventArgs e)
+            {
+                action.Invoke();
+            }
+        }
+
+        /// <summary>
+        /// Creates new <see cref="VerticalStackPanel"/> and adds it to the <see cref="Children"/>.
+        /// </summary>
+        public virtual VerticalStackPanel AddVerticalStackPanel()
+        {
+            var result = new VerticalStackPanel
+            {
+                Parent = this,
+            };
+            return result;
+        }
+
+        /// <summary>
+        /// Creates new <see cref="StackPanel"/> and adds it to the <see cref="Children"/>.
+        /// </summary>
+        public virtual StackPanel AddStackPanel(bool isVertical = true)
+        {
+            StackPanelOrientation orientation;
+
+            if (isVertical)
+                orientation = StackPanelOrientation.Vertical;
+            else
+                orientation = StackPanelOrientation.Horizontal;
+
+            var result = new StackPanel
+            {
+                Parent = this,
+                Orientation = orientation,
+            };
+            return result;
         }
 
         /// <summary>
