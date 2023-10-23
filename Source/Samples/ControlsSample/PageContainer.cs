@@ -26,7 +26,7 @@ namespace ControlsSample
             Margin = new Thickness(100, 100, 0, 0),
         };
 
-        private readonly AnimationControl waitAnination = new()
+        private readonly AnimationPlayer waitAnination = new()
         {
             Margin = new Thickness(100, 100, 0, 0),
         };

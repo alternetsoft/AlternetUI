@@ -6,7 +6,7 @@ namespace Alternet.UI
     {
         public new Native.AnimationControl NativeControl => (Native.AnimationControl)base.NativeControl!;
 
-        public new AnimationControl Control => (AnimationControl)base.Control;
+        public new AnimationPlayer Control => (AnimationPlayer)base.Control;
 
         /// <inheritdoc/>
         protected override bool VisualChildNeedsNativeControl => true;

@@ -57,6 +57,9 @@ namespace Alternet.UI
             }
         }
 
+        /// <inheritdoc/>
+        public override ControlId ControlKind => ControlId.Calendar;
+
         [Browsable(false)]
         internal new NativeCalendarHandler Handler
         {

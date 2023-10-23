@@ -12,7 +12,7 @@ namespace ControlsSample
         internal static readonly string AnimationHourGlass = $"{ResPrefix}HourGlass.gif";
         internal static readonly string AnimationSpinner = $"{ResPrefix}Spinner.gif";
 
-        private readonly AnimationControl animation = new();
+        private readonly AnimationPlayer animation = new();
         
         private readonly ComboBox selectComboBox = new()
         {
@@ -38,12 +38,16 @@ namespace ControlsSample
             selectComboBox.Parent = mainPanel;
 
             selectComboBox.SelectedItemChanged += SelectComboBox_SelectedItemChanged;
+
+            var buttonPanel = mainPanel.AddHorizontalStackPanel();
+            buttonPanel.AddButton("Play", animation.Play);
+            buttonPanel.AddButton("Stop", animation.Stop);
+            buttonPanel.ChildrenSet.Margin(5).SuggestedWidthToMax();
         }
 
         private void SelectComboBox_SelectedItemChanged(object? sender, EventArgs e)
         {
-            var url = selectComboBox.SelectedItem as string;
-            if (url is null)
+            if (selectComboBox.SelectedItem is not string url)
                 return;
             animation.Stop();
             animation.LoadFromUrl(url);

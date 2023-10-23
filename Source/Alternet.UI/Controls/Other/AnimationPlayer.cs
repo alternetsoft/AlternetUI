@@ -14,7 +14,7 @@ namespace Alternet.UI
     /// a long task (e.g. a "throbber").
     /// </summary>
     /// <remarks>
-    /// <see cref="AnimationControl"/> API is as simple as possible and won't give you full
+    /// <see cref="AnimationPlayer"/> API is as simple as possible and won't give you full
     /// control on the animation; if you need it then use other controls.
     /// </remarks>
     /// <remarks>
@@ -22,8 +22,11 @@ namespace Alternet.UI
     /// may have only limited support for the animation types. Set UseGeneric if you need to
     /// support all of them.
     /// </remarks>
-    public class AnimationControl : Control
+    public class AnimationPlayer : Control
     {
+        /// <inheritdoc/>
+        public override ControlId ControlKind => ControlId.AnimationPlayer;
+
         [Browsable(false)]
         internal new NativeAnimationControlHandler Handler
         {
@@ -45,9 +48,22 @@ namespace Alternet.UI
         /// has an infinite delay time) and always start from the first frame even if
         /// you stopped it while some other frame was displayed.
         /// </remarks>
-        public virtual bool Play()
+        public virtual bool PlayFn()
         {
             return NativeControl.Play();
+        }
+
+        /// <summary>
+        /// Starts playing the animation.
+        /// </summary>
+        /// <remarks>
+        /// The animation is always played in loop mode (unless the last frame of the animation
+        /// has an infinite delay time) and always start from the first frame even if
+        /// you stopped it while some other frame was displayed.
+        /// </remarks>
+        public virtual void Play()
+        {
+            NativeControl.Play();
         }
 
         /// <summary>
@@ -103,6 +119,23 @@ namespace Alternet.UI
             return NativeControl.Load(inputStream, (int)type);
         }
 
+        /// <summary>
+        /// Loads the animation from the given file or resource url.
+        /// </summary>
+        /// <param name="url">Url with the animation.</param>
+        /// <param name="type">One of the <see cref="AnimationType"/> values;
+        /// <see cref="AnimationType.Any"/>
+        /// means that the function should try to autodetect the animation type.
+        /// </param>
+        /// <returns><c>true</c> if the operation succeeded, <c>false</c> otherwise.</returns>
+        /// <example>
+        /// <code>
+        /// var resPrefix = $"embres:ControlsSample.Resources.Animation.";
+        /// var animationPlant = $"{resPrefix}Plant.gif";
+        /// animation.LoadFromUrl(animationPlant);
+        /// animation.Play();
+        /// </code>
+        /// </example>
         public virtual bool LoadFromUrl(string url, AnimationType type = AnimationType.Any)
         {
             using var stream = ResourceLoader.StreamFromUrl(url);
