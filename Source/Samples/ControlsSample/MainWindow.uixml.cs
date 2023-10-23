@@ -83,30 +83,30 @@ namespace ControlsSample
                 pages.Add(item);
             }
 
-            AddPage("Text Input", CreateTextInputPage);
-            AddPage("Tree View", CreateTreeViewPage);
-            AddPage("List View", CreateListViewPage);
-            AddPage("List Box", CreateListBoxPage);
-            AddPage("Combo Box", CreateComboBoxPage);
-            AddPage("Check List Box", CreateCheckListBoxPage);
-            AddPage("Progress Bar", CreateProgressBarPage);
-            AddPage("Button", CreateButtonPage);
-            AddPage("Slider", CreateSliderPage);
-            AddPage("Grid", CreateGridPage);
-            AddPage("Numeric Input", CreateNumericInputPage);
-            AddPage("Radio Button", CreateRadioButtonsPage);
-            AddPage("Check Box", CreateCheckBoxesPage);
-            AddPage("Date Time", CreateDateTimePage);
-            AddPage("Web Browser", CreateWebBrowserPage);
-            AddPage("Splitter Panel", CreateSplitterPanelPage);
-            AddPage("Layout Panel", CreateLayoutPanelPage);
-            AddPage("Calendar", CreateCalendarPage);
-            AddPage("Animation", CreateAnimationPage);
+//            AddPage("Text Input", CreateTextInputPage);
+  //          AddPage("Tree View", CreateTreeViewPage);
+    //        AddPage("List View", CreateListViewPage);
+      //      AddPage("List Box", CreateListBoxPage);
+        //    AddPage("Combo Box", CreateComboBoxPage);
+          //  AddPage("Check List Box", CreateCheckListBoxPage);
+            //AddPage("Progress Bar", CreateProgressBarPage);
+            //AddPage("Button", CreateButtonPage);
+            //AddPage("Slider", CreateSliderPage);
+            //AddPage("Grid", CreateGridPage);
+            //AddPage("Numeric Input", CreateNumericInputPage);
+            //AddPage("Radio Button", CreateRadioButtonsPage);
+            //AddPage("Check Box", CreateCheckBoxesPage);
+            //AddPage("Date Time", CreateDateTimePage);
+            //AddPage("Web Browser", CreateWebBrowserPage);
+            //AddPage("Splitter Panel", CreateSplitterPanelPage);
+            //AddPage("Layout Panel", CreateLayoutPanelPage);
+            //AddPage("Calendar", CreateCalendarPage);
+            //AddPage("Animation", CreateAnimationPage);
 
-            if (NotifyIcon.IsAvailable)
-                AddPage("Notify Icon", CreateNotifyIconPage);
-            if (Application.IsWindowsOS)
-                AddPage("Tab Control", CreateTabControlPage);
+            //if (NotifyIcon.IsAvailable)
+            //    AddPage("Notify Icon", CreateNotifyIconPage);
+            //if (Application.IsWindowsOS)
+            //    AddPage("Tab Control", CreateTabControlPage);
             AddPage("All Samples", CreateAllSamplesPage);
 
             pageContainer.SelectedIndex = 0;

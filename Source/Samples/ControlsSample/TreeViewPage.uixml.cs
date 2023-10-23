@@ -75,6 +75,7 @@ namespace ControlsSample
                 treeView.ImageList = ResourceLoader.LoadImageLists().Small;
                 AddDefaultItems();
                 site = value;
+                SetCustomColors();
             }
         }
 

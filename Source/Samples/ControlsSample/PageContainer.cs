@@ -26,14 +26,14 @@ namespace ControlsSample
             Margin = new Thickness(100, 100, 0, 0),
         };
 
-        private readonly AnimationPlayer waitAnination = new()
+        /*private readonly AnimationPlayer waitAnination = new()
         {
             Margin = new Thickness(100, 100, 0, 0),
-        };
+        };*/
 
         public PageContainer()
         {
-            waitAnination.LoadFromUrl(AnimationPage.AnimationHourGlass);
+            //waitAnination.LoadFromUrl(AnimationPage.AnimationHourGlass);
 
             grid = new Grid();
             grid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
