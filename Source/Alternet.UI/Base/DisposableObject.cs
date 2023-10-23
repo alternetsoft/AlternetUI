@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -97,10 +98,15 @@ namespace Alternet.UI
         /// Throws <see cref="ObjectDisposedException"/> if
         /// <see cref="IsDisposed"/> is <c>true</c>.
         /// </summary>
+        /// <remarks>
+        /// Does nothing if DEBUG is not defined.
+        /// </remarks>
         public void CheckDisposed()
         {
+#if DEBUG
             if (IsDisposed)
                 throw new ObjectDisposedException(null);
+#endif
         }
 
         /// <summary>
