@@ -74,16 +74,20 @@ namespace ControlsSample
             {
                 treeView.ImageList = ResourceLoader.LoadImageLists().Small;
                 AddDefaultItems();
-                var item = treeView.Items[2];
-                item.Text = "Bold item";
-                item.IsBold = true;
-
-                item = treeView.Items[4];
-                item.TextColor = Color.White;
-                item.BackgroundColor = Color.Gray;
-                item.Text = "Item with custom colors";
                 site = value;
             }
+        }
+
+        internal void SetCustomColors()
+        {
+            var item = treeView.Items[2];
+            item.Text = "Bold item";
+            item.IsBold = true;
+
+            item = treeView.Items[4];
+            item.TextColor = Color.White;
+            item.BackgroundColor = Color.Gray;
+            item.Text = "Item with custom colors";
         }
 
         private void AddDefaultItems()
