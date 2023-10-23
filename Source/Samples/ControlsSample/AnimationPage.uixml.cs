@@ -27,7 +27,7 @@ namespace ControlsSample
 
             InitializeComponent();
             animation.Parent = mainPanel;
-            animation.LoadFromUrl(defaultAnimationUrl);
+            animation.LoadFromUrl(defaultAnimationUrl, AnimationType.Gif);
             animation.Play();
 
             selectComboBox.IsEditable = false;
