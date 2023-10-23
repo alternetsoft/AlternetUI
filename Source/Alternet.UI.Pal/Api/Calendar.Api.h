@@ -23,6 +23,16 @@ ALTERNET_UI_API void Calendar_SetSundayFirst_(Calendar* obj, c_bool value)
     obj->SetSundayFirst(value);
 }
 
+ALTERNET_UI_API c_bool Calendar_GetMondayFirst_(Calendar* obj)
+{
+    return obj->GetMondayFirst();
+}
+
+ALTERNET_UI_API void Calendar_SetMondayFirst_(Calendar* obj, c_bool value)
+{
+    obj->SetMondayFirst(value);
+}
+
 ALTERNET_UI_API c_bool Calendar_GetShowHolidays_(Calendar* obj)
 {
     return obj->GetShowHolidays();

@@ -97,12 +97,15 @@ namespace ControlsSample
             AddPage("Check Box", CreateCheckBoxesPage);
             AddPage("Text Input", CreateTextInputPage);
             AddPage("Date Time", CreateDateTimePage);
-            if(NotifyIcon.IsAvailable)
-                AddPage("Notify Icon", CreateNotifyIconPage);
             AddPage("Web Browser", CreateWebBrowserPage);
             AddPage("Splitter Panel", CreateSplitterPanelPage);
             AddPage("Layout Panel", CreateLayoutPanelPage);
-            if(Application.IsWindowsOS)
+            AddPage("Calendar", CreateCalendarPage);
+            AddPage("Animation", CreateAnimationPage);
+
+            if (NotifyIcon.IsAvailable)
+                AddPage("Notify Icon", CreateNotifyIconPage);
+            if (Application.IsWindowsOS)
                 AddPage("Tab Control", CreateTabControlPage);
             AddPage("All Samples", CreateAllSamplesPage);
 
@@ -118,6 +121,8 @@ namespace ControlsSample
                 pageContainer.PagesControl.SetFocus();
         }
 
+        Control CreateCalendarPage() => new CalendarPage() { Site = this };
+        Control CreateAnimationPage() => new AnimationPage() { Site = this };
         Control CreateTreeViewPage() => new TreeViewPage() { Site = this };
         Control CreateListViewPage() => new ListViewPage() { Site = this };
         Control CreateListBoxPage() => new ListBoxPage() { Site = this };

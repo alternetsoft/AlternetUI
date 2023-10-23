@@ -43,10 +43,13 @@ namespace Alternet::UI
 
         if (_showHolidays)
             style |= wxCAL_SHOW_HOLIDAYS;
+        
         if (_sundayFirst)
             style |= wxCAL_SUNDAY_FIRST;
         else
+        if (_mondayFirst)
             style |= wxCAL_MONDAY_FIRST;
+        
         if (_noMonthChange)
             style |= wxCAL_NO_MONTH_CHANGE;
         if (_sequentalMonthSelect)
@@ -146,6 +149,19 @@ namespace Alternet::UI
         if (_useGeneric == value)
             return;
         _useGeneric = value;
+        RecreateWxWindowIfNeeded();
+    }
+
+    bool Calendar::GetMondayFirst()
+    {
+        return _mondayFirst;
+    }
+
+    void Calendar::SetMondayFirst(bool value)
+    {
+        if (_mondayFirst == value)
+            return;
+        _mondayFirst = value;
         RecreateWxWindowIfNeeded();
     }
 

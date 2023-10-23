@@ -13,6 +13,7 @@ namespace NativeApi.Api
     public class Calendar : Control
     {
         public bool SundayFirst { get; set; }
+        public bool MondayFirst { get; set; }
         public bool ShowHolidays { get; set; }
         public bool NoYearChange { get; set; }
         public bool NoMonthChange { get; set; }

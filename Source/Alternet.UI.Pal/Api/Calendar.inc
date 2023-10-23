@@ -5,6 +5,10 @@ bool GetSundayFirst();
 void SetSundayFirst(bool value);
 
 
+bool GetMondayFirst();
+void SetMondayFirst(bool value);
+
+
 bool GetShowHolidays();
 void SetShowHolidays(bool value);
 

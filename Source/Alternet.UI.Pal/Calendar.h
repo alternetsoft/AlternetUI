@@ -18,7 +18,8 @@ namespace Alternet::UI
         wxCalendarCtrl* GetCalendar();
 
         bool _showHolidays = false;
-        bool _sundayFirst = true;
+        bool _sundayFirst = false;
+        bool _mondayFirst = false;
         bool _noYearChange = false;
         bool _noMonthChange = false;
         bool _sequentalMonthSelect = false;

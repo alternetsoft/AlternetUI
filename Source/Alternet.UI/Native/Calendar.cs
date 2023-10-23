@@ -39,6 +39,21 @@ namespace Alternet.UI.Native
             }
         }
         
+        public bool MondayFirst
+        {
+            get
+            {
+                CheckDisposed();
+                return NativeApi.Calendar_GetMondayFirst_(NativePointer);
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.Calendar_SetMondayFirst_(NativePointer, value);
+            }
+        }
+        
         public bool ShowHolidays
         {
             get
@@ -482,6 +497,12 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Calendar_SetSundayFirst_(IntPtr obj, bool value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool Calendar_GetMondayFirst_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Calendar_SetMondayFirst_(IntPtr obj, bool value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool Calendar_GetShowHolidays_(IntPtr obj);
