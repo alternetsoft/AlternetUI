@@ -71,7 +71,7 @@ namespace CustomControlsSample
             this.SetSizeToContent();
         }
 
-        public static bool DisableCustomColorPopup { get; set; } = true;
+        public static bool DisableCustomColorPopup { get; set; } = false;
 
         class Data : INotifyPropertyChanged
         {
