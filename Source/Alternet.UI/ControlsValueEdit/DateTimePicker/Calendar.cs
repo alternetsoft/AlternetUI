@@ -41,7 +41,7 @@ namespace Alternet.UI
     /// if possible.The native Linux calendar chooses the first weekday based on
     /// locale, and these styles have no effect on it.
     /// </remarks>
-    public class Calendar : Control
+    public class Calendar : CustomDateEdit
     {
         /// <summary>
         /// Occurs when the selected date changed.
@@ -93,10 +93,11 @@ namespace Alternet.UI
             }
         }
 
-        /// <summary>
-        /// Gets or sets the currently selected date.
-        /// </summary>
-        public DateTime Value
+        /// <inheritdoc/>
+        /// <remarks>
+        /// When this property is changed from the code and not by the user, events are not fired.
+        /// </remarks>
+        public override DateTime Value
         {
             get
             {
@@ -231,6 +232,7 @@ namespace Alternet.UI
             set
             {
                 NativeControl.UseGeneric = value;
+                SetRange();
                 PerformLayout();
             }
         }
@@ -485,6 +487,14 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Changes <see cref="Value"/> property to the today date.
+        /// </summary>
+        public void SelectToday()
+        {
+            Value = DateTime.Now.Date;
+        }
+
+        /// <summary>
         /// Returns the <see cref="ICalendarDateAttr"/> attributes for the given day or <c>null</c>.
         /// </summary>
         /// <param name="day">Day (in the range 1...31).</param>
@@ -545,6 +555,15 @@ namespace Alternet.UI
         {
             OnDayDoubleClick(e);
             DayDoubleClick?.Invoke(this, e);
+        }
+
+        /// <inheritdoc/>
+        protected override void SetRange(DateTime min, DateTime max)
+        {
+            NativeControl.MinValue = min;
+            NativeControl.MaxValue = max;
+            NativeControl.SetRange(UseMinDate, UseMaxDate);
+            Refresh();
         }
 
         /// <summary>

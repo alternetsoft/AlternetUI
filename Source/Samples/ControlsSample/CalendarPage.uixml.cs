@@ -24,6 +24,9 @@ namespace ControlsSample
             calendar.VerticalAlignment = VerticalAlignment.Top;
 
             var optionsPanel = mainPanel.AddHorizontalStackPanel();
+
+            // CheckBoxes panel
+            
             var checkboxPanel = optionsPanel.AddVerticalStackPanel();
 
             var showHolidaysCheckBox = checkboxPanel.AddCheckBox("Show Holidays")
@@ -47,13 +50,29 @@ namespace ControlsSample
                 .BindBoolProp(calendar, nameof(Calendar.ShowWeekNumbers));
             checkboxPanel.ChildrenSet.Margin(5);
 
+            // Buttons panel
+
             var buttonPanel = optionsPanel.AddVerticalStackPanel();
             var setDayColorsButton = buttonPanel.AddButton("Set days (5, 7) style", SetDayColors);
             setDayColorsButton.Enabled = useGenericCheckBox.IsChecked;
 
             buttonPanel.AddButton("Mark days (2, 3)", MarkDays);
+            buttonPanel.AddButton("Today", calendar.SelectToday);
 
             buttonPanel.ChildrenSet.Margin(5);
+
+            // Allow date range panel
+
+            var rangePanel = optionsPanel.AddVerticalStackPanel();
+
+            rangePanel.AddButton("Allow Any Date", RangeAnyDate_Click);
+            rangePanel.AddButton("Allow Dates <= Tomorrow", RangeTomorrow_Click);
+            rangePanel.AddButton("Allow Dates >= Yesterday", RangeYesterday_Click);
+            rangePanel.AddButton("Allow Yesterday..Tomorrow", RangeYesterdayTomorrow_Click);
+
+            rangePanel.ChildrenSet.Margin(5);
+
+            // Other initializations
 
             useGenericCheckBox.BindBoolProp(setDayColorsButton, nameof(Button.Enabled));
             useGenericCheckBox.BindBoolProp(sequentalMonthSelectCheckBox, nameof(Button.Enabled));
@@ -96,6 +115,33 @@ namespace ControlsSample
                 if (calendar.UseGeneric)
                     calendar.BackgroundColor = SystemColors.Window;
             }
+        }
+
+        private void RangeAnyDate_Click()
+        {
+            calendar.UseMinMaxDate = false;
+        }
+
+        private void RangeTomorrow_Click()
+        {
+            calendar.UseMinMaxDate = false;
+            calendar.MaxDate = DateTime.Today.AddDays(1);
+            calendar.UseMaxDate = true;
+        }
+
+        private void RangeYesterday_Click()
+        {
+            calendar.UseMinMaxDate = false;
+            calendar.MinDate = DateTime.Today.AddDays(-1);
+            calendar.UseMinDate = true;
+        }
+
+        private void RangeYesterdayTomorrow_Click()
+        {
+            calendar.UseMinMaxDate = false;
+            calendar.MaxDate = DateTime.Today.AddDays(1);
+            calendar.MinDate = DateTime.Today.AddDays(-1);
+            calendar.UseMinMaxDate = true;
         }
 
         private void Calendar_DayDoubleClick(object? sender, EventArgs e)
