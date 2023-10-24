@@ -22,13 +22,6 @@ namespace CustomControlsSample
 
                 isPressed = value;
                 Refresh();
-
-                // Popup hangs complete Linux system
-                if (Application.IsLinuxOS && MainWindow.DisableCustomColorPopup)
-                    return;
-
-                if (isPressed)
-                    OpenPopup();
             }
         }
 
@@ -41,9 +34,9 @@ namespace CustomControlsSample
                     popup = new Popup();
 
                     var border = new Border();
-                    //border.Children.Add(GetColorButtonsGrid());
+                    border.Children.Add(GetColorButtonsGrid());
                     popup.Children.Add(border);
-                    //popup.SetSizeToContent();
+                    popup.SetSizeToContent();
                 }
 
                 return popup;
@@ -181,6 +174,7 @@ namespace CustomControlsSample
         private void Control_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             IsPressed = false;
+            OpenPopup();
         }
 
         private void Control_ValueChanged(object? sender, EventArgs e)
@@ -201,11 +195,13 @@ namespace CustomControlsSample
 
         private void OpenPopup()
         {
-            Control.BeginInvoke(() =>
+            Popup.Location = Control.ClientToScreen(ClientRectangle.BottomLeft);
+            Popup.Show();
+
+/*       Hangs Linux:
+ *       Control.BeginInvoke(() =>
             {
-                Popup.Location = Control.ClientToScreen(ClientRectangle.BottomLeft);
-                Popup.Show();
-            });
+            });*/
         }
     }
 }
