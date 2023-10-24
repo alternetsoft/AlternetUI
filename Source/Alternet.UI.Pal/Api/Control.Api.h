@@ -11,6 +11,16 @@
 
 using namespace Alternet::UI;
 
+ALTERNET_UI_API int Control_GetLayoutDirection_(Control* obj)
+{
+    return obj->GetLayoutDirection();
+}
+
+ALTERNET_UI_API void Control_SetLayoutDirection_(Control* obj, int value)
+{
+    obj->SetLayoutDirection(value);
+}
+
 ALTERNET_UI_API char16_t* Control_GetName_(Control* obj)
 {
     return AllocPInvokeReturnString(obj->GetName());
@@ -246,6 +256,16 @@ ALTERNET_UI_API void Control_SetMaximumSize_(Control* obj, Size value)
     obj->SetMaximumSize(value);
 }
 
+ALTERNET_UI_API void Control_ShowPopupMenu_(Control* obj, void* menu, int x, int y)
+{
+    obj->ShowPopupMenu(menu, x, y);
+}
+
+ALTERNET_UI_API void Control_BeginIgnoreRecreate_(Control* obj)
+{
+    obj->BeginIgnoreRecreate();
+}
+
 ALTERNET_UI_API void Control_EndIgnoreRecreate_(Control* obj)
 {
     obj->EndIgnoreRecreate();
@@ -459,16 +479,6 @@ ALTERNET_UI_API void Control_Freeze_(Control* obj)
 ALTERNET_UI_API void Control_Thaw_(Control* obj)
 {
     obj->Thaw();
-}
-
-ALTERNET_UI_API void Control_ShowPopupMenu_(Control* obj, void* menu, int x, int y)
-{
-    obj->ShowPopupMenu(menu, x, y);
-}
-
-ALTERNET_UI_API void Control_BeginIgnoreRecreate_(Control* obj)
-{
-    obj->BeginIgnoreRecreate();
 }
 
 ALTERNET_UI_API void Control_SetEventCallback_(Control::ControlEventCallbackType callback)

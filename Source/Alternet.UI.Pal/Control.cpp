@@ -548,6 +548,16 @@ namespace Alternet::UI
         }
     }
 
+    int Control::GetLayoutDirection()
+    {
+        return GetWxWindow()->GetLayoutDirection();
+    }
+    
+    void Control::SetLayoutDirection(int value)
+    {
+        GetWxWindow()->SetLayoutDirection((wxLayoutDirection)value);
+    }
+
     void* Control::GetWxWidget() 
     {
         return GetWxWindow();

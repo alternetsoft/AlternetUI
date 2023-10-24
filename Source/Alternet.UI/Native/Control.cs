@@ -24,6 +24,21 @@ namespace Alternet.UI.Native
         {
         }
         
+        public int LayoutDirection
+        {
+            get
+            {
+                CheckDisposed();
+                return NativeApi.Control_GetLayoutDirection_(NativePointer);
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.Control_SetLayoutDirection_(NativePointer, value);
+            }
+        }
+        
         public string Name
         {
             get
@@ -410,6 +425,18 @@ namespace Alternet.UI.Native
             }
         }
         
+        public void ShowPopupMenu(System.IntPtr menu, int x, int y)
+        {
+            CheckDisposed();
+            NativeApi.Control_ShowPopupMenu_(NativePointer, menu, x, y);
+        }
+        
+        public void BeginIgnoreRecreate()
+        {
+            CheckDisposed();
+            NativeApi.Control_BeginIgnoreRecreate_(NativePointer);
+        }
+        
         public void EndIgnoreRecreate()
         {
             CheckDisposed();
@@ -677,18 +704,6 @@ namespace Alternet.UI.Native
             NativeApi.Control_Thaw_(NativePointer);
         }
         
-        public void ShowPopupMenu(System.IntPtr menu, int x, int y)
-        {
-            CheckDisposed();
-            NativeApi.Control_ShowPopupMenu_(NativePointer, menu, x, y);
-        }
-        
-        public void BeginIgnoreRecreate()
-        {
-            CheckDisposed();
-            NativeApi.Control_BeginIgnoreRecreate_(NativePointer);
-        }
-        
         static GCHandle eventCallbackGCHandle;
         
         static void SetEventCallback()
@@ -829,6 +844,12 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Control_SetEventCallback_(ControlEventCallbackType callback);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int Control_GetLayoutDirection_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Control_SetLayoutDirection_(IntPtr obj, int value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern string Control_GetName_(IntPtr obj);
@@ -972,6 +993,12 @@ namespace Alternet.UI.Native
             public static extern void Control_SetMaximumSize_(IntPtr obj, Alternet.Drawing.Size value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Control_ShowPopupMenu_(IntPtr obj, System.IntPtr menu, int x, int y);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Control_BeginIgnoreRecreate_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Control_EndIgnoreRecreate_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
@@ -1099,12 +1126,6 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Control_Thaw_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Control_ShowPopupMenu_(IntPtr obj, System.IntPtr menu, int x, int y);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Control_BeginIgnoreRecreate_(IntPtr obj);
             
         }
     }

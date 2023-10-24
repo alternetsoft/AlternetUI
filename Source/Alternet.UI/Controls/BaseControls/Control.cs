@@ -1180,6 +1180,33 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets the layout direction for this control.
+        /// </summary>
+        /// <remarks>
+        /// Note that <see cref="LayoutDirection.Default"/> is returned if layout direction
+        /// is not supported.
+        /// </remarks>
+        public LayoutDirection LayoutDirection
+        {
+            get
+            {
+                var control = Handler.NativeControl;
+                if (control is null)
+                    return LayoutDirection.Default;
+
+                return (LayoutDirection)control.LayoutDirection;
+            }
+
+            set
+            {
+                var control = Handler.NativeControl;
+                if (control is null)
+                    return;
+                control.LayoutDirection = (int)value;
+            }
+        }
+
+        /// <summary>
         /// Gets a value indicating whether the control has input focus.
         /// </summary>
         [Browsable(false)]
