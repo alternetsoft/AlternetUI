@@ -17,7 +17,11 @@ namespace Alternet::UI
     public:
         wxWindow* CreateWxWindowCore(wxWindow* parent) override;
 
+#if defined(__WXGTK__)
+        bool _useGeneric = true;
+#else
         bool _useGeneric = false;
+#endif
 
     private:
         wxAnimationCtrlBase* GetAnimation();

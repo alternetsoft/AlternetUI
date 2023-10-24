@@ -30,6 +30,10 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets a value indicating whether to use generic calendar or native calendar.
         /// </summary>
+        /// <remarks>
+        /// Default value under Linux is <c>true</c> (native version is not working),
+        /// on other platfroms - <c>false</c>.
+        /// </remarks>
         public bool UseGeneric
         {
             get
