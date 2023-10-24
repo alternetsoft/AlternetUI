@@ -12,6 +12,7 @@ namespace Alternet.Drawing
     [TypeConverter(typeof(ImageConverter))]
     public abstract class Image : IDisposable
     {
+        private static ImageGrayScaleMethod defaultGrayScaleMethod = ImageGrayScaleMethod.SetColorRGB150;
         private static Brush? disabledBrush = null;
         private static Color disabledBrushColor = Color.FromArgb(171, 71, 71, 71);
 
@@ -55,7 +56,27 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Get or set color used in <see cref="ToGrayScale"/> method.
+        /// Gets or sets default gray scale method used in <see cref="GrayScale"/>
+        /// and other functions.
+        /// </summary>
+        public static ImageGrayScaleMethod DefaultGrayScaleMethod
+        {
+            get
+            {
+                return defaultGrayScaleMethod;
+            }
+
+            set
+            {
+                if (value == ImageGrayScaleMethod.Default)
+                    return;
+                defaultGrayScaleMethod = value;
+            }
+        }
+
+        /// <summary>
+        /// Get or set color used when gray scale method is
+        /// <see cref="ImageGrayScaleMethod.FillWithDisabledBrush"/>.
         /// </summary>
         public static Color DisabledBrushColor
         {
@@ -208,9 +229,31 @@ namespace Alternet.Drawing
         /// Makes image grayscaled.
         /// </summary>
         /// <returns><c>true</c> if operation is successful. </returns>
-        public bool GrayScale()
+        public bool GrayScale(ImageGrayScaleMethod method = ImageGrayScaleMethod.Default)
         {
-            return NativeImage.GrayScale();
+            void GrayScaleWithBrush()
+            {
+                var size = Size;
+                using var dc = DrawingContext.FromImage(this);
+                dc.FillRectangle(
+                    DisabledBrush,
+                    new(0, 0, size.Width, size.Height));
+            }
+
+            if(method == ImageGrayScaleMethod.Default)
+            {
+                method = DefaultGrayScaleMethod;
+            }
+
+            switch (method)
+            {
+                case ImageGrayScaleMethod.SetColorRGB150:
+                default:
+                    return NativeImage.GrayScale();
+                case ImageGrayScaleMethod.FillWithDisabledBrush:
+                    GrayScaleWithBrush();
+                    return true;
+            }
         }
 
         /// <summary>
@@ -221,18 +264,14 @@ namespace Alternet.Drawing
         /// This method uses <see cref="GrayScale"/> and if it is unsuccessfull,
         /// it fills the image with <see cref="DisabledBrushColor"/>.
         /// </remarks>
-        public Image ToGrayScale()
+        public Image ToGrayScale(ImageGrayScaleMethod method = ImageGrayScaleMethod.Default)
         {
             Bitmap bitmap = new(this);
 
-            if (bitmap.GrayScale())
+            if (bitmap.GrayScale(method))
                 return bitmap;
 
-            var size = bitmap.Size;
-            using var dc = DrawingContext.FromImage(bitmap);
-            dc.FillRectangle(
-                DisabledBrush,
-                new(0, 0, size.Width, size.Height));
+            bitmap.GrayScale(ImageGrayScaleMethod.FillWithDisabledBrush);
             return bitmap;
         }
 
