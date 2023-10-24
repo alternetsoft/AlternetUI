@@ -24,7 +24,7 @@ namespace CustomControlsSample
                 Refresh();
 
                 // Popup hangs complete Linux system
-                if (!Application.IsWindowsOS && MainWindow.DisableCustomColorPopup)
+                if (Application.IsLinuxOS && MainWindow.DisableCustomColorPopup)
                     return;
 
                 if (isPressed)
@@ -41,9 +41,9 @@ namespace CustomControlsSample
                     popup = new Popup();
 
                     var border = new Border();
-                    border.Children.Add(GetColorButtonsGrid());
+                    //border.Children.Add(GetColorButtonsGrid());
                     popup.Children.Add(border);
-                    popup.SetSizeToContent();
+                    //popup.SetSizeToContent();
                 }
 
                 return popup;
