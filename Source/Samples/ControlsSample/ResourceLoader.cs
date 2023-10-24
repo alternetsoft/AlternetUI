@@ -24,17 +24,19 @@ namespace ControlsSample
         private static ControlStateImages LoadButtonImages()
         {
             static Image LoadImage(string stateName) =>
-                new Bitmap(
-                    Assembly.GetExecutingAssembly().GetManifestResourceStream(
-                        $"ControlsSample.Resources.ButtonImages.ButtonImage{stateName}.png")
-                    ?? throw new Exception());
+                Image.FromSvgUrl(
+                    $"embres:ControlsSample.Resources.ButtonImages.ButtonImage{stateName}.svg",
+                    24,
+                    24);
+
+            var disabledImage = LoadImage("Disabled");
 
             return new ControlStateImages
             {
                 NormalImage = LoadImage("Normal"),
                 HoveredImage = LoadImage("Hovered"),
                 PressedImage = LoadImage("Pressed"),
-                DisabledImage = LoadImage("Disabled"),
+                DisabledImage = disabledImage,
 				FocusedImage = LoadImage("Focused"),
             };
         }

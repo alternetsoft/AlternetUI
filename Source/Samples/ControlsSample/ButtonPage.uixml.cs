@@ -32,6 +32,8 @@ namespace ControlsSample
         {
             InitializeComponent();
 
+            button.Padding = 5;
+
             textAlignComboBox.Items.AddRange(ValidAlign);
             textAlignComboBox.SelectedIndex = textAlignComboBox.FindStringExact("Default");
             imageAlignComboBox.Items.AddRange(ValidAlign);
