@@ -13,6 +13,8 @@ namespace Alternet::UI
 #include "Api/Calendar.inc"
     public:
         wxWindow* CreateWxWindowCore(wxWindow* parent) override;
+        virtual void RecreateWxWindowIfNeeded() override;
+        static wxCalendarDateAttr* CloneDateAttr(const wxCalendarDateAttr& attr);
 
     private:
         wxCalendarCtrlBase* GetCalendar();

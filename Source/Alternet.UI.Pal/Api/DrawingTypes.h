@@ -244,9 +244,24 @@ namespace Alternet::UI
         {
         }
 
-        Color(const wxColor& c) : R(c.Red()), G(c.Green()), B(c.Blue()), 
-            A(c.Alpha()), state(1)
+        Color(const wxColor& c)
         {
+            if (c.IsOk())
+            {
+                R = c.Red();
+                G = c.Green();
+                B = c.Blue();
+                A = c.Alpha();
+                state = 1;
+            }
+            else
+            {
+                R = 0;
+                G = 0;
+                B = 0;
+                A = 0;
+                state = 0;
+            }
         }
 
         inline operator Color_C() { return Color_C{ R, G, B, A, state}; }

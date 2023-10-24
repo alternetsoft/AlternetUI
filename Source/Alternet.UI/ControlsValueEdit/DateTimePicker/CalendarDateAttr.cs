@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,9 +10,21 @@ namespace Alternet.UI
 {
     internal class CalendarDateAttr : DisposableObject, ICalendarDateAttr
     {
+        private bool immutable;
+
         public CalendarDateAttr(IntPtr handle, bool disposeHandle)
             : base(handle, disposeHandle)
         {
+        }
+
+        /// <summary>
+        /// Gets whether this object is immutable (properties are readonly).
+        /// </summary>
+        [Browsable(false)]
+        public bool Immutable
+        {
+            get => immutable;
+            internal set => immutable = value;
         }
 
         public Color? TextColor
@@ -25,6 +38,8 @@ namespace Alternet.UI
 
             set
             {
+                if (immutable)
+                    return;
                 if(value is null)
                     Native.Calendar.DateAttrSetTextColor(Handle, Color.Empty);
                 else
@@ -43,6 +58,8 @@ namespace Alternet.UI
 
             set
             {
+                if (immutable)
+                    return;
                 if (value is null)
                     Native.Calendar.DateAttrSetBackgroundColor(Handle, Color.Empty);
                 else
@@ -61,6 +78,8 @@ namespace Alternet.UI
 
             set
             {
+                if (immutable)
+                    return;
                 if (value is null)
                     Native.Calendar.DateAttrSetBorderColor(Handle, Color.Empty);
                 else
@@ -77,6 +96,8 @@ namespace Alternet.UI
 
             set
             {
+                if (immutable)
+                    return;
                 Native.Calendar.DateAttrSetHoliday(Handle, value);
             }
         }
@@ -90,6 +111,8 @@ namespace Alternet.UI
 
             set
             {
+                if (immutable)
+                    return;
                 Native.Calendar.DateAttrSetBorder(Handle, (int)value);
             }
         }
@@ -133,6 +156,11 @@ namespace Alternet.UI
                 return Native.Calendar.DateAttrHasBorder(Handle);
             }
         }
+
+        /// <inheritdoc/>
+        protected override void DisposeUnmanagedResources()
+        {
+            Native.Calendar.DeleteDateAttr(Handle);
+        }
     }
 }
-

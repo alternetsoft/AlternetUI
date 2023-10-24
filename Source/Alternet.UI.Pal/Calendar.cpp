@@ -50,6 +50,11 @@ namespace Alternet::UI
         RecreateWxWindowIfNeeded();
     }
 
+    void Calendar::RecreateWxWindowIfNeeded()
+    {
+        Control::RecreateWxWindowIfNeeded();
+    }
+
     wxWindow* Calendar::CreateWxWindowCore(wxWindow* parent)
     {
         long style = 0;
@@ -382,7 +387,15 @@ namespace Alternet::UI
 
     void Calendar::SetAttr(int day, void* calendarDateAttr)
     {
-        GetCalendar()->SetAttr(day, (wxCalendarDateAttr*)calendarDateAttr);
+        if (calendarDateAttr == nullptr)
+        {
+            ResetAttr(day);
+            return;
+        }
+
+        auto cloned = CloneDateAttr(*(wxCalendarDateAttr*)calendarDateAttr);
+
+        GetCalendar()->SetAttr(day, cloned);
     }
 
     void Calendar::ResetAttr(int day)
@@ -403,12 +416,17 @@ namespace Alternet::UI
     void* Calendar::GetMarkDateAttr()
     {
         auto& mark = wxCalendarDateAttr::GetMark();
+        return CloneDateAttr(mark);
+    }
+
+    wxCalendarDateAttr* Calendar::CloneDateAttr(const wxCalendarDateAttr& attr)
+    {
         return new wxCalendarDateAttr(
-            mark.GetTextColour(),
-            mark.GetBackgroundColour(),
-            mark.GetBorderColour(),
-            mark.GetFont(),
-            mark.GetBorder());
+            attr.GetTextColour(),
+            attr.GetBackgroundColour(),
+            attr.GetBorderColour(),
+            attr.GetFont(),
+            attr.GetBorder());
     }
 
     wxCalendarDateAttr markDateAttr;

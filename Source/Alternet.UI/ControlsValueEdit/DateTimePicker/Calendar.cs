@@ -70,6 +70,46 @@ namespace Alternet.UI
         public event EventHandler? DayDoubleClick;
 
         /// <summary>
+        /// Gets or sets the <see cref="ICalendarDateAttr"/> attributes for the marked days.
+        /// </summary>
+        public static ICalendarDateAttr? MarkDateAttr
+        {
+            get
+            {
+                var result = Native.Calendar.GetMarkDateAttr();
+                if (result == default)
+                    return null;
+                var resultIntf = new CalendarDateAttr(result, true);
+                resultIntf.Immutable = true;
+                return resultIntf;
+            }
+
+            set
+            {
+                if (value is null)
+                    Native.Calendar.SetMarkDateAttr(default);
+                else
+                    Native.Calendar.SetMarkDateAttr(value.Handle);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the currently selected date.
+        /// </summary>
+        public DateTime Value
+        {
+            get
+            {
+                return NativeControl.Value;
+            }
+
+            set
+            {
+                NativeControl.Value = value;
+            }
+        }
+
+        /// <summary>
         /// Gets or sets a value indicating whether to highlight holidays in the calendar
         /// </summary>
         /// <remarks>
@@ -85,7 +125,7 @@ namespace Alternet.UI
 
             set
             {
-                NativeControl.ShowHolidays = value;
+                NativeControl.EnableHolidayDisplay(value);
                 PerformLayout();
             }
         }
@@ -103,7 +143,7 @@ namespace Alternet.UI
 
             set
             {
-                NativeControl.NoMonthChange = value;
+                NativeControl.EnableMonthChange(!value);
                 PerformLayout();
             }
         }
@@ -259,34 +299,88 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override ControlId ControlKind => ControlId.Calendar;
 
+        /// <summary>
+        /// Gets or sets the foreground color currently used for holiday highlighting.
+        /// </summary>
+        /// <remarks>
+        /// This property is only implemented in generic calendar (when
+        /// <see cref="UseGeneric"/> is <c>true</c>) and always returns
+        /// <see cref="Color.Empty"/> in the native versions.
+        /// </remarks>
         public Color HolidayColorFg
         {
             get => NativeControl.GetHolidayColorFg();
+            set => SetHolidayColors(value, HolidayColorBg);
         }
 
+        /// <summary>
+        /// Gets or sets the background color currently used for holiday highlighting.
+        /// </summary>
+        /// <remarks>
+        /// This property is only implemented in generic calendar (when
+        /// <see cref="UseGeneric"/> is <c>true</c>) and always returns
+        /// <see cref="Color.Empty"/> in the native versions.
+        /// </remarks>
         public Color HolidayColorBg
         {
             get => NativeControl.GetHolidayColorBg();
+            set => SetHolidayColors(HolidayColorFg, value);
         }
 
+        /// <summary>
+        /// Gets or sets the foreground color of the header part of the calendar control.
+        /// </summary>
+        /// <remarks>
+        /// This property is only implemented in generic calendar (when
+        /// <see cref="UseGeneric"/> is <c>true</c>) and always returns
+        /// <see cref="Color.Empty"/> in the native versions.
+        /// </remarks>
         public Color HeaderColorFg
         {
             get => NativeControl.GetHeaderColorFg();
+            set => SetHeaderColors(value, HeaderColorBg);
         }
 
+        /// <summary>
+        /// Gets or sets the background color of the header part of the calendar control.
+        /// </summary>
+        /// <remarks>
+        /// This property is only implemented in generic calendar (when
+        /// <see cref="UseGeneric"/> is <c>true</c>) and always returns
+        /// <see cref="Color.Empty"/> in the native versions.
+        /// </remarks>
         public Color HeaderColorBg
         {
             get => NativeControl.GetHeaderColorBg();
+            set => SetHeaderColors(HeaderColorFg, value);
         }
 
+        /// <summary>
+        /// Gets or sets the foreground highlight color.
+        /// </summary>
+        /// <remarks>
+        /// This property is only implemented in generic calendar (when
+        /// <see cref="UseGeneric"/> is <c>true</c>) and always returns
+        /// <see cref="Color.Empty"/> in the native versions.
+        /// </remarks>
         public Color HighlightColorFg
         {
             get => NativeControl.GetHighlightColorFg();
+            set => SetHighlightColors(value, HighlightColorBg);
         }
 
+        /// <summary>
+        /// Gets or sets the background highlight color.
+        /// </summary>
+        /// <remarks>
+        /// This property is only implemented in generic calendar (when
+        /// <see cref="UseGeneric"/> is <c>true</c>) and always returns
+        /// <see cref="Color.Empty"/> in the native versions.
+        /// </remarks>
         public Color HighlightColorBg
         {
             get => NativeControl.GetHighlightColorBg();
+            set => SetHighlightColors(HighlightColorFg, value);
         }
 
         [Browsable(false)]
@@ -304,47 +398,96 @@ namespace Alternet.UI
         internal DayOfWeek FirstDayOfWeekUseGlobalization =>
             System.Globalization.DateTimeFormatInfo.CurrentInfo.FirstDayOfWeek;
 
-        public bool AllowMonthChange() => NativeControl.AllowMonthChange();
+        /// <summary>
+        /// Creates <see cref="ICalendarDateAttr"/> instance.
+        /// </summary>
+        /// <param name="border">Date border settings.</param>
+        public static ICalendarDateAttr CreateDateAttr(int border = 0)
+        {
+            var result = Native.Calendar.CreateDateAttr(border);
+            return new CalendarDateAttr(result, true);
+        }
 
-        public bool EnableMonthChange(bool enable = true) => NativeControl.EnableMonthChange(enable);
-
+        /// <summary>
+        /// Marks or unmarks the day.
+        /// </summary>
+        /// <remarks>
+        /// This day of month will be marked in every month. Usually marked days
+        /// are painted in bold font.
+        /// </remarks>
+        /// <param name="day">Day (in the range 1...31).</param>
+        /// <param name="mark"><c>true</c> to mark the day, <c>false</c> to unmark it.</param>
         public void Mark(int day, bool mark = true) => NativeControl.Mark(day, mark);
 
+        /// <summary>
+        /// Clears any attributes associated with the given day.
+        /// </summary>
+        /// <param name="day">Day (in the range 1...31).</param>
+        /// <remarks>
+        /// This method is only implemented in generic calendar (when
+        /// <see cref="UseGeneric"/> is <c>true</c>) and does nothing in the native version.
+        /// </remarks>
         public void ResetAttr(int day) => NativeControl.ResetAttr(day);
 
-        public void EnableHolidayDisplay(bool display = true) => NativeControl.EnableHolidayDisplay(display);
-
+        /// <summary>
+        /// Marks the specified day as being a holiday in the current month.
+        /// </summary>
+        /// <param name="day">Day (in the range 1...31).</param>
+        /// <remarks>
+        /// This method is only implemented in generic calendar (when
+        /// <see cref="UseGeneric"/> is <c>true</c>) and does nothing in the native version.
+        /// </remarks>
         public void SetHoliday(int day) => NativeControl.SetHoliday(day);
 
-        public void SetHighlightColors(Color? colorFg, Color? colorBg)
+        /// <summary>
+        /// Sets values for <see cref="HighlightColorBg"/> and
+        /// <see cref="HighlightColorFg"/> properties.
+        /// </summary>
+        /// <param name="colorFg">New value of the <see cref="HighlightColorFg"/> property.</param>
+        /// <param name="colorBg">New value of the <see cref="HighlightColorBg"/> property.</param>
+        /// <remarks>
+        /// This method is only implemented in generic calendar (when
+        /// <see cref="UseGeneric"/> is <c>true</c>) and does nothing in the native version.
+        /// </remarks>
+        public void SetHighlightColors(Color colorFg, Color colorBg)
         {
-            colorFg ??= Color.Empty;
-            colorBg ??= Color.Empty;
-            NativeControl.SetHighlightColors(colorFg.Value, colorBg.Value);
+            NativeControl.SetHighlightColors(colorFg, colorBg);
         }
 
-        public void SetHolidayColors(Color? colorFg, Color? colorBg)
+        /// <summary>
+        /// Sets values for <see cref="HolidayColorBg"/> and
+        /// <see cref="HolidayColorFg"/> properties.
+        /// </summary>
+        /// <param name="colorFg">New value of the <see cref="HolidayColorFg"/> property.</param>
+        /// <param name="colorBg">New value of the <see cref="HolidayColorBg"/> property.</param>
+        /// <remarks>
+        /// This method is only implemented in generic calendar (when
+        /// <see cref="UseGeneric"/> is <c>true</c>) and does nothing in the native version.
+        /// </remarks>
+        public void SetHolidayColors(Color colorFg, Color colorBg)
         {
-            colorFg ??= Color.Empty;
-            colorBg ??= Color.Empty;
-            NativeControl.SetHolidayColors(colorFg.Value, colorBg.Value);
+            NativeControl.SetHolidayColors(colorFg, colorBg);
         }
 
-        public void SetHeaderColors(Color? colorFg, Color? colorBg)
+        /// <summary>
+        /// Sets values for <see cref="HeaderColorBg"/> and
+        /// <see cref="HeaderColorFg"/> properties.
+        /// </summary>
+        /// <param name="colorFg">New value of the <see cref="HeaderColorFg"/> property.</param>
+        /// <param name="colorBg">New value of the <see cref="HeaderColorBg"/> property.</param>
+        /// <remarks>
+        /// This method is only implemented in generic calendar (when
+        /// <see cref="UseGeneric"/> is <c>true</c>) and does nothing in the native version.
+        /// </remarks>
+        public void SetHeaderColors(Color colorFg, Color colorBg)
         {
-            colorFg ??= Color.Empty;
-            colorBg ??= Color.Empty;
-            NativeControl.SetHeaderColors(colorFg.Value, colorBg.Value);
+            NativeControl.SetHeaderColors(colorFg, colorBg);
         }
 
-        public static ICalendarDateAttr? GetMarkDateAttr()
-        {
-            var result = Native.Calendar.GetMarkDateAttr();
-            if (result == default)
-                return null;
-            return new CalendarDateAttr(result, false);
-        }
-
+        /// <summary>
+        /// Returns the <see cref="ICalendarDateAttr"/> attributes for the given day or <c>null</c>.
+        /// </summary>
+        /// <param name="day">Day (in the range 1...31).</param>
         public ICalendarDateAttr? GetAttr(int day)
         {
             var result = NativeControl.GetAttr(day);
@@ -353,27 +496,26 @@ namespace Alternet.UI
             return new CalendarDateAttr(result, false);
         }
 
+        /// <summary>
+        /// Sets the <see cref="ICalendarDateAttr"/> attributes for the given day.
+        /// </summary>
+        /// <param name="day">Day (in the range 1...31).</param>
+        /// <param name="dateAttr">Day attributes. Pass <c>null</c> to reset attributes.</param>
         public void SetAttr(int day, ICalendarDateAttr? dateAttr)
         {
             if (dateAttr is null)
-                NativeControl.SetAttr(day, default);
+                NativeControl.ResetAttr(day);
             else
                 NativeControl.SetAttr(day, dateAttr.Handle);
         }
 
-        public static void SetMarkDateAttr(ICalendarDateAttr? dateAttr)
-        {
-            if (dateAttr is null)
-                Native.Calendar.SetMarkDateAttr(default);
-            else
-                Native.Calendar.SetMarkDateAttr(dateAttr.Handle);
-        }
+        internal bool AllowMonthChange() => NativeControl.AllowMonthChange();
 
-        public static ICalendarDateAttr CreateDateAttr(int border = 0)
-        {
-            var result = Native.Calendar.CreateDateAttr(border);
-            return new CalendarDateAttr(result, false);
-        }
+        internal bool EnableMonthChange(bool enable = true) =>
+            NativeControl.EnableMonthChange(enable);
+
+        internal void EnableHolidayDisplay(bool display = true) =>
+            NativeControl.EnableHolidayDisplay(display);
 
         internal void RaiseSelectionChanged(EventArgs e)
         {

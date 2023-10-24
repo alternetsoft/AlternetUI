@@ -26,22 +26,24 @@ namespace ControlsSample
             var optionsPanel = mainPanel.AddHorizontalStackPanel();
             var checkboxPanel = optionsPanel.AddVerticalStackPanel();
 
-            checkboxPanel.AddCheckBox("Show Holidays")
+            var showHolidaysCheckBox = checkboxPanel.AddCheckBox("Show Holidays")
                 .BindBoolProp(calendar,nameof(Calendar.ShowHolidays));
-            checkboxPanel.AddCheckBox("No Month Change")
+            
+            var noMonthChangeCheckBox = checkboxPanel.AddCheckBox("No Month Change")
                 .BindBoolProp(calendar, nameof(Calendar.NoMonthChange));
+            
             var useGenericCheckBox = checkboxPanel.AddCheckBox("Use Generic")
                 .BindBoolProp(calendar, nameof(Calendar.UseGeneric));
-            
-            var sequentalMonthSelectCheckBox = checkboxPanel.AddCheckBox("Generic: Sequental Month Select")
+
+            var sequentalMonthSelectCheckBox = checkboxPanel.AddCheckBox("Sequental Month Select")
                 .BindBoolProp(calendar, nameof(Calendar.SequentalMonthSelect));
             sequentalMonthSelectCheckBox.Enabled = useGenericCheckBox.IsChecked;
             
-            var showSurroundWeeksCheckBox = checkboxPanel.AddCheckBox("Generic: Show Surround Weeks")
+            var showSurroundWeeksCheckBox = checkboxPanel.AddCheckBox("Show Surround Weeks")
                 .BindBoolProp(calendar, nameof(Calendar.ShowSurroundWeeks));
             showSurroundWeeksCheckBox.Enabled = useGenericCheckBox.IsChecked;
             
-            checkboxPanel.AddCheckBox("Native: Week Numbers")
+            var weekNumbersCheckBox = checkboxPanel.AddCheckBox("Week Numbers")
                 .BindBoolProp(calendar, nameof(Calendar.ShowWeekNumbers));
             checkboxPanel.ChildrenSet.Margin(5);
 
@@ -49,7 +51,7 @@ namespace ControlsSample
             var setDayColorsButton = buttonPanel.AddButton("Set days (5, 7) style", SetDayColors);
             setDayColorsButton.Enabled = useGenericCheckBox.IsChecked;
 
-            buttonPanel.AddButton("Mark days (2, 3)", SelectDay);
+            buttonPanel.AddButton("Mark days (2, 3)", MarkDays);
 
             buttonPanel.ChildrenSet.Margin(5);
 
@@ -60,10 +62,13 @@ namespace ControlsSample
             calendar.Parent = mainPanel;
             calendar.PerformLayout();
 
-            void SelectDay()
+            useGenericCheckBox.CheckedChanged += Generic_CheckedChanged;
+
+            void MarkDays()
             {
                 calendar.Mark(2);
                 calendar.Mark(3);
+                calendar.Refresh();
             }
 
             void SetDayColors()
@@ -79,11 +84,24 @@ namespace ControlsSample
                 calendar.SetAttr(7, dateAttr);
                 calendar.Refresh();
             }
+
+            void Generic_CheckedChanged(object? sender, EventArgs e)
+            {
+                showHolidaysCheckBox.IsChecked = calendar.ShowHolidays;
+                noMonthChangeCheckBox.IsChecked = calendar.NoMonthChange;
+                sequentalMonthSelectCheckBox.IsChecked = calendar.SequentalMonthSelect;
+                showSurroundWeeksCheckBox.IsChecked = calendar.ShowSurroundWeeks;
+                weekNumbersCheckBox.IsChecked = calendar.ShowWeekNumbers;
+
+                if (calendar.UseGeneric)
+                    calendar.BackgroundColor = SystemColors.Window;
+            }
         }
 
         private void Calendar_DayDoubleClick(object? sender, EventArgs e)
         {
-            LogEvent("DayDoubleClick");
+            var s = calendar.Value.ToString("yyyy-MM-dd");
+            LogEvent($"DayDoubleClick {s}");
         }
 
         private void Calendar_DayHeaderClick(object? sender, EventArgs e)
@@ -103,7 +121,8 @@ namespace ControlsSample
 
         private void Calendar_SelectionChanged(object? sender, EventArgs e)
         {
-            LogEvent("SelectionChanged");
+            var s = calendar.Value.ToString("yyyy-MM-dd");
+            LogEvent($"SelectionChanged {s}");
         }
 
         private void LogEvent(string evName)
