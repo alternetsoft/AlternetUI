@@ -259,6 +259,36 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override ControlId ControlKind => ControlId.Calendar;
 
+        public Color HolidayColorFg
+        {
+            get => NativeControl.GetHolidayColorFg();
+        }
+
+        public Color HolidayColorBg
+        {
+            get => NativeControl.GetHolidayColorBg();
+        }
+
+        public Color HeaderColorFg
+        {
+            get => NativeControl.GetHeaderColorFg();
+        }
+
+        public Color HeaderColorBg
+        {
+            get => NativeControl.GetHeaderColorBg();
+        }
+
+        public Color HighlightColorFg
+        {
+            get => NativeControl.GetHighlightColorFg();
+        }
+
+        public Color HighlightColorBg
+        {
+            get => NativeControl.GetHighlightColorBg();
+        }
+
         [Browsable(false)]
         internal new NativeCalendarHandler Handler
         {
@@ -273,18 +303,6 @@ namespace Alternet.UI
 
         internal DayOfWeek FirstDayOfWeekUseGlobalization =>
             System.Globalization.DateTimeFormatInfo.CurrentInfo.FirstDayOfWeek;
-
-        public Color HolidayColorFg => NativeControl.GetHolidayColorFg();
-
-        public Color HolidayColorBg => NativeControl.GetHolidayColorBg();
-
-        public Color HeaderColorFg => NativeControl.GetHeaderColorFg();
-
-        public Color HeaderColorBg => NativeControl.GetHeaderColorBg();
-
-        public Color HighlightColorFg => NativeControl.GetHighlightColorFg();
-
-        public Color HighlightColorBg => NativeControl.GetHighlightColorBg();
 
         public bool AllowMonthChange() => NativeControl.AllowMonthChange();
 
