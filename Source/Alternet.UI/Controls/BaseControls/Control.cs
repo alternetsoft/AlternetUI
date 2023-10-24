@@ -2145,6 +2145,21 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Creates new <see cref="GroupBox"/> and adds it to the <see cref="Children"/>.
+        /// </summary>
+        public virtual GroupBox AddGroupBox(string? title = default)
+        {
+            var result = new GroupBox
+            {
+                Parent = this,
+            };
+
+            if (title is not null)
+                result.Title = title;
+            return result;
+        }
+
+        /// <summary>
         /// Creates new <see cref="StackPanel"/> and adds it to the <see cref="Children"/>.
         /// </summary>
         public virtual StackPanel AddStackPanel(bool isVertical = true)
