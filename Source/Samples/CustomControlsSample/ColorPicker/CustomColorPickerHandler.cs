@@ -8,7 +8,7 @@ namespace CustomControlsSample
     {
         private bool isPressed;
 
-        private Popup? popup;
+        private Window? popup;
 
         protected override bool NeedsPaint => true;
 
@@ -25,13 +25,21 @@ namespace CustomControlsSample
             }
         }
 
-        private Popup Popup
+        private Window Popup
         {
             get
             {
                 if (popup == null)
                 {
-                    popup = new Popup();
+                    popup = new Window();
+                    popup.Owner = Control.ParentWindow;
+                    popup.Visible = false;
+                    popup.ShowInTaskbar = false;
+                    popup.CloseEnabled = false;
+                    popup.MinimizeEnabled = false;
+                    popup.MaximizeEnabled = false;
+                    popup.Resizable = false;
+                    popup.LostFocus += Popup_LostFocus;
 
                     var border = new Border();
                     border.Children.Add(GetColorButtonsGrid());
@@ -41,6 +49,11 @@ namespace CustomControlsSample
 
                 return popup;
             }
+        }
+
+        private void Popup_LostFocus(object sender, RoutedEventArgs e)
+        {
+            (sender as Window)?.Hide();
         }
 
         private readonly Color[] colors = new[]
@@ -195,10 +208,12 @@ namespace CustomControlsSample
 
         private void OpenPopup()
         {
+            Popup.Handler.Required();
             Popup.Location = Control.ClientToScreen(ClientRectangle.BottomLeft);
+            Popup.SetSizeToContent();
             Popup.Show();
 
-/*       Hangs Linux:
+/*       
  *       Control.BeginInvoke(() =>
             {
             });*/
