@@ -153,12 +153,18 @@ namespace Alternet::UI
     void Window::RemoveInputBinding(const string& managedCommandId)
     {
         if (managedCommandId.empty())
-            throwExInvalidArg(managedCommandId, u"Command ID must not be empty.");
+        {
+            DebugLogInvalidArg(managedCommandId, u"Command ID must not be empty.");
+            return;
+        }
 
         auto it = _acceleratorsByCommandIds.find(managedCommandId);
-        if (it == _acceleratorsByCommandIds.end())
-            throwExInvalidArg(managedCommandId,
+        if (it == _acceleratorsByCommandIds.end()) 
+        {
+            DebugLogInvalidArg(managedCommandId,
                 u"Input binding with this command ID was not found in this window.");
+            return;
+        }
 
         IdManager::FreeId(it->second.GetCommand());
 
@@ -490,8 +496,6 @@ namespace Alternet::UI
     long Window::GetWindowStyle()
     {
         long style = wxCLIP_CHILDREN;
-
-        // style = style | wxFULL_REPAINT_ON_RESIZE;
 
         if(GetHasSystemMenu())
             style |= wxSYSTEM_MENU;
