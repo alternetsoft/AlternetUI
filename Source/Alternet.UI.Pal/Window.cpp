@@ -506,6 +506,8 @@ namespace Alternet::UI
 
         if (!GetHasBorder())
             style |= wxBORDER_NONE;
+        else
+            style |= _borderStyle;
 
         if (GetHasTitleBar())
             style |= wxCAPTION;
