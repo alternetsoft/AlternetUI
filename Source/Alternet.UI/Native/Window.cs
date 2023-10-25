@@ -204,6 +204,21 @@ namespace Alternet.UI.Native
             }
         }
         
+        public bool IsPopupWindow
+        {
+            get
+            {
+                CheckDisposed();
+                return NativeApi.Window_GetIsPopupWindow_(NativePointer);
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.Window_SetIsPopupWindow_(NativePointer, value);
+            }
+        }
+        
         public ModalResult ModalResult
         {
             get
@@ -558,6 +573,12 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Window_SetHasSystemMenu_(IntPtr obj, bool value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool Window_GetIsPopupWindow_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Window_SetIsPopupWindow_(IntPtr obj, bool value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern ModalResult Window_GetModalResult_(IntPtr obj);

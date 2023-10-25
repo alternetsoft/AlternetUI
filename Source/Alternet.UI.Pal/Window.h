@@ -146,6 +146,7 @@ namespace Alternet::UI
             ModalLoopStopRequested = 1 << 11,
             ShownOnce = 1 << 12,
             SystemMenu = 1 << 13,
+            PopupWindow = 1 << 14,
         };
 
         DelayedFlags<Window, DelayedWindowFlags> _delayedFlags;

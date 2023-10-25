@@ -137,6 +137,16 @@ ALTERNET_UI_API void Window_SetHasSystemMenu_(Window* obj, c_bool value)
     obj->SetHasSystemMenu(value);
 }
 
+ALTERNET_UI_API c_bool Window_GetIsPopupWindow_(Window* obj)
+{
+    return obj->GetIsPopupWindow();
+}
+
+ALTERNET_UI_API void Window_SetIsPopupWindow_(Window* obj, c_bool value)
+{
+    obj->SetIsPopupWindow(value);
+}
+
 ALTERNET_UI_API ModalResult Window_GetModalResult_(Window* obj)
 {
     return obj->GetModalResult();

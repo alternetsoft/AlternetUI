@@ -49,6 +49,10 @@ bool GetHasSystemMenu();
 void SetHasSystemMenu(bool value);
 
 
+bool GetIsPopupWindow();
+void SetIsPopupWindow(bool value);
+
+
 ModalResult GetModalResult();
 void SetModalResult(ModalResult value);
 

@@ -493,6 +493,20 @@ namespace Alternet::UI
         _startLocation = value;
     }
 
+    bool Window::GetIsPopupWindow()
+    {
+        return _flags.IsSet(WindowFlags::PopupWindow);
+    }
+
+    void Window::SetIsPopupWindow(bool value)
+    {
+        if (GetIsPopupWindow() == value)
+            return;
+
+        _flags.Set(WindowFlags::PopupWindow, value);
+        ScheduleRecreateWxWindow();
+    }
+
     long Window::GetWindowStyle()
     {
         long style = wxCLIP_CHILDREN;

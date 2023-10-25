@@ -26,6 +26,7 @@ namespace Alternet.UI
         private bool hasBorder = true;
         private bool alwaysOnTop = false;
         private bool isToolWindow = false;
+        private bool isPopupWindow = false;
         private Toolbar? toolbar = null;
         private StatusBar? statusBar = null;
         private ImageSet? icon = null;
@@ -204,6 +205,8 @@ namespace Alternet.UI
 
             set
             {
+                if (hasTitleBar == value)
+                    return;
                 hasTitleBar = value;
                 OnHasTitleBarChanged(EventArgs.Empty);
                 HasTitleBarChanged?.Invoke(this, EventArgs.Empty);
@@ -228,6 +231,8 @@ namespace Alternet.UI
 
             set
             {
+                if (hasBorder == value)
+                    return;
                 hasBorder = value;
                 OnHasBorderChanged(EventArgs.Empty);
                 HasBorderChanged?.Invoke(this, EventArgs.Empty);
@@ -243,6 +248,8 @@ namespace Alternet.UI
 
             set
             {
+                if (resizable == value)
+                    return;
                 resizable = value;
                 OnResizableChanged(EventArgs.Empty);
                 ResizableChanged?.Invoke(this, EventArgs.Empty);
@@ -260,9 +267,32 @@ namespace Alternet.UI
 
             set
             {
+                if (isToolWindow == value)
+                    return;
                 isToolWindow = value;
                 OnIsToolWindowChanged(EventArgs.Empty);
                 IsToolWindowChanged?.Invoke(this, EventArgs.Empty);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether to create a special popup window.
+        /// </summary>
+        /// <remarks>
+        /// Set this flag to create a special popup window: it will be always shown
+        /// on top of other windows, will capture the mouse and will be dismissed when
+        /// the mouse is clicked outside of it or if it loses focus in any other way.
+        /// </remarks>
+        public bool IsPopupWindow
+        {
+            get => isPopupWindow;
+
+            set
+            {
+                if (isPopupWindow == value)
+                    return;
+                isPopupWindow = value;
+                Handler.NativeControl.IsPopupWindow = value;
             }
         }
 
@@ -297,6 +327,8 @@ namespace Alternet.UI
 
             set
             {
+                if (alwaysOnTop == value)
+                    return;
                 alwaysOnTop = value;
                 OnAlwaysOnTopChanged(EventArgs.Empty);
                 AlwaysOnTopChanged?.Invoke(this, EventArgs.Empty);
@@ -312,6 +344,8 @@ namespace Alternet.UI
 
             set
             {
+                if (closeEnabled == value)
+                    return;
                 closeEnabled = value;
                 OnCloseEnabledChanged(EventArgs.Empty);
                 CloseEnabledChanged?.Invoke(this, EventArgs.Empty);
@@ -327,6 +361,8 @@ namespace Alternet.UI
 
             set
             {
+                if (maximizeEnabled == value)
+                    return;
                 maximizeEnabled = value;
                 OnMaximizeEnabledChanged(EventArgs.Empty);
                 MaximizeEnabledChanged?.Invoke(this, EventArgs.Empty);
@@ -354,6 +390,8 @@ namespace Alternet.UI
 
             set
             {
+                if (showInTaskbar == value)
+                    return;
                 showInTaskbar = value;
                 OnShowInTaskbarChanged(EventArgs.Empty);
                 ShowInTaskbarChanged?.Invoke(this, EventArgs.Empty);
@@ -369,6 +407,8 @@ namespace Alternet.UI
 
             set
             {
+                if (minimizeEnabled == value)
+                    return;
                 minimizeEnabled = value;
                 OnMinimizeEnabledChanged(EventArgs.Empty);
                 MinimizeEnabledChanged?.Invoke(this, EventArgs.Empty);
@@ -391,6 +431,8 @@ namespace Alternet.UI
 
             set
             {
+                if (owner == value)
+                    return;
                 owner = value;
                 OnOwnerChanged(EventArgs.Empty);
                 OwnerChanged?.Invoke(this, EventArgs.Empty);
@@ -411,6 +453,8 @@ namespace Alternet.UI
 
             set
             {
+                if (title == value)
+                    return;
                 title = value;
                 TitleChanged?.Invoke(this, EventArgs.Empty);
             }
