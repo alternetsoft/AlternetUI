@@ -1,6 +1,6 @@
 # 0.9.405 (not released, work in progress)
 
-- Added Calendar and AnimationControl.
+- Added Calendar and AnimationPlayer controls.
 - Implemented Sizer functionality. It allows to implement complex controls layouts.
 - Add to TreeViewItem: TextColor, BackgroundColor, IsBold.
 - TreeView speedup (removed handlesByItems usage).
@@ -18,6 +18,11 @@
 - Add to TextBox: TextAlign, TextWrap.
 - Add to ListControl: FirstItem, SelectFirstItem().
 - Minor improvements in PropertyGrid.
+- Add to Control: LayoutDirection, ChildrenSet, AddStackPanel, AddButton, AddHorizontalStackPanel, AddVerticalStackPanel,
+AddCheckBox, AddLabel, AddGroupBox.
+- Fixed freeze/system hang on Linux in CustomColorPicker popup.
+- Add to Popup: IsTransient, PuContainsControls, BorderStyle.
+- Add to Window: BorderStyle, IsPopupWindow.
 
 ---
 
