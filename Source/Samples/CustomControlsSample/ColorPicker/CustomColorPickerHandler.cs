@@ -33,13 +33,12 @@ namespace CustomControlsSample
                 {
                     popup = new Window();
                     popup.Owner = Control.ParentWindow;
-                    popup.Visible = false;
                     popup.ShowInTaskbar = false;
                     popup.CloseEnabled = false;
                     popup.MinimizeEnabled = false;
                     popup.MaximizeEnabled = false;
                     popup.Resizable = false;
-                    popup.LostFocus += Popup_LostFocus;
+                    popup.Deactivated += Popup_Deactivated;
 
                     var border = new Border();
                     border.Children.Add(GetColorButtonsGrid());
@@ -51,7 +50,7 @@ namespace CustomControlsSample
             }
         }
 
-        private void Popup_LostFocus(object sender, RoutedEventArgs e)
+        private void Popup_Deactivated(object? sender, EventArgs e)
         {
             (sender as Window)?.Hide();
         }
