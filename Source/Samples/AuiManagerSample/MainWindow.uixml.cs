@@ -277,17 +277,17 @@ namespace AuiManagerSample
 
         private void CalendarButton_Click(object? sender, EventArgs e)
         {
-            Log("Calendar clicked");
+            Log("Tool Calendar clicked");
         }
 
         private void PhotoButton_Click(object? sender, EventArgs e)
         {
-            Log("Photo clicked");
+            Log("Tool Photo clicked");
         }
 
         private void PencilButton_Click(object? sender, EventArgs e)
         {
-            Log("Pencil clicked");
+            Log("Tool Pencil clicked");
         }
 
         private void ToolDropDown_Click(object? sender, EventArgs e)
