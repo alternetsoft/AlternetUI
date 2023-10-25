@@ -118,6 +118,10 @@ namespace _PreprocessorDetail
 #define throwExInvalidOp throw Alternet::UI::InvalidOperationException(u"", 0, ExceptionOrigin)
 #define throwExInvalidOpWithInfo(message) throw Alternet::UI::InvalidOperationException(string(message), 0, ExceptionOrigin)
 
+
+#define DebugLogInvalidArg(argument, message) Alternet::UI::Application::Log(string(message) + string(u". Argument name: ") + (u###argument))
+
+
 #ifdef PLATFORM_WINDOWS
 #define ThrowOnFail(hr) \
 	if (FAILED((hr))) \
