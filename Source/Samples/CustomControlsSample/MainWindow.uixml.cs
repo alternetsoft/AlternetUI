@@ -56,6 +56,7 @@ namespace CustomControlsSample
                 Margin = 5,
                 SuggestedWidth = 150,
                 SuggestedHeight = 100,
+                Visible = false,
             };
 
             Binding myBinding = new ("IntValue") 
