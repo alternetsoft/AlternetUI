@@ -209,15 +209,23 @@ namespace Alternet::UI
         GetWxWindow()->SetName(wxStr(value));
     }
 
+    int Control::GetBorderStyle()
+    {
+        return _borderStyle;
+    }
+    
+    void Control::SetBorderStyle(int value)
+    {
+        if (_borderStyle == value)
+            return;
+        _borderStyle = value;
+        RecreateWxWindowIfNeeded();
+    }
+
     Control::~Control()
     {
         DestroyDropTarget();
         DestroyWxWindow();
-    }
-
-    long Control::GetBorderStyle()
-    {
-        return createStyles;
     }
 
     bool Control::CanSetScrollbar()

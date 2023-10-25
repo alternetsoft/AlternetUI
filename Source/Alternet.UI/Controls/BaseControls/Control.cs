@@ -448,6 +448,28 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets border style of the control.
+        /// </summary>
+        internal virtual ControlBorderStyle BorderStyle
+        {
+            get
+            {
+                var nc = Handler.NativeControl;
+                if (nc is null)
+                    return ControlBorderStyle.Default;
+                return (ControlBorderStyle)nc.BorderStyle;
+            }
+
+            set
+            {
+                var nc = Handler.NativeControl;
+                if (nc is null)
+                    return;
+                nc.BorderStyle = (int)value;
+            }
+        }
+
+        /// <summary>
         /// Gets or sets a value indicating whether the control and all its
         /// child controls are displayed.
         /// </summary>

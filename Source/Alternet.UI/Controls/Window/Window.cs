@@ -211,6 +211,15 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets border style of the window.
+        /// </summary>
+        public new ControlBorderStyle BorderStyle
+        {
+            get => base.BorderStyle;
+            set => base.BorderStyle = value;
+        }
+
+        /// <summary>
         /// Gets or sets a value indicating whether the window has a border.
         /// </summary>
         public bool HasBorder

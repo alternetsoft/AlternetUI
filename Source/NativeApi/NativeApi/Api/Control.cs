@@ -8,6 +8,7 @@ namespace NativeApi.Api
 {
     public abstract class Control
     {
+        public int BorderStyle { get; set; }
         public int LayoutDirection { get; set; }
         public string Name { get; set; }
         public int Id { get; set; }

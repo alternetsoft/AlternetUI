@@ -11,6 +11,16 @@
 
 using namespace Alternet::UI;
 
+ALTERNET_UI_API int Control_GetBorderStyle_(Control* obj)
+{
+    return obj->GetBorderStyle();
+}
+
+ALTERNET_UI_API void Control_SetBorderStyle_(Control* obj, int value)
+{
+    obj->SetBorderStyle(value);
+}
+
 ALTERNET_UI_API int Control_GetLayoutDirection_(Control* obj)
 {
     return obj->GetLayoutDirection();
@@ -256,6 +266,16 @@ ALTERNET_UI_API void Control_SetMaximumSize_(Control* obj, Size value)
     obj->SetMaximumSize(value);
 }
 
+ALTERNET_UI_API void Control_Freeze_(Control* obj)
+{
+    obj->Freeze();
+}
+
+ALTERNET_UI_API void Control_Thaw_(Control* obj)
+{
+    obj->Thaw();
+}
+
 ALTERNET_UI_API void Control_ShowPopupMenu_(Control* obj, void* menu, int x, int y)
 {
     obj->ShowPopupMenu(menu, x, y);
@@ -469,16 +489,6 @@ ALTERNET_UI_API Control* Control_GetFocusedControl_()
 ALTERNET_UI_API void Control_NotifyCaptureLost_()
 {
     Control::NotifyCaptureLost();
-}
-
-ALTERNET_UI_API void Control_Freeze_(Control* obj)
-{
-    obj->Freeze();
-}
-
-ALTERNET_UI_API void Control_Thaw_(Control* obj)
-{
-    obj->Thaw();
 }
 
 ALTERNET_UI_API void Control_SetEventCallback_(Control::ControlEventCallbackType callback)

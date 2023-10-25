@@ -24,6 +24,21 @@ namespace Alternet.UI.Native
         {
         }
         
+        public int BorderStyle
+        {
+            get
+            {
+                CheckDisposed();
+                return NativeApi.Control_GetBorderStyle_(NativePointer);
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.Control_SetBorderStyle_(NativePointer, value);
+            }
+        }
+        
         public int LayoutDirection
         {
             get
@@ -425,6 +440,18 @@ namespace Alternet.UI.Native
             }
         }
         
+        public void Freeze()
+        {
+            CheckDisposed();
+            NativeApi.Control_Freeze_(NativePointer);
+        }
+        
+        public void Thaw()
+        {
+            CheckDisposed();
+            NativeApi.Control_Thaw_(NativePointer);
+        }
+        
         public void ShowPopupMenu(System.IntPtr menu, int x, int y)
         {
             CheckDisposed();
@@ -692,18 +719,6 @@ namespace Alternet.UI.Native
             NativeApi.Control_NotifyCaptureLost_();
         }
         
-        public void Freeze()
-        {
-            CheckDisposed();
-            NativeApi.Control_Freeze_(NativePointer);
-        }
-        
-        public void Thaw()
-        {
-            CheckDisposed();
-            NativeApi.Control_Thaw_(NativePointer);
-        }
-        
         static GCHandle eventCallbackGCHandle;
         
         static void SetEventCallback()
@@ -844,6 +859,12 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Control_SetEventCallback_(ControlEventCallbackType callback);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int Control_GetBorderStyle_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Control_SetBorderStyle_(IntPtr obj, int value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern int Control_GetLayoutDirection_(IntPtr obj);
@@ -993,6 +1014,12 @@ namespace Alternet.UI.Native
             public static extern void Control_SetMaximumSize_(IntPtr obj, Alternet.Drawing.Size value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Control_Freeze_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Control_Thaw_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Control_ShowPopupMenu_(IntPtr obj, System.IntPtr menu, int x, int y);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
@@ -1120,12 +1147,6 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Control_NotifyCaptureLost_();
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Control_Freeze_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Control_Thaw_(IntPtr obj);
             
         }
     }

@@ -67,7 +67,6 @@ namespace Alternet::UI
     {
 #include "Api/Control.inc"
     public:
-        long GetBorderStyle();
         virtual wxWindow* CreateWxWindowCore(wxWindow* parent) = 0;
 
         wxWindow* GetWxWindow();
@@ -97,9 +96,9 @@ namespace Alternet::UI
         Window* GetParentWindow();
 
     protected:
-        int64_t createStyles = 0;
         bool bindScrollEvents = true;
         int _ignoreRecreate = 0;
+        int _borderStyle = 0;
 
         virtual void OnParentChanged();
         virtual void OnAnyParentChanged();
