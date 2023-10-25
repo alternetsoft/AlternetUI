@@ -34,6 +34,9 @@ namespace CustomControlsSample
                     popup = new Window();
                     popup.Owner = Control.ParentWindow;
                     popup.ShowInTaskbar = false;
+                    popup.StartLocation = WindowStartLocation.Manual;
+                    popup.HasTitleBar = false;
+                    popup.AlwaysOnTop = true;
                     popup.CloseEnabled = false;
                     popup.MinimizeEnabled = false;
                     popup.MaximizeEnabled = false;
@@ -146,9 +149,31 @@ namespace CustomControlsSample
             Control.ValueChanged += Control_ValueChanged;
             Control.MouseMove += Control_MouseMove;
             Control.MouseEnter += Control_MouseEnter;
+            Control.KeyDown += Control_KeyDown;
             Control.MouseLeave += Control_MouseLeave;
+            Control.GotFocus += Control_GotFocus;
+            Control.LostFocus += Control_LostFocus;
             Control.MouseLeftButtonDown += Control_MouseLeftButtonDown;
             Control.MouseLeftButtonUp += Control_MouseLeftButtonUp;
+        }
+
+        private void Control_KeyDown(object sender, KeyEventArgs e)
+        {
+            if(e.Key == Key.Enter)
+            {
+                e.Handled = true;
+                OpenPopup();
+            }
+        }
+
+        private void Control_LostFocus(object sender, RoutedEventArgs e)
+        {
+            Refresh();
+        }
+
+        private void Control_GotFocus(object sender, RoutedEventArgs e)
+        {
+            Refresh();
         }
 
         protected override void OnDetach()
@@ -159,6 +184,8 @@ namespace CustomControlsSample
             Control.MouseLeave -= Control_MouseLeave;
             Control.MouseLeftButtonDown -= Control_MouseLeftButtonDown;
             Control.MouseLeftButtonUp -= Control_MouseLeftButtonUp;
+            Control.GotFocus -= Control_GotFocus;
+            Control.LostFocus -= Control_LostFocus;
 
             base.OnDetach();
         }
@@ -201,21 +228,25 @@ namespace CustomControlsSample
                 return CustomControlsColors.BackgroundPressedBrush;
             if (IsMouseOver)
                 return CustomControlsColors.BackgroundHoveredBrush;
+            if(IsFocused)
+                return CustomControlsColors.BackgroundFocusedBrush;
 
             return CustomControlsColors.BackgroundBrush;
         }
 
         private void OpenPopup()
         {
-            Popup.Handler.Required();
-            Popup.Location = Control.ClientToScreen(ClientRectangle.BottomLeft);
-            Popup.SetSizeToContent();
-            Popup.Show();
-
-/*       
- *       Control.BeginInvoke(() =>
+            Control.BeginInvoke(() =>
             {
-            });*/
+                Popup.HandleNeeded();
+                var bl = ClientRectangle.BottomLeft;
+                var blScreen = Control.ClientToScreen(bl);
+                Popup.Location = blScreen;
+                Popup.SetSizeToContent();
+                Popup.Show();
+                if (Popup.IsFocusable)
+                    Popup.SetFocus();
+            });
         }
     }
 }
