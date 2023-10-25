@@ -22,7 +22,6 @@ namespace Alternet::UI
 
     ListBox::ListBox(int64_t styles)
     {
-        createStyles = styles;
         bindScrollEvents = false;
     }
 
@@ -267,7 +266,7 @@ namespace Alternet::UI
         auto listBox = GetListBox();
         listBox->Clear();
 
-        for (auto item : _items) 
+        for (auto& item : _items) 
         {
             listBox->Append(wxStr(item));
         }
