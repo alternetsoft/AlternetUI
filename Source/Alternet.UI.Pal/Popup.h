@@ -17,7 +17,10 @@ namespace Alternet::UI
         void UpdateWxWindowParent() override;
 
     private:
-        wxPopupTransientWindow* GetWxPopup();
+        wxPopupWindow* GetWxPopup();
+
+        bool _isTransient = true;
+        bool _puContainsControls = false;
 
         inline static std::vector<wxWindow*> _popupWindows;
     };

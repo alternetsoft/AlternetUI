@@ -23,6 +23,36 @@ namespace Alternet.UI.Native
         {
         }
         
+        public bool IsTransient
+        {
+            get
+            {
+                CheckDisposed();
+                return NativeApi.Popup_GetIsTransient_(NativePointer);
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.Popup_SetIsTransient_(NativePointer, value);
+            }
+        }
+        
+        public bool PuContainsControls
+        {
+            get
+            {
+                CheckDisposed();
+                return NativeApi.Popup_GetPuContainsControls_(NativePointer);
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.Popup_SetPuContainsControls_(NativePointer, value);
+            }
+        }
+        
         
         [SuppressUnmanagedCodeSecurity]
         public class NativeApi : NativeApiProvider
@@ -31,6 +61,18 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern IntPtr Popup_Create_();
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool Popup_GetIsTransient_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Popup_SetIsTransient_(IntPtr obj, bool value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool Popup_GetPuContainsControls_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Popup_SetPuContainsControls_(IntPtr obj, bool value);
             
         }
     }

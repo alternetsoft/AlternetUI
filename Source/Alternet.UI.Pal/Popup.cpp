@@ -24,18 +24,62 @@ namespace Alternet::UI
         }
     };
 
+    class wxPopupWindow2 : public wxPopupWindow,
+        public wxWidgetExtender
+    {
+    public:
+        wxPopupWindow2(wxWindow* parent, int style = wxBORDER_NONE)
+        {
+            Create(parent, style);
+        }
+    };
+
+    bool Popup::GetPuContainsControls()
+    {
+        return _puContainsControls;
+    }
+
+    void Popup::SetPuContainsControls(bool value)
+    {
+        if (_puContainsControls == value)
+            return;
+        _puContainsControls = value;
+        RecreateWxWindowIfNeeded();
+    }
+
     wxWindow* Popup::CreateWxWindowCore(wxWindow* parent)
     {
-        return new wxPopupTransientWindow2(parent);
+        int style = _borderStyle;
+
+        if (_puContainsControls)
+            style |= wxPU_CONTAINS_CONTROLS;
+
+        if(_isTransient)
+            return new wxPopupTransientWindow2(parent, style);
+        else
+            return new wxPopupWindow2(parent, style);
     }
 
     void Popup::UpdateWxWindowParent()
     {
     }
 
-    wxPopupTransientWindow* Popup::GetWxPopup()
+    bool Popup::GetIsTransient()
     {
-        return dynamic_cast<wxPopupTransientWindow*>(GetWxWindow());
+        return _isTransient;
+    }
+    
+    void Popup::SetIsTransient(bool value)
+    {
+        if (_isTransient == value)
+            return;
+        _isTransient = value;
+        RecreateWxWindowIfNeeded();
+    }
+
+    wxPopupWindow* Popup::GetWxPopup()
+    {
+        return dynamic_cast<wxPopupWindow*>(GetWxWindow());
     }
 
     /*static*/ std::vector<wxWindow*> Popup::GetVisiblePopupWindows()

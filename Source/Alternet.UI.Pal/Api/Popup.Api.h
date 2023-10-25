@@ -13,3 +13,23 @@ ALTERNET_UI_API Popup* Popup_Create_()
     return new Popup();
 }
 
+ALTERNET_UI_API c_bool Popup_GetIsTransient_(Popup* obj)
+{
+    return obj->GetIsTransient();
+}
+
+ALTERNET_UI_API void Popup_SetIsTransient_(Popup* obj, c_bool value)
+{
+    obj->SetIsTransient(value);
+}
+
+ALTERNET_UI_API c_bool Popup_GetPuContainsControls_(Popup* obj)
+{
+    return obj->GetPuContainsControls();
+}
+
+ALTERNET_UI_API void Popup_SetPuContainsControls_(Popup* obj, c_bool value)
+{
+    obj->SetPuContainsControls(value);
+}
+

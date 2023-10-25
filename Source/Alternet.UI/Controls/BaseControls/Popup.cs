@@ -46,6 +46,61 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether a popup window disappears automatically
+        /// when the user clicks mouse outside it or if it loses focus in any other way.
+        /// </summary>
+        /// <remarks>
+        /// This style can be useful for implementing custom combobox-like controls for example.
+        /// </remarks>
+        public bool IsTransient
+        {
+            get
+            {
+                return Handler.NativeControl.IsTransient;
+            }
+
+            set
+            {
+                Handler.NativeControl.IsTransient = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets border style of the popup.
+        /// </summary>
+        public new ControlBorderStyle BorderStyle
+        {
+            get => base.BorderStyle;
+            set => base.BorderStyle = value;
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether a popup window will take focus from
+        /// its parent window.
+        /// </summary>
+        /// <remarks>
+        /// By default in Windows, a popup window will not take focus from its parent window.
+        /// However many standard controls, including common ones such as <see cref="TextBox"/>,
+        /// need focus to function correctly and will not work when placed on a default popup.
+        /// This flag can be used to make the popup take focus and let all controls work but at
+        /// the price of not allowing the parent window to keep focus while the popup is shown,
+        /// which can also be sometimes desirable. This style is currently only implemented
+        /// in Windows and simply does nothing under the other platforms.
+        /// </remarks>
+        public bool PuContainsControls
+        {
+            get
+            {
+                return Handler.NativeControl.PuContainsControls;
+            }
+
+            set
+            {
+                Handler.NativeControl.PuContainsControls = value;
+            }
+        }
+
         private new NativePopupHandler Handler
         {
             get
