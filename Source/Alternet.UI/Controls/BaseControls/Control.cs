@@ -1375,6 +1375,11 @@ namespace Alternet.UI
             return SynchronizationService.BeginInvoke(method, args);
         }
 
+        public void HandleNeeded()
+        {
+            Handler.NativeControl?.Required();
+        }
+
         /// <summary>
         /// Executes a delegate asynchronously on the thread that the control
         /// was created on.
