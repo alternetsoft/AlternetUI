@@ -104,19 +104,19 @@ ALTERNET_UI_API void* AuiToolBar_AddControl_(AuiToolBar* obj, int toolId, void* 
     return obj->AddControl(toolId, control, label);
 }
 
-ALTERNET_UI_API void* AuiToolBar_AddSeparator_(AuiToolBar* obj)
+ALTERNET_UI_API void* AuiToolBar_AddSeparator_(AuiToolBar* obj, int toolId)
 {
-    return obj->AddSeparator();
+    return obj->AddSeparator(toolId);
 }
 
-ALTERNET_UI_API void* AuiToolBar_AddSpacer_(AuiToolBar* obj, int pixels)
+ALTERNET_UI_API void* AuiToolBar_AddSpacer_(AuiToolBar* obj, int toolId, int pixels)
 {
-    return obj->AddSpacer(pixels);
+    return obj->AddSpacer(toolId, pixels);
 }
 
-ALTERNET_UI_API void* AuiToolBar_AddStretchSpacer_(AuiToolBar* obj, int proportion)
+ALTERNET_UI_API void* AuiToolBar_AddStretchSpacer_(AuiToolBar* obj, int toolId, int proportion)
 {
-    return obj->AddStretchSpacer(proportion);
+    return obj->AddStretchSpacer(toolId, proportion);
 }
 
 ALTERNET_UI_API c_bool AuiToolBar_Realize_(AuiToolBar* obj)

@@ -63,11 +63,11 @@ namespace NativeApi.Api
 
         public IntPtr AddControl(int toolId, IntPtr control, string label) => throw new Exception();
 
-        public IntPtr AddSeparator() => throw new Exception();
+        public IntPtr AddSeparator(int toolId) => throw new Exception();
 
-        public IntPtr AddSpacer(int pixels) => throw new Exception();
+        public IntPtr AddSpacer(int toolId, int pixels) => throw new Exception();
 
-        public IntPtr AddStretchSpacer(int proportion = 1) => throw new Exception();
+        public IntPtr AddStretchSpacer(int toolId, int proportion = 1) => throw new Exception();
 
         public bool Realize() => throw new Exception();
 

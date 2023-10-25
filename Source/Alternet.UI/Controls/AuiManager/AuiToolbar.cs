@@ -396,9 +396,11 @@ namespace Alternet.UI
         /// platform so it can be a vertical line (Windows, some versions of Linux)
         /// or just an empty space or something else.
         /// </remarks>
-        public void AddSeparator()
+        public int AddSeparator()
         {
-            NativeControl.AddSeparator();
+            int toolId = GenNewId();
+            NativeControl.AddSeparator(toolId);
+            return toolId;
         }
 
         /// <summary>
@@ -409,18 +411,22 @@ namespace Alternet.UI
         /// If <paramref name="pixels"/> is not specified,
         /// <see cref="DefaultSpacerWidth"/> is used as a spacer width.
         /// </remarks>
-        public void AddSpacer(int? pixels = null)
+        public int AddSpacer(int? pixels = null)
         {
             pixels ??= DefaultSpacerWidth;
-            NativeControl.AddSpacer(pixels.Value);
+            int toolId = GenNewId();
+            NativeControl.AddSpacer(toolId, pixels.Value);
+            return toolId;
         }
 
         /// <summary>
         /// Adds a stretchable space to the toolbar.
         /// </summary>
-        public void AddStretchSpacer(int proportion = 1)
+        public int AddStretchSpacer(int proportion = 1)
         {
-            NativeControl.AddStretchSpacer(proportion);
+            int toolId = GenNewId();
+            NativeControl.AddStretchSpacer(toolId, proportion);
+            return toolId;
         }
 
         /// <summary>

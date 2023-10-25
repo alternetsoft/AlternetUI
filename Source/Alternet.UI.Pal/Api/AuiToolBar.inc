@@ -28,9 +28,9 @@ void* AddTool2(int toolId, const string& label, ImageSet* bitmapBundle, ImageSet
 void* AddTool3(int toolId, ImageSet* bitmapBundle, ImageSet* disabledBitmapBundle, bool toggle, void* clientData, const string& shortHelpString, const string& longHelpString);
 void* AddLabel(int toolId, const string& label, int width);
 void* AddControl(int toolId, void* control, const string& label);
-void* AddSeparator();
-void* AddSpacer(int pixels);
-void* AddStretchSpacer(int proportion);
+void* AddSeparator(int toolId);
+void* AddSpacer(int toolId, int pixels);
+void* AddStretchSpacer(int toolId, int proportion);
 bool Realize();
 void* FindControl(int windowId);
 void* FindToolByPosition(int x, int y);

@@ -289,19 +289,25 @@ namespace Alternet::UI
         return result;
     }
 
-    void* AuiToolBar::AddSeparator()
+    void* AuiToolBar::AddSeparator(int toolId)
     {
-        return GetToolbar()->AddSeparator();
+        auto result = GetToolbar()->AddSeparator();
+        result->SetId(toolId);
+        return result;
     }
 
-    void* AuiToolBar::AddSpacer(int pixels)
+    void* AuiToolBar::AddSpacer(int toolId, int pixels)
     {
-        return GetToolbar()->AddSpacer(pixels);
+        auto result = GetToolbar()->AddSpacer(pixels);
+        result->SetId(toolId);
+        return result;
     }
 
-    void* AuiToolBar::AddStretchSpacer(int proportion)
+    void* AuiToolBar::AddStretchSpacer(int toolId, int proportion)
     {
-        return GetToolbar()->AddStretchSpacer(proportion);
+        auto result = GetToolbar()->AddStretchSpacer(proportion);
+        result->SetId(toolId);
+        return result;
     }
 
     bool AuiToolBar::Realize()

@@ -150,22 +150,22 @@ namespace Alternet.UI.Native
             return NativeApi.AuiToolBar_AddControl_(NativePointer, toolId, control, label);
         }
         
-        public System.IntPtr AddSeparator()
+        public System.IntPtr AddSeparator(int toolId)
         {
             CheckDisposed();
-            return NativeApi.AuiToolBar_AddSeparator_(NativePointer);
+            return NativeApi.AuiToolBar_AddSeparator_(NativePointer, toolId);
         }
         
-        public System.IntPtr AddSpacer(int pixels)
+        public System.IntPtr AddSpacer(int toolId, int pixels)
         {
             CheckDisposed();
-            return NativeApi.AuiToolBar_AddSpacer_(NativePointer, pixels);
+            return NativeApi.AuiToolBar_AddSpacer_(NativePointer, toolId, pixels);
         }
         
-        public System.IntPtr AddStretchSpacer(int proportion)
+        public System.IntPtr AddStretchSpacer(int toolId, int proportion)
         {
             CheckDisposed();
-            return NativeApi.AuiToolBar_AddStretchSpacer_(NativePointer, proportion);
+            return NativeApi.AuiToolBar_AddStretchSpacer_(NativePointer, toolId, proportion);
         }
         
         public bool Realize()
@@ -616,13 +616,13 @@ namespace Alternet.UI.Native
             public static extern System.IntPtr AuiToolBar_AddControl_(IntPtr obj, int toolId, System.IntPtr control, string label);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr AuiToolBar_AddSeparator_(IntPtr obj);
+            public static extern System.IntPtr AuiToolBar_AddSeparator_(IntPtr obj, int toolId);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr AuiToolBar_AddSpacer_(IntPtr obj, int pixels);
+            public static extern System.IntPtr AuiToolBar_AddSpacer_(IntPtr obj, int toolId, int pixels);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr AuiToolBar_AddStretchSpacer_(IntPtr obj, int proportion);
+            public static extern System.IntPtr AuiToolBar_AddStretchSpacer_(IntPtr obj, int toolId, int proportion);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool AuiToolBar_Realize_(IntPtr obj);
