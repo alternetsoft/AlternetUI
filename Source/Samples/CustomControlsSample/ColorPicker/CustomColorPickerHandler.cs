@@ -36,6 +36,7 @@ namespace CustomControlsSample
                     popup.ShowInTaskbar = false;
                     popup.StartLocation = WindowStartLocation.Manual;
                     popup.HasTitleBar = false;
+                    popup.HasBorder = false;
                     popup.AlwaysOnTop = true;
                     popup.CloseEnabled = false;
                     popup.MinimizeEnabled = false;
