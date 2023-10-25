@@ -511,6 +511,9 @@ namespace Alternet::UI
     {
         long style = wxCLIP_CHILDREN;
 
+        if (GetIsPopupWindow())
+            style |= wxPOPUP_WINDOW;
+
         if(GetHasSystemMenu())
             style |= wxSYSTEM_MENU;
 
