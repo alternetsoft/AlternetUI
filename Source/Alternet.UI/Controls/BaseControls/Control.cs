@@ -448,28 +448,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets border style of the control.
-        /// </summary>
-        internal virtual ControlBorderStyle BorderStyle
-        {
-            get
-            {
-                var nc = Handler.NativeControl;
-                if (nc is null)
-                    return ControlBorderStyle.Default;
-                return (ControlBorderStyle)nc.BorderStyle;
-            }
-
-            set
-            {
-                var nc = Handler.NativeControl;
-                if (nc is null)
-                    return;
-                nc.BorderStyle = (int)value;
-            }
-        }
-
-        /// <summary>
         /// Gets or sets a value indicating whether the control and all its
         /// child controls are displayed.
         /// </summary>
@@ -1293,6 +1271,28 @@ namespace Alternet.UI
 
         internal bool HasExtendedProps => extendedProps != null;
 
+        /// <summary>
+        /// Gets or sets border style of the control.
+        /// </summary>
+        internal virtual ControlBorderStyle BorderStyle
+        {
+            get
+            {
+                var nc = Handler.NativeControl;
+                if (nc is null)
+                    return ControlBorderStyle.Default;
+                return (ControlBorderStyle)nc.BorderStyle;
+            }
+
+            set
+            {
+                var nc = Handler.NativeControl;
+                if (nc is null)
+                    return;
+                nc.BorderStyle = (int)value;
+            }
+        }
+
         internal ControlExtendedProps ExtendedProps
         {
             get
@@ -1375,6 +1375,9 @@ namespace Alternet.UI
             return SynchronizationService.BeginInvoke(method, args);
         }
 
+        /// <summary>
+        /// Creates native control if its not already created.
+        /// </summary>
         public void HandleNeeded()
         {
             Handler.NativeControl?.Required();

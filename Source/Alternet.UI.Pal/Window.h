@@ -23,9 +23,11 @@ namespace Alternet::UI
         static std::vector<Frame*> GetAllFrames();
 
         Window* GetWindow();
-
+        
+        void RemoveFrame();
     private:
         Window* _window;
+        bool _frameRemoved = false;
 
         inline static std::vector<Frame*> _allFrames;
 

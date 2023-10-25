@@ -14,10 +14,17 @@ namespace Alternet::UI
             _window(window)
     {
         _allFrames.push_back(this);
+        /* Application::Log(std::to_string(_allFrames.size())); */
     }
 
-    Frame::~Frame()
+    void Frame::RemoveFrame()
     {
+        if (_frameRemoved)
+            return;
+        _frameRemoved = true;
+
+        /*Application::Log(std::to_string(_allFrames.size()));*/
+
         // Ensure the parking window is closed after all regular windows have been closed.
         _allFrames.erase(std::find(_allFrames.begin(), _allFrames.end(), this));
 
@@ -34,10 +41,15 @@ namespace Alternet::UI
             else
             {
                 auto win = _allFrames[0];
-                if(win->CanBeFocused())
-                    win->SetFocus();            
+                if (win->CanBeFocused())
+                    win->SetFocus();
             }
         }
+    }
+
+    Frame::~Frame()
+    {
+        RemoveFrame();
     }
 
     /*static*/ std::vector<Frame*> Frame::GetAllFrames()
@@ -257,8 +269,6 @@ namespace Alternet::UI
             else if (_frame->IsIconized())
                 _frame->Iconize(false);
         }
-        else
-            throwExInvalidArgEnumValue(value);
     }
 
     MainMenu* Window::RetrieveMenu()
@@ -335,7 +345,9 @@ namespace Alternet::UI
     {
         Control::OnBeforeDestroyWxWindow();
 
-        auto wxWindow = GetWxWindow();
+        auto wxWindow = GetFrame();
+
+        wxWindow->RemoveFrame();
 
         wxWindow->Unbind(wxEVT_SIZE, &Window::OnSizeChanged, this);
         wxWindow->Unbind(wxEVT_MOVE, &Window::OnMove, this);
@@ -383,8 +395,6 @@ namespace Alternet::UI
         case WindowStartLocation::CenterOwner:
             wxWindow->CenterOnParent();
             break;
-        default:
-            throwExInvalidOp;
         }
     }
 
@@ -767,7 +777,7 @@ namespace Alternet::UI
         for (auto frame : allFrames)
         {
             auto window = frame->GetWindow();
-            if (window->GetIsActive())
+            if (window->GetIsActive() && window->GetVisible())
             {
                 if (window->IsDestroyingWxWindow())
                     return nullptr;

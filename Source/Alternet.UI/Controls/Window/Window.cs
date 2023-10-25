@@ -754,9 +754,17 @@ namespace Alternet.UI
             return GetParentWindow(c.Parent);
         }
 
-        internal void RaiseDeactivated() => Deactivated?.Invoke(this, EventArgs.Empty);
+        internal void RaiseDeactivated()
+        {
+            Deactivated?.Invoke(this, EventArgs.Empty);
+            /*Application.DebugLog($"Deactivated {Name}");*/
+        }
 
-        internal void RaiseActivated() => Activated?.Invoke(this, EventArgs.Empty);
+        internal void RaiseActivated()
+        {
+            Activated?.Invoke(this, EventArgs.Empty);
+            /*Application.DebugLog($"Activated {Name}");*/
+        }
 
         internal void RaiseClosing(WindowClosingEventArgs e) => OnClosing(e);
 

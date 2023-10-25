@@ -41,7 +41,10 @@ namespace CustomControlsSample
                     popup.MinimizeEnabled = false;
                     popup.MaximizeEnabled = false;
                     popup.Resizable = false;
+                    popup.Disposed += Popup_Disposed;
+                    popup.Name = "Popup";
                     popup.Deactivated += Popup_Deactivated;
+                    popup.Activated += Popup_Activated;
 
                     var border = new Border();
                     border.Children.Add(GetColorButtonsGrid());
@@ -51,6 +54,34 @@ namespace CustomControlsSample
 
                 return popup;
             }
+        }
+
+        private void Popup_Activated(object? sender, EventArgs e)
+        {
+            var window = sender as Window;
+            if (!window.Visible)
+            {
+
+            }
+        }
+
+        private void Popup_Disposed(object? sender, EventArgs e)
+        {
+            popup = null;
+        }
+
+        private void ColorButton_Click(object? sender, EventArgs e)
+        {
+            Control.Value = ((ColorPicker)sender!).Value;
+
+            Control.BeginInvoke(() =>
+            {
+                Popup.Hide();
+                Application.DoEvents();
+                Control.ParentWindow?.Activate();
+                if (Control.CanAcceptFocus)
+                    Control.SetFocus();
+            });
         }
 
         private void Popup_Deactivated(object? sender, EventArgs e)
@@ -108,12 +139,6 @@ namespace CustomControlsSample
             }
 
             return grid;
-        }
-
-        private void ColorButton_Click(object? sender, EventArgs e)
-        {
-            Control.Value = ((ColorPicker)sender!).Value;
-            Popup.Hide();
         }
 
         SolidBrush? colorBrush;
