@@ -109,15 +109,17 @@ namespace AuiManagerSample
                 "Calendar",
                 ImageCalendar,
                 "Calendar Hint");
+            toolbar4.SetToolName(calendarToolId, "Calendar");
 
-            toolbar4.AddSeparator();
+            int separatorToolId = toolbar4.AddSeparator();
 
             pencilToolId = toolbar4.AddTool(
                 "Pencil",
                 ImagePencil,
                 "Pencil Hint");
+            toolbar4.SetToolName(pencilToolId, "Pencil");
 
-            toolbar4.AddLabel("Text1");
+            int labelToolId = toolbar4.AddLabel("Text1");
 
             var control4 = new ComboBox
             {
@@ -133,13 +135,16 @@ namespace AuiManagerSample
             };
 
             var comboBoxId = toolbar4.AddControl(control4);
+            toolbar4.SetToolName(comboBoxId, "ComboBox");
 
             photoToolId = toolbar4.AddTool(
                 "Photo",
                 ImagePhoto,
                 "Photo Hint");
+            toolbar4.SetToolName(photoToolId, "Photo");
 
             var textBoxId = toolbar4.AddControl(textBox4);
+            toolbar4.SetToolName(textBoxId, "TextBox");
 
             var minHeight1 = toolbar4.GetToolMinHeight(comboBoxId);
             var minHeight2 = toolbar4.GetToolMinHeight(textBoxId);
@@ -153,13 +158,14 @@ namespace AuiManagerSample
             toolbar4.GrowToolMinSize(comboBoxId, 100, minHeight);
             toolbar4.GrowToolMinSize(textBoxId, 100, minHeight);
 
-            toolbar4.AddStretchSpacer();
+            int stretchSpacerId = toolbar4.AddStretchSpacer();
 
             graphToolId = toolbar4.AddTool(
                 "Graph",
                 ImageGraph,
                 "Graph Hint");
             toolbar4.SetToolDropDown(graphToolId, true);
+            toolbar4.SetToolName(graphToolId, "Graph");
 
             toolbar4.Realize();
 
@@ -240,12 +246,12 @@ namespace AuiManagerSample
 
         private void Toolbar4_ToolCommand(object? sender, EventArgs e)
         {
-            Log("ToolCommand");
+            Log($"Toolbar: ToolCommand {toolbar4.EventToolNameOrId}");
         }
 
         private void Toolbar4_ToolRightClick(object? sender, EventArgs e)
         {
-            Log($"Toolbar: ToolRightClick {toolbar4.EventToolId}");
+            Log($"Toolbar: ToolRightClick {toolbar4.EventToolNameOrId}");
         }
 
         private void Toolbar4_OverflowClick(object? sender, EventArgs e)
@@ -255,7 +261,7 @@ namespace AuiManagerSample
 
         private void Toolbar4_ToolMiddleClick(object? sender, EventArgs e)
         {
-            Log($"Toolbar: ToolMiddleClick {toolbar4.EventToolId}");
+            Log($"Toolbar: ToolMiddleClick {toolbar4.EventToolNameOrId}");
         }
 
         private void Toolbar4_BeginDrag(object? sender, EventArgs e)
@@ -286,7 +292,7 @@ namespace AuiManagerSample
 
         private void ToolDropDown_Click(object? sender, EventArgs e)
         {
-            Log("ToolDropDown");
+            Log($"Toolbar: ToolDropDown {toolbar4.EventToolNameOrId}");
         }
 
         private void NotebookPageClose(object? sender, CancelEventArgs e)

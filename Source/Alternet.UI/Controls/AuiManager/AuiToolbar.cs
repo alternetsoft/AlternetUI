@@ -97,6 +97,23 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets name of the tool passed in the event handler. If name is empty,
+        /// tool id is returned.
+        /// </summary>
+        [Browsable(false)]
+        public string EventToolNameOrId
+        {
+            get
+            {
+                var id = EventToolId;
+                var name = GetToolName(id);
+                if (name is null)
+                    return id.ToString();
+                return name;
+            }
+        }
+
+        /// <summary>
         /// Gets whether is drop down part of the tool was clicked when event is fired.
         /// </summary>
         /// <remarks>
@@ -445,6 +462,7 @@ namespace Alternet.UI
         public void Clear()
         {
             NativeControl.Clear();
+            toolData.Clear();
         }
 
         /// <summary>
@@ -461,25 +479,10 @@ namespace Alternet.UI
         /// </remarks>
         public bool DeleteTool(int toolId)
         {
-            return NativeControl.DeleteTool(toolId);
-        }
-
-        /// <summary>
-        /// Removes the tool at the given position from the toolbar.
-        /// </summary>
-        /// <remarks>
-        /// Note that if this tool was added by <see cref="AddControl"/>,
-        /// the associated control is not deleted and must either be
-        /// reused (e.g.by reparenting it under a different window)
-        /// or destroyed by caller.
-        /// </remarks>
-        /// <param name="index">The index, or position, of a previously
-        /// added tool.</param>
-        /// <returns><c>true</c> if the tool was removed or <c>false</c> otherwise,
-        /// e.g. if the tool with the given ID was not found.</returns>
-        public bool DeleteByIndex(int index)
-        {
-            return NativeControl.DeleteByIndex(index);
+            var result = NativeControl.DeleteTool(toolId);
+            if (result)
+                toolData.Remove(toolId);
+            return result;
         }
 
         /// <summary>
@@ -513,19 +516,6 @@ namespace Alternet.UI
         public Rect GetToolRect(int toolId)
         {
             return NativeControl.GetToolRect(toolId);
-        }
-
-        /// <summary>
-        /// Gets whether the specified tool fits in the toolbar visible area.
-        /// </summary>
-        /// <param name="index">The index, or position, of a previously
-        /// added tool.</param>
-        /// <returns>
-        /// <c>true</c> if tool fits in the toolbar, <c>false</c> otherwise.
-        /// </returns>
-        public bool GetToolFitsByIndex(int index)
-        {
-            return NativeControl.GetToolFitsByIndex(index);
         }
 
         /// <summary>
@@ -696,7 +686,7 @@ namespace Alternet.UI
                 pt = window.ScreenToClient(pt);
 
                 window.ShowPopupMenu(contextMenu, (int)pt.X, (int)pt.Y);
-                DoOnCaptureLost();
+                /*DoOnCaptureLost();*/
                 SetToolSticky(toolId, false);
             }
             finally
@@ -764,6 +754,58 @@ namespace Alternet.UI
         {
             var toolData = GetToolData(toolId, true);
             toolData!.Click += ev;
+        }
+
+        /// <summary>
+        /// Gets name of the specified tool.
+        /// </summary>
+        /// <param name="toolId">ID of a previously added tool.</param>
+        /// <remarks>
+        /// Name of the tool can be used for the debug or other purposes.
+        /// </remarks>
+        public string? GetToolName(int toolId)
+        {
+            var toolData = GetToolData(toolId, false);
+            if (toolData == null)
+                return null;
+            return toolData.Name;
+        }
+
+        /// <summary>
+        /// Sets name of the specified tool.
+        /// </summary>
+        /// <param name="toolId">ID of a previously added tool.</param>
+        /// <param name="name">Name of the tool</param>
+        /// <remarks>
+        /// Name of the tool can be used for the debug or other purposes.
+        /// </remarks>
+        public void SetToolName(int toolId, string? name)
+        {
+            var toolData = GetToolData(toolId, true);
+            toolData!.Name = name;
+        }
+
+        /// <summary>
+        /// Gets user data associated with the specified tool.
+        /// </summary>
+        /// <param name="toolId">ID of a previously added tool.</param>
+        public object? GetToolTag(int toolId)
+        {
+            var toolData = GetToolData(toolId, false);
+            if (toolData == null)
+                return null;
+            return toolData.Tag;
+        }
+
+        /// <summary>
+        /// Sets user data associated with the specified tool.
+        /// </summary>
+        /// <param name="toolId">ID of a previously added tool.</param>
+        /// <param name="tag">User data.</param>
+        public void SetToolTag(int toolId, object? tag)
+        {
+            var toolData = GetToolData(toolId, true);
+            toolData!.Tag = tag;
         }
 
         /// <summary>
@@ -1089,9 +1131,41 @@ namespace Alternet.UI
             NativeControl.DoOnCaptureLost();
         }
 
+        /// <summary>
+        /// Removes the tool at the given position from the toolbar.
+        /// </summary>
+        /// <remarks>
+        /// Note that if this tool was added by <see cref="AddControl"/>,
+        /// the associated control is not deleted and must either be
+        /// reused (e.g.by reparenting it under a different window)
+        /// or destroyed by caller.
+        /// </remarks>
+        /// <param name="index">The index, or position, of a previously
+        /// added tool.</param>
+        /// <returns><c>true</c> if the tool was removed or <c>false</c> otherwise,
+        /// e.g. if the tool with the given ID was not found.</returns>
+        internal bool DeleteByIndex(int index)
+        {
+            var result = NativeControl.DeleteByIndex(index);
+            return result;
+        }
+
         internal void DoOnLeftUp(int x, int y)
         {
             NativeControl.DoOnLeftUp(x, y);
+        }
+
+        /// <summary>
+        /// Gets whether the specified tool fits in the toolbar visible area.
+        /// </summary>
+        /// <param name="index">The index, or position, of a previously
+        /// added tool.</param>
+        /// <returns>
+        /// <c>true</c> if tool fits in the toolbar, <c>false</c> otherwise.
+        /// </returns>
+        internal bool GetToolFitsByIndex(int index)
+        {
+            return NativeControl.GetToolFitsByIndex(index);
         }
 
         internal void DoOnLeftDown(int x, int y)
@@ -1169,6 +1243,10 @@ namespace Alternet.UI
         internal class ToolData
         {
             public event EventHandler? Click;
+
+            public string? Name { get; set; }
+
+            public object? Tag { get; set; }
 
             public ContextMenu? DropDownMenu { get; set; }
 
