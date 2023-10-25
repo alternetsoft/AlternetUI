@@ -12,6 +12,8 @@ namespace Alternet::UI
     class Window;
     class Button;
 
+    // Frame
+
     class Frame : public wxFrame, public wxWidgetExtender
     {
     public:
@@ -30,6 +32,8 @@ namespace Alternet::UI
         BYREF_ONLY(Frame);
     };
 
+    // FrameDisabler
+
     class FrameDisabler
     {
     public:
@@ -42,6 +46,8 @@ namespace Alternet::UI
 
         BYREF_ONLY(FrameDisabler);
     };
+
+    // Window
 
     class Window : public Control
     {
@@ -80,7 +86,6 @@ namespace Alternet::UI
         ModalResult _modalResult = ModalResult::None;
 
         Frame* _frame = nullptr;
-        //wxPanel* _panel = nullptr;
 
         void UpdateAcceleratorTable();
 
