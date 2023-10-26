@@ -68,11 +68,40 @@ namespace Alternet.UI
                 return values[0];
             }
 
-            double result = values[0];
+            var result = values[0];
 
             for(int i = 1; i < values.Length; i++)
             {
-                double item = values[i];
+                var item = values[i];
+                if (item > result)
+                    result = item;
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Returns the larger of the specified numbers.
+        /// </summary>
+        /// <param name="values">Array of <see cref="int"/> numbers.</param>
+        /// <exception cref="ArgumentOutOfRangeException">if <paramref name="values"/> is
+        /// an empty array.</exception>
+        public static int Max(params int[] values)
+        {
+            var length = values.Length;
+
+            if (length < 2)
+            {
+                if (length == 0)
+                    throw new ArgumentOutOfRangeException(nameof(values));
+                return values[0];
+            }
+
+            var result = values[0];
+
+            for (int i = 1; i < values.Length; i++)
+            {
+                var item = values[i];
                 if (item > result)
                     result = item;
             }

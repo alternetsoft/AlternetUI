@@ -983,6 +983,30 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets minimal heights of the toolbar items.
+        /// </summary>
+        /// <param name="toolIds">IDs of a previously added toolbar items.</param>
+        public int[] GetToolMinHeights(params int[] toolIds)
+        {
+            var length = toolIds.Length;
+            int[] result = new int[length];
+            for (int i = 0; i < length; i++)
+                result[i] = GetToolMinHeight(toolIds[i]);
+            return result;
+        }
+
+        /// <summary>
+        /// Gets maximal value in minimal heights of the specified toolbar items.
+        /// </summary>
+        /// <param name="toolIds">IDs of a previously added toolbar items.</param>
+        public int GetToolMaxOfMinHeights(params int[] toolIds)
+        {
+            var heights = GetToolMinHeights(toolIds);
+            var result = MathUtils.Max(heights);
+            return result;
+        }
+
+        /// <summary>
         /// Gets minimal width of the toolbar item.
         /// </summary>
         /// <param name="toolId">ID of a previously added toolbar item.</param>

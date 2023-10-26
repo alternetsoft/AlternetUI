@@ -148,9 +148,7 @@ namespace AuiManagerSample
             var textBoxId = toolbar4.AddControl(textBox4);
             toolbar4.SetToolName(textBoxId, "TextBox");
 
-            var minHeight1 = toolbar4.GetToolMinHeight(comboBoxId);
-            var minHeight2 = toolbar4.GetToolMinHeight(textBoxId);
-            var minHeight = Math.Max(minHeight1, minHeight2);
+            var minHeight = toolbar4.GetToolMaxOfMinHeights(comboBoxId, textBoxId);
 
             // We need to specify min width. On MacOs without this call control's width
             // will be too small. Width and height here is not DIP, it's pixel.
