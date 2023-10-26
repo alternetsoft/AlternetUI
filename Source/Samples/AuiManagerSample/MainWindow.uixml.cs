@@ -180,7 +180,7 @@ namespace AuiManagerSample
                 "Graph",
                 ImageGraph,
                 "Graph Hint");
-            // toolbar4.SetToolDropDown(graphToolId, true);
+            toolbar4.SetToolDropDown(graphToolId, true);
             toolbar4.SetToolName(graphToolId, "Graph");
 
             toolbar4.Realize();
@@ -241,10 +241,14 @@ namespace AuiManagerSample
             notebook5.TabRightMouseUp += NotebookTabRightMouseUp;
             notebook5.BgDoubleClick += NotebookBgDclickMouse;
 
-            toolbar4.SetToolDropDownOnEvent(photoToolId, AuiToolbarItemDropDownOnEvent.Click);
-            toolbar4.SetToolDropDownOnEvent(graphToolId, AuiToolbarItemDropDownOnEvent.Click);
-            toolbar4.SetToolDropDownMenu(photoToolId, contextMenu);
-            toolbar4.SetToolDropDownMenu(graphToolId, contextMenu);
+            if (!Application.IsMacOs)
+            {
+                // Under MacOs we have exceptions when drop down menus are shown.
+                toolbar4.SetToolDropDownOnEvent(photoToolId, AuiToolbarItemDropDownOnEvent.Click);
+                toolbar4.SetToolDropDownOnEvent(graphToolId, AuiToolbarItemDropDownOnEvent.ClickArrow);
+                toolbar4.SetToolDropDownMenu(photoToolId, contextMenu);
+                toolbar4.SetToolDropDownMenu(graphToolId, contextMenu);
+            }
 
             toolbar4.ToolCommand += Toolbar4_ToolCommand;
             toolbar4.ToolDropDown += ToolDropDown_Click;
