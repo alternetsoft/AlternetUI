@@ -29,6 +29,7 @@ namespace ControlsSample
             {
                 site = value;
                 AddDefaultItems();
+                view.SelectedItem = view.FirstItem;
             }
         }
 
