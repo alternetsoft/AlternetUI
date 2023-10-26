@@ -32,9 +32,8 @@ namespace Alternet.UI
         private IAuiPaneInfo? toolbarPane;
         private PropertyGrid? propertyGrid;
         private PropertyGrid? eventGrid;
-        private Control? logControl;
+        private LogListBox? logControl;
         private TreeView? leftTreeView;
-        private ContextMenu? logContextMenu;
         private AuiToolbar? toolbar;
 
         private IAuiNotebookPage? logPage;
@@ -83,37 +82,22 @@ namespace Alternet.UI
         /// <summary>
         /// Gets control on the bottom pane which can be used for logging.
         /// </summary>
-        public Control LogControl
+        public LogListBox LogControl
         {
             get
             {
                 if (logControl == null)
                 {
-                    var useTreeView = false;
-
-                    if (useTreeView)
+                    logControl = new LogListBox()
                     {
-                        logControl = new TreeView()
-                        {
-                            Parent = this,
-                            HasBorder = false,
-                            FullRowSelect = true,
-                            VariableRowHeight = true,
-                        };
-                    }
-                    else
-                    {
-                        logControl = new ListBox()
-                        {
-                            Parent = this,
-                            HasBorder = false,
-                        };
-                    }
+                        Parent = this,
+                        HasBorder = false,
+                    };
 
                     logPage = BottomNotebook.AddPage(
                         logControl,
                         CommonStrings.Default.NotebookTabTitleOutput);
-                    LogContextMenu.Required();
+                    logControl.ContextMenu.Required();
                 }
 
                 return logControl;
@@ -153,24 +137,6 @@ namespace Alternet.UI
         /// This property must be assigned before first use of <see cref="LeftTreeView"/>
         /// </remarks>
         public bool LeftTreeViewAsListBox { get; set; } = false;
-
-        /// <summary>
-        /// Gets context menu for the <see cref="LogControl"/>.
-        /// </summary>
-        public ContextMenu LogContextMenu
-        {
-            get
-            {
-                if (logContextMenu == null)
-                {
-                    logContextMenu = new();
-                    InitLogContextMenu();
-                    LogControl.MouseRightButtonDown += LogControl_ShowMenu;
-                }
-
-                return logContextMenu;
-            }
-        }
 
         /// <summary>
         /// Gets <see cref="PropertyGrid"/> which can be used to show properties.
@@ -449,29 +415,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Same as <see cref="Application.Log"/> but
-        /// uses <see cref="LogControl"/> for the logging.
-        /// </summary>
-        /// <param name="message">Message text.</param>
-        public virtual void Log(string? message)
-        {
-            // This is slow.
-            if(LogControl is TreeView logTreeView)
-            {
-                logTreeView.Add(ConstructLogMessage(message));
-                logTreeView.SelectAndShowItem(logTreeView.LastRootItem);
-            }
-
-            if (LogControl is ListBox logListBox)
-            {
-                logListBox.Add(ConstructLogMessage(message));
-                logListBox.SelectedIndex = logListBox.Items.Count - 1;
-            }
-
-            Application.DoEvents();
-        }
-
-        /// <summary>
         /// Adds an empty space to the <see cref="ActionsControl"/>.
         /// </summary>
         /// <remarks>
@@ -511,60 +454,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Same as <see cref="Application.LogReplace(string, string)"/> but
-        /// uses <see cref="LogControl"/> for the logging.
-        /// </summary>
-        /// <param name="message">Message text.</param>
-        /// <param name="prefix">Message text prefix.</param>
-        /// <remarks>
-        /// If last logged message
-        /// contains <paramref name="prefix"/>, last log item is replaced with
-        /// <paramref name="message"/> instead of adding new log item.
-        /// </remarks>
-        public virtual void LogReplace(string? message, string? prefix)
-        {
-            string? s;
-
-            var listBox = LogControl as ListBox;
-            var treeView = LogControl as TreeView;
-
-            if (listBox is not null)
-                s = listBox.LastItem?.ToString();
-            else
-            if (treeView is not null)
-                s = treeView.LastRootItem?.Text;
-            else
-                s = null;
-
-            if (s is null)
-            {
-                Log(message);
-                return;
-            }
-
-            var b = s?.StartsWith(prefix ?? string.Empty) ?? false;
-
-            if (b)
-            {
-                if (listBox is not null)
-                {
-                    listBox.LastItem = ConstructLogMessage(message);
-                    listBox.SelectedIndex = listBox.Items.Count - 1;
-                }
-                else
-                if (treeView is not null)
-                {
-                    treeView.LastRootItem!.Text = ConstructLogMessage(message);
-                    treeView.SelectAndShowItem(treeView.LastRootItem);
-                }
-            }
-            else
-                Log(message);
-
-            Application.DoEvents();
-        }
-
-        /// <summary>
         /// Gets toolbar button bitmap size.
         /// </summary>
         /// <returns></returns>
@@ -582,37 +471,7 @@ namespace Alternet.UI
         /// </summary>
         public virtual void BindApplicationLog()
         {
-            LogControl.Required();
-            LogContextMenu.Required();
-            Application.Current.LogMessage += Application_LogMessage;
-        }
-
-        internal virtual void Application_LogMessage(object? sender, LogMessageEventArgs e)
-        {
-#if DEBUG
-            if (e.ReplaceLastMessage)
-                LogReplace(e.Message, e.MessagePrefix);
-            else
-                Log(e.Message);
-#endif
-        }
-
-        /// <summary>
-        /// Adds additional information to the log messages which are logged to
-        /// <see cref="LogControl"/>.
-        /// </summary>
-        /// <param name="msg">Log message.</param>
-        /// <remarks>
-        /// By default adds unique integer identifier to the end of the <paramref name="msg"/>.
-        /// </remarks>
-        protected virtual string ConstructLogMessage(string? msg)
-        {
-            return $"{msg} ({LogUtils.GenNewId()})";
-        }
-
-        private void LogControl_ShowMenu(object? sender, MouseButtonEventArgs e)
-        {
-            LogControl.ShowPopupMenu(LogContextMenu);
+            LogControl.BindApplicationLog();
         }
 
         private void Actions_MouseDoubleClick(object? sender, MouseButtonEventArgs e)
@@ -620,8 +479,7 @@ namespace Alternet.UI
             var listBox = sender as ListBox;
             if (listBox?.SelectedItem is not ListControlItem item || item.Action == null)
                 return;
-            if(logControl is not null)
-                Log("Do action: " + item.Text);
+            logControl?.Log("Do action: " + item.Text);
             item.Action();
         }
 
@@ -639,27 +497,6 @@ namespace Alternet.UI
             toolbarStyle &= ~AuiToolbarCreateStyle.Gripper;
 
             return toolbarStyle;
-        }
-
-        private void InitLogContextMenu()
-        {
-            void RemoveAll()
-            {
-                if (LogControl is ListBox listBox)
-                    listBox.RemoveAll();
-                else
-                if (LogControl is TreeView treeView)
-                    treeView.RemoveAll();
-            }
-
-            LogContextMenu.Add(new(CommonStrings.Default.ButtonClear, RemoveAll));
-
-            LogContextMenu.Add(new("Open log file", LogUtils.OpenLogFile));
-
-#if DEBUG
-            /*LogContextMenu.Add(
-             new("C++ Throw", () => { WebBrowser.DoCommandGlobal("CppThrow"); }));*/
-#endif
         }
     }
 }

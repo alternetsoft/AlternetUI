@@ -21,7 +21,7 @@ namespace AuiManagerSample
         private readonly ImageSet ImageGraph = ImageSet.FromUrl(ResPrefixGraph);
         private readonly AuiManager manager = new();
         private readonly LayoutPanel panel = new();
-        private readonly ListBox listBox3;
+        private readonly LogListBox listBox3;
         private readonly AuiToolbar toolbar4 = new();
         private readonly AuiNotebook notebook5;
         private readonly ListBox listBox5;
@@ -54,7 +54,18 @@ namespace AuiManagerSample
             {
                 HasBorder = false
             };
-            listBox.Add(paneName);
+            parent ??= panel;
+            parent.Children.Add(listBox);
+            listBox.SetBounds(0, 0, 200, 100, BoundsSpecified.Size);
+            return listBox;
+        }
+
+        private LogListBox CreateLogListBox(string paneName, Control? parent = null)
+        {
+            LogListBox listBox = new()
+            {
+                HasBorder = false
+            };
             parent ??= panel;
             parent.Children.Add(listBox);
             listBox.SetBounds(0, 0, 200, 100, BoundsSpecified.Size);
@@ -96,7 +107,8 @@ namespace AuiManagerSample
             var pane3 = manager.CreatePaneInfo();
             pane3.Name("pane3").Caption("Pane 3").Bottom().PaneBorder(false)
                 .LeftDockable(false).RightDockable(false);
-            listBox3 = CreateListBox("Pane 3");
+            listBox3 = CreateLogListBox("Pane 3");
+            listBox3.BindApplicationLog();
             listBox3.Add("LeftDockable(false)");
             listBox3.Add("RightDockable(false)");
             manager.AddPane(listBox3, pane3);
@@ -148,6 +160,9 @@ namespace AuiManagerSample
             var textBoxId = toolbar4.AddControl(textBox4);
             toolbar4.SetToolName(textBoxId, "TextBox");
 
+            var heights = toolbar4.GetToolMinHeights(comboBoxId, textBoxId);
+            Application.Log($"Editors MinHeights: {StringUtils.ToString<int>(heights)}");
+
             var minHeight = toolbar4.GetToolMaxOfMinHeights(comboBoxId, textBoxId);
 
             // We need to specify min width. On MacOs without this call control's width
@@ -184,11 +199,14 @@ namespace AuiManagerSample
             listBox6 = CreateListBox("ListBox 6");
 
             notebook5.AddPage(listBox5, "ListBox 5", false, ImagePencil);
+            listBox5.Add("This page can be closed");
             notebook5.AddPage(listBox6, "ListBox 6", true, ImagePhoto);
             listBox6.Add("This page can not be closed");
 
             panel.Children.Add(notebook5);
             manager.AddPane(notebook5, pane5);
+
+            // Other initializations.
 
             manager.ArtProvider.SetMetric(
                 AuiDockArtSetting.GradientType,

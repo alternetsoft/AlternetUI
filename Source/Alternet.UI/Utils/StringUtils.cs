@@ -68,6 +68,30 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Combines array elements to comma separated string inside round brackets.
+        /// </summary>
+        /// <typeparam name="T">Type of the array item.</typeparam>
+        /// <param name="items">Array of items.</param>
+        public static string ToString<T>(params T[] items)
+        {
+            var length = items.Length;
+            if (length == 0)
+                return "()";
+            string result = string.Empty;
+            foreach(var item in items)
+            {
+                if (result == string.Empty)
+                    result = $"({item}";
+                else
+                    result += $", {item}";
+            }
+
+            result += ")";
+
+            return result;
+        }
+
+        /// <summary>
         /// Combines name and value pairs to string.
         /// </summary>
         /// <param name="names">Names.</param>
