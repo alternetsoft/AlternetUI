@@ -6,7 +6,18 @@ namespace Alternet::UI
     // This seems to be a known problem, 
     // see https://gitlab.gnome.org/GNOME/gtk/-/issues/1910
 
+#ifdef __WXGTK__
     bool UseChoiceControlForReadOnlyComboBox = false;
+#endif
+
+#ifdef __WXMSW__
+    bool UseChoiceControlForReadOnlyComboBox = false;
+#endif
+
+#ifdef __WXOSX__
+    bool UseChoiceControlForReadOnlyComboBox = true;
+#endif
+
 //#ifdef __WXMSW__
 //    constexpr bool UseChoiceControlForReadOnlyComboBox = false;
 //#else
