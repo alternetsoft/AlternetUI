@@ -94,7 +94,7 @@ namespace Alternet.UI
         /// Occurs when the mouse button is double clicked on the tabs
         /// background area.
         /// </summary>
-        public event EventHandler? BgDclickMouse;
+        public event EventHandler? BgDoubleClick;
 
         /// <summary>
         /// Defines default visual style for the newly created
@@ -654,10 +654,10 @@ namespace Alternet.UI
             TabRightMouseUp?.Invoke(this, e);
         }
 
-        internal void RaiseBgDclickMouse(EventArgs e)
+        internal void RaiseBgDoubleClick(EventArgs e)
         {
-            OnBgDclickMouse(e);
-            BgDclickMouse?.Invoke(this, e);
+            OnBgDoubleClick(e);
+            BgDoubleClick?.Invoke(this, e);
         }
 
         /// <summary>
@@ -823,7 +823,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="e">An <see cref="EventArgs"/> that contains
         /// the event data.</param>
-        protected virtual void OnBgDclickMouse(EventArgs e)
+        protected virtual void OnBgDoubleClick(EventArgs e)
         {
         }
     }

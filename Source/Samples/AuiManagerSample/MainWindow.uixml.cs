@@ -220,7 +220,7 @@ namespace AuiManagerSample
             notebook5.TabMiddleMouseUp += NotebookTabMiddleMouseUp;
             notebook5.TabRightMouseDown += NotebookTabRightMouseDown;
             notebook5.TabRightMouseUp += NotebookTabRightMouseUp;
-            notebook5.BgDclickMouse += NotebookBgDclickMouse;
+            notebook5.BgDoubleClick += NotebookBgDclickMouse;
 
             toolbar4.SetToolDropDownOnEvent(photoToolId, AuiToolbarItemDropDownOnEvent.Click);
             toolbar4.SetToolDropDownOnEvent(graphToolId, AuiToolbarItemDropDownOnEvent.ClickArrow);

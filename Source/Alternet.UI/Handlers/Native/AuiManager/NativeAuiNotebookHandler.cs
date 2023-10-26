@@ -83,7 +83,7 @@ namespace Alternet.UI
 
         private void NativeControl_BgDclickMouse(object? sender, EventArgs e)
         {
-            Control.RaiseBgDclickMouse(e);
+            Control.RaiseBgDoubleClick(e);
         }
 
         private void NativeControl_TabRightMouseUp(object? sender, EventArgs e)
