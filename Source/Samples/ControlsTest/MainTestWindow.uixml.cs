@@ -7,7 +7,7 @@ namespace ControlsTest
     internal partial class MainTestWindow : Window
     {
         private readonly StatusBar statusbar = new();
-        private readonly bool disableResize = true;
+        private readonly bool disableResize = false;
         private readonly PanelTreeAndCards mainPanel;
 
         static MainTestWindow()
@@ -40,9 +40,9 @@ namespace ControlsTest
             this.StatusBar = statusbar;
             mainPanel.Parent = this;
             mainPanel.BindApplicationLog();
-            mainPanel.BackgroundColor = Color.Beige;
+            /*mainPanel.BackgroundColor = Color.Beige;*/
 
-            this.SetSizer(SizerFactory.Default.CreateBoxSizer(true));
+            /*this.SetSizer(SizerFactory.Default.CreateBoxSizer(true));*/
 
             void CreateWebBrowserPages()
             {
@@ -68,12 +68,6 @@ namespace ControlsTest
                 }
             }
 
-            mainPanel.AddAction("Create WebBrowser", CreateWebBrowserPages);
-            mainPanel.AddAction("Create CustomDraw", () =>
-            {
-                mainPanel.Add("Custom Draw Test", new CustomDrawTestPage());
-            });
-
             if (AddLinkLabelPage)
             {
                 mainPanel.AddAction("Create LinkLabels", () =>
@@ -83,6 +77,8 @@ namespace ControlsTest
             }
 
             mainPanel.Add("Sizer Test", new SizerTestPage());
+            mainPanel.Add("Custom Draw Test", new CustomDrawTestPage());
+            CreateWebBrowserPages();
 
             mainPanel.LeftTreeView.SelectedItem = mainPanel.LeftTreeView.FirstItem;
             mainPanel.Manager.Update();
