@@ -34,6 +34,18 @@ namespace Alternet.UI
 
         public override void OnLayout()
         {
+            if (!Control.HasChildren)
+                return;
+            var children = Control.Children;
+
+            for (int i = children.Count - 1; i >= 0; i--)
+            {
+                Control child = children[i];
+                if (!child.Visible)
+                    continue;
+
+                child.Handler.OnLayout();
+            }
         }
 
         internal override Native.Control CreateNativeControl()

@@ -48,9 +48,17 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref="PanelAuiManager"/> class.
         /// </summary>
         public PanelAuiManager(Action<PanelAuiManager>? initAction = null)
-            : base()
+            : this()
         {
             initAction?.Invoke(this);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PanelAuiManager"/> class.
+        /// </summary>
+        public PanelAuiManager()
+            : base()
+        {
             defaultToolbarStyle = InitDefaultToolbarStyle();
         }
 
@@ -472,6 +480,13 @@ namespace Alternet.UI
         public virtual void BindApplicationLog()
         {
             LogControl.BindApplicationLog();
+        }
+
+        /// <inheritdoc/>
+        protected override void OnSizeChanged(EventArgs e)
+        {
+            base.OnSizeChanged(e);
+            Manager.Update();
         }
 
         private void Actions_MouseDoubleClick(object? sender, MouseButtonEventArgs e)

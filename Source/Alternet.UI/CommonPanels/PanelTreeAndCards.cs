@@ -20,11 +20,16 @@ namespace Alternet.UI
         public PanelTreeAndCards(Action<PanelAuiManager>? initAction = null)
             : base(initAction)
         {
-            LeftTreeView.Required();
-            Manager.AddPane(cardPanel, CenterPane);
+            Initialize();
+        }
 
-            LeftTreeView.SelectionChanged += LeftTreeView_SelectionChanged;
-            Manager.Update();
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PanelTreeAndCards"/> class.
+        /// </summary>
+        public PanelTreeAndCards()
+            : base()
+        {
+            Initialize();
         }
 
         /// <summary>
@@ -62,6 +67,15 @@ namespace Alternet.UI
             var item = LeftTreeView.Add(title);
             item.Tag = index;
             return index;
+        }
+
+        private void Initialize()
+        {
+            LeftTreeView.Required();
+            Manager.AddPane(cardPanel, CenterPane);
+
+            LeftTreeView.SelectionChanged += LeftTreeView_SelectionChanged;
+            Manager.Update();
         }
 
         private void LeftTreeView_SelectionChanged(object? sender, System.EventArgs e)

@@ -36,7 +36,7 @@ namespace ControlsTest
         {
             rootPanel = new(GetPandaUrl())
             {
-                LogEvents = true,
+                LogEvents = false,
                 DefaultRightPaneBestSize = new(150, 200),
                 DefaultRightPaneMinSize = new(150, 200),
                 Visible = false,
@@ -50,6 +50,8 @@ namespace ControlsTest
         }
 
         public PanelWebBrowser PanelWebBrowser => rootPanel;
+
+        public bool LogTitleChanged => false;
 
         public WebBrowser WebBrowser => rootPanel.WebBrowser;
 
@@ -320,6 +322,9 @@ namespace ControlsTest
 
         private void WebBrowser_TitleChanged(object? sender, WebBrowserEventArgs e)
         {
+            if (!LogTitleChanged)
+                return;
+
             var backendVersion = WebBrowser.GetBackendVersionString(rootPanel.WebBrowser.Backend);
             if (rootPanel.IsIEBackend)
                 backendVersion = "Internet Explorer";
