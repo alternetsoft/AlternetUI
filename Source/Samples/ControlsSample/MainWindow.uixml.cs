@@ -105,8 +105,8 @@ namespace ControlsSample
 
             if (NotifyIcon.IsAvailable)
                 AddPage("Notify Icon", CreateNotifyIconPage);
-            if (Application.IsWindowsOS)
-                AddPage("Tab Control", CreateTabControlPage);
+
+            AddPage("Tab Control", CreateTabControlPage);
             AddPage("All Samples", CreateAllSamplesPage);
 
             pageContainer.SelectedIndex = 0;
