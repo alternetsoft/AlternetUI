@@ -112,6 +112,7 @@ namespace AuiManagerSample
             toolbar4.SetToolName(calendarToolId, "Calendar");
 
             int separatorToolId = toolbar4.AddSeparator();
+            toolbar4.SetToolName(separatorToolId, "Separator");
 
             pencilToolId = toolbar4.AddTool(
                 "Pencil",
@@ -120,6 +121,7 @@ namespace AuiManagerSample
             toolbar4.SetToolName(pencilToolId, "Pencil");
 
             int labelToolId = toolbar4.AddLabel("Text1");
+            toolbar4.SetToolName(labelToolId, "Text1");
 
             var control4 = new ComboBox
             {
@@ -159,6 +161,7 @@ namespace AuiManagerSample
             toolbar4.GrowToolMinSize(textBoxId, 100, minHeight);
 
             int stretchSpacerId = toolbar4.AddStretchSpacer();
+            toolbar4.SetToolName(stretchSpacerId, "StretchSpacer");
 
             graphToolId = toolbar4.AddTool(
                 "Graph",
@@ -278,21 +281,26 @@ namespace AuiManagerSample
         private void CalendarButton_Click(object? sender, EventArgs e)
         {
             Log("Tool Calendar clicked");
+            Log("==========");
         }
 
         private void PhotoButton_Click(object? sender, EventArgs e)
         {
             Log("Tool Photo clicked");
+            Log("==========");
         }
 
         private void PencilButton_Click(object? sender, EventArgs e)
         {
             Log("Tool Pencil clicked");
+            Log("==========");
         }
 
         private void ToolDropDown_Click(object? sender, EventArgs e)
         {
-            Log($"Toolbar: ToolDropDown {toolbar4.EventToolNameOrId}");
+            Log("==========");
+            var isDropDownClicked = toolbar4.EventIsDropDownClicked;
+            Log($"Toolbar: ToolDropDown {toolbar4.EventToolNameOrId}, DropDownPart = {isDropDownClicked}");
         }
 
         private void NotebookPageClose(object? sender, CancelEventArgs e)
@@ -365,7 +373,7 @@ namespace AuiManagerSample
 
         private void NotebookBgDclickMouse(object? sender, EventArgs e)
         {
-            LogNotebook("BgDclickMouse");
+            LogNotebook("BgDoubleClick");
         }
 
         private void LogNotebook(string s)
@@ -378,6 +386,7 @@ namespace AuiManagerSample
         {
             var isDropDownClicked = toolbar4.EventIsDropDownClicked;
             Log($"Graph clicked, DropDownPart = {isDropDownClicked}");
+            Log("==========");
         }
 
         private void InitContextMenu()

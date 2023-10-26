@@ -176,12 +176,12 @@ namespace Alternet::UI
     {
         FromEventData(event);
         RaiseEvent(AuiToolBarEvent::ToolDropDown);
-        if(_eventIsDropDownClicked)
+       /* if (_eventIsDropDownClicked)
         {
             wxCommandEvent* ev = new wxCommandEvent(wxEVT_TOOL);
             ev->SetId(event.GetToolId());
             GetToolbar()->GetEventHandler()->QueueEvent(ev);
-        }
+        }*/
         event.Skip();
     }
 

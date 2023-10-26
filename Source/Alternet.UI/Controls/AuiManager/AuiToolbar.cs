@@ -1061,7 +1061,6 @@ namespace Alternet.UI
         {
             OnToolCommand(e);
             ToolCommand?.Invoke(this, e);
-            ProcessToolClick();
         }
 
         internal void ProcessToolClick()
@@ -1090,13 +1089,18 @@ namespace Alternet.UI
 
             if (!show)
                 return;
-            ShowDropDownMenu(EventToolId, menu);
+
+            BeginInvoke(() =>
+            {
+                ShowDropDownMenu(EventToolId, menu);
+            });
         }
 
         internal void RaiseToolDropDown(EventArgs e)
         {
             OnToolDropDown(e);
             ToolDropDown?.Invoke(this, e);
+            ProcessToolClick();
         }
 
         internal void RaiseToolMiddleClick(EventArgs e)
