@@ -108,6 +108,25 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Sets <see cref="Control.Visible"/> property for all the controls in the set.
+        /// </summary>
+        /// <param name="value">New visible property setting.</param>
+        public ControlSet Visible(bool value)
+        {
+            foreach (var item in items)
+                item.Visible = value;
+            return this;
+        }
+
+        public ControlSet Action<T>(Action<T> action)
+            where T : Control
+        {
+            foreach (var item in items)
+                action((T)item);
+            return this;
+        }
+
+        /// <summary>
         /// Sets suggested width for all the controls in the set.
         /// </summary>
         public ControlSet SuggestedWidthToMax()
