@@ -8,9 +8,6 @@ namespace Alternet.UI
     {
         public new LayoutPanel Control => (LayoutPanel)base.Control;
 
-        public new Native.Panel NativeControl =>
-            (Native.Panel)base.NativeControl!;
-
         public override IEnumerable<Control> AllChildrenIncludedInLayout
             => Enumerable.Empty<Control>();
 
