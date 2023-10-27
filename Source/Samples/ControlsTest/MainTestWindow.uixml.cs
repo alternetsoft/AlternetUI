@@ -92,9 +92,9 @@ namespace ControlsTest
             mainPanel.CardPanel.Name = "cardPanel";
         }
 
-        internal PanelTreeAndCards MainPanel => mainPanel;
-
         internal static bool AddLinkLabelPage { get; set; } = false;
+
+        internal PanelTreeAndCards MainPanel => mainPanel;
 
         private void InitPanel(PanelAuiManager panel)
         {

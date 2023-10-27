@@ -59,11 +59,6 @@ namespace CustomControlsSample
 
         private void Popup_Activated(object? sender, EventArgs e)
         {
-            var window = sender as Window;
-            if (!window.Visible)
-            {
-
-            }
         }
 
         private void Popup_Disposed(object? sender, EventArgs e)

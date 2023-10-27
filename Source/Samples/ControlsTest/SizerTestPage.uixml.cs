@@ -105,7 +105,6 @@ namespace ControlsTest
                 var sizer = SizerFactory.Default.CreateGridBagSizer(10, 10);
                 ApplySizer(sizer);
             });*/
-
         }
     }
 }

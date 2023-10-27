@@ -6,7 +6,7 @@ namespace DrawingSample
 {
     internal partial class MainWindow : Window
     {
-        private DrawingPage[] drawingPages = new DrawingPage[]
+        private readonly DrawingPage[] drawingPages = new DrawingPage[]
         {
             new ShapesPage(),
             new TextPage(),
@@ -51,7 +51,7 @@ namespace DrawingSample
             return tabPage;
         }
 
-        private void TabControl_SelectedPageChanged(object? sender, TabPageChangedEventArgs e)
+        private void TabControl_SelectedPageChanged(object? sender, EventArgs e)
         {
             if (selectedPage != null)
                 ((DrawingPage)selectedPage.Tag!).OnDeactivated();
