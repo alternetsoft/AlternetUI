@@ -46,6 +46,7 @@ namespace ControlsSample
             pagesControl = new()
             {
                 SuggestedWidth = 140,
+                MaxHeight = 400,
             };
             pagesControl.MakeAsListBox();
 
