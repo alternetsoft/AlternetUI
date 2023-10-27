@@ -484,6 +484,14 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Returns first window or <c>null</c> if there are no windows.
+        /// </summary>
+        public static Window? FirstWindow()
+        {
+            return FirstWindow<Window>();
+        }
+
+        /// <summary>
         /// Calls <see cref="LogMessage"/> event to add or replace log message.
         /// </summary>
         /// <param name="msg">Message text.</param>
