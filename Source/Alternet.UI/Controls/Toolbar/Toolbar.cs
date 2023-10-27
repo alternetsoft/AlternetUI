@@ -42,7 +42,7 @@ namespace Alternet.UI
         /// <remarks>
         /// Default property value is 16. Suggested values are 16, 24, 32, 48.
         /// </remarks>
-        public static int DefaultImageSize96dpi { get; set; } = 24;
+        public static int DefaultImageSize96dpi { get; set; } = 16;
 
         /// <summary>
         /// Defines the default size of toolbar images for displays
@@ -61,7 +61,7 @@ namespace Alternet.UI
         /// <remarks>
         /// Default property value is 24. Suggested values are 16, 24, 32, 48.
         /// </remarks>
-        public static int DefaultImageSize144dpi { get; set; } = 32;
+        public static int DefaultImageSize144dpi { get; set; } = 24;
 
         /// <summary>
         /// Defines the default size of toolbar images for displays
