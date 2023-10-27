@@ -1041,6 +1041,13 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Called when native control size is changed.
+        /// </summary>
+        protected virtual void NativeControlSizeChanged()
+        {
+        }
+
+        /// <summary>
         /// Called after this handler has been attached to a <see cref="Control"/>.
         /// </summary>
         protected virtual void OnAttach()
@@ -1119,17 +1126,13 @@ namespace Alternet.UI
 
         private static void DisposeNativeControlCore(Native.Control nativeControl)
         {
-            // handlersByNativeControls.Remove(nativeControl);
             nativeControl.handler = null;
             nativeControl.Dispose();
         }
 
         private void NativeControl_SizeChanged(object? sender, EventArgs e)
         {
-            var newBounds = Bounds;
-            if (newBounds != reportedBounds)
-            {
-            }
+            NativeControlSizeChanged();
         }
 
         private void ReportBoundsChanged(Rect oldBounds, Rect newBounds)
