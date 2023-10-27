@@ -7,7 +7,6 @@ namespace Alternet.UI
     internal class NativeTabControlHandler : TabControlHandler
     {
         private bool skipChildrenInsertionCheck;
-        private bool layoutFirstTime = true;
 
         public override TabAlignment TabAlignment
         {
@@ -37,7 +36,6 @@ namespace Alternet.UI
         {
             page.TitleChanged -= Page_TitleChanged;
             RemovePage(index, page);
-            UpdateSelectedPageFromNativeControl();
             page.Index = null;
             UpdatePageIndices(index);
         }
@@ -52,7 +50,6 @@ namespace Alternet.UI
 
             // NativeControl.SelectedPageIndexChanging += NativeControl_SelectedPageIndexChanging;
             NativeControl.SelectedPageIndexChanged += NativeControl_SelectedPageIndexChanged;
-            Control.SelectedPageChanged += Control_SelectedPageChanged;
         }
 
         /*// private void NativeControl_SelectedPageIndexChanging
@@ -73,20 +70,24 @@ namespace Alternet.UI
             InsertPage(index, page);
             page.TitleChanged += Page_TitleChanged;
             UpdatePageIndices(index + 1);
-            UpdateSelectedPageFromNativeControl();
         }
 
         protected override void OnDetach()
         {
             // NativeControl.SelectedPageIndexChanging -= NativeControl_SelectedPageIndexChanging;
             NativeControl.SelectedPageIndexChanged -= NativeControl_SelectedPageIndexChanged;
-            Control.SelectedPageChanged -= Control_SelectedPageChanged;
             Control.Children.ItemInserted -= Children_ItemInserted;
 
             Control.Pages.ItemInserted -= Pages_ItemInserted;
             Control.Pages.ItemRemoved -= Pages_ItemRemoved;
 
             base.OnDetach();
+        }
+
+        protected override void NativeControlSizeChanged()
+        {
+            base.NativeControlSizeChanged();
+            LayoutSelectedPage();
         }
 
         private void LayoutSelectedPage()
@@ -96,11 +97,10 @@ namespace Alternet.UI
             {
                 var page = Control.Pages[selectedPageIndex];
 
-                if(Application.IsLinuxOS && layoutFirstTime)
-                    page.Handler.Bounds = ChildrenLayoutBounds;
-                layoutFirstTime = false;
+                //if (Application.IsLinuxOS && selectedPageIndex==0)
+                //    page.Handler.Bounds = ChildrenLayoutBounds;
 
-                page.PerformLayout();
+                page.Handler.OnLayout();
             }
         }
 
@@ -156,24 +156,17 @@ namespace Alternet.UI
             }
         }
 
-        private void Control_SelectedPageChanged(object sender, RoutedEventArgs e)
-        {
-            var index = Control.SelectedPage == null
-                ? -1 : Control.Pages.IndexOf(Control.SelectedPage);
-            NativeControl.SelectedPageIndex = index;
-        }
-
         private void NativeControl_SelectedPageIndexChanged(object? sender, EventArgs e)
         {
-            UpdateSelectedPageFromNativeControl();
             LayoutSelectedPage();
+            Control.RaiseSelectedPageChanged(EventArgs.Empty);
         }
 
-        private void UpdateSelectedPageFromNativeControl()
+        /*private void UpdateSelectedPageFromNativeControl()
         {
             var selectedPageIndex = NativeControl.SelectedPageIndex;
             Control.SelectedPage = selectedPageIndex == -1 ? null : Control.Pages[selectedPageIndex];
-        }
+        }*/
 
         private void Pages_ItemRemoved(object? sender, int index, TabPage item)
         {

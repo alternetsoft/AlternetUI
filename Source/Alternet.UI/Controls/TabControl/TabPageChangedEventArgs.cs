@@ -7,18 +7,18 @@ namespace Alternet.UI
     /// </summary>
     /// <param name="sender">The object where the event handler is attached.</param>
     /// <param name="e">The event data.</param>
-    public delegate void SelectedTabPageChangedEventHandler(object sender, SelectedTabPageChangedEventArgs e);
+    public delegate void TabPageChangedEventHandler(object sender, TabPageChangedEventArgs e);
 
     /// <summary>
     /// Provides data for the selected tab change routed events.
     /// </summary>
-    public class SelectedTabPageChangedEventArgs : RoutedEventArgs
+    public class TabPageChangedEventArgs : EventArgs
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="SelectedTabPageChangedEventArgs"/> class.
+        /// Initializes a new instance of the <see cref="TabPageChangedEventArgs"/> class.
         /// </summary>
-        public SelectedTabPageChangedEventArgs(RoutedEvent routedEvent, object source, TabPage? oldValue, TabPage? newValue)
-            : base(routedEvent, source)
+        public TabPageChangedEventArgs(TabPage? oldValue, TabPage? newValue)
+            : base()
         {
             OldValue = oldValue;
             NewValue = newValue;

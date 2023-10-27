@@ -75,7 +75,7 @@ namespace ControlsSample
 
             VerticalStackPanel panel = new()
             {
-                HorizontalAlignment = HorizontalAlignment.Stretch,
+                HorizontalAlignment = HorizontalAlignment.Left,
                 Padding = 5,
             };
 
@@ -87,7 +87,7 @@ namespace ControlsSample
                 {
                     Text = s + " Button " + i.ToString(),
                     Margin = 5,
-                    HorizontalAlignment = HorizontalAlignment.Stretch,
+                    HorizontalAlignment = HorizontalAlignment.Left,
                 };
                 panel.Children.Add(button);
             }
@@ -102,9 +102,9 @@ namespace ControlsSample
             tabControl.Pages.Clear();
         }
 
-        private void TabControl_SelectedPageChanged(object sender, SelectedTabPageChangedEventArgs e)
+        private void TabControl_SelectedPageChanged(object sender, EventArgs e)
         {
-            Site?.LogEvent($"SelectedPageChanged; Old: {GetPageTitle(e.OldValue)}, New: {GetPageTitle(e.NewValue)}");
+            Site?.LogEvent($"SelectedPageChanged");
         }
 
         private void TabAlignmentComboBox_SelectedItemChanged(object sender, EventArgs e)

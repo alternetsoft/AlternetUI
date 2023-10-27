@@ -68,10 +68,11 @@
 
       </VerticalStackPanel>
 
-      <VerticalStackPanel>
+      <VerticalStackPanel Visible="false">
         <StackPanel Orientation="Horizontal" Margin="5">
           <Label Text="Tabs:" VerticalAlignment="Center"/>
-          <ComboBox IsEditable="false" Name="tabAlignmentComboBox" Margin="5,0,0,0" SelectedItemChanged="TabAlignmentComboBox_SelectedItemChanged"/>
+          <ComboBox IsEditable="false" Name="tabAlignmentComboBox" Margin="5,0,0,0"
+                    SelectedItemChanged="TabAlignmentComboBox_SelectedItemChanged"/>
         </StackPanel>
 
       </VerticalStackPanel>
