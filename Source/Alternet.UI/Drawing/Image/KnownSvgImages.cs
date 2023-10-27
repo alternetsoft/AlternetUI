@@ -164,11 +164,16 @@ namespace Alternet.UI
         /// Gets <see cref="KnownSvgImages"/> for the specified bitmap size.
         /// </summary>
         /// <param name="size">Image size.</param>
-        /// <returns></returns>
         public static KnownSvgImages GetForSize(Int32Size size)
         {
             var images = Images.GetOrCreate(size, () => new KnownSvgImages(size));
             return images;
         }
+
+        /// <summary>
+        /// Gets <see cref="KnownSvgImages"/> for the specified bitmap size.
+        /// </summary>
+        /// <param name="size">Image size.</param>
+        public static KnownSvgImages GetForSize(int size) => GetForSize(new Int32Size(size));
     }
 }
