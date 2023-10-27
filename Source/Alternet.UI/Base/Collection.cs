@@ -58,6 +58,34 @@ namespace Alternet.Base.Collections
         public bool RangeOpInProgress { get; private set; }
 
         /// <summary>
+        /// Gets the first item in the collection or 'default'.
+        /// </summary>
+        public T? First
+        {
+            get
+            {
+                if (Count > 0)
+                    return this[0];
+                else
+                    return default;
+            }
+        }
+
+        /// <summary>
+        /// Gets the last item in the collection or 'default'.
+        /// </summary>
+        public T? Last
+        {
+            get
+            {
+                if (Count > 0)
+                    return this[Count - 1];
+                else
+                    return default;
+            }
+        }
+
+        /// <summary>
         /// Gets or sets a value indicating whether an
         /// <see cref="ArgumentNullException"/> should be thrown
         /// on an attempt to add a <c>null</c> value to the collection.
