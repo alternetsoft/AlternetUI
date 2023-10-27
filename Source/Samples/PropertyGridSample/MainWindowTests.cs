@@ -51,7 +51,7 @@ namespace PropertyGridSample
 
             e.DragStarted = true;
             var distance = MathUtils.GetDistance(e.MouseDownLocation, e.MouseClientLocation);
-            panel.Log($"DragStart {e.MouseDownLocation} {e.MouseClientLocation} {!e.DistanceIsLess} {distance}");
+            Application.Log($"DragStart {e.MouseDownLocation} {e.MouseClientLocation} {!e.DistanceIsLess} {distance}");
             DoDragDrop(GetDataObject(), DragDropEffects.Copy | DragDropEffects.Move);
         }
 
@@ -71,9 +71,9 @@ namespace PropertyGridSample
             string s = $"Event: {name}. PropName: <{propName}>. Value: <{propValue}>";
 
             if (logAlways)
-                panel.Log(s);
+                Application.Log(s);
             else
-                panel.LogReplace(s, s);
+                Application.LogReplace(s, s);
         }
 
         private void PGPropertySelected(object? sender, EventArgs e)
@@ -227,10 +227,10 @@ namespace PropertyGridSample
             variant.AsULong = maxULong;
             ulong maxULong2 = variant.AsULong;
 
-            panel.Log($"{minLong} - {minLong2}");
-            panel.Log($"{maxLong} - {maxLong2}");
-            panel.Log($"{minULong} - {minULong2}");
-            panel.Log($"{maxULong} - {maxULong2}");
+            Application.Log($"{minLong} - {minLong2}");
+            Application.Log($"{maxLong} - {maxLong2}");
+            Application.Log($"{minULong} - {minULong2}");
+            Application.Log($"{maxULong} - {maxULong2}");
 
             variant.AsBool = true;
 
