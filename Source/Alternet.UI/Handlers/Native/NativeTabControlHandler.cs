@@ -7,6 +7,7 @@ namespace Alternet.UI
     internal class NativeTabControlHandler : TabControlHandler
     {
         private bool skipChildrenInsertionCheck;
+        private bool layoutFirstTime = true;
 
         public override TabAlignment TabAlignment
         {
@@ -95,8 +96,9 @@ namespace Alternet.UI
             {
                 var page = Control.Pages[selectedPageIndex];
 
-                if(Application.IsLinuxOS)
+                if(Application.IsLinuxOS && layoutFirstTime)
                     page.Handler.Bounds = ChildrenLayoutBounds;
+                layoutFirstTime = false;
 
                 page.PerformLayout();
             }
