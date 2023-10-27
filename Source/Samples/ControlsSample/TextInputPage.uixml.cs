@@ -56,6 +56,31 @@ namespace ControlsSample
             numberHexTextBox.TextChanged += TextBox_ValueChanged;
 
             noBellOnErrorCheckBox.BindBoolProp(ValueValidatorFactory.Default, nameof(ValueValidatorFactory.IsSilent));
+
+            ControlSet numberLabels = new(
+                numberSignedLabel,
+                numberUnsignedLabel,
+                numberFloatLabel,
+                numberHexLabel);
+            numberLabels.SuggestedWidthToMax();
+
+            ControlSet numberImages = new(
+                numberSignedImage,
+                numberUnsignedImage,
+                numberFloatImage,
+                numberHexImage);
+
+            var imageSize = Toolbar.GetDefaultImageSize(Application.FirstWindow()!);
+
+            var imageSet = KnownSvgImages.GetForSize(imageSize).ImgMessageBoxError;
+            var image = imageSet.AsImage(imageSize);
+
+            numberImages.Visible(true).Action<PictureBox>(InitPictureBox);
+
+            void InitPictureBox(PictureBox picture)
+            {
+                picture.Image = image;
+            }
         }
 
         private void MultiLineTextBox_TextUrl(object? sender, EventArgs e)
@@ -90,8 +115,8 @@ namespace ControlsSample
         }
 
         internal static void GetWordIndex(
-            string s, 
-            string word, 
+            string s,
+            string word,
             out int startIndex,
             out int endIndex)
         {
@@ -137,11 +162,11 @@ namespace ControlsSample
             taOrderedList.SetBulletStyle(TextBoxTextAttrBulletStyle.Arabic);
 
             var taBig = TextBox.CreateTextAttr();
-            taBig.SetFontPointSize((int)Font.Default.SizeInPoints+15);
+            taBig.SetFontPointSize((int)Font.Default.SizeInPoints + 15);
 
             var taUnderlined2 = TextBox.CreateTextAttr();
             taUnderlined2.SetFontUnderlinedEx(
-                TextBoxTextAttrUnderlineType.Special, 
+                TextBoxTextAttrUnderlineType.Special,
                 Color.Red);
 
             List<object> list = new()
@@ -188,6 +213,6 @@ namespace ControlsSample
     }
 
     public static class Extensions
-    { 
+    {
     }
 }
