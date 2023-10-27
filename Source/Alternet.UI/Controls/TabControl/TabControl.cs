@@ -19,19 +19,6 @@ namespace Alternet.UI
         [Category("Behavior")]
         public event EventHandler? SelectedPageChanged;
 
-        /// <summary>
-        /// Gets a <see cref="TabControlHandler"/> associated with this class.
-        /// </summary>
-        [Browsable(false)]
-        public new TabControlHandler Handler
-        {
-            get
-            {
-                CheckDisposed();
-                return (TabControlHandler)base.Handler;
-            }
-        }
-
         // public event EventHandler<SelectedTabPageChangingEventArgs>? SelectedPageChanging;
 
         // public void RaiseSelectedPageChanging(SelectedTabPageChangingEventArgs e)
@@ -125,6 +112,19 @@ namespace Alternet.UI
                 value ??= -1;
                 if (NativeControl is not null)
                     NativeControl.SelectedPageIndex = value.Value;
+            }
+        }
+
+        /// <summary>
+        /// Gets a <see cref="TabControlHandler"/> associated with this class.
+        /// </summary>
+        [Browsable(false)]
+        internal new TabControlHandler Handler
+        {
+            get
+            {
+                CheckDisposed();
+                return (TabControlHandler)base.Handler;
             }
         }
 

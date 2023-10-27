@@ -7,6 +7,7 @@ namespace Alternet.UI
     internal class NativeTabControlHandler : TabControlHandler
     {
         private bool skipChildrenInsertionCheck;
+        private bool skipLinuxFix;
 
         public override TabAlignment TabAlignment
         {
@@ -97,8 +98,8 @@ namespace Alternet.UI
             {
                 var page = Control.Pages[selectedPageIndex];
 
-                //if (Application.IsLinuxOS && selectedPageIndex==0)
-                //    page.Handler.Bounds = ChildrenLayoutBounds;
+                if (Application.IsLinuxOS && selectedPageIndex == 0 && !skipLinuxFix)
+                    page.Handler.Bounds = ChildrenLayoutBounds;
 
                 page.Handler.OnLayout();
             }
@@ -158,6 +159,7 @@ namespace Alternet.UI
 
         private void NativeControl_SelectedPageIndexChanged(object? sender, EventArgs e)
         {
+            skipLinuxFix = true;
             LayoutSelectedPage();
             Control.RaiseSelectedPageChanged(EventArgs.Empty);
         }
