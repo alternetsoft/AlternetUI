@@ -67,6 +67,12 @@ namespace Alternet.UI.Native
             NativeApi.ImageSet_LoadSvgFromStream_(NativePointer, stream.NativePointer, width, height);
         }
         
+        public void InitImage(Image image, int width, int height)
+        {
+            CheckDisposed();
+            NativeApi.ImageSet_InitImage_(NativePointer, image.NativePointer, width, height);
+        }
+        
         
         [SuppressUnmanagedCodeSecurity]
         public class NativeApi : NativeApiProvider
@@ -93,6 +99,9 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void ImageSet_LoadSvgFromStream_(IntPtr obj, IntPtr stream, int width, int height);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void ImageSet_InitImage_(IntPtr obj, IntPtr image, int width, int height);
             
         }
     }

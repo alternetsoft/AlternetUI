@@ -24,10 +24,10 @@ namespace Alternet::UI
                 return wxBitmap();
         }
 
-    private:
-
         static wxBitmapType GetBitmapTypeFromFormat(const string& format);
 
         wxBitmap _bitmap; // reference-counted, so use copy-by-value.
+    private:
+
     };
 }

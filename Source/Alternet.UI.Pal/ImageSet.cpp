@@ -73,6 +73,13 @@ namespace Alternet::UI
 		return &_iconBundle;
 	}
 	
+	void ImageSet::InitImage(Image* image, int width, int height)
+	{
+		auto bitmapBundle = GetBitmapBundle();
+		auto bitmap = bitmapBundle.GetBitmap(wxSize(width, height));
+		image->_bitmap = bitmap;
+	}
+
 	wxBitmapBundle ImageSet::GetBitmapBundle()
 	{
 		if (!_bitmapBundleValid)

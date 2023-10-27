@@ -42,6 +42,12 @@ namespace Alternet.Drawing
             NativeImage.Initialize(size);
         }
 
+        private protected Image(ImageSet imageSet, Int32Size size)
+        {
+            nativeImage = new UI.Native.Image();
+            imageSet.NativeImageSet.InitImage(nativeImage, size.Width, size.Height);
+        }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="Image"/> class.
         /// </summary>

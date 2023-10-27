@@ -45,3 +45,8 @@ ALTERNET_UI_API void ImageSet_LoadSvgFromStream_(ImageSet* obj, void* stream, in
     obj->LoadSvgFromStream(stream, width, height);
 }
 
+ALTERNET_UI_API void ImageSet_InitImage_(ImageSet* obj, Image* image, int width, int height)
+{
+    obj->InitImage(image, width, height);
+}
+

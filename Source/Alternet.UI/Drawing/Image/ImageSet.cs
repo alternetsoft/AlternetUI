@@ -214,6 +214,11 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets first image.
+        /// </summary>
+        public Image? AsImage(Int32Size size) => new Bitmap(this, size);
+
+        /// <summary>
         /// Releases all resources used by the <see cref="ImageList"/> object.
         /// </summary>
         public void Dispose()

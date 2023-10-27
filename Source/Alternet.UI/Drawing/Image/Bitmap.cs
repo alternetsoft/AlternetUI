@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using Alternet.UI;
 
 namespace Alternet.Drawing
 {
@@ -25,6 +26,17 @@ namespace Alternet.Drawing
         /// <see cref="Bitmap"/>.</param>
         public Bitmap(Size size)
             : base(size)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Bitmap"/> class with the image from
+        /// <see cref="ImageSet"/>.
+        /// </summary>
+        /// <param name="imageSet">Source of the image.</param>
+        /// <param name="size">Size of the image in device pixels.</param>
+        public Bitmap(ImageSet imageSet, Int32Size size)
+            : base(imageSet, size)
         {
         }
 
