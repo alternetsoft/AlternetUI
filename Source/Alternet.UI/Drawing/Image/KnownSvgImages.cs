@@ -25,6 +25,7 @@ namespace Alternet.UI
         private ImageSet? imgCancel;
         private ImageSet? imgAddChild;
         private ImageSet? imgRemoveAll;
+        private ImageSet? imgMessageBoxError;
 
         private Int32Size size;
 
@@ -56,6 +57,16 @@ namespace Alternet.UI
             get => imgBrowserForward ??=
                 AuiToolbar.LoadSvgImage(SvgUtils.UrlImageWebBrowserForward, size);
             set => imgBrowserForward = value;
+        }
+
+        /// <summary>
+        /// Gets or sets image that can be used in MessageBox like dialogs as "Error" sign.
+        /// </summary>
+        public ImageSet ImgMessageBoxError
+        {
+            get => imgMessageBoxError ??=
+                AuiToolbar.LoadSvgImage(SvgUtils.UrlImageMessageBoxError, size);
+            set => imgMessageBoxError = value;
         }
 
         /// <summary>

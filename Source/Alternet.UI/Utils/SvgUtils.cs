@@ -17,6 +17,12 @@ namespace Alternet.UI
             "embres:Alternet.UI.Resources.Svg.{0}.svg?assembly=Alternet.UI";
 
         /// <summary>
+        /// Gets or sets url used to load "error" svg image used in MessageBox like dialogs.
+        /// </summary>
+        public static string UrlImageMessageBoxError { get; set; } =
+            GetImageUrl("alternet-circle-xmark");
+
+        /// <summary>
         /// Gets or sets url used to load "plus" svg image used in "Add" toolbar buttons.
         /// </summary>
         public static string UrlImagePlus { get; set; } = GetImageUrl("alternet-plus");
