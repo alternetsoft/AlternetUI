@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Reflection;
 using Alternet.UI;
-using static System.Net.Mime.MediaTypeNames;
+using Alternet.Drawing;
 
 namespace ControlsSample
 {
@@ -75,7 +75,7 @@ namespace ControlsSample
 
             VerticalStackPanel panel = new()
             {
-                HorizontalAlignment = HorizontalAlignment.Left,
+                HorizontalAlignment = HorizontalAlignment.Stretch,
                 Padding = 5,
             };
 
@@ -87,6 +87,7 @@ namespace ControlsSample
                 {
                     Text = s + " Button " + i.ToString(),
                     Margin = 5,
+                    HorizontalAlignment = HorizontalAlignment.Stretch,
                 };
                 panel.Children.Add(button);
             }
