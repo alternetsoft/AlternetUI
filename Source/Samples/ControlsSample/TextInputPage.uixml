@@ -67,9 +67,10 @@
           <PictureBox Name="numberHexImage" Margin="5,0,0,5"/>
         </HorizontalStackPanel>
 
-      </VerticalStackPanel>
-      <VerticalStackPanel  Margin="5" >
-        <CheckBox Text="No Bell On Error" Name="noBellOnErrorCheckBox"/>
+        <VerticalStackPanel  Margin="0,5,0,5" >
+          <CheckBox Text="No Bell On Error" Name="noBellOnErrorCheckBox"/>
+        </VerticalStackPanel>
+
       </VerticalStackPanel>
     </HorizontalStackPanel>
 

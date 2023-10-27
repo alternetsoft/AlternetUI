@@ -62,7 +62,7 @@ namespace ControlsSample
                 numberUnsignedLabel,
                 numberFloatLabel,
                 numberHexLabel);
-            numberLabels.SuggestedWidthToMax();
+            numberLabels.SuggestedWidthToMax().VerticalAlignment(VerticalAlignment.Center);
 
             ControlSet numberImages = new(
                 numberSignedImage,
@@ -75,7 +75,8 @@ namespace ControlsSample
             var imageSet = KnownSvgImages.GetForSize(imageSize).ImgMessageBoxError;
             var image = imageSet.AsImage(imageSize);
 
-            numberImages.Visible(true).Action<PictureBox>(InitPictureBox);
+            numberImages.Visible(false).Action<PictureBox>(InitPictureBox)
+                .VerticalAlignment(VerticalAlignment.Center);
 
             void InitPictureBox(PictureBox picture)
             {
