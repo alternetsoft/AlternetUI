@@ -12,6 +12,9 @@
 
 namespace Alternet::UI
 {
+    // https://docs.wxwidgets.org/3.2/classwx_d_c.html
+    // https://docs.wxwidgets.org/3.2/classwx_graphics_context.html
+
     class TextPainter;
 
     class DrawingContext : public Object
