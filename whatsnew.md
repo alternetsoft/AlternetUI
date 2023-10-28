@@ -1,6 +1,14 @@
 # 0.9.406 (not released, work in progress)
 
-- 
+- Add LogListBox control.
+- Add PictureBox: ImageVisible, ImageStretch.
+- Improved resize behavior of AuiManager controls and panels.
+- Fixed TabControl behavior and bad painting under Linux.
+- AuiToolbar: All Add methods now return toolId.
+- AuiToolbar: Add EventToolNameOrId, GetToolName(), GetToolTag(), SetToolName(), SetToolTag(), GetToolMinHeights(),
+ GetToolMaxOfMinHeights().
+- AuiToolbar: Fixed Clear, DeleteTool, ShowPopupMenu.
+- Add Application.FirstWindow; Collection: First, Last; ControlSet: Visible, Action; ImageSet.AsImage.
 
 ---
 
