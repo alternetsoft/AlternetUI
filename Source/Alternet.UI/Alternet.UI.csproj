@@ -292,10 +292,6 @@
     <AdditionalFiles Include="..\stylecop.json" Link="stylecop.json" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Drawing\NewFolder\" />
-  </ItemGroup>
-
   <!-- ================================================= -->
   <!-- remove .. in path -->
   <Target Name="CreateAllClassesXml" AfterTargets="AfterBuild" Condition="'$(TargetFramework)' == 'net6.0' AND false">
