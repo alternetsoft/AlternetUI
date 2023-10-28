@@ -118,6 +118,11 @@ namespace Alternet.UI
             return this;
         }
 
+        /// <summary>
+        /// Executes specified action for all the controls in the set.
+        /// </summary>
+        /// <typeparam name="T">Type of the action parameter.</typeparam>
+        /// <param name="action">Action to execute.</param>
         public ControlSet Action<T>(Action<T> action)
             where T : Control
         {
