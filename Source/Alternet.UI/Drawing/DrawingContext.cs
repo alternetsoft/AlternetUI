@@ -697,13 +697,6 @@ namespace Alternet.Drawing
         /// the drawn text.</param>
         public void DrawText(string text, Font font, Brush brush, Rect bounds)
         {
-#if DEBUG
-            if (text is null)
-                throw new ArgumentNullException(nameof(text));
-
-            if (font is null)
-                throw new ArgumentNullException(nameof(font));
-#endif
             DrawText(text, font, brush, bounds, TextFormat.Default);
         }
 
@@ -721,7 +714,12 @@ namespace Alternet.Drawing
         /// <param name="format"><see cref="TextFormat"/> that specifies formatting attributes,
         /// such as
         /// alignment and trimming, that are applied to the drawn text.</param>
-        public void DrawText(string text, Font font, Brush brush, Rect bounds, TextFormat format)
+        public void DrawText(
+            string text,
+            Font font,
+            Brush brush,
+            Rect bounds,
+            TextFormat format)
         {
 #if DEBUG
             if (text is null)
