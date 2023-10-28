@@ -72,10 +72,10 @@ namespace ControlsSample
 
             var imageSize = Toolbar.GetDefaultImageSize(Application.FirstWindow()!);
 
-            var imageSet = KnownSvgImages.GetForSize(imageSize).ImgMessageBoxError;
+            var imageSet = KnownSvgImages.GetForSize(imageSize).ImgMessageBoxWarning;
             var image = imageSet.AsImage(imageSize);
 
-            numberImages.Visible(false).Action<PictureBox>(InitPictureBox)
+            numberImages.Visible(true).Action<PictureBox>(InitPictureBox)
                 .VerticalAlignment(VerticalAlignment.Center);
 
             void InitPictureBox(PictureBox picture)

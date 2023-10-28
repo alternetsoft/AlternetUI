@@ -65,6 +65,8 @@
     <None Remove="Resources\Svg\alternet-arrow-right.svg" />
     <None Remove="Resources\Svg\alternet-caret-right.svg" />
     <None Remove="Resources\Svg\alternet-check.svg" />
+    <None Remove="Resources\Svg\alternet-circle-exclamation.svg" />
+    <None Remove="Resources\Svg\alternet-circle-info.svg" />
     <None Remove="Resources\Svg\alternet-circle-xmark.svg" />
     <None Remove="Resources\Svg\alternet-ellipsis-vertical.svg" />
     <None Remove="Resources\Svg\alternet-ellipsis.svg" />
@@ -121,8 +123,6 @@
     <None Remove="Resources\Svg\paste.svg" />
     <None Remove="Resources\Svg\print.svg" />
     <None Remove="Resources\Svg\question.svg" />
-    <None Remove="Resources\Svg\Regular\circle-question.svg" />
-    <None Remove="Resources\Svg\Regular\circle-xmark.svg" />
     <None Remove="Resources\Svg\rotate-left.svg" />
     <None Remove="Resources\Svg\rotate.svg" />
     <None Remove="Resources\Svg\scissors.svg" />
@@ -143,6 +143,8 @@
     <EmbeddedResource Include="Resources\Svg\align-left.svg" />
     <EmbeddedResource Include="Resources\Svg\align-right.svg" />
     <EmbeddedResource Include="Resources\Svg\alternet-add-child.svg" />
+    <EmbeddedResource Include="Resources\Svg\alternet-circle-exclamation.svg" />
+    <EmbeddedResource Include="Resources\Svg\alternet-circle-info.svg" />
     <EmbeddedResource Include="Resources\Svg\alternet-circle-xmark.svg" />
     <EmbeddedResource Include="Resources\Svg\alternet-zoomin.svg" />
     <EmbeddedResource Include="Resources\Svg\alternet-zoomout.svg" />
@@ -167,8 +169,6 @@
     <EmbeddedResource Include="Resources\Svg\alternet-caret-right.svg" />
     <EmbeddedResource Include="Resources\Svg\alternet-check.svg" />
     <EmbeddedResource Include="Resources\Svg\circle-check.svg" />
-    <EmbeddedResource Include="Resources\Svg\circle-exclamation.svg" />
-    <EmbeddedResource Include="Resources\Svg\circle-info.svg" />
     <EmbeddedResource Include="Resources\Svg\circle-question.svg" />
     <EmbeddedResource Include="Resources\Svg\copy.svg" />
     <EmbeddedResource Include="Resources\Svg\alternet-ellipsis-vertical.svg" />
@@ -199,8 +199,6 @@
     <EmbeddedResource Include="Resources\Svg\alternet-plus.svg" />
     <EmbeddedResource Include="Resources\Svg\print.svg" />
     <EmbeddedResource Include="Resources\Svg\question.svg" />
-    <EmbeddedResource Include="Resources\Svg\Regular\circle-question.svg" />
-    <EmbeddedResource Include="Resources\Svg\Regular\circle-xmark.svg" />
     <EmbeddedResource Include="Resources\Svg\rotate-left.svg" />
     <EmbeddedResource Include="Resources\Svg\alternet-rotate-right.svg" />
     <EmbeddedResource Include="Resources\Svg\rotate.svg" />
@@ -292,6 +290,10 @@
 
   <ItemGroup>
     <AdditionalFiles Include="..\stylecop.json" Link="stylecop.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Drawing\NewFolder\" />
   </ItemGroup>
 
   <!-- ================================================= -->

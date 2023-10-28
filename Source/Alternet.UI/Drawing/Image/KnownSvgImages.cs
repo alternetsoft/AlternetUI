@@ -26,6 +26,8 @@ namespace Alternet.UI
         private ImageSet? imgAddChild;
         private ImageSet? imgRemoveAll;
         private ImageSet? imgMessageBoxError;
+        private ImageSet? imgMessageBoxInformation;
+        private ImageSet? imgMessageBoxWarning;
 
         private Int32Size size;
 
@@ -67,6 +69,26 @@ namespace Alternet.UI
             get => imgMessageBoxError ??=
                 AuiToolbar.LoadSvgImage(SvgUtils.UrlImageMessageBoxError, size);
             set => imgMessageBoxError = value;
+        }
+
+        /// <summary>
+        /// Gets or sets image that can be used in MessageBox like dialogs as "Information" sign.
+        /// </summary>
+        public ImageSet ImgMessageBoxInformation
+        {
+            get => imgMessageBoxInformation ??=
+                AuiToolbar.LoadSvgImage(SvgUtils.UrlImageMessageBoxInformation, size);
+            set => imgMessageBoxInformation = value;
+        }
+
+        /// <summary>
+        /// Gets or sets image that can be used in MessageBox like dialogs as "Warning" sign.
+        /// </summary>
+        public ImageSet ImgMessageBoxWarning
+        {
+            get => imgMessageBoxWarning ??=
+                AuiToolbar.LoadSvgImage(SvgUtils.UrlImageMessageBoxWarning, size);
+            set => imgMessageBoxWarning = value;
         }
 
         /// <summary>
