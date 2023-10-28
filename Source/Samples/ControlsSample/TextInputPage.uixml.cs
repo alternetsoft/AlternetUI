@@ -81,6 +81,8 @@ namespace ControlsSample
             void InitPictureBox(PictureBox picture)
             {
                 picture.Image = image;
+                picture.ImageVisible = true;
+                picture.ImageStretch = false;
             }
         }
 

@@ -11,8 +11,9 @@ namespace Alternet.UI
             if (Control.Background != null)
                 drawingContext.FillRectangle(Control.Background, ClientRectangle);
 
-            if (Control.Image != null)
-                drawingContext.DrawImage(Control.Image, ClientRectangle);
+            var primitive = Control.Primitive;
+            primitive.DestRect = ClientRectangle;
+            primitive.Draw(drawingContext);
         }
 
         public override Size GetPreferredSize(Size availableSize)

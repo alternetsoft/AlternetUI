@@ -8,5 +8,6 @@ namespace Alternet.Drawing
 {
     internal class DrawPrimitive
     {
+        public bool Visible { get; set; } = true;
     }
 }

@@ -15,21 +15,7 @@ namespace Alternet.UI
     [ControlCategory("Common")]
     public class PictureBox : Control
     {
-        /// <summary>
-        /// Identifies the <see cref="Image"/> dependency property.
-        /// </summary>
-        public static readonly DependencyProperty ImageProperty =
-            DependencyProperty.Register(
-                    "Image",
-                    typeof(Image),
-                    typeof(PictureBox),
-                    new FrameworkPropertyMetadata(
-                            null,
-                            PropMetadataOption.AffectsPaint | PropMetadataOption.AffectsLayout,
-                            new PropertyChangedCallback(OnImagePropertyChanged),
-                            new CoerceValueCallback(CoerceImage),
-                            isAnimationProhibited: true,
-                            UpdateSourceTrigger.PropertyChanged));
+        private readonly DrawImagePrimitive primitive = new();
 
         /// <summary>
         /// Occurs when the <see cref="Image"/> property changes.
@@ -43,17 +29,60 @@ namespace Alternet.UI
         {
             get
             {
-                return (Image?)GetValue(ImageProperty);
+                return primitive.Image;
             }
 
             set
             {
-                SetValue(ImageProperty, value);
+                if (primitive.Image == value)
+                    return;
+                primitive.Image = value;
+                RaiseImageChanged(EventArgs.Empty);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether to draw image stretched to the size of the control.
+        /// </summary>
+        public bool ImageStretch
+        {
+            get
+            {
+                return primitive.Stretch;
+            }
+
+            set
+            {
+                if (primitive.Stretch == value)
+                    return;
+                primitive.Stretch = value;
+                Refresh();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether to draw image.
+        /// </summary>
+        public bool ImageVisible
+        {
+            get
+            {
+                return primitive.Visible;
+            }
+
+            set
+            {
+                if (primitive.Visible == value)
+                    return;
+                primitive.Visible = value;
+                Refresh();
             }
         }
 
         /// <inheritdoc/>
         public override ControlId ControlKind => ControlId.PictureBox;
+
+        internal DrawImagePrimitive Primitive => primitive;
 
         /// <summary>
         /// Raises the <see cref="ImageChanged"/> event and calls
@@ -63,9 +92,6 @@ namespace Alternet.UI
         /// data.</param>
         public void RaiseImageChanged(EventArgs e)
         {
-            if (e == null)
-                throw new ArgumentNullException(nameof(e));
-
             OnImageChanged(e);
             ImageChanged?.Invoke(this, e);
         }
@@ -83,27 +109,6 @@ namespace Alternet.UI
         protected override ControlHandler CreateHandler()
         {
             return GetEffectiveControlHandlerHactory().CreatePictureBoxHandler(this);
-        }
-
-        private static object CoerceImage(DependencyObject d, object value)
-        {
-            // var o = (PictureBox)d;
-            return value;
-        }
-
-        private static void OnImagePropertyChanged(
-            DependencyObject d,
-            DependencyPropertyChangedEventArgs e)
-        {
-            PictureBox control = (PictureBox)d;
-            control.OnValuePropertyChanged((Image)e.OldValue, (Image)e.NewValue);
-        }
-
-#pragma warning disable IDE0060 // Remove unused parameter
-        private void OnValuePropertyChanged(Image oldValue, Image newValue)
-#pragma warning restore IDE0060 // Remove unused parameter
-        {
-            RaiseImageChanged(EventArgs.Empty);
         }
     }
 }
