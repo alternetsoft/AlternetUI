@@ -146,7 +146,8 @@ namespace Alternet.UI
         /// by this property, you can use it if <see cref="TextBox"/> edits a number value or
         /// for any other purposes.
         /// </remarks>
-        public NumberStyles? NumberStyles { get; set; }
+        [Browsable(false)]
+        public virtual NumberStyles? NumberStyles { get; set; }
 
         /// <summary>
         /// Gets or sets an object that supplies culture-specific formatting information
@@ -156,7 +157,8 @@ namespace Alternet.UI
         /// Default value is <c>null</c>. <see cref="TextBox"/> behavior is not affected
         /// by this property, you can use it for any purposes.
         /// </remarks>
-        public IFormatProvider? FormatProvider { get; set; }
+        [Browsable(false)]
+        public virtual IFormatProvider? FormatProvider { get; set; }
 
         /// <summary>
         /// Gets or sets <see cref="Type"/> of the <see cref="Text"/> property.
@@ -165,7 +167,8 @@ namespace Alternet.UI
         /// Default value is <c>null</c>. <see cref="TextBox"/> behavior is not affected
         /// by this property, you can use it for any purposes.
         /// </remarks>
-        public Type? DataType { get; set; }
+        [Browsable(false)]
+        public virtual Type? DataType { get; set; }
 
         /// <summary>
         /// Gets or sets validator reporter object or control.
@@ -175,7 +178,8 @@ namespace Alternet.UI
         /// reports validation or other errors to the end users. Usually
         /// this is a <see cref="PictureBox"/> with error image.
         /// </remarks>
-        public object? ValidatorReporter { get; set; }
+        [Browsable(false)]
+        public virtual object? ValidatorReporter { get; set; }
 
         /// <summary>
         /// Gets or sets a text string that can be used as validator error message.
@@ -184,7 +188,7 @@ namespace Alternet.UI
         /// Default value is <c>null</c>. <see cref="TextBox"/> behavior is not affected
         /// by this property, you can use it for any purposes.
         /// </remarks>
-        public string? ValidatorErrorText { get; set; }
+        public virtual string? ValidatorErrorText { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether empty string is allowed in <see cref="Text"/>.
@@ -193,7 +197,8 @@ namespace Alternet.UI
         /// Default value is <c>true</c>. <see cref="TextBox"/> behavior is not affected
         /// by this property, you can use it for any purposes.
         /// </remarks>
-        public bool EmptyTextAllow { get; set; } = true;
+        [Browsable(false)]
+        public virtual bool EmptyTextAllow { get; set; } = true;
 
         /// <summary>
         /// Gets or sets data value in cases when <see cref="Text"/> property is empty.
@@ -202,7 +207,8 @@ namespace Alternet.UI
         /// Default value is <c>null</c>. <see cref="TextBox"/> behavior is not affected
         /// by this property, you can use it for any purposes.
         /// </remarks>
-        public object? EmptyTextValue { get; set; }
+        [Browsable(false)]
+        public virtual object? EmptyTextValue { get; set; }
 
         /// <summary>
         /// Gets or sets <see cref="IValueValidator"/> for the <see cref="TextBox"/> control.
@@ -213,7 +219,7 @@ namespace Alternet.UI
         /// <see cref="ValueValidatorFactory.CreateValueValidatorText"/>.
         /// </remarks>
         [Browsable(false)]
-        public IValueValidator? Validator
+        public virtual IValueValidator? Validator
         {
             get
             {
