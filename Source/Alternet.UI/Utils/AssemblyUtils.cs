@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -317,6 +318,19 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets <see cref="TypeCode"/> of the real type using <see cref="GetRealType"/>
+        /// and <see cref="Type.GetTypeCode"/>.
+        /// </summary>
+        /// <param name="type">Type</param>
+        /// <returns></returns>
+        public static TypeCode GetRealTypeCode(Type type)
+        {
+            var realType = GetRealType(type);
+            var typeCode = Type.GetTypeCode(realType);
+            return typeCode;
+        }
+
+        /// <summary>
         /// Gets property info.
         /// </summary>
         /// <param name="instance">Object instance.</param>
@@ -350,6 +364,51 @@ namespace Alternet.UI
                 TypeCode.Decimal => MinValueDecimal,
                 TypeCode.DateTime => MinValueDateTime,
                 _ => null,
+            };
+        }
+
+        /// <summary>
+        /// Returns minimal and maximal possible values for the given <see cref="TypeCode"/>
+        /// as a range string using specified <paramref name="format"/>.
+        /// </summary>
+        /// <remarks>
+        /// For example, if format is "{0}..{1}", result is "0..255".
+        /// </remarks>
+        public static string? GetMinMaxRangeStr(TypeCode code, string? format = null)
+        {
+            var minValue = GetMinValue(code);
+            var maxValue = GetMaxValue(code);
+            if (minValue is null || maxValue is null)
+                return null;
+            format ??= "{0}..{1}";
+            return string.Format(format, minValue, maxValue);
+        }
+
+        /// <summary>
+        /// Gets default <see cref="NumberStyles"/> for the specified <paramref name="typeCode"/>.
+        /// </summary>
+        public static NumberStyles GetDefaultNumberStyles(TypeCode typeCode)
+        {
+            const NumberStyles NumberStylesInt = NumberStyles.Integer;
+            const NumberStyles NumberStylesFloat = NumberStyles.Float | NumberStyles.AllowThousands;
+
+            return typeCode switch
+            {
+                TypeCode.SByte => NumberStylesInt,
+                TypeCode.Byte => NumberStylesInt,
+                TypeCode.Int16 => NumberStylesInt,
+                TypeCode.UInt16 => NumberStylesInt,
+                TypeCode.Int32 => NumberStylesInt,
+                TypeCode.UInt32 => NumberStylesInt,
+                TypeCode.Int64 => NumberStylesInt,
+                TypeCode.UInt64 => NumberStylesInt,
+
+                TypeCode.Single => NumberStylesFloat,
+                TypeCode.Double => NumberStylesFloat,
+
+                TypeCode.Decimal => NumberStyles.Number,
+
+                _ => NumberStyles.None,
             };
         }
 
