@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Globalization;
+using Alternet.Drawing;
 
 namespace Alternet.UI
 {
@@ -114,8 +116,102 @@ namespace Alternet.UI
         public event EventHandler? HasBorderChanged;
 
         /// <summary>
-        /// Gets or sets validator for the <see cref="TextBox"/> control.
+        /// Gets or sets a text string that can be used as a default validator error message.
         /// </summary>
+        /// <remarks>
+        /// This property can be used when <see cref="ValidatorErrorText"/> is <c>null</c>.
+        /// </remarks>
+        public static string? DefaultValidatorErrorText { get; set; }
+
+        /// <summary>
+        /// Gets or sets default <see cref="Color"/> that can be used
+        /// as a background color for the <see cref="TextBox"/> in cases when
+        /// application needs to report user an error in <see cref="Text"/> property.
+        /// </summary>
+        public static Color DefaultErrorBackgroundColor { get; set; } = Color.Red;
+
+        /// <summary>
+        /// Gets or sets default <see cref="Color"/> that can be used
+        /// as a foreground color for the <see cref="TextBox"/> in cases when
+        /// application needs to report user an error in <see cref="Text"/> property.
+        /// </summary>
+        public static Color DefaultErrorForegroundColor { get; set; } = Color.White;
+
+        /// <summary>
+        /// Gets or sets a bitwise combination of <see cref="NumberStyles"/> values that indicates
+        /// the permitted format of <see cref="Text"/>.
+        /// </summary>
+        /// <remarks>
+        /// Default value is <c>null</c>. <see cref="TextBox"/> behavior is not affected
+        /// by this property, you can use it if <see cref="TextBox"/> edits a number value or
+        /// for any other purposes.
+        /// </remarks>
+        public NumberStyles? NumberStyles { get; set; }
+
+        /// <summary>
+        /// Gets or sets an object that supplies culture-specific formatting information
+        /// about <see cref="Text"/> property.
+        /// </summary>
+        /// <remarks>
+        /// Default value is <c>null</c>. <see cref="TextBox"/> behavior is not affected
+        /// by this property, you can use it for any purposes.
+        /// </remarks>
+        public IFormatProvider? FormatProvider { get; set; }
+
+        /// <summary>
+        /// Gets or sets <see cref="Type"/> of the <see cref="Text"/> property.
+        /// </summary>
+        /// <remarks>
+        /// Default value is <c>null</c>. <see cref="TextBox"/> behavior is not affected
+        /// by this property, you can use it for any purposes.
+        /// </remarks>
+        public Type? DataType { get; set; }
+
+        /// <summary>
+        /// Gets or sets validator reporter object or control.
+        /// </summary>
+        /// <remarks>
+        /// This propety can be used to store reference to control that
+        /// reports validation or other errors to the end users. Usually
+        /// this is a <see cref="PictureBox"/> with error image.
+        /// </remarks>
+        public object? ValidatorReporter { get; set; }
+
+        /// <summary>
+        /// Gets or sets a text string that can be used as validator error message.
+        /// </summary>
+        /// <remarks>
+        /// Default value is <c>null</c>. <see cref="TextBox"/> behavior is not affected
+        /// by this property, you can use it for any purposes.
+        /// </remarks>
+        public string? ValidatorErrorText { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether empty string is allowed in <see cref="Text"/>.
+        /// </summary>
+        /// <remarks>
+        /// Default value is <c>true</c>. <see cref="TextBox"/> behavior is not affected
+        /// by this property, you can use it for any purposes.
+        /// </remarks>
+        public bool EmptyTextAllow { get; set; } = true;
+
+        /// <summary>
+        /// Gets or sets data value in cases when <see cref="Text"/> property is empty.
+        /// </summary>
+        /// <remarks>
+        /// Default value is <c>null</c>. <see cref="TextBox"/> behavior is not affected
+        /// by this property, you can use it for any purposes.
+        /// </remarks>
+        public object? EmptyTextValue { get; set; }
+
+        /// <summary>
+        /// Gets or sets <see cref="IValueValidator"/> for the <see cref="TextBox"/> control.
+        /// </summary>
+        /// <remarks>
+        /// <see cref="IValueValidator"/> allows to set limitations on possible values of
+        /// the <see cref="Text"/> property. See <see cref="IValueValidatorText"/> and
+        /// <see cref="ValueValidatorFactory.CreateValueValidatorText"/>.
+        /// </remarks>
         [Browsable(false)]
         public IValueValidator? Validator
         {
@@ -686,6 +782,33 @@ namespace Alternet.UI
         public virtual void OnEnterPressed(EventArgs e)
         {
             EnterPressed?.Invoke(this, e);
+        }
+
+        /// <summary>
+        /// Returns <see cref="TypeCode"/> for the <see cref="DataType"/> property
+        /// or <see cref="TypeCode.String"/>.
+        /// </summary>
+        /// <returns></returns>
+        public virtual TypeCode GetDataTypeCode()
+        {
+            if (DataType is null)
+                return TypeCode.String;
+            var typeCode = AssemblyUtils.GetRealTypeCode(DataType);
+            return typeCode;
+        }
+
+        /// <summary>
+        /// Returns minimal and maximal possible values for the <see cref="DataType"/>
+        /// as a range string and formats it using <paramref name="format"/>.
+        /// </summary>
+        /// <param name="format">Range string format. Example: "Range is [{0}]."</param>
+        /// <remarks>
+        /// If <paramref name="format"/> is <c>null</c>, range string is returned unformatted.
+        /// </remarks>
+        public virtual string? GetMinMaxRangeStr(string? format = null)
+        {
+            var s = AssemblyUtils.GetMinMaxRangeStr(GetDataTypeCode(), format);
+            return s;
         }
 
         /// <summary>

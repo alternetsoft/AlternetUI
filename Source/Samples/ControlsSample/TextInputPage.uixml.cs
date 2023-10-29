@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Alternet.Drawing;
 using Alternet.UI;
+using Alternet.UI.Localization;
 
 namespace ControlsSample
 {
@@ -60,6 +61,25 @@ namespace ControlsSample
             numberFloatTextBox.TextChanged += NumberFloatTextBox_ValueChanged;
             numberHexTextBox.TextChanged += NumberHexTextBox_ValueChanged;
 
+            numberSignedTextBox.DataType = typeof(short);
+            numberUnsignedTextBox.DataType = typeof(byte);
+            numberFloatTextBox.DataType = typeof(double);
+            numberHexTextBox.DataType = typeof(int);
+
+            numberSignedTextBox.ValidatorReporter = numberSignedImage;
+            numberUnsignedTextBox.ValidatorReporter = numberUnsignedImage;
+            numberFloatTextBox.ValidatorReporter = numberFloatImage;
+            numberHexTextBox.ValidatorReporter = numberHexImage;
+
+            var rangeFormat = " Range is [{0}..{1}].";
+
+            numberSignedTextBox.ValidatorErrorText =
+                $"A number is expected.{numberSignedTextBox.GetMinMaxRangeStr(rangeFormat)}";
+            numberUnsignedTextBox.ValidatorErrorText =
+                $"A number is expected.{numberUnsignedTextBox.GetMinMaxRangeStr(rangeFormat)}";
+            numberFloatTextBox.ValidatorErrorText = "A floating point number is expected.";
+            numberHexTextBox.ValidatorErrorText = "A hexadecimal number is expected.";
+
             noBellOnErrorCheckBox.BindBoolProp(ValueValidatorFactory.Default, nameof(ValueValidatorFactory.IsSilent));
 
             ControlSet numberLabels = new(
@@ -86,7 +106,7 @@ namespace ControlsSample
             void InitPictureBox(PictureBox picture)
             {
                 picture.Image = image;
-                picture.ImageVisible = true;
+                picture.ImageVisible = false;
                 picture.ImageStretch = false;
             }
         }
@@ -109,9 +129,53 @@ namespace ControlsSample
 
         private void ValidateFormat(object? sender, TextChangedEventArgs e)
         {
-            if (sender is not TextBox asTextBox)
+            if (sender is not TextBox editor)
                 return;
 
+            if (string.IsNullOrEmpty(editor.Text))
+            {
+                ReportValidatorError(editor.EmptyTextAllow);
+                return;
+            }
+
+            var typeCode = editor.GetDataTypeCode();
+            if (typeCode == TypeCode.String)
+                return;
+
+            var isOk = StringUtils.TryParseNumber(
+                typeCode,
+                editor.Text,
+                editor.NumberStyles,
+                editor.FormatProvider,
+                out _);
+
+            ReportValidatorError(isOk);
+
+            void ReportValidatorError(bool ok, string? errorText = null)
+            {
+
+                var hint = string.Empty;
+                if (ok)
+                {
+                    editor.ResetBackgroundColor();
+                    editor.ResetForegroundColor();
+                }
+                else
+                {
+                    editor.BackgroundColor = TextBox.DefaultErrorBackgroundColor;
+                    editor.ForegroundColor = TextBox.DefaultErrorForegroundColor;
+                    hint = errorText ?? editor.ValidatorErrorText;
+                    hint ??= TextBox.DefaultValidatorErrorText; 
+                }
+
+                var reporter = editor.ValidatorReporter as PictureBox; // IValidatorReporter
+
+                if (reporter is not null)
+                {
+                    reporter.ToolTip = hint;
+                    reporter.ImageVisible = !ok;
+                }
+            }
         }
 
         private void NumberSignedTextBox_ValueChanged(object? sender, TextChangedEventArgs e)
