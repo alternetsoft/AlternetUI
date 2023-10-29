@@ -55,6 +55,11 @@ namespace ControlsSample
             numberFloatTextBox.TextChanged += TextBox_ValueChanged;
             numberHexTextBox.TextChanged += TextBox_ValueChanged;
 
+            numberSignedTextBox.TextChanged += NumberSignedTextBox_ValueChanged;
+            numberUnsignedTextBox.TextChanged += NumberUnsignedTextBox_ValueChanged;
+            numberFloatTextBox.TextChanged += NumberFloatTextBox_ValueChanged;
+            numberHexTextBox.TextChanged += NumberHexTextBox_ValueChanged;
+
             noBellOnErrorCheckBox.BindBoolProp(ValueValidatorFactory.Default, nameof(ValueValidatorFactory.IsSilent));
 
             ControlSet numberLabels = new(
@@ -100,6 +105,33 @@ namespace ControlsSample
             {
                 site = value;
             }
+        }
+
+        private void ValidateFormat(object? sender, TextChangedEventArgs e)
+        {
+            if (sender is not TextBox asTextBox)
+                return;
+
+        }
+
+        private void NumberSignedTextBox_ValueChanged(object? sender, TextChangedEventArgs e)
+        {
+            ValidateFormat(sender, e);
+        }
+
+        private void NumberUnsignedTextBox_ValueChanged(object? sender, TextChangedEventArgs e)
+        {
+            ValidateFormat(sender, e);
+        }
+
+        private void NumberFloatTextBox_ValueChanged(object? sender, TextChangedEventArgs e)
+        {
+            ValidateFormat(sender, e);
+        }
+
+        private void NumberHexTextBox_ValueChanged(object? sender, TextChangedEventArgs e)
+        {
+            ValidateFormat(sender, e);
         }
 
         private void TextBox_ValueChanged(object? sender, TextChangedEventArgs e)
