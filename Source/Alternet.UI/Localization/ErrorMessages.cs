@@ -47,5 +47,8 @@ namespace Alternet.UI.Localization
 
         /// <see cref="CurrentApplicationIsNotSet"/>
         public string PropertyCannotBeNull { get; set; } = "Property {0} value cannot be null.";
+
+        /// <see cref="CurrentApplicationIsNotSet"/>
+        public string InvalidStringFormat { get; set; } = "String format is not valid.";
     }
 }
