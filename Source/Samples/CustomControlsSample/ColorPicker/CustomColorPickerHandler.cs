@@ -33,15 +33,7 @@ namespace CustomControlsSample
                 {
                     popup = new Window();
                     popup.Owner = Control.ParentWindow;
-                    popup.ShowInTaskbar = false;
-                    popup.StartLocation = WindowStartLocation.Manual;
-                    popup.HasTitleBar = false;
-                    popup.HasBorder = false;
-                    popup.AlwaysOnTop = true;
-                    popup.CloseEnabled = false;
-                    popup.MinimizeEnabled = false;
-                    popup.MaximizeEnabled = false;
-                    popup.Resizable = false;
+                    popup.MakeAsPopup();
                     popup.Disposed += Popup_Disposed;
                     popup.Name = "Popup";
                     popup.Deactivated += Popup_Deactivated;

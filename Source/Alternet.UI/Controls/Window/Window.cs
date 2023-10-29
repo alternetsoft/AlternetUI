@@ -783,6 +783,22 @@ namespace Alternet.UI
             return ModalResult;
         }
 
+        /// <summary>
+        /// Initializes <see cref="Window"/> properties so it looks like popup window.
+        /// </summary>
+        public void MakeAsPopup()
+        {
+            ShowInTaskbar = false;
+            StartLocation = WindowStartLocation.Manual;
+            HasTitleBar = false;
+            HasBorder = false;
+            AlwaysOnTop = true;
+            CloseEnabled = false;
+            MinimizeEnabled = false;
+            MaximizeEnabled = false;
+            Resizable = false;
+        }
+
         internal static Window? GetParentWindow(DependencyObject dp)
         {
             // For use instead of PresentationSource.CriticalFromVisual(focusScope).
