@@ -164,7 +164,7 @@ namespace Alternet.UI
         public static bool TryParseNumber(
             TypeCode typeCode,
             string? s,
-            NumberStyles style,
+            NumberStyles? style,
             IFormatProvider? provider,
             out object? result)
         {
@@ -175,7 +175,9 @@ namespace Alternet.UI
                 return false;
             }
 
-            var isOk = tryParse(s, style, provider, out result);
+            style ??= AssemblyUtils.GetDefaultNumberStyles(typeCode);
+
+            var isOk = tryParse(s, style.Value, provider, out result);
             return isOk;
         }
 
