@@ -16,6 +16,210 @@ namespace Alternet.UI
     public static class AssemblyUtils
     {
         /// <summary>
+        /// Gets maximal possible variable value for the <see cref="sbyte"/> type
+        /// as <see cref="object"/>.
+        /// </summary>
+        public static readonly object MaxValueSByte = sbyte.MaxValue;
+
+        /// <summary>
+        /// Gets maximal possible variable value for the <see cref="byte"/> type
+        /// as <see cref="object"/>.
+        /// </summary>
+        public static readonly object MaxValueByte = byte.MaxValue;
+
+        /// <summary>
+        /// Gets maximal possible variable value for the <see cref="short"/> type
+        /// as <see cref="object"/>.
+        /// </summary>
+        public static readonly object MaxValueInt16 = short.MaxValue;
+
+        /// <summary>
+        /// Gets maximal possible variable value for the <see cref="ushort"/> type
+        /// as <see cref="object"/>.
+        /// </summary>
+        public static readonly object MaxValueUInt16 = ushort.MaxValue;
+
+        /// <summary>
+        /// Gets maximal possible variable value for the <see cref="int"/> type
+        /// as <see cref="object"/>.
+        /// </summary>
+        public static readonly object MaxValueInt32 = int.MaxValue;
+
+        /// <summary>
+        /// Gets maximal possible variable value for the <see cref="uint"/> type
+        /// as <see cref="object"/>.
+        /// </summary>
+        public static readonly object MaxValueUInt32 = uint.MaxValue;
+
+        /// <summary>
+        /// Gets maximal possible variable value for the <see cref="long"/> type
+        /// as <see cref="object"/>.
+        /// </summary>
+        public static readonly object MaxValueInt64 = long.MaxValue;
+
+        /// <summary>
+        /// Gets maximal possible variable value for the <see cref="ulong"/> type
+        /// as <see cref="object"/>.
+        /// </summary>
+        public static readonly object MaxValueUInt64 = ulong.MaxValue;
+
+        /// <summary>
+        /// Gets maximal possible variable value for the <see cref="float"/> type
+        /// as <see cref="object"/>.
+        /// </summary>
+        public static readonly object MaxValueSingle = float.MaxValue;
+
+        /// <summary>
+        /// Gets maximal possible variable value for the <see cref="double"/> type
+        /// as <see cref="object"/>.
+        /// </summary>
+        public static readonly object MaxValueDouble = double.MaxValue;
+
+        /// <summary>
+        /// Gets maximal possible variable value for the <see cref="decimal"/> type
+        /// as <see cref="object"/>.
+        /// </summary>
+        public static readonly object MaxValueDecimal = decimal.MaxValue;
+
+        /// <summary>
+        /// Gets maximal possible variable value for the <see cref="DateTime"/> type
+        /// as <see cref="object"/>.
+        /// </summary>
+        public static readonly object MaxValueDateTime = DateTime.MaxValue;
+
+        /// <summary>
+        /// Gets minimal possible variable value for the <see cref="sbyte"/> type
+        /// as <see cref="object"/>.
+        /// </summary>
+        public static readonly object MinValueSByte = sbyte.MinValue;
+
+        /// <summary>
+        /// Gets minimal possible variable value for the <see cref="byte"/> type
+        /// as <see cref="object"/>.
+        /// </summary>
+        public static readonly object MinValueByte = byte.MinValue;
+
+        /// <summary>
+        /// Gets minimal possible variable value for the <see cref="short"/> type
+        /// as <see cref="object"/>.
+        /// </summary>
+        public static readonly object MinValueInt16 = short.MinValue;
+
+        /// <summary>
+        /// Gets minimal possible variable value for the <see cref="ushort"/> type
+        /// as <see cref="object"/>.
+        /// </summary>
+        public static readonly object MinValueUInt16 = ushort.MinValue;
+
+        /// <summary>
+        /// Gets minimal possible variable value for the <see cref="int"/> type
+        /// as <see cref="object"/>.
+        /// </summary>
+        public static readonly object MinValueInt32 = int.MinValue;
+
+        /// <summary>
+        /// Gets minimal possible variable value for the <see cref="uint"/> type
+        /// as <see cref="object"/>.
+        /// </summary>
+        public static readonly object MinValueUInt32 = uint.MinValue;
+
+        /// <summary>
+        /// Gets minimal possible variable value for the <see cref="long"/> type
+        /// as <see cref="object"/>.
+        /// </summary>
+        public static readonly object MinValueInt64 = long.MinValue;
+
+        /// <summary>
+        /// Gets minimal possible variable value for the <see cref="ulong"/> type
+        /// as <see cref="object"/>.
+        /// </summary>
+        public static readonly object MinValueUInt64 = ulong.MinValue;
+
+        /// <summary>
+        /// Gets minimal possible variable value for the <see cref="float"/> type
+        /// as <see cref="object"/>.
+        /// </summary>
+        public static readonly object MinValueSingle = float.MinValue;
+
+        /// <summary>
+        /// Gets minimal possible variable value for the <see cref="double"/> type
+        /// as <see cref="object"/>.
+        /// </summary>
+        public static readonly object MinValueDouble = double.MinValue;
+
+        /// <summary>
+        /// Gets minimal possible variable value for the <see cref="decimal"/> type
+        /// as <see cref="object"/>.
+        /// </summary>
+        public static readonly object MinValueDecimal = decimal.MinValue;
+
+        /// <summary>
+        /// Gets minimal possible variable value for the <see cref="DateTime"/> type
+        /// as <see cref="object"/>.
+        /// </summary>
+        public static readonly object MinValueDateTime = DateTime.MinValue;
+
+        /// <summary>
+        /// Gets default value for the <see cref="sbyte"/> type as <see cref="object"/>.
+        /// </summary>
+        public static readonly object DefaultSByte = default(sbyte);
+
+        /// <summary>
+        /// Gets default value for the <see cref="byte"/> type as <see cref="object"/>.
+        /// </summary>
+        public static readonly object DefaultByte = default(byte);
+
+        /// <summary>
+        /// Gets default value for the <see cref="short"/> type as <see cref="object"/>.
+        /// </summary>
+        public static readonly object DefaultInt16 = default(short);
+
+        /// <summary>
+        /// Gets default value for the <see cref="ushort"/> type as <see cref="object"/>.
+        /// </summary>
+        public static readonly object DefaultUInt16 = default(ushort);
+
+        /// <summary>
+        /// Gets default value for the <see cref="int"/> type as <see cref="object"/>.
+        /// </summary>
+        public static readonly object DefaultInt32 = default(int);
+
+        /// <summary>
+        /// Gets default value for the <see cref="uint"/> type as <see cref="object"/>.
+        /// </summary>
+        public static readonly object DefaultUInt32 = default(uint);
+
+        /// <summary>
+        /// Gets default value for the <see cref="long"/> type as <see cref="object"/>.
+        /// </summary>
+        public static readonly object DefaultInt64 = default(long);
+
+        /// <summary>
+        /// Gets default value for the <see cref="ulong"/> type as <see cref="object"/>.
+        /// </summary>
+        public static readonly object DefaultUInt64 = default(ulong);
+
+        /// <summary>
+        /// Gets default value for the <see cref="float"/> type as <see cref="object"/>.
+        /// </summary>
+        public static readonly object DefaultSingle = default(float);
+
+        /// <summary>
+        /// Gets default value for the <see cref="double"/> type as <see cref="object"/>.
+        /// </summary>
+        public static readonly object DefaultDouble = default(double);
+
+        /// <summary>
+        /// Gets default value for the <see cref="decimal"/> type as <see cref="object"/>.
+        /// </summary>
+        public static readonly object DefaultDecimal = default(decimal);
+
+        /// <summary>
+        /// Gets default value for the <see cref="DateTime"/> type as <see cref="object"/>.
+        /// </summary>
+        public static readonly object DefaultDateTime = default(DateTime);
+
+        /// <summary>
         /// Creates <see cref="Action"/> for the specified <see cref="MethodInfo"/>.
         /// </summary>
         /// <param name="instance">Object which contains the method.</param>
@@ -133,18 +337,41 @@ namespace Alternet.UI
         {
             return code switch
             {
-                TypeCode.SByte => sbyte.MinValue,
-                TypeCode.Byte => byte.MinValue,
-                TypeCode.Int16 => short.MinValue,
-                TypeCode.UInt16 => ushort.MinValue,
-                TypeCode.Int32 => int.MinValue,
-                TypeCode.UInt32 => uint.MinValue,
-                TypeCode.Int64 => long.MinValue,
-                TypeCode.UInt64 => ulong.MinValue,
-                TypeCode.Single => float.MinValue,
-                TypeCode.Double => double.MinValue,
-                TypeCode.Decimal => decimal.MinValue,
-                TypeCode.DateTime => DateTime.MinValue,
+                TypeCode.SByte => MinValueSByte,
+                TypeCode.Byte => MinValueByte,
+                TypeCode.Int16 => MinValueInt16,
+                TypeCode.UInt16 => MinValueUInt16,
+                TypeCode.Int32 => MinValueInt32,
+                TypeCode.UInt32 => MinValueUInt32,
+                TypeCode.Int64 => MinValueInt64,
+                TypeCode.UInt64 => MinValueUInt64,
+                TypeCode.Single => MinValueSingle,
+                TypeCode.Double => MinValueDouble,
+                TypeCode.Decimal => MinValueDecimal,
+                TypeCode.DateTime => MinValueDateTime,
+                _ => null,
+            };
+        }
+
+        /// <summary>
+        /// Gets default value for the given <see cref="TypeCode"/>.
+        /// </summary>
+        public static object? GetDefaultValue(TypeCode code)
+        {
+            return code switch
+            {
+                TypeCode.SByte => DefaultSByte,
+                TypeCode.Byte => DefaultByte,
+                TypeCode.Int16 => DefaultInt16,
+                TypeCode.UInt16 => DefaultUInt16,
+                TypeCode.Int32 => DefaultInt32,
+                TypeCode.UInt32 => DefaultUInt32,
+                TypeCode.Int64 => DefaultInt64,
+                TypeCode.UInt64 => DefaultUInt64,
+                TypeCode.Single => DefaultSingle,
+                TypeCode.Double => DefaultDouble,
+                TypeCode.Decimal => DefaultDecimal,
+                TypeCode.DateTime => DefaultDateTime,
                 _ => null,
             };
         }
@@ -156,18 +383,18 @@ namespace Alternet.UI
         {
             return code switch
             {
-                TypeCode.SByte => sbyte.MaxValue,
-                TypeCode.Byte => byte.MaxValue,
-                TypeCode.Int16 => short.MaxValue,
-                TypeCode.UInt16 => ushort.MaxValue,
-                TypeCode.Int32 => int.MaxValue,
-                TypeCode.UInt32 => uint.MaxValue,
-                TypeCode.Int64 => long.MaxValue,
-                TypeCode.UInt64 => ulong.MaxValue,
-                TypeCode.Single => float.MaxValue,
-                TypeCode.Double => double.MaxValue,
-                TypeCode.Decimal => decimal.MaxValue,
-                TypeCode.DateTime => DateTime.MaxValue,
+                TypeCode.SByte => MaxValueSByte,
+                TypeCode.Byte => MaxValueByte,
+                TypeCode.Int16 => MaxValueInt16,
+                TypeCode.UInt16 => MaxValueUInt16,
+                TypeCode.Int32 => MaxValueInt32,
+                TypeCode.UInt32 => MaxValueUInt32,
+                TypeCode.Int64 => MaxValueInt64,
+                TypeCode.UInt64 => MaxValueUInt64,
+                TypeCode.Single => MaxValueSingle,
+                TypeCode.Double => MaxValueDouble,
+                TypeCode.Decimal => MaxValueDecimal,
+                TypeCode.DateTime => MaxValueDateTime,
                 _ => null,
             };
         }
