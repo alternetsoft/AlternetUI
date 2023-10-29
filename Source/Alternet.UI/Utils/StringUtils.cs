@@ -8,6 +8,29 @@ using System.Threading.Tasks;
 namespace Alternet.UI
 {
     /// <summary>
+    /// Defines delegate type for the methods that convert the string representation of
+    /// a number to its number equivalent.
+    /// </summary>
+    /// <param name="s">The string to parse.</param>
+    /// <param name="style">A bitwise combination of <see cref="NumberStyles"/> values that indicates
+    /// the permitted format of <paramref name="s"/>.</param>
+    /// <param name="provider">
+    /// An object that supplies culture-specific formatting information
+    /// about <paramref name="s"/>.
+    /// </param>
+    /// <param name="result">
+    /// When this method returns and if the conversion succeeded, contains a number equivalent
+    /// of the numeric value or symbol contained in <paramref name="s"/>.
+    /// Contains default value for the type if the conversion failed.
+    /// </param>
+    /// <returns><c>true</c> if s was converted successfully; otherwise, <c>false</c>.</returns>
+    public delegate bool TryParseNumberDelegate(
+        string? s,
+        NumberStyles style,
+        IFormatProvider? provider,
+        out object? result);
+
+    /// <summary>
     /// Contains <see cref="string"/> related static methods.
     /// </summary>
     public static class StringUtils
@@ -115,6 +138,185 @@ namespace Alternet.UI
 
             result.Append('}');
             return result.ToString();
+        }
+
+        /// <summary>
+        /// Converts the string representation of a number to its number equivalent.
+        /// A return value indicates whether the conversion succeeded or failed.
+        /// </summary>
+        /// <param name="typeCode">Number type identifier.</param>
+        /// <param name="s">The string to parse.</param>
+        /// <param name="style">A bitwise combination of <see cref="NumberStyles"/> values that indicates
+        /// the permitted format of <paramref name="s"/>.</param>
+        /// <param name="provider">
+        /// An object that supplies culture-specific formatting information
+        /// about <paramref name="s"/>.
+        /// </param>
+        /// <param name="result">
+        /// When this method returns and if the conversion succeeded, contains a number equivalent
+        /// of the numeric value or symbol contained in <paramref name="s"/>.
+        /// Contains default value for the type if the conversion failed.
+        /// </param>
+        /// <returns><c>true</c> if s was converted successfully; otherwise, <c>false</c>.</returns>
+        /// <remarks>
+        /// This method is equivalent of "TryParse" methods implemented in number types.
+        /// </remarks>
+        public static bool TryParseNumber(
+            TypeCode typeCode,
+            string? s,
+            NumberStyles style,
+            IFormatProvider? provider,
+            out object? result)
+        {
+            var tryParse = GetTryParseDelegate(typeCode);
+            if (tryParse is null)
+            {
+                result = AssemblyUtils.GetDefaultValue(typeCode);
+                return false;
+            }
+
+            var isOk = tryParse(s, style, provider, out result);
+            return isOk;
+        }
+
+        internal static bool TryParseSByte(
+            string? s,
+            NumberStyles style,
+            IFormatProvider? provider,
+            out object? result)
+        {
+            var isOk = sbyte.TryParse(s, style, provider, out var value);
+            result = value;
+            return isOk;
+        }
+
+        internal static bool TryParseByte(
+            string? s,
+            NumberStyles style,
+            IFormatProvider? provider,
+            out object? result)
+        {
+            var isOk = byte.TryParse(s, style, provider, out var value);
+            result = value;
+            return isOk;
+        }
+
+        internal static bool TryParseInt16(
+            string? s,
+            NumberStyles style,
+            IFormatProvider? provider,
+            out object? result)
+        {
+            var isOk = short.TryParse(s, style, provider, out var value);
+            result = value;
+            return isOk;
+        }
+
+        internal static bool TryParseUInt16(
+            string? s,
+            NumberStyles style,
+            IFormatProvider? provider,
+            out object? result)
+        {
+            var isOk = ushort.TryParse(s, style, provider, out var value);
+            result = value;
+            return isOk;
+        }
+
+        internal static bool TryParseInt32(
+            string? s,
+            NumberStyles style,
+            IFormatProvider? provider,
+            out object? result)
+        {
+            var isOk = int.TryParse(s, style, provider, out var value);
+            result = value;
+            return isOk;
+        }
+
+        internal static bool TryParseUInt32(
+            string? s,
+            NumberStyles style,
+            IFormatProvider? provider,
+            out object? result)
+        {
+            var isOk = uint.TryParse(s, style, provider, out var value);
+            result = value;
+            return isOk;
+        }
+
+        internal static bool TryParseInt64(
+            string? s,
+            NumberStyles style,
+            IFormatProvider? provider,
+            out object? result)
+        {
+            var isOk = long.TryParse(s, style, provider, out var value);
+            result = value;
+            return isOk;
+        }
+
+        internal static bool TryParseUInt64(
+            string? s,
+            NumberStyles style,
+            IFormatProvider? provider,
+            out object? result)
+        {
+            var isOk = ulong.TryParse(s, style, provider, out var value);
+            result = value;
+            return isOk;
+        }
+
+        internal static bool TryParseSingle(
+            string? s,
+            NumberStyles style,
+            IFormatProvider? provider,
+            out object? result)
+        {
+            var isOk = float.TryParse(s, style, provider, out var value);
+            result = value;
+            return isOk;
+        }
+
+        internal static bool TryParseDouble(
+            string? s,
+            NumberStyles style,
+            IFormatProvider? provider,
+            out object? result)
+        {
+            var isOk = double.TryParse(s, style, provider, out var value);
+            result = value;
+            return isOk;
+        }
+
+        internal static bool TryParseDecimal(
+            string? s,
+            NumberStyles style,
+            IFormatProvider? provider,
+            out object? result)
+        {
+            var isOk = decimal.TryParse(s, style, provider, out var value);
+            result = value;
+            return isOk;
+        }
+
+        internal static TryParseNumberDelegate? GetTryParseDelegate(TypeCode typeCode)
+        {
+            return typeCode switch
+            {
+                TypeCode.SByte => TryParseSByte,
+                TypeCode.Byte => TryParseByte,
+                TypeCode.Int16 => TryParseInt16,
+                TypeCode.UInt16 => TryParseUInt16,
+                TypeCode.Int32 => TryParseInt32,
+                TypeCode.UInt32 => TryParseUInt32,
+                TypeCode.Int64 => TryParseInt64,
+                TypeCode.UInt64 => TryParseUInt64,
+                TypeCode.Single => TryParseSingle,
+                TypeCode.Double => TryParseDouble,
+                TypeCode.Decimal => TryParseDecimal,
+                _ => null,
+            };
         }
 
         private class ComparerUsingToString<T> : IComparer<T>
