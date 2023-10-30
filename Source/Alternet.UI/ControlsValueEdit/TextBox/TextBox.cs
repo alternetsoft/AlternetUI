@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
 using Alternet.Drawing;
+using Alternet.UI.Localization;
 
 namespace Alternet.UI
 {
@@ -198,7 +199,7 @@ namespace Alternet.UI
         /// by this property, you can use it for any purposes.
         /// </remarks>
         [Browsable(false)]
-        public virtual bool EmptyTextAllow { get; set; } = true;
+        public virtual bool AllowEmptyText { get; set; } = true;
 
         /// <summary>
         /// Gets or sets data value in cases when <see cref="Text"/> property is empty.
@@ -733,6 +734,35 @@ namespace Alternet.UI
         public static ITextBoxTextAttr CreateTextAttr()
         {
             return new TextBoxTextAttr();
+        }
+
+        /// <summary>
+        /// Gets known error text.
+        /// </summary>
+        /// <param name="kind">Error kind.</param>
+        public string GetKnownErrorText(ValueValidatorKnownError kind)
+        {
+            switch (kind)
+            {
+                case ValueValidatorKnownError.NumberIsExpected:
+                    var rangeStr = GetMinMaxRangeStr(ErrorMessages.Default.ValidationRangeFormat);
+                    return $"{ErrorMessages.Default.ValidationNumberIsExpected} {rangeStr}".Trim();
+                case ValueValidatorKnownError.FloatIsExpected:
+                    return ErrorMessages.Default.ValidationFloatIsExpected;
+                case ValueValidatorKnownError.HexNumberIsExpected:
+                    return ErrorMessages.Default.ValidationHexNumberIsExpected;
+                case ValueValidatorKnownError.InvalidFormat:
+                    return ErrorMessages.Default.ValidationInvalidFormat;
+                default:
+                    var defaultResult = ValidatorErrorText ?? DefaultValidatorErrorText;
+                    return defaultResult ?? ErrorMessages.Default.ValidationInvalidFormat;
+            }
+        }
+
+        /// <inheritdoc cref="ValueValidatorFactory.CreateValidator"/>
+        public static IValueValidatorText CreateValidator(ValueValidatorKind kind)
+        {
+            return ValueValidatorFactory.CreateValidator(kind);
         }
 
         /// <summary>
@@ -1344,6 +1374,41 @@ namespace Alternet.UI
             if (style is not TextBoxTextAttr s)
                 return false;
             return Handler.SetStyle(start, end, s.Handle);
+        }
+
+        /// <summary>
+        /// Reports text validation error.
+        /// </summary>
+        /// <param name="showError">Indicates whether to show/hide error.</param>
+        /// <param name="errorText">Specifies error text.</param>
+        /// <remarks>
+        /// Uses <see cref="DefaultErrorBackgroundColor"/>, <see cref="DefaultErrorForegroundColor"/>,
+        /// <see cref="ValidatorErrorText"/>, <see cref="DefaultValidatorErrorText"/> and
+        /// <see cref="ValidatorReporter"/> properties.
+        /// </remarks>
+        /// <remarks>
+        /// <see cref="ValidatorReporter"/> property must support <see cref="IValidatorReporter"/>
+        /// interface in order to be used in this method. <see cref="PictureBox"/> supports
+        /// this interface.
+        /// </remarks>
+        public void ReportValidatorError(bool showError, string? errorText = null)
+        {
+            var hint = string.Empty;
+            if (!showError)
+            {
+                ResetBackgroundColor();
+                ResetForegroundColor();
+            }
+            else
+            {
+                BackgroundColor = DefaultErrorBackgroundColor;
+                ForegroundColor = DefaultErrorForegroundColor;
+                hint = errorText ?? ValidatorErrorText;
+                hint ??= DefaultValidatorErrorText;
+            }
+
+            var reporter = ValidatorReporter as IValidatorReporter;
+            reporter?.SetErrorStatus(this, showError, hint);
         }
 
         /// <summary>
