@@ -27,7 +27,7 @@ namespace Alternet.UI
         BottomRight,
 
         /// <summary>
-        /// Tick marks are located on both sides of the control.
+        /// Tick marks are located on both sides of the control. Windows only.
         /// </summary>
         Both,
     }
