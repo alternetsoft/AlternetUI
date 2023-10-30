@@ -43,12 +43,27 @@ namespace Alternet.UI.Localization
             "Event has already been handled.";
 
         /// <see cref="CurrentApplicationIsNotSet"/>
-        public string PropertyIsNull { get; set; } = "Property {0} is null";
+        public string PropertyIsNull { get; set; } = "Property {0} is null.";
 
         /// <see cref="CurrentApplicationIsNotSet"/>
         public string PropertyCannotBeNull { get; set; } = "Property {0} value cannot be null.";
 
         /// <see cref="CurrentApplicationIsNotSet"/>
         public string InvalidStringFormat { get; set; } = "String format is not valid.";
+
+        /// <see cref="CurrentApplicationIsNotSet"/>
+        public string ValidationNumberIsExpected { get; set; } = "A number is expected.";
+
+        /// <see cref="CurrentApplicationIsNotSet"/>
+        public string ValidationFloatIsExpected { get; set; } = "A floating point number is expected.";
+
+        /// <see cref="CurrentApplicationIsNotSet"/>
+        public string ValidationHexNumberIsExpected { get; set; } = "A hexadecimal number is expected.";
+
+        /// <see cref="CurrentApplicationIsNotSet"/>
+        public string ValidationRangeFormat { get; set; } = "Range is [{0}..{1}].";
+
+        /// <see cref="CurrentApplicationIsNotSet"/>
+        public string ValidationInvalidFormat { get; set; } = "Invalid format.";
     }
 }
