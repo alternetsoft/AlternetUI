@@ -45,12 +45,39 @@ namespace Alternet.UI
         /// <summary>
         /// Gets validator for <see cref="decimal"/> numbers;
         /// </summary>
+        /// <remarks>
+        /// Do not use it. Consider using <see cref="CreateValidator"/> method.
+        /// </remarks>
         public virtual IValueValidatorText DecimalValidator
         {
             get
             {
                 decimalValidator ??= CreateValueValidatorNum(ValueValidatorNumStyle.Float);
                 return decimalValidator;
+            }
+        }
+
+        /// <summary>
+        /// Creates <see cref="IValueValidatorText"/> instance with the specified kind.
+        /// </summary>
+        /// <param name="kind">Kind ofthe validator.</param>
+        public static IValueValidatorText CreateValidator(ValueValidatorKind kind)
+        {
+            switch (kind)
+            {
+                default:
+                case ValueValidatorKind.Generic:
+                    return Default.CreateValueValidatorText(ValueValidatorTextStyle.None);
+                case ValueValidatorKind.SignedInt:
+                    return Default.CreateValueValidatorNum(ValueValidatorNumStyle.Signed);
+                case ValueValidatorKind.UnsignedInt:
+                    return Default.CreateValueValidatorNum(ValueValidatorNumStyle.Unsigned);
+                case ValueValidatorKind.Float:
+                    return Default.CreateValueValidatorNum(ValueValidatorNumStyle.Float);
+                case ValueValidatorKind.SignedHex:
+                    return Default.CreateValueValidatorNum(ValueValidatorNumStyle.Signed, 16);
+                case ValueValidatorKind.UnsignedHex:
+                    return Default.CreateValueValidatorNum(ValueValidatorNumStyle.Unsigned, 16);
             }
         }
 
@@ -66,7 +93,7 @@ namespace Alternet.UI
         /// <summary>
         /// Creates <see cref="IValueValidatorText"/> instance for the numeric properties.
         /// </summary>
-        /// <param name="numericType"></param>
+        /// <param name="numericType">Number kind (signed int, unsigned int, float).</param>
         /// <param name="valueBase">Value base (2, 8, 10 or 16). Optional.
         /// Default value is 10.</param>
         public virtual IValueValidatorText CreateValueValidatorNum(

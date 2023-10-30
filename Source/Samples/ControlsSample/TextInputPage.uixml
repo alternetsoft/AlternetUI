@@ -43,6 +43,7 @@
 
     <HorizontalStackPanel Name="tab4" Visible="false">
       <VerticalStackPanel  Margin="5" >
+        <Label Text="Try to enter invalid numbers" Margin="0,0,0,5"/>
         <HorizontalStackPanel>
           <Label Text="Signed" Margin="0,0,5,5" Name="numberSignedLabel"/>
           <TextBox Name="numberSignedTextBox" SuggestedWidth="150" Margin="0,0,0,5"/>

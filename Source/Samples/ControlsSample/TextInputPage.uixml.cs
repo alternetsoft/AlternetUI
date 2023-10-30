@@ -12,14 +12,6 @@ namespace ControlsSample
         private const string LoremIpsum =
             "Lorem ipsum dolor sit amet,\nconsectetur adipiscing elit. Suspendisse tincidunt orci vitae arcu congue commodo. Proin fermentum rhoncus dictum.";
 
-        private readonly IValueValidatorText ValidatorNumberSigned =
-            ValueValidatorFactory.Default.CreateValueValidatorNum(ValueValidatorNumStyle.Signed);
-        private readonly IValueValidatorText ValidatorNumberUnsigned =
-            ValueValidatorFactory.Default.CreateValueValidatorNum(ValueValidatorNumStyle.Unsigned);
-        private readonly IValueValidatorText ValidatorNumberFloat =
-            ValueValidatorFactory.Default.CreateValueValidatorNum(ValueValidatorNumStyle.Float);
-        private readonly IValueValidatorText ValidatorNumberHex =
-            ValueValidatorFactory.Default.CreateValueValidatorNum(ValueValidatorNumStyle.Unsigned, 16);
         private readonly CardPanelHeader panelHeader = new();
         private IPageSite? site;
 
@@ -46,41 +38,41 @@ namespace ControlsSample
             passwordCheckBox.BindBoolProp(textBox, nameof(TextBox.IsPassword));
             hasBorderCheckBox.BindBoolProp(textBox, nameof(TextBox.HasBorder));
 
-            numberSignedTextBox.Validator = ValidatorNumberSigned;
-            numberUnsignedTextBox.Validator = ValidatorNumberUnsigned;
-            numberFloatTextBox.Validator = ValidatorNumberFloat;
-            numberHexTextBox.Validator = ValidatorNumberHex;
-
-            numberSignedTextBox.TextChanged += TextBox_ValueChanged;
-            numberUnsignedTextBox.TextChanged += TextBox_ValueChanged;
-            numberFloatTextBox.TextChanged += TextBox_ValueChanged;
-            numberHexTextBox.TextChanged += TextBox_ValueChanged;
-
-            numberSignedTextBox.TextChanged += NumberSignedTextBox_ValueChanged;
-            numberUnsignedTextBox.TextChanged += NumberUnsignedTextBox_ValueChanged;
-            numberFloatTextBox.TextChanged += NumberFloatTextBox_ValueChanged;
-            numberHexTextBox.TextChanged += NumberHexTextBox_ValueChanged;
-
+            numberSignedTextBox.Validator = TextBox.CreateValidator(ValueValidatorKind.SignedInt);
+            numberSignedTextBox.TextChanged += ReportValueChanged;
+            numberSignedTextBox.TextChanged += ValidateFormat;
             numberSignedTextBox.DataType = typeof(short);
-            numberUnsignedTextBox.DataType = typeof(byte);
-            numberFloatTextBox.DataType = typeof(double);
-            numberHexTextBox.DataType = typeof(int);
-
             numberSignedTextBox.ValidatorReporter = numberSignedImage;
-            numberUnsignedTextBox.ValidatorReporter = numberUnsignedImage;
-            numberFloatTextBox.ValidatorReporter = numberFloatImage;
-            numberHexTextBox.ValidatorReporter = numberHexImage;
-
-            var rangeFormat = " Range is [{0}..{1}].";
-
             numberSignedTextBox.ValidatorErrorText =
-                $"A number is expected.{numberSignedTextBox.GetMinMaxRangeStr(rangeFormat)}";
-            numberUnsignedTextBox.ValidatorErrorText =
-                $"A number is expected.{numberUnsignedTextBox.GetMinMaxRangeStr(rangeFormat)}";
-            numberFloatTextBox.ValidatorErrorText = "A floating point number is expected.";
-            numberHexTextBox.ValidatorErrorText = "A hexadecimal number is expected.";
+                numberSignedTextBox.GetKnownErrorText(ValueValidatorKnownError.NumberIsExpected);
 
-            noBellOnErrorCheckBox.BindBoolProp(ValueValidatorFactory.Default, nameof(ValueValidatorFactory.IsSilent));
+            numberUnsignedTextBox.TextChanged += ValidateFormat;
+            numberUnsignedTextBox.Validator = TextBox.CreateValidator(ValueValidatorKind.UnsignedInt);
+            numberUnsignedTextBox.TextChanged += ReportValueChanged;
+            numberUnsignedTextBox.DataType = typeof(byte);
+            numberUnsignedTextBox.ValidatorReporter = numberUnsignedImage;
+            numberUnsignedTextBox.ValidatorErrorText =
+                numberUnsignedTextBox.GetKnownErrorText(ValueValidatorKnownError.NumberIsExpected);
+
+            numberFloatTextBox.Validator = TextBox.CreateValidator(ValueValidatorKind.Float);
+            numberFloatTextBox.TextChanged += ReportValueChanged;
+            numberFloatTextBox.TextChanged += ValidateFormat;
+            numberFloatTextBox.DataType = typeof(double);
+            numberFloatTextBox.ValidatorReporter = numberFloatImage;
+            numberFloatTextBox.ValidatorErrorText =
+                numberFloatTextBox.GetKnownErrorText(ValueValidatorKnownError.FloatIsExpected);
+
+            numberHexTextBox.Validator = TextBox.CreateValidator(ValueValidatorKind.UnsignedHex); 
+            numberHexTextBox.TextChanged += ReportValueChanged;
+            numberHexTextBox.TextChanged += ValidateFormat;
+            numberHexTextBox.DataType = typeof(int);
+            numberHexTextBox.ValidatorReporter = numberHexImage;
+            numberHexTextBox.ValidatorErrorText =
+                numberHexTextBox.GetKnownErrorText(ValueValidatorKnownError.HexNumberIsExpected);
+
+            noBellOnErrorCheckBox.BindBoolProp(
+                ValueValidatorFactory.Default,
+                nameof(ValueValidatorFactory.IsSilent));
 
             ControlSet numberLabels = new(
                 numberSignedLabel,
@@ -134,7 +126,7 @@ namespace ControlsSample
 
             if (string.IsNullOrEmpty(editor.Text))
             {
-                ReportValidatorError(editor.EmptyTextAllow);
+                editor.ReportValidatorError(!editor.AllowEmptyText);
                 return;
             }
 
@@ -149,56 +141,10 @@ namespace ControlsSample
                 editor.FormatProvider,
                 out _);
 
-            ReportValidatorError(isOk);
-
-            void ReportValidatorError(bool ok, string? errorText = null)
-            {
-
-                var hint = string.Empty;
-                if (ok)
-                {
-                    editor.ResetBackgroundColor();
-                    editor.ResetForegroundColor();
-                }
-                else
-                {
-                    editor.BackgroundColor = TextBox.DefaultErrorBackgroundColor;
-                    editor.ForegroundColor = TextBox.DefaultErrorForegroundColor;
-                    hint = errorText ?? editor.ValidatorErrorText;
-                    hint ??= TextBox.DefaultValidatorErrorText; 
-                }
-
-                var reporter = editor.ValidatorReporter as PictureBox; // IValidatorReporter
-
-                if (reporter is not null)
-                {
-                    reporter.ToolTip = hint;
-                    reporter.ImageVisible = !ok;
-                }
-            }
+            editor.ReportValidatorError(!isOk);
         }
 
-        private void NumberSignedTextBox_ValueChanged(object? sender, TextChangedEventArgs e)
-        {
-            ValidateFormat(sender, e);
-        }
-
-        private void NumberUnsignedTextBox_ValueChanged(object? sender, TextChangedEventArgs e)
-        {
-            ValidateFormat(sender, e);
-        }
-
-        private void NumberFloatTextBox_ValueChanged(object? sender, TextChangedEventArgs e)
-        {
-            ValidateFormat(sender, e);
-        }
-
-        private void NumberHexTextBox_ValueChanged(object? sender, TextChangedEventArgs e)
-        {
-            ValidateFormat(sender, e);
-        }
-
-        private void TextBox_ValueChanged(object? sender, TextChangedEventArgs e)
+        private void ReportValueChanged(object? sender, TextChangedEventArgs e)
         {
             var name = (sender as Control)?.Name;
             var value = ((TextBox)sender!).Text;

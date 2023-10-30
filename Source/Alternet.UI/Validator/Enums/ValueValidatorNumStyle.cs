@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Styles used by <see cref="ValueValidatorFactory"/>.
+    /// Styles used by <see cref="ValueValidatorFactory.CreateValueValidatorNum"/>.
     /// </summary>
     public enum ValueValidatorNumStyle
     {
