@@ -31,8 +31,10 @@ namespace Alternet.UI
 
         internal override Native.Control CreateNativeControl()
         {
-            var result = new Native.Panel();
-            result.AcceptsFocusAll = false;
+            var result = new Native.Panel
+            {
+                AcceptsFocusAll = false,
+            };
             return result;
         }
     }

@@ -179,7 +179,7 @@ namespace Alternet.UI
         /// Gets a value indicating whether the mouse pointer is over the
         /// <see cref="Control"/>.
         /// </summary>
-        public bool IsMouseOver
+        public virtual bool IsMouseOver
         {
             get
             {
@@ -194,7 +194,7 @@ namespace Alternet.UI
         /// Gets a value indicating whether the <see cref="Control"/> is contained in a
         /// <see cref="VisualChildren"/> collection.
         /// </summary>
-        public bool IsVisualChild
+        public virtual bool IsVisualChild
         {
             get => isVisualChild;
             private set
@@ -235,7 +235,7 @@ namespace Alternet.UI
             get
             {
                 if (NativeControl == null)
-                    throw new InvalidOperationException();
+                    return false;
 
                 return NativeControl.TabStop;
             }
@@ -243,7 +243,7 @@ namespace Alternet.UI
             set
             {
                 if (NativeControl == null)
-                    throw new InvalidOperationException();
+                    return;
 
                 NativeControl.TabStop = value;
             }
@@ -252,12 +252,12 @@ namespace Alternet.UI
         /// <summary>
         /// Gets a value indicating whether the control has input focus.
         /// </summary>
-        public bool IsFocused
+        public virtual bool IsFocused
         {
             get
             {
                 if (NativeControl == null)
-                    throw new InvalidOperationException();
+                    return false;
 
                 return NativeControl.IsFocused;
             }

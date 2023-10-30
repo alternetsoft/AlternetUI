@@ -1221,6 +1221,96 @@ namespace Alternet.UI
         internal static int ScreenShotCounter { get; set; } = 0;
 
         /// <summary>
+        /// Gets or sets value indicating whether this control accepts
+        /// input or not (i.e. behaves like a static text) and so doesn't need focus.
+        /// </summary>
+        /// <remarks>
+        /// Default value is true.
+        /// </remarks>
+        internal bool AcceptsFocus
+        {
+            get
+            {
+                var result = Handler.NativeControl?.AcceptsFocus;
+                return result ?? false;
+            }
+
+            set
+            {
+                if (Handler.NativeControl is null)
+                    return;
+                Handler.NativeControl.AcceptsFocus = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets value indicating whether this control accepts
+        /// focus from keyboard or not.
+        /// </summary>
+        /// <remarks>
+        /// Default value is true.
+        /// </remarks>
+        /// <returns>
+        /// Return false to indicate that while this control can,
+        /// in principle, have focus if the user clicks
+        /// it with the mouse, it shouldn't be included
+        /// in the TAB traversal chain when using the keyboard.
+        /// </returns>
+        internal bool AcceptsFocusFromKeyboard
+        {
+            get
+            {
+                var result = Handler.NativeControl?.AcceptsFocusFromKeyboard;
+                return result ?? false;
+            }
+
+            set
+            {
+                if (Handler.NativeControl is null)
+                    return;
+                Handler.NativeControl.AcceptsFocusFromKeyboard = value;
+            }
+        }
+
+        /// <summary>
+        /// Indicates whether this control or one of its children accepts focus.
+        /// </summary>
+        /// <remarks>
+        /// Default value is true.
+        /// </remarks>
+        internal bool AcceptsFocusRecursively
+        {
+            get
+            {
+                var result = Handler.NativeControl?.AcceptsFocusRecursively;
+                return result ?? false;
+            }
+
+            set
+            {
+                if (Handler.NativeControl is null)
+                    return;
+                Handler.NativeControl.AcceptsFocusRecursively = value;
+            }
+        }
+
+        internal bool AcceptsFocusAll
+        {
+            get
+            {
+                var result = Handler.NativeControl?.AcceptsFocusAll;
+                return result ?? false;
+            }
+
+            set
+            {
+                if (Handler.NativeControl is null)
+                    return;
+                Handler.NativeControl.AcceptsFocusAll = value;
+            }
+        }
+
+        /// <summary>
         /// Gets or sets the border brush of the control.
         /// </summary>
         [Browsable(false)]

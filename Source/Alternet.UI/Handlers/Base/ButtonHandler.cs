@@ -22,40 +22,8 @@ namespace Alternet.UI
         /// </summary>
         public abstract bool IsDefault { get; set; }
 
-        /// <summary>
-        /// Gets or sets value indicating whether this control accepts
-        /// input or not (i.e. behaves like a static text) and so doesn't need focus.
-        /// </summary>
-        /// <remarks>
-        /// Default value is true.
-        /// </remarks>
-        public abstract bool AcceptsFocus { get; set; }
-
         /// <inheritdoc cref="Button.ExactFit"/>
         public abstract bool ExactFit { get; set; }
-
-        /// <summary>
-        /// Gets or sets value indicating whether this control accepts
-        /// focus from keyboard or not.
-        /// </summary>
-        /// <remarks>
-        /// Default value is true.
-        /// </remarks>
-        /// <returns>
-        /// Return false to indicate that while this control can,
-        /// in principle, have focus if the user clicks
-        /// it with the mouse, it shouldn't be included
-        /// in the TAB traversal chain when using the keyboard.
-        /// </returns>
-        public abstract bool AcceptsFocusFromKeyboard { get; set; }
-
-        /// <summary>
-        /// Indicates whether this control or one of its children accepts focus.
-        /// </summary>
-        /// <remarks>
-        /// Default value is true.
-        /// </remarks>
-        public abstract bool AcceptsFocusRecursively { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether the control has a border.

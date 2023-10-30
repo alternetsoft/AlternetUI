@@ -9,45 +9,6 @@ namespace Alternet.UI
     {
         private ControlStateImages? stateImages;
 
-        public override bool AcceptsFocus
-        {
-            get
-            {
-                return NativeControl.AcceptsFocus;
-            }
-
-            set
-            {
-                NativeControl.AcceptsFocus = value;
-            }
-        }
-
-        public override bool AcceptsFocusFromKeyboard
-        {
-            get
-            {
-                return NativeControl.AcceptsFocusFromKeyboard;
-            }
-
-            set
-            {
-                NativeControl.AcceptsFocusFromKeyboard = value;
-            }
-        }
-
-        public override bool AcceptsFocusRecursively
-        {
-            get
-            {
-                return NativeControl.AcceptsFocusRecursively;
-            }
-
-            set
-            {
-                NativeControl.AcceptsFocusRecursively = value;
-            }
-        }
-
         public override bool HasBorder
         {
             get
@@ -96,10 +57,11 @@ namespace Alternet.UI
 
             set
             {
+                if (value is null)
+                    throw new ArgumentNullException(nameof(StateImages));
                 if (stateImages != null)
                     stateImages.PropertyChanged -= StateImages_PropertyChanged;
-
-                stateImages = value ?? throw new ArgumentNullException();
+                stateImages = value;
                 stateImages.PropertyChanged += StateImages_PropertyChanged;
                 ApplyStateImages();
                 OnImageChanged();
