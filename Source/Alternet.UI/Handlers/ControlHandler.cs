@@ -15,13 +15,9 @@ namespace Alternet.UI
     {
         private int layoutSuspendCount;
         private Rect reportedBounds;
-
         private bool inLayout;
-
         private Control? control;
-
         private Rect bounds;
-
         private Native.Control? nativeControl;
         private bool isVisualChild;
         private Collection<Control>? visualChildren;
