@@ -227,6 +227,11 @@ namespace Alternet::UI
         GetSlider()->SetPageSize(value);
     }
 
+    void Slider::ClearTicks()
+    {
+        GetSlider()->ClearTicks();
+    }
+
     int Slider::RetrieveTickFrequency()
     {
         return GetSlider()->GetTickFreq();

@@ -93,6 +93,11 @@ ALTERNET_UI_API void Slider_SetTickStyle_(Slider* obj, SliderTickStyle value)
     obj->SetTickStyle(value);
 }
 
+ALTERNET_UI_API void Slider_ClearTicks_(Slider* obj)
+{
+    obj->ClearTicks();
+}
+
 ALTERNET_UI_API void Slider_SetEventCallback_(Slider::SliderEventCallbackType callback)
 {
     Slider::SetEventCallback(callback);

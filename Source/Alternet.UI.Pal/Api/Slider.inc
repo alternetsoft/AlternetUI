@@ -32,6 +32,7 @@ void SetOrientation(SliderOrientation value);
 SliderTickStyle GetTickStyle();
 void SetTickStyle(SliderTickStyle value);
 
+void ClearTicks();
 public:
 enum class SliderEvent
 {

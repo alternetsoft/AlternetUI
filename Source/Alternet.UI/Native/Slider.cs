@@ -144,6 +144,12 @@ namespace Alternet.UI.Native
             }
         }
         
+        public void ClearTicks()
+        {
+            CheckDisposed();
+            NativeApi.Slider_ClearTicks_(NativePointer);
+        }
+        
         static GCHandle eventCallbackGCHandle;
         
         static void SetEventCallback()
@@ -242,6 +248,9 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Slider_SetTickStyle_(IntPtr obj, SliderTickStyle value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Slider_ClearTicks_(IntPtr obj);
             
         }
     }

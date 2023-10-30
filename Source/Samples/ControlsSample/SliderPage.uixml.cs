@@ -13,8 +13,16 @@ namespace ControlsSample
         {
             InitializeComponent();
 
-            foreach (var item in Enum.GetValues(typeof(SliderTickStyle)))
-                tickStyleComboBox.Items.Add(item ?? throw new Exception());
+            clearTicksButton.Visible = Application.IsWindowsOS || Application.IsLinuxOS;
+
+            foreach (var item in Enum.GetValues<SliderTickStyle>())
+            {
+                if (item == SliderTickStyle.None && Application.IsLinuxOS)
+                    continue;
+                if (item == SliderTickStyle.Both && !Application.IsWindowsOS)
+                    continue;
+                tickStyleComboBox.Items.Add(item);
+            }
             tickStyleComboBox.SelectedIndex = 0;
         }
 
@@ -31,8 +39,16 @@ namespace ControlsSample
 
         private void TickStyleComboBox_SelectedItemChanged(object? sender, EventArgs e)
         {
-            foreach (var slider in GetAllSliders())
-                slider.TickStyle = (SliderTickStyle)(tickStyleComboBox.SelectedItem ?? throw new InvalidOperationException());
+            if (tickStyleComboBox.SelectedItem is null)
+                return;
+
+            this.DoInsideUpdate(() =>
+            {
+                foreach (var slider in GetAllSliders())
+                {
+                    slider.TickStyle = (SliderTickStyle)(tickStyleComboBox.SelectedItem);
+                }
+            });
         }
 
         private void Slider_ValueChanged(object? sender, EventArgs e)
@@ -43,6 +59,14 @@ namespace ControlsSample
         private void ProgressBarControlSlider_ValueChanged(object? sender, EventArgs e)
         {
             progressBar.Value = progressBarControlSlider.Value;
+        }
+
+        private void ClearTicksButton_Click(object? sender, EventArgs e)
+        {
+            foreach (var slider in GetAllSliders())
+            {
+                slider.ClearTicks();
+            }
         }
 
         private void IncreaseAllButton_Click(object? sender, EventArgs e)

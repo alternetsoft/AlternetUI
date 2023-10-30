@@ -301,6 +301,18 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Clears the ticks.
+        /// </summary>
+        /// <remarks>
+        /// Availability: only available for the Windows, Linux ports.
+        /// </remarks>
+        public void ClearTicks()
+        {
+            if(Application.IsWindowsOS || Application.IsLinuxOS)
+                (Handler.NativeControl as Native.Slider)?.ClearTicks();
+        }
+
+        /// <summary>
         /// Raises the <see cref="ValueChanged"/> event and calls
         /// <see cref="OnValueChanged(EventArgs)"/>.
         /// </summary>

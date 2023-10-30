@@ -19,5 +19,7 @@ namespace NativeApi.Api
 
         public SliderOrientation Orientation { get; set; }
         public SliderTickStyle TickStyle { get; set; }
+
+        public void ClearTicks() { }
     }
 }

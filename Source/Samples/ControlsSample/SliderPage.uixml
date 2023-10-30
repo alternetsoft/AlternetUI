@@ -89,6 +89,9 @@
       <Button Text="Increase All" Margin="0,0,0,0" Name="increaseAllButton"
       Click="IncreaseAllButton_Click" />
 
+      <Button Text="Clear Ticks" Margin="5,0,0,0" Name="clearTicksButton"
+      Click="ClearTicksButton_Click" />
+
       <Label Text="Tick Style:" VerticalAlignment="Center" Margin="20,0,0,0"/>
       <ComboBox IsEditable="false" Name="tickStyleComboBox" Margin="5,0,0,0"
           SelectedItemChanged="TickStyleComboBox_SelectedItemChanged"/>
