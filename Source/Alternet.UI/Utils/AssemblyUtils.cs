@@ -374,14 +374,45 @@ namespace Alternet.UI
         /// <remarks>
         /// For example, if format is "{0}..{1}", result is "0..255".
         /// </remarks>
-        public static string? GetMinMaxRangeStr(TypeCode code, string? format = null)
+        public static string? GetMinMaxRangeStr(
+            TypeCode code,
+            string? format = null,
+            object? minValue = null,
+            object? maxValue = null)
         {
-            var minValue = GetMinValue(code);
-            var maxValue = GetMaxValue(code);
-            if (minValue is null || maxValue is null)
+            var minValueT = MathUtils.Max(GetMinValue(code), minValue);
+            var maxValueT = MathUtils.Min(GetMaxValue(code), maxValue);
+            if (minValueT is null || maxValueT is null)
                 return null;
             format ??= "{0}..{1}";
-            return string.Format(format, minValue, maxValue);
+            return string.Format(format, minValueT, maxValueT);
+        }
+
+        /// <summary>
+        /// Upgrades signed inegers to <see cref="long"/>, unsigned integers to
+        /// <see cref="ulong"/> and returns all other types as is.
+        /// </summary>
+        /// <param name="value">Value of any type.</param>
+        public static object UpgradeNumberType(object value)
+        {
+            var typeCode = AssemblyUtils.GetRealTypeCode(value.GetType());
+            return typeCode switch
+            {
+                TypeCode.SByte => LongOrULong((long)((sbyte)value)),
+                TypeCode.Int16 => LongOrULong((long)((short)value)),
+                TypeCode.Int32 => LongOrULong((long)((int)value)),
+                TypeCode.Byte => (ulong)((byte)value),
+                TypeCode.UInt16 => (ulong)((ushort)value),
+                TypeCode.UInt32 => (ulong)((uint)value),
+                _ => value,
+            };
+
+            static object LongOrULong(long longValue)
+            {
+                if (longValue < 0)
+                    return longValue;
+                return (ulong)longValue;
+            }
         }
 
         /// <summary>
@@ -482,6 +513,38 @@ namespace Alternet.UI
             if (browsable is not null)
                 return browsable.Browsable;
             return true;
+        }
+
+        /// <summary>
+        /// Returns <c>true</c> if <paramref name="typeCode"/> is number.
+        /// </summary>
+        /// <param name="typeCode">Type code.</param>
+        public static bool IsNumberTypeCode(TypeCode typeCode)
+        {
+            switch (typeCode)
+            {
+                case TypeCode.Empty:
+                case TypeCode.Object:
+                case TypeCode.DBNull:
+                case TypeCode.Boolean:
+                case TypeCode.Char:
+                case TypeCode.DateTime:
+                case TypeCode.String:
+                default:
+                    return false;
+                case TypeCode.SByte:
+                case TypeCode.Byte:
+                case TypeCode.Int16:
+                case TypeCode.UInt16:
+                case TypeCode.Int32:
+                case TypeCode.UInt32:
+                case TypeCode.Int64:
+                case TypeCode.UInt64:
+                case TypeCode.Single:
+                case TypeCode.Double:
+                case TypeCode.Decimal:
+                    return true;
+            }
         }
 
         /// <summary>
