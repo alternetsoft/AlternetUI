@@ -102,7 +102,15 @@ namespace ControlsSample
                 picture.Image = image;
                 picture.ImageVisible = false;
                 picture.ImageStretch = false;
+                picture.TabStop = false;
+                picture.GotFocus += Control_GotFocus;
             }
+        }
+
+        private void Control_GotFocus(object sender, RoutedEventArgs e)
+        {
+            var name = (sender as Control)?.Name ?? sender.GetType().Name;
+            site?.LogEvent($"Focused: {name}" );
         }
 
         private void MultiLineTextBox_TextUrl(object? sender, EventArgs e)

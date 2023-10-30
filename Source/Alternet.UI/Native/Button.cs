@@ -202,51 +202,6 @@ namespace Alternet.UI.Native
             }
         }
         
-        public bool AcceptsFocus
-        {
-            get
-            {
-                CheckDisposed();
-                return NativeApi.Button_GetAcceptsFocus_(NativePointer);
-            }
-            
-            set
-            {
-                CheckDisposed();
-                NativeApi.Button_SetAcceptsFocus_(NativePointer, value);
-            }
-        }
-        
-        public bool AcceptsFocusFromKeyboard
-        {
-            get
-            {
-                CheckDisposed();
-                return NativeApi.Button_GetAcceptsFocusFromKeyboard_(NativePointer);
-            }
-            
-            set
-            {
-                CheckDisposed();
-                NativeApi.Button_SetAcceptsFocusFromKeyboard_(NativePointer, value);
-            }
-        }
-        
-        public bool AcceptsFocusRecursively
-        {
-            get
-            {
-                CheckDisposed();
-                return NativeApi.Button_GetAcceptsFocusRecursively_(NativePointer);
-            }
-            
-            set
-            {
-                CheckDisposed();
-                NativeApi.Button_SetAcceptsFocusRecursively_(NativePointer, value);
-            }
-        }
-        
         public bool TextVisible
         {
             get
@@ -405,24 +360,6 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Button_SetFocusedImage_(IntPtr obj, IntPtr value);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool Button_GetAcceptsFocus_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Button_SetAcceptsFocus_(IntPtr obj, bool value);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool Button_GetAcceptsFocusFromKeyboard_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Button_SetAcceptsFocusFromKeyboard_(IntPtr obj, bool value);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool Button_GetAcceptsFocusRecursively_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Button_SetAcceptsFocusRecursively_(IntPtr obj, bool value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool Button_GetTextVisible_(IntPtr obj);

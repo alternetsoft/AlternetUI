@@ -2,7 +2,7 @@ using Alternet.Drawing;
 
 namespace Alternet.UI
 {
-    internal class PictureBoxHandler : ControlHandler<PictureBox>
+    internal class PictureBoxHandler : NativeControlHandler<PictureBox, Native.Panel>
     {
         protected override bool NeedsPaint => true;
 
@@ -27,6 +27,13 @@ namespace Alternet.UI
                 return new Size(specifiedWidth, specifiedHeight);
 
             return Control.Image.Size;
+        }
+
+        internal override Native.Control CreateNativeControl()
+        {
+            var result = new Native.Panel();
+            result.AcceptsFocusAll = false;
+            return result;
         }
     }
 }

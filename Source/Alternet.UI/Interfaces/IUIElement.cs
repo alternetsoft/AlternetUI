@@ -14,15 +14,15 @@ namespace Alternet.UI
 
         event MouseButtonEventHandler MouseDoubleClick;
 
-        event DependencyPropertyChangedEventHandler FocusableChanged;
-
         event RoutedEventHandler GotFocus;
 
         event RoutedEventHandler LostFocus;
 
         event EventHandler? LayoutUpdated;
 
-        bool Focusable { get; set; }
+        /*event DependencyPropertyChangedEventHandler FocusableChanged;*/
+
+        /*bool Focusable { get; set; }*/
 
         void AddToEventRoute(EventRoute route, RoutedEventArgs e);
 

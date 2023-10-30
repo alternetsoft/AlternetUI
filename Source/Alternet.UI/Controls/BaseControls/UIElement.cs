@@ -246,15 +246,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        ///     FocusableChanged event
-        /// </summary>
-        public event DependencyPropertyChangedEventHandler FocusableChanged
-        {
-            add { EventHandlersStoreAdd(FocusableChangedKey, value); }
-            remove { EventHandlersStoreRemove(FocusableChangedKey, value); }
-        }
-
-        /// <summary>
         ///     Event reporting a key was pressed
         /// </summary>
         public event KeyEventHandler PreviewKeyDown
@@ -494,10 +485,19 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        ///     FocusableChanged event
+        /// </summary>
+        internal event DependencyPropertyChangedEventHandler FocusableChanged
+        {
+            add { EventHandlersStoreAdd(FocusableChangedKey, value); }
+            remove { EventHandlersStoreRemove(FocusableChangedKey, value); }
+        }
+
+        /// <summary>
         ///     Gettor and Settor for Focusable Property
         /// </summary>
         [Browsable(false)]
-        public bool Focusable
+        internal bool Focusable
         {
             get { return (bool)GetValue(FocusableProperty); }
             set { SetValue(FocusableProperty, BooleanBoxes.Box(value)); }

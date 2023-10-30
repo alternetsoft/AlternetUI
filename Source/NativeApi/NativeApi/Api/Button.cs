@@ -31,10 +31,6 @@ namespace NativeApi.Api
 
         public Image? FocusedImage { get; set; }
 
-        public bool AcceptsFocus { get;set;}
-        public bool AcceptsFocusFromKeyboard { get;set;}
-        public bool AcceptsFocusRecursively { get;set;}
-
         public bool TextVisible { get; set; }
         public int TextAlign { get; set; }
         public void SetImagePosition(int dir) {}

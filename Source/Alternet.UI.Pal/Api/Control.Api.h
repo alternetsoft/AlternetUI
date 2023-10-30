@@ -11,6 +11,46 @@
 
 using namespace Alternet::UI;
 
+ALTERNET_UI_API c_bool Control_GetAcceptsFocus_(Control* obj)
+{
+    return obj->GetAcceptsFocus();
+}
+
+ALTERNET_UI_API void Control_SetAcceptsFocus_(Control* obj, c_bool value)
+{
+    obj->SetAcceptsFocus(value);
+}
+
+ALTERNET_UI_API c_bool Control_GetAcceptsFocusFromKeyboard_(Control* obj)
+{
+    return obj->GetAcceptsFocusFromKeyboard();
+}
+
+ALTERNET_UI_API void Control_SetAcceptsFocusFromKeyboard_(Control* obj, c_bool value)
+{
+    obj->SetAcceptsFocusFromKeyboard(value);
+}
+
+ALTERNET_UI_API c_bool Control_GetAcceptsFocusRecursively_(Control* obj)
+{
+    return obj->GetAcceptsFocusRecursively();
+}
+
+ALTERNET_UI_API void Control_SetAcceptsFocusRecursively_(Control* obj, c_bool value)
+{
+    obj->SetAcceptsFocusRecursively(value);
+}
+
+ALTERNET_UI_API c_bool Control_GetAcceptsFocusAll_(Control* obj)
+{
+    return obj->GetAcceptsFocusAll();
+}
+
+ALTERNET_UI_API void Control_SetAcceptsFocusAll_(Control* obj, c_bool value)
+{
+    obj->SetAcceptsFocusAll(value);
+}
+
 ALTERNET_UI_API int Control_GetBorderStyle_(Control* obj)
 {
     return obj->GetBorderStyle();
@@ -266,6 +306,21 @@ ALTERNET_UI_API void Control_SetMaximumSize_(Control* obj, Size value)
     obj->SetMaximumSize(value);
 }
 
+ALTERNET_UI_API Control* Control_HitTest_(Point screenPoint)
+{
+    return Control::HitTest(screenPoint);
+}
+
+ALTERNET_UI_API Control* Control_GetFocusedControl_()
+{
+    return Control::GetFocusedControl();
+}
+
+ALTERNET_UI_API void Control_NotifyCaptureLost_()
+{
+    Control::NotifyCaptureLost();
+}
+
 ALTERNET_UI_API void Control_Freeze_(Control* obj)
 {
     obj->Freeze();
@@ -474,21 +529,6 @@ ALTERNET_UI_API int Control_GetScrollBarLargeChange_(Control* obj, ScrollBarOrie
 ALTERNET_UI_API int Control_GetScrollBarMaximum_(Control* obj, ScrollBarOrientation orientation)
 {
     return obj->GetScrollBarMaximum(orientation);
-}
-
-ALTERNET_UI_API Control* Control_HitTest_(Point screenPoint)
-{
-    return Control::HitTest(screenPoint);
-}
-
-ALTERNET_UI_API Control* Control_GetFocusedControl_()
-{
-    return Control::GetFocusedControl();
-}
-
-ALTERNET_UI_API void Control_NotifyCaptureLost_()
-{
-    Control::NotifyCaptureLost();
 }
 
 ALTERNET_UI_API void Control_SetEventCallback_(Control::ControlEventCallbackType callback)

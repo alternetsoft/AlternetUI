@@ -95,6 +95,10 @@ namespace Alternet::UI
 
         Window* GetParentWindow();
 
+        bool _acceptsFocus = true;
+        bool _acceptsFocusFromKeyboard = true;
+        bool _acceptsFocusRecursively = true;
+
     protected:
         bool bindScrollEvents = true;
         int _ignoreRecreate = 0;

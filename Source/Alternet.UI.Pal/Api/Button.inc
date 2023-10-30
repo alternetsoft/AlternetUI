@@ -45,18 +45,6 @@ Image* GetFocusedImage();
 void SetFocusedImage(Image* value);
 
 
-bool GetAcceptsFocus();
-void SetAcceptsFocus(bool value);
-
-
-bool GetAcceptsFocusFromKeyboard();
-void SetAcceptsFocusFromKeyboard(bool value);
-
-
-bool GetAcceptsFocusRecursively();
-void SetAcceptsFocusRecursively(bool value);
-
-
 bool GetTextVisible();
 void SetTextVisible(bool value);
 

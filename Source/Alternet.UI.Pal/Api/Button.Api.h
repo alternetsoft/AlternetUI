@@ -124,36 +124,6 @@ ALTERNET_UI_API void Button_SetFocusedImage_(Button* obj, Image* value)
     obj->SetFocusedImage(value);
 }
 
-ALTERNET_UI_API c_bool Button_GetAcceptsFocus_(Button* obj)
-{
-    return obj->GetAcceptsFocus();
-}
-
-ALTERNET_UI_API void Button_SetAcceptsFocus_(Button* obj, c_bool value)
-{
-    obj->SetAcceptsFocus(value);
-}
-
-ALTERNET_UI_API c_bool Button_GetAcceptsFocusFromKeyboard_(Button* obj)
-{
-    return obj->GetAcceptsFocusFromKeyboard();
-}
-
-ALTERNET_UI_API void Button_SetAcceptsFocusFromKeyboard_(Button* obj, c_bool value)
-{
-    obj->SetAcceptsFocusFromKeyboard(value);
-}
-
-ALTERNET_UI_API c_bool Button_GetAcceptsFocusRecursively_(Button* obj)
-{
-    return obj->GetAcceptsFocusRecursively();
-}
-
-ALTERNET_UI_API void Button_SetAcceptsFocusRecursively_(Button* obj, c_bool value)
-{
-    obj->SetAcceptsFocusRecursively(value);
-}
-
 ALTERNET_UI_API c_bool Button_GetTextVisible_(Button* obj)
 {
     return obj->GetTextVisible();

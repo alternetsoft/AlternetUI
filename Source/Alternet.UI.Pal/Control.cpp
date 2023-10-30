@@ -647,6 +647,61 @@ namespace Alternet::UI
     {
     }
 
+    bool Control::GetAcceptsFocus()
+    {
+        return _acceptsFocus;
+    }
+
+    void Control::SetAcceptsFocus(bool value)
+    {
+        if (_acceptsFocus == value)
+            return;
+        _acceptsFocus = value;
+        RecreateWxWindowIfNeeded();
+    }
+
+    bool Control::GetAcceptsFocusAll()
+    {
+        return _acceptsFocus && _acceptsFocusFromKeyboard && _acceptsFocusRecursively;
+    }
+
+    void Control::SetAcceptsFocusAll(bool value)
+    {
+        if (_acceptsFocus == value && _acceptsFocusFromKeyboard == value
+            && _acceptsFocusRecursively == value)
+            return;
+        _acceptsFocus = value;
+        _acceptsFocusFromKeyboard = value;
+        _acceptsFocusRecursively = value;
+        RecreateWxWindowIfNeeded();
+    }
+
+    bool Control::GetAcceptsFocusFromKeyboard()
+    {
+        return _acceptsFocusFromKeyboard;
+    }
+
+    void Control::SetAcceptsFocusFromKeyboard(bool value)
+    {
+        if (_acceptsFocusFromKeyboard == value)
+            return;
+        _acceptsFocusFromKeyboard = value;
+        RecreateWxWindowIfNeeded();
+    }
+
+    bool Control::GetAcceptsFocusRecursively()
+    {
+        return _acceptsFocusRecursively;
+    }
+
+    void Control::SetAcceptsFocusRecursively(bool value)
+    {
+        if (_acceptsFocusRecursively == value)
+            return;
+        _acceptsFocusRecursively = value;
+        RecreateWxWindowIfNeeded();
+    }
+
     void Control::CreateWxWindow()
     {
         _flags.Set(ControlFlags::CreatingWxWindow, true);

@@ -24,6 +24,66 @@ namespace Alternet.UI.Native
         {
         }
         
+        public bool AcceptsFocus
+        {
+            get
+            {
+                CheckDisposed();
+                return NativeApi.Control_GetAcceptsFocus_(NativePointer);
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.Control_SetAcceptsFocus_(NativePointer, value);
+            }
+        }
+        
+        public bool AcceptsFocusFromKeyboard
+        {
+            get
+            {
+                CheckDisposed();
+                return NativeApi.Control_GetAcceptsFocusFromKeyboard_(NativePointer);
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.Control_SetAcceptsFocusFromKeyboard_(NativePointer, value);
+            }
+        }
+        
+        public bool AcceptsFocusRecursively
+        {
+            get
+            {
+                CheckDisposed();
+                return NativeApi.Control_GetAcceptsFocusRecursively_(NativePointer);
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.Control_SetAcceptsFocusRecursively_(NativePointer, value);
+            }
+        }
+        
+        public bool AcceptsFocusAll
+        {
+            get
+            {
+                CheckDisposed();
+                return NativeApi.Control_GetAcceptsFocusAll_(NativePointer);
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.Control_SetAcceptsFocusAll_(NativePointer, value);
+            }
+        }
+        
         public int BorderStyle
         {
             get
@@ -440,6 +500,27 @@ namespace Alternet.UI.Native
             }
         }
         
+        public static Control? HitTest(Alternet.Drawing.Point screenPoint)
+        {
+            var _nnn = NativeApi.Control_HitTest_(screenPoint);
+            var _mmm = NativeObject.GetFromNativePointer<Control>(_nnn, null);
+            ReleaseNativeObjectPointer(_nnn);
+            return _mmm;
+        }
+        
+        public static Control? GetFocusedControl()
+        {
+            var _nnn = NativeApi.Control_GetFocusedControl_();
+            var _mmm = NativeObject.GetFromNativePointer<Control>(_nnn, null);
+            ReleaseNativeObjectPointer(_nnn);
+            return _mmm;
+        }
+        
+        public static void NotifyCaptureLost()
+        {
+            NativeApi.Control_NotifyCaptureLost_();
+        }
+        
         public void Freeze()
         {
             CheckDisposed();
@@ -698,27 +779,6 @@ namespace Alternet.UI.Native
             return NativeApi.Control_GetScrollBarMaximum_(NativePointer, orientation);
         }
         
-        public static Control? HitTest(Alternet.Drawing.Point screenPoint)
-        {
-            var _nnn = NativeApi.Control_HitTest_(screenPoint);
-            var _mmm = NativeObject.GetFromNativePointer<Control>(_nnn, null);
-            ReleaseNativeObjectPointer(_nnn);
-            return _mmm;
-        }
-        
-        public static Control? GetFocusedControl()
-        {
-            var _nnn = NativeApi.Control_GetFocusedControl_();
-            var _mmm = NativeObject.GetFromNativePointer<Control>(_nnn, null);
-            ReleaseNativeObjectPointer(_nnn);
-            return _mmm;
-        }
-        
-        public static void NotifyCaptureLost()
-        {
-            NativeApi.Control_NotifyCaptureLost_();
-        }
-        
         static GCHandle eventCallbackGCHandle;
         
         static void SetEventCallback()
@@ -859,6 +919,30 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Control_SetEventCallback_(ControlEventCallbackType callback);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool Control_GetAcceptsFocus_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Control_SetAcceptsFocus_(IntPtr obj, bool value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool Control_GetAcceptsFocusFromKeyboard_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Control_SetAcceptsFocusFromKeyboard_(IntPtr obj, bool value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool Control_GetAcceptsFocusRecursively_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Control_SetAcceptsFocusRecursively_(IntPtr obj, bool value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool Control_GetAcceptsFocusAll_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Control_SetAcceptsFocusAll_(IntPtr obj, bool value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern int Control_GetBorderStyle_(IntPtr obj);
@@ -1014,6 +1098,15 @@ namespace Alternet.UI.Native
             public static extern void Control_SetMaximumSize_(IntPtr obj, Alternet.Drawing.Size value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern IntPtr Control_HitTest_(Alternet.Drawing.Point screenPoint);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern IntPtr Control_GetFocusedControl_();
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Control_NotifyCaptureLost_();
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Control_Freeze_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
@@ -1138,15 +1231,6 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern int Control_GetScrollBarMaximum_(IntPtr obj, ScrollBarOrientation orientation);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern IntPtr Control_HitTest_(Alternet.Drawing.Point screenPoint);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern IntPtr Control_GetFocusedControl_();
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Control_NotifyCaptureLost_();
             
         }
     }

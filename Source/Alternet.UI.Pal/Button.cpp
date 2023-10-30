@@ -9,17 +9,26 @@ namespace Alternet::UI
 {
     bool wxButton2::AcceptsFocus() const
     {
-        return _owner->_acceptsFocus;
+        if (_owner == nullptr)
+            return wxButton::AcceptsFocus();
+        else
+            return _owner->_acceptsFocus;
     }
 
     bool wxButton2::AcceptsFocusFromKeyboard() const
     {
-        return _owner->_acceptsFocusFromKeyboard;
+        if (_owner == nullptr)
+            return wxButton::AcceptsFocusFromKeyboard();
+        else
+            return _owner->_acceptsFocusFromKeyboard;
     }
 
     bool wxButton2::AcceptsFocusRecursively() const
     {
-        return _owner->_acceptsFocusRecursively;
+        if (_owner == nullptr)
+            return wxButton::AcceptsFocusRecursively();
+        else
+            return _owner->_acceptsFocusRecursively;
     }
 
 #ifdef __WXOSX_COCOA__            
@@ -115,45 +124,6 @@ namespace Alternet::UI
     {
         _text.Set(value);
     }
-
-    bool Button::GetAcceptsFocus() 
-    {
-        return _acceptsFocus;
-    }
-
-    void Button::SetAcceptsFocus(bool value)
-    {
-        if (_acceptsFocus == value)
-            return;
-        _acceptsFocus = value;
-        RecreateWxWindowIfNeeded();
-    }
-
-    bool Button::GetAcceptsFocusFromKeyboard()
-    {
-        return _acceptsFocusFromKeyboard;
-    }
-
-    void Button::SetAcceptsFocusFromKeyboard(bool value)
-    {
-        if (_acceptsFocusFromKeyboard == value)
-            return;
-        _acceptsFocusFromKeyboard = value;
-        RecreateWxWindowIfNeeded();
-    }
-
-    bool Button::GetAcceptsFocusRecursively()
-    {
-        return _acceptsFocusRecursively;
-    }
-
-    void Button::SetAcceptsFocusRecursively(bool value)
-    {
-        if (_acceptsFocusRecursively == value)
-            return;
-        _acceptsFocusRecursively = value;
-        RecreateWxWindowIfNeeded();
-    }    
 
     bool Button::GetExactFit()
     {

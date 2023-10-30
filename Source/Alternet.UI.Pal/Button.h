@@ -11,7 +11,7 @@ namespace Alternet::UI
     class wxButton2 : public wxButton, public wxWidgetExtender
     {
     public:
-        Button* _owner = nullptr;
+        Button* _owner;
 
         virtual bool AcceptsFocus() const override;
         virtual bool AcceptsFocusFromKeyboard() const override;
@@ -41,10 +41,6 @@ namespace Alternet::UI
         void OnButtonClick(wxCommandEvent& event);
 
         void RaiseClick();
-
-        bool _acceptsFocus = true;
-        bool _acceptsFocusFromKeyboard = true;
-        bool _acceptsFocusRecursively = true;
 
     protected:
         virtual void OnWxWindowCreated() override;
