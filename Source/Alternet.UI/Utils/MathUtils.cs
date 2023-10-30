@@ -52,6 +52,112 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Returns the larger of two objects.
+        /// Objects must support <see cref="IComparable"/> interface.
+        /// </summary>
+        /// <param name="a">The first of two objects to compare.</param>
+        /// <param name="b">The second of two objects to compare.</param>
+        /// <returns>Parameter <paramref name="a"/> or <paramref name="b"/>,
+        /// whichever is larger.</returns>
+        /// <remarks>Any of the objects can be <c>null</c>.</remarks>
+        public static object? Max(object? a, object? b)
+        {
+            if (a is not IComparable)
+                return b;
+            if (b is null)
+                return a;
+            var result = SafeCompareTo(a, b);
+            if (result < 0) // "a" precedes "b" in the sort order.
+                return b;
+            return a;
+        }
+
+        /// <summary>
+        /// Checks whether <paramref name="value"/> is in range specified with
+        /// <paramref name="minValue"/> and <paramref name="maxValue"/> parameters.
+        /// </summary>
+        /// <param name="value">Value to check.</param>
+        /// <param name="minValue">Minimal possible value.</param>
+        /// <param name="maxValue">Maximal possible value.</param>
+        /// <returns><c>true</c> if <paramref name="value"/> is in range;
+        /// <c>false</c> otherwise.</returns>
+        /// <remarks>
+        /// If range parameter is <c>null</c> it is not checked. If <paramref name="value"/> is null,
+        /// <c>null</c> is returned.
+        /// </remarks>
+        public static bool? ValueInRange(object? value, object? minValue, object? maxValue)
+        {
+            if (value is null)
+                return null;
+
+            if(minValue is not null)
+            {
+                var result = SafeCompareTo(value, minValue);
+                if (result < 0)
+                    return false;
+            }
+
+            if (maxValue is not null)
+            {
+                var result = SafeCompareTo(value, maxValue);
+                if (result > 0)
+                    return false;
+            }
+
+            return true;
+        }
+
+        /// <summary>
+        /// Same as <see cref="IComparable.CompareTo"/> but additionally allows
+        /// to compare different integer types without exceptions.
+        /// Objects must support <see cref="IComparable"/> interface.
+        /// </summary>
+        /// <param name="a">The first of two objects to compare.</param>
+        /// <param name="b">The second of two objects to compare.</param>
+        /// <returns>
+        /// A value that indicates the relative order of the objects being compared.
+        /// Meanings: Result is less than zero – <paramref name="a"/> precedes <paramref name="b"/>
+        /// in the sort order. Result is zero – <paramref name="a"/> occurs in the same position
+        /// in the sort order as <paramref name="b"/>. Result is greater than zero – <paramref name="a"/>
+        /// follows <paramref name="b"/> in the sort order.
+        /// </returns>
+        public static int SafeCompareTo(object a, object b)
+        {
+            var aUpgraded = AssemblyUtils.UpgradeNumberType(a);
+            var bUpgraded = AssemblyUtils.UpgradeNumberType(b);
+            var aTypeCode = AssemblyUtils.GetRealTypeCode(aUpgraded.GetType());
+            var bTypeCode = AssemblyUtils.GetRealTypeCode(bUpgraded.GetType());
+            if (aTypeCode == bTypeCode)
+                return (aUpgraded as IComparable)!.CompareTo(bUpgraded);
+            if (aTypeCode == TypeCode.Int64 && bTypeCode == TypeCode.UInt64)
+                return -1;
+            if (aTypeCode == TypeCode.UInt64 && bTypeCode == TypeCode.Int64)
+                return 1;
+            return (aUpgraded as IComparable)!.CompareTo(bUpgraded);
+        }
+
+        /// <summary>
+        /// Returns the smaller of two objects.
+        /// Objects must support <see cref="IComparable"/> interface.
+        /// </summary>
+        /// <param name="a">The first of two objects to compare.</param>
+        /// <param name="b">The second of two objects to compare.</param>
+        /// <returns>Parameter <paramref name="a"/> or <paramref name="b"/>,
+        /// whichever is smaller.</returns>
+        /// <remarks>Any of the objects can be <c>null</c>.</remarks>
+        public static object? Min(object? a, object? b)
+        {
+            if (a is null)
+                return b;
+            if (b is null)
+                return a;
+            var result = SafeCompareTo(a, b);
+            if (result < 0) // "a" precedes "b" in the sort order.
+                return a;
+            return b;
+        }
+
+        /// <summary>
         /// Returns the larger of the specified numbers.
         /// </summary>
         /// <param name="values">Array of <see cref="double"/> numbers.</param>
