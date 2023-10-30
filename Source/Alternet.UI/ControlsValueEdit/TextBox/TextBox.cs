@@ -736,6 +736,12 @@ namespace Alternet.UI
             return new TextBoxTextAttr();
         }
 
+        /// <inheritdoc cref="ValueValidatorFactory.CreateValidator"/>
+        public static IValueValidatorText CreateValidator(ValueValidatorKind kind)
+        {
+            return ValueValidatorFactory.CreateValidator(kind);
+        }
+
         /// <summary>
         /// Gets known error text.
         /// </summary>
@@ -757,12 +763,6 @@ namespace Alternet.UI
                     var defaultResult = ValidatorErrorText ?? DefaultValidatorErrorText;
                     return defaultResult ?? ErrorMessages.Default.ValidationInvalidFormat;
             }
-        }
-
-        /// <inheritdoc cref="ValueValidatorFactory.CreateValidator"/>
-        public static IValueValidatorText CreateValidator(ValueValidatorKind kind)
-        {
-            return ValueValidatorFactory.CreateValidator(kind);
         }
 
         /// <summary>
