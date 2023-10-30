@@ -34,6 +34,8 @@ namespace ControlsSample
             textAlignComboBox.BindEnumProp(textBox, nameof(TextBox.TextAlign));
             RichEditButton_Click(null, EventArgs.Empty);
 
+            textBox.TextChanged += ReportValueChanged;
+
             readOnlyCheckBox.BindBoolProp(textBox, nameof(TextBox.ReadOnly));
             passwordCheckBox.BindBoolProp(textBox, nameof(TextBox.IsPassword));
             hasBorderCheckBox.BindBoolProp(textBox, nameof(TextBox.HasBorder));
