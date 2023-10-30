@@ -14,12 +14,12 @@ namespace Alternet.UI
     /// </remarks>
     public class ValueValidatorFactory
     {
+        private IValueValidatorText? decimalValidator;
+
         /// <summary>
         /// Gets or sets default implementation of the <see cref="ValueValidatorFactory"/>.
         /// </summary>
         public static ValueValidatorFactory Default { get; set; } = new();
-
-        private IValueValidatorText? decimalValidator;
 
         /// <summary>
         /// Gets or sets whether error sound produced by the validators
@@ -63,22 +63,20 @@ namespace Alternet.UI
         /// <param name="kind">Kind ofthe validator.</param>
         public static IValueValidatorText CreateValidator(ValueValidatorKind kind)
         {
-            switch (kind)
+            return kind switch
             {
-                default:
-                case ValueValidatorKind.Generic:
-                    return Default.CreateValueValidatorText(ValueValidatorTextStyle.None);
-                case ValueValidatorKind.SignedInt:
-                    return Default.CreateValueValidatorNum(ValueValidatorNumStyle.Signed);
-                case ValueValidatorKind.UnsignedInt:
-                    return Default.CreateValueValidatorNum(ValueValidatorNumStyle.Unsigned);
-                case ValueValidatorKind.Float:
-                    return Default.CreateValueValidatorNum(ValueValidatorNumStyle.Float);
-                case ValueValidatorKind.SignedHex:
-                    return Default.CreateValueValidatorNum(ValueValidatorNumStyle.Signed, 16);
-                case ValueValidatorKind.UnsignedHex:
-                    return Default.CreateValueValidatorNum(ValueValidatorNumStyle.Unsigned, 16);
-            }
+                ValueValidatorKind.SignedInt =>
+                    Default.CreateValueValidatorNum(ValueValidatorNumStyle.Signed),
+                ValueValidatorKind.UnsignedInt =>
+                    Default.CreateValueValidatorNum(ValueValidatorNumStyle.Unsigned),
+                ValueValidatorKind.Float =>
+                    Default.CreateValueValidatorNum(ValueValidatorNumStyle.Float),
+                ValueValidatorKind.SignedHex =>
+                    Default.CreateValueValidatorNum(ValueValidatorNumStyle.Signed, 16),
+                ValueValidatorKind.UnsignedHex =>
+                    Default.CreateValueValidatorNum(ValueValidatorNumStyle.Unsigned, 16),
+                _ => Default.CreateValueValidatorText(ValueValidatorTextStyle.None),
+            };
         }
 
         /// <summary>
