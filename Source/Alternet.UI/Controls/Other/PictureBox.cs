@@ -13,7 +13,7 @@ namespace Alternet.UI
     [DefaultProperty("Image")]
     [DefaultBindingProperty("Image")]
     [ControlCategory("Common")]
-    public class PictureBox : Control
+    public class PictureBox : Control, IValidatorReporter
     {
         private readonly DrawImagePrimitive primitive = new();
 
@@ -94,6 +94,12 @@ namespace Alternet.UI
         {
             OnImageChanged(e);
             ImageChanged?.Invoke(this, e);
+        }
+
+        void IValidatorReporter.SetErrorStatus(object? sender, bool showError, string? errorText)
+        {
+            ToolTip = errorText ?? string.Empty;
+            ImageVisible = showError;
         }
 
         /// <summary>
