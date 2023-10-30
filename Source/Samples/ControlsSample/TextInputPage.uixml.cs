@@ -53,6 +53,12 @@ namespace ControlsSample
             numberUnsignedTextBox.TextChanged += ReportValueChanged;
             numberUnsignedTextBox.DataType = typeof(byte);
             numberUnsignedTextBox.ValidatorReporter = numberUnsignedImage;
+            // We need to apply min and max values before ValidatorErrorText
+            // is assigned as they are used in error text.
+            numberUnsignedTextBox.MinValue = 2;
+            // 2000 is greater than Byte can hold. It is assigned here for testing purposes.
+            // Actual max is a minimal of byte.MinValue and MaxValue property.
+            numberUnsignedTextBox.MaxValue = 2000;
             numberUnsignedTextBox.ValidatorErrorText =
                 numberUnsignedTextBox.GetKnownErrorText(ValueValidatorKnownError.NumberIsExpected);
 
@@ -141,7 +147,7 @@ namespace ControlsSample
             }
 
             var typeCode = editor.GetDataTypeCode();
-            if (typeCode == TypeCode.String)
+            if (!AssemblyUtils.IsNumberTypeCode(typeCode))
                 return;
 
             var isOk = StringUtils.TryParseNumber(
@@ -149,7 +155,16 @@ namespace ControlsSample
                 editor.Text,
                 editor.NumberStyles,
                 editor.FormatProvider,
-                out _);
+                out var value);
+
+            if (isOk)
+            {
+                var minValue = MathUtils.Max(AssemblyUtils.GetMinValue(typeCode), editor.MinValue);
+                var maxValue = MathUtils.Min(AssemblyUtils.GetMaxValue(typeCode), editor.MaxValue);
+                var valueInRange = MathUtils.ValueInRange(value, minValue, maxValue);
+                if (valueInRange is not null)
+                    isOk = valueInRange.Value;
+            }
 
             editor.ReportValidatorError(!isOk);
         }

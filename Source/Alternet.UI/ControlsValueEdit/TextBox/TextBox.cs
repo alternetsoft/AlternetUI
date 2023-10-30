@@ -711,7 +711,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets a hint shown in an empty unfocused text control.
         /// </summary>
-        public string EmptyTextHint
+        public string? EmptyTextHint
         {
             get
             {
@@ -720,9 +720,38 @@ namespace Alternet.UI
 
             set
             {
+                value ??= string.Empty;
                 Handler.EmptyTextHint = value;
             }
         }
+
+        /// <summary>
+        /// Gets or sets the minimum value that can be
+        /// entered in the control.
+        /// </summary>
+        /// <remarks>
+        /// This property has sense for the numbers and some other types.
+        /// Default value is <c>null</c>.
+        /// </remarks>
+        /// <remarks>
+        /// <see cref="TextBox"/> behavior is not affected
+        /// by this property, you can use it for any purposes.
+        /// </remarks>
+        public object? MinValue { get; set; }
+
+        /// <summary>
+        /// Gets or sets the maximum value that can be
+        /// entered in the control.
+        /// </summary>
+        /// <remarks>
+        /// This property has sense for the numbers and some other types.
+        /// Default value is <c>null</c>.
+        /// </remarks>
+        /// <remarks>
+        /// <see cref="TextBox"/> behavior is not affected
+        /// by this property, you can use it for any purposes.
+        /// </remarks>
+        public object? MaxValue { get; set; }
 
         internal new NativeTextBoxHandler Handler =>
             (NativeTextBoxHandler)base.Handler;
@@ -843,7 +872,7 @@ namespace Alternet.UI
         /// </remarks>
         public virtual string? GetMinMaxRangeStr(string? format = null)
         {
-            var s = AssemblyUtils.GetMinMaxRangeStr(GetDataTypeCode(), format);
+            var s = AssemblyUtils.GetMinMaxRangeStr(GetDataTypeCode(), format, MinValue, MaxValue);
             return s;
         }
 
