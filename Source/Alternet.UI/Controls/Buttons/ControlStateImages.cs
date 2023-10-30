@@ -92,6 +92,33 @@ namespace Alternet.UI
             set => SetProperty(ref disabledImage, value);
         }
 
+        /// <summary>
+        /// Gets <see cref="Image"/> for the specified state or <see cref="NormalImage"/> if
+        /// image for that state is not specified.
+        /// </summary>
+        /// <param name="state">Control state.</param>
+        public Image? GetImage(GenericControlState state)
+        {
+            return GetImageOrNull(state) ?? NormalImage;
+        }
+
+        /// <summary>
+        /// Gets <see cref="Image"/> for the specified state or <c>null</c> if image for that state
+        /// is not specified.
+        /// </summary>
+        /// <param name="state">Control state.</param>
+        public Image? GetImageOrNull(GenericControlState state)
+        {
+            return state switch
+            {
+                GenericControlState.Hovered => HoveredImage,
+                GenericControlState.Pressed => PressedImage,
+                GenericControlState.Disabled => DisabledImage,
+                GenericControlState.Focused => FocusedImage,
+                _ => NormalImage,
+            };
+        }
+
         private bool SetProperty<T>(
             ref T storage,
             T value,
