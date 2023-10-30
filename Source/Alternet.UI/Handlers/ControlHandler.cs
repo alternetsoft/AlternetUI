@@ -14,7 +14,6 @@ namespace Alternet.UI
     public abstract class ControlHandler : BaseObject
     {
         private int layoutSuspendCount;
-        private Rect reportedBounds;
         private bool inLayout;
         private Control? control;
         private Rect bounds;
@@ -1144,7 +1143,6 @@ namespace Alternet.UI
 
             if (locationChanged || sizeChanged)
             {
-                reportedBounds = newBounds;
                 PerformLayout();
             }
         }
