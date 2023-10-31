@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,6 +13,7 @@ namespace Alternet.UI
     public class PopupListBox : PopupWindow
     {
         private ListBox? listBox;
+        private int? resultIndex;
 
         /// <summary>
         /// Gets or sets <see cref="ListBox"/> control used in the popup window.
@@ -44,14 +46,69 @@ namespace Alternet.UI
             }
         }
 
+        /// <inheritdoc/>
+        [Browsable(false)]
+        public override ModalResult PopupResult
+        {
+            get
+            {
+                return base.PopupResult;
+            }
+
+            set
+            {
+                if (value == ModalResult.None)
+                    resultIndex = null;
+                base.PopupResult = value;
+            }
+        }
+
+        public int? ResultIndex
+        {
+            get
+            {
+                if (resultIndex is null)
+                    return ListBox.SelectedIndex;
+                return resultIndex;
+            }
+
+            set
+            {
+                resultIndex = value;
+            }
+        }
+
+        /// <inheritdoc/>
+        protected override void PopupControl_MouseDoubleClick(object? sender, MouseButtonEventArgs e)
+        {
+            UpdateResultIndex(e);
+            if(resultIndex is not null)
+                base.PopupControl_MouseDoubleClick(sender, e);
+        }
+
+        /// <inheritdoc/>
+        protected override void PopupControl_MouseLeftButtonUp(object? sender, MouseButtonEventArgs e)
+        {
+            UpdateResultIndex(e);
+            if (resultIndex is not null)
+                base.PopupControl_MouseLeftButtonUp(sender, e);
+        }
+
+        private void UpdateResultIndex(MouseButtonEventArgs e)
+        {
+            resultIndex = ListBox.HitTest(e.GetPosition(ListBox));
+        }
+
         private void BindEvents(ListBox control)
         {
             control.MouseDoubleClick += PopupControl_MouseDoubleClick;
+            control.MouseLeftButtonUp += PopupControl_MouseLeftButtonUp;
         }
 
         private void UnbindEvents(ListBox control)
         {
             control.MouseDoubleClick -= PopupControl_MouseDoubleClick;
+            control.MouseLeftButtonUp -= PopupControl_MouseLeftButtonUp;
         }
     }
 }

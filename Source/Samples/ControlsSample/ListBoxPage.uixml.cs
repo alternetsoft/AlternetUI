@@ -33,15 +33,15 @@ namespace ControlsSample
 
         private void PopupListBox_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            LogPopupListBoxEvent("DoubleClick");
+            // LogPopupListBoxEvent("DoubleClick");
         }
 
         private void PopupListBox_VisibleChanged(object? sender, EventArgs e)
         {
             if (popupListBox.Visible)
                 return;
-            var selectedItem = popupListBox.ListBox.SelectedItem ?? "<null>";
-            site?.LogEvent($"PopupResult: {popupListBox.PopupResult}, Item: {selectedItem}");
+            var resultItem = popupListBox.ListBox[popupListBox.ResultIndex] ?? "<null>";
+            site?.LogEvent($"PopupResult: {popupListBox.PopupResult}, Item: {resultItem}");
         }
 
         private void PopupListBox_SelectionChanged(object? sender, EventArgs e)
@@ -54,19 +54,26 @@ namespace ControlsSample
             site?.LogEvent($"Popup: {eventName}. Selected Item: {selectedItem}");
         }
 
+        private void LogPopupListBoxMouseEvent(string eventName, MouseButtonEventArgs e)
+        {
+            var itemIndex = popupListBox.ListBox.HitTest(e.GetPosition(popupListBox.ListBox));
+            var selectedItem = popupListBox.ListBox.Items[itemIndex];
+            site?.LogEvent($"Popup: {eventName}. Item: {selectedItem}");
+        }
+
         private void PopupListBox_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            LogPopupListBoxEvent("MouseLeftButtonUp");
+            // LogPopupListBoxMouseEvent("MouseLeftButtonUp", e);
         }
 
         private void PopupListBox_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            LogPopupListBoxEvent("MouseLeftButtonDown");
+            // LogPopupListBoxMouseEvent("MouseLeftButtonDown", e);
         }
 
         private void PopupListBox_Click(object? sender, EventArgs e)
         {
-            LogPopupListBoxEvent("Click");
+            // LogPopupListBoxEvent("Click");
         }
 
         private void ShowPopupButton_Click(object? sender, EventArgs e)

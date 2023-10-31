@@ -91,7 +91,7 @@ namespace Alternet.UI
         /// when popup is shown.
         /// </summary>
         [Browsable(false)]
-        public ModalResult PopupResult
+        public virtual ModalResult PopupResult
         {
             get
             {
@@ -154,11 +154,12 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Implements default behavior on left mouse button double click.
+        /// Default implementation of the left mouse button double click event
+        /// for the popup control.
         /// </summary>
         /// <param name="sender">Event object.</param>
         /// <param name="e">Event arguments.</param>
-        protected virtual void PopupControl_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        protected virtual void PopupControl_MouseDoubleClick(object? sender, MouseButtonEventArgs e)
         {
             if (HideOnDoubleClick && e.ChangedButton == MouseButton.Left)
             {
@@ -167,7 +168,22 @@ namespace Alternet.UI
             }
         }
 
-        private void PopupWindow_KeyDown(object sender, KeyEventArgs e)
+        /// <summary>
+        /// Default implementation of the left mouse button up event
+        /// for the popup control.
+        /// </summary>
+        /// <param name="sender">Event object.</param>
+        /// <param name="e">Event arguments.</param>
+        protected virtual void PopupControl_MouseLeftButtonUp(object? sender, MouseButtonEventArgs e)
+        {
+            if (HideOnClick)
+            {
+                e.Handled = true;
+                HidePopup(ModalResult.Accepted);
+            }
+        }
+
+        private void PopupWindow_KeyDown(object? sender, KeyEventArgs e)
         {
             if(HideOnEscape && e.Key == Key.Escape && e.Modifiers == ModifierKeys.None)
             {
