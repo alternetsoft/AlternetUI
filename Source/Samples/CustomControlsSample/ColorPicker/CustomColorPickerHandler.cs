@@ -31,13 +31,10 @@ namespace CustomControlsSample
             {
                 if (popup == null)
                 {
-                    popup = new Window();
+                    popup = new PopupWindow();
                     popup.Owner = Control.ParentWindow;
-                    popup.MakeAsPopup();
                     popup.Disposed += Popup_Disposed;
                     popup.Name = "Popup";
-                    popup.Deactivated += Popup_Deactivated;
-                    popup.Activated += Popup_Activated;
 
                     var border = new Border();
                     border.Children.Add(GetColorButtonsGrid());
@@ -47,10 +44,6 @@ namespace CustomControlsSample
 
                 return popup;
             }
-        }
-
-        private void Popup_Activated(object? sender, EventArgs e)
-        {
         }
 
         private void Popup_Disposed(object? sender, EventArgs e)
@@ -70,11 +63,6 @@ namespace CustomControlsSample
                 if (Control.CanAcceptFocus)
                     Control.SetFocus();
             });
-        }
-
-        private void Popup_Deactivated(object? sender, EventArgs e)
-        {
-            (sender as Window)?.Hide();
         }
 
         private readonly Color[] colors = new[]

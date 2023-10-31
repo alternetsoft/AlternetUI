@@ -12,5 +12,19 @@ namespace Alternet.UI
     /// </summary>
     public class PopupWindow : Window
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PopupWindow"/> class.
+        /// </summary>
+        public PopupWindow()
+            : base()
+        {
+            MakeAsPopup();
+            Deactivated += Popup_Deactivated;
+        }
+
+        private void Popup_Deactivated(object? sender, EventArgs e)
+        {
+            (sender as Window)?.Hide();
+        }
     }
 }
