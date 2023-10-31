@@ -7,17 +7,15 @@ namespace ControlsSample
     internal partial class MainWindow : Window, IPageSite
     {
         private readonly PageContainer pageContainer = new();
-        private readonly ListBox eventsControl = new();
+        private readonly LogListBox eventsControl = new();
         private readonly Grid mainGrid = new();
         private readonly Control mainGridParent = new();
         private readonly LinkLabel? linkLabel;
         private readonly LinkLabel? linkLabel2;
-        private string? lastEventMessage = null;
-        private int lastEventNumber = 1;
 
         public MainWindow()
         {
-            Application.Current.LogMessage += Application_LogMessage;
+            eventsControl.BindApplicationLog();
 
             Icon = ImageSet.FromUrlOrNull("embres:ControlsSample.Sample.ico");
             InitializeComponent();
@@ -114,9 +112,9 @@ namespace ControlsSample
             mainGridParent.Padding = 10;
             mainGridParent.Children.Add(mainGrid);
             Children.Add(mainGridParent);
-#if DEBUG
-            LogEvent("Net Version = " + Environment.Version.ToString());
-#endif
+
+            eventsControl.DebugLogVersion();
+
             if (pageContainer.PagesControl.CanAcceptFocus)
                 pageContainer.PagesControl.SetFocus();
         }
@@ -144,16 +142,6 @@ namespace ControlsSample
         Control CreateLayoutPanelPage() => new LayoutPanelPage() { Site = this };
         Control CreateAllSamplesPage() => new AllSamplesPage() { Site = this };
 
-        private void Application_LogMessage(object? sender, LogMessageEventArgs e)
-        {
-#if DEBUG
-            if (e.ReplaceLastMessage)
-                LogEventSmart(e.Message, e.MessagePrefix);
-            else
-                LogEvent(e.Message);
-#endif
-        }
-
         private void LinkLabel_LinkClicked(
             object? sender,
             System.ComponentModel.CancelEventArgs e)
@@ -163,39 +151,16 @@ namespace ControlsSample
             LogEvent(linkLabel.Url);
         }
 
-        public string? LastEventMessage => lastEventMessage;
+        public string? LastEventMessage => eventsControl.LastLogMessage;
 
         public void LogEventSmart(string? message, string? prefix)
         {
-            var s = lastEventMessage;
-            var b = s?.StartsWith(prefix ?? string.Empty) ?? false;
-
-            var item = eventsControl.LastRootItem;
-
-            if (b && item is not null)
-            {
-                eventsControl.LastRootItem = ConstructMessage(message);
-                eventsControl.SelectedIndex = eventsControl.Items.Count-1;
-            }
-            else
-                LogEvent(message);
-        }
-
-        private string ConstructMessage(string? message)
-        {
-            var s = $"{lastEventNumber++}. {message}";
-            return s;
+            eventsControl.LogReplace(message, prefix);
         }
 
         public void LogEvent(string? message)
         {
-            if (message is null)
-                return;
-            lastEventMessage = message;
-
-            var item = new TreeViewItem(ConstructMessage(message));
-            eventsControl.Items.Add(item);
-            eventsControl.SelectedItem = eventsControl.LastRootItem;
+            eventsControl.Log(message);
         }
     }
 }

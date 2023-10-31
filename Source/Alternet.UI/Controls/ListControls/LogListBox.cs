@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,6 +14,12 @@ namespace Alternet.UI
     public class LogListBox : ListBox
     {
         private ContextMenu? contextMenu;
+        private string? lastLogMessage;
+
+        /// <summary>
+        /// Gets the last logged message.
+        /// </summary>
+        public string? LastLogMessage => lastLogMessage;
 
         /// <summary>
         /// Gets context menu for the control.
@@ -59,6 +66,7 @@ namespace Alternet.UI
 
             if (b)
             {
+                lastLogMessage = message;
                 LastItem = ConstructLogMessage(message);
                 SelectedIndex = Items.Count - 1;
             }
@@ -85,10 +93,23 @@ namespace Alternet.UI
         /// <param name="message">Message text.</param>
         public virtual void Log(string? message)
         {
+            lastLogMessage = message;
             Add(ConstructLogMessage(message));
             SelectedIndex = Items.Count - 1;
 
             Application.DoEvents();
+        }
+
+        /// <summary>
+        /// Logs environment versions.
+        /// </summary>
+        /// <remarks>
+        /// Works only if DEBUG conditional is defined.
+        /// </remarks>
+        [Conditional("DEBUG")]
+        public virtual void DebugLogVersion()
+        {
+            Application.Log($"Net = {Environment.Version}, {WebBrowser.GetLibraryVersionString()}");
         }
 
         internal virtual void Application_LogMessage(object? sender, LogMessageEventArgs e)
