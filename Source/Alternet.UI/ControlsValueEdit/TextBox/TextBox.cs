@@ -162,6 +162,22 @@ namespace Alternet.UI
         public virtual IFormatProvider? FormatProvider { get; set; }
 
         /// <summary>
+        /// Gets or sets default format used in value to string convertion.
+        /// </summary>
+        public virtual string? DefaultFormat { get; set; }
+
+        /// <summary>
+        /// Gets or sets <see cref="IObjectToString"/> provider which is used in
+        /// value to string convertion.
+        /// </summary>
+        public virtual IObjectToString? Converter { get; set; }
+
+        /// <summary>
+        /// Gets or sets default value for the <see cref="Text"/> property.
+        /// </summary>
+        public virtual string? DefaultText { get; set; }
+
+        /// <summary>
         /// Gets or sets <see cref="Type"/> of the <see cref="Text"/> property.
         /// </summary>
         /// <remarks>
@@ -991,6 +1007,134 @@ namespace Alternet.UI
         public void AppendText(string text)
         {
             Handler.AppendText(text);
+        }
+
+        /// <inheritdoc cref="SetTextAsObject"/>
+        public virtual void SetTextAs(sbyte value)
+        {
+            SetTextAsObject(value);
+        }
+
+        /// <inheritdoc cref="SetTextAsObject"/>
+        public virtual void SetTextAs(byte value)
+        {
+            SetTextAsObject(value);
+        }
+
+        /// <inheritdoc cref="SetTextAsObject"/>
+        public virtual void SetTextAs(short value)
+        {
+            SetTextAsObject(value);
+        }
+
+        /// <inheritdoc cref="SetTextAsObject"/>
+        public virtual void SetTextAs(ushort value)
+        {
+            SetTextAsObject(value);
+        }
+
+        /// <inheritdoc cref="SetTextAsObject"/>
+        public virtual void SetTextAs(int value)
+        {
+            SetTextAsObject(value);
+        }
+
+        /// <inheritdoc cref="SetTextAsObject"/>
+        public virtual void SetTextAs(uint value)
+        {
+            SetTextAsObject(value);
+        }
+
+        /// <inheritdoc cref="SetTextAsObject"/>
+        public virtual void SetTextAs(long value)
+        {
+            SetTextAsObject(value);
+        }
+
+        /// <inheritdoc cref="SetTextAsObject"/>
+        public virtual void SetTextAs(ulong value)
+        {
+            SetTextAsObject(value);
+        }
+
+        /// <inheritdoc cref="SetTextAsObject"/>
+        public virtual void SetTextAs(float value)
+        {
+            SetTextAsObject(value);
+        }
+
+        /// <inheritdoc cref="SetTextAsObject"/>
+        public virtual void SetTextAs(double value)
+        {
+            SetTextAsObject(value);
+        }
+
+        /// <inheritdoc cref="SetTextAsObject"/>
+        public virtual void SetTextAs(decimal value)
+        {
+            SetTextAsObject(value);
+        }
+
+        /// <inheritdoc cref="SetTextAsObject"/>
+        public virtual void SetTextAs(DateTime value)
+        {
+            SetTextAsObject(value);
+        }
+
+        /// <summary>
+        /// Converts <paramref name="value"/> to <see cref="string"/> and assigns <see cref="Text"/>
+        /// property with the converted value.
+        /// </summary>
+        /// <param name="value">Value.</param>
+        /// <remarks>
+        /// This method uses <see cref="Converter"/>, <see cref="DefaultFormat"/> and
+        /// <see cref="FormatProvider"/> propertties. Depending
+        /// on the values of these properties, different conversion methods are used.
+        /// </remarks>
+        public virtual void SetTextAsObject(object? value)
+        {
+            if (value is null)
+            {
+                Text = string.Empty;
+                return;
+            }
+
+            var typeCode = AssemblyUtils.GetRealTypeCode(value.GetType());
+
+            var converter = Converter ??
+                ObjectToStringFactory.Default.GetConverter(typeCode);
+            if (converter is null)
+            {
+                Text = value.ToString() ?? string.Empty;
+                return;
+            }
+
+            if (DefaultFormat is null)
+            {
+                if (FormatProvider is null)
+                {
+                    Text = converter.ToString(value) ?? string.Empty;
+                    return;
+                }
+                else
+                {
+                    Text = converter.ToString(value, FormatProvider) ?? string.Empty;
+                    return;
+                }
+            }
+            else
+            {
+                if (FormatProvider is null)
+                {
+                    Text = converter.ToString(value, DefaultFormat) ?? string.Empty;
+                    return;
+                }
+                else
+                {
+                    Text = converter.ToString(value, DefaultFormat, FormatProvider) ?? string.Empty;
+                    return;
+                }
+            }
         }
 
         /// <summary>
