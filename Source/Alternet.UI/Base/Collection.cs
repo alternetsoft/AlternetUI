@@ -120,6 +120,22 @@ namespace Alternet.Base.Collections
         }
 
         /// <summary>
+        /// Gets or sets the element at the specified index.
+        /// </summary>
+        /// <param name="index">The zero-based index of the element or <c>null</c>.</param>
+        /// <returns>The element at the specified index or <c>null</c> if <paramref name="index"/>
+        /// is <c>null</c>.</returns>
+        public T? this[int? index]
+        {
+            get
+            {
+                if (index is null)
+                    return default;
+                return base[index.Value];
+            }
+        }
+
+        /// <summary>
         /// Adds the elements of the specified <see cref="IEnumerable{T}"/> to the end
         /// of the collection.
         /// </summary>
