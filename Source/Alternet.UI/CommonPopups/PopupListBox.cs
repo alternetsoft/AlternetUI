@@ -20,11 +20,15 @@ namespace Alternet.UI
         {
             get
             {
-                listBox ??= new()
+                if(listBox == null)
                 {
-                    HasBorder = false,
-                    Parent = this.Border,
-                };
+                    listBox = new()
+                    {
+                        HasBorder = false,
+                        Parent = this.Border,
+                    };
+                    BindEvents(listBox);
+                }
 
                 return listBox;
             }
@@ -33,9 +37,21 @@ namespace Alternet.UI
             {
                 if (listBox == value || listBox is null)
                     return;
+                UnbindEvents(listBox);
                 listBox = value;
+                BindEvents(listBox);
                 listBox.Parent = Border;
             }
+        }
+
+        private void BindEvents(ListBox control)
+        {
+            control.MouseDoubleClick += PopupControl_MouseDoubleClick;
+        }
+
+        private void UnbindEvents(ListBox control)
+        {
+            control.MouseDoubleClick -= PopupControl_MouseDoubleClick;
         }
     }
 }

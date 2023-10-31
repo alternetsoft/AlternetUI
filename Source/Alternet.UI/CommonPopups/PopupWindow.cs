@@ -69,6 +69,18 @@ namespace Alternet.UI
 
         /// <summary>
         /// Gets or sets a value indicating whether a popup window disappears automatically
+        /// when the user double clicks left mouse button.
+        /// </summary>
+        public bool HideOnDoubleClick { get; set; } = true;
+
+        /// <summary>
+        /// Gets or sets a value indicating whether a popup window disappears automatically
+        /// when the user clicks left mouse button.
+        /// </summary>
+        public bool HideOnClick { get; set; } = true;
+
+        /// <summary>
+        /// Gets or sets a value indicating whether a popup window disappears automatically
         /// when the user clicks mouse outside it or if it loses focus in any other way.
         /// </summary>
         public bool HideOnDeactivate { get; set; } = true;
@@ -129,12 +141,30 @@ namespace Alternet.UI
             });
         }
 
-        private void HidePopup(ModalResult result)
+        /// <summary>
+        /// Hides popup window.
+        /// </summary>
+        /// <param name="result">New <see cref="PopupResult"/> value.</param>
+        public virtual void HidePopup(ModalResult result)
         {
             if (!Visible)
                 return;
             PopupResult = result;
             Hide();
+        }
+
+        /// <summary>
+        /// Implements default behavior on left mouse button double click.
+        /// </summary>
+        /// <param name="sender">Event object.</param>
+        /// <param name="e">Event arguments.</param>
+        protected virtual void PopupControl_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if (HideOnDoubleClick && e.ChangedButton == MouseButton.Left)
+            {
+                e.Handled = true;
+                HidePopup(ModalResult.Accepted);
+            }
         }
 
         private void PopupWindow_KeyDown(object sender, KeyEventArgs e)
