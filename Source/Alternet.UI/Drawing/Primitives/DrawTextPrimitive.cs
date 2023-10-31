@@ -12,7 +12,6 @@ namespace Alternet.Drawing
 }
 
 /*
- 
 DrawText(string text, Font font, Brush brush, Point origin) // default format
 
 DrawText(string text, Font font, Brush brush, Point origin, TextFormat format)

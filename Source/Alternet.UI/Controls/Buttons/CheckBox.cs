@@ -203,6 +203,14 @@ namespace Alternet.UI
         public override ControlId ControlKind => ControlId.CheckBox;
 
         /// <summary>
+        /// Gets a <see cref="ControlHandler"/> associated with this class.
+        /// </summary>
+        [Browsable(false)]
+        internal NativeCheckBoxHandler? NativeHandler => Handler as NativeCheckBoxHandler;
+
+        internal Native.CheckBox? NativeControl => Handler.NativeControl as Native.CheckBox;
+
+        /// <summary>
         /// Binds property specified with <paramref name="instance"/> and
         /// <paramref name="propName"/> to the <see cref="CheckBox"/>.
         /// After binding <see cref="CheckBox"/> will edit the specified property.
@@ -240,14 +248,6 @@ namespace Alternet.UI
             Binding myBinding = new(propName) { Mode = BindingMode.TwoWay };
             BindingOperations.SetBinding(this, CheckBox.IsCheckedProperty, myBinding);
         }
-
-        /// <summary>
-        /// Gets a <see cref="ControlHandler"/> associated with this class.
-        /// </summary>
-        [Browsable(false)]
-        internal NativeCheckBoxHandler? NativeHandler => Handler as NativeCheckBoxHandler;
-
-        internal Native.CheckBox? NativeControl => Handler.NativeControl as Native.CheckBox;
 
         /// <summary>
         /// Raises the <see cref="CheckedChanged"/> event and calls
