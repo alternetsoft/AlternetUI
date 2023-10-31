@@ -34,7 +34,7 @@ namespace PropertyGridSample
 
                   typeof(Toolbar), // can create some modal window? or add child window 
                   typeof(WebBrowser),
-                  typeof(Popup), // button with popup like ContextMenu
+                  //typeof(Popup), // button with popup like ContextMenu
                   typeof(AuiNotebook),
                   typeof(AuiToolbar),
                   typeof(PanelAuiManager),

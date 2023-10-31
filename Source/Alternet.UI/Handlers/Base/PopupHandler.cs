@@ -3,7 +3,7 @@ namespace Alternet.UI
     /// <summary>
     /// Provides base functionality for implementing a specific <see cref="Popup"/> behavior and appearance.
     /// </summary>
-    public abstract class PopupHandler : ControlHandler
+    internal abstract class PopupHandler : ControlHandler
     {
         /// <summary>
         /// Gets a <see cref="Popup"/> this handler provides the implementation for.

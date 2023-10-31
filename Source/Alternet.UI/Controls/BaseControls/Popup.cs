@@ -7,9 +7,12 @@ namespace Alternet.UI
     /// The <see cref="Popup"/> control displays content in a separate window that floats
     /// over the current application window.
     /// </summary>
+    /// <remarks>
+    /// <see cref="Popup"/> doesn't work properly on Linux. Please use <see cref="PopupWindow"/>
+    /// </remarks>
     [System.ComponentModel.DesignerCategory("Code")]
     [ControlCategory("Hidden")]
-    public class Popup : Control
+    internal class Popup : Control
     {
         private Window? owner;
 
