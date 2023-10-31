@@ -1,14 +1,25 @@
 # 0.9.406 (not released, work in progress)
 
-- Add LogListBox control.
+- Add LogListBox, PopupWindow, PopupListBox controls.
 - Add PictureBox: ImageVisible, ImageStretch.
 - Improved resize behavior of AuiManager controls and panels.
+- Added to TextBox: MinValue, MaxValue, DefaultValidatorErrorText, DefaultErrorBackgroundColor, DefaultErrorForegroundColor,
+ NumberStyles, FormatProvider, DataType, ValidatorReporter, ValidatorErrorText, EmptyTextAllow, EmptyTextValue,
+ GetDataTypeCode, GetMinMaxRangeStr, CreateValidator, GetKnownErrorText, ReportValidatorError, DefaultFormat, Converter,
+ DefaultText, different SetTextAs* methods.
+- Improvments in Validator classes and methods.
 - Fixed TabControl behavior and bad painting under Linux.
 - AuiToolbar: All Add methods now return toolId.
 - AuiToolbar: Add EventToolNameOrId, GetToolName(), GetToolTag(), SetToolName(), SetToolTag(), GetToolMinHeights(),
  GetToolMaxOfMinHeights().
 - AuiToolbar: Fixed Clear, DeleteTool, ShowPopupMenu.
 - Add Application.FirstWindow; Collection: First, Last; ControlSet: Visible, Action; ImageSet.AsImage.
+- Add Window.MakeAsPopup, StringUtils.TryParseNumber, .
+- AssemblyUtils improvments: Optimization of GetMinValue, GetMaxValue. Add consts for Default, MinValue
+ and MaxValue for all number types. Add GetRealTypeCode, GetMinMaxRangeStr, GetDefaultNumberStyles, GetDefaultValue, 
+UpgradeNumberType, IsNumberTypeCode.
+- Add Slider.ClearTicks().
+- PictureBox made unfocusable.
 
 ---
 
