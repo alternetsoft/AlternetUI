@@ -2,17 +2,83 @@
 using System.Collections.Generic;
 using System.Linq;
 using Alternet.UI;
+using Alternet.Drawing;
 
 namespace ControlsSample
 {
     internal partial class ListBoxPage : Control
     {
+        private readonly CardPanelHeader panelHeader = new();
+        private readonly PopupListBox popupListBox = new();
         private IPageSite? site;
         private int newItemIndex = 0;
 
         public ListBoxPage()
         {
             InitializeComponent();
+            panelHeader.Add("ListBox", tab1);
+            panelHeader.Add("Popup ListBox", tab2);
+            tabControl.Children.Prepend(panelHeader);
+            panelHeader.SelectedTab = panelHeader.Tabs[0];
+
+            showPopupButton.Click += ShowPopupButton_Click;
+
+            popupListBox.ListBox.MouseLeftButtonUp += PopupListBox_MouseLeftButtonUp;
+            popupListBox.ListBox.MouseLeftButtonDown += PopupListBox_MouseLeftButtonDown;
+            popupListBox.ListBox.SelectionChanged += PopupListBox_SelectionChanged;
+            popupListBox.ListBox.Click += PopupListBox_Click;
+            popupListBox.ListBox.MouseDoubleClick += PopupListBox_MouseDoubleClick;
+            popupListBox.VisibleChanged += PopupListBox_VisibleChanged;
+        }
+
+        private void PopupListBox_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            LogPopupListBoxEvent("DoubleClick");
+        }
+
+        private void PopupListBox_VisibleChanged(object? sender, EventArgs e)
+        {
+            if (popupListBox.Visible)
+                return;
+            var selectedItem = popupListBox.ListBox.SelectedItem ?? "<null>";
+            site?.LogEvent($"PopupResult: {popupListBox.PopupResult}, Item: {selectedItem}");
+        }
+
+        private void PopupListBox_SelectionChanged(object? sender, EventArgs e)
+        {
+        }
+
+        private void LogPopupListBoxEvent(string eventName)
+        {
+            var selectedItem = popupListBox.ListBox.SelectedItem ?? "<null>";
+            site?.LogEvent($"Popup: {eventName}. Selected Item: {selectedItem}");
+        }
+
+        private void PopupListBox_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            LogPopupListBoxEvent("MouseLeftButtonUp");
+        }
+
+        private void PopupListBox_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            LogPopupListBoxEvent("MouseLeftButtonDown");
+        }
+
+        private void PopupListBox_Click(object? sender, EventArgs e)
+        {
+            LogPopupListBoxEvent("Click");
+        }
+
+        private void ShowPopupButton_Click(object? sender, EventArgs e)
+        {
+            if (popupListBox.ListBox.Items.Count == 0)
+            {
+                popupListBox.ListBox.SuggestedSize = new Size(150, 300);
+                AddDefaultItems(popupListBox.ListBox);
+                popupListBox.ListBox.SelectFirstItem();
+            }
+            site?.LogEvent(" === ShowPopupButton_Click ===");
+            popupListBox.PopupUnderControl(showPopupButton);            
         }
 
         public IPageSite? Site
@@ -21,18 +87,23 @@ namespace ControlsSample
 
             set
             {
-                listBox.Items.Add("One");
-                listBox.Items.Add("Two");
-                listBox.Items.Add("Three");
-                listBox.Items.Add("Four");
-                listBox.Items.Add("Five");
-                listBox.Items.Add("Six");
-                listBox.Items.Add("Seven");
-                listBox.Items.Add("Eight");
-                listBox.Items.Add("Nine");
-                listBox.Items.Add("Ten");
+                AddDefaultItems(listBox);
                 site = value;
             }
+        }
+
+        private void AddDefaultItems(ListBox control)
+        {
+            control.Add("One");
+            control.Add("Two");
+            control.Add("Three");
+            control.Add("Four");
+            control.Add("Five");
+            control.Add("Six");
+            control.Add("Seven");
+            control.Add("Eight");
+            control.Add("Nine");
+            control.Add("Ten");
         }
 
         private void EditorButton_Click(object? sender, System.EventArgs e)

@@ -8,7 +8,7 @@ namespace CustomControlsSample
     {
         private bool isPressed;
 
-        private Window? popup;
+        private PopupWindow? popup;
 
         protected override bool NeedsPaint => true;
 
@@ -25,20 +25,20 @@ namespace CustomControlsSample
             }
         }
 
-        private Window Popup
+        private PopupWindow Popup
         {
             get
             {
                 if (popup == null)
                 {
-                    popup = new PopupWindow();
-                    popup.Owner = Control.ParentWindow;
+                    popup = new()
+                    {
+                        Owner = Control.ParentWindow,
+                        Name = "Popup"
+                    };
                     popup.Disposed += Popup_Disposed;
-                    popup.Name = "Popup";
 
-                    var border = new Border();
-                    border.Children.Add(GetColorButtonsGrid());
-                    popup.Children.Add(border);
+                    GetColorButtonsGrid().Parent = popup.Border;
                     popup.SetSizeToContent();
                 }
 
