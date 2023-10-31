@@ -139,7 +139,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets individual border side settings.
+        /// Gets or sets individual border side settings.
         /// </summary>
         [Browsable(false)]
         public BorderSettings Settings
