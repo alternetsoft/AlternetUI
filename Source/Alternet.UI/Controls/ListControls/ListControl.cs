@@ -132,6 +132,17 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets the <see cref="Items"/> element at the specified index.
+        /// </summary>
+        /// <param name="index">The zero-based index of the <see cref="Items"/> element or
+        /// <c>null</c>.</param>
+        /// <returns>The <see cref="Items"/> element at the specified index or <c>null</c>.</returns>
+        public object? this[int? index]
+        {
+            get => Items[index];
+        }
+
+        /// <summary>
         /// Adds an object to the end of the <see cref="Items"/> collection.
         /// </summary>
         /// <param name="item">The object to be added to the end of the
