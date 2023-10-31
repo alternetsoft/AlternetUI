@@ -1303,7 +1303,7 @@ namespace Alternet.UI
         /// input is discarded.
         /// </remarks>
         /// <remarks>
-        /// Note that in GTK this function may only be used with
+        /// Note that on Linux this function may only be used with
         /// single line text controls.
         /// </remarks>
         /// <param name="len"></param>
