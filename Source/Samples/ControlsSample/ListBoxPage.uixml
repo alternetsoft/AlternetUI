@@ -35,7 +35,8 @@
 
     <VerticalStackPanel Name="tab2" Visible="false" Margin="5">
       <Button Text="Show Popup" Name="showPopupButton" Margin="5" HorizontalAlignment="Left"/>
-      <Label Text="Work in progress. Currently not everything works fine in the popups..." Margin="5"/>
+      <Label Text="Work in progress. Currently not everything works fine in the popups..."
+             Margin="5" Visible="false"/>
     </VerticalStackPanel>
     
   </VerticalStackPanel>
