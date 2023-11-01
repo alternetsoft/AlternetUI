@@ -197,5 +197,17 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="size">Image size.</param>
         public static KnownSvgImages GetForSize(int size) => GetForSize(new Int32Size(size));
+
+        /// <summary>
+        /// Gets <see cref="KnownSvgImages.ImgMessageBoxWarning"/> image for the specified bitmap size.
+        /// </summary>
+        /// <param name="size">Image size.</param>
+        public static Image? GetWarningImage(int? size = null)
+        {
+            size ??= Toolbar.GetDefaultImageSize().Width;
+            var imageSet = GetForSize(size.Value).ImgMessageBoxWarning;
+            var image = imageSet.AsImage(size.Value);
+            return image;
+        }
     }
 }
