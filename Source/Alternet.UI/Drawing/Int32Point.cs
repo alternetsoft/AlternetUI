@@ -25,10 +25,19 @@ namespace Alternet.Drawing
     public struct Int32Point : IEquatable<Int32Point>
     {
         /// <summary>
-        /// Creates a new instance of the <see cref='Drawing.Int32Point'/>
-        /// class with member data left uninitialized.
+        /// Gets an empty point with (0, 0) ccordinates.
         /// </summary>
         public static readonly Int32Point Empty;
+
+        /// <summary>
+        /// Gets a point with (-1, -1) ccordinates.
+        /// </summary>
+        public static readonly Int32Point MinusOne = new(-1, -1);
+
+        /// <summary>
+        /// Gets a point with (1, 1) ccordinates.
+        /// </summary>
+        public static readonly Int32Point One = new(1, 1);
 
         private int x; // Do not rename (binary serialization)
         private int y; // Do not rename (binary serialization)

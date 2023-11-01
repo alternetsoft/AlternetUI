@@ -39,7 +39,17 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets <see cref="Size"/> with width and height equal to -1.
         /// </summary>
-        public static readonly Size Default = new(-1);
+        public static readonly Size Default = new(-1d, -1d);
+
+        /// <summary>
+        /// Gets <see cref="Size"/> with width and height equal to -1.
+        /// </summary>
+        public static readonly Size MinusOne = new(-1d, -1d);
+
+        /// <summary>
+        /// Gets <see cref="Size"/> with width and height equal to 1.
+        /// </summary>
+        public static readonly Size One = new(1d, 1d);
 
         /// <summary>
         /// Gets <see cref="Size"/> with width and height equal to

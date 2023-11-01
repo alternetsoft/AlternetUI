@@ -29,6 +29,16 @@ namespace Alternet.Drawing
         /// </summary>
         public static readonly Int32Size Empty;
 
+        /// <summary>
+        /// Gets a size with (-1, -1) values.
+        /// </summary>
+        public static readonly Int32Size MinusOne = new(-1, -1);
+
+        /// <summary>
+        /// Gets a size with (1, 1) values.
+        /// </summary>
+        public static readonly Int32Size One = new(1, 1);
+
         private int width; // Do not rename (binary serialization)
         private int height; // Do not rename (binary serialization)
 

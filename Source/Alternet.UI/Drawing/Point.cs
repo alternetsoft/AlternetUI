@@ -26,10 +26,20 @@ namespace Alternet.Drawing
     public struct Point : IEquatable<Point>
     {
         /// <summary>
-        /// Creates a new instance of the <see cref='Drawing.Point'/> class with member data
-        /// left uninitialized.
+        /// Gets an empty point with (0, 0) ccordinates.
         /// </summary>
         public static readonly Point Empty;
+
+        /// <summary>
+        /// Gets a point with (-1, -1) ccordinates.
+        /// </summary>
+        public static readonly Point MinusOne = new(-1d, -1d);
+
+        /// <summary>
+        /// Gets a point with (1, 1) ccordinates.
+        /// </summary>
+        public static readonly Point One = new(1d, 1d);
+
         private double x; // Do not rename (binary serialization)
         private double y; // Do not rename (binary serialization)
 
