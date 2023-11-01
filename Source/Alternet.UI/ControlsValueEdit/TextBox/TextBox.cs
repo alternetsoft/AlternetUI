@@ -53,6 +53,7 @@ namespace Alternet.UI
         private GenericAlignment textAlign;
         private IValueValidator? validator;
         private int maxLength;
+        private int minLength;
 
         static TextBox()
         {
@@ -395,19 +396,16 @@ namespace Alternet.UI
         /// the user can enter into the control.
         /// </summary>
         /// <remarks>
-        /// It allows limiting the text value length to len not counting the
-        /// terminating NULL character.
-        /// </remarks>
-        /// <remarks>
-        /// If len is 0, the previously set max length limit, if any,
+        /// If new max length is 0, the previously set max length limit, if any,
         /// is discarded and the user may enter as much text as
         /// the underlying native text control widget
         /// supports (typically at least 32Kb).
         /// </remarks>
         /// <remarks>
         /// If the user tries to enter more characters into the text control
-        /// when it already is filled up to the maximal length, an event is sent to
-        /// notify the program about it (giving it the possibility to
+        /// when it already is filled up to the maximal length, a <see cref="TextMaxLength"/>
+        /// event is sent to
+        /// notify about it (giving it the possibility to
         /// show an explanatory message, for example) and the extra
         /// input is discarded.
         /// </remarks>
@@ -428,6 +426,29 @@ namespace Alternet.UI
                     return;
                 maxLength = value;
                 Handler.SetMaxLength((ulong)value);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the minimum number of characters
+        /// the user must enter into the control.
+        /// </summary>
+        /// <remarks>
+        /// Currently this property doesn't affect <see cref="TextBox"/> behavior.
+        /// You can implement your own validation rules using <see cref="TextChanged"/> event.
+        /// </remarks>
+        public int MinLength
+        {
+            get
+            {
+                return minLength;
+            }
+
+            set
+            {
+                if (minLength == value || value < 0)
+                    return;
+                minLength = value;
             }
         }
 
@@ -846,6 +867,15 @@ namespace Alternet.UI
                     return ErrorMessages.Default.ValidationHexNumberIsExpected;
                 case ValueValidatorKnownError.InvalidFormat:
                     return ErrorMessages.Default.ValidationInvalidFormat;
+                case ValueValidatorKnownError.MinimumLength:
+                    return string.Format(ErrorMessages.Default.ValidationMinimumLength, MinLength);
+                case ValueValidatorKnownError.MaximumLength:
+                    return string.Format(ErrorMessages.Default.ValidationMaximumLength, MaxLength);
+                case ValueValidatorKnownError.MinMaxLength:
+                    return string.Format(
+                        ErrorMessages.Default.ValidationMinMaxLength,
+                        MinLength,
+                        MaxLength);
                 default:
                     var defaultResult = ValidatorErrorText ?? DefaultValidatorErrorText;
                     return defaultResult ?? ErrorMessages.Default.ValidationInvalidFormat;

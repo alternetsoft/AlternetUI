@@ -44,5 +44,29 @@ namespace Alternet.UI
         /// Use <see cref="ErrorMessages.ValidationInvalidFormat"/> for the localization.
         /// </remarks>
         InvalidFormat,
+
+        /// <summary>
+        /// Error: "Minimum length is {0} characters.".
+        /// </summary>
+        /// <remarks>
+        /// Use <see cref="ErrorMessages.ValidationMinimumLength"/> for the localization.
+        /// </remarks>
+        MinimumLength,
+
+        /// <summary>
+        /// Error: "Maximum length is {0} characters.".
+        /// </summary>
+        /// <remarks>
+        /// Use <see cref="ErrorMessages.ValidationMaximumLength"/> for the localization.
+        /// </remarks>
+        MaximumLength,
+
+        /// <summary>
+        /// Error: "Valid length is {0} to {1} characters.".
+        /// </summary>
+        /// <remarks>
+        /// Use <see cref="ErrorMessages.ValidationMinMaxLength"/> for the localization.
+        /// </remarks>
+        MinMaxLength,
     }
 }
