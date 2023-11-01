@@ -92,7 +92,7 @@ static void* CreateTextBox(void* validator);
 int GetLineLength(int64_t lineNo);
 string GetLineText(int64_t lineNo);
 int GetNumberOfLines();
-Point PositionToXY(int64_t pos);
+Int32Point PositionToXY(int64_t pos);
 Point PositionToCoords(int64_t pos);
 void ShowPosition(int64_t pos);
 int64_t XYToPosition(int64_t x, int64_t y);

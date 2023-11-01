@@ -39,7 +39,7 @@ namespace NativeApi.Api
 
         public int GetNumberOfLines() => throw new Exception();
 
-        public Point PositionToXY(long pos) => throw new Exception();
+        public Int32Point PositionToXY(long pos) => throw new Exception();
 
         public Point PositionToCoords(long pos) => throw new Exception();
 
@@ -53,8 +53,7 @@ namespace NativeApi.Api
 
         public bool SetDefaultStyle(IntPtr style) => throw new Exception();
 
-        public bool SetStyle(long start, long end, IntPtr style) => 
-            throw new Exception();
+        public bool SetStyle(long start, long end, IntPtr style) => default;
 
         public bool IsModified { get; set; }
         public bool CanCopy { get; }

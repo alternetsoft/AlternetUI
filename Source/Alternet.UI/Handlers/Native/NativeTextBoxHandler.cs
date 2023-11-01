@@ -1,5 +1,6 @@
 using System;
 using System.Runtime.InteropServices;
+using Alternet.Drawing;
 
 namespace Alternet.UI
 {
@@ -229,12 +230,12 @@ namespace Alternet.UI
             return NativeControl.GetNumberOfLines();
         }
 
-        public Alternet.Drawing.Point PositionToXY(long pos)
+        public Int32Point PositionToXY(long pos)
         {
             return NativeControl.PositionToXY(pos);
         }
 
-        public Alternet.Drawing.Point PositionToCoords(long pos)
+        public Point PositionToCoords(long pos)
         {
             return NativeControl.PositionToCoords(pos);
         }

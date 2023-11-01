@@ -424,14 +424,14 @@ namespace Alternet::UI
 		return GetTextCtrl()->GetNumberOfLines();
 	}
 
-	Point TextBox::PositionToXY(int64_t pos)
+	Int32Point TextBox::PositionToXY(int64_t pos)
 	{
 		long x;
 		long y;
 		auto result = GetTextCtrl()->PositionToXY(pos, &x, &y);
 		if (result)
-			return Point(x, y);
-		return Point(-1, -1);
+			return Int32Point(x, y);
+		return Int32Point(-1, -1);
 	}
 
 	Point TextBox::PositionToCoords(int64_t pos)

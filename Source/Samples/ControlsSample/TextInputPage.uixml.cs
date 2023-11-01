@@ -133,6 +133,46 @@ namespace ControlsSample
             maxLengthBox.DataType = typeof(int);
             maxLengthBox.Validator = TextBox.CreateValidator(ValueValidatorKind.UnsignedInt);
             maxLengthBox.TextChanged += MaxLengthBox_TextChanged;
+
+            Application.Current.Idle += Application_Idle;
+
+            textBox.CurrentPositionChanged += TextBox_CurrentPositionChanged;
+            multiLineTextBox.CurrentPositionChanged += TextBox_CurrentPositionChanged;
+            richEdit.CurrentPositionChanged += TextBox_CurrentPositionChanged;
+        }
+
+        private void TextBox_CurrentPositionChanged(object? sender, EventArgs e)
+        {
+            if (sender is TextBox control)
+                LogTextBoxPosition(control);
+        }
+
+        private void LogTextBoxPosition(TextBox control)
+        {
+            var currentPos = control.CurrentPosition;
+            if (currentPos is null)
+                return;
+            var name = control.Name ?? control.GetType().Name;
+            var prefix = $"{name}.CurrentPos:";
+            site?.LogEventSmart($"{prefix} {currentPos.Value+1}", prefix);
+        }
+
+        private void Application_Idle(object? sender, EventArgs e)
+        {
+            if (tab1.Visible)
+            {
+                textBox.IdleAction();
+            }
+
+            if (tab2.Visible)
+            {
+                multiLineTextBox.IdleAction();
+            }
+
+            if (tab3.Visible)
+            {
+                richEdit.IdleAction();
+            }
         }
 
         private void TextBox_TextMaxLength(object? sender, EventArgs e)

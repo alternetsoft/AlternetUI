@@ -78,6 +78,16 @@ namespace Alternet.UI
         public event EventHandler? ReadOnlyChanged;
 
         /// <summary>
+        /// Occurs when <see cref="CurrentPosition"/> property value changes.
+        /// </summary>
+        /// <remarks>
+        /// You need to call <see cref="IdleAction"/> in the
+        /// <see cref="Application.Idle"/> event handler in order to enable
+        /// <see cref="CurrentPositionChanged"/> event firing.
+        /// </remarks>
+        public event EventHandler? CurrentPositionChanged;
+
+        /// <summary>
         /// Occurs when the value of the <see cref="Text"/> property changes.
         /// </summary>
         public event TextChangedEventHandler TextChanged
@@ -793,6 +803,43 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets current position of the caret.
+        /// </summary>
+        /// <remarks>
+        /// Uses <see cref="GetInsertionPoint"/> and <see cref="PositionToXY"/> to get the position.
+        /// Uses <see cref="SetInsertionPoint"/> and <see cref="XYToPosition"/> to set the position.
+        /// </remarks>
+        /// <remarks>
+        /// Caret position starts from (0,0).
+        /// </remarks>
+        [Browsable(false)]
+        public Int32Point? CurrentPosition
+        {
+            get
+            {
+                var insertPoint = GetInsertionPoint();
+                var currentPos = PositionToXY(insertPoint);
+                if (currentPos == Int32Point.MinusOne)
+                    return null;
+                return currentPos;
+            }
+
+            set
+            {
+                value ??= Int32Point.Empty;
+                var insertPoint = XYToPosition((long)value.Value.X, (long)value.Value.Y);
+                SetInsertionPoint(insertPoint);
+                CurrentPositionChanged?.Invoke(this, EventArgs.Empty);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets position of the caret which was reported in the event.
+        /// </summary>
+        [Browsable(false)]
+        public Int32Point? ReportedPosition { get; set; }
+
+        /// <summary>
         /// Gets a value indicating whether the user can undo the previous operation
         /// in the control.
         /// </summary>
@@ -1051,7 +1098,7 @@ namespace Alternet.UI
         /// <param name="pos">Position in the text.</param>
         /// <returns>Point.X receives zero based column number. Point.Y receives
         /// zero based line number. If failure returns (-1,-1).</returns>
-        public Point PositionToXY(long pos)
+        public Int32Point PositionToXY(long pos)
         {
             return Handler.PositionToXY(pos);
         }
@@ -1429,6 +1476,23 @@ namespace Alternet.UI
         public void SetInsertionPointEnd()
         {
             Handler.SetInsertionPointEnd();
+        }
+
+        /// <summary>
+        /// Call this method in <see cref="Application.Idle"/> event handler
+        /// in order to update information related to the current selection and caret position.
+        /// </summary>
+        public virtual void IdleAction()
+        {
+            if(CurrentPositionChanged is not null)
+            {
+                var currentPos = CurrentPosition;
+                if (ReportedPosition != currentPos)
+                {
+                    ReportedPosition = currentPos;
+                    CurrentPositionChanged(this, EventArgs.Empty);
+                }
+            }
         }
 
         /// <summary>
