@@ -54,6 +54,7 @@ namespace Alternet.UI
         private IValueValidator? validator;
         private int maxLength;
         private int minLength;
+        private TextBoxOptions options;
 
         static TextBox()
         {
@@ -425,7 +426,8 @@ namespace Alternet.UI
                 if (maxLength == value || value < 0)
                     return;
                 maxLength = value;
-                Handler.SetMaxLength((ulong)value);
+                if(options.HasFlag(TextBoxOptions.SetNativeMaxLength))
+                    Handler.SetMaxLength((ulong)value);
             }
         }
 
@@ -528,6 +530,39 @@ namespace Alternet.UI
             set
             {
                 Handler.IsModified = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets <see cref="Text"/> property value as <see cref="object"/> of a number type.
+        /// </summary>
+        /// <remarks>
+        /// If <see cref="Text"/> property doesn't contain a number value, <c>null</c> is returned.
+        /// </remarks>
+        [Browsable(false)]
+        public object? TextAsNumber
+        {
+            get
+            {
+                var typeCode = GetDataTypeCode();
+                if (!AssemblyUtils.IsNumberTypeCode(typeCode))
+                    return null;
+
+                var isOk = StringUtils.TryParseNumber(
+                    typeCode,
+                    Text,
+                    NumberStyles,
+                    FormatProvider,
+                    out var result);
+                if (isOk)
+                    return result;
+                else
+                    return null;
+            }
+
+            set
+            {
+                SetTextAsObject(value);
             }
         }
 
@@ -788,6 +823,25 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets flags which customize behavior and visual style of the control.
+        /// </summary>
+        [Browsable(false)]
+        public TextBoxOptions Options
+        {
+            get
+            {
+                return options;
+            }
+
+            set
+            {
+                if (options == value)
+                    return;
+                options = value;
+            }
+        }
+
+        /// <summary>
         /// Gets or sets a hint shown in an empty unfocused text control.
         /// </summary>
         public string? EmptyTextHint
@@ -949,6 +1003,12 @@ namespace Alternet.UI
             var typeCode = AssemblyUtils.GetRealTypeCode(DataType);
             return typeCode;
         }
+
+        /// <summary>
+        /// Returns <c>true</c> if <see cref="DataType"/> is a number type.
+        /// </summary>
+        /// <returns></returns>
+        public virtual bool DataTypeIsNumber() => AssemblyUtils.IsNumberTypeCode(GetDataTypeCode());
 
         /// <summary>
         /// Returns minimal and maximal possible values for the <see cref="DataType"/>

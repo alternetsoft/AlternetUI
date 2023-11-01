@@ -18,27 +18,29 @@ namespace ControlsSample
         public TextInputPage()
         {
             InitializeComponent();
-            textBox.EmptyTextHint = "Sample Hint";
-            textBox.Text = "sample text";
-            multiLineTextBox.Text = LoremIpsum;
-            multiLineTextBox.TextUrl += MultiLineTextBox_TextUrl;
 
             panelHeader.Add("TextBox", tab1);
             panelHeader.Add("Memo", tab2);
             panelHeader.Add("RichEdit", tab3);
             panelHeader.Add("Numbers", tab4);
             tabControl.Children.Prepend(panelHeader);
-            panelHeader.SelectedTab = panelHeader.Tabs[0];
+            panelHeader.SelectFirstTab();
 
-            wordWrapComboBox.BindEnumProp(multiLineTextBox, nameof(TextBox.TextWrap));
-            textAlignComboBox.BindEnumProp(textBox, nameof(TextBox.TextAlign));
-            RichEditButton_Click(null, EventArgs.Empty);
+            // textBox
 
+            textBox.EmptyTextHint = "Sample Hint";
+            textBox.Text = "sample text";
             textBox.TextChanged += ReportValueChanged;
+            textBox.TextChanged += ValidateFormat;
+            textBox.ValidatorReporter = textImage;
+            textBox.TextMaxLength += TextBox_TextMaxLength;
 
-            readOnlyCheckBox.BindBoolProp(textBox, nameof(TextBox.ReadOnly));
-            passwordCheckBox.BindBoolProp(textBox, nameof(TextBox.IsPassword));
-            hasBorderCheckBox.BindBoolProp(textBox, nameof(TextBox.HasBorder));
+            // multiLineTextBox
+
+            multiLineTextBox.Text = LoremIpsum;
+            multiLineTextBox.TextUrl += MultiLineTextBox_TextUrl;
+
+            // numberSignedTextBox
 
             numberSignedTextBox.Validator = TextBox.CreateValidator(ValueValidatorKind.SignedInt);
             numberSignedTextBox.TextChanged += ReportValueChanged;
@@ -47,6 +49,8 @@ namespace ControlsSample
             numberSignedTextBox.ValidatorReporter = numberSignedImage;
             numberSignedTextBox.ValidatorErrorText =
                 numberSignedTextBox.GetKnownErrorText(ValueValidatorKnownError.NumberIsExpected);
+
+            // numberUnsignedTextBox
 
             numberUnsignedTextBox.TextChanged += ValidateFormat;
             numberUnsignedTextBox.Validator = TextBox.CreateValidator(ValueValidatorKind.UnsignedInt);
@@ -62,6 +66,8 @@ namespace ControlsSample
             numberUnsignedTextBox.ValidatorErrorText =
                 numberUnsignedTextBox.GetKnownErrorText(ValueValidatorKnownError.NumberIsExpected);
 
+            // numberFloatTextBox
+
             numberFloatTextBox.Validator = TextBox.CreateValidator(ValueValidatorKind.Float);
             numberFloatTextBox.TextChanged += ReportValueChanged;
             numberFloatTextBox.TextChanged += ValidateFormat;
@@ -70,6 +76,8 @@ namespace ControlsSample
             numberFloatTextBox.ValidatorErrorText =
                 numberFloatTextBox.GetKnownErrorText(ValueValidatorKnownError.FloatIsExpected);
 
+            // numberHexTextBox
+
             numberHexTextBox.Validator = TextBox.CreateValidator(ValueValidatorKind.UnsignedHex); 
             numberHexTextBox.TextChanged += ReportValueChanged;
             numberHexTextBox.TextChanged += ValidateFormat;
@@ -77,6 +85,16 @@ namespace ControlsSample
             numberHexTextBox.ValidatorReporter = numberHexImage;
             numberHexTextBox.ValidatorErrorText =
                 numberHexTextBox.GetKnownErrorText(ValueValidatorKnownError.HexNumberIsExpected);
+
+            // Other initializations
+
+            wordWrapComboBox.BindEnumProp(multiLineTextBox, nameof(TextBox.TextWrap));
+            textAlignComboBox.BindEnumProp(textBox, nameof(TextBox.TextAlign));
+            RichEditButton_Click(null, EventArgs.Empty);
+
+            readOnlyCheckBox.BindBoolProp(textBox, nameof(TextBox.ReadOnly));
+            passwordCheckBox.BindBoolProp(textBox, nameof(TextBox.IsPassword));
+            hasBorderCheckBox.BindBoolProp(textBox, nameof(TextBox.HasBorder));
 
             noBellOnErrorCheckBox.BindBoolProp(
                 ValueValidatorFactory.Default,
@@ -89,18 +107,28 @@ namespace ControlsSample
                 numberHexLabel);
             numberLabels.SuggestedWidthToMax().VerticalAlignment(VerticalAlignment.Center);
 
-            ControlSet numberImages = new(
+            ControlSet tab1Labels = new(
+                textAlignLabel,
+                minLengthLabel,
+                maxLengthLabel);
+            tab1Labels.SuggestedWidthToMax();
+
+            ControlSet tab1editors = new(
+                textAlignComboBox,
+                minLengthBox,
+                maxLengthBox);
+            tab1editors.SuggestedWidthToMax();
+
+            ControlSet errorImages = new(
+                textImage,
                 numberSignedImage,
                 numberUnsignedImage,
                 numberFloatImage,
                 numberHexImage);
 
-            var imageSize = Toolbar.GetDefaultImageSize(Application.FirstWindow()!);
+            var image = KnownSvgImages.GetWarningImage();
 
-            var imageSet = KnownSvgImages.GetForSize(imageSize).ImgMessageBoxWarning;
-            var image = imageSet.AsImage(imageSize);
-
-            numberImages.Visible(true).Action<PictureBox>(InitPictureBox)
+            errorImages.Visible(true).Action<PictureBox>(InitPictureBox)
                 .VerticalAlignment(VerticalAlignment.Center);
 
             void InitPictureBox(PictureBox picture)
@@ -111,6 +139,41 @@ namespace ControlsSample
                 picture.TabStop = false;
                 picture.GotFocus += Control_GotFocus;
             }
+
+            minLengthBox.DataType = typeof(int);
+            minLengthBox.Validator = TextBox.CreateValidator(ValueValidatorKind.UnsignedInt);
+            minLengthBox.TextChanged += MinLengthBox_TextChanged;
+
+            maxLengthBox.DataType = typeof(int);
+            maxLengthBox.Validator = TextBox.CreateValidator(ValueValidatorKind.UnsignedInt);
+            maxLengthBox.TextChanged += MaxLengthBox_TextChanged;
+        }
+
+        private void TextBox_TextMaxLength(object? sender, EventArgs e)
+        {
+            site?.LogEvent("TextBox: Text max length reached");
+        }
+
+        private void MaxLengthBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            // Improve TextBox binding to use DataType
+
+            var value = maxLengthBox.TextAsNumber;
+            if (value is null)
+                textBox.MaxLength = 0;
+            else
+                textBox.MaxLength = (int)value;
+            ValidateFormat(textBox);
+        }
+
+        private void MinLengthBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            var value = minLengthBox.TextAsNumber;
+            if (value is null)
+                textBox.MinLength = 0;
+            else
+                textBox.MinLength = (int)value;
+            ValidateFormat(textBox);
         }
 
         private void Control_GotFocus(object sender, RoutedEventArgs e)
@@ -139,33 +202,63 @@ namespace ControlsSample
         {
             if (sender is not TextBox editor)
                 return;
+            ValidateFormat(editor);
+        }
 
+        private void ValidateFormat(TextBox editor)
+        {
             if (string.IsNullOrEmpty(editor.Text))
             {
                 editor.ReportValidatorError(!editor.AllowEmptyText);
                 return;
             }
 
-            var typeCode = editor.GetDataTypeCode();
-            if (!AssemblyUtils.IsNumberTypeCode(typeCode))
-                return;
+            var isOk = true;
 
-            var isOk = StringUtils.TryParseNumber(
-                typeCode,
-                editor.Text,
-                editor.NumberStyles,
-                editor.FormatProvider,
-                out var value);
+            if (editor.DataTypeIsNumber())
+            {
+                var value = editor.TextAsNumber;
+                isOk = value is not null;
+
+                if (isOk) // min max not only for numbers
+                {
+                    // bool ReportErrorMinMaxValue()
+                    var typeCode = editor.GetDataTypeCode();
+                    var minValue = MathUtils.Max(AssemblyUtils.GetMinValue(typeCode), editor.MinValue);
+                    var maxValue = MathUtils.Min(AssemblyUtils.GetMaxValue(typeCode), editor.MaxValue);
+                    var valueInRange = MathUtils.ValueInRange(value, minValue, maxValue);
+                    if (valueInRange is not null)
+                        isOk = valueInRange.Value;
+                    // report min max error text here.
+                }
+            }
 
             if (isOk)
             {
-                var minValue = MathUtils.Max(AssemblyUtils.GetMinValue(typeCode), editor.MinValue);
-                var maxValue = MathUtils.Min(AssemblyUtils.GetMaxValue(typeCode), editor.MaxValue);
-                var valueInRange = MathUtils.ValueInRange(value, minValue, maxValue);
-                if (valueInRange is not null)
-                    isOk = valueInRange.Value;
-            }
+                // bool ReportErrorMinMaxLength()
+                if(editor.MinLength > 0)
+                {
+                    if(editor.Text.Length < editor.MinLength)
+                    {
+                        editor.ReportValidatorError(
+                            true,
+                            editor.GetKnownErrorText(ValueValidatorKnownError.MinimumLength));
+                        return;
+                    }
+                }
 
+                if (editor.MaxLength > 0)
+                {
+                    if (editor.Text.Length > editor.MaxLength)
+                    {
+                        editor.ReportValidatorError(
+                            true,
+                            editor.GetKnownErrorText(ValueValidatorKnownError.MaximumLength));
+                        return;
+                    }
+                }
+            }
+            
             editor.ReportValidatorError(!isOk);
         }
 
