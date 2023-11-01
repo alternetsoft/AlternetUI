@@ -52,6 +52,7 @@ namespace Alternet.UI
         private TextBoxTextWrap textWrap;
         private GenericAlignment textAlign;
         private IValueValidator? validator;
+        private int maxLength;
 
         static TextBox()
         {
@@ -107,7 +108,7 @@ namespace Alternet.UI
         /// Occurs when maximal text length is reached.
         /// </summary>
         /// <remarks>
-        /// Use <see cref="SetMaxLength"/> to set maximal text length.
+        /// Use <see cref="MaxLength"/> to set maximal text length.
         /// </remarks>
         public event EventHandler? TextMaxLength;
 
@@ -386,6 +387,47 @@ namespace Alternet.UI
 
                 readOnly = value;
                 ReadOnlyChanged?.Invoke(this, EventArgs.Empty);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the maximum number of characters
+        /// the user can enter into the control.
+        /// </summary>
+        /// <remarks>
+        /// It allows limiting the text value length to len not counting the
+        /// terminating NULL character.
+        /// </remarks>
+        /// <remarks>
+        /// If len is 0, the previously set max length limit, if any,
+        /// is discarded and the user may enter as much text as
+        /// the underlying native text control widget
+        /// supports (typically at least 32Kb).
+        /// </remarks>
+        /// <remarks>
+        /// If the user tries to enter more characters into the text control
+        /// when it already is filled up to the maximal length, an event is sent to
+        /// notify the program about it (giving it the possibility to
+        /// show an explanatory message, for example) and the extra
+        /// input is discarded.
+        /// </remarks>
+        /// <remarks>
+        /// Note that on Linux this function may only be used with
+        /// single line text controls.
+        /// </remarks>
+        public int MaxLength
+        {
+            get
+            {
+                return maxLength;
+            }
+
+            set
+            {
+                if (maxLength == value || value < 0)
+                    return;
+                maxLength = value;
+                Handler.SetMaxLength((ulong)value);
             }
         }
 
@@ -1279,37 +1321,6 @@ namespace Alternet.UI
         public void SetInsertionPointEnd()
         {
             Handler.SetInsertionPointEnd();
-        }
-
-        /// <summary>
-        /// Sets the maximum number of characters
-        /// the user can enter into the control.
-        /// </summary>
-        /// <remarks>
-        /// It allows limiting the text value length to len not counting the
-        /// terminating NULL character.
-        /// </remarks>
-        /// <remarks>
-        /// If len is 0, the previously set max length limit, if any,
-        /// is discarded and the user may enter as much text as
-        /// the underlying native text control widget
-        /// supports(typically at least 32Kb).
-        /// </remarks>
-        /// <remarks>
-        /// If the user tries to enter more characters into the text control
-        /// when it already is filled up to the maximal length, an event is sent to
-        /// notify the program about it (giving it the possibility to
-        /// show an explanatory message, for example) and the extra
-        /// input is discarded.
-        /// </remarks>
-        /// <remarks>
-        /// Note that on Linux this function may only be used with
-        /// single line text controls.
-        /// </remarks>
-        /// <param name="len"></param>
-        public void SetMaxLength(ulong len)
-        {
-            Handler.SetMaxLength(len);
         }
 
         /// <summary>
