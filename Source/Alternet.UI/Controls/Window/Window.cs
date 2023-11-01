@@ -42,6 +42,7 @@ namespace Alternet.UI
         {
             Application.Current.RegisterWindow(this);
             SetVisibleValue(false);
+            DefaultDPI ??= GetDPI();
             Bounds = new Rect(100, 100, 400, 400);
         }
 
@@ -188,6 +189,11 @@ namespace Alternet.UI
         /// <value>A <see cref="Window"/> that represents the currently active window,
         /// or <see langword="null"/> if there is no active window.</value>
         public static Window? ActiveWindow => NativeWindowHandler.ActiveWindow;
+
+        /// <summary>
+        /// Gets DPI of the first created window.
+        /// </summary>
+        public static Size? DefaultDPI { get; set; }
 
         /// <summary>
         /// Gets a value indicating whether the window is the currently active window for
