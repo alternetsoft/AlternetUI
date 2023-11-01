@@ -99,10 +99,15 @@ namespace Alternet.Drawing
             new(size.Width, size.Height);
 
         /// <summary>
-        /// Converts the specified <see cref='Int32Size'/> to a
-        /// <see cref='Size'/>.
+        /// Converts the specified <see cref='Int32Size'/> to a <see cref='Size'/>.
         /// </summary>
         public static implicit operator Size(Int32Size p) => new(p.Width, p.Height);
+
+        /// <summary>
+        /// Converts the specified <see cref='int'/> to a <see cref='Int32Size'/>.
+        /// Width and height are set to the <paramref name="value"/>.
+        /// </summary>
+        public static implicit operator Int32Size(int value) => new(value, value);
 
         /// <summary>
         /// Performs vector addition of two <see cref='Int32Size'/> objects.
