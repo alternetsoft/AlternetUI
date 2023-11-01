@@ -1082,74 +1082,86 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc cref="SetTextAsObject"/>
-        public virtual void SetTextAs(sbyte value)
+        public virtual void SetTextAsSByte(sbyte value)
         {
+            DataType ??= typeof(byte);
             SetTextAsObject(value);
         }
 
         /// <inheritdoc cref="SetTextAsObject"/>
-        public virtual void SetTextAs(byte value)
+        public virtual void SetTextAsByte(byte value)
         {
+            DataType ??= typeof(byte);
             SetTextAsObject(value);
         }
 
         /// <inheritdoc cref="SetTextAsObject"/>
-        public virtual void SetTextAs(short value)
+        public virtual void SetTextAsInt16(short value)
         {
+            DataType ??= typeof(short);
             SetTextAsObject(value);
         }
 
         /// <inheritdoc cref="SetTextAsObject"/>
-        public virtual void SetTextAs(ushort value)
+        public virtual void SetTextAsUInt16(ushort value)
         {
+            DataType ??= typeof(ushort);
             SetTextAsObject(value);
         }
 
         /// <inheritdoc cref="SetTextAsObject"/>
-        public virtual void SetTextAs(int value)
+        public virtual void SetTextAsInt(int value)
         {
+            DataType ??= typeof(int);
             SetTextAsObject(value);
         }
 
         /// <inheritdoc cref="SetTextAsObject"/>
-        public virtual void SetTextAs(uint value)
+        public virtual void SetTextAsUInt32(uint value)
         {
+            DataType ??= typeof(uint);
             SetTextAsObject(value);
         }
 
         /// <inheritdoc cref="SetTextAsObject"/>
-        public virtual void SetTextAs(long value)
+        public virtual void SetTextAsInt64(long value)
         {
+            DataType ??= typeof(long);
             SetTextAsObject(value);
         }
 
         /// <inheritdoc cref="SetTextAsObject"/>
-        public virtual void SetTextAs(ulong value)
+        public virtual void SetTextAsUInt64(ulong value)
         {
+            DataType ??= typeof(ulong);
             SetTextAsObject(value);
         }
 
         /// <inheritdoc cref="SetTextAsObject"/>
-        public virtual void SetTextAs(float value)
+        public virtual void SetTextAsSingle(float value)
         {
+            DataType ??= typeof(float);
             SetTextAsObject(value);
         }
 
         /// <inheritdoc cref="SetTextAsObject"/>
-        public virtual void SetTextAs(double value)
+        public virtual void SetTextAsDouble(double value)
         {
+            DataType ??= typeof(double);
             SetTextAsObject(value);
         }
 
         /// <inheritdoc cref="SetTextAsObject"/>
-        public virtual void SetTextAs(decimal value)
+        public virtual void SetTextAsDecimal(decimal value)
         {
+            DataType ??= typeof(decimal);
             SetTextAsObject(value);
         }
 
         /// <inheritdoc cref="SetTextAsObject"/>
-        public virtual void SetTextAs(DateTime value)
+        public virtual void SetTextAsDateTime(DateTime value)
         {
+            DataType ??= typeof(DateTime);
             SetTextAsObject(value);
         }
 
@@ -1163,6 +1175,10 @@ namespace Alternet.UI
         /// <see cref="FormatProvider"/> propertties. Depending
         /// on the values of these properties, different conversion methods are used.
         /// </remarks>
+        /// <remarks>
+        /// If <see cref="DataType"/> property is <c>null</c>, it is set to
+        /// the type of <paramref name="value"/>.
+        /// </remarks>
         public virtual void SetTextAsObject(object? value)
         {
             if (value is null)
@@ -1171,7 +1187,9 @@ namespace Alternet.UI
                 return;
             }
 
-            var typeCode = AssemblyUtils.GetRealTypeCode(value.GetType());
+            var type = value.GetType();
+            DataType ??= type;
+            var typeCode = AssemblyUtils.GetRealTypeCode(type);
 
             var converter = Converter ??
                 ObjectToStringFactory.Default.GetConverter(typeCode);
