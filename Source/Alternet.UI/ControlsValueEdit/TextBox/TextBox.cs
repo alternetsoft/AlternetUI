@@ -1051,7 +1051,7 @@ namespace Alternet.UI
         /// <param name="pos">Position in the text.</param>
         /// <returns>Point.X receives zero based column number. Point.Y receives
         /// zero based line number. If failure returns (-1,-1).</returns>
-        public Alternet.Drawing.Point PositionToXY(long pos)
+        public Point PositionToXY(long pos)
         {
             return Handler.PositionToXY(pos);
         }
@@ -1077,7 +1077,7 @@ namespace Alternet.UI
         /// Additionally, GTK only implements this method for multiline
         /// controls and (-1,-1) is always returned for the single line ones.
         /// </remarks>
-        public Alternet.Drawing.Point PositionToCoords(long pos)
+        public Point PositionToCoords(long pos)
         {
             return Handler.PositionToCoords(pos);
         }
