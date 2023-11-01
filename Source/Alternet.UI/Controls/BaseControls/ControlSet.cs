@@ -11,6 +11,11 @@ namespace Alternet.UI
     /// </summary>
     public class ControlSet
     {
+        /// <summary>
+        /// Gets <see cref="ControlSet"/> without items.
+        /// </summary>
+        public static readonly ControlSet Empty = new(Array.Empty<Control>());
+
         private readonly IReadOnlyList<Control> items;
 
         /// <summary>
@@ -71,6 +76,18 @@ namespace Alternet.UI
         /// to get or set.</param>
         /// <returns>The element at the specified index.</returns>
         public Control this[int index] => items[index];
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ControlSet"/> class.
+        /// </summary>
+        /// <param name="controls">Controls.</param>
+        public static ControlSet New(params Control[] controls) => new(controls);
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ControlSet"/> class.
+        /// </summary>
+        /// <param name="controls">Controls.</param>
+        public static ControlSet New(IReadOnlyList<Control> controls) => new(controls);
 
         /// <summary>
         /// Creates two dimensional array 'Control[,]' from the specified columns with controls.
