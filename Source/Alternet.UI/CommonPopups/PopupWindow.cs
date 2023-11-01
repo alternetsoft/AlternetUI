@@ -61,6 +61,10 @@ namespace Alternet.UI
         /// </summary>
         public bool HideOnEscape { get; set; } = true;
 
+        public Control? PopupOwner { get; set; }
+
+        public bool FocusPopupOwnerOnHide { get; set; } = true;
+
         /// <summary>
         /// Gets or sets a value indicating whether a popup window disappears automatically
         /// when the user presses "Enter" key.
@@ -126,9 +130,11 @@ namespace Alternet.UI
         /// Shows popup under bottom left corner of the specified control.
         /// </summary>
         /// <param name="control">Control.</param>
-        public void PopupUnderControl(Control control)
+        public void ShowPopup(Control control)
         {
             PopupResult = ModalResult.None;
+            PopupOwner = control;
+
             control.BeginInvoke(() =>
             {
                 HandleNeeded();
@@ -150,7 +156,20 @@ namespace Alternet.UI
             if (!Visible)
                 return;
             PopupResult = result;
-            Hide();
+
+            BeginInvoke(() =>
+            {
+                Hide();
+                Application.DoEvents();
+                if (PopupOwner is not null && FocusPopupOwnerOnHide)
+                {
+                    PopupOwner.ParentWindow?.Activate();
+                    if (PopupOwner.CanAcceptFocus)
+                        PopupOwner.SetFocus();
+                }
+
+                PopupOwner = null;
+            });
         }
 
         /// <summary>

@@ -34,7 +34,9 @@ namespace CustomControlsSample
                     popup = new()
                     {
                         Owner = Control.ParentWindow,
-                        Name = "Popup"
+                        Name = "Popup",
+                        HideOnEnter = false,
+                        HideOnDoubleClick = false,
                     };
                     popup.Disposed += Popup_Disposed;
 
@@ -49,20 +51,6 @@ namespace CustomControlsSample
         private void Popup_Disposed(object? sender, EventArgs e)
         {
             popup = null;
-        }
-
-        private void ColorButton_Click(object? sender, EventArgs e)
-        {
-            Control.Value = ((ColorPicker)sender!).Value;
-
-            Control.BeginInvoke(() =>
-            {
-                Popup.Hide();
-                Application.DoEvents();
-                Control.ParentWindow?.Activate();
-                if (Control.CanAcceptFocus)
-                    Control.SetFocus();
-            });
         }
 
         private readonly Color[] colors = new[]
@@ -235,19 +223,16 @@ namespace CustomControlsSample
             return CustomControlsColors.BackgroundBrush;
         }
 
+        private void ColorButton_Click(object? sender, EventArgs e)
+        {
+            Control.Value = ((ColorPicker)sender!).Value;
+
+            Popup.HidePopup(ModalResult.Accepted);
+        }
+
         private void OpenPopup()
         {
-            Control.BeginInvoke(() =>
-            {
-                Popup.HandleNeeded();
-                var bl = ClientRectangle.BottomLeft;
-                var blScreen = Control.ClientToScreen(bl);
-                Popup.Location = blScreen;
-                Popup.SetSizeToContent();
-                Popup.Show();
-                if (Popup.IsFocusable)
-                    Popup.SetFocus();
-            });
+            Popup.ShowPopup(this.Control);
         }
     }
 }

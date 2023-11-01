@@ -85,7 +85,7 @@ namespace ControlsSample
                 popupListBox.ListBox.SelectFirstItem();
             }
             site?.LogEvent(" === ShowPopupButton_Click ===");
-            popupListBox.PopupUnderControl(showPopupButton);            
+            popupListBox.ShowPopup(showPopupButton);            
         }
 
         public IPageSite? Site
