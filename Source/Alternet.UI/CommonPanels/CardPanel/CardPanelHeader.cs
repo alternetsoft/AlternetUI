@@ -141,6 +141,15 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Selects the first tab if it exists.
+        /// </summary>
+        public virtual void SelectFirstTab()
+        {
+            if (Tabs.Count > 0)
+                SelectedTab = Tabs[0];
+        }
+
+        /// <summary>
         /// Sets width of all cards to value obtained with <see cref="GetMaxCardSize"/>.
         /// </summary>
         public virtual void CardsWidthToMax(WindowSizeToContentMode mode)
