@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using Alternet.Base.Collections;
@@ -277,9 +278,17 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="control">Control's <see cref="Control.GetDPI"/> method
         /// is used to get DPI settings.</param>
-        public static Int32Size GetDefaultImageSize(Control control)
+        public static Int32Size GetDefaultImageSize(Control? control = null)
         {
-            var result = GetDefaultImageSize(control.GetDPI());
+            control ??= Application.FirstWindow();
+            Size? dpi;
+            if (control is null)
+                dpi = Window.DefaultDPI;
+            else
+                dpi = control.GetDPI();
+            if (dpi is null)
+                throw new ArgumentNullException(nameof(control));
+            var result = GetDefaultImageSize(dpi.Value);
             return result;
         }
 
