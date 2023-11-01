@@ -61,8 +61,16 @@ namespace Alternet.UI
         /// </summary>
         public bool HideOnEscape { get; set; } = true;
 
+        /// <summary>
+        /// Gets or sets owner of the popup window.
+        /// </summary>
+        /// <remarks>Usually owner of the popup window is a control under which popup is
+        /// shown using <see cref="ShowPopup"/> method.</remarks>
         public Control? PopupOwner { get; set; }
 
+        /// <summary>
+        /// Gets or sets whether to focus <see cref="PopupOwner"/> control when popup is closed.
+        /// </summary>
         public bool FocusPopupOwnerOnHide { get; set; } = true;
 
         /// <summary>
