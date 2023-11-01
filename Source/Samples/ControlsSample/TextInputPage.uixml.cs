@@ -100,35 +100,21 @@ namespace ControlsSample
                 ValueValidatorFactory.Default,
                 nameof(ValueValidatorFactory.IsSilent));
 
-            ControlSet numberLabels = new(
-                numberSignedLabel,
-                numberUnsignedLabel,
-                numberFloatLabel,
-                numberHexLabel);
-            numberLabels.SuggestedWidthToMax().VerticalAlignment(VerticalAlignment.Center);
+            ControlSet.New(numberSignedLabel, numberUnsignedLabel, numberFloatLabel, numberHexLabel)
+                .SuggestedWidthToMax().VerticalAlignment(VerticalAlignment.Center);
 
-            ControlSet tab1Labels = new(
-                textAlignLabel,
-                minLengthLabel,
-                maxLengthLabel);
-            tab1Labels.SuggestedWidthToMax();
+            ControlSet.New(textAlignLabel, minLengthLabel, maxLengthLabel).SuggestedWidthToMax();
 
-            ControlSet tab1editors = new(
-                textAlignComboBox,
-                minLengthBox,
-                maxLengthBox);
-            tab1editors.SuggestedWidthToMax();
+            ControlSet.New(textAlignComboBox, minLengthBox, maxLengthBox).SuggestedWidthToMax();
 
-            ControlSet errorImages = new(
+            var image = KnownSvgImages.GetWarningImage();
+
+            ControlSet.New(
                 textImage,
                 numberSignedImage,
                 numberUnsignedImage,
                 numberFloatImage,
-                numberHexImage);
-
-            var image = KnownSvgImages.GetWarningImage();
-
-            errorImages.Visible(true).Action<PictureBox>(InitPictureBox)
+                numberHexImage).Visible(true).Action<PictureBox>(InitPictureBox)
                 .VerticalAlignment(VerticalAlignment.Center);
 
             void InitPictureBox(PictureBox picture)
