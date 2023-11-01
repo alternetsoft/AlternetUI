@@ -48,7 +48,8 @@ namespace Alternet.UI
                             isAnimationProhibited: true,
                             UpdateSourceTrigger.PropertyChanged));
 
-        private static readonly Size DefaultSize = new(double.NaN, double.NaN);
+        private static readonly Size DefaultSize = Size.NaN;
+        private static int groupIndexCounter;
 
         private MouseButtonEventArgs? dragEventArgs;
         private Point dragEventMousePos;
@@ -484,8 +485,15 @@ namespace Alternet.UI
         /// </remarks>
         public virtual bool Enabled
         {
-            get { return (bool)GetValue(EnabledProperty); }
-            set { SetValue(EnabledProperty, value); }
+            get
+            {
+                return (bool)GetValue(EnabledProperty);
+            }
+
+            set
+            {
+                SetValue(EnabledProperty, value);
+            }
         }
 
         /// <summary>
@@ -1046,6 +1054,35 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets group indexes which are assigned to this control.
+        /// </summary>
+        public int[]? GroupIndexes { get; set; }
+
+        /// <summary>
+        /// Gets or sets group index which is assigned to this control.
+        /// </summary>
+        /// <remarks>
+        /// This property modifies <see cref="GroupIndexes"/>.
+        /// </remarks>
+        public int? GroupIndex
+        {
+            get
+            {
+                if (GroupIndexes is null || GroupIndexes.Length == 0)
+                    return null;
+                return GroupIndexes[0];
+            }
+
+            set
+            {
+                if (value is null)
+                    GroupIndexes = null;
+                else
+                    GroupIndexes = new int[] { value.Value };
+            }
+        }
+
+        /// <summary>
         /// Gets or sets the background brush for the control.
         /// </summary>
         [Browsable(false)]
@@ -1408,6 +1445,11 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Generates new group index.
+        /// </summary>
+        public static int NewGroupIndex() => groupIndexCounter++;
+
+        /// <summary>
         /// Resets bacgkround color to the default value.
         /// </summary>
         public virtual void ResetBackgroundColor()
@@ -1622,6 +1664,44 @@ namespace Alternet.UI
             if (index >= Children.Count || index < 0)
                 return null;
             return Children[index];
+        }
+
+        /// <summary>
+        /// Gets <see cref="ControlSet"/> with all controls which are members of the
+        /// specified group.
+        /// </summary>
+        /// <param name="groupIndex">Index of the group.</param>
+        /// <param name="recursive">Whether to check child controls recursively.</param>
+        public ControlSet GetGroup(int groupIndex, bool recursive = false)
+        {
+            if (!HasChildren)
+                return ControlSet.Empty;
+            List<Control> result = new();
+            foreach(var control in Children)
+            {
+                if (control.MemberOfGroup(groupIndex))
+                    result.Add(control);
+                if (recursive)
+                {
+                    ControlSet subSet = control.GetGroup(groupIndex, true);
+                    result.AddRange(subSet.Items);
+                }
+            }
+
+            return new ControlSet(result);
+        }
+
+        /// <summary>
+        /// Checks whether this control is a member of the specified group.
+        /// </summary>
+        /// <param name="groupIndex">Index of the group.</param>
+        public bool MemberOfGroup(int groupIndex)
+        {
+            var indexes = GroupIndexes;
+
+            if (indexes is null)
+                return false;
+            return Array.IndexOf<int>(indexes, groupIndex) >= 0;
         }
 
         /// <summary>
