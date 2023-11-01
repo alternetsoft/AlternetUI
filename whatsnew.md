@@ -6,7 +6,7 @@
 - Added to TextBox: MinValue, MaxValue, DefaultValidatorErrorText, DefaultErrorBackgroundColor, DefaultErrorForegroundColor,
  NumberStyles, FormatProvider, DataType, ValidatorReporter, ValidatorErrorText, EmptyTextAllow, EmptyTextValue,
  GetDataTypeCode, GetMinMaxRangeStr, CreateValidator, GetKnownErrorText, ReportValidatorError, DefaultFormat, Converter,
- DefaultText, different SetTextAs* methods.
+ DefaultText, different SetTextAs* methods, MinLength, MaxLength.
 - Improvments in Validator classes and methods.
 - Fixed TabControl behavior and bad painting under Linux.
 - AuiToolbar: All Add methods now return toolId.
