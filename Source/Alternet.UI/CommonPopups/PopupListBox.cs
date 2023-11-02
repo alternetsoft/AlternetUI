@@ -24,11 +24,9 @@ namespace Alternet.UI
             {
                 if(listBox == null)
                 {
-                    listBox = new()
-                    {
-                        HasBorder = false,
-                        Parent = this.Border,
-                    };
+                    listBox = (ListBox)CreateMainControl();
+                    listBox.HasBorder = false;
+                    listBox.Parent = this.Border;
                     BindEvents(listBox);
                 }
 
@@ -88,36 +86,39 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        protected override void PopupControl_MouseDoubleClick(object? sender, MouseButtonEventArgs e)
+        protected override Control CreateMainControl() => new ListBox();
+
+        /// <inheritdoc/>
+        protected override void OnMainControlMouseDoubleClick(object? sender, MouseButtonEventArgs e)
         {
             UpdateResultIndex(e);
             if(resultIndex is not null)
-                base.PopupControl_MouseDoubleClick(sender, e);
+                base.OnMainControlMouseDoubleClick(sender, e);
         }
 
         /// <inheritdoc/>
-        protected override void PopupControl_MouseLeftButtonUp(object? sender, MouseButtonEventArgs e)
+        protected override void OnMainControlMouseLeftButtonUp(object? sender, MouseButtonEventArgs e)
         {
             UpdateResultIndex(e);
             if (resultIndex is not null)
-                base.PopupControl_MouseLeftButtonUp(sender, e);
+                base.OnMainControlMouseLeftButtonUp(sender, e);
+        }
+
+        /// <inheritdoc/>
+        protected override void BindEvents(Control control)
+        {
+            base.BindEvents(control);
+        }
+
+        /// <inheritdoc/>
+        protected override void UnbindEvents(Control control)
+        {
+            base.UnbindEvents(control);
         }
 
         private void UpdateResultIndex(MouseButtonEventArgs e)
         {
             resultIndex = ListBox.HitTest(e.GetPosition(ListBox));
-        }
-
-        private void BindEvents(ListBox control)
-        {
-            control.MouseDoubleClick += PopupControl_MouseDoubleClick;
-            control.MouseLeftButtonUp += PopupControl_MouseLeftButtonUp;
-        }
-
-        private void UnbindEvents(ListBox control)
-        {
-            control.MouseDoubleClick -= PopupControl_MouseDoubleClick;
-            control.MouseLeftButtonUp -= PopupControl_MouseLeftButtonUp;
         }
     }
 }

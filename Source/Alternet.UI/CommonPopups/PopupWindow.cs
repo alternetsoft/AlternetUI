@@ -182,11 +182,11 @@ namespace Alternet.UI
 
         /// <summary>
         /// Default implementation of the left mouse button double click event
-        /// for the popup control.
+        /// for the main control of the popup window.
         /// </summary>
         /// <param name="sender">Event object.</param>
         /// <param name="e">Event arguments.</param>
-        protected virtual void PopupControl_MouseDoubleClick(object? sender, MouseButtonEventArgs e)
+        protected virtual void OnMainControlMouseDoubleClick(object? sender, MouseButtonEventArgs e)
         {
             if (HideOnDoubleClick && e.ChangedButton == MouseButton.Left)
             {
@@ -196,12 +196,37 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Creates main control of the popup window.
+        /// </summary>
+        protected virtual Control CreateMainControl() => new Control();
+
+        /// <summary>
+        /// Override to bind events to the main control of the popup window.
+        /// </summary>
+        /// <param name="control">Control which events are binded.</param>
+        protected virtual void BindEvents(Control control)
+        {
+            control.MouseDoubleClick += OnMainControlMouseDoubleClick;
+            control.MouseLeftButtonUp += OnMainControlMouseLeftButtonUp;
+        }
+
+        /// <summary>
+        /// Override to unbind events to the main control of the popup window.
+        /// </summary>
+        /// <param name="control">Control which events are unbinded.</param>
+        protected virtual void UnbindEvents(Control control)
+        {
+            control.MouseDoubleClick -= OnMainControlMouseDoubleClick;
+            control.MouseLeftButtonUp -= OnMainControlMouseLeftButtonUp;
+        }
+
+        /// <summary>
         /// Default implementation of the left mouse button up event
         /// for the popup control.
         /// </summary>
         /// <param name="sender">Event object.</param>
         /// <param name="e">Event arguments.</param>
-        protected virtual void PopupControl_MouseLeftButtonUp(object? sender, MouseButtonEventArgs e)
+        protected virtual void OnMainControlMouseLeftButtonUp(object? sender, MouseButtonEventArgs e)
         {
             if (HideOnClick)
             {

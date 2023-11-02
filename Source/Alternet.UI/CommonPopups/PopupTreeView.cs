@@ -11,5 +11,7 @@ namespace Alternet.UI
     /// </summary>
     internal class PopupTreeView : PopupWindow
     {
+        /// <inheritdoc/>
+        protected override Control CreateMainControl() => new TreeView();
     }
 }

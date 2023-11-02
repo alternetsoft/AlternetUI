@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Popup window with <see cref="Calendar"/> control.
+    /// Popup window with <see cref="PanelAuiManager"/> control.
     /// </summary>
-    internal class PopupCalendar : PopupWindow
+    internal class PopupAuiManager : PopupWindow
     {
         /// <inheritdoc/>
-        protected override Control CreateMainControl() => new Calendar();
+        protected override Control CreateMainControl() => new PanelAuiManager();
     }
 }
