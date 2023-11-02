@@ -52,5 +52,15 @@ namespace Alternet.UI
         /// The Microsoft "Windows" key on Windows or "Control" key on macOS or "Meta" key on Linux.
         /// </summary>
         Windows = 1 << 3,
+
+        /// <summary>
+        /// Both Control and Shift modifiers are pressed.
+        /// </summary>
+        ControlShift = Control | Shift,
+
+        /// <summary>
+        /// Both Control and Alt modifiers are pressed.
+        /// </summary>
+        ControlAlt = Control | Alt,
     }
 }

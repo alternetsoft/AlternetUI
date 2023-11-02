@@ -37,11 +37,13 @@ namespace ControlsSample
             textBox.Text = "sample text";
             textBox.ValidatorReporter = textImage;
             textBox.TextMaxLength += TextBox_TextMaxLength;
+            textBox.CurrentPositionChanged += TextBox_CurrentPositionChanged;
 
             // ==== multiLineTextBox
 
             multiLineTextBox.Text = LoremIpsum;
             multiLineTextBox.TextUrl += MultiLineTextBox_TextUrl;
+            multiLineTextBox.CurrentPositionChanged += TextBox_CurrentPositionChanged;
 
             // ==== numberSignedTextBox
 
@@ -147,6 +149,8 @@ namespace ControlsSample
                 picture.GotFocus += Control_GotFocus;
             }
 
+            // !!! update UseValidator to support unsigned int
+            // !!! but need to set MinValue = 0
             minLengthBox.DataType = typeof(int);
             minLengthBox.Validator = TextBox.CreateValidator(ValueValidatorKind.UnsignedInt);
             minLengthBox.TextChanged += MinLengthBox_TextChanged;
@@ -157,16 +161,69 @@ namespace ControlsSample
 
             Application.Current.Idle += Application_Idle;
 
-            textBox.CurrentPositionChanged += TextBox_CurrentPositionChanged;
-            multiLineTextBox.CurrentPositionChanged += TextBox_CurrentPositionChanged;
-            richEdit.CurrentPositionChanged += TextBox_CurrentPositionChanged;
-
             setDoubleMaxButton.Click += SetDoubleMaxButton_Click;
             setDoubleMinButton.Click += SetDoubleMinButton_Click;
             setDoubleMaxPPButton.Click += SetDoubleMaxPPButton_Click;
             setDoubleMinMMButton.Click += SetDoubleMinMMButton_Click;
 
+            // ==== richEdit
+
+            richEdit.CurrentPositionChanged += TextBox_CurrentPositionChanged;
+            richEdit.KeyDown += RichEdit_KeyDown;
             InitRichEdit();
+        }
+
+        private void RichEdit_KeyDown(object sender, KeyEventArgs e)
+        {
+            void ToggleBold()
+            {
+                Application.Log("Ctrl+B");
+            }
+
+            void ToggleItalic()
+            {
+                Application.Log("Ctrl+I");
+            }
+
+            void ToggleUnderline()
+            {
+                Application.Log("Ctrl+U");
+            }
+
+            void AlignCenter()
+            {
+                Application.Log("Ctrl+Shift+E Center Align");
+            }
+
+            void AlignLeft()
+            {
+                Application.Log("Ctrl+Shift+L Left Align");
+            }
+
+            void AlignRight()
+            {
+                Application.Log("Ctrl+Shift+R Right Align");
+            }
+
+            void Justify()
+            {
+                Application.Log("Ctrl+Shift+J Justify");
+            }
+
+            if (KnownKeys.RichEditToggleBold.Run(e, ToggleBold))
+                return;
+            if (KnownKeys.RichEditToggleItalic.Run(e, ToggleItalic))
+                return;
+            if (KnownKeys.RichEditToggleUnderline.Run(e, ToggleUnderline))
+                return;
+            if (KnownKeys.RichEditLeftAlign.Run(e, AlignLeft))
+                return;
+            if (KnownKeys.RichEditCenterAlign.Run(e, AlignCenter))
+                return;
+            if (KnownKeys.RichEditRightAlign.Run(e, AlignRight))
+                return;
+            if (KnownKeys.RichEditJustify.Run(e, Justify))
+                return;
         }
 
         private void SetDoubleMinMMButton_Click(object? sender, EventArgs e)
@@ -388,14 +445,27 @@ namespace ControlsSample
                 "Font is ", taBig, "big", taDefault, ".\n",
                 "Font is ", taUnderlined2, "special underlined", taDefault, ".\n",
                 "This is url: ", taUrl, homePage, taDefault, ".\n",
+                "\n",
+                "Keys:\n",
+                "Ctrl+B - Toggle Bold style.\n",
+                "Ctrl+I - Toggle Italic style.\n",
+                "Ctrl+U - Toggle Underline style.\n",
+                "Ctrl+Shift+L - Left Align\n",
+                "Ctrl+Shift+E - Center Align.\n",
+                "Ctrl+Shift+R - Right Align.\n",
+                "Ctrl+Shift+J - Justify.\n",
             };
 
             richEdit.Clear();
             richEdit.AutoUrl = true;
             richEdit.IsRichEdit = true;
 
-            richEdit.AppendTextAndStyles(list);
-            richEdit.AppendNewLine();
+            richEdit.DoInsideUpdate(() =>
+            {
+                richEdit.AppendTextAndStyles(list);
+                richEdit.AppendNewLine();
+                richEdit.Refresh();
+            });
 
             /*
             const string sUnorderedListItem = "Unordered List Item";
