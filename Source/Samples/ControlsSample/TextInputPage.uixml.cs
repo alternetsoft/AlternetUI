@@ -43,19 +43,19 @@ namespace ControlsSample
             // numberSignedTextBox
 
             numberSignedTextBox.Validator = TextBox.CreateValidator(ValueValidatorKind.SignedInt);
+            numberSignedTextBox.DataType = typeof(short);
             numberSignedTextBox.TextChanged += ReportValueChanged;
             numberSignedTextBox.TextChanged += ValidateFormat;
-            numberSignedTextBox.DataType = typeof(short);
             numberSignedTextBox.ValidatorReporter = numberSignedImage;
             numberSignedTextBox.ValidatorErrorText =
                 numberSignedTextBox.GetKnownErrorText(ValueValidatorKnownError.NumberIsExpected);
 
             // numberUnsignedTextBox
 
-            numberUnsignedTextBox.TextChanged += ValidateFormat;
             numberUnsignedTextBox.Validator = TextBox.CreateValidator(ValueValidatorKind.UnsignedInt);
-            numberUnsignedTextBox.TextChanged += ReportValueChanged;
             numberUnsignedTextBox.DataType = typeof(byte);
+            numberUnsignedTextBox.TextChanged += ValidateFormat;
+            numberUnsignedTextBox.TextChanged += ReportValueChanged;
             numberUnsignedTextBox.ValidatorReporter = numberUnsignedImage;
             // We need to apply min and max values before ValidatorErrorText
             // is assigned as they are used in error text.
@@ -69,19 +69,19 @@ namespace ControlsSample
             // numberFloatTextBox
 
             numberFloatTextBox.Validator = TextBox.CreateValidator(ValueValidatorKind.Float);
+            numberFloatTextBox.DataType = typeof(double);
             numberFloatTextBox.TextChanged += ReportValueChanged;
             numberFloatTextBox.TextChanged += ValidateFormat;
-            numberFloatTextBox.DataType = typeof(double);
             numberFloatTextBox.ValidatorReporter = numberFloatImage;
             numberFloatTextBox.ValidatorErrorText =
                 numberFloatTextBox.GetKnownErrorText(ValueValidatorKnownError.FloatIsExpected);
 
             // numberHexTextBox
 
-            numberHexTextBox.Validator = TextBox.CreateValidator(ValueValidatorKind.UnsignedHex); 
+            numberHexTextBox.Validator = TextBox.CreateValidator(ValueValidatorKind.UnsignedHex);
+            numberHexTextBox.DataType = typeof(int);
             numberHexTextBox.TextChanged += ReportValueChanged;
             numberHexTextBox.TextChanged += ValidateFormat;
-            numberHexTextBox.DataType = typeof(int);
             numberHexTextBox.ValidatorReporter = numberHexImage;
             numberHexTextBox.ValidatorErrorText =
                 numberHexTextBox.GetKnownErrorText(ValueValidatorKnownError.HexNumberIsExpected);
@@ -90,11 +90,12 @@ namespace ControlsSample
 
             wordWrapComboBox.BindEnumProp(multiLineTextBox, nameof(TextBox.TextWrap));
             textAlignComboBox.BindEnumProp(textBox, nameof(TextBox.TextAlign));
-            RichEditButton_Click(null, EventArgs.Empty);
+            InitRichEdit();
 
             readOnlyCheckBox.BindBoolProp(textBox, nameof(TextBox.ReadOnly));
             passwordCheckBox.BindBoolProp(textBox, nameof(TextBox.IsPassword));
             hasBorderCheckBox.BindBoolProp(textBox, nameof(TextBox.HasBorder));
+            logPositionCheckBox.BindBoolProp(this, nameof(LogPosition));
 
             noBellOnErrorCheckBox.BindBoolProp(
                 ValueValidatorFactory.Default,
@@ -141,9 +142,11 @@ namespace ControlsSample
             richEdit.CurrentPositionChanged += TextBox_CurrentPositionChanged;
         }
 
+        public bool LogPosition { get; set; }
+
         private void TextBox_CurrentPositionChanged(object? sender, EventArgs e)
         {
-            if (sender is TextBox control)
+            if (LogPosition && sender is TextBox control)
                 LogTextBoxPosition(control);
         }
 
@@ -318,7 +321,7 @@ namespace ControlsSample
             endIndex = startIndex + word.Length;
         }
 
-        private void RichEditButton_Click(object? sender, EventArgs e)
+        private void InitRichEdit()
         {
             var taTextColorRed = TextBox.CreateTextAttr();
             taTextColorRed.SetTextColor(Color.Red);

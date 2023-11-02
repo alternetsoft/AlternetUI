@@ -44,6 +44,7 @@
           <CheckBox Name="readOnlyCheckBox" Text="ReadOnly" Margin="5,0,0,5"/>
           <CheckBox Name="passwordCheckBox" Text="Password" Margin="5,0,0,5"/>
           <CheckBox Name="hasBorderCheckBox" Text="Has Border" Margin="5,0,0,5"/>
+          <CheckBox Name="logPositionCheckBox" Text="Log Position" Margin="5,0,0,5"/>
         </VerticalStackPanel>
         <!-- ========================= -->
       </HorizontalStackPanel>

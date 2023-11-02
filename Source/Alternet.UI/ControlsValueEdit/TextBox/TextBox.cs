@@ -555,7 +555,7 @@ namespace Alternet.UI
             get
             {
                 var typeCode = GetDataTypeCode();
-                if (!AssemblyUtils.IsNumberTypeCode(typeCode))
+                if (!AssemblyUtils.IsTypeCodeNumber(typeCode))
                     return null;
 
                 var isOk = StringUtils.TryParseNumber(
@@ -1055,7 +1055,7 @@ namespace Alternet.UI
         /// Returns <c>true</c> if <see cref="DataType"/> is a number type.
         /// </summary>
         /// <returns></returns>
-        public virtual bool DataTypeIsNumber() => AssemblyUtils.IsNumberTypeCode(GetDataTypeCode());
+        public virtual bool DataTypeIsNumber() => AssemblyUtils.IsTypeCodeNumber(GetDataTypeCode());
 
         /// <summary>
         /// Returns minimal and maximal possible values for the <see cref="DataType"/>
