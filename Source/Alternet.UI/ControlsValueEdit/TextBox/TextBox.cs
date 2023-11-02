@@ -17,7 +17,7 @@ namespace Alternet.UI
     [DefaultEvent("TextChanged")]
     [DefaultBindingProperty("Text")]
     [ControlCategory("Common")]
-    public class TextBox : Control
+    public class TextBox : Control, IValidatorReporter
     {
         /// <summary>
         /// Identifies the <see cref="Text"/> dependency property.
@@ -86,6 +86,14 @@ namespace Alternet.UI
         /// <see cref="CurrentPositionChanged"/> event firing.
         /// </remarks>
         public event EventHandler? CurrentPositionChanged;
+
+        /// <summary>
+        /// Occurs when <see cref="ReportValidatorError"/> is called.
+        /// </summary>
+        /// <remarks>
+        /// You can handle this event in order to show validation error information.
+        /// </remarks>
+        public event ErrorStatusEventHandler? ErrorStatusChanged;
 
         /// <summary>
         /// Occurs when the value of the <see cref="Text"/> property changes.
@@ -967,6 +975,16 @@ namespace Alternet.UI
             return CreateValidator(typeCode);
         }
 
+        void IValidatorReporter.SetErrorStatus(object? sender, bool showError, string? errorText)
+        {
+            ErrorStatusChanged?.Invoke(this, new(showError, errorText));
+        }
+
+        /// <summary>
+        /// Sets <see cref="DataType"/> property to <typeparamref name="T"/>
+        /// and <see cref="Validator"/> to the appropriate validator provider.
+        /// </summary>
+        /// <typeparam name="T">New <see cref="DataType"/> property value.</typeparam>
         public virtual void UseValidator<T>()
         {
             DataType = typeof(T);
@@ -1821,8 +1839,13 @@ namespace Alternet.UI
                 hint ??= DefaultValidatorErrorText;
             }
 
-            var reporter = ValidatorReporter as IValidatorReporter;
-            reporter?.SetErrorStatus(this, showError, hint);
+            Report(ValidatorReporter as IValidatorReporter);
+            Report(this);
+
+            void Report(IValidatorReporter? reporter)
+            {
+                reporter?.SetErrorStatus(this, showError, hint);
+            }
         }
 
         /// <summary>
