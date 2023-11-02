@@ -12,36 +12,15 @@ namespace Alternet.UI
     /// </summary>
     public class PopupListBox : PopupWindow
     {
-        private ListBox? listBox;
         private int? resultIndex;
 
         /// <summary>
         /// Gets or sets <see cref="ListBox"/> control used in the popup window.
         /// </summary>
-        public ListBox ListBox
+        public new ListBox MainControl
         {
-            get
-            {
-                if(listBox == null)
-                {
-                    listBox = (ListBox)CreateMainControl();
-                    listBox.HasBorder = false;
-                    listBox.Parent = this.Border;
-                    BindEvents(listBox);
-                }
-
-                return listBox;
-            }
-
-            set
-            {
-                if (listBox == value || listBox is null)
-                    return;
-                UnbindEvents(listBox);
-                listBox = value;
-                BindEvents(listBox);
-                listBox.Parent = Border;
-            }
+            get => (ListBox)base.MainControl;
+            set => base.MainControl = value;
         }
 
         /// <inheritdoc/>
@@ -75,7 +54,7 @@ namespace Alternet.UI
             get
             {
                 if (resultIndex is null)
-                    return ListBox.SelectedIndex;
+                    return MainControl.SelectedIndex;
                 return resultIndex;
             }
 
@@ -86,7 +65,13 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        protected override Control CreateMainControl() => new ListBox();
+        protected override Control CreateMainControl()
+        {
+            return new ListBox()
+            {
+                HasBorder = false,
+            };
+        }
 
         /// <inheritdoc/>
         protected override void OnMainControlMouseDoubleClick(object? sender, MouseButtonEventArgs e)
@@ -118,7 +103,7 @@ namespace Alternet.UI
 
         private void UpdateResultIndex(MouseButtonEventArgs e)
         {
-            resultIndex = ListBox.HitTest(e.GetPosition(ListBox));
+            resultIndex = MainControl.HitTest(e.GetPosition(MainControl));
         }
     }
 }

@@ -11,7 +11,22 @@ namespace Alternet.UI
     /// </summary>
     public class PopupCheckListBox : PopupListBox
     {
+        /// <summary>
+        /// Gets or sets <see cref="CheckListBox"/> control used in the popup window.
+        /// </summary>
+        public new CheckListBox MainControl
+        {
+            get => (CheckListBox)base.MainControl;
+            set => base.MainControl = value;
+        }
+
         /// <inheritdoc/>
-        protected override Control CreateMainControl() => new CheckListBox();
+        protected override Control CreateMainControl()
+        {
+            return new CheckListBox()
+            {
+                HasBorder = false,
+            };
+        }
     }
 }

@@ -23,12 +23,25 @@ namespace ControlsSample
 
             showPopupButton.Click += ShowPopupButton_Click;
 
-            popupListBox.ListBox.MouseLeftButtonUp += PopupListBox_MouseLeftButtonUp;
-            popupListBox.ListBox.MouseLeftButtonDown += PopupListBox_MouseLeftButtonDown;
-            popupListBox.ListBox.SelectionChanged += PopupListBox_SelectionChanged;
-            popupListBox.ListBox.Click += PopupListBox_Click;
-            popupListBox.ListBox.MouseDoubleClick += PopupListBox_MouseDoubleClick;
+            popupListBox.MainControl.MouseLeftButtonUp += PopupListBox_MouseLeftButtonUp;
+            popupListBox.MainControl.MouseLeftButtonDown += PopupListBox_MouseLeftButtonDown;
+            popupListBox.MainControl.SelectionChanged += PopupListBox_SelectionChanged;
+            popupListBox.MainControl.Click += PopupListBox_Click;
+            popupListBox.MainControl.MouseDoubleClick += PopupListBox_MouseDoubleClick;
             popupListBox.VisibleChanged += PopupListBox_VisibleChanged;
+        }
+
+        internal void LogPopupListBoxEvent(string eventName)
+        {
+            var selectedItem = popupListBox.MainControl.SelectedItem ?? "<null>";
+            site?.LogEvent($"Popup: {eventName}. Selected Item: {selectedItem}");
+        }
+
+        internal void LogPopupListBoxMouseEvent(string eventName, MouseButtonEventArgs e)
+        {
+            var itemIndex = popupListBox.MainControl.HitTest(e.GetPosition(popupListBox.MainControl));
+            var selectedItem = popupListBox.MainControl.Items[itemIndex];
+            site?.LogEvent($"Popup: {eventName}. Item: {selectedItem}");
         }
 
         private void PopupListBox_MouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -40,25 +53,12 @@ namespace ControlsSample
         {
             if (popupListBox.Visible)
                 return;
-            var resultItem = popupListBox.ListBox[popupListBox.ResultIndex] ?? "<null>";
+            var resultItem = popupListBox.MainControl[popupListBox.ResultIndex] ?? "<null>";
             site?.LogEvent($"PopupResult: {popupListBox.PopupResult}, Item: {resultItem}");
         }
 
         private void PopupListBox_SelectionChanged(object? sender, EventArgs e)
         {
-        }
-
-        private void LogPopupListBoxEvent(string eventName)
-        {
-            var selectedItem = popupListBox.ListBox.SelectedItem ?? "<null>";
-            site?.LogEvent($"Popup: {eventName}. Selected Item: {selectedItem}");
-        }
-
-        private void LogPopupListBoxMouseEvent(string eventName, MouseButtonEventArgs e)
-        {
-            var itemIndex = popupListBox.ListBox.HitTest(e.GetPosition(popupListBox.ListBox));
-            var selectedItem = popupListBox.ListBox.Items[itemIndex];
-            site?.LogEvent($"Popup: {eventName}. Item: {selectedItem}");
         }
 
         private void PopupListBox_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
@@ -78,11 +78,11 @@ namespace ControlsSample
 
         private void ShowPopupButton_Click(object? sender, EventArgs e)
         {
-            if (popupListBox.ListBox.Items.Count == 0)
+            if (popupListBox.MainControl.Items.Count == 0)
             {
-                popupListBox.ListBox.SuggestedSize = new Size(150, 300);
-                AddDefaultItems(popupListBox.ListBox);
-                popupListBox.ListBox.SelectFirstItem();
+                popupListBox.MainControl.SuggestedSize = new Size(150, 300);
+                AddDefaultItems(popupListBox.MainControl);
+                popupListBox.MainControl.SelectFirstItem();
             }
             site?.LogEvent(" === ShowPopupButton_Click ===");
             popupListBox.ShowPopup(showPopupButton);            

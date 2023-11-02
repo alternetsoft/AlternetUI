@@ -9,9 +9,24 @@ namespace Alternet.UI
     /// <summary>
     /// Popup window with <see cref="Calendar"/> control.
     /// </summary>
-    internal class PopupCalendar : PopupWindow
+    public class PopupCalendar : PopupWindow
     {
+        /// <summary>
+        /// Gets or sets <see cref="Calendar"/> control used in the popup window.
+        /// </summary>
+        public new Calendar MainControl
+        {
+            get => (Calendar)base.MainControl;
+            set => base.MainControl = value;
+        }
+
         /// <inheritdoc/>
-        protected override Control CreateMainControl() => new Calendar();
+        protected override Control CreateMainControl()
+        {
+            return new Calendar()
+            {
+                HasBorder = false,
+            };
+        }
     }
 }

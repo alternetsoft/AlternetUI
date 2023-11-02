@@ -16,6 +16,7 @@ namespace Alternet.UI
         private static readonly BorderSettings Settings = BorderSettings.Default.Clone();
         private readonly Border border = new();
         private ModalResult popupResult;
+        private Control? mainControl;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PopupWindow"/> class.
@@ -28,6 +29,7 @@ namespace Alternet.UI
             border.Parent = this;
             Deactivated += Popup_Deactivated;
             KeyDown += PopupWindow_KeyDown;
+            MainControl.Required();
         }
 
         /// <summary>
@@ -113,6 +115,34 @@ namespace Alternet.UI
             set
             {
                 popupResult = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets main control used in the popup window.
+        /// </summary>
+        protected Control MainControl
+        {
+            get
+            {
+                if (mainControl == null)
+                {
+                    mainControl = CreateMainControl();
+                    mainControl.Parent = this.Border;
+                    BindEvents(mainControl);
+                }
+
+                return mainControl;
+            }
+
+            set
+            {
+                if (mainControl == value || mainControl is null)
+                    return;
+                UnbindEvents(mainControl);
+                mainControl = value;
+                BindEvents(mainControl);
+                mainControl.Parent = Border;
             }
         }
 
