@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Mail;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -69,6 +70,30 @@ namespace Alternet.UI
                 decimalValidator ??= CreateValueValidatorNum(ValueValidatorNumStyle.Float);
                 return decimalValidator;
             }
+        }
+
+        /// <summary>
+        /// Validates e-mail address.
+        /// </summary>
+        /// <param name="email">E-mail address.</param>
+        /// <returns><c>true</c> if e-mail address is in a valid format;
+        /// <c>false</c> otherwise.</returns>
+        public static bool IsValidMailAddress(string email)
+        {
+#if NET6_0_OR_GREATER
+            var result = MailAddress.TryCreate(email, out _);
+            return result;
+#else
+            try
+            {
+                var mail = new MailAddress(email);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+#endif
         }
 
         /// <summary>
