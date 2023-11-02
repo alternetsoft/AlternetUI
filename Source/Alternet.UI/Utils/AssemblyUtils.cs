@@ -516,20 +516,13 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Returns <c>true</c> if <paramref name="typeCode"/> is number.
+        /// Returns <c>true</c> if <paramref name="typeCode"/> is number type.
         /// </summary>
         /// <param name="typeCode">Type code.</param>
-        public static bool IsNumberTypeCode(TypeCode typeCode)
+        public static bool IsTypeCodeNumber(TypeCode typeCode)
         {
             switch (typeCode)
             {
-                case TypeCode.Empty:
-                case TypeCode.Object:
-                case TypeCode.DBNull:
-                case TypeCode.Boolean:
-                case TypeCode.Char:
-                case TypeCode.DateTime:
-                case TypeCode.String:
                 default:
                     return false;
                 case TypeCode.SByte:
@@ -540,6 +533,62 @@ namespace Alternet.UI
                 case TypeCode.UInt32:
                 case TypeCode.Int64:
                 case TypeCode.UInt64:
+                case TypeCode.Single:
+                case TypeCode.Double:
+                case TypeCode.Decimal:
+                    return true;
+            }
+        }
+
+        /// <summary>
+        /// Returns <c>true</c> if <paramref name="typeCode"/> is an unsigned integer number type
+        /// (byte, ushort, uint, ulong).
+        /// </summary>
+        /// <param name="typeCode">Type code.</param>
+        public static bool IsTypeCodeUnsignedInt(TypeCode typeCode)
+        {
+            switch (typeCode)
+            {
+                default:
+                    return false;
+                case TypeCode.Byte:
+                case TypeCode.UInt16:
+                case TypeCode.UInt32:
+                case TypeCode.UInt64:
+                    return true;
+            }
+        }
+
+        /// <summary>
+        /// Returns <c>true</c> if <paramref name="typeCode"/> is a signed integer number type
+        /// (sbyte, short, int, long).
+        /// </summary>
+        /// <param name="typeCode">Type code.</param>
+        public static bool IsTypeCodeSignedInt(TypeCode typeCode)
+        {
+            switch (typeCode)
+            {
+                default:
+                    return false;
+                case TypeCode.SByte:
+                case TypeCode.Int16:
+                case TypeCode.Int32:
+                case TypeCode.Int64:
+                    return true;
+            }
+        }
+
+        /// <summary>
+        /// Returns <c>true</c> if <paramref name="typeCode"/> is a floating point number type
+        /// (float, double or decimal).
+        /// </summary>
+        /// <param name="typeCode">Type code.</param>
+        public static bool IsTypeCodeFloat(TypeCode typeCode)
+        {
+            switch (typeCode)
+            {
+                default:
+                    return false;
                 case TypeCode.Single:
                 case TypeCode.Double:
                 case TypeCode.Decimal:
