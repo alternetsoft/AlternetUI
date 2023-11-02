@@ -228,7 +228,7 @@ namespace Alternet.UI
         /// <summary>
         /// Creates main control of the popup window.
         /// </summary>
-        protected virtual Control CreateMainControl() => new Control();
+        protected virtual Control CreateMainControl() => new();
 
         /// <summary>
         /// Override to bind events to the main control of the popup window.
