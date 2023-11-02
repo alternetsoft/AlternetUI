@@ -73,6 +73,25 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Compares <paramref name="value"/> with the default value of the
+        /// specified type.
+        /// </summary>
+        /// <param name="code">Type code.</param>
+        /// <param name="value">Value to compare with the default value.</param>
+        /// <returns><c>true</c> if <paramref name="value"/> is less than a default value;
+        /// <c>false</c> otherwise.</returns>
+        public static bool? LessThanDefault(TypeCode code, object? value)
+        {
+            if (value is null)
+                return null;
+            var defaultValue = AssemblyUtils.GetDefaultValue(code);
+            if (defaultValue is null)
+                return null;
+            var result = MathUtils.SafeCompareTo(value, defaultValue);
+            return result < 0;
+        }
+
+        /// <summary>
         /// Checks whether <paramref name="value"/> is in range specified with
         /// <paramref name="minValue"/> and <paramref name="maxValue"/> parameters.
         /// </summary>

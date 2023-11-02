@@ -30,6 +30,14 @@ namespace Alternet.UI
         FloatIsExpected,
 
         /// <summary>
+        /// Error: "An unsigned floating point number is expected.".
+        /// </summary>
+        /// <remarks>
+        /// Use <see cref="ErrorMessages.ValidationUnsignedFloatIsExpected"/> for the localization.
+        /// </remarks>
+        UnsignedFloatIsExpected,
+
+        /// <summary>
         /// Error: "A hexadecimal number is expected.".
         /// </summary>
         /// <remarks>

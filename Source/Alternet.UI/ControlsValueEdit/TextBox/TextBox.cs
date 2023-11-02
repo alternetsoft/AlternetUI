@@ -579,7 +579,7 @@ namespace Alternet.UI
 
                 object? UseDelegate(TryParseNumberDelegate proc)
                 {
-                    var numberStyles = NumberStyles ?? AssemblyUtils.GetDefaultNumberStyles(typeCode);
+                    var numberStyles = NumberStyles ?? System.Globalization.NumberStyles.Any;
                     var isOk = proc(
                         Text,
                         numberStyles,
@@ -1016,6 +1016,10 @@ namespace Alternet.UI
             ErrorStatusChanged?.Invoke(this, new(showError, errorText));
         }
 
+        /// <summary>
+        /// Gets "real" minimal value taking into account <see cref="DataType"/>
+        /// and <see cref="MinValue"/>.
+        /// </summary>
         public object? GetRealMinValue()
         {
             var typeCode = GetDataTypeCode();
@@ -1023,6 +1027,10 @@ namespace Alternet.UI
             return result;
         }
 
+        /// <summary>
+        /// Gets "real" maxmimal value taking into account <see cref="DataType"/>
+        /// and <see cref="MinValue"/>.
+        /// </summary>
         public object? GetRealMaxValue()
         {
             var typeCode = GetDataTypeCode();
@@ -1173,6 +1181,8 @@ namespace Alternet.UI
                     return $"{ErrorMessages.Default.ValidationNumberIsExpected} {rangeStr}".Trim();
                 case ValueValidatorKnownError.FloatIsExpected:
                     return ErrorMessages.Default.ValidationFloatIsExpected;
+                case ValueValidatorKnownError.UnsignedFloatIsExpected:
+                    return ErrorMessages.Default.ValidationUnsignedFloatIsExpected;
                 case ValueValidatorKnownError.HexNumberIsExpected:
                     return ErrorMessages.Default.ValidationHexNumberIsExpected;
                 case ValueValidatorKnownError.InvalidFormat:

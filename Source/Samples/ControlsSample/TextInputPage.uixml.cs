@@ -45,14 +45,13 @@ namespace ControlsSample
 
             // ==== numberSignedTextBox
 
-            numberSignedTextBox.UseValidator<short>();
             numberSignedTextBox.ValidatorReporter = numberSignedImage;
+            numberSignedTextBox.UseValidator<short>();
             numberSignedTextBox.ValidatorErrorText =
                 numberSignedTextBox.GetKnownErrorText(ValueValidatorKnownError.NumberIsExpected);
 
             // ==== numberUnsignedTextBox
 
-            numberUnsignedTextBox.UseValidator<byte>();
             numberUnsignedTextBox.ValidatorReporter = numberUnsignedImage;
             // We need to apply min and max values before ValidatorErrorText
             // is assigned as they are used in error text.
@@ -60,24 +59,31 @@ namespace ControlsSample
             // 2000 is greater than Byte can hold. It is assigned here for testing purposes.
             // Actual max is a minimal of Byte.MinValue and TextBox.MaxValue.
             numberUnsignedTextBox.MaxValue = 2000;
+            numberUnsignedTextBox.UseValidator<byte>();
             numberUnsignedTextBox.ValidatorErrorText =
                 numberUnsignedTextBox.GetKnownErrorText(ValueValidatorKnownError.NumberIsExpected);
 
             // ==== numberFloatTextBox
 
-            numberFloatTextBox.UseValidator<double>();
             numberFloatTextBox.ValidatorReporter = numberFloatImage;
+            numberFloatTextBox.UseValidator<double>();
             numberFloatTextBox.ValidatorErrorText =
                 numberFloatTextBox.GetKnownErrorText(ValueValidatorKnownError.FloatIsExpected);
 
+            // ==== unsignedFloatTextBox
+
+            unsignedFloatTextBox.ValidatorReporter = unsignedFloatImage;
+            unsignedFloatTextBox.MinValue = 0d;
+            unsignedFloatTextBox.UseValidator<double>();
+            unsignedFloatTextBox.ValidatorErrorText =
+                numberFloatTextBox.GetKnownErrorText(ValueValidatorKnownError.UnsignedFloatIsExpected);
+
             // ==== numberHexTextBox
 
+            numberHexTextBox.ValidatorReporter = numberHexImage;
             numberHexTextBox.NumberStyles = NumberStyles.HexNumber;
             numberHexTextBox.Validator = TextBox.CreateValidator(ValueValidatorKind.UnsignedHex);
             numberHexTextBox.DataType = typeof(uint);
-            numberHexTextBox.ValidatorReporter = numberHexImage;
-
-            // !! range output in error 
             numberHexTextBox.ValidatorErrorText =
                 numberHexTextBox.GetKnownErrorText(ValueValidatorKnownError.HexNumberIsExpected);
 
@@ -92,6 +98,7 @@ namespace ControlsSample
             ControlSet.New(
                 numberHexTextBox,
                 numberFloatTextBox,
+                unsignedFloatTextBox,
                 numberUnsignedTextBox,
                 numberSignedTextBox,
                 textBox).Action<TextBox>(BindTextChanged);          
@@ -108,7 +115,12 @@ namespace ControlsSample
                 ValueValidatorFactory.Default,
                 nameof(ValueValidatorFactory.BellOnError));
 
-            ControlSet.New(numberSignedLabel, numberUnsignedLabel, numberFloatLabel, numberHexLabel)
+            ControlSet.New(
+                numberSignedLabel,
+                numberUnsignedLabel,
+                numberFloatLabel,
+                unsignedFloatLabel,
+                numberHexLabel)
                 .SuggestedWidthToMax().VerticalAlignment(VerticalAlignment.Center);
 
             ControlSet.New(textAlignLabel, minLengthLabel, maxLengthLabel).SuggestedWidthToMax();
@@ -122,6 +134,7 @@ namespace ControlsSample
                 numberSignedImage,
                 numberUnsignedImage,
                 numberFloatImage,
+                unsignedFloatImage,
                 numberHexImage).Visible(true).Action<PictureBox>(InitPictureBox)
                 .VerticalAlignment(VerticalAlignment.Center);
 
@@ -294,6 +307,13 @@ namespace ControlsSample
                 prefix = $"{name}: ";
 
             var asNumber = textBox.TextAsNumber;
+
+            if (asNumber is not null)
+            {
+                asNumber += $"| {asNumber.GetType().Name}";
+            }
+            else
+                asNumber = "null";
 
             site?.LogEventSmart($"{prefix}{value} => {asNumber}", prefix);
         }

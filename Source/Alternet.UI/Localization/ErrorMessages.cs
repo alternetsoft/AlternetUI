@@ -55,6 +55,9 @@ namespace Alternet.UI.Localization
         public string ValidationNumberIsExpected { get; set; } = "A number is expected.";
 
         /// <see cref="CurrentApplicationIsNotSet"/>
+        public string ValidationUnsignedFloatIsExpected { get; set; } = "An unsigned floating point number is expected.";
+
+        /// <see cref="CurrentApplicationIsNotSet"/>
         public string ValidationFloatIsExpected { get; set; } = "A floating point number is expected.";
 
         /// <see cref="CurrentApplicationIsNotSet"/>
