@@ -958,6 +958,22 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Creates <see cref="IValueValidatorText"/> instance for the specified type.
+        /// </summary>
+        /// <param name="type">Type.</param>
+        public static IValueValidatorText CreateValidator(Type type)
+        {
+            var typeCode = AssemblyUtils.GetRealTypeCode(type);
+            return CreateValidator(typeCode);
+        }
+
+        public virtual void UseValidator<T>()
+        {
+            DataType = typeof(T);
+            Validator = CreateValidator(typeof(T));
+        }
+
+        /// <summary>
         /// Reports an error if length of the <see cref="Text"/> property value
         /// is less than <see cref="MinLength"/> or greater than <see cref="MaxLength"/>.
         /// </summary>

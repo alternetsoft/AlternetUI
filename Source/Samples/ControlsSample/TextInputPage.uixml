@@ -76,31 +76,35 @@
       <VerticalStackPanel  Margin="5" >
         <Label Text="Try to enter invalid numbers" Margin="0,0,0,5"/>
         <HorizontalStackPanel>
-          <Label Text="Signed (short)" Margin="0,0,5,5" Name="numberSignedLabel"/>
+          <Label Text="1. Signed (short)" Margin="0,0,5,5" Name="numberSignedLabel"/>
           <TextBox Name="numberSignedTextBox" SuggestedWidth="150" Margin="0,0,0,5"/>
           <PictureBox Name="numberSignedImage" Margin="5,0,0,5"/>
         </HorizontalStackPanel>
 
         <HorizontalStackPanel>
-          <Label Text="Unsigned (byte)" Margin="0,0,5,5" Name="numberUnsignedLabel"/>
+          <Label Text="2. Unsigned (byte)" Margin="0,0,5,5" Name="numberUnsignedLabel"/>
           <TextBox Name="numberUnsignedTextBox" SuggestedWidth="150" Margin="0,0,0,5"/>
           <PictureBox Name="numberUnsignedImage" Margin="5,0,0,5"/>
         </HorizontalStackPanel>
 
         <HorizontalStackPanel>
-          <Label Text="Signed (double)" Margin="0,0,5,5" Name="numberFloatLabel"/>
+          <Label Text="3. Signed (double)" Margin="0,0,5,5" Name="numberFloatLabel"/>
           <TextBox Name="numberFloatTextBox" SuggestedWidth="150" Margin="0,0,0,5"/>
           <PictureBox Name="numberFloatImage" Margin="5,0,0,5"/>
         </HorizontalStackPanel>
 
         <HorizontalStackPanel>
-          <Label Text="Unsigned Hex (uint)" Margin="0,0,5,5" Name="numberHexLabel"/>
+          <Label Text="4. Unsigned Hex (uint)" Margin="0,0,5,5" Name="numberHexLabel"/>
           <TextBox Name="numberHexTextBox" SuggestedWidth="150" Margin="0,0,0,5"/>
           <PictureBox Name="numberHexImage" Margin="5,0,0,5"/>
         </HorizontalStackPanel>
 
         <VerticalStackPanel  Margin="0,5,0,5" >
           <CheckBox Text="Bell On Error" Name="bellOnErrorCheckBox"/>
+          <Button Text="[3] = Double.Max" Name="setDoubleMaxButton" Visible="false"/>
+          <Button Text="[3] = Double.Min" Name="setDoubleMinButton" Visible="false"/>
+          <Button Text="[3] = Error Max" Name="setDoubleMaxPPButton" Visible="false"/>
+          <Button Text="[3] = Error Min" Name="setDoubleMinMMButton" Visible="false"/>
         </VerticalStackPanel>
 
       </VerticalStackPanel>
