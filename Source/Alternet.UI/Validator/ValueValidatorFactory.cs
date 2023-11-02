@@ -16,6 +16,11 @@ namespace Alternet.UI
     {
         private IValueValidatorText? decimalValidator;
 
+        static ValueValidatorFactory()
+        {
+            IsSilent = true;
+        }
+
         /// <summary>
         /// Gets or sets default implementation of the <see cref="ValueValidatorFactory"/>.
         /// </summary>
@@ -43,10 +48,19 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets whether to play error sound. An opposite of <see cref="IsSilent"/>.
+        /// </summary>
+        public static bool BellOnError
+        {
+            get => !IsSilent;
+            set => IsSilent = !value;
+        }
+
+        /// <summary>
         /// Gets validator for <see cref="decimal"/> numbers;
         /// </summary>
         /// <remarks>
-        /// Do not use it. Consider using <see cref="CreateValidator"/> method.
+        /// Do not use it. Consider using <see cref="CreateValidator(ValueValidatorKind)"/> method.
         /// </remarks>
         public virtual IValueValidatorText DecimalValidator
         {
@@ -55,6 +69,22 @@ namespace Alternet.UI
                 decimalValidator ??= CreateValueValidatorNum(ValueValidatorNumStyle.Float);
                 return decimalValidator;
             }
+        }
+
+        /// <summary>
+        /// Creates <see cref="IValueValidatorText"/> instance with
+        /// the specified <see cref="TypeCode"/>.
+        /// </summary>
+        /// <param name="typeCode">Type code.</param>
+        public static IValueValidatorText CreateValidator(TypeCode typeCode)
+        {
+            if (AssemblyUtils.IsTypeCodeUnsignedInt(typeCode))
+                return CreateValidator(ValueValidatorKind.UnsignedInt);
+            if (AssemblyUtils.IsTypeCodeSignedInt(typeCode))
+                return CreateValidator(ValueValidatorKind.SignedInt);
+            if (AssemblyUtils.IsTypeCodeFloat(typeCode))
+                return CreateValidator(ValueValidatorKind.SignedFloat);
+            return CreateValidator(ValueValidatorKind.Generic);
         }
 
         /// <summary>
@@ -69,7 +99,7 @@ namespace Alternet.UI
                     Default.CreateValueValidatorNum(ValueValidatorNumStyle.Signed),
                 ValueValidatorKind.UnsignedInt =>
                     Default.CreateValueValidatorNum(ValueValidatorNumStyle.Unsigned),
-                ValueValidatorKind.Float =>
+                ValueValidatorKind.SignedFloat =>
                     Default.CreateValueValidatorNum(ValueValidatorNumStyle.Float),
                 ValueValidatorKind.SignedHex =>
                     Default.CreateValueValidatorNum(ValueValidatorNumStyle.Signed, 16),

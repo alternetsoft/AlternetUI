@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using Alternet.Drawing;
 using Alternet.UI;
@@ -68,7 +69,7 @@ namespace ControlsSample
 
             // numberFloatTextBox
 
-            numberFloatTextBox.Validator = TextBox.CreateValidator(ValueValidatorKind.Float);
+            numberFloatTextBox.Validator = TextBox.CreateValidator(ValueValidatorKind.SignedFloat);
             numberFloatTextBox.DataType = typeof(double);
             numberFloatTextBox.TextChanged += ReportValueChanged;
             numberFloatTextBox.TextChanged += ValidateFormat;
@@ -79,10 +80,13 @@ namespace ControlsSample
             // numberHexTextBox
 
             numberHexTextBox.Validator = TextBox.CreateValidator(ValueValidatorKind.UnsignedHex);
-            numberHexTextBox.DataType = typeof(int);
+            numberHexTextBox.DataType = typeof(uint);
+            numberHexTextBox.NumberStyles = NumberStyles.HexNumber;
             numberHexTextBox.TextChanged += ReportValueChanged;
             numberHexTextBox.TextChanged += ValidateFormat;
             numberHexTextBox.ValidatorReporter = numberHexImage;
+
+            // !! range output in error 
             numberHexTextBox.ValidatorErrorText =
                 numberHexTextBox.GetKnownErrorText(ValueValidatorKnownError.HexNumberIsExpected);
 
@@ -97,9 +101,9 @@ namespace ControlsSample
             hasBorderCheckBox.BindBoolProp(textBox, nameof(TextBox.HasBorder));
             logPositionCheckBox.BindBoolProp(this, nameof(LogPosition));
 
-            noBellOnErrorCheckBox.BindBoolProp(
+            bellOnErrorCheckBox.BindBoolProp(
                 ValueValidatorFactory.Default,
-                nameof(ValueValidatorFactory.IsSilent));
+                nameof(ValueValidatorFactory.BellOnError));
 
             ControlSet.New(numberSignedLabel, numberUnsignedLabel, numberFloatLabel, numberHexLabel)
                 .SuggestedWidthToMax().VerticalAlignment(VerticalAlignment.Center);
@@ -262,31 +266,8 @@ namespace ControlsSample
                 }
             }
 
-            if (isOk)
-            {
-                // bool ReportErrorMinMaxLength()
-                if(editor.MinLength > 0)
-                {
-                    if(editor.Text.Length < editor.MinLength)
-                    {
-                        editor.ReportValidatorError(
-                            true,
-                            editor.GetKnownErrorText(ValueValidatorKnownError.MinimumLength));
-                        return;
-                    }
-                }
-
-                if (editor.MaxLength > 0)
-                {
-                    if (editor.Text.Length > editor.MaxLength)
-                    {
-                        editor.ReportValidatorError(
-                            true,
-                            editor.GetKnownErrorText(ValueValidatorKnownError.MaximumLength));
-                        return;
-                    }
-                }
-            }
+            if (isOk && editor.ReportErrorMinMaxLength())
+                return;
             
             editor.ReportValidatorError(!isOk);
         }
@@ -295,10 +276,13 @@ namespace ControlsSample
         {
             var name = (sender as Control)?.Name;
             var value = ((TextBox)sender!).Text;
+            string prefix;
             if (name is null)
-                site?.LogEvent($"TextBox: {value}");
+                prefix = "TextBox: ";
             else
-                site?.LogEvent($"{name}: {value}");
+                prefix = $"{name}: ";
+
+            site?.LogEventSmart($"{prefix}{value}", prefix);
         }
 
         private void AddLetterAButton_Click(object? sender, EventArgs e)

@@ -76,31 +76,31 @@
       <VerticalStackPanel  Margin="5" >
         <Label Text="Try to enter invalid numbers" Margin="0,0,0,5"/>
         <HorizontalStackPanel>
-          <Label Text="Signed" Margin="0,0,5,5" Name="numberSignedLabel"/>
+          <Label Text="Signed (short)" Margin="0,0,5,5" Name="numberSignedLabel"/>
           <TextBox Name="numberSignedTextBox" SuggestedWidth="150" Margin="0,0,0,5"/>
           <PictureBox Name="numberSignedImage" Margin="5,0,0,5"/>
         </HorizontalStackPanel>
 
         <HorizontalStackPanel>
-          <Label Text="Unsigned" Margin="0,0,5,5" Name="numberUnsignedLabel"/>
+          <Label Text="Unsigned (byte)" Margin="0,0,5,5" Name="numberUnsignedLabel"/>
           <TextBox Name="numberUnsignedTextBox" SuggestedWidth="150" Margin="0,0,0,5"/>
           <PictureBox Name="numberUnsignedImage" Margin="5,0,0,5"/>
         </HorizontalStackPanel>
 
         <HorizontalStackPanel>
-          <Label Text="Float" Margin="0,0,5,5" Name="numberFloatLabel"/>
+          <Label Text="Signed (double)" Margin="0,0,5,5" Name="numberFloatLabel"/>
           <TextBox Name="numberFloatTextBox" SuggestedWidth="150" Margin="0,0,0,5"/>
           <PictureBox Name="numberFloatImage" Margin="5,0,0,5"/>
         </HorizontalStackPanel>
 
         <HorizontalStackPanel>
-          <Label Text="Hex" Margin="0,0,5,5" Name="numberHexLabel"/>
+          <Label Text="Unsigned Hex (uint)" Margin="0,0,5,5" Name="numberHexLabel"/>
           <TextBox Name="numberHexTextBox" SuggestedWidth="150" Margin="0,0,0,5"/>
           <PictureBox Name="numberHexImage" Margin="5,0,0,5"/>
         </HorizontalStackPanel>
 
         <VerticalStackPanel  Margin="0,5,0,5" >
-          <CheckBox Text="No Bell On Error" Name="noBellOnErrorCheckBox"/>
+          <CheckBox Text="Bell On Error" Name="bellOnErrorCheckBox"/>
         </VerticalStackPanel>
 
       </VerticalStackPanel>

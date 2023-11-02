@@ -7,8 +7,9 @@ using System.Threading.Tasks;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Defines possible validator kinds used in <see cref="TextBox.CreateValidator"/>
-    /// and <see cref="ValueValidatorFactory.CreateValidator"/>.
+    /// Defines possible validator kinds used in
+    /// <see cref="TextBox.CreateValidator(ValueValidatorKind)"/>
+    /// and <see cref="ValueValidatorFactory.CreateValidator(ValueValidatorKind)"/>.
     /// </summary>
     public enum ValueValidatorKind
     {
@@ -30,7 +31,7 @@ namespace Alternet.UI
         /// <summary>
         /// <see cref="IValueValidatorText"/> which allows to enter floating point numbers.
         /// </summary>
-        Float,
+        SignedFloat,
 
         /// <summary>
         /// <see cref="IValueValidatorText"/> which allows to enter signed hexadecimal

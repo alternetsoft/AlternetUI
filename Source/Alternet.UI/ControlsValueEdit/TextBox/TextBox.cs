@@ -945,17 +945,59 @@ namespace Alternet.UI
             return new TextBoxTextAttr();
         }
 
-        /// <inheritdoc cref="ValueValidatorFactory.CreateValidator"/>
+        /// <inheritdoc cref="ValueValidatorFactory.CreateValidator(ValueValidatorKind)"/>
         public static IValueValidatorText CreateValidator(ValueValidatorKind kind)
         {
             return ValueValidatorFactory.CreateValidator(kind);
+        }
+
+        /// <inheritdoc cref="ValueValidatorFactory.CreateValidator(TypeCode)"/>
+        public static IValueValidatorText CreateValidator(TypeCode typeCode)
+        {
+            return ValueValidatorFactory.CreateValidator(typeCode);
+        }
+
+        /// <summary>
+        /// Reports an error if length of the <see cref="Text"/> property value
+        /// is less than <see cref="MinLength"/> or greater than <see cref="MaxLength"/>.
+        /// </summary>
+        /// <returns><c>true</c> if error validation error was reported; <c>false</c> if
+        /// validation is ok and error was not reported.</returns>
+        /// <remarks>
+        /// <see cref="ReportValidatorError"/> is used to report the error.
+        /// </remarks>
+        public virtual bool ReportErrorMinMaxLength()
+        {
+            if (MinLength > 0)
+            {
+                if (Text.Length < MinLength)
+                {
+                    ReportValidatorError(
+                        true,
+                        GetKnownErrorText(ValueValidatorKnownError.MinimumLength));
+                    return true;
+                }
+            }
+
+            if (MaxLength > 0)
+            {
+                if (Text.Length > MaxLength)
+                {
+                    ReportValidatorError(
+                        true,
+                        GetKnownErrorText(ValueValidatorKnownError.MaximumLength));
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         /// <summary>
         /// Gets known error text.
         /// </summary>
         /// <param name="kind">Error kind.</param>
-        public string GetKnownErrorText(ValueValidatorKnownError kind)
+        public virtual string GetKnownErrorText(ValueValidatorKnownError kind)
         {
             switch (kind)
             {

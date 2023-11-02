@@ -21,6 +21,6 @@ namespace Alternet.UI
         /// native control and <see cref="TextBox.TextMaxLength"/> event is fired when max length
         /// is reached.
         /// </remarks>
-        SetNativeMaxLength,
+        SetNativeMaxLength = 1,
     }
 }
