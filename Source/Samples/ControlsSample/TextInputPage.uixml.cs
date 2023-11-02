@@ -35,8 +35,6 @@ namespace ControlsSample
 
             textBox.EmptyTextHint = "Sample Hint";
             textBox.Text = "sample text";
-            textBox.TextChanged += ReportValueChanged;
-            textBox.TextChanged += ValidateFormat;
             textBox.ValidatorReporter = textImage;
             textBox.TextMaxLength += TextBox_TextMaxLength;
 
@@ -48,10 +46,6 @@ namespace ControlsSample
             // ==== numberSignedTextBox
 
             numberSignedTextBox.UseValidator<short>();
-            //numberSignedTextBox.Validator = TextBox.CreateValidator(ValueValidatorKind.SignedInt);
-            //numberSignedTextBox.DataType = typeof(short);
-            numberSignedTextBox.TextChanged += ReportValueChanged;
-            numberSignedTextBox.TextChanged += ValidateFormat;
             numberSignedTextBox.ValidatorReporter = numberSignedImage;
             numberSignedTextBox.ValidatorErrorText =
                 numberSignedTextBox.GetKnownErrorText(ValueValidatorKnownError.NumberIsExpected);
@@ -59,10 +53,6 @@ namespace ControlsSample
             // ==== numberUnsignedTextBox
 
             numberUnsignedTextBox.UseValidator<byte>();
-            //numberUnsignedTextBox.Validator = TextBox.CreateValidator(ValueValidatorKind.UnsignedInt);
-            //numberUnsignedTextBox.DataType = typeof(byte);
-            numberUnsignedTextBox.TextChanged += ValidateFormat;
-            numberUnsignedTextBox.TextChanged += ReportValueChanged;
             numberUnsignedTextBox.ValidatorReporter = numberUnsignedImage;
             // We need to apply min and max values before ValidatorErrorText
             // is assigned as they are used in error text.
@@ -76,10 +66,6 @@ namespace ControlsSample
             // ==== numberFloatTextBox
 
             numberFloatTextBox.UseValidator<double>();
-            //numberFloatTextBox.Validator = TextBox.CreateValidator(ValueValidatorKind.SignedFloat);
-            //numberFloatTextBox.DataType = typeof(double);
-            numberFloatTextBox.TextChanged += ReportValueChanged;
-            numberFloatTextBox.TextChanged += ValidateFormat;
             numberFloatTextBox.ValidatorReporter = numberFloatImage;
             numberFloatTextBox.ValidatorErrorText =
                 numberFloatTextBox.GetKnownErrorText(ValueValidatorKnownError.FloatIsExpected);
@@ -89,8 +75,6 @@ namespace ControlsSample
             numberHexTextBox.NumberStyles = NumberStyles.HexNumber;
             numberHexTextBox.Validator = TextBox.CreateValidator(ValueValidatorKind.UnsignedHex);
             numberHexTextBox.DataType = typeof(uint);
-            numberHexTextBox.TextChanged += ReportValueChanged;
-            numberHexTextBox.TextChanged += ValidateFormat;
             numberHexTextBox.ValidatorReporter = numberHexImage;
 
             // !! range output in error 
@@ -99,9 +83,21 @@ namespace ControlsSample
 
             // ==== Other initializations
 
+            void BindTextChanged(TextBox control)
+            {
+                control.TextChanged += ReportValueChanged;
+                control.TextChanged += ValidateFormat;
+            }
+
+            ControlSet.New(
+                numberHexTextBox,
+                numberFloatTextBox,
+                numberUnsignedTextBox,
+                numberSignedTextBox,
+                textBox).Action<TextBox>(BindTextChanged);          
+
             wordWrapComboBox.BindEnumProp(multiLineTextBox, nameof(TextBox.TextWrap));
             textAlignComboBox.BindEnumProp(textBox, nameof(TextBox.TextAlign));
-            InitRichEdit();
 
             readOnlyCheckBox.BindBoolProp(textBox, nameof(TextBox.ReadOnly));
             passwordCheckBox.BindBoolProp(textBox, nameof(TextBox.IsPassword));
@@ -157,6 +153,7 @@ namespace ControlsSample
             setDoubleMaxPPButton.Click += SetDoubleMaxPPButton_Click;
             setDoubleMinMMButton.Click += SetDoubleMinMMButton_Click;
 
+            InitRichEdit();
         }
 
         private void SetDoubleMinMMButton_Click(object? sender, EventArgs e)
@@ -273,36 +270,16 @@ namespace ControlsSample
 
         private void ValidateFormat(TextBox editor)
         {
-            if (string.IsNullOrEmpty(editor.Text))
-            {
-                editor.ReportValidatorError(!editor.AllowEmptyText);
+            if (editor.ReportErrorEmptyText())
                 return;
-            }
 
-            var isOk = true;
+            if (editor.ReportErrorBadNumber())
+                return;
 
-            if (editor.DataTypeIsNumber())
-            {
-                var value = editor.TextAsNumber;
-                isOk = value is not null;
-
-                if (isOk) // min max not only for numbers
-                {
-                    // bool ReportErrorMinMaxValue()
-                    var typeCode = editor.GetDataTypeCode();
-                    var minValue = MathUtils.Max(AssemblyUtils.GetMinValue(typeCode), editor.MinValue);
-                    var maxValue = MathUtils.Min(AssemblyUtils.GetMaxValue(typeCode), editor.MaxValue);
-                    var valueInRange = MathUtils.ValueInRange(value, minValue, maxValue);
-                    if (valueInRange is not null)
-                        isOk = valueInRange.Value;
-                    // report min max error text here.
-                }
-            }
-
-            if (isOk && editor.ReportErrorMinMaxLength())
+            if (editor.ReportErrorMinMaxLength())
                 return;
             
-            editor.ReportValidatorError(!isOk);
+            editor.ReportValidatorError(false);
         }
 
         private void ReportValueChanged(object? sender, TextChangedEventArgs e)

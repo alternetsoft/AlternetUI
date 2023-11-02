@@ -85,26 +85,26 @@ namespace Alternet.UI
         /// If range parameter is <c>null</c> it is not checked. If <paramref name="value"/> is null,
         /// <c>null</c> is returned.
         /// </remarks>
-        public static bool? ValueInRange(object? value, object? minValue, object? maxValue)
+        public static ValueInRangeResult ValueInRange(object? value, object? minValue, object? maxValue)
         {
             if (value is null)
-                return null;
+                return ValueInRangeResult.Unknown;
 
             if(minValue is not null)
             {
                 var result = SafeCompareTo(value, minValue);
                 if (result < 0)
-                    return false;
+                    return ValueInRangeResult.Less;
             }
 
             if (maxValue is not null)
             {
                 var result = SafeCompareTo(value, maxValue);
                 if (result > 0)
-                    return false;
+                    return ValueInRangeResult.Greater;
             }
 
-            return true;
+            return ValueInRangeResult.Ok;
         }
 
         /// <summary>

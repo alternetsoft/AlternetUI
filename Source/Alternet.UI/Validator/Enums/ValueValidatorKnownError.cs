@@ -68,5 +68,21 @@ namespace Alternet.UI
         /// Use <see cref="ErrorMessages.ValidationMinMaxLength"/> for the localization.
         /// </remarks>
         MinMaxLength,
+
+        /// <summary>
+        /// Error: "Minimum value is {0}.".
+        /// </summary>
+        /// <remarks>
+        /// Use <see cref="ErrorMessages.ValidationMinimumValue"/> for the localization.
+        /// </remarks>
+        MinimumValue,
+
+        /// <summary>
+        /// Error: "Maximum value is {0}.".
+        /// </summary>
+        /// <remarks>
+        /// Use <see cref="ErrorMessages.ValidationMaximumValue"/> for the localization.
+        /// </remarks>
+        MaximumValue,
     }
 }

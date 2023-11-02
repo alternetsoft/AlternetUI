@@ -564,7 +564,7 @@ namespace Alternet.UI
             {
                 var typeCode = GetDataTypeCode();
                 if (!AssemblyUtils.IsTypeCodeNumber(typeCode))
-                    return null;
+                    return SmartTextAsNumber();
 
                 var isOk = StringUtils.TryParseNumber(
                     typeCode,
@@ -576,6 +576,42 @@ namespace Alternet.UI
                     return result;
                 else
                     return null;
+
+                object? UseDelegate(TryParseNumberDelegate proc)
+                {
+                    var numberStyles = NumberStyles ?? AssemblyUtils.GetDefaultNumberStyles(typeCode);
+                    var isOk = proc(
+                        Text,
+                        numberStyles,
+                        FormatProvider,
+                        out result);
+                    if (isOk)
+                        return result;
+                    else
+                        return null;
+                }
+
+                object? SmartTextAsNumber()
+                {
+                    TryParseNumberDelegate[] procs =
+                    {
+                        StringUtils.TryParseInt32,
+                        StringUtils.TryParseUInt32,
+                        StringUtils.TryParseInt64,
+                        StringUtils.TryParseUInt64,
+                        StringUtils.TryParseDouble,
+                        StringUtils.TryParseDecimal,
+                    };
+
+                    foreach(var proc in procs)
+                    {
+                        object? result = UseDelegate(proc);
+                        if (result is not null)
+                            return result;
+                    }
+
+                    return null;
+                }
             }
 
             set
@@ -980,6 +1016,20 @@ namespace Alternet.UI
             ErrorStatusChanged?.Invoke(this, new(showError, errorText));
         }
 
+        public object? GetRealMinValue()
+        {
+            var typeCode = GetDataTypeCode();
+            var result = MathUtils.Max(AssemblyUtils.GetMinValue(typeCode), MinValue);
+            return result;
+        }
+
+        public object? GetRealMaxValue()
+        {
+            var typeCode = GetDataTypeCode();
+            var result = MathUtils.Min(AssemblyUtils.GetMaxValue(typeCode), MaxValue);
+            return result;
+        }
+
         /// <summary>
         /// Sets <see cref="DataType"/> property to <typeparamref name="T"/>
         /// and <see cref="Validator"/> to the appropriate validator provider.
@@ -992,10 +1042,93 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Reports an error if <see cref="Text"/> property is empty
+        /// and it is not allowed (<see cref="AllowEmptyText"/> is <c>false</c>).
+        /// </summary>
+        public virtual bool ReportErrorEmptyText()
+        {
+            if (string.IsNullOrEmpty(Text))
+            {
+                if (AllowEmptyText)
+                    return false;
+                else
+                {
+                    ReportValidatorError(true);
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Reports an error if <paramref name="value"/>
+        /// is less than <see cref="MinValue"/> or greater than <see cref="MaxValue"/>.
+        /// </summary>
+        /// <returns><c>true</c> if validation error was reported; <c>false</c> if
+        /// validation is ok and error was not reported.</returns>
+        /// <remarks>
+        /// <see cref="ReportValidatorError"/> is used to report the error. If
+        /// <see cref="DataType"/> is assigned, it is also used to get possible min and max
+        /// values.
+        /// </remarks>
+        public virtual bool ReportErrorMinMaxValue(object? value)
+        {
+            if (value is null)
+                return false;
+            var valueInRange = MathUtils.ValueInRange(
+                value,
+                GetRealMinValue(),
+                GetRealMaxValue());
+            switch (valueInRange)
+            {
+                case ValueInRangeResult.Less:
+                    ReportValidatorError(
+                        true,
+                        GetKnownErrorText(ValueValidatorKnownError.MinimumValue));
+                    return true;
+                case ValueInRangeResult.Greater:
+                    ReportValidatorError(
+                        true,
+                        GetKnownErrorText(ValueValidatorKnownError.MaximumValue));
+                    return true;
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Reports an error if <see cref="DataType"/> is a number type and
+        /// <see cref="TextAsNumber"/> is <c>null</c>.
+        /// </summary>
+        /// <returns><c>true</c> if validation error was reported; <c>false</c> if
+        /// validation is ok and error was not reported.</returns>
+        /// <remarks>
+        /// <see cref="ReportValidatorError"/> is used to report the error.
+        /// </remarks>
+        public virtual bool ReportErrorBadNumber()
+        {
+            if (DataTypeIsNumber() && !string.IsNullOrEmpty(Text))
+            {
+                var value = TextAsNumber;
+                if (value is null)
+                {
+                    ReportValidatorError(true);
+                    return true;
+                }
+
+                if (ReportErrorMinMaxValue(value))
+                    return true;
+            }
+
+            return false;
+        }
+
+        /// <summary>
         /// Reports an error if length of the <see cref="Text"/> property value
         /// is less than <see cref="MinLength"/> or greater than <see cref="MaxLength"/>.
         /// </summary>
-        /// <returns><c>true</c> if error validation error was reported; <c>false</c> if
+        /// <returns><c>true</c> if validation error was reported; <c>false</c> if
         /// validation is ok and error was not reported.</returns>
         /// <remarks>
         /// <see cref="ReportValidatorError"/> is used to report the error.
@@ -1048,6 +1181,10 @@ namespace Alternet.UI
                     return string.Format(ErrorMessages.Default.ValidationMinimumLength, MinLength);
                 case ValueValidatorKnownError.MaximumLength:
                     return string.Format(ErrorMessages.Default.ValidationMaximumLength, MaxLength);
+                case ValueValidatorKnownError.MinimumValue:
+                    return string.Format(ErrorMessages.Default.ValidationMinimumValue, MinValue);
+                case ValueValidatorKnownError.MaximumValue:
+                    return string.Format(ErrorMessages.Default.ValidationMaximumValue, MaxValue);
                 case ValueValidatorKnownError.MinMaxLength:
                     return string.Format(
                         ErrorMessages.Default.ValidationMinMaxLength,

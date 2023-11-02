@@ -74,5 +74,11 @@ namespace Alternet.UI.Localization
 
         /// <see cref="CurrentApplicationIsNotSet"/>
         public string ValidationMinMaxLength { get; set; } = "Valid length is {0} to {1} characters.";
+
+        /// <see cref="CurrentApplicationIsNotSet"/>
+        public string ValidationMinimumValue { get; set; } = "Minimum value is {0}.";
+
+        /// <see cref="CurrentApplicationIsNotSet"/>
+        public string ValidationMaximumValue { get; set; } = "Maximum value is {0}.";
     }
 }
