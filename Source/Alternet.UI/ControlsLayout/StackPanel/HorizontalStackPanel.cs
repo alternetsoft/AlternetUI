@@ -16,6 +16,15 @@ namespace Alternet.UI
         /// <summary>
         /// Initializes a new instance of the <see cref="HorizontalStackPanel"/> class.
         /// </summary>
+        public HorizontalStackPanel(params Control[] children)
+        {
+            foreach (var child in children)
+                child.Parent = this;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="HorizontalStackPanel"/> class.
+        /// </summary>
         public HorizontalStackPanel()
             : base()
         {

@@ -21,16 +21,27 @@ namespace ControlsSample
         private readonly RichTextBox richEdit = new()
         {
             Name = "richEdit",
-            SuggestedWidth = 350,
-            SuggestedHeight = 250,
+            SuggestedSize = new Size(350, 250),
             Margin = new Thickness(0, 0, 0, 5),
         };
+        private readonly TextBoxAndLabel numberSignedEdit = new("1. Signed (short)");
+        private readonly TextBoxAndLabel numberUnsignedEdit = new("2. Unsigned (byte)");
+        private readonly TextBoxAndLabel numberFloatEdit = new("3. Signed (double)");
+        private readonly TextBoxAndLabel unsignedFloatEdit = new("4. Unsigned (double)");
+        private readonly TextBoxAndLabel numberHexEdit = new("5. Unsigned Hex (uint)");
 
         private IPageSite? site;
 
         public TextInputPage()
         {
             InitializeComponent();
+
+            ControlSet.New(
+                numberSignedEdit,
+                numberUnsignedEdit,
+                numberFloatEdit,
+                unsignedFloatEdit,
+                numberHexEdit).Margin(0,5,5,5).Parent(numbersPanel).InnerSuggestedWidth(200);
 
             panelHeader.Add("TextBox", tab1);
             panelHeader.Add("Memo", tab2);
@@ -55,47 +66,37 @@ namespace ControlsSample
 
             // ==== numberSignedTextBox
 
-            numberSignedTextBox.ValidatorReporter = numberSignedImage;
-            numberSignedTextBox.UseValidator<short>();
-            numberSignedTextBox.ValidatorErrorText =
-                numberSignedTextBox.GetKnownErrorText(ValueValidatorKnownError.NumberIsExpected);
+            numberSignedEdit.TextBox.UseValidator<short>();
+            numberSignedEdit.TextBox.SetErrorText(ValueValidatorKnownError.NumberIsExpected);
 
             // ==== numberUnsignedTextBox
 
-            numberUnsignedTextBox.ValidatorReporter = numberUnsignedImage;
             // We need to apply min and max values before ValidatorErrorText
             // is assigned as they are used in error text.
-            numberUnsignedTextBox.MinValue = 2;
+            numberUnsignedEdit.TextBox.MinValue = 2;
             // 2000 is greater than Byte can hold. It is assigned here for testing purposes.
             // Actual max is a minimal of Byte.MinValue and TextBox.MaxValue.
-            numberUnsignedTextBox.MaxValue = 2000;
-            numberUnsignedTextBox.UseValidator<byte>();
-            numberUnsignedTextBox.ValidatorErrorText =
-                numberUnsignedTextBox.GetKnownErrorText(ValueValidatorKnownError.NumberIsExpected);
+            numberUnsignedEdit.TextBox.MaxValue = 2000;
+            numberUnsignedEdit.TextBox.UseValidator<byte>();
+            numberUnsignedEdit.TextBox.SetErrorText(ValueValidatorKnownError.NumberIsExpected);
 
             // ==== numberFloatTextBox
 
-            numberFloatTextBox.ValidatorReporter = numberFloatImage;
-            numberFloatTextBox.UseValidator<double>();
-            numberFloatTextBox.ValidatorErrorText =
-                numberFloatTextBox.GetKnownErrorText(ValueValidatorKnownError.FloatIsExpected);
+            numberFloatEdit.TextBox.UseValidator<double>();
+            numberFloatEdit.TextBox.SetErrorText(ValueValidatorKnownError.FloatIsExpected);
 
             // ==== unsignedFloatTextBox
 
-            unsignedFloatTextBox.ValidatorReporter = unsignedFloatImage;
-            unsignedFloatTextBox.MinValue = 0d;
-            unsignedFloatTextBox.UseValidator<double>();
-            unsignedFloatTextBox.ValidatorErrorText =
-                numberFloatTextBox.GetKnownErrorText(ValueValidatorKnownError.UnsignedFloatIsExpected);
+            unsignedFloatEdit.TextBox.MinValue = 0d;
+            unsignedFloatEdit.TextBox.UseValidator<double>();
+            unsignedFloatEdit.TextBox.SetErrorText(ValueValidatorKnownError.UnsignedFloatIsExpected);
 
             // ==== numberHexTextBox
 
-            numberHexTextBox.ValidatorReporter = numberHexImage;
-            numberHexTextBox.NumberStyles = NumberStyles.HexNumber;
-            numberHexTextBox.Validator = TextBox.CreateValidator(ValueValidatorKind.UnsignedHex);
-            numberHexTextBox.DataType = typeof(uint);
-            numberHexTextBox.ValidatorErrorText =
-                numberHexTextBox.GetKnownErrorText(ValueValidatorKnownError.HexNumberIsExpected);
+            numberHexEdit.TextBox.NumberStyles = NumberStyles.HexNumber;
+            numberHexEdit.TextBox.Validator = TextBox.CreateValidator(ValueValidatorKind.UnsignedHex);
+            numberHexEdit.TextBox.DataType = typeof(uint);
+            numberHexEdit.TextBox.SetErrorText(ValueValidatorKnownError.HexNumberIsExpected);
 
             // ==== Other initializations
 
@@ -106,11 +107,11 @@ namespace ControlsSample
             }
 
             ControlSet.New(
-                numberHexTextBox,
-                numberFloatTextBox,
-                unsignedFloatTextBox,
-                numberUnsignedTextBox,
-                numberSignedTextBox,
+                numberHexEdit.TextBox,
+                numberFloatEdit.TextBox,
+                unsignedFloatEdit.TextBox,
+                numberUnsignedEdit.TextBox,
+                numberSignedEdit.TextBox,
                 textBox).Action<TextBox>(BindTextChanged);          
 
             wordWrapComboBox.BindEnumProp(multiLineTextBox, nameof(TextBox.TextWrap));
@@ -126,36 +127,16 @@ namespace ControlsSample
                 nameof(ValueValidatorFactory.BellOnError));
 
             ControlSet.New(
-                numberSignedLabel,
-                numberUnsignedLabel,
-                numberFloatLabel,
-                unsignedFloatLabel,
-                numberHexLabel)
-                .SuggestedWidthToMax().VerticalAlignment(VerticalAlignment.Center);
+                numberSignedEdit.Label,
+                numberUnsignedEdit.Label,
+                numberFloatEdit.Label,
+                unsignedFloatEdit.Label,
+                numberHexEdit.Label)
+                .SuggestedWidthToMax();
 
             ControlSet.New(textAlignLabel, minLengthLabel, maxLengthLabel).SuggestedWidthToMax();
 
             ControlSet.New(textAlignComboBox, minLengthBox, maxLengthBox).SuggestedWidthToMax();
-
-            var image = KnownSvgImages.GetWarningImage();
-
-            ControlSet.New(
-                textImage,
-                numberSignedImage,
-                numberUnsignedImage,
-                numberFloatImage,
-                unsignedFloatImage,
-                numberHexImage).Visible(true).Action<PictureBox>(InitPictureBox)
-                .VerticalAlignment(VerticalAlignment.Center);
-
-            void InitPictureBox(PictureBox picture)
-            {
-                picture.Image = image;
-                picture.ImageVisible = false;
-                picture.ImageStretch = false;
-                picture.TabStop = false;
-                picture.GotFocus += Control_GotFocus;
-            }
 
             // !!! update UseValidator to support unsigned int
             // !!! but need to set MinValue = 0
@@ -213,22 +194,22 @@ namespace ControlsSample
 
         private void SetDoubleMinMMButton_Click(object? sender, EventArgs e)
         {
-            numberFloatTextBox.Text = ErrorMinValueTextDouble;
+            numberFloatEdit.TextBox.Text = ErrorMinValueTextDouble;
         }
 
         private void SetDoubleMaxPPButton_Click(object? sender, EventArgs e)
         {
-            numberFloatTextBox.Text = ErrorMaxValueTextDouble;
+            numberFloatEdit.TextBox.Text = ErrorMaxValueTextDouble;
         }
 
         private void SetDoubleMinButton_Click(object? sender, EventArgs e)
         {
-            numberFloatTextBox.Text = MinValueTextDouble;
+            numberFloatEdit.TextBox.Text = MinValueTextDouble;
         }
 
         private void SetDoubleMaxButton_Click(object? sender, EventArgs e)
         {
-            numberFloatTextBox.Text = MaxValueTextDouble;
+            numberFloatEdit.TextBox.Text = MaxValueTextDouble;
         }
 
         public bool LogPosition { get; set; }
@@ -486,5 +467,14 @@ namespace ControlsSample
 
     public static class Extensions
     {
+        public static ControlSet InnerSuggestedWidth(this ControlSet controlSet, double value)
+        {
+            foreach (var item in controlSet.Items)
+            {
+                if (item is ControlAndLabel control)
+                    control.InnerSuggestedWidth = value;
+            }
+            return controlSet;
+        }
     }
 }

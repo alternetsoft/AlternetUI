@@ -2160,6 +2160,15 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Sets <see cref="ValidatorErrorText"/> property to <paramref name="knownError"/>.
+        /// </summary>
+        /// <param name="knownError">Known error identifier.</param>
+        public virtual void SetErrorText(ValueValidatorKnownError knownError)
+        {
+            ValidatorErrorText = GetKnownErrorText(knownError);
+        }
+
+        /// <summary>
         /// Handles default rich text editor keys.
         /// </summary>
         /// <param name="e">Event arguments.</param>
