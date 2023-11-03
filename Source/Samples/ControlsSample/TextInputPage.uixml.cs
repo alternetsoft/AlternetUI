@@ -198,41 +198,16 @@ namespace ControlsSample
             return result;
         }
 
-        private void RichEdit_KeyDown(object sender, KeyEventArgs e)
+        private void RichEdit_KeyDown(object? sender, KeyEventArgs e)
         {
-            void AlignCenter()
+            richEdit.HandleRichEditKeys(e);
+
+            void Test()
             {
-                Application.Log("Ctrl+Shift+E Center Align");
+                richEdit.SelectionSetColor(Color.White, Color.Red);
             }
 
-            void AlignLeft()
-            {
-                Application.Log("Ctrl+Shift+L Left Align");
-            }
-
-            void AlignRight()
-            {
-                Application.Log("Ctrl+Shift+R Right Align");
-            }
-
-            void Justify()
-            {
-                Application.Log("Ctrl+Shift+J Justify");
-            }
-
-            if (KnownKeys.RichEditToggleBold.Run(e, richEdit.ToggleSelectionBold))
-                return;
-            if (KnownKeys.RichEditToggleItalic.Run(e, richEdit.ToggleSelectionItalic))
-                return;
-            if (KnownKeys.RichEditToggleUnderline.Run(e, richEdit.ToggleSelectionUnderline))
-                return;
-            if (KnownKeys.RichEditLeftAlign.Run(e, AlignLeft))
-                return;
-            if (KnownKeys.RichEditCenterAlign.Run(e, AlignCenter))
-                return;
-            if (KnownKeys.RichEditRightAlign.Run(e, AlignRight))
-                return;
-            if (KnownKeys.RichEditJustify.Run(e, Justify))
+            if (KnownKeys.RunTest.Run(e, Test))
                 return;
         }
 

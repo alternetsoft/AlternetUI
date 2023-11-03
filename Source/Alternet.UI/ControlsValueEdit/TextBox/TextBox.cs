@@ -1073,6 +1073,28 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Sets foreground and background colors of the selection.  If no text is selected,
+        /// style of the insertion point is changed.
+        /// </summary>
+        /// <param name="textColor">Foreground color.</param>
+        /// <param name="backColor">Background color.</param>
+        /// <remarks>
+        /// If any of the color parameters is null, it will not be changed.
+        /// </remarks>
+        public void SelectionSetColor(Color? textColor, Color? backColor = null)
+        {
+            var position = GetInsertionPoint();
+            var fs = GetStyle(position);
+            var newStyle = TextBox.CreateTextAttr();
+            newStyle.Copy(fs);
+            if (backColor is not null)
+                newStyle.SetBackgroundColor(backColor.Value);
+            if (textColor is not null)
+                newStyle.SetTextColor(textColor.Value);
+            SetSelectionStyle(newStyle);
+        }
+
+        /// <summary>
         /// Toggles <see cref="FontStyle.Bold"/> style of the selection. If no text is selected,
         /// style of the insertion point is changed.
         /// </summary>
@@ -2103,6 +2125,74 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Sets text alignment in the current position to <paramref name="alignment"/>.
+        /// </summary>
+        /// <param name="alignment">New alignment value.</param>
+        public virtual void SelectionSetAlignment(TextBoxTextAttrAlignment alignment)
+        {
+            var fs = CreateTextAttr();
+            fs.SetAlignment(alignment);
+            SetSelectionStyle(fs);
+        }
+
+        /// <summary>
+        /// Sets text alignment in the current position to <see cref="TextBoxTextAttrAlignment.Center"/>
+        /// </summary>
+        public virtual void SelectionAlignCenter()
+        {
+            SelectionSetAlignment(TextBoxTextAttrAlignment.Center);
+        }
+
+        /// <summary>
+        /// Sets text alignment in the current position to <see cref="TextBoxTextAttrAlignment.Left"/>
+        /// </summary>
+        public virtual void SelectionAlignLeft()
+        {
+            SelectionSetAlignment(TextBoxTextAttrAlignment.Left);
+        }
+
+        /// <summary>
+        /// Handles default rich text editor keys.
+        /// </summary>
+        /// <param name="e">Event arguments.</param>
+        /// <remarks>
+        /// You can use this method in the <see cref="UIElement.KeyDown"/> event handlers.
+        /// </remarks>
+        public virtual void HandleRichEditKeys(KeyEventArgs e)
+        {
+            if (KnownKeys.RichEditToggleBold.Run(e, ToggleSelectionBold))
+                return;
+            if (KnownKeys.RichEditToggleItalic.Run(e, ToggleSelectionItalic))
+                return;
+            if (KnownKeys.RichEditToggleUnderline.Run(e, ToggleSelectionUnderline))
+                return;
+            if (KnownKeys.RichEditLeftAlign.Run(e, SelectionAlignLeft))
+                return;
+            if (KnownKeys.RichEditCenterAlign.Run(e, SelectionAlignCenter))
+                return;
+            if (KnownKeys.RichEditRightAlign.Run(e, SelectionAlignRight))
+                return;
+            if (KnownKeys.RichEditJustify.Run(e, SelectionJustify))
+                return;
+        }
+
+        /// <summary>
+        /// Sets text alignment in the current position to <see cref="TextBoxTextAttrAlignment.Right"/>
+        /// </summary>
+        public virtual void SelectionAlignRight()
+        {
+            SelectionSetAlignment(TextBoxTextAttrAlignment.Right);
+        }
+
+        /// <summary>
+        /// Sets text alignment in the current position to <see cref="TextBoxTextAttrAlignment.Justified"/>
+        /// </summary>
+        public virtual void SelectionJustify()
+        {
+            SelectionSetAlignment(TextBoxTextAttrAlignment.Justified);
+        }
+
+        /// <summary>
         /// Called when content in this Control changes.
         /// Raises the TextChanged event.
         /// </summary>
@@ -2138,7 +2228,7 @@ namespace Alternet.UI
             DependencyPropertyChangedEventArgs e)
         {
             TextBox textBox = (TextBox)d;
-            textBox.OnTextChanged(new TextChangedEventArgs(TextChangedEvent)); 
+            textBox.OnTextChanged(new TextChangedEventArgs(TextChangedEvent));
         }
     }
 }
