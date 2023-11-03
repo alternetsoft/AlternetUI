@@ -16,6 +16,7 @@ namespace Alternet.UI
         /// </summary>
         public RichTextBox()
         {
+            ProcessTab = true;
             base.Multiline = true;
             base.IsRichEdit = true;
         }

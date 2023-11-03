@@ -12,6 +12,11 @@ namespace Alternet.UI
     public class KnownKeys
     {
         /// <summary>
+        /// Gets or sets keys used in the rich edit to select all text.
+        /// </summary>
+        public static KeyInfo RichEditSelectAll { get; set; } = new(Key.A, ModifierKeys.Control);
+
+        /// <summary>
         /// Gets or sets keys used to run test action.
         /// </summary>
         public static KeyInfo RunTest { get; set; } = new(Key.T, ModifierKeys.ControlShift);

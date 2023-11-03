@@ -1835,7 +1835,15 @@ namespace Alternet.UI
         /// </summary>
         public virtual void SelectAll()
         {
-            Handler.SelectAll();
+            if (IsRichEdit)
+            {
+                DoInsideUpdate(() =>
+                {
+                    SetSelection(-1, -1);
+                });
+            }
+            else
+                Handler.SelectAll();
         }
 
         /// <summary>
@@ -2160,6 +2168,8 @@ namespace Alternet.UI
         /// </remarks>
         public virtual void HandleRichEditKeys(KeyEventArgs e)
         {
+            if (KnownKeys.RichEditSelectAll.Run(e, SelectAll))
+                return;
             if (KnownKeys.RichEditToggleBold.Run(e, ToggleSelectionBold))
                 return;
             if (KnownKeys.RichEditToggleItalic.Run(e, ToggleSelectionItalic))
