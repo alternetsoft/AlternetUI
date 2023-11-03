@@ -1042,6 +1042,9 @@ namespace Alternet.UI
         /// If any attribute within style is not set, the corresponding
         /// attribute from <see cref="GetDefaultStyle"/> is used.
         /// </remarks>
+        /// <remarks>
+        /// Turn on <see cref="TextBox.IsRichEdit"/> in order to use this method.
+        /// </remarks>
         public virtual bool SetSelectionStyle(ITextBoxTextAttr style)
         {
             if (HasSelection)
@@ -1657,6 +1660,9 @@ namespace Alternet.UI
         /// the programmer should use <see cref="GetInsertionPoint"/>
         /// and <see cref="SetInsertionPoint"/>.
         /// </remarks>
+        /// <remarks>
+        /// Turn on <see cref="TextBox.IsRichEdit"/> in order to use this method.
+        /// </remarks>
         public void AppendTextAndStyles(IEnumerable<object> list)
         {
             foreach (object item in list)
@@ -1971,6 +1977,9 @@ namespace Alternet.UI
         /// Returns the style currently used for the new text.
         /// </summary>
         /// <returns></returns>
+        /// <remarks>
+        /// Turn on <see cref="TextBox.IsRichEdit"/> in order to use this method.
+        /// </remarks>
         public ITextBoxTextAttr GetDefaultStyle()
         {
             return new TextBoxTextAttr(Handler.GetDefaultStyle());
@@ -1981,6 +1990,9 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="pos">The position for which text style is returned.</param>
         /// <returns></returns>
+        /// <remarks>
+        /// Turn on <see cref="TextBox.IsRichEdit"/> in order to use this method.
+        /// </remarks>
         public ITextBoxTextAttr GetStyle(long pos)
         {
             return new TextBoxTextAttr(Handler.GetStyle(pos));
@@ -2002,6 +2014,9 @@ namespace Alternet.UI
         /// previous default style didn't set them neither, the global font or colors
         /// of the text control itself are used as fall back.
         /// </remarks>
+        /// <remarks>
+        /// Turn on <see cref="TextBox.IsRichEdit"/> in order to use this method.
+        /// </remarks>
         public bool SetDefaultStyle(ITextBoxTextAttr style)
         {
             if (style is not TextBoxTextAttr s)
@@ -2022,6 +2037,9 @@ namespace Alternet.UI
         /// <remarks>
         /// If any attribute within style is not set, the corresponding
         /// attribute from <see cref="GetDefaultStyle"/> is used.
+        /// </remarks>
+        /// <remarks>
+        /// Turn on <see cref="TextBox.IsRichEdit"/> in order to use this method.
         /// </remarks>
         public bool SetStyle(long start, long end, ITextBoxTextAttr style)
         {
