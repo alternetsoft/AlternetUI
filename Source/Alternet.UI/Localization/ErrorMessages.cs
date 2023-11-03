@@ -52,16 +52,19 @@ namespace Alternet.UI.Localization
         public string InvalidStringFormat { get; set; } = "String format is not valid.";
 
         /// <see cref="CurrentApplicationIsNotSet"/>
-        public string ValidationNumberIsExpected { get; set; } = "A number is expected.";
+        public string ValidationNumberIsExpected { get; set; } = "Number is expected.";
 
         /// <see cref="CurrentApplicationIsNotSet"/>
-        public string ValidationUnsignedFloatIsExpected { get; set; } = "An unsigned floating point number is expected.";
+        public string ValidationUnsignedNumberIsExpected { get; set; } = "Unsigned number is expected.";
 
         /// <see cref="CurrentApplicationIsNotSet"/>
-        public string ValidationFloatIsExpected { get; set; } = "A floating point number is expected.";
+        public string ValidationUnsignedFloatIsExpected { get; set; } = "Unsigned floating point number is expected.";
 
         /// <see cref="CurrentApplicationIsNotSet"/>
-        public string ValidationHexNumberIsExpected { get; set; } = "A hexadecimal number is expected.";
+        public string ValidationFloatIsExpected { get; set; } = "Floating point number is expected.";
+
+        /// <see cref="CurrentApplicationIsNotSet"/>
+        public string ValidationHexNumberIsExpected { get; set; } = "Hexadecimal number is expected.";
 
         /// <see cref="CurrentApplicationIsNotSet"/>
         public string ValidationRangeFormat { get; set; } = "Range is [{0}..{1}].";

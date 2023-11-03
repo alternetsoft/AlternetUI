@@ -13,13 +13,20 @@ namespace Alternet.UI
     public enum ValueValidatorKnownError
     {
         /// <summary>
-        /// Error: "A number is expected. Range is [{0}..{1}].".
+        /// Error: "A number is expected.".
         /// </summary>
         /// <remarks>
-        /// Use <see cref="ErrorMessages.ValidationNumberIsExpected"/> and
-        /// <see cref="ErrorMessages.ValidationRangeFormat"/> for the localization.
+        /// Use <see cref="ErrorMessages.ValidationNumberIsExpected"/> for the localization.
         /// </remarks>
         NumberIsExpected,
+
+        /// <summary>
+        /// Error: "An unsigned number is expected.".
+        /// </summary>
+        /// <remarks>
+        /// Use <see cref="ErrorMessages.ValidationUnsignedNumberIsExpected"/> for the localization.
+        /// </remarks>
+        UnsignedNumberIsExpected,
 
         /// <summary>
         /// Error: "A floating point number is expected.".

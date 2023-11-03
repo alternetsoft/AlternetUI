@@ -24,11 +24,11 @@ namespace ControlsSample
             SuggestedSize = new Size(350, 250),
             Margin = new Thickness(0, 0, 0, 5),
         };
-        private readonly TextBoxAndLabel.Int16Editor shortEdit = new("Int16");
-        private readonly TextBoxAndLabel.ByteEditor byteEdit = new("Byte");
-        private readonly TextBoxAndLabel.DoubleEditor doubleEdit = new("Double");
-        private readonly TextBoxAndLabel.UDoubleEditor udoubleEdit = new("UDouble");
-        private readonly TextBoxAndLabel.UInt32HexEditor uint32HexEdit = new("UInt32 Hex");
+        private readonly ValueEditorInt16 shortEdit = new("Int16");
+        private readonly ValueEditorByte byteEdit = new("Byte");
+        private readonly ValueEditorDouble doubleEdit = new("Double");
+        private readonly ValueEditorUDouble udoubleEdit = new("UDouble");
+        private readonly HexEditorUInt32 uint32HexEdit = new("UInt32 Hex");
 
         private IPageSite? site;
 
@@ -63,34 +63,6 @@ namespace ControlsSample
             multiLineTextBox.Text = LoremIpsum;
             multiLineTextBox.TextUrl += MultiLineTextBox_TextUrl;
             multiLineTextBox.CurrentPositionChanged += TextBox_CurrentPositionChanged;
-
-            // ==== numberSignedTextBox
-
-            shortEdit.TextBox.UseValidator<short>();
-            shortEdit.TextBox.SetErrorText(ValueValidatorKnownError.NumberIsExpected);
-
-            // ==== numberUnsignedTextBox
-
-            byteEdit.TextBox.UseValidator<byte>();
-            byteEdit.TextBox.SetErrorText(ValueValidatorKnownError.NumberIsExpected);
-
-            // ==== numberDoubleTextBox
-
-            doubleEdit.TextBox.UseValidator<double>();
-            doubleEdit.TextBox.SetErrorText(ValueValidatorKnownError.FloatIsExpected);
-
-            // ==== unsignedDoubleTextBox
-
-            udoubleEdit.TextBox.MinValue = 0d;
-            udoubleEdit.TextBox.UseValidator<double>();
-            udoubleEdit.TextBox.SetErrorText(ValueValidatorKnownError.UnsignedFloatIsExpected);
-
-            // ==== numberHexTextBox
-
-            uint32HexEdit.TextBox.NumberStyles = NumberStyles.HexNumber;
-            uint32HexEdit.TextBox.Validator = TextBox.CreateValidator(ValueValidatorKind.UnsignedHex);
-            uint32HexEdit.TextBox.DataType = typeof(uint);
-            uint32HexEdit.TextBox.SetErrorText(ValueValidatorKnownError.HexNumberIsExpected);
 
             // ==== Other initializations
 
@@ -132,8 +104,7 @@ namespace ControlsSample
 
             ControlSet.New(textAlignComboBox, minLengthBox, maxLengthBox).SuggestedWidthToMax();
 
-            // !!! update UseValidator to support unsigned int
-            // !!! but need to set MinValue = 0
+            // !!! 
             minLengthBox.DataType = typeof(int);
             minLengthBox.Validator = TextBox.CreateValidator(ValueValidatorKind.UnsignedInt);
             minLengthBox.TextChanged += MinLengthBox_TextChanged;

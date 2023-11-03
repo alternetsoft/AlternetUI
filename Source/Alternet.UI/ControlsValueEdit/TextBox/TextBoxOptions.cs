@@ -22,5 +22,10 @@ namespace Alternet.UI
         /// is reached.
         /// </remarks>
         SetNativeMaxLength = 1,
+
+        /// <summary>
+        /// Adds integer min/max values to the error messages.
+        /// </summary>
+        IntRangeInError = 2,
     }
 }

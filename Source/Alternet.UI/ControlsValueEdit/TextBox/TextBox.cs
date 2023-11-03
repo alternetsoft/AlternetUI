@@ -54,7 +54,7 @@ namespace Alternet.UI
         private IValueValidator? validator;
         private int maxLength;
         private int minLength;
-        private TextBoxOptions options;
+        private TextBoxOptions options = TextBoxOptions.IntRangeInError;
 
         static TextBox()
         {
@@ -1266,11 +1266,23 @@ namespace Alternet.UI
         /// <param name="kind">Error kind.</param>
         public virtual string GetKnownErrorText(ValueValidatorKnownError kind)
         {
+            string AddRangeSuffix(string s)
+            {
+                if (options.HasFlag(TextBoxOptions.IntRangeInError))
+                {
+                    var rangeStr = GetMinMaxRangeStr(ErrorMessages.Default.ValidationRangeFormat);
+                    return $"{s} {rangeStr}".Trim();
+                }
+                else
+                    return s;
+            }
+
             switch (kind)
             {
                 case ValueValidatorKnownError.NumberIsExpected:
-                    var rangeStr = GetMinMaxRangeStr(ErrorMessages.Default.ValidationRangeFormat);
-                    return $"{ErrorMessages.Default.ValidationNumberIsExpected} {rangeStr}".Trim();
+                    return AddRangeSuffix(ErrorMessages.Default.ValidationNumberIsExpected);
+                case ValueValidatorKnownError.UnsignedNumberIsExpected:
+                    return AddRangeSuffix(ErrorMessages.Default.ValidationUnsignedNumberIsExpected);
                 case ValueValidatorKnownError.FloatIsExpected:
                     return ErrorMessages.Default.ValidationFloatIsExpected;
                 case ValueValidatorKnownError.UnsignedFloatIsExpected:
