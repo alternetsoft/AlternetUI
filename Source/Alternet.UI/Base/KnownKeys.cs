@@ -12,6 +12,11 @@ namespace Alternet.UI
     public class KnownKeys
     {
         /// <summary>
+        /// Gets or sets keys used to run test action.
+        /// </summary>
+        public static KeyInfo RunTest { get; set; } = new(Key.T, ModifierKeys.ControlShift);
+
+        /// <summary>
         /// Gets or sets keys used in the rich edit for toggling font bold style.
         /// </summary>
         public static KeyInfo RichEditToggleBold { get; set; } = new(Key.B, ModifierKeys.Control);
