@@ -18,6 +18,14 @@ namespace ControlsSample
             "Lorem ipsum dolor sit amet,\nconsectetur adipiscing elit. Suspendisse tincidunt orci vitae arcu congue commodo. Proin fermentum rhoncus dictum.";
 
         private readonly CardPanelHeader panelHeader = new();
+        private readonly RichTextBox richEdit = new()
+        {
+            Name = "richEdit",
+            SuggestedWidth = 350,
+            SuggestedHeight = 250,
+            Margin = new Thickness(0, 0, 0, 5),
+        };
+
         private IPageSite? site;
 
         public TextInputPage()
@@ -168,6 +176,7 @@ namespace ControlsSample
 
             // ==== richEdit
 
+            richEdit.Parent = richEditParent;
             richEdit.CurrentPositionChanged += TextBox_CurrentPositionChanged;
             richEdit.KeyDown += RichEdit_KeyDown;
             InitRichEdit();
@@ -467,9 +476,7 @@ namespace ControlsSample
                 "Ctrl+Shift+J - Justify.\n",
             };
 
-            richEdit.Clear();
             richEdit.AutoUrl = true;
-            richEdit.IsRichEdit = true;
 
             richEdit.DoInsideUpdate(() =>
             {

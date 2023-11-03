@@ -66,9 +66,7 @@
     <!-- ========================= -->
 
     <HorizontalStackPanel Name="tab3" Visible="false">
-      <VerticalStackPanel  Margin="5" >
-        <TextBox Name="richEdit" Multiline="true" SuggestedWidth="350" SuggestedHeight="250"
-                 Margin="0,0,0,5"/>
+      <VerticalStackPanel  Margin="5" Name="richEditParent">
       </VerticalStackPanel>
     </HorizontalStackPanel>
 

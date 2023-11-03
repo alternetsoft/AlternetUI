@@ -445,7 +445,7 @@ namespace Alternet.UI
             Control.OnEnterPressed(e);
         }
 
-        private void Control_ReadOnlyChanged(object? sender, System.EventArgs e)
+        private void Control_ReadOnlyChanged(object? sender, EventArgs e)
         {
             ApplyReadOnly();
         }
@@ -460,21 +460,18 @@ namespace Alternet.UI
             NativeControl.Multiline = Control.Multiline;
         }
 
-        private void Control_MultilineChanged(object? sender, System.EventArgs e)
+        private void Control_MultilineChanged(object? sender, EventArgs e)
         {
             ApplyMultiline();
         }
 
-        private void Control_HasBorderChanged(object? sender, System.EventArgs? e)
+        private void Control_HasBorderChanged(object? sender, EventArgs e)
         {
             NativeControl.EditControlOnly = !Control.HasBorder;
         }
 
-        private void NativeControl_TextChanged(object? sender, System.EventArgs? e)
+        private void NativeControl_TextChanged(object? sender, EventArgs e)
         {
-            if (e is null)
-                throw new System.ArgumentNullException(nameof(e));
-
             handlingNativeControlTextChanged = true;
             try
             {
@@ -486,11 +483,8 @@ namespace Alternet.UI
             }
         }
 
-        private void Control_TextChanged(object? sender, System.EventArgs? e)
+        private void Control_TextChanged(object? sender, EventArgs e)
         {
-            if (e is null)
-                throw new System.ArgumentNullException(nameof(e));
-
             if (!handlingNativeControlTextChanged)
             {
                 if (NativeControl.Text != Control.Text)
