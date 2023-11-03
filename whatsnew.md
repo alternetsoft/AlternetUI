@@ -1,12 +1,18 @@
 # 0.9.406 (not released, work in progress)
 
-- Add LogListBox, PopupWindow, PopupListBox, PopupCheckListBox, PopupPictureBox, PopupCalendar, PopupTreeView,
+- Add RichTextBox, LogListBox, PopupWindow, PopupListBox, PopupCheckListBox, PopupPictureBox, PopupCalendar, PopupTreeView,
 PopupAuiManager controls.
 - PictureBox: ImageVisible, ImageStretch.
 - TextBox: MinValue, MaxValue, DefaultValidatorErrorText, DefaultErrorBackgroundColor, DefaultErrorForegroundColor,
  NumberStyles, FormatProvider, DataType, ValidatorReporter, ValidatorErrorText, EmptyTextAllow, EmptyTextValue,
  GetDataTypeCode, GetMinMaxRangeStr, CreateValidator, GetKnownErrorText, ReportValidatorError, DefaultFormat, Converter,
- DefaultText, SetTextAs* methods, MinLength, MaxLength, TextAsNumber, Options, CurrentPosition, CurrentPositionChanged event.
+ DefaultText, SetTextAs* methods, MinLength, MaxLength, TextAsNumber, Options, CurrentPosition, CurrentPositionChanged event,
+ReportErrorMinMaxLength, UseValidator, ErrorStatusChanged event, .
+- ITextBoxTextAttr: Add GetFontStyle, SetFontStyle, GetFontItalic.
+- TextBox: Add rich edit methods SetSelectionStyle, ToggleSelectionFontStyle, ToggleSelectionBold, ToggleSelectionItalic,
+ ToggleSelectionUnderline, ToggleSelectionStrikethrough, SelectionSetColor, SelectionSetAlignment, SelectionAlignCenter,
+ SelectionAlignLeft, HandleRichEditKeys, SelectionAlignRight, SelectionJustify.
+- Fixed TextBox.SelectAll if it is rich editor.
 - Improvments in Validator classes and methods.
 - Fixed TabControl behavior and bad painting under Linux.
 - Improved resize behavior of AuiManager controls and panels.
