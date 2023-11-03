@@ -13,6 +13,16 @@ namespace Alternet.UI
     public interface ITextBoxTextAttr
     {
         /// <summary>
+        /// Gets <see cref="FontStyle"/> of the text.
+        /// </summary>
+        public FontStyle GetFontStyle();
+
+        /// <summary>
+        /// Sets <see cref="FontStyle"/> of the text.
+        /// </summary>
+        void SetFontStyle(FontStyle fontStyle);
+
+        /// <summary>
         /// Sets color of the text.
         /// </summary>
         /// <param name="colText">New text color.</param>
@@ -35,6 +45,11 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="faceName">New font name.</param>
         void SetFontFaceName(string faceName);
+
+        /// <summary>
+        /// Returns boolean value indicating whether text is shown in the italic style.
+        /// </summary>
+        bool GetFontItalic();
 
         /// <summary>
         /// Sets boolean value indicating whether to underline the text.

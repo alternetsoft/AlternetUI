@@ -38,6 +38,14 @@ namespace Alternet.UI
             Native.TextBoxTextAttr.SetBackgroundColor(handle, colBack);
         }
 
+        public bool GetFontItalic()
+        {
+            const int wxNORMAL = 90;
+
+            var fs = Native.TextBoxTextAttr.GetFontStyle(handle);
+            return fs != wxNORMAL;
+        }
+
         public void SetFontItalic(bool italic)
         {
             const int wxNORMAL = 90;
@@ -466,15 +474,36 @@ namespace Alternet.UI
                 (TextBoxTextAttrBulletStyle)Native.TextBoxTextAttr.GetBulletStyle(handle);
         }
 
-        /*public void SetFontStyle(FontStyle fontStyle)
+        public void SetFontStyle(FontStyle fontStyle)
         {
-            throw new NotImplementedException();
+            if (fontStyle.HasFlag(FontStyle.Bold))
+                SetFontWeight(FontWeight.Bold);
+            else
+                SetFontWeight(FontWeight.Normal);
+            SetFontItalic(fontStyle.HasFlag(FontStyle.Italic));
+            SetFontStrikethrough(fontStyle.HasFlag(FontStyle.Strikethrough));
+            SetFontUnderlined(fontStyle.HasFlag(FontStyle.Underlined));
         }
 
         public FontStyle GetFontStyle()
         {
-            throw new NotImplementedException();
-        }*/
+            var fontWeight = GetFontWeight();
+            FontStyle result = FontStyle.Regular;
+
+            var isBold = fontWeight > FontWeight.Normal;
+            var isItalic = GetFontItalic();
+            var isUnderlined = GetFontUnderlined();
+            var isStrikeOut = GetFontStrikethrough();
+            if (isBold)
+                result |= FontStyle.Bold;
+            if (isItalic)
+                result |= FontStyle.Italic;
+            if (isUnderlined)
+                result |= FontStyle.Underlined;
+            if (isStrikeOut)
+                result |= FontStyle.Strikethrough;
+            return result;
+        }
 
         public bool HasFlag(TextBoxTextAttrFlags flag)
         {
