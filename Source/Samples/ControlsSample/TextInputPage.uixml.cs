@@ -24,11 +24,11 @@ namespace ControlsSample
             SuggestedSize = new Size(350, 250),
             Margin = new Thickness(0, 0, 0, 5),
         };
-        private readonly TextBoxAndLabel numberSignedEdit = new("1. Signed (short)");
-        private readonly TextBoxAndLabel numberUnsignedEdit = new("2. Unsigned (byte)");
-        private readonly TextBoxAndLabel numberFloatEdit = new("3. Signed (double)");
-        private readonly TextBoxAndLabel unsignedFloatEdit = new("4. Unsigned (double)");
-        private readonly TextBoxAndLabel numberHexEdit = new("5. Unsigned Hex (uint)");
+        private readonly TextBoxAndLabel.Int16Editor shortEdit = new("Int16");
+        private readonly TextBoxAndLabel.ByteEditor byteEdit = new("Byte");
+        private readonly TextBoxAndLabel.DoubleEditor doubleEdit = new("Double");
+        private readonly TextBoxAndLabel.UDoubleEditor udoubleEdit = new("UDouble");
+        private readonly TextBoxAndLabel.UInt32HexEditor uint32HexEdit = new("UInt32 Hex");
 
         private IPageSite? site;
 
@@ -37,11 +37,11 @@ namespace ControlsSample
             InitializeComponent();
 
             ControlSet.New(
-                numberSignedEdit,
-                numberUnsignedEdit,
-                numberFloatEdit,
-                unsignedFloatEdit,
-                numberHexEdit).Margin(0,5,5,5).Parent(numbersPanel).InnerSuggestedWidth(200);
+                shortEdit,
+                byteEdit,
+                doubleEdit,
+                udoubleEdit,
+                uint32HexEdit).Margin(0,5,5,5).Parent(numbersPanel).InnerSuggestedWidth(200);
 
             panelHeader.Add("TextBox", tab1);
             panelHeader.Add("Memo", tab2);
@@ -66,37 +66,31 @@ namespace ControlsSample
 
             // ==== numberSignedTextBox
 
-            numberSignedEdit.TextBox.UseValidator<short>();
-            numberSignedEdit.TextBox.SetErrorText(ValueValidatorKnownError.NumberIsExpected);
+            shortEdit.TextBox.UseValidator<short>();
+            shortEdit.TextBox.SetErrorText(ValueValidatorKnownError.NumberIsExpected);
 
             // ==== numberUnsignedTextBox
 
-            // We need to apply min and max values before ValidatorErrorText
-            // is assigned as they are used in error text.
-            numberUnsignedEdit.TextBox.MinValue = 2;
-            // 2000 is greater than Byte can hold. It is assigned here for testing purposes.
-            // Actual max is a minimal of Byte.MinValue and TextBox.MaxValue.
-            numberUnsignedEdit.TextBox.MaxValue = 2000;
-            numberUnsignedEdit.TextBox.UseValidator<byte>();
-            numberUnsignedEdit.TextBox.SetErrorText(ValueValidatorKnownError.NumberIsExpected);
+            byteEdit.TextBox.UseValidator<byte>();
+            byteEdit.TextBox.SetErrorText(ValueValidatorKnownError.NumberIsExpected);
 
-            // ==== numberFloatTextBox
+            // ==== numberDoubleTextBox
 
-            numberFloatEdit.TextBox.UseValidator<double>();
-            numberFloatEdit.TextBox.SetErrorText(ValueValidatorKnownError.FloatIsExpected);
+            doubleEdit.TextBox.UseValidator<double>();
+            doubleEdit.TextBox.SetErrorText(ValueValidatorKnownError.FloatIsExpected);
 
-            // ==== unsignedFloatTextBox
+            // ==== unsignedDoubleTextBox
 
-            unsignedFloatEdit.TextBox.MinValue = 0d;
-            unsignedFloatEdit.TextBox.UseValidator<double>();
-            unsignedFloatEdit.TextBox.SetErrorText(ValueValidatorKnownError.UnsignedFloatIsExpected);
+            udoubleEdit.TextBox.MinValue = 0d;
+            udoubleEdit.TextBox.UseValidator<double>();
+            udoubleEdit.TextBox.SetErrorText(ValueValidatorKnownError.UnsignedFloatIsExpected);
 
             // ==== numberHexTextBox
 
-            numberHexEdit.TextBox.NumberStyles = NumberStyles.HexNumber;
-            numberHexEdit.TextBox.Validator = TextBox.CreateValidator(ValueValidatorKind.UnsignedHex);
-            numberHexEdit.TextBox.DataType = typeof(uint);
-            numberHexEdit.TextBox.SetErrorText(ValueValidatorKnownError.HexNumberIsExpected);
+            uint32HexEdit.TextBox.NumberStyles = NumberStyles.HexNumber;
+            uint32HexEdit.TextBox.Validator = TextBox.CreateValidator(ValueValidatorKind.UnsignedHex);
+            uint32HexEdit.TextBox.DataType = typeof(uint);
+            uint32HexEdit.TextBox.SetErrorText(ValueValidatorKnownError.HexNumberIsExpected);
 
             // ==== Other initializations
 
@@ -107,11 +101,11 @@ namespace ControlsSample
             }
 
             ControlSet.New(
-                numberHexEdit.TextBox,
-                numberFloatEdit.TextBox,
-                unsignedFloatEdit.TextBox,
-                numberUnsignedEdit.TextBox,
-                numberSignedEdit.TextBox,
+                uint32HexEdit.TextBox,
+                doubleEdit.TextBox,
+                udoubleEdit.TextBox,
+                byteEdit.TextBox,
+                shortEdit.TextBox,
                 textBox).Action<TextBox>(BindTextChanged);          
 
             wordWrapComboBox.BindEnumProp(multiLineTextBox, nameof(TextBox.TextWrap));
@@ -127,11 +121,11 @@ namespace ControlsSample
                 nameof(ValueValidatorFactory.BellOnError));
 
             ControlSet.New(
-                numberSignedEdit.Label,
-                numberUnsignedEdit.Label,
-                numberFloatEdit.Label,
-                unsignedFloatEdit.Label,
-                numberHexEdit.Label)
+                shortEdit.Label,
+                byteEdit.Label,
+                doubleEdit.Label,
+                udoubleEdit.Label,
+                uint32HexEdit.Label)
                 .SuggestedWidthToMax();
 
             ControlSet.New(textAlignLabel, minLengthLabel, maxLengthLabel).SuggestedWidthToMax();
@@ -194,22 +188,22 @@ namespace ControlsSample
 
         private void SetDoubleMinMMButton_Click(object? sender, EventArgs e)
         {
-            numberFloatEdit.TextBox.Text = ErrorMinValueTextDouble;
+            doubleEdit.TextBox.Text = ErrorMinValueTextDouble;
         }
 
         private void SetDoubleMaxPPButton_Click(object? sender, EventArgs e)
         {
-            numberFloatEdit.TextBox.Text = ErrorMaxValueTextDouble;
+            doubleEdit.TextBox.Text = ErrorMaxValueTextDouble;
         }
 
         private void SetDoubleMinButton_Click(object? sender, EventArgs e)
         {
-            numberFloatEdit.TextBox.Text = MinValueTextDouble;
+            doubleEdit.TextBox.Text = MinValueTextDouble;
         }
 
         private void SetDoubleMaxButton_Click(object? sender, EventArgs e)
         {
-            numberFloatEdit.TextBox.Text = MaxValueTextDouble;
+            doubleEdit.TextBox.Text = MaxValueTextDouble;
         }
 
         public bool LogPosition { get; set; }
