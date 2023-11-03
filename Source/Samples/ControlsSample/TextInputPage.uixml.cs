@@ -173,23 +173,24 @@ namespace ControlsSample
             InitRichEdit();
         }
 
+        string GetFontStatus()
+        {
+            var position = richEdit.GetInsertionPoint();
+            var fs = richEdit.GetStyle(position);
+            var style = fs.GetFontStyle();
+
+            var underlined = style.HasFlag(FontStyle.Underlined) ? "underlined" : string.Empty;
+            var strikeout = style.HasFlag(FontStyle.Strikethrough) ? "strikethrough" : string.Empty;
+            var italic = style.HasFlag(FontStyle.Italic) ? "italic" : string.Empty;
+            var bold = style.HasFlag(FontStyle.Bold) ? "bold" : string.Empty;
+
+            var result = $"{fs.GetFontFaceName()} {fs.GetFontSize()} {bold} {underlined} {strikeout} {italic}";
+
+            return result;
+        }
+
         private void RichEdit_KeyDown(object sender, KeyEventArgs e)
         {
-            void ToggleBold()
-            {
-                Application.Log("Ctrl+B");
-            }
-
-            void ToggleItalic()
-            {
-                Application.Log("Ctrl+I");
-            }
-
-            void ToggleUnderline()
-            {
-                Application.Log("Ctrl+U");
-            }
-
             void AlignCenter()
             {
                 Application.Log("Ctrl+Shift+E Center Align");
@@ -210,11 +211,11 @@ namespace ControlsSample
                 Application.Log("Ctrl+Shift+J Justify");
             }
 
-            if (KnownKeys.RichEditToggleBold.Run(e, ToggleBold))
+            if (KnownKeys.RichEditToggleBold.Run(e, richEdit.ToggleSelectionBold))
                 return;
-            if (KnownKeys.RichEditToggleItalic.Run(e, ToggleItalic))
+            if (KnownKeys.RichEditToggleItalic.Run(e, richEdit.ToggleSelectionItalic))
                 return;
-            if (KnownKeys.RichEditToggleUnderline.Run(e, ToggleUnderline))
+            if (KnownKeys.RichEditToggleUnderline.Run(e, richEdit.ToggleSelectionUnderline))
                 return;
             if (KnownKeys.RichEditLeftAlign.Run(e, AlignLeft))
                 return;
@@ -261,7 +262,13 @@ namespace ControlsSample
                 return;
             var name = control.Name ?? control.GetType().Name;
             var prefix = $"{name}.CurrentPos:";
-            site?.LogEventSmart($"{prefix} {currentPos.Value+1}", prefix);
+
+            var fontStatus = string.Empty;
+
+            if (control == richEdit)
+                fontStatus = GetFontStatus();
+
+            site?.LogEventSmart($"{prefix} {currentPos.Value+1} {fontStatus}", prefix);
         }
 
         private void Application_Idle(object? sender, EventArgs e)
@@ -413,6 +420,9 @@ namespace ControlsSample
             var taBold = TextBox.CreateTextAttr();
             taBold.SetFontWeight(FontWeight.Bold);
 
+            var taStrikeOut = TextBox.CreateTextAttr();
+            taStrikeOut.SetFontStrikethrough();
+
             var homePage = @"https://www.alternet-ui.com/";
 
             var taUrl = TextBox.CreateTextAttr();
@@ -442,6 +452,7 @@ namespace ControlsSample
                 "Font is ", taUnderlined, "underlined", taDefault, ".\n",
                 "Font is ", taBold, "bold", taDefault, ".\n",
                 "Font is ", taItalic, "italic", taDefault, ".\n",
+                "Font is ", taStrikeOut, "strikeout", taDefault, ".\n",
                 "Font is ", taBig, "big", taDefault, ".\n",
                 "Font is ", taUnderlined2, "special underlined", taDefault, ".\n",
                 "This is url: ", taUrl, homePage, taDefault, ".\n",

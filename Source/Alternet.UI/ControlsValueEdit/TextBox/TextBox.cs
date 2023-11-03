@@ -1030,6 +1030,90 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Changes the style of selection (if any). If no text is selected, style of the
+        /// insertion point is changed.
+        /// </summary>
+        /// <param name="style">The new text style.</param>
+        /// <returns>
+        /// <c>true</c> on success, <c>false</c> if an error occurred (this may also
+        /// mean that the styles are not supported under this platform).
+        /// </returns>
+        /// <remarks>
+        /// If any attribute within style is not set, the corresponding
+        /// attribute from <see cref="GetDefaultStyle"/> is used.
+        /// </remarks>
+        public virtual bool SetSelectionStyle(ITextBoxTextAttr style)
+        {
+            if (HasSelection)
+            {
+                var selectionStart = GetSelectionStart();
+                var selectionEnd = GetSelectionEnd();
+                var result = SetStyle(selectionStart, selectionEnd, style);
+                return result;
+            }
+            else
+            {
+                var position = GetInsertionPoint();
+                var result = SetStyle(position, position, style);
+                return result;
+            }
+        }
+
+        /// <summary>
+        /// Toggles <see cref="FontStyle"/> of the selection. If no text is selected, style of the
+        /// insertion point is changed.
+        /// </summary>
+        /// <param name="toggle">Font style to toggle</param>
+        public virtual void ToggleSelectionFontStyle(FontStyle toggle)
+        {
+            var position = GetInsertionPoint();
+            var fs = GetStyle(position);
+            var style = fs.GetFontStyle();
+            style = Font.ChangeFontStyle(style, toggle, !style.HasFlag(toggle));
+
+            var newStyle = TextBox.CreateTextAttr();
+            newStyle.Copy(fs);
+            newStyle.SetFontStyle(style);
+            SetSelectionStyle(newStyle);
+        }
+
+        /// <summary>
+        /// Toggles <see cref="FontStyle.Bold"/> style of the selection. If no text is selected,
+        /// style of the insertion point is changed.
+        /// </summary>
+        public virtual void ToggleSelectionBold()
+        {
+            ToggleSelectionFontStyle(FontStyle.Bold);
+        }
+
+        /// <summary>
+        /// Toggles <see cref="FontStyle.Italic"/> style of the selection. If no text is selected,
+        /// style of the insertion point is changed.
+        /// </summary>
+        public virtual void ToggleSelectionItalic()
+        {
+            ToggleSelectionFontStyle(FontStyle.Italic);
+        }
+
+        /// <summary>
+        /// Toggles <see cref="FontStyle.Underlined"/> style of the selection. If no text is selected,
+        /// style of the insertion point is changed.
+        /// </summary>
+        public virtual void ToggleSelectionUnderline()
+        {
+            ToggleSelectionFontStyle(FontStyle.Underlined);
+        }
+
+        /// <summary>
+        /// Toggles <see cref="FontStyle.Strikethrough"/> style of the selection. If no text is
+        /// selected, style of the insertion point is changed.
+        /// </summary>
+        public virtual void ToggleSelectionStrikethrough()
+        {
+            ToggleSelectionFontStyle(FontStyle.Strikethrough);
+        }
+
+        /// <summary>
         /// Sets <see cref="DataType"/> property to <typeparamref name="T"/>
         /// and <see cref="Validator"/> to the appropriate validator provider.
         /// </summary>
@@ -1932,7 +2016,7 @@ namespace Alternet.UI
         /// <param name="end">The end of the range to change.</param>
         /// <param name="style">The new style for the range.</param>
         /// <returns>
-        /// true on success, false if an error occurred (this may also
+        /// <c>true</c> on success, <c>false</c> if an error occurred (this may also
         /// mean that the styles are not supported under this platform).
         /// </returns>
         /// <remarks>
