@@ -33,6 +33,25 @@ namespace Alternet.UI
         public ModifierKeys Modifiers { get; set; }
 
         /// <summary>
+        /// Runs action if any of the keys is pressed.
+        /// </summary>
+        /// <param name="e">Event arguments.</param>
+        /// <param name="action">Action to run.</param>
+        /// <param name="setHandled">Specifies whether to set event arguments Handled property.</param>
+        /// <returns><c>true</c> if key is pressed; <c>false</c> otherwise.</returns>
+        /// <param name="keys">Array of keys.</param>
+        public static bool Run(KeyInfo[] keys, KeyEventArgs e, Action? action = null, bool setHandled = true)
+        {
+            foreach (var key in keys)
+            {
+                if (key.Run(e, action, setHandled))
+                    return true;
+            }
+
+            return false;
+        }
+
+        /// <summary>
         /// Checks <paramref name="e"/> event arguments on whether this key is pressed.
         /// </summary>
         /// <param name="e">Event arguments.</param>
@@ -44,7 +63,7 @@ namespace Alternet.UI
         /// <param name="e">Event arguments.</param>
         /// <param name="action">Action to run.</param>
         /// <param name="setHandled">Specifies whether to set event arguments Handled property.</param>
-        /// <returns></returns>
+        /// <returns><c>true</c> if key is pressed; <c>false</c> otherwise.</returns>
         public bool Run(KeyEventArgs e, Action? action = null, bool setHandled = true)
         {
             var result = IsPressed(e);
