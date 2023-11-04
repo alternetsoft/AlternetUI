@@ -33,8 +33,6 @@ namespace Alternet.UI
     /// </remarks>
     public class RoutedEventArgs : EventArgs
     {
-        #region Construction
-
         /// <summary>
         ///     Constructor for <see cref="RoutedEventArgs"/>
         /// </summary>
@@ -73,9 +71,6 @@ namespace Alternet.UI
             _source = _originalSource = source;
         }
 
-        #endregion Construction
-
-        #region External API
         /// <summary>
         ///     Returns the <see cref="RoutedEvent"/> associated
         ///     with this <see cref="RoutedEventArgs"/>
@@ -308,10 +303,6 @@ namespace Alternet.UI
             }
 }
 
-        #endregion External API
-
-        #region Operations
-
         // Calls the InvokeEventHandler protected
         // virtual method
         //
@@ -369,11 +360,6 @@ namespace Alternet.UI
                 _flags[InvokingHandlerIndex] = value;
             }
         }
-        #endregion Operations
-
-
-
-        #region Data
 
         private RoutedEvent _routedEvent;
         private object _source;
@@ -384,8 +370,6 @@ namespace Alternet.UI
         private const int HandledIndex                          = 1;
         private const int UserInitiatedIndex                    = 2;
         private const int InvokingHandlerIndex                  = 4;
-
-        #endregion Data
     }
 
     /// <summary>
