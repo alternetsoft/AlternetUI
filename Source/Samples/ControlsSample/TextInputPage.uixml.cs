@@ -101,7 +101,7 @@ namespace ControlsSample
             // ==== multiLineTextBox
 
             multiLineTextBox.AutoUrl = true;
-            multiLineTextBox.Parent = multilineParent;
+            multilineParent.Children.Prepend(multiLineTextBox);
             multiLineTextBox.Text = LoremIpsum;
             multiLineTextBox.TextUrl += MultiLineTextBox_TextUrl;
             multiLineTextBox.CurrentPositionChanged += TextBox_CurrentPositionChanged;
