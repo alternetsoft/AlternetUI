@@ -9,6 +9,11 @@ namespace Alternet.UI
 {
     public class TextBoxAndLabel : ControlAndLabel
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TextBoxAndLabel"/> class.
+        /// </summary>
+        /// <param name="title">Label text.</param>
+        /// <param name="text">Default value of the <see cref="Text"/> property.</param>
         public TextBoxAndLabel(string title, string? text = default)
             : this()
         {
@@ -18,6 +23,9 @@ namespace Alternet.UI
             Init();
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TextBoxAndLabel"/> class.
+        /// </summary>
         public TextBoxAndLabel()
             : base()
         {

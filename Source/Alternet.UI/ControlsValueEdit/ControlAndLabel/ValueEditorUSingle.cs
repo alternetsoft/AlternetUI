@@ -8,16 +8,25 @@ namespace Alternet.UI
 {
     public class ValueEditorUSingle : ValueEditorCustom
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ValueEditorUSingle"/> class.
+        /// </summary>
+        /// <param name="title">Label text.</param>
+        /// <param name="text">Default value of the Text property.</param>
         public ValueEditorUSingle(string title, string? text = default)
                     : base(title, text)
         {
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ValueEditorUSingle"/> class.
+        /// </summary>
         public ValueEditorUSingle()
             : base()
         {
         }
 
+        /// <inheritdoc/>
         protected override void Init()
         {
             base.Init();

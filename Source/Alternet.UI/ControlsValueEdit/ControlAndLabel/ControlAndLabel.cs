@@ -26,6 +26,9 @@ namespace Alternet.UI
         };
         private readonly Control mainControl;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ControlAndLabel"/> class.
+        /// </summary>
         public ControlAndLabel()
             : base()
         {
