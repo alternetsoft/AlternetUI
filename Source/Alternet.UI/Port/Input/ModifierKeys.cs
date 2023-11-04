@@ -62,5 +62,10 @@ namespace Alternet.UI
         /// Both Control and Alt modifiers are pressed.
         /// </summary>
         ControlAlt = Control | Alt,
+
+        /// <summary>
+        /// Both Alt and Shift modifiers are pressed.
+        /// </summary>
+        AltShift = Alt | Shift,
     }
 }
