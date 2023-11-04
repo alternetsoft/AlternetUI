@@ -6,22 +6,21 @@ using System.Threading.Tasks;
 
 namespace Alternet.UI
 {
-    public class ValueEditorUInt64 : TextBoxAndLabel
+    public class ValueEditorUInt64 : ValueEditorCustom
     {
         public ValueEditorUInt64(string title, string? text = default)
-            : base(title, text)
+                    : base(title, text)
         {
-            Init();
         }
 
         public ValueEditorUInt64()
             : base()
         {
-            Init();
         }
 
-        private void Init()
+        protected override void Init()
         {
+            base.Init();
             TextBox.UseValidator<ulong>();
             TextBox.SetErrorText(ValueValidatorKnownError.UnsignedNumberIsExpected);
         }

@@ -7,22 +7,21 @@ using System.Threading.Tasks;
 
 namespace Alternet.UI
 {
-    public class HexEditorUInt32 : TextBoxAndLabel
+    public class HexEditorUInt32 : ValueEditorCustom
     {
         public HexEditorUInt32(string title, string? text = default)
-            : base(title, text)
+                    : base(title, text)
         {
-            Init();
         }
 
         public HexEditorUInt32()
             : base()
         {
-            Init();
         }
 
-        private void Init()
+        protected override void Init()
         {
+            base.Init();
             TextBox.NumberStyles = NumberStyles.HexNumber;
             TextBox.Validator = TextBox.CreateValidator(ValueValidatorKind.UnsignedHex);
             TextBox.DataType = typeof(uint);

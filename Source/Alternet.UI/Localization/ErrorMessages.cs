@@ -86,5 +86,11 @@ namespace Alternet.UI.Localization
 
         /// <see cref="CurrentApplicationIsNotSet"/>
         public string ValidationMaximumValue { get; set; } = "Maximum value is {0}.";
+
+        /// <see cref="CurrentApplicationIsNotSet"/>
+        public string ValidationValueIsRequired { get; set; } = "Value is required.";
+
+        /// <see cref="CurrentApplicationIsNotSet"/>
+        public string ValidationEMailIsExpected { get; set; } = "E-mail is expected.";
     }
 }

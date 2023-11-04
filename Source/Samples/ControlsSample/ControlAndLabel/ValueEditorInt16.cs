@@ -6,22 +6,21 @@ using System.Threading.Tasks;
 
 namespace Alternet.UI
 {
-    public class ValueEditorInt16 : TextBoxAndLabel
+    public class ValueEditorInt16 : ValueEditorCustom
     {
         public ValueEditorInt16(string title, string? text = default)
-            : base(title, text)
+                    : base(title, text)
         {
-            Init();
         }
 
         public ValueEditorInt16()
             : base()
         {
-            Init();
         }
 
-        private void Init()
+        protected override void Init()
         {
+            base.Init();
             TextBox.UseValidator<short>();
             TextBox.SetErrorText(ValueValidatorKnownError.NumberIsExpected);
         }

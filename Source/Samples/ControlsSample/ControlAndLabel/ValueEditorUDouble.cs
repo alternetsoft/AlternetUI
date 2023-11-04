@@ -6,22 +6,21 @@ using System.Threading.Tasks;
 
 namespace Alternet.UI
 {
-    public class ValueEditorUDouble : TextBoxAndLabel
+    public class ValueEditorUDouble : ValueEditorCustom
     {
         public ValueEditorUDouble(string title, string? text = default)
-            : base(title, text)
+                    : base(title, text)
         {
-            Init();
         }
 
         public ValueEditorUDouble()
             : base()
         {
-            Init();
         }
 
-        private void Init()
+        protected override void Init()
         {
+            base.Init();
             TextBox.MinValue = 0d;
             TextBox.UseValidator<double>();
             TextBox.SetErrorText(ValueValidatorKnownError.UnsignedFloatIsExpected);

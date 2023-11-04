@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace Alternet.UI
 {
-    public class ValueEditorSingle : ValueEditorCustom
+    public class ValueEditorCustom : TextBoxAndLabel
     {
-        public ValueEditorSingle(string title, string? text = default)
+        public ValueEditorCustom(string title, string? text = default)
                     : base(title, text)
         {
         }
 
-        public ValueEditorSingle()
+        public ValueEditorCustom()
             : base()
         {
         }
@@ -21,8 +21,7 @@ namespace Alternet.UI
         protected override void Init()
         {
             base.Init();
-            TextBox.UseValidator<float>();
-            TextBox.SetErrorText(ValueValidatorKnownError.FloatIsExpected);
+            TextBox.Options |= TextBoxOptions.DefaultValidation;
         }
     }
 }

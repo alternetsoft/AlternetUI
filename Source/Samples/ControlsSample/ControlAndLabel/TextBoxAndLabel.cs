@@ -15,19 +15,46 @@ namespace Alternet.UI
             Title = title;
             if (text is not null)
                 TextBox.Text = text;
+            Init();
         }
 
         public TextBoxAndLabel()
             : base()
         {
-            MainControl.ValidatorReporter = ErrorPicture;
+            Init();
         }
+
+        public event EventHandler? TextChanged;
 
         public new TextBox MainControl => (TextBox)base.MainControl;
 
         public TextBox TextBox => (TextBox)base.MainControl;
 
+        public string Text
+        {
+            get
+            {
+                return TextBox.Text;
+            }
+
+            set
+            {
+                TextBox.Text = value;
+            }
+        }
+
         /// <inheritdoc/>
         protected override Control CreateControl() => new TextBox();
+
+        protected virtual void Init()
+        {
+            MainControl.ValidatorReporter = ErrorPicture;
+            MainControl.TextChanged += MainControl_TextChanged;
+        }
+
+        protected virtual void MainControl_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TextChanged?.Invoke(this, e);
+        }
     }
 }

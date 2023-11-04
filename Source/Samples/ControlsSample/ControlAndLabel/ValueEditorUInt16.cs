@@ -9,19 +9,18 @@ namespace Alternet.UI
     public class ValueEditorUInt16 : TextBoxAndLabel
     {
         public ValueEditorUInt16(string title, string? text = default)
-            : base(title, text)
+                   : base(title, text)
         {
-            Init();
         }
 
         public ValueEditorUInt16()
             : base()
         {
-            Init();
         }
 
-        private void Init()
+        protected override void Init()
         {
+            base.Init();
             TextBox.UseValidator<ushort>();
             TextBox.SetErrorText(ValueValidatorKnownError.UnsignedNumberIsExpected);
         }

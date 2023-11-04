@@ -11,7 +11,7 @@
 
       <HorizontalStackPanel HorizontalAlignment="Stretch">
         <TextBox Margin="5" Name="textBox" SuggestedWidth="350"/>
-        <PictureBox Name="textImage" Margin="0,5,5,5"/>
+        <PictureBox Name="textImage"/>
       </HorizontalStackPanel>
 
       <HorizontalStackPanel Margin="5" HorizontalAlignment="Left">
@@ -21,23 +21,12 @@
 
       <HorizontalStackPanel>
         <!-- ========================= -->
-        <VerticalStackPanel Margin="5" HorizontalAlignment="Left">
+        <VerticalStackPanel Margin="5" HorizontalAlignment="Left" Name="textBoxOptionsPanel">
           <HorizontalStackPanel>
             <Label Text="Text Align" Margin="0,0,5,5" VerticalAlignment="Center" Name="textAlignLabel"/>
             <ComboBox Name="textAlignComboBox" Margin="0,0,0,5" VerticalAlignment="Center"/>
           </HorizontalStackPanel>
 
-          <HorizontalStackPanel>
-            <Label Text="Min Length" Margin="0,0,5,5" VerticalAlignment="Center" Name="minLengthLabel"/>
-            <TextBox Name="minLengthBox" Margin="0,0,0,5" VerticalAlignment="Center"
-                     Enabled="true" Text="0"/>
-          </HorizontalStackPanel>
-
-          <HorizontalStackPanel>
-            <Label Text="Max Length" Margin="0,0,5,5" VerticalAlignment="Center" Name="maxLengthLabel"/>
-            <TextBox Name="maxLengthBox" Margin="0,0,0,5" VerticalAlignment="Center"
-                     Enabled="true" Text="0"/>
-          </HorizontalStackPanel>
         </VerticalStackPanel>
         <!-- ========================= -->
         <VerticalStackPanel Margin="5" HorizontalAlignment="Left">
@@ -76,10 +65,6 @@
 
         <VerticalStackPanel  Margin="0,5,0,5" >
           <CheckBox Text="Bell On Error" Name="bellOnErrorCheckBox"/>
-          <Button Text="[3] = Double.Max" Name="setDoubleMaxButton" Visible="false"/>
-          <Button Text="[3] = Double.Min" Name="setDoubleMinButton" Visible="false"/>
-          <Button Text="[3] = Error Max" Name="setDoubleMaxPPButton" Visible="false"/>
-          <Button Text="[3] = Error Min" Name="setDoubleMinMMButton" Visible="false"/>
         </VerticalStackPanel>
 
       </VerticalStackPanel>

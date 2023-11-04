@@ -21,8 +21,8 @@ namespace ControlsSample
         private readonly RichTextBox richEdit = new()
         {
             Name = "richEdit",
-            SuggestedSize = new Size(350, 250),
-            Margin = new Thickness(0, 0, 0, 5),
+            SuggestedSize = new(350, 250),
+            Margin = new(0, 0, 0, 5),
         };
         private readonly ValueEditorInt16 shortEdit = new("Int16");
         private readonly ValueEditorByte byteEdit = new("Byte");
@@ -30,18 +30,35 @@ namespace ControlsSample
         private readonly ValueEditorUDouble udoubleEdit = new("UDouble");
         private readonly HexEditorUInt32 uint32HexEdit = new("UInt32 Hex");
 
+        private readonly ValueEditorUInt32 minLengthEdit = new("Min Length")
+        {
+            Margin = new(0, 0, 0, 5),
+            Text = "0",
+        };
+        private readonly ValueEditorUInt32 maxLengthEdit = new("Max Length")
+        {
+            Margin = new(0, 0, 0, 5),
+            Text = "0",
+        };
+
         private IPageSite? site;
 
         public TextInputPage()
         {
             InitializeComponent();
 
+            void BindTextChanged(ValueEditorCustom control)
+            {
+                control.TextChanged += ReportValueChanged;
+            }
+
             ControlSet.New(
                 shortEdit,
                 byteEdit,
                 doubleEdit,
                 udoubleEdit,
-                uint32HexEdit).Margin(0,5,5,5).Parent(numbersPanel).InnerSuggestedWidth(200);
+                uint32HexEdit).Margin(0,5,5,5).Parent(numbersPanel).InnerSuggestedWidth(200)
+                .Action<ValueEditorCustom>(BindTextChanged);
 
             panelHeader.Add("TextBox", tab1);
             panelHeader.Add("Memo", tab2);
@@ -57,6 +74,9 @@ namespace ControlsSample
             textBox.ValidatorReporter = textImage;
             textBox.TextMaxLength += TextBox_TextMaxLength;
             textBox.CurrentPositionChanged += TextBox_CurrentPositionChanged;
+            textBox.Options |= TextBoxOptions.DefaultValidation;
+            textBox.TextChanged += ReportValueChanged;
+            TextBox.InitErrorPicture(textImage);
 
             // ==== multiLineTextBox
 
@@ -65,20 +85,6 @@ namespace ControlsSample
             multiLineTextBox.CurrentPositionChanged += TextBox_CurrentPositionChanged;
 
             // ==== Other initializations
-
-            void BindTextChanged(TextBox control)
-            {
-                control.TextChanged += ReportValueChanged;
-                control.TextChanged += ValidateFormat;
-            }
-
-            ControlSet.New(
-                uint32HexEdit.TextBox,
-                doubleEdit.TextBox,
-                udoubleEdit.TextBox,
-                byteEdit.TextBox,
-                shortEdit.TextBox,
-                textBox).Action<TextBox>(BindTextChanged);          
 
             wordWrapComboBox.BindEnumProp(multiLineTextBox, nameof(TextBox.TextWrap));
             textAlignComboBox.BindEnumProp(textBox, nameof(TextBox.TextAlign));
@@ -100,25 +106,21 @@ namespace ControlsSample
                 uint32HexEdit.Label)
                 .SuggestedWidthToMax();
 
-            ControlSet.New(textAlignLabel, minLengthLabel, maxLengthLabel).SuggestedWidthToMax();
+            ControlSet.New(textAlignLabel, minLengthEdit.Label, maxLengthEdit.Label).SuggestedWidthToMax();
+            ControlSet.New(textAlignComboBox, minLengthEdit.TextBox, maxLengthEdit.TextBox).SuggestedWidthToMax();
 
-            ControlSet.New(textAlignComboBox, minLengthBox, maxLengthBox).SuggestedWidthToMax();
-
-            // !!! 
-            minLengthBox.DataType = typeof(int);
-            minLengthBox.Validator = TextBox.CreateValidator(ValueValidatorKind.UnsignedInt);
-            minLengthBox.TextChanged += MinLengthBox_TextChanged;
-
-            maxLengthBox.DataType = typeof(int);
-            maxLengthBox.Validator = TextBox.CreateValidator(ValueValidatorKind.UnsignedInt);
-            maxLengthBox.TextChanged += MaxLengthBox_TextChanged;
 
             Application.Current.Idle += Application_Idle;
 
-            setDoubleMaxButton.Click += SetDoubleMaxButton_Click;
-            setDoubleMinButton.Click += SetDoubleMinButton_Click;
-            setDoubleMaxPPButton.Click += SetDoubleMaxPPButton_Click;
-            setDoubleMinMMButton.Click += SetDoubleMinMMButton_Click;
+            // ==== Min and Max length editors
+
+            minLengthEdit.TextBox.TextChanged += MinLengthBox_TextChanged;
+            minLengthEdit.TextBox.AllowEmptyText = false;
+            minLengthEdit.Parent = textBoxOptionsPanel;
+
+            maxLengthEdit.TextBox.TextChanged += MaxLengthBox_TextChanged;
+            maxLengthEdit.TextBox.AllowEmptyText = false;
+            maxLengthEdit.Parent = textBoxOptionsPanel;
 
             // ==== richEdit
 
@@ -226,24 +228,16 @@ namespace ControlsSample
 
         private void MaxLengthBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            // Improve TextBox binding to use DataType
-
-            var value = maxLengthBox.TextAsNumber;
-            if (value is null)
-                textBox.MaxLength = 0;
-            else
-                textBox.MaxLength = (int)value;
-            ValidateFormat(textBox);
+            var value = maxLengthEdit.TextBox.TextAsNumberOrDefault<uint>(0);
+            textBox.MaxLength = (int)value;
+            textBox.RunDefaultValidation();
         }
 
         private void MinLengthBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            var value = minLengthBox.TextAsNumber;
-            if (value is null)
-                textBox.MinLength = 0;
-            else
-                textBox.MinLength = (int)value;
-            ValidateFormat(textBox);
+            var value = minLengthEdit.TextBox.TextAsNumberOrDefault<uint>(0);
+            textBox.MinLength = (int)value;
+            textBox.RunDefaultValidation();
         }
 
         private void Control_GotFocus(object sender, RoutedEventArgs e)
@@ -268,30 +262,13 @@ namespace ControlsSample
             }
         }
 
-        private void ValidateFormat(object? sender, TextChangedEventArgs e)
+        private void ReportValueChanged(object? sender, EventArgs e)
         {
-            if (sender is not TextBox editor)
+            var textBox = (sender as ValueEditorCustom)?.TextBox;
+            if (textBox is null)
+                textBox = sender as TextBox;
+            if (textBox is null)
                 return;
-            ValidateFormat(editor);
-        }
-
-        private void ValidateFormat(TextBox editor)
-        {
-            if (editor.ReportErrorEmptyText())
-                return;
-
-            if (editor.ReportErrorBadNumber())
-                return;
-
-            if (editor.ReportErrorMinMaxLength())
-                return;
-            
-            editor.ReportValidatorError(false);
-        }
-
-        private void ReportValueChanged(object? sender, TextChangedEventArgs e)
-        {
-            var textBox = (sender as TextBox)!;
             var name = (sender as Control)?.Name;
             var value = textBox.Text;
             string prefix;
@@ -303,13 +280,9 @@ namespace ControlsSample
             var asNumber = textBox.TextAsNumber;
 
             if (asNumber is not null)
-            {
-                asNumber += $"| {asNumber.GetType().Name}";
-            }
-            else
-                asNumber = "null";
+                asNumber = $" => {asNumber} | {asNumber.GetType().Name}";
 
-            site?.LogEventSmart($"{prefix}{value} => {asNumber}", prefix);
+            site?.LogEventSmart($"{prefix}{value}{asNumber}", prefix);
         }
 
         private void AddLetterAButton_Click(object? sender, EventArgs e)

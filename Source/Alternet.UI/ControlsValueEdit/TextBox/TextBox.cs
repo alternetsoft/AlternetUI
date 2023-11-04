@@ -545,6 +545,9 @@ namespace Alternet.UI
         {
             get
             {
+                if (string.IsNullOrWhiteSpace(Text))
+                    return this.EmptyTextValue;
+
                 var typeCode = GetDataTypeCode();
                 if (!AssemblyUtils.IsTypeCodeNumber(typeCode))
                     return SmartTextAsNumber();
@@ -985,6 +988,26 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Initializes <see cref="PictureBox"/> with error image and other options.
+        /// </summary>
+        /// <param name="picture"></param>
+        public static void InitErrorPicture(PictureBox picture)
+        {
+            picture.Image = KnownSvgImages.GetWarningImage();
+            picture.VerticalAlignment = VerticalAlignment.Center;
+            picture.ImageVisible = false;
+            picture.ImageStretch = false;
+            picture.TabStop = false;
+
+            picture.MouseLeftButtonUp += Picture_MouseLeftButtonUp;
+
+            void Picture_MouseLeftButtonUp(object? sender, MouseButtonEventArgs e)
+            {
+                e.Handled = true;
+            }
+        }
+
+        /// <summary>
         /// Creates <see cref="IValueValidatorText"/> instance for the specified type.
         /// </summary>
         /// <param name="type">Type.</param>
@@ -1019,6 +1042,19 @@ namespace Alternet.UI
             var typeCode = GetDataTypeCode();
             var result = MathUtils.Min(AssemblyUtils.GetMaxValue(typeCode), MaxValue);
             return result;
+        }
+
+        /// <summary>
+        /// Returns <see cref="TextAsNumber"/> or <paramref name="defValue"/> if it is <c>null</c>.
+        /// </summary>
+        /// <typeparam name="T">Type of the result.</typeparam>
+        /// <param name="defValue">Default value.</param>
+        public T TextAsNumberOrDefault<T>(T defValue)
+        {
+            var result = TextAsNumber;
+            if (result is null)
+                return defValue;
+            return (T)result;
         }
 
         /// <summary>
@@ -1261,6 +1297,24 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Runs default validation of the <see cref="Text"/> property.
+        /// </summary>
+        /// Validation errors are reported using <see cref="ReportValidatorError"/>.
+        public virtual void RunDefaultValidation()
+        {
+            if (ReportErrorEmptyText())
+                return;
+
+            if (ReportErrorBadNumber())
+                return;
+
+            if (ReportErrorMinMaxLength())
+                return;
+
+            ReportValidatorError(false);
+        }
+
+        /// <summary>
         /// Gets known error text.
         /// </summary>
         /// <param name="kind">Error kind.</param>
@@ -1304,6 +1358,10 @@ namespace Alternet.UI
                         ErrorMessages.Default.ValidationMinMaxLength,
                         MinLength,
                         MaxLength);
+                case ValueValidatorKnownError.ValueIsRequired:
+                    return ErrorMessages.Default.ValidationValueIsRequired;
+                case ValueValidatorKnownError.EMailIsExpected:
+                    return ErrorMessages.Default.ValidationEMailIsExpected;
                 default:
                     var defaultResult = ValidatorErrorText ?? DefaultValidatorErrorText;
                     return defaultResult ?? ErrorMessages.Default.ValidationInvalidFormat;
@@ -1979,7 +2037,7 @@ namespace Alternet.UI
 
         /// <summary>
         /// Raises the <see cref="TextChanged"/> event and calls
-        /// <see cref="OnTextChanged(EventArgs)"/>.
+        /// <see cref="OnTextChanged"/>.
         /// </summary>
         /// <param name="e">An <see cref="EventArgs"/> that contains the
         /// event data.</param>
@@ -2231,8 +2289,11 @@ namespace Alternet.UI
         protected virtual void OnTextChanged(TextChangedEventArgs e)
         {
             RaiseEvent(e);
+            if (Options.HasFlag(TextBoxOptions.DefaultValidation))
+                RunDefaultValidation();
         }
 
+        /*
         /// <summary>
         /// Called when the value of the <see cref="Text"/> property changes.
         /// </summary>
@@ -2240,7 +2301,7 @@ namespace Alternet.UI
         /// event data.</param>
         protected virtual void OnTextChanged(EventArgs e)
         {
-        }
+        }*/
 
         /// <inheritdoc/>
         protected override ControlHandler CreateHandler()

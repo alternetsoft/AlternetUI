@@ -24,8 +24,13 @@ namespace Alternet.UI
         SetNativeMaxLength = 1,
 
         /// <summary>
-        /// Adds integer min/max values to the error messages.
+        /// Adds integer min/max value range to the error messages.
         /// </summary>
         IntRangeInError = 2,
+
+        /// <summary>
+        /// Perform default value validation using <see cref="TextBox.RunDefaultValidation"/>.
+        /// </summary>
+        DefaultValidation = 4,
     }
 }

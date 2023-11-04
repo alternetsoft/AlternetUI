@@ -99,5 +99,21 @@ namespace Alternet.UI
         /// Use <see cref="ErrorMessages.ValidationMaximumValue"/> for the localization.
         /// </remarks>
         MaximumValue,
+
+        /// <summary>
+        /// Error: "Value is required.".
+        /// </summary>
+        /// <remarks>
+        /// Use <see cref="ErrorMessages.ValidationValueIsRequired"/> for the localization.
+        /// </remarks>
+        ValueIsRequired,
+
+        /// <summary>
+        /// Error: "E-mail is expected.".
+        /// </summary>
+        /// <remarks>
+        /// Use <see cref="ErrorMessages.ValidationEMailIsExpected"/> for the localization.
+        /// </remarks>
+        EMailIsExpected,
     }
 }

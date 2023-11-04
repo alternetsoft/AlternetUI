@@ -23,12 +23,7 @@ namespace Alternet.UI
         private readonly PictureBox errorPicture = new()
         {
             Margin = new Thickness(5, 0, 0, 0),
-            VerticalAlignment = VerticalAlignment.Center,
-            ImageVisible = false,
-            ImageStretch = false,
-            TabStop = false,
         };
-
         private readonly Control mainControl;
 
         public ControlAndLabel()
@@ -39,7 +34,7 @@ namespace Alternet.UI
             mainControl = CreateControl();
             mainControl.VerticalAlignment = VerticalAlignment.Center;
             mainControl.Parent = this;
-            errorPicture.Image = KnownSvgImages.GetWarningImage(); 
+            TextBox.InitErrorPicture(errorPicture);
             errorPicture.Parent = this;
         }
 
