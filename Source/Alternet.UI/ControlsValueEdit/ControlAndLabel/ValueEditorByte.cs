@@ -15,10 +15,12 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref="ValueEditorByte"/> class.
         /// </summary>
         /// <param name="title">Label text.</param>
-        /// <param name="text">Default value of the Text property.</param>
-        public ValueEditorByte(string title, string? text = default)
-                    : base(title, text)
+        /// <param name="value">Default value.</param>
+        public ValueEditorByte(string title, byte? value = default)
+                    : base(title)
         {
+            if (value is not null)
+                TextBox.SetTextAsByte(value.Value);
         }
 
         /// <summary>

@@ -44,9 +44,7 @@
     <!-- ========================= -->
 
     <HorizontalStackPanel Name="tab2" Visible="false">
-      <VerticalStackPanel>
-        <TextBox Name="multiLineTextBox" Multiline="true" SuggestedWidth="350" SuggestedHeight="130"
-                 Margin="5"/>
+      <VerticalStackPanel Name="multilineParent">
         <Label Text="Word Wrap:" Margin="5,0,0,0"/>
         <ComboBox Name="wordWrapComboBox" Margin="5"/>
       </VerticalStackPanel>

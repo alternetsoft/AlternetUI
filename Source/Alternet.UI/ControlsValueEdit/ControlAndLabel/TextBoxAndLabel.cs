@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace Alternet.UI
 {
+    /// <summary>
+    /// Implements <see cref="TextBox"/> with attached <see cref="Label"/>.
+    /// </summary>
     public class TextBoxAndLabel : ControlAndLabel
     {
         /// <summary>
@@ -32,6 +35,9 @@ namespace Alternet.UI
             Init();
         }
 
+        /// <summary>
+        /// Occurs when the value of the <see cref="Text"/> property changes.
+        /// </summary>
         public event EventHandler? TextChanged;
 
         /// <summary>

@@ -15,7 +15,10 @@ namespace ControlsSample
         private const string MinValueTextDouble = "-1.7976931348623157E+308";
         private const string MaxValueTextDouble = "1.7976931348623157E+308";
         private const string LoremIpsum =
-            "Lorem ipsum dolor sit amet,\nconsectetur adipiscing elit. Suspendisse tincidunt orci vitae arcu congue commodo. Proin fermentum rhoncus dictum.";
+            "Lorem ipsum dolor sit amet,\nconsectetur adipiscing elit. "+
+            "Suspendisse tincidunt orci vitae arcu congue commodo. "+
+            "Proin fermentum rhoncus dictum.\n\n"+
+            "Sample url: https://www.alternet-ui.com/\n";
 
         private readonly CardPanelHeader panelHeader = new();
         private readonly RichTextBox richEdit = new()
@@ -24,11 +27,11 @@ namespace ControlsSample
             SuggestedSize = new(350, 250),
             Margin = new(0, 0, 0, 5),
         };
-        private readonly ValueEditorInt16 shortEdit = new("Int16");
-        private readonly ValueEditorByte byteEdit = new("Byte");
-        private readonly ValueEditorDouble doubleEdit = new("Double");
-        private readonly ValueEditorUDouble udoubleEdit = new("UDouble");
-        private readonly HexEditorUInt32 uint32HexEdit = new("UInt32 Hex");
+        private readonly ValueEditorInt16 shortEdit = new("Int16", -25);
+        private readonly ValueEditorByte byteEdit = new("Byte", 230);
+        private readonly ValueEditorDouble doubleEdit = new("Double", -15.3);
+        private readonly ValueEditorUDouble udoubleEdit = new("UDouble", 1002);
+        private readonly HexEditorUInt32 uint32HexEdit = new("UInt32 Hex", 0x25E6);
 
         private readonly ValueEditorUInt32 minLengthEdit = new("Min Length")
         {
@@ -45,6 +48,13 @@ namespace ControlsSample
             Margin = new(0, 0, 0, 5),
             InnerSuggestedWidth = 200,
         };
+
+        private readonly MultilineTextBox multiLineTextBox = new()
+        {
+            SuggestedWidth = 350,
+            SuggestedHeight = 130,
+            Margin = 5,
+        };         
 
         private IPageSite? site;
 
@@ -90,6 +100,8 @@ namespace ControlsSample
 
             // ==== multiLineTextBox
 
+            multiLineTextBox.AutoUrl = true;
+            multiLineTextBox.Parent = multilineParent;
             multiLineTextBox.Text = LoremIpsum;
             multiLineTextBox.TextUrl += MultiLineTextBox_TextUrl;
             multiLineTextBox.CurrentPositionChanged += TextBox_CurrentPositionChanged;
@@ -137,6 +149,7 @@ namespace ControlsSample
             richEdit.Parent = richEditParent;
             richEdit.CurrentPositionChanged += TextBox_CurrentPositionChanged;
             richEdit.KeyDown += RichEdit_KeyDown;
+            richEdit.TextUrl += MultiLineTextBox_TextUrl;
             InitRichEdit();
         }
 
@@ -270,8 +283,12 @@ namespace ControlsSample
 
         private void MultiLineTextBox_TextUrl(object? sender, EventArgs e)
         {
-            string? url = multiLineTextBox.DoCommand("GetReportedUrl")?.ToString();
+            if (sender is not TextBox textBox)
+                return;
+            string? url = textBox.DoCommand("GetReportedUrl")?.ToString();
             site?.LogEvent("TextBox: Url clicked =>" + url);
+            if(url is not null)
+                AppUtils.ShellExecute(url);
         }
 
         public IPageSite? Site
@@ -287,8 +304,7 @@ namespace ControlsSample
         private void ReportValueChanged(object? sender, EventArgs e)
         {
             var textBox = (sender as ValueEditorCustom)?.TextBox;
-            if (textBox is null)
-                textBox = sender as TextBox;
+            textBox ??= sender as TextBox;
             if (textBox is null)
                 return;
             var name = (sender as Control)?.Name;

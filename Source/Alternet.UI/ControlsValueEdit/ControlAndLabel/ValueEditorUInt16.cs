@@ -15,10 +15,12 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref="ValueEditorUInt16"/> class.
         /// </summary>
         /// <param name="title">Label text.</param>
-        /// <param name="text">Default value of the Text property.</param>
-        public ValueEditorUInt16(string title, string? text = default)
-                   : base(title, text)
+        /// <param name="value">Default value.</param>
+        public ValueEditorUInt16(string title, ushort? value = default)
+                   : base(title)
         {
+            if (value is not null)
+                TextBox.SetTextAsUInt16(value.Value);
         }
 
         /// <summary>

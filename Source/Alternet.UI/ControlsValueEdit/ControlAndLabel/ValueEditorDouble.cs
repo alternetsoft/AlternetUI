@@ -15,10 +15,12 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref="ValueEditorDouble"/> class.
         /// </summary>
         /// <param name="title">Label text.</param>
-        /// <param name="text">Default value of the Text property.</param>
-        public ValueEditorDouble(string title, string? text = default)
-                    : base(title, text)
+        /// <param name="value">Default value.</param>
+        public ValueEditorDouble(string title, double? value = default)
+                    : base(title)
         {
+            if (value is not null)
+                TextBox.SetTextAsDouble(value.Value);
         }
 
         /// <summary>

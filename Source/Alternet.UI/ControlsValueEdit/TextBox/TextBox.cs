@@ -1614,7 +1614,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc cref="SetTextAsObject"/>
-        public virtual void SetTextAsInt(int value)
+        public virtual void SetTextAsInt32(int value)
         {
             DataType ??= typeof(int);
             SetTextAsObject(value);

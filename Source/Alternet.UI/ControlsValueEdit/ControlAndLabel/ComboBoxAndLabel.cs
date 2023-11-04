@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace Alternet.UI
 {
+    /// <summary>
+    /// Implements <see cref="ComboBox"/> with attached <see cref="Label"/>.
+    /// </summary>
     public class ComboBoxAndLabel : ControlAndLabel
     {
         /// <inheritdoc/>

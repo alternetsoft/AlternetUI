@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Alternet.UI.Localization;
 
 namespace Alternet.UI
 {
@@ -15,10 +16,21 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref="ValueEditorUDouble"/> class.
         /// </summary>
         /// <param name="title">Label text.</param>
-        /// <param name="text">Default value of the Text property.</param>
-        public ValueEditorUDouble(string title, string? text = default)
-                    : base(title, text)
+        /// <param name="value">Default value.</param>
+        public ValueEditorUDouble(string title, double? value = default)
+                    : base(title)
         {
+            if (value is not null)
+            {
+                if (value.Value < 0)
+                {
+                    throw new ArgumentException(
+                        ErrorMessages.Default.ValidationUnsignedFloatIsExpected,
+                        nameof(value));
+                }
+
+                TextBox.SetTextAsDouble(value.Value);
+            }
         }
 
         /// <summary>
