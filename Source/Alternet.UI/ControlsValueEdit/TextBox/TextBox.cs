@@ -1001,7 +1001,7 @@ namespace Alternet.UI
 
             picture.MouseLeftButtonUp += Picture_MouseLeftButtonUp;
 
-            void Picture_MouseLeftButtonUp(object? sender, MouseButtonEventArgs e)
+            static void Picture_MouseLeftButtonUp(object? sender, MouseButtonEventArgs e)
             {
                 e.Handled = true;
             }
@@ -2247,21 +2247,23 @@ namespace Alternet.UI
         /// </remarks>
         public virtual void HandleRichEditKeys(KeyEventArgs e)
         {
-            if (KnownKeys.RichEditSelectAll.Run(e, SelectAll))
+            if (KnownKeys.RichEditKeys.SelectAll.Run(e, SelectAll))
                 return;
-            if (KnownKeys.RichEditToggleBold.Run(e, ToggleSelectionBold))
+            if (KnownKeys.RichEditKeys.ToggleBold.Run(e, ToggleSelectionBold))
                 return;
-            if (KnownKeys.RichEditToggleItalic.Run(e, ToggleSelectionItalic))
+            if (KnownKeys.RichEditKeys.ToggleItalic.Run(e, ToggleSelectionItalic))
                 return;
-            if (KnownKeys.RichEditToggleUnderline.Run(e, ToggleSelectionUnderline))
+            if (KnownKeys.RichEditKeys.ToggleUnderline.Run(e, ToggleSelectionUnderline))
                 return;
-            if (KnownKeys.RichEditLeftAlign.Run(e, SelectionAlignLeft))
+            if (KnownKeys.RichEditKeys.ToggleStrikethrough.Run(e, ToggleSelectionStrikethrough))
                 return;
-            if (KnownKeys.RichEditCenterAlign.Run(e, SelectionAlignCenter))
+            if (KnownKeys.RichEditKeys.LeftAlign.Run(e, SelectionAlignLeft))
                 return;
-            if (KnownKeys.RichEditRightAlign.Run(e, SelectionAlignRight))
+            if (KnownKeys.RichEditKeys.CenterAlign.Run(e, SelectionAlignCenter))
                 return;
-            if (KnownKeys.RichEditJustify.Run(e, SelectionJustify))
+            if (KnownKeys.RichEditKeys.RightAlign.Run(e, SelectionAlignRight))
+                return;
+            if (KnownKeys.RichEditKeys.Justify.Run(e, SelectionJustify))
                 return;
         }
 

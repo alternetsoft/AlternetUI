@@ -148,14 +148,33 @@ namespace ControlsSample
 
         private void RichEdit_KeyDown(object? sender, KeyEventArgs e)
         {
-            richEdit.HandleRichEditKeys(e);
-
             void Test()
             {
                 richEdit.SelectionSetColor(Color.White, Color.Red);
             }
 
+            void FontSizeDecrease()
+            {
+                Application.Log("FontSizeDec");
+            }
+
+            void FontSizeIncrease()
+            {
+                Application.Log("FontSizeInc");
+            }
+
+            void ClearTextFormatting()
+            {
+                Application.Log("ClearTextFormatting");
+            }
+
             if (KnownKeys.RunTest.Run(e, Test))
+                return;
+            if (KnownKeys.RichEditKeys.DecFontSize.Run(e, FontSizeDecrease))
+                return;
+            if (KnownKeys.RichEditKeys.IncFontSize.Run(e, FontSizeIncrease))
+                return;
+            if (KeyInfo.Run(KnownKeys.RichEditKeys.ClearTextFormatting, e, ClearTextFormatting))
                 return;
         }
 
