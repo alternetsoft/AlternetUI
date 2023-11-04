@@ -40,6 +40,11 @@ namespace ControlsSample
             Margin = new(0, 0, 0, 5),
             Text = "0",
         };
+        private readonly ValueEditorEMail emailEdit = new("E-mail")
+        {
+            Margin = new(0, 0, 0, 5),
+            InnerSuggestedWidth = 200,
+        };
 
         private IPageSite? site;
 
@@ -64,6 +69,7 @@ namespace ControlsSample
             panelHeader.Add("Memo", tab2);
             panelHeader.Add("RichEdit", tab3);
             panelHeader.Add("Numbers", tab4);
+            panelHeader.Add("Other", tab5);
             tabControl.Children.Prepend(panelHeader);
             panelHeader.SelectFirstTab();
 
@@ -77,6 +83,10 @@ namespace ControlsSample
             textBox.Options |= TextBoxOptions.DefaultValidation;
             textBox.TextChanged += ReportValueChanged;
             TextBox.InitErrorPicture(textImage);
+
+            // ==== Email editor
+
+            emailEdit.Parent = otherParent;
 
             // ==== multiLineTextBox
 

@@ -1196,7 +1196,9 @@ namespace Alternet.UI
             if (string.IsNullOrEmpty(Text))
             {
                 if (AllowEmptyText)
+                {
                     return false;
+                }
                 else
                 {
                     ReportValidatorError(true);

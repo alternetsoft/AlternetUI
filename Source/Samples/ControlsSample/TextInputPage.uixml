@@ -59,6 +59,8 @@
       </VerticalStackPanel>
     </HorizontalStackPanel>
 
+    <!-- ========================= -->
+
     <HorizontalStackPanel Name="tab4" Visible="false">
       <VerticalStackPanel  Margin="5" Name="numbersPanel">
         <Label Text="Try to enter invalid numbers" Margin="0,0,0,5"/>
@@ -69,6 +71,15 @@
 
       </VerticalStackPanel>
     </HorizontalStackPanel>
+    
+    <!-- ========================= -->
+
+    <HorizontalStackPanel Name="tab5" Visible="false">
+      <VerticalStackPanel  Margin="5" Name="otherParent">
+      </VerticalStackPanel>
+    </HorizontalStackPanel>
+
+    <!-- ========================= -->
 
   </VerticalStackPanel>
 </Control>
