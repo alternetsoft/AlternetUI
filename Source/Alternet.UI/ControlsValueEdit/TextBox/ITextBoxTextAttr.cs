@@ -18,6 +18,16 @@ namespace Alternet.UI
         public FontStyle GetFontStyle();
 
         /// <summary>
+        /// Gets <see cref="FontInfo"/> of the text.
+        /// </summary>
+        public FontInfo GetFontInfo();
+
+        /// <summary>
+        /// Sets <see cref="FontInfo"/> of the text.
+        /// </summary>
+        public void SetFontInfo(FontInfo value);
+
+        /// <summary>
         /// Sets <see cref="FontStyle"/> of the text.
         /// </summary>
         void SetFontStyle(FontStyle fontStyle);
@@ -39,6 +49,12 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="pointSize">New font size in points.</param>
         void SetFontPointSize(int pointSize);
+
+        /// <summary>
+        /// Sets font size in points.
+        /// </summary>
+        /// <param name="pointSize">New font size in points.</param>
+        void SetFontPointSize(double pointSize);
 
         /// <summary>
         /// Sets name of the font.

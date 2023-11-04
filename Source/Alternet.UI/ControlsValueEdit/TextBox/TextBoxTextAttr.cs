@@ -28,6 +28,21 @@ namespace Alternet.UI
 
         public IntPtr Handle => handle;
 
+        public FontInfo GetFontInfo()
+        {
+            var fontStyle = GetFontStyle();
+            var size = GetFontSize();
+            var name = GetFontFaceName();
+            return new(name, size, fontStyle);
+        }
+
+        public void SetFontInfo(FontInfo value)
+        {
+            SetFontStyle(value.Style);
+            SetFontFaceName(value.Name);
+            SetFontPointSize(value.SizeInPoints);
+    }
+
         public void SetTextColor(Color colText)
         {
             Native.TextBoxTextAttr.SetTextColor(handle, colText);
@@ -85,6 +100,11 @@ namespace Alternet.UI
                 return;
 
             Native.TextBoxTextAttr.Copy(handle, s.Handle);
+        }
+
+        public void SetFontPointSize(double pointSize)
+        {
+            SetFontPointSize((int)pointSize);
         }
 
         public void SetFontPointSize(int pointSize)

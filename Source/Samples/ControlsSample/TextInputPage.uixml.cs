@@ -153,20 +153,12 @@ namespace ControlsSample
             InitRichEdit();
         }
 
-        string GetFontStatus()
+        private string GetFontStatus()
         {
             var position = richEdit.GetInsertionPoint();
             var fs = richEdit.GetStyle(position);
-            var style = fs.GetFontStyle();
-
-            var underlined = style.HasFlag(FontStyle.Underlined) ? "underlined" : string.Empty;
-            var strikeout = style.HasFlag(FontStyle.Strikethrough) ? "strikethrough" : string.Empty;
-            var italic = style.HasFlag(FontStyle.Italic) ? "italic" : string.Empty;
-            var bold = style.HasFlag(FontStyle.Bold) ? "bold" : string.Empty;
-
-            var result = $"{fs.GetFontFaceName()} {fs.GetFontSize()} {bold} {underlined} {strikeout} {italic}";
-
-            return result;
+            var fontInfo = fs.GetFontInfo();
+            return fontInfo.ToString();
         }
 
         private void RichEdit_KeyDown(object? sender, KeyEventArgs e)
