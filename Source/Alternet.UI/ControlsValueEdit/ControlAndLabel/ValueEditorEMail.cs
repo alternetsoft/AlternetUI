@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace Alternet.UI
 {
+    /// <summary>
+    /// Imlements e-mail editor with validation.
+    /// </summary>
     public class ValueEditorEMail : ValueEditorCustom
     {
         /// <summary>
@@ -31,12 +34,13 @@ namespace Alternet.UI
         {
             base.Init();
             TextBox.SetErrorText(ValueValidatorKnownError.EMailIsExpected);
-            TextBox.TextChanged += TextBox_TextChanged;
             TextBox.Options &= ~TextBoxOptions.DefaultValidation;
         }
 
-        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        /// <inheritdoc/>
+        protected override void MainControlTextChanged()
         {
+            base.MainControlTextChanged();
             if (TextBox.ReportErrorEmptyText())
                 return;
 

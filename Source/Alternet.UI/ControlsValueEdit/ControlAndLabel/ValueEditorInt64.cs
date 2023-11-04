@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace Alternet.UI
 {
+    /// <summary>
+    /// Imlements <see cref="long"/> editor with validation.
+    /// </summary>
     public class ValueEditorInt64 : ValueEditorCustom
     {
         /// <summary>

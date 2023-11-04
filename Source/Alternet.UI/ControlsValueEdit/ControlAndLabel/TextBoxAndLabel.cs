@@ -34,10 +34,19 @@ namespace Alternet.UI
 
         public event EventHandler? TextChanged;
 
+        /// <summary>
+        /// Gets main child control.
+        /// </summary>
         public new TextBox MainControl => (TextBox)base.MainControl;
 
+        /// <summary>
+        /// Gets main child control, same as <see cref="MainControl"/>.
+        /// </summary>
         public TextBox TextBox => (TextBox)base.MainControl;
 
+        /// <summary>
+        /// Gets or sets <see cref="TextBox.Text"/> property of the main child control.
+        /// </summary>
         public string Text
         {
             get
@@ -54,15 +63,31 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override Control CreateControl() => new TextBox();
 
+        /// <summary>
+        /// Initializes main child control.
+        /// </summary>
+        /// <remarks>
+        /// Override this method to do custom initialization. Do not call this method
+        /// directly, it is called automatically from constructor. When overriding you
+        /// must call base method before any other initializations.
+        /// </remarks>
         protected virtual void Init()
         {
             MainControl.ValidatorReporter = ErrorPicture;
             MainControl.TextChanged += MainControl_TextChanged;
         }
 
-        protected virtual void MainControl_TextChanged(object sender, TextChangedEventArgs e)
+        /// <summary>
+        /// Called when text is changed in the main child control.
+        /// </summary>
+        protected virtual void MainControlTextChanged()
         {
-            TextChanged?.Invoke(this, e);
+            TextChanged?.Invoke(this, EventArgs.Empty);
+        }
+
+        private void MainControl_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            MainControlTextChanged();
         }
     }
 }

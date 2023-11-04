@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Alternet.Drawing;
 
 namespace Alternet.UI
 {
@@ -24,6 +25,7 @@ namespace Alternet.UI
         {
             Margin = new Thickness(5, 0, 0, 0),
         };
+
         private readonly Control mainControl;
 
         /// <summary>
@@ -41,36 +43,83 @@ namespace Alternet.UI
             errorPicture.Parent = this;
         }
 
+        /// <summary>
+        /// Gets or sets <see cref="Control.SuggestedWidth"/> property of the main child control.
+        /// </summary>
         public double InnerSuggestedWidth
         {
             get => MainControl.SuggestedWidth;
             set => MainControl.SuggestedWidth = value;
         }
 
+        /// <summary>
+        /// Gets or sets <see cref="Control.SuggestedHeight"/> property of the main child control.
+        /// </summary>
+        public double InnerSuggestedHeight
+        {
+            get => MainControl.SuggestedHeight;
+            set => MainControl.SuggestedHeight = value;
+        }
+
+        /// <summary>
+        /// Gets or sets <see cref="Control.SuggestedSize"/> property of the main child control.
+        /// </summary>
+        public Size InnerSuggestedSize
+        {
+            get => MainControl.SuggestedSize;
+            set => MainControl.SuggestedSize = value;
+        }
+
+        /// <summary>
+        /// Gets attached <see cref="Label"/> control.
+        /// </summary>
         public Label Label => label;
 
+        /// <summary>
+        /// Gets or sets visibility of the attached <see cref="Label"/> control.
+        /// </summary>
         public bool LabelVisible
         {
             get => Label.Visible;
             set => Label.Visible = value;
         }
 
+        /// <summary>
+        /// Gets or sets visibility of the attached <see cref="PictureBox"/> control which
+        /// displays validation error information.
+        /// </summary>
         public bool ErrorPictureVisible
         {
             get => ErrorPicture.Visible;
             set => ErrorPicture.Visible = value;
         }
 
+        /// <summary>
+        /// Gets or sets text of the attached <see cref="Label"/> control.
+        /// </summary>
         public string Title
         {
             get => Label.Text;
             set => Label.Text = value;
         }
 
+        /// <summary>
+        /// Gets attached <see cref="PictureBox"/> control which
+        /// displays validation error information.
+        /// </summary>
         public PictureBox ErrorPicture => errorPicture;
 
+        /// <summary>
+        /// Gets main child control.
+        /// </summary>
         public Control MainControl => mainControl;
 
+        /// <summary>
+        /// Creates main child control.
+        /// </summary>
+        /// <remarks>
+        /// For example, main control for the <see cref="TextBoxAndLabel"/> is <see cref="TextBox"/>.
+        /// </remarks>
         protected abstract Control CreateControl();
     }
 }
