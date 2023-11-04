@@ -209,7 +209,7 @@ namespace Alternet.UI
             var nativeOwner = owner == null ?
                 null : ((NativeWindowHandler)owner.Handler).NativeControl;
 
-            string fontName = fontInfo.FontFamily.Name;
+            var fontName = fontInfo.Name;
             var style = (UI.Native.FontStyle)fontInfo.Style;
             var genericFamily = Font.ToNativeGenericFamily(
                 fontInfo.FontFamily.GenericFamily);
@@ -224,7 +224,7 @@ namespace Alternet.UI
 
             fontInfo.Style = (FontStyle)nativeDialog.ResultFontStyle;
             fontInfo.SizeInPoints = nativeDialog.ResultFontSizeInPoints;
-            fontInfo.FontFamily = new FontFamily(nativeDialog.ResultFontName);
+            fontInfo.Name = nativeDialog.ResultFontName;
 
             return result;
         }

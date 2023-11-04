@@ -61,12 +61,7 @@ namespace Alternet.Drawing
             double emSize,
             FontStyle style = FontStyle.Regular)
         {
-            if (emSize <= 0 || double.IsInfinity(emSize) || double.IsNaN(emSize))
-            {
-                throw new ArgumentException(
-                    ErrorMessages.Default.InvalidParameter,
-                    nameof(emSize));
-            }
+            CheckSize(emSize);
 
             NativeFont = new UI.Native.Font();
             NativeFont.Initialize(
@@ -206,7 +201,7 @@ namespace Alternet.Drawing
         /// Gets the font family name of this <see cref="Font"/>.
         /// </summary>
         /// <value>A string representation of the font family name
-        /// of this Font.</value>
+        /// of this <see cref="Font"/>.</value>
         public string Name
         {
             get
@@ -355,6 +350,16 @@ namespace Alternet.Drawing
             return value == null ?
                 UI.Native.GenericFontFamily.None :
                 (UI.Native.GenericFontFamily)value;
+        }
+
+        internal static void CheckSize(double emSize)
+        {
+            if (emSize <= 0 || double.IsInfinity(emSize) || double.IsNaN(emSize))
+            {
+                throw new ArgumentException(
+                    ErrorMessages.Default.InvalidParameter,
+                    nameof(emSize));
+            }
         }
 
         internal static Font CreateDefaultFont()
