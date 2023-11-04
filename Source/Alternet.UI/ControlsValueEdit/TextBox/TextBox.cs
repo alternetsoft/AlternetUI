@@ -1109,6 +1109,16 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Clears text formatting when <see cref="TextBox"/> is in rich edit mode.
+        /// </summary>
+        public void ClearTextFormatting()
+        {
+            var attr = CreateTextAttr();
+            attr.SetFlags(TextBoxTextAttrFlags.All);
+            SetSelectionStyle(attr);
+        }
+
+        /// <summary>
         /// Sets foreground and background colors of the selection.  If no text is selected,
         /// style of the insertion point is changed.
         /// </summary>
@@ -2247,23 +2257,25 @@ namespace Alternet.UI
         /// </remarks>
         public virtual void HandleRichEditKeys(KeyEventArgs e)
         {
-            if (KnownKeys.RichEditKeys.SelectAll.Run(e, SelectAll))
+            if (KeyInfo.Run(KnownKeys.RichEditKeys.SelectAll, e, SelectAll))
                 return;
-            if (KnownKeys.RichEditKeys.ToggleBold.Run(e, ToggleSelectionBold))
+            if (KeyInfo.Run(KnownKeys.RichEditKeys.ToggleBold, e, ToggleSelectionBold))
                 return;
-            if (KnownKeys.RichEditKeys.ToggleItalic.Run(e, ToggleSelectionItalic))
+            if (KeyInfo.Run(KnownKeys.RichEditKeys.ToggleItalic, e, ToggleSelectionItalic))
                 return;
-            if (KnownKeys.RichEditKeys.ToggleUnderline.Run(e, ToggleSelectionUnderline))
+            if (KeyInfo.Run(KnownKeys.RichEditKeys.ToggleUnderline, e, ToggleSelectionUnderline))
                 return;
-            if (KnownKeys.RichEditKeys.ToggleStrikethrough.Run(e, ToggleSelectionStrikethrough))
+            if (KeyInfo.Run(KnownKeys.RichEditKeys.ToggleStrikethrough, e, ToggleSelectionStrikethrough))
                 return;
-            if (KnownKeys.RichEditKeys.LeftAlign.Run(e, SelectionAlignLeft))
+            if (KeyInfo.Run(KnownKeys.RichEditKeys.LeftAlign, e, SelectionAlignLeft))
                 return;
-            if (KnownKeys.RichEditKeys.CenterAlign.Run(e, SelectionAlignCenter))
+            if (KeyInfo.Run(KnownKeys.RichEditKeys.CenterAlign, e, SelectionAlignCenter))
                 return;
-            if (KnownKeys.RichEditKeys.RightAlign.Run(e, SelectionAlignRight))
+            if (KeyInfo.Run(KnownKeys.RichEditKeys.RightAlign, e, SelectionAlignRight))
                 return;
-            if (KnownKeys.RichEditKeys.Justify.Run(e, SelectionJustify))
+            if (KeyInfo.Run(KnownKeys.RichEditKeys.Justify, e, SelectionJustify))
+                return;
+            if (KeyInfo.Run(KnownKeys.RichEditKeys.ClearTextFormatting, e, ClearTextFormatting))
                 return;
         }
 

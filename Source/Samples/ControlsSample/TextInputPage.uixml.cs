@@ -163,18 +163,11 @@ namespace ControlsSample
                 Application.Log("FontSizeInc");
             }
 
-            void ClearTextFormatting()
-            {
-                Application.Log("ClearTextFormatting");
-            }
-
             if (KnownKeys.RunTest.Run(e, Test))
                 return;
-            if (KnownKeys.RichEditKeys.DecFontSize.Run(e, FontSizeDecrease))
+            if (KeyInfo.Run(KnownKeys.RichEditKeys.DecFontSize, e, FontSizeDecrease))
                 return;
-            if (KnownKeys.RichEditKeys.IncFontSize.Run(e, FontSizeIncrease))
-                return;
-            if (KeyInfo.Run(KnownKeys.RichEditKeys.ClearTextFormatting, e, ClearTextFormatting))
+            if (KeyInfo.Run(KnownKeys.RichEditKeys.IncFontSize, e, FontSizeIncrease))
                 return;
         }
 
