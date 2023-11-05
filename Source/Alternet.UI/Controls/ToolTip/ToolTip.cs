@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 
 namespace Alternet.UI
 {
-
     /// <summary>
     /// This class holds information about a tooltip associated with a control.
     /// </summary>
@@ -41,43 +40,70 @@ namespace Alternet.UI
             }
         }
 
-        // Set the delay between subsequent tooltips to appear.
+        /// <summary>
+        /// Sets the delay between subsequent tooltips to appear.
+        /// </summary>
+        /// <param name="msecs">Delay in milliseconds.</param>
         public static void SetReshow(long msecs)
         {
             Native.WxOtherFactory.ToolTipSetReshow(msecs);
         }
 
-        // Enable or disable tooltips globally.
-        // May not be supported on all platforms (eg. wxCocoa).
+        /// <summary>
+        /// Enables or disables tooltips globally.
+        /// </summary>
+        /// <remarks>
+        /// May not be supported on all platforms (eg. wxCocoa).
+        /// </remarks>
+        /// <param name="flag">Enables or disables tooltips.</param>
         public static void SetEnabled(bool flag)
         {
             Native.WxOtherFactory.ToolTipEnable(flag);
         }
 
-        // Set the delay after which the tooltip disappears or how long a tooltip remains visible.
-        // May not be supported on all platforms (eg. wxCocoa, GTK).
+        /// <summary>
+        /// Sets the delay after which the tooltip disappears or how long a tooltip remains visible.
+        /// </summary>
+        /// <remarks>
+        /// May not be supported on all platforms (eg. wxCocoa, GTK).
+        /// </remarks>
+        /// <param name="msecs">Delay in milliseconds.</param>
         public static void SetAutoPop(long msecs)
         {
             Native.WxOtherFactory.ToolTipSetAutoPop(msecs);
         }
 
-        // Set the delay after which the tooltip appears.
-        // May not be supported on all platforms.
+        /// <summary>
+        /// Sets the delay after which the tooltip appears.
+        /// </summary>
+        /// <param name="msecs">Delay in milliseconds.</param>
+        /// <remarks>
+        /// May not be supported on all platforms.
+        /// </remarks>
         public static void SetDelay(long msecs)
         {
             Native.WxOtherFactory.ToolTipSetDelay(msecs);
         }
 
-        // Set tooltip maximal width in pixels. By default, tooltips are wrapped at a suitably
-        // chosen width. You can pass -1 as width to disable wrapping them completely,
-        // 0 to restore the default behaviour or an arbitrary positive value to wrap
-        // them at the given width. Notice that this function does not change the width of
-        // the tooltips created before calling it. Currently this function is wxMSW-only.
+        /// <summary>
+        /// Sets tooltip maximal width in pixels.
+        /// </summary>
+        /// <remarks>
+        /// By default, tooltips are wrapped at a suitably
+        /// chosen width. You can pass -1 as width to disable wrapping them completely,
+        /// 0 to restore the default behaviour or an arbitrary positive value to wrap
+        /// them at the given width. Notice that this function does not change the width of
+        /// the tooltips created before calling it. Currently this function is Windows-only.
+        /// </remarks>
+        /// <param name="width">ToolTip width in pixels.</param>
         public static void ToolTipSetMaxWidth(int width)
         {
             Native.WxOtherFactory.ToolTipSetMaxWidth(width);
         }
 
+        /// <summary>
+        /// Gets the control to which this tooltip is attached.
+        /// </summary>
         internal IntPtr GetWindow()
         {
             return Native.WxOtherFactory.ToolTipGetWindow(Handle);
