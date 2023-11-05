@@ -1,19 +1,25 @@
+- SPEED NativeObject.cs InstancesByNativePointers
+
+- SPEED TreView dictionary in NativeHandler
+
+- review all throwEx in C++
+
+- PropGridDemo:Color must have Empty item and set null if it is set in PropGrid
+Useful for BackgroundColor
+
+======================
 Top priority controls:
 
 - panelrichedit
 
-- animation (https://docs.wxwidgets.org/3.2/classwx_animation_ctrl.html)
-
-- Calendar (https://docs.wxwidgets.org/3.2/classwx_calendar_ctrl.html)
-
 - DataGrid
 
 - wxHtmlWindow https://docs.wxwidgets.org/3.2/classwx_html_window.html
-
 ======================
 
-- https://docs.wxwidgets.org/3.0/classwx_floating_point_validator.html
-Add code for this
+https://docs.wxwidgets.org/3.2/classwx_bitmap_combo_box.html
+
+https://docs.wxwidgets.org/3.2/classwx_v_list_box.html
 
 - drawline with pen with non 1 width is different under dif oses.
 
@@ -28,13 +34,6 @@ Add code for this
 - why window is always disposed after close
 and if not disposed app behaves incorrectly. (seen in list edit after it closed)
 
-- Validator check how works with editor (PropertyGrid in dialog)
-	Need property grid dialog (can use CollectionEditor)
-   	public static IValueValidatorText CreateValueValidatorNum(
-       ValueValidatorNumStyle numericType,
-       int valueBase = 10)
-    	ValueValidatorNumStyle       Signed, Unsigned, Float,
-
 - wxBitmapComboBox https://docs.wxwidgets.org/3.2/classwx_bitmap_combo_box.html
 - wxComboCtrl https://docs.wxwidgets.org/3.2/classwx_combo_ctrl.html
 - wxRearrangeList (in checkListBox) https://docs.wxwidgets.org/3.2/classwx_rearrange_list.html
@@ -48,19 +47,13 @@ and if not disposed app behaves incorrectly. (seen in list edit after it closed)
 
 - Add init event for each control in Platform Default props.
 
-- Check mouse move events are really coming (as i disabled them)
-
-- PROPERTY: Direction or TextAlign in TextEdit, Label, LinkLabel, Numeric, DateTime, CheckBox, RadioButton
-
 - CONTROL: AdvLabel as label is limited
 
 - PROPERTY: Control.ContextMenu
 
 - BUG: redo listview setselected (raises twice selected event)
 
-- CheckListBox with events
-Auto hook to events and output to log
-Implement LogUtils
+- CheckListBox with events, Auto hook to events and output to log
 
 - DOCS: Examples for PropertyGrid, LayoutPanel, AuiManager, AuiToolbar, AuiNotebook 
 
@@ -82,13 +75,13 @@ Implement LogUtils
 - Use custom flags for eventGrid
 
 - Redo disposable from DisposableObject // also all other
-C:\DIMA\AlternetUI\Source\Alternet.UI\CommonDialogs\CommonDialog.cs
-C:\DIMA\AlternetUI\Source\Alternet.UI\Controls\AuiManager\AuiManager.cs
-C:\DIMA\AlternetUI\Source\Alternet.UI\Drawing\Image\ImageList.cs
-C:\DIMA\AlternetUI\Source\Alternet.UI\Drawing\Image\ImageSet.cs
-C:\DIMA\AlternetUI\Source\Alternet.UI\Drawing\Printing\PrintPreviewDialog.cs
+\AlternetUI\Source\Alternet.UI\CommonDialogs\CommonDialog.cs
+\AlternetUI\Source\Alternet.UI\Controls\AuiManager\AuiManager.cs
+\AlternetUI\Source\Alternet.UI\Drawing\Image\ImageList.cs
+\AlternetUI\Source\Alternet.UI\Drawing\Image\ImageSet.cs
+\AlternetUI\Source\Alternet.UI\Drawing\Printing\PrintPreviewDialog.cs
 
-- C:\DIMA\AlternetUI\Source\Alternet.UI\Base\BaseComponent.cs
+- \AlternetUI\Source\Alternet.UI\Base\BaseComponent.cs
 From FrameworkElement
 
 - When modal form is opened click on app icon in task bar doesn;t show it 
@@ -96,10 +89,6 @@ And shows main form but it is disabled.
 	- add set mainform and check how modal form 
 
 - AuiManager sample on exit we have silent exception ??
-
-- SPEED NativeObject.cs InstancesByNativePointers
-
-- SPEED TreView dictionary in NativeHandler
 
 - compare class and interface methods need for intf support of all class methods
 
@@ -209,3 +198,27 @@ Point asPoint = new(50, 85);
 
 - ButtonState class and get/set ??
 
+- Why in window?
+    inline double GetDPIScaleFactor(wxWindow* window)
+    {
+#if defined(__WXMSW__)
+        return window->GetDPIScaleFactor();
+#else
+        return 1;
+#endif
+    }
+
+- ColorDialogChanged, PropGrid is not changed
+
+- When Colors applied to propGrid editors are painted doing badly
+(black -> white)
+
+- Border.BackgroundKind
+
+- Animation - wxAC_NO_AUTORESIZE:
+	By default, the control will adjust its size to exactly fit to the size of the animation when 
+SetAnimation is called. If this style flag is given, the control will not change its size
+
+- DC DrawTextAtPoint( What about textFormat support
+
+wxAlternetColourProperty(94,22) warning C4018 < signed/unsigned mismatch
