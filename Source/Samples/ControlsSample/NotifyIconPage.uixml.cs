@@ -26,7 +26,44 @@ namespace ControlsSample
                 notifyIcon.DoubleClick += NotifyIcon_DoubleClick;
                 notifyIcon.Menu = new ExampleContextMenu();
             }
+
+            ControlSet.New(
+                iconTextLabel,
+                tooltipTitleLabel,
+                tooltipMessageLabel,
+                tooltipIconLabel,
+                tooltipKindLabel)
+                .SuggestedWidthToMax();
+
+            tooltipKindComboBox.BindEnumProp(this, nameof(ToolTipKind));
+            tooltipIconComboBox.BindEnumProp(this, nameof(ToolTipIcon));
+
+            showToolTipButton.Click += ShowToolTipButton_Click;
+            hideToolTipButton.Click += HideToolTipButton_Click;
         }
+
+        private void ShowToolTipButton_Click(object? sender, EventArgs e)
+        {
+            RichToolTip.Show(
+                tooltipTitleTextBox.Text,
+                tooltipMessageTextBox.Text,
+                tooltipPreview,
+                ToolTipKind,
+                ToolTipIcon);
+        }
+
+        private void HideToolTipButton_Click(object? sender, EventArgs e)
+        {
+            // RichToolTip.Show assigns RichToolTip.Default,
+            // so we can use this variable for hiding the tooltip.
+            var toolTip = RichToolTip.Default;
+            RichToolTip.Default = null;
+            toolTip?.Dispose();
+        }
+
+        public RichToolTipKind ToolTipKind { get; set; } = RichToolTipKind.None;
+
+        public MessageBoxIcon ToolTipIcon { get; set; } = MessageBoxIcon.Warning;
 
         public IPageSite? Site
         {

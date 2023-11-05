@@ -2,21 +2,62 @@
         xmlns="http://schemas.alternetsoft.com/ui/2021"
         xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
         xmlns:local="clr-namespace:ControlsSample;assembly=ControlsSample">
+
   <VerticalStackPanel Padding="10,0,0,10" HorizontalAlignment="Stretch">
     <GroupBox Name="notifyPanel" Title="Notify Icon">
-    <StackPanel Orientation="Vertical" Padding="10">
-      <CheckBox
-          Text="Visible In Taskbar"
-          Name="notifyIconVisibleCheckBox"
-          CheckedChanged="NotifyIconVisibleCheckBox_CheckedChanged" />
-      <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
-        <Label Text="Icon Text: " Margin="0,0,5,0" VerticalAlignment="Center"/>
-        <TextBox Text="AlterNET UI Notify Icon example" Name="notifyIconTextTextBox" Margin="0,0,5,0"
-                 SuggestedWidth="250" VerticalAlignment="Center"/>
-        <Button Text="Apply Text" Name="applyTextButton" VerticalAlignment="Center"
-                Click="ApplyTextButton_Click"/>
+      <StackPanel Orientation="Vertical" Padding="10">
+        <CheckBox
+            Text="Visible In Taskbar"
+            Name="notifyIconVisibleCheckBox"
+            CheckedChanged="NotifyIconVisibleCheckBox_CheckedChanged" />
+        <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+          <Label Text="Icon Text" Margin="0,0,5,0" VerticalAlignment="Center" Name="iconTextLabel"/>
+          <TextBox Text="AlterNET UI Notify Icon example" Name="notifyIconTextTextBox" Margin="0,0,5,0"
+                   SuggestedWidth="250" VerticalAlignment="Center"/>
+          <Button Text="Apply Text" Name="applyTextButton" VerticalAlignment="Center"
+                  Click="ApplyTextButton_Click"/>
+        </StackPanel>
       </StackPanel>
-    </StackPanel>
-  </GroupBox>
-    </VerticalStackPanel>
+    </GroupBox>
+
+    <GroupBox Name="tooltipPanel" Title="Rich ToolTip" Margin="0,5,0,5">
+      <StackPanel Orientation="Vertical" Padding="10">
+
+        <HorizontalStackPanel>
+          <Label Text="Title" Margin="0,0,5,0" VerticalAlignment="Center" Name="tooltipTitleLabel"/>
+          <TextBox Text="Message Title" Name="tooltipTitleTextBox" Margin="0,0,0,0"
+                   SuggestedWidth="250" VerticalAlignment="Center"/>
+          <Button Text="Show ToolTip" Name="showToolTipButton" VerticalAlignment="Center"
+                  Margin="5,0,0,0" HorizontalAlignment="Left"/>
+        </HorizontalStackPanel>
+
+        <HorizontalStackPanel Margin="0,5,0,0">
+          <Label Text="Message" Margin="0,0,5,0" VerticalAlignment="Center" Name="tooltipMessageLabel"/>
+          <TextBox Text="This is sample text" Name="tooltipMessageTextBox" Margin="0,0,0,0"
+                   SuggestedWidth="250" VerticalAlignment="Center"/>
+          <Button Text="Hide ToolTip" Name="hideToolTipButton" VerticalAlignment="Center"
+                  Margin="5,0,0,0" HorizontalAlignment="Left"/>
+        </HorizontalStackPanel>
+
+        <HorizontalStackPanel Margin="0,5,0,0">
+          <Label Text="Tip Kind" Margin="0,0,5,0" VerticalAlignment="Center" Name="tooltipKindLabel"/>
+          <ComboBox Name="tooltipKindComboBox" Margin="0,0,0,0"
+                   SuggestedWidth="250" VerticalAlignment="Center"/>
+        </HorizontalStackPanel>
+
+        <HorizontalStackPanel Margin="0,5,0,0">
+          <Label Text="Icon" Margin="0,0,5,0" VerticalAlignment="Center" Name="tooltipIconLabel"/>
+          <ComboBox Name="tooltipIconComboBox" Margin="0,0,0,0"
+                   SuggestedWidth="250" VerticalAlignment="Center"/>
+        </HorizontalStackPanel>
+
+        <HorizontalStackPanel Margin="0,5,0,0" VerticalAlignment="Stretch" Name="tooltipPreview">
+        </HorizontalStackPanel>
+
+      </StackPanel>
+    </GroupBox>
+
+  </VerticalStackPanel>
+
+
 </Control>
