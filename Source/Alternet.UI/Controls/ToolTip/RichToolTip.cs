@@ -145,11 +145,10 @@ namespace Alternet.UI
         {
             const int wxICON_WARNING = 0x00000100;
             const int wxICON_ERROR = 0x00000200;
-            const int wxICON_QUESTION = 0x00000400;
             const int wxICON_INFORMATION = 0x00000800;
             const int wxICON_NONE = 0x00040000;
 
-            int style = wxICON_NONE;
+            int style;
 
             switch (icon)
             {
@@ -167,7 +166,7 @@ namespace Alternet.UI
                     style = wxICON_ERROR;
                     break;
                 case MessageBoxIcon.Question:
-                    style = wxICON_QUESTION;
+                    style = wxICON_NONE;
                     break;
             }
 
