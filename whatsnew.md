@@ -1,14 +1,17 @@
-# 0.9.406 (not released, work in progress)
+# 0.9.406 (2023 November 5)
 
-- Add RichTextBox, LogListBox, PopupWindow, PopupListBox, PopupCheckListBox, PopupPictureBox, PopupCalendar, PopupTreeView,
-PopupAuiManager controls.
+- Add MultilineTextBox, RichTextBox, LogListBox, ComboBoxAndLabel, ControlAndLabel, TextBoxAndLabel, controls.
+- Add popup windows: PopupWindow, PopupListBox, PopupCheckListBox, PopupPictureBox, PopupCalendar, PopupTreeView, PopupAuiManager.
+- Add value editors: HexEditorUInt32, ValueEditorByte, ValueEditorCustom, ValueEditorDouble, ValueEditorEMail, ValueEditorInt16,
+ ValueEditorInt32, ValueEditorInt64, ValueEditorSByte, ValueEditorSingle, ValueEditorUDouble, ValueEditorUInt16, ValueEditorUInt32, 
+ValueEditorUInt64, ValueEditorUSingle.
 - PictureBox: ImageVisible, ImageStretch.
 - TextBox: MinValue, MaxValue, DefaultValidatorErrorText, DefaultErrorBackgroundColor, DefaultErrorForegroundColor,
  NumberStyles, FormatProvider, DataType, ValidatorReporter, ValidatorErrorText, EmptyTextAllow, EmptyTextValue,
  GetDataTypeCode, GetMinMaxRangeStr, CreateValidator, GetKnownErrorText, ReportValidatorError, DefaultFormat, Converter,
  DefaultText, SetTextAs* methods, MinLength, MaxLength, TextAsNumber, Options, CurrentPosition, CurrentPositionChanged event,
 ReportErrorMinMaxLength, UseValidator, ErrorStatusChanged event, .
-- ITextBoxTextAttr: Add GetFontStyle, SetFontStyle, GetFontItalic.
+- ITextBoxTextAttr: Add GetFontStyle, SetFontStyle, GetFontItalic, GetFontInfo, SetFontInfo.
 - TextBox: Add rich edit methods SetSelectionStyle, ToggleSelectionFontStyle, ToggleSelectionBold, ToggleSelectionItalic,
  ToggleSelectionUnderline, ToggleSelectionStrikethrough, SelectionSetColor, SelectionSetAlignment, SelectionAlignCenter,
  SelectionAlignLeft, HandleRichEditKeys, SelectionAlignRight, SelectionJustify.
@@ -28,6 +31,8 @@ UpgradeNumberType, IsNumberTypeCode.
 - Add Slider.ClearTicks().
 - PictureBox made unfocusable.
 - Control: Add methods and props for grouping of children. Added GroupIndexes, GroupIndex, NewGroupIndex, GetGroup, MemberOfGroup.
+- FontInfo improved: add Name property, FontInfo instance is not created if not needed, new constructor, validated SizeInPoints
+ property on set.
 
 ---
 
