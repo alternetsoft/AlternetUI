@@ -1,3 +1,7 @@
+# 0.9.407 (not released, work in progress)
+
+- Add RichToolTip.
+
 # 0.9.406 (2023 November 5)
 
 - Add MultilineTextBox, RichTextBox, LogListBox, ComboBoxAndLabel, ControlAndLabel, TextBoxAndLabel, controls.
