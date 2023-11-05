@@ -1003,7 +1003,15 @@ namespace Alternet.UI
 
             static void Picture_MouseLeftButtonUp(object? sender, MouseButtonEventArgs e)
             {
+                if (sender is not PictureBox pictureBox)
+                    return;
                 e.Handled = true;
+
+                RichToolTip.Show(
+                    ErrorMessages.Default.ErrorTitle,
+                    pictureBox.ToolTip,
+                    pictureBox,
+                    RichToolTipKind.None);
             }
         }
 

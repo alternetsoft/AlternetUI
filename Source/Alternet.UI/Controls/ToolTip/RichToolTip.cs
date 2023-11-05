@@ -1,0 +1,151 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Alternet.Drawing;
+using Alternet.UI.Localization;
+
+namespace Alternet.UI
+{
+    /// <summary>
+    /// Allows to show a tool tip with more customizations than a standard tooltip.
+    /// Additionally to the tooltip message <see cref="RichToolTip"/> allows to
+    /// specify title, image, tip kind and some other options.
+    /// </summary>
+    public class RichToolTip : DisposableObject, IRichToolTip
+    {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="RichToolTip"/> class.
+        /// </summary>
+        /// <param name="title">Tooltip title.</param>
+        /// <param name="message">Tooltip message.</param>
+        public RichToolTip(string? title, string? message)
+            : base(
+                  Native.WxOtherFactory.CreateRichToolTip(
+                    title ?? string.Empty,
+                    message ?? string.Empty),
+                  true)
+        {
+        }
+
+        /// <summary>
+        /// Gets or sets default <see cref="RichToolTip"/>.
+        /// </summary>
+        public static RichToolTip? Default { get; set; }
+
+        /// <summary>
+        /// Shows tooltip on the screen.
+        /// </summary>
+        /// <param name="title">Tooltip title.</param>
+        /// <param name="message">Tooltip message.</param>
+        /// <param name="control">Control for which tooltip is shown.</param>
+        /// <param name="kind">Tooltip kind.</param>
+        public static void Show(
+            string? title,
+            string? message,
+            Control control,
+            RichToolTipKind kind = RichToolTipKind.Auto)
+        {
+            Default = new(title, message);
+            if(kind != RichToolTipKind.Auto)
+                Default.SetTipKind(kind);
+            Default.Show(control);
+        }
+
+        /// <summary>
+        /// Sets the background color: if two colors are specified, the background
+        /// is drawn using a gradient from top to bottom, otherwise a single solid
+        /// color is used.
+        /// </summary>
+        /// <param name="color">Background color.</param>
+        /// <param name="endColor">Second background color.</param>
+        public void SetBackgroundColor(Color color, Color? endColor)
+        {
+            Color color2;
+            if (endColor is null)
+                color2 = Color.Empty;
+            else
+                color2 = endColor.Value;
+            Native.WxOtherFactory.RichToolTipSetBkColor(Handle, color, color2);
+        }
+
+        /// <summary>
+        /// Sets timeout after which the tooltip should disappear, in milliseconds.
+        /// Optionally specify a show delay.
+        /// </summary>
+        /// <remarks>
+        /// By default the tooltip is hidden after system-dependent interval of time
+        /// elapses but this method can be used to change this or also disable
+        /// hiding the tooltip automatically entirely by passing 0 in this parameter
+        /// (but doing this can result in native version not being used).
+        /// </remarks>
+        /// <param name="milliseconds">Timeout value.</param>
+        /// <param name="millisecondsShowdelay">Show delay value.</param>
+        public void SetTimeout(uint milliseconds, uint millisecondsShowdelay = 0)
+        {
+            Native.WxOtherFactory.RichToolTipSetTimeout(Handle, milliseconds, millisecondsShowdelay);
+        }
+
+        /// <summary>
+        /// Sets the small icon to show in the tooltip.
+        /// </summary>
+        /// <param name="bitmap">Icon of the tooltip.</param>
+        public void SetIcon(ImageSet? bitmap)
+        {
+            Native.WxOtherFactory.RichToolTipSetIcon(Handle, bitmap?.NativeImageSet);
+        }
+
+        /// <summary>
+        /// Sets the title text font.
+        /// </summary>
+        /// <remarks>
+        /// By default it's emphasized using the font style
+        /// or colour appropriate for the current platform.
+        /// </remarks>
+        /// <param name="font">Font of the title.</param>
+        public void SetTitleFont(Font? font)
+        {
+            Native.WxOtherFactory.RichToolTipSetTitleFont(Handle, font?.NativeFont);
+        }
+
+        /// <summary>
+        /// Chooses the tip kind, possibly none. By default the tip is positioned
+        /// automatically, as if <see cref="RichToolTipKind.Auto"/> was used.
+        /// </summary>
+        /// <param name="tipKind">Tip kind.</param>
+        public void SetTipKind(RichToolTipKind tipKind)
+        {
+            Native.WxOtherFactory.RichToolTipSetTipKind(Handle, (int)tipKind);
+        }
+
+        /// <summary>
+        /// Shows the tooltip for the given control and optionally a specified area.
+        /// </summary>
+        /// <param name="control">Control for which tooltip is shown.</param>
+        /// <param name="rect">Area of the tooltip.</param>
+        public void Show(Control control, Int32Rect? rect = null)
+        {
+            if(rect is null)
+                Native.WxOtherFactory.RichToolTipShowFor(Handle, control.WxWidget, Int32Rect.Empty);
+            else
+                Native.WxOtherFactory.RichToolTipShowFor(Handle, control.WxWidget, rect.Value);
+        }
+
+        /// <summary>
+        /// Sets the standard icon to show in the tooltip.
+        /// </summary>
+        /// <param name="icon">One of the standard information/warning/error icons
+        /// (the question icon doesn't make sense for a tooltip)</param>
+        internal void SetIcon(int icon)
+        {
+            Native.WxOtherFactory.RichToolTipSetIcon2(Handle, icon);
+        }
+
+        /// <inheritdoc/>
+        protected override void DisposeUnmanagedResources()
+        {
+            Native.WxOtherFactory.DeleteRichToolTip(Handle);
+        }
+    }
+}

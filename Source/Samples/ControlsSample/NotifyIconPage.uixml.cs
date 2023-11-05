@@ -11,16 +11,21 @@ namespace ControlsSample
 
         private IPageSite? site;
 
-        private readonly NotifyIcon notifyIcon;
+        private readonly NotifyIcon? notifyIcon;
 
         public NotifyIconPage()
         {
             InitializeComponent();
 
-            notifyIcon = new NotifyIcon { Icon = Image, Text = notifyIconTextTextBox.Text };
-            notifyIcon.Click += NotifyIcon_Click;
-            notifyIcon.DoubleClick += NotifyIcon_DoubleClick;
-            notifyIcon.Menu = new ExampleContextMenu();
+            notifyPanel.Visible = NotifyIcon.IsAvailable;
+
+            if (notifyPanel.Visible)
+            {
+                notifyIcon = new NotifyIcon { Icon = Image, Text = notifyIconTextTextBox.Text };
+                notifyIcon.Click += NotifyIcon_Click;
+                notifyIcon.DoubleClick += NotifyIcon_DoubleClick;
+                notifyIcon.Menu = new ExampleContextMenu();
+            }
         }
 
         public IPageSite? Site
@@ -44,13 +49,15 @@ namespace ControlsSample
         }
 
         private void NotifyIconVisibleCheckBox_CheckedChanged(object sender, EventArgs e)
-        {
-            notifyIcon.Visible = notifyIconVisibleCheckBox.IsChecked;
+        {   
+            if(notifyIcon is not null)
+                notifyIcon.Visible = notifyIconVisibleCheckBox.IsChecked;
         }
 
         private void ApplyTextButton_Click(object sender, System.EventArgs e)
         {
-            notifyIcon.Text = notifyIconTextTextBox.Text;
+            if (notifyIcon is not null)
+                notifyIcon.Text = notifyIconTextTextBox.Text;
         }
     }
 }

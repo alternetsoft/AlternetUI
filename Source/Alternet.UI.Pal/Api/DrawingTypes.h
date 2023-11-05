@@ -171,6 +171,11 @@ namespace Alternet::UI
         inline Int32Point GetLocation() const { return Int32Point(X, Y); };
         inline Int32Size GetSize() const { return Int32Size(Width, Height); };
 
+        inline bool IsZero() const
+        {
+            return (Width == 0) && (Height == 0) && (X == 0) && (Y == 0);
+        }
+
         inline operator Int32Rect_C() { return Int32Rect_C{ X, Y, Width, Height }; }
 
         inline bool operator==(const Int32Rect& rhs)

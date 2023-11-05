@@ -102,7 +102,7 @@ namespace ControlsSample
             AddPage("Animation", CreateAnimationPage);
 
             if (NotifyIcon.IsAvailable)
-                AddPage("Notify Icon", CreateNotifyIconPage);
+                AddPage("Notify & ToolTip", CreateNotifyIconPage);
 
             AddPage("Tab Control", CreateTabControlPage);
             AddPage("All Samples", CreateAllSamplesPage);

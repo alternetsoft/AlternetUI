@@ -17,6 +17,9 @@ namespace Alternet.UI.Localization
             "Current application instance is not set.";
 
         /// <see cref="CurrentApplicationIsNotSet"/>
+        public string ErrorTitle { get; set; } = "Error";
+
+        /// <see cref="CurrentApplicationIsNotSet"/>
         public string CannotDisposeImmutableObject { get; set; } =
             "Cannot dispose an immutable object.";
 

@@ -272,6 +272,7 @@
     <ClCompile Include="RadialGradientBrush.cpp" />
     <ClCompile Include="RadioButton.cpp" />
     <ClCompile Include="Region.cpp" />
+    <ClCompile Include="RichTextBox.cpp" />
     <ClCompile Include="SelectDirectoryDialog.cpp" />
     <ClCompile Include="Sizer.cpp" />
     <ClCompile Include="SizerFlags.cpp" />
@@ -306,6 +307,7 @@
     <ClCompile Include="WrapSizer.cpp" />
     <ClCompile Include="WxAlternet\wxAlternetColourProperty.cpp" />
     <ClCompile Include="WxControlFactory.cpp" />
+    <ClCompile Include="WxOtherFactory.cpp" />
     <ClCompile Include="WxStatusBarFactory.cpp" />
     <ClCompile Include="WxTreeViewFactory.cpp" />
   </ItemGroup>
@@ -395,6 +397,7 @@
     <ClInclude Include="Api\RadialGradientBrush.Api.h" />
     <ClInclude Include="Api\RadioButton.Api.h" />
     <ClInclude Include="Api\Region.Api.h" />
+    <ClInclude Include="Api\RichTextBox.Api.h" />
     <ClInclude Include="Api\SelectDirectoryDialog.Api.h" />
     <ClInclude Include="Api\Sizer.Api.h" />
     <ClInclude Include="Api\SizerFlags.Api.h" />
@@ -427,6 +430,7 @@
     <ClInclude Include="Api\Window.Api.h" />
     <ClInclude Include="Api\WrapSizer.Api.h" />
     <ClInclude Include="Api\WxControlFactory.Api.h" />
+    <ClInclude Include="Api\WxOtherFactory.Api.h" />
     <ClInclude Include="Api\WxStatusBarFactory.Api.h" />
     <ClInclude Include="Api\WxTreeViewFactory.Api.h" />
     <ClInclude Include="Application.h" />
@@ -517,6 +521,7 @@
     <ClInclude Include="RadialGradientBrush.h" />
     <ClInclude Include="RadioButton.h" />
     <ClInclude Include="Region.h" />
+    <ClInclude Include="RichTextBox.h" />
     <ClInclude Include="Screenshot.h" />
     <ClInclude Include="SelectDirectoryDialog.h" />
     <ClInclude Include="Sizer.h" />
@@ -555,6 +560,7 @@
     <ClInclude Include="WxAlternet\wxAlternetColourProperty.h" />
     <ClInclude Include="WxAlternet\wxAlternetLogFormatter.h" />
     <ClInclude Include="WxControlFactory.h" />
+    <ClInclude Include="WxOtherFactory.h" />
     <ClInclude Include="WxStatusBarFactory.h" />
     <ClInclude Include="WxTreeViewFactory.h" />
   </ItemGroup>
@@ -632,6 +638,7 @@
     <None Include="Api\RadialGradientBrush.inc" />
     <None Include="Api\RadioButton.inc" />
     <None Include="Api\Region.inc" />
+    <None Include="Api\RichTextBox.inc" />
     <None Include="Api\SelectDirectoryDialog.inc" />
     <None Include="Api\Sizer.inc" />
     <None Include="Api\SizerFlags.inc" />
@@ -664,6 +671,7 @@
     <None Include="Api\Window.inc" />
     <None Include="Api\WrapSizer.inc" />
     <None Include="Api\WxControlFactory.inc" />
+    <None Include="Api\WxOtherFactory.inc" />
     <None Include="Api\WxStatusBarFactory.inc" />
     <None Include="Api\WxTreeViewFactory.inc" />
   </ItemGroup>
