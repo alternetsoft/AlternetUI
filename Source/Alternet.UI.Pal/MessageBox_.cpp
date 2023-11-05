@@ -49,6 +49,7 @@ namespace Alternet::UI
         switch (icon)
         {
         case MessageBoxIcon::None:
+        default:
             style |= wxICON_NONE;
             break;
         case MessageBoxIcon::Information:
@@ -60,12 +61,14 @@ namespace Alternet::UI
         case MessageBoxIcon::Error:
             style |= wxICON_ERROR;
             break;
-        default:
-            throwExInvalidArgEnumValue(icon);
+        case MessageBoxIcon::Question:
+            style |= wxICON_QUESTION;
+            break;
         }
 
         switch (defaultButton)
         {
+        default:
         case MessageBoxDefaultButton::OK:
             style |= wxOK_DEFAULT;
             break;
@@ -78,8 +81,6 @@ namespace Alternet::UI
         case MessageBoxDefaultButton::No:
             style |= wxNO_DEFAULT;
             break;
-        default:
-            throwExInvalidArgEnumValue(defaultButton);
         }
 
         return style;

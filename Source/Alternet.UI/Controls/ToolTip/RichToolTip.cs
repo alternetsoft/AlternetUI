@@ -39,17 +39,21 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="title">Tooltip title.</param>
         /// <param name="message">Tooltip message.</param>
+        /// <param name="icon">Tooltip standard icon.</param>
         /// <param name="control">Control for which tooltip is shown.</param>
         /// <param name="kind">Tooltip kind.</param>
         public static void Show(
             string? title,
             string? message,
             Control control,
-            RichToolTipKind kind = RichToolTipKind.Auto)
+            RichToolTipKind? kind = null,
+            MessageBoxIcon? icon = null)
         {
             Default = new(title, message);
-            if(kind != RichToolTipKind.Auto)
-                Default.SetTipKind(kind);
+            if (kind is not null)
+                Default.SetTipKind(kind.Value);
+            if (icon is not null)
+                Default.SetIcon(icon.Value);
             Default.Show(control);
         }
 
@@ -126,7 +130,7 @@ namespace Alternet.UI
         /// <param name="rect">Area of the tooltip.</param>
         public void Show(Control control, Int32Rect? rect = null)
         {
-            if(rect is null)
+            if (rect is null)
                 Native.WxOtherFactory.RichToolTipShowFor(Handle, control.WxWidget, Int32Rect.Empty);
             else
                 Native.WxOtherFactory.RichToolTipShowFor(Handle, control.WxWidget, rect.Value);
@@ -137,9 +141,37 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="icon">One of the standard information/warning/error icons
         /// (the question icon doesn't make sense for a tooltip)</param>
-        internal void SetIcon(int icon)
+        public void SetIcon(MessageBoxIcon icon)
         {
-            Native.WxOtherFactory.RichToolTipSetIcon2(Handle, icon);
+            const int wxICON_WARNING = 0x00000100;
+            const int wxICON_ERROR = 0x00000200;
+            const int wxICON_QUESTION = 0x00000400;
+            const int wxICON_INFORMATION = 0x00000800;
+            const int wxICON_NONE = 0x00040000;
+
+            int style = wxICON_NONE;
+
+            switch (icon)
+            {
+                default:
+                case MessageBoxIcon.None:
+                    style = wxICON_NONE;
+                    break;
+                case MessageBoxIcon.Information:
+                    style = wxICON_INFORMATION;
+                    break;
+                case MessageBoxIcon.Warning:
+                    style = wxICON_WARNING;
+                    break;
+                case MessageBoxIcon.Error:
+                    style = wxICON_ERROR;
+                    break;
+                case MessageBoxIcon.Question:
+                    style = wxICON_QUESTION;
+                    break;
+            }
+
+            Native.WxOtherFactory.RichToolTipSetIcon2(Handle, style);
         }
 
         /// <inheritdoc/>

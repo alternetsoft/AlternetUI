@@ -506,6 +506,7 @@ namespace Alternet::UI
         Information = 1,
         Warning = 2,
         Error = 3,
+        Question = 4,
     };
     
     enum class MouseButton

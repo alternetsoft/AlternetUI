@@ -44,6 +44,7 @@ namespace NativeApi.Api
         None,
         Information,
         Warning,
-        Error
+        Error,
+        Question,
     }
 }

@@ -505,6 +505,7 @@ namespace Alternet.UI.Native
         Information = 1,
         Warning = 2,
         Error = 3,
+        Question = 4,
     }
     
     enum MouseButton

@@ -1011,7 +1011,8 @@ namespace Alternet.UI
                     ErrorMessages.Default.ErrorTitle,
                     pictureBox.ToolTip,
                     pictureBox,
-                    RichToolTipKind.None);
+                    RichToolTipKind.None,
+                    MessageBoxIcon.Error);
             }
         }
 
