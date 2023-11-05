@@ -425,12 +425,12 @@ namespace Alternet.Drawing
         /// <summary>
         /// Inflates this <see cref='Rect'/> by the specified amount.
         /// </summary>
-        public void Inflate(double x, double y)
+        public void Inflate(double dx, double dy)
         {
-            X -= x;
-            Y -= y;
-            width += 2 * x;
-            height += 2 * y;
+            x -= dx;
+            y -= dy;
+            width += 2 * dx;
+            height += 2 * dy;
         }
 
         /// <summary>
