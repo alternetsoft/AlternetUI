@@ -9,11 +9,12 @@
 
 namespace Alternet::UI
 {
-    class RichTextBox : public Object
+    class RichTextBox : public Control
     {
 #include "Api/RichTextBox.inc"
     public:
-    
+        wxWindow* CreateWxWindowCore(wxWindow* parent) override;
+        wxRichTextCtrl* GetTextCtrl();
     private:
     
     };

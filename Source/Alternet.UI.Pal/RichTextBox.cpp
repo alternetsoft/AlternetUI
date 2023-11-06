@@ -2,6 +2,41 @@
 
 namespace Alternet::UI
 {
+	class wxRichTextCtrl2 : public wxRichTextCtrl, public wxWidgetExtender
+	{
+	public:
+		wxRichTextCtrl2(wxWindow* parent, wxWindowID id = -1,
+			const wxString& value = wxEmptyString, const wxPoint& pos = wxDefaultPosition,
+			const wxSize& size = wxDefaultSize,
+			long style = wxRE_MULTILINE, const wxValidator& validator = wxDefaultValidator,
+			const wxString& name = wxASCII_STR(wxTextCtrlNameStr))
+			: wxRichTextCtrl(parent, id, value, pos, size, style, validator, name)
+		{}
+
+	};
+
+	wxWindow* RichTextBox::CreateWxWindowCore(wxWindow* parent)
+	{
+/*
+#define wxRE_READONLY          0x0010
+#define wxRE_CENTRE_CARET      0x8000
+*/
+		long style = wxRE_MULTILINE;
+
+		auto result = new wxRichTextCtrl2(parent, -1,
+			wxEmptyString, wxDefaultPosition,
+			wxDefaultSize,
+			style);
+
+		//result->Bind(wxEVT_TEXT, &RichTextBox::OnTextChanged, this);
+		return result;
+	}
+
+	wxRichTextCtrl* RichTextBox::GetTextCtrl()
+	{
+		return dynamic_cast<wxRichTextCtrl*>(GetWxWindow());
+	}
+
 	RichTextBox::RichTextBox()
 	{
 
@@ -9,6 +44,14 @@ namespace Alternet::UI
 
 	RichTextBox::~RichTextBox()
 	{
+		if (IsWxWindowCreated())
+		{
+			auto window = GetWxWindow();
+			if (window != nullptr)
+			{
+				// window->Unbind(wxEVT_TEXT, &TextBox::OnTextChanged, this);
+			}
+		}
 	}
 
 	bool RichTextBox::IsPositionVisible(int64_t pos)
