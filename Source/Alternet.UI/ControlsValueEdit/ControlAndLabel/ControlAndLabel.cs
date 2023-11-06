@@ -44,6 +44,32 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets <see cref="Control.ColumnIndex"/> property of the attached
+        /// <see cref="Label"/> control.
+        /// </summary>
+        public int? LabelColumnIndex
+        {
+            get
+            {
+                return Label.ColumnIndex;
+            }
+
+            set
+            {
+                Label.ColumnIndex = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets <see cref="Control.SuggestedWidth"/> property of the main child control.
+        /// </summary>
+        public double LabelSuggestedWidth
+        {
+            get => Label.SuggestedWidth;
+            set => Label.SuggestedWidth = value;
+        }
+
+        /// <summary>
         /// Gets or sets <see cref="Control.SuggestedWidth"/> property of the main child control.
         /// </summary>
         public double InnerSuggestedWidth
