@@ -9,7 +9,7 @@ namespace ControlsSample
     internal partial class GridPage : Control
     {
         private IPageSite? site;
-        private ControlSet controls;
+        private readonly ControlSet controls;
 
         public GridPage()
         {
@@ -27,8 +27,10 @@ namespace ControlsSample
                     for (int row = minRow; row <= maxRow; row++)
                     {
                         Border border = new();
-                        Label label = new($"({column},{row})");
-                        label.Parent = border;
+                        Label label = new($"({column},{row})")
+                        {
+                            Parent = border,
+                        };
                         Grid.SetRowColumn(border, row, column);
                         gridControls.Add(border);
                     }
