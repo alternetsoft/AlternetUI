@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace NativeApi.Api
 {
     // https://docs.wxwidgets.org/3.2/classwx_rich_text_ctrl.html
-    public class RichTextBox
+    public class RichTextBox : Control
     {
         public string GetRange(long from, long to) => default;
 

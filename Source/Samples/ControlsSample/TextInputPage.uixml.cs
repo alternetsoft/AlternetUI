@@ -147,25 +147,26 @@ namespace ControlsSample
             // ==== richEdit
 
             richEdit.Parent = richEditParent;
-            richEdit.CurrentPositionChanged += TextBox_CurrentPositionChanged;
+            // richEdit.CurrentPositionChanged += TextBox_CurrentPositionChanged;
             richEdit.KeyDown += RichEdit_KeyDown;
-            richEdit.TextUrl += MultiLineTextBox_TextUrl;
+            // richEdit.TextUrl += MultiLineTextBox_TextUrl;
             InitRichEdit();
         }
 
         private string GetFontStatus()
         {
-            var position = richEdit.GetInsertionPoint();
-            var fs = richEdit.GetStyle(position);
-            var fontInfo = fs.GetFontInfo();
-            return fontInfo.ToString();
+            //var position = richEdit.GetInsertionPoint();
+            //var fs = richEdit.GetStyle(position);
+            //var fontInfo = fs.GetFontInfo();
+            //return fontInfo.ToString();
+            return string.Empty;
         }
 
         private void RichEdit_KeyDown(object? sender, KeyEventArgs e)
         {
             void Test()
             {
-                richEdit.SelectionSetColor(Color.White, Color.Red);
+                // richEdit.SelectionSetColor(Color.White, Color.Red);
             }
 
             if (KnownKeys.RunTest.Run(e, Test))
@@ -210,10 +211,10 @@ namespace ControlsSample
 
             var fontStatus = string.Empty;
 
-            if (control == richEdit)
-                fontStatus = GetFontStatus();
+            //if (control == richEdit)
+            //    fontStatus = GetFontStatus();
 
-            site?.LogEventSmart($"{prefix} {currentPos.Value+1} {fontStatus}", prefix);
+            site?.LogEventSmart($"{prefix} {currentPos.Value+1}", prefix);
         }
 
         private void Application_Idle(object? sender, EventArgs e)
@@ -230,7 +231,7 @@ namespace ControlsSample
 
             if (tab3.Visible)
             {
-                richEdit.IdleAction();
+                // richEdit.IdleAction();
             }
         }
 
@@ -386,13 +387,13 @@ namespace ControlsSample
                 "Ctrl+Shift+J - Justify.\n",
             };
 
-            richEdit.AutoUrl = true;
+            // richEdit.AutoUrl = true;
 
             richEdit.DoInsideUpdate(() =>
             {
-                richEdit.AppendTextAndStyles(list);
-                richEdit.AppendNewLine();
-                richEdit.Refresh();
+                // richEdit.AppendTextAndStyles(list);
+                // richEdit.AppendNewLine();
+                // richEdit.Refresh();
             });
 
             /*

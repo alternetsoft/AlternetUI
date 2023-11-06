@@ -8,7 +8,7 @@ using System.ComponentModel;
 using System.Security;
 namespace Alternet.UI.Native
 {
-    internal class RichTextBox : NativeObject
+    internal class RichTextBox : Control
     {
         static RichTextBox()
         {

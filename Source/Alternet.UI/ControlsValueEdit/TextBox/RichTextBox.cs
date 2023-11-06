@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,47 +10,40 @@ namespace Alternet.UI
     /// <summary>
     /// Implements rich text editor functionality.
     /// </summary>
-    public class RichTextBox : TextBox
+    public class RichTextBox : Control
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="RichTextBox"/> class.
         /// </summary>
         public RichTextBox()
         {
-            ProcessTab = true;
-            base.Multiline = true;
-            base.IsRichEdit = true;
         }
 
-        /// <summary>
-        /// Always returns <c>true</c>.
-        /// </summary>
-        public override bool Multiline
-        {
-            get => true;
+        /// <inheritdoc/>
+        public override ControlId ControlKind => ControlId.RichTextBox;
 
-            set
+        [Browsable(false)]
+        internal new NativeRichTextBoxHandler Handler
+        {
+            get
             {
+                CheckDisposed();
+                return (NativeRichTextBoxHandler)base.Handler;
             }
         }
 
-        /// <summary>
-        /// Always returns <c>true</c>.
-        /// </summary>
-        public override bool IsRichEdit
-        {
-            get => true;
+        internal Native.RichTextBox NativeControl => Handler.NativeControl;
 
-            set
-            {
-            }
+        /// <inheritdoc/>
+        protected override ControlHandler CreateHandler()
+        {
+            return new NativeRichTextBoxHandler();
         }
 
         /// <inheritdoc/>
         protected override void OnKeyDown(KeyEventArgs e)
         {
             base.OnKeyDown(e);
-            HandleRichEditKeys(e);
         }
     }
 }
