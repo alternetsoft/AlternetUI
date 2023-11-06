@@ -229,7 +229,7 @@ namespace Alternet.UI
         /// Sets <see cref="Control.Parent"/> property for all the controls in the set.
         /// </summary>
         /// <param name="value">Parent control.</param>
-        public ControlSet Parent(Control value)
+        public ControlSet Parent(Control? value)
         {
             foreach (var item in items)
                 item.Parent = value;
