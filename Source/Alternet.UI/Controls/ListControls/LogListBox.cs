@@ -109,7 +109,10 @@ namespace Alternet.UI
         [Conditional("DEBUG")]
         public virtual void DebugLogVersion()
         {
-            Application.Log($"Net = {Environment.Version}, {WebBrowser.GetLibraryVersionString()}");
+            var wxWidgets = WebBrowser.GetLibraryVersionString();
+            var net = $"Net: {Environment.Version}";
+            var dpi = $"DPI: {Application.FirstWindow()?.GetDPI().Width}";
+            Application.Log($"{net}, {wxWidgets}, {dpi}");
         }
 
         internal virtual void Application_LogMessage(object? sender, LogMessageEventArgs e)
