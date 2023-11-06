@@ -153,7 +153,7 @@ namespace ControlsSample
             InitRichEdit();
         }
 
-        private string GetFontStatus()
+        internal string GetFontStatus()
         {
             //var position = richEdit.GetInsertionPoint();
             //var fs = richEdit.GetStyle(position);
@@ -166,7 +166,7 @@ namespace ControlsSample
         {
             void Test()
             {
-                // richEdit.SelectionSetColor(Color.White, Color.Red);
+                richEdit.Required();
             }
 
             if (KnownKeys.RunTest.Run(e, Test))
@@ -209,9 +209,8 @@ namespace ControlsSample
             var name = control.Name ?? control.GetType().Name;
             var prefix = $"{name}.CurrentPos:";
 
-            var fontStatus = string.Empty;
-
-            //if (control == richEdit)
+            // var fontStatus = string.Empty;
+            // if (control == richEdit)
             //    fontStatus = GetFontStatus();
 
             site?.LogEventSmart($"{prefix} {currentPos.Value+1}", prefix);
