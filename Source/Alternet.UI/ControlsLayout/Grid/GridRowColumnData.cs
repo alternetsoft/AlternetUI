@@ -3,11 +3,54 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Alternet.Base.Collections;
 
 namespace Alternet.UI
 {
     public partial class Grid
     {
+        /// <summary>
+        /// Gets or sets count of <see cref="RowDefinitions"/>.
+        /// </summary>
+        /// <remarks>
+        /// If row count grows, <see cref="RowDefinition.CreateAuto"/> is used to add new rows.
+        /// </remarks>
+        public int RowCount
+        {
+            get
+            {
+                return RowDefinitions.Count;
+            }
+
+            set
+            {
+                if (value < 0)
+                    throw new ArgumentException(nameof(RowCount));
+                ListUtils.SetCount(RowDefinitions, value, RowDefinition.CreateAuto);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets count of <see cref="ColumnDefinitions"/>.
+        /// </summary>
+        /// <remarks>
+        /// If column count grows, <see cref="ColumnDefinition.CreateAuto"/> is used to add new rows.
+        /// </remarks>
+        public int ColumnCount
+        {
+            get
+            {
+                return ColumnDefinitions.Count;
+            }
+
+            set
+            {
+                if (value < 0)
+                    throw new ArgumentException(nameof(ColumnCount));
+                ListUtils.SetCount(ColumnDefinitions, value, ColumnDefinition.CreateAuto);
+            }
+        }
+
         /// <summary>
         /// Sets a value that indicates which column child control within a <see cref="Grid"/>
         /// should appear in.

@@ -202,7 +202,7 @@ namespace Alternet.Base.Collections
         /// <summary>
         /// Changes the number of elements in the collection.
         /// </summary>
-        /// <param name="newCount">New </param>
+        /// <param name="newCount">New number of elements.</param>
         /// <param name="createItem">Function which creates new item.</param>
         /// <remarks>
         /// If collection has more items than specified in <paramref name="newCount"/>,
@@ -211,11 +211,7 @@ namespace Alternet.Base.Collections
         /// </remarks>
         public void SetCount(int newCount, Func<T> createItem)
         {
-            for (int i = Count - 1; i >= newCount; i--)
-                RemoveAt(i);
-
-            for (int i = Count; i < newCount; i++)
-                Add(createItem());
+            ListUtils.SetCount(this, newCount, createItem);
         }
 
         internal void SafeSetItem(int index, T item)
