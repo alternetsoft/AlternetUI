@@ -12,7 +12,6 @@ namespace NativeApi.Api
     // https://docs.wxwidgets.org/3.2/classwx_rich_text_ctrl.html
     public class RichTextBox
     {
-/*
         public string GetRange(long from, long to) => default;
 
         // Returns the length of the specified line in characters.
@@ -36,916 +35,310 @@ namespace NativeApi.Api
 
         // Returns <c>true</c> if the control is multiline.
         public bool IsMultiLine() => default;
-*/
+
+        // Returns the text within the current selection range, if any.    
+        public string GetStringSelection() => default;
+
+        // Gets the current filename associated with the control.    
+        public string GetFilename() => default;
+
+        // Sets the current filename.    
+        public void SetFilename(string filename) { }
+
+        // Sets the size of the buffer beyond which layout is delayed during resizing.
+        // This optimizes sizing for large buffers. The default is 20000.
+        public void SetDelayedLayoutThreshold(long threshold) { }
+
+        // Gets the size of the buffer beyond which layout is delayed during resizing.
+        // This optimizes sizing for large buffers. The default is 20000.
+        public long GetDelayedLayoutThreshold() => default;
+
+        // Gets the flag indicating that full layout is required.    
+        public bool GetFullLayoutRequired() => default;
+
+        // Sets the flag indicating that full layout is required.    
+        public void SetFullLayoutRequired(bool b) { }
+
+        // Returns the last time full layout was performed.    
+        public long GetFullLayoutTime() => default;
+
+        // Sets the last time full layout was performed.    
+        public void SetFullLayoutTime(long t) { }
+
+        // Returns the position that should be shown when full (delayed) layout is performed.    
+        public long GetFullLayoutSavedPosition() => default;
+
+        // Sets the position that should be shown when full (delayed) layout is performed.    
+        public void SetFullLayoutSavedPosition(long p) { }
+
+        // Forces any pending layout due to delayed, partial layout when the control was resized.
+        public void ForceDelayedLayout() { }
+
+        // Returns <c>true</c> if we are showing the caret position at the start of a line
+        // instead of at the end of the previous one.
+        public bool GetCaretAtLineStart() => default;
+
+        // Sets a flag to remember that we are showing the caret position at the start of a line
+        // instead of at the end of the previous one.    
+        public void SetCaretAtLineStart(bool atStart) { }
+
+        // Returns <c>true</c> if we are dragging a selection.    
+        public bool GetDragging() => default;
+
+        // Sets a flag to remember if we are dragging a selection.
+        public void SetDragging(bool dragging) { }
+
+        // Returns the current context menu.    
+        public IntPtr GetContextMenu() => default;
+
+        // Sets the current context menu.    
+        public void SetContextMenu(IntPtr menu) { }
+
+        // Returns an anchor so we know how to extend the selection.
+        // It's a caret position since it's between two characters.    
+        public long GetSelectionAnchor() => default;
+
+        // Sets an anchor so we know how to extend the selection.
+        // It's a caret position since it's between two characters.    
+        public void SetSelectionAnchor(long anchor) { }
+
+        // Returns the anchor object if selecting multiple containers.
+        public IntPtr GetSelectionAnchorObject() => default;
+
+        // Sets the anchor object if selecting multiple containers.
+        public void SetSelectionAnchorObject(IntPtr anchor) { }
+
+        // Returns the wxRichTextObject object that currently has the editing focus.
+        // If there are no composite objects, this will be the top-level buffer.
+        public IntPtr GetFocusObject() => default;
+
+        // Sets m_focusObject without making any alterations.
+        public void StoreFocusObject(IntPtr obj) { }
+
+        // Sets the wxRichTextObject object that currently has the editing focus.
+        public bool SetFocusObject(IntPtr obj, bool setCaretPosition = true) => default;
+
+        // Invalidates the whole buffer to trigger painting later.    
+        public void Invalidate() { }
+
+        // Clears the buffer content, leaving a single empty paragraph. Cannot be undone.    
+        public void Clear() { }
+
+        // Replaces the content in the specified range with the string specified by @a value.
+        public void Replace(long from, long to, string value) { }
+
+        // Removes the content in the specified range.    
+        public void Remove(long from, long to) { }
+
+        public bool LoadFile(string file, int type) => default;
+
+        // Saves the buffer content using the given type.
+        // If the specified type is wxRICHTEXT_TYPE_ANY, the type is deduced from
+        // the filename extension.    
+        public bool SaveFile(string file, int type) => default;
+
+        // Sets flags that change the behaviour of loading or saving.
+        // See the documentation for each handler class to see what flags are
+        // relevant for each handler.    
+        public void SetHandlerFlags(int flags) { }
+
+        // Returns flags that change the behaviour of loading or saving.
+        // See the documentation for each handler class to see what flags are
+        // relevant for each handler.
+        public int GetHandlerFlags() => default;
+
+        // Marks the buffer as modified.    
+        public void MarkDirty() { }
+
+        // Sets the buffer's modified status to @false, and clears the buffer's command history.    
+        public void DiscardEdits() { }
+
+        // Sets the maximum number of characters that may be entered in a single line
+        // text control.For compatibility only; currently does nothing.
+        public void SetMaxLength(ulong len) { }
+
+        // Writes text at the current position.    
+        public void WriteText(string text) { }
+
+        // Sets the insertion point to the end of the buffer and writes the text.    
+        public void AppendText(string text) { }
+
+        // Translates from column and line number to position.    
+        public long XYToPosition(long x, long y) => default;
+
+        // Scrolls the buffer so that the given position is in view.    
+        public void ShowPosition(long pos) { }
+
+        // Copies the selected content (if any) to the clipboard.    
+        public void Copy() { }
+
+        // Copies the selected content (if any) to the clipboard and deletes the selection.
+        // This is undoable.    
+        public void Cut() { }
+
+        // Pastes content from the clipboard to the buffer.    
+        public void Paste() { }
+
+        // Deletes the content in the selection, if any. This is undoable.    
+        public void DeleteSelection() { }
+
+        // Returns <c>true</c> if selected content can be copied to the clipboard.    
+        public bool CanCopy() => default;
+
+        // Returns <c>true</c> if selected content can be copied to the clipboard and deleted.    
+        public bool CanCut() => default;
+
+        // Returns <c>true</c> if the clipboard content can be pasted to the buffer.    
+        public bool CanPaste() => default;
+
+        // Returns <c>true</c> if selected content can be deleted.    
+        public bool CanDeleteSelection() => default;
+
+        // Undoes the command at the top of the command history, if there is one.    
+        public void Undo() { }
+
+        // Redoes the current command.    
+        public void Redo() { }
+
+        // Returns <c>true</c> if there is a command in the command history that can be undone.    
+        public bool CanUndo() => default;
+
+        // Returns <c>true</c> if there is a command in the command history that can be redone.    
+        public bool CanRedo() => default;
+
+        // Sets the insertion point and causes the current editing style to be taken from
+        // the new position (unlike wxRichTextCtrl::SetCaretPosition).    
+        public void SetInsertionPoint(long pos) { }
+
+        // Sets the insertion point to the end of the text control.    
+        public void SetInsertionPointEnd() { }
+
+        // Returns the current insertion point.    
+        public long GetInsertionPoint() => default;
+
+        // Sets the selection to the given range.
+        // The end point of range is specified as the last character position of the span
+        // of text, plus one.
+        // So, for example, to set the selection for a character at position 5, use the
+        // range (5,6).
+        public void SetSelection(long from, long to) { }
+
+        // Makes the control editable, or not.
+        public void SetEditable(bool editable) { }
+
+        // Returns <c>true</c> if there is a selection and the object containing the selection
+        // was the same as the current focus object.    
+        public bool HasSelection() => default;
+
+        // Returns <c>true</c> if there was a selection, whether or not the current focus object
+        // is the same as the selection's container object.    
+        public bool HasUnfocusedSelection() => default;
+
+        // Inserts a new paragraph at the current insertion point. @see LineBreak().    
+        public bool Newline() => default;
+
+        // Inserts a line break at the current insertion point.
+        //A line break forces wrapping within a paragraph, and can be introduced by
+        //using this function, by appending the wxChar value @b  wxRichTextLineBreakChar
+        //to text content, or by typing Shift-Return.    
+        public bool LineBreak() => default;
+
+        // Ends the current style.    
+        public bool EndStyle() => default;
+
+        // Ends application of all styles in the current style stack.
+        public bool EndAllStyles() => default;
+
+        // Begins using bold.
+        public bool BeginBold() => default;
+
+        // Ends using bold.
+        public bool EndBold() => default;
+
+        // Begins using italic.    
+        public bool BeginItalic() => default;
+
+        // Ends using italic.    
+        public bool EndItalic() => default;
+
+        // Begins using underlining.    
+        public bool BeginUnderline() => default;
+
+        // End applying underlining.    
+        public bool EndUnderline() => default;
+
+        // Begins using the given point size.    
+        public bool BeginFontSize(int pointSize) => default;
+
+        // Ends using a point size.    
+        public bool EndFontSize() => default;
+
+        // Begins using this font.    
+        public bool BeginFont(Font? font) => default;
+
+        // Ends using a font.    
+        public bool EndFont() => default;
+
+        // Begins using this colour.    
+        public bool BeginTextColour(Color colour) => default;
+
+        // Ends applying a text colour.    
+        public bool EndTextColour() => default;
+
+        // Begins using alignment.
+        // For alignment values, see wxTextAttr.
+        public bool BeginAlignment(int alignment) => default;
+
+        // Ends alignment.    
+        public bool EndAlignment() => default;
+
+        // Begins applying a left indent and subindent in tenths of a millimetre.
+        // The subindent is an offset from the left edge of the paragraph, and is
+        // used for all but the first line in a paragraph. A positive value will
+        // cause the first line to appear to the left of the subsequent lines, and
+        // a negative value will cause the first line to be indented to the right
+        // of the subsequent lines.
+        // wxRichTextBuffer uses indentation to render a bulleted item. The
+        // content of the paragraph, including the first line, starts at the
+        // @a leftIndent plus the @a leftSubIndent.
+        // @param leftIndent
+        // The distance between the margin and the bullet.
+        // @param leftSubIndent
+        // The distance between the left edge of the bullet and the left edge
+        // of the actual paragraph.    
+        public bool BeginLeftIndent(int leftIndent, int leftSubIndent = 0) => default;
+
+        // Ends left indent.    
+        public bool EndLeftIndent() => default;
+
+        // Begins a right indent, specified in tenths of a millimetre.    
+        public bool BeginRightIndent(int rightIndent) => default;
+
+        // Ends right indent.    
+        public bool EndRightIndent() => default;
+
+        // Begins paragraph spacing; pass the before-paragraph and after-paragraph spacing
+        // in tenths of a millimetre.    
+        public bool BeginParagraphSpacing(int before, int after) => default;
+
+        // Ends paragraph spacing.    
+        public bool EndParagraphSpacing() => default;
+
+        // Begins applying line spacing. @e spacing is a multiple, where 10 means
+        // single-spacing, 15 means 1.5 spacing, and 20 means double spacing.
+        // The ::wxTextAttrLineSpacing constants are defined for convenience.
+        public bool BeginLineSpacing(int lineSpacing) => default;
+
+        // Ends line spacing.    
+        public bool EndLineSpacing() => default;
     }
 }
 
 /*
 
-// 
-Returns the range of the current selection.
-        The end point of range is specified as the last character position of the span
-        of text, plus one.
-        If the return values @a from and @a to are the same, there is no selection.
-    
-    void GetSelection(long* from, long* to) const wxOVERRIDE;
-    const wxRichTextSelection& GetSelection() const { return m_selection; }
-    wxRichTextSelection& GetSelection() { return m_selection; }
+=> default;
+=======================
 
-    // 
-        Returns the text within the current selection range, if any.
-    
-    wxString GetStringSelection() const wxOVERRIDE;
-
-    // 
-        Gets the current filename associated with the control.
-    
-    wxString GetFilename() const { return m_filename; }
-
-    // 
-        Sets the current filename.
-    
-    void SetFilename(const wxString& filename) { m_filename = filename; }
-
-    // 
-        Sets the size of the buffer beyond which layout is delayed during resizing.
-        This optimizes sizing for large buffers. The default is 20000.
-    
-    void SetDelayedLayoutThreshold(long threshold) { m_delayedLayoutThreshold = threshold; }
-
-    // 
-        Gets the size of the buffer beyond which layout is delayed during resizing.
-        This optimizes sizing for large buffers. The default is 20000.
-    
-    long GetDelayedLayoutThreshold() const { return m_delayedLayoutThreshold; }
-
-    // 
-        Gets the flag indicating that full layout is required.
-    
-    bool GetFullLayoutRequired() const { return m_fullLayoutRequired; }
-
-    // 
-        Sets the flag indicating that full layout is required.
-    
-    void SetFullLayoutRequired(bool b) { m_fullLayoutRequired = b; }
-
-    // 
-        Returns the last time full layout was performed.
-    
-    wxLongLong GetFullLayoutTime() const { return m_fullLayoutTime; }
-
-    // 
-        Sets the last time full layout was performed.
-    
-    void SetFullLayoutTime(wxLongLong t) { m_fullLayoutTime = t; }
-
-    // 
-        Returns the position that should be shown when full (delayed) layout is performed.
-    
-    long GetFullLayoutSavedPosition() const { return m_fullLayoutSavedPosition; }
-
-    // 
-        Sets the position that should be shown when full (delayed) layout is performed.
-    
-    void SetFullLayoutSavedPosition(long p) { m_fullLayoutSavedPosition = p; }
-
-    // 
-        Forces any pending layout due to delayed, partial layout when the control
-        was resized.
-    
-    void ForceDelayedLayout();
-
-    // 
-        Sets the text (normal) cursor.
-    
-    void SetTextCursor(const wxCursor& cursor ) { m_textCursor = cursor; }
-
-    // 
-        Returns the text (normal) cursor.
-    
-    wxCursor GetTextCursor() const { return m_textCursor; }
-
-    // 
-        Sets the cursor to be used over URLs.
-    
-    void SetURLCursor(const wxCursor& cursor ) { m_urlCursor = cursor; }
-
-    // 
-        Returns the cursor to be used over URLs.
-    
-    wxCursor GetURLCursor() const { return m_urlCursor; }
-
-    // 
-        Returns <c>true</c> if we are showing the caret position at the start of a line
-        instead of at the end of the previous one.
-    
-    bool GetCaretAtLineStart() const { return m_caretAtLineStart; }
-
-    // 
-        Sets a flag to remember that we are showing the caret position at the start of a line
-        instead of at the end of the previous one.
-    
-    void SetCaretAtLineStart(bool atStart) { m_caretAtLineStart = atStart; }
-
-    // 
-        Returns <c>true</c> if we are dragging a selection.
-    
-    bool GetDragging() const { return m_dragging; }
-
-    // 
-        Sets a flag to remember if we are dragging a selection.
-    
-    void SetDragging(bool dragging) { m_dragging = dragging; }
-
-
-#if wxRICHTEXT_BUFFERED_PAINTING
-    //@{
-    // 
-        Returns the buffer bitmap if using buffered painting.
-    
-    const wxBitmap& GetBufferBitmap() const { return m_bufferBitmap; }
-    wxBitmap& GetBufferBitmap() { return m_bufferBitmap; }
-    //@}
-#endif
-
-    // 
-        Returns the current context menu.
-    
-    wxMenu* GetContextMenu()
-
-    // 
-        Sets the current context menu.
-    
-    void SetContextMenu(wxMenu* menu);
-
-    // 
-        Returns an anchor so we know how to extend the selection.
-        It's a caret position since it's between two characters.
-    
-    long GetSelectionAnchor()
-
-    // 
-        Sets an anchor so we know how to extend the selection.
-        It's a caret position since it's between two characters.
-    
-    void SetSelectionAnchor(long anchor)
-
-    // 
-        Returns the anchor object if selecting multiple containers.
-    
-    wxRichTextObject* GetSelectionAnchorObject()
-
-    // 
-        Sets the anchor object if selecting multiple containers.
-    
-    void SetSelectionAnchorObject(wxRichTextObject* anchor)
-
-    //@{
-    // 
-        Returns an object that stores information about context menu property item(s),
-        in order to communicate between the context menu event handler and the code
-        that responds to it. The wxRichTextContextMenuPropertiesInfo stores one
-        item for each object that could respond to a property-editing event. If
-        objects are nested, several might be editable.
-    
-    wxRichTextContextMenuPropertiesInfo& GetContextMenuPropertiesInfo()
-    const wxRichTextContextMenuPropertiesInfo& GetContextMenuPropertiesInfo()
-    //@}
-
-    // 
-        Returns the wxRichTextObject object that currently has the editing focus.
-        If there are no composite objects, this will be the top-level buffer.
-    
-    wxRichTextParagraphLayoutBox* GetFocusObject()
-
-    // 
-        Sets m_focusObject without making any alterations.
-    
-    void StoreFocusObject(wxRichTextParagraphLayoutBox* obj)
-
-    // 
-        Sets the wxRichTextObject object that currently has the editing focus.
-    
-    bool SetFocusObject(wxRichTextParagraphLayoutBox* obj, bool setCaretPosition = true);
-
-    // 
-        Invalidates the whole buffer to trigger painting later.
-    
-    void Invalidate() { GetBuffer().Invalidate(wxRICHTEXT_ALL); }
-
-    // 
-        Clears the buffer content, leaving a single empty paragraph. Cannot be undone.
-    
-    void Clear() wxOVERRIDE;
-
-    // 
-        Replaces the content in the specified range with the string specified by
-        @a value.
-    
-    void Replace(long from, long to, const wxString& value) wxOVERRIDE;
-
-    // 
-        Removes the content in the specified range.
-    
-    void Remove(long from, long to) wxOVERRIDE;
-
-#ifdef DOXYGEN
-    // 
-        Loads content into the control's buffer using the given type.
-
-        If the specified type is wxRICHTEXT_TYPE_ANY, the type is deduced from
-        the filename extension.
-
-        This function looks for a suitable wxRichTextFileHandler object.
-    
-    bool LoadFile(const wxString& file,
-                  int type = wxRICHTEXT_TYPE_ANY);
-#endif
-
-#if wxUSE_FFILE && wxUSE_STREAMS
-    // 
-        Helper function for LoadFile(). Loads content into the control's buffer using the given type.
-
-        If the specified type is wxRICHTEXT_TYPE_ANY, the type is deduced from
-        the filename extension.
-
-        This function looks for a suitable wxRichTextFileHandler object.
-    
-    bool DoLoadFile(const wxString& file, int fileType) wxOVERRIDE;
-#endif // wxUSE_FFILE && wxUSE_STREAMS
-
-#ifdef DOXYGEN
-    // 
-        Saves the buffer content using the given type.
-
-        If the specified type is wxRICHTEXT_TYPE_ANY, the type is deduced from
-        the filename extension.
-
-        This function looks for a suitable wxRichTextFileHandler object.
-    
-    bool SaveFile(const wxString& file = wxEmptyString,
-                  int type = wxRICHTEXT_TYPE_ANY);
-#endif
-
-#if wxUSE_FFILE && wxUSE_STREAMS
-    // 
-        Helper function for SaveFile(). Saves the buffer content using the given type.
-
-        If the specified type is wxRICHTEXT_TYPE_ANY, the type is deduced from
-        the filename extension.
-
-        This function looks for a suitable wxRichTextFileHandler object.
-    
-    bool DoSaveFile(const wxString& file = wxEmptyString,
-                            int fileType = wxRICHTEXT_TYPE_ANY) wxOVERRIDE;
-#endif // wxUSE_FFILE && wxUSE_STREAMS
-
-    // 
-        Sets flags that change the behaviour of loading or saving.
-
-        See the documentation for each handler class to see what flags are
-        relevant for each handler.
-    
-    void SetHandlerFlags(int flags) { GetBuffer().SetHandlerFlags(flags); }
-
-    // 
-        Returns flags that change the behaviour of loading or saving.
-        See the documentation for each handler class to see what flags are
-        relevant for each handler.
-    
-    int GetHandlerFlags() const { return GetBuffer().GetHandlerFlags(); }
-
-    // 
-        Marks the buffer as modified.
-    
-    void MarkDirty() wxOVERRIDE;
-
-    // 
-        Sets the buffer's modified status to @false, and clears the buffer's command
-        history.
-    
-    void DiscardEdits() wxOVERRIDE;
-
-    // 
-        Sets the maximum number of characters that may be entered in a single line
-        text control. For compatibility only; currently does nothing.
-    
-    void SetMaxLength(unsigned long WXUNUSED(len)) wxOVERRIDE { }
-
-    // 
-        Writes text at the current position.
-    
-    void WriteText(const wxString& text) wxOVERRIDE;
-
-    // 
-        Sets the insertion point to the end of the buffer and writes the text.
-    
-    void AppendText(const wxString& text) wxOVERRIDE;
-
-    //@{
-    // 
-        Gets the attributes at the given position.
-        This function gets the combined style - that is, the style you see on the
-        screen as a result of combining base style, paragraph style and character
-        style attributes.
-
-        To get the character or paragraph style alone, use GetUncombinedStyle().
-
-        @beginWxPerlOnly
-        In wxPerl this method is implemented as GetStyle(@a position)
-        returning a 2-element list (ok, attr).
-        @endWxPerlOnly
-    
-    bool GetStyle(long position, wxTextAttr& style) wxOVERRIDE;
-    bool GetStyle(long position, wxRichTextAttr& style);
-    bool GetStyle(long position, wxRichTextAttr& style, wxRichTextParagraphLayoutBox* container);
-    //@}
-
-    //@{
-    // 
-        Sets the attributes for the given range.
-        The end point of range is specified as the last character position of the span
-        of text, plus one.
-
-        So, for example, to set the style for a character at position 5, use the range
-        (5,6).
-    
-    bool SetStyle(long start, long end, const wxTextAttr& style) wxOVERRIDE;
-    bool SetStyle(long start, long end, const wxRichTextAttr& style);
-    bool SetStyle(const wxRichTextRange& range, const wxTextAttr& style);
-    bool SetStyle(const wxRichTextRange& range, const wxRichTextAttr& style);
-    //@}
-
-    // 
-        Sets the attributes for a single object
-    
-    void SetStyle(wxRichTextObject *obj, const wxRichTextAttr& textAttr, int flags = wxRICHTEXT_SETSTYLE_WITH_UNDO);
-
-    //@{
-    // 
-        Gets the attributes common to the specified range.
-        Attributes that differ in value within the range will not be included
-        in @a style flags.
-
-        @beginWxPerlOnly
-        In wxPerl this method is implemented as GetStyleForRange(@a position)
-        returning a 2-element list (ok, attr).
-        @endWxPerlOnly
-    
-    bool GetStyleForRange(const wxRichTextRange& range, wxTextAttr& style);
-    bool GetStyleForRange(const wxRichTextRange& range, wxRichTextAttr& style);
-    bool GetStyleForRange(const wxRichTextRange& range, wxRichTextAttr& style, wxRichTextParagraphLayoutBox* container);
-    //@}
-
-    // 
-        Sets the attributes for the given range, passing flags to determine how the
-        attributes are set.
-
-        The end point of range is specified as the last character position of the span
-        of text, plus one. So, for example, to set the style for a character at
-        position 5, use the range (5,6).
-
-        @a flags may contain a bit list of the following values:
-        - wxRICHTEXT_SETSTYLE_NONE: no style flag.
-        - wxRICHTEXT_SETSTYLE_WITH_UNDO: specifies that this operation should be
-          undoable.
-        - wxRICHTEXT_SETSTYLE_OPTIMIZE: specifies that the style should not be applied
-          if the combined style at this point is already the style in question.
-        - wxRICHTEXT_SETSTYLE_PARAGRAPHS_ONLY: specifies that the style should only be
-          applied to paragraphs, and not the content.
-          This allows content styling to be preserved independently from that
-          of e.g. a named paragraph style.
-        - wxRICHTEXT_SETSTYLE_CHARACTERS_ONLY: specifies that the style should only be
-          applied to characters, and not the paragraph.
-          This allows content styling to be preserved independently from that
-          of e.g. a named paragraph style.
-        - wxRICHTEXT_SETSTYLE_RESET: resets (clears) the existing style before applying
-          the new style.
-        - wxRICHTEXT_SETSTYLE_REMOVE: removes the specified style. Only the style flags
-          are used in this operation.
-    
-    bool SetStyleEx(const wxRichTextRange& range, const wxRichTextAttr& style, int flags = wxRICHTEXT_SETSTYLE_WITH_UNDO);
-
-    //@{
-    // 
-        Gets the attributes at the given position.
-        This function gets the @e uncombined style - that is, the attributes associated
-        with the paragraph or character content, and not necessarily the combined
-        attributes you see on the screen.
-        To get the combined attributes, use GetStyle().
-
-        If you specify (any) paragraph attribute in @e style's flags, this function
-        will fetch the paragraph attributes.
-        Otherwise, it will return the character attributes.
-
-        @beginWxPerlOnly
-        In wxPerl this method is implemented as GetUncombinedStyle(@a position)
-        returning a 2-element list (ok, attr).
-        @endWxPerlOnly
-    
-    bool GetUncombinedStyle(long position, wxRichTextAttr& style);
-    bool GetUncombinedStyle(long position, wxRichTextAttr& style, wxRichTextParagraphLayoutBox* container);
-    //@}
-
-    //@{
-    // 
-        Sets the current default style, which can be used to change how subsequently
-        inserted text is displayed.
-    
-    bool SetDefaultStyle(const wxTextAttr& style) wxOVERRIDE;
-    bool SetDefaultStyle(const wxRichTextAttr& style);
-    //@}
-
-    // 
-        Returns the current default style, which can be used to change how subsequently
-        inserted text is displayed.
-    
-    const wxRichTextAttr& GetDefaultStyleEx() const;
-
-    //const wxTextAttr& GetDefaultStyle() const;
-
-    //@{
-    // 
-        Sets the list attributes for the given range, passing flags to determine how
-        the attributes are set.
-
-        Either the style definition or the name of the style definition (in the current
-        sheet) can be passed.
-        @a flags is a bit list of the following:
-        - wxRICHTEXT_SETSTYLE_WITH_UNDO: specifies that this command will be undoable.
-        - wxRICHTEXT_SETSTYLE_RENUMBER: specifies that numbering should start from
-          @a startFrom, otherwise existing attributes are used.
-        - wxRICHTEXT_SETSTYLE_SPECIFY_LEVEL: specifies that @a listLevel should be used
-          as the level for all paragraphs, otherwise the current indentation will be used.
-
-        @see NumberList(), PromoteList(), ClearListStyle().
-    
-    bool SetListStyle(const wxRichTextRange& range, wxRichTextListStyleDefinition* def, int flags = wxRICHTEXT_SETSTYLE_WITH_UNDO, int startFrom = 1, int specifiedLevel = -1);
-    bool SetListStyle(const wxRichTextRange& range, const wxString& defName, int flags = wxRICHTEXT_SETSTYLE_WITH_UNDO, int startFrom = 1, int specifiedLevel = -1);
-    //@}
-
-    // 
-        Clears the list style from the given range, clearing list-related attributes
-        and applying any named paragraph style associated with each paragraph.
-
-        @a flags is a bit list of the following:
-        - wxRICHTEXT_SETSTYLE_WITH_UNDO: specifies that this command will be undoable.
-
-        @see SetListStyle(), PromoteList(), NumberList().
-    
-    bool ClearListStyle(const wxRichTextRange& range, int flags = wxRICHTEXT_SETSTYLE_WITH_UNDO);
-
-    //@{
-    // 
-        Numbers the paragraphs in the given range.
-        Pass flags to determine how the attributes are set.
-
-        Either the style definition or the name of the style definition (in the current
-        sheet) can be passed.
-
-        @a flags is a bit list of the following:
-        - wxRICHTEXT_SETSTYLE_WITH_UNDO: specifies that this command will be undoable.
-        - wxRICHTEXT_SETSTYLE_RENUMBER: specifies that numbering should start from
-          @a startFrom, otherwise existing attributes are used.
-        - wxRICHTEXT_SETSTYLE_SPECIFY_LEVEL: specifies that @a listLevel should be used
-          as the level for all paragraphs, otherwise the current indentation will be used.
-
-        @see SetListStyle(), PromoteList(), ClearListStyle().
-    
-    bool NumberList(const wxRichTextRange& range, wxRichTextListStyleDefinition* def = NULL, int flags = wxRICHTEXT_SETSTYLE_WITH_UNDO, int startFrom = 1, int specifiedLevel = -1);
-    bool NumberList(const wxRichTextRange& range, const wxString& defName, int flags = wxRICHTEXT_SETSTYLE_WITH_UNDO, int startFrom = 1, int specifiedLevel = -1);
-    //@}
-
-    //@{
-    // 
-        Promotes or demotes the paragraphs in the given range.
-        A positive @a promoteBy produces a smaller indent, and a negative number
-        produces a larger indent. Pass flags to determine how the attributes are set.
-        Either the style definition or the name of the style definition (in the current
-        sheet) can be passed.
-
-        @a flags is a bit list of the following:
-        - wxRICHTEXT_SETSTYLE_WITH_UNDO: specifies that this command will be undoable.
-        - wxRICHTEXT_SETSTYLE_RENUMBER: specifies that numbering should start from
-          @a startFrom, otherwise existing attributes are used.
-        - wxRICHTEXT_SETSTYLE_SPECIFY_LEVEL: specifies that @a listLevel should be used
-        as the level for all paragraphs, otherwise the current indentation will be used.
-
-        @see SetListStyle(), @see SetListStyle(), ClearListStyle().
-    
-    bool PromoteList(int promoteBy, const wxRichTextRange& range, wxRichTextListStyleDefinition* def = NULL, int flags = wxRICHTEXT_SETSTYLE_WITH_UNDO, int specifiedLevel = -1);
-    bool PromoteList(int promoteBy, const wxRichTextRange& range, const wxString& defName, int flags = wxRICHTEXT_SETSTYLE_WITH_UNDO, int specifiedLevel = -1);
-    //@}
-
-    // 
-        Sets the properties for the given range, passing flags to determine how the
-        attributes are set. You can merge properties or replace them.
-
-        The end point of range is specified as the last character position of the span
-        of text, plus one. So, for example, to set the properties for a character at
-        position 5, use the range (5,6).
-
-        @a flags may contain a bit list of the following values:
-        - wxRICHTEXT_SETSPROPERTIES_NONE: no flag.
-        - wxRICHTEXT_SETPROPERTIES_WITH_UNDO: specifies that this operation should be
-          undoable.
-        - wxRICHTEXT_SETPROPERTIES_PARAGRAPHS_ONLY: specifies that the properties should only be
-          applied to paragraphs, and not the content.
-        - wxRICHTEXT_SETPROPERTIES_CHARACTERS_ONLY: specifies that the properties should only be
-          applied to characters, and not the paragraph.
-        - wxRICHTEXT_SETPROPERTIES_RESET: resets (clears) the existing properties before applying
-          the new properties.
-        - wxRICHTEXT_SETPROPERTIES_REMOVE: removes the specified properties.
-    
-    bool SetProperties(const wxRichTextRange& range, const wxRichTextProperties& properties, int flags = wxRICHTEXT_SETPROPERTIES_WITH_UNDO);
-
-    // 
-        Deletes the content within the given range.
-    
-    bool Delete(const wxRichTextRange& range);
-
-    // 
-        Translates from column and line number to position.
-    
-    long XYToPosition(long x, long y) const wxOVERRIDE;
-
-    // 
-        Converts a text position to zero-based column and line numbers.
-    
-    bool PositionToXY(long pos, long *x, long *y) const wxOVERRIDE;
-
-    // 
-        Scrolls the buffer so that the given position is in view.
-    
-    void ShowPosition(long pos) wxOVERRIDE;
-
-    //@{
-    // 
-        Finds the character at the given position in pixels.
-        @a pt is in device coords (not adjusted for the client area origin nor for
-        scrolling).
-    
-    wxTextCtrlHitTestResult HitTest(const wxPoint& pt, long *pos) const wxOVERRIDE;
-    wxTextCtrlHitTestResult HitTest(const wxPoint& pt,
-                                            wxTextCoord *col,
-                                            wxTextCoord *row) const wxOVERRIDE;
-
-    // 
-        Finds the container at the given point, which is in screen coordinates.
-    
-    wxRichTextParagraphLayoutBox* FindContainerAtPoint(const wxPoint& pt, long& position, int& hit, wxRichTextObject* hitObj, int flags = 0);
-    //@}
-
-#if wxUSE_DRAG_AND_DROP
-    // 
-        Does the 'drop' of Drag'n'Drop.
-    
-    void OnDrop(wxCoord WXUNUSED(x), wxCoord WXUNUSED(y), wxDragResult def, wxDataObject* DataObj);
-#endif
-
-// Clipboard operations
-
-    // 
-        Copies the selected content (if any) to the clipboard.
-    
-    void Copy() wxOVERRIDE;
-
-    // 
-        Copies the selected content (if any) to the clipboard and deletes the selection.
-        This is undoable.
-    
-    void Cut() wxOVERRIDE;
-
-    // 
-        Pastes content from the clipboard to the buffer.
-    
-    void Paste() wxOVERRIDE;
-
-    // 
-        Deletes the content in the selection, if any. This is undoable.
-    
-    void DeleteSelection();
-
-    // 
-        Returns <c>true</c> if selected content can be copied to the clipboard.
-    
-    bool CanCopy() const wxOVERRIDE;
-
-    // 
-        Returns <c>true</c> if selected content can be copied to the clipboard and deleted.
-    
-    bool CanCut() const wxOVERRIDE;
-
-    // 
-        Returns <c>true</c> if the clipboard content can be pasted to the buffer.
-    
-    bool CanPaste() const wxOVERRIDE;
-
-    // 
-        Returns <c>true</c> if selected content can be deleted.
-    
-    bool CanDeleteSelection() const;
-
-    // 
-        Undoes the command at the top of the command history, if there is one.
-    
-    void Undo() wxOVERRIDE;
-
-    // 
-        Redoes the current command.
-    
-    void Redo() wxOVERRIDE;
-
-    // 
-        Returns <c>true</c> if there is a command in the command history that can be undone.
-    
-    bool CanUndo() const wxOVERRIDE;
-
-    // 
-        Returns <c>true</c> if there is a command in the command history that can be redone.
-    
-    bool CanRedo() const wxOVERRIDE;
-
-    // 
-        Sets the insertion point and causes the current editing style to be taken from
-        the new position (unlike wxRichTextCtrl::SetCaretPosition).
-    
-    void SetInsertionPoint(long pos) wxOVERRIDE;
-
-    // 
-        Sets the insertion point to the end of the text control.
-    
-    void SetInsertionPointEnd() wxOVERRIDE;
-
-    // 
-        Returns the current insertion point.
-    
-    long GetInsertionPoint() const wxOVERRIDE;
-
-    // 
-        Returns the last position in the buffer.
-    
-    wxTextPos GetLastPosition() const wxOVERRIDE;
-
-    //@{
-    // 
-        Sets the selection to the given range.
-        The end point of range is specified as the last character position of the span
-        of text, plus one.
-
-        So, for example, to set the selection for a character at position 5, use the
-        range (5,6).
-    
-    void SetSelection(long from, long to) wxOVERRIDE;
-    void SetSelection(const wxRichTextSelection& sel) { m_selection = sel; }
-    //@}
-
-    // 
-        Makes the control editable, or not.
-    
-    void SetEditable(bool editable) wxOVERRIDE;
-
-    // 
-        Returns <c>true</c> if there is a selection and the object containing the selection
-        was the same as the current focus object.
-    
-    bool HasSelection() const;
-
-    // 
-        Returns <c>true</c> if there was a selection, whether or not the current focus object
-        is the same as the selection's container object.
-    
-    bool HasUnfocusedSelection() const;
-
-    //@{
-    // 
-        Write a bitmap or image at the current insertion point.
-        Supply an optional type to use for internal and file storage of the raw data.
-    
-    bool WriteImage(const wxImage& image, wxBitmapType bitmapType = wxBITMAP_TYPE_PNG,
-                            const wxRichTextAttr& textAttr = wxRichTextAttr());
-
-    bool WriteImage(const wxBitmap& bitmap, wxBitmapType bitmapType = wxBITMAP_TYPE_PNG,
-                            const wxRichTextAttr& textAttr = wxRichTextAttr());
-    //@}
-
-    // 
-        Loads an image from a file and writes it at the current insertion point.
-    
-    bool WriteImage(const wxString& filename, wxBitmapType bitmapType,
-                            const wxRichTextAttr& textAttr = wxRichTextAttr());
-
-    // 
-        Writes an image block at the current insertion point.
-    
-    bool WriteImage(const wxRichTextImageBlock& imageBlock,
-                            const wxRichTextAttr& textAttr = wxRichTextAttr());
-
-    // 
-        Write a text box at the current insertion point, returning the text box.
-        You can then call SetFocusObject() to set the focus to the new object.
-    
-    wxRichTextBox* WriteTextBox(const wxRichTextAttr& textAttr = wxRichTextAttr());
-
-    // 
-        Writes a field at the current insertion point.
-
-        @param fieldType
-            The field type, matching an existing field type definition.
-        @param properties
-            Extra data for the field.
-        @param textAttr
-            Optional attributes.
-
-        @see wxRichTextField, wxRichTextFieldType, wxRichTextFieldTypeStandard
-    
-    wxRichTextField* WriteField(const wxString& fieldType, const wxRichTextProperties& properties,
-                            const wxRichTextAttr& textAttr = wxRichTextAttr());
-
-    // 
-        Write a table at the current insertion point, returning the table.
-        You can then call SetFocusObject() to set the focus to the new object.
-    
-    wxRichTextTable* WriteTable(int rows, int cols, const wxRichTextAttr& tableAttr = wxRichTextAttr(), const wxRichTextAttr& cellAttr = wxRichTextAttr());
-
-    // 
-        Inserts a new paragraph at the current insertion point. @see LineBreak().
-    
-    bool Newline();
-
-    // 
-        Inserts a line break at the current insertion point.
-
-        A line break forces wrapping within a paragraph, and can be introduced by
-        using this function, by appending the wxChar value @b  wxRichTextLineBreakChar
-        to text content, or by typing Shift-Return.
-    
-    bool LineBreak();
-
-    // 
-        Sets the basic (overall) style.
-
-        This is the style of the whole buffer before further styles are applied,
-        unlike the default style, which only affects the style currently being
-        applied (for example, setting the default style to bold will cause
-        subsequently inserted text to be bold).
-    
-    void SetBasicStyle(const wxRichTextAttr& style) { GetBuffer().SetBasicStyle(style); }
-
-    // 
-        Gets the basic (overall) style.
-
-        This is the style of the whole buffer before further styles are applied,
-        unlike the default style, which only affects the style currently being
-        applied (for example, setting the default style to bold will cause
-        subsequently inserted text to be bold).
-    
-    const wxRichTextAttr& GetBasicStyle() const { return GetBuffer().GetBasicStyle(); }
-
-    // 
-        Begins applying a style.
-    
-    bool BeginStyle(const wxRichTextAttr& style) { return GetBuffer().BeginStyle(style); }
-
-    // 
-        Ends the current style.
-    
-    bool EndStyle() { return GetBuffer().EndStyle(); }
-
-    // 
-        Ends application of all styles in the current style stack.
-    
-    bool EndAllStyles() { return GetBuffer().EndAllStyles(); }
-
-    // 
-        Begins using bold.
-    
-    bool BeginBold() { return GetBuffer().BeginBold(); }
-
-    // 
-        Ends using bold.
-    
-    bool EndBold()  { return GetBuffer().EndBold(); }
-
-    // 
-        Begins using italic.
-    
-    bool BeginItalic() { return GetBuffer().BeginItalic(); }
-
-    // 
-        Ends using italic.
-    
-    bool EndItalic() { return GetBuffer().EndItalic(); }
-
-    // 
-        Begins using underlining.
-    
-    bool BeginUnderline() { return GetBuffer().BeginUnderline(); }
-
-    // 
-        End applying underlining.
-    
-    bool EndUnderline() { return GetBuffer().EndUnderline(); }
-
-    // 
-        Begins using the given point size.
-    
-    bool BeginFontSize(int pointSize) { return GetBuffer().BeginFontSize(pointSize); }
-
-    // 
-        Ends using a point size.
-    
-    bool EndFontSize() { return GetBuffer().EndFontSize(); }
-
-    // 
-        Begins using this font.
-    
-    bool BeginFont(const wxFont& font) { return GetBuffer().BeginFont(font); }
-
-    // 
-        Ends using a font.
-    
-    bool EndFont() { return GetBuffer().EndFont(); }
-
-    // 
-        Begins using this colour.
-    
-    bool BeginTextColour(const wxColour& colour) { return GetBuffer().BeginTextColour(colour); }
-
-    // 
-        Ends applying a text colour.
-    
-    bool EndTextColour() { return GetBuffer().EndTextColour(); }
-
-    // 
-        Begins using alignment.
-        For alignment values, see wxTextAttr.
-    
-    bool BeginAlignment(wxTextAttrAlignment alignment) { return GetBuffer().BeginAlignment(alignment); }
-
-    // 
-        Ends alignment.
-    
-    bool EndAlignment() { return GetBuffer().EndAlignment(); }
-
-    // 
-        Begins applying a left indent and subindent in tenths of a millimetre.
-        The subindent is an offset from the left edge of the paragraph, and is
-        used for all but the first line in a paragraph. A positive value will
-        cause the first line to appear to the left of the subsequent lines, and
-        a negative value will cause the first line to be indented to the right
-        of the subsequent lines.
-
-        wxRichTextBuffer uses indentation to render a bulleted item. The
-        content of the paragraph, including the first line, starts at the
-        @a leftIndent plus the @a leftSubIndent.
-
-        @param leftIndent
-            The distance between the margin and the bullet.
-        @param leftSubIndent
-             The distance between the left edge of the bullet and the left edge
-             of the actual paragraph.
-    
-    bool BeginLeftIndent(int leftIndent, int leftSubIndent = 0) { return GetBuffer().BeginLeftIndent(leftIndent, leftSubIndent); }
-
-    // 
-        Ends left indent.
-    
-    bool EndLeftIndent() { return GetBuffer().EndLeftIndent(); }
-
-    // 
-        Begins a right indent, specified in tenths of a millimetre.
-    
-    bool BeginRightIndent(int rightIndent) { return GetBuffer().BeginRightIndent(rightIndent); }
-
-    // 
-        Ends right indent.
-    
-    bool EndRightIndent() { return GetBuffer().EndRightIndent(); }
-
-    // 
-        Begins paragraph spacing; pass the before-paragraph and after-paragraph spacing
-        in tenths of a millimetre.
-    
-    bool BeginParagraphSpacing(int before, int after) { return GetBuffer().BeginParagraphSpacing(before, after); }
-
-    // 
-        Ends paragraph spacing.
-    
-    bool EndParagraphSpacing() { return GetBuffer().EndParagraphSpacing(); }
-
-    // 
-        Begins applying line spacing. @e spacing is a multiple, where 10 means
-        single-spacing, 15 means 1.5 spacing, and 20 means double spacing.
-
-        The ::wxTextAttrLineSpacing constants are defined for convenience.
-    
-    bool BeginLineSpacing(int lineSpacing) { return GetBuffer().BeginLineSpacing(lineSpacing); }
-
-    // 
-        Ends line spacing.
-    
-    bool EndLineSpacing() { return GetBuffer().EndLineSpacing(); }
 
     // 
         Begins a numbered bullet.
@@ -977,7 +370,7 @@ Returns the range of the current selection.
         See BeginNumberedBullet() for an explanation of how indentation is used
         to render the bulleted paragraph.
     
-    bool BeginSymbolBullet(const wxString& symbol, int leftIndent, int leftSubIndent, int bulletStyle = wxTEXT_ATTR_BULLET_STYLE_SYMBOL)
+    bool BeginSymbolBullet(string symbol, int leftIndent, int leftSubIndent, int bulletStyle = wxTEXT_ATTR_BULLET_STYLE_SYMBOL)
     { return GetBuffer().BeginSymbolBullet(symbol, leftIndent, leftSubIndent, bulletStyle); }
 
     // 
@@ -988,7 +381,7 @@ Returns the range of the current selection.
     // 
         Begins applying a symbol bullet.
     
-    bool BeginStandardBullet(const wxString& bulletName, int leftIndent, int leftSubIndent, int bulletStyle = wxTEXT_ATTR_BULLET_STYLE_STANDARD)
+    bool BeginStandardBullet(string bulletName, int leftIndent, int leftSubIndent, int bulletStyle = wxTEXT_ATTR_BULLET_STYLE_STANDARD)
     { return GetBuffer().BeginStandardBullet(bulletName, leftIndent, leftSubIndent, bulletStyle); }
 
     // 
@@ -999,7 +392,7 @@ Returns the range of the current selection.
     // 
         Begins using the named character style.
     
-    bool BeginCharacterStyle(const wxString& characterStyle) { return GetBuffer().BeginCharacterStyle(characterStyle); }
+    bool BeginCharacterStyle(string characterStyle) { return GetBuffer().BeginCharacterStyle(characterStyle); }
 
     // 
         Ends application of a named character style.
@@ -1009,7 +402,7 @@ Returns the range of the current selection.
     // 
         Begins applying the named paragraph style.
     
-    bool BeginParagraphStyle(const wxString& paragraphStyle) { return GetBuffer().BeginParagraphStyle(paragraphStyle); }
+    bool BeginParagraphStyle(string paragraphStyle) { return GetBuffer().BeginParagraphStyle(paragraphStyle); }
 
     // 
         Ends application of a named paragraph style.
@@ -1020,7 +413,7 @@ Returns the range of the current selection.
         Begins using a specified list style.
         Optionally, you can also pass a level and a number.
     
-    bool BeginListStyle(const wxString& listStyle, int level = 1, int number = 1) { return GetBuffer().BeginListStyle(listStyle, level, number); }
+    bool BeginListStyle(string listStyle, int level = 1, int number = 1) { return GetBuffer().BeginListStyle(listStyle, level, number); }
 
     // 
         Ends using a specified list style.
@@ -1033,7 +426,7 @@ Returns the range of the current selection.
         Pass a URL and optionally, a character style to apply, since it is common
         to mark a URL with a familiar style such as blue text with underlining.
     
-    bool BeginURL(const wxString& url, const wxString& characterStyle = wxEmptyString) { return GetBuffer().BeginURL(url, characterStyle); }
+    bool BeginURL(string url, string characterStyle = wxEmptyString) { return GetBuffer().BeginURL(url, characterStyle); }
 
     // 
         Ends applying a URL.
@@ -1048,7 +441,7 @@ Returns the range of the current selection.
     // 
         Cancels any selection.
     
-    void SelectNone() wxOVERRIDE;
+    void SelectNone()
 
     // 
         Selects the word at the given character position.
@@ -1071,7 +464,7 @@ Returns the range of the current selection.
         So, for example, to set the selection for a character at position 5, use the
         range (5,6).
     
-    void SetSelectionRange(const wxRichTextRange& range);
+    void SetSelectionRange(wxRichTextRange& range);
 
     // 
         Returns the selection range in character positions. -2, -2 means no selection
@@ -1079,7 +472,7 @@ Returns the range of the current selection.
         The range is in internal format, i.e. a single character selection is denoted
         by (n, n)
     
-    wxRichTextRange GetInternalSelectionRange() const { return m_selection.GetRange(); }
+    wxRichTextRange GetInternalSelectionRange() { return m_selection.GetRange(); }
 
     // 
         Sets the selection range in character positions. -2, -2 means no selection
@@ -1087,17 +480,17 @@ Returns the range of the current selection.
         The range is in internal format, i.e. a single character selection is denoted
         by (n, n)
     
-    void SetInternalSelectionRange(const wxRichTextRange& range) { m_selection.Set(range, GetFocusObject()); }
+    void SetInternalSelectionRange(wxRichTextRange& range) { m_selection.Set(range, GetFocusObject()); }
 
     // 
         Adds a new paragraph of text to the end of the buffer.
     
-    wxRichTextRange AddParagraph(const wxString& text);
+    wxRichTextRange AddParagraph(string text);
 
     // 
         Adds an image to the control's buffer.
     
-    wxRichTextRange AddImage(const wxImage& image);
+    wxRichTextRange AddImage(wxImage& image);
 
     // 
         Lays out the buffer, which must be done before certain operations, such as
@@ -1109,7 +502,7 @@ Returns the range of the current selection.
     // 
         Implements layout. An application may override this to perform operations before or after layout.
     
-    void DoLayoutBuffer(wxRichTextBuffer& buffer, wxDC& dc, wxRichTextDrawingContext& context, const wxRect& rect, const wxRect& parentRect, int flags);
+    void DoLayoutBuffer(wxRichTextBuffer& buffer, wxDC& dc, wxRichTextDrawingContext& context, wxRect& rect, wxRect& parentRect, int flags);
 
     // 
         Move the caret to the given character position.
@@ -1189,18 +582,18 @@ Returns the range of the current selection.
     
     bool WordRight(int noPages = 1, int flags = 0);
 
-    //@{
+    
     // 
         Returns the buffer associated with the control.
     
     wxRichTextBuffer& GetBuffer() { return m_buffer; }
-    const wxRichTextBuffer& GetBuffer() const { return m_buffer; }
-    //@}
+    wxRichTextBuffer& GetBuffer() { return m_buffer; }
+    
 
     // 
         Starts batching undo history for commands.
     
-    bool BeginBatchUndo(const wxString& cmdName) { return m_buffer.BeginBatchUndo(cmdName); }
+    bool BeginBatchUndo(string cmdName) { return m_buffer.BeginBatchUndo(cmdName); }
 
     // 
         Ends batching undo command history.
@@ -1210,7 +603,7 @@ Returns the range of the current selection.
     // 
         Returns <c>true</c> if undo commands are being batched.
     
-    bool BatchingUndo() const { return m_buffer.BatchingUndo(); }
+    bool BatchingUndo() { return m_buffer.BatchingUndo(); }
 
     // 
         Starts suppressing undo history for commands.
@@ -1225,7 +618,7 @@ Returns the range of the current selection.
     // 
         Returns <c>true</c> if undo history suppression is on.
     
-    bool SuppressingUndo() const { return m_buffer.SuppressingUndo(); }
+    bool SuppressingUndo() { return m_buffer.SuppressingUndo(); }
 
     // 
         Test if this whole range has character attributes of the specified kind.
@@ -1234,7 +627,7 @@ Returns the range of the current selection.
         You can use this to implement, for example, bold button updating.
         @a style must have flags indicating which attributes are of interest.
     
-    bool HasCharacterAttributes(const wxRichTextRange& range, const wxRichTextAttr& style) const
+    bool HasCharacterAttributes(wxRichTextRange& range, wxRichTextAttr& style) const
     {
         return GetFocusObject()->HasCharacterAttributes(range.ToInternal(), style);
     }
@@ -1245,7 +638,7 @@ Returns the range of the current selection.
         You can use this to implement, for example, centering button updating.
         @a style must have flags indicating which attributes are of interest.
     
-    bool HasParagraphAttributes(const wxRichTextRange& range, const wxRichTextAttr& style) const
+    bool HasParagraphAttributes(wxRichTextRange& range, wxRichTextAttr& style) const
     {
         return GetFocusObject()->HasParagraphAttributes(range.ToInternal(), style);
     }
@@ -1322,7 +715,7 @@ Returns the range of the current selection.
         Returns the style sheet associated with the control, if any.
         A style sheet allows named character and paragraph styles to be applied.
     
-    wxRichTextStyleSheet* GetStyleSheet() const { return GetBuffer().GetStyleSheet(); }
+    wxRichTextStyleSheet* GetStyleSheet() { return GetBuffer().GetStyleSheet(); }
 
     // 
         Push the style sheet to top of stack.
@@ -1342,18 +735,18 @@ Returns the range of the current selection.
     // 
         Shows the given context menu, optionally adding appropriate property-editing commands for the current position in the object hierarchy.
     
-    bool ShowContextMenu(wxMenu* menu, const wxPoint& pt, bool addPropertyCommands = true);
+    bool ShowContextMenu(wxMenu* menu, wxPoint& pt, bool addPropertyCommands = true);
 
     // 
         Prepares the context menu, optionally adding appropriate property-editing commands.
         Returns the number of property commands added.
     
-    int PrepareContextMenu(wxMenu* menu, const wxPoint& pt, bool addPropertyCommands = true);
+    int PrepareContextMenu(wxMenu* menu, wxPoint& pt, bool addPropertyCommands = true);
 
     // 
         Returns <c>true</c> if we can edit the object's properties via a GUI.
     
-    bool CanEditProperties(wxRichTextObject* obj) const { return obj->CanEditProperties(); }
+    bool CanEditProperties(wxRichTextObject* obj) { return obj->CanEditProperties(); }
 
     // 
         Edits the object's properties via a GUI.
@@ -1375,7 +768,7 @@ Returns the range of the current selection.
         Can we delete this range?
         Sends an event to the control.
     
-    bool CanDeleteRange(wxRichTextParagraphLayoutBox& container, const wxRichTextRange& range) const;
+    bool CanDeleteRange(wxRichTextParagraphLayoutBox& container, wxRichTextRange& range) const;
 
     // 
         Can we insert content at this position?
@@ -1391,7 +784,7 @@ Returns the range of the current selection.
     // 
         Returns <c>true</c> if the vertical scrollbar is enabled.
     
-    bool GetVerticalScrollbarEnabled() const { return m_verticalScrollbarEnabled; }
+    bool GetVerticalScrollbarEnabled() { return m_verticalScrollbarEnabled; }
 
     // 
         Sets the scale factor for displaying fonts, for example for more comfortable
@@ -1403,7 +796,7 @@ Returns the range of the current selection.
         Returns the scale factor for displaying fonts, for example for more comfortable
         editing.
     
-    double GetFontScale() const { return GetBuffer().GetFontScale(); }
+    double GetFontScale() { return GetBuffer().GetFontScale(); }
 
     // 
         Sets the scale factor for displaying certain dimensions such as indentation and
@@ -1416,7 +809,7 @@ Returns the range of the current selection.
         Returns the scale factor for displaying certain dimensions such as indentation
         and inter-paragraph spacing.
     
-    double GetDimensionScale() const { return GetBuffer().GetDimensionScale(); }
+    double GetDimensionScale() { return GetBuffer().GetDimensionScale(); }
 
     // 
         Sets an overall scale factor for displaying and editing the content.
@@ -1426,43 +819,43 @@ Returns the range of the current selection.
     // 
         Returns an overall scale factor for displaying and editing the content.
     
-    double GetScale() const { return m_scale; }
+    double GetScale() { return m_scale; }
 
     // 
         Returns an unscaled point.
     
-    wxPoint GetUnscaledPoint(const wxPoint& pt) const;
+    wxPoint GetUnscaledPoint(wxPoint& pt) const;
 
     // 
         Returns a scaled point.
     
-    wxPoint GetScaledPoint(const wxPoint& pt) const;
+    wxPoint GetScaledPoint(wxPoint& pt) const;
 
     // 
         Returns an unscaled size.
     
-    wxSize GetUnscaledSize(const wxSize& sz) const;
+    wxSize GetUnscaledSize(wxSize& sz) const;
 
     // 
         Returns a scaled size.
     
-    wxSize GetScaledSize(const wxSize& sz) const;
+    wxSize GetScaledSize(wxSize& sz) const;
 
     // 
         Returns an unscaled rectangle.
     
-    wxRect GetUnscaledRect(const wxRect& rect) const;
+    wxRect GetUnscaledRect(wxRect& rect) const;
 
     // 
         Returns a scaled rectangle.
     
-    wxRect GetScaledRect(const wxRect& rect) const;
+    wxRect GetScaledRect(wxRect& rect) const;
 
     // 
         Returns <c>true</c> if this control can use attributes and text.
         The default is @false.
     
-    bool GetVirtualAttributesEnabled() const { return m_useVirtualAttributes; }
+    bool GetVirtualAttributesEnabled() { return m_useVirtualAttributes; }
 
     // 
         Pass <c>true</c> to let the control use attributes.
@@ -1475,7 +868,7 @@ Returns the range of the current selection.
     // 
         Sends the event to the control.
     
-    void Command(wxCommandEvent& event) wxOVERRIDE;
+    void Command(wxCommandEvent& event)
 
     // 
         Loads the first dropped file.
@@ -1616,7 +1009,7 @@ Returns the range of the current selection.
         Sets the font, and also the basic and default attributes
         (see wxRichTextCtrl::SetDefaultStyle).
     
-    bool SetFont(const wxFont& font) wxOVERRIDE;
+    bool SetFont(wxFont& font)
 
     // 
         A helper function setting up scrollbars, for example after a resize.
@@ -1644,14 +1037,14 @@ Returns the range of the current selection.
     // 
         Recreates the buffer bitmap if necessary.
     
-    bool RecreateBuffer(const wxSize& size = wxDefaultSize);
+    bool RecreateBuffer(wxSize& size = wxDefaultSize);
 #endif
 
     // Write text
-    void DoWriteText(const wxString& value, int flags = 0);
+    void DoWriteText(string value, int flags = 0);
 
     // Should we inherit colours?
-    bool ShouldInheritColours() const wxOVERRIDE { return false; }
+    bool ShouldInheritColours()  { return false; }
 
     // 
         Internal function to position the visible caret according to the current caret
@@ -1683,13 +1076,13 @@ Returns the range of the current selection.
     // 
         Refreshes the area affected by a selection change.
     
-    bool RefreshForSelectionChange(const wxRichTextSelection& oldSelection, const wxRichTextSelection& newSelection);
+    bool RefreshForSelectionChange(wxRichTextSelection& oldSelection, wxRichTextSelection& newSelection);
 
     // 
         Overrides standard refresh in order to provoke delayed image loading.
     
     void Refresh( bool eraseBackground = true,
-                       const wxRect *rect = (const wxRect *) NULL ) wxOVERRIDE;
+                       wxRect *rect = (wxRect *) NULL)
 
     // 
         Sets the caret position.
@@ -1700,12 +1093,12 @@ Returns the range of the current selection.
         from the new position or cause the actual caret to be refreshed; to do that,
         call wxRichTextCtrl::SetInsertionPoint instead.
     
-    void SetCaretPosition(long position, bool showAtLineStart = false) ;
+    void SetCaretPosition(long position, bool showAtLineStart = false)
 
     // 
         Returns the current caret position.
     
-    long GetCaretPosition() const { return m_caretPosition; }
+    long GetCaretPosition() { return m_caretPosition; }
 
     // 
         The adjusted caret position is the character position adjusted to take
@@ -1719,14 +1112,14 @@ Returns the range of the current selection.
         and keeping the same position if we're going from the end of one line
         to the start of the next, which may be the exact same caret position.
     
-    void MoveCaretForward(long oldPosition) ;
+    void MoveCaretForward(long oldPosition)
 
     // 
         Move the caret one visual step forward: this may mean setting a flag
         and keeping the same position if we're going from the end of one line
         to the start of the next, which may be the exact same caret position.
     
-    void MoveCaretBack(long oldPosition) ;
+    void MoveCaretBack(long oldPosition)
 
     // 
         Returns the caret height and position for the given character position.
@@ -1751,7 +1144,7 @@ Returns the range of the current selection.
     // 
         Gets the command processor associated with the control's buffer.
     
-    wxCommandProcessor* GetCommandProcessor() const { return GetBuffer().GetCommandProcessor(); }
+    wxCommandProcessor* GetCommandProcessor() { return GetBuffer().GetCommandProcessor(); }
 
     // 
         Deletes content if there is a selection, e.g. when pressing a key.
@@ -1768,12 +1161,12 @@ Returns the range of the current selection.
     // 
         Transforms logical (unscrolled) position to physical window position.
     
-    wxPoint GetPhysicalPoint(const wxPoint& ptLogical) const;
+    wxPoint GetPhysicalPoint(wxPoint& ptLogical) const;
 
     // 
         Transforms physical window position to logical (unscrolled) position.
     
-    wxPoint GetLogicalPoint(const wxPoint& ptPhysical) const;
+    wxPoint GetLogicalPoint(wxPoint& ptPhysical) const;
 
     // 
         Helper function for finding the caret position for the next word.
@@ -1797,7 +1190,7 @@ Returns the range of the current selection.
         in the UI. A value of -2 means that we should only reflect the style of the
         content under the caret.
     
-    long GetCaretPositionForDefaultStyle() const { return m_caretPositionForDefaultStyle; }
+    long GetCaretPositionForDefaultStyle() { return m_caretPositionForDefaultStyle; }
 
     // 
         Set the caret position for the default style that the user is selecting.
@@ -1814,7 +1207,7 @@ Returns the range of the current selection.
 
         @see SetAndShowDefaultStyle().
     
-    bool IsDefaultStyleShowing() const { return m_caretPositionForDefaultStyle != -2; }
+    bool IsDefaultStyleShowing() { return m_caretPositionForDefaultStyle != -2; }
 
     // 
         Sets @a attr as the default style and tells the control that the UI should
@@ -1822,7 +1215,7 @@ Returns the range of the current selection.
 
         @see IsDefaultStyleShowing().
     
-    void SetAndShowDefaultStyle(const wxRichTextAttr& attr)
+    void SetAndShowDefaultStyle(wxRichTextAttr& attr)
     {
         SetDefaultStyle(attr);
         SetCaretPositionForDefaultStyle(GetCaretPosition());
@@ -1843,7 +1236,7 @@ Returns the range of the current selection.
         Returns <c>true</c> if images are enabled.
     
 
-    bool GetImagesEnabled() const { return m_enableImages; }
+    bool GetImagesEnabled() { return m_enableImages; }
 
     // 
         Enable or disable delayed image loading
@@ -1855,12 +1248,12 @@ Returns the range of the current selection.
         Returns <c>true</c> if delayed image loading is enabled.
     
 
-    bool GetDelayedImageLoading() const { return m_enableDelayedImageLoading; }
+    bool GetDelayedImageLoading() { return m_enableDelayedImageLoading; }
 
     // 
         Gets the flag indicating that delayed image processing is required.
     
-    bool GetDelayedImageProcessingRequired() const { return m_delayedImageProcessingRequired; }
+    bool GetDelayedImageProcessingRequired() { return m_delayedImageProcessingRequired; }
 
     // 
         Sets the flag indicating that delayed image processing is required.
@@ -1870,7 +1263,7 @@ Returns the range of the current selection.
     // 
         Returns the last time delayed image processing was performed.
     
-    wxLongLong GetDelayedImageProcessingTime() const { return m_delayedImageProcessingTime; }
+    wxLongLong GetDelayedImageProcessingTime() { return m_delayedImageProcessingTime; }
 
     // 
         Sets the last time delayed image processing was performed.
@@ -1886,7 +1279,7 @@ Returns the range of the current selection.
     // 
         Replaces existing content with the given text.
     
-    void SetValue(const wxString& value);
+    void SetValue(string value);
 
     // 
         Call this function to prevent refresh and allow fast updates, and then Thaw() to
@@ -1908,7 +1301,7 @@ Returns the range of the current selection.
 
     /// Set the line increment height in pixels
     void SetLineHeight(int height) { m_lineHeight = height; }
-    int GetLineHeight() const { return m_lineHeight; }
+    int GetLineHeight() { return m_lineHeight; }
 
 // Implementation
 
@@ -1939,12 +1332,12 @@ Returns the range of the current selection.
     // 
         Processes mouse movement in order to change the cursor
     
-    bool ProcessMouseMovement(wxRichTextParagraphLayoutBox* container, wxRichTextObject* obj, long position, const wxPoint& pos);
+    bool ProcessMouseMovement(wxRichTextParagraphLayoutBox* container, wxRichTextObject* obj, long position, wxPoint& pos);
 
     // 
         Font names take a long time to retrieve, so cache them (on demand).
     
-    static const wxArrayString& GetAvailableFontNames();
+    static wxArrayString& GetAvailableFontNames();
 
     // 
         Clears the cache of available font names.
@@ -1954,13 +1347,13 @@ Returns the range of the current selection.
     WX_FORWARD_TO_SCROLL_HELPER()
 
     // implement wxTextEntry methods
-    wxString DoGetValue() const wxOVERRIDE;
+    wxString DoGetValue()
 
     // 
         Do delayed image loading and garbage-collect other images
     
     bool ProcessDelayedImageLoading(bool refresh);
-    bool ProcessDelayedImageLoading(const wxRect& screenRect, wxRichTextParagraphLayoutBox* box, int& loadCount);
+    bool ProcessDelayedImageLoading(wxRect& screenRect, wxRichTextParagraphLayoutBox* box, int& loadCount);
 
     // 
         Request delayed image processing.
@@ -1971,5 +1364,353 @@ Returns the range of the current selection.
         Respond to timer events.
     
     void OnTimer(wxTimerEvent& event);
+====================
+
+// Returns the range of the current selection.
+   //     The end point of range is specified as the last character position of the span
+     //   of text, plus one.
+       // If the return values @a from and @a to are the same, there is no selection.
+    
+    void GetSelection(long* from, long* to)
+    wxRichTextSelection& GetSelection()
+
+    // Sets the text (normal) cursor.    
+    void SetTextCursor(wxCursor& cursor){}
+
+    // Returns the text (normal) cursor.    
+    wxCursor GetTextCursor() => default;
+
+    // Sets the cursor to be used over URLs.    
+    void SetURLCursor(wxCursor& cursor) {}
+
+    //         Returns the cursor to be used over URLs.    
+    wxCursor GetURLCursor() => default;
+
+    // 
+        Returns an object that stores information about context menu property item(s),
+        in order to communicate between the context menu event handler and the code
+        that responds to it. The wxRichTextContextMenuPropertiesInfo stores one
+        item for each object that could respond to a property-editing event. If
+        objects are nested, several might be editable.
+    
+    wxRichTextContextMenuPropertiesInfo& GetContextMenuPropertiesInfo()
+    wxRichTextContextMenuPropertiesInfo& GetContextMenuPropertiesInfo()
+
+    
+    // 
+        Gets the attributes at the given position.
+        This function gets the combined style - that is, the style you see on the
+        screen as a result of combining base style, paragraph style and character
+        style attributes.
+
+        To get the character or paragraph style alone, use GetUncombinedStyle().
+
+        @beginWxPerlOnly
+        In wxPerl this method is implemented as GetStyle(@a position)
+        returning a 2-element list (ok, attr).
+        @endWxPerlOnly
+    
+    bool GetStyle(long position, wxTextAttr& style)
+    bool GetStyle(long position, wxRichTextAttr& style);
+    bool GetStyle(long position, wxRichTextAttr& style, wxRichTextParagraphLayoutBox* container);
+    
+   
+    // 
+        Sets the attributes for the given range.
+        The end point of range is specified as the last character position of the span
+        of text, plus one.
+
+        So, for example, to set the style for a character at position 5, use the range
+        (5,6).
+    
+    bool SetStyle(long start, long end, wxTextAttr& style)
+    bool SetStyle(long start, long end, wxRichTextAttr& style);
+    bool SetStyle(wxRichTextRange& range, wxTextAttr& style);
+    bool SetStyle(wxRichTextRange& range, wxRichTextAttr& style);
+    
+
+    // 
+        Sets the attributes for a single object
+    
+    void SetStyle(wxRichTextObject *obj, wxRichTextAttr& textAttr, int flags = wxRICHTEXT_SETSTYLE_WITH_UNDO);
+
+    // 
+        Gets the attributes common to the specified range.
+        Attributes that differ in value within the range will not be included
+        in @a style flags.
+
+        @beginWxPerlOnly
+        In wxPerl this method is implemented as GetStyleForRange(@a position)
+        returning a 2-element list (ok, attr).
+        @endWxPerlOnly
+    
+    bool GetStyleForRange(wxRichTextRange& range, wxTextAttr& style);
+    bool GetStyleForRange(wxRichTextRange& range, wxRichTextAttr& style);
+    bool GetStyleForRange(wxRichTextRange& range, wxRichTextAttr& style, wxRichTextParagraphLayoutBox* container);
+    
+
+    // 
+        Sets the attributes for the given range, passing flags to determine how the
+        attributes are set.
+
+        The end point of range is specified as the last character position of the span
+        of text, plus one. So, for example, to set the style for a character at
+        position 5, use the range (5,6).
+
+        @a flags may contain a bit list of the following values:
+        - wxRICHTEXT_SETSTYLE_NONE: no style flag.
+        - wxRICHTEXT_SETSTYLE_WITH_UNDO: specifies that this operation should be
+          undoable.
+        - wxRICHTEXT_SETSTYLE_OPTIMIZE: specifies that the style should not be applied
+          if the combined style at this point is already the style in question.
+        - wxRICHTEXT_SETSTYLE_PARAGRAPHS_ONLY: specifies that the style should only be
+          applied to paragraphs, and not the content.
+          This allows content styling to be preserved independently from that
+          of e.g. a named paragraph style.
+        - wxRICHTEXT_SETSTYLE_CHARACTERS_ONLY: specifies that the style should only be
+          applied to characters, and not the paragraph.
+          This allows content styling to be preserved independently from that
+          of e.g. a named paragraph style.
+        - wxRICHTEXT_SETSTYLE_RESET: resets (clears) the existing style before applying
+          the new style.
+        - wxRICHTEXT_SETSTYLE_REMOVE: removes the specified style. Only the style flags
+          are used in this operation.
+    
+    bool SetStyleEx(wxRichTextRange& range, wxRichTextAttr& style, int flags = wxRICHTEXT_SETSTYLE_WITH_UNDO);
+
+    
+    // 
+        Gets the attributes at the given position.
+        This function gets the @e uncombined style - that is, the attributes associated
+        with the paragraph or character content, and not necessarily the combined
+        attributes you see on the screen.
+        To get the combined attributes, use GetStyle().
+
+        If you specify (any) paragraph attribute in @e style's flags, this function
+        will fetch the paragraph attributes.
+        Otherwise, it will return the character attributes.
+
+        @beginWxPerlOnly
+        In wxPerl this method is implemented as GetUncombinedStyle(@a position)
+        returning a 2-element list (ok, attr).
+        @endWxPerlOnly
+    
+    bool GetUncombinedStyle(long position, wxRichTextAttr& style);
+    bool GetUncombinedStyle(long position, wxRichTextAttr& style, wxRichTextParagraphLayoutBox* container);
+    
+
+    
+    // 
+        Sets the current default style, which can be used to change how subsequently
+        inserted text is displayed.
+    
+    bool SetDefaultStyle(wxTextAttr& style)
+    bool SetDefaultStyle(wxRichTextAttr& style);
+    
+
+    // 
+        Returns the current default style, which can be used to change how subsequently
+        inserted text is displayed.
+    
+    wxRichTextAttr& GetDefaultStyleEx() const;
+
+    //wxTextAttr& GetDefaultStyle() const;
+
+    
+    // 
+        Sets the list attributes for the given range, passing flags to determine how
+        the attributes are set.
+
+        Either the style definition or the name of the style definition (in the current
+        sheet) can be passed.
+        @a flags is a bit list of the following:
+        - wxRICHTEXT_SETSTYLE_WITH_UNDO: specifies that this command will be undoable.
+        - wxRICHTEXT_SETSTYLE_RENUMBER: specifies that numbering should start from
+          @a startFrom, otherwise existing attributes are used.
+        - wxRICHTEXT_SETSTYLE_SPECIFY_LEVEL: specifies that @a listLevel should be used
+          as the level for all paragraphs, otherwise the current indentation will be used.
+
+        @see NumberList(), PromoteList(), ClearListStyle().
+    
+    bool SetListStyle(wxRichTextRange& range, wxRichTextListStyleDefinition* def, int flags = wxRICHTEXT_SETSTYLE_WITH_UNDO, int startFrom = 1, int specifiedLevel = -1);
+    bool SetListStyle(wxRichTextRange& range, string defName, int flags = wxRICHTEXT_SETSTYLE_WITH_UNDO, int startFrom = 1, int specifiedLevel = -1);
+    
+
+    // 
+        Clears the list style from the given range, clearing list-related attributes
+        and applying any named paragraph style associated with each paragraph.
+
+        @a flags is a bit list of the following:
+        - wxRICHTEXT_SETSTYLE_WITH_UNDO: specifies that this command will be undoable.
+
+        @see SetListStyle(), PromoteList(), NumberList().
+    
+    bool ClearListStyle(wxRichTextRange& range, int flags = wxRICHTEXT_SETSTYLE_WITH_UNDO);
+
+    
+    // 
+        Numbers the paragraphs in the given range.
+        Pass flags to determine how the attributes are set.
+
+        Either the style definition or the name of the style definition (in the current
+        sheet) can be passed.
+
+        @a flags is a bit list of the following:
+        - wxRICHTEXT_SETSTYLE_WITH_UNDO: specifies that this command will be undoable.
+        - wxRICHTEXT_SETSTYLE_RENUMBER: specifies that numbering should start from
+          @a startFrom, otherwise existing attributes are used.
+        - wxRICHTEXT_SETSTYLE_SPECIFY_LEVEL: specifies that @a listLevel should be used
+          as the level for all paragraphs, otherwise the current indentation will be used.
+
+        @see SetListStyle(), PromoteList(), ClearListStyle().
+    
+    bool NumberList(wxRichTextRange& range, wxRichTextListStyleDefinition* def = NULL, int flags = wxRICHTEXT_SETSTYLE_WITH_UNDO, int startFrom = 1, int specifiedLevel = -1);
+    bool NumberList(wxRichTextRange& range, string defName, int flags = wxRICHTEXT_SETSTYLE_WITH_UNDO, int startFrom = 1, int specifiedLevel = -1);
+    
+
+    
+    // 
+        Promotes or demotes the paragraphs in the given range.
+        A positive @a promoteBy produces a smaller indent, and a negative number
+        produces a larger indent. Pass flags to determine how the attributes are set.
+        Either the style definition or the name of the style definition (in the current
+        sheet) can be passed.
+
+        @a flags is a bit list of the following:
+        - wxRICHTEXT_SETSTYLE_WITH_UNDO: specifies that this command will be undoable.
+        - wxRICHTEXT_SETSTYLE_RENUMBER: specifies that numbering should start from
+          @a startFrom, otherwise existing attributes are used.
+        - wxRICHTEXT_SETSTYLE_SPECIFY_LEVEL: specifies that @a listLevel should be used
+        as the level for all paragraphs, otherwise the current indentation will be used.
+
+        @see SetListStyle(), @see SetListStyle(), ClearListStyle().
+    
+    bool PromoteList(int promoteBy, wxRichTextRange& range, wxRichTextListStyleDefinition* def = NULL, int flags = wxRICHTEXT_SETSTYLE_WITH_UNDO, int specifiedLevel = -1);
+    bool PromoteList(int promoteBy, wxRichTextRange& range, string defName, int flags = wxRICHTEXT_SETSTYLE_WITH_UNDO, int specifiedLevel = -1);
+    
+
+    // 
+        Sets the properties for the given range, passing flags to determine how the
+        attributes are set. You can merge properties or replace them.
+
+        The end point of range is specified as the last character position of the span
+        of text, plus one. So, for example, to set the properties for a character at
+        position 5, use the range (5,6).
+
+        @a flags may contain a bit list of the following values:
+        - wxRICHTEXT_SETSPROPERTIES_NONE: no flag.
+        - wxRICHTEXT_SETPROPERTIES_WITH_UNDO: specifies that this operation should be
+          undoable.
+        - wxRICHTEXT_SETPROPERTIES_PARAGRAPHS_ONLY: specifies that the properties should only be
+          applied to paragraphs, and not the content.
+        - wxRICHTEXT_SETPROPERTIES_CHARACTERS_ONLY: specifies that the properties should only be
+          applied to characters, and not the paragraph.
+        - wxRICHTEXT_SETPROPERTIES_RESET: resets (clears) the existing properties before applying
+          the new properties.
+        - wxRICHTEXT_SETPROPERTIES_REMOVE: removes the specified properties.
+    
+    bool SetProperties(wxRichTextRange& range, wxRichTextProperties& properties, int flags = wxRICHTEXT_SETPROPERTIES_WITH_UNDO);
+
+    // 
+        Deletes the content within the given range.
+    
+    bool Delete(wxRichTextRange& range);
+
+    // 
+        Finds the character at the given position in pixels.
+        @a pt is in device coords (not adjusted for the client area origin nor for
+        scrolling).
+    
+    wxTextCtrlHitTestResult HitTest(wxPoint& pt, long *pos)
+    wxTextCtrlHitTestResult HitTest(wxPoint& pt,
+                                            wxTextCoord *col,
+                                            wxTextCoord *row)
+
+    // 
+        Finds the container at the given point, which is in screen coordinates.
+    wxRichTextParagraphLayoutBox* FindContainerAtPoint(wxPoint& pt,
+        long& position, int& hit, wxRichTextObject* hitObj, int flags = 0);
+    
+    // Converts a text position to zero-based column and line numbers.    
+    bool PositionToXY(long pos, long* x, long* y)
+
+    // Returns the last position in the buffer.    
+    wxTextPos GetLastPosition()
+
+    void SetSelection(wxRichTextSelection& sel) { m_selection = sel; }
+
+    // 
+        Write a bitmap or image at the current insertion point.
+        Supply an optional type to use for internal and file storage of the raw data.
+    
+    bool WriteImage(wxImage& image, wxBitmapType bitmapType = wxBITMAP_TYPE_PNG,
+                            wxRichTextAttr& textAttr = wxRichTextAttr());
+
+    bool WriteImage(wxBitmap& bitmap, wxBitmapType bitmapType = wxBITMAP_TYPE_PNG,
+                            wxRichTextAttr& textAttr = wxRichTextAttr());
+    
+
+    // 
+        Loads an image from a file and writes it at the current insertion point.
+    
+    bool WriteImage(string filename, wxBitmapType bitmapType,
+                            wxRichTextAttr& textAttr = wxRichTextAttr());
+
+    // 
+        Writes an image block at the current insertion point.
+    
+    bool WriteImage(wxRichTextImageBlock& imageBlock,
+                            wxRichTextAttr& textAttr = wxRichTextAttr());
+
+    // 
+        Write a text box at the current insertion point, returning the text box.
+        You can then call SetFocusObject() to set the focus to the new object.
+    
+    wxRichTextBox* WriteTextBox(wxRichTextAttr& textAttr = wxRichTextAttr());
+
+    // 
+        Writes a field at the current insertion point.
+
+        @param fieldType
+            The field type, matching an existing field type definition.
+        @param properties
+            Extra data for the field.
+        @param textAttr
+            Optional attributes.
+
+        @see wxRichTextField, wxRichTextFieldType, wxRichTextFieldTypeStandard
+    
+    wxRichTextField* WriteField(string fieldType, wxRichTextProperties& properties,
+                            wxRichTextAttr& textAttr = wxRichTextAttr());
+
+    // 
+        Write a table at the current insertion point, returning the table.
+        You can then call SetFocusObject() to set the focus to the new object.
+    
+    wxRichTextTable* WriteTable(int rows, int cols, wxRichTextAttr& tableAttr = wxRichTextAttr(), wxRichTextAttr& cellAttr = wxRichTextAttr());
+
+    //         Sets the basic (overall) style.
+
+        This is the style of the whole buffer before further styles are applied,
+        unlike the default style, which only affects the style currently being
+        applied (for example, setting the default style to bold will cause
+        subsequently inserted text to be bold).
+    
+    void SetBasicStyle(wxRichTextAttr& style) { GetBuffer().SetBasicStyle(style); }
+
+    // 
+        Gets the basic (overall) style.
+
+        This is the style of the whole buffer before further styles are applied,
+        unlike the default style, which only affects the style currently being
+        applied (for example, setting the default style to bold will cause
+        subsequently inserted text to be bold).
+    
+    wxRichTextAttr& GetBasicStyle() { return GetBuffer().GetBasicStyle(); }
+
+    // 
+        Begins applying a style.
+    
+    bool BeginStyle(wxRichTextAttr& style) { return GetBuffer().BeginStyle(style); }
 
 */
