@@ -3,22 +3,19 @@
         xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
         xmlns:local="clr-namespace:ControlsSample;assembly=ControlsSample">
   <VerticalStackPanel Padding="10" HorizontalAlignment="Stretch" Name="tabControl">
-    
+
     <StackPanel Orientation="Horizontal" Name="tab1" Margin="5">
       <ListBox
         SuggestedWidth="200" Name="listBox" SelectionChanged="ListBox_SelectionChanged"
-        MouseLeftButtonDown="ListBox_MouseLeftButtonDown" Margin="0,0,0,5"/>      
+        MouseLeftButtonDown="ListBox_MouseLeftButtonDown" Margin="0,0,0,5"/>
       <StackPanel Orientation="Vertical" Margin="10,0,5,5">
         <Button Text="Add Item" Name="addItemButton" Click="AddItemButton_Click"/>
         <Button Text="Remove Selected" Name="removeItemButton" Margin="0,3,0,0"
             Click="RemoveItemButton_Click"/>
         <Button Text="Add 5000 Items" Name="addManyItemsButton" Margin="0,3,0,0"
             Click="AddManyItemsButton_Click" />
-        <CheckBox Text="Multiple Selection" Name="allowMultipleSelectionCheckBox"
-            Margin="0,10,0,10"
-            CheckedChanged="AllowMultipleSelectionCheckBox_CheckedChanged"/>
-        <Button Text="Make Last Item Visible" Name="ensureLastItemVisibleButton"
-            Margin="0,0,0,0" Click="EnsureLastItemVisibleButton_Click" />
+        <Button Text="Last Item Visible" Name="ensureLastItemVisibleButton"
+            Margin="0,3,0,0" Click="EnsureLastItemVisibleButton_Click" />
         <Button Text="Select Item: 2" Name="selectItemAtIndex2Button"
             Margin="0,3,0,0" Click="SelectItemAtIndex2Button_Click" />
         <Button Text="Select Items: 2, 4" Name="selectItemAtIndices2And4Button"
@@ -30,7 +27,15 @@
             Click="EditorButton_Click" />
         <Button Text="Has Border" Name="hasBorderButton"
             Margin="0,3,0,5" Click="HasBorderButton_Click" />
-      </StackPanel>      
+      </StackPanel>
+      <StackPanel Orientation="Vertical" Margin="10,0,5,5">
+        <CheckBox Text="Multiple Selection" Name="allowMultipleSelectionCheckBox"
+            Margin="0,0,0,5" CheckedChanged="AllowMultipleSelectionCheckBox_CheckedChanged"/>
+        <CheckBox Text="Find Exact" Name="findExactCheckBox" Margin="0,0,0,5"/>
+        <CheckBox Text="Find Ignore Case" Name="findIgnoreCaseCheckBox" Margin="0,0,0,5"/>
+        <Label Text="Find Text" Margin="0,0,0,5"/>
+        <TextBox Name="findText" Margin="0,0,0,5"/>
+      </StackPanel>
     </StackPanel>
 
     <VerticalStackPanel Name="tab2" Visible="false" Margin="5">
@@ -38,6 +43,6 @@
       <Label Text="Work in progress. Currently not everything works fine in the popups..."
              Margin="5" Visible="false"/>
     </VerticalStackPanel>
-    
+
   </VerticalStackPanel>
 </Control>

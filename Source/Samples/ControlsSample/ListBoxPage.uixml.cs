@@ -29,7 +29,27 @@ namespace ControlsSample
             popupListBox.MainControl.Click += PopupListBox_Click;
             popupListBox.MainControl.MouseDoubleClick += PopupListBox_MouseDoubleClick;
             popupListBox.VisibleChanged += PopupListBox_VisibleChanged;
+
+            findExactCheckBox.BindBoolProp(this, nameof(FindExact));
+            findIgnoreCaseCheckBox.BindBoolProp(this, nameof(FindIgnoreCase));
+            findText.TextChanged += FindText_TextChanged;
         }
+
+        private void FindText_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            var text = findText.Text;
+            if(text is null)
+            {
+                listBox.SelectedIndex = null;
+                return;
+            }
+            var result = listBox.FindStringEx(text, null, FindExact, FindIgnoreCase);
+            listBox.SelectedIndex = result;
+        }
+
+        public bool FindExact { get; set; } = false;
+
+        public bool FindIgnoreCase { get; set; } = true;
 
         internal void LogPopupListBoxEvent(string eventName)
         {

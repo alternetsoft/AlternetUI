@@ -78,6 +78,20 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets <see cref="CultureInfo"/> used in find string methods.
+        /// </summary>
+        /// <remarks>
+        /// If <see cref="FindStringCulture"/> is not assigned,
+        /// <see cref="CultureInfo.CurrentCulture"/> is used.
+        /// </remarks>
+        public CultureInfo? FindStringCulture { get; set; }
+
+        /// <summary>
+        /// Gets or sets <see cref="CompareOptions"/> used in find string methods.
+        /// </summary>
+        public CompareOptions CompareOptions { get; set; } = CompareOptions.None;
+
+        /// <summary>
         /// Gets first item in the control or <c>null</c> if there are no items.
         /// </summary>
         [Browsable(false)]
@@ -390,7 +404,14 @@ namespace Alternet.UI
             // through the list infinitely.
             int numberOfTimesThroughLoop = 0;
 
-            // this API is really Find NEXT String...
+            var culture = FindStringCulture ?? CultureInfo.CurrentCulture;
+            var options = CompareOptions;
+
+            if (ignoreCase)
+                options |= CompareOptions.IgnoreCase;
+            else
+                options &= ~CompareOptions.IgnoreCase;
+
             for (
                 int index = (startIndexInt + 1) % items.Count;
                 numberOfTimesThroughLoop < items.Count;
@@ -404,8 +425,8 @@ namespace Alternet.UI
                     found = string.Compare(
                         str,
                         GetItemText(items[index]),
-                        ignoreCase,
-                        CultureInfo.CurrentCulture) == 0;
+                        culture,
+                        options) == 0;
                 }
                 else
                 {
@@ -415,8 +436,8 @@ namespace Alternet.UI
                         GetItemText(items[index]),
                         0,
                         str.Length,
-                        ignoreCase,
-                        CultureInfo.CurrentCulture) == 0;
+                        culture,
+                        options) == 0;
                 }
 
                 if (found)
