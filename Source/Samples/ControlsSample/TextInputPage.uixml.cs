@@ -73,7 +73,9 @@ namespace ControlsSample
                 doubleEdit,
                 udoubleEdit,
                 uint32HexEdit).Margin(0,5,5,5).Parent(numbersPanel).InnerSuggestedWidth(200)
-                .Action<ValueEditorCustom>(BindTextChanged);
+                .Action<ValueEditorCustom>(BindTextChanged).LabelColumnIndex(0);
+
+            numbersPanel.GetColumnGroup(0, true).SuggestedWidthToMax();
 
             panelHeader.Add("TextBox", tab1);
             panelHeader.Add("Memo", tab2);
@@ -121,15 +123,13 @@ namespace ControlsSample
                 nameof(ValueValidatorFactory.BellOnError));
 
             ControlSet.New(
-                shortEdit.Label,
-                byteEdit.Label,
-                doubleEdit.Label,
-                udoubleEdit.Label,
-                uint32HexEdit.Label)
-                .SuggestedWidthToMax();
-
-            ControlSet.New(textAlignLabel, minLengthEdit.Label, maxLengthEdit.Label).SuggestedWidthToMax();
-            ControlSet.New(textAlignComboBox, minLengthEdit.TextBox, maxLengthEdit.TextBox).SuggestedWidthToMax();
+                textAlignLabel,
+                minLengthEdit.Label,
+                maxLengthEdit.Label).SuggestedWidthToMax();
+            ControlSet.New(
+                textAlignComboBox,
+                minLengthEdit.TextBox,
+                maxLengthEdit.TextBox).SuggestedWidthToMax();
 
 
             Application.Current.Idle += Application_Idle;
@@ -421,14 +421,5 @@ namespace ControlsSample
 
     public static class Extensions
     {
-        public static ControlSet InnerSuggestedWidth(this ControlSet controlSet, double value)
-        {
-            foreach (var item in controlSet.Items)
-            {
-                if (item is ControlAndLabel control)
-                    control.InnerSuggestedWidth = value;
-            }
-            return controlSet;
-        }
     }
 }
