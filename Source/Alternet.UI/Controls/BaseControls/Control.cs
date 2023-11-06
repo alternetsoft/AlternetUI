@@ -1059,7 +1059,8 @@ namespace Alternet.UI
         public int[]? GroupIndexes { get; set; }
 
         /// <summary>
-        /// Gets or sets group index which is assigned to this control.
+        /// Gets or sets group indexes of this control. Group indexes are used
+        /// in <see cref="GetGroup"/> method.
         /// </summary>
         /// <remarks>
         /// This property modifies <see cref="GroupIndexes"/>.
@@ -1081,6 +1082,16 @@ namespace Alternet.UI
                     GroupIndexes = new int[] { value.Value };
             }
         }
+
+        /// <summary>
+        /// Gets or sets column index which is used in <see cref="GetColumnGroup"/>.
+        /// </summary>
+        public int? ColumnIndex { get; set; }
+
+        /// <summary>
+        /// Gets or sets row index which is used in <see cref="GetRowGroup"/>.
+        /// </summary>
+        public int? RowIndex { get; set; }
 
         /// <summary>
         /// Gets or sets the background brush for the control.
@@ -1684,6 +1695,56 @@ namespace Alternet.UI
                 if (recursive)
                 {
                     ControlSet subSet = control.GetGroup(groupIndex, true);
+                    result.AddRange(subSet.Items);
+                }
+            }
+
+            return new ControlSet(result);
+        }
+
+        /// <summary>
+        /// Gets <see cref="ControlSet"/> with all controls which have <see cref="ColumnIndex"/>
+        /// property equal to <paramref name="columnIndex"/>.
+        /// </summary>
+        /// <param name="columnIndex">Column index.</param>
+        /// <param name="recursive">Whether to check child controls recursively.</param>
+        public ControlSet GetColumnGroup(int columnIndex, bool recursive = false)
+        {
+            if (!HasChildren)
+                return ControlSet.Empty;
+            List<Control> result = new();
+            foreach (var control in Children)
+            {
+                if (control.ColumnIndex == columnIndex)
+                    result.Add(control);
+                if (recursive)
+                {
+                    ControlSet subSet = control.GetColumnGroup(columnIndex, true);
+                    result.AddRange(subSet.Items);
+                }
+            }
+
+            return new ControlSet(result);
+        }
+
+        /// <summary>
+        /// Gets <see cref="ControlSet"/> with all controls which have <see cref="RowIndex"/>
+        /// property equal to <paramref name="rowIndex"/>.
+        /// </summary>
+        /// <param name="rowIndex">Column index.</param>
+        /// <param name="recursive">Whether to check child controls recursively.</param>
+        public ControlSet GetRowGroup(int rowIndex, bool recursive = false)
+        {
+            if (!HasChildren)
+                return ControlSet.Empty;
+            List<Control> result = new();
+            foreach (var control in Children)
+            {
+                if (control.RowIndex == rowIndex)
+                    result.Add(control);
+                if (recursive)
+                {
+                    ControlSet subSet = control.GetRowGroup(rowIndex, true);
                     result.AddRange(subSet.Items);
                 }
             }
