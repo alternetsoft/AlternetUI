@@ -137,11 +137,11 @@ namespace ControlsSample
             // ==== Min and Max length editors
 
             minLengthEdit.TextBox.TextChanged += MinLengthBox_TextChanged;
-            minLengthEdit.TextBox.AllowEmptyText = false;
+            minLengthEdit.TextBox.IsRequired = true;
             minLengthEdit.Parent = textBoxOptionsPanel;
 
             maxLengthEdit.TextBox.TextChanged += MaxLengthBox_TextChanged;
-            maxLengthEdit.TextBox.AllowEmptyText = false;
+            maxLengthEdit.TextBox.IsRequired = true;
             maxLengthEdit.Parent = textBoxOptionsPanel;
 
             // ==== richEdit
@@ -168,21 +168,7 @@ namespace ControlsSample
                 richEdit.SelectionSetColor(Color.White, Color.Red);
             }
 
-            void FontSizeDecrease()
-            {
-                Application.Log("FontSizeDec");
-            }
-
-            void FontSizeIncrease()
-            {
-                Application.Log("FontSizeInc");
-            }
-
             if (KnownKeys.RunTest.Run(e, Test))
-                return;
-            if (KeyInfo.Run(KnownKeys.RichEditKeys.DecFontSize, e, FontSizeDecrease))
-                return;
-            if (KeyInfo.Run(KnownKeys.RichEditKeys.IncFontSize, e, FontSizeIncrease))
                 return;
         }
 

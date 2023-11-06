@@ -239,6 +239,28 @@ namespace Alternet.UI
         public virtual bool AllowEmptyText { get; set; } = true;
 
         /// <summary>
+        /// Gets or sets a value indicating whether <see cref="Text"/> is required to be not empty.
+        /// This is an opposite of <see cref="AllowEmptyText"/> property.
+        /// </summary>
+        /// <remarks>
+        /// Default value is <c>false</c>. <see cref="TextBox"/> behavior is not affected
+        /// by this property, you can use it for any purposes.
+        /// </remarks>
+        [Browsable(false)]
+        public bool IsRequired
+        {
+            get
+            {
+                return !AllowEmptyText;
+            }
+
+            set
+            {
+                AllowEmptyText = !value;
+            }
+        }
+
+        /// <summary>
         /// Gets or sets data value in cases when <see cref="Text"/> property is empty.
         /// </summary>
         /// <remarks>
