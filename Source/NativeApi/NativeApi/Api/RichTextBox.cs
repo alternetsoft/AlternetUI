@@ -113,10 +113,10 @@ namespace NativeApi.Api
         public IntPtr GetFocusObject() => default;
 
         // Sets m_focusObject without making any alterations.
-        public void StoreFocusObject(IntPtr obj) { }
+        public void StoreFocusObject(IntPtr richObj) { }
 
         // Sets the wxRichTextObject object that currently has the editing focus.
-        public bool SetFocusObject(IntPtr obj, bool setCaretPosition = true) => default;
+        public bool SetFocusObject(IntPtr richObj, bool setCaretPosition = true) => default;
 
         // Invalidates the whole buffer to trigger painting later.    
         public void Invalidate() { }
@@ -519,13 +519,13 @@ namespace NativeApi.Api
         public int PrepareContextMenu(IntPtr menu, Int32Point pt, bool addPropertyCommands = true) => default;
 
         // Returns <c>true</c> if we can edit the object's properties via a GUI.
-        public bool CanEditProperties(IntPtr obj) => default;
+        public bool CanEditProperties(IntPtr richObj) => default;
 
         // Edits the object's properties via a GUI.
-        public bool EditProperties(IntPtr obj, IntPtr parentWindow) => default;
+        public bool EditProperties(IntPtr richObj, IntPtr parentWindow) => default;
 
         // Gets the object's properties menu label.    
-        public string GetPropertiesMenuLabel(IntPtr obj) => default;
+        public string GetPropertiesMenuLabel(IntPtr richObj) => default;
 
         // Starts batching undo history for commands.
         public bool BeginBatchUndo(string cmdName) => default;
@@ -741,7 +741,7 @@ namespace NativeApi.Api
         public bool SetRichStyle(long start, long end, IntPtr style) => default;
 
         // Sets the attributes for a single object    
-        public void SetStyle(IntPtr obj, IntPtr textAttr, int flags) { }// = wxRICHTEXT_SETSTYLE_WITH_UNDO
+        public void SetStyle2(IntPtr richObj, IntPtr textAttr, int flags) { }// = wxRICHTEXT_SETSTYLE_WITH_UNDO
 
         // Gets the attributes common to the specified range.
         // Attributes that differ in value within the range will not be included
@@ -935,7 +935,7 @@ namespace NativeApi.Api
         // objects are nested, several might be editable.    
         public IntPtr GetContextMenuPropertiesInfo() => default;
 
-        public void SetSelection(IntPtr sel) { }
+        public void SetSelection2(IntPtr sel) { }
 
         // Write a bitmap or image at the current insertion point.
         // Supply an optional type to use for internal and file storage of the raw data.    
