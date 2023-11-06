@@ -226,6 +226,51 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Sets <see cref="ControlAndLabel.LabelSuggestedWidth"/> property for all
+        /// the controls in the set.
+        /// </summary>
+        public ControlSet LabelSuggestedWidth(double value)
+        {
+            foreach (var item in Items)
+            {
+                if (item is ControlAndLabel control)
+                    control.LabelSuggestedWidth = value;
+            }
+
+            return this;
+        }
+
+        /// <summary>
+        /// Sets <see cref="ControlAndLabel.LabelColumnIndex"/> property for all
+        /// the controls in the set.
+        /// </summary>
+        public ControlSet LabelColumnIndex(int value)
+        {
+            foreach (var item in Items)
+            {
+                if (item is ControlAndLabel control)
+                    control.LabelColumnIndex = value;
+            }
+
+            return this;
+        }
+
+        /// <summary>
+        /// Sets <see cref="ControlAndLabel.InnerSuggestedWidth"/> property for all
+        /// the controls in the set.
+        /// </summary>
+        public ControlSet InnerSuggestedWidth(double value)
+        {
+            foreach (var item in Items)
+            {
+                if (item is ControlAndLabel control)
+                    control.InnerSuggestedWidth = value;
+            }
+
+            return this;
+        }
+
+        /// <summary>
         /// Sets <see cref="Control.Parent"/> property for all the controls in the set.
         /// </summary>
         /// <param name="value">Parent control.</param>
