@@ -69,9 +69,9 @@ namespace ControlsSample
             mainGrid.Children.Add(headerPanel);
             mainGrid.Children.Add(pageContainer);
             mainGrid.Children.Add(eventsControl);
-            Alternet.UI.Grid.SetRow(headerPanel, 0);
-            Alternet.UI.Grid.SetRow(pageContainer, 1);
-            Alternet.UI.Grid.SetRow(eventsControl, 2);
+            Grid.SetRow(headerPanel, 0);
+            Grid.SetRow(pageContainer, 1);
+            Grid.SetRow(eventsControl, 2);
 
             var pages = pageContainer.Pages;
 
