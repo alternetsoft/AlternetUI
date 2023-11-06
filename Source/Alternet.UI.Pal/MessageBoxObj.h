@@ -5,9 +5,9 @@
 
 namespace Alternet::UI
 {
-    class MessageBox_
+    class MessageBoxObj
     {
-#include "Api/MessageBox_.inc"
+#include "Api/MessageBoxObj.inc"
     public:
 
     private:

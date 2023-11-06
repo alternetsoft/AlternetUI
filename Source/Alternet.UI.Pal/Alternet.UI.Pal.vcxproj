@@ -251,7 +251,7 @@
     <ClCompile Include="MemoryFSHandler.cpp" />
     <ClCompile Include="Menu.cpp" />
     <ClCompile Include="MenuItem.cpp" />
-    <ClCompile Include="MessageBox_.cpp" />
+    <ClCompile Include="MessageBoxObj.cpp" />
     <ClCompile Include="Mouse.cpp" />
     <ClCompile Include="NotifyIcon.cpp" />
     <ClCompile Include="NumericUpDown.cpp" />
@@ -373,7 +373,7 @@
     <ClInclude Include="Api\MemoryFSHandler.Api.h" />
     <ClInclude Include="Api\Menu.Api.h" />
     <ClInclude Include="Api\MenuItem.Api.h" />
-    <ClInclude Include="Api\MessageBox_.Api.h" />
+    <ClInclude Include="Api\MessageBoxObj.Api.h" />
     <ClInclude Include="Api\Mouse.Api.h" />
     <ClInclude Include="Api\NativeEventDataTypes.h" />
     <ClInclude Include="Api\NotifyIcon.Api.h" />
@@ -499,7 +499,7 @@
     <ClInclude Include="MemoryFSHandler.h" />
     <ClInclude Include="Menu.h" />
     <ClInclude Include="MenuItem.h" />
-    <ClInclude Include="MessageBox_.h" />
+    <ClInclude Include="MessageBoxObj.h" />
     <ClInclude Include="Mouse.h" />
     <ClInclude Include="NotifyIcon.h" />
     <ClInclude Include="NumericUpDown.h" />
@@ -618,7 +618,7 @@
     <None Include="Api\MemoryFSHandler.inc" />
     <None Include="Api\Menu.inc" />
     <None Include="Api\MenuItem.inc" />
-    <None Include="Api\MessageBox_.inc" />
+    <None Include="Api\MessageBoxObj.inc" />
     <None Include="Api\Mouse.inc" />
     <None Include="Api\NotifyIcon.inc" />
     <None Include="Api\NumericUpDown.inc" />

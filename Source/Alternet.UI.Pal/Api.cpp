@@ -61,7 +61,7 @@
 #include "Api/MainMenu.Api.h"
 #include "Api/Menu.Api.h"
 #include "Api/MenuItem.Api.h"
-#include "Api/MessageBox_.Api.h"
+#include "Api/MessageBoxObj.Api.h"
 #include "Api/Mouse.Api.h"
 #include "Api/NotifyIcon.Api.h"
 #include "Api/NumericUpDown.Api.h"

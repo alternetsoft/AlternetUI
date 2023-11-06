@@ -2,8 +2,8 @@
 public:
 static MessageBoxResult Show(Window* owner, const string& text, optional<string> caption, MessageBoxButtons buttons, MessageBoxIcon icon, MessageBoxDefaultButton defaultButton);
 private:
-MessageBox_() {}
+MessageBoxObj() {}
 protected:
-virtual ~MessageBox_();
+virtual ~MessageBoxObj();
 private:
-BYREF_ONLY(MessageBox_);
+BYREF_ONLY(MessageBoxObj);

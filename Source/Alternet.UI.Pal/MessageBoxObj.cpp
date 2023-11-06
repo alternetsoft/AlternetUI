@@ -1,8 +1,8 @@
-#include "MessageBox_.h"
+#include "MessageBoxObj.h"
 
 namespace Alternet::UI
 {
-    MessageBoxResult MessageBox_::Show(
+    MessageBoxResult MessageBoxObj::Show(
         Window* owner,
         const string& text,
         optional<string> caption,
@@ -24,7 +24,7 @@ namespace Alternet::UI
         return result;
     }
 
-    /*static*/ long MessageBox_::GetStyle(MessageBoxButtons buttons, MessageBoxIcon icon, MessageBoxDefaultButton defaultButton)
+    /*static*/ long MessageBoxObj::GetStyle(MessageBoxButtons buttons, MessageBoxIcon icon, MessageBoxDefaultButton defaultButton)
     {
         long style = 0;
 
@@ -86,7 +86,7 @@ namespace Alternet::UI
         return style;
     }
 
-    MessageBoxResult MessageBox_::GetResult(int wxResult)
+    MessageBoxResult MessageBoxObj::GetResult(int wxResult)
     {
         MessageBoxResult result;
         switch (wxResult)

@@ -3,7 +3,7 @@ using System;
 
 namespace NativeApi.Api
 {
-    [NativeName("MessageBox_")]
+    [NativeName("MessageBoxObj")]
     public static class MessageBox
     {
         public static MessageBoxResult Show(
