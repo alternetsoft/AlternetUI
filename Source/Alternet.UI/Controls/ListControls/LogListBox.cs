@@ -17,9 +17,26 @@ namespace Alternet.UI
         private string? lastLogMessage;
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="LogListBox"/> class.
+        /// </summary>
+        public LogListBox()
+            : base()
+        {
+            SelectionMode = ListBoxSelectionMode.Multiple;
+        }
+
+        /// <summary>
         /// Gets the last logged message.
         /// </summary>
-        public string? LastLogMessage => lastLogMessage;
+        public string? LastLogMessage
+        {
+            get
+            {
+                if(Items.Count > 0)
+                    return lastLogMessage;
+                return null;
+            }
+        }
 
         /// <summary>
         /// Gets context menu for the control.
@@ -54,7 +71,7 @@ namespace Alternet.UI
         {
             string? s;
 
-            s = LastItem?.ToString();
+            s = LastLogMessage;
 
             if (s is null)
             {
@@ -100,21 +117,6 @@ namespace Alternet.UI
             Application.DoEvents();
         }
 
-        /// <summary>
-        /// Logs environment versions.
-        /// </summary>
-        /// <remarks>
-        /// Works only if DEBUG conditional is defined.
-        /// </remarks>
-        [Conditional("DEBUG")]
-        public virtual void DebugLogVersion()
-        {
-            var wxWidgets = WebBrowser.GetLibraryVersionString();
-            var net = $"Net: {Environment.Version}";
-            var dpi = $"DPI: {Application.FirstWindow()?.GetDPI().Width}";
-            Application.Log($"{net}, {wxWidgets}, {dpi}");
-        }
-
         internal virtual void Application_LogMessage(object? sender, LogMessageEventArgs e)
         {
             if (e.ReplaceLastMessage)
@@ -132,7 +134,9 @@ namespace Alternet.UI
         /// </remarks>
         protected virtual string ConstructLogMessage(string? msg)
         {
-            return $"{msg} [{LogUtils.GenNewId()}]";
+            if (string.IsNullOrWhiteSpace(msg))
+                return string.Empty;
+            return $" [{LogUtils.GenNewId()}] {msg}";
         }
 
         /// <summary>
@@ -143,6 +147,20 @@ namespace Alternet.UI
             ContextMenu.Add(new(CommonStrings.Default.ButtonClear, RemoveAll));
 
             ContextMenu.Add(new("Open log file", LogUtils.OpenLogFile));
+
+            ContextMenu.Add(new("Log Display Info", Display.Log));
+
+            var logToFileItem = ContextMenu.Add(new("Log to file"));
+            logToFileItem.ClickAction = AlsoLogToFile;
+
+            void AlsoLogToFile()
+            {
+                if (Application.LogFileIsEnabled)
+                    return;
+                Application.LogFileIsEnabled = true;
+                logToFileItem.Checked = true;
+                logToFileItem.Enabled = false;
+            }
 
 #if DEBUG
             /*Add(
