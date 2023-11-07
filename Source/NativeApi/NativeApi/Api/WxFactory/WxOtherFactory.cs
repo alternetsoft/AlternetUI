@@ -12,9 +12,12 @@ namespace NativeApi.Api
 {
     // https://docs.wxwidgets.org/3.2/classwx_rich_tool_tip.html
     // https://docs.wxwidgets.org/3.2/classwx_tool_tip.html
+    // https://docs.wxwidgets.org/3.2/classwx_display.html
+    // https://docs.wxwidgets.org/3.2/classwx_caret.html
+    // https://docs.wxwidgets.org/3.2/classwx_cursor.html
     public class WxOtherFactory
     {
-        // RichToolTip
+        // =================== RichToolTip
 
         // Ctor must specify the tooltip title and main message, additional
         // attributes can be set later.
@@ -51,7 +54,7 @@ namespace NativeApi.Api
         // Show the tooltip for the given window and optionally a specified area.
         public static void RichToolTipShowFor(IntPtr handle, IntPtr window, Int32Rect rect) { }
 
-        // ToolTip
+        // =================== ToolTip
 
         public static IntPtr CreateToolTip(string tip) => default;
         public static void DeleteToolTip(IntPtr handle) { }
@@ -80,6 +83,13 @@ namespace NativeApi.Api
 
         // Set the delay between subsequent tooltips to appear. 
         public static void ToolTipSetReshow(long msecs) { }
+
+        // =================== Caret
+
+        // =================== Cursor
+
+        // =================== Display
+
     }
 }
 
