@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Alternet.UI
 {
     /// <summary>Specifies the built in cursor types.</summary>
-    public enum StockCursor
+    public enum CursorType
     {
         /// <summary>
         /// A value indicating that no cursor should be displayed.
