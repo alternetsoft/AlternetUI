@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
@@ -144,7 +145,17 @@ namespace Alternet.UI
         /// </summary>
         protected virtual void InitContextMenu()
         {
+            void Copy()
+            {
+                var text = SelectedItemsAsText();
+                if (string.IsNullOrEmpty(text))
+                    return;
+                Clipboard.SetText(text);
+            }
+
             ContextMenu.Add(new(CommonStrings.Default.ButtonClear, RemoveAll));
+
+            ContextMenu.Add(new(CommonStrings.Default.ButtonCopy, Copy));
 
             ContextMenu.Add(new("Open log file", LogUtils.OpenLogFile));
 
