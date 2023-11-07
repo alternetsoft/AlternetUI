@@ -63,6 +63,9 @@ namespace Alternet.UI.Localization
         /// <inheritdoc cref="ButtonOk"/>
         public string ButtonClear { get; set; } = "Clear";
 
+        /// <inheritdoc cref="ButtonOk"/>
+        public string ButtonCopy { get; set; } = "Copy";
+
         // ========================
 
         /// <inheritdoc cref="ButtonOk"/>
