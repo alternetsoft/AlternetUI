@@ -110,7 +110,7 @@ namespace ControlsSample
             mainGridParent.Children.Add(mainGrid);
             Children.Add(mainGridParent);
 
-            eventsControl.DebugLogVersion();
+            LogUtils.DebugLogVersion();
 
             if (pageContainer.PagesControl.CanAcceptFocus)
                 pageContainer.PagesControl.SetFocus();
