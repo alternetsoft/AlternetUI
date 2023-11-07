@@ -27,6 +27,11 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets <see cref="string"/> which is logged before and after log section.
+        /// </summary>
+        public static string SectionSeparator { get; set; } = "=========";
+
+        /// <summary>
         /// Gets or sets max property value length for the <see cref="LogPropLimitLength"/>
         /// </summary>
         public static int LogPropMaxLength { get; set; } = 80;
@@ -50,10 +55,44 @@ namespace Alternet.UI
                 s += s2 + Environment.NewLine;
             }
 
-            LogToFile("=========");
+            LogToFile(SectionSeparator);
             LogToFile("Font Families:");
             LogToFile(s);
-            LogToFile("=========");
+            LogToFile(SectionSeparator);
+        }
+
+        /// <summary>
+        /// Gets logging method based on the <paramref name="toFile"/> parameter value.
+        /// </summary>
+        /// <param name="toFile">If <c>true</c>, <see cref="LogToFile"/> is returned;
+        /// otherwise <see cref="Application.Log"/> is returned.</param>
+        /// <returns></returns>
+        public static Action<object?> GetLogMethod(bool toFile)
+        {
+            static void ToFile(object? value)
+            {
+                LogToFile(value?.ToString());
+            }
+
+            if (toFile)
+                return ToFile;
+            else
+                return Application.Log;
+        }
+
+        /// <summary>
+        /// Logs environment versions.
+        /// </summary>
+        /// <remarks>
+        /// Works only if DEBUG conditional is defined.
+        /// </remarks>
+        [Conditional("DEBUG")]
+        public static void DebugLogVersion()
+        {
+            var wxWidgets = WebBrowser.GetLibraryVersionString();
+            var net = $"Net: {Environment.Version}";
+            var dpi = $"DPI: {Application.FirstWindow()?.GetDPI().Width}";
+            Application.Log($"{net}, {wxWidgets}, {dpi}");
         }
 
         /// <summary>
@@ -62,9 +101,10 @@ namespace Alternet.UI
         /// <param name="e">Exception to log.</param>
         public static void LogException(Exception e)
         {
-            Application.Log("====== EXCEPTION:");
+            Application.Log(SectionSeparator);
+            Application.Log("Exception:");
             Application.Log(e.ToString());
-            Application.Log("======");
+            Application.Log(SectionSeparator);
         }
 
         /// <summary>
@@ -124,11 +164,12 @@ namespace Alternet.UI
         /// <summary>
         /// Logs message to the specified file or to default application log file.
         /// </summary>
-        /// <param name="msg">Log message.</param>
+        /// <param name="obj">Log message or object.</param>
         /// <param name="filename">Log file path. <see cref="Application.LogFilePath"/> is used
         /// when this parameter is <c>null</c>.</param>
-        public static void LogToFile(string msg, string? filename = null)
+        public static void LogToFile(object? obj = null, string? filename = null)
         {
+            var msg = obj?.ToString() ?? string.Empty;
             filename ??= Application.LogFilePath;
 
             string dt = System.DateTime.Now.ToString("HH:mm:ss");
@@ -145,13 +186,13 @@ namespace Alternet.UI
         /// Same as <see cref="LogToFile"/> but writes message to file only under debug environment
         /// (DEBUG conditional is defined).
         /// </summary>
-        /// <param name="msg">Log message</param>
+        /// <param name="obj">Log message or object.</param>
         /// <param name="filename">Log file path. <see cref="Application.LogFilePath"/> is used
         /// when this parameter is <c>null</c>.</param>
         [Conditional("DEBUG")]
-        public static void DebugLogToFile(string msg, string? filename = null)
+        public static void DebugLogToFile(object? obj = null, string? filename = null)
         {
-            LogToFile(msg, filename);
+            LogToFile(obj, filename);
         }
 
         /// <summary>
@@ -176,12 +217,12 @@ namespace Alternet.UI
             try
             {
                 flags |= Flags.AppStartLogged;
-                LogUtils.LogToFile(string.Empty);
-                LogUtils.LogToFile(string.Empty);
-                LogToFile("======================================");
+                LogToFile();
+                LogToFile();
+                LogToFile(SectionSeparator);
                 LogToFile("Application log started");
-                LogToFile("======================================");
-                LogUtils.LogToFile(string.Empty);
+                LogToFile(SectionSeparator);
+                LogToFile();
             }
             catch
             {
@@ -198,12 +239,12 @@ namespace Alternet.UI
             try
             {
                 flags |= Flags.AppFinishLogged;
-                LogUtils.LogToFile(string.Empty);
-                LogUtils.LogToFile(string.Empty);
-                LogToFile("======================================");
+                LogToFile();
+                LogToFile();
+                LogToFile(SectionSeparator);
                 LogToFile("Application log finished");
-                LogToFile("======================================");
-                LogUtils.LogToFile(string.Empty);
+                LogToFile(SectionSeparator);
+                LogToFile();
             }
             catch
             {
