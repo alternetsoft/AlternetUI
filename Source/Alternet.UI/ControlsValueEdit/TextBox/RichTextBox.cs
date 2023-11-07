@@ -1791,26 +1791,26 @@ namespace Alternet.UI
         // Supply an optional type to use for internal and file storage of the raw data.
         internal bool WriteImage(
             Image bitmap,
-            int bitmapType,
+            BitmapType bitmapType = BitmapType.Png,
             IntPtr textAttr = default)
         {
             if (bitmap is null)
                 return false;
             return NativeControl.WriteImage(
                 bitmap.NativeImage,
-                bitmapType,
+                (int)bitmapType,
                 textAttr);
-        } // = wxBITMAP_TYPE_PNG
+        } // 
 
         // Loads an image from a file and writes it at the current insertion point.
         internal bool WriteImage(
             string filename,
-            int bitmapType,
+            BitmapType bitmapType = BitmapType.Png,
             IntPtr textAttr = default)
         {
             return NativeControl.WriteImage2(
                 filename,
-                bitmapType,
+                (int)bitmapType,
                 textAttr);
         }
 
