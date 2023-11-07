@@ -100,10 +100,7 @@ namespace ControlsSample
             AddPage("Layout Panel", CreateLayoutPanelPage);
             AddPage("Calendar", CreateCalendarPage);
             AddPage("Animation", CreateAnimationPage);
-
-            if (NotifyIcon.IsAvailable)
-                AddPage("Notify & ToolTip", CreateNotifyIconPage);
-
+            AddPage("Notify & ToolTip", CreateNotifyIconPage);
             AddPage("Tab Control", CreateTabControlPage);
             AddPage("All Samples", CreateAllSamplesPage);
 
