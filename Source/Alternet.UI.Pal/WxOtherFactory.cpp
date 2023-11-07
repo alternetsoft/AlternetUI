@@ -120,4 +120,177 @@ namespace Alternet::UI
 			delete wxr;
 		}
 	}
+
+	void* WxOtherFactory::CreateCursor()
+	{
+		return new wxCursor();
+	}
+	
+	void* WxOtherFactory::CreateCursor2(int cursorId)
+	{
+		return new wxCursor((wxStockCursor)cursorId);
+	}
+
+	void* WxOtherFactory::CreateCursor3(const string& cursorName, int type,
+		int hotSpotX, int hotSpotY)
+	{
+		return new wxCursor(wxStr(cursorName), (wxBitmapType)type, hotSpotX, hotSpotY);
+	}
+
+	void* WxOtherFactory::CreateCursor4(Image* image)
+	{
+		if (image == nullptr)
+			return new wxCursor();
+		return new wxCursor(image->GetBitmap().ConvertToImage());
+	}
+
+	void WxOtherFactory::DeleteCursor(void* handle)
+	{
+		delete (wxCursor*)handle;
+	}
+
+	bool WxOtherFactory::CursorIsOk(void* handle)
+	{
+		return ((wxCursor*)handle)->IsOk();
+	}
+
+	Int32Point WxOtherFactory::CursorGetHotSpot(void* handle)
+	{
+		return ((wxCursor*)handle)->GetHotSpot();
+	}
+
+	void WxOtherFactory::DeleteCaret(void* handle)
+	{
+
+	}
+
+	Int32Point WxOtherFactory::CaretGetPosition(void* handle)
+	{
+		return Int32Point();
+	}
+
+	Int32Size WxOtherFactory::CaretGetSize(void* handle)
+	{
+		return Int32Size();
+	}
+
+	void WxOtherFactory::CaretMove(void* handle, int x, int y)
+	{
+
+	}
+
+	void WxOtherFactory::CaretSetSize(void* handle, int width, int height)
+	{
+
+	}
+
+	void* WxOtherFactory::CreateCaret()
+	{
+		return nullptr;
+	}
+
+	void* WxOtherFactory::CreateCaret2(void* window, int width, int height)
+	{
+		return nullptr;
+	}
+
+	void* WxOtherFactory::CaretGetWindow(void* handle)
+	{
+		return nullptr;
+	}
+
+	void WxOtherFactory::CaretHide(void* handle)
+	{
+
+	}
+
+	bool WxOtherFactory::CaretIsOk(void* handle)
+	{
+		return false;
+	}
+
+	bool WxOtherFactory::CaretIsVisible(void* handle)
+	{
+		return false;
+	}
+
+	void WxOtherFactory::CaretShow(void* handle, bool show)
+	{
+
+	}
+
+	void* WxOtherFactory::CreateDisplay()
+	{
+		return nullptr;
+	}
+
+	void* WxOtherFactory::CreateDisplay2(uint32_t index)
+	{
+		return nullptr;
+	}
+
+	void* WxOtherFactory::CreateDisplay3(void* window)
+	{
+		return nullptr;
+	}
+
+	void WxOtherFactory::DeleteDisplay(void* handle)
+	{
+
+	}
+
+	uint32_t WxOtherFactory::DisplayGetCount()
+	{
+		return 0;
+	}
+
+	int WxOtherFactory::DisplayGetFromPoint(const Int32Point& pt)
+	{
+		return 0;
+	}
+
+	int WxOtherFactory::DisplayGetFromWindow(void* win)
+	{
+		return 0;
+	}
+
+	int WxOtherFactory::DisplayGetStdPPIValue()
+	{
+		return 0;
+	}
+
+	Int32Size WxOtherFactory::DisplayGetStdPPI()
+	{
+		return Int32Size();
+	}
+
+	string WxOtherFactory::DisplayGetName(void* handle)
+	{
+		return wxStr(wxEmptyString);
+	}
+
+	Int32Size WxOtherFactory::DisplayGetPPI(void* handle)
+	{
+		return Int32Size();
+	}
+
+	double WxOtherFactory::DisplayGetScaleFactor(void* handle)
+	{
+		return 0;
+	}
+
+	bool WxOtherFactory::DisplayIsPrimary(void* handle)
+	{
+		return false;
+	}
+
+	Int32Rect WxOtherFactory::DisplayGetClientArea(void* handle)
+	{
+		return Int32Rect();
+	}
+
+	Int32Rect WxOtherFactory::DisplayGetGeometry(void* handle)
+	{
+		return Int32Rect();
+	}
 }

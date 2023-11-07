@@ -5,6 +5,7 @@
 #include "WxOtherFactory.h"
 #include "ImageSet.h"
 #include "Font.h"
+#include "Image.h"
 #include "ApiUtils.h"
 #include "Exceptions.h"
 
@@ -108,5 +109,175 @@ ALTERNET_UI_API void WxOtherFactory_ToolTipSetMaxWidth_(int width)
 ALTERNET_UI_API void WxOtherFactory_ToolTipSetReshow_(int64_t msecs)
 {
     WxOtherFactory::ToolTipSetReshow(msecs);
+}
+
+ALTERNET_UI_API void* WxOtherFactory_CreateCursor_()
+{
+    return WxOtherFactory::CreateCursor();
+}
+
+ALTERNET_UI_API void* WxOtherFactory_CreateCursor2_(int cursorId)
+{
+    return WxOtherFactory::CreateCursor2(cursorId);
+}
+
+ALTERNET_UI_API void* WxOtherFactory_CreateCursor3_(const char16_t* cursorName, int type, int hotSpotX, int hotSpotY)
+{
+    return WxOtherFactory::CreateCursor3(cursorName, type, hotSpotX, hotSpotY);
+}
+
+ALTERNET_UI_API void* WxOtherFactory_CreateCursor4_(Image* image)
+{
+    return WxOtherFactory::CreateCursor4(image);
+}
+
+ALTERNET_UI_API void WxOtherFactory_DeleteCursor_(void* handle)
+{
+    WxOtherFactory::DeleteCursor(handle);
+}
+
+ALTERNET_UI_API c_bool WxOtherFactory_CursorIsOk_(void* handle)
+{
+    return WxOtherFactory::CursorIsOk(handle);
+}
+
+ALTERNET_UI_API Int32Point_C WxOtherFactory_CursorGetHotSpot_(void* handle)
+{
+    return WxOtherFactory::CursorGetHotSpot(handle);
+}
+
+ALTERNET_UI_API void WxOtherFactory_DeleteCaret_(void* handle)
+{
+    WxOtherFactory::DeleteCaret(handle);
+}
+
+ALTERNET_UI_API Int32Point_C WxOtherFactory_CaretGetPosition_(void* handle)
+{
+    return WxOtherFactory::CaretGetPosition(handle);
+}
+
+ALTERNET_UI_API Int32Size_C WxOtherFactory_CaretGetSize_(void* handle)
+{
+    return WxOtherFactory::CaretGetSize(handle);
+}
+
+ALTERNET_UI_API void WxOtherFactory_CaretMove_(void* handle, int x, int y)
+{
+    WxOtherFactory::CaretMove(handle, x, y);
+}
+
+ALTERNET_UI_API void WxOtherFactory_CaretSetSize_(void* handle, int width, int height)
+{
+    WxOtherFactory::CaretSetSize(handle, width, height);
+}
+
+ALTERNET_UI_API void* WxOtherFactory_CreateCaret_()
+{
+    return WxOtherFactory::CreateCaret();
+}
+
+ALTERNET_UI_API void* WxOtherFactory_CreateCaret2_(void* window, int width, int height)
+{
+    return WxOtherFactory::CreateCaret2(window, width, height);
+}
+
+ALTERNET_UI_API void* WxOtherFactory_CaretGetWindow_(void* handle)
+{
+    return WxOtherFactory::CaretGetWindow(handle);
+}
+
+ALTERNET_UI_API void WxOtherFactory_CaretHide_(void* handle)
+{
+    WxOtherFactory::CaretHide(handle);
+}
+
+ALTERNET_UI_API c_bool WxOtherFactory_CaretIsOk_(void* handle)
+{
+    return WxOtherFactory::CaretIsOk(handle);
+}
+
+ALTERNET_UI_API c_bool WxOtherFactory_CaretIsVisible_(void* handle)
+{
+    return WxOtherFactory::CaretIsVisible(handle);
+}
+
+ALTERNET_UI_API void WxOtherFactory_CaretShow_(void* handle, c_bool show)
+{
+    WxOtherFactory::CaretShow(handle, show);
+}
+
+ALTERNET_UI_API void* WxOtherFactory_CreateDisplay_()
+{
+    return WxOtherFactory::CreateDisplay();
+}
+
+ALTERNET_UI_API void* WxOtherFactory_CreateDisplay2_(uint32_t index)
+{
+    return WxOtherFactory::CreateDisplay2(index);
+}
+
+ALTERNET_UI_API void* WxOtherFactory_CreateDisplay3_(void* window)
+{
+    return WxOtherFactory::CreateDisplay3(window);
+}
+
+ALTERNET_UI_API void WxOtherFactory_DeleteDisplay_(void* handle)
+{
+    WxOtherFactory::DeleteDisplay(handle);
+}
+
+ALTERNET_UI_API uint32_t WxOtherFactory_DisplayGetCount_()
+{
+    return WxOtherFactory::DisplayGetCount();
+}
+
+ALTERNET_UI_API int WxOtherFactory_DisplayGetFromPoint_(Int32Point pt)
+{
+    return WxOtherFactory::DisplayGetFromPoint(pt);
+}
+
+ALTERNET_UI_API int WxOtherFactory_DisplayGetFromWindow_(void* win)
+{
+    return WxOtherFactory::DisplayGetFromWindow(win);
+}
+
+ALTERNET_UI_API int WxOtherFactory_DisplayGetStdPPIValue_()
+{
+    return WxOtherFactory::DisplayGetStdPPIValue();
+}
+
+ALTERNET_UI_API Int32Size_C WxOtherFactory_DisplayGetStdPPI_()
+{
+    return WxOtherFactory::DisplayGetStdPPI();
+}
+
+ALTERNET_UI_API char16_t* WxOtherFactory_DisplayGetName_(void* handle)
+{
+    return AllocPInvokeReturnString(WxOtherFactory::DisplayGetName(handle));
+}
+
+ALTERNET_UI_API Int32Size_C WxOtherFactory_DisplayGetPPI_(void* handle)
+{
+    return WxOtherFactory::DisplayGetPPI(handle);
+}
+
+ALTERNET_UI_API double WxOtherFactory_DisplayGetScaleFactor_(void* handle)
+{
+    return WxOtherFactory::DisplayGetScaleFactor(handle);
+}
+
+ALTERNET_UI_API c_bool WxOtherFactory_DisplayIsPrimary_(void* handle)
+{
+    return WxOtherFactory::DisplayIsPrimary(handle);
+}
+
+ALTERNET_UI_API Int32Rect_C WxOtherFactory_DisplayGetClientArea_(void* handle)
+{
+    return WxOtherFactory::DisplayGetClientArea(handle);
+}
+
+ALTERNET_UI_API Int32Rect_C WxOtherFactory_DisplayGetGeometry_(void* handle)
+{
+    return WxOtherFactory::DisplayGetGeometry(handle);
 }
 

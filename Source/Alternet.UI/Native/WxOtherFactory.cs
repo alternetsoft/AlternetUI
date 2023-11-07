@@ -118,6 +118,176 @@ namespace Alternet.UI.Native
             NativeApi.WxOtherFactory_ToolTipSetReshow_(msecs);
         }
         
+        public static System.IntPtr CreateCursor()
+        {
+            return NativeApi.WxOtherFactory_CreateCursor_();
+        }
+        
+        public static System.IntPtr CreateCursor2(int cursorId)
+        {
+            return NativeApi.WxOtherFactory_CreateCursor2_(cursorId);
+        }
+        
+        public static System.IntPtr CreateCursor3(string cursorName, int type, int hotSpotX, int hotSpotY)
+        {
+            return NativeApi.WxOtherFactory_CreateCursor3_(cursorName, type, hotSpotX, hotSpotY);
+        }
+        
+        public static System.IntPtr CreateCursor4(Image image)
+        {
+            return NativeApi.WxOtherFactory_CreateCursor4_(image.NativePointer);
+        }
+        
+        public static void DeleteCursor(System.IntPtr handle)
+        {
+            NativeApi.WxOtherFactory_DeleteCursor_(handle);
+        }
+        
+        public static bool CursorIsOk(System.IntPtr handle)
+        {
+            return NativeApi.WxOtherFactory_CursorIsOk_(handle);
+        }
+        
+        public static Alternet.Drawing.Int32Point CursorGetHotSpot(System.IntPtr handle)
+        {
+            return NativeApi.WxOtherFactory_CursorGetHotSpot_(handle);
+        }
+        
+        public static void DeleteCaret(System.IntPtr handle)
+        {
+            NativeApi.WxOtherFactory_DeleteCaret_(handle);
+        }
+        
+        public static Alternet.Drawing.Int32Point CaretGetPosition(System.IntPtr handle)
+        {
+            return NativeApi.WxOtherFactory_CaretGetPosition_(handle);
+        }
+        
+        public static Alternet.Drawing.Int32Size CaretGetSize(System.IntPtr handle)
+        {
+            return NativeApi.WxOtherFactory_CaretGetSize_(handle);
+        }
+        
+        public static void CaretMove(System.IntPtr handle, int x, int y)
+        {
+            NativeApi.WxOtherFactory_CaretMove_(handle, x, y);
+        }
+        
+        public static void CaretSetSize(System.IntPtr handle, int width, int height)
+        {
+            NativeApi.WxOtherFactory_CaretSetSize_(handle, width, height);
+        }
+        
+        public static System.IntPtr CreateCaret()
+        {
+            return NativeApi.WxOtherFactory_CreateCaret_();
+        }
+        
+        public static System.IntPtr CreateCaret2(System.IntPtr window, int width, int height)
+        {
+            return NativeApi.WxOtherFactory_CreateCaret2_(window, width, height);
+        }
+        
+        public static System.IntPtr CaretGetWindow(System.IntPtr handle)
+        {
+            return NativeApi.WxOtherFactory_CaretGetWindow_(handle);
+        }
+        
+        public static void CaretHide(System.IntPtr handle)
+        {
+            NativeApi.WxOtherFactory_CaretHide_(handle);
+        }
+        
+        public static bool CaretIsOk(System.IntPtr handle)
+        {
+            return NativeApi.WxOtherFactory_CaretIsOk_(handle);
+        }
+        
+        public static bool CaretIsVisible(System.IntPtr handle)
+        {
+            return NativeApi.WxOtherFactory_CaretIsVisible_(handle);
+        }
+        
+        public static void CaretShow(System.IntPtr handle, bool show)
+        {
+            NativeApi.WxOtherFactory_CaretShow_(handle, show);
+        }
+        
+        public static System.IntPtr CreateDisplay()
+        {
+            return NativeApi.WxOtherFactory_CreateDisplay_();
+        }
+        
+        public static System.IntPtr CreateDisplay2(uint index)
+        {
+            return NativeApi.WxOtherFactory_CreateDisplay2_(index);
+        }
+        
+        public static System.IntPtr CreateDisplay3(System.IntPtr window)
+        {
+            return NativeApi.WxOtherFactory_CreateDisplay3_(window);
+        }
+        
+        public static void DeleteDisplay(System.IntPtr handle)
+        {
+            NativeApi.WxOtherFactory_DeleteDisplay_(handle);
+        }
+        
+        public static uint DisplayGetCount()
+        {
+            return NativeApi.WxOtherFactory_DisplayGetCount_();
+        }
+        
+        public static int DisplayGetFromPoint(Alternet.Drawing.Int32Point pt)
+        {
+            return NativeApi.WxOtherFactory_DisplayGetFromPoint_(pt);
+        }
+        
+        public static int DisplayGetFromWindow(System.IntPtr win)
+        {
+            return NativeApi.WxOtherFactory_DisplayGetFromWindow_(win);
+        }
+        
+        public static int DisplayGetStdPPIValue()
+        {
+            return NativeApi.WxOtherFactory_DisplayGetStdPPIValue_();
+        }
+        
+        public static Alternet.Drawing.Int32Size DisplayGetStdPPI()
+        {
+            return NativeApi.WxOtherFactory_DisplayGetStdPPI_();
+        }
+        
+        public static string DisplayGetName(System.IntPtr handle)
+        {
+            return NativeApi.WxOtherFactory_DisplayGetName_(handle);
+        }
+        
+        public static Alternet.Drawing.Int32Size DisplayGetPPI(System.IntPtr handle)
+        {
+            return NativeApi.WxOtherFactory_DisplayGetPPI_(handle);
+        }
+        
+        public static double DisplayGetScaleFactor(System.IntPtr handle)
+        {
+            return NativeApi.WxOtherFactory_DisplayGetScaleFactor_(handle);
+        }
+        
+        public static bool DisplayIsPrimary(System.IntPtr handle)
+        {
+            return NativeApi.WxOtherFactory_DisplayIsPrimary_(handle);
+        }
+        
+        public static Alternet.Drawing.Int32Rect DisplayGetClientArea(System.IntPtr handle)
+        {
+            return NativeApi.WxOtherFactory_DisplayGetClientArea_(handle);
+        }
+        
+        public static Alternet.Drawing.Int32Rect DisplayGetGeometry(System.IntPtr handle)
+        {
+            return NativeApi.WxOtherFactory_DisplayGetGeometry_(handle);
+        }
+        
         
         [SuppressUnmanagedCodeSecurity]
         public class NativeApi : NativeApiProvider
@@ -183,6 +353,108 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void WxOtherFactory_ToolTipSetReshow_(long msecs);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr WxOtherFactory_CreateCursor_();
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr WxOtherFactory_CreateCursor2_(int cursorId);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr WxOtherFactory_CreateCursor3_(string cursorName, int type, int hotSpotX, int hotSpotY);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr WxOtherFactory_CreateCursor4_(IntPtr image);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void WxOtherFactory_DeleteCursor_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool WxOtherFactory_CursorIsOk_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern Alternet.Drawing.Int32Point WxOtherFactory_CursorGetHotSpot_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void WxOtherFactory_DeleteCaret_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern Alternet.Drawing.Int32Point WxOtherFactory_CaretGetPosition_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern Alternet.Drawing.Int32Size WxOtherFactory_CaretGetSize_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void WxOtherFactory_CaretMove_(System.IntPtr handle, int x, int y);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void WxOtherFactory_CaretSetSize_(System.IntPtr handle, int width, int height);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr WxOtherFactory_CreateCaret_();
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr WxOtherFactory_CreateCaret2_(System.IntPtr window, int width, int height);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr WxOtherFactory_CaretGetWindow_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void WxOtherFactory_CaretHide_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool WxOtherFactory_CaretIsOk_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool WxOtherFactory_CaretIsVisible_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void WxOtherFactory_CaretShow_(System.IntPtr handle, bool show);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr WxOtherFactory_CreateDisplay_();
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr WxOtherFactory_CreateDisplay2_(uint index);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr WxOtherFactory_CreateDisplay3_(System.IntPtr window);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void WxOtherFactory_DeleteDisplay_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern uint WxOtherFactory_DisplayGetCount_();
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int WxOtherFactory_DisplayGetFromPoint_(Alternet.Drawing.Int32Point pt);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int WxOtherFactory_DisplayGetFromWindow_(System.IntPtr win);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int WxOtherFactory_DisplayGetStdPPIValue_();
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern Alternet.Drawing.Int32Size WxOtherFactory_DisplayGetStdPPI_();
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern string WxOtherFactory_DisplayGetName_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern Alternet.Drawing.Int32Size WxOtherFactory_DisplayGetPPI_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern double WxOtherFactory_DisplayGetScaleFactor_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool WxOtherFactory_DisplayIsPrimary_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern Alternet.Drawing.Int32Rect WxOtherFactory_DisplayGetClientArea_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern Alternet.Drawing.Int32Rect WxOtherFactory_DisplayGetGeometry_(System.IntPtr handle);
             
         }
     }
