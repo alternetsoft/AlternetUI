@@ -448,12 +448,20 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Logs an empty string.
+        /// </summary>
+        public static void LogEmptyLine()
+        {
+            Log(" ");
+        }
+
         /// <inheritdoc cref="Log"/>
         /// <remarks>
         /// Works only if DEBUG conditional is defined.
         /// </remarks>
         [Conditional("DEBUG")]
-        public static void DebugLog(string msg)
+        public static void DebugLog(object? msg)
         {
             Log(msg);
         }
