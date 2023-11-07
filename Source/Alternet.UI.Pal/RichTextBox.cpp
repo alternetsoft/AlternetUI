@@ -81,7 +81,8 @@ namespace Alternet::UI
 
 	bool RichTextBox::GetCaretPositionForIndex(int64_t position, const Int32Rect& rect, void* container)
 	{
-		wxRect wxr = rect;
+		Int32Rect r = rect;
+		wxRect wxr = r;
 		return GetTextCtrl()->GetCaretPositionForIndex(position, wxr,
 			(wxRichTextParagraphLayoutBox*)container);
 	}
@@ -138,7 +139,7 @@ namespace Alternet::UI
 
 	int64_t RichTextBox::GetDelayedImageProcessingTime()
 	{
-		return GetTextCtrl()->GetDelayedImageProcessingTime();
+		return GetTextCtrl()->GetDelayedImageProcessingTime().ToLong();
 	}
 
 	void RichTextBox::SetDelayedImageProcessingTime(int64_t t)
@@ -528,7 +529,7 @@ namespace Alternet::UI
 
 	void* RichTextBox::WriteField(const string& fieldType, void* properties, void* textAttr)
 	{
-		return GetTextCtrl()->nullptr;
+		return nullptr;
 	}
 
 	bool RichTextBox::CanDeleteRange(void* container, int64_t startRange, int64_t endRange)
@@ -543,7 +544,7 @@ namespace Alternet::UI
 
 	void* RichTextBox::GetBuffer()
 	{
-		return false;
+		return nullptr;
 	}
 
 	int64_t RichTextBox::DeleteSelectedContent()
@@ -689,7 +690,7 @@ namespace Alternet::UI
 
 	bool RichTextBox::IsSelectionAligned(int alignment)
 	{
-		return GetTextCtrl()->IsSelectionAligned(alignment);
+		return GetTextCtrl()->IsSelectionAligned((wxTextAttrAlignment)alignment);
 	}
 
 	bool RichTextBox::ApplyBoldToSelection()
@@ -714,12 +715,13 @@ namespace Alternet::UI
 
 	bool RichTextBox::ApplyAlignmentToSelection(int alignment)
 	{
-		return GetTextCtrl()->;
+		return GetTextCtrl()->ApplyAlignmentToSelection((wxTextAttrAlignment)alignment);
 	}
 
 	bool RichTextBox::ApplyStyle(void* def)
 	{
-		return GetTextCtrl()->;
+		// !!!!!
+		return false;
 	}
 
 	void RichTextBox::SetStyleSheet(void* styleSheet)
@@ -728,7 +730,7 @@ namespace Alternet::UI
 
 	bool RichTextBox::SetDefaultStyleToCursorStyle()
 	{
-		return GetTextCtrl()->;
+		return GetTextCtrl()->SetDefaultStyleToCursorStyle();
 	}
 
 	void RichTextBox::SelectNone()
@@ -738,157 +740,158 @@ namespace Alternet::UI
 
 	bool RichTextBox::SelectWord(int64_t position)
 	{
-		return GetTextCtrl()->;
+		return GetTextCtrl()->SelectWord(position);
 	}
 
 	bool RichTextBox::LayoutContent(bool onlyVisibleRect)
 	{
-		return GetTextCtrl()->;
+		return GetTextCtrl()->LayoutContent(onlyVisibleRect);
 	}
 
 	bool RichTextBox::MoveCaret(int64_t pos, bool showAtLineStart, void* container)
 	{
-		return GetTextCtrl()->;
+		// !!!!!
+		return false;
 	}
 
 	bool RichTextBox::MoveRight(int noPositions, int flags)
 	{
-		return GetTextCtrl()->;
+		return GetTextCtrl()->MoveRight(noPositions, flags);
 	}
 
 	bool RichTextBox::MoveLeft(int noPositions, int flags)
 	{
-		return GetTextCtrl()->;
+		return GetTextCtrl()->MoveLeft(noPositions, flags);
 	}
 
 	bool RichTextBox::MoveUp(int noLines, int flags)
 	{
-		return GetTextCtrl()->;
+		return GetTextCtrl()->MoveUp(noLines, flags);
 	}
 
 	bool RichTextBox::MoveDown(int noLines, int flags)
 	{
-		return GetTextCtrl()->;
+		return GetTextCtrl()->MoveDown(noLines, flags);
 	}
 
 	bool RichTextBox::MoveToLineEnd(int flags)
 	{
-		return GetTextCtrl()->;
+		return GetTextCtrl()->MoveToLineEnd(flags);
 	}
 
 	bool RichTextBox::MoveToLineStart(int flags)
 	{
-		return GetTextCtrl()->;
+		return GetTextCtrl()->MoveToLineStart(flags);
 	}
 
 	bool RichTextBox::MoveToParagraphEnd(int flags)
 	{
-		return GetTextCtrl()->;
+		return GetTextCtrl()->MoveToParagraphEnd(flags);
 	}
 
 	bool RichTextBox::MoveToParagraphStart(int flags)
 	{
-		return GetTextCtrl()->;
+		return GetTextCtrl()->MoveToParagraphStart(flags);
 	}
 
 	bool RichTextBox::MoveHome(int flags)
 	{
-		return GetTextCtrl()->;
+		return GetTextCtrl()->MoveHome(flags);
 	}
 
 	bool RichTextBox::MoveEnd(int flags)
 	{
-		return GetTextCtrl()->;
+		return GetTextCtrl()->MoveEnd(flags);
 	}
 
 	bool RichTextBox::PageUp(int noPages, int flags)
 	{
-		return GetTextCtrl()->;
+		return GetTextCtrl()->PageUp(noPages, flags);
 	}
 
 	bool RichTextBox::PageDown(int noPages, int flags)
 	{
-		return GetTextCtrl()->;
+		return GetTextCtrl()->PageDown(noPages, flags);
 	}
 
 	bool RichTextBox::WordLeft(int noPages, int flags)
 	{
-		return GetTextCtrl()->;
+		return GetTextCtrl()->WordLeft(noPages, flags);
 	}
 
 	bool RichTextBox::WordRight(int noPages, int flags)
 	{
-		return GetTextCtrl()->;
+		return GetTextCtrl()->WordRight(noPages, flags);
 	}
 
 	bool RichTextBox::PushStyleSheet(void* styleSheet)
 	{
-		return GetTextCtrl()->;
+		return false;
 	}
 
 	void* RichTextBox::PopStyleSheet()
 	{
-		return GetTextCtrl()->nullptr;
+		return GetTextCtrl()->PopStyleSheet();
 	}
 
 	bool RichTextBox::ApplyStyleSheet(void* styleSheet)
 	{
-		return GetTextCtrl()->;
+		return false;
 	}
 
 	bool RichTextBox::ShowContextMenu(void* menu, const Int32Point& pt, bool addPropertyCommands)
 	{
-		return GetTextCtrl()->;
+		return GetTextCtrl()->ShowContextMenu((wxMenu*)menu, pt, addPropertyCommands);
 	}
 
 	int RichTextBox::PrepareContextMenu(void* menu, const Int32Point& pt, bool addPropertyCommands)
 	{
-		return GetTextCtrl()->0;
+		return GetTextCtrl()->PrepareContextMenu((wxMenu*) menu, pt, addPropertyCommands);
 	}
 
 	bool RichTextBox::CanEditProperties(void* richObj)
 	{
-		return GetTextCtrl()->;
+		return GetTextCtrl()->CanEditProperties((wxRichTextObject*)richObj);
 	}
 
 	bool RichTextBox::EditProperties(void* richObj, void* parentWindow)
 	{
-		return GetTextCtrl()->;
+		return GetTextCtrl()->EditProperties((wxRichTextObject*)richObj, (wxWindow*)parentWindow);
 	}
 
 	string RichTextBox::GetPropertiesMenuLabel(void* richObj)
 	{
-		return GetTextCtrl()->wxStr(wxEmptyString);
+		return wxStr(GetTextCtrl()->GetPropertiesMenuLabel((wxRichTextObject*)richObj));
 	}
 
 	bool RichTextBox::BeginBatchUndo(const string& cmdName)
 	{
-		return GetTextCtrl()->;
+		return GetTextCtrl()->BeginBatchUndo(wxStr(cmdName));
 	}
 
 	bool RichTextBox::EndBatchUndo()
 	{
-		return GetTextCtrl()->;
+		return GetTextCtrl()->EndBatchUndo();
 	}
 
 	bool RichTextBox::BatchingUndo()
 	{
-		return GetTextCtrl()->;
+		return GetTextCtrl()->BatchingUndo();
 	}
 
 	bool RichTextBox::BeginSuppressUndo()
 	{
-		return GetTextCtrl()->;
+		return GetTextCtrl()->BeginSuppressUndo();
 	}
 
 	bool RichTextBox::EndSuppressUndo()
 	{
-		return GetTextCtrl()->;
+		return GetTextCtrl()->EndSuppressUndo();
 	}
 
 	bool RichTextBox::SuppressingUndo()
 	{
-		return GetTextCtrl()->;
+		return GetTextCtrl()->SuppressingUndo();
 	}
 
 	void RichTextBox::EnableVerticalScrollbar(bool enable)
@@ -898,7 +901,7 @@ namespace Alternet::UI
 
 	bool RichTextBox::GetVerticalScrollbarEnabled()
 	{
-		return GetTextCtrl()->;
+		return GetTextCtrl()->GetVerticalScrollbarEnabled();
 	}
 
 	void RichTextBox::SetFontScale(double fontScale, bool refresh)
@@ -908,12 +911,12 @@ namespace Alternet::UI
 
 	double RichTextBox::GetFontScale()
 	{
-		return GetTextCtrl()->0;
+		return GetTextCtrl()->GetFontScale();
 	}
 
 	bool RichTextBox::GetVirtualAttributesEnabled()
 	{
-		return GetTextCtrl()->;
+		return GetTextCtrl()->GetVirtualAttributesEnabled();
 	}
 
 	void RichTextBox::EnableVirtualAttributes(bool b)
@@ -928,22 +931,24 @@ namespace Alternet::UI
 
 	bool RichTextBox::ExtendSelection(int64_t oldPosition, int64_t newPosition, int flags)
 	{
-		return GetTextCtrl()->;
+		return GetTextCtrl()->ExtendSelection(oldPosition, newPosition, flags);
 	}
 
 	bool RichTextBox::ExtendCellSelection(void* table, int noRowSteps, int noColSteps)
 	{
-		return GetTextCtrl()->;
+		// !!!!!!!!!!
+		return false;
 	}
 
 	bool RichTextBox::StartCellSelection(void* table, void* newCell)
 	{
-		return GetTextCtrl()->;
+		// !!!!!!!!!!
+		return false;
 	}
 
 	bool RichTextBox::ScrollIntoView(int64_t position, int keyCode)
 	{
-		return GetTextCtrl()->;
+		return GetTextCtrl()->ScrollIntoView(position, keyCode);
 	}
 
 	void RichTextBox::SetCaretPosition(int64_t position, bool showAtLineStart)
@@ -953,12 +958,12 @@ namespace Alternet::UI
 
 	int64_t RichTextBox::GetCaretPosition()
 	{
-		return GetTextCtrl()->0;
+		return GetTextCtrl()->GetCaretPosition();
 	}
 
 	int64_t RichTextBox::GetAdjustedCaretPosition(int64_t caretPos)
 	{
-		return GetTextCtrl()->0;
+		return GetTextCtrl()->GetAdjustedCaretPosition(caretPos);
 	}
 
 	void RichTextBox::MoveCaretForward(int64_t oldPosition)
@@ -968,67 +973,67 @@ namespace Alternet::UI
 
 	Int32Point RichTextBox::GetPhysicalPoint(const Int32Point& ptLogical)
 	{
-		return GetTextCtrl()->Int32Point();
+		return GetTextCtrl()->GetPhysicalPoint(ptLogical);
 	}
 
 	Int32Point RichTextBox::GetLogicalPoint(const Int32Point& ptPhysical)
 	{
-		return GetTextCtrl()->Int32Point();
+		return GetTextCtrl()->GetLogicalPoint(ptPhysical);
 	}
 
 	int64_t RichTextBox::FindNextWordPosition(int direction)
 	{
-		return GetTextCtrl()->0;
+		return GetTextCtrl()->FindNextWordPosition(direction);
 	}
 
 	string RichTextBox::GetRange(int64_t from, int64_t to)
 	{
-		return GetTextCtrl()->wxStr(wxEmptyString);
+		return wxStr(GetTextCtrl()->GetRange(from, to));
 	}
 
 	int RichTextBox::GetLineLength(int64_t lineNo)
 	{
-		return GetTextCtrl()->0;
+		return GetTextCtrl()->GetLineLength(lineNo);
 	}
 
 	string RichTextBox::GetLineText(int64_t lineNo)
 	{
-		return GetTextCtrl()->wxStr(wxEmptyString);
+		return wxStr(GetTextCtrl()->GetLineText(lineNo));
 	}
 
 	int RichTextBox::GetNumberOfLines()
 	{
-		return GetTextCtrl()->0;
+		return GetTextCtrl()->GetNumberOfLines();
 	}
 
 	bool RichTextBox::IsModified()
 	{
-		return GetTextCtrl()->;
+		return GetTextCtrl()->IsModified();
 	}
 
 	bool RichTextBox::IsEditable()
 	{
-		return GetTextCtrl()->;
+		return GetTextCtrl()->IsEditable();
 	}
 
 	bool RichTextBox::IsSingleLine()
 	{
-		return GetTextCtrl()->;
+		return GetTextCtrl()->IsSingleLine();
 	}
 
 	bool RichTextBox::IsMultiLine()
 	{
-		return GetTextCtrl()->;
+		return GetTextCtrl()->IsMultiLine();
 	}
 
 	string RichTextBox::GetStringSelection()
 	{
-		return GetTextCtrl()->wxStr(wxEmptyString);
+		return wxStr(GetTextCtrl()->GetStringSelection());
 	}
 
 	string RichTextBox::GetFilename()
 	{
-		return GetTextCtrl()->wxStr(wxEmptyString);
+		return wxStr(GetTextCtrl()->GetFilename());
 	}
 
 	void RichTextBox::SetFilename(const string& filename)
@@ -1043,12 +1048,12 @@ namespace Alternet::UI
 
 	int64_t RichTextBox::GetDelayedLayoutThreshold()
 	{
-		return GetTextCtrl()->0;
+		return GetTextCtrl()->GetDelayedLayoutThreshold();
 	}
 
 	bool RichTextBox::GetFullLayoutRequired()
 	{
-		return GetTextCtrl()->;
+		return GetTextCtrl()->GetFullLayoutRequired();
 	}
 
 	void RichTextBox::SetFullLayoutRequired(bool b)
@@ -1058,7 +1063,7 @@ namespace Alternet::UI
 
 	int64_t RichTextBox::GetFullLayoutTime()
 	{
-		return GetTextCtrl()->0;
+		return GetTextCtrl()->GetFullLayoutTime().ToLong();
 	}
 
 	void RichTextBox::SetFullLayoutTime(int64_t t)
@@ -1068,7 +1073,7 @@ namespace Alternet::UI
 
 	int64_t RichTextBox::GetFullLayoutSavedPosition()
 	{
-		return GetTextCtrl()->0;
+		return GetTextCtrl()->GetFullLayoutSavedPosition();
 	}
 
 	void RichTextBox::SetFullLayoutSavedPosition(int64_t p)
@@ -1083,7 +1088,7 @@ namespace Alternet::UI
 
 	bool RichTextBox::GetCaretAtLineStart()
 	{
-		return GetTextCtrl()->;
+		return GetTextCtrl()->GetCaretAtLineStart();
 	}
 
 	void RichTextBox::SetCaretAtLineStart(bool atStart)
@@ -1093,7 +1098,7 @@ namespace Alternet::UI
 
 	bool RichTextBox::GetDragging()
 	{
-		return GetTextCtrl()->;
+		return GetTextCtrl()->GetDragging();
 	}
 
 	void RichTextBox::SetDragging(bool dragging)
@@ -1103,7 +1108,7 @@ namespace Alternet::UI
 
 	void* RichTextBox::GetContextMenu()
 	{
-		return GetTextCtrl()->nullptr;
+		return GetTextCtrl()->GetContextMenu();
 	}
 
 	void RichTextBox::SetContextMenu(void* menu)
@@ -1113,7 +1118,7 @@ namespace Alternet::UI
 
 	int64_t RichTextBox::GetSelectionAnchor()
 	{
-		return GetTextCtrl()->0;
+		return GetTextCtrl()->GetSelectionAnchor();
 	}
 
 	void RichTextBox::SetSelectionAnchor(int64_t anchor)
@@ -1123,7 +1128,7 @@ namespace Alternet::UI
 
 	void* RichTextBox::GetSelectionAnchorObject()
 	{
-		return GetTextCtrl()->nullptr;
+		return GetTextCtrl()->GetSelectionAnchorObject();
 	}
 
 	void RichTextBox::SetSelectionAnchorObject(void* anchor)
@@ -1133,7 +1138,7 @@ namespace Alternet::UI
 
 	void* RichTextBox::GetFocusObject()
 	{
-		return GetTextCtrl()->nullptr;
+		return GetTextCtrl()->GetFocusObject();
 	}
 
 	void RichTextBox::StoreFocusObject(void* richObj)
@@ -1143,7 +1148,7 @@ namespace Alternet::UI
 
 	bool RichTextBox::SetFocusObject(void* richObj, bool setCaretPosition)
 	{
-		return GetTextCtrl()->;
+		return false;
 	}
 
 	void RichTextBox::Invalidate()
@@ -1168,12 +1173,12 @@ namespace Alternet::UI
 
 	bool RichTextBox::LoadFile(const string& file, int type)
 	{
-		return GetTextCtrl()->;
+		return GetTextCtrl()->LoadFile(wxStr(file), type);
 	}
 
 	bool RichTextBox::SaveFile(const string& file, int type)
 	{
-		return GetTextCtrl()->;
+		return GetTextCtrl()->SaveFile(wxStr(file), type);
 	}
 
 	void RichTextBox::SetHandlerFlags(int flags)
@@ -1183,7 +1188,7 @@ namespace Alternet::UI
 
 	int RichTextBox::GetHandlerFlags()
 	{
-		return GetTextCtrl()->0;
+		return GetTextCtrl()->GetHandlerFlags();
 	}
 
 	void RichTextBox::MarkDirty()
@@ -1213,7 +1218,7 @@ namespace Alternet::UI
 
 	int64_t RichTextBox::XYToPosition(int64_t x, int64_t y)
 	{
-		return GetTextCtrl()->0;
+		return GetTextCtrl()->XYToPosition(x, y);
 	}
 
 	void RichTextBox::ShowPosition(int64_t pos)
@@ -1243,22 +1248,22 @@ namespace Alternet::UI
 
 	bool RichTextBox::CanCopy()
 	{
-		return GetTextCtrl()->;
+		return GetTextCtrl()->CanCopy();
 	}
 
 	bool RichTextBox::CanCut()
 	{
-		return GetTextCtrl()->;
+		return GetTextCtrl()->CanCut();
 	}
 
 	bool RichTextBox::CanPaste()
 	{
-		return GetTextCtrl()->;
+		return GetTextCtrl()->CanPaste();
 	}
 
 	bool RichTextBox::CanDeleteSelection()
 	{
-		return GetTextCtrl()->;
+		return GetTextCtrl()->CanDeleteSelection();
 	}
 
 	void RichTextBox::Undo()
@@ -1273,12 +1278,12 @@ namespace Alternet::UI
 
 	bool RichTextBox::CanUndo()
 	{
-		return GetTextCtrl()->;
+		return GetTextCtrl()->CanUndo();
 	}
 
 	bool RichTextBox::CanRedo()
 	{
-		return GetTextCtrl()->;
+		return GetTextCtrl()->CanRedo();
 	}
 
 	void RichTextBox::SetInsertionPoint(int64_t pos)
@@ -1293,7 +1298,7 @@ namespace Alternet::UI
 
 	int64_t RichTextBox::GetInsertionPoint()
 	{
-		return GetTextCtrl()->0;
+		return GetTextCtrl()->GetInsertionPoint();
 	}
 
 	void RichTextBox::SetSelection(int64_t from, int64_t to)
@@ -1308,101 +1313,101 @@ namespace Alternet::UI
 
 	bool RichTextBox::HasSelection()
 	{
-		return GetTextCtrl()->;
+		return GetTextCtrl()->HasSelection();
 	}
 
 	bool RichTextBox::HasUnfocusedSelection()
 	{
-		return GetTextCtrl()->;
+		return GetTextCtrl()->HasUnfocusedSelection();
 	}
 
 	bool RichTextBox::Newline()
 	{
-		return GetTextCtrl()->;
+		return GetTextCtrl()->Newline();
 	}
 
 	bool RichTextBox::LineBreak()
 	{
-		return GetTextCtrl()->;
+		return GetTextCtrl()->LineBreak();
 	}
 
 	bool RichTextBox::EndStyle()
 	{
-		return GetTextCtrl()->;
+		return GetTextCtrl()->EndStyle();
 	}
 
 	bool RichTextBox::EndAllStyles()
 	{
-		return GetTextCtrl()->;
+		return GetTextCtrl()->EndAllStyles();
 	}
 
 	bool RichTextBox::BeginBold()
 	{
-		return GetTextCtrl()->;
+		return GetTextCtrl()->BeginBold();
 	}
 
 	bool RichTextBox::EndBold()
 	{
-		return GetTextCtrl()->;
+		return GetTextCtrl()->EndBold();
 	}
 
 	bool RichTextBox::BeginItalic()
 	{
-		return GetTextCtrl()->;
+		return GetTextCtrl()->BeginItalic();
 	}
 
 	bool RichTextBox::EndItalic()
 	{
-		return GetTextCtrl()->;
+		return GetTextCtrl()->EndItalic();
 	}
 
 	bool RichTextBox::BeginUnderline()
 	{
-		return GetTextCtrl()->;
+		return GetTextCtrl()->BeginUnderline();
 	}
 
 	bool RichTextBox::EndUnderline()
 	{
-		return GetTextCtrl()->;
+		return GetTextCtrl()->EndUnderline();
 	}
 
 	bool RichTextBox::BeginFontSize(int pointSize)
 	{
-		return GetTextCtrl()->;
+		return GetTextCtrl()->BeginFontSize(pointSize);
 	}
 
 	bool RichTextBox::EndFontSize()
 	{
-		return GetTextCtrl()->;
+		return GetTextCtrl()->EndFontSize();
 	}
 
 	bool RichTextBox::BeginFont(Font* font)
 	{
-		return GetTextCtrl()->;
+		return false;
 	}
 
 	bool RichTextBox::EndFont()
 	{
-		return GetTextCtrl()->;
+		return GetTextCtrl()->EndFont();
 	}
 
 	bool RichTextBox::BeginTextColour(const Color& colour)
 	{
-		return GetTextCtrl()->;
+		return GetTextCtrl()->BeginTextColour(colour);
 	}
 
 	bool RichTextBox::EndTextColour()
 	{
-		return GetTextCtrl()->;
+		return GetTextCtrl()->EndTextColour();
 	}
 
 	bool RichTextBox::BeginAlignment(int alignment)
 	{
-		return GetTextCtrl()->;
+		return GetTextCtrl()->BeginAlignment((wxTextAttrAlignment)alignment);
 	}
 
 	bool RichTextBox::EndAlignment()
 	{
-		return GetTextCtrl()->;
+		return GetTextCtrl()->EndAlignment();
 	}
 }
