@@ -130,6 +130,12 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Same as <see cref="SelectedIndices"/>
+        /// </summary>
+        [Browsable(false)]
+        public IReadOnlyList<int> SelectedIndexes => SelectedIndices;
+
+        /// <summary>
         /// Gets or sets a value indicating whether the control has a border.
         /// </summary>
         public virtual bool HasBorder
@@ -416,6 +422,17 @@ namespace Alternet.UI
             }
 
             return validIndexes;
+        }
+
+        /// <summary>
+        /// Gets selected items as <see cref="string"/>.
+        /// </summary>
+        /// <remarks>Each item is separated by <paramref name="separator"/> or
+        /// <see cref="Environment.NewLine"/> if it is empty.</remarks>
+        /// <param name="separator">Items separator string.</param>
+        public virtual string? SelectedItemsAsText(string? separator = default)
+        {
+            return ItemsAsText(SelectedIndexes, separator);
         }
 
         /// <summary>

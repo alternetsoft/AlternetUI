@@ -334,6 +334,29 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets items as <see cref="string"/>.
+        /// </summary>
+        /// <remarks>Each item is separated by <paramref name="separator"/> or
+        /// <see cref="Environment.NewLine"/> if it is empty.</remarks>
+        /// <param name="separator">Items separator string.</param>
+        /// <param name="indexes">Items indexes.</param>
+        public virtual string? ItemsAsText(IReadOnlyList<int> indexes, string? separator = default)
+        {
+            separator ??= Environment.NewLine;
+            string? result = null;
+
+            foreach (var index in indexes)
+            {
+                if (result is null)
+                    result = Items[index].ToString();
+                else
+                    result += $"{separator}{Items[index]}";
+            }
+
+            return result;
+        }
+
+        /// <summary>
         /// Unselects all items in the control.
         /// </summary>
         /// <remarks>
