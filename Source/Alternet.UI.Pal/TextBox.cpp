@@ -586,8 +586,6 @@ namespace Alternet::UI
 		GetTextCtrl()->SetHint(wxStr(value));
 	}
 
-
-
 	void* TextBox::GetStyle(int64_t position)
 	{
 		wxTextAttr textAttr;

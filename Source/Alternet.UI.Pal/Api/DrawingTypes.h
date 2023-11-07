@@ -176,6 +176,8 @@ namespace Alternet::UI
             return (Width == 0) && (Height == 0) && (X == 0) && (Y == 0);
         }
 
+        inline operator wxRect() { return wxRect{ X, Y, Width, Height }; }
+
         inline operator Int32Rect_C() { return Int32Rect_C{ X, Y, Width, Height }; }
 
         inline bool operator==(const Int32Rect& rhs)
