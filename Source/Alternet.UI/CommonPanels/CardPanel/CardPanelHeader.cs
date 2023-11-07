@@ -32,6 +32,7 @@ namespace Alternet.UI
 
         private Size additionalSpace = new(30, 30);
         private CardPanelHeaderItem? selectedTab;
+        private bool tabHasBorder = DefaultTabHasBorder;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CardPanelHeader"/> class.
@@ -48,9 +49,37 @@ namespace Alternet.UI
         public event EventHandler? TabClick;
 
         /// <summary>
+        /// Gets or sets default value of the <see cref="TabHasBorder"/>.
+        /// </summary>
+        public static bool DefaultTabHasBorder { get; set; } = false;
+
+        /// <summary>
         /// Gets tabs added with <see cref="Add"/> method.
         /// </summary>
         public IReadOnlyList<CardPanelHeaderItem> Tabs => tabs;
+
+        /// <summary>
+        /// Gets or sets whether tabs have border.
+        /// </summary>
+        public bool TabHasBorder
+        {
+            get
+            {
+                return tabHasBorder;
+            }
+
+            set
+            {
+                if (tabHasBorder == value)
+                    return;
+                tabHasBorder = value;
+                foreach (var item in Tabs)
+                {
+                    if (item.HeaderControl is Button button)
+                        button.HasBorder = tabHasBorder;
+                }
+            }
+        }
 
         /// <summary>
         /// Gets or sets size of the additional space which is added when
@@ -77,7 +106,8 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets whether to update width of the cards when selected tab is changed.
         /// </summary>
-        public WindowSizeToContentMode UpdateCardsMode { get; set; } = WindowSizeToContentMode.WidthAndHeight;
+        public WindowSizeToContentMode UpdateCardsMode { get; set; } =
+            WindowSizeToContentMode.WidthAndHeight;
 
         /// <summary>
         /// Gets selected tab.
@@ -218,6 +248,7 @@ namespace Alternet.UI
         {
             var control = new Button(text)
             {
+                HasBorder = TabHasBorder,
                 HorizontalAlignment = HorizontalAlignment.Center,
                 Parent = stackPanel,
             };
