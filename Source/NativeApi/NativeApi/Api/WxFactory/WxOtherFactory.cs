@@ -30,7 +30,7 @@ namespace NativeApi.Api
         public static void RichToolTipSetBkColor(IntPtr handle, Color color, Color endColor) { }
 
         // Set the small icon to show: either one of the standard information/
-        // warning/error ones (the question icon doesn't make sense for a tooltip)
+        // warning/error ones(the question icon doesn't make sense for a tooltip)
         // or a custom icon.
         public static void RichToolTipSetIcon(IntPtr handle, ImageSet? bitmapBundle) { }
         public static void RichToolTipSetIcon2(IntPtr handle, int icon) { } // wxICON_* in defs.h
@@ -39,7 +39,7 @@ namespace NativeApi.Api
         // By default the tooltip is hidden after system-dependent interval of time
         // elapses but this method can be used to change this or also disable
         // hiding the tooltip automatically entirely by passing 0 in this parameter
-        // (but doing this can result in native version not being used).
+        //(but doing this can result in native version not being used).
         // Optionally specify a show delay.
         public static void RichToolTipSetTimeout(IntPtr handle, uint milliseconds, uint millisecondsShowdelay = 0) { }
 
@@ -63,11 +63,11 @@ namespace NativeApi.Api
         public static void ToolTipSetTip(IntPtr handle, string tip) { }
 
         // Enable or disable tooltips globally. 
-        // May not be supported on all platforms (eg. wxCocoa).
+        // May not be supported on all platforms(eg. wxCocoa).
         public static void ToolTipEnable(bool flag) { }
 
         // Set the delay after which the tooltip disappears or how long a tooltip remains visible. 	
-        // May not be supported on all platforms (eg. wxCocoa, GTK).
+        // May not be supported on all platforms(eg. wxCocoa, GTK).
         public static void ToolTipSetAutoPop(long msecs) { }
 
         // Set the delay after which the tooltip appears. 
@@ -84,17 +84,116 @@ namespace NativeApi.Api
         // Set the delay between subsequent tooltips to appear. 
         public static void ToolTipSetReshow(long msecs) { }
 
+        // =================== Cursor
+
+        public static IntPtr CreateCursor() => default;
+
+        //ructs a cursor using a cursor identifier.
+        public static IntPtr CreateCursor2(int cursorId) => default; // wxStockCursor     
+
+        //ructs a cursor by passing a string resource name or filename.
+        public static IntPtr CreateCursor3(string cursorName, int type,
+            int hotSpotX = 0, int hotSpotY = 0) => default; // =wxCURSOR_DEFAULT_TYPE
+
+        //ructs a cursor from an image.
+        public static IntPtr CreateCursor4(Image image) => default;
+
+        public static void DeleteCursor(IntPtr handle) { }
+
+        // Returns true if cursor data is present. 
+        public static bool CursorIsOk(IntPtr handle) => default;
+
+        public static Int32Point CursorGetHotSpot(IntPtr handle) => default;
+
         // =================== Caret
 
-        // =================== Cursor
+        public static void DeleteCaret(IntPtr handle) { }
+
+        // Get the caret position(in pixels).
+        public static Int32Point CaretGetPosition(IntPtr handle) => default;
+
+        // Get the caret size.
+        public static Int32Size CaretGetSize(IntPtr handle) => default;
+
+        // Move the caret to given position(in logical coordinates).
+        public static void CaretMove(IntPtr handle, int x, int y) { }
+
+        // Changes the size of the caret.
+        public static void CaretSetSize(IntPtr handle, int width, int height) { }
+
+        public static IntPtr CreateCaret() => default;
+
+        // Creates a caret with the given size(in pixels) and associates it with the window.
+        public static IntPtr CreateCaret2(IntPtr window, int width, int height) => default;
+
+        // Get the window the caret is associated with.
+        public static IntPtr CaretGetWindow(IntPtr handle) => default;
+
+        // Hides the caret, same as Show(false).
+        public static void CaretHide(IntPtr handle) { }
+
+        // Returns true if the caret was created successfully.
+        public static bool CaretIsOk(IntPtr handle) => default;
+
+        // Returns true if the caret is visible and false if it
+        // is permanently hidden(if it is blinking and not shown
+        // currently but will be after the next blink, this method still returns true).
+        public static bool CaretIsVisible(IntPtr handle) => default;
+
+        // Shows or hides the caret.
+        public static void CaretShow(IntPtr handle, bool show = true) { }
 
         // =================== Display
 
+        // Defaultructor creating display object representing the primary display.
+        public static IntPtr CreateDisplay() => default;
+
+        //ructor, setting up a wxDisplay instance with the specified display.
+        public static IntPtr CreateDisplay2(uint index) => default;
+
+        //ructor creating the display object associated with the given window.
+        public static IntPtr CreateDisplay3(IntPtr window) => default;
+
+        public static void DeleteDisplay(IntPtr handle) { }
+
+        // Returns the number of connected displays.
+        public static uint DisplayGetCount() => default;
+
+        // Returns the index of the display on which the given point lies,
+        // or -1 if the point is not on any connected display.
+        public static int DisplayGetFromPoint(Int32Point pt) => default;
+
+        // Returns the index of the display on which the given window lies.
+        public static int DisplayGetFromWindow(IntPtr win) => default;
+
+        // Returns default display resolution for the current platform in pixels per inch. 
+        public static int DisplayGetStdPPIValue() => default;
+
+        // Returns default display resolution for the current platform as wxSize. 
+        public static Int32Size DisplayGetStdPPI() => default;
+
+        // Returns the display's name.
+        public static string DisplayGetName(IntPtr handle) => default;
+
+        // Returns display resolution in pixels per inch.
+        public static Int32Size DisplayGetPPI(IntPtr handle) => default;
+
+        // Returns scaling factor used by this display. 
+        public static double DisplayGetScaleFactor(IntPtr handle) => default;
+
+        // Returns true if the display is the primary display. 
+        public static bool DisplayIsPrimary(IntPtr handle) => default;
+
+        // Returns the client area of the display.
+        public static Int32Rect DisplayGetClientArea(IntPtr handle) => default;
+
+        // Returns the bounding rectangle of the display
+        public static Int32Rect DisplayGetGeometry(IntPtr handle) => default;
+
+        // ===================
     }
 }
 
 /*
-
-
  
 */
