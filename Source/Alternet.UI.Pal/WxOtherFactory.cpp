@@ -90,7 +90,9 @@ namespace Alternet::UI
 
 	void WxOtherFactory::ToolTipSetMaxWidth(int width)
 	{
+#ifdef __WXMSW__
 		wxToolTip::SetMaxWidth(width);
+#endif
 	}
 
 	void WxOtherFactory::ToolTipSetReshow(int64_t msecs)
