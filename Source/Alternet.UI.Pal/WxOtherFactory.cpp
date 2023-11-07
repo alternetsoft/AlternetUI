@@ -161,107 +161,107 @@ namespace Alternet::UI
 
 	void WxOtherFactory::DeleteCaret(void* handle)
 	{
-
+		delete (wxCaret*)handle;
 	}
 
 	Int32Point WxOtherFactory::CaretGetPosition(void* handle)
 	{
-		return Int32Point();
+		return ((wxCaret*)handle)->GetPosition();
 	}
 
 	Int32Size WxOtherFactory::CaretGetSize(void* handle)
 	{
-		return Int32Size();
+		return ((wxCaret*)handle)->GetSize();
 	}
 
 	void WxOtherFactory::CaretMove(void* handle, int x, int y)
 	{
-
+		((wxCaret*)handle)->Move(x, y);
 	}
 
 	void WxOtherFactory::CaretSetSize(void* handle, int width, int height)
 	{
-
+		return ((wxCaret*)handle)->SetSize(width, height);
 	}
 
 	void* WxOtherFactory::CreateCaret()
 	{
-		return nullptr;
+		return new wxCaret();
 	}
 
 	void* WxOtherFactory::CreateCaret2(void* window, int width, int height)
 	{
-		return nullptr;
+		return new wxCaret((wxWindow*)window, width, height);
 	}
 
 	void* WxOtherFactory::CaretGetWindow(void* handle)
 	{
-		return nullptr;
+		return ((wxCaret*)handle)->GetWindow();
 	}
 
 	void WxOtherFactory::CaretHide(void* handle)
 	{
-
+		((wxCaret*)handle)->Hide();
 	}
 
 	bool WxOtherFactory::CaretIsOk(void* handle)
 	{
-		return false;
+		return ((wxCaret*)handle)->IsOk();
 	}
 
 	bool WxOtherFactory::CaretIsVisible(void* handle)
 	{
-		return false;
+		return ((wxCaret*)handle)->IsVisible();
 	}
 
 	void WxOtherFactory::CaretShow(void* handle, bool show)
 	{
-
+		((wxCaret*)handle)->Show(show);
 	}
 
 	void* WxOtherFactory::CreateDisplay()
 	{
-		return nullptr;
+		return new wxDisplay();
 	}
 
 	void* WxOtherFactory::CreateDisplay2(uint32_t index)
 	{
-		return nullptr;
+		return new wxDisplay(index);
 	}
 
 	void* WxOtherFactory::CreateDisplay3(void* window)
 	{
-		return nullptr;
+		return new wxDisplay((wxWindow*)window);
 	}
 
 	void WxOtherFactory::DeleteDisplay(void* handle)
 	{
-
+		delete (wxDisplay*)handle;
 	}
 
 	uint32_t WxOtherFactory::DisplayGetCount()
 	{
-		return 0;
+		return wxDisplay::GetCount();
 	}
 
 	int WxOtherFactory::DisplayGetFromPoint(const Int32Point& pt)
 	{
-		return 0;
+		return wxDisplay::GetFromPoint(pt);
 	}
 
 	int WxOtherFactory::DisplayGetFromWindow(void* win)
 	{
-		return 0;
+		return wxDisplay::GetFromWindow((wxWindow*) win);
 	}
 
 	int WxOtherFactory::DisplayGetStdPPIValue()
 	{
-		return 0;
+		return wxDisplay::GetStdPPIValue();
 	}
 
 	Int32Size WxOtherFactory::DisplayGetStdPPI()
 	{
-		return Int32Size();
+		return wxDisplay::GetStdPPI();
 	}
 
 	string WxOtherFactory::DisplayGetName(void* handle)
@@ -271,26 +271,26 @@ namespace Alternet::UI
 
 	Int32Size WxOtherFactory::DisplayGetPPI(void* handle)
 	{
-		return Int32Size();
+		return ((wxDisplay*)handle)->GetPPI();
 	}
 
 	double WxOtherFactory::DisplayGetScaleFactor(void* handle)
 	{
-		return 0;
+		return ((wxDisplay*)handle)->GetScaleFactor();
 	}
 
 	bool WxOtherFactory::DisplayIsPrimary(void* handle)
 	{
-		return false;
+		return ((wxDisplay*)handle)->IsPrimary();
 	}
 
 	Int32Rect WxOtherFactory::DisplayGetClientArea(void* handle)
 	{
-		return Int32Rect();
+		return ((wxDisplay*)handle)->GetClientArea();
 	}
 
 	Int32Rect WxOtherFactory::DisplayGetGeometry(void* handle)
 	{
-		return Int32Rect();
+		return ((wxDisplay*)handle)->GetGeometry();
 	}
 }
