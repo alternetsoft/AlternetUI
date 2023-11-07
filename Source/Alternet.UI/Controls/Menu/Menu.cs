@@ -62,7 +62,11 @@ namespace Alternet.UI
         /// Adds item to <see cref="Items"/>.
         /// </summary>
         /// <param name="item">Menu item.</param>
-        public void Add(MenuItem item) => Items.Add(item);
+        public MenuItem Add(MenuItem item)
+        {
+            Items.Add(item);
+            return Items.Last!;
+        }
 
         private void Items_ItemInserted(object? sender, int index, MenuItem item)
         {
