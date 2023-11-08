@@ -69,12 +69,12 @@ namespace Alternet.UI
             var useErrorColors = Application.IsWindowsOS;
             DefaultErrorUseForegroundColor = useErrorColors;
             DefaultErrorUseBackgroundColor = useErrorColors;
-    }
+        }
 
-    /// <summary>
-    /// Occurs when <see cref="Multiline"/> property value changes.
-    /// </summary>
-    public event EventHandler? MultilineChanged;
+        /// <summary>
+        /// Occurs when <see cref="Multiline"/> property value changes.
+        /// </summary>
+        public event EventHandler? MultilineChanged;
 
         /// <summary>
         /// Occurs when <see cref="ReadOnly"/> property value changes.
@@ -518,7 +518,7 @@ namespace Alternet.UI
                 if (maxLength == value || value < 0)
                     return;
                 maxLength = value;
-                if(options.HasFlag(TextBoxOptions.SetNativeMaxLength))
+                if (options.HasFlag(TextBoxOptions.SetNativeMaxLength))
                     Handler.SetMaxLength((ulong)value);
             }
         }
@@ -649,7 +649,7 @@ namespace Alternet.UI
                         StringUtils.TryParseDecimal,
                     };
 
-                    foreach(var proc in procs)
+                    foreach (var proc in procs)
                     {
                         object? result = UseDelegate(proc);
                         if (result is not null)
@@ -1493,7 +1493,7 @@ namespace Alternet.UI
             TextUrl?.Invoke(this, e);
             if (e.Cancel)
                 return;
-            if (AutoUrlOpen)
+            if (AutoUrlOpen && !string.IsNullOrEmpty(e.Url))
                 AppUtils.OpenUrl(e.Url);
         }
 
@@ -1957,7 +1957,7 @@ namespace Alternet.UI
         /// </summary>
         public virtual void IdleAction()
         {
-            if(CurrentPositionChanged is not null)
+            if (CurrentPositionChanged is not null)
             {
                 var currentPos = CurrentPosition;
                 if (ReportedPosition != currentPos)
@@ -2245,9 +2245,9 @@ namespace Alternet.UI
             var hint = string.Empty;
             if (!showError)
             {
-                if(DefaultErrorUseBackgroundColor)
+                if (DefaultErrorUseBackgroundColor)
                     ResetBackgroundColor();
-                if(DefaultErrorUseForegroundColor)
+                if (DefaultErrorUseForegroundColor)
                     ResetForegroundColor();
             }
             else
