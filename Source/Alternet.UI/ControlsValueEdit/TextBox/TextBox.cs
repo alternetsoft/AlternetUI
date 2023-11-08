@@ -65,12 +65,16 @@ namespace Alternet.UI
             var prm = PropertyGrid.GetNewItemParams(typeof(TextBox), nameof(TextBox.TextAlign));
             prm.EnumIsFlags = false;
             prm.Choices = choices;
-        }
 
-        /// <summary>
-        /// Occurs when <see cref="Multiline"/> property value changes.
-        /// </summary>
-        public event EventHandler? MultilineChanged;
+            var useErrorColors = Application.IsWindowsOS;
+            DefaultErrorUseForegroundColor = useErrorColors;
+            DefaultErrorUseBackgroundColor = useErrorColors;
+    }
+
+    /// <summary>
+    /// Occurs when <see cref="Multiline"/> property value changes.
+    /// </summary>
+    public event EventHandler? MultilineChanged;
 
         /// <summary>
         /// Occurs when <see cref="ReadOnly"/> property value changes.
@@ -158,6 +162,26 @@ namespace Alternet.UI
         /// application needs to report user an error in <see cref="Text"/> property.
         /// </summary>
         public static Color DefaultErrorForegroundColor { get; set; } = Color.White;
+
+        /// <summary>
+        /// Gets or sets whether to use <see cref="DefaultErrorForegroundColor"/>
+        /// when application needs to report user an error.
+        /// </summary>
+        /// <remarks>
+        /// Default value is <c>true</c> on Windows and <c>false</c> on other platforms.
+        /// Do not set <c>true</c> on MacOs as it is not supported.
+        /// </remarks>
+        public static bool DefaultErrorUseForegroundColor { get; set; }
+
+        /// <summary>
+        /// Gets or sets whether to use <see cref="DefaultErrorBackgroundColor"/>
+        /// when application needs to report user an error.
+        /// </summary>
+        /// <remarks>
+        /// Default value is <c>true</c> on Windows and <c>false</c> on other platforms.
+        /// Do not set <c>true</c> on MacOs as it is not supported.
+        /// </remarks>
+        public static bool DefaultErrorUseBackgroundColor { get; set; }
 
         /// <summary>
         /// Gets or sets default value of the <see cref="AutoUrlOpen"/> property.
@@ -2221,13 +2245,17 @@ namespace Alternet.UI
             var hint = string.Empty;
             if (!showError)
             {
-                ResetBackgroundColor();
-                ResetForegroundColor();
+                if(DefaultErrorUseBackgroundColor)
+                    ResetBackgroundColor();
+                if(DefaultErrorUseForegroundColor)
+                    ResetForegroundColor();
             }
             else
             {
-                BackgroundColor = DefaultErrorBackgroundColor;
-                ForegroundColor = DefaultErrorForegroundColor;
+                if (DefaultErrorUseBackgroundColor)
+                    BackgroundColor = DefaultErrorBackgroundColor;
+                if (DefaultErrorUseForegroundColor)
+                    ForegroundColor = DefaultErrorForegroundColor;
                 hint = errorText ?? ValidatorErrorText;
                 hint ??= DefaultValidatorErrorText;
             }
