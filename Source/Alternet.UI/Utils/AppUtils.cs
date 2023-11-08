@@ -43,6 +43,17 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Opens url in the default browser.
+        /// </summary>
+        /// <param name="url">Url to open.</param>
+        /// <returns><c>true</c> if operation is successful; <c> false</c> otherwise.</returns>
+        public static bool OpenUrl(string url)
+        {
+            var result = ShellExecute(url);
+            return result;
+        }
+
         /// <inheritdoc cref="ProcessStart"/>
         /// <remarks>
         /// Uses shell execute to start the process.
