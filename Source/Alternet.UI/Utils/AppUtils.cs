@@ -51,20 +51,6 @@ namespace Alternet.UI
         /// <returns><c>true</c> if operation is successful; <c> false</c> otherwise.</returns>
         public static bool OpenUrl(string url)
         {
-            if (Application.IsMacOs)
-            {
-                try
-                {
-                    Process.Start("open", url);
-                    return true;
-                }
-                catch (Exception e)
-                {
-                    LogUtils.LogException(e);
-                    return false;
-                }
-            }
-
             var result = ShellExecute(url);
             return result;
         }
