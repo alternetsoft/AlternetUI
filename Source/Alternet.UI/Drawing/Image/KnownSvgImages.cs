@@ -46,7 +46,7 @@ namespace Alternet.UI
         /// </summary>
         public ImageSet ImgBrowserBack
         {
-            get => imgBrowserBack ??= AuiToolbar.LoadSvgImage(SvgUtils.UrlImageWebBrowserBack, size);
+            get => imgBrowserBack ??= AuiToolbar.LoadSvgImage(KnownSvgUrls.UrlImageWebBrowserBack, size);
             set => imgBrowserBack = value;
         }
 
@@ -57,7 +57,7 @@ namespace Alternet.UI
         public ImageSet ImgBrowserForward
         {
             get => imgBrowserForward ??=
-                AuiToolbar.LoadSvgImage(SvgUtils.UrlImageWebBrowserForward, size);
+                AuiToolbar.LoadSvgImage(KnownSvgUrls.UrlImageWebBrowserForward, size);
             set => imgBrowserForward = value;
         }
 
@@ -67,7 +67,7 @@ namespace Alternet.UI
         public ImageSet ImgMessageBoxError
         {
             get => imgMessageBoxError ??=
-                AuiToolbar.LoadSvgImage(SvgUtils.UrlImageMessageBoxError, size);
+                AuiToolbar.LoadSvgImage(KnownSvgUrls.UrlImageMessageBoxError, size);
             set => imgMessageBoxError = value;
         }
 
@@ -77,7 +77,7 @@ namespace Alternet.UI
         public ImageSet ImgMessageBoxInformation
         {
             get => imgMessageBoxInformation ??=
-                AuiToolbar.LoadSvgImage(SvgUtils.UrlImageMessageBoxInformation, size);
+                AuiToolbar.LoadSvgImage(KnownSvgUrls.UrlImageMessageBoxInformation, size);
             set => imgMessageBoxInformation = value;
         }
 
@@ -87,7 +87,7 @@ namespace Alternet.UI
         public ImageSet ImgMessageBoxWarning
         {
             get => imgMessageBoxWarning ??=
-                AuiToolbar.LoadSvgImage(SvgUtils.UrlImageMessageBoxWarning, size);
+                AuiToolbar.LoadSvgImage(KnownSvgUrls.UrlImageMessageBoxWarning, size);
             set => imgMessageBoxWarning = value;
         }
 
@@ -96,7 +96,7 @@ namespace Alternet.UI
         /// </summary>
         public ImageSet ImgZoomIn
         {
-            get => imgZoomIn ??= AuiToolbar.LoadSvgImage(SvgUtils.UrlImageZoomIn, size);
+            get => imgZoomIn ??= AuiToolbar.LoadSvgImage(KnownSvgUrls.UrlImageZoomIn, size);
             set => imgZoomIn = value;
         }
 
@@ -105,7 +105,7 @@ namespace Alternet.UI
         /// </summary>
         public ImageSet ImgZoomOut
         {
-            get => imgZoomOut ??= AuiToolbar.LoadSvgImage(SvgUtils.UrlImageZoomOut, size);
+            get => imgZoomOut ??= AuiToolbar.LoadSvgImage(KnownSvgUrls.UrlImageZoomOut, size);
             set => imgZoomOut = value;
         }
 
@@ -115,7 +115,7 @@ namespace Alternet.UI
         /// </summary>
         public ImageSet ImgBrowserGo
         {
-            get => imgBrowserGo ??= AuiToolbar.LoadSvgImage(SvgUtils.UrlImageWebBrowserGo, size);
+            get => imgBrowserGo ??= AuiToolbar.LoadSvgImage(KnownSvgUrls.UrlImageWebBrowserGo, size);
             set => imgBrowserGo = value;
         }
 
@@ -124,7 +124,7 @@ namespace Alternet.UI
         /// </summary>
         public ImageSet ImgAdd
         {
-            get => imgAdd ??= AuiToolbar.LoadSvgImage(SvgUtils.UrlImagePlus, size);
+            get => imgAdd ??= AuiToolbar.LoadSvgImage(KnownSvgUrls.UrlImagePlus, size);
             set => imgAdd = value;
         }
 
@@ -133,7 +133,7 @@ namespace Alternet.UI
         /// </summary>
         public ImageSet ImgMoreActions
         {
-            get => imgMoreActions ??= AuiToolbar.LoadSvgImage(SvgUtils.UrlImageMoreActions, size);
+            get => imgMoreActions ??= AuiToolbar.LoadSvgImage(KnownSvgUrls.UrlImageMoreActions, size);
             set => imgMoreActions = value;
         }
 
@@ -142,7 +142,7 @@ namespace Alternet.UI
         /// </summary>
         public ImageSet ImgRemove
         {
-            get => imgRemove ??= AuiToolbar.LoadSvgImage(SvgUtils.UrlImageMinus, size);
+            get => imgRemove ??= AuiToolbar.LoadSvgImage(KnownSvgUrls.UrlImageMinus, size);
             set => imgRemove = value;
         }
 
@@ -151,7 +151,7 @@ namespace Alternet.UI
         /// </summary>
         public ImageSet ImgOk
         {
-            get => imgOk ??= AuiToolbar.LoadSvgImage(SvgUtils.UrlImageOk, size);
+            get => imgOk ??= AuiToolbar.LoadSvgImage(KnownSvgUrls.UrlImageOk, size);
             set => imgOk = value;
         }
 
@@ -160,7 +160,7 @@ namespace Alternet.UI
         /// </summary>
         public ImageSet ImgCancel
         {
-            get => imgCancel ??= AuiToolbar.LoadSvgImage(SvgUtils.UrlImageCancel, size);
+            get => imgCancel ??= AuiToolbar.LoadSvgImage(KnownSvgUrls.UrlImageCancel, size);
             set => imgCancel = value;
         }
 
@@ -169,7 +169,7 @@ namespace Alternet.UI
         /// </summary>
         public ImageSet ImgAddChild
         {
-            get => imgAddChild ??= AuiToolbar.LoadSvgImage(SvgUtils.UrlImageAddChild, size);
+            get => imgAddChild ??= AuiToolbar.LoadSvgImage(KnownSvgUrls.UrlImageAddChild, size);
             set => imgAddChild = value;
         }
 
@@ -178,7 +178,7 @@ namespace Alternet.UI
         /// </summary>
         public ImageSet ImgRemoveAll
         {
-            get => imgRemoveAll ??= AuiToolbar.LoadSvgImage(SvgUtils.UrlImageRemoveAll, size);
+            get => imgRemoveAll ??= AuiToolbar.LoadSvgImage(KnownSvgUrls.UrlImageRemoveAll, size);
             set => imgRemoveAll = value;
         }
 
