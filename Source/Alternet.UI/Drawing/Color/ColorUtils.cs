@@ -54,11 +54,11 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Converts <see cref="WxSystemColor"/> to <see cref="KnownColor"/>.
+        /// Converts <see cref="SystemSettingsColor"/> to <see cref="KnownColor"/>.
         /// </summary>
         /// <param name="color">Color value.</param>
         /// <returns>Converted color value.</returns>
-        public static KnownColor Convert(WxSystemColor color)
+        public static KnownColor Convert(SystemSettingsColor color)
         {
             KnownColor[] table = new KnownColor[]
             {
@@ -117,48 +117,48 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Converts <see cref="KnownColor"/> to <see cref="WxSystemColor"/>.
+        /// Converts <see cref="KnownColor"/> to <see cref="SystemSettingsColor"/>.
         /// </summary>
         /// <param name="color">Color value.</param>
         /// <returns>Converted color value.</returns>
-        public static WxSystemColor Convert(KnownColor color)
+        public static SystemSettingsColor Convert(KnownColor color)
         {
             return color switch
             {
-                KnownColor.ActiveBorder => (WxSystemColor)0x0A,
-                KnownColor.ActiveCaption => (WxSystemColor)0x02,
-                KnownColor.ActiveCaptionText => (WxSystemColor)0x09,
-                KnownColor.AppWorkspace => (WxSystemColor)0x0C,
-                KnownColor.ButtonFace => (WxSystemColor)0x0F,
-                KnownColor.ButtonHighlight => (WxSystemColor)0x14,
-                KnownColor.ButtonShadow => (WxSystemColor)0x10,
-                KnownColor.Control => (WxSystemColor)0x0F,
-                KnownColor.ControlDark => (WxSystemColor)0x10,
-                KnownColor.ControlDarkDark => (WxSystemColor)0x15,
-                KnownColor.ControlLight => (WxSystemColor)0x16,
-                KnownColor.ControlLightLight => (WxSystemColor)0x14,
-                KnownColor.ControlText => (WxSystemColor)0x12,
-                KnownColor.Desktop => (WxSystemColor)0x01,
-                KnownColor.GradientActiveCaption => (WxSystemColor)0x1B,
-                KnownColor.GradientInactiveCaption => (WxSystemColor)0x1C,
-                KnownColor.GrayText => (WxSystemColor)0x11,
-                KnownColor.Highlight => (WxSystemColor)0x0D,
-                KnownColor.HighlightText => (WxSystemColor)0x0E,
-                KnownColor.HotTrack => (WxSystemColor)0x1A,
-                KnownColor.InactiveBorder => (WxSystemColor)0x0B,
-                KnownColor.InactiveCaption => (WxSystemColor)0x03,
-                KnownColor.InactiveCaptionText => (WxSystemColor)0x13,
-                KnownColor.Info => (WxSystemColor)0x18,
-                KnownColor.InfoText => (WxSystemColor)0x17,
-                KnownColor.Menu => (WxSystemColor)0x04,
-                KnownColor.MenuBar => (WxSystemColor)0x1E,
-                KnownColor.MenuHighlight => (WxSystemColor)0x1D,
-                KnownColor.MenuText => (WxSystemColor)0x07,
-                KnownColor.ScrollBar => (WxSystemColor)0x00,
-                KnownColor.Window => (WxSystemColor)0x05,
-                KnownColor.WindowFrame => (WxSystemColor)0x06,
-                KnownColor.WindowText => (WxSystemColor)0x08,
-                _ => WxSystemColor.Max,
+                KnownColor.ActiveBorder => (SystemSettingsColor)0x0A,
+                KnownColor.ActiveCaption => (SystemSettingsColor)0x02,
+                KnownColor.ActiveCaptionText => (SystemSettingsColor)0x09,
+                KnownColor.AppWorkspace => (SystemSettingsColor)0x0C,
+                KnownColor.ButtonFace => (SystemSettingsColor)0x0F,
+                KnownColor.ButtonHighlight => (SystemSettingsColor)0x14,
+                KnownColor.ButtonShadow => (SystemSettingsColor)0x10,
+                KnownColor.Control => (SystemSettingsColor)0x0F,
+                KnownColor.ControlDark => (SystemSettingsColor)0x10,
+                KnownColor.ControlDarkDark => (SystemSettingsColor)0x15,
+                KnownColor.ControlLight => (SystemSettingsColor)0x16,
+                KnownColor.ControlLightLight => (SystemSettingsColor)0x14,
+                KnownColor.ControlText => (SystemSettingsColor)0x12,
+                KnownColor.Desktop => (SystemSettingsColor)0x01,
+                KnownColor.GradientActiveCaption => (SystemSettingsColor)0x1B,
+                KnownColor.GradientInactiveCaption => (SystemSettingsColor)0x1C,
+                KnownColor.GrayText => (SystemSettingsColor)0x11,
+                KnownColor.Highlight => (SystemSettingsColor)0x0D,
+                KnownColor.HighlightText => (SystemSettingsColor)0x0E,
+                KnownColor.HotTrack => (SystemSettingsColor)0x1A,
+                KnownColor.InactiveBorder => (SystemSettingsColor)0x0B,
+                KnownColor.InactiveCaption => (SystemSettingsColor)0x03,
+                KnownColor.InactiveCaptionText => (SystemSettingsColor)0x13,
+                KnownColor.Info => (SystemSettingsColor)0x18,
+                KnownColor.InfoText => (SystemSettingsColor)0x17,
+                KnownColor.Menu => (SystemSettingsColor)0x04,
+                KnownColor.MenuBar => (SystemSettingsColor)0x1E,
+                KnownColor.MenuHighlight => (SystemSettingsColor)0x1D,
+                KnownColor.MenuText => (SystemSettingsColor)0x07,
+                KnownColor.ScrollBar => (SystemSettingsColor)0x00,
+                KnownColor.Window => (SystemSettingsColor)0x05,
+                KnownColor.WindowFrame => (SystemSettingsColor)0x06,
+                KnownColor.WindowText => (SystemSettingsColor)0x08,
+                _ => SystemSettingsColor.Max,
             };
         }
 
