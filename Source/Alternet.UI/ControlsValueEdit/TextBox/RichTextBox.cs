@@ -966,13 +966,20 @@ namespace Alternet.UI
         {
             return NativeControl.BeginListStyle(listStyle, level, number);
         }
-//!!!!!!!!!!!!!!!!!!!!
+
+        /// <summary>
         /// Ends using a specified list style.
+        /// </summary>
         public bool EndListStyle()
         {
             return NativeControl.EndListStyle();
         }
 
+        //!!!!!!!!!!!!!!!!!!!!
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// Begins applying wxTEXT_ATTR_URL to the content.
         /// Pass a URL and optionally, a character style to apply, since it is common
         /// to mark a URL with a familiar style such as blue text with underlining.
@@ -982,12 +989,18 @@ namespace Alternet.UI
             return NativeControl.BeginURL(url, characterStyle);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         /// Ends applying a URL.
         public bool EndURL()
         {
             return NativeControl.EndURL();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         /// Returns <c>true</c> if all of the selection, or the content
         /// at the caret position, is bold.
         public bool IsSelectionBold()
@@ -995,6 +1008,9 @@ namespace Alternet.UI
             return NativeControl.IsSelectionBold();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         /// Returns <c>true</c> if all of the selection, or the content
         /// at the caret position, is italic.
         public bool IsSelectionItalics()
@@ -1002,6 +1018,9 @@ namespace Alternet.UI
             return NativeControl.IsSelectionItalics();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         /// Returns <c>true</c> if all of the selection, or the content
         /// at the caret position, is underlined.
         public bool IsSelectionUnderlined()
@@ -1009,6 +1028,9 @@ namespace Alternet.UI
             return NativeControl.IsSelectionUnderlined();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         /// Returns <c>true</c> if all of the selection, or the content
         /// at the current caret position, has the supplied effects flag(s).
         public bool DoesSelectionHaveTextEffectFlag(TextBoxTextAttrEffects flag)
@@ -1016,6 +1038,9 @@ namespace Alternet.UI
             return NativeControl.DoesSelectionHaveTextEffectFlag((int)flag);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         /// Returns <c>true</c> if all of the selection, or the content
         /// at the caret position, is aligned according to the specified flag.
         public bool IsSelectionAligned(TextBoxTextAttrAlignment alignment)
@@ -1023,24 +1048,36 @@ namespace Alternet.UI
             return NativeControl.IsSelectionAligned((int)alignment);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         /// Apples bold to the selection or default style (undoable).
         public bool ApplyBoldToSelection()
         {
             return NativeControl.ApplyBoldToSelection();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         /// Applies italic to the selection or default style (undoable).
         public bool ApplyItalicToSelection()
         {
             return NativeControl.ApplyItalicToSelection();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         /// Applies underline to the selection or default style (undoable).
         public bool ApplyUnderlineToSelection()
         {
             return NativeControl.ApplyUnderlineToSelection();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         /// Applies one or more wxTextAttrEffects flags to the selection (undoable).
         /// If there is no selection, it is applied to the default style.
         public bool ApplyTextEffectToSelection(TextBoxTextAttrEffects flags)
@@ -1048,6 +1085,9 @@ namespace Alternet.UI
             return NativeControl.ApplyTextEffectToSelection((int)flags);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         /// Applies the given alignment to the selection or the default style (undoable).
         /// For alignment values, see wxTextAttr.
         public bool ApplyAlignmentToSelection(TextBoxTextAttrAlignment alignment)
@@ -1055,24 +1095,36 @@ namespace Alternet.UI
             return NativeControl.ApplyAlignmentToSelection((int)alignment);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         /// Sets the default style to the style under the cursor.
         public bool SetDefaultStyleToCursorStyle()
         {
             return NativeControl.SetDefaultStyleToCursorStyle();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         /// Cancels any selection.
         public void SelectNone()
         {
             NativeControl.SelectNone();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         /// Selects the word at the given character position.
         public bool SelectWord(long position)
         {
             return NativeControl.SelectWord(position);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         /// Lays out the buffer, which must be done before certain operations, such as
         /// setting the caret position.
         /// This function should not normally be required by the application.
@@ -1081,24 +1133,36 @@ namespace Alternet.UI
             return NativeControl.LayoutContent(onlyVisibleRect);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         /// Moves right.
         public bool MoveRight(int noPositions = 1, int flags = 0)
         {
             return NativeControl.MoveRight(noPositions, flags);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         /// Moves left.
         public bool MoveLeft(int noPositions = 1, int flags = 0)
         {
             return NativeControl.MoveLeft(noPositions, flags);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         /// Moves to the start of the paragraph.
         public bool MoveUp(int noLines = 1, int flags = 0)
         {
             return NativeControl.MoveUp(noLines, flags);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         /// Moves the caret down.
         public bool MoveDown(int noLines = 1, int flags = 0)
         {
@@ -1106,138 +1170,207 @@ namespace Alternet.UI
         }
 
         /// Moves to the end of the line.
+        /// <summary>
+        /// 
+        /// </summary>
         public bool MoveToLineEnd(int flags = 0)
         {
             return NativeControl.MoveToLineEnd(flags);
         }
 
         /// Moves to the start of the line.
+        /// <summary>
+        /// 
+        /// </summary>
         public bool MoveToLineStart(int flags = 0)
         {
             return NativeControl.MoveToLineStart(flags);
         }
 
         /// Moves to the end of the paragraph.
+        /// <summary>
+        /// 
+        /// </summary>
         public bool MoveToParagraphEnd(int flags = 0)
         {
             return NativeControl.MoveToParagraphEnd(flags);
         }
 
         /// Moves to the start of the paragraph.
+        /// <summary>
+        /// 
+        /// </summary>
         public bool MoveToParagraphStart(int flags = 0)
         {
             return NativeControl.MoveToParagraphStart(flags);
         }
 
         /// Moves to the start of the buffer.
+        /// <summary>
+        /// 
+        /// </summary>
         public bool MoveHome(int flags = 0)
         {
             return NativeControl.MoveHome(flags);
         }
 
         /// Moves to the end of the buffer.
+        /// <summary>
+        /// 
+        /// </summary>
         public bool MoveEnd(int flags = 0)
         {
             return NativeControl.MoveEnd(flags);
         }
 
         /// Moves one or more pages up.
+        /// <summary>
+        /// 
+        /// </summary>
         public bool PageUp(int noPages = 1, int flags = 0)
         {
             return NativeControl.PageUp(noPages, flags);
         }
 
         /// Moves one or more pages down.
+        /// <summary>
+        /// 
+        /// </summary>
         public bool PageDown(int noPages = 1, int flags = 0)
         {
             return NativeControl.PageDown(noPages, flags);
         }
 
         /// Moves a number of words to the left.
+        /// <summary>
+        /// 
+        /// </summary>
         public bool WordLeft(int noPages = 1, int flags = 0)
         {
             return NativeControl.WordLeft(noPages, flags);
         }
 
         /// Move a number of words to the right.
+        /// <summary>
+        /// 
+        /// </summary>
         public bool WordRight(int noPages = 1, int flags = 0)
         {
             return NativeControl.WordRight(noPages, flags);
         }
 
         /// Starts batching undo history for commands.
+        /// <summary>
+        /// 
+        /// </summary>
         public bool BeginBatchUndo(string cmdName)
         {
             return NativeControl.BeginBatchUndo(cmdName);
         }
 
         /// Ends batching undo command history.
+        /// <summary>
+        /// 
+        /// </summary>
         public bool EndBatchUndo()
         {
             return NativeControl.EndBatchUndo();
         }
 
         /// Returns <c>true</c> if undo commands are being batched.
+        /// <summary>
+        /// 
+        /// </summary>
         public bool BatchingUndo()
         {
             return NativeControl.BatchingUndo();
         }
 
         /// Starts suppressing undo history for commands.
+        /// <summary>
+        /// 
+        /// </summary>
         public bool BeginSuppressUndo()
         {
             return NativeControl.BeginSuppressUndo();
         }
 
         /// Ends suppressing undo command history.
+        /// <summary>
+        /// 
+        /// </summary>
         public bool EndSuppressUndo()
         {
             return NativeControl.EndSuppressUndo();
         }
 
         /// Returns <c>true</c> if undo history suppression is on.
+        /// <summary>
+        /// 
+        /// </summary>
         public bool SuppressingUndo()
         {
             return NativeControl.SuppressingUndo();
         }
 
         /// Enable or disable the vertical scrollbar.
+        /// <summary>
+        /// 
+        /// </summary>
         public void EnableVerticalScrollbar(bool enable)
         {
             NativeControl.EnableVerticalScrollbar(enable);
         }
 
         /// Returns <c>true</c> if the vertical scrollbar is enabled.
+        /// <summary>
+        /// 
+        /// </summary>
         public bool GetVerticalScrollbarEnabled()
         {
             return NativeControl.GetVerticalScrollbarEnabled();
         }
 
         /// Sets the scale factor for displaying fonts, for example for more comfortableediting.
+        /// <summary>
+        /// 
+        /// </summary>
         public void SetFontScale(double fontScale, bool refresh = false)
         {
             NativeControl.SetFontScale(fontScale, refresh);
         }
 
         /// Returns the scale factor for displaying fonts, for example for more comfortable editing.
+        /// <summary>
+        /// 
+        /// </summary>
         public double GetFontScale()
         {
             return NativeControl.GetFontScale();
         }
 
         /// Returns <c>true</c> if this control can use attributes and text. The default is @false.
+        /// <summary>
+        /// 
+        /// </summary>
         public bool GetVirtualAttributesEnabled()
         {
             return NativeControl.GetVirtualAttributesEnabled();
         }
 
         /// Pass <c>true</c> to let the control use attributes. The default is @false.
+        /// <summary>
+        /// 
+        /// </summary>
         public void EnableVirtualAttributes(bool b)
         {
             NativeControl.EnableVirtualAttributes(b);
         }
 
         /// Write text
+        /// <summary>
+        /// 
+        /// </summary>
         public void DoWriteText(string value, int flags = 0)
         {
             NativeControl.DoWriteText(value, flags);
@@ -1245,6 +1378,9 @@ namespace Alternet.UI
 
         /// Helper function for extending the selection, returning <c>true</c> if the selection
         /// was changed. Selections are in caret positions.
+        /// <summary>
+        /// 
+        /// </summary>
         public bool ExtendSelection(long oldPosition, long newPosition, int flags)
         {
             return NativeControl.ExtendSelection(oldPosition, newPosition, flags);
@@ -1255,13 +1391,19 @@ namespace Alternet.UI
         /// A value of -1 means the caret is at the start of the buffer.
         /// Please note that this does not update the current editing style
         /// from the new position or cause the actual caret to be refreshed; to do that,
-        /// call wxRichTextCtrl::SetInsertionPoint instead.
+        /// call SetInsertionPoint instead.
+        /// <summary>
+        /// 
+        /// </summary>
         public void SetCaretPosition(long position, bool showAtLineStart = false)
         {
             NativeControl.SetCaretPosition(position, showAtLineStart);
         }
 
         /// Returns the current caret position.
+        /// <summary>
+        /// 
+        /// </summary>
         public long GetCaretPosition()
         {
             return NativeControl.GetCaretPosition();
@@ -1270,6 +1412,9 @@ namespace Alternet.UI
         /// The adjusted caret position is the character position adjusted to take
         /// into account whether we're at the start of a paragraph, in which case
         /// style information should be taken from the next position, not current one.
+        /// <summary>
+        /// 
+        /// </summary>
         public long GetAdjustedCaretPosition(long caretPos)
         {
             return NativeControl.GetAdjustedCaretPosition(caretPos);
@@ -1278,18 +1423,27 @@ namespace Alternet.UI
         /// Move the caret one visual step forward: this may mean setting a flag
         /// and keeping the same position if we're going from the end of one line
         /// to the start of the next, which may be the exact same caret position.
+        /// <summary>
+        /// 
+        /// </summary>
         public void MoveCaretForward(long oldPosition)
         {
             NativeControl.MoveCaretForward(oldPosition);
         }
 
         /// Transforms logical (unscrolled) position to physical window position.
+        /// <summary>
+        /// 
+        /// </summary>
         public Int32Point GetPhysicalPoint(Int32Point ptLogical)
         {
             return NativeControl.GetPhysicalPoint(ptLogical);
         }
 
         /// Transforms physical window position to logical (unscrolled) position.
+        /// <summary>
+        /// 
+        /// </summary>
         public Int32Point GetLogicalPoint(Int32Point ptPhysical)
         {
             return NativeControl.GetLogicalPoint(ptPhysical);
@@ -1297,18 +1451,27 @@ namespace Alternet.UI
 
         /// Helper function for finding the caret position for the next word.
         /// Direction is 1 (forward) or -1 (backwards).
+        /// <summary>
+        /// 
+        /// </summary>
         public long FindNextWordPosition(int direction = 1)
         {
             return NativeControl.FindNextWordPosition(direction);
         }
 
         /// Returns <c>true</c> if the given position is visible on the screen.
+        /// <summary>
+        /// 
+        /// </summary>
         public bool IsPositionVisible(long pos)
         {
             return NativeControl.IsPositionVisible(pos);
         }
 
         /// Returns the first visible position in the current view.
+        /// <summary>
+        /// 
+        /// </summary>
         public long GetFirstVisiblePosition()
         {
             return NativeControl.GetFirstVisiblePosition();
@@ -1318,12 +1481,18 @@ namespace Alternet.UI
         /// soon as this position changes, we no longer reflect the default style
         /// in the UI. A value of -2 means that we should only reflect the style of the
         /// content under the caret.
+        /// <summary>
+        /// 
+        /// </summary>
         public long GetCaretPositionForDefaultStyle()
         {
             return NativeControl.GetCaretPositionForDefaultStyle();
         }
 
         /// Set the caret position for the default style that the user is selecting.
+        /// <summary>
+        /// 
+        /// </summary>
         public void SetCaretPositionForDefaultStyle(long pos)
         {
             NativeControl.SetCaretPositionForDefaultStyle(pos);
@@ -1332,6 +1501,9 @@ namespace Alternet.UI
         /// Move the caret one visual step forward: this may mean setting a flag
         /// and keeping the same position if we're going from the end of one line
         /// to the start of the next, which may be the exact same caret position.
+        /// <summary>
+        /// 
+        /// </summary>
         public void MoveCaretBack(long oldPosition)
         {
             NativeControl.MoveCaretBack(oldPosition);
@@ -1340,78 +1512,117 @@ namespace Alternet.UI
         /// Returns <c>true</c> if the user has recently set the default style without moving
         /// the caret, and therefore the UI needs to reflect the default style and not
         /// the style at the caret.
+        /// <summary>
+        /// 
+        /// </summary>
         public bool IsDefaultStyleShowing()
         {
             return NativeControl.IsDefaultStyleShowing();
         }
 
         /// Returns the first visible point in the window.
+        /// <summary>
+        /// 
+        /// </summary>
         public Int32Point GetFirstVisiblePoint()
         {
             return NativeControl.GetFirstVisiblePoint();
         }
 
         /// Enable or disable images
+        /// <summary>
+        /// 
+        /// </summary>
         public void EnableImages(bool b)
         {
             NativeControl.EnableImages(b);
         }
 
         /// Returns <c>true</c> if images are enabled.
+        /// <summary>
+        /// 
+        /// </summary>
         public bool GetImagesEnabled()
         {
             return NativeControl.GetImagesEnabled();
         }
 
         /// Enable or disable delayed image loading.
+        /// <summary>
+        /// 
+        /// </summary>
         public void EnableDelayedImageLoading(bool b)
         {
             NativeControl.EnableDelayedImageLoading(b);
         }
 
         /// Returns <c>true</c> if delayed image loading is enabled.
+        /// <summary>
+        /// 
+        /// </summary>
         public bool GetDelayedImageLoading()
         {
             return NativeControl.GetDelayedImageLoading();
         }
 
         /// Gets the flag indicating that delayed image processing is required.
+        /// <summary>
+        /// 
+        /// </summary>
         public bool GetDelayedImageProcessingRequired()
         {
             return NativeControl.GetDelayedImageProcessingRequired();
         }
 
         /// Sets the flag indicating that delayed image processing is required.
+        /// <summary>
+        /// 
+        /// </summary>
         public void SetDelayedImageProcessingRequired(bool b)
         {
             NativeControl.SetDelayedImageProcessingRequired(b);
         }
 
         /// Returns the last time delayed image processing was performed.
+        /// <summary>
+        /// 
+        /// </summary>
         public long GetDelayedImageProcessingTime()
         {
             return NativeControl.GetDelayedImageProcessingTime();
         }
 
         /// Sets the last time delayed image processing was performed.
+        /// <summary>
+        /// 
+        /// </summary>
         public void SetDelayedImageProcessingTime(long t)
         {
             NativeControl.SetDelayedImageProcessingTime(t);
         }
 
         /// Returns the content of the entire control as a string.
+        /// <summary>
+        /// 
+        /// </summary>
         public string GetValue()
         {
             return NativeControl.GetValue();
         }
 
         /// Replaces existing content with the given text.
+        /// <summary>
+        /// 
+        /// </summary>
         public void SetValue(string value)
         {
             NativeControl.SetValue(value);
         }
 
         /// Set the line increment height in pixels
+        /// <summary>
+        /// 
+        /// </summary>
         public void SetLineHeight(int height)
         {
             NativeControl.SetLineHeight(height);
@@ -1423,24 +1634,33 @@ namespace Alternet.UI
         }
 
         /// Do delayed image loading and garbage-collect other images.
+        /// <summary>
+        /// 
+        /// </summary>
         public bool ProcessDelayedImageLoading(bool refresh)
         {
             return NativeControl.ProcessDelayedImageLoading(refresh);
         }
 
         /// Request delayed image processing.
+        /// <summary>
+        /// 
+        /// </summary>
         public void RequestDelayedImageProcessing()
         {
             NativeControl.RequestDelayedImageProcessing();
         }
 
         /// Returns the last position in the buffer.
+        /// <summary>
+        /// 
+        /// </summary>
         public long GetLastPosition()
         {
             return NativeControl.GetLastPosition();
         }
 
-        public bool SetListStyle(
+        internal bool SetListStyle(
             long startRange,
             long endRange,
             string defName,
@@ -1461,12 +1681,12 @@ namespace Alternet.UI
         /// and applying any named paragraph style associated with each paragraph.
         /// @a flags is a bit list of the following:
         /// - wxRICHTEXT_SETSTYLE_WITH_UNDO: specifies that this command will be undoable.
-        public bool ClearListStyle(long startRange, long endRange, int flags)
+        internal bool ClearListStyle(long startRange, long endRange, int flags)
         {
             return NativeControl.ClearListStyle(startRange, endRange, flags);
         }/// = wxRICHTEXT_SETSTYLE_WITH_UNDO
 
-        public bool NumberList(
+        internal bool NumberList(
             long startRange,
             long endRange,
             string defName,
@@ -1483,7 +1703,7 @@ namespace Alternet.UI
                 specifiedLevel);
         }/// = wxRICHTEXT_SETSTYLE_WITH_UNDO
 
-        public bool PromoteList(
+        internal bool PromoteList(
             int promoteBy,
             long startRange,
             long endRange,
@@ -1501,6 +1721,9 @@ namespace Alternet.UI
         } /// = wxRICHTEXT_SETSTYLE_WITH_UNDO
 
         /// Deletes the content within the given range.
+        /// <summary>
+        /// 
+        /// </summary>
         public bool Delete(long startRange, long endRange)
         {
             return NativeControl.Delete(startRange, endRange);
@@ -1511,12 +1734,18 @@ namespace Alternet.UI
         /// of text, plus one.
         /// So, for example, to set the selection for a character at position 5, use the
         /// range (5,6).
+        /// <summary>
+        /// 
+        /// </summary>
         public void SetSelectionRange(long startRange, long endRange)
         {
             NativeControl.SetSelectionRange(startRange, endRange);
         }
 
         /// Converts a text position to zero-based column and line numbers.
+        /// <summary>
+        /// 
+        /// </summary>
         public Int32Point PositionToXY(long pos)
         {
             return NativeControl.PositionToXY(pos);
@@ -1525,30 +1754,45 @@ namespace Alternet.UI
         /// Deletes content if there is a selection, e.g. when pressing a key.
         /// Returns the new caret position in @e newPos, or leaves it if there
         /// was no action. This is undoable.
+        /// <summary>
+        /// 
+        /// </summary>
         public long DeleteSelectedContent()
         {
             return NativeControl.DeleteSelectedContent();
         }
 
         /// Returns the current context menu.
+        /// <summary>
+        /// 
+        /// </summary>
         internal IntPtr GetContextMenu()
         {
             return NativeControl.GetContextMenu();
         }
 
         /// Sets the current context menu.
+        /// <summary>
+        /// 
+        /// </summary>
         internal void SetContextMenu(IntPtr menu)
         {
             NativeControl.SetContextMenu(menu);
         }
 
         /// Returns the anchor object if selecting multiple containers.
+        /// <summary>
+        /// 
+        /// </summary>
         internal IntPtr GetSelectionAnchorObject()
         {
             return NativeControl.GetSelectionAnchorObject();
         }
 
         /// Sets the anchor object if selecting multiple containers.
+        /// <summary>
+        /// 
+        /// </summary>
         internal void SetSelectionAnchorObject(IntPtr anchor)
         {
             NativeControl.SetSelectionAnchorObject(anchor);
@@ -1556,18 +1800,27 @@ namespace Alternet.UI
 
         /// Returns the wxRichTextObject object that currently has the editing focus.
         /// If there are no composite objects, this will be the top-level buffer.
+        /// <summary>
+        /// 
+        /// </summary>
         internal IntPtr GetFocusObject()
         {
             return NativeControl.GetFocusObject();
         }
 
         /// Sets m_focusObject without making any alterations.
+        /// <summary>
+        /// 
+        /// </summary>
         internal void StoreFocusObject(IntPtr richObj)
         {
             NativeControl.StoreFocusObject(richObj);
         }
 
         /// Begins using this font.
+        /// <summary>
+        /// 
+        /// </summary>
         internal bool BeginFont(Font? font)
         {
             return NativeControl.BeginFont(font?.NativeFont);
@@ -1578,6 +1831,9 @@ namespace Alternet.UI
         /// This might be useful if the styles have changed.
         /// If @a sheet is @NULL, the sheet set with SetStyleSheet() is used.
         /// Currently this applies paragraph styles only.
+        /// <summary>
+        /// 
+        /// </summary>
         internal bool ApplyStyle(IntPtr def)
         {
             return NativeControl.ApplyStyle(def);
@@ -1585,6 +1841,9 @@ namespace Alternet.UI
 
         /// Sets the style sheet associated with the control.
         /// A style sheet allows named character and paragraph styles to be applied.
+        /// <summary>
+        /// 
+        /// </summary>
         internal void SetStyleSheet(IntPtr styleSheet)
         {
             NativeControl.SetStyleSheet(styleSheet);
@@ -1592,31 +1851,46 @@ namespace Alternet.UI
 
         /// Move the caret to the given character position.
         /// Please note that this does not update the current editing style
-        /// from the new position; to do that, call wxRichTextCtrl::SetInsertionPoint instead.
+        /// from the new position; to do that, call SetInsertionPoint instead.
+        /// <summary>
+        /// 
+        /// </summary>
         internal bool MoveCaret(long pos, bool showAtLineStart = false, IntPtr container = default)
         {
             return NativeControl.MoveCaret(pos, showAtLineStart, container);
         }
 
         /// Push the style sheet to top of stack.
+        /// <summary>
+        /// 
+        /// </summary>
         internal bool PushStyleSheet(IntPtr styleSheet)
         {
             return NativeControl.PushStyleSheet(styleSheet);
         }
 
         /// Pops the style sheet from top of stack.
+        /// <summary>
+        /// 
+        /// </summary>
         internal IntPtr PopStyleSheet()
         {
             return NativeControl.PopStyleSheet();
         }
 
         /// Applies the style sheet to the buffer, for example if the styles have changed.
+        /// <summary>
+        /// 
+        /// </summary>
         internal bool ApplyStyleSheet(IntPtr styleSheet = default)
         {
             return NativeControl.ApplyStyleSheet(styleSheet);
         }
 
         /// Shows the given context menu, optionally adding appropriate property-editing commands for the current position in the object hierarchy.
+        /// <summary>
+        /// 
+        /// </summary>
         internal bool ShowContextMenu(IntPtr menu, Int32Point pt, bool addPropertyCommands = true)
         {
             return NativeControl.ShowContextMenu(menu, pt, addPropertyCommands);
@@ -1624,36 +1898,54 @@ namespace Alternet.UI
 
         /// Prepares the context menu, optionally adding appropriate property-editing commands.
         /// Returns the number of property commands added.
+        /// <summary>
+        /// 
+        /// </summary>
         internal int PrepareContextMenu(IntPtr menu, Int32Point pt, bool addPropertyCommands = true)
         {
             return NativeControl.PrepareContextMenu(menu, pt, addPropertyCommands);
         }
 
         /// Returns <c>true</c> if we can edit the object's properties via a GUI.
+        /// <summary>
+        /// 
+        /// </summary>
         internal bool CanEditProperties(IntPtr richObj)
         {
             return NativeControl.CanEditProperties(richObj);
         }
 
         /// Edits the object's properties via a GUI.
+        /// <summary>
+        /// 
+        /// </summary>
         internal bool EditProperties(IntPtr richObj, IntPtr parentWindow)
         {
             return NativeControl.EditProperties(richObj, parentWindow);
         }
 
         /// Extends a table selection in the given direction.
+        /// <summary>
+        /// 
+        /// </summary>
         internal bool ExtendCellSelection(IntPtr table, int noRowSteps, int noColSteps)
         {
             return NativeControl.ExtendCellSelection(table, noRowSteps, noColSteps);
         }
 
         /// Starts selecting table cells.
+        /// <summary>
+        /// 
+        /// </summary>
         internal bool StartCellSelection(IntPtr table, IntPtr newCell)
         {
             return NativeControl.StartCellSelection(table, newCell);
         }
 
         /// Scrolls @a position into view. This function takes a caret position.
+        /// <summary>
+        /// 
+        /// </summary>
         internal bool ScrollIntoView(long position, int keyCode)
         {
             return NativeControl.ScrollIntoView(position, keyCode);
@@ -1661,6 +1953,9 @@ namespace Alternet.UI
 
         /// Returns the caret height and position for the given character position.
         /// If container is null, the current focus object will be used.
+        /// <summary>
+        /// 
+        /// </summary>
         internal bool GetCaretPositionForIndex(
             long position,
             Int32Rect rect,
@@ -1673,18 +1968,27 @@ namespace Alternet.UI
         /// If the caret is shown at the very end of the line, it means the next character
         /// is actually on the following line.
         /// So this function gets the line we're expecting to find if this is the case.
+        /// <summary>
+        /// 
+        /// </summary>
         internal IntPtr GetVisibleLineForCaretPosition(long caretPosition)
         {
             return NativeControl.GetVisibleLineForCaretPosition(caretPosition);
         }
 
         /// Gets the command processor associated with the control's buffer.
+        /// <summary>
+        /// 
+        /// </summary>
         internal IntPtr GetCommandProcessor()
         {
             return NativeControl.GetCommandProcessor();
         }
 
         /// Sets up the caret for the given position and container, after a mouse click.
+        /// <summary>
+        /// 
+        /// </summary>
         internal bool SetCaretPositionAfterClick(
             IntPtr container,
             long position,
@@ -1706,6 +2010,9 @@ namespace Alternet.UI
         /// If you specify (any) paragraph attribute in @e style's flags, this function
         /// will fetch the paragraph attributes.
         /// Otherwise, it will return the character attributes.
+        /// <summary>
+        /// 
+        /// </summary>
         internal bool GetUncombinedStyle(long position, IntPtr style)
         {
             return NativeControl.GetUncombinedStyle(position, style);
@@ -1723,6 +2030,9 @@ namespace Alternet.UI
 
         /// Returns the current default style, which can be used to change how subsequently
         /// inserted text is displayed.
+        /// <summary>
+        /// 
+        /// </summary>
         internal IntPtr GetDefaultStyleEx()
         {
             return NativeControl.GetDefaultStyleEx();
@@ -1733,6 +2043,9 @@ namespace Alternet.UI
         /// screen as a result of combining base style, paragraph style and character
         /// style attributes.
         /// To get the character or paragraph style alone, use GetUncombinedStyle().
+        /// <summary>
+        /// 
+        /// </summary>
         internal IntPtr GetStyle(long position)
         {
             return NativeControl.GetStyle(position);
@@ -1748,6 +2061,9 @@ namespace Alternet.UI
             return NativeControl.GetStyleInContainer(position, container);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         /// Sets the attributes for the given range.
         /// The end point of range is specified as the last character position of the span
         /// of text, plus one. So, for example, to set the style for a character at
@@ -1763,6 +2079,9 @@ namespace Alternet.UI
         }
 
         /// Sets the attributes for a single object
+        /// <summary>
+        /// 
+        /// </summary>
         internal void SetStyle(IntPtr richObj, IntPtr textAttr, int flags)
         {
             NativeControl.SetStyle2(richObj, textAttr, flags);
@@ -1771,6 +2090,9 @@ namespace Alternet.UI
         /// Gets the attributes common to the specified range.
         /// Attributes that differ in value within the range will not be included
         /// in @a style flags.
+        /// <summary>
+        /// 
+        /// </summary>
         internal IntPtr GetStyleForRange(long startRange, long endRange)
         {
             return NativeControl.GetStyleForRange(startRange, endRange);
@@ -1809,6 +2131,9 @@ namespace Alternet.UI
         ///   the new style.
         /// - wxRICHTEXT_SETSTYLE_REMOVE: removes the specified style. Only the style flags
         ///   are used in this operation.
+        /// <summary>
+        /// 
+        /// </summary>
         internal bool SetStyleEx(long startRange, long endRange, IntPtr style, int flags)
         {
             return NativeControl.SetStyleEx(startRange, endRange, style, flags);
@@ -1824,6 +2149,9 @@ namespace Alternet.UI
         ///   @a startFrom, otherwise existing attributes are used.
         /// - wxRICHTEXT_SETSTYLE_SPECIFY_LEVEL: specifies that @a listLevel should be used
         ///   as the level for all paragraphs, otherwise the current indentation will be used.
+        /// <summary>
+        /// 
+        /// </summary>
         internal bool SetListStyle(
             long startRange,
             long endRange,
@@ -1851,6 +2179,9 @@ namespace Alternet.UI
         ///   @a startFrom, otherwise existing attributes are used.
         /// - wxRICHTEXT_SETSTYLE_SPECIFY_LEVEL: specifies that @a listLevel should be used
         /// as the level for all paragraphs, otherwise the current indentation will be used.
+        /// <summary>
+        /// 
+        /// </summary>
         internal bool NumberList(
             long startRange,
             long endRange,
@@ -1879,6 +2210,9 @@ namespace Alternet.UI
         ///   @a startFrom, otherwise existing attributes are used.
         /// - wxRICHTEXT_SETSTYLE_SPECIFY_LEVEL: specifies that @a listLevel should be used
         /// as the level for all paragraphs, otherwise the current indentation will be used.
+        /// <summary>
+        /// 
+        /// </summary>
         internal bool PromoteList(
             int promoteBy,
             long startRange,
@@ -1898,6 +2232,9 @@ namespace Alternet.UI
 
         /// Write a table at the current insertion point, returning the table.
         /// You can then call SetFocusObject() to set the focus to the new object.
+        /// <summary>
+        /// 
+        /// </summary>
         internal IntPtr WriteTable(
             int rows,
             int cols,
@@ -1916,6 +2253,9 @@ namespace Alternet.UI
         /// unlike the default style, which only affects the style currently being
         /// applied (for example, setting the default style to bold will cause
         /// subsequently inserted text to be bold).
+        /// <summary>
+        /// 
+        /// </summary>
         internal void SetBasicStyle(IntPtr style)
         {
             NativeControl.SetBasicStyle(style);
@@ -1926,12 +2266,18 @@ namespace Alternet.UI
         /// unlike the default style, which only affects the style currently being
         /// applied (for example, setting the default style to bold will cause
         /// subsequently inserted text to be bold).
+        /// <summary>
+        /// 
+        /// </summary>
         internal IntPtr GetBasicStyle()
         {
             return NativeControl.GetBasicStyle();
         }
 
         /// Begins applying a style.
+        /// <summary>
+        /// 
+        /// </summary>
         internal bool BeginStyle(IntPtr style)
         {
             return NativeControl.BeginStyle(style);
@@ -1941,6 +2287,9 @@ namespace Alternet.UI
         /// If any of the attributes are different within the range, the test fails.
         /// You can use this to implement, for example, bold button updating.
         /// @a style must have flags indicating which attributes are of interest.
+        /// <summary>
+        /// 
+        /// </summary>
         internal bool HasCharacterAttributes(long startRange, long endRange, IntPtr style)
         {
             return NativeControl.HasCharacterAttributes(startRange, endRange, style);
@@ -1948,6 +2297,9 @@ namespace Alternet.UI
 
         /// Returns the style sheet associated with the control, if any.
         /// A style sheet allows named character and paragraph styles to be applied.
+        /// <summary>
+        /// 
+        /// </summary>
         internal IntPtr GetStyleSheet()
         {
             return NativeControl.GetStyleSheet();
@@ -1955,6 +2307,9 @@ namespace Alternet.UI
 
         /// Sets @a attr as the default style and tells the control that the UI should
         /// reflect this attribute until the user moves the caret.
+        /// <summary>
+        /// 
+        /// </summary>
         internal void SetAndShowDefaultStyle(IntPtr attr)
         {
             NativeControl.SetAndShowDefaultStyle(attr);
@@ -1962,6 +2317,9 @@ namespace Alternet.UI
 
         /// Write a text box at the current insertion point, returning the text box.
         /// You can then call SetFocusObject() to set the focus to the new object.
+        /// <summary>
+        /// 
+        /// </summary>
         internal IntPtr WriteTextBox(IntPtr textAttr = default)
         {
             return NativeControl.WriteTextBox(textAttr);
@@ -1971,6 +2329,9 @@ namespace Alternet.UI
         /// If any of the attributes are different within the range, the test fails.
         /// You can use this to implement, for example, centering button updating.
         /// @a style must have flags indicating which attributes are of interest.
+        /// <summary>
+        /// 
+        /// </summary>
         internal bool HasParagraphAttributes(
             long startRange,
             long endRange,
@@ -1998,6 +2359,9 @@ namespace Alternet.UI
         /// - wxRICHTEXT_SETPROPERTIES_RESET: resets (clears) the existing properties before applying
         ///   the new properties.
         /// - wxRICHTEXT_SETPROPERTIES_REMOVE: removes the specified properties.
+        /// <summary>
+        /// 
+        /// </summary>
         internal bool SetProperties(
             long startRange,
             long endRange,
@@ -2012,24 +2376,36 @@ namespace Alternet.UI
         } /// = wxRICHTEXT_SETPROPERTIES_WITH_UNDO
 
         /// Sets the text (normal) cursor.
+        /// <summary>
+        /// 
+        /// </summary>
         internal void SetTextCursor(IntPtr cursor)
         {
             NativeControl.SetTextCursor(cursor);
         }
 
         /// Returns the text (normal) cursor.
+        /// <summary>
+        /// 
+        /// </summary>
         internal IntPtr GetTextCursor()
         {
             return NativeControl.GetTextCursor();
         }
 
         /// Sets the cursor to be used over URLs.
+        /// <summary>
+        /// 
+        /// </summary>
         internal void SetURLCursor(IntPtr cursor)
         {
             NativeControl.SetURLCursor(cursor);
         }
 
         /// Returns the cursor to be used over URLs.
+        /// <summary>
+        /// 
+        /// </summary>
         internal IntPtr GetURLCursor()
         {
             return NativeControl.GetURLCursor();
@@ -2039,6 +2415,9 @@ namespace Alternet.UI
         /// The end point of range is specified as the last character position of the span
         /// of text, plus one.
         /// If the return values @a from and @a to are the same, there is no selection.
+        /// <summary>
+        /// 
+        /// </summary>
         internal IntPtr GetSelection()
         {
             return NativeControl.GetSelection();
@@ -2049,6 +2428,9 @@ namespace Alternet.UI
         /// that responds to it. The wxRichTextContextMenuPropertiesInfo stores one
         /// item for each object that could respond to a property-editing event. If
         /// objects are nested, several might be editable.
+        /// <summary>
+        /// 
+        /// </summary>
         internal IntPtr GetContextMenuPropertiesInfo()
         {
             return NativeControl.GetContextMenuPropertiesInfo();
@@ -2073,6 +2455,9 @@ namespace Alternet.UI
 
         /// Write a bitmap or image at the current insertion point.
         /// Supply an optional type to use for internal and file storage of the raw data.
+        /// <summary>
+        /// 
+        /// </summary>
         internal bool WriteImage(
             Image bitmap,
             BitmapType bitmapType /*= BitmapType.Png*/,
@@ -2087,6 +2472,9 @@ namespace Alternet.UI
         }
 
         /// Loads an image from a file and writes it at the current insertion point.
+        /// <summary>
+        /// 
+        /// </summary>
         internal bool WriteImage(
             string filename,
             BitmapType bitmapType = BitmapType.Png,
@@ -2099,6 +2487,9 @@ namespace Alternet.UI
         }
 
         /// Writes an image block at the current insertion point.
+        /// <summary>
+        /// 
+        /// </summary>
         internal bool WriteImage(IntPtr imageBlock, IntPtr textAttr = default)
         {
             return NativeControl.WriteImage3(imageBlock, textAttr);
@@ -2111,6 +2502,9 @@ namespace Alternet.UI
         ///       Extra data for the field.
         ///  @param textAttr
         ///      Optional attributes.
+        /// <summary>
+        /// 
+        /// </summary>
         internal IntPtr WriteField(
             string fieldType,
             IntPtr properties,
@@ -2124,6 +2518,9 @@ namespace Alternet.UI
 
         /// Can we delete this range?
         /// Sends an event to the control.
+        /// <summary>
+        /// 
+        /// </summary>
         internal bool CanDeleteRange(IntPtr container, long startRange, long endRange)
         {
             return NativeControl.CanDeleteRange(container, startRange, endRange);
@@ -2131,24 +2528,36 @@ namespace Alternet.UI
 
         /// Can we insert content at this position?
         /// Sends an event to the control.
+        /// <summary>
+        /// 
+        /// </summary>
         internal bool CanInsertContent(IntPtr container, long pos)
         {
             return NativeControl.CanInsertContent(container, pos);
         }
 
         /// Returns the buffer associated with the control.
+        /// <summary>
+        /// 
+        /// </summary>
         internal IntPtr GetBuffer()
         {
             return NativeControl.GetBuffer();
         }
 
         /// Gets the object's properties menu label.
+        /// <summary>
+        /// 
+        /// </summary>
         internal string GetPropertiesMenuLabel(IntPtr richObj)
         {
             return NativeControl.GetPropertiesMenuLabel(richObj);
         }
 
         /// Sets the wxRichTextObject object that currently has the editing focus.
+        /// <summary>
+        /// 
+        /// </summary>
         internal bool SetFocusObject(IntPtr richObj, bool setCaretPosition = true)
         {
             return NativeControl.SetFocusObject(richObj, setCaretPosition);
