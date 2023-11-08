@@ -131,7 +131,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="msg">Log message.</param>
         /// <remarks>
-        /// By default adds unique integer identifier to the end of the <paramref name="msg"/>.
+        /// By default adds unique integer identifier to the beginning of the <paramref name="msg"/>.
         /// </remarks>
         protected virtual string ConstructLogMessage(string? msg)
         {
