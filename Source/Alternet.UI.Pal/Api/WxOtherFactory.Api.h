@@ -281,3 +281,33 @@ ALTERNET_UI_API Int32Rect_C WxOtherFactory_DisplayGetGeometry_(void* handle)
     return WxOtherFactory::DisplayGetGeometry(handle);
 }
 
+ALTERNET_UI_API c_bool WxOtherFactory_SystemSettingsHasFeature_(int index)
+{
+    return WxOtherFactory::SystemSettingsHasFeature(index);
+}
+
+ALTERNET_UI_API Color_C WxOtherFactory_SystemSettingsGetColor_(int index)
+{
+    return WxOtherFactory::SystemSettingsGetColor(index);
+}
+
+ALTERNET_UI_API int WxOtherFactory_SystemSettingsGetMetric_(int index, void* win)
+{
+    return WxOtherFactory::SystemSettingsGetMetric(index, win);
+}
+
+ALTERNET_UI_API char16_t* WxOtherFactory_SystemAppearanceGetName_()
+{
+    return AllocPInvokeReturnString(WxOtherFactory::SystemAppearanceGetName());
+}
+
+ALTERNET_UI_API c_bool WxOtherFactory_SystemAppearanceIsDark_()
+{
+    return WxOtherFactory::SystemAppearanceIsDark();
+}
+
+ALTERNET_UI_API c_bool WxOtherFactory_SystemAppearanceIsUsingDarkBackground_()
+{
+    return WxOtherFactory::SystemAppearanceIsUsingDarkBackground();
+}
+

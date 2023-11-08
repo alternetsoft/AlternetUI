@@ -293,4 +293,34 @@ namespace Alternet::UI
 	{
 		return ((wxDisplay*)handle)->GetGeometry();
 	}
+
+	bool WxOtherFactory::SystemSettingsHasFeature(int index)
+	{
+		return wxSystemSettings::HasFeature((wxSystemFeature)index);
+	}
+
+	Color WxOtherFactory::SystemSettingsGetColor(int index)
+	{
+		return wxSystemSettings::GetColour((wxSystemColour)index);
+	}
+
+	int WxOtherFactory::SystemSettingsGetMetric(int index, void* win)
+	{
+		return wxSystemSettings::GetMetric((wxSystemMetric)index, (wxWindow*)win);
+	}
+
+	string WxOtherFactory::SystemAppearanceGetName()
+	{
+		return wxStr(wxSystemSettings::GetAppearance().GetName());
+	}
+
+	bool WxOtherFactory::SystemAppearanceIsDark()
+	{
+		return wxSystemSettings::GetAppearance().IsDark();
+	}
+
+	bool WxOtherFactory::SystemAppearanceIsUsingDarkBackground()
+	{
+		return wxSystemSettings::GetAppearance().IsUsingDarkBackground();
+	}
 }

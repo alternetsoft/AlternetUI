@@ -190,10 +190,33 @@ namespace NativeApi.Api
         // Returns the bounding rectangle of the display
         public static Int32Rect DisplayGetGeometry(IntPtr handle) => default;
 
+        // =================== SystemSettings
+
+        // Returns true if the port has certain feature.
+        public static bool SystemSettingsHasFeature(int index) => default;
+
+        // Gets a standard system color
+        public static Color SystemSettingsGetColor(int index) => default;
+
+        // Gets a system-dependent metric.
+        public static int SystemSettingsGetMetric(int index, IntPtr win = default) => default;
+
+        // Returns the name if available or empty string otherwise.
+        public static string SystemAppearanceGetName() => default;
+
+        // Return true if the current system there is explicitly recognized as
+        // being a dark theme or if the default window background is dark.
+        public static bool SystemAppearanceIsDark() => default;
+
+        // Return true if the background is darker than foreground. This is used by
+        // IsDark() if there is no platform-specific way to determine whether a
+        // dark mode is being used.
+        public static bool SystemAppearanceIsUsingDarkBackground() => default;
         // ===================
     }
 }
 
 /*
- 
+    // get a standard system font
+    public static wxFont SystemSettingsGetFont(int index) => default;
 */

@@ -53,6 +53,12 @@ static double DisplayGetScaleFactor(void* handle);
 static bool DisplayIsPrimary(void* handle);
 static Int32Rect DisplayGetClientArea(void* handle);
 static Int32Rect DisplayGetGeometry(void* handle);
+static bool SystemSettingsHasFeature(int index);
+static Color SystemSettingsGetColor(int index);
+static int SystemSettingsGetMetric(int index, void* win);
+static string SystemAppearanceGetName();
+static bool SystemAppearanceIsDark();
+static bool SystemAppearanceIsUsingDarkBackground();
 public:
 WxOtherFactory();
 protected:

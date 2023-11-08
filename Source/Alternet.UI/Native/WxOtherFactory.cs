@@ -288,6 +288,36 @@ namespace Alternet.UI.Native
             return NativeApi.WxOtherFactory_DisplayGetGeometry_(handle);
         }
         
+        public static bool SystemSettingsHasFeature(int index)
+        {
+            return NativeApi.WxOtherFactory_SystemSettingsHasFeature_(index);
+        }
+        
+        public static Alternet.Drawing.Color SystemSettingsGetColor(int index)
+        {
+            return NativeApi.WxOtherFactory_SystemSettingsGetColor_(index);
+        }
+        
+        public static int SystemSettingsGetMetric(int index, System.IntPtr win)
+        {
+            return NativeApi.WxOtherFactory_SystemSettingsGetMetric_(index, win);
+        }
+        
+        public static string SystemAppearanceGetName()
+        {
+            return NativeApi.WxOtherFactory_SystemAppearanceGetName_();
+        }
+        
+        public static bool SystemAppearanceIsDark()
+        {
+            return NativeApi.WxOtherFactory_SystemAppearanceIsDark_();
+        }
+        
+        public static bool SystemAppearanceIsUsingDarkBackground()
+        {
+            return NativeApi.WxOtherFactory_SystemAppearanceIsUsingDarkBackground_();
+        }
+        
         
         [SuppressUnmanagedCodeSecurity]
         public class NativeApi : NativeApiProvider
@@ -455,6 +485,24 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern Alternet.Drawing.Int32Rect WxOtherFactory_DisplayGetGeometry_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool WxOtherFactory_SystemSettingsHasFeature_(int index);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern NativeApiTypes.Color WxOtherFactory_SystemSettingsGetColor_(int index);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int WxOtherFactory_SystemSettingsGetMetric_(int index, System.IntPtr win);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern string WxOtherFactory_SystemAppearanceGetName_();
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool WxOtherFactory_SystemAppearanceIsDark_();
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool WxOtherFactory_SystemAppearanceIsUsingDarkBackground_();
             
         }
     }
