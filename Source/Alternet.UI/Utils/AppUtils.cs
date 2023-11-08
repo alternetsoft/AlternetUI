@@ -28,7 +28,8 @@ namespace Alternet.UI
             process.StartInfo.FileName = filePath;
             process.StartInfo.CreateNoWindow = true;
             process.StartInfo.UseShellExecute = false;
-            process.StartInfo.Arguments = args;
+            if (args is not null)
+                process.StartInfo.Arguments = args;
             if (folder != null)
                 process.StartInfo.WorkingDirectory = folder;
             try
@@ -50,6 +51,20 @@ namespace Alternet.UI
         /// <returns><c>true</c> if operation is successful; <c> false</c> otherwise.</returns>
         public static bool OpenUrl(string url)
         {
+            if (Application.IsMacOs)
+            {
+                try
+                {
+                    Process.Start("open", url);
+                    return true;
+                }
+                catch (Exception e)
+                {
+                    LogUtils.LogException(e);
+                    return false;
+                }
+            }
+
             var result = ShellExecute(url);
             return result;
         }
@@ -65,7 +80,8 @@ namespace Alternet.UI
             process.StartInfo.FileName = filePath;
             process.StartInfo.CreateNoWindow = true;
             process.StartInfo.UseShellExecute = true;
-            process.StartInfo.Arguments = args;
+            if(args is not null)
+                process.StartInfo.Arguments = args;
             if (folder != null)
                 process.StartInfo.WorkingDirectory = folder;
             try

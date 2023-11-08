@@ -122,7 +122,7 @@ namespace Alternet.UI
         /// <summary>
         /// Occurs when url clicked in the text.
         /// </summary>
-        public event EventHandler? TextUrl;
+        public event UrlEventHandler? TextUrl;
 
         /// <summary>
         /// Occurs when maximal text length is reached.
@@ -158,6 +158,20 @@ namespace Alternet.UI
         /// application needs to report user an error in <see cref="Text"/> property.
         /// </summary>
         public static Color DefaultErrorForegroundColor { get; set; } = Color.White;
+
+        /// <summary>
+        /// Gets or sets default value of the <see cref="AutoUrlOpen"/> property.
+        /// </summary>
+        public static bool DefaultAutoUrlOpen { get; set; } = false;
+
+        /// <summary>
+        /// Gets or sets a value indicating whether urls in the input text
+        /// are opened in the default browser.
+        /// </summary>
+        /// <remarks>
+        /// Use <see cref="AutoUrl"/> in order to highlight and underline urls.
+        /// </remarks>
+        public virtual bool AutoUrlOpen { get; set; } = DefaultAutoUrlOpen;
 
         /// <summary>
         /// Gets or sets a bitwise combination of <see cref="NumberStyles"/> values that indicates
@@ -1448,11 +1462,15 @@ namespace Alternet.UI
         ///     Raises the <see cref="TextUrl"/> event.
         /// </summary>
         /// <param name="e">
-        ///     An <see cref="EventArgs"/> that contains the event data.
+        ///     An <see cref="UrlEventArgs"/> that contains the event data.
         /// </param>
-        public virtual void OnTextUrl(EventArgs e)
+        public virtual void OnTextUrl(UrlEventArgs e)
         {
             TextUrl?.Invoke(this, e);
+            if (e.Cancel)
+                return;
+            if (AutoUrlOpen)
+                AppUtils.OpenUrl(e.Url);
         }
 
         /// <summary>

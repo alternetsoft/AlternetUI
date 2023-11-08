@@ -103,6 +103,7 @@ namespace ControlsSample
             // ==== multiLineTextBox
 
             multiLineTextBox.AutoUrl = true;
+            multiLineTextBox.AutoUrlOpen = true;
             multilineParent.Children.Prepend(multiLineTextBox);
             multiLineTextBox.Text = LoremIpsum;
             multiLineTextBox.TextUrl += MultiLineTextBox_TextUrl;
@@ -130,7 +131,6 @@ namespace ControlsSample
                 textAlignComboBox,
                 minLengthEdit.TextBox,
                 maxLengthEdit.TextBox).SuggestedWidthToMax();
-
 
             Application.Current.Idle += Application_Idle;
 
@@ -259,14 +259,11 @@ namespace ControlsSample
             site?.LogEvent($"Focused: {name}" );
         }
 
-        private void MultiLineTextBox_TextUrl(object? sender, EventArgs e)
+        private void MultiLineTextBox_TextUrl(object? sender, UrlEventArgs e)
         {
             if (sender is not TextBox textBox)
                 return;
-            string? url = textBox.DoCommand("GetReportedUrl")?.ToString();
-            site?.LogEvent("TextBox: Url clicked =>" + url);
-            if(!string.IsNullOrEmpty(url))
-                AppUtils.OpenUrl(url);
+            site?.LogEvent("TextBox: Url clicked =>" + e.Url);
         }
 
         public IPageSite? Site

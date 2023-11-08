@@ -437,7 +437,8 @@ namespace Alternet.UI
 
         private void NativeControl_TextUrl(object? sender, EventArgs e)
         {
-            Control.OnTextUrl(e);
+            var url = ReportedUrl;
+            Control.OnTextUrl(new UrlEventArgs(url));
         }
 
         private void NativeControl_TextEnter(object? sender, EventArgs e)
