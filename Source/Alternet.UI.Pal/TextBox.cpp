@@ -271,14 +271,14 @@ namespace Alternet::UI
 		if (ev.Moving())
 			return;
 
-		if (!ev.LeftDown())
-			return;
+		//if (!ev.LeftDown())
+		//	return;
 
 		long start = event.GetURLStart();
 		long end = event.GetURLEnd();
 		long delta = end - start;
 
-		auto url = GetTextCtrl()->GetValue().Mid(start, delta);
+		auto url = GetTextCtrl()->GetValue().Mid(start, delta).Clone();
 
 		_eventUrl = wxStr(url);
 
