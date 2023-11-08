@@ -29,6 +29,10 @@ namespace Alternet.UI
         {
         }
 
+        public static Color? DefaultBackgroundColor { get; set; }
+
+        public static Color? DefaultBackgroundColorEnd { get; set; }
+
         /// <summary>
         /// Gets or sets default <see cref="RichToolTip"/>.
         /// </summary>
@@ -54,6 +58,8 @@ namespace Alternet.UI
                 Default.SetTipKind(kind.Value);
             if (icon is not null)
                 Default.SetIcon(icon.Value);
+            if (DefaultBackgroundColor is not null)
+                Default.SetBackgroundColor(DefaultBackgroundColor.Value, DefaultBackgroundColorEnd);
             Default.Show(control);
         }
 
