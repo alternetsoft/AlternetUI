@@ -15,13 +15,29 @@ namespace Alternet::UI
 
 	};
 
+	bool RichTextBox::GetHasBorder()
+	{
+		return hasBorder;
+	}
+
+	void RichTextBox::SetHasBorder(bool value)
+	{
+		if (hasBorder == value)
+			return;
+		hasBorder = value;
+		RecreateWxWindowIfNeeded();
+	}
+
 	wxWindow* RichTextBox::CreateWxWindowCore(wxWindow* parent)
 	{
 /*
 #define wxRE_READONLY          0x0010
 #define wxRE_CENTRE_CARET      0x8000
 */
-		long style = wxRE_MULTILINE;
+		long style = wxRE_MULTILINE | GetBorderStyle();;
+
+		if (!hasBorder)
+			style = style | wxBORDER_NONE;
 
 		auto result = new wxRichTextCtrl2(parent, -1,
 			wxEmptyString, wxDefaultPosition,
@@ -39,7 +55,7 @@ namespace Alternet::UI
 
 	RichTextBox::RichTextBox()
 	{
-
+		bindScrollEvents = false;
 	}
 
 	RichTextBox::~RichTextBox()

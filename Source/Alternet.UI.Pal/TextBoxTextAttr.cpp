@@ -2,6 +2,11 @@
 
 namespace Alternet::UI
 {
+	void* TextBoxTextAttr::RichGetTextBoxAttr(void* attr)
+	{
+		return nullptr;
+	}
+
 	TextBoxTextAttr::TextBoxTextAttr()
 	{
 	}
@@ -15,9 +20,25 @@ namespace Alternet::UI
 		return (wxTextAttr*)attr;
 	}
 
+	wxRichTextAttr* TextBoxTextAttr::RichAttr(void* attr)
+	{
+		return (wxRichTextAttr*)attr;
+	}
+
 	void TextBoxTextAttr::Delete(void* attr)
 	{
 		delete Attr(attr);
+	}
+
+	void TextBoxTextAttr::DeleteRichTextAttr(void* attr)
+	{
+		delete RichAttr(attr);
+	}
+
+	void* TextBoxTextAttr::CreateRichTextAttr()
+	{
+		wxRichTextAttr* attr = new wxRichTextAttr();
+		return attr;
 	}
 
 	void TextBoxTextAttr::Copy(void* toAttr, void* fromAttr)

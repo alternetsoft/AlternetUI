@@ -13,11 +13,32 @@ namespace Alternet.UI
     /// </summary>
     public class RichTextBox : Control
     {
+        private bool hasBorder = true;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="RichTextBox"/> class.
         /// </summary>
         public RichTextBox()
         {
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the control has a border.
+        /// </summary>
+        public virtual bool HasBorder
+        {
+            get
+            {
+                return hasBorder;
+            }
+
+            set
+            {
+                if (hasBorder == value)
+                    return;
+                hasBorder = value;
+                NativeControl.HasBorder = value;
+            }
         }
 
         /// <inheritdoc/>
@@ -41,6 +62,15 @@ namespace Alternet.UI
         public static void ClearAvailableFontNames()
         {
             Native.RichTextBox.ClearAvailableFontNames();
+        }
+
+        /// <summary>
+        /// Creates new custom rich text style.
+        /// </summary>
+        /// <returns></returns>
+        public static ITextBoxRichAttr CreateRichAttr()
+        {
+            return new TextBoxRichAttr();
         }
 
         /// <summary>
@@ -356,19 +386,32 @@ namespace Alternet.UI
             NativeControl.Remove(from, to);
         }
 
-        internal bool LoadFile(string file, int type)
+        /// <summary>
+        /// Loads content into the control's buffer using the given type.
+        /// </summary>
+        /// <param name="file">Filename.</param>
+        /// <param name="type">File type.</param>
+        /// <remarks>
+        /// If the specified type is <see cref="RichTextFileType.Any"/>, the type is deduced from
+        /// the filename extension.
+        /// </remarks>
+        public bool LoadFile(string file, RichTextFileType type = RichTextFileType.Any)
         {
-            return NativeControl.LoadFile(file, type);
+            return NativeControl.LoadFile(file, (int)type);
         }
 
         /// <summary>
         /// Saves the buffer content using the given type.
-        /// If the specified type is Any, the type is deduced from
-        /// the filename extension.
         /// </summary>
-        internal bool SaveFile(string file, int type)
+        /// <remarks>
+        /// If the specified type is <see cref="RichTextFileType.Any"/>, the type is deduced from
+        /// the filename extension.
+        /// </remarks>
+        /// <param name="file">Filename.</param>
+        /// <param name="type">File type.</param>
+        public bool SaveFile(string file, RichTextFileType type = RichTextFileType.Any)
         {
-            return NativeControl.SaveFile(file, type);
+            return NativeControl.SaveFile(file, (int)type);
         }
 
         /// <summary>
@@ -1729,6 +1772,16 @@ namespace Alternet.UI
             return NativeControl.Delete(startRange, endRange);
         }
 
+        /// <summary>
+        /// Begins applying a style.
+        /// </summary>
+        public bool BeginStyle(ITextBoxRichAttr style)
+        {
+            if (style is not TextBoxRichAttr s)
+                return false;
+            return NativeControl.BeginStyle(s.Handle);
+        }
+
         /// Sets the selection to the given range.
         /// The end point of range is specified as the last character position of the span
         /// of text, plus one.
@@ -2272,15 +2325,6 @@ namespace Alternet.UI
         internal IntPtr GetBasicStyle()
         {
             return NativeControl.GetBasicStyle();
-        }
-
-        /// Begins applying a style.
-        /// <summary>
-        /// 
-        /// </summary>
-        internal bool BeginStyle(IntPtr style)
-        {
-            return NativeControl.BeginStyle(style);
         }
 
         /// Test if this whole range has character attributes of the specified kind.

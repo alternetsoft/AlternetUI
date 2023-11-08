@@ -15,6 +15,26 @@ ALTERNET_UI_API RichTextBox* RichTextBox_Create_()
     return new RichTextBox();
 }
 
+ALTERNET_UI_API c_bool RichTextBox_GetHasBorder_(RichTextBox* obj)
+{
+    return obj->GetHasBorder();
+}
+
+ALTERNET_UI_API void RichTextBox_SetHasBorder_(RichTextBox* obj, c_bool value)
+{
+    obj->SetHasBorder(value);
+}
+
+ALTERNET_UI_API Int32Point_C RichTextBox_GetLogicalPoint_(RichTextBox* obj, Int32Point ptPhysical)
+{
+    return obj->GetLogicalPoint(ptPhysical);
+}
+
+ALTERNET_UI_API int64_t RichTextBox_FindNextWordPosition_(RichTextBox* obj, int direction)
+{
+    return obj->FindNextWordPosition(direction);
+}
+
 ALTERNET_UI_API c_bool RichTextBox_IsPositionVisible_(RichTextBox* obj, int64_t pos)
 {
     return obj->IsPositionVisible(pos);
@@ -398,6 +418,16 @@ ALTERNET_UI_API void* RichTextBox_GetBuffer_(RichTextBox* obj)
 ALTERNET_UI_API int64_t RichTextBox_DeleteSelectedContent_(RichTextBox* obj)
 {
     return obj->DeleteSelectedContent();
+}
+
+ALTERNET_UI_API c_bool RichTextBox_BeginAlignment_(RichTextBox* obj, int alignment)
+{
+    return obj->BeginAlignment(alignment);
+}
+
+ALTERNET_UI_API c_bool RichTextBox_EndAlignment_(RichTextBox* obj)
+{
+    return obj->EndAlignment();
 }
 
 ALTERNET_UI_API c_bool RichTextBox_BeginLeftIndent_(RichTextBox* obj, int leftIndent, int leftSubIndent)
@@ -815,16 +845,6 @@ ALTERNET_UI_API Int32Point_C RichTextBox_GetPhysicalPoint_(RichTextBox* obj, Int
     return obj->GetPhysicalPoint(ptLogical);
 }
 
-ALTERNET_UI_API Int32Point_C RichTextBox_GetLogicalPoint_(RichTextBox* obj, Int32Point ptPhysical)
-{
-    return obj->GetLogicalPoint(ptPhysical);
-}
-
-ALTERNET_UI_API int64_t RichTextBox_FindNextWordPosition_(RichTextBox* obj, int direction)
-{
-    return obj->FindNextWordPosition(direction);
-}
-
 ALTERNET_UI_API char16_t* RichTextBox_GetRange_(RichTextBox* obj, int64_t from, int64_t to)
 {
     return AllocPInvokeReturnString(obj->GetRange(from, to));
@@ -1238,15 +1258,5 @@ ALTERNET_UI_API c_bool RichTextBox_BeginTextColour_(RichTextBox* obj, Color colo
 ALTERNET_UI_API c_bool RichTextBox_EndTextColour_(RichTextBox* obj)
 {
     return obj->EndTextColour();
-}
-
-ALTERNET_UI_API c_bool RichTextBox_BeginAlignment_(RichTextBox* obj, int alignment)
-{
-    return obj->BeginAlignment(alignment);
-}
-
-ALTERNET_UI_API c_bool RichTextBox_EndAlignment_(RichTextBox* obj)
-{
-    return obj->EndAlignment();
 }
 

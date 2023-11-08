@@ -13,6 +13,21 @@ ALTERNET_UI_API TextBoxTextAttr* TextBoxTextAttr_Create_()
     return new TextBoxTextAttr();
 }
 
+ALTERNET_UI_API c_bool TextBoxTextAttr_HasBulletText_(void* attr)
+{
+    return TextBoxTextAttr::HasBulletText(attr);
+}
+
+ALTERNET_UI_API c_bool TextBoxTextAttr_HasBulletName_(void* attr)
+{
+    return TextBoxTextAttr::HasBulletName(attr);
+}
+
+ALTERNET_UI_API c_bool TextBoxTextAttr_HasURL_(void* attr)
+{
+    return TextBoxTextAttr::HasURL(attr);
+}
+
 ALTERNET_UI_API c_bool TextBoxTextAttr_HasPageBreak_(void* attr)
 {
     return TextBoxTextAttr::HasPageBreak(attr);
@@ -53,6 +68,11 @@ ALTERNET_UI_API void TextBoxTextAttr_Delete_(void* attr)
     TextBoxTextAttr::Delete(attr);
 }
 
+ALTERNET_UI_API void TextBoxTextAttr_DeleteRichTextAttr_(void* attr)
+{
+    TextBoxTextAttr::DeleteRichTextAttr(attr);
+}
+
 ALTERNET_UI_API void TextBoxTextAttr_Copy_(void* toAttr, void* fromAttr)
 {
     TextBoxTextAttr::Copy(toAttr, fromAttr);
@@ -61,6 +81,16 @@ ALTERNET_UI_API void TextBoxTextAttr_Copy_(void* toAttr, void* fromAttr)
 ALTERNET_UI_API void* TextBoxTextAttr_CreateTextAttr_()
 {
     return TextBoxTextAttr::CreateTextAttr();
+}
+
+ALTERNET_UI_API void* TextBoxTextAttr_CreateRichTextAttr_()
+{
+    return TextBoxTextAttr::CreateRichTextAttr();
+}
+
+ALTERNET_UI_API void* TextBoxTextAttr_RichGetTextBoxAttr_(void* attr)
+{
+    return TextBoxTextAttr::RichGetTextBoxAttr(attr);
 }
 
 ALTERNET_UI_API void TextBoxTextAttr_SetTextColor_(void* attr, Color colText)
@@ -456,20 +486,5 @@ ALTERNET_UI_API c_bool TextBoxTextAttr_HasBulletStyle_(void* attr)
 ALTERNET_UI_API c_bool TextBoxTextAttr_HasBulletNumber_(void* attr)
 {
     return TextBoxTextAttr::HasBulletNumber(attr);
-}
-
-ALTERNET_UI_API c_bool TextBoxTextAttr_HasBulletText_(void* attr)
-{
-    return TextBoxTextAttr::HasBulletText(attr);
-}
-
-ALTERNET_UI_API c_bool TextBoxTextAttr_HasBulletName_(void* attr)
-{
-    return TextBoxTextAttr::HasBulletName(attr);
-}
-
-ALTERNET_UI_API c_bool TextBoxTextAttr_HasURL_(void* attr)
-{
-    return TextBoxTextAttr::HasURL(attr);
 }
 

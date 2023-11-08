@@ -13,9 +13,15 @@ namespace NativeApi.Api
     {
         public static void Delete(IntPtr attr) { }
 
+        public static void DeleteRichTextAttr(IntPtr attr) { }
+
         public static void Copy(IntPtr toAttr, IntPtr fromAttr) {}
 
         public static IntPtr CreateTextAttr() => throw new Exception();
+
+        public static IntPtr CreateRichTextAttr() => default;
+
+        public static IntPtr RichGetTextBoxAttr(IntPtr attr) => default;
 
         public static void SetTextColor(IntPtr attr, Color colText) {}
         public static void SetBackgroundColor(IntPtr attr, Color colBack) => 

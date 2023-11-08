@@ -1031,7 +1031,7 @@ namespace Alternet.UI
             (NativeTextBoxHandler)base.Handler;
 
         /// <summary>
-        /// Creates new custom style.
+        /// Creates new custom text style.
         /// </summary>
         /// <returns></returns>
         public static ITextBoxTextAttr CreateTextAttr()

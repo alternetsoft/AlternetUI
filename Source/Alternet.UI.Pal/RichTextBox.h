@@ -16,6 +16,6 @@ namespace Alternet::UI
         wxWindow* CreateWxWindowCore(wxWindow* parent) override;
         wxRichTextCtrl* GetTextCtrl();
     private:
-    
+        bool hasBorder = true;
     };
 }

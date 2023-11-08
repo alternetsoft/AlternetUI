@@ -52,10 +52,8 @@
 
     <!-- ========================= -->
 
-    <HorizontalStackPanel Name="tab3" Visible="false">
-      <VerticalStackPanel  Margin="5" Name="richEditParent">
-      </VerticalStackPanel>
-    </HorizontalStackPanel>
+    <Control Name="tab3" Visible="false">
+    </Control>
 
     <!-- ========================= -->
 

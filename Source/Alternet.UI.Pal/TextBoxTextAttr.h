@@ -3,6 +3,7 @@
 #include "ApiTypes.h"
 #include "Object.h"
 #include "Font.h"
+#include "wx/richtext/richtextctrl.h"
 
 namespace Alternet::UI
 {
@@ -12,5 +13,6 @@ namespace Alternet::UI
     public:
     private:
         static inline wxTextAttr* Attr(void* attr);
+        static inline wxRichTextAttr* RichAttr(void* attr);
     };
 }

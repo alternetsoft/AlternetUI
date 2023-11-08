@@ -21,12 +21,7 @@ namespace ControlsSample
             "Sample url: https://www.alternet-ui.com/\n";
 
         private readonly CardPanelHeader panelHeader = new();
-        private readonly RichTextBox richEdit = new()
-        {
-            Name = "richEdit",
-            SuggestedSize = new(350, 250),
-            Margin = new(0, 0, 0, 5),
-        };
+        private readonly PanelRichTextBox richPanel = new();
         private readonly ValueEditorInt16 shortEdit = new("Int16", -25);
         private readonly ValueEditorByte byteEdit = new("Byte", 230);
         private readonly ValueEditorDouble doubleEdit = new("Double", -15.3);
@@ -146,9 +141,10 @@ namespace ControlsSample
 
             // ==== richEdit
 
-            richEdit.Parent = richEditParent;
+            richPanel.SuggestedSize = new Size(500, 400); // how without it?
+            richPanel.Parent = tab3;
             // richEdit.CurrentPositionChanged += TextBox_CurrentPositionChanged;
-            richEdit.KeyDown += RichEdit_KeyDown;
+            richPanel.TextBox.KeyDown += RichEdit_KeyDown;
             // richEdit.TextUrl += MultiLineTextBox_TextUrl;
             InitRichEdit2();
         }
@@ -166,7 +162,6 @@ namespace ControlsSample
         {
             void Test()
             {
-                richEdit.Required();
             }
 
             if (KnownKeys.RunTest.Run(e, Test))
@@ -386,6 +381,8 @@ namespace ControlsSample
 
             // richEdit.AutoUrl = true;
 
+            var richEdit = richPanel.TextBox;
+
             richEdit.DoInsideUpdate(() =>
             {
                 richEdit.AppendTextAndStyles(list);
@@ -417,17 +414,14 @@ namespace ControlsSample
                 "It was in January, the most down-trodden month of an Edinburgh winter." +
                 " An attractive woman came into the cafe, which is nothing remarkable.";
 
-            var r = richEdit;
+            var r = richPanel.TextBox;
 
             r.SetDefaultStyle(TextBox.CreateTextAttr());
 
             r.BeginUpdate();
-
             r.BeginSuppressUndo();
 
             r.BeginParagraphSpacing(0, 20);
-
-
             r.BeginAlignment(TextBoxTextAttrAlignment.Center);
             r.BeginBold();
 
@@ -469,19 +463,17 @@ namespace ControlsSample
             r.WriteText(" Well, you can change text ");
 
             r.BeginTextColor(Color.Red);
-            r.WriteText("color, like this red bit.");
+            r.WriteText("color, like this red bit. ");
             r.EndTextColor();
 
-            /*
-            var backgroundColourAttr = TextBox.CreateTextAttr();
+            var backgroundColourAttr = RichTextBox.CreateRichAttr();
             backgroundColourAttr.SetBackgroundColor(Color.Green);
-            backgroundColourAttr.SetTextColor(Color.Blue);
+            backgroundColourAttr.SetTextColor(Color.Yellow);
             r.BeginStyle(backgroundColourAttr);
-            r.WriteText(" And this blue on green bit.");
+            r.WriteText("And this yellow on green bit");
             r.EndStyle();
-            */
 
-            r.WriteText(" Naturally you can make things ");
+            r.WriteText(". Naturally you can make things ");
             r.BeginBold();
             r.WriteText("bold ");
             r.EndBold();
@@ -619,17 +611,17 @@ namespace ControlsSample
             r.EndSymbolBullet();
 
             // Make a style suitable for showing a URL
-            var urlStyle = TextBox.CreateTextAttr(); 
+            var urlStyle = RichTextBox.CreateRichAttr(); 
             urlStyle.SetTextColor(Color.Blue);
             urlStyle.SetFontUnderlined(true);
 
-            /*r.WriteText("RichTextBox can also display URLs, such as this one: ");
+            r.WriteText("RichTextBox can also display URLs, such as this one: ");
             r.BeginStyle(urlStyle);
             r.BeginURL("http://www.alternet-ui.com");
             r.WriteText("Alternet UI Web Site");
             r.EndURL();
             r.EndStyle();
-            r.WriteText(". Click on the URL to generate an event.");*/
+            r.WriteText(". Click on the URL to generate an event.");
 
             r.NewLine();
 

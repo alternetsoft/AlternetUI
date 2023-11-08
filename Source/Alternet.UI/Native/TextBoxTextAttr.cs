@@ -23,6 +23,21 @@ namespace Alternet.UI.Native
         {
         }
         
+        public static bool HasBulletText(System.IntPtr attr)
+        {
+            return NativeApi.TextBoxTextAttr_HasBulletText_(attr);
+        }
+        
+        public static bool HasBulletName(System.IntPtr attr)
+        {
+            return NativeApi.TextBoxTextAttr_HasBulletName_(attr);
+        }
+        
+        public static bool HasURL(System.IntPtr attr)
+        {
+            return NativeApi.TextBoxTextAttr_HasURL_(attr);
+        }
+        
         public static bool HasPageBreak(System.IntPtr attr)
         {
             return NativeApi.TextBoxTextAttr_HasPageBreak_(attr);
@@ -63,6 +78,11 @@ namespace Alternet.UI.Native
             NativeApi.TextBoxTextAttr_Delete_(attr);
         }
         
+        public static void DeleteRichTextAttr(System.IntPtr attr)
+        {
+            NativeApi.TextBoxTextAttr_DeleteRichTextAttr_(attr);
+        }
+        
         public static void Copy(System.IntPtr toAttr, System.IntPtr fromAttr)
         {
             NativeApi.TextBoxTextAttr_Copy_(toAttr, fromAttr);
@@ -71,6 +91,16 @@ namespace Alternet.UI.Native
         public static System.IntPtr CreateTextAttr()
         {
             return NativeApi.TextBoxTextAttr_CreateTextAttr_();
+        }
+        
+        public static System.IntPtr CreateRichTextAttr()
+        {
+            return NativeApi.TextBoxTextAttr_CreateRichTextAttr_();
+        }
+        
+        public static System.IntPtr RichGetTextBoxAttr(System.IntPtr attr)
+        {
+            return NativeApi.TextBoxTextAttr_RichGetTextBoxAttr_(attr);
         }
         
         public static void SetTextColor(System.IntPtr attr, Alternet.Drawing.Color colText)
@@ -468,21 +498,6 @@ namespace Alternet.UI.Native
             return NativeApi.TextBoxTextAttr_HasBulletNumber_(attr);
         }
         
-        public static bool HasBulletText(System.IntPtr attr)
-        {
-            return NativeApi.TextBoxTextAttr_HasBulletText_(attr);
-        }
-        
-        public static bool HasBulletName(System.IntPtr attr)
-        {
-            return NativeApi.TextBoxTextAttr_HasBulletName_(attr);
-        }
-        
-        public static bool HasURL(System.IntPtr attr)
-        {
-            return NativeApi.TextBoxTextAttr_HasURL_(attr);
-        }
-        
         
         [SuppressUnmanagedCodeSecurity]
         public class NativeApi : NativeApiProvider
@@ -491,6 +506,15 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern IntPtr TextBoxTextAttr_Create_();
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool TextBoxTextAttr_HasBulletText_(System.IntPtr attr);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool TextBoxTextAttr_HasBulletName_(System.IntPtr attr);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool TextBoxTextAttr_HasURL_(System.IntPtr attr);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool TextBoxTextAttr_HasPageBreak_(System.IntPtr attr);
@@ -517,10 +541,19 @@ namespace Alternet.UI.Native
             public static extern void TextBoxTextAttr_Delete_(System.IntPtr attr);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void TextBoxTextAttr_DeleteRichTextAttr_(System.IntPtr attr);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void TextBoxTextAttr_Copy_(System.IntPtr toAttr, System.IntPtr fromAttr);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern System.IntPtr TextBoxTextAttr_CreateTextAttr_();
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr TextBoxTextAttr_CreateRichTextAttr_();
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr TextBoxTextAttr_RichGetTextBoxAttr_(System.IntPtr attr);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void TextBoxTextAttr_SetTextColor_(System.IntPtr attr, NativeApiTypes.Color colText);
@@ -758,15 +791,6 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool TextBoxTextAttr_HasBulletNumber_(System.IntPtr attr);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool TextBoxTextAttr_HasBulletText_(System.IntPtr attr);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool TextBoxTextAttr_HasBulletName_(System.IntPtr attr);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool TextBoxTextAttr_HasURL_(System.IntPtr attr);
             
         }
     }

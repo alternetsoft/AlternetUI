@@ -12,6 +12,8 @@ namespace NativeApi.Api
     // https://docs.wxwidgets.org/3.2/classwx_rich_text_ctrl.html
     public class RichTextBox : Control
     {
+        public bool HasBorder { get; set; }
+
         public string GetRange(long from, long to) => default;
 
         // Returns the length of the specified line in characters.
