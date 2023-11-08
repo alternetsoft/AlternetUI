@@ -150,7 +150,7 @@ namespace ControlsSample
             // richEdit.CurrentPositionChanged += TextBox_CurrentPositionChanged;
             richEdit.KeyDown += RichEdit_KeyDown;
             // richEdit.TextUrl += MultiLineTextBox_TextUrl;
-            InitRichEdit();
+            InitRichEdit2();
         }
 
         internal string GetFontStatus()
@@ -352,6 +352,7 @@ namespace ControlsSample
 
             var taOrderedList = TextBox.CreateTextAttr();
             taOrderedList.SetBulletStyle(TextBoxTextAttrBulletStyle.Arabic);
+            taOrderedList.SetBulletNumber(1);
 
             var taBig = TextBox.CreateTextAttr();
             taBig.SetFontPointSize((int)Font.Default.SizeInPoints + 15);
@@ -391,27 +392,256 @@ namespace ControlsSample
                 richEdit.Refresh();
             });
 
-            /*
             const string sUnorderedListItem = "Unordered List Item";
             const string sOrderedListItem = "Ordered List Item";
-            
-            for (int i = 1; i < 4; i++)
-            {
-                multiLineTextBox.SetDefaultStyle(taUnorderedList);
-                multiLineTextBox.AppendText(sUnorderedListItem+i);
-                multiLineTextBox.AppendNewLine();
-            }
-            multiLineTextBox.SetDefaultStyle(taDefault);
-            multiLineTextBox.AppendNewLine();
 
+            richEdit.SetDefaultStyle(taUnorderedList);
             for (int i = 1; i < 4; i++)
             {
-                multiLineTextBox.SetDefaultStyle(taOrderedList);
-                multiLineTextBox.AppendText(sOrderedListItem + i + "\n");
-                multiLineTextBox.SetDefaultStyle(taDefault);
-                multiLineTextBox.AppendNewLine();
+                richEdit.WriteText(sUnorderedListItem+ i + "\n");
             }
-            multiLineTextBox.SetDefaultStyle(taDefault);*/
+            richEdit.SetDefaultStyle(taDefault);
+            richEdit.NewLine();
+
+            richEdit.SetDefaultStyle(taOrderedList);
+            for (int i = 1; i < 4; i++)
+            {
+                richEdit.WriteText(sOrderedListItem + i + "\n");
+            }
+            richEdit.SetDefaultStyle(taDefault);
+        }
+
+        public void InitRichEdit2()
+        {
+            const string itWasInJanuary =
+                "It was in January, the most down-trodden month of an Edinburgh winter." +
+                " An attractive woman came into the cafe, which is nothing remarkable.";
+
+            var r = richEdit;
+
+            r.SetDefaultStyle(TextBox.CreateTextAttr());
+
+            r.BeginUpdate();
+
+            r.BeginSuppressUndo();
+
+            r.BeginParagraphSpacing(0, 20);
+
+
+            r.BeginAlignment(TextBoxTextAttrAlignment.Center);
+            r.BeginBold();
+
+            r.BeginFontSize(14);
+
+            r.WriteText(
+                "Welcome to RichTextBox, a control\nfor editing and presenting styled text and images\n");
+            r.EndFontSize();
+
+            r.EndBold();
+            r.NewLine();
+
+            var logoImage = Image.FromUrl("embres:ControlsSample.Resources.logo-128x128.png");
+
+            r.WriteImage(logoImage);
+
+            r.NewLine();
+            r.NewLine();
+
+            r.EndAlignment();
+
+
+            const string zebraLeftText =
+                "This is a simple test for a floating left image test." +
+                " The image should be placed at the left side of the current buffer " +
+                "and all the text should flow around it at the right side. ";
+            const string zebraLeftTripleText = zebraLeftText + zebraLeftText + zebraLeftText;
+
+            const string zebraRightText =
+            "This is a simple test for a floating right image test. " +
+            "The image should be placed at the right side of the current buffer and" +
+            " all the text should flow around it at the left side. ";
+            const string zebraRightTripleText = zebraRightText + zebraRightText + zebraRightText;
+
+            /*
+            r.BeginAlignment(TextBoxTextAttrAlignment.Left);
+            var imageAttr = TextBox.CreateTextAttr();
+            imageAttr.GetTextBoxAttr().SetFloatMode(wxTEXT_BOX_ATTR_FLOAT_LEFT);
+            r.WriteText(zebraLeftTripleText);
+
+            r.WriteImage(logoImage, BitmapType.Png, imageAttr);
+
+            imageAttr.GetTextBoxAttr().GetTop().SetValue(200);
+            imageAttr.GetTextBoxAttr().GetTop().SetUnits(wxTEXT_ATTR_UNITS_PIXELS);
+            imageAttr.GetTextBoxAttr().SetFloatMode(wxTEXT_BOX_ATTR_FLOAT_RIGHT);
+            r.WriteImage(logoImage, BitmapType.Png, imageAttr);
+            r.WriteText(zebraRightTripleText);
+            r.EndAlignment();
+            */
+            
+            r.NewLine();
+
+            r.WriteText("What can you do with this thing? ");
+
+            r.WriteImage(KnownSvgImages.GetForSize(64).ImgMessageBoxInformation.AsImage(64)!);
+            r.WriteText(" Well, you can change text ");
+
+            r.BeginTextColor(Color.Red);
+            r.WriteText("color, like this red bit.");
+            r.EndTextColor();
+
+            /*
+            var backgroundColourAttr = TextBox.CreateTextAttr();
+            backgroundColourAttr.SetBackgroundColor(Color.Green);
+            backgroundColourAttr.SetTextColor(Color.Blue);
+            r.BeginStyle(backgroundColourAttr);
+            r.WriteText(" And this blue on green bit.");
+            r.EndStyle();
+            */
+
+            r.WriteText(" Naturally you can make things ");
+            r.BeginBold();
+            r.WriteText("bold ");
+            r.EndBold();
+            r.BeginItalic();
+            r.WriteText("or italic ");
+            r.EndItalic();
+            r.BeginUnderline();
+            r.WriteText("or underlined.");
+            r.EndUnderline();
+
+            r.BeginFontSize(14);
+            r.WriteText(" Different font sizes on the same line is allowed, too.");
+            r.EndFontSize();
+
+            r.WriteText(" Next we'll show an indented paragraph.");
+
+            r.NewLine();
+
+            r.BeginLeftIndent(60);
+            r.WriteText(itWasInJanuary);
+            r.NewLine();
+
+            r.EndLeftIndent();
+
+            r.WriteText(
+                "Next, we'll show a first-line indent, achieved using BeginLeftIndent(100, -40).");
+
+            r.NewLine();
+
+            r.BeginLeftIndent(100, -40);
+
+            r.WriteText(itWasInJanuary);
+            r.NewLine();
+
+            r.EndLeftIndent();
+
+            r.WriteText("Numbered bullets are possible, again using subindents:");
+            r.NewLine();
+
+            r.BeginNumberedBullet(1, 100, 60);
+            r.WriteText("This is my first item. Note that RichTextBox can apply"+
+                " numbering and bullets automatically based on list styles, but this"+
+                " list is formatted explicitly by setting indents.");
+            r.NewLine();
+            r.EndNumberedBullet();
+
+            r.BeginNumberedBullet(2, 100, 60);
+            r.WriteText("This is my second item.");
+            r.NewLine();
+            r.EndNumberedBullet();
+
+            r.WriteText("The following paragraph is right-indented:");
+            r.NewLine();
+
+            r.BeginRightIndent(200);
+
+            r.WriteText(itWasInJanuary);
+            r.NewLine();
+
+            r.EndRightIndent();
+
+            r.WriteText("The following paragraph is right-aligned with 1.5 line spacing:");
+            r.NewLine();
+
+            r.BeginAlignment(TextBoxTextAttrAlignment.Right);
+            r.BeginLineSpacing((int)TextBoxTextAttrLineSpacing.Half);
+            r.WriteText(itWasInJanuary);
+            r.NewLine();
+            r.EndLineSpacing();
+            r.EndAlignment();
+
+            /*int[] tabs = { 400, 600, 800, 1000 };
+            var attr = TextBox.CreateTextAttr();
+            attr.SetFlags(TextBoxTextAttrFlags.Tabs);
+            attr.SetTabs(tabs);
+            r.SetDefaultStyle(attr);
+            r.WriteText("This line contains tabs:\tFirst tab\tSecond tab\tThird tab");
+            r.NewLine();*/
+
+            r.WriteText("Other notable features of wxRichTextCtrl include:");
+            r.NewLine();
+
+            r.BeginSymbolBullet("*", 100, 60);
+            r.WriteText("Compatibility with wxTextCtrl API");
+            r.NewLine();
+            r.EndSymbolBullet();
+
+            r.BeginSymbolBullet("*", 100, 60);
+            r.WriteText(
+                "Easy stack-based BeginXXX()...EndXXX() style setting in addition to SetStyle()");
+            r.NewLine();
+            r.EndSymbolBullet();
+
+            r.BeginSymbolBullet("*", 100, 60);
+            r.WriteText("XML loading and saving");
+            r.NewLine();
+            r.EndSymbolBullet();
+
+            r.BeginSymbolBullet("*", 100, 60);
+            r.WriteText("Undo/Redo, with batching option and Undo suppressing");
+            r.NewLine();
+            r.EndSymbolBullet();
+
+            r.BeginSymbolBullet("*", 100, 60);
+            r.WriteText("Clipboard copy and paste");
+            r.NewLine();
+            r.EndSymbolBullet();
+
+            r.BeginSymbolBullet("*", 100, 60);
+            r.WriteText("Style sheets with named character and paragraph styles,"+
+                " and control for applying named styles");
+            r.NewLine();
+            r.EndSymbolBullet();
+
+            r.BeginSymbolBullet("*", 100, 60);
+            r.WriteText("A design that can easily be extended to other content types,"+
+                " ultimately with text boxes, tables, controls, and so on");
+            r.NewLine();
+            r.EndSymbolBullet();
+
+            // Make a style suitable for showing a URL
+            var urlStyle = TextBox.CreateTextAttr(); 
+            urlStyle.SetTextColor(Color.Blue);
+            urlStyle.SetFontUnderlined(true);
+
+            /*r.WriteText("RichTextBox can also display URLs, such as this one: ");
+            r.BeginStyle(urlStyle);
+            r.BeginURL("http://www.alternet-ui.com");
+            r.WriteText("Alternet UI Web Site");
+            r.EndURL();
+            r.EndStyle();
+            r.WriteText(". Click on the URL to generate an event.");*/
+
+            r.NewLine();
+
+            r.WriteText("Note: this sample content was generated programmatically"+
+                " from within the demo. The images were loaded from resources. Enjoy RichTextBox!\n");
+
+            r.EndParagraphSpacing();
+
+            r.EndSuppressUndo();
+
+            r.EndUpdate();
         }
     }
 
