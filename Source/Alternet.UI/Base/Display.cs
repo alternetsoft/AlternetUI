@@ -7,6 +7,9 @@ using Alternet.Drawing;
 
 namespace Alternet.UI
 {
+    /// <summary>
+    /// Determines the sizes and locations of displays connected to the system.
+    /// </summary>
     public class Display : DisposableObject
     {
         /// <summary>
