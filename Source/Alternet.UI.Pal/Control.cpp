@@ -8,6 +8,59 @@ namespace Alternet::UI
 {
     /*static*/ Control::ControlsByWxWindowsMap Control::s_controlsByWxWindowsMap;
 
+    wxString Control::GetMouseEventDesc(const wxMouseEvent& ev)
+    {
+        // click event
+        wxString button;
+        bool dbl, up;
+        if (ev.LeftDown() || ev.LeftUp() || ev.LeftDClick())
+        {
+            button = "Left";
+            dbl = ev.LeftDClick();
+            up = ev.LeftUp();
+        }
+        else if (ev.MiddleDown() || ev.MiddleUp() || ev.MiddleDClick())
+        {
+            button = "Middle";
+            dbl = ev.MiddleDClick();
+            up = ev.MiddleUp();
+        }
+        else if (ev.RightDown() || ev.RightUp() || ev.RightDClick())
+        {
+            button = "Right";
+            dbl = ev.RightDClick();
+            up = ev.RightUp();
+        }
+        else if (ev.Aux1Down() || ev.Aux1Up() || ev.Aux1DClick())
+        {
+            button = "Aux1";
+            dbl = ev.Aux1DClick();
+            up = ev.Aux1Up();
+        }
+        else if (ev.Aux2Down() || ev.Aux2Up() || ev.Aux2DClick())
+        {
+            button = "Aux2";
+            dbl = ev.Aux2DClick();
+            up = ev.Aux2Up();
+        }
+        else if (ev.GetWheelRotation())
+        {
+            return wxString::Format("%s wheel rotation %+d",
+                ev.GetWheelAxis() == wxMOUSE_WHEEL_VERTICAL ? "Vertical" : "Horizontal",
+                ev.GetWheelRotation());
+        }
+        else
+        {
+            return "Unknown mouse event";
+        }
+        wxASSERT(!(dbl && up));
+
+        return wxString::Format("%s mouse button %s",
+            button,
+            dbl ? "double clicked"
+            : up ? "released" : "clicked");
+    }
+
     Control::Control() :
         _flags(ControlFlags::TabStop),
         _delayedFlags(

@@ -67,6 +67,8 @@ namespace Alternet::UI
     {
 #include "Api/Control.inc"
     public:
+        static wxString GetMouseEventDesc(const wxMouseEvent& ev);
+
         virtual wxWindow* CreateWxWindowCore(wxWindow* parent) = 0;
 
         wxWindow* GetWxWindow();
