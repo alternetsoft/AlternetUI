@@ -196,6 +196,18 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Logs <see cref="Color"/> value.
+        /// </summary>
+        /// <param name="title">Color label.</param>
+        /// <param name="value">Color value.</param>
+        public static void LogColor(string title, Color? value)
+        {
+            if (value is not null)
+                value = ColorUtils.FindKnownColor(value.Value);
+            Application.Log($"{title} = {value?.ToDebugString()}");
+        }
+
+        /// <summary>
         /// Opens log file <see cref="Application.LogFilePath"/> in the default editor
         /// of the operating system.
         /// </summary>

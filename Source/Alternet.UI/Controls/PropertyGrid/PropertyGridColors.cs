@@ -329,23 +329,16 @@ namespace Alternet.UI
         /// </summary>
         public void LogToFile()
         {
-            static void LogColor(string title, Color? value)
-            {
-                if (value is not null)
-                    value = ColorUtils.FindKnownColor(value.Value);
-                LogUtils.LogToFile($"{title} = {value?.ToDebugString()}");
-            }
-
-            LogColor("CaptionBackgroundColor", CaptionBackgroundColor);
-            LogColor("CaptionForegroundColor", CaptionForegroundColor);
-            LogColor("CellBackgroundColor", CellBackgroundColor);
-            LogColor("CellDisabledTextColor", CellDisabledTextColor);
-            LogColor("CellTextColor", CellTextColor);
-            LogColor("EmptySpaceColor", EmptySpaceColor);
-            LogColor("LineColor", LineColor);
-            LogColor("MarginColor", MarginColor);
-            LogColor("SelectionBackgroundColor", SelectionBackgroundColor);
-            LogColor("SelectionForegroundColor", SelectionForegroundColor);
+            LogUtils.LogColor("CaptionBackgroundColor", CaptionBackgroundColor);
+            LogUtils.LogColor("CaptionForegroundColor", CaptionForegroundColor);
+            LogUtils.LogColor("CellBackgroundColor", CellBackgroundColor);
+            LogUtils.LogColor("CellDisabledTextColor", CellDisabledTextColor);
+            LogUtils.LogColor("CellTextColor", CellTextColor);
+            LogUtils.LogColor("EmptySpaceColor", EmptySpaceColor);
+            LogUtils.LogColor("LineColor", LineColor);
+            LogUtils.LogColor("MarginColor", MarginColor);
+            LogUtils.LogColor("SelectionBackgroundColor", SelectionBackgroundColor);
+            LogUtils.LogColor("SelectionForegroundColor", SelectionForegroundColor);
         }
 
         internal void ApplyDefaultWhiteScheme()
