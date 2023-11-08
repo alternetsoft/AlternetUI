@@ -15,7 +15,7 @@
           <TextBox Text="AlterNET UI Notify Icon example" Name="notifyIconTextTextBox" Margin="0,0,5,0"
                    SuggestedWidth="250" VerticalAlignment="Center"/>
           <Button Text="Apply Text" Name="applyTextButton" VerticalAlignment="Center"
-                  Click="ApplyTextButton_Click"/>
+                  Click="ApplyTextButton_Click" ColumnIndex="3" />
         </StackPanel>
       </StackPanel>
     </GroupBox>
@@ -27,7 +27,7 @@
           <Label Text="Title" Margin="0,0,5,0" VerticalAlignment="Center" Name="tooltipTitleLabel"/>
           <TextBox Text="Message Title" Name="tooltipTitleTextBox" Margin="0,0,0,0"
                    SuggestedWidth="250" VerticalAlignment="Center"/>
-          <Button Text="Show ToolTip" Name="showToolTipButton" VerticalAlignment="Center"
+          <Button Text="Show ToolTip" Name="showToolTipButton" ColumnIndex="3" VerticalAlignment="Center"
                   Margin="5,0,0,0" HorizontalAlignment="Left"/>
         </HorizontalStackPanel>
 
@@ -35,7 +35,7 @@
           <Label Text="Message" Margin="0,0,5,0" VerticalAlignment="Center" Name="tooltipMessageLabel"/>
           <TextBox Text="This is sample text" Name="tooltipMessageTextBox" Margin="0,0,0,0"
                    SuggestedWidth="250" VerticalAlignment="Center"/>
-          <Button Text="Hide ToolTip" Name="hideToolTipButton" VerticalAlignment="Center"
+          <Button Text="Hide ToolTip" Name="hideToolTipButton" ColumnIndex="3" VerticalAlignment="Center"
                   Margin="5,0,0,0" HorizontalAlignment="Left"/>
         </HorizontalStackPanel>
 

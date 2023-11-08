@@ -49,14 +49,11 @@ namespace ControlsSample
             mainGrid.RowCount = 5;
             controls.Parent(mainGrid);
             mainGrid.PerformLayout();
+            growButton.Enabled = false;
         }
 
         private void ShrinkButton_Click(object? sender, EventArgs e)
         {
-            controls.Parent(null);
-            mainGrid.ColumnCount = 2;
-            mainGrid.RowCount = 2;
-            mainGrid.PerformLayout();
         }
 
         private void BackgroundButton_Click(object? sender, EventArgs e)
