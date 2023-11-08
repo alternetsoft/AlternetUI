@@ -47,7 +47,7 @@ namespace Alternet.Drawing
         /// and if it is found, <paramref name="color"/> is modified to become a known color.</returns>
         public static Color FindKnownColor(Color color)
         {
-            if (color.IsKnownColor)
+            if (color.IsKnownColor || !color.IsOpaque)
                 return color;
             var result = KnownColorTable.ArgbToKnownColor(color.AsUInt());
             return result;
