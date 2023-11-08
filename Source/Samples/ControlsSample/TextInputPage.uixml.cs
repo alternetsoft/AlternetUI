@@ -103,7 +103,7 @@ namespace ControlsSample
             // ==== multiLineTextBox
 
             multiLineTextBox.AutoUrl = true;
-            multiLineTextBox.AutoUrlOpen = true;
+            // multiLineTextBox.AutoUrlOpen = true;
             multilineParent.Children.Prepend(multiLineTextBox);
             multiLineTextBox.Text = LoremIpsum;
             multiLineTextBox.TextUrl += MultiLineTextBox_TextUrl;
@@ -365,31 +365,30 @@ namespace ControlsSample
             {
                 "Text color is ", taTextColorRed, "red", taDefault, ".\n",
                 "Background color is ", taBackColorYellow, "yellow", taDefault, ".\n",
-                "Font is ", taUnderlined, "underlined", taDefault, ".\n",
-                "Font is ", taBold, "bold", taDefault, ".\n",
-                "Font is ", taItalic, "italic", taDefault, ".\n",
+                "Font is ", "<u>", "underlined", "</u>", ".\n",
+                "Font is ", "<b>", "bold", "</b>", ".\n",
+                "Font is ", "<i>", "italic", "</i>", ".\n",
                 "Font is ", taStrikeOut, "strikeout", taDefault, ".\n",
                 "Font is ", taBig, "big", taDefault, ".\n",
                 "Font is ", taUnderlined2, "special underlined", taDefault, ".\n",
-                "This is url: ", taUrl, homePage, taDefault, ".\n",
+                "This is url: ",taUrl, homePage, taDefault, ".\n",
                 "\n",
-                "Keys:\n",
-                "Ctrl+B - Toggle Bold style.\n",
-                "Ctrl+I - Toggle Italic style.\n",
-                "Ctrl+U - Toggle Underline style.\n",
-                "Ctrl+Shift+L - Left Align\n",
-                "Ctrl+Shift+E - Center Align.\n",
-                "Ctrl+Shift+R - Right Align.\n",
-                "Ctrl+Shift+J - Justify.\n",
+//                "Keys:\n",
+//                "Ctrl+B - Toggle Bold style.\n",
+//                "Ctrl+I - Toggle Italic style.\n",
+//                "Ctrl+U - Toggle Underline style.\n",
+//                "Ctrl+Shift+L - Left Align\n",
+//                "Ctrl+Shift+E - Center Align.\n",
+//                "Ctrl+Shift+R - Right Align.\n",
+//                "Ctrl+Shift+J - Justify.\n",
             };
 
             // richEdit.AutoUrl = true;
 
             richEdit.DoInsideUpdate(() =>
             {
-                // richEdit.AppendTextAndStyles(list);
-                // richEdit.AppendNewLine();
-                // richEdit.Refresh();
+                richEdit.AppendTextAndStyles(list);
+                richEdit.Refresh();
             });
 
             /*

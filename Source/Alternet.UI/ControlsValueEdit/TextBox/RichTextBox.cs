@@ -193,6 +193,71 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Sets the current default style, which can be used to change how subsequently
+        /// inserted text is displayed.
+        /// </summary>
+        /// <param name="style">The style for the new text.</param>
+        /// <returns>
+        /// true on success, false if an error occurred(this may
+        /// also mean that the styles are not supported under this platform).
+        /// </returns>
+        public virtual bool SetDefaultStyle(ITextBoxTextAttr style)
+        {
+            if (style is not TextBoxTextAttr s)
+                return false;
+            return NativeControl.SetDefaultStyle(s.Handle);
+        }
+
+        /// <summary>
+        /// Appends text and styles to the end of the text control.
+        /// </summary>
+        /// <param name="list">List containing strings or
+        /// <see cref="ITextBoxTextAttr"/> instances.</param>
+        /// <remarks>
+        /// After the text is appended, the insertion point will be at the end
+        /// of the text control. If this behaviour is not desired,
+        /// the programmer should use <see cref="GetInsertionPoint"/>
+        /// and <see cref="SetInsertionPoint"/>.
+        /// </remarks>
+        public virtual void AppendTextAndStyles(IEnumerable<object> list)
+        {
+            foreach (object item in list)
+            {
+                var ta = item as ITextBoxTextAttr;
+                if (ta is not null)
+                {
+                    SetDefaultStyle(ta);
+                    continue;
+                }
+
+                if (item != null)
+                {
+                    var s = item.ToString()!;
+                    if (s == "<b>")
+                        BeginBold();
+                    else
+                    if (s == "</b>")
+                        EndBold();
+                    else
+                    if (s == "<i>")
+                        BeginItalic();
+                    else
+                    if (s == "</i>")
+                        EndItalic();
+                    else
+                    if (s == "<u>")
+                        BeginUnderline();
+                    else
+                    if (s == "</u>")
+                        EndUnderline();
+                    else
+                        WriteText(s);
+
+                }
+            }
+        }
+
+        /// <summary>
         /// Sets the position that should be shown when full (delayed) layout is performed.
         /// </summary>
         /// <param name="p"></param>
@@ -1479,13 +1544,6 @@ namespace Alternet.UI
         internal bool GetUncombinedStyle(long position, IntPtr style, IntPtr container)
         {
             return NativeControl.GetUncombinedStyle2(position, style, container);
-        }
-
-        // Sets the current default style, which can be used to change how subsequently
-        // inserted text is displayed.
-        internal bool SetDefaultStyle(IntPtr style)
-        {
-            return NativeControl.SetDefaultStyle(style);
         }
 
         internal bool SetDefaultRichStyle(IntPtr style)
