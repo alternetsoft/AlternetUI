@@ -9,6 +9,8 @@
 #include "wx/display.h"
 #include "wx/cursor.h"
 #include "wx/caret.h"
+#include "wx/private/richtooltip.h"
+#include "wx/generic/private/richtooltip.h"
 
 namespace Alternet::UI
 {

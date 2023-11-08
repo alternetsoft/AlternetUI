@@ -2,50 +2,141 @@
 
 namespace Alternet::UI
 {
+	class wxRichToolTip2
+	{
+	public:
+		wxRichToolTip2(const wxString& title, const wxString& message)
+		{
+			m_impl = new wxRichToolTipGenericImpl(title, message);
+		}
+
+		// Set the background colour: if two colours are specified, the background
+		// is drawn using a gradient from top to bottom, otherwise a single solid
+		// colour is used.
+		void SetBackgroundColour(const wxColour& col,
+			const wxColour& colEnd = wxColour());
+
+		// Set the small icon to show: either one of the standard information/
+		// warning/error ones (the question icon doesn't make sense for a tooltip)
+		// or a custom icon.
+		void SetIcon(int icon = wxICON_INFORMATION);
+		void SetIcon(const wxBitmapBundle& icon);
+
+		// Set timeout after which the tooltip should disappear, in milliseconds.
+		// By default the tooltip is hidden after system-dependent interval of time
+		// elapses but this method can be used to change this or also disable
+		// hiding the tooltip automatically entirely by passing 0 in this parameter
+		// (but doing this can result in native version not being used).
+		// Optionally specify a show delay.
+		void SetTimeout(unsigned milliseconds, unsigned millisecondsShowdelay = 0);
+
+		// Choose the tip kind, possibly none. By default the tip is positioned
+		// automatically, as if wxTipKind_Auto was used.
+		void SetTipKind(wxTipKind tipKind);
+
+		// Set the title text font. By default it's emphasized using the font style
+		// or colour appropriate for the current platform.
+		void SetTitleFont(const wxFont& font);
+
+		// Show the tooltip for the given window and optionally a specified area.
+		void ShowFor(wxWindow* win, const wxRect* rect = NULL);
+
+		// Non-virtual dtor as this class is not supposed to be derived from.
+		~wxRichToolTip2();
+
+	private:
+		wxRichToolTipGenericImpl* m_impl;
+
+		wxDECLARE_NO_COPY_CLASS(wxRichToolTip2);
+	};
+
+	void wxRichToolTip2::SetBackgroundColour(const wxColour& col, const wxColour& colEnd)
+	{
+		m_impl->SetBackgroundColour(col, colEnd);
+	}
+
+	void wxRichToolTip2::SetIcon(int icon)
+	{
+		m_impl->SetStandardIcon(icon);
+	}
+
+	void wxRichToolTip2::SetIcon(const wxBitmapBundle& icon)
+	{
+		m_impl->SetCustomIcon(icon);
+	}
+
+	void wxRichToolTip2::SetTimeout(unsigned milliseconds,
+		unsigned millisecondsDelay)
+	{
+		m_impl->SetTimeout(milliseconds, millisecondsDelay);
+	}
+
+	void wxRichToolTip2::SetTipKind(wxTipKind tipKind)
+	{
+		m_impl->SetTipKind(tipKind);
+	}
+
+	void wxRichToolTip2::SetTitleFont(const wxFont& font)
+	{
+		m_impl->SetTitleFont(font);
+	}
+
+	void wxRichToolTip2::ShowFor(wxWindow* win, const wxRect* rect)
+	{
+		wxCHECK_RET(win, wxS("Must have a valid window"));
+
+		m_impl->ShowFor(win, rect);
+	}
+
+	wxRichToolTip2::~wxRichToolTip2()
+	{
+		delete m_impl;
+	}
+
 	void* WxOtherFactory::CreateRichToolTip(const string& title, const string& message)
 	{
-		return new wxRichToolTip(wxStr(title), wxStr(message));
+		return new wxRichToolTip2(wxStr(title), wxStr(message));
 	}
 
 	void WxOtherFactory::DeleteRichToolTip(void* handle)
 	{
-		delete (wxRichToolTip*)handle;
+		delete (wxRichToolTip2*)handle;
 	}
 
 	void WxOtherFactory::RichToolTipSetBkColor(void* handle, const Color& color, const Color& endColor)
 	{
 		if(endColor.IsEmpty())
-			((wxRichToolTip*)handle)->SetBackgroundColour(color);
+			((wxRichToolTip2*)handle)->SetBackgroundColour(color);
 		else
-			((wxRichToolTip*)handle)->SetBackgroundColour(color, endColor);
+			((wxRichToolTip2*)handle)->SetBackgroundColour(color, endColor);
 	}
 
 	void WxOtherFactory::RichToolTipSetIcon(void* handle, ImageSet* bitmapBundle)
 	{
-		((wxRichToolTip*)handle)->SetIcon(ImageSet::BitmapBundle(bitmapBundle));
+		((wxRichToolTip2*)handle)->SetIcon(ImageSet::BitmapBundle(bitmapBundle));
 	}
 
 	void WxOtherFactory::RichToolTipSetIcon2(void* handle, int icon)
 	{
-		((wxRichToolTip*)handle)->SetIcon(icon);
+		((wxRichToolTip2*)handle)->SetIcon(icon);
 	}
 
 	void WxOtherFactory::RichToolTipSetTimeout(void* handle, uint32_t milliseconds, uint32_t millisecondsShowdelay)
 	{
-		((wxRichToolTip*)handle)->SetTimeout(milliseconds, millisecondsShowdelay);
+		((wxRichToolTip2*)handle)->SetTimeout(milliseconds, millisecondsShowdelay);
 	}
 
 	void WxOtherFactory::RichToolTipSetTipKind(void* handle, int tipKind)
 	{
-		((wxRichToolTip*)handle)->SetTipKind((wxTipKind)tipKind);
+		((wxRichToolTip2*)handle)->SetTipKind((wxTipKind)tipKind);
 	}
 
 	void WxOtherFactory::RichToolTipSetTitleFont(void* handle, Font* font)
 	{
 		if (font == nullptr)
-			((wxRichToolTip*)handle)->SetTitleFont(wxNullFont);
+			((wxRichToolTip2*)handle)->SetTitleFont(wxNullFont);
 		else
-			((wxRichToolTip*)handle)->SetTitleFont(font->GetWxFont());
+			((wxRichToolTip2*)handle)->SetTitleFont(font->GetWxFont());
 	}
 
 	void* WxOtherFactory::CreateToolTip(const string& tip)
