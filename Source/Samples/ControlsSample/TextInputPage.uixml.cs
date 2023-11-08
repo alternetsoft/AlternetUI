@@ -265,8 +265,8 @@ namespace ControlsSample
                 return;
             string? url = textBox.DoCommand("GetReportedUrl")?.ToString();
             site?.LogEvent("TextBox: Url clicked =>" + url);
-            if(url is not null)
-                AppUtils.ShellExecute(url);
+            if(!string.IsNullOrEmpty(url))
+                AppUtils.OpenUrl(url);
         }
 
         public IPageSite? Site
