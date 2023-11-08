@@ -857,6 +857,11 @@ namespace Alternet.Drawing
         public byte A => unchecked((byte)(Value >> ARGBAlphaShift));
 
         /// <summary>
+        /// Returns <c>true</c> if color is opaque (<see cref="A"/> is 255).
+        /// </summary>
+        public bool IsOpaque => A == 255;
+
+        /// <summary>
         /// Gets a value indicating whether this <see cref="Color"/> structure is
         /// a predefined color.
         /// Predefined colors are represented by the elements of the
