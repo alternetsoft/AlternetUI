@@ -11,7 +11,7 @@ namespace Alternet.UI
     /// <summary>
     /// Contains static methods related to Svg image handling.
     /// </summary>
-    public static class SvgUtils
+    public static class KnownSvgUrls
     {
         private const string ResTemplate =
             "embres:Alternet.UI.Resources.Svg.{0}.svg?assembly=Alternet.UI";
