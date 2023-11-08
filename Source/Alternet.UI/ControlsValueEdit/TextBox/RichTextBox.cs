@@ -35,7 +35,9 @@ namespace Alternet.UI
 
         internal Native.RichTextBox NativeControl => Handler.NativeControl;
 
-        // Clears the cache of available font names.
+        /// <summary>
+        /// Clears the cache of available font names.
+        /// </summary>
         public static void ClearAvailableFontNames()
         {
             Native.RichTextBox.ClearAvailableFontNames();
@@ -46,112 +48,154 @@ namespace Alternet.UI
             return NativeControl.GetRange(from, to);
         }
 
-        // Returns the length of the specified line in characters.
+        /// <summary>
+        /// Returns the length of the specified line in characters.
+        /// </summary>
         public int GetLineLength(long lineNo)
         {
             return NativeControl.GetLineLength(lineNo);
         }
 
-        // Returns the text for the given line.
+        /// <summary>
+        /// Returns the text for the given line.
+        /// </summary>
         public string GetLineText(long lineNo)
         {
             return NativeControl.GetLineText(lineNo);
         }
 
-        // Returns the number of lines in the buffer.
+        /// <summary>
+        /// Returns the number of lines in the buffer.
+        /// </summary>
         public int GetNumberOfLines()
         {
             return NativeControl.GetNumberOfLines();
         }
 
-        // Returns <c>true</c> if the buffer has been modified.
+        /// <summary>
+        /// Returns <c>true</c> if the buffer has been modified.
+        /// </summary>
         public bool IsModified()
         {
             return NativeControl.IsModified();
         }
 
-        // Returns <c>true</c> if the control is editable.
+        /// <summary>
+        /// Returns <c>true</c> if the control is editable.
+        /// </summary>
         public bool IsEditable()
         {
             return NativeControl.IsEditable();
         }
 
-        // Returns <c>true</c> if the control is single-line.
-        // Currently wxRichTextCtrl does not support single-line editing.
+        /// <summary>
+        /// Returns <c>true</c> if the control is single-line.
+        /// Currently <see cref="RichTextBox"/> does not support single-line editing.
+        /// </summary>
         public bool IsSingleLine()
         {
             return NativeControl.IsSingleLine();
         }
 
-        // Returns <c>true</c> if the control is multiline.
+        /// <summary>
+        /// Returns <c>true</c> if the control is multiline.
+        /// </summary>
         public bool IsMultiLine()
         {
             return NativeControl.IsMultiLine();
         }
 
-        // Returns the text within the current selection range, if any.
+        /// <summary>
+        /// Returns the text within the current selection range, if any.
+        /// </summary>
         public string GetStringSelection()
         {
             return NativeControl.GetStringSelection();
         }
 
-        // Gets the current filename associated with the control.
+        /// <summary>
+        /// Gets the current filename associated with the control.
+        /// </summary>
         public string GetFilename()
         {
             return NativeControl.GetFilename();
         }
 
-        // Sets the current filename.
+        /// <summary>
+        /// Sets the current filename.
+        /// </summary>
+        /// <param name="filename"></param>
         public void SetFilename(string filename)
         {
             NativeControl.SetFilename(filename);
         }
 
-        // Sets the size of the buffer beyond which layout is delayed during resizing.
-        // This optimizes sizing for large buffers. The default is 20000.
+        /// <summary>
+        /// Sets the size of the buffer beyond which layout is delayed during resizing.
+        /// This optimizes sizing for large buffers. The default is 20000.
+        /// </summary>
+        /// <param name="threshold"></param>
         public void SetDelayedLayoutThreshold(long threshold)
         {
             NativeControl.SetDelayedLayoutThreshold(threshold);
         }
 
-        // Gets the size of the buffer beyond which layout is delayed during resizing.
-        // This optimizes sizing for large buffers. The default is 20000.
+        /// <summary>
+        /// Gets the size of the buffer beyond which layout is delayed during resizing.
+        /// This optimizes sizing for large buffers. The default is 20000.
+        /// </summary>
         public long GetDelayedLayoutThreshold()
         {
             return NativeControl.GetDelayedLayoutThreshold();
         }
 
-        // Gets the flag indicating that full layout is required.
+        /// <summary>
+        /// Gets the flag indicating that full layout is required.
+        /// </summary>
         public bool GetFullLayoutRequired()
         {
             return NativeControl.GetFullLayoutRequired();
         }
 
-        // Sets the flag indicating that full layout is required.
+        /// <summary>
+        /// Sets the flag indicating that full layout is required.
+        /// </summary>
+        /// <param name="b"></param>
         public void SetFullLayoutRequired(bool b)
         {
             NativeControl.SetFullLayoutRequired(b);
         }
 
-        // Returns the last time full layout was performed.
+        /// <summary>
+        /// Returns the last time full layout was performed.
+        /// </summary>
         public long GetFullLayoutTime()
         {
             return NativeControl.GetFullLayoutTime();
         }
 
-        // Sets the last time full layout was performed.
+        /// <summary>
+        /// Sets the last time full layout was performed.
+        /// </summary>
+        /// <param name="t"></param>
         public void SetFullLayoutTime(long t)
         {
             NativeControl.SetFullLayoutTime(t);
         }
 
-        // Returns the position that should be shown when full (delayed) layout is performed.
+        /// <summary>
+        /// Returns the position that should be shown when full (delayed) layout is performed.
+        /// </summary>
+        /// <returns></returns>
         public long GetFullLayoutSavedPosition()
         {
             return NativeControl.GetFullLayoutSavedPosition();
         }
 
-        // Sets the position that should be shown when full (delayed) layout is performed.
+        /// <summary>
+        /// Sets the position that should be shown when full (delayed) layout is performed.
+        /// </summary>
+        /// <param name="p"></param>
         public void SetFullLayoutSavedPosition(long p)
         {
             NativeControl.SetFullLayoutSavedPosition(p);
