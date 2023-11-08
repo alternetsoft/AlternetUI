@@ -440,15 +440,13 @@ namespace ControlsSample
             r.EndBold();
             r.NewLine();
 
-            var logoImage = Image.FromUrl("embres:ControlsSample.Resources.logo-128x128.png");
+            var logoImage = Image.FromUrl("embres:ControlsSample.Resources.icon-48x48.png");
 
             r.WriteImage(logoImage);
 
             r.NewLine();
-            r.NewLine();
 
             r.EndAlignment();
-
 
             const string zebraLeftText =
                 "This is a simple test for a floating left image test." +
@@ -462,27 +460,11 @@ namespace ControlsSample
             " all the text should flow around it at the left side. ";
             const string zebraRightTripleText = zebraRightText + zebraRightText + zebraRightText;
 
-            /*
-            r.BeginAlignment(TextBoxTextAttrAlignment.Left);
-            var imageAttr = TextBox.CreateTextAttr();
-            imageAttr.GetTextBoxAttr().SetFloatMode(wxTEXT_BOX_ATTR_FLOAT_LEFT);
-            r.WriteText(zebraLeftTripleText);
-
-            r.WriteImage(logoImage, BitmapType.Png, imageAttr);
-
-            imageAttr.GetTextBoxAttr().GetTop().SetValue(200);
-            imageAttr.GetTextBoxAttr().GetTop().SetUnits(wxTEXT_ATTR_UNITS_PIXELS);
-            imageAttr.GetTextBoxAttr().SetFloatMode(wxTEXT_BOX_ATTR_FLOAT_RIGHT);
-            r.WriteImage(logoImage, BitmapType.Png, imageAttr);
-            r.WriteText(zebraRightTripleText);
-            r.EndAlignment();
-            */
-            
             r.NewLine();
 
             r.WriteText("What can you do with this thing? ");
 
-            r.WriteImage(KnownSvgImages.GetForSize(64).ImgMessageBoxInformation.AsImage(64)!);
+            r.WriteImage(KnownSvgImages.GetForSize(24).ImgMessageBoxInformation.AsImage(24)!);
             r.WriteText(" Well, you can change text ");
 
             r.BeginTextColor(Color.Red);
@@ -578,44 +560,60 @@ namespace ControlsSample
             r.WriteText("This line contains tabs:\tFirst tab\tSecond tab\tThird tab");
             r.NewLine();*/
 
-            r.WriteText("Other notable features of wxRichTextCtrl include:");
+            /*
+            r.BeginAlignment(TextBoxTextAttrAlignment.Left);
+            var imageAttr = TextBox.CreateTextAttr();
+            imageAttr.GetTextBoxAttr().SetFloatMode(wxTEXT_BOX_ATTR_FLOAT_LEFT);
+            r.WriteText(zebraLeftTripleText);
+
+            r.WriteImage(logoImage, BitmapType.Png, imageAttr);
+
+            imageAttr.GetTextBoxAttr().GetTop().SetValue(200);
+            imageAttr.GetTextBoxAttr().GetTop().SetUnits(wxTEXT_ATTR_UNITS_PIXELS);
+            imageAttr.GetTextBoxAttr().SetFloatMode(wxTEXT_BOX_ATTR_FLOAT_RIGHT);
+            r.WriteImage(logoImage, BitmapType.Png, imageAttr);
+            r.WriteText(zebraRightTripleText);
+            r.EndAlignment();
+            */
+
+            r.WriteText("Other notable features of RichTextBox include:");
             r.NewLine();
 
             r.BeginSymbolBullet("*", 100, 60);
-            r.WriteText("Compatibility with wxTextCtrl API");
+            r.WriteText("Compatibility with TextBox API.");
             r.NewLine();
             r.EndSymbolBullet();
 
             r.BeginSymbolBullet("*", 100, 60);
             r.WriteText(
-                "Easy stack-based BeginXXX()...EndXXX() style setting in addition to SetStyle()");
+                "Easy stack-based BeginXXX()...EndXXX() style setting in addition to SetStyle().");
             r.NewLine();
             r.EndSymbolBullet();
 
             r.BeginSymbolBullet("*", 100, 60);
-            r.WriteText("XML loading and saving");
+            r.WriteText("XML and other formats loading and saving.");
             r.NewLine();
             r.EndSymbolBullet();
 
             r.BeginSymbolBullet("*", 100, 60);
-            r.WriteText("Undo/Redo, with batching option and Undo suppressing");
+            r.WriteText("Undo/Redo, with batching option and Undo suppressing.");
             r.NewLine();
             r.EndSymbolBullet();
 
             r.BeginSymbolBullet("*", 100, 60);
-            r.WriteText("Clipboard copy and paste");
+            r.WriteText("Clipboard copy and paste.");
             r.NewLine();
             r.EndSymbolBullet();
 
             r.BeginSymbolBullet("*", 100, 60);
             r.WriteText("Style sheets with named character and paragraph styles,"+
-                " and control for applying named styles");
+                " and control for applying named styles.");
             r.NewLine();
             r.EndSymbolBullet();
 
             r.BeginSymbolBullet("*", 100, 60);
             r.WriteText("A design that can easily be extended to other content types,"+
-                " ultimately with text boxes, tables, controls, and so on");
+                " ultimately with text boxes, tables, controls, and so on.");
             r.NewLine();
             r.EndSymbolBullet();
 

@@ -41,6 +41,7 @@
       <None Remove="Resources\ButtonImages\ButtonImageHovered.svg" />
       <None Remove="Resources\ButtonImages\ButtonImageNormal.svg" />
       <None Remove="Resources\ButtonImages\ButtonImagePressed.svg" />
+      <None Remove="Resources\icon-48x48.png" />
       <None Remove="Resources\logo-128x128.png" />
       <None Remove="Resources\SamplePandaPdf.pdf" />
       <None Remove="Resources\Svg\arrow-left.svg" />
@@ -92,6 +93,7 @@
       <EmbeddedResource Include="Resources\ButtonImages\ButtonImageNormal.svg" />
       <EmbeddedResource Include="Resources\ButtonImages\ButtonImagePressed.png" />
       <EmbeddedResource Include="Resources\ButtonImages\ButtonImagePressed.svg" />
+      <EmbeddedResource Include="Resources\icon-48x48.png" />
       <EmbeddedResource Include="Resources\ImageListIcons\Large\Calendar32.png" />
       <EmbeddedResource Include="Resources\ImageListIcons\Large\LineGraph32.png" />
       <EmbeddedResource Include="Resources\ImageListIcons\Large\Pencil32.png" />

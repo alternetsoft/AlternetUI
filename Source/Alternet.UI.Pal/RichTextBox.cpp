@@ -477,8 +477,13 @@ namespace Alternet::UI
 
 	bool RichTextBox::WriteImage2(const string& filename, int bitmapType, void* textAttr)
 	{
-		wxRichTextAttr* s = (wxRichTextAttr*)textAttr;
-		return GetTextCtrl()->WriteImage(wxStr(filename), (wxBitmapType)bitmapType, *s);
+		if(textAttr == nullptr)
+			return GetTextCtrl()->WriteImage(wxStr(filename), (wxBitmapType)bitmapType);
+		else
+		{
+			wxRichTextAttr* s = (wxRichTextAttr*)textAttr;
+			return GetTextCtrl()->WriteImage(wxStr(filename), (wxBitmapType)bitmapType, *s);
+		}
 	}
 
 	int64_t RichTextBox::DeleteSelectedContent()
@@ -1344,15 +1349,25 @@ namespace Alternet::UI
 	{
 		if (bitmap == nullptr)
 			return false;
-		wxRichTextAttr* s = (wxRichTextAttr*)textAttr;
-		return GetTextCtrl()->WriteImage(bitmap->GetBitmap(), (wxBitmapType)bitmapType, *s);;
+		if(textAttr == nullptr)
+			return GetTextCtrl()->WriteImage(bitmap->GetBitmap(), (wxBitmapType)bitmapType);
+		else
+		{
+			wxRichTextAttr* s = (wxRichTextAttr*)textAttr;
+			return GetTextCtrl()->WriteImage(bitmap->GetBitmap(), (wxBitmapType)bitmapType, *s);
+		}
 	}
 
 	bool RichTextBox::WriteImage3(void* imageBlock, void* textAttr)
 	{
-		wxRichTextAttr* s = (wxRichTextAttr*)textAttr;
 		wxRichTextImageBlock* block = (wxRichTextImageBlock*)imageBlock;
-		return GetTextCtrl()->WriteImage(*block, *s);
+		if (textAttr == nullptr)
+			return GetTextCtrl()->WriteImage(*block);
+		else
+		{
+			wxRichTextAttr* s = (wxRichTextAttr*)textAttr;
+			return GetTextCtrl()->WriteImage(*block, *s);
+		}
 	}
 
 	bool RichTextBox::CanDeleteRange(void* container, int64_t startRange, int64_t endRange)
