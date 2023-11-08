@@ -126,6 +126,10 @@ namespace Alternet.UI
         /// <summary>
         /// Occurs when url clicked in the text.
         /// </summary>
+        /// <remarks>
+        /// This event is not fired on MacOs. On this os, url is
+        /// automatically opened in the default browser.
+        /// </remarks>
         public event UrlEventHandler? TextUrl;
 
         /// <summary>
@@ -1490,11 +1494,15 @@ namespace Alternet.UI
         /// </param>
         public virtual void OnTextUrl(UrlEventArgs e)
         {
+            // Under MacOs url parameter of the event data is always empty,
+            // so event is not fired. Also on MacOs url is opened automatically.
+            if (Application.IsMacOs)
+                return;
             TextUrl?.Invoke(this, e);
             if (e.Cancel)
                 return;
             if (AutoUrlOpen && !string.IsNullOrEmpty(e.Url))
-                AppUtils.OpenUrl(e.Url);
+                AppUtils.OpenUrl(e.Url!);
         }
 
         /// <summary>
@@ -2045,11 +2053,11 @@ namespace Alternet.UI
         /// <param name="from">The first position.</param>
         /// <param name="to">The last position.</param>
         /// <returns>
-        /// <see cref="string"/> containing the texct from the first
+        /// <see cref="string"/> containing the text from the first
         /// to the last position.
         /// </returns>
         /// <remarks>
-        /// The positions must have been returned by another TextBox method.
+        /// The positions must have been returned by another control method.
         /// Please note that the positions in a multiline text control do not
         /// correspond to the indices in the string returned by Value because of the
         /// different new line representations(CR or CR LF). This method should be
