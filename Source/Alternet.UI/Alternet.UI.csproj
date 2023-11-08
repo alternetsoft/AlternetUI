@@ -53,7 +53,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="Application\ThreadException\Resources\ErrorImage.png" />
+    <None Remove="Base\ThreadException\Resources\ErrorImage.png" />
     <None Remove="Build.Result.Log" />
     <None Remove="Find.Not.Documented.log" />
     <None Remove="Resources\Svg\align-center.svg" />
@@ -137,7 +137,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Application\ThreadException\Resources\ErrorImage.png" />
+    <EmbeddedResource Include="Base\ThreadException\Resources\ErrorImage.png" />
     <EmbeddedResource Include="Resources\Svg\align-center.svg" />
     <EmbeddedResource Include="Resources\Svg\align-justify.svg" />
     <EmbeddedResource Include="Resources\Svg\align-left.svg" />
