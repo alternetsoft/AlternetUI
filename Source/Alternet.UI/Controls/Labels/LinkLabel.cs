@@ -187,7 +187,7 @@ namespace Alternet.UI
             if (!e.Cancel && UseShellExecute)
             {
                 e.Cancel = true;
-                AppUtils.ShellExecute(Url);
+                AppUtils.OpenUrl(Url);
             }
         }
 
