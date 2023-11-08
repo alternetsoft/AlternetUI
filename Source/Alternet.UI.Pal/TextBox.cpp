@@ -290,14 +290,14 @@ namespace Alternet::UI
 		if (ev.Moving())
 			return;
 
-		//if (!ev.LeftDown())
-		//	return;
+		if (!ev.LeftDown())
+			return;
 
 		long start = event.GetURLStart();
 		long end = event.GetURLEnd();
 		long delta = end - start;
 
-		LogEvent(event);
+		/*LogEvent(event);*/
 
 		auto url = GetTextCtrl()->GetValue().Mid(start, delta).Clone();
 
