@@ -525,7 +525,7 @@ namespace Alternet.UI
         }
 
         // Inserts a new paragraph at the current insertion point. @see LineBreak().
-        public bool Newline()
+        public bool NewLine()
         {
             return NativeControl.Newline();
         }
@@ -1889,12 +1889,24 @@ namespace Alternet.UI
             NativeControl.SetSelection2(sel);
         }
 
+        public bool WriteImage(
+            Image bitmap,
+            BitmapType bitmapType = BitmapType.Png)
+        {
+            if (bitmap is null)
+                return false;
+            return NativeControl.WriteImage(
+                bitmap.NativeImage,
+                (int)bitmapType,
+                default);
+        }
+
         // Write a bitmap or image at the current insertion point.
         // Supply an optional type to use for internal and file storage of the raw data.
         internal bool WriteImage(
             Image bitmap,
-            BitmapType bitmapType = BitmapType.Png,
-            IntPtr textAttr = default)
+            BitmapType bitmapType /*= BitmapType.Png*/,
+            IntPtr textAttr)
         {
             if (bitmap is null)
                 return false;
@@ -1902,7 +1914,7 @@ namespace Alternet.UI
                 bitmap.NativeImage,
                 (int)bitmapType,
                 textAttr);
-        } // 
+        }
 
         // Loads an image from a file and writes it at the current insertion point.
         internal bool WriteImage(
