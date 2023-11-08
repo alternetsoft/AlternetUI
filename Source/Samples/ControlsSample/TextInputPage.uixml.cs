@@ -433,8 +433,9 @@ namespace ControlsSample
 
             r.BeginFontSize(14);
 
-            r.WriteText(
-                "Welcome to RichTextBox, a control\nfor editing and presenting styled text and images\n");
+            r.WriteText("Welcome to RichTextBox, a control");
+            r.LineBreak();
+            r.WriteText("for editing and presenting styled text and images\n");
             r.EndFontSize();
 
             r.EndBold();
