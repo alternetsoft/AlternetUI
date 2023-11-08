@@ -1,4 +1,5 @@
 #include "TextBox.h"
+#include "Application.h"
 
 namespace Alternet::UI
 {
@@ -262,6 +263,24 @@ namespace Alternet::UI
 		RaiseEvent(TextBoxEvent::TextEnter);
 	}
 
+	void LogEvent(wxTextUrlEvent& event)
+	{
+		const wxMouseEvent& ev = event.GetMouseEvent();
+		long start = event.GetURLStart();
+		long end = event.GetURLEnd();
+		long delta = end - start;
+
+		auto s_start = std::to_string(start);
+		auto s_end = std::to_string(end);
+		auto s_delta = std::to_string(delta);
+		auto s_mouse = Control::GetMouseEventDesc(ev);
+
+		Application::Log("==================");
+		Application::Log(s_mouse);
+		Application::Log(s_start + " / " + s_end + " / " + s_delta);
+		Application::Log("==================");
+	}
+
 	void TextBox::OnTextUrl(wxTextUrlEvent& event)
 	{
 		event.Skip();
@@ -277,6 +296,8 @@ namespace Alternet::UI
 		long start = event.GetURLStart();
 		long end = event.GetURLEnd();
 		long delta = end - start;
+
+		LogEvent(event);
 
 		auto url = GetTextCtrl()->GetValue().Mid(start, delta).Clone();
 
