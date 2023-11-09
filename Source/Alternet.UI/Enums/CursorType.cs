@@ -17,131 +17,131 @@ namespace Alternet.UI
         /// <summary>
         /// A standard arrow cursor.
         /// </summary>
-        Arrow,
+        Arrow = 1,
 
-        /// <summary>
+        /*/// <summary>
         /// A standard arrow cursor pointing to the right.
         /// </summary>
-        RightArrow,
+        RightArrow = 2,*/
 
-        /// <summary>
+        /*/// <summary>
         /// Bullseye cursor
         /// </summary>
-        Bullseye,
+        Bullseye = 3,*/
 
         /// <summary>
         /// Rectangular character cursor.
         /// </summary>
-        Char,
+        Char = 4,
 
         /// <summary>
         /// A crosshair cursor.
         /// </summary>
-        Cross,
+        Cross = 5,
 
         /// <summary>
         /// A hand cursor.
         /// </summary>
-        Hand,
+        Hand = 6,
 
         /// <summary>
         /// A text I-Beam cursor (vertical line).
         /// </summary>
-        IBeam,
+        IBeam = 7,
 
         /// <summary>
         /// Represents a mouse with the left button depressed.
         /// </summary>
-        LeftButton,
+        LeftButton = 8,
 
-        /// <summary>
+        /*/// <summary>
         /// A magnifier icon.
         /// </summary>
-        Magnifier,
+        Magnifier = 9,*/
 
         /// <summary>
         /// Represents a mouse with the middle button depressed.
         /// </summary>
-        MiddleButton,
+        MiddleButton = 10,
 
         /// <summary>
         /// A no-entry sign cursor.
         /// </summary>
-        NoEntry,
+        NoEntry = 11,
 
-        /// <summary>
+        /*/// <summary>
         /// A paintbrush cursor.
         /// </summary>
-        PaintBrush,
+        PaintBrush = 12,*/
 
-        /// <summary>
+        /*/// <summary>
         /// A pencil cursor.
         /// </summary>
-        Pencil,
+        Pencil = 13,*/
 
-        /// <summary>
+        /*/// <summary>
         /// A cursor that points left.
         /// </summary>
-        PointLeft,
+        PointLeft = 14,*/
 
-        /// <summary>
+        /*/// <summary>
         /// A cursor that points right.
         /// </summary>
-        PointRight,
+        PointRight = 15,*/
 
         /// <summary>
         /// An arrow and question mark.
         /// </summary>
-        QuestionArrow,
+        QuestionArrow = 16,
 
         /// <summary>
         /// Represents a mouse with the right button depressed.
         /// </summary>
-        RightButton,
+        RightButton = 17,
 
         /// <summary>
         /// A cursor with arrows pointing northeast and southwest.
         /// </summary>
-        SizeNESW,
+        SizeNESW = 18,
 
         /// <summary>
         /// A cursor with arrows pointing north and south.
         /// </summary>
-        SizeNS,
+        SizeNS = 19,
 
         /// <summary>
         /// A cursor with arrows pointing northwest and southeast.
         /// </summary>
-        SizeNWSE,
+        SizeNWSE = 20,
 
         /// <summary>
         /// A cursor with arrows pointing west and east.
         /// </summary>
-        SizeWE,
+        SizeWE = 21,
 
         /// <summary>
         /// A general sizing cursor.
         /// </summary>
-        Sizing,
+        Sizing = 22,
 
-        /// <summary>
+        /*/// <summary>
         /// A spraycan cursor.
         /// </summary>
-        SprayCan,
+        SprayCan = 23,*/
 
         /// <summary>
         /// An hourglass cursor.
         /// </summary>
-        Wait,
+        Wait = 24,
 
         /// <summary>
         /// A watch cursor.
         /// </summary>
-        Watch,
+        Watch = 25,
 
-        /// <summary>
+        /*/// <summary>
         /// A transparent cursor.
         /// </summary>
-        Blank,
+        Blank = 26,*/
     }
 }

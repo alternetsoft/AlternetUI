@@ -120,6 +120,9 @@
       <AdditionalDependencies>Comctl32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>..\..\External\wxWidgets\3rdparty\webview2\build\native\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
+    <ResourceCompile>
+      <AdditionalIncludeDirectories>../../External/WxWidgets/include/</AdditionalIncludeDirectories>
+    </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -142,6 +145,9 @@
       <AdditionalDependencies>Comctl32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>..\..\External\wxWidgets\3rdparty\webview2\build\native\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
+    <ResourceCompile>
+      <AdditionalIncludeDirectories>../../External/WxWidgets/include/</AdditionalIncludeDirectories>
+    </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -522,6 +528,7 @@
     <ClInclude Include="RadialGradientBrush.h" />
     <ClInclude Include="RadioButton.h" />
     <ClInclude Include="Region.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="RichTextBox.h" />
     <ClInclude Include="Screenshot.h" />
     <ClInclude Include="SelectDirectoryDialog.h" />
@@ -676,6 +683,9 @@
     <None Include="Api\WxOtherFactory.inc" />
     <None Include="Api\WxStatusBarFactory.inc" />
     <None Include="Api\WxTreeViewFactory.inc" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Alternet.UI.Pal.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <Import Project="wxWidgets.props" />

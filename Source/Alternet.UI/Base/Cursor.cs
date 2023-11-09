@@ -89,6 +89,39 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets whether the specified cursor is Windows standard cursor
+        /// (is provided by the OS).
+        /// </summary>
+        /// <param name="cursor">Cursor identifier.</param>
+        public static bool IsStandardCursorWindows(CursorType cursor)
+        {
+            switch (cursor)
+            {
+                case CursorType.None:
+                case CursorType.Arrow:
+                case CursorType.Char:
+                case CursorType.Cross:
+                case CursorType.Hand:
+                case CursorType.IBeam:
+                case CursorType.LeftButton:
+                case CursorType.MiddleButton:
+                case CursorType.NoEntry:
+                case CursorType.QuestionArrow:
+                case CursorType.RightButton:
+                case CursorType.SizeNESW:
+                case CursorType.SizeNS:
+                case CursorType.SizeNWSE:
+                case CursorType.SizeWE:
+                case CursorType.Sizing:
+                case CursorType.Wait:
+                case CursorType.Watch:
+                    return true;
+                default:
+                    return false;
+            }
+        }
+
         /// <inheritdoc/>
         protected override void DisposeUnmanagedResources()
         {

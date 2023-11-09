@@ -211,8 +211,10 @@ namespace PaintSample
 
             void UpdateCheckedItems()
             {
+                var myTool = Tools.CurrentTool;
+
                 foreach (var item in toolsMenu.Items)
-                    item.Checked = item.Tag == Tools.CurrentTool;
+                    item.Checked = item.Tag == myTool;
             }
 
             foreach (var tool in Tools.AllTools)

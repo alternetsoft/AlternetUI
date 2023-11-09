@@ -273,10 +273,38 @@ namespace Alternet::UI
 	{
 		return new wxCursor();
 	}
-	
+
+#ifdef __WXMSW__
+	HMODULE GetCurrentModule()
+	{ // NB: XP+ solution!
+		HMODULE hModule = NULL;
+		GetModuleHandleEx(
+			GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS,
+			(LPCTSTR)GetCurrentModule,
+			&hModule);
+
+		return hModule;
+	}
+#endif
+
 	void* WxOtherFactory::CreateCursor2(int cursorId)
 	{
-		return new wxCursor((wxStockCursor)cursorId);
+#ifdef __WXMSW__
+		//auto instance = wxGetInstance();
+		//auto newHandle = GetCurrentModule();
+		//wxSetInstance(newHandle);
+#endif
+		try
+		{
+			return new wxCursor((wxStockCursor)cursorId);
+		}
+		catch (...)
+		{
+#ifdef __WXMSW__
+			//wxSetInstance(instance);
+#endif
+			throw;
+		}
 	}
 
 	void* WxOtherFactory::CreateCursor3(const string& cursorName, int type,

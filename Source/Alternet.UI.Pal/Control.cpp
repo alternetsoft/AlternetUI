@@ -1813,7 +1813,7 @@ namespace Alternet::UI
     void Control::ResetBackgroundColor()
     {
         GetWxWindow()->SetBackgroundColour(wxNullColour);
-    }
+    } 
 
     void Control::ResetForegroundColor()
     {
