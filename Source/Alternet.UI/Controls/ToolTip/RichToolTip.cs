@@ -129,11 +129,25 @@ namespace Alternet.UI
             Native.WxOtherFactory.RichToolTipSetBkColor(Handle, color, color2);
         }
 
+        /// <summary>
+        /// Sets foreground color of the tooltip message.
+        /// </summary>
+        /// <param name="color">Foreground color of the message.</param>
+        /// <remarks>
+        /// This is implemnented only for generic tooltips (when <see cref="UseGeneric"/> is true).
+        /// </remarks>
         public void SetForegroundColor(Color color)
         {
             Native.WxOtherFactory.RichToolTipSetFgColor(Handle, color);
         }
 
+        /// <summary>
+        /// Sets foreground color of the tooltip title.
+        /// </summary>
+        /// <param name="color">Foreground color of the title.</param>
+        /// <remarks>
+        /// This is implemnented only for generic tooltips (when <see cref="UseGeneric"/> is true).
+        /// </remarks>
         public void SetTitleForegroundColor(Color color)
         {
             Native.WxOtherFactory.RichToolTipSetTitleFgColor(Handle, color);
