@@ -531,6 +531,11 @@ ALTERNET_UI_API int Control_GetScrollBarMaximum_(Control* obj, ScrollBarOrientat
     return obj->GetScrollBarMaximum(orientation);
 }
 
+ALTERNET_UI_API void Control_SetCursor_(Control* obj, void* handle)
+{
+    obj->SetCursor(handle);
+}
+
 ALTERNET_UI_API void Control_SetEventCallback_(Control::ControlEventCallbackType callback)
 {
     Control::SetEventCallback(callback);

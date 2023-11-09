@@ -174,6 +174,7 @@ bool IsScrollBarVisible(ScrollBarOrientation orientation);
 int GetScrollBarValue(ScrollBarOrientation orientation);
 int GetScrollBarLargeChange(ScrollBarOrientation orientation);
 int GetScrollBarMaximum(ScrollBarOrientation orientation);
+void SetCursor(void* handle);
 public:
 enum class ControlEvent
 {

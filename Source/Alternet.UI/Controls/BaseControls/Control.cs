@@ -74,6 +74,7 @@ namespace Alternet.UI
         private Control? parent;
         private int updateCount = 0;
         private ControlFlags flags;
+        private Cursor? cursor;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Control"/> class.
@@ -271,6 +272,35 @@ namespace Alternet.UI
         /// of their system.
         /// </value>
         public static Font DefaultFont => Font.Default;
+
+        /// <summary>
+        /// Gets or sets the cursor that the control should normally display.
+        /// </summary>
+        /// <remarks>
+        /// Notice that the control cursor also sets it for the children of the control implicitly.
+        /// </remarks>
+        /// <remarks>
+        /// The cursor may be <c>null</c> in which case the control cursor will be
+        /// reset back to default.
+        /// </remarks>
+        public virtual Cursor? Cursor
+        {
+            get
+            {
+                return cursor;
+            }
+
+            set
+            {
+                if (cursor == value)
+                    return;
+                cursor = value;
+                if (cursor is null)
+                    Handler.NativeControl?.SetCursor(default);
+                else
+                    Handler.NativeControl?.SetCursor(cursor.Handle);
+            }
+        }
 
         /// <summary>
         /// Gets or sets size of the <see cref="Control"/>'s client area, in
@@ -2112,6 +2142,15 @@ namespace Alternet.UI
         public Point DeviceToScreen(Int32Point point)
         {
             return Handler.DeviceToScreen(point);
+        }
+
+        /// <summary>
+        /// Changes <see cref="Cursor"/> property.
+        /// </summary>
+        /// <param name="value">New cursor.</param>
+        public void SetCursor(Cursor? value)
+        {
+            Cursor = value;
         }
 
         /// <summary>

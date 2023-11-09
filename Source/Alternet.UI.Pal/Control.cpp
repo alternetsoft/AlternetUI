@@ -1830,6 +1830,17 @@ namespace Alternet::UI
         return window->HasFocus();
     }
 
+    void Control::SetCursor(void* handle)
+    {
+        if(handle == nullptr)
+            GetWxWindow()->SetCursor(wxNullCursor);
+        else
+        {
+            auto cursor = (wxCursor*)handle;
+            GetWxWindow()->SetCursor(wxCursor(*cursor));
+        }
+    }
+
     /*static*/ Control* Control::GetFocusedControl()
     {
         auto focusedWxWindow = wxWindow::FindFocus();

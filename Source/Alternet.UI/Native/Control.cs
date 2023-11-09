@@ -779,6 +779,12 @@ namespace Alternet.UI.Native
             return NativeApi.Control_GetScrollBarMaximum_(NativePointer, orientation);
         }
         
+        public void SetCursor(System.IntPtr handle)
+        {
+            CheckDisposed();
+            NativeApi.Control_SetCursor_(NativePointer, handle);
+        }
+        
         static GCHandle eventCallbackGCHandle;
         
         static void SetEventCallback()
@@ -1231,6 +1237,9 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern int Control_GetScrollBarMaximum_(IntPtr obj, ScrollBarOrientation orientation);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Control_SetCursor_(IntPtr obj, System.IntPtr handle);
             
         }
     }

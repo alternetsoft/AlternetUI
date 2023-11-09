@@ -100,6 +100,7 @@ namespace ControlsSample
 
                 if (!loaded)
                 {
+                    activePageHolder.ParentWindow?.SetCursor(Cursors.Wait);
                     waitLabelContainer.Parent = activePageHolder;
                     waitLabelContainer.Visible = true;
                     waitLabelContainer.Update();
@@ -115,6 +116,7 @@ namespace ControlsSample
             finally
             {
                 activePageHolder.ResumeLayout();
+                activePageHolder.ParentWindow?.SetCursor(null);
             }
         }
 

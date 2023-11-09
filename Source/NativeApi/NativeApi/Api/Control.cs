@@ -8,6 +8,7 @@ namespace NativeApi.Api
 {
     public abstract class Control
     {
+        public void SetCursor(IntPtr handle) { }
         public bool AcceptsFocus { get; set; }
         public bool AcceptsFocusFromKeyboard { get; set; }
         public bool AcceptsFocusRecursively { get; set; }
