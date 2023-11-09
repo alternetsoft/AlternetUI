@@ -326,7 +326,7 @@ namespace Alternet::UI
         itemContainer->Clear();
 
         wxArrayString wxStrings;
-        for (auto item : _items)
+        for (auto& item : _items)
             wxStrings.Add(wxStr(item));
 
         itemContainer->Append(wxStrings);
