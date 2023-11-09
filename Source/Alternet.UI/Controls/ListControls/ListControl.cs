@@ -16,6 +16,16 @@ namespace Alternet.UI
         // from WinForms
 
         /// <summary>
+        /// Default value of the <see cref="FindStringCulture"/> property.
+        /// </summary>
+        public static CultureInfo? DefaultFindStringCulture { get; set; }
+
+        /// <summary>
+        /// Default value of the <see cref="CompareOptions"/> property.
+        /// </summary>
+        public static CompareOptions DefaultCompareOptions { get; set; } = CompareOptions.None;
+
+        /// <summary>
         /// Gets or sets the currently selected item in the control.
         /// </summary>
         /// <value>An object that represents the current selection in the
@@ -84,12 +94,12 @@ namespace Alternet.UI
         /// If <see cref="FindStringCulture"/> is not assigned,
         /// <see cref="CultureInfo.CurrentCulture"/> is used.
         /// </remarks>
-        public CultureInfo? FindStringCulture { get; set; }
+        public CultureInfo? FindStringCulture { get; set; } = DefaultFindStringCulture;
 
         /// <summary>
         /// Gets or sets <see cref="CompareOptions"/> used in find string methods.
         /// </summary>
-        public CompareOptions CompareOptions { get; set; } = CompareOptions.None;
+        public CompareOptions CompareOptions { get; set; } = DefaultCompareOptions;
 
         /// <summary>
         /// Gets first item in the control or <c>null</c> if there are no items.
