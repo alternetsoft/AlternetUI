@@ -28,6 +28,9 @@ namespace Alternet.UI.Localization
         public string ButtonFind { get; set; } = "Find";
 
         /// <inheritdoc cref="ButtonOk"/>
+        public string ButtonReplace { get; set; } = "Replace";
+
+        /// <inheritdoc cref="ButtonOk"/>
         public string ButtonPrint { get; set; } = "Print";
 
         /// <inheritdoc cref="ButtonOk"/>
@@ -38,6 +41,15 @@ namespace Alternet.UI.Localization
 
         /// <inheritdoc cref="ButtonOk"/>
         public string ButtonBack { get; set; } = "Back";
+
+        /// <inheritdoc cref="ButtonOk"/>
+        public string ButtonNew { get; set; } = "New";
+
+        /// <inheritdoc cref="ButtonOk"/>
+        public string ButtonOpen { get; set; } = "Open";
+
+        /// <inheritdoc cref="ButtonOk"/>
+        public string ButtonSave { get; set; } = "Save";
 
         /// <inheritdoc cref="ButtonOk"/>
         public string ButtonForward { get; set; } = "Forward";
@@ -65,6 +77,18 @@ namespace Alternet.UI.Localization
 
         /// <inheritdoc cref="ButtonOk"/>
         public string ButtonCopy { get; set; } = "Copy";
+
+        /// <inheritdoc cref="ButtonOk"/>
+        public string ButtonPaste { get; set; } = "Paste";
+
+        /// <inheritdoc cref="ButtonOk"/>
+        public string ButtonCut { get; set; } = "Cut";
+
+        /// <inheritdoc cref="ButtonOk"/>
+        public string ButtonUndo { get; set; } = "Undo";
+
+        /// <inheritdoc cref="ButtonOk"/>
+        public string ButtonRedo { get; set; } = "Redo";
 
         // ========================
 
