@@ -23,6 +23,24 @@ namespace Alternet.UI
             GetImageUrl("alternet-circle-xmark");
 
         /// <summary>
+        /// Gets or sets url used to load "File|New" svg image used in toolbars.
+        /// </summary>
+        public static string UrlImageFileNew { get; set; } =
+            GetImageUrl("alternet-file");
+
+        /// <summary>
+        /// Gets or sets url used to load "File|Save" svg image used in toolbars.
+        /// </summary>
+        public static string UrlImageFileSave { get; set; } =
+            GetImageUrl("alternet-floppy-disk");
+
+        /// <summary>
+        /// Gets or sets url used to load "File|Open" svg image used in toolbars.
+        /// </summary>
+        public static string UrlImageFileOpen { get; set; } =
+            GetImageUrl("alternet-file-open");
+
+        /// <summary>
         /// Gets or sets url used to load "Information" svg image used in MessageBox like dialogs.
         /// </summary>
         public static string UrlImageMessageBoxInformation { get; set; } =

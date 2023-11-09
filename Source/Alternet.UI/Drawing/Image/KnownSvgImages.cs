@@ -13,6 +13,7 @@ namespace Alternet.UI
     public class KnownSvgImages
     {
         private static readonly AdvDictionary<Int32Size, KnownSvgImages> Images = new();
+
         private ImageSet? imgBrowserBack;
         private ImageSet? imgBrowserForward;
         private ImageSet? imgZoomIn;
@@ -28,6 +29,9 @@ namespace Alternet.UI
         private ImageSet? imgMessageBoxError;
         private ImageSet? imgMessageBoxInformation;
         private ImageSet? imgMessageBoxWarning;
+        private ImageSet? imgFileNew;
+        private ImageSet? imgFileOpen;
+        private ImageSet? imgFileSave;
 
         private Int32Size size;
 
@@ -79,6 +83,36 @@ namespace Alternet.UI
             get => imgMessageBoxInformation ??=
                 AuiToolbar.LoadSvgImage(KnownSvgUrls.UrlImageMessageBoxInformation, size);
             set => imgMessageBoxInformation = value;
+        }
+
+        /// <summary>
+        /// Gets or sets image that can be used in "File|New" toolbar items.
+        /// </summary>
+        public ImageSet ImageFileNew
+        {
+            get => imgFileNew ??=
+                AuiToolbar.LoadSvgImage(KnownSvgUrls.UrlImageFileNew, size);
+            set => imgFileNew = value;
+        }
+
+        /// <summary>
+        /// Gets or sets image that can be used in "File|Save" toolbar items.
+        /// </summary>
+        public ImageSet ImageFileSave
+        {
+            get => imgFileSave ??=
+                AuiToolbar.LoadSvgImage(KnownSvgUrls.UrlImageFileSave, size);
+            set => imgFileSave = value;
+        }
+
+        /// <summary>
+        /// Gets or sets image that can be used in "File|Open" toolbar items.
+        /// </summary>
+        public ImageSet ImageFileOpen
+        {
+            get => imgFileOpen ??=
+                AuiToolbar.LoadSvgImage(KnownSvgUrls.UrlImageFileOpen, size);
+            set => imgFileOpen = value;
         }
 
         /// <summary>
