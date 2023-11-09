@@ -16,6 +16,16 @@ ALTERNET_UI_API WxOtherFactory* WxOtherFactory_Create_()
     return new WxOtherFactory();
 }
 
+ALTERNET_UI_API c_bool WxOtherFactory_GetRichToolTipUseGeneric_()
+{
+    return WxOtherFactory::GetRichToolTipUseGeneric();
+}
+
+ALTERNET_UI_API void WxOtherFactory_SetRichToolTipUseGeneric_(c_bool value)
+{
+    WxOtherFactory::SetRichToolTipUseGeneric(value);
+}
+
 ALTERNET_UI_API void* WxOtherFactory_CreateRichToolTip_(const char16_t* title, const char16_t* message)
 {
     return WxOtherFactory::CreateRichToolTip(title, message);
@@ -29,6 +39,16 @@ ALTERNET_UI_API void WxOtherFactory_DeleteRichToolTip_(void* handle)
 ALTERNET_UI_API void WxOtherFactory_RichToolTipSetBkColor_(void* handle, Color color, Color endColor)
 {
     WxOtherFactory::RichToolTipSetBkColor(handle, color, endColor);
+}
+
+ALTERNET_UI_API void WxOtherFactory_RichToolTipSetFgColor_(void* handle, Color color)
+{
+    WxOtherFactory::RichToolTipSetFgColor(handle, color);
+}
+
+ALTERNET_UI_API void WxOtherFactory_RichToolTipSetTitleFgColor_(void* handle, Color color)
+{
+    WxOtherFactory::RichToolTipSetTitleFgColor(handle, color);
 }
 
 ALTERNET_UI_API void WxOtherFactory_RichToolTipSetIcon_(void* handle, ImageSet* bitmapBundle)

@@ -1,4 +1,5 @@
 using System;
+using Alternet.Drawing;
 
 namespace Alternet.UI
 {
@@ -10,6 +11,14 @@ namespace Alternet.UI
         static PlatformDefaults()
         {
         }
+
+        public Color? RichToolTipBackgroundColor { get; set; }
+
+        public Color? RichToolTipBackgroundColorEnd { get; set; }
+
+        public Color? RichToolTipForegroundColor { get; set; }
+
+        public Color? RichToolTipTitleForegroundColor { get; set; }
 
         /// <summary>
         /// Gets or sets whether to adjust height of <see cref="TextBox"/> controls

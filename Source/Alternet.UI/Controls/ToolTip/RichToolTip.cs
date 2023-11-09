@@ -27,19 +27,60 @@ namespace Alternet.UI
                     message ?? string.Empty),
                   true)
         {
+            var platform = AllPlatformDefaults.PlatformCurrent;
+
+            var backgroundColor = DefaultBackgroundColor ?? platform.RichToolTipBackgroundColor;
+            var backgroundColorEnd = DefaultBackgroundColorEnd ?? platform.RichToolTipBackgroundColorEnd;
+            var foregroundColor = DefaultForegroundColor ?? platform.RichToolTipForegroundColor;
+            var titleForegroundColor = DefaultTitleForegroundColor ?? platform.RichToolTipTitleForegroundColor;
+
+            if (backgroundColor is not null)
+                SetBackgroundColor(backgroundColor.Value, backgroundColorEnd);
+            if (foregroundColor is not null)
+                SetForegroundColor(foregroundColor.Value);
+            if (titleForegroundColor is not null)
+                SetTitleForegroundColor(titleForegroundColor.Value);
         }
 
         /// <summary>
-        /// Gets or sets default background color of the tooltip for use in
-        /// <see cref="Show(string?,string?,Control,RichToolTipKind?,MessageBoxIcon?)"/>
-        /// or any other places.
+        /// Gets or sets whether to use generic or native control as a <see cref="RichToolTip"/>.
+        /// </summary>
+        /// <remarks>
+        /// When generic control is used, it is possible to specify foreground color
+        /// and foreground title color. In the native control it is not implemented.
+        /// We suggest to use generic version under Linux as native version have bad colors
+        /// on Ubuntu so message is not visible. Default is true.
+        /// </remarks>
+        public static bool UseGeneric
+        {
+            get
+            {
+                return Native.WxOtherFactory.RichToolTipUseGeneric;
+            }
+
+            set
+            {
+                Native.WxOtherFactory.RichToolTipUseGeneric = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets default background color of the tooltip.
         /// </summary>
         public static Color? DefaultBackgroundColor { get; set; }
 
         /// <summary>
-        /// Gets or sets default background end color of the tooltip for use in
-        /// <see cref="Show(string?,string?,Control,RichToolTipKind?,MessageBoxIcon?)"/>
-        /// or any other places.
+        /// Gets or sets default foreground color of the tooltip.
+        /// </summary>
+        public static Color? DefaultForegroundColor { get; set; }
+
+        /// <summary>
+        /// Gets or sets default foreground color of the tooltip.
+        /// </summary>
+        public static Color? DefaultTitleForegroundColor { get; set; }
+
+        /// <summary>
+        /// Gets or sets default background end color of the tooltip.
         /// </summary>
         public static Color? DefaultBackgroundColorEnd { get; set; }
 
@@ -68,8 +109,6 @@ namespace Alternet.UI
                 Default.SetTipKind(kind.Value);
             if (icon is not null)
                 Default.SetIcon(icon.Value);
-            if (DefaultBackgroundColor is not null)
-                Default.SetBackgroundColor(DefaultBackgroundColor.Value, DefaultBackgroundColorEnd);
             Default.Show(control);
         }
 
@@ -88,6 +127,16 @@ namespace Alternet.UI
             else
                 color2 = endColor.Value;
             Native.WxOtherFactory.RichToolTipSetBkColor(Handle, color, color2);
+        }
+
+        public void SetForegroundColor(Color color)
+        {
+            Native.WxOtherFactory.RichToolTipSetFgColor(Handle, color);
+        }
+
+        public void SetTitleForegroundColor(Color color)
+        {
+            Native.WxOtherFactory.RichToolTipSetTitleFgColor(Handle, color);
         }
 
         /// <summary>
@@ -180,9 +229,6 @@ namespace Alternet.UI
                     break;
                 case MessageBoxIcon.Error:
                     style = wxICON_ERROR;
-                    break;
-                case MessageBoxIcon.Question:
-                    style = wxICON_NONE;
                     break;
             }
 

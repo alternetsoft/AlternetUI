@@ -29,6 +29,12 @@ namespace NativeApi.Api
         // color is used.
         public static void RichToolTipSetBkColor(IntPtr handle, Color color, Color endColor) { }
 
+        public static void RichToolTipSetFgColor(IntPtr handle, Color color) { }
+
+        public static void RichToolTipSetTitleFgColor(IntPtr handle, Color color) { }
+
+        public static bool RichToolTipUseGeneric { get; set; }
+
         // Set the small icon to show: either one of the standard information/
         // warning/error ones(the question icon doesn't make sense for a tooltip)
         // or a custom icon.

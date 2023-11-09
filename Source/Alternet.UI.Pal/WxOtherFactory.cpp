@@ -1,13 +1,50 @@
 #include "WxOtherFactory.h"
+#include "WxAlternet/wxAlternetRichToolTip.h"
 
 namespace Alternet::UI
 {
+
+#ifdef __WXGTK__
+	bool AlternetRichTooltip = true;
+#endif
+
+#ifdef __WXMSW__
+	bool AlternetRichTooltip = true;
+#endif
+
+#ifdef __WXOSX__
+	bool AlternetRichTooltip = true;
+#endif
+
 	class wxRichToolTip2
 	{
 	public:
+		wxAlternetRichToolTipImpl* GetAlternetImpl()
+		{
+			return dynamic_cast<wxAlternetRichToolTipImpl*>(m_impl);
+		}
+
 		wxRichToolTip2(const wxString& title, const wxString& message)
 		{
-			m_impl = new wxRichToolTipGenericImpl(title, message);
+			// m_impl = new wxRichToolTipGenericImpl(title, message);
+			if(AlternetRichTooltip)
+				m_impl = new wxAlternetRichToolTipImpl(title, message);
+			else
+				m_impl = wxRichToolTipImpl::Create(title, message);
+		}
+
+		void SetForegroundColour(const wxColour& col)
+		{
+			auto impl = GetAlternetImpl();
+			if (impl != nullptr)
+				impl->SetForegroundColour(col);
+		}
+
+		void SetTitleForegroundColour(const wxColour& col)
+		{
+			auto impl = GetAlternetImpl();
+			if (impl != nullptr)
+				impl->SetTitleForegroundColour(col);
 		}
 
 		// Set the background colour: if two colours are specified, the background
@@ -45,7 +82,7 @@ namespace Alternet::UI
 		~wxRichToolTip2();
 
 	private:
-		wxRichToolTipGenericImpl* m_impl;
+		wxRichToolTipImpl* m_impl;
 
 		wxDECLARE_NO_COPY_CLASS(wxRichToolTip2);
 	};
@@ -91,6 +128,26 @@ namespace Alternet::UI
 	wxRichToolTip2::~wxRichToolTip2()
 	{
 		delete m_impl;
+	}
+	
+	bool WxOtherFactory::GetRichToolTipUseGeneric()
+	{
+		return AlternetRichTooltip;
+	}
+	
+	void WxOtherFactory::SetRichToolTipUseGeneric(bool value)
+	{
+		AlternetRichTooltip = value;
+	}
+
+	void WxOtherFactory::RichToolTipSetTitleFgColor(void* handle, const Color& color)
+	{
+		((wxRichToolTip2*)handle)->SetTitleForegroundColour(color);
+	}
+
+	void WxOtherFactory::RichToolTipSetFgColor(void* handle, const Color& color)
+	{
+		((wxRichToolTip2*)handle)->SetForegroundColour(color);
 	}
 
 	void* WxOtherFactory::CreateRichToolTip(const string& title, const string& message)
@@ -203,11 +260,11 @@ namespace Alternet::UI
 	void WxOtherFactory::RichToolTipShowFor(void* handle, void* window, const Int32Rect& rect)
 	{
 		if(rect.IsZero())
-			((wxRichToolTip*)handle)->ShowFor((wxWindow*)window);
+			((wxRichToolTip2*)handle)->ShowFor((wxWindow*)window);
 		else
 		{
 			auto wxr = new wxRect(rect.X, rect.Y, rect.Width, rect.Height);
-			((wxRichToolTip*)handle)->ShowFor((wxWindow*)window, wxr);
+			((wxRichToolTip2*)handle)->ShowFor((wxWindow*)window, wxr);
 			delete wxr;
 		}
 	}

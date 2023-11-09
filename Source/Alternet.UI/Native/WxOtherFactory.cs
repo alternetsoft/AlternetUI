@@ -23,6 +23,19 @@ namespace Alternet.UI.Native
         {
         }
         
+        public static bool RichToolTipUseGeneric
+        {
+            get
+            {
+                return NativeApi.WxOtherFactory_GetRichToolTipUseGeneric_();
+            }
+            
+            set
+            {
+                NativeApi.WxOtherFactory_SetRichToolTipUseGeneric_(value);
+            }
+        }
+        
         public static System.IntPtr CreateRichToolTip(string title, string message)
         {
             return NativeApi.WxOtherFactory_CreateRichToolTip_(title, message);
@@ -36,6 +49,16 @@ namespace Alternet.UI.Native
         public static void RichToolTipSetBkColor(System.IntPtr handle, Alternet.Drawing.Color color, Alternet.Drawing.Color endColor)
         {
             NativeApi.WxOtherFactory_RichToolTipSetBkColor_(handle, color, endColor);
+        }
+        
+        public static void RichToolTipSetFgColor(System.IntPtr handle, Alternet.Drawing.Color color)
+        {
+            NativeApi.WxOtherFactory_RichToolTipSetFgColor_(handle, color);
+        }
+        
+        public static void RichToolTipSetTitleFgColor(System.IntPtr handle, Alternet.Drawing.Color color)
+        {
+            NativeApi.WxOtherFactory_RichToolTipSetTitleFgColor_(handle, color);
         }
         
         public static void RichToolTipSetIcon(System.IntPtr handle, ImageSet? bitmapBundle)
@@ -328,6 +351,12 @@ namespace Alternet.UI.Native
             public static extern IntPtr WxOtherFactory_Create_();
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool WxOtherFactory_GetRichToolTipUseGeneric_();
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void WxOtherFactory_SetRichToolTipUseGeneric_(bool value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern System.IntPtr WxOtherFactory_CreateRichToolTip_(string title, string message);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
@@ -335,6 +364,12 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void WxOtherFactory_RichToolTipSetBkColor_(System.IntPtr handle, NativeApiTypes.Color color, NativeApiTypes.Color endColor);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void WxOtherFactory_RichToolTipSetFgColor_(System.IntPtr handle, NativeApiTypes.Color color);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void WxOtherFactory_RichToolTipSetTitleFgColor_(System.IntPtr handle, NativeApiTypes.Color color);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void WxOtherFactory_RichToolTipSetIcon_(System.IntPtr handle, IntPtr bitmapBundle);

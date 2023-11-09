@@ -1,4 +1,5 @@
 using System;
+using Alternet.Drawing;
 
 namespace Alternet.UI
 {
@@ -14,6 +15,10 @@ namespace Alternet.UI
             PlatformLinux.Controls.RadioButton.MinMargin = minCheckBoxMargin;
             PlatformLinux.Controls.CheckBox.MinMargin = minCheckBoxMargin;
             PlatformLinux.AdjustTextBoxesHeight = true;
+
+            PlatformLinux.RichToolTipBackgroundColor = Color.White;
+            PlatformLinux.RichToolTipForegroundColor = Color.Black;
+            PlatformLinux.RichToolTipTitleForegroundColor = Color.Navy;
         }
 
         /// <summary>
