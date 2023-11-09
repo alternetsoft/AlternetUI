@@ -27,6 +27,21 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets id of the 'New' toolbar item.
+        /// </summary>
+        public int ButtonIdNew => buttonIdNew;
+
+        /// <summary>
+        /// Gets id of the 'Open' toolbar item.
+        /// </summary>
+        public int ButtonIdOpen => buttonIdOpen;
+
+        /// <summary>
+        /// Gets id of the 'Save' toolbar item.
+        /// </summary>
+        public int ButtonIdSave => buttonIdSave;
+
+        /// <summary>
         /// Gets <see cref="RichTextBox"/> control used in this panel.
         /// </summary>
         public RichTextBox TextBox

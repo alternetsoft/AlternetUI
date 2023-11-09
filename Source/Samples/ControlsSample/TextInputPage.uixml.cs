@@ -162,7 +162,7 @@ namespace ControlsSample
 
         private void RichEdit_KeyDown(object? sender, KeyEventArgs e)
         {
-            void Test()
+            static void Test()
             {
             }
 
@@ -258,8 +258,6 @@ namespace ControlsSample
 
         private void MultiLineTextBox_TextUrl(object? sender, UrlEventArgs e)
         {
-            if (sender is not TextBox textBox)
-                return;
             site?.LogEvent("TextBox: Url clicked =>" + e.Url);
         }
 
@@ -315,7 +313,7 @@ namespace ControlsSample
             endIndex = startIndex + word.Length;
         }
 
-        private void InitRichEdit()
+        internal void InitRichEdit()
         {
             var taTextColorRed = TextBox.CreateTextAttr();
             taTextColorRed.SetTextColor(Color.Red);

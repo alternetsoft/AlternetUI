@@ -29,8 +29,18 @@ namespace Alternet.UI
         {
         }
 
+        /// <summary>
+        /// Gets or sets default background color of the tooltip for use in
+        /// <see cref="Show(string?,string?,Control,RichToolTipKind?,MessageBoxIcon?)"/>
+        /// or any other places.
+        /// </summary>
         public static Color? DefaultBackgroundColor { get; set; }
 
+        /// <summary>
+        /// Gets or sets default background end color of the tooltip for use in
+        /// <see cref="Show(string?,string?,Control,RichToolTipKind?,MessageBoxIcon?)"/>
+        /// or any other places.
+        /// </summary>
         public static Color? DefaultBackgroundColorEnd { get; set; }
 
         /// <summary>

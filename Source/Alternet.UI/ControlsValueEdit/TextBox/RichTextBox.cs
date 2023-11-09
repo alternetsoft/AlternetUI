@@ -389,7 +389,7 @@ namespace Alternet.UI
         /// <summary>
         /// Loads content into the control's buffer using the given type.
         /// </summary>
-        /// <param name="file">Filename.</param>
+        /// <param name="file">File name.</param>
         /// <param name="type">File type.</param>
         /// <remarks>
         /// If the specified type is <see cref="RichTextFileType.Any"/>, the type is deduced from
@@ -1499,6 +1499,14 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Begins using this font.
+        /// </summary>
+        public bool BeginFont(Font? font)
+        {
+            return NativeControl.BeginFont(font?.NativeFont);
+        }
+
+        /// <summary>
         /// Returns <c>true</c> if the user has recently set the default style without moving
         /// the caret, and therefore the UI needs to reflect the default style and not
         /// the style at the caret.
@@ -1636,6 +1644,20 @@ namespace Alternet.UI
             return NativeControl.GetLastPosition();
         }
 
+        /// <summary>
+        /// Sets the list attributes for the given range, passing flags to determine how
+        /// the attributes are set.
+        /// </summary>
+        /// <remarks>
+        /// <paramref name="flags"/> is a bit list of the following:
+        /// <see cref="RichTextSetStyleFlags.WithUndo"/>: specifies that this command will
+        /// be undoable.
+        /// <see cref="RichTextSetStyleFlags.Renumber"/>: specifies that numbering
+        /// should start from <paramref name="startFrom"/>, otherwise existing attributes are used.
+        /// <see cref="RichTextSetStyleFlags.SpecifyLevel"/>: specifies that
+        /// <paramref name="specifiedLevel"/> should be used
+        /// as the level for all paragraphs, otherwise the current indentation will be used.
+        /// </remarks>
         public bool SetListStyle(
             long startRange,
             long endRange,
@@ -1653,10 +1675,18 @@ namespace Alternet.UI
                 specifiedLevel);
         }
 
+        /// <summary>
         /// Clears the list style from the given range, clearing list-related attributes
         /// and applying any named paragraph style associated with each paragraph.
-        /// @a flags is a bit list of the following:
-        /// - wxRICHTEXT_SETSTYLE_WITH_UNDO: specifies that this command will be undoable.
+        /// </summary>
+        /// <param name="startRange"></param>
+        /// <param name="endRange"></param>
+        /// <param name="flags"></param>
+        /// <returns></returns>
+        /// <remarks>
+        /// <paramref name="flags"/> is a bit list of the following:
+        /// <see cref="RichTextSetStyleFlags.WithUndo"/>: specifies that this command will be undoable.
+        /// </remarks>
         public bool ClearListStyle(
             long startRange,
             long endRange,
@@ -1665,6 +1695,19 @@ namespace Alternet.UI
             return NativeControl.ClearListStyle(startRange, endRange, (int)flags);
         }
 
+        /// <summary>
+        /// Numbers the paragraphs in the given range.
+        /// </summary>
+        /// <remarks>
+        /// <paramref name="flags"/> is a bit list of the following:
+        /// <see cref="RichTextSetStyleFlags.WithUndo"/>: specifies that this command will
+        /// be undoable.
+        /// <see cref="RichTextSetStyleFlags.Renumber"/>: specifies that numbering
+        /// should start from <paramref name="startFrom"/>, otherwise existing attributes are used.
+        /// <see cref="RichTextSetStyleFlags.SpecifyLevel"/>: specifies that
+        /// <paramref name="specifiedLevel"/> should be used
+        /// as the level for all paragraphs, otherwise the current indentation will be used.
+        /// </remarks>
         public bool NumberList(
             long startRange,
             long endRange,
@@ -1682,6 +1725,23 @@ namespace Alternet.UI
                 specifiedLevel);
         }
 
+        /// <summary>
+        /// Promotes or demotes the paragraphs in the given range.
+        /// </summary>
+        /// <remarks>
+        /// A positive <paramref name="promoteBy"/> produces a smaller indent, and a negative number
+        /// produces a larger indent. Pass flags to determine how the attributes are set.
+        /// </remarks>
+        /// <remarks>
+        /// <paramref name="flags"/> is a bit list of the following:
+        /// <see cref="RichTextSetStyleFlags.WithUndo"/>: specifies that this command will
+        /// be undoable.
+        /// <see cref="RichTextSetStyleFlags.Renumber"/>: specifies that numbering
+        /// should start from start number, otherwise existing attributes are used.
+        /// <see cref="RichTextSetStyleFlags.SpecifyLevel"/>: specifies that
+        /// <paramref name="specifiedLevel"/> should be used
+        /// as the level for all paragraphs, otherwise the current indentation will be used.
+        /// </remarks>
         public bool PromoteList(
             int promoteBy,
             long startRange,
@@ -1748,6 +1808,35 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Write a bitmap or image at the current insertion point.
+        /// Supply an optional type to use for internal and file storage of the raw data.
+        /// </summary>
+        public bool WriteImage(
+            Image bitmap,
+            BitmapType bitmapType = BitmapType.Png,
+            ITextBoxRichAttr? textAttr = null)
+        {
+            if (bitmap is null)
+                return false;
+            if (textAttr is TextBoxRichAttr s)
+                return NativeControl.WriteImage(bitmap.NativeImage, (int)bitmapType, s.Handle);
+            return NativeControl.WriteImage(bitmap.NativeImage, (int)bitmapType, default);
+        }
+
+        /// <summary>
+        /// Loads an image from a file and writes it at the current insertion point.
+        /// </summary>
+        public bool WriteImage(
+            string filename,
+            BitmapType bitmapType = BitmapType.Png,
+            ITextBoxRichAttr? textAttr = null)
+        {
+            if (textAttr is TextBoxRichAttr s)
+                return NativeControl.WriteImage2(filename, (int)bitmapType, s.Handle);
+            return NativeControl.WriteImage2(filename, (int)bitmapType, default);
+        }
+
+        /// <summary>
         /// Returns the current context menu.
         /// </summary>
         internal IntPtr GetContextMenu()
@@ -1794,14 +1883,6 @@ namespace Alternet.UI
         internal void StoreFocusObject(IntPtr richObj)
         {
             NativeControl.StoreFocusObject(richObj);
-        }
-
-        /// <summary>
-        /// Begins using this font.
-        /// </summary>
-        public bool BeginFont(Font? font)
-        {
-            return NativeControl.BeginFont(font?.NativeFont);
         }
 
         /// <summary>
@@ -2014,6 +2095,15 @@ namespace Alternet.UI
             return NativeControl.GetStyle(position);
         }
 
+        /// <summary>
+        /// Gets the attributes at the given position.
+        /// </summary>
+        /// <remarks>
+        /// This function gets the combined style - that is, the style you see on the
+        /// screen as a result of combining base style, paragraph style and character
+        /// style attributes.
+        /// To get the character or paragraph style alone, use GetUncombinedStyle.
+        /// </remarks>
         internal IntPtr GetRichStyle(long position)
         {
             return NativeControl.GetRichStyle(position);
@@ -2037,13 +2127,21 @@ namespace Alternet.UI
             return NativeControl.SetStyle(start, end, style);
         }
 
+        /// <summary>
+        /// Sets the attributes for the given range.
+        /// </summary>
+        /// <remarks>
+        /// The end point of range is specified as the last character position of the span
+        /// of text, plus one. So, for example, to set the style for a character at
+        /// position 5, use the range (5,6).
+        /// </remarks>
         internal bool SetRichStyle(long start, long end, IntPtr style)
         {
             return NativeControl.SetRichStyle(start, end, style);
         }
 
         /// <summary>
-        /// Sets the attributes for a single object
+        /// Sets the attributes for a single object.
         /// </summary>
         internal void SetStyle(
             IntPtr richObj,
@@ -2063,6 +2161,11 @@ namespace Alternet.UI
             return NativeControl.GetStyleForRange(startRange, endRange);
         }
 
+        /// <summary>
+        /// Gets the attributes common to the specified range.
+        /// Attributes that differ in value within the range will not be included
+        /// in style flags.
+        /// </summary>
         internal IntPtr GetRichStyleForRange(long startRange, long endRange)
         {
             return NativeControl.GetStyleForRange2(startRange, endRange);
@@ -2298,26 +2401,24 @@ namespace Alternet.UI
                 style);
         }
 
-        //!!!!!!!!!!!!!!!!!!!!!!!!!
+        /// <summary>
         /// Sets the properties for the given range, passing flags to determine how the
         /// attributes are set. You can merge properties or replace them.
+        /// </summary>
+        /// <remarks>
         /// The end point of range is specified as the last character position of the span
         /// of text, plus one. So, for example, to set the properties for a character at
         /// position 5, use the range (5,6).
-        /// @a flags may contain a bit list of the following values:
-        /// - wxRICHTEXT_SETSPROPERTIES_NONE: no flag.
-        /// - wxRICHTEXT_SETPROPERTIES_WITH_UNDO: specifies that this operation should be
-        ///   undoable.
-        /// - wxRICHTEXT_SETPROPERTIES_PARAGRAPHS_ONLY: specifies that the properties should only be
-        ///   applied to paragraphs, and not the content.
-        /// - wxRICHTEXT_SETPROPERTIES_CHARACTERS_ONLY: specifies that the properties should only be
-        ///   applied to characters, and not the paragraph.
-        /// - wxRICHTEXT_SETPROPERTIES_RESET: resets (clears) the existing properties before applying
-        ///   the new properties.
-        /// - wxRICHTEXT_SETPROPERTIES_REMOVE: removes the specified properties.
-        /// <summary>
-        /// 
-        /// </summary>
+        /// </remarks>
+        /// <remarks>
+        /// <paramref name="flags"/> may contain a bit list of the following values:
+        /// <see cref="RichTextSetStyleFlags.None"/>,
+        /// <see cref="RichTextSetStyleFlags.WithUndo"/>,
+        /// <see cref="RichTextSetStyleFlags.ParagraphsOnly"/>,
+        /// <see cref="RichTextSetStyleFlags.CharactersOnly"/>,
+        /// <see cref="RichTextSetStyleFlags.Reset"/>,
+        /// <see cref="RichTextSetStyleFlags.Remove"/>.
+        /// </remarks>
         internal bool SetProperties(
             long startRange,
             long endRange,
@@ -2394,49 +2495,6 @@ namespace Alternet.UI
         internal void SetSelection(IntPtr sel)
         {
             NativeControl.SetSelection2(sel);
-        }
-
-        public bool WriteImage(
-            Image bitmap,
-            BitmapType bitmapType = BitmapType.Png)
-        {
-            if (bitmap is null)
-                return false;
-            return NativeControl.WriteImage(
-                bitmap.NativeImage,
-                (int)bitmapType,
-                default);
-        }
-
-        /// <summary>
-        /// Write a bitmap or image at the current insertion point.
-        /// Supply an optional type to use for internal and file storage of the raw data.
-        /// </summary>
-        internal bool WriteImage(
-            Image bitmap,
-            BitmapType bitmapType /*= BitmapType.Png*/,
-            IntPtr textAttr)
-        {
-            if (bitmap is null)
-                return false;
-            return NativeControl.WriteImage(
-                bitmap.NativeImage,
-                (int)bitmapType,
-                textAttr);
-        }
-
-        /// <summary>
-        /// Loads an image from a file and writes it at the current insertion point.
-        /// </summary>
-        internal bool WriteImage(
-            string filename,
-            BitmapType bitmapType = BitmapType.Png,
-            IntPtr textAttr = default)
-        {
-            return NativeControl.WriteImage2(
-                filename,
-                (int)bitmapType,
-                textAttr);
         }
 
         /// <summary>
