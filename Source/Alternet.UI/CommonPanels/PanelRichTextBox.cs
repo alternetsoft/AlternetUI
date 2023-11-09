@@ -14,6 +14,9 @@ namespace Alternet.UI
     public class PanelRichTextBox : PanelAuiManager
     {
         private RichTextBox? textBox;
+        private int buttonIdNew;
+        private int buttonIdOpen;
+        private int buttonIdSave;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PanelRichTextBox"/> class.
@@ -45,10 +48,20 @@ namespace Alternet.UI
 
             var images = KnownSvgImages.GetForSize(imageSize);
 
-            var buttonIdBack = toolbar.AddTool(
-                CommonStrings.Default.ButtonBack,
-                images.ImgBrowserBack,
-                CommonStrings.Default.ButtonBack);
+            buttonIdNew = toolbar.AddTool(
+                CommonStrings.Default.ButtonNew,
+                images.ImageFileNew,
+                CommonStrings.Default.ButtonNew);
+
+            buttonIdOpen = toolbar.AddTool(
+                CommonStrings.Default.ButtonOpen,
+                images.ImageFileOpen,
+                CommonStrings.Default.ButtonOpen);
+
+            buttonIdSave = toolbar.AddTool(
+                CommonStrings.Default.ButtonSave,
+                images.ImageFileSave,
+                CommonStrings.Default.ButtonSave);
 
             toolbar.AddLabel("Work in progress...");
 
@@ -71,6 +84,8 @@ namespace Alternet.UI
 
         private void Initialize()
         {
+            DefaultRightPaneBestSize = new(150, 200);
+            DefaultRightPaneMinSize = new(150, 200);
             TextBox.HasBorder = false;
             DefaultToolbarStyle &=
                 ~(AuiToolbarCreateStyle.Text | AuiToolbarCreateStyle.HorzLayout);

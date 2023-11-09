@@ -98,7 +98,8 @@ namespace ControlsSample
             // ==== multiLineTextBox
 
             multiLineTextBox.AutoUrl = true;
-            // multiLineTextBox.AutoUrlOpen = true;
+            if(!Application.IsMacOs)
+                multiLineTextBox.AutoUrlOpen = true;
             multilineParent.Children.Prepend(multiLineTextBox);
             multiLineTextBox.Text = LoremIpsum;
             multiLineTextBox.TextUrl += MultiLineTextBox_TextUrl;
@@ -141,6 +142,7 @@ namespace ControlsSample
 
             // ==== richEdit
 
+            richPanel.ActionsControl.Required();
             richPanel.SuggestedSize = new Size(500, 400); // how without it?
             richPanel.Parent = tab3;
             // richEdit.CurrentPositionChanged += TextBox_CurrentPositionChanged;

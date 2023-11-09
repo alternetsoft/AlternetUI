@@ -71,6 +71,10 @@
     <None Remove="Resources\Svg\alternet-ellipsis-vertical.svg" />
     <None Remove="Resources\Svg\alternet-ellipsis.svg" />
     <None Remove="Resources\Svg\alternet-eraser.svg" />
+    <None Remove="Resources\Svg\alternet-file-open.svg" />
+    <None Remove="Resources\Svg\alternet-file.svg" />
+    <None Remove="Resources\Svg\alternet-floppy-disk.svg" />
+    <None Remove="Resources\Svg\alternet-folder-ellipsis.svg" />
     <None Remove="Resources\Svg\alternet-house.svg" />
     <None Remove="Resources\Svg\alternet-minus.svg" />
     <None Remove="Resources\Svg\alternet-plus.svg" />
@@ -102,8 +106,6 @@
     <None Remove="Resources\Svg\circle-xmark.svg" />
     <None Remove="Resources\Svg\copy.svg" />
     <None Remove="Resources\Svg\exclamation.svg" />
-    <None Remove="Resources\Svg\file.svg" />
-    <None Remove="Resources\Svg\floppy-disk.svg" />
     <None Remove="Resources\Svg\folder.svg" />
     <None Remove="Resources\Svg\gear.svg" />
     <None Remove="Resources\Svg\genderless.svg" />
@@ -146,6 +148,8 @@
     <EmbeddedResource Include="Resources\Svg\alternet-circle-exclamation.svg" />
     <EmbeddedResource Include="Resources\Svg\alternet-circle-info.svg" />
     <EmbeddedResource Include="Resources\Svg\alternet-circle-xmark.svg" />
+    <EmbeddedResource Include="Resources\Svg\alternet-file-open.svg" />
+    <EmbeddedResource Include="Resources\Svg\alternet-folder-ellipsis.svg" />
     <EmbeddedResource Include="Resources\Svg\alternet-zoomin.svg" />
     <EmbeddedResource Include="Resources\Svg\alternet-zoomout.svg" />
     <EmbeddedResource Include="Resources\Svg\angle-down.svg" />
@@ -175,8 +179,8 @@
     <EmbeddedResource Include="Resources\Svg\alternet-ellipsis.svg" />
     <EmbeddedResource Include="Resources\Svg\alternet-eraser.svg" />
     <EmbeddedResource Include="Resources\Svg\exclamation.svg" />
-    <EmbeddedResource Include="Resources\Svg\file.svg" />
-    <EmbeddedResource Include="Resources\Svg\floppy-disk.svg" />
+    <EmbeddedResource Include="Resources\Svg\alternet-file.svg" />
+    <EmbeddedResource Include="Resources\Svg\alternet-floppy-disk.svg" />
     <EmbeddedResource Include="Resources\Svg\folder.svg" />
     <EmbeddedResource Include="Resources\Svg\gear.svg" />
     <EmbeddedResource Include="Resources\Svg\genderless.svg" />
