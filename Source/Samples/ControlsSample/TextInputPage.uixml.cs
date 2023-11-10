@@ -173,13 +173,23 @@ namespace ControlsSample
 
         private void RichPanel_FileSaveClick(object? sender, EventArgs e)
         {
-            Application.Log("File.Save");
-            if (!richPanel.TextBox.SaveFile("e:/result.txt", RichTextFileType.Text))
-                Application.Log("Error saving TXT file.");
-            if(!richPanel.TextBox.SaveFile("e:/result.html", RichTextFileType.Html))
-                Application.Log("Error saving HTML file.");
-            if(!richPanel.TextBox.SaveFile("e:/result.xml", RichTextFileType.Xml))
-                Application.Log("Error saving XML file.");
+            const string FileDialogFilter =
+                "HTML Files (*.html;*.htm)|*.html;*.htm|"+
+                "TXT Files (*.txt)|*.txt|" +
+                "XML Files (*.xml)|*.xml";
+
+            using SaveFileDialog dialog = new()
+            {
+                Filter = FileDialogFilter,
+            };
+
+            if (dialog.ShowModal(this) != ModalResult.Accepted)
+                return;
+
+            if (richPanel.TextBox.SaveFile(dialog.FileName!, RichTextFileType.Any))
+                Application.Log($"Saved to file: {dialog.FileName}");
+            else
+                Application.Log($"Error saving to file: {dialog.FileName}");
         }
 
         private void RichPanel_FileOpenClick(object? sender, EventArgs e)
