@@ -93,8 +93,6 @@ namespace Alternet.UI
             var net = $"Net: {Environment.Version}";
             var dpi = $"DPI: {Application.FirstWindow()?.GetDPI().Width}";
             Application.Log($"{net}, {wxWidgets}, {dpi}");
-
-            SystemSettings.LogSystemFonts();
         }
 
         /// <summary>
