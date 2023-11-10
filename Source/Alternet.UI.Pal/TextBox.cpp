@@ -303,7 +303,7 @@ namespace Alternet::UI
 
 		_eventUrl = wxStr(url);
 
-		Application::Log("OnTextUrl.GetString:" + event.GetString());
+		// Application::Log("OnTextUrl.GetString:" + event.GetString());
 
 		RaiseEvent(TextBoxEvent::TextUrl);
 	}
