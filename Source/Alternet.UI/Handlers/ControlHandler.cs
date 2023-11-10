@@ -1158,6 +1158,14 @@ namespace Alternet.UI
                 NativeControl.ToolTip = Control.ToolTip;
         }
 
+        private void ApplyFont()
+        {
+            if (NativeControl != null)
+                NativeControl.Font = Control.Font?.NativeFont;
+
+            Invalidate();
+        }
+
         private void Control_FontChanged(object? sender, EventArgs e)
         {
             ApplyFont();
@@ -1349,14 +1357,6 @@ namespace Alternet.UI
                 NativeControl.ForegroundColor = GetBrushColor(Control.Foreground);
             Invalidate();
         }*/
-
-        private void ApplyFont()
-        {
-            if (NativeControl != null)
-                NativeControl.Font = Control.Font?.NativeFont;
-
-            Invalidate();
-        }
 
         /*private void ApplyBorderColor()
         {
