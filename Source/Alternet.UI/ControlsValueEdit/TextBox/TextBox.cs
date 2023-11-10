@@ -2353,37 +2353,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Handles default rich text editor keys.
-        /// </summary>
-        /// <param name="e">Event arguments.</param>
-        /// <remarks>
-        /// You can use this method in the <see cref="UIElement.KeyDown"/> event handlers.
-        /// </remarks>
-        public virtual void HandleRichEditKeys(KeyEventArgs e)
-        {
-            if (KeyInfo.Run(KnownKeys.RichEditKeys.SelectAll, e, SelectAll))
-                return;
-            if (KeyInfo.Run(KnownKeys.RichEditKeys.ToggleBold, e, ToggleSelectionBold))
-                return;
-            if (KeyInfo.Run(KnownKeys.RichEditKeys.ToggleItalic, e, ToggleSelectionItalic))
-                return;
-            if (KeyInfo.Run(KnownKeys.RichEditKeys.ToggleUnderline, e, ToggleSelectionUnderline))
-                return;
-            if (KeyInfo.Run(KnownKeys.RichEditKeys.ToggleStrikethrough, e, ToggleSelectionStrikethrough))
-                return;
-            if (KeyInfo.Run(KnownKeys.RichEditKeys.LeftAlign, e, SelectionAlignLeft))
-                return;
-            if (KeyInfo.Run(KnownKeys.RichEditKeys.CenterAlign, e, SelectionAlignCenter))
-                return;
-            if (KeyInfo.Run(KnownKeys.RichEditKeys.RightAlign, e, SelectionAlignRight))
-                return;
-            if (KeyInfo.Run(KnownKeys.RichEditKeys.Justify, e, SelectionJustify))
-                return;
-            if (KeyInfo.Run(KnownKeys.RichEditKeys.ClearTextFormatting, e, ClearTextFormatting))
-                return;
-        }
-
-        /// <summary>
         /// Sets text alignment in the current position to <see cref="TextBoxTextAttrAlignment.Right"/>
         /// </summary>
         public virtual void SelectionAlignRight()

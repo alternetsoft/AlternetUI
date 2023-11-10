@@ -282,6 +282,81 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Handles default rich text editor keys.
+        /// </summary>
+        /// <param name="e">Event arguments.</param>
+        /// <remarks>
+        /// You can use this method in the <see cref="UIElement.KeyDown"/> event handlers.
+        /// </remarks>
+        public virtual bool HandleAdditionalKeys(KeyEventArgs e)
+        {
+            void ToggleSelectionBold()
+            {
+
+            }
+
+            void ToggleSelectionItalic()
+            {
+
+            }
+
+            void ToggleSelectionUnderline()
+            {
+
+            }
+
+            void ToggleSelectionStrikethrough()
+            {
+
+            }
+
+            void SelectionAlignLeft()
+            {
+
+            }
+
+            void SelectionAlignCenter()
+            {
+
+            }
+
+            void SelectionAlignRight()
+            {
+
+            }
+
+            void SelectionJustify()
+            {
+
+            }
+
+            void ClearTextFormatting()
+            {
+
+            }
+
+            if (KeyInfo.Run(KnownKeys.RichEditKeys.ToggleBold, e, ToggleSelectionBold))
+                return true;
+            if (KeyInfo.Run(KnownKeys.RichEditKeys.ToggleItalic, e, ToggleSelectionItalic))
+                return true;
+            if (KeyInfo.Run(KnownKeys.RichEditKeys.ToggleUnderline, e, ToggleSelectionUnderline))
+                return true;
+            if (KeyInfo.Run(KnownKeys.RichEditKeys.ToggleStrikethrough, e, ToggleSelectionStrikethrough))
+                return true;
+            if (KeyInfo.Run(KnownKeys.RichEditKeys.LeftAlign, e, SelectionAlignLeft))
+                return true;
+            if (KeyInfo.Run(KnownKeys.RichEditKeys.CenterAlign, e, SelectionAlignCenter))
+                return true;
+            if (KeyInfo.Run(KnownKeys.RichEditKeys.RightAlign, e, SelectionAlignRight))
+                return true;
+            if (KeyInfo.Run(KnownKeys.RichEditKeys.Justify, e, SelectionJustify))
+                return true;
+            if (KeyInfo.Run(KnownKeys.RichEditKeys.ClearTextFormatting, e, ClearTextFormatting))
+                return true;
+            return false;
+        }
+
+        /// <summary>
         ///     Raises the <see cref="TextUrl"/> event.
         /// </summary>
         /// <param name="e">
