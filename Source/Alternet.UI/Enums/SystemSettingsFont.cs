@@ -24,35 +24,35 @@ namespace Alternet.UI
         /// <summary>
         /// Windows fixed-pitch (monospaced) font.
         /// </summary>
-        AnsiFixedFont,
+        AnsiFixedFont = 11,
 
         /// <summary>
         /// Windows variable-pitch (proportional) font.
         /// </summary>
-        AnsiVarFont,
+        AnsiVarFont = 12,
 
         /// <summary>
         /// System font. By default, the system uses the system font to draw menus,
         /// dialog box controls, and text.
         /// </summary>
-        SystemFont,
+        SystemFont = 13,
 
         /// <summary>
         /// Device-dependent font.
         /// </summary>
-        DeviceDefaultFont,
+        DeviceDefaultFont = 14,
 
-        /// <summary>
+        /*/// <summary>
         /// Don't use: this is here just to make the values of enum elements
         /// coincide with the corresponding msw constants
         /// </summary>
-        DefaultPalette,
+        DefaultPalette = 15,*/
 
-        /// <summary>
+        /*/// <summary>
         /// Don't use: MSDN says that this is a stock object provided only
         /// for compatibility with 16-bit windows versions earlier than 3.0!
         /// </summary>
-        SystemFixedFont,
+        SystemFixedFont = 16,*/
 
         /// <summary>
         /// Default font for user interface objects such as menus and dialog boxes.
@@ -61,6 +61,6 @@ namespace Alternet.UI
         /// Note that with modern GUIs nothing guarantees that the same font is used for
         /// all GUI elements, so some controls might use a different font by default.
         /// </remarks>
-        DefaultGuiFont,
+        DefaultGuiFont = 17,
     }
 }

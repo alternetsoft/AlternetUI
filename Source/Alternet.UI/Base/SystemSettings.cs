@@ -55,7 +55,8 @@ namespace Alternet.UI
         /// <param name="systemFont">Font identifier.</param>
         public static Font GetFont(SystemSettingsFont systemFont)
         {
-            return Font.Default;
+            var fnt = Native.WxOtherFactory.SystemSettingsGetFont((int)systemFont);
+            return new Font(fnt);
         }
 
         /// <summary>

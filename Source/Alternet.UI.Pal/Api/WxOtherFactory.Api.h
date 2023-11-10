@@ -316,6 +316,11 @@ ALTERNET_UI_API c_bool WxOtherFactory_SystemSettingsHasFeature_(int index)
     return WxOtherFactory::SystemSettingsHasFeature(index);
 }
 
+ALTERNET_UI_API Font* WxOtherFactory_SystemSettingsGetFont_(int index)
+{
+    return WxOtherFactory::SystemSettingsGetFont(index);
+}
+
 ALTERNET_UI_API Color_C WxOtherFactory_SystemSettingsGetColor_(int index)
 {
     return WxOtherFactory::SystemSettingsGetColor(index);
