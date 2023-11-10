@@ -1175,6 +1175,12 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets real font value.
+        /// </summary>
+        /// <remarks>
+        /// Returns font event if <see cref="Font"/> property is <c>null</c>.
+        /// </remarks>
         public virtual Font? RealFont
         {
             get
