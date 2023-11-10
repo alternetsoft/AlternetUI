@@ -174,6 +174,16 @@ namespace ControlsSample
         private void RichPanel_FileSaveClick(object? sender, EventArgs e)
         {
             Application.Log("File.Save");
+            if (!richPanel.TextBox.SaveFile("e:/result.txt", RichTextFileType.Text))
+                Application.Log("Error saving TXT file.");
+            if(!richPanel.TextBox.SaveFile("e:/result.html", RichTextFileType.Html))
+                Application.Log("Error saving HTML file.");
+            if(!richPanel.TextBox.SaveFile("e:/result.xml", RichTextFileType.Xml))
+                Application.Log("Error saving XML file.");
+            if(!richPanel.TextBox.SaveFile("e:/result.rtf", RichTextFileType.Rtf))
+                Application.Log("Error saving RTF file.");
+            if(!richPanel.TextBox.SaveFile("e:/result.pdf", RichTextFileType.Pdf))
+                Application.Log("Error saving PDF file.");
         }
 
         private void RichPanel_FileOpenClick(object? sender, EventArgs e)
