@@ -89,6 +89,10 @@ namespace Alternet::UI
 
             wxLog::DoLogRecord(level, msg, info);
         }
+
+        void DoLogText(const wxString& WXUNUSED(msg)) override
+        {
+        }
     };
 
 }
