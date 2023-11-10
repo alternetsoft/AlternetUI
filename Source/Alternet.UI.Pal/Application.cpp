@@ -241,7 +241,7 @@ wxDEFINE_EVENT( wxEVT_HOTKEY, wxKeyEvent );
             throwExInvalidOp;
         s_current = this;
 
-#ifdef __WXMSW__
+#ifdef __WXMSW__    
         windowsVisualThemeSupportCookie = WindowsVisualThemeSupport::GetInstance().Enable();
 #endif
 
