@@ -283,7 +283,7 @@ namespace Alternet.UI
             control ??= Application.FirstWindow();
             Size? dpi;
             if (control is null)
-                dpi = Window.DefaultDPI;
+                dpi = Window.DefaultDPI ?? Display.DefaultDPI;
             else
                 dpi = control.GetDPI();
             if (dpi is null)
