@@ -124,11 +124,12 @@ namespace Alternet.UI
                 {
                     if (selectedTab == tab)
                     {
-                        Application.Log($"HeaderControl.RealFont: {tab.HeaderControl.RealFont?.ToInfoString()}");
-                        tab.HeaderControl.Font = Font.Default.AsBold;
+                        tab.HeaderControl.IsBold = true;
                     }
                     else
-                        tab.HeaderControl.Font = null;
+                    {
+                        tab.HeaderControl.IsBold = false;
+                    }
                 }
             }
         }
