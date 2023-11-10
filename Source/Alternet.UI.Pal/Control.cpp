@@ -1096,6 +1096,31 @@ namespace Alternet::UI
         _flags.Set(ControlFlags::DoNotDestroyWxWindow, value);
     }
 
+    bool Control::GetIsBold()
+    {
+        auto w = GetWxWindow();
+        auto weight = w->GetFont().GetWeight();
+        if (weight > wxFontWeight::wxFONTWEIGHT_NORMAL)
+            return true;
+        else
+            return false;
+    }
+    
+    void Control::SetIsBold(bool value)
+    {
+        if (GetIsBold() == value)
+            return;
+        auto w = GetWxWindow();
+        if (value)
+            w->SetFont(w->GetFont().Bold());
+        else
+        {
+            auto font = w->GetFont();
+            font.SetWeight(wxFONTWEIGHT_NORMAL);
+            w->SetFont(font);
+        }
+    }
+
     Font* Control::GetFont()
     {
         auto w = GetWxWindow();

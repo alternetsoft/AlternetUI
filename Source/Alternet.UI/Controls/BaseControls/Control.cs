@@ -1192,6 +1192,23 @@ namespace Alternet.UI
             }
         }
 
+        public virtual bool IsBold
+        {
+            get
+            {
+                if (Handler.NativeControl is null)
+                    return false;
+                return Handler.NativeControl.IsBold;
+            }
+
+            set
+            {
+                if (Handler.NativeControl is null)
+                    return;
+                Handler.NativeControl.IsBold = value;
+            }
+        }
+
         /// <summary>
         /// Gets or sets the vertical alignment applied to this control when it
         /// is positioned within a parent control.

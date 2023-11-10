@@ -24,6 +24,21 @@ namespace Alternet.UI.Native
         {
         }
         
+        public bool IsBold
+        {
+            get
+            {
+                CheckDisposed();
+                return NativeApi.Control_GetIsBold_(NativePointer);
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.Control_SetIsBold_(NativePointer, value);
+            }
+        }
+        
         public bool AcceptsFocus
         {
             get
@@ -925,6 +940,12 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Control_SetEventCallback_(ControlEventCallbackType callback);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool Control_GetIsBold_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Control_SetIsBold_(IntPtr obj, bool value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool Control_GetAcceptsFocus_(IntPtr obj);

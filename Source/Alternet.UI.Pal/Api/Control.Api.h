@@ -11,6 +11,16 @@
 
 using namespace Alternet::UI;
 
+ALTERNET_UI_API c_bool Control_GetIsBold_(Control* obj)
+{
+    return obj->GetIsBold();
+}
+
+ALTERNET_UI_API void Control_SetIsBold_(Control* obj, c_bool value)
+{
+    obj->SetIsBold(value);
+}
+
 ALTERNET_UI_API c_bool Control_GetAcceptsFocus_(Control* obj)
 {
     return obj->GetAcceptsFocus();
