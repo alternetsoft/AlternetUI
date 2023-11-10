@@ -50,6 +50,32 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets a standard system font.
+        /// </summary>
+        /// <param name="systemFont">Font identifier.</param>
+        public static Font GetFont(SystemSettingsFont systemFont)
+        {
+            return Font.Default;
+        }
+
+        /// <summary>
+        /// Logs all fonts enumerated in <see cref="SystemSettingsFont"/>.
+        /// </summary>
+        public static void LogSystemFonts()
+        {
+            Application.Log($"Default font: {Font.Default.ToInfoString()}");
+            Application.Log($"Bold font: {Font.Default.AsBold.ToInfoString()}");
+
+            var values = Enum.GetValues(typeof(SystemSettingsFont));
+            foreach(var value in values)
+            {
+                var font = GetFont((SystemSettingsFont)value);
+
+                Application.Log($"Font {value}: {font.ToInfoString()}");
+            }
+        }
+
+        /// <summary>
         /// Returns <c>true</c> if the port has certain feature.
         /// </summary>
         /// <param name="index">System feature identifier.</param>
