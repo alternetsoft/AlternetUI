@@ -6,6 +6,7 @@ namespace Alternet::UI
 	TextBox::TextBox() :
 		_text(*this, u"", &Control::IsWxWindowCreated, &TextBox::RetrieveText, &TextBox::ApplyText)
 	{
+		bindScrollEvents = false;
 		GetDelayedValues().Add(&_text);
 	}
 
