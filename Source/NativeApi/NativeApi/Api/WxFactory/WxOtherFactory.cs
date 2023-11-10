@@ -113,6 +113,12 @@ namespace NativeApi.Api
 
         // =================== Caret
 
+        // blink time is measured in milliseconds and is the time elapsed
+        // between 2 inversions of the caret (blink time of the caret is common
+        // to all carets in the application, so these functions are static)
+        public static int CaretGetBlinkTime() => default;
+        public static void CaretSetBlinkTime(int milliseconds) { }
+
         public static void DeleteCaret(IntPtr handle) { }
 
         // Get the caret position(in pixels).

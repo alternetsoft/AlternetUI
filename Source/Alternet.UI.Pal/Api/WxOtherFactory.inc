@@ -32,6 +32,8 @@ static void* CreateCursor4(Image* image);
 static void DeleteCursor(void* handle);
 static bool CursorIsOk(void* handle);
 static Int32Point CursorGetHotSpot(void* handle);
+static int CaretGetBlinkTime();
+static void CaretSetBlinkTime(int milliseconds);
 static void DeleteCaret(void* handle);
 static Int32Point CaretGetPosition(void* handle);
 static Int32Size CaretGetSize(void* handle);

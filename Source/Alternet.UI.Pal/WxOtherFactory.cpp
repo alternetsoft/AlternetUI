@@ -380,6 +380,16 @@ namespace Alternet::UI
 		((wxCaret*)handle)->Hide();
 	}
 
+	int WxOtherFactory::CaretGetBlinkTime()
+	{
+		return wxCaret::GetBlinkTime();
+	}
+	
+	void WxOtherFactory::CaretSetBlinkTime(int milliseconds)
+	{
+		wxCaret::SetBlinkTime(milliseconds);
+	}
+
 	bool WxOtherFactory::CaretIsOk(void* handle)
 	{
 		return ((wxCaret*)handle)->IsOk();

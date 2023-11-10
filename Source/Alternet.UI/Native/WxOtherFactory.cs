@@ -176,6 +176,16 @@ namespace Alternet.UI.Native
             return NativeApi.WxOtherFactory_CursorGetHotSpot_(handle);
         }
         
+        public static int CaretGetBlinkTime()
+        {
+            return NativeApi.WxOtherFactory_CaretGetBlinkTime_();
+        }
+        
+        public static void CaretSetBlinkTime(int milliseconds)
+        {
+            NativeApi.WxOtherFactory_CaretSetBlinkTime_(milliseconds);
+        }
+        
         public static void DeleteCaret(System.IntPtr handle)
         {
             NativeApi.WxOtherFactory_DeleteCaret_(handle);
@@ -439,6 +449,12 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern Alternet.Drawing.Int32Point WxOtherFactory_CursorGetHotSpot_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int WxOtherFactory_CaretGetBlinkTime_();
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void WxOtherFactory_CaretSetBlinkTime_(int milliseconds);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void WxOtherFactory_DeleteCaret_(System.IntPtr handle);

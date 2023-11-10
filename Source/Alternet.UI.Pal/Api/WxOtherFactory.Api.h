@@ -166,6 +166,16 @@ ALTERNET_UI_API Int32Point_C WxOtherFactory_CursorGetHotSpot_(void* handle)
     return WxOtherFactory::CursorGetHotSpot(handle);
 }
 
+ALTERNET_UI_API int WxOtherFactory_CaretGetBlinkTime_()
+{
+    return WxOtherFactory::CaretGetBlinkTime();
+}
+
+ALTERNET_UI_API void WxOtherFactory_CaretSetBlinkTime_(int milliseconds)
+{
+    WxOtherFactory::CaretSetBlinkTime(milliseconds);
+}
+
 ALTERNET_UI_API void WxOtherFactory_DeleteCaret_(void* handle)
 {
     WxOtherFactory::DeleteCaret(handle);
