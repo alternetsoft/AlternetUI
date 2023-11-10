@@ -42,6 +42,18 @@ namespace Alternet.UI
         public event UrlEventHandler? TextUrl;
 
         /// <summary>
+        /// Gets or sets a value indicating whether urls in the input text
+        /// are opened in the default browser.
+        /// </summary>
+        public virtual bool AutoUrlOpen { get; set; } = TextBox.DefaultAutoUrlOpen;
+
+        /// <summary>
+        /// Gets or sets <see cref="ModifierKeys"/> used when clicked url is autoimatically opened
+        /// in the browser when <see cref="AutoUrlOpen"/> is <c>true</c>.
+        /// </summary>
+        public virtual ModifierKeys AutoUrlModifiers { get; set; } = TextBox.DefaultAutoUrlModifiers;
+
+        /// <summary>
         /// Gets or sets the text contents of the control.
         /// </summary>
         /// <value>A string containing the text contents of the control. The
@@ -280,6 +292,11 @@ namespace Alternet.UI
             TextUrl?.Invoke(this, e);
             if (e.Cancel)
                 return;
+            if (AutoUrlOpen && e.IsValidUrl)
+            {
+                if (e.Modifiers == AutoUrlModifiers)
+                    AppUtils.OpenUrl(e.Url!);
+            }
         }
 
         /// <summary>

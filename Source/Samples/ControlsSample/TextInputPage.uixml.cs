@@ -147,6 +147,8 @@ namespace ControlsSample
             richPanel.Parent = tab3;
             // richEdit.CurrentPositionChanged += TextBox_CurrentPositionChanged;
             richPanel.TextBox.KeyDown += RichEdit_KeyDown;
+            if (!Application.IsMacOs)
+                richPanel.TextBox.AutoUrlOpen = true;
             richPanel.TextBox.TextUrl += MultiLineTextBox_TextUrl;
             richPanel.TextBox.EnterPressed += RichTextBox_EnterPressed;
             // richEdit.TextUrl += MultiLineTextBox_TextUrl;
@@ -292,6 +294,8 @@ namespace ControlsSample
         private void MultiLineTextBox_TextUrl(object? sender, UrlEventArgs e)
         {
             site?.LogEvent("TextBox: Url clicked =>" + e.Url);
+            if(e.Modifiers != ModifierKeys.Control)
+                site?.LogEvent("Use Ctrl+Click to open in the default browser" + e.Url);
         }
 
         public IPageSite? Site
