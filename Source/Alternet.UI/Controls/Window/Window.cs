@@ -193,7 +193,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets DPI of the first created window.
         /// </summary>
-        public static Size? DefaultDPI { get; set; }
+        public static Size? DefaultDPI { get; internal set; }
 
         /// <summary>
         /// Gets a value indicating whether the window is the currently active window for
