@@ -47,7 +47,8 @@ namespace NativeApi.Api
         // hiding the tooltip automatically entirely by passing 0 in this parameter
         //(but doing this can result in native version not being used).
         // Optionally specify a show delay.
-        public static void RichToolTipSetTimeout(IntPtr handle, uint milliseconds, uint millisecondsShowdelay = 0) { }
+        public static void RichToolTipSetTimeout(IntPtr handle, uint milliseconds,
+            uint millisecondsShowdelay = 0) { }
 
         // Choose the tip kind, possibly none. By default the tip is positioned
         // automatically, as if wxTipKind_Auto was used.
@@ -224,7 +225,9 @@ namespace NativeApi.Api
         // IsDark() if there is no platform-specific way to determine whether a
         // dark mode is being used.
         public static bool SystemAppearanceIsUsingDarkBackground() => default;
+        
         // ===================
+
     }
 }
 
