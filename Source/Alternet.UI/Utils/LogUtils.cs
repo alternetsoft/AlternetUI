@@ -94,8 +94,7 @@ namespace Alternet.UI
             var dpi = $"DPI: {Application.FirstWindow()?.GetDPI().Width}";
             Application.Log($"{net}, {wxWidgets}, {dpi}");
 
-            Application.Log($"Default font: {Font.Default.ToInfoString()}");
-            Application.Log($"Bold font: {Font.Default.AsBold.ToInfoString()}");
+            SystemSettings.LogSystemFonts();
         }
 
         /// <summary>

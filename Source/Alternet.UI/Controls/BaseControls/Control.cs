@@ -1175,6 +1175,17 @@ namespace Alternet.UI
             }
         }
 
+        public virtual Font? RealFont
+        {
+            get
+            {
+                var fnt = Handler.NativeControl?.Font;
+                if (fnt is null)
+                    return null;
+                return new Font(fnt);
+            }
+        }
+
         /// <summary>
         /// Gets or sets the vertical alignment applied to this control when it
         /// is positioned within a parent control.
