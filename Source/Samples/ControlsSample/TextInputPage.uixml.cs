@@ -147,8 +147,41 @@ namespace ControlsSample
             richPanel.Parent = tab3;
             // richEdit.CurrentPositionChanged += TextBox_CurrentPositionChanged;
             richPanel.TextBox.KeyDown += RichEdit_KeyDown;
+            richPanel.TextBox.TextUrl += MultiLineTextBox_TextUrl;
+            richPanel.TextBox.EnterPressed += RichTextBox_EnterPressed;
             // richEdit.TextUrl += MultiLineTextBox_TextUrl;
+            richPanel.FileNewClick += RichPanel_FileNewClick;
+            richPanel.FileOpenClick += RichPanel_FileOpenClick;
+            richPanel.FileSaveClick += RichPanel_FileSaveClick;
             InitRichEdit2();
+            richPanel.TextBox.TextChanged += RichTextBox_TextChanged;
+        }
+
+        private void RichTextBox_TextChanged(object? sender, EventArgs e)
+        {
+            var s = "RichTextBox Text Changed.";
+            Application.LogReplace(s,s);
+        }
+
+        private void RichTextBox_EnterPressed(object? sender, EventArgs e)
+        {
+            var s = "RichTextBox Enter pressed.";
+            Application.LogReplace(s, s);
+        }
+
+        private void RichPanel_FileSaveClick(object? sender, EventArgs e)
+        {
+            Application.Log("File.Save");
+        }
+
+        private void RichPanel_FileOpenClick(object? sender, EventArgs e)
+        {
+            Application.Log("File.Open");
+        }
+
+        private void RichPanel_FileNewClick(object? sender, EventArgs e)
+        {
+            Application.Log("File.New");
         }
 
         internal string GetFontStatus()

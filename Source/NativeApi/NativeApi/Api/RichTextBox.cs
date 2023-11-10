@@ -14,6 +14,12 @@ namespace NativeApi.Api
     {
         public bool HasBorder { get; set; }
 
+        public string ReportedUrl { get; }
+
+        public event EventHandler? TextChanged;
+        public event EventHandler? TextEnter;
+        public event EventHandler? TextUrl;
+
         public string GetRange(long from, long to) => default;
 
         // Returns the length of the specified line in characters.

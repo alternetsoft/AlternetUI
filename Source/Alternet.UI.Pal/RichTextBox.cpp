@@ -44,8 +44,53 @@ namespace Alternet::UI
 			wxDefaultSize,
 			style);
 
-		//result->Bind(wxEVT_TEXT, &RichTextBox::OnTextChanged, this);
+		result->Bind(wxEVT_TEXT, &RichTextBox::OnTextChanged, this);
+		result->Bind(wxEVT_TEXT_ENTER, &RichTextBox::OnTextEnter, this);
+		result->Bind(wxEVT_TEXT_URL, &RichTextBox::OnTextUrl, this);
+
 		return result;
+	}
+
+	string RichTextBox::GetReportedUrl()
+	{
+		return _eventUrl;
+	}
+
+	void RichTextBox::OnTextUrl(wxTextUrlEvent& event)
+	{
+		event.Skip();
+		const wxMouseEvent& ev = event.GetMouseEvent();
+
+		// filter out mouse moves, too many of them
+		if (ev.Moving())
+			return;
+
+	/*	if (!ev.LeftDown())
+			return;*/
+/*
+		long start = event.GetURLStart();
+		long end = event.GetURLEnd();
+		long delta = end - start;
+  */
+		/*LogEvent(event);*/
+
+	/*	auto url = GetTextCtrl()->GetValue().Mid(start, delta).Clone();*/
+
+		_eventUrl = wxStr(event.GetString());
+
+		RaiseEvent(RichTextBoxEvent::TextUrl);
+	}
+
+	void RichTextBox::OnTextEnter(wxCommandEvent& event)
+	{
+		event.Skip();
+		RaiseEvent(RichTextBoxEvent::TextEnter);
+	}
+
+	void RichTextBox::OnTextChanged(wxCommandEvent& event)
+	{
+		event.Skip();
+		RaiseEvent(RichTextBoxEvent::TextChanged);
 	}
 
 	wxRichTextCtrl* RichTextBox::GetTextCtrl()
@@ -65,7 +110,9 @@ namespace Alternet::UI
 			auto window = GetWxWindow();
 			if (window != nullptr)
 			{
-				// window->Unbind(wxEVT_TEXT, &TextBox::OnTextChanged, this);
+				window->Unbind(wxEVT_TEXT, &RichTextBox::OnTextChanged, this);
+				window->Unbind(wxEVT_TEXT_ENTER, &RichTextBox::OnTextEnter, this);
+				window->Unbind(wxEVT_TEXT_URL, &RichTextBox::OnTextUrl, this);
 			}
 		}
 	}

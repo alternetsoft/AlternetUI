@@ -1,0 +1,10 @@
+- Rich Edit events
+https://docs.wxwidgets.org/3.2/classwx_rich_text_event.html
+
+Richedit internal methods
+
+wxTextBoxAttr 
+https://docs.wxwidgets.org/3.2/classwx_text_box_attr.html
+
+wxRichTextHTMLHandler
+https://docs.wxwidgets.org/3.2/classwx_rich_text_h_t_m_l_handler.html

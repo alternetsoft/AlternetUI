@@ -25,6 +25,51 @@ ALTERNET_UI_API void RichTextBox_SetHasBorder_(RichTextBox* obj, c_bool value)
     obj->SetHasBorder(value);
 }
 
+ALTERNET_UI_API char16_t* RichTextBox_GetReportedUrl_(RichTextBox* obj)
+{
+    return AllocPInvokeReturnString(obj->GetReportedUrl());
+}
+
+ALTERNET_UI_API int64_t RichTextBox_DeleteSelectedContent_(RichTextBox* obj)
+{
+    return obj->DeleteSelectedContent();
+}
+
+ALTERNET_UI_API c_bool RichTextBox_StartCellSelection_(RichTextBox* obj, void* table, void* newCell)
+{
+    return obj->StartCellSelection(table, newCell);
+}
+
+ALTERNET_UI_API c_bool RichTextBox_ScrollIntoView_(RichTextBox* obj, int64_t position, int keyCode)
+{
+    return obj->ScrollIntoView(position, keyCode);
+}
+
+ALTERNET_UI_API void RichTextBox_SetCaretPosition_(RichTextBox* obj, int64_t position, c_bool showAtLineStart)
+{
+    obj->SetCaretPosition(position, showAtLineStart);
+}
+
+ALTERNET_UI_API int64_t RichTextBox_GetCaretPosition_(RichTextBox* obj)
+{
+    return obj->GetCaretPosition();
+}
+
+ALTERNET_UI_API int64_t RichTextBox_GetAdjustedCaretPosition_(RichTextBox* obj, int64_t caretPos)
+{
+    return obj->GetAdjustedCaretPosition(caretPos);
+}
+
+ALTERNET_UI_API void RichTextBox_MoveCaretForward_(RichTextBox* obj, int64_t oldPosition)
+{
+    obj->MoveCaretForward(oldPosition);
+}
+
+ALTERNET_UI_API Int32Point_C RichTextBox_GetPhysicalPoint_(RichTextBox* obj, Int32Point ptLogical)
+{
+    return obj->GetPhysicalPoint(ptLogical);
+}
+
 ALTERNET_UI_API Int32Point_C RichTextBox_GetLogicalPoint_(RichTextBox* obj, Int32Point ptPhysical)
 {
     return obj->GetLogicalPoint(ptPhysical);
@@ -415,9 +460,39 @@ ALTERNET_UI_API void* RichTextBox_GetBuffer_(RichTextBox* obj)
     return obj->GetBuffer();
 }
 
-ALTERNET_UI_API int64_t RichTextBox_DeleteSelectedContent_(RichTextBox* obj)
+ALTERNET_UI_API c_bool RichTextBox_EndUnderline_(RichTextBox* obj)
 {
-    return obj->DeleteSelectedContent();
+    return obj->EndUnderline();
+}
+
+ALTERNET_UI_API c_bool RichTextBox_BeginFontSize_(RichTextBox* obj, int pointSize)
+{
+    return obj->BeginFontSize(pointSize);
+}
+
+ALTERNET_UI_API c_bool RichTextBox_EndFontSize_(RichTextBox* obj)
+{
+    return obj->EndFontSize();
+}
+
+ALTERNET_UI_API c_bool RichTextBox_BeginFont_(RichTextBox* obj, Font* font)
+{
+    return obj->BeginFont(font);
+}
+
+ALTERNET_UI_API c_bool RichTextBox_EndFont_(RichTextBox* obj)
+{
+    return obj->EndFont();
+}
+
+ALTERNET_UI_API c_bool RichTextBox_BeginTextColour_(RichTextBox* obj, Color colour)
+{
+    return obj->BeginTextColour(colour);
+}
+
+ALTERNET_UI_API c_bool RichTextBox_EndTextColour_(RichTextBox* obj)
+{
+    return obj->EndTextColour();
 }
 
 ALTERNET_UI_API c_bool RichTextBox_BeginAlignment_(RichTextBox* obj, int alignment)
@@ -810,41 +885,6 @@ ALTERNET_UI_API c_bool RichTextBox_ExtendCellSelection_(RichTextBox* obj, void* 
     return obj->ExtendCellSelection(table, noRowSteps, noColSteps);
 }
 
-ALTERNET_UI_API c_bool RichTextBox_StartCellSelection_(RichTextBox* obj, void* table, void* newCell)
-{
-    return obj->StartCellSelection(table, newCell);
-}
-
-ALTERNET_UI_API c_bool RichTextBox_ScrollIntoView_(RichTextBox* obj, int64_t position, int keyCode)
-{
-    return obj->ScrollIntoView(position, keyCode);
-}
-
-ALTERNET_UI_API void RichTextBox_SetCaretPosition_(RichTextBox* obj, int64_t position, c_bool showAtLineStart)
-{
-    obj->SetCaretPosition(position, showAtLineStart);
-}
-
-ALTERNET_UI_API int64_t RichTextBox_GetCaretPosition_(RichTextBox* obj)
-{
-    return obj->GetCaretPosition();
-}
-
-ALTERNET_UI_API int64_t RichTextBox_GetAdjustedCaretPosition_(RichTextBox* obj, int64_t caretPos)
-{
-    return obj->GetAdjustedCaretPosition(caretPos);
-}
-
-ALTERNET_UI_API void RichTextBox_MoveCaretForward_(RichTextBox* obj, int64_t oldPosition)
-{
-    obj->MoveCaretForward(oldPosition);
-}
-
-ALTERNET_UI_API Int32Point_C RichTextBox_GetPhysicalPoint_(RichTextBox* obj, Int32Point ptLogical)
-{
-    return obj->GetPhysicalPoint(ptLogical);
-}
-
 ALTERNET_UI_API char16_t* RichTextBox_GetRange_(RichTextBox* obj, int64_t from, int64_t to)
 {
     return AllocPInvokeReturnString(obj->GetRange(from, to));
@@ -1225,38 +1265,8 @@ ALTERNET_UI_API c_bool RichTextBox_BeginUnderline_(RichTextBox* obj)
     return obj->BeginUnderline();
 }
 
-ALTERNET_UI_API c_bool RichTextBox_EndUnderline_(RichTextBox* obj)
+ALTERNET_UI_API void RichTextBox_SetEventCallback_(RichTextBox::RichTextBoxEventCallbackType callback)
 {
-    return obj->EndUnderline();
-}
-
-ALTERNET_UI_API c_bool RichTextBox_BeginFontSize_(RichTextBox* obj, int pointSize)
-{
-    return obj->BeginFontSize(pointSize);
-}
-
-ALTERNET_UI_API c_bool RichTextBox_EndFontSize_(RichTextBox* obj)
-{
-    return obj->EndFontSize();
-}
-
-ALTERNET_UI_API c_bool RichTextBox_BeginFont_(RichTextBox* obj, Font* font)
-{
-    return obj->BeginFont(font);
-}
-
-ALTERNET_UI_API c_bool RichTextBox_EndFont_(RichTextBox* obj)
-{
-    return obj->EndFont();
-}
-
-ALTERNET_UI_API c_bool RichTextBox_BeginTextColour_(RichTextBox* obj, Color colour)
-{
-    return obj->BeginTextColour(colour);
-}
-
-ALTERNET_UI_API c_bool RichTextBox_EndTextColour_(RichTextBox* obj)
-{
-    return obj->EndTextColour();
+    RichTextBox::SetEventCallback(callback);
 }
 

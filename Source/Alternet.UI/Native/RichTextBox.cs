@@ -12,6 +12,7 @@ namespace Alternet.UI.Native
     {
         static RichTextBox()
         {
+            SetEventCallback();
         }
         
         public RichTextBox()
@@ -36,6 +37,64 @@ namespace Alternet.UI.Native
                 CheckDisposed();
                 NativeApi.RichTextBox_SetHasBorder_(NativePointer, value);
             }
+        }
+        
+        public string ReportedUrl
+        {
+            get
+            {
+                CheckDisposed();
+                return NativeApi.RichTextBox_GetReportedUrl_(NativePointer);
+            }
+            
+        }
+        
+        public long DeleteSelectedContent()
+        {
+            CheckDisposed();
+            return NativeApi.RichTextBox_DeleteSelectedContent_(NativePointer);
+        }
+        
+        public bool StartCellSelection(System.IntPtr table, System.IntPtr newCell)
+        {
+            CheckDisposed();
+            return NativeApi.RichTextBox_StartCellSelection_(NativePointer, table, newCell);
+        }
+        
+        public bool ScrollIntoView(long position, int keyCode)
+        {
+            CheckDisposed();
+            return NativeApi.RichTextBox_ScrollIntoView_(NativePointer, position, keyCode);
+        }
+        
+        public void SetCaretPosition(long position, bool showAtLineStart)
+        {
+            CheckDisposed();
+            NativeApi.RichTextBox_SetCaretPosition_(NativePointer, position, showAtLineStart);
+        }
+        
+        public long GetCaretPosition()
+        {
+            CheckDisposed();
+            return NativeApi.RichTextBox_GetCaretPosition_(NativePointer);
+        }
+        
+        public long GetAdjustedCaretPosition(long caretPos)
+        {
+            CheckDisposed();
+            return NativeApi.RichTextBox_GetAdjustedCaretPosition_(NativePointer, caretPos);
+        }
+        
+        public void MoveCaretForward(long oldPosition)
+        {
+            CheckDisposed();
+            NativeApi.RichTextBox_MoveCaretForward_(NativePointer, oldPosition);
+        }
+        
+        public Alternet.Drawing.Int32Point GetPhysicalPoint(Alternet.Drawing.Int32Point ptLogical)
+        {
+            CheckDisposed();
+            return NativeApi.RichTextBox_GetPhysicalPoint_(NativePointer, ptLogical);
         }
         
         public Alternet.Drawing.Int32Point GetLogicalPoint(Alternet.Drawing.Int32Point ptPhysical)
@@ -505,10 +564,46 @@ namespace Alternet.UI.Native
             return NativeApi.RichTextBox_GetBuffer_(NativePointer);
         }
         
-        public long DeleteSelectedContent()
+        public bool EndUnderline()
         {
             CheckDisposed();
-            return NativeApi.RichTextBox_DeleteSelectedContent_(NativePointer);
+            return NativeApi.RichTextBox_EndUnderline_(NativePointer);
+        }
+        
+        public bool BeginFontSize(int pointSize)
+        {
+            CheckDisposed();
+            return NativeApi.RichTextBox_BeginFontSize_(NativePointer, pointSize);
+        }
+        
+        public bool EndFontSize()
+        {
+            CheckDisposed();
+            return NativeApi.RichTextBox_EndFontSize_(NativePointer);
+        }
+        
+        public bool BeginFont(Font? font)
+        {
+            CheckDisposed();
+            return NativeApi.RichTextBox_BeginFont_(NativePointer, font?.NativePointer ?? IntPtr.Zero);
+        }
+        
+        public bool EndFont()
+        {
+            CheckDisposed();
+            return NativeApi.RichTextBox_EndFont_(NativePointer);
+        }
+        
+        public bool BeginTextColour(Alternet.Drawing.Color colour)
+        {
+            CheckDisposed();
+            return NativeApi.RichTextBox_BeginTextColour_(NativePointer, colour);
+        }
+        
+        public bool EndTextColour()
+        {
+            CheckDisposed();
+            return NativeApi.RichTextBox_EndTextColour_(NativePointer);
         }
         
         public bool BeginAlignment(int alignment)
@@ -979,48 +1074,6 @@ namespace Alternet.UI.Native
             return NativeApi.RichTextBox_ExtendCellSelection_(NativePointer, table, noRowSteps, noColSteps);
         }
         
-        public bool StartCellSelection(System.IntPtr table, System.IntPtr newCell)
-        {
-            CheckDisposed();
-            return NativeApi.RichTextBox_StartCellSelection_(NativePointer, table, newCell);
-        }
-        
-        public bool ScrollIntoView(long position, int keyCode)
-        {
-            CheckDisposed();
-            return NativeApi.RichTextBox_ScrollIntoView_(NativePointer, position, keyCode);
-        }
-        
-        public void SetCaretPosition(long position, bool showAtLineStart)
-        {
-            CheckDisposed();
-            NativeApi.RichTextBox_SetCaretPosition_(NativePointer, position, showAtLineStart);
-        }
-        
-        public long GetCaretPosition()
-        {
-            CheckDisposed();
-            return NativeApi.RichTextBox_GetCaretPosition_(NativePointer);
-        }
-        
-        public long GetAdjustedCaretPosition(long caretPos)
-        {
-            CheckDisposed();
-            return NativeApi.RichTextBox_GetAdjustedCaretPosition_(NativePointer, caretPos);
-        }
-        
-        public void MoveCaretForward(long oldPosition)
-        {
-            CheckDisposed();
-            NativeApi.RichTextBox_MoveCaretForward_(NativePointer, oldPosition);
-        }
-        
-        public Alternet.Drawing.Int32Point GetPhysicalPoint(Alternet.Drawing.Int32Point ptLogical)
-        {
-            CheckDisposed();
-            return NativeApi.RichTextBox_GetPhysicalPoint_(NativePointer, ptLogical);
-        }
-        
         public string GetRange(long from, long to)
         {
             CheckDisposed();
@@ -1477,53 +1530,65 @@ namespace Alternet.UI.Native
             return NativeApi.RichTextBox_BeginUnderline_(NativePointer);
         }
         
-        public bool EndUnderline()
+        static GCHandle eventCallbackGCHandle;
+        
+        static void SetEventCallback()
         {
-            CheckDisposed();
-            return NativeApi.RichTextBox_EndUnderline_(NativePointer);
+            if (!eventCallbackGCHandle.IsAllocated)
+            {
+                var sink = new NativeApi.RichTextBoxEventCallbackType((obj, e, parameter) =>
+                {
+                    var w = NativeObject.GetFromNativePointer<RichTextBox>(obj, p => new RichTextBox(p));
+                    if (w == null) return IntPtr.Zero;
+                    return w.OnEvent(e, parameter);
+                }
+                );
+                eventCallbackGCHandle = GCHandle.Alloc(sink);
+                NativeApi.RichTextBox_SetEventCallback_(sink);
+            }
         }
         
-        public bool BeginFontSize(int pointSize)
+        IntPtr OnEvent(NativeApi.RichTextBoxEvent e, IntPtr parameter)
         {
-            CheckDisposed();
-            return NativeApi.RichTextBox_BeginFontSize_(NativePointer, pointSize);
+            switch (e)
+            {
+                case NativeApi.RichTextBoxEvent.TextChanged:
+                {
+                    TextChanged?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                }
+                case NativeApi.RichTextBoxEvent.TextEnter:
+                {
+                    TextEnter?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                }
+                case NativeApi.RichTextBoxEvent.TextUrl:
+                {
+                    TextUrl?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                }
+                default: throw new Exception("Unexpected RichTextBoxEvent value: " + e);
+            }
         }
         
-        public bool EndFontSize()
-        {
-            CheckDisposed();
-            return NativeApi.RichTextBox_EndFontSize_(NativePointer);
-        }
-        
-        public bool BeginFont(Font? font)
-        {
-            CheckDisposed();
-            return NativeApi.RichTextBox_BeginFont_(NativePointer, font?.NativePointer ?? IntPtr.Zero);
-        }
-        
-        public bool EndFont()
-        {
-            CheckDisposed();
-            return NativeApi.RichTextBox_EndFont_(NativePointer);
-        }
-        
-        public bool BeginTextColour(Alternet.Drawing.Color colour)
-        {
-            CheckDisposed();
-            return NativeApi.RichTextBox_BeginTextColour_(NativePointer, colour);
-        }
-        
-        public bool EndTextColour()
-        {
-            CheckDisposed();
-            return NativeApi.RichTextBox_EndTextColour_(NativePointer);
-        }
-        
+        public event EventHandler? TextChanged;
+        public event EventHandler? TextEnter;
+        public event EventHandler? TextUrl;
         
         [SuppressUnmanagedCodeSecurity]
         public class NativeApi : NativeApiProvider
         {
             static NativeApi() => Initialize();
+            
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            public delegate IntPtr RichTextBoxEventCallbackType(IntPtr obj, RichTextBoxEvent e, IntPtr param);
+            
+            public enum RichTextBoxEvent
+            {
+                TextChanged,
+                TextEnter,
+                TextUrl,
+            }
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void RichTextBox_SetEventCallback_(RichTextBoxEventCallbackType callback);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern IntPtr RichTextBox_Create_();
@@ -1533,6 +1598,33 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void RichTextBox_SetHasBorder_(IntPtr obj, bool value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern string RichTextBox_GetReportedUrl_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern long RichTextBox_DeleteSelectedContent_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool RichTextBox_StartCellSelection_(IntPtr obj, System.IntPtr table, System.IntPtr newCell);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool RichTextBox_ScrollIntoView_(IntPtr obj, long position, int keyCode);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void RichTextBox_SetCaretPosition_(IntPtr obj, long position, bool showAtLineStart);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern long RichTextBox_GetCaretPosition_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern long RichTextBox_GetAdjustedCaretPosition_(IntPtr obj, long caretPos);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void RichTextBox_MoveCaretForward_(IntPtr obj, long oldPosition);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern Alternet.Drawing.Int32Point RichTextBox_GetPhysicalPoint_(IntPtr obj, Alternet.Drawing.Int32Point ptLogical);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern Alternet.Drawing.Int32Point RichTextBox_GetLogicalPoint_(IntPtr obj, Alternet.Drawing.Int32Point ptPhysical);
@@ -1769,7 +1861,25 @@ namespace Alternet.UI.Native
             public static extern System.IntPtr RichTextBox_GetBuffer_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern long RichTextBox_DeleteSelectedContent_(IntPtr obj);
+            public static extern bool RichTextBox_EndUnderline_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool RichTextBox_BeginFontSize_(IntPtr obj, int pointSize);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool RichTextBox_EndFontSize_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool RichTextBox_BeginFont_(IntPtr obj, IntPtr font);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool RichTextBox_EndFont_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool RichTextBox_BeginTextColour_(IntPtr obj, NativeApiTypes.Color colour);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool RichTextBox_EndTextColour_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool RichTextBox_BeginAlignment_(IntPtr obj, int alignment);
@@ -2006,27 +2116,6 @@ namespace Alternet.UI.Native
             public static extern bool RichTextBox_ExtendCellSelection_(IntPtr obj, System.IntPtr table, int noRowSteps, int noColSteps);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool RichTextBox_StartCellSelection_(IntPtr obj, System.IntPtr table, System.IntPtr newCell);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool RichTextBox_ScrollIntoView_(IntPtr obj, long position, int keyCode);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void RichTextBox_SetCaretPosition_(IntPtr obj, long position, bool showAtLineStart);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern long RichTextBox_GetCaretPosition_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern long RichTextBox_GetAdjustedCaretPosition_(IntPtr obj, long caretPos);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void RichTextBox_MoveCaretForward_(IntPtr obj, long oldPosition);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.Int32Point RichTextBox_GetPhysicalPoint_(IntPtr obj, Alternet.Drawing.Int32Point ptLogical);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern string RichTextBox_GetRange_(IntPtr obj, long from, long to);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
@@ -2253,27 +2342,6 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool RichTextBox_BeginUnderline_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool RichTextBox_EndUnderline_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool RichTextBox_BeginFontSize_(IntPtr obj, int pointSize);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool RichTextBox_EndFontSize_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool RichTextBox_BeginFont_(IntPtr obj, IntPtr font);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool RichTextBox_EndFont_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool RichTextBox_BeginTextColour_(IntPtr obj, NativeApiTypes.Color colour);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool RichTextBox_EndTextColour_(IntPtr obj);
             
         }
     }

@@ -27,6 +27,21 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Occurs when 'New' button is clicked on the toolbar.
+        /// </summary>
+        public event EventHandler? FileNewClick;
+
+        /// <summary>
+        /// Occurs when 'Open' button is clicked on the toolbar.
+        /// </summary>
+        public event EventHandler? FileOpenClick;
+
+        /// <summary>
+        /// Occurs when 'Save' button is clicked on the toolbar.
+        /// </summary>
+        public event EventHandler? FileSaveClick;
+
+        /// <summary>
         /// Gets id of the 'New' toolbar item.
         /// </summary>
         public int ButtonIdNew => buttonIdNew;
@@ -78,9 +93,28 @@ namespace Alternet.UI
                 images.ImageFileSave,
                 CommonStrings.Default.ButtonSave);
 
+            toolbar.AddToolOnClick(buttonIdNew, FileNew_Click);
+            toolbar.AddToolOnClick(buttonIdOpen, FileOpen_Click);
+            toolbar.AddToolOnClick(buttonIdSave, FileSave_Click);
+
             toolbar.AddLabel("Work in progress...");
 
             toolbar.Realize();
+        }
+
+        private void FileNew_Click(object? sender, EventArgs e)
+        {
+            FileNewClick?.Invoke(this, EventArgs.Empty);
+        }
+
+        private void FileOpen_Click(object? sender, EventArgs e)
+        {
+            FileOpenClick?.Invoke(this, EventArgs.Empty);
+        }
+
+        private void FileSave_Click(object? sender, EventArgs e)
+        {
+            FileSaveClick?.Invoke(this, EventArgs.Empty);
         }
 
         /// <inheritdoc/>

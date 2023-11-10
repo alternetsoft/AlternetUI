@@ -15,7 +15,11 @@ namespace Alternet::UI
     public:
         wxWindow* CreateWxWindowCore(wxWindow* parent) override;
         wxRichTextCtrl* GetTextCtrl();
+        void OnTextChanged(wxCommandEvent& event);
+        void OnTextEnter(wxCommandEvent& event);
+        void OnTextUrl(wxTextUrlEvent& event);
     private:
+        string _eventUrl = wxStr(wxEmptyString);
         bool hasBorder = true;
     };
 }

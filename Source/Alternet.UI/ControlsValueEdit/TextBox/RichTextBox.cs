@@ -23,6 +23,50 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Occurs when the value of the <see cref="Text"/> property changes.
+        /// </summary>
+        public event EventHandler? TextChanged;
+
+        /// <summary>
+        /// Occurs when Enter key is pressed in the control.
+        /// </summary>
+        public event EventHandler? EnterPressed;
+
+        /// <summary>
+        /// Occurs when url clicked in the text.
+        /// </summary>
+        /// <remarks>
+        /// This event is not fired on MacOs. On this os, url is
+        /// automatically opened in the default browser.
+        /// </remarks>
+        public event UrlEventHandler? TextUrl;
+
+        /// <summary>
+        /// Gets or sets the text contents of the control.
+        /// </summary>
+        /// <value>A string containing the text contents of the control. The
+        /// default is an empty string ("").</value>
+        /// <remarks>
+        /// Getting this property returns a string copy of the contents of the
+        /// control. Setting this property replaces the contents of the control
+        /// with the specified string.
+        /// </remarks>
+        [DefaultValue("")]
+        public virtual string Text
+        {
+            get
+            {
+                return NativeControl.GetValue();
+            }
+
+            set
+            {
+                value ??= string.Empty;
+                NativeControl.SetValue(value);
+            }
+        }
+
+        /// <summary>
         /// Gets or sets a value indicating whether the control has a border.
         /// </summary>
         public virtual bool HasBorder
@@ -223,6 +267,41 @@ namespace Alternet.UI
         public long GetFullLayoutSavedPosition()
         {
             return NativeControl.GetFullLayoutSavedPosition();
+        }
+
+        /// <summary>
+        ///     Raises the <see cref="TextUrl"/> event.
+        /// </summary>
+        /// <param name="e">
+        ///     An <see cref="UrlEventArgs"/> that contains the event data.
+        /// </param>
+        public virtual void OnTextUrl(UrlEventArgs e)
+        {
+            TextUrl?.Invoke(this, e);
+            if (e.Cancel)
+                return;
+        }
+
+        /// <summary>
+        ///     Raises the <see cref="EnterPressed"/> event.
+        /// </summary>
+        /// <param name="e">
+        ///     An <see cref="EventArgs"/> that contains the event data.
+        /// </param>
+        public virtual void OnEnterPressed(EventArgs e)
+        {
+            EnterPressed?.Invoke(this, e);
+        }
+
+        /// <summary>
+        ///     Raises the <see cref="TextChanged"/> event.
+        /// </summary>
+        /// <param name="e">
+        ///     An <see cref="EventArgs"/> that contains the event data.
+        /// </param>
+        public virtual void OnTextChanged(EventArgs e)
+        {
+            TextChanged?.Invoke(this, e);
         }
 
         /// <summary>

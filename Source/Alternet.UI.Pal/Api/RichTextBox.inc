@@ -4,6 +4,17 @@ public:
 bool GetHasBorder();
 void SetHasBorder(bool value);
 
+
+string GetReportedUrl();
+
+int64_t DeleteSelectedContent();
+bool StartCellSelection(void* table, void* newCell);
+bool ScrollIntoView(int64_t position, int keyCode);
+void SetCaretPosition(int64_t position, bool showAtLineStart);
+int64_t GetCaretPosition();
+int64_t GetAdjustedCaretPosition(int64_t caretPos);
+void MoveCaretForward(int64_t oldPosition);
+Int32Point GetPhysicalPoint(const Int32Point& ptLogical);
 Int32Point GetLogicalPoint(const Int32Point& ptPhysical);
 int64_t FindNextWordPosition(int direction);
 bool IsPositionVisible(int64_t pos);
@@ -82,7 +93,13 @@ void* WriteField(const string& fieldType, void* properties, void* textAttr);
 bool CanDeleteRange(void* container, int64_t startRange, int64_t endRange);
 bool CanInsertContent(void* container, int64_t pos);
 void* GetBuffer();
-int64_t DeleteSelectedContent();
+bool EndUnderline();
+bool BeginFontSize(int pointSize);
+bool EndFontSize();
+bool BeginFont(Font* font);
+bool EndFont();
+bool BeginTextColour(const Color& colour);
+bool EndTextColour();
 bool BeginAlignment(int alignment);
 bool EndAlignment();
 bool BeginLeftIndent(int leftIndent, int leftSubIndent);
@@ -161,13 +178,6 @@ void EnableVirtualAttributes(bool b);
 void DoWriteText(const string& value, int flags);
 bool ExtendSelection(int64_t oldPosition, int64_t newPosition, int flags);
 bool ExtendCellSelection(void* table, int noRowSteps, int noColSteps);
-bool StartCellSelection(void* table, void* newCell);
-bool ScrollIntoView(int64_t position, int keyCode);
-void SetCaretPosition(int64_t position, bool showAtLineStart);
-int64_t GetCaretPosition();
-int64_t GetAdjustedCaretPosition(int64_t caretPos);
-void MoveCaretForward(int64_t oldPosition);
-Int32Point GetPhysicalPoint(const Int32Point& ptLogical);
 string GetRange(int64_t from, int64_t to);
 int GetLineLength(int64_t lineNo);
 string GetLineText(int64_t lineNo);
@@ -244,13 +254,20 @@ bool EndBold();
 bool BeginItalic();
 bool EndItalic();
 bool BeginUnderline();
-bool EndUnderline();
-bool BeginFontSize(int pointSize);
-bool EndFontSize();
-bool BeginFont(Font* font);
-bool EndFont();
-bool BeginTextColour(const Color& colour);
-bool EndTextColour();
+public:
+enum class RichTextBoxEvent
+{
+    TextChanged,
+    TextEnter,
+    TextUrl,
+};
+typedef void* (*RichTextBoxEventCallbackType)(RichTextBox* obj, RichTextBoxEvent event, void* param);
+static void SetEventCallback(RichTextBoxEventCallbackType value) { eventCallback = value; }
+protected:
+bool RaiseEvent(RichTextBoxEvent event, void* parameter = nullptr) { if (EventsSuspended()) return false; if (eventCallback != nullptr) return eventCallback(this, event, parameter) != nullptr; else return false; }
+void* RaiseEventWithPointerResult(RichTextBoxEvent event, void* parameter = nullptr) { if (EventsSuspended()) return nullptr; if (eventCallback != nullptr) return eventCallback(this, event, parameter); else return nullptr; }
+private:
+inline static RichTextBoxEventCallbackType eventCallback = nullptr;
 public:
 RichTextBox();
 protected:
