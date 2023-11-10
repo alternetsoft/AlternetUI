@@ -10,6 +10,11 @@ namespace ControlsSample
 {
     internal partial class TextInputPage : Control
     {
+        const string FileDialogFilter =
+            "HTML Files (*.html;*.htm)|*.html;*.htm|" +
+            "TXT Files (*.txt)|*.txt|" +
+            "XML Files (*.xml)|*.xml";
+
         private const string ErrorMinValueTextDouble = "-2.7976931348623157E+308";
         private const string ErrorMaxValueTextDouble = "2.7976931348623157E+308";
         private const string MinValueTextDouble = "-1.7976931348623157E+308";
@@ -173,21 +178,20 @@ namespace ControlsSample
 
         private void RichPanel_FileSaveClick(object? sender, EventArgs e)
         {
-            const string FileDialogFilter =
-                "HTML Files (*.html;*.htm)|*.html;*.htm|"+
-                "TXT Files (*.txt)|*.txt|" +
-                "XML Files (*.xml)|*.xml";
-
             using SaveFileDialog dialog = new()
             {
                 Filter = FileDialogFilter,
+                FileName = richPanel.TextBox.GetFilename(),
             };
 
             if (dialog.ShowModal(this) != ModalResult.Accepted)
                 return;
 
             if (richPanel.TextBox.SaveFile(dialog.FileName!, RichTextFileType.Any))
+            {
+                richPanel.TextBox.SetFilename(dialog.FileName!);
                 Application.Log($"Saved to file: {dialog.FileName}");
+            }
             else
                 Application.Log($"Error saving to file: {dialog.FileName}");
         }
