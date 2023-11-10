@@ -1192,6 +1192,9 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets or sets whether control's font is bold.
+        /// </summary>
         public virtual bool IsBold
         {
             get
