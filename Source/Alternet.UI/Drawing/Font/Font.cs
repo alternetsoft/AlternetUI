@@ -1,5 +1,7 @@
 using System;
 using System.ComponentModel;
+using System.Diagnostics;
+using System.Globalization;
 using Alternet.UI.Localization;
 
 namespace Alternet.Drawing
@@ -8,6 +10,7 @@ namespace Alternet.Drawing
     /// Defines a particular format for text, including font face, size, and
     /// style attributes. This class cannot be inherited.
     /// </summary>
+    [DebuggerDisplay("{ToInfoString()}")]
     public sealed class Font : IDisposable, IEquatable<Font>
     {
         private static Font? defaultFont;
@@ -312,6 +315,21 @@ namespace Alternet.Drawing
         {
             CheckDisposed();
             return NativeFont.Description;
+        }
+
+        /// <summary>
+        /// Returns a human-readable string representation of this <see cref="Font"/>.
+        /// </summary>
+        /// <returns>A string that represents this <see cref="Font"/>.</returns>
+        public string ToInfoString()
+        {
+            return string.Format(
+                CultureInfo.CurrentCulture,
+                "[{0}: Name={1}, Size={2}, Style={3}]",
+                GetType().Name,
+                Name,
+                SizeInPoints,
+                Style);
         }
 
         /// <summary>
