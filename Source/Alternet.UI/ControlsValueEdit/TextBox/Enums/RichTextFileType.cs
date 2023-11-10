@@ -19,26 +19,26 @@ namespace Alternet.UI
         /// <summary>
         /// Text file type.
         /// </summary>
-        Text,
+        Text = 1,
 
         /// <summary>
         /// Xml file type.
         /// </summary>
-        Xml,
+        Xml = 2,
 
         /// <summary>
         /// Html file type.
         /// </summary>
-        Html,
+        Html = 3,
 
-        /// <summary>
+        /*/// <summary>
         /// Rtf file type.
         /// </summary>
-        Rtf,
+        Rtf = 4,*/
 
-        /// <summary>
+        /*/// <summary>
         /// Pdf file type.
         /// </summary>
-        Pdf,
+        Pdf = 5,*/
     }
 }

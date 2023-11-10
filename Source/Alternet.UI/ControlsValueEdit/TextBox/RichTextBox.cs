@@ -15,6 +15,11 @@ namespace Alternet.UI
     {
         private bool hasBorder = true;
 
+        static RichTextBox()
+        {
+            Native.RichTextBox.InitFileHandlers();
+        }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="RichTextBox"/> class.
         /// </summary>
@@ -566,6 +571,9 @@ namespace Alternet.UI
         /// If the specified type is <see cref="RichTextFileType.Any"/>, the type is deduced from
         /// the filename extension.
         /// </remarks>
+        /// <remarks>
+        /// Use <see cref="SetFileHandlerFlags"/> to setup load options.
+        /// </remarks>
         public bool LoadFile(string file, RichTextFileType type = RichTextFileType.Any)
         {
             return NativeControl.LoadFile(file, (int)type);
@@ -578,8 +586,11 @@ namespace Alternet.UI
         /// If the specified type is <see cref="RichTextFileType.Any"/>, the type is deduced from
         /// the filename extension.
         /// </remarks>
-        /// <param name="file">Filename.</param>
+        /// <param name="file">File name.</param>
         /// <param name="type">File type.</param>
+        /// <remarks>
+        /// Use <see cref="SetFileHandlerFlags"/> to setup save options.
+        /// </remarks>
         public bool SaveFile(string file, RichTextFileType type = RichTextFileType.Any)
         {
             return NativeControl.SaveFile(file, (int)type);
@@ -590,8 +601,9 @@ namespace Alternet.UI
         /// See the documentation for each handler class to see what flags are
         /// relevant for each handler.
         /// </summary>
-        public void SetFileHandlerFlags(int flags)
+        public void SetFileHandlerFlags(RichTextHandlerFlags knownFlags, int customFlags = 0)
         {
+            var flags = customFlags | (int)knownFlags;
             NativeControl.SetHandlerFlags(flags);
         }
 

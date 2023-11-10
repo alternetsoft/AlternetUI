@@ -7,7 +7,9 @@ void SetHasBorder(bool value);
 
 string GetReportedUrl();
 
+void* GetBuffer();
 int64_t DeleteSelectedContent();
+bool ExtendCellSelection(void* table, int noRowSteps, int noColSteps);
 bool StartCellSelection(void* table, void* newCell);
 bool ScrollIntoView(int64_t position, int keyCode);
 void SetCaretPosition(int64_t position, bool showAtLineStart);
@@ -92,7 +94,7 @@ bool WriteImage3(void* imageBlock, void* textAttr);
 void* WriteField(const string& fieldType, void* properties, void* textAttr);
 bool CanDeleteRange(void* container, int64_t startRange, int64_t endRange);
 bool CanInsertContent(void* container, int64_t pos);
-void* GetBuffer();
+bool BeginUnderline();
 bool EndUnderline();
 bool BeginFontSize(int pointSize);
 bool EndFontSize();
@@ -177,7 +179,7 @@ bool GetVirtualAttributesEnabled();
 void EnableVirtualAttributes(bool b);
 void DoWriteText(const string& value, int flags);
 bool ExtendSelection(int64_t oldPosition, int64_t newPosition, int flags);
-bool ExtendCellSelection(void* table, int noRowSteps, int noColSteps);
+static void InitFileHandlers();
 string GetRange(int64_t from, int64_t to);
 int GetLineLength(int64_t lineNo);
 string GetLineText(int64_t lineNo);
@@ -253,7 +255,6 @@ bool BeginBold();
 bool EndBold();
 bool BeginItalic();
 bool EndItalic();
-bool BeginUnderline();
 public:
 enum class RichTextBoxEvent
 {

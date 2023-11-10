@@ -30,9 +30,19 @@ ALTERNET_UI_API char16_t* RichTextBox_GetReportedUrl_(RichTextBox* obj)
     return AllocPInvokeReturnString(obj->GetReportedUrl());
 }
 
+ALTERNET_UI_API void* RichTextBox_GetBuffer_(RichTextBox* obj)
+{
+    return obj->GetBuffer();
+}
+
 ALTERNET_UI_API int64_t RichTextBox_DeleteSelectedContent_(RichTextBox* obj)
 {
     return obj->DeleteSelectedContent();
+}
+
+ALTERNET_UI_API c_bool RichTextBox_ExtendCellSelection_(RichTextBox* obj, void* table, int noRowSteps, int noColSteps)
+{
+    return obj->ExtendCellSelection(table, noRowSteps, noColSteps);
 }
 
 ALTERNET_UI_API c_bool RichTextBox_StartCellSelection_(RichTextBox* obj, void* table, void* newCell)
@@ -455,9 +465,9 @@ ALTERNET_UI_API c_bool RichTextBox_CanInsertContent_(RichTextBox* obj, void* con
     return obj->CanInsertContent(container, pos);
 }
 
-ALTERNET_UI_API void* RichTextBox_GetBuffer_(RichTextBox* obj)
+ALTERNET_UI_API c_bool RichTextBox_BeginUnderline_(RichTextBox* obj)
 {
-    return obj->GetBuffer();
+    return obj->BeginUnderline();
 }
 
 ALTERNET_UI_API c_bool RichTextBox_EndUnderline_(RichTextBox* obj)
@@ -880,9 +890,9 @@ ALTERNET_UI_API c_bool RichTextBox_ExtendSelection_(RichTextBox* obj, int64_t ol
     return obj->ExtendSelection(oldPosition, newPosition, flags);
 }
 
-ALTERNET_UI_API c_bool RichTextBox_ExtendCellSelection_(RichTextBox* obj, void* table, int noRowSteps, int noColSteps)
+ALTERNET_UI_API void RichTextBox_InitFileHandlers_()
 {
-    return obj->ExtendCellSelection(table, noRowSteps, noColSteps);
+    RichTextBox::InitFileHandlers();
 }
 
 ALTERNET_UI_API char16_t* RichTextBox_GetRange_(RichTextBox* obj, int64_t from, int64_t to)
@@ -1258,11 +1268,6 @@ ALTERNET_UI_API c_bool RichTextBox_BeginItalic_(RichTextBox* obj)
 ALTERNET_UI_API c_bool RichTextBox_EndItalic_(RichTextBox* obj)
 {
     return obj->EndItalic();
-}
-
-ALTERNET_UI_API c_bool RichTextBox_BeginUnderline_(RichTextBox* obj)
-{
-    return obj->BeginUnderline();
 }
 
 ALTERNET_UI_API void RichTextBox_SetEventCallback_(RichTextBox::RichTextBoxEventCallbackType callback)

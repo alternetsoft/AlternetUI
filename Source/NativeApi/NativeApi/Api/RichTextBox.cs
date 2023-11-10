@@ -10,8 +10,14 @@ using System.Threading.Tasks;
 namespace NativeApi.Api
 {
     // https://docs.wxwidgets.org/3.2/classwx_rich_text_ctrl.html
+    // https://docs.wxwidgets.org/3.2/classwx_rich_text_buffer.html
+    // https://docs.wxwidgets.org/3.2/classwx_rich_text_file_handler.html
+    // https://docs.wxwidgets.org/3.2/classwx_rich_text_x_m_l_handler.html
+    // https://docs.wxwidgets.org/3.2/classwx_rich_text_h_t_m_l_handler.html
     public class RichTextBox : Control
     {
+        public static void InitFileHandlers() {}
+        
         public bool HasBorder { get; set; }
 
         public string ReportedUrl { get; }

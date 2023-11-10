@@ -6,6 +6,8 @@
 #include "Image.h"
 #include "Control.h"
 #include "wx/richtext/richtextctrl.h"
+#include "wx/richtext/richtexthtml.h"
+#include "wx/richtext/richtextxml.h"
 
 namespace Alternet::UI
 {

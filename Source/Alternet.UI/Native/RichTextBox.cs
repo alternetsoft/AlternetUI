@@ -49,10 +49,22 @@ namespace Alternet.UI.Native
             
         }
         
+        public System.IntPtr GetBuffer()
+        {
+            CheckDisposed();
+            return NativeApi.RichTextBox_GetBuffer_(NativePointer);
+        }
+        
         public long DeleteSelectedContent()
         {
             CheckDisposed();
             return NativeApi.RichTextBox_DeleteSelectedContent_(NativePointer);
+        }
+        
+        public bool ExtendCellSelection(System.IntPtr table, int noRowSteps, int noColSteps)
+        {
+            CheckDisposed();
+            return NativeApi.RichTextBox_ExtendCellSelection_(NativePointer, table, noRowSteps, noColSteps);
         }
         
         public bool StartCellSelection(System.IntPtr table, System.IntPtr newCell)
@@ -558,10 +570,10 @@ namespace Alternet.UI.Native
             return NativeApi.RichTextBox_CanInsertContent_(NativePointer, container, pos);
         }
         
-        public System.IntPtr GetBuffer()
+        public bool BeginUnderline()
         {
             CheckDisposed();
-            return NativeApi.RichTextBox_GetBuffer_(NativePointer);
+            return NativeApi.RichTextBox_BeginUnderline_(NativePointer);
         }
         
         public bool EndUnderline()
@@ -1068,10 +1080,9 @@ namespace Alternet.UI.Native
             return NativeApi.RichTextBox_ExtendSelection_(NativePointer, oldPosition, newPosition, flags);
         }
         
-        public bool ExtendCellSelection(System.IntPtr table, int noRowSteps, int noColSteps)
+        public static void InitFileHandlers()
         {
-            CheckDisposed();
-            return NativeApi.RichTextBox_ExtendCellSelection_(NativePointer, table, noRowSteps, noColSteps);
+            NativeApi.RichTextBox_InitFileHandlers_();
         }
         
         public string GetRange(long from, long to)
@@ -1524,12 +1535,6 @@ namespace Alternet.UI.Native
             return NativeApi.RichTextBox_EndItalic_(NativePointer);
         }
         
-        public bool BeginUnderline()
-        {
-            CheckDisposed();
-            return NativeApi.RichTextBox_BeginUnderline_(NativePointer);
-        }
-        
         static GCHandle eventCallbackGCHandle;
         
         static void SetEventCallback()
@@ -1603,7 +1608,13 @@ namespace Alternet.UI.Native
             public static extern string RichTextBox_GetReportedUrl_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr RichTextBox_GetBuffer_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern long RichTextBox_DeleteSelectedContent_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool RichTextBox_ExtendCellSelection_(IntPtr obj, System.IntPtr table, int noRowSteps, int noColSteps);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool RichTextBox_StartCellSelection_(IntPtr obj, System.IntPtr table, System.IntPtr newCell);
@@ -1858,7 +1869,7 @@ namespace Alternet.UI.Native
             public static extern bool RichTextBox_CanInsertContent_(IntPtr obj, System.IntPtr container, long pos);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr RichTextBox_GetBuffer_(IntPtr obj);
+            public static extern bool RichTextBox_BeginUnderline_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool RichTextBox_EndUnderline_(IntPtr obj);
@@ -2113,7 +2124,7 @@ namespace Alternet.UI.Native
             public static extern bool RichTextBox_ExtendSelection_(IntPtr obj, long oldPosition, long newPosition, int flags);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool RichTextBox_ExtendCellSelection_(IntPtr obj, System.IntPtr table, int noRowSteps, int noColSteps);
+            public static extern void RichTextBox_InitFileHandlers_();
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern string RichTextBox_GetRange_(IntPtr obj, long from, long to);
@@ -2339,9 +2350,6 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool RichTextBox_EndItalic_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool RichTextBox_BeginUnderline_(IntPtr obj);
             
         }
     }

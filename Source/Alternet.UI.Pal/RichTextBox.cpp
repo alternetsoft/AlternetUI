@@ -1160,6 +1160,12 @@ namespace Alternet::UI
 		return GetTextCtrl()->LoadFile(wxStr(file), type);
 	}
 
+	void RichTextBox::InitFileHandlers()
+	{
+		wxRichTextBuffer::AddHandler(new wxRichTextXMLHandler);
+		wxRichTextBuffer::AddHandler(new wxRichTextHTMLHandler);
+	}
+
 	bool RichTextBox::SaveFile(const string& file, int type)
 	{
 		return GetTextCtrl()->SaveFile(wxStr(file), type);
