@@ -279,7 +279,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets minimal toolbar image size.
         /// </summary>
-        public int DefaultMinToolbarImageSize { get; set; } = 24;
+        public int DefaultMinToolbarImageSize { get; set; } = 16;
 
         /// <summary>
         /// Gets or sets default toolbar style.
