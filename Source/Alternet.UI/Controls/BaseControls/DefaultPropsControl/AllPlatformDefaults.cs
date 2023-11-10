@@ -16,9 +16,20 @@ namespace Alternet.UI
             PlatformLinux.Controls.CheckBox.MinMargin = minCheckBoxMargin;
             PlatformLinux.AdjustTextBoxesHeight = true;
 
-            PlatformLinux.RichToolTipBackgroundColor = Color.White;
-            PlatformLinux.RichToolTipForegroundColor = Color.Black;
-            PlatformLinux.RichToolTipTitleForegroundColor = Color.Navy;
+            var platform = PlatformLinux;
+
+            if (SystemSettings.AppearanceIsDark)
+            {
+                platform.RichToolTipBackgroundColor = Color.FromArgb(39, 39, 39);
+                platform.RichToolTipForegroundColor = Color.White;
+                platform.RichToolTipTitleForegroundColor = Color.FromRgb(156, 220, 254);
+            }
+            else
+            {
+                platform.RichToolTipBackgroundColor = Color.White;
+                platform.RichToolTipForegroundColor = Color.Black;
+                platform.RichToolTipTitleForegroundColor = Color.Navy;
+            }
         }
 
         /// <summary>
