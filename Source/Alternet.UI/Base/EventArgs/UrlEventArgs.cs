@@ -38,5 +38,15 @@ namespace Alternet.UI
             get => url;
             set => url = value;
         }
+
+        /// <summary>
+        /// Gets whether <see cref="Url"/> is in a valid format.
+        /// </summary>
+        public bool IsValidUrl => ValueValidatorFactory.IsValidUrl(url);
+
+        /// <summary>
+        /// The set of modifier keys currently pressed.
+        /// </summary>
+        public ModifierKeys Modifiers => Keyboard.Modifiers;
     }
 }
