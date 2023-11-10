@@ -10,7 +10,7 @@ namespace PaintSample
     public partial class MainWindow : Window
     {
         private const string FileDialogImageFilesFilter =
-            "Image files(*.png; *.jpg)|*.png;*.jpg|All files(*.*)|*.*";
+            "Image files (*.png; *.jpg)|*.png;*.jpg|All files (*.*)|*.*";
         private Tools? tools;
 
         private Document? document;
