@@ -193,6 +193,14 @@ namespace Alternet.UI
         public static bool DefaultAutoUrlOpen { get; set; } = false;
 
         /// <summary>
+        /// Gets or sets default value of the <see cref="AutoUrlModifiers"/> property.
+        /// </summary>
+        /// <remarks>
+        /// Default value is <see cref="ModifierKeys.Control"/>.
+        /// </remarks>
+        public static ModifierKeys DefaultAutoUrlModifiers { get; set; } = ModifierKeys.Control;
+
+        /// <summary>
         /// Gets or sets a value indicating whether urls in the input text
         /// are opened in the default browser.
         /// </summary>
@@ -200,6 +208,12 @@ namespace Alternet.UI
         /// Use <see cref="AutoUrl"/> in order to highlight and underline urls.
         /// </remarks>
         public virtual bool AutoUrlOpen { get; set; } = DefaultAutoUrlOpen;
+
+        /// <summary>
+        /// Gets or sets <see cref="ModifierKeys"/> used when clicked url is autoimatically opened
+        /// in the browser when <see cref="AutoUrlOpen"/> is <c>true</c>.
+        /// </summary>
+        public virtual ModifierKeys AutoUrlModifiers { get; set; } = DefaultAutoUrlModifiers;
 
         /// <summary>
         /// Gets or sets a bitwise combination of <see cref="NumberStyles"/> values that indicates
@@ -1496,13 +1510,16 @@ namespace Alternet.UI
         {
             // Under MacOs url parameter of the event data is always empty,
             // so event is not fired. Also on MacOs url is opened automatically.
-            if (Application.IsMacOs)
-                return;
+            // if (Application.IsMacOs)
+            //    return;
             TextUrl?.Invoke(this, e);
             if (e.Cancel)
                 return;
-            if (AutoUrlOpen && !string.IsNullOrEmpty(e.Url))
-                AppUtils.OpenUrl(e.Url!);
+            if (AutoUrlOpen && e.IsValidUrl)
+            {
+                if(e.Modifiers == AutoUrlModifiers)
+                    AppUtils.OpenUrl(e.Url!);
+            }
         }
 
         /// <summary>
