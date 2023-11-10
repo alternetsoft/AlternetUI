@@ -1510,14 +1510,14 @@ namespace Alternet.UI
         {
             // Under MacOs url parameter of the event data is always empty,
             // so event is not fired. Also on MacOs url is opened automatically.
-            // if (Application.IsMacOs)
-            //    return;
+            if (Application.IsMacOs)
+                return;
             TextUrl?.Invoke(this, e);
             if (e.Cancel)
                 return;
             if (AutoUrlOpen && e.IsValidUrl)
             {
-                if(e.Modifiers == AutoUrlModifiers)
+                if (e.Modifiers == AutoUrlModifiers)
                     AppUtils.OpenUrl(e.Url!);
             }
         }
