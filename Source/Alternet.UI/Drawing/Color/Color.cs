@@ -1056,8 +1056,17 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// <inheritdoc cref="FromArgb(int,int,int,int)"/>
+        /// Creates a <see cref="Color"/> structure from the four ARGB
+        /// component (alpha, red, green, and blue) values.
         /// </summary>
+        /// <param name="alpha">The alpha component.</param>
+        /// <param name="red">The red component.</param>
+        /// <param name="green">The green component.</param>
+        /// <param name="blue">The blue component.</param>
+        /// <returns>The <see cref="Color"/> that this method creates.</returns>
+        /// <remarks>To create an opaque color, set alpha to 255. To create
+        /// a semitransparent color, set alpha to any value from 1 through 254.
+        /// </remarks>
         public static Color FromArgb(byte alpha, byte red, byte green, byte blue)
         {
             return FromArgb(
@@ -1066,6 +1075,18 @@ namespace Alternet.Drawing
                 (uint)green << ARGBGreenShift |
                 (uint)blue << ARGBBlueShift);
         }
+
+        /// <summary>
+        /// Creates an opaque <see cref="Color"/> structure from the four ARGB
+        /// components (255, <paramref name="red"/>, <paramref name="green"/>,
+        /// and <paramref name="blue"/>) values.
+        /// </summary>
+        /// <param name="red"></param>
+        /// <param name="green"></param>
+        /// <param name="blue"></param>
+        /// <returns></returns>
+        public static Color FromRgb(byte red, byte green, byte blue) =>
+            FromArgb((byte)255, red, green, blue);
 
         /// <summary>
         /// Creates a <see cref="Color"/> structure from the specified
