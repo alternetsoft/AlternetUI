@@ -60,10 +60,12 @@ namespace Alternet.UI
         /// <see cref="ModalResult.Accepted"/> if the user clicks OK in the dialog window;
         /// otherwise, <see cref="ModalResult.Canceled"/>.
         /// </returns>
-        public ModalResult ShowModal(Window? owner)
+        public ModalResult ShowModal(Control? owner)
         {
+            Window? window = owner as Window;
+            window ??= owner?.ParentWindow;
             CheckDisposed();
-            return ShowModalCore(owner);
+            return ShowModalCore(window);
         }
 
         /// <summary>
