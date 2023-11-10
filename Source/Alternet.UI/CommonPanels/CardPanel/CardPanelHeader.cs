@@ -123,7 +123,10 @@ namespace Alternet.UI
                 foreach(var tab in tabs)
                 {
                     if (selectedTab == tab)
+                    {
+                        Application.Log($"HeaderControl.RealFont: {tab.HeaderControl.RealFont?.ToInfoString()}");
                         tab.HeaderControl.Font = Font.Default.AsBold;
+                    }
                     else
                         tab.HeaderControl.Font = null;
                 }
