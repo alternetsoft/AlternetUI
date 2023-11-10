@@ -50,22 +50,11 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets a standard system font.
-        /// </summary>
-        /// <param name="systemFont">Font identifier.</param>
-        public static Font GetFont(SystemSettingsFont systemFont)
-        {
-            var fnt = Native.WxOtherFactory.SystemSettingsGetFont((int)systemFont);
-            return new Font(fnt);
-        }
-
-        /// <summary>
         /// Logs all fonts enumerated in <see cref="SystemSettingsFont"/>.
         /// </summary>
         public static void LogSystemFonts()
         {
             Application.Log($"Default font: {Font.Default.ToInfoString()}");
-            Application.Log($"Bold font: {Font.Default.AsBold.ToInfoString()}");
 
             var values = Enum.GetValues(typeof(SystemSettingsFont));
             foreach(var value in values)
@@ -118,6 +107,16 @@ namespace Alternet.UI
         {
             IntPtr wx = control?.WxWidget ?? default;
             return Native.WxOtherFactory.SystemSettingsGetMetric((int)index, wx);
+        }
+
+        /// <summary>
+        /// Gets a standard system font.
+        /// </summary>
+        /// <param name="systemFont">Font identifier.</param>
+        internal static Font GetFont(SystemSettingsFont systemFont)
+        {
+            var fnt = Native.WxOtherFactory.SystemSettingsGetFont((int)systemFont);
+            return new Font(fnt);
         }
     }
 }
