@@ -203,7 +203,7 @@ namespace ControlsSample
 
             if (KnownKeys.RunTest.Run(e, Test))
                 return;
-            // richPanel.TextBox.HandleAdditionalKeys(e);
+            richPanel.TextBox.HandleAdditionalKeys(e);
         }
 
         private void SetDoubleMinMMButton_Click(object? sender, EventArgs e)
