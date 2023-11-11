@@ -1461,6 +1461,8 @@ namespace Alternet.UI
                     return ErrorMessages.Default.ValidationValueIsRequired;
                 case ValueValidatorKnownError.EMailIsExpected:
                     return ErrorMessages.Default.ValidationEMailIsExpected;
+                case ValueValidatorKnownError.UrlIsExpected:
+                    return ErrorMessages.Default.ValidationUrlIsExpected;
                 default:
                     var defaultResult = ValidatorErrorText ?? DefaultValidatorErrorText;
                     return defaultResult ?? ErrorMessages.Default.ValidationInvalidFormat;

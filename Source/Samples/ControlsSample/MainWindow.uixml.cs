@@ -111,7 +111,6 @@ namespace ControlsSample
             Children.Add(mainGridParent);
 
             LogUtils.DebugLogVersion();
-            Application.Log($"Control.RealFont: {RealFont?.ToInfoString()}");
 
             if (pageContainer.PagesControl.CanAcceptFocus)
                 pageContainer.PagesControl.SetFocus();

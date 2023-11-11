@@ -48,6 +48,11 @@ namespace ControlsSample
             Margin = new(0, 0, 0, 5),
             InnerSuggestedWidth = 200,
         };
+        private readonly ValueEditorUrl urlEdit = new("Url")
+        {
+            Margin = new(0, 0, 0, 5),
+            InnerSuggestedWidth = 200,
+        };
 
         private readonly MultilineTextBox multiLineTextBox = new()
         {
@@ -96,9 +101,12 @@ namespace ControlsSample
             textBox.TextChanged += ReportValueChanged;
             TextBox.InitErrorPicture(textImage);
 
-            // ==== Email editor
+            // ==== Other editors
 
             emailEdit.Parent = otherParent;
+            urlEdit.Parent = otherParent;
+
+            ControlSet.New(emailEdit.Label, urlEdit.Label).SuggestedWidthToMax();
 
             // ==== multiLineTextBox
 

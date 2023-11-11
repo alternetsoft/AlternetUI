@@ -95,5 +95,8 @@ namespace Alternet.UI.Localization
 
         /// <see cref="CurrentApplicationIsNotSet"/>
         public string ValidationEMailIsExpected { get; set; } = "E-mail is expected.";
+
+        /// <see cref="CurrentApplicationIsNotSet"/>
+        public string ValidationUrlIsExpected { get; set; } = "Url is expected.";
     }
 }

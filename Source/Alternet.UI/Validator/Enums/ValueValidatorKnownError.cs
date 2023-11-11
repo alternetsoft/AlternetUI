@@ -115,5 +115,13 @@ namespace Alternet.UI
         /// Use <see cref="ErrorMessages.ValidationEMailIsExpected"/> for the localization.
         /// </remarks>
         EMailIsExpected,
+
+        /// <summary>
+        /// Error: "Url is expected.".
+        /// </summary>
+        /// <remarks>
+        /// Use <see cref="ErrorMessages.ValidationUrlIsExpected"/> for the localization.
+        /// </remarks>
+        UrlIsExpected,
     }
 }
