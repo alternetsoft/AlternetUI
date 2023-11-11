@@ -12,7 +12,7 @@ namespace Alternet.UI
         /// <summary>
         /// Toggles <see cref="FontStyle.Bold"/> style of the selection.
         /// </summary>
-        public void SelectionToggleBold()
+        public virtual void SelectionToggleBold()
         {
             ApplyBoldToSelection();
         }
@@ -20,7 +20,7 @@ namespace Alternet.UI
         /// <summary>
         /// Toggles <see cref="FontStyle.Italic"/> style of the selection.
         /// </summary>
-        public void SelectionToggleItalic()
+        public virtual void SelectionToggleItalic()
         {
             ApplyItalicToSelection();
         }
@@ -28,7 +28,7 @@ namespace Alternet.UI
         /// <summary>
         /// Toggles <see cref="FontStyle.Underlined"/> style of the selection.
         /// </summary>
-        public void SelectionToggleUnderlined()
+        public virtual void SelectionToggleUnderlined()
         {
             ApplyUnderlineToSelection();
         }
@@ -36,7 +36,7 @@ namespace Alternet.UI
         /// <summary>
         /// Toggles <see cref="FontStyle.Strikethrough"/> style of the selection.
         /// </summary>
-        public void SelectionToggleStrikethrough()
+        public virtual void SelectionToggleStrikethrough()
         {
             ApplyTextEffectToSelection(TextBoxTextAttrEffects.Strikethrough);
         }
@@ -44,7 +44,7 @@ namespace Alternet.UI
         /// <summary>
         /// Sets text alignment in the current position to <see cref="TextBoxTextAttrAlignment.Left"/>
         /// </summary>
-        public void SelectionAlignLeft()
+        public virtual void SelectionAlignLeft()
         {
             ApplyAlignmentToSelection(TextBoxTextAttrAlignment.Left);
         }
@@ -52,7 +52,7 @@ namespace Alternet.UI
         /// <summary>
         /// Sets text alignment in the current position to <see cref="TextBoxTextAttrAlignment.Center"/>
         /// </summary>
-        public void SelectionAlignCenter()
+        public virtual void SelectionAlignCenter()
         {
             ApplyAlignmentToSelection(TextBoxTextAttrAlignment.Center);
         }
@@ -60,7 +60,7 @@ namespace Alternet.UI
         /// <summary>
         /// Sets text alignment in the current position to <see cref="TextBoxTextAttrAlignment.Right"/>
         /// </summary>
-        public void SelectionAlignRight()
+        public virtual void SelectionAlignRight()
         {
             ApplyAlignmentToSelection(TextBoxTextAttrAlignment.Right);
         }
@@ -68,14 +68,33 @@ namespace Alternet.UI
         /// <summary>
         /// Sets text alignment in the current position to <see cref="TextBoxTextAttrAlignment.Justified"/>
         /// </summary>
-        public void SelectionAlignJustified()
+        public virtual void SelectionAlignJustified()
         {
             ApplyAlignmentToSelection(TextBoxTextAttrAlignment.Justified);
         }
 
-        public void SelectionClearFormatting()
+        /// <summary>
+        /// Sets specified style to the selection.
+        /// </summary>
+        public virtual bool ApplyStyleToSelection(ITextBoxRichAttr style, RichTextSetStyleFlags flags)
         {
+            if (style is not TextBoxRichAttr s)
+                return false;
+            return NativeControl.ApplyStyleToSelection(s.Handle, (int)flags);
+        }
 
+        /// <summary>
+        /// Clears formatting of the selection.
+        /// </summary>
+        public virtual void SelectionClearFormatting()
+        {
+            var style = RichTextBox.CreateRichAttr();
+            var flags = TextBoxTextAttrFlags.Character | TextBoxTextAttrFlags.Alignment
+                | TextBoxTextAttrFlags.ParaSpacingAfter | TextBoxTextAttrFlags.ParaSpacingBefore
+                | TextBoxTextAttrFlags.LineSpacing | TextBoxTextAttrFlags.CharacterStyleName;
+            flags &= ~TextBoxTextAttrFlags.Url;
+            style.SetFlags(flags);
+            ApplyStyleToSelection(style, RichTextSetStyleFlags.Remove);
         }
 
         /// <summary>

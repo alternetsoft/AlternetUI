@@ -7,8 +7,10 @@ void SetHasBorder(bool value);
 
 string GetReportedUrl();
 
+bool CanInsertContent(void* container, int64_t pos);
 void* GetBuffer();
 int64_t DeleteSelectedContent();
+bool ExtendSelection(int64_t oldPosition, int64_t newPosition, int flags);
 bool ExtendCellSelection(void* table, int noRowSteps, int noColSteps);
 bool StartCellSelection(void* table, void* newCell);
 bool ScrollIntoView(int64_t position, int keyCode);
@@ -93,7 +95,7 @@ bool WriteImage2(const string& filename, int bitmapType, void* textAttr);
 bool WriteImage3(void* imageBlock, void* textAttr);
 void* WriteField(const string& fieldType, void* properties, void* textAttr);
 bool CanDeleteRange(void* container, int64_t startRange, int64_t endRange);
-bool CanInsertContent(void* container, int64_t pos);
+bool EndItalic();
 bool BeginUnderline();
 bool EndUnderline();
 bool BeginFontSize(int pointSize);
@@ -178,7 +180,7 @@ double GetFontScale();
 bool GetVirtualAttributesEnabled();
 void EnableVirtualAttributes(bool b);
 void DoWriteText(const string& value, int flags);
-bool ExtendSelection(int64_t oldPosition, int64_t newPosition, int flags);
+bool ApplyStyleToSelection(void* style, int flags);
 static void InitFileHandlers();
 string GetRange(int64_t from, int64_t to);
 int GetLineLength(int64_t lineNo);
@@ -254,7 +256,6 @@ bool EndAllStyles();
 bool BeginBold();
 bool EndBold();
 bool BeginItalic();
-bool EndItalic();
 public:
 enum class RichTextBoxEvent
 {

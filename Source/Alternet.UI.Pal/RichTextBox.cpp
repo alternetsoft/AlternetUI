@@ -279,7 +279,7 @@ namespace Alternet::UI
 
 	void* RichTextBox::GetDefaultStyleEx()
 	{
-		wxRichTextAttr result = GetTextCtrl()->GetDefaultStyle();
+		wxRichTextAttr result = GetTextCtrl()->GetDefaultStyleEx();
 		wxRichTextAttr* style = new wxRichTextAttr();
 		style->Copy(result);
 		return style;
@@ -460,9 +460,18 @@ namespace Alternet::UI
 
 	void* RichTextBox::WriteTable(int rows, int cols, void* tableAttr, void* cellAttr)
 	{
-		wxRichTextAttr* wxtableAttr = (wxRichTextAttr*)tableAttr;
-		wxRichTextAttr* wxcellAttr = (wxRichTextAttr*)cellAttr;
-		return GetTextCtrl()->WriteTable(rows, cols, *wxtableAttr, *wxcellAttr);
+		auto wxtableAttr = (wxRichTextAttr*)tableAttr;
+		auto wxcellAttr = (wxRichTextAttr*)cellAttr;
+
+		wxRichTextAttr ta;
+		wxRichTextAttr tc;
+
+		if (wxtableAttr != nullptr)
+			ta.Copy(*wxtableAttr);
+		if (wxcellAttr != nullptr)
+			tc.Copy(*wxcellAttr);
+
+		return GetTextCtrl()->WriteTable(rows, cols, ta, tc);
 	}
 
 	void RichTextBox::SetBasicStyle(void* style)
@@ -693,6 +702,22 @@ namespace Alternet::UI
 	bool RichTextBox::IsSelectionAligned(int alignment)
 	{
 		return GetTextCtrl()->IsSelectionAligned((wxTextAttrAlignment)alignment);
+	}
+
+	bool RichTextBox::ApplyStyleToSelection(void* style, int flags)
+	{
+		wxRichTextAttr* s = (wxRichTextAttr*)style;
+
+		if (GetTextCtrl()->HasSelection())
+			return GetTextCtrl()->SetStyleEx(GetTextCtrl()->GetSelectionRange(), *s,
+				wxRICHTEXT_SETSTYLE_WITH_UNDO | wxRICHTEXT_SETSTYLE_OPTIMIZE | flags);
+		else
+		{
+			wxRichTextAttr current = GetTextCtrl()->GetDefaultStyleEx();
+			current.Apply(*s);
+			GetTextCtrl()->SetAndShowDefaultStyle(current);
+		}
+		return true;
 	}
 
 	bool RichTextBox::ApplyBoldToSelection()
@@ -1478,28 +1503,36 @@ namespace Alternet::UI
 
 	void RichTextBox::SetTextCursor(void* cursor)
 	{
-		//!!!!!!!!!!!!!!!
-		// void GetTextCtrl()->SetTextCursor(const wxCursor& cursor)
+		if (cursor == nullptr)
+			GetTextCtrl()->SetTextCursor(wxCursor());
+		else
+		{
+			auto wx = (wxCursor*)cursor;
+			auto wcursor = wxCursor(*wx);			
+			GetTextCtrl()->SetTextCursor(wcursor);
+		}
 	}
 
 	void* RichTextBox::GetTextCursor()
 	{
-		// !!!!!!!!!!!!!
-		// wxCursor GetTextCtrl()->GetTextCursor()
-		return nullptr;
+		return new wxCursor(GetTextCtrl()->GetTextCursor());
 	}
 
 	void RichTextBox::SetURLCursor(void* cursor)
 	{
-		// !!!!!!!!!!!!!
-		// void GetTextCtrl()->SetURLCursor(const wxCursor& cursor)
+		if (cursor == nullptr)
+			GetTextCtrl()->SetURLCursor(wxCursor());
+		else
+		{
+			auto wx = (wxCursor*)cursor;
+			auto wcursor = wxCursor(*wx);
+			GetTextCtrl()->SetURLCursor(wcursor);
+		}
 	}
 
 	void* RichTextBox::GetURLCursor()
 	{
-		//!!!!!!!!!!!!
-		// wxCursor GetTextCtrl()->GetURLCursor()				
-		return nullptr;
+		return new wxCursor(GetTextCtrl()->GetURLCursor());
 	}
 
 	void* RichTextBox::GetContextMenuPropertiesInfo()

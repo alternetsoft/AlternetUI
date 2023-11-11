@@ -30,6 +30,11 @@ ALTERNET_UI_API char16_t* RichTextBox_GetReportedUrl_(RichTextBox* obj)
     return AllocPInvokeReturnString(obj->GetReportedUrl());
 }
 
+ALTERNET_UI_API c_bool RichTextBox_CanInsertContent_(RichTextBox* obj, void* container, int64_t pos)
+{
+    return obj->CanInsertContent(container, pos);
+}
+
 ALTERNET_UI_API void* RichTextBox_GetBuffer_(RichTextBox* obj)
 {
     return obj->GetBuffer();
@@ -38,6 +43,11 @@ ALTERNET_UI_API void* RichTextBox_GetBuffer_(RichTextBox* obj)
 ALTERNET_UI_API int64_t RichTextBox_DeleteSelectedContent_(RichTextBox* obj)
 {
     return obj->DeleteSelectedContent();
+}
+
+ALTERNET_UI_API c_bool RichTextBox_ExtendSelection_(RichTextBox* obj, int64_t oldPosition, int64_t newPosition, int flags)
+{
+    return obj->ExtendSelection(oldPosition, newPosition, flags);
 }
 
 ALTERNET_UI_API c_bool RichTextBox_ExtendCellSelection_(RichTextBox* obj, void* table, int noRowSteps, int noColSteps)
@@ -460,9 +470,9 @@ ALTERNET_UI_API c_bool RichTextBox_CanDeleteRange_(RichTextBox* obj, void* conta
     return obj->CanDeleteRange(container, startRange, endRange);
 }
 
-ALTERNET_UI_API c_bool RichTextBox_CanInsertContent_(RichTextBox* obj, void* container, int64_t pos)
+ALTERNET_UI_API c_bool RichTextBox_EndItalic_(RichTextBox* obj)
 {
-    return obj->CanInsertContent(container, pos);
+    return obj->EndItalic();
 }
 
 ALTERNET_UI_API c_bool RichTextBox_BeginUnderline_(RichTextBox* obj)
@@ -885,9 +895,9 @@ ALTERNET_UI_API void RichTextBox_DoWriteText_(RichTextBox* obj, const char16_t* 
     obj->DoWriteText(value, flags);
 }
 
-ALTERNET_UI_API c_bool RichTextBox_ExtendSelection_(RichTextBox* obj, int64_t oldPosition, int64_t newPosition, int flags)
+ALTERNET_UI_API c_bool RichTextBox_ApplyStyleToSelection_(RichTextBox* obj, void* style, int flags)
 {
-    return obj->ExtendSelection(oldPosition, newPosition, flags);
+    return obj->ApplyStyleToSelection(style, flags);
 }
 
 ALTERNET_UI_API void RichTextBox_InitFileHandlers_()
@@ -1263,11 +1273,6 @@ ALTERNET_UI_API c_bool RichTextBox_EndBold_(RichTextBox* obj)
 ALTERNET_UI_API c_bool RichTextBox_BeginItalic_(RichTextBox* obj)
 {
     return obj->BeginItalic();
-}
-
-ALTERNET_UI_API c_bool RichTextBox_EndItalic_(RichTextBox* obj)
-{
-    return obj->EndItalic();
 }
 
 ALTERNET_UI_API void RichTextBox_SetEventCallback_(RichTextBox::RichTextBoxEventCallbackType callback)

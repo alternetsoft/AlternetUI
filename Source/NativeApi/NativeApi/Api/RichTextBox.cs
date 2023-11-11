@@ -16,6 +16,8 @@ namespace NativeApi.Api
     // https://docs.wxwidgets.org/3.2/classwx_rich_text_h_t_m_l_handler.html
     public class RichTextBox : Control
     {
+        public bool ApplyStyleToSelection(IntPtr style, int flags) => default;
+
         public static void InitFileHandlers() {}
         
         public bool HasBorder { get; set; }

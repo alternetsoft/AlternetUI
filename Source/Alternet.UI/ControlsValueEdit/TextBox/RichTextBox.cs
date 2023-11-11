@@ -1467,6 +1467,16 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Returns the current default style, which can be used to change how subsequently
+        /// inserted text is displayed.
+        /// </summary>
+        public ITextBoxRichAttr GetDefaultStyleEx()
+        {
+            var result = NativeControl.GetDefaultStyleEx();
+            return new TextBoxRichAttr(result);
+        }
+
+        /// <summary>
         /// Returns <c>true</c> if undo history suppression is on.
         /// </summary>
         public bool SuppressingUndo()
@@ -1853,6 +1863,31 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Write a table at the current insertion point, returning the table.
+        /// </summary>
+        public object WriteTable(
+            int rows,
+            int cols,
+            ITextBoxRichAttr? tableAttr = default,
+            ITextBoxRichAttr? cellAttr = default)
+        {
+            IntPtr tableAttrPtr = default;
+            IntPtr cellAttrPtr = default;
+
+            if (tableAttr is TextBoxRichAttr ta)
+                tableAttrPtr = ta.Handle;
+
+            if (cellAttr is TextBoxRichAttr ca)
+                cellAttrPtr = ca.Handle;
+
+            return NativeControl.WriteTable(
+                rows,
+                cols,
+                tableAttrPtr,
+                cellAttrPtr);
+        }
+
+        /// <summary>
         /// Numbers the paragraphs in the given range.
         /// </summary>
         /// <remarks>
@@ -1880,6 +1915,64 @@ namespace Alternet.UI
                 (int)flags,
                 startFrom,
                 specifiedLevel);
+        }
+
+        /// <summary>
+        /// Gets the attributes at the given position.
+        /// </summary>
+        /// <remarks>
+        /// This function gets the combined style - that is, the style you see on the
+        /// screen as a result of combining base style, paragraph style and character
+        /// style attributes.
+        /// To get the character or paragraph style alone, use GetUncombinedStyle.
+        /// </remarks>
+        public ITextBoxTextAttr GetStyle(long position)
+        {
+            var result = NativeControl.GetStyle(position);
+            return new TextBoxTextAttr(result);
+        }
+
+        /// <summary>
+        /// Gets the attributes at the given position.
+        /// </summary>
+        /// <remarks>
+        /// This function gets the combined style - that is, the style you see on the
+        /// screen as a result of combining base style, paragraph style and character
+        /// style attributes.
+        /// To get the character or paragraph style alone, use GetUncombinedStyle.
+        /// </remarks>
+        public ITextBoxRichAttr GetRichStyle(long position)
+        {
+            var result = NativeControl.GetRichStyle(position);
+            return new TextBoxRichAttr(result);
+        }
+
+        /// <summary>
+        /// Sets the attributes for the given range, passing flags to determine how the
+        /// attributes are set.
+        /// </summary>
+        /// <remarks>
+        /// The end point of range is specified as the last character position of the span
+        /// of text, plus one. So, for example, to set the style for a character at
+        /// position 5, use the range (5,6).
+        /// <paramref name="flags"/> may contain a bit list of the following values:
+        /// <see cref="RichTextSetStyleFlags.None"/>,
+        /// <see cref="RichTextSetStyleFlags.WithUndo"/>,
+        /// <see cref="RichTextSetStyleFlags.Optimize"/>,
+        /// <see cref="RichTextSetStyleFlags.ParagraphsOnly"/>,
+        /// <see cref="RichTextSetStyleFlags.CharactersOnly"/>,
+        /// <see cref="RichTextSetStyleFlags.Reset"/>,
+        /// <see cref="RichTextSetStyleFlags.Remove"/>.
+        /// </remarks>
+        public bool SetStyleEx(
+            long startRange,
+            long endRange,
+            ITextBoxRichAttr style,
+            RichTextSetStyleFlags flags = RichTextSetStyleFlags.WithUndo)
+        {
+            if (style is not TextBoxRichAttr s)
+                return false;
+            return NativeControl.SetStyleEx(startRange, endRange, s.Handle, (int)flags);
         }
 
         /// <summary>
@@ -1917,6 +2010,74 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Sets the text (normal) cursor.
+        /// </summary>
+        public void SetTextCursor(Cursor? cursor)
+        {
+            if (cursor is null)
+                NativeControl.SetTextCursor(default);
+            else
+                NativeControl.SetTextCursor(cursor.Handle);
+        }
+
+        /// <summary>
+        /// Returns the text (normal) cursor.
+        /// </summary>
+        public Cursor GetTextCursor()
+        {
+            return new Cursor(NativeControl.GetTextCursor(), true);
+        }
+
+        /// <summary>
+        /// Sets the cursor to be used over URLs.
+        /// </summary>
+        public void SetURLCursor(Cursor? cursor)
+        {
+            if (cursor is null)
+                NativeControl.SetURLCursor(default);
+            else
+                NativeControl.SetURLCursor(cursor.Handle);
+        }
+
+        /// <summary>
+        /// Returns the cursor to be used over URLs.
+        /// </summary>
+        public Cursor GetURLCursor()
+        {
+            return new Cursor(NativeControl.GetURLCursor(), true);
+        }
+
+        /// <summary>
+        /// Sets the basic (overall) style.
+        /// </summary>
+        /// <remarks>
+        /// This is the style of the whole buffer before further styles are applied,
+        /// unlike the default style, which only affects the style currently being
+        /// applied (for example, setting the default style to bold will cause
+        /// subsequently inserted text to be bold).
+        /// </remarks>
+        public void SetBasicStyle(ITextBoxRichAttr style)
+        {
+            if (style is TextBoxRichAttr s)
+                NativeControl.SetBasicStyle(s.Handle);
+        }
+
+        /// <summary>
+        /// Gets the basic (overall) style.
+        /// </summary>
+        /// <remarks>
+        /// This is the style of the whole buffer before further styles are applied,
+        /// unlike the default style, which only affects the style currently being
+        /// applied (for example, setting the default style to bold will cause
+        /// subsequently inserted text to be bold).
+        /// </remarks>
+        public ITextBoxRichAttr GetBasicStyle()
+        {
+            var result = NativeControl.GetBasicStyle();
+            return new TextBoxRichAttr(result);
+        }
+
+        /// <summary>
         /// Deletes the content within the given range.
         /// </summary>
         public bool Delete(long startRange, long endRange)
@@ -1932,6 +2093,36 @@ namespace Alternet.UI
             if (style is not TextBoxRichAttr s)
                 return false;
             return NativeControl.BeginStyle(s.Handle);
+        }
+
+        /// <summary>
+        /// Sets the attributes for the given range.
+        /// </summary>
+        /// <remarks>
+        /// The end point of range is specified as the last character position of the span
+        /// of text, plus one. So, for example, to set the style for a character at
+        /// position 5, use the range (5,6).
+        /// </remarks>
+        public bool SetStyle(long start, long end, ITextBoxTextAttr style)
+        {
+            if (style is not TextBoxTextAttr s)
+                return false;
+            return NativeControl.SetStyle(start, end, s.Handle);
+        }
+
+        /// <summary>
+        /// Sets the attributes for the given range.
+        /// </summary>
+        /// <remarks>
+        /// The end point of range is specified as the last character position of the span
+        /// of text, plus one. So, for example, to set the style for a character at
+        /// position 5, use the range (5,6).
+        /// </remarks>
+        public bool SetRichStyle(long start, long end, ITextBoxRichAttr style)
+        {
+            if (style is not TextBoxRichAttr s)
+                return false;
+            return NativeControl.SetRichStyle(start, end, s.Handle);
         }
 
         /// <summary>
@@ -1952,6 +2143,28 @@ namespace Alternet.UI
         public Int32Point PositionToXY(long pos)
         {
             return NativeControl.PositionToXY(pos);
+        }
+
+        /// <summary>
+        /// Gets the attributes common to the specified range.
+        /// Attributes that differ in value within the range will not be included
+        /// in style flags.
+        /// </summary>
+        public ITextBoxTextAttr GetStyleForRange(long startRange, long endRange)
+        {
+            var result = NativeControl.GetStyleForRange(startRange, endRange);
+            return new TextBoxTextAttr(result);
+        }
+
+        /// <summary>
+        /// Gets the attributes common to the specified range.
+        /// Attributes that differ in value within the range will not be included
+        /// in style flags.
+        /// </summary>
+        public ITextBoxRichAttr GetRichStyleForRange(long startRange, long endRange)
+        {
+            var result = NativeControl.GetStyleForRange2(startRange, endRange);
+            return new TextBoxRichAttr(result);
         }
 
         /// <summary>
@@ -2052,7 +2265,7 @@ namespace Alternet.UI
         internal bool ApplyStyle(IntPtr def)
         {
             return NativeControl.ApplyStyle(def);
-        }
+        } // wxRichTextStyleDefinition
 
         /// <summary>
         /// Sets the style sheet associated with the control.
@@ -2217,79 +2430,16 @@ namespace Alternet.UI
         internal bool GetUncombinedStyle(long position, IntPtr style)
         {
             return NativeControl.GetUncombinedStyle(position, style);
-        }
+        } // wxRichTextAttr& style param to result
 
         internal bool GetUncombinedStyle(long position, IntPtr style, IntPtr container)
         {
             return NativeControl.GetUncombinedStyle2(position, style, container);
-        }
-
-        /// <summary>
-        /// Returns the current default style, which can be used to change how subsequently
-        /// inserted text is displayed.
-        /// </summary>
-        internal IntPtr GetDefaultStyleEx()
-        {
-            return NativeControl.GetDefaultStyleEx();
-        }
-
-        /// <summary>
-        /// Gets the attributes at the given position.
-        /// </summary>
-        /// <remarks>
-        /// This function gets the combined style - that is, the style you see on the
-        /// screen as a result of combining base style, paragraph style and character
-        /// style attributes.
-        /// To get the character or paragraph style alone, use GetUncombinedStyle.
-        /// </remarks>
-        internal IntPtr GetStyle(long position)
-        {
-            return NativeControl.GetStyle(position);
-        }
-
-        /// <summary>
-        /// Gets the attributes at the given position.
-        /// </summary>
-        /// <remarks>
-        /// This function gets the combined style - that is, the style you see on the
-        /// screen as a result of combining base style, paragraph style and character
-        /// style attributes.
-        /// To get the character or paragraph style alone, use GetUncombinedStyle.
-        /// </remarks>
-        internal IntPtr GetRichStyle(long position)
-        {
-            return NativeControl.GetRichStyle(position);
-        }
+        } // wxRichTextAttr& style param to result
 
         internal IntPtr GetStyleInContainer(long position, IntPtr container)
         {
             return NativeControl.GetStyleInContainer(position, container);
-        }
-
-        /// <summary>
-        /// Sets the attributes for the given range.
-        /// </summary>
-        /// <remarks>
-        /// The end point of range is specified as the last character position of the span
-        /// of text, plus one. So, for example, to set the style for a character at
-        /// position 5, use the range (5,6).
-        /// </remarks>
-        internal bool SetStyle(long start, long end, IntPtr style)
-        {
-            return NativeControl.SetStyle(start, end, style);
-        }
-
-        /// <summary>
-        /// Sets the attributes for the given range.
-        /// </summary>
-        /// <remarks>
-        /// The end point of range is specified as the last character position of the span
-        /// of text, plus one. So, for example, to set the style for a character at
-        /// position 5, use the range (5,6).
-        /// </remarks>
-        internal bool SetRichStyle(long start, long end, IntPtr style)
-        {
-            return NativeControl.SetRichStyle(start, end, style);
         }
 
         /// <summary>
@@ -2303,55 +2453,9 @@ namespace Alternet.UI
             NativeControl.SetStyle2(richObj, textAttr, (int)flags);
         }
 
-        /// <summary>
-        /// Gets the attributes common to the specified range.
-        /// Attributes that differ in value within the range will not be included
-        /// in style flags.
-        /// </summary>
-        internal IntPtr GetStyleForRange(long startRange, long endRange)
-        {
-            return NativeControl.GetStyleForRange(startRange, endRange);
-        }
-
-        /// <summary>
-        /// Gets the attributes common to the specified range.
-        /// Attributes that differ in value within the range will not be included
-        /// in style flags.
-        /// </summary>
-        internal IntPtr GetRichStyleForRange(long startRange, long endRange)
-        {
-            return NativeControl.GetStyleForRange2(startRange, endRange);
-        }
-
         internal IntPtr GetStyleForRange(long startRange, long endRange, IntPtr container)
         {
             return NativeControl.GetStyleForRange3(startRange, endRange, container);
-        }
-
-        /// <summary>
-        /// Sets the attributes for the given range, passing flags to determine how the
-        /// attributes are set.
-        /// </summary>
-        /// <remarks>
-        /// The end point of range is specified as the last character position of the span
-        /// of text, plus one. So, for example, to set the style for a character at
-        /// position 5, use the range (5,6).
-        /// <paramref name="flags"/> may contain a bit list of the following values:
-        /// <see cref="RichTextSetStyleFlags.None"/>,
-        /// <see cref="RichTextSetStyleFlags.WithUndo"/>,
-        /// <see cref="RichTextSetStyleFlags.Optimize"/>,
-        /// <see cref="RichTextSetStyleFlags.ParagraphsOnly"/>,
-        /// <see cref="RichTextSetStyleFlags.CharactersOnly"/>,
-        /// <see cref="RichTextSetStyleFlags.Reset"/>,
-        /// <see cref="RichTextSetStyleFlags.Remove"/>.
-        /// </remarks>
-        internal bool SetStyleEx(
-            long startRange,
-            long endRange,
-            IntPtr style,
-            RichTextSetStyleFlags flags = RichTextSetStyleFlags.WithUndo)
-        {
-            return NativeControl.SetStyleEx(startRange, endRange, style, (int)flags);
         }
 
         /// <summary>
@@ -2383,7 +2487,7 @@ namespace Alternet.UI
                 (int)flags,
                 startFrom,
                 specifiedLevel);
-        }
+        } // wxRichTextListStyleDefinition
 
         /// <summary>
         /// Numbers the paragraphs in the given range.
@@ -2413,7 +2517,7 @@ namespace Alternet.UI
                 (int)flags,
                 startFrom,
                 specifiedLevel);
-        }
+        } // wxRichTextListStyleDefinition
 
         /// <summary>
         /// Promotes or demotes the paragraphs in the given range.
@@ -2447,52 +2551,7 @@ namespace Alternet.UI
                 def,
                 (int)flags,
                 specifiedLevel);
-        }
-
-        /// <summary>
-        /// Write a table at the current insertion point, returning the table.
-        /// You can then call SetFocusObject() to set the focus to the new object.
-        /// </summary>
-        internal IntPtr WriteTable(
-            int rows,
-            int cols,
-            IntPtr tableAttr = default,
-            IntPtr cellAttr = default)
-        {
-            return NativeControl.WriteTable(
-                rows,
-                cols,
-                tableAttr,
-                cellAttr);
-        }
-
-        /// <summary>
-        /// Sets the basic (overall) style.
-        /// </summary>
-        /// <remarks>
-        /// This is the style of the whole buffer before further styles are applied,
-        /// unlike the default style, which only affects the style currently being
-        /// applied (for example, setting the default style to bold will cause
-        /// subsequently inserted text to be bold).
-        /// </remarks>
-        internal void SetBasicStyle(IntPtr style)
-        {
-            NativeControl.SetBasicStyle(style);
-        }
-
-        /// <summary>
-        /// Gets the basic (overall) style.
-        /// </summary>
-        /// <remarks>
-        /// This is the style of the whole buffer before further styles are applied,
-        /// unlike the default style, which only affects the style currently being
-        /// applied (for example, setting the default style to bold will cause
-        /// subsequently inserted text to be bold).
-        /// </remarks>
-        internal IntPtr GetBasicStyle()
-        {
-            return NativeControl.GetBasicStyle();
-        }
+        } // wxRichTextListStyleDefinition
 
         /// <summary>
         /// Test if this whole range has character attributes of the specified kind.
@@ -2502,9 +2561,12 @@ namespace Alternet.UI
         /// You can use this to implement, for example, bold button updating.
         /// Style must have flags indicating which attributes are of interest.
         /// </remarks>
-        internal bool HasCharacterAttributes(long startRange, long endRange, IntPtr style)
+        internal bool HasCharacterAttributes(long startRange, long endRange, ITextBoxRichAttr style)
         {
-            return NativeControl.HasCharacterAttributes(startRange, endRange, style);
+            if (style is TextBoxRichAttr s)
+                return NativeControl.HasCharacterAttributes(startRange, endRange, s.Handle);
+            else
+                return false;
         }
 
         /// <summary>
@@ -2520,9 +2582,10 @@ namespace Alternet.UI
         /// Sets <paramref name="attr"/> as the default style and tells the control that the UI should
         /// reflect this attribute until the user moves the caret.
         /// </summary>
-        internal void SetAndShowDefaultStyle(IntPtr attr)
+        public void SetAndShowDefaultStyle(ITextBoxRichAttr attr)
         {
-            NativeControl.SetAndShowDefaultStyle(attr);
+            if (attr is TextBoxRichAttr s)
+                NativeControl.SetAndShowDefaultStyle(s.Handle);
         }
 
         /// <summary>
@@ -2542,15 +2605,20 @@ namespace Alternet.UI
         /// You can use this to implement, for example, centering button updating.
         /// <paramref name="style"/> must have flags indicating which attributes are of interest.
         /// </remarks>
-        internal bool HasParagraphAttributes(
+        public bool HasParagraphAttributes(
             long startRange,
             long endRange,
-            IntPtr style)
+            ITextBoxRichAttr style)
         {
-            return NativeControl.HasParagraphAttributes(
-                startRange,
-                endRange,
-                style);
+            if (style is TextBoxRichAttr s)
+            {
+                return NativeControl.HasParagraphAttributes(
+                    startRange,
+                    endRange,
+                    s.Handle);
+            }
+            else
+                return false;
         }
 
         /// <summary>
@@ -2582,38 +2650,6 @@ namespace Alternet.UI
                 endRange,
                 properties,
                 (int)flags);
-        }
-
-        /// <summary>
-        /// Sets the text (normal) cursor.
-        /// </summary>
-        internal void SetTextCursor(IntPtr cursor)
-        {
-            NativeControl.SetTextCursor(cursor);
-        }
-
-        /// <summary>
-        /// Returns the text (normal) cursor.
-        /// </summary>
-        internal IntPtr GetTextCursor()
-        {
-            return NativeControl.GetTextCursor();
-        }
-
-        /// <summary>
-        /// Sets the cursor to be used over URLs.
-        /// </summary>
-        internal void SetURLCursor(IntPtr cursor)
-        {
-            NativeControl.SetURLCursor(cursor);
-        }
-
-        /// <summary>
-        /// Returns the cursor to be used over URLs.
-        /// </summary>
-        internal IntPtr GetURLCursor()
-        {
-            return NativeControl.GetURLCursor();
         }
 
         /// <summary>
