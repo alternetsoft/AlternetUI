@@ -1182,7 +1182,7 @@ namespace Alternet.UI
         /// insertion point is changed.
         /// </summary>
         /// <param name="toggle">Font style to toggle</param>
-        public virtual void ToggleSelectionFontStyle(FontStyle toggle)
+        public virtual void SelectionToggleFontStyle(FontStyle toggle)
         {
             var position = GetInsertionPoint();
             var fs = GetStyle(position);
@@ -1231,36 +1231,36 @@ namespace Alternet.UI
         /// Toggles <see cref="FontStyle.Bold"/> style of the selection. If no text is selected,
         /// style of the insertion point is changed.
         /// </summary>
-        public virtual void ToggleSelectionBold()
+        public virtual void SelectionToggleBold()
         {
-            ToggleSelectionFontStyle(FontStyle.Bold);
+            SelectionToggleFontStyle(FontStyle.Bold);
         }
 
         /// <summary>
         /// Toggles <see cref="FontStyle.Italic"/> style of the selection. If no text is selected,
         /// style of the insertion point is changed.
         /// </summary>
-        public virtual void ToggleSelectionItalic()
+        public virtual void SelectionToggleItalic()
         {
-            ToggleSelectionFontStyle(FontStyle.Italic);
+            SelectionToggleFontStyle(FontStyle.Italic);
         }
 
         /// <summary>
         /// Toggles <see cref="FontStyle.Underlined"/> style of the selection. If no text is selected,
         /// style of the insertion point is changed.
         /// </summary>
-        public virtual void ToggleSelectionUnderline()
+        public virtual void SelectionToggleUnderline()
         {
-            ToggleSelectionFontStyle(FontStyle.Underlined);
+            SelectionToggleFontStyle(FontStyle.Underlined);
         }
 
         /// <summary>
         /// Toggles <see cref="FontStyle.Strikethrough"/> style of the selection. If no text is
         /// selected, style of the insertion point is changed.
         /// </summary>
-        public virtual void ToggleSelectionStrikethrough()
+        public virtual void SelectionToggleStrikethrough()
         {
-            ToggleSelectionFontStyle(FontStyle.Strikethrough);
+            SelectionToggleFontStyle(FontStyle.Strikethrough);
         }
 
         /// <summary>
