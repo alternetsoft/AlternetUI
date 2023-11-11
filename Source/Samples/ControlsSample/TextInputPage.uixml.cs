@@ -225,7 +225,7 @@ namespace ControlsSample
 
         private void RichEdit_KeyDown(object? sender, KeyEventArgs e)
         {
-            static void Test()
+            void Test()
             {
             }
 

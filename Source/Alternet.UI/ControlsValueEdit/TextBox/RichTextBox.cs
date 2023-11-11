@@ -295,44 +295,44 @@ namespace Alternet.UI
         /// </remarks>
         public virtual bool HandleAdditionalKeys(KeyEventArgs e)
         {
-            void ToggleSelectionBold()
+            void SelectionToggleBold()
             {
-
+                ApplyBoldToSelection();
             }
 
-            void ToggleSelectionItalic()
+            void SelectionToggleItalic()
             {
-
+                ApplyItalicToSelection();
             }
 
-            void ToggleSelectionUnderline()
+            void SelectionToggleUnderline()
             {
-
+                ApplyUnderlineToSelection();
             }
 
-            void ToggleSelectionStrikethrough()
+            void SelectionToggleStrikethrough()
             {
-
+                ApplyTextEffectToSelection(TextBoxTextAttrEffects.Strikethrough);
             }
 
             void SelectionAlignLeft()
             {
-
+                ApplyAlignmentToSelection(TextBoxTextAttrAlignment.Left);
             }
 
             void SelectionAlignCenter()
             {
-
+                ApplyAlignmentToSelection(TextBoxTextAttrAlignment.Center);
             }
 
             void SelectionAlignRight()
             {
-
+                ApplyAlignmentToSelection(TextBoxTextAttrAlignment.Right);
             }
 
             void SelectionJustify()
             {
-
+                ApplyAlignmentToSelection(TextBoxTextAttrAlignment.Justified);
             }
 
             void ClearTextFormatting()
@@ -340,13 +340,13 @@ namespace Alternet.UI
 
             }
 
-            if (KeyInfo.Run(KnownKeys.RichEditKeys.ToggleBold, e, ToggleSelectionBold))
+            if (KeyInfo.Run(KnownKeys.RichEditKeys.ToggleBold, e, SelectionToggleBold))
                 return true;
-            if (KeyInfo.Run(KnownKeys.RichEditKeys.ToggleItalic, e, ToggleSelectionItalic))
+            if (KeyInfo.Run(KnownKeys.RichEditKeys.ToggleItalic, e, SelectionToggleItalic))
                 return true;
-            if (KeyInfo.Run(KnownKeys.RichEditKeys.ToggleUnderline, e, ToggleSelectionUnderline))
+            if (KeyInfo.Run(KnownKeys.RichEditKeys.ToggleUnderline, e, SelectionToggleUnderline))
                 return true;
-            if (KeyInfo.Run(KnownKeys.RichEditKeys.ToggleStrikethrough, e, ToggleSelectionStrikethrough))
+            if (KeyInfo.Run(KnownKeys.RichEditKeys.ToggleStrikethrough, e, SelectionToggleStrikethrough))
                 return true;
             if (KeyInfo.Run(KnownKeys.RichEditKeys.LeftAlign, e, SelectionAlignLeft))
                 return true;
