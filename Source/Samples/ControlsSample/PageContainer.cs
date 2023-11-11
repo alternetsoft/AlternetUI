@@ -8,7 +8,13 @@ namespace ControlsSample
 
     public class PageContainer : Control
     {
-        private readonly TreeView pagesControl;
+        private readonly TreeView pagesControl = new()
+        {
+            HasBorder = false,
+            SuggestedWidth = 140,
+            MaxHeight = 400,
+        };
+
         private readonly Control activePageHolder = new()
         {
         };
@@ -43,11 +49,6 @@ namespace ControlsSample
             });
             Children.Add(grid);
 
-            pagesControl = new()
-            {
-                SuggestedWidth = 140,
-                MaxHeight = 400,
-            };
             pagesControl.MakeAsListBox();
 
             pagesControl.SelectionChanged += PagesListBox_SelectionChanged;

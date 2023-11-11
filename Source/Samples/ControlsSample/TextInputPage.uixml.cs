@@ -677,9 +677,8 @@ namespace ControlsSample
             r.EndSymbolBullet();
 
             // Make a style suitable for showing a URL
-            var urlStyle = RichTextBox.CreateRichAttr(); 
-            urlStyle.SetTextColor(Color.Blue);
-            urlStyle.SetFontUnderlined(true);
+            var urlStyle = RichTextBox.CreateRichAttr();
+            urlStyle.SetTextColor(Color.Blue).SetFontUnderlined(true);  
 
             r.WriteText("RichTextBox can also display URLs, such as this one: ");
             r.BeginStyle(urlStyle);

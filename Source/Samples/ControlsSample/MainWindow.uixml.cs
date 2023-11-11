@@ -7,11 +7,16 @@ namespace ControlsSample
     internal partial class MainWindow : Window, IPageSite
     {
         private readonly PageContainer pageContainer = new();
-        private readonly LogListBox eventsControl = new();
+        private readonly LogListBox eventsControl = new()
+        {
+            HasBorder = false,
+            Margin = new(0, 10, 0, 0),
+            SuggestedHeight = 150,
+        };        
         private readonly Grid mainGrid = new();
         private readonly Control mainGridParent = new();
-        private readonly LinkLabel? linkLabel;
-        private readonly LinkLabel? linkLabel2;
+        /*private readonly LinkLabel? linkLabel;
+        private readonly LinkLabel? linkLabel2;*/
 
         public MainWindow()
         {
@@ -20,23 +25,26 @@ namespace ControlsSample
             Icon = ImageSet.FromUrlOrNull("embres:ControlsSample.Sample.ico");
             InitializeComponent();
 
-            mainGrid.RowDefinitions.Add(new RowDefinition
+            /*mainGrid.RowDefinitions.Add(new RowDefinition
             {
                 Height = new GridLength(1, GridUnitType.Auto)
             }
-            );
+            );*/
             mainGrid.RowDefinitions.Add(new RowDefinition
             {
                 Height = new GridLength(100, GridUnitType.Star)
             }
             );
-            mainGrid.RowDefinitions.Add(new RowDefinition
+            mainGrid.AddAutoRow();
+                
+/*                
+                .Add(new RowDefinition
                 {
                     Height = new GridLength(150, GridUnitType.Pixel)
                 }
             );
-
-            var headerPanel = new HorizontalStackPanel()
+*/
+            /*var headerPanel = new HorizontalStackPanel()
             {
                 HorizontalAlignment = HorizontalAlignment.Right,
             };
@@ -61,17 +69,16 @@ namespace ControlsSample
 
             linkLabel.VisitedColor = linkLabel.NormalColor;
             linkLabel2.VisitedColor = linkLabel.NormalColor;
-
             headerPanel.Children.Add(linkLabel);
-            headerPanel.Children.Add(linkLabel2);
+            headerPanel.Children.Add(linkLabel2);          
+             */
 
-            eventsControl.Margin = new(0,10,0,0);
-            mainGrid.Children.Add(headerPanel);
+            //mainGrid.Children.Add(headerPanel);
             mainGrid.Children.Add(pageContainer);
             mainGrid.Children.Add(eventsControl);
-            Grid.SetRow(headerPanel, 0);
-            Grid.SetRow(pageContainer, 1);
-            Grid.SetRow(eventsControl, 2);
+            //Grid.SetRow(headerPanel, 0);
+            Grid.SetRow(pageContainer, 0);
+            Grid.SetRow(eventsControl, 1);
 
             var pages = pageContainer.Pages;
 
@@ -81,6 +88,7 @@ namespace ControlsSample
                 pages.Add(item);
             }
 
+            AddPage("Welcome", CreateWelcomePage);
             AddPage("Text Input", CreateTextInputPage);
             AddPage("Tree View", CreateTreeViewPage);
             AddPage("List View", CreateListViewPage);
@@ -138,6 +146,7 @@ namespace ControlsSample
         Control CreateSplitterPanelPage() => new SplitterPanelPage() { Site = this };
         Control CreateLayoutPanelPage() => new LayoutPanelPage() { Site = this };
         Control CreateAllSamplesPage() => new AllSamplesPage() { Site = this };
+        Control CreateWelcomePage() => new WelcomePage() { Site = this };
 
         private void LinkLabel_LinkClicked(
             object? sender,
