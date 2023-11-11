@@ -2365,7 +2365,7 @@ namespace Alternet.UI
         /// <summary>
         /// Sets text alignment in the current position to <see cref="TextBoxTextAttrAlignment.Justified"/>
         /// </summary>
-        public virtual void SelectionJustify()
+        public virtual void SelectionAlignJustified()
         {
             SelectionSetAlignment(TextBoxTextAttrAlignment.Justified);
         }

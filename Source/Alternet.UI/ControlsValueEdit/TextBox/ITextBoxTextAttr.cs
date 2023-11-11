@@ -25,42 +25,42 @@ namespace Alternet.UI
         /// <summary>
         /// Sets <see cref="FontInfo"/> of the text.
         /// </summary>
-        public void SetFontInfo(FontInfo value);
+        ITextBoxTextAttr SetFontInfo(FontInfo value);
 
         /// <summary>
         /// Sets <see cref="FontStyle"/> of the text.
         /// </summary>
-        void SetFontStyle(FontStyle fontStyle);
+        ITextBoxTextAttr SetFontStyle(FontStyle fontStyle);
 
         /// <summary>
         /// Sets color of the text.
         /// </summary>
         /// <param name="colText">New text color.</param>
-        void SetTextColor(Color colText);
+        ITextBoxTextAttr SetTextColor(Color colText);
 
         /// <summary>
         /// Sets background color.
         /// </summary>
         /// <param name="colBack">New background color.</param>
-        void SetBackgroundColor(Color colBack);
+        ITextBoxTextAttr SetBackgroundColor(Color colBack);
 
         /// <summary>
         /// Sets font size in points.
         /// </summary>
         /// <param name="pointSize">New font size in points.</param>
-        void SetFontPointSize(int pointSize);
+        ITextBoxTextAttr SetFontPointSize(int pointSize);
 
         /// <summary>
         /// Sets font size in points.
         /// </summary>
         /// <param name="pointSize">New font size in points.</param>
-        void SetFontPointSize(double pointSize);
+        ITextBoxTextAttr SetFontPointSize(double pointSize);
 
         /// <summary>
         /// Sets name of the font.
         /// </summary>
         /// <param name="faceName">New font name.</param>
-        void SetFontFaceName(string faceName);
+        ITextBoxTextAttr SetFontFaceName(string faceName);
 
         /// <summary>
         /// Returns boolean value indicating whether text is shown in the italic style.
@@ -71,40 +71,40 @@ namespace Alternet.UI
         /// Sets boolean value indicating whether to underline the text.
         /// </summary>
         /// <param name="underlined">Underline text or not.</param>
-        void SetFontUnderlined(bool underlined = true);
+        ITextBoxTextAttr SetFontUnderlined(bool underlined = true);
 
         /// <summary>
         /// Sets boolean value indicating whether to show text in the italic style.
         /// </summary>
-        void SetFontItalic(bool italic = true);
+        ITextBoxTextAttr SetFontItalic(bool italic = true);
 
         /// <summary>
         /// Sets boolean value indicating whether to show text in the slanted style
         /// (almost same as italic).
         /// </summary>
-        void SetFontSlanted(bool slanted = true);
+        ITextBoxTextAttr SetFontSlanted(bool slanted = true);
 
         /// <summary>
         /// Sets boolean value indicating whether to show text in the
         /// strikethrough style
         /// </summary>
-        void SetFontStrikethrough(bool strikethrough = true);
+        ITextBoxTextAttr SetFontStrikethrough(bool strikethrough = true);
 
         /// <summary>
         /// Sets initial value for ordered list numbers.
         /// </summary>
-        void SetBulletNumber(int n);
+        ITextBoxTextAttr SetBulletNumber(int n);
 
         /// <summary>
         /// Sets the bullet text, which could be a symbol, or
         /// (for example) cached outline text.
         /// </summary>
-        void SetBulletText(string text);
+        ITextBoxTextAttr SetBulletText(string text);
 
         /// <summary>
         /// Specifies a page break before this paragraph.
         /// </summary>
-        void SetPageBreak(bool pageBreak = true);
+        ITextBoxTextAttr SetPageBreak(bool pageBreak = true);
 
         /// <summary>
         /// Returns outline level of the text.
@@ -199,7 +199,7 @@ namespace Alternet.UI
         /// <summary>
         /// Sets value of the URL attribute for the text.
         /// </summary>
-        void SetURL(string url);
+        ITextBoxTextAttr SetURL(string url);
 
         /// <summary>
         /// Sets integer value which defines an empty spacing after the paragraph.
@@ -207,7 +207,7 @@ namespace Alternet.UI
         /// <remarks>
         ///  Spacing is counted in tenths of a millimetre.
         /// </remarks>
-        void SetParagraphSpacingAfter(int spacing);
+        ITextBoxTextAttr SetParagraphSpacingAfter(int spacing);
 
         /// <summary>
         /// Sets integer value which defines an empty spacing before the paragraph.
@@ -215,7 +215,7 @@ namespace Alternet.UI
         /// <remarks>
         ///  Spacing is counted in tenths of a millimetre.
         /// </remarks>
-        void SetParagraphSpacingBefore(int spacing);
+        ITextBoxTextAttr SetParagraphSpacingBefore(int spacing);
 
         /// <summary>
         /// Sets integer value which defines an empty spacing between the
@@ -225,27 +225,27 @@ namespace Alternet.UI
         /// Line spacing is a multiple, where 10 means single-spacing,
         /// 15 means 1.5 spacing, and 20 means double spacing.
         /// </remarks>
-        void SetLineSpacing(int spacing);
+        ITextBoxTextAttr SetLineSpacing(int spacing);
 
         /// <summary>
         /// Sets the character style name.
         /// </summary>
-        void SetCharacterStyleName(string name);
+        ITextBoxTextAttr SetCharacterStyleName(string name);
 
         /// <summary>
         /// Sets the paragraph style name.
         /// </summary>
-        void SetParagraphStyleName(string name);
+        ITextBoxTextAttr SetParagraphStyleName(string name);
 
         /// <summary>
         /// Sets the list style name.
         /// </summary>
-        void SetListStyleName(string name);
+        ITextBoxTextAttr SetListStyleName(string name);
 
         /// <summary>
         /// Sets the bullet font name.
         /// </summary>
-        void SetBulletFont(string bulletFont);
+        ITextBoxTextAttr SetBulletFont(string bulletFont);
 
         /// <summary>
         /// Sets the standard bullet name, applicable if the bullet
@@ -255,12 +255,12 @@ namespace Alternet.UI
         /// Valid standard bullet names are: "standard/circle", "standard/square",
         /// "standard/diamond", "standard/triangle".
         /// </remarks>
-        void SetBulletName(string name);
+        ITextBoxTextAttr SetBulletName(string name);
 
         /// <summary>
         /// Sets outline level of the text.
         /// </summary>
-        void SetOutlineLevel(int level);
+        ITextBoxTextAttr SetOutlineLevel(int level);
 
         /// <summary>
         /// Returns font size.
@@ -446,7 +446,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="type">Type of the underline.</param>
         /// <param name="color">Color of the underline.</param>
-        void SetFontUnderlinedEx(TextBoxTextAttrUnderlineType type, Color color);
+        ITextBoxTextAttr SetFontUnderlinedEx(TextBoxTextAttrUnderlineType type, Color color);
 
         /// <summary>
         /// Returns type of the underline.
@@ -457,7 +457,7 @@ namespace Alternet.UI
         /// Sets font weight.
         /// </summary>
         /// <param name="fontWeight">New value for the font waight attribute.</param>
-        void SetFontWeight(FontWeight fontWeight);
+        ITextBoxTextAttr SetFontWeight(FontWeight fontWeight);
 
         /// <summary>
         /// Returns font weight.
@@ -467,7 +467,7 @@ namespace Alternet.UI
         /// <summary>
         /// Sets text effects.
         /// </summary>
-        void SetTextEffects(TextBoxTextAttrEffects effects);
+        ITextBoxTextAttr SetTextEffects(TextBoxTextAttrEffects effects);
 
         /// <summary>
         /// Returns text effects.
@@ -478,7 +478,7 @@ namespace Alternet.UI
         /// Sets text alignment.
         /// </summary>
         /// <param name="alignment">New alignment of the text.</param>
-        void SetAlignment(TextBoxTextAttrAlignment alignment);
+        ITextBoxTextAttr SetAlignment(TextBoxTextAttrAlignment alignment);
 
         /// <summary>
         /// Returns text alignment.
@@ -489,7 +489,7 @@ namespace Alternet.UI
         /// Sets bullet style for the lists.
         /// </summary>
         /// <param name="style">New bullet style.</param>
-        void SetBulletStyle(TextBoxTextAttrBulletStyle style);
+        ITextBoxTextAttr SetBulletStyle(TextBoxTextAttrBulletStyle style);
 
         /// <summary>
         /// Returns bullet style used for the lists.
@@ -507,13 +507,13 @@ namespace Alternet.UI
         /// Mark attribute as not specified.
         /// </summary>
         /// <param name="flag">Attribute identification flag.</param>
-        void RemoveFlag(TextBoxTextAttrFlags flag);
+        ITextBoxTextAttr RemoveFlag(TextBoxTextAttrFlags flag);
 
         /// <summary>
         /// Add flag indicating that some attribute is specified.
         /// </summary>
         /// <param name="flag">Attribute identification flag.</param>
-        void AddFlag(TextBoxTextAttrFlags flag);
+        ITextBoxTextAttr AddFlag(TextBoxTextAttrFlags flag);
 
         /// <summary>
         /// Returns flags for specified attributes.
@@ -524,7 +524,7 @@ namespace Alternet.UI
         /// Set flags indicating that these attributes are specified in the style.
         /// </summary>
         /// <param name="flags">Attribute identification flags.</param>
-        void SetFlags(TextBoxTextAttrFlags flags);
+        ITextBoxTextAttr SetFlags(TextBoxTextAttrFlags flags);
 
         /// <summary>
         /// Copy all attributes from the other style.
@@ -536,6 +536,6 @@ namespace Alternet.UI
         /// Sets font family attribute.
         /// </summary>
         /// <param name="family">New font family value.</param>
-        void SetFontFamily(GenericFontFamily family);
+        ITextBoxTextAttr SetFontFamily(GenericFontFamily family);
     }
 }

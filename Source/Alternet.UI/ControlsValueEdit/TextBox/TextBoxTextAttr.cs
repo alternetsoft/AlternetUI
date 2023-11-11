@@ -27,21 +27,24 @@ namespace Alternet.UI
             return new(name, size, fontStyle);
         }
 
-        public void SetFontInfo(FontInfo value)
+        public ITextBoxTextAttr SetFontInfo(FontInfo value)
         {
             SetFontStyle(value.Style);
             SetFontFaceName(value.Name);
             SetFontPointSize(value.SizeInPoints);
-    }
-
-        public void SetTextColor(Color colText)
-        {
-            Native.TextBoxTextAttr.SetTextColor(Handle, colText);
+            return this;
         }
 
-        public void SetBackgroundColor(Color colBack)
+        public ITextBoxTextAttr SetTextColor(Color colText)
+        {
+            Native.TextBoxTextAttr.SetTextColor(Handle, colText);
+            return this;
+        }
+
+        public ITextBoxTextAttr SetBackgroundColor(Color colBack)
         {
             Native.TextBoxTextAttr.SetBackgroundColor(Handle, colBack);
+            return this;
         }
 
         public bool GetFontItalic()
@@ -52,7 +55,7 @@ namespace Alternet.UI
             return fs != wxNORMAL;
         }
 
-        public void SetFontItalic(bool italic)
+        public ITextBoxTextAttr SetFontItalic(bool italic)
         {
             const int wxNORMAL = 90;
             const int wxITALIC = 93;
@@ -61,9 +64,10 @@ namespace Alternet.UI
                 Native.TextBoxTextAttr.SetFontStyle(Handle, wxITALIC);
             else
                 Native.TextBoxTextAttr.SetFontStyle(Handle, wxNORMAL);
+            return this;
         }
 
-        public void SetFontSlanted(bool slanted)
+        public ITextBoxTextAttr SetFontSlanted(bool slanted)
         {
             const int wxNORMAL = 90;
             const int wxSLANT = 94;
@@ -72,6 +76,7 @@ namespace Alternet.UI
                 Native.TextBoxTextAttr.SetFontStyle(Handle, wxSLANT);
             else
                 Native.TextBoxTextAttr.SetFontStyle(Handle, wxNORMAL);
+            return this;
         }
 
         public void Copy(ITextBoxTextAttr fromAttr)
@@ -82,44 +87,52 @@ namespace Alternet.UI
             Native.TextBoxTextAttr.Copy(Handle, s.Handle);
         }
 
-        public void SetFontPointSize(double pointSize)
+        public ITextBoxTextAttr SetFontPointSize(double pointSize)
         {
             SetFontPointSize((int)pointSize);
+            return this;
         }
 
-        public void SetFontPointSize(int pointSize)
+        public ITextBoxTextAttr SetFontPointSize(int pointSize)
         {
             Native.TextBoxTextAttr.SetFontPointSize(Handle, pointSize);
+            return this;
         }
 
-        public void SetFontFaceName(string faceName)
+        public ITextBoxTextAttr SetFontFaceName(string faceName)
         {
             Native.TextBoxTextAttr.SetFontFaceName(Handle, faceName);
+            return this;
         }
 
-        public void SetFontUnderlined(bool underlined)
+        public ITextBoxTextAttr SetFontUnderlined(bool underlined)
         {
             Native.TextBoxTextAttr.SetFontUnderlined(Handle, underlined);
+            return this;
         }
 
-        public void SetFontStrikethrough(bool strikethrough)
+        public ITextBoxTextAttr SetFontStrikethrough(bool strikethrough)
         {
             Native.TextBoxTextAttr.SetFontStrikethrough(Handle, strikethrough);
+            return this;
         }
 
-        public void SetBulletNumber(int n)
+        public ITextBoxTextAttr SetBulletNumber(int n)
         {
             Native.TextBoxTextAttr.SetBulletNumber(Handle, n);
+            return this;
         }
 
-        public void SetBulletText(string text)
+        public ITextBoxTextAttr SetBulletText(string text)
         {
             Native.TextBoxTextAttr.SetBulletText(Handle, text);
+            return this;
         }
 
-        public void SetPageBreak(bool pageBreak)
+        public ITextBoxTextAttr SetPageBreak(bool pageBreak)
         {
             Native.TextBoxTextAttr.SetPageBreak(Handle, pageBreak);
+            return this;
         }
 
         public int GetOutlineLevel()
@@ -197,54 +210,64 @@ namespace Alternet.UI
             return Native.TextBoxTextAttr.GetBackgroundColor(Handle);
         }
 
-        public void SetURL(string url)
+        public ITextBoxTextAttr SetURL(string url)
         {
             Native.TextBoxTextAttr.SetURL(Handle, url);
+            return this;
         }
 
-        public void SetParagraphSpacingAfter(int spacing)
+        public ITextBoxTextAttr SetParagraphSpacingAfter(int spacing)
         {
             Native.TextBoxTextAttr.SetParagraphSpacingAfter(Handle, spacing);
+            return this;
         }
 
-        public void SetParagraphSpacingBefore(int spacing)
+        public ITextBoxTextAttr SetParagraphSpacingBefore(int spacing)
         {
             Native.TextBoxTextAttr.SetParagraphSpacingBefore(Handle, spacing);
+            return this;
         }
 
-        public void SetLineSpacing(int spacing)
+        public ITextBoxTextAttr SetLineSpacing(int spacing)
         {
             Native.TextBoxTextAttr.SetLineSpacing(Handle, spacing);
+            return this;
         }
 
-        public void SetCharacterStyleName(string name)
+        public ITextBoxTextAttr SetCharacterStyleName(string name)
         {
             Native.TextBoxTextAttr.SetCharacterStyleName(Handle, name);
+            return this;
         }
 
-        public void SetParagraphStyleName(string name)
+        public ITextBoxTextAttr SetParagraphStyleName(string name)
         {
             Native.TextBoxTextAttr.SetParagraphStyleName(Handle, name);
+            return this;
         }
 
-        public void SetListStyleName(string name)
+        public ITextBoxTextAttr SetListStyleName(string name)
         {
             Native.TextBoxTextAttr.SetListStyleName(Handle, name);
+            return this;
         }
 
-        public void SetBulletFont(string bulletFont)
+        public ITextBoxTextAttr SetBulletFont(string bulletFont)
         {
             Native.TextBoxTextAttr.SetBulletFont(Handle, bulletFont);
+            return this;
         }
 
-        public void SetBulletName(string name)
+        public ITextBoxTextAttr SetBulletName(string name)
         {
             Native.TextBoxTextAttr.SetBulletName(Handle, name);
+            return this;
         }
 
-        public void SetOutlineLevel(int level)
+        public ITextBoxTextAttr SetOutlineLevel(int level)
         {
             Native.TextBoxTextAttr.SetOutlineLevel(Handle, level);
+            return this;
         }
 
         public int GetFontSize()
@@ -417,11 +440,12 @@ namespace Alternet.UI
             return Native.TextBoxTextAttr.HasOutlineLevel(Handle);
         }
 
-        public void SetFontUnderlinedEx(
+        public ITextBoxTextAttr SetFontUnderlinedEx(
             TextBoxTextAttrUnderlineType type,
             Color color)
         {
             Native.TextBoxTextAttr.SetFontUnderlinedEx(Handle, (int)type, color);
+            return this;
         }
 
         public TextBoxTextAttrUnderlineType GetUnderlineType()
@@ -431,9 +455,10 @@ namespace Alternet.UI
                     GetUnderlineType(Handle);
         }
 
-        public void SetFontWeight(FontWeight fontWeight)
+        public ITextBoxTextAttr SetFontWeight(FontWeight fontWeight)
         {
             Native.TextBoxTextAttr.SetFontWeight(Handle, (int)fontWeight);
+            return this;
         }
 
         public FontWeight GetFontWeight()
@@ -441,9 +466,10 @@ namespace Alternet.UI
             return (FontWeight)Native.TextBoxTextAttr.GetFontWeight(Handle);
         }
 
-        public void SetTextEffects(TextBoxTextAttrEffects effects)
+        public ITextBoxTextAttr SetTextEffects(TextBoxTextAttrEffects effects)
         {
             Native.TextBoxTextAttr.SetTextEffects(Handle, (int)effects);
+            return this;
         }
 
         public TextBoxTextAttrEffects GetTextEffects()
@@ -452,9 +478,10 @@ namespace Alternet.UI
                 (TextBoxTextAttrEffects)Native.TextBoxTextAttr.GetTextEffects(Handle);
         }
 
-        public void SetAlignment(TextBoxTextAttrAlignment alignment)
+        public ITextBoxTextAttr SetAlignment(TextBoxTextAttrAlignment alignment)
         {
             Native.TextBoxTextAttr.SetAlignment(Handle, (int)alignment);
+            return this;
         }
 
         public TextBoxTextAttrAlignment GetAlignment()
@@ -463,9 +490,10 @@ namespace Alternet.UI
                 (TextBoxTextAttrAlignment)Native.TextBoxTextAttr.GetAlignment(Handle);
         }
 
-        public void SetBulletStyle(TextBoxTextAttrBulletStyle style)
+        public ITextBoxTextAttr SetBulletStyle(TextBoxTextAttrBulletStyle style)
         {
             Native.TextBoxTextAttr.SetBulletStyle(Handle, (int)style);
+            return this;
         }
 
         public TextBoxTextAttrBulletStyle GetBulletStyle()
@@ -474,7 +502,7 @@ namespace Alternet.UI
                 (TextBoxTextAttrBulletStyle)Native.TextBoxTextAttr.GetBulletStyle(Handle);
         }
 
-        public void SetFontStyle(FontStyle fontStyle)
+        public ITextBoxTextAttr SetFontStyle(FontStyle fontStyle)
         {
             if (fontStyle.HasFlag(FontStyle.Bold))
                 SetFontWeight(FontWeight.Bold);
@@ -483,6 +511,7 @@ namespace Alternet.UI
             SetFontItalic(fontStyle.HasFlag(FontStyle.Italic));
             SetFontStrikethrough(fontStyle.HasFlag(FontStyle.Strikethrough));
             SetFontUnderlined(fontStyle.HasFlag(FontStyle.Underlined));
+            return this;
         }
 
         public FontStyle GetFontStyle()
@@ -510,19 +539,22 @@ namespace Alternet.UI
             return Native.TextBoxTextAttr.HasFlag(Handle, (int)flag);
         }
 
-        public void RemoveFlag(TextBoxTextAttrFlags flag)
+        public ITextBoxTextAttr RemoveFlag(TextBoxTextAttrFlags flag)
         {
             Native.TextBoxTextAttr.RemoveFlag(Handle, (int)flag);
+            return this;
         }
 
-        public void AddFlag(TextBoxTextAttrFlags flag)
+        public ITextBoxTextAttr AddFlag(TextBoxTextAttrFlags flag)
         {
             Native.TextBoxTextAttr.AddFlag(Handle, (int)flag);
+            return this;
         }
 
-        public void SetFontFamily(GenericFontFamily family)
+        public ITextBoxTextAttr SetFontFamily(GenericFontFamily family)
         {
             Native.TextBoxTextAttr.SetFontFamily(Handle, (int)family);
+            return this;
         }
 
         public TextBoxTextAttrFlags GetFlags()
@@ -531,9 +563,10 @@ namespace Alternet.UI
                 (TextBoxTextAttrFlags)Native.TextBoxTextAttr.GetFlags(Handle);
         }
 
-        public void SetFlags(TextBoxTextAttrFlags flags)
+        public ITextBoxTextAttr SetFlags(TextBoxTextAttrFlags flags)
         {
             Native.TextBoxTextAttr.SetFlags(Handle, (int)flags);
+            return this;
         }
 
         protected override void DisposeUnmanagedResources()

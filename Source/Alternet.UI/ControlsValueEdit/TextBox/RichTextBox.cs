@@ -11,7 +11,7 @@ namespace Alternet.UI
     /// <summary>
     /// Implements rich text editor functionality.
     /// </summary>
-    public class RichTextBox : Control
+    public partial class RichTextBox : Control
     {
         private bool hasBorder = true;
 
@@ -51,6 +51,32 @@ namespace Alternet.UI
         /// are opened in the default browser.
         /// </summary>
         public virtual bool AutoUrlOpen { get; set; } = TextBox.DefaultAutoUrlOpen;
+
+        /// <summary>
+        /// Gets or sets a value indicating whether text in the control is read-only.
+        /// </summary>
+        /// <value>
+        /// <see langword="true"/> if the control is read-only; otherwise,
+        /// <see langword="false"/>. The default is <see langword="false"/>.
+        /// </value>
+        /// <remarks>
+        /// When this property is set to <see langword="true"/>, the contents
+        /// of the control cannot be changed by the user at runtime.
+        /// With this property set to <see langword="true"/>, you can still
+        /// set the value of the <see cref="Text"/> property in code.
+        /// </remarks>
+        public virtual bool ReadOnly
+        {
+            get
+            {
+                return !IsEditable();
+            }
+
+            set
+            {
+                SetEditable(!value);
+            }
+        }
 
         /// <summary>
         /// Gets or sets <see cref="ModifierKeys"/> used when clicked url is autoimatically opened
@@ -287,81 +313,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Handles default rich text editor keys.
-        /// </summary>
-        /// <param name="e">Event arguments.</param>
-        /// <remarks>
-        /// You can use this method in the <see cref="UIElement.KeyDown"/> event handlers.
-        /// </remarks>
-        public virtual bool HandleAdditionalKeys(KeyEventArgs e)
-        {
-            void SelectionToggleBold()
-            {
-                ApplyBoldToSelection();
-            }
-
-            void SelectionToggleItalic()
-            {
-                ApplyItalicToSelection();
-            }
-
-            void SelectionToggleUnderline()
-            {
-                ApplyUnderlineToSelection();
-            }
-
-            void SelectionToggleStrikethrough()
-            {
-                ApplyTextEffectToSelection(TextBoxTextAttrEffects.Strikethrough);
-            }
-
-            void SelectionAlignLeft()
-            {
-                ApplyAlignmentToSelection(TextBoxTextAttrAlignment.Left);
-            }
-
-            void SelectionAlignCenter()
-            {
-                ApplyAlignmentToSelection(TextBoxTextAttrAlignment.Center);
-            }
-
-            void SelectionAlignRight()
-            {
-                ApplyAlignmentToSelection(TextBoxTextAttrAlignment.Right);
-            }
-
-            void SelectionJustify()
-            {
-                ApplyAlignmentToSelection(TextBoxTextAttrAlignment.Justified);
-            }
-
-            void ClearTextFormatting()
-            {
-
-            }
-
-            if (KeyInfo.Run(KnownKeys.RichEditKeys.ToggleBold, e, SelectionToggleBold))
-                return true;
-            if (KeyInfo.Run(KnownKeys.RichEditKeys.ToggleItalic, e, SelectionToggleItalic))
-                return true;
-            if (KeyInfo.Run(KnownKeys.RichEditKeys.ToggleUnderline, e, SelectionToggleUnderline))
-                return true;
-            if (KeyInfo.Run(KnownKeys.RichEditKeys.ToggleStrikethrough, e, SelectionToggleStrikethrough))
-                return true;
-            if (KeyInfo.Run(KnownKeys.RichEditKeys.LeftAlign, e, SelectionAlignLeft))
-                return true;
-            if (KeyInfo.Run(KnownKeys.RichEditKeys.CenterAlign, e, SelectionAlignCenter))
-                return true;
-            if (KeyInfo.Run(KnownKeys.RichEditKeys.RightAlign, e, SelectionAlignRight))
-                return true;
-            if (KeyInfo.Run(KnownKeys.RichEditKeys.Justify, e, SelectionJustify))
-                return true;
-            if (KeyInfo.Run(KnownKeys.RichEditKeys.ClearTextFormatting, e, ClearTextFormatting))
-                return true;
-            return false;
-        }
-
-        /// <summary>
         ///     Raises the <see cref="TextUrl"/> event.
         /// </summary>
         /// <param name="e">
@@ -402,12 +353,27 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Writes url with title and style.
+        /// </summary>
+        /// <param name="style">Url style.</param>
+        /// <param name="url">Url.</param>
+        /// <param name="text">Url title (optional).</param>
+        public virtual void WriteUrl(ITextBoxRichAttr style, string url, string? text = default)
+        {
+            BeginStyle(style);
+            BeginURL(url);
+            WriteText(text ?? url);
+            EndURL();
+            EndStyle();
+        }
+
+        /// <summary>
         /// Sets the current default style, which can be used to change how subsequently
         /// inserted text is displayed.
         /// </summary>
         /// <param name="style">The style for the new text.</param>
         /// <returns>
-        /// true on success, false if an error occurred(this may
+        /// <c>true</c> on success, <c>false</c> if an error occurred (this may
         /// also mean that the styles are not supported under this platform).
         /// </returns>
         public virtual bool SetDefaultStyle(ITextBoxTextAttr style)
@@ -415,6 +381,14 @@ namespace Alternet.UI
             if (style is not TextBoxTextAttr s)
                 return false;
             return NativeControl.SetDefaultStyle(s.Handle);
+        }
+
+        /// <inheritdoc cref="SetDefaultStyle"/>
+        public bool SetDefaultRichStyle(ITextBoxRichAttr style)
+        {
+            if (style is not TextBoxRichAttr s)
+                return false;
+            return NativeControl.SetDefaultRichStyle(s.Handle);
         }
 
         /// <summary>
@@ -2248,11 +2222,6 @@ namespace Alternet.UI
         internal bool GetUncombinedStyle(long position, IntPtr style, IntPtr container)
         {
             return NativeControl.GetUncombinedStyle2(position, style, container);
-        }
-
-        internal bool SetDefaultRichStyle(IntPtr style)
-        {
-            return NativeControl.SetDefaultRichStyle(style);
         }
 
         /// <summary>
