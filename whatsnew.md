@@ -1,17 +1,22 @@
 # 0.9.407 (not released, work in progress)
 
 - RichTextBox is now full featured rich text editor not derived from TextBox.
-- Add RichToolTip, ToolTip, Display, SystemSettings, PanelRichTextBox classes.
+- Added PanelRichTextBox, ValueEditorString, ValueEditorUrl controls.
+- Added RichToolTip, ToolTip, Display, SystemSettings, Caret, Cursor, Cursors, SystemFonts classes.
 - Rect speed optimization.
-- ListControl: FindStringCulture, CompareOptions. Improved FindString* behavior to use these new props.Added FindString demo to ControlsSample.
-- TextBox: IsRequired, AutoUrlOpen, DefaultAutoUrlOpen, DefaultErrorUseBackgroundColor, DefaultErrorUseForegroundColor.
+- ListControl: FindStringCulture, CompareOptions, DefaultFindStringCulture, DefaultCompareOptions. Improved FindString* behavior
+ to use these new props. Added FindString demo to ControlsSample.
+- TextBox: IsRequired, AutoUrlOpen, DefaultAutoUrlOpen, DefaultErrorUseBackgroundColor, DefaultErrorUseForegroundColor,
+ DefaultAutoUrlModifiers, AutoUrlModifiers, IsNullOrEmpty, IsNullOrWhiteSpace.
 - Grid: ColumnCount, RowCount.
-- Control: ColumnIndex, RowIndex, GetColumnGroup, GetRowGroup.
+- Control: Cursor, IsBold, ColumnIndex, RowIndex, GetColumnGroup, GetRowGroup.
 - ControlSet: LabelSuggestedWidth, LabelColumnIndex, LabelColumnIndex.
 - ControlAndLabel: LabelColumnIndex, LabelSuggestedWidth.
 - ListBox: SelectedItemsAsText, ItemsAsText.
 - CardPanelHeader: TabHasBorder, DefaultTabHasBorder.
 - Fixed ColorUtils.FindKnownColor exception on MacOs.
+- Fixed bad RichToolTip colors on Linux.
+- TextBoxAndLabel: IsValidMail, IsNullOrEmpty, IsNullOrWhiteSpace.
 
 # 0.9.406 (2023 November 5)
 
