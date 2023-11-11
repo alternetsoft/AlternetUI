@@ -13,6 +13,18 @@ namespace Alternet.UI
     public abstract class CustomTextEdit : Control
     {
         /// <summary>
+        /// Gets whether <see cref="Text"/> is null or empty.
+        /// </summary>
+        [Browsable(false)]
+        public bool IsNullOrEmpty => string.IsNullOrEmpty(Text);
+
+        /// <summary>
+        /// Gets whether <see cref="Text"/> is null or white space.
+        /// </summary>
+        [Browsable(false)]
+        public bool IsNullOrWhiteSpace => string.IsNullOrWhiteSpace(Text);
+
+        /// <summary>
         /// Gets or sets the text contents of the text box.
         /// </summary>
         /// <value>A string containing the text contents of the text box. The
