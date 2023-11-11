@@ -5,6 +5,8 @@
 #include "RichTextBox.h"
 #include "Image.h"
 #include "Font.h"
+#include "InputStream.h"
+#include "OutputStream.h"
 #include "ApiUtils.h"
 #include "Exceptions.h"
 
@@ -30,6 +32,16 @@ ALTERNET_UI_API char16_t* RichTextBox_GetReportedUrl_(RichTextBox* obj)
     return AllocPInvokeReturnString(obj->GetReportedUrl());
 }
 
+ALTERNET_UI_API void* RichTextBox_WriteField_(RichTextBox* obj, const char16_t* fieldType, void* properties, void* textAttr)
+{
+    return obj->WriteField(fieldType, properties, textAttr);
+}
+
+ALTERNET_UI_API c_bool RichTextBox_CanDeleteRange_(RichTextBox* obj, void* container, int64_t startRange, int64_t endRange)
+{
+    return obj->CanDeleteRange(container, startRange, endRange);
+}
+
 ALTERNET_UI_API c_bool RichTextBox_CanInsertContent_(RichTextBox* obj, void* container, int64_t pos)
 {
     return obj->CanInsertContent(container, pos);
@@ -43,6 +55,16 @@ ALTERNET_UI_API void* RichTextBox_GetBuffer_(RichTextBox* obj)
 ALTERNET_UI_API int64_t RichTextBox_DeleteSelectedContent_(RichTextBox* obj)
 {
     return obj->DeleteSelectedContent();
+}
+
+ALTERNET_UI_API void RichTextBox_EnableVirtualAttributes_(RichTextBox* obj, c_bool b)
+{
+    obj->EnableVirtualAttributes(b);
+}
+
+ALTERNET_UI_API void RichTextBox_DoWriteText_(RichTextBox* obj, const char16_t* value, int flags)
+{
+    obj->DoWriteText(value, flags);
 }
 
 ALTERNET_UI_API c_bool RichTextBox_ExtendSelection_(RichTextBox* obj, int64_t oldPosition, int64_t newPosition, int flags)
@@ -460,14 +482,14 @@ ALTERNET_UI_API c_bool RichTextBox_WriteImage3_(RichTextBox* obj, void* imageBlo
     return obj->WriteImage3(imageBlock, textAttr);
 }
 
-ALTERNET_UI_API void* RichTextBox_WriteField_(RichTextBox* obj, const char16_t* fieldType, void* properties, void* textAttr)
+ALTERNET_UI_API c_bool RichTextBox_EndBold_(RichTextBox* obj)
 {
-    return obj->WriteField(fieldType, properties, textAttr);
+    return obj->EndBold();
 }
 
-ALTERNET_UI_API c_bool RichTextBox_CanDeleteRange_(RichTextBox* obj, void* container, int64_t startRange, int64_t endRange)
+ALTERNET_UI_API c_bool RichTextBox_BeginItalic_(RichTextBox* obj)
 {
-    return obj->CanDeleteRange(container, startRange, endRange);
+    return obj->BeginItalic();
 }
 
 ALTERNET_UI_API c_bool RichTextBox_EndItalic_(RichTextBox* obj)
@@ -885,14 +907,14 @@ ALTERNET_UI_API c_bool RichTextBox_GetVirtualAttributesEnabled_(RichTextBox* obj
     return obj->GetVirtualAttributesEnabled();
 }
 
-ALTERNET_UI_API void RichTextBox_EnableVirtualAttributes_(RichTextBox* obj, c_bool b)
+ALTERNET_UI_API c_bool RichTextBox_LoadFromStream_(RichTextBox* obj, void* stream, int type)
 {
-    obj->EnableVirtualAttributes(b);
+    return obj->LoadFromStream(stream, type);
 }
 
-ALTERNET_UI_API void RichTextBox_DoWriteText_(RichTextBox* obj, const char16_t* value, int flags)
+ALTERNET_UI_API c_bool RichTextBox_SaveToStream_(RichTextBox* obj, void* stream, int type)
 {
-    obj->DoWriteText(value, flags);
+    return obj->SaveToStream(stream, type);
 }
 
 ALTERNET_UI_API c_bool RichTextBox_ApplyStyleToSelection_(RichTextBox* obj, void* style, int flags)
@@ -1263,16 +1285,6 @@ ALTERNET_UI_API c_bool RichTextBox_EndAllStyles_(RichTextBox* obj)
 ALTERNET_UI_API c_bool RichTextBox_BeginBold_(RichTextBox* obj)
 {
     return obj->BeginBold();
-}
-
-ALTERNET_UI_API c_bool RichTextBox_EndBold_(RichTextBox* obj)
-{
-    return obj->EndBold();
-}
-
-ALTERNET_UI_API c_bool RichTextBox_BeginItalic_(RichTextBox* obj)
-{
-    return obj->BeginItalic();
 }
 
 ALTERNET_UI_API void RichTextBox_SetEventCallback_(RichTextBox::RichTextBoxEventCallbackType callback)

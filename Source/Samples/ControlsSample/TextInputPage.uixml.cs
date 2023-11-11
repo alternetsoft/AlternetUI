@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using Alternet.Drawing;
 using Alternet.UI;
@@ -184,20 +185,56 @@ namespace ControlsSample
             Application.LogReplace(s, s);
         }
 
+        private RichTextFileType GetFileTypeFromName(string filename)
+        {
+            var ext = Path.GetExtension(filename).ToLower();
+            if (ext == ".txt")
+                return RichTextFileType.Text;
+            if (ext == ".xml")
+                return RichTextFileType.Xml;
+            if (ext == ".html" || ext == ".htm")
+                return RichTextFileType.Html;
+            return RichTextFileType.Any;
+        }
+
         private void RichPanel_FileSaveClick(object? sender, EventArgs e)
         {
+            bool useFile = false;
+
+            bool SaveFile(string filename)
+            {
+                if (File.Exists(filename))
+                    File.Delete(filename);
+                if(useFile)
+                    return richPanel.TextBox.SaveToFile(filename, RichTextFileType.Any);
+                try
+                {
+                    using var stream = File.Create(filename);
+                    var fileType = GetFileTypeFromName(filename);
+                    if(fileType == RichTextFileType.Any)
+                        return false;
+                    richPanel.TextBox.SaveToStream(stream, fileType);
+                    return true;
+                }
+                catch (Exception e)
+                {
+                    LogUtils.LogException(e);
+                    return false;
+                }
+            }
+
             using SaveFileDialog dialog = new()
             {
                 Filter = FileDialogFilter,
-                FileName = richPanel.TextBox.GetFilename(),
+                FileName = richPanel.TextBox.FileName,
             };
 
             if (dialog.ShowModal(this) != ModalResult.Accepted)
                 return;
 
-            if (richPanel.TextBox.SaveFile(dialog.FileName!, RichTextFileType.Any))
+            if (SaveFile(dialog.FileName!))
             {
-                richPanel.TextBox.SetFilename(dialog.FileName!);
+                richPanel.TextBox.FileName = dialog.FileName!;
                 Application.Log($"Saved to file: {dialog.FileName}");
             }
             else

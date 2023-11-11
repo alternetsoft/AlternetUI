@@ -1,4 +1,5 @@
 ﻿#pragma warning disable
+using NativeApi.Api.ManagedServers;
 using ApiCommon;
 using Alternet.Drawing;
 using System;
@@ -16,6 +17,9 @@ namespace NativeApi.Api
     // https://docs.wxwidgets.org/3.2/classwx_rich_text_h_t_m_l_handler.html
     public class RichTextBox : Control
     {
+        public bool LoadFromStream(InputStream stream, int type) => default;
+        public bool SaveToStream(OutputStream stream, int type) => default;
+
         public bool ApplyStyleToSelection(IntPtr style, int flags) => default;
 
         public static void InitFileHandlers() {}

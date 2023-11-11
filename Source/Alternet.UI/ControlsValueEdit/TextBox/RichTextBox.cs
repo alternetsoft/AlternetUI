@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -51,6 +52,22 @@ namespace Alternet.UI
         /// are opened in the default browser.
         /// </summary>
         public virtual bool AutoUrlOpen { get; set; } = TextBox.DefaultAutoUrlOpen;
+
+        /// <summary>
+        /// Gets or sets the current filename associated with the control.
+        /// </summary>
+        public virtual string FileName
+        {
+            get
+            {
+                return GetFileName();
+            }
+
+            set
+            {
+                SetFileName(value ?? string.Empty);
+            }
+        }
 
         /// <summary>
         /// Gets or sets a value indicating whether text in the control is read-only.
@@ -231,23 +248,6 @@ namespace Alternet.UI
         public string GetStringSelection()
         {
             return NativeControl.GetStringSelection();
-        }
-
-        /// <summary>
-        /// Gets the current filename associated with the control.
-        /// </summary>
-        public string GetFilename()
-        {
-            return NativeControl.GetFilename();
-        }
-
-        /// <summary>
-        /// Sets the current filename.
-        /// </summary>
-        /// <param name="filename"></param>
-        public void SetFilename(string filename)
-        {
-            NativeControl.SetFilename(filename);
         }
 
         /// <summary>
@@ -548,7 +548,7 @@ namespace Alternet.UI
         /// <remarks>
         /// Use <see cref="SetFileHandlerFlags"/> to setup load options.
         /// </remarks>
-        public bool LoadFile(string file, RichTextFileType type = RichTextFileType.Any)
+        public bool LoadFromFile(string file, RichTextFileType type = RichTextFileType.Any)
         {
             return NativeControl.LoadFile(file, (int)type);
         }
@@ -565,9 +565,43 @@ namespace Alternet.UI
         /// <remarks>
         /// Use <see cref="SetFileHandlerFlags"/> to setup save options.
         /// </remarks>
-        public bool SaveFile(string file, RichTextFileType type = RichTextFileType.Any)
+        public bool SaveToFile(string file, RichTextFileType type = RichTextFileType.Any)
         {
             return NativeControl.SaveFile(file, (int)type);
+        }
+
+        /// <summary>
+        /// Saves the buffer content to <see cref="Stream"/> using the given data type.
+        /// </summary>
+        /// <param name="stream">Output stream.</param>
+        /// <param name="type">File type.</param>
+        /// <remarks>
+        /// Use <see cref="SetFileHandlerFlags"/> to setup save options.
+        /// </remarks>
+        /// <returns>
+        /// <c>true</c> on success, <c>false</c> if an error occurred.
+        /// </returns>
+        public bool SaveToStream(Stream stream, RichTextFileType type)
+        {
+            using var outputStream = new UI.Native.OutputStream(stream);
+            return NativeControl.SaveToStream(outputStream, (int)type);
+        }
+
+        /// <summary>
+        /// Loads the buffer content from <see cref="Stream"/> using the given data type.
+        /// </summary>
+        /// <param name="stream">Output stream.</param>
+        /// <param name="type">File type.</param>
+        /// <remarks>
+        /// Use <see cref="SetFileHandlerFlags"/> to setup save options.
+        /// </remarks>
+        /// <returns>
+        /// <c>true</c> on success, <c>false</c> if an error occurred.
+        /// </returns>
+        public bool LoadFromStream(Stream stream, RichTextFileType type)
+        {
+            using var inputStream = new UI.Native.InputStream(stream);
+            return NativeControl.LoadFromStream(inputStream, (int)type);
         }
 
         /// <summary>
@@ -2743,6 +2777,23 @@ namespace Alternet.UI
         internal string GetPropertiesMenuLabel(IntPtr richObj)
         {
             return NativeControl.GetPropertiesMenuLabel(richObj);
+        }
+
+        /// <summary>
+        /// Gets the current filename associated with the control.
+        /// </summary>
+        internal string GetFileName()
+        {
+            return NativeControl.GetFilename();
+        }
+
+        /// <summary>
+        /// Sets the current filename.
+        /// </summary>
+        /// <param name="filename"></param>
+        internal void SetFileName(string filename)
+        {
+            NativeControl.SetFilename(filename);
         }
 
         /// <summary>

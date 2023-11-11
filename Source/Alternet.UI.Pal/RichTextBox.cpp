@@ -1530,6 +1530,34 @@ namespace Alternet::UI
 		}
 	}
 
+	bool RichTextBox::LoadFromStream(void* stream, int type)
+	{
+		InputStream inputStream(stream);
+		ManagedInputStream managedInputStream(&inputStream);
+		auto flags = GetHandlerFlags();
+
+		auto handler = wxRichTextBuffer::FindHandler((wxRichTextFileType)type);
+		if (handler == nullptr)
+			return false;
+		handler->SetFlags(flags);
+		auto result = handler->LoadFile(&GetTextCtrl()->GetBuffer(), managedInputStream);
+		return result;
+	}
+
+	bool RichTextBox::SaveToStream(void* stream, int type)
+	{
+		OutputStream outputStream(stream);
+		ManagedOutputStream managedOutputStream(&outputStream);
+		auto flags = GetHandlerFlags();
+
+		auto handler = wxRichTextBuffer::FindHandler((wxRichTextFileType) type);
+		if (handler == nullptr)
+			return false;
+		handler->SetFlags(flags);
+		auto result = handler->SaveFile(&GetTextCtrl()->GetBuffer(), managedOutputStream);
+		return result;
+	}
+
 	void* RichTextBox::GetURLCursor()
 	{
 		return new wxCursor(GetTextCtrl()->GetURLCursor());

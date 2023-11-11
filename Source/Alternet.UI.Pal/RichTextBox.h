@@ -8,6 +8,10 @@
 #include "wx/richtext/richtextctrl.h"
 #include "wx/richtext/richtexthtml.h"
 #include "wx/richtext/richtextxml.h"
+#include "Api/InputStream.h"
+#include "Api/OutputStream.h"
+#include "ManagedInputStream.h"
+#include "ManagedOutputStream.h"
 
 namespace Alternet::UI
 {
