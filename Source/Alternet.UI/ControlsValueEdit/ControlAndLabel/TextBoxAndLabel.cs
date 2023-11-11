@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
 using System.Text;
@@ -51,6 +52,12 @@ namespace Alternet.UI
         public TextBox TextBox => (TextBox)base.MainControl;
 
         /// <summary>
+        /// Gets whether editor contains a valid e-mail address.
+        /// </summary>
+        [Browsable(false)]
+        public virtual bool IsValidMail => ValueValidatorFactory.IsValidMailAddress(Text);
+
+        /// <summary>
         /// Gets or sets <see cref="TextBox.Text"/> property of the main child control.
         /// </summary>
         public virtual string Text
@@ -65,6 +72,18 @@ namespace Alternet.UI
                 TextBox.Text = value;
             }
         }
+
+        /// <summary>
+        /// Gets whether <see cref="Text"/> is null or empty.
+        /// </summary>
+        [Browsable(false)]
+        public bool IsNullOrEmpty => string.IsNullOrEmpty(Text);
+
+        /// <summary>
+        /// Gets whether <see cref="Text"/> is null or white space.
+        /// </summary>
+        [Browsable(false)]
+        public bool IsNullOrWhiteSpace => string.IsNullOrWhiteSpace(Text);
 
         /// <inheritdoc/>
         protected override Control CreateControl() => new TextBox();
