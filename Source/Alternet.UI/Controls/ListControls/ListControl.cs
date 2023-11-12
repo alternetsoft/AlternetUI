@@ -6,24 +6,30 @@ using Alternet.Base.Collections;
 
 namespace Alternet.UI
 {
+    // todo: copy DataSource, DisplayMember, ValueMember etc implementation from WinForms
+
     /// <summary>
     /// Provides a common implementation of members for the ListBox and
     /// ComboBox classes.
     /// </summary>
-    public abstract class ListControl : Control
+    public abstract class ListControl : Control, IReadOnlyStrings
     {
-        // todo: copy DataSource, DisplayMember, ValueMember etc implementation
-        // from WinForms
+        private StringSearch? search;
 
         /// <summary>
-        /// Default value of the <see cref="FindStringCulture"/> property.
+        /// Gets or sets string search provider.
         /// </summary>
-        public static CultureInfo? DefaultFindStringCulture { get; set; }
+        public virtual StringSearch Search
+        {
+            get => search ??= new(this);
 
-        /// <summary>
-        /// Default value of the <see cref="CompareOptions"/> property.
-        /// </summary>
-        public static CompareOptions DefaultCompareOptions { get; set; } = CompareOptions.None;
+            set
+            {
+                if (value is null)
+                    return;
+                search = value;
+            }
+        }
 
         /// <summary>
         /// Gets or sets the currently selected item in the control.
@@ -88,20 +94,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets <see cref="CultureInfo"/> used in find string methods.
-        /// </summary>
-        /// <remarks>
-        /// If <see cref="FindStringCulture"/> is not assigned,
-        /// <see cref="CultureInfo.CurrentCulture"/> is used.
-        /// </remarks>
-        public CultureInfo? FindStringCulture { get; set; } = DefaultFindStringCulture;
-
-        /// <summary>
-        /// Gets or sets <see cref="CompareOptions"/> used in find string methods.
-        /// </summary>
-        public CompareOptions CompareOptions { get; set; } = DefaultCompareOptions;
-
-        /// <summary>
         /// Gets first item in the control or <c>null</c> if there are no items.
         /// </summary>
         [Browsable(false)]
@@ -130,6 +122,8 @@ namespace Alternet.UI
             get => LastItem;
             set => LastItem = value;
         }
+
+        int IReadOnlyStrings.Count => Items.Count;
 
         /// <summary>
         /// Gets or sets the <see cref="Items"/> element at the specified index.
@@ -166,6 +160,8 @@ namespace Alternet.UI
             get => Items[index];
         }
 
+        string? IReadOnlyStrings.this[int index] => GetItemText(index);
+
         /// <summary>
         /// Adds an object to the end of the <see cref="Items"/> collection.
         /// </summary>
@@ -185,6 +181,12 @@ namespace Alternet.UI
             if (Count > 0)
                 SelectedIndex = Count - 1;
         }
+
+        /// <summary>
+        /// Returns the text representation of item with the specified <paramref name="index"/>.
+        /// </summary>
+        /// <param name="index">Item index from which to get the contents to display.</param>
+        public virtual string GetItemText(int index) => GetItemText(Items[index]);
 
         /// <summary>
         /// Returns the text representation of the specified item.
@@ -250,76 +252,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Returns the index of the first item in the control that starts
-        /// with the specified string.
-        /// </summary>
-        /// <param name="s">The <see cref="string"/> to search for.</param>
-        /// <returns>The zero-based index of the first item found;
-        /// returns <c>null</c> if no match is found.</returns>
-        /// <remarks>
-        /// The search performed by this method is not case-sensitive.
-        /// The <paramref name="s"/> parameter is a substring to compare against
-        /// the text associated with the items in the control. The search performs
-        /// a partial match starting from the beginning of the text, and returning
-        /// the first item in the list that matches the specified substring.
-        /// </remarks>
-        public virtual int? FindString(string s)
-        {
-            return FindStringInternal(
-                s,
-                Items,
-                startIndex: null,
-                exact: false,
-                ignoreCase: true);
-        }
-
-        /// <summary>
-        /// Returns the index of the first item in the control beyond the specified
-        /// index that contains the specified string. The search is not case sensitive.
-        /// </summary>
-        /// <param name="s">The <see cref="string"/> to search for.</param>
-        /// <param name="startIndex">The zero-based index of the item before
-        /// the first item to be searched. Set to <c>null</c> to search from the beginning
-        /// of the control.</param>
-        /// <returns>The zero-based index of the first item found; returns <c>null</c> if
-        /// no match is found.</returns>
-        /// <remarks>
-        /// The search performed by this method is not case-sensitive. The <paramref name="s"/>
-        /// parameter is a substring to compare against the text associated with the
-        /// <see cref="Items"/> in the control. The search performs a partial match
-        /// starting from the beginning of the text, returning the first item in the
-        /// list that matches the specified substring.
-        /// </remarks>
-        public virtual int? FindString(string s, int? startIndex)
-        {
-            return FindStringInternal(
-                s,
-                Items,
-                startIndex,
-                exact: false,
-                ignoreCase: true);
-        }
-
-        /// <summary>
-        /// Finds the first item in the combo box that matches the specified string.
-        /// </summary>
-        /// <param name="s">The string to search for.</param>
-        /// <returns>The zero-based index of the first item found; returns
-        /// <c>null</c> if no match is found.</returns>
-        /// <remarks>
-        /// The search performed by this method is not case-sensitive.
-        /// </remarks>
-        public virtual int? FindStringExact(string s)
-        {
-            return FindStringInternal(
-                s,
-                Items,
-                startIndex: null,
-                exact: true,
-                ignoreCase: true);
-        }
-
-        /// <summary>
         /// Removes items from the control.
         /// </summary>
         public virtual void RemoveItems(IReadOnlyList<int> items)
@@ -366,6 +298,22 @@ namespace Alternet.UI
             return result;
         }
 
+        /// <inheritdoc cref="StringSearch.FindString(string)"/>
+        public virtual int? FindString(string s) => Search.FindString(s);
+
+        /// <inheritdoc cref="StringSearch.FindString(string, int?)"/>
+        public virtual int? FindString(string s, int? startIndex) => Search.FindString(s, startIndex);
+
+        /// <inheritdoc cref="StringSearch.FindStringExact(string)"/>
+        public virtual int? FindStringExact(string s) => Search.FindStringExact(s);
+
+        /// <inheritdoc cref="StringSearch.FindStringEx(string?, int?, bool, bool)"/>
+        public virtual int? FindStringEx(
+         string? str,
+         int? startIndex,
+         bool exact,
+         bool ignoreCase) => Search.FindStringEx(str, startIndex, exact, ignoreCase);
+
         /// <summary>
         /// Unselects all items in the control.
         /// </summary>
@@ -379,105 +327,6 @@ namespace Alternet.UI
             SelectedItem = null;
         }
 
-        /// <summary>
-        /// Returns the index of the first item in the control beyond the specified
-        /// index that contains or equal the specified string.
-        /// </summary>
-        /// <param name="str">The <see cref="string"/> to search for.</param>
-        /// <param name="startIndex">The zero-based index of the item before
-        /// the first item to be searched. Set to <c>null</c> to search from the beginning
-        /// of the control.</param>
-        /// <returns>The zero-based index of the first item found; returns <c>null</c> if
-        /// no match is found.</returns>
-        /// <remarks>
-        /// The <paramref name="str"/>
-        /// parameter is a substring to compare against the text associated with the
-        /// <see cref="Items"/> in the control.
-        /// The search performs a partial match (<paramref name="exact"/> is <c>false</c>)
-        /// or exact match (<paramref name="exact"/> is <c>true</c>)
-        /// Search starts from the beginning of the text, returning the first item in the
-        /// list that matches the specified substring.
-        /// </remarks>
-        /// <param name="exact"><c>true</c> uses exact comparison; <c>false</c> uses partial
-        /// compare.</param>
-        /// <param name="ignoreCase">Whether to ignore text case or not.</param>
-        public virtual int? FindStringEx(
-         string? str,
-         int? startIndex,
-         bool exact,
-         bool ignoreCase)
-        {
-            return FindStringInternal(
-             str,
-             Items,
-             startIndex,
-             exact,
-             ignoreCase);
-        }
-
-        private int? FindStringInternal(
-             string? str,
-             IList<object> items,
-             int? startIndex,
-             bool exact,
-             bool ignoreCase)
-        {
-            if (str is null)
-                return null;
-            if (items is null || items.Count == 0)
-                return null;
-
-            var startIndexInt = startIndex ?? -1;
-
-            if (startIndexInt < -1 || startIndexInt >= items.Count)
-                throw new ArgumentOutOfRangeException(nameof(startIndex));
-
-            // Start from the start index and wrap around until we find the string
-            // in question. Use a separate counter to ensure that we arent cycling
-            // through the list infinitely.
-            int numberOfTimesThroughLoop = 0;
-
-            var culture = FindStringCulture ?? CultureInfo.CurrentCulture;
-            var options = CompareOptions;
-
-            if (ignoreCase)
-                options |= CompareOptions.IgnoreCase;
-            else
-                options &= ~CompareOptions.IgnoreCase;
-
-            for (
-                int index = (startIndexInt + 1) % items.Count;
-                numberOfTimesThroughLoop < items.Count;
-                index = (index + 1) % items.Count)
-            {
-                numberOfTimesThroughLoop++;
-
-                bool found;
-                if (exact)
-                {
-                    found = string.Compare(
-                        str,
-                        GetItemText(items[index]),
-                        culture,
-                        options) == 0;
-                }
-                else
-                {
-                    found = string.Compare(
-                        str,
-                        0,
-                        GetItemText(items[index]),
-                        0,
-                        str.Length,
-                        culture,
-                        options) == 0;
-                }
-
-                if (found)
-                    return index;
-            }
-
-            return null;
-        }
+        private int GetItemCount() => Items.Count;
     }
 }
