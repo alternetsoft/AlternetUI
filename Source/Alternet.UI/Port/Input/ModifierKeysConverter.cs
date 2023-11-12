@@ -75,6 +75,35 @@ namespace Alternet.UI
             return modifiers;
         }
 
+        /// <summary>
+        /// Converts <see cref="ModifierKeys"/> to <see cref="string"/>.
+        /// </summary>
+        /// <param name="modifiers">Key modifiers.</param>
+        /// <returns>A <see cref="string"/> representation of <see cref="ModifierKeys"/> value.</returns>
+        /// <exception cref="InvalidEnumArgumentException"></exception>
+        public static string ToString(ModifierKeys modifiers)
+        {
+            string strModifiers = "";
+
+            Add(ModifierKeys.Control);
+            Add(ModifierKeys.Alt);
+            Add(ModifierKeys.Windows);
+            Add(ModifierKeys.Shift);
+
+            return strModifiers;
+
+            void Add(ModifierKeys key)
+            {
+                if ((modifiers & key) == key)
+                {
+                    if (strModifiers.Length > 0)
+                        strModifiers += Modifier_Delimiter;
+
+                    strModifiers += MatchModifiers(key);
+                }
+            }
+        }
+
         /// <inheritdoc/>
         public override object ConvertTo(
             ITypeDescriptorContext context,
@@ -90,43 +119,12 @@ namespace Alternet.UI
                 ModifierKeys modifiers = (ModifierKeys)value;
 
                 if (!IsDefinedModifierKeys(modifiers))
+                {
                     throw new InvalidEnumArgumentException(
                         "value", (int)modifiers, typeof(ModifierKeys));
-                else
-                {
-                    string strModifiers = "";
-
-                    if ((modifiers & ModifierKeys.Control) == ModifierKeys.Control)
-                    {
-                        strModifiers += MatchModifiers(ModifierKeys.Control);
-                    }
-
-                    if ((modifiers & ModifierKeys.Alt) == ModifierKeys.Alt)
-                    {
-                        if (strModifiers.Length > 0) 
-                            strModifiers += Modifier_Delimiter;
-
-                        strModifiers += MatchModifiers(ModifierKeys.Alt);
-                    }
-
-                    if ((modifiers & ModifierKeys.Windows) == ModifierKeys.Windows)
-                    {
-                        if (strModifiers.Length > 0)
-                            strModifiers += Modifier_Delimiter;
-
-                        strModifiers += MatchModifiers(ModifierKeys.Windows); ;
-                    }
-
-                    if ((modifiers & ModifierKeys.Shift) == ModifierKeys.Shift)
-                    {
-                        if (strModifiers.Length > 0)
-                            strModifiers += Modifier_Delimiter;
-
-                        strModifiers += MatchModifiers(ModifierKeys.Shift); ;
-                    }
-
-                    return strModifiers;
                 }
+                else
+                    return ToString(modifiers);
             }
             throw GetConvertToException(value,destinationType);
         }
