@@ -10,6 +10,29 @@ namespace Alternet.UI
     public class OpenFileDialog : FileDialog
     {
         /// <summary>
+        /// Gets or sets whether the user may only select files that actually exist.
+        /// </summary>
+        /// <remarks>
+        /// For open dialog only. Notice that under MacOS the file open dialog always behaves as
+        /// if this style was specified, because it is impossible to choose a file that
+        /// doesn't exist from a standard MacOS file dialog.
+        /// </remarks>
+        public bool FileMustExist
+        {
+            get
+            {
+                CheckDisposed();
+                return NativeDialog.FileMustExist;
+            }
+
+            set
+            {
+                CheckDisposed();
+                NativeDialog.FileMustExist = value;
+            }
+        }
+
+        /// <summary>
         /// Gets or sets a value indicating whether the dialog window allows multiple files
         /// to be selected.
         /// </summary>

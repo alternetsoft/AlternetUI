@@ -226,6 +226,7 @@ namespace ControlsSample
             using SaveFileDialog dialog = new()
             {
                 Filter = FileDialogFilter,
+                OverwritePrompt = true,
                 FileName = richPanel.TextBox.FileName,
             };
 

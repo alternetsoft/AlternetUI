@@ -23,6 +23,96 @@ namespace Alternet.UI.Native
         {
         }
         
+        public bool OverwritePrompt
+        {
+            get
+            {
+                CheckDisposed();
+                return NativeApi.FileDialog_GetOverwritePrompt_(NativePointer);
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.FileDialog_SetOverwritePrompt_(NativePointer, value);
+            }
+        }
+        
+        public bool NoShortcutFollow
+        {
+            get
+            {
+                CheckDisposed();
+                return NativeApi.FileDialog_GetNoShortcutFollow_(NativePointer);
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.FileDialog_SetNoShortcutFollow_(NativePointer, value);
+            }
+        }
+        
+        public bool FileMustExist
+        {
+            get
+            {
+                CheckDisposed();
+                return NativeApi.FileDialog_GetFileMustExist_(NativePointer);
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.FileDialog_SetFileMustExist_(NativePointer, value);
+            }
+        }
+        
+        public bool ChangeDir
+        {
+            get
+            {
+                CheckDisposed();
+                return NativeApi.FileDialog_GetChangeDir_(NativePointer);
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.FileDialog_SetChangeDir_(NativePointer, value);
+            }
+        }
+        
+        public bool PreviewFiles
+        {
+            get
+            {
+                CheckDisposed();
+                return NativeApi.FileDialog_GetPreviewFiles_(NativePointer);
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.FileDialog_SetPreviewFiles_(NativePointer, value);
+            }
+        }
+        
+        public bool ShowHiddenFiles
+        {
+            get
+            {
+                CheckDisposed();
+                return NativeApi.FileDialog_GetShowHiddenFiles_(NativePointer);
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.FileDialog_SetShowHiddenFiles_(NativePointer, value);
+            }
+        }
+        
         public FileDialogMode Mode
         {
             get
@@ -168,6 +258,42 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern IntPtr FileDialog_Create_();
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool FileDialog_GetOverwritePrompt_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void FileDialog_SetOverwritePrompt_(IntPtr obj, bool value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool FileDialog_GetNoShortcutFollow_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void FileDialog_SetNoShortcutFollow_(IntPtr obj, bool value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool FileDialog_GetFileMustExist_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void FileDialog_SetFileMustExist_(IntPtr obj, bool value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool FileDialog_GetChangeDir_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void FileDialog_SetChangeDir_(IntPtr obj, bool value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool FileDialog_GetPreviewFiles_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void FileDialog_SetPreviewFiles_(IntPtr obj, bool value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool FileDialog_GetShowHiddenFiles_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void FileDialog_SetShowHiddenFiles_(IntPtr obj, bool value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern FileDialogMode FileDialog_GetMode_(IntPtr obj);

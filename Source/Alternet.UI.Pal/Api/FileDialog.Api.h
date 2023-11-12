@@ -14,6 +14,66 @@ ALTERNET_UI_API FileDialog* FileDialog_Create_()
     return new FileDialog();
 }
 
+ALTERNET_UI_API c_bool FileDialog_GetOverwritePrompt_(FileDialog* obj)
+{
+    return obj->GetOverwritePrompt();
+}
+
+ALTERNET_UI_API void FileDialog_SetOverwritePrompt_(FileDialog* obj, c_bool value)
+{
+    obj->SetOverwritePrompt(value);
+}
+
+ALTERNET_UI_API c_bool FileDialog_GetNoShortcutFollow_(FileDialog* obj)
+{
+    return obj->GetNoShortcutFollow();
+}
+
+ALTERNET_UI_API void FileDialog_SetNoShortcutFollow_(FileDialog* obj, c_bool value)
+{
+    obj->SetNoShortcutFollow(value);
+}
+
+ALTERNET_UI_API c_bool FileDialog_GetFileMustExist_(FileDialog* obj)
+{
+    return obj->GetFileMustExist();
+}
+
+ALTERNET_UI_API void FileDialog_SetFileMustExist_(FileDialog* obj, c_bool value)
+{
+    obj->SetFileMustExist(value);
+}
+
+ALTERNET_UI_API c_bool FileDialog_GetChangeDir_(FileDialog* obj)
+{
+    return obj->GetChangeDir();
+}
+
+ALTERNET_UI_API void FileDialog_SetChangeDir_(FileDialog* obj, c_bool value)
+{
+    obj->SetChangeDir(value);
+}
+
+ALTERNET_UI_API c_bool FileDialog_GetPreviewFiles_(FileDialog* obj)
+{
+    return obj->GetPreviewFiles();
+}
+
+ALTERNET_UI_API void FileDialog_SetPreviewFiles_(FileDialog* obj, c_bool value)
+{
+    obj->SetPreviewFiles(value);
+}
+
+ALTERNET_UI_API c_bool FileDialog_GetShowHiddenFiles_(FileDialog* obj)
+{
+    return obj->GetShowHiddenFiles();
+}
+
+ALTERNET_UI_API void FileDialog_SetShowHiddenFiles_(FileDialog* obj, c_bool value)
+{
+    obj->SetShowHiddenFiles(value);
+}
+
 ALTERNET_UI_API FileDialogMode FileDialog_GetMode_(FileDialog* obj)
 {
     return obj->GetMode();

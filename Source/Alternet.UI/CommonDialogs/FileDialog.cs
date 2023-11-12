@@ -23,6 +23,88 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets whether to direct the dialog to return the path and file name of the
+        /// selected shortcut file, not
+        /// its target as it does by default.
+        /// </summary>
+        /// <remarks>
+        /// Currently this flag is only implemented in Windows
+        /// and MacOs (where it prevents aliases from being resolved).
+        /// The non-dereferenced link path is always returned, even without this flag, under Linux
+        /// and so using it there doesn't do anything.
+        /// </remarks>
+        public bool NoShortcutFollow
+        {
+            get
+            {
+                CheckDisposed();
+                return nativeDialog.NoShortcutFollow;
+            }
+
+            set
+            {
+                CheckDisposed();
+                nativeDialog.NoShortcutFollow = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets whether to change the current working directory (when the dialog is
+        /// dismissed) to the directory where the file(s) chosen by the user are.
+        /// </summary>
+        public bool ChangeDir
+        {
+            get
+            {
+                CheckDisposed();
+                return nativeDialog.ChangeDir;
+            }
+
+            set
+            {
+                CheckDisposed();
+                nativeDialog.ChangeDir = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets whether to show the preview of the selected files (currently only
+        /// supported by Linux port).
+        /// </summary>
+        public bool PreviewFiles
+        {
+            get
+            {
+                CheckDisposed();
+                return nativeDialog.PreviewFiles;
+            }
+
+            set
+            {
+                CheckDisposed();
+                nativeDialog.PreviewFiles = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets whether to show hidden files.
+        /// </summary>
+        public bool ShowHiddenFiles
+        {
+            get
+            {
+                CheckDisposed();
+                return nativeDialog.ShowHiddenFiles;
+            }
+
+            set
+            {
+                CheckDisposed();
+                nativeDialog.ShowHiddenFiles = value;
+            }
+        }
+
+        /// <summary>
         /// Gets or sets the initial directory displayed by the file dialog window.
         /// </summary>
         public string? InitialDirectory

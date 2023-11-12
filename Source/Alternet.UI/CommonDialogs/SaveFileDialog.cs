@@ -9,6 +9,27 @@ namespace Alternet.UI
     public class SaveFileDialog : FileDialog
     {
         /// <summary>
+        /// Gets or sets prompt for a confirmation if a file will be overwritten.
+        /// </summary>
+        /// <remarks>
+        /// This style is for Save dialog only, is always enabled on MacOs and cannot be disabled.
+        /// </remarks>
+        public bool OverwritePrompt
+        {
+            get
+            {
+                CheckDisposed();
+                return NativeDialog.OverwritePrompt;
+            }
+
+            set
+            {
+                CheckDisposed();
+                NativeDialog.OverwritePrompt = value;
+            }
+        }
+
+        /// <summary>
         /// Gets or sets whether an empty file name is allowed when dialog result
         /// is <see cref="ModalResult.Accepted"/>.
         /// </summary>

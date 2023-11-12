@@ -22,6 +22,13 @@ namespace Alternet::UI
 
         long GetStyle();
 
+        bool _overwritePrompt;
+        bool _noShortcutFollow;
+        bool _fileMustExist;
+        bool _changeDir;
+        bool _previewFiles;
+        bool _showHiddenFiles;
+
         FileDialogMode _mode = FileDialogMode::Open;
         optional<string> _initialDirectory;
         optional<string> _title;

@@ -27,6 +27,84 @@ namespace Alternet::UI
             wxASCII_STR(wxFileDialogNameStr));
     }
 
+    bool FileDialog::GetOverwritePrompt()
+    {
+        return _overwritePrompt;
+    }
+
+    void FileDialog::SetOverwritePrompt(bool value)
+    {
+        if (_overwritePrompt == value)
+            return;
+        _overwritePrompt = value;
+        RecreateDialog();
+    }
+
+    bool FileDialog::GetNoShortcutFollow()
+    {
+        return _noShortcutFollow;
+    }
+
+    void FileDialog::SetNoShortcutFollow(bool value)
+    {
+        if (_noShortcutFollow == value)
+            return;
+        _noShortcutFollow = value;
+        RecreateDialog();
+    }
+
+    bool FileDialog::GetFileMustExist()
+    {
+        return _fileMustExist;
+    }
+
+    void FileDialog::SetFileMustExist(bool value)
+    {
+        if (_fileMustExist == value)
+            return;
+        _fileMustExist = value;
+        RecreateDialog();
+    }
+
+    bool FileDialog::GetChangeDir()
+    {
+        return _changeDir;
+    }
+
+    void FileDialog::SetChangeDir(bool value)
+    {
+        if (_changeDir == value)
+            return;
+        _changeDir = value;
+        RecreateDialog();
+    }
+
+    bool FileDialog::GetPreviewFiles()
+    {
+        return _previewFiles;
+    }
+
+    void FileDialog::SetPreviewFiles(bool value)
+    {
+        if (_previewFiles == value)
+            return;
+        _previewFiles = value;
+        RecreateDialog();
+    }
+
+    bool FileDialog::GetShowHiddenFiles()
+    {
+        return _showHiddenFiles;
+    }
+
+    void FileDialog::SetShowHiddenFiles(bool value)
+    {
+        if (_showHiddenFiles == value)
+            return;
+        _showHiddenFiles = value;
+        RecreateDialog();
+    }
+
     long FileDialog::GetStyle()
     {
         long style = 0;
@@ -35,9 +113,19 @@ namespace Alternet::UI
             style |= wxFD_OPEN;
         else if (_mode == FileDialogMode::Save)
             style |= wxFD_SAVE;
-        else
-            throwExNoInfo;
 
+        if (_overwritePrompt)
+            style |= wxFD_OVERWRITE_PROMPT;
+        if (_noShortcutFollow)
+            style |= wxFD_NO_FOLLOW;
+        if (_fileMustExist)
+            style |= wxFD_FILE_MUST_EXIST;
+        if (_changeDir)
+            style |= wxFD_CHANGE_DIR;
+        if (_previewFiles)
+            style |= wxFD_PREVIEW;
+        if (_showHiddenFiles)
+            style |= wxFD_SHOW_HIDDEN;
         if (_allowMultipleSelection)
             style |= wxFD_MULTIPLE;
 
