@@ -2127,6 +2127,16 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Sets <paramref name="attr"/> as the default style and tells the control that the UI should
+        /// reflect this attribute until the user moves the caret.
+        /// </summary>
+        public void SetAndShowDefaultStyle(ITextBoxRichAttr attr)
+        {
+            if (attr is TextBoxRichAttr s)
+                NativeControl.SetAndShowDefaultStyle(s.Handle);
+        }
+
+        /// <summary>
         /// Returns the cursor to be used over URLs.
         /// </summary>
         public Cursor GetURLCursor()
@@ -2147,6 +2157,30 @@ namespace Alternet.UI
         {
             if (style is TextBoxRichAttr s)
                 NativeControl.SetBasicStyle(s.Handle);
+        }
+
+        /// <summary>
+        /// Test if this whole range has paragraph attributes of the specified kind.
+        /// </summary>
+        /// <remarks>
+        /// If any of the attributes are different within the range, the test fails.
+        /// You can use this to implement, for example, centering button updating.
+        /// <paramref name="style"/> must have flags indicating which attributes are of interest.
+        /// </remarks>
+        public bool HasParagraphAttributes(
+            long startRange,
+            long endRange,
+            ITextBoxRichAttr style)
+        {
+            if (style is TextBoxRichAttr s)
+            {
+                return NativeControl.HasParagraphAttributes(
+                    startRange,
+                    endRange,
+                    s.Handle);
+            }
+            else
+                return false;
         }
 
         /// <summary>
@@ -2666,46 +2700,12 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Sets <paramref name="attr"/> as the default style and tells the control that the UI should
-        /// reflect this attribute until the user moves the caret.
-        /// </summary>
-        public void SetAndShowDefaultStyle(ITextBoxRichAttr attr)
-        {
-            if (attr is TextBoxRichAttr s)
-                NativeControl.SetAndShowDefaultStyle(s.Handle);
-        }
-
-        /// <summary>
         /// Write a text box at the current insertion point, returning the text box.
         /// You can then call SetFocusObject() to set the focus to the new object.
         /// </summary>
         internal IntPtr WriteTextBox(IntPtr textAttr = default)
         {
             return NativeControl.WriteTextBox(textAttr);
-        }
-
-        /// <summary>
-        /// Test if this whole range has paragraph attributes of the specified kind.
-        /// </summary>
-        /// <remarks>
-        /// If any of the attributes are different within the range, the test fails.
-        /// You can use this to implement, for example, centering button updating.
-        /// <paramref name="style"/> must have flags indicating which attributes are of interest.
-        /// </remarks>
-        public bool HasParagraphAttributes(
-            long startRange,
-            long endRange,
-            ITextBoxRichAttr style)
-        {
-            if (style is TextBoxRichAttr s)
-            {
-                return NativeControl.HasParagraphAttributes(
-                    startRange,
-                    endRange,
-                    s.Handle);
-            }
-            else
-                return false;
         }
 
         /// <summary>
