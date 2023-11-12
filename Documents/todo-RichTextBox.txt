@@ -8,3 +8,12 @@ https://docs.wxwidgets.org/3.2/classwx_text_box_attr.html
 
 wxRichTextHTMLHandler
 https://docs.wxwidgets.org/3.2/classwx_rich_text_h_t_m_l_handler.html
+
+- wxWidgets has Insert symbol dialog, which could be useful for RichEdit
+
+- RichEdit printing
+
+- RichEdit study wx sample and implements its features.
+	Insert image
+	Insert url
+	Insert symbol				
