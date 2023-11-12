@@ -17,6 +17,16 @@
 - Fixed ColorUtils.FindKnownColor exception on MacOs.
 - Fixed bad RichToolTip colors on Linux.
 - TextBoxAndLabel: IsValidMail, IsNullOrEmpty, IsNullOrWhiteSpace.
+- Add SaveFileDialog.OverwritePrompt, OpenFileDialog.FileMustExist.
+- FileDialog: NoShortcutFollow, ChangeDir, PreviewFiles, ShowHiddenFiles.
+- AuiToolbar better tool click handling.
+- Fixed FileDialog: FileName not assigned to dialog.
+- Fixed #57, #58.
+- Added SoundUtils.Bell, CardPanel.UseBusyCursor, PlatformDefaults.TextBoxUrlClickModifiers, ModifierKeysConverter.ToString, 
+KeyInfo.ToString, KeyInfo.GetCustomKeyLabel, KeyInfo.RegisterCustomKeyLabels.
+- Application: IsBusyCursor, BeginBusyCursor, EndBusyCursor.
+- DialogFactory: GetTextFromUser, GetNumberFromUser.
+- RichTextBox: CaretLineNumber, LastLineNumber, ShowDialogGoToLine, SaveToStream, LoadFromStream.
 
 # 0.9.406 (2023 November 5)
 
