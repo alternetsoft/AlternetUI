@@ -13,6 +13,11 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets default value for <see cref="TextBox.AutoUrlModifiers"/> property.
+        /// </summary>
+        public ModifierKeys TextBoxUrlClickModifiers { get; set; }
+
+        /// <summary>
         /// Gets or sets default background color of the <see cref="RichToolTip"/>.
         /// </summary>
         public Color? RichToolTipBackgroundColor { get; set; }

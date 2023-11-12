@@ -196,9 +196,10 @@ namespace Alternet.UI
         /// Gets or sets default value of the <see cref="AutoUrlModifiers"/> property.
         /// </summary>
         /// <remarks>
-        /// Default value is <see cref="ModifierKeys.Control"/>.
+        /// If this is not assigned (default),
+        /// <see cref="PlatformDefaults.TextBoxUrlClickModifiers"/> is used as property default.
         /// </remarks>
-        public static ModifierKeys DefaultAutoUrlModifiers { get; set; } = ModifierKeys.Control;
+        public static ModifierKeys? DefaultAutoUrlModifiers { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether urls in the input text
@@ -213,7 +214,7 @@ namespace Alternet.UI
         /// Gets or sets <see cref="ModifierKeys"/> used when clicked url is autoimatically opened
         /// in the browser when <see cref="AutoUrlOpen"/> is <c>true</c>.
         /// </summary>
-        public virtual ModifierKeys AutoUrlModifiers { get; set; } = DefaultAutoUrlModifiers;
+        public virtual ModifierKeys? AutoUrlModifiers { get; set; }
 
         /// <summary>
         /// Gets or sets a bitwise combination of <see cref="NumberStyles"/> values that indicates
@@ -1522,7 +1523,10 @@ namespace Alternet.UI
                 return;
             if (AutoUrlOpen && e.IsValidUrl)
             {
-                if (e.Modifiers == AutoUrlModifiers)
+                var modifiers = AutoUrlModifiers ?? DefaultAutoUrlModifiers
+                    ?? AllPlatformDefaults.PlatformCurrent.TextBoxUrlClickModifiers;
+
+                if (e.Modifiers == modifiers)
                     AppUtils.OpenUrl(e.Url!);
             }
         }

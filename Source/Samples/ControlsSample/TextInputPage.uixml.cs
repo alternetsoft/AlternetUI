@@ -70,6 +70,11 @@ namespace ControlsSample
 
         private IPageSite? site;
 
+        static TextInputPage()
+        {
+            KeyInfo.RegisterCustomKeyLabels();
+        }
+
         public TextInputPage()
         {
             InitializeComponent();
@@ -318,7 +323,6 @@ namespace ControlsSample
 
             if (KnownKeys.RunTest.Run(e, Test))
                 return;
-            richPanel.TextBox.HandleAdditionalKeys(e);
         }
 
         private void SetDoubleMinMMButton_Click(object? sender, EventArgs e)
@@ -410,8 +414,12 @@ namespace ControlsSample
         private void MultiLineTextBox_TextUrl(object? sender, UrlEventArgs e)
         {
             site?.LogEvent("TextBox: Url clicked =>" + e.Url);
-            if(e.Modifiers != ModifierKeys.Control)
-                site?.LogEvent("Use Ctrl+Click to open in the default browser" + e.Url);
+            var modifiers = AllPlatformDefaults.PlatformCurrent.TextBoxUrlClickModifiers;
+            if (e.Modifiers != modifiers)
+            {
+                var modifiersText = ModifierKeysConverter.ToString(modifiers);
+                site?.LogEvent($"Use {modifiersText}+Click to open in the default browser: " + e.Url);
+            }
         }
 
         public IPageSite? Site
@@ -522,14 +530,6 @@ namespace ControlsSample
                 "Font is ", taUnderlined2, "special underlined", taDefault, ".\n",
                 "This is url: ",taUrl, homePage, taDefault, ".\n",
                 "\n",
-//                "Keys:\n",
-//                "Ctrl+B - Toggle Bold style.\n",
-//                "Ctrl+I - Toggle Italic style.\n",
-//                "Ctrl+U - Toggle Underline style.\n",
-//                "Ctrl+Shift+L - Left Align\n",
-//                "Ctrl+Shift+E - Center Align.\n",
-//                "Ctrl+Shift+R - Right Align.\n",
-//                "Ctrl+Shift+J - Justify.\n",
             };
 
             // richEdit.AutoUrl = true;
@@ -780,10 +780,27 @@ namespace ControlsSample
             r.WriteText("Note: this sample content was generated programmatically"+
                 " from within the demo. The images were loaded from resources. Enjoy RichTextBox!\n");
 
+            r.NewLine();
+
+            string St(KeyInfo[] keys) => StringUtils.ToString(
+                keys,
+                string.Empty,
+                string.Empty,
+                " or ");
+
+            r.WriteText("Keys:\n");
+            r.WriteText($"{St(KnownKeys.RichEditKeys.ToggleBold)} - Toggle Bold style.\n");
+            r.WriteText($"{St(KnownKeys.RichEditKeys.ToggleItalic)} - Toggle Italic style.\n");
+            r.WriteText($"{St(KnownKeys.RichEditKeys.ToggleUnderline)} - Toggle Underline style.\n");
+            r.WriteText($"{St(KnownKeys.RichEditKeys.ToggleStrikethrough)} - Toggle Strikethrough style.\n");
+            r.WriteText($"{St(KnownKeys.RichEditKeys.LeftAlign)} - Left Align\n");
+            r.WriteText($"{St(KnownKeys.RichEditKeys.CenterAlign)} - Center Align.\n");
+            r.WriteText($"{St(KnownKeys.RichEditKeys.RightAlign)} - Right Align.\n");
+            r.WriteText($"{St(KnownKeys.RichEditKeys.Justify)} - Justify.\n");
+            r.WriteText($"{St(KnownKeys.RichEditKeys.ClearTextFormatting)} - Clear formatting.\n");
+
             r.EndParagraphSpacing();
-
             r.EndSuppressUndo();
-
             r.EndUpdate();
         }
     }

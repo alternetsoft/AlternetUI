@@ -16,6 +16,10 @@ namespace Alternet.UI
             PlatformLinux.Controls.CheckBox.MinMargin = minCheckBoxMargin;
             PlatformLinux.AdjustTextBoxesHeight = true;
 
+            PlatformLinux.TextBoxUrlClickModifiers = ModifierKeys.Control;
+            PlatformWindows.TextBoxUrlClickModifiers = ModifierKeys.Control;
+            PlatformMacOs.TextBoxUrlClickModifiers = ModifierKeys.ControlShift;
+
             var platform = PlatformLinux;
 
             if (SystemSettings.AppearanceIsDark)

@@ -55,6 +55,12 @@ namespace Alternet.UI
         public virtual bool AutoUrlOpen { get; set; } = TextBox.DefaultAutoUrlOpen;
 
         /// <summary>
+        /// Gets or sets whether to call <see cref="HandleAdditionalKeys"/> method
+        /// when key is pressed. Default is <c>true</c>.
+        /// </summary>
+        public bool AllowAdditionalKeys { get; set; } = true;
+
+        /// <summary>
         /// Gets or sets the current filename associated with the control.
         /// </summary>
         public virtual string FileName
@@ -100,7 +106,7 @@ namespace Alternet.UI
         /// Gets or sets <see cref="ModifierKeys"/> used when clicked url is autoimatically opened
         /// in the browser when <see cref="AutoUrlOpen"/> is <c>true</c>.
         /// </summary>
-        public virtual ModifierKeys AutoUrlModifiers { get; set; } = TextBox.DefaultAutoUrlModifiers;
+        public virtual ModifierKeys? AutoUrlModifiers { get; set; }
 
         /// <summary>
         /// Gets or sets the text contents of the control.
@@ -354,7 +360,9 @@ namespace Alternet.UI
                 return;
             if (AutoUrlOpen && e.IsValidUrl)
             {
-                if (e.Modifiers == AutoUrlModifiers)
+                var modifiers = AutoUrlModifiers ?? TextBox.DefaultAutoUrlModifiers
+                    ?? AllPlatformDefaults.PlatformCurrent.TextBoxUrlClickModifiers;
+                if (e.Modifiers == modifiers)
                     AppUtils.OpenUrl(e.Url!);
             }
         }
@@ -2867,6 +2875,8 @@ namespace Alternet.UI
         protected override void OnKeyDown(KeyEventArgs e)
         {
             base.OnKeyDown(e);
+            if(AllowAdditionalKeys)
+                HandleAdditionalKeys(e);
         }
     }
 }
