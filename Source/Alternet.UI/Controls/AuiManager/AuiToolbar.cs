@@ -668,30 +668,35 @@ namespace Alternet.UI
         /// <param name="contextMenu">Context menu.</param>
         public void ShowDropDownMenu(int toolId, ContextMenu contextMenu)
         {
-            if (showingDropDown > 0)
-                return;
+            ShowMe();
 
-            showingDropDown++;
-
-            try
+            void ShowMe()
             {
-                Window? window = ParentWindow;
-                if (window == null)
+                if (showingDropDown > 0)
                     return;
 
-                SetToolSticky(toolId, true);
+                showingDropDown++;
 
-                Rect toolRect = GetToolRect(toolId);
-                Point pt = ClientToScreen(toolRect.BottomLeft);
-                pt = window.ScreenToClient(pt);
+                try
+                {
+                    Window? window = ParentWindow;
+                    if (window == null)
+                        return;
 
-                window.ShowPopupMenu(contextMenu, (int)pt.X, (int)pt.Y);
-                /*DoOnCaptureLost();*/
-                SetToolSticky(toolId, false);
-            }
-            finally
-            {
-                showingDropDown--;
+                    SetToolSticky(toolId, true);
+
+                    Rect toolRect = GetToolRect(toolId);
+                    Point pt = ClientToScreen(toolRect.BottomLeft);
+                    pt = window.ScreenToClient(pt);
+
+                    window.ShowPopupMenu(contextMenu, (int)pt.X, (int)pt.Y);
+                    /*DoOnCaptureLost();*/
+                    SetToolSticky(toolId, false);
+                }
+                finally
+                {
+                    showingDropDown--;
+                }
             }
         }
 
@@ -1092,7 +1097,10 @@ namespace Alternet.UI
             var toolData = GetToolData(EventToolId, false);
             if (toolData == null)
                 return;
-            toolData.OnClick(this, EventArgs.Empty);
+            BeginInvoke(() =>
+            {
+                toolData.OnClick(this, EventArgs.Empty);
+            });
 
             AuiToolbarItemDropDownOnEvent dropDownOnEvent = toolData.DropDownOnEvent;
 
