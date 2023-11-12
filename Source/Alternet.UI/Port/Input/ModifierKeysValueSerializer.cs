@@ -49,7 +49,8 @@ namespace Alternet.UI
         /// <ExternalAPI/> 
         public override bool CanConvertToString(object value, IValueSerializerContext context) 
         {
-            return (value is ModifierKeys) && ModifierKeysConverter.IsDefinedModifierKeys((ModifierKeys)value);
+            return (value is ModifierKeys)
+                && ModifierKeysConverter.IsDefinedModifierKeys((ModifierKeys)value);
         }
 
         /// <summary>
