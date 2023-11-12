@@ -72,7 +72,6 @@ namespace ControlsSample
 
         static TextInputPage()
         {
-            KeyInfo.RegisterCustomKeyLabels();
         }
 
         public TextInputPage()
