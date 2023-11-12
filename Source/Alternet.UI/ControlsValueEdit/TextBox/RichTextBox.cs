@@ -13,9 +13,10 @@ namespace Alternet.UI
     /// <summary>
     /// Implements rich text editor functionality.
     /// </summary>
-    public partial class RichTextBox : Control
+    public partial class RichTextBox : Control, IReadOnlyStrings
     {
         private bool hasBorder = true;
+        private StringSearch? search;
 
         static RichTextBox()
         {
@@ -55,10 +56,27 @@ namespace Alternet.UI
         public virtual bool AutoUrlOpen { get; set; } = TextBox.DefaultAutoUrlOpen;
 
         /// <summary>
+        /// Gets or sets string search provider.
+        /// </summary>
+        public virtual StringSearch Search
+        {
+            get => search ??= new(this);
+
+            set
+            {
+                if (value is null)
+                    return;
+                search = value;
+            }
+        }
+
+        /// <summary>
         /// Gets or sets whether to call <see cref="HandleAdditionalKeys"/> method
         /// when key is pressed. Default is <c>true</c>.
         /// </summary>
         public bool AllowAdditionalKeys { get; set; } = true;
+
+        int IReadOnlyStrings.Count => GetNumberOfLines();
 
         /// <summary>
         /// Gets or sets the current filename associated with the control.
@@ -194,6 +212,21 @@ namespace Alternet.UI
         }
 
         internal Native.RichTextBox NativeControl => Handler.NativeControl;
+
+        string? IReadOnlyStrings.this[int index]
+        {
+            get
+            {
+                try
+                {
+                    return GetLineText(index);
+                }
+                catch
+                {
+                    return string.Empty;
+                }
+            }
+        }
 
         /// <summary>
         /// Clears the cache of available font names.
