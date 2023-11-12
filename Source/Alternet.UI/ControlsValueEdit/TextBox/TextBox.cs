@@ -17,7 +17,7 @@ namespace Alternet.UI
     [DefaultEvent("TextChanged")]
     [DefaultBindingProperty("Text")]
     [ControlCategory("Common")]
-    public class TextBox : CustomTextEdit, IValidatorReporter
+    public class TextBox : CustomTextEdit, IValidatorReporter, IReadOnlyStrings
     {
         /// <summary>
         /// Identifies the <see cref="Text"/> dependency property.
@@ -55,6 +55,7 @@ namespace Alternet.UI
         private int maxLength;
         private int minLength;
         private TextBoxOptions options = TextBoxOptions.IntRangeInError;
+        private StringSearch? search;
 
         static TextBox()
         {
@@ -200,6 +201,21 @@ namespace Alternet.UI
         /// <see cref="PlatformDefaults.TextBoxUrlClickModifiers"/> is used as property default.
         /// </remarks>
         public static ModifierKeys? DefaultAutoUrlModifiers { get; set; }
+
+        /// <summary>
+        /// Gets or sets string search provider.
+        /// </summary>
+        public virtual StringSearch Search
+        {
+            get => search ??= new(this);
+
+            set
+            {
+                if (value is null)
+                    return;
+                search = value;
+            }
+        }
 
         /// <summary>
         /// Gets or sets a value indicating whether urls in the input text
@@ -720,6 +736,8 @@ namespace Alternet.UI
             }
         }
 
+        int IReadOnlyStrings.Count => GetNumberOfLines();
+
         /// <summary>
         /// Gets a value indicating whether the current selection can be replaced with
         /// the contents of the Clipboard, which allows
@@ -1047,6 +1065,21 @@ namespace Alternet.UI
 
         internal new NativeTextBoxHandler Handler =>
             (NativeTextBoxHandler)base.Handler;
+
+        string? IReadOnlyStrings.this[int index]
+        {
+            get
+            {
+                try
+                {
+                    return GetLineText(index);
+                }
+                catch
+                {
+                    return string.Empty;
+                }
+            }
+        }
 
         /// <summary>
         /// Creates new custom text style.
@@ -1580,11 +1613,11 @@ namespace Alternet.UI
         /// </summary>
         /// <returns></returns>
         /// <remarks>
-        /// The returned number is the number of logical lines, i.e.just the count of
+        /// The returned number is the number of logical lines, i.e. just the count of
         /// the number of newline characters in the control + 1, for GTK
         /// and OSX/Cocoa ports while it is the number of physical lines,
-        /// i.e.the count of
-        /// lines actually shown in the control, in MSW and OSX/Carbon.Because of
+        /// i.e. the count of
+        /// lines actually shown in the control, in MSW and OSX/Carbon. Because of
         /// this discrepancy, it is not recommended to use this function.
         /// </remarks>
         /// <remarks>
