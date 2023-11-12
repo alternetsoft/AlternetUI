@@ -1,3 +1,5 @@
+- RichEdit.GetUncombinedStyle
+
 - Rich Edit events
 https://docs.wxwidgets.org/3.2/classwx_rich_text_event.html
 
