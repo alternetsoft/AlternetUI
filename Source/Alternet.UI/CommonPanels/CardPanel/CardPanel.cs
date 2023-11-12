@@ -38,6 +38,12 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets whether to call <see cref="Application.BeginBusyCursor"/> when
+        /// page is created. By default is <c>true</c>.
+        /// </summary>
+        public bool UseBusyCursor { get; set; } = true;
+
+        /// <summary>
         /// Gets pages with child controls.
         /// </summary>
         public Collection<CardPanelItem> Cards { get; } = new Collection<CardPanelItem>();
@@ -51,6 +57,7 @@ namespace Alternet.UI
             if (index == null || index < 0 || index >= Cards.Count)
                 return;
 
+            var busyCursor = false;
             SuspendLayout();
             try
             {
@@ -60,6 +67,12 @@ namespace Alternet.UI
 
                 if (!loaded)
                 {
+                    if (UseBusyCursor)
+                    {
+                        Application.BeginBusyCursor();
+                        busyCursor = true;
+                    }
+
                     waitLabelContainer.Parent = this;
                     waitLabelContainer.Visible = true;
                     waitLabelContainer.Refresh();
@@ -78,6 +91,8 @@ namespace Alternet.UI
             }
             finally
             {
+                if (busyCursor)
+                    Application.EndBusyCursor();
                 ResumeLayout();
             }
         }
