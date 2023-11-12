@@ -98,11 +98,13 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Handles default rich text editor keys.
+        /// Handles additional rich text editor keys like Ctrl+B, Ctrl+I, Ctrl+U and other.
         /// </summary>
         /// <param name="e">Event arguments.</param>
         /// <remarks>
         /// You can use this method in the <see cref="UIElement.KeyDown"/> event handlers.
+        /// <see cref="AllowAdditionalKeys"/> specifies whether <see cref="HandleAdditionalKeys"/>
+        /// is called automatically.
         /// </remarks>
         public virtual bool HandleAdditionalKeys(KeyEventArgs e)
         {
