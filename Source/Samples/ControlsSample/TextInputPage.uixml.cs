@@ -11,10 +11,16 @@ namespace ControlsSample
 {
     internal partial class TextInputPage : Control
     {
-        const string FileDialogFilter =
-            "HTML Files (*.html;*.htm)|*.html;*.htm|" +
-            "TXT Files (*.txt)|*.txt|" +
-            "XML Files (*.xml)|*.xml";
+        const string HtmlFilesFilter = "HTML Files (*.html; *.htm)|*.html;*.htm";
+        const string TextFilesFilter = "TXT Files (*.txt)|*.txt";
+        const string XmlFilesFilter = "XML Files (*.xml)|*.xml";
+
+        const string SaveFileDialogFilter = $"{TextFilesFilter}|{HtmlFilesFilter}|{XmlFilesFilter}";
+
+        const string AllFilesFilter = "All Files (*.*)|*.*";
+        const string SupportedFilesFilter = "Supported Files (*.txt; *.xml)|*.txt;*.xml;";
+        const string OpenFileDialogFilter =
+            $"{SupportedFilesFilter}|{AllFilesFilter}";
 
         private const string ErrorMinValueTextDouble = "-2.7976931348623157E+308";
         private const string ErrorMaxValueTextDouble = "2.7976931348623157E+308";
@@ -204,7 +210,7 @@ namespace ControlsSample
 
         private void RichPanelFileSave()
         {
-            bool useFile = false;
+            bool useFile = true;
 
             bool SaveFile(string filename)
             {
@@ -230,7 +236,7 @@ namespace ControlsSample
 
             using SaveFileDialog dialog = new()
             {
-                Filter = FileDialogFilter,
+                Filter = SaveFileDialogFilter,
                 OverwritePrompt = true,
                 FileName = richPanel.TextBox.FileName,
             };
@@ -249,7 +255,39 @@ namespace ControlsSample
 
         private void RichPanel_FileOpenClick(object? sender, EventArgs e)
         {
-            Application.Log("File.Open");
+            bool useFile = true;
+
+            bool LoadFile(string filename)
+            {
+                if (useFile)
+                    return richPanel.TextBox.LoadFromFile(filename, RichTextFileType.Any);
+                try
+                {
+                    return false;
+                }
+                catch (Exception e)
+                {
+                    LogUtils.LogException(e);
+                    return false;
+                }
+            }
+
+            using OpenFileDialog dialog = new()
+            {
+                Filter = OpenFileDialogFilter,
+                FileMustExist = true,
+            };
+
+            if (dialog.ShowModal(this) != ModalResult.Accepted)
+                return;
+
+            if (LoadFile(dialog.FileName!))
+            {
+                richPanel.TextBox.FileName = dialog.FileName!;
+                Application.Log($"Loaded from file: {dialog.FileName}");
+            }
+            else
+                Application.Log($"Error loading from file: {dialog.FileName}");
         }
 
         private void RichPanel_FileNewClick(object? sender, EventArgs e)
