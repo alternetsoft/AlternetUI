@@ -33,6 +33,36 @@ namespace Alternet.UI
         public ModifierKeys Modifiers { get; set; }
 
         /// <summary>
+        /// Registers custom labels for the <see cref="Key"/> enum.
+        /// </summary>
+        public static void RegisterCustomKeyLabels()
+        {
+            var choices = PropertyGrid.GetChoices<Key>();
+            choices.SetLabelForValue(Key.D0, "0");
+            choices.SetLabelForValue(Key.D1, "1");
+            choices.SetLabelForValue(Key.D2, "2");
+            choices.SetLabelForValue(Key.D3, "3");
+            choices.SetLabelForValue(Key.D4, "4");
+            choices.SetLabelForValue(Key.D5, "5");
+            choices.SetLabelForValue(Key.D6, "6");
+            choices.SetLabelForValue(Key.D7, "7");
+            choices.SetLabelForValue(Key.D8, "8");
+            choices.SetLabelForValue(Key.D9, "9");
+            choices.SetLabelForValue(Key.Slash, "/");
+            choices.SetLabelForValue(Key.Backslash, @"\");
+        }
+
+        /// <summary>
+        /// Gets custom label of the key.
+        /// </summary>
+        /// <param name="key">Key.</param>
+        public static string GetCustomKeyLabel(Key key)
+        {
+            var choices = PropertyGrid.GetChoices<Key>();
+            return choices.GetLabelFromValue((int)key) ?? key.ToString();
+        }
+
+        /// <summary>
         /// Runs action if any of the keys is pressed.
         /// </summary>
         /// <param name="e">Event arguments.</param>
@@ -49,6 +79,22 @@ namespace Alternet.UI
             }
 
             return false;
+        }
+
+        /// <summary>
+        /// Returns a string that represents the current object.
+        /// </summary>
+        /// <returns>A <see cref="string"/> that represents the current object.</returns>
+        public override string ToString()
+        {
+            var keyText = GetCustomKeyLabel(Key);
+            if(Modifiers != ModifierKeys.None)
+            {
+                var modifiersText = ModifierKeysConverter.ToString(Modifiers);
+                keyText = $"{modifiersText}+{keyText}";
+            }
+
+            return keyText;
         }
 
         /// <summary>
