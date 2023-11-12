@@ -19,7 +19,7 @@ namespace Alternet::UI
             owner,
             wxStr(_title.value_or(u"")),
             wxStr(_initialDirectory.value_or(u"")),
-            wxEmptyString,
+            wxStr(_fileName.value_or(u"")),
             wxStr(_filter.value_or(u"")),
             GetStyle(),
             wxDefaultPosition,
@@ -161,6 +161,8 @@ namespace Alternet::UI
 
     void FileDialog::SetTitle(optional<string> value)
     {
+        if (_title == value)
+            return;
         _title = value;
         RecreateDialog();
     }
@@ -172,6 +174,8 @@ namespace Alternet::UI
 
     void FileDialog::SetFilter(optional<string> value)
     {
+        if (_filter == value)
+            return;
         _filter = value;
         GetDialog()->SetWildcard(wxStr(value.value_or(u"")));
     }
@@ -183,6 +187,8 @@ namespace Alternet::UI
 
     void FileDialog::SetSelectedFilterIndex(int value)
     {
+        if (_selectedFilterIndex == value)
+            return;
         _selectedFilterIndex = value;
         GetDialog()->SetFilterIndex(value);
     }
@@ -207,6 +213,8 @@ namespace Alternet::UI
 
     void FileDialog::SetFileName(optional<string> value)
     {
+        if (_fileName == value)
+            return;
         _fileName = value;
         GetDialog()->SetPath(wxStr(value.value_or(u"")));
     }
@@ -218,6 +226,8 @@ namespace Alternet::UI
 
     void FileDialog::SetAllowMultipleSelection(bool value)
     {
+        if (_allowMultipleSelection == value)
+            return;
         _allowMultipleSelection = value;
         RecreateDialog();
     }
@@ -258,10 +268,8 @@ namespace Alternet::UI
         
         if (result == wxID_OK)
             return ModalResult::Accepted;
-        else if (result == wxID_CANCEL)
-            return ModalResult::Canceled;
         else
-            throwExNoInfo;
+            return ModalResult::Canceled;
     }
 
     void FileDialog::DestroyDialog()

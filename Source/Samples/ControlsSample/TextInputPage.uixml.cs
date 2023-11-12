@@ -199,6 +199,11 @@ namespace ControlsSample
 
         private void RichPanel_FileSaveClick(object? sender, EventArgs e)
         {
+            RichPanelFileSave();
+        }
+
+        private void RichPanelFileSave()
+        {
             bool useFile = false;
 
             bool SaveFile(string filename)
