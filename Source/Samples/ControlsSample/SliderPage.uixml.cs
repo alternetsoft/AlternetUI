@@ -15,7 +15,7 @@ namespace ControlsSample
 
             clearTicksButton.Visible = Application.IsWindowsOS || Application.IsLinuxOS;
 
-            foreach (var item in Enum.GetValues<SliderTickStyle>())
+            foreach (SliderTickStyle item in Enum.GetValues(typeof(SliderTickStyle)))
             {
                 if (item == SliderTickStyle.None && Application.IsLinuxOS)
                     continue;
