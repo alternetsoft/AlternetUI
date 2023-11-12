@@ -150,7 +150,7 @@ namespace Alternet.UI
                 var text = SelectedItemsAsText();
                 if (string.IsNullOrEmpty(text))
                     return;
-                Clipboard.SetText(text);
+                Clipboard.SetText(text!);
             }
 
             ContextMenu.Add(new(CommonStrings.Default.ButtonClear, RemoveAll));

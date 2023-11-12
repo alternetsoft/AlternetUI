@@ -283,6 +283,7 @@ namespace Alternet.UI
         /// The cursor may be <c>null</c> in which case the control cursor will be
         /// reset back to default.
         /// </remarks>
+        [Browsable(false)]
         public virtual Cursor? Cursor
         {
             get
@@ -1020,6 +1021,7 @@ namespace Alternet.UI
         /// <summary>
         /// Returns <see cref="ControlSet"/> filled with <see cref="Children"/>.
         /// </summary>
+        [Browsable(false)]
         public virtual ControlSet ChildrenSet => new(Children);
 
         /// <summary>
@@ -1086,6 +1088,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets group indexes which are assigned to this control.
         /// </summary>
+        [Browsable(false)]
         public int[]? GroupIndexes { get; set; }
 
         /// <summary>
@@ -1181,6 +1184,7 @@ namespace Alternet.UI
         /// <remarks>
         /// Returns font event if <see cref="Font"/> property is <c>null</c>.
         /// </remarks>
+        [Browsable(false)]
         public virtual Font? RealFont
         {
             get
@@ -1314,6 +1318,8 @@ namespace Alternet.UI
 
             set
             {
+                if (value == LayoutDirection.Default)
+                    return;
                 var control = Handler.NativeControl;
                 if (control is null)
                     return;

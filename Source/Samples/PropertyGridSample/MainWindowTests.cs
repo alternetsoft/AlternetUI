@@ -22,10 +22,9 @@ namespace PropertyGridSample
         internal void RunTests()
 #pragma warning restore
         {
-            LogPropGridColors();
         }
 
-        private void LogPropGridColors()
+        internal void LogPropGridColors()
         {
             var color = panel.PropGrid.GetCurrentColors();
             (color as PropertyGridColors)?.LogToFile();

@@ -14,6 +14,7 @@ namespace Alternet.UI
     /// <remarks>
     /// It behaves like <see cref="TabControl"/> but has no tab titles.
     /// </remarks>
+    [ControlCategory("Hidden")]
     public class CardPanel : Control
     {
         private readonly VerticalStackPanel waitLabelContainer = new()

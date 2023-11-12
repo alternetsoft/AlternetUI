@@ -55,6 +55,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets border of the <see cref="PopupWindow"/>.
         /// </summary>
+        [Browsable(false)]
         public Border Border => border;
 
         /// <summary>
@@ -68,6 +69,7 @@ namespace Alternet.UI
         /// </summary>
         /// <remarks>Usually owner of the popup window is a control under which popup is
         /// shown using <see cref="ShowPopup"/> method.</remarks>
+        [Browsable(false)]
         public Control? PopupOwner { get; set; }
 
         /// <summary>
@@ -121,6 +123,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets main control used in the popup window.
         /// </summary>
+        [Browsable(false)]
         protected Control MainControl
         {
             get

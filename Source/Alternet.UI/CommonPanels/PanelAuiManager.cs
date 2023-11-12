@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
@@ -65,31 +66,37 @@ namespace Alternet.UI
         /// <summary>
         /// Gets <see cref="LogControl"/> page index in the <see cref="BottomNotebook"/>.
         /// </summary>
+        [Browsable(false)]
         public IAuiNotebookPage? LogPage => logPage;
 
         /// <summary>
         /// Gets <see cref="LeftTreeView"/> page index in the <see cref="LeftNotebook"/>.
         /// </summary>
+        [Browsable(false)]
         public IAuiNotebookPage? LeftTreeViewPage => leftTreeViewPage;
 
         /// <summary>
         /// Gets <see cref="PropGrid"/> page index in the <see cref="RightNotebook"/>.
         /// </summary>
+        [Browsable(false)]
         public IAuiNotebookPage? PropGridPage => propGridPage;
 
         /// <summary>
         /// Gets <see cref="ActionsControl"/> page index in the <see cref="RightNotebook"/>.
         /// </summary>
+        [Browsable(false)]
         public IAuiNotebookPage? ActionsPage => actionsPage;
 
         /// <summary>
         /// Gets <see cref="EventGrid"/> page index in the <see cref="RightNotebook"/>.
         /// </summary>
+        [Browsable(false)]
         public IAuiNotebookPage? EventGridPage => eventGridPage;
 
         /// <summary>
         /// Gets control on the bottom pane which can be used for logging.
         /// </summary>
+        [Browsable(false)]
         public LogListBox LogControl
         {
             get
@@ -115,6 +122,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets <see cref="TreeView"/> control on the left pane.
         /// </summary>
+        [Browsable(false)]
         public TreeView LeftTreeView
         {
             get
@@ -149,6 +157,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets <see cref="PropertyGrid"/> which can be used to show properties.
         /// </summary>
+        [Browsable(false)]
         public PropertyGrid PropGrid
         {
             get
@@ -171,6 +180,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets <see cref="PropertyGrid"/> which can be used to show events.
         /// </summary>
+        [Browsable(false)]
         public PropertyGrid EventGrid
         {
             get
@@ -194,6 +204,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets <see cref="AuiNotebook"/> control which is located on the left pane.
         /// </summary>
+        [Browsable(false)]
         public AuiNotebook LeftNotebook
         {
             get
@@ -211,6 +222,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets <see cref="AuiNotebook"/> control which is located on the right pane.
         /// </summary>
+        [Browsable(false)]
         public AuiNotebook RightNotebook
         {
             get
@@ -228,6 +240,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets <see cref="AuiNotebook"/> control which is located on the bottom pane.
         /// </summary>
+        [Browsable(false)]
         public AuiNotebook CenterNotebook
         {
             get
@@ -245,6 +258,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets <see cref="AuiNotebook"/> control which is located on the bottom pane.
         /// </summary>
+        [Browsable(false)]
         public AuiNotebook BottomNotebook
         {
             get
@@ -262,6 +276,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets <see cref="AuiToolbar"/> located on the top of the control.
         /// </summary>
+        [Browsable(false)]
         public AuiToolbar Toolbar
         {
             get
@@ -293,6 +308,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets the top pane with the <see cref="AuiToolbar"/>.
         /// </summary>
+        [Browsable(false)]
         public IAuiPaneInfo ToolbarPane
         {
             get
@@ -312,6 +328,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets the left pane.
         /// </summary>
+        [Browsable(false)]
         public IAuiPaneInfo LeftPane
         {
             get
@@ -332,6 +349,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets the right pane.
         /// </summary>
+        [Browsable(false)]
         public IAuiPaneInfo RightPane
         {
             get
@@ -354,6 +372,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets the center pane.
         /// </summary>
+        [Browsable(false)]
         public IAuiPaneInfo CenterPane
         {
             get
@@ -371,6 +390,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets the control with actions list.
         /// </summary>
+        [Browsable(false)]
         public Control ActionsControl
         {
             get
@@ -405,6 +425,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets the bottom pane.
         /// </summary>
+        [Browsable(false)]
         public IAuiPaneInfo BottomPane
         {
             get
@@ -456,7 +477,7 @@ namespace Alternet.UI
         [Conditional("DEBUG")]
         public virtual void WriteWelcomeLogMessages()
         {
-            Application.DebugLog($"Net Version = {Environment.Version}");
+            LogUtils.DebugLogVersion();
             if (Application.LogFileIsEnabled)
                 Application.DebugLog($"Log File = {Application.LogFilePath}");
         }

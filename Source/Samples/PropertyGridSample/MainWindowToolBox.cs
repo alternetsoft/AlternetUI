@@ -37,9 +37,11 @@ namespace PropertyGridSample
                   //typeof(Popup), // button with popup like ContextMenu
                   typeof(AuiNotebook),
                   typeof(AuiToolbar),
+                  typeof(AnimationPlayer),
                   typeof(PanelAuiManager),
                   typeof(PanelAuiManagerBase),
                   typeof(UIDialogWindow),
+                  typeof(LogListBox),
                   typeof(SplitterPanel),// know how
                   typeof(Grid),// know how
                   typeof(ScrollViewer),
@@ -53,6 +55,10 @@ namespace PropertyGridSample
                   typeof(CardPanel),
                   typeof(TabControl), // pages are not shown. Why?
                   typeof(Window),
+                  typeof(CardPanelHeader),
+                  typeof(ComboBoxAndLabel),
+                  typeof(TextBoxAndLabel),
+                  typeof(ControlAndLabel),
                 };
 
                 IEnumerable<Type> result = AssemblyUtils.GetTypeDescendants(typeof(Control));
@@ -61,6 +67,8 @@ namespace PropertyGridSample
                     if (Array.IndexOf(badTypes, type) >= 0)
                         continue;
                     if (type.Assembly != typeof(Control).Assembly)
+                        continue;
+                    if(AssemblyUtils.TypeIsDescendant(type, badTypes))
                         continue;
                     item = new(type);
                     panel.LeftTreeView.Add(item);

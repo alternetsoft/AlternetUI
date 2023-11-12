@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -44,21 +45,25 @@ namespace Alternet.UI
         /// <summary>
         /// Gets id of the 'New' toolbar item.
         /// </summary>
+        [Browsable(false)]
         public int ButtonIdNew => buttonIdNew;
 
         /// <summary>
         /// Gets id of the 'Open' toolbar item.
         /// </summary>
+        [Browsable(false)]
         public int ButtonIdOpen => buttonIdOpen;
 
         /// <summary>
         /// Gets id of the 'Save' toolbar item.
         /// </summary>
+        [Browsable(false)]
         public int ButtonIdSave => buttonIdSave;
 
         /// <summary>
         /// Gets <see cref="RichTextBox"/> control used in this panel.
         /// </summary>
+        [Browsable(false)]
         public RichTextBox TextBox
         {
             get

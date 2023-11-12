@@ -17,6 +17,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets <see cref="ListBox"/> control used in the popup window.
         /// </summary>
+        [Browsable(false)]
         public new ListBox MainControl
         {
             get => (ListBox)base.MainControl;
@@ -49,6 +50,7 @@ namespace Alternet.UI
         /// it contains selected item index. This item index is more correct than
         /// <see cref="ListBox.SelectedIndex"/>.
         /// </remarks>
+        [Browsable(false)]
         public int? ResultIndex
         {
             get

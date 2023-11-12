@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -86,6 +87,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets <see cref="WebBrowser"/> control used in this panel.
         /// </summary>
+        [Browsable(false)]
         public WebBrowser WebBrowser
         {
             get

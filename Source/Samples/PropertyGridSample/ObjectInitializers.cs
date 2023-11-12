@@ -64,6 +64,18 @@ namespace PropertyGridSample
                 border.Background = Brushes.BurlyWood;
             });
 
+            Actions.Add(typeof(RichTextBox), (c) =>
+            {
+                var control = (c as RichTextBox)!;
+                control.SuggestedHeight = 200;
+            });
+
+            Actions.Add(typeof(MultilineTextBox), (c) =>
+            {
+                var control = (c as MultilineTextBox)!;
+                control.SuggestedHeight = 200;
+            });
+
             Actions.Add(typeof(Button), (c) =>
             {
                 var button = (c as Button)!;

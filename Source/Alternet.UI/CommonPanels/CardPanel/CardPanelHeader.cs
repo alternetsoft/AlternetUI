@@ -17,6 +17,7 @@ namespace Alternet.UI
     /// Allows to switch cards in the <see cref="CardPanel"/> control by clicking
     /// on the card title.
     /// </remarks>
+    [ControlCategory("Hidden")]
     public class CardPanelHeader : Control
     {
         private readonly Collection<CardPanelHeaderItem> tabs = new();

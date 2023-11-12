@@ -79,8 +79,10 @@ namespace Alternet.UI
                 var result = Native.Calendar.GetMarkDateAttr();
                 if (result == default)
                     return null;
-                var resultIntf = new CalendarDateAttr(result, true);
-                resultIntf.Immutable = true;
+                var resultIntf = new CalendarDateAttr(result, true)
+                {
+                    Immutable = true,
+                };
                 return resultIntf;
             }
 
@@ -309,6 +311,7 @@ namespace Alternet.UI
         /// <see cref="UseGeneric"/> is <c>true</c>) and always returns
         /// <see cref="Color.Empty"/> in the native versions.
         /// </remarks>
+        [Browsable(false)]
         public Color HolidayColorFg
         {
             get => NativeControl.GetHolidayColorFg();
@@ -323,6 +326,7 @@ namespace Alternet.UI
         /// <see cref="UseGeneric"/> is <c>true</c>) and always returns
         /// <see cref="Color.Empty"/> in the native versions.
         /// </remarks>
+        [Browsable(false)]
         public Color HolidayColorBg
         {
             get => NativeControl.GetHolidayColorBg();
@@ -337,6 +341,7 @@ namespace Alternet.UI
         /// <see cref="UseGeneric"/> is <c>true</c>) and always returns
         /// <see cref="Color.Empty"/> in the native versions.
         /// </remarks>
+        [Browsable(false)]
         public Color HeaderColorFg
         {
             get => NativeControl.GetHeaderColorFg();
@@ -351,6 +356,7 @@ namespace Alternet.UI
         /// <see cref="UseGeneric"/> is <c>true</c>) and always returns
         /// <see cref="Color.Empty"/> in the native versions.
         /// </remarks>
+        [Browsable(false)]
         public Color HeaderColorBg
         {
             get => NativeControl.GetHeaderColorBg();
@@ -365,6 +371,7 @@ namespace Alternet.UI
         /// <see cref="UseGeneric"/> is <c>true</c>) and always returns
         /// <see cref="Color.Empty"/> in the native versions.
         /// </remarks>
+        [Browsable(false)]
         public Color HighlightColorFg
         {
             get => NativeControl.GetHighlightColorFg();
@@ -379,6 +386,7 @@ namespace Alternet.UI
         /// <see cref="UseGeneric"/> is <c>true</c>) and always returns
         /// <see cref="Color.Empty"/> in the native versions.
         /// </remarks>
+        [Browsable(false)]
         public Color HighlightColorBg
         {
             get => NativeControl.GetHighlightColorBg();

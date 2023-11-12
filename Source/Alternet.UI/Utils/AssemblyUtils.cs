@@ -610,6 +610,25 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Returns <c>true</c> if <paramref name="type"/> is a descendant of any type
+        /// in the array of types.
+        /// </summary>
+        /// <remarks>This method checks all base types recursively not only
+        /// the first <see cref="Type.BaseType"/> value.</remarks>
+        /// <param name="type">Type to check.</param>
+        /// <param name="baseTypes">Base types array.</param>
+        public static bool TypeIsDescendant(Type type, Type[] baseTypes)
+        {
+            foreach(var item in baseTypes)
+            {
+                if (TypeIsDescendant(type, item))
+                    return true;
+            }
+
+            return false;
+        }
+
+        /// <summary>
         /// Returns <c>true</c> if specified type is a descendant of another type.
         /// </summary>
         /// <remarks>This method checks all base types recursively not only

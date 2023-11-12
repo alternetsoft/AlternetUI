@@ -247,6 +247,7 @@ namespace Alternet.UI
         /// Gets or sets <see cref="IObjectToString"/> provider which is used in
         /// value to string convertion.
         /// </summary>
+        [Browsable(false)]
         public virtual IObjectToString? Converter { get; set; }
 
         /// <summary>
@@ -1025,6 +1026,7 @@ namespace Alternet.UI
         /// <see cref="TextBox"/> behavior is not affected
         /// by this property, you can use it for any purposes.
         /// </remarks>
+        [Browsable(false)]
         public virtual object? MinValue { get; set; }
 
         /// <summary>
@@ -1039,6 +1041,7 @@ namespace Alternet.UI
         /// <see cref="TextBox"/> behavior is not affected
         /// by this property, you can use it for any purposes.
         /// </remarks>
+        [Browsable(false)]
         public virtual object? MaxValue { get; set; }
 
         internal new NativeTextBoxHandler Handler =>

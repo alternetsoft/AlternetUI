@@ -33,7 +33,7 @@ namespace PropertyGridSample
                 PropGrid.AddPropCategory("Nullable");
                 PropGrid.AddProps(NullableProps.Default);
 
-                if(PropGrid.CellBackgroundColor.EqualARGB(Color.White))
+                if(!SystemSettings.AppearanceIsDark)
                     PropGrid.SetCategoriesBackgroundColor(Color.LightGray);
             }
             finally
