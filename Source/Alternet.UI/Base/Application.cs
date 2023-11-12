@@ -166,6 +166,12 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Returns true if between two <see cref="BeginBusyCursor"/> and
+        /// <see cref="EndBusyCursor"/> calls.
+        /// </summary>
+        public static bool IsBusyCursor => Native.WxOtherFactory.IsBusyCursor();
+
+        /// <summary>
         /// Returns true if operating system is Apple macOS.
         /// </summary>
         public static bool IsMacOs
@@ -408,6 +414,24 @@ namespace Alternet.UI
         internal bool InvokeRequired => nativeApplication.InvokeRequired;
 
         internal string EventArgString => NativeApplication.EventArgString;
+
+        /// <summary>
+        /// Changes the cursor to the given cursor for all windows in the application.
+        /// </summary>
+        /// <remarks>
+        /// Use <see cref="IsBusyCursor"/> to get current busy cursor state.
+        /// Use <see cref="EndBusyCursor"/> to revert the cursor back to its previous state.
+        /// These two calls can be nested, and a counter ensures that only the outer calls take effect.
+        /// </remarks>
+        public static void BeginBusyCursor() => Native.WxOtherFactory.BeginBusyCursor();
+
+        /// <summary>
+        /// Changes the cursor back to the original cursor, for all windows in the application.
+        /// </summary>
+        /// <remarks>
+        /// Use with <see cref="BeginBusyCursor"/> and <see cref="IsBusyCursor"/>.
+        /// </remarks>
+        public static void EndBusyCursor() => Native.WxOtherFactory.EndBusyCursor();
 
         /// <summary>
         /// Sets wxSystemOptions value.
@@ -730,6 +754,11 @@ namespace Alternet.UI
             }
         }
 
+        private static IDisposable BusyCursor()
+        {
+            return new BusyCursorObject();
+        }
+
         private static void WriteToLogFileIfAllowed(string msg)
         {
             if (!LogFileIsEnabled)
@@ -805,6 +834,19 @@ namespace Alternet.UI
             {
                 if(logFileIsEnabled)
                     LogUtils.LogToFileAppFinished();
+            }
+        }
+
+        private class BusyCursorObject : DisposableObject
+        {
+            public BusyCursorObject()
+            {
+                BeginBusyCursor();
+            }
+
+            protected override void DisposeManagedResources()
+            {
+                EndBusyCursor();
             }
         }
     }
