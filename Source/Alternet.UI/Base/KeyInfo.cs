@@ -11,6 +11,8 @@ namespace Alternet.UI
     /// </summary>
     public class KeyInfo
     {
+        private static bool _registeredCustomKeyLabels = false;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="KeyInfo"/> class.
         /// </summary>
@@ -37,6 +39,9 @@ namespace Alternet.UI
         /// </summary>
         public static void RegisterCustomKeyLabels()
         {
+            if (_registeredCustomKeyLabels)
+                return;
+            _registeredCustomKeyLabels = true;
             var choices = PropertyGrid.GetChoices<Key>();
             choices.SetLabelForValue(Key.D0, "0");
             choices.SetLabelForValue(Key.D1, "1");
@@ -58,6 +63,7 @@ namespace Alternet.UI
         /// <param name="key">Key.</param>
         public static string GetCustomKeyLabel(Key key)
         {
+            RegisterCustomKeyLabels();
             var choices = PropertyGrid.GetChoices<Key>();
             return choices.GetLabelFromValue((int)key) ?? key.ToString();
         }
