@@ -95,21 +95,31 @@ namespace Alternet.UI
         /// </summary>
         /// <typeparam name="T">Type of the array item.</typeparam>
         /// <param name="items">Array of items.</param>
-        public static string ToString<T>(params T[] items)
+        /// <param name="prefix">Prefix string to add before items text.</param>
+        /// <param name="suffix">Suffix string to add after items text.</param>
+        /// <param name="separator">Separator string to add between each item text.</param>
+        public static string ToString<T>(
+            T[] items,
+            string? prefix = default,
+            string? suffix = default,
+            string? separator = default)
         {
+            prefix ??= "(";
+            suffix ??= ")";
+            separator ??= ", ";
             var length = items.Length;
             if (length == 0)
-                return "()";
+                return $"{prefix}{suffix}";
             string result = string.Empty;
             foreach(var item in items)
             {
                 if (result == string.Empty)
-                    result = $"({item}";
+                    result = $"{prefix}{item}";
                 else
-                    result += $", {item}";
+                    result += $"{separator}{item}";
             }
 
-            result += ")";
+            result += suffix;
 
             return result;
         }
