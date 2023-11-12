@@ -92,6 +92,7 @@ namespace ControlsSample
             if (SelectedIndex == null)
                 return;
 
+            var busyCursor = false;
             activePageHolder.SuspendLayout();
             try
             {
@@ -101,7 +102,8 @@ namespace ControlsSample
 
                 if (!loaded)
                 {
-                    activePageHolder.ParentWindow?.SetCursor(Cursors.Wait);
+                    Application.BeginBusyCursor();
+                    busyCursor = true;
                     waitLabelContainer.Parent = activePageHolder;
                     waitLabelContainer.Visible = true;
                     waitLabelContainer.Update();
@@ -116,8 +118,9 @@ namespace ControlsSample
             }
             finally
             {
+                if (busyCursor)
+                    Application.EndBusyCursor();
                 activePageHolder.ResumeLayout();
-                activePageHolder.ParentWindow?.SetCursor(null);
             }
         }
 

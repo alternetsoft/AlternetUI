@@ -177,6 +177,10 @@ namespace ControlsSample
             richPanel.FileSaveClick += RichPanel_FileSaveClick;
             InitRichEdit2();
             richPanel.TextBox.TextChanged += RichTextBox_TextChanged;
+
+            // ==== Add test actions
+
+            richPanel.AddAction("Bell", SoundUtils.Bell);
         }
 
         private void RichTextBox_TextChanged(object? sender, EventArgs e)
