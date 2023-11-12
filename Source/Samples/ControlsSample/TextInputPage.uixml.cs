@@ -176,11 +176,13 @@ namespace ControlsSample
             richPanel.FileOpenClick += RichPanel_FileOpenClick;
             richPanel.FileSaveClick += RichPanel_FileSaveClick;
             InitRichEdit2();
+            richPanel.TextBox.SetCaretPosition(0, true);
             richPanel.TextBox.TextChanged += RichTextBox_TextChanged;
 
             // ==== Add test actions
 
             richPanel.AddAction("Bell", SoundUtils.Bell);
+            richPanel.AddAction("Go To Line", richPanel.TextBox.ShowDialogGoToLine);
         }
 
         private void RichTextBox_TextChanged(object? sender, EventArgs e)

@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Alternet.Drawing;
+using Alternet.UI.Localization;
 
 namespace Alternet.UI
 {
@@ -123,6 +124,34 @@ namespace Alternet.UI
             {
                 value ??= string.Empty;
                 NativeControl.SetValue(value);
+            }
+        }
+
+        /// <summary>
+        /// Gets the line number (zero-based) with the cursor.
+        /// </summary>
+        [Browsable(false)]
+        public virtual long CaretLineNumber
+        {
+            get
+            {
+                var currentPosition = GetCaretPosition();
+                var caretLineNumber = PositionToXY(currentPosition).Y;
+                return caretLineNumber;
+            }
+        }
+
+        /// <summary>
+        /// Gets the last line number (zero-based).
+        /// </summary>
+        [Browsable(false)]
+        public virtual long LastLineNumber
+        {
+            get
+            {
+                var lastPosition = GetLastPosition();
+                var lastLineNumber = PositionToXY(lastPosition).Y;
+                return lastLineNumber;
             }
         }
 
@@ -1919,6 +1948,30 @@ namespace Alternet.UI
                 cols,
                 tableAttrPtr,
                 cellAttrPtr);
+        }
+
+        /// <summary>
+        /// Shows 'Go To Line' dialog.
+        /// </summary>
+        public virtual void ShowDialogGoToLine()
+        {
+            var lastLineNumber = LastLineNumber + 1;
+            var prompt = string.Format(CommonStrings.Default.LineNumberTemplate, 1, lastLineNumber);
+            var result = DialogFactory.GetNumberFromUser(
+                null,
+                prompt,
+                CommonStrings.Default.WindowTitleGoToLine,
+                CaretLineNumber + 1,
+                1,
+                lastLineNumber,
+                this);
+            if (result is null)
+                return;
+            var newPosition = XYToPosition(0, result.Value - 1);
+            SetCaretPosition(newPosition, true);
+            ShowPosition(newPosition);
+            if (CanAcceptFocus)
+                SetFocus();
         }
 
         /// <summary>

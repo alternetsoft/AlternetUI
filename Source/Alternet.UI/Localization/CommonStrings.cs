@@ -95,6 +95,9 @@ namespace Alternet.UI.Localization
         /// <inheritdoc cref="ButtonOk"/>
         public string WindowTitleListEdit { get; set; } = "List Editor";
 
+        /// <inheritdoc cref="ButtonOk"/>
+        public string WindowTitleGoToLine { get; set; } = "Go To Line";
+
         // ========================
 
         /// <inheritdoc cref="ButtonOk"/>
@@ -139,5 +142,10 @@ namespace Alternet.UI.Localization
 
         /// <inheritdoc cref="ButtonOk"/>
         public string FindOptionBackwards { get; set; } = "Backwards";
+
+        // ========================
+
+        /// <inheritdoc cref="ButtonOk"/>
+        public string LineNumberTemplate { get; set; } = "Line Number ({0} - {1})";
     }
 }
