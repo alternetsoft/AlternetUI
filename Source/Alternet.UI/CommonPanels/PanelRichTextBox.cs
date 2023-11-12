@@ -68,6 +68,20 @@ namespace Alternet.UI
             }
         }
 
+        /// <inheritdoc/>
+        protected override void OnParentChanged(EventArgs e)
+        {
+            base.OnParentChanged(e);
+
+            if (Parent == null || Flags.HasFlag(ControlFlags.ParentAssigned))
+                return;
+
+            Manager.AddPane(TextBox, CenterPane);
+            Manager.AddPane(Toolbar, ToolbarPane);
+
+            Manager.Update();
+        }
+
         /// <summary>
         /// Creates toolbar items.
         /// </summary>
@@ -115,20 +129,6 @@ namespace Alternet.UI
         private void FileSave_Click(object? sender, EventArgs e)
         {
             FileSaveClick?.Invoke(this, EventArgs.Empty);
-        }
-
-        /// <inheritdoc/>
-        protected override void OnParentChanged(EventArgs e)
-        {
-            base.OnParentChanged(e);
-
-            if (Parent == null || Flags.HasFlag(ControlFlags.ParentAssigned))
-                return;
-
-            Manager.AddPane(TextBox, CenterPane);
-            Manager.AddPane(Toolbar, ToolbarPane);
-
-            Manager.Update();
         }
 
         private void Initialize()
