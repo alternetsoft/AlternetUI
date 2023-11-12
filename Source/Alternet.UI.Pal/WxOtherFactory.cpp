@@ -1,5 +1,6 @@
 #include "WxOtherFactory.h"
 #include "WxAlternet/wxAlternetRichToolTip.h"
+#include "wx/numdlg.h"
 
 namespace Alternet::UI
 {
@@ -516,5 +517,40 @@ namespace Alternet::UI
 	bool WxOtherFactory::SystemAppearanceIsUsingDarkBackground()
 	{
 		return wxSystemSettings::GetAppearance().IsUsingDarkBackground();
+	}
+
+	bool WxOtherFactory::IsBusyCursor()
+	{
+		return wxIsBusy();
+	}
+
+	void WxOtherFactory::BeginBusyCursor()
+	{
+		wxBeginBusyCursor();
+	}
+
+	void WxOtherFactory::EndBusyCursor()
+	{
+		wxEndBusyCursor();
+	}
+	
+	void WxOtherFactory::Bell()
+	{
+		wxBell();
+	}
+
+	string WxOtherFactory::GetTextFromUser(const string& message,
+		const string& caption, const string& defaultValue, void* parent, int x, int y, bool centre)
+	{
+		return wxStr(wxGetTextFromUser(wxStr(message),
+			wxStr(caption), wxStr(defaultValue), (wxWindow*)parent, x, y, centre));
+	}
+
+	int64_t WxOtherFactory::GetNumberFromUser(const string& message, const string& prompt,
+		const string& caption, int64_t value, int64_t min, int64_t max, void* parent,
+		const Int32Point& pos)
+	{
+		return wxGetNumberFromUser(wxStr(message), wxStr(prompt),
+			wxStr(caption), value, min, max, (wxWindow*)parent, pos);
 	}
 }

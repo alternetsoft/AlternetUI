@@ -68,6 +68,12 @@ static int SystemSettingsGetMetric(int index, void* win);
 static string SystemAppearanceGetName();
 static bool SystemAppearanceIsDark();
 static bool SystemAppearanceIsUsingDarkBackground();
+static bool IsBusyCursor();
+static void BeginBusyCursor();
+static void EndBusyCursor();
+static void Bell();
+static string GetTextFromUser(const string& message, const string& caption, const string& defaultValue, void* parent, int x, int y, bool centre);
+static int64_t GetNumberFromUser(const string& message, const string& prompt, const string& caption, int64_t value, int64_t min, int64_t max, void* parent, const Int32Point& pos);
 public:
 WxOtherFactory();
 protected:

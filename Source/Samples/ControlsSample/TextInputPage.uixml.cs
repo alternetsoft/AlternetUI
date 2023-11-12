@@ -306,7 +306,7 @@ namespace ControlsSample
 
         private void RichEdit_KeyDown(object? sender, KeyEventArgs e)
         {
-            void Test()
+            static void Test()
             {
             }
 

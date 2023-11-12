@@ -359,6 +359,36 @@ namespace Alternet.UI.Native
             return NativeApi.WxOtherFactory_SystemAppearanceIsUsingDarkBackground_();
         }
         
+        public static bool IsBusyCursor()
+        {
+            return NativeApi.WxOtherFactory_IsBusyCursor_();
+        }
+        
+        public static void BeginBusyCursor()
+        {
+            NativeApi.WxOtherFactory_BeginBusyCursor_();
+        }
+        
+        public static void EndBusyCursor()
+        {
+            NativeApi.WxOtherFactory_EndBusyCursor_();
+        }
+        
+        public static void Bell()
+        {
+            NativeApi.WxOtherFactory_Bell_();
+        }
+        
+        public static string GetTextFromUser(string message, string caption, string defaultValue, System.IntPtr parent, int x, int y, bool centre)
+        {
+            return NativeApi.WxOtherFactory_GetTextFromUser_(message, caption, defaultValue, parent, x, y, centre);
+        }
+        
+        public static long GetNumberFromUser(string message, string prompt, string caption, long value, long min, long max, System.IntPtr parent, Alternet.Drawing.Int32Point pos)
+        {
+            return NativeApi.WxOtherFactory_GetNumberFromUser_(message, prompt, caption, value, min, max, parent, pos);
+        }
+        
         
         [SuppressUnmanagedCodeSecurity]
         public class NativeApi : NativeApiProvider
@@ -565,6 +595,24 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool WxOtherFactory_SystemAppearanceIsUsingDarkBackground_();
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool WxOtherFactory_IsBusyCursor_();
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void WxOtherFactory_BeginBusyCursor_();
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void WxOtherFactory_EndBusyCursor_();
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void WxOtherFactory_Bell_();
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern string WxOtherFactory_GetTextFromUser_(string message, string caption, string defaultValue, System.IntPtr parent, int x, int y, bool centre);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern long WxOtherFactory_GetNumberFromUser_(string message, string prompt, string caption, long value, long min, long max, System.IntPtr parent, Alternet.Drawing.Int32Point pos);
             
         }
     }

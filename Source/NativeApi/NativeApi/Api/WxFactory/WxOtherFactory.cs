@@ -228,12 +228,25 @@ namespace NativeApi.Api
         // IsDark() if there is no platform-specific way to determine whether a
         // dark mode is being used.
         public static bool SystemAppearanceIsUsingDarkBackground() => default;
-        
+
         // ===================
 
+        public static bool IsBusyCursor() => default;
+
+        public static void BeginBusyCursor() { }
+        
+        public static void EndBusyCursor() { }
+
+        // Ring the system bell.
+        // This function is categorized as a GUI one and so is not thread-safe.
+        // #include <wx/utils.h> 
+        public static void Bell() { }
+
+        public static string GetTextFromUser(string message, string caption, string defaultValue,
+            IntPtr parent, int x = -1, int y = -1, bool centre = true) => default;
+
+        public static long GetNumberFromUser(string message, string prompt, string caption,
+            long value, long min, long max, IntPtr parent, Int32Point pos) => default;
+        // ===================
     }
 }
-
-/*
- 
-*/

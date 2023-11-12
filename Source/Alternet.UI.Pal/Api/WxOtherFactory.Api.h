@@ -346,3 +346,33 @@ ALTERNET_UI_API c_bool WxOtherFactory_SystemAppearanceIsUsingDarkBackground_()
     return WxOtherFactory::SystemAppearanceIsUsingDarkBackground();
 }
 
+ALTERNET_UI_API c_bool WxOtherFactory_IsBusyCursor_()
+{
+    return WxOtherFactory::IsBusyCursor();
+}
+
+ALTERNET_UI_API void WxOtherFactory_BeginBusyCursor_()
+{
+    WxOtherFactory::BeginBusyCursor();
+}
+
+ALTERNET_UI_API void WxOtherFactory_EndBusyCursor_()
+{
+    WxOtherFactory::EndBusyCursor();
+}
+
+ALTERNET_UI_API void WxOtherFactory_Bell_()
+{
+    WxOtherFactory::Bell();
+}
+
+ALTERNET_UI_API char16_t* WxOtherFactory_GetTextFromUser_(const char16_t* message, const char16_t* caption, const char16_t* defaultValue, void* parent, int x, int y, c_bool centre)
+{
+    return AllocPInvokeReturnString(WxOtherFactory::GetTextFromUser(message, caption, defaultValue, parent, x, y, centre));
+}
+
+ALTERNET_UI_API int64_t WxOtherFactory_GetNumberFromUser_(const char16_t* message, const char16_t* prompt, const char16_t* caption, int64_t value, int64_t min, int64_t max, void* parent, Int32Point pos)
+{
+    return WxOtherFactory::GetNumberFromUser(message, prompt, caption, value, min, max, parent, pos);
+}
+
