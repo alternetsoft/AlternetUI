@@ -12,6 +12,198 @@ namespace Alternet.Drawing
     /// </summary>
     public static class ColorUtils
     {
+        /// <summary>
+        /// All known color values (in order of definition in the <see cref="KnownColor"/>).
+        /// </summary>
+        private static readonly SystemSettingsColor[] ColorValueTable =
+        {
+            // "not a known color"
+            SystemSettingsColor.Max,
+
+            // "System" colors, Part 1
+            SystemSettingsColor.ActiveBorder,     // ActiveBorder
+            SystemSettingsColor.ActiveCaption,     // ActiveCaption
+            SystemSettingsColor.ActiveCaptionText,     // ActiveCaptionText
+            SystemSettingsColor.AppWorkspace,     // AppWorkspace
+            SystemSettingsColor.ButtonFace,     // Control
+            SystemSettingsColor.ButtonShadow,     // ControlDark
+            SystemSettingsColor.ControlDarkDark,     // ControlDarkDark
+            SystemSettingsColor.ControlLight,     // ControlLight
+            SystemSettingsColor.ButtonHighlight,     // ControlLightLight
+            SystemSettingsColor.ControlText,     // ControlText
+            SystemSettingsColor.Desktop,     // Desktop
+            SystemSettingsColor.GrayText,     // GrayText
+            SystemSettingsColor.Highlight,     // Highlight
+            SystemSettingsColor.HighlightText,     // HighlightText
+            SystemSettingsColor.HotTrack,     // HotTrack
+            SystemSettingsColor.InactiveBorder,     // InactiveBorder
+            SystemSettingsColor.InactiveCaption,     // InactiveCaption
+            SystemSettingsColor.InactiveCaptionText,     // InactiveCaptionText
+            SystemSettingsColor.Info,     // Info
+            SystemSettingsColor.InfoText,     // InfoText
+            SystemSettingsColor.Menu,     // Menu
+            SystemSettingsColor.MenuText,     // MenuText
+            SystemSettingsColor.ScrollBar,     // ScrollBar
+            SystemSettingsColor.Window,     // Window
+            SystemSettingsColor.WindowFrame,     // WindowFrame
+            SystemSettingsColor.WindowText,     // WindowText
+
+            // "Web" Colors, Part 1
+            SystemSettingsColor.Max,     // Transparent
+            SystemSettingsColor.Max,     // AliceBlue
+            SystemSettingsColor.Max,     // AntiqueWhite
+            SystemSettingsColor.Max,     // Aqua
+            SystemSettingsColor.Max,     // Aquamarine
+            SystemSettingsColor.Max,     // Azure
+            SystemSettingsColor.Max,     // Beige
+            SystemSettingsColor.Max,     // Bisque
+            SystemSettingsColor.Max,     // Black
+            SystemSettingsColor.Max,     // BlanchedAlmond
+            SystemSettingsColor.Max,     // Blue
+            SystemSettingsColor.Max,     // BlueViolet
+            SystemSettingsColor.Max,     // Brown
+            SystemSettingsColor.Max,     // BurlyWood
+            SystemSettingsColor.Max,     // CadetBlue
+            SystemSettingsColor.Max,     // Chartreuse
+            SystemSettingsColor.Max,     // Chocolate
+            SystemSettingsColor.Max,     // Coral
+            SystemSettingsColor.Max,     // CornflowerBlue
+            SystemSettingsColor.Max,     // Cornsilk
+            SystemSettingsColor.Max,     // Crimson
+            SystemSettingsColor.Max,     // Cyan
+            SystemSettingsColor.Max,     // DarkBlue
+            SystemSettingsColor.Max,     // DarkCyan
+            SystemSettingsColor.Max,     // DarkGoldenrod
+            SystemSettingsColor.Max,     // DarkGray
+            SystemSettingsColor.Max,     // DarkGreen
+            SystemSettingsColor.Max,     // DarkKhaki
+            SystemSettingsColor.Max,     // DarkMagenta
+            SystemSettingsColor.Max,     // DarkOliveGreen
+            SystemSettingsColor.Max,     // DarkOrange
+            SystemSettingsColor.Max,     // DarkOrchid
+            SystemSettingsColor.Max,     // DarkRed
+            SystemSettingsColor.Max,     // DarkSalmon
+            SystemSettingsColor.Max,     // DarkSeaGreen
+            SystemSettingsColor.Max,     // DarkSlateBlue
+            SystemSettingsColor.Max,     // DarkSlateGray
+            SystemSettingsColor.Max,     // DarkTurquoise
+            SystemSettingsColor.Max,     // DarkViolet
+            SystemSettingsColor.Max,     // DeepPink
+            SystemSettingsColor.Max,     // DeepSkyBlue
+            SystemSettingsColor.Max,     // DimGray
+            SystemSettingsColor.Max,     // DodgerBlue
+            SystemSettingsColor.Max,     // Firebrick
+            SystemSettingsColor.Max,     // FloralWhite
+            SystemSettingsColor.Max,     // ForestGreen
+            SystemSettingsColor.Max,     // Fuchsia
+            SystemSettingsColor.Max,     // Gainsboro
+            SystemSettingsColor.Max,     // GhostWhite
+            SystemSettingsColor.Max,     // Gold
+            SystemSettingsColor.Max,     // Goldenrod
+            SystemSettingsColor.Max,     // Gray
+            SystemSettingsColor.Max,     // Green
+            SystemSettingsColor.Max,     // GreenYellow
+            SystemSettingsColor.Max,     // Honeydew
+            SystemSettingsColor.Max,     // HotPink
+            SystemSettingsColor.Max,     // IndianRed
+            SystemSettingsColor.Max,     // Indigo
+            SystemSettingsColor.Max,     // Ivory
+            SystemSettingsColor.Max,     // Khaki
+            SystemSettingsColor.Max,     // Lavender
+            SystemSettingsColor.Max,     // LavenderBlush
+            SystemSettingsColor.Max,     // LawnGreen
+            SystemSettingsColor.Max,     // LemonChiffon
+            SystemSettingsColor.Max,     // LightBlue
+            SystemSettingsColor.Max,     // LightCoral
+            SystemSettingsColor.Max,     // LightCyan
+            SystemSettingsColor.Max,     // LightGoldenrodYellow
+            SystemSettingsColor.Max,     // LightGray
+            SystemSettingsColor.Max,     // LightGreen
+            SystemSettingsColor.Max,     // LightPink
+            SystemSettingsColor.Max,     // LightSalmon
+            SystemSettingsColor.Max,     // LightSeaGreen
+            SystemSettingsColor.Max,     // LightSkyBlue
+            SystemSettingsColor.Max,     // LightSlateGray
+            SystemSettingsColor.Max,     // LightSteelBlue
+            SystemSettingsColor.Max,     // LightYellow
+            SystemSettingsColor.Max,     // Lime
+            SystemSettingsColor.Max,     // LimeGreen
+            SystemSettingsColor.Max,     // Linen
+            SystemSettingsColor.Max,     // Magenta
+            SystemSettingsColor.Max,     // Maroon
+            SystemSettingsColor.Max,     // MediumAquamarine
+            SystemSettingsColor.Max,     // MediumBlue
+            SystemSettingsColor.Max,     // MediumOrchid
+            SystemSettingsColor.Max,     // MediumPurple
+            SystemSettingsColor.Max,     // MediumSeaGreen
+            SystemSettingsColor.Max,     // MediumSlateBlue
+            SystemSettingsColor.Max,     // MediumSpringGreen
+            SystemSettingsColor.Max,     // MediumTurquoise
+            SystemSettingsColor.Max,     // MediumVioletRed
+            SystemSettingsColor.Max,     // MidnightBlue
+            SystemSettingsColor.Max,     // MintCream
+            SystemSettingsColor.Max,     // MistyRose
+            SystemSettingsColor.Max,     // Moccasin
+            SystemSettingsColor.Max,     // NavajoWhite
+            SystemSettingsColor.Max,     // Navy
+            SystemSettingsColor.Max,     // OldLace
+            SystemSettingsColor.Max,     // Olive
+            SystemSettingsColor.Max,     // OliveDrab
+            SystemSettingsColor.Max,     // Orange
+            SystemSettingsColor.Max,     // OrangeRed
+            SystemSettingsColor.Max,     // Orchid
+            SystemSettingsColor.Max,     // PaleGoldenrod
+            SystemSettingsColor.Max,     // PaleGreen
+            SystemSettingsColor.Max,     // PaleTurquoise
+            SystemSettingsColor.Max,     // PaleVioletRed
+            SystemSettingsColor.Max,     // PapayaWhip
+            SystemSettingsColor.Max,     // PeachPuff
+            SystemSettingsColor.Max,     // Peru
+            SystemSettingsColor.Max,     // Pink
+            SystemSettingsColor.Max,     // Plum
+            SystemSettingsColor.Max,     // PowderBlue
+            SystemSettingsColor.Max,     // Purple
+            SystemSettingsColor.Max,     // Red
+            SystemSettingsColor.Max,     // RosyBrown
+            SystemSettingsColor.Max,     // RoyalBlue
+            SystemSettingsColor.Max,     // SaddleBrown
+            SystemSettingsColor.Max,     // Salmon
+            SystemSettingsColor.Max,     // SandyBrown
+            SystemSettingsColor.Max,     // SeaGreen
+            SystemSettingsColor.Max,     // SeaShell
+            SystemSettingsColor.Max,     // Sienna
+            SystemSettingsColor.Max,     // Silver
+            SystemSettingsColor.Max,     // SkyBlue
+            SystemSettingsColor.Max,     // SlateBlue
+            SystemSettingsColor.Max,     // SlateGray
+            SystemSettingsColor.Max,     // Snow
+            SystemSettingsColor.Max,     // SpringGreen
+            SystemSettingsColor.Max,     // SteelBlue
+            SystemSettingsColor.Max,     // Tan
+            SystemSettingsColor.Max,     // Teal
+            SystemSettingsColor.Max,     // Thistle
+            SystemSettingsColor.Max,     // Tomato
+            SystemSettingsColor.Max,     // Turquoise
+            SystemSettingsColor.Max,     // Violet
+            SystemSettingsColor.Max,     // Wheat
+            SystemSettingsColor.Max,     // White
+            SystemSettingsColor.Max,     // WhiteSmoke
+            SystemSettingsColor.Max,     // Yellow
+            SystemSettingsColor.Max,     // YellowGreen
+
+            // "System" colors, Part 2
+            SystemSettingsColor.ButtonFace,     // ButtonFace
+            SystemSettingsColor.ButtonHighlight,     // ButtonHighlight
+            SystemSettingsColor.ButtonShadow,     // ButtonShadow
+            SystemSettingsColor.GradientActiveCaption,     // GradientActiveCaption
+            SystemSettingsColor.GradientInactiveCaption,     // GradientInactiveCaption
+            SystemSettingsColor.MenuBar,     // MenuBar
+            SystemSettingsColor.MenuHighlight,     // MenuHighlight
+
+            // "Web" colors, Part 2
+            SystemSettingsColor.Max,     // RebeccaPurple
+        };
+
         private static AdvDictionary<KnownColor, IKnownColorInfo>? knownColorItems;
 
         private static AdvDictionary<KnownColor, IKnownColorInfo> KnownColorItems
@@ -123,43 +315,47 @@ namespace Alternet.Drawing
         /// <returns>Converted color value.</returns>
         public static SystemSettingsColor Convert(KnownColor color)
         {
+            var result = ColorValueTable[(int)color];
+            return result;
+/*
             return color switch
             {
-                KnownColor.ActiveBorder => (SystemSettingsColor)0x0A,
-                KnownColor.ActiveCaption => (SystemSettingsColor)0x02,
-                KnownColor.ActiveCaptionText => (SystemSettingsColor)0x09,
-                KnownColor.AppWorkspace => (SystemSettingsColor)0x0C,
-                KnownColor.ButtonFace => (SystemSettingsColor)0x0F,
-                KnownColor.ButtonHighlight => (SystemSettingsColor)0x14,
-                KnownColor.ButtonShadow => (SystemSettingsColor)0x10,
-                KnownColor.Control => (SystemSettingsColor)0x0F,
-                KnownColor.ControlDark => (SystemSettingsColor)0x10,
-                KnownColor.ControlDarkDark => (SystemSettingsColor)0x15,
-                KnownColor.ControlLight => (SystemSettingsColor)0x16,
-                KnownColor.ControlLightLight => (SystemSettingsColor)0x14,
-                KnownColor.ControlText => (SystemSettingsColor)0x12,
-                KnownColor.Desktop => (SystemSettingsColor)0x01,
-                KnownColor.GradientActiveCaption => (SystemSettingsColor)0x1B,
-                KnownColor.GradientInactiveCaption => (SystemSettingsColor)0x1C,
-                KnownColor.GrayText => (SystemSettingsColor)0x11,
-                KnownColor.Highlight => (SystemSettingsColor)0x0D,
-                KnownColor.HighlightText => (SystemSettingsColor)0x0E,
-                KnownColor.HotTrack => (SystemSettingsColor)0x1A,
-                KnownColor.InactiveBorder => (SystemSettingsColor)0x0B,
-                KnownColor.InactiveCaption => (SystemSettingsColor)0x03,
-                KnownColor.InactiveCaptionText => (SystemSettingsColor)0x13,
-                KnownColor.Info => (SystemSettingsColor)0x18,
-                KnownColor.InfoText => (SystemSettingsColor)0x17,
-                KnownColor.Menu => (SystemSettingsColor)0x04,
-                KnownColor.MenuBar => (SystemSettingsColor)0x1E,
-                KnownColor.MenuHighlight => (SystemSettingsColor)0x1D,
-                KnownColor.MenuText => (SystemSettingsColor)0x07,
-                KnownColor.ScrollBar => (SystemSettingsColor)0x00,
-                KnownColor.Window => (SystemSettingsColor)0x05,
-                KnownColor.WindowFrame => (SystemSettingsColor)0x06,
-                KnownColor.WindowText => (SystemSettingsColor)0x08,
+                KnownColor.ActiveBorder => SystemSettingsColor.ActiveBorder,
+                KnownColor.ActiveCaption => SystemSettingsColor.ActiveCaption,
+                KnownColor.ActiveCaptionText => SystemSettingsColor.ActiveCaptionText,
+                KnownColor.AppWorkspace => SystemSettingsColor.AppWorkspace,
+                KnownColor.ButtonFace => SystemSettingsColor.ButtonFace,
+                KnownColor.ButtonHighlight => SystemSettingsColor.ButtonHighlight,
+                KnownColor.ButtonShadow => SystemSettingsColor.ButtonShadow,
+                KnownColor.Control => SystemSettingsColor.ButtonFace,
+                KnownColor.ControlDark => SystemSettingsColor.ButtonShadow,
+                KnownColor.ControlDarkDark => SystemSettingsColor.ControlDarkDark,
+                KnownColor.ControlLight => SystemSettingsColor.ControlLight,
+                KnownColor.ControlLightLight => SystemSettingsColor.ButtonHighlight,
+                KnownColor.ControlText => SystemSettingsColor.ControlText,
+                KnownColor.Desktop => SystemSettingsColor.Desktop,
+                KnownColor.GradientActiveCaption => SystemSettingsColor.GradientActiveCaption,
+                KnownColor.GradientInactiveCaption => SystemSettingsColor.GradientInactiveCaption,
+                KnownColor.GrayText => SystemSettingsColor.GrayText,
+                KnownColor.Highlight => SystemSettingsColor.Highlight,
+                KnownColor.HighlightText => SystemSettingsColor.HighlightText,
+                KnownColor.HotTrack => SystemSettingsColor.HotTrack,
+                KnownColor.InactiveBorder => SystemSettingsColor.InactiveBorder,
+                KnownColor.InactiveCaption => SystemSettingsColor.InactiveCaption,
+                KnownColor.InactiveCaptionText => SystemSettingsColor.InactiveCaptionText,
+                KnownColor.Info => SystemSettingsColor.Info,
+                KnownColor.InfoText => SystemSettingsColor.InfoText,
+                KnownColor.Menu => SystemSettingsColor.Menu,
+                KnownColor.MenuBar => SystemSettingsColor.MenuBar,
+                KnownColor.MenuHighlight => SystemSettingsColor.MenuHighlight,
+                KnownColor.MenuText => SystemSettingsColor.MenuText,
+                KnownColor.ScrollBar => SystemSettingsColor.ScrollBar,
+                KnownColor.Window => SystemSettingsColor.Window,
+                KnownColor.WindowFrame => SystemSettingsColor.WindowFrame,
+                KnownColor.WindowText => SystemSettingsColor.WindowText,
                 _ => SystemSettingsColor.Max,
             };
+*/
         }
 
         /// <summary>
