@@ -92,7 +92,8 @@ namespace Alternet.UI
             var wxWidgets = WebBrowser.GetLibraryVersionString();
             var net = $"Net: {Environment.Version}";
             var dpi = $"DPI: {Application.FirstWindow()?.GetDPI().Width}";
-            Application.Log($"{net}, {wxWidgets}, {dpi}");
+            var ui = $"UI: {WebBrowser.DoCommandGlobal("UIVersion")}";
+            Application.Log($"{ui}, {net}, {wxWidgets}, {dpi}");
         }
 
         /// <summary>

@@ -1,11 +1,10 @@
-﻿using Alternet.Base.Collections;
+﻿using System;
+using Alternet.Base.Collections;
 using Alternet.Drawing;
 using Alternet.UI;
 
 namespace ControlsSample
 {
-    public delegate Control CreateControlAction();
-
     public class PageContainer : Control
     {
         private readonly TreeView pagesControl = new()
@@ -32,15 +31,8 @@ namespace ControlsSample
             Margin = new Thickness(100, 100, 0, 0),
         };
 
-        /*private readonly AnimationPlayer waitAnination = new()
-        {
-            Margin = new Thickness(100, 100, 0, 0),
-        };*/
-
         public PageContainer()
         {
-            //waitAnination.LoadFromUrl(AnimationPage.AnimationHourGlass);
-
             grid = new Grid();
             grid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
             grid.ColumnDefinitions.Add(new ColumnDefinition
@@ -126,13 +118,20 @@ namespace ControlsSample
 
         public class Page
         {
-            private readonly CreateControlAction action;
+            private readonly Func<Control>? action;
             private Control? control;
+            private Lazy<Control>? lazyControl;
 
-            public Page(string title, CreateControlAction action)
+            public Page(string title, Func<Control> action)
             {
                 Title = title;
                 this.action = action;
+            }
+
+            public Page(string title,  Lazy<Control> lazyControl)
+            {
+                Title = title;
+                this.lazyControl = lazyControl;
             }
 
             public string Title { get; }
@@ -143,7 +142,16 @@ namespace ControlsSample
             {
                 get
                 {
-                    control ??= action();
+                    if(control is null)
+                    {
+                        if (lazyControl is not null)
+                            control = lazyControl.Value;
+                        else
+                        if (action is not null)
+                            control = action();
+                        else
+                            control = new();
+                    }
                     return control;
                 }
             }

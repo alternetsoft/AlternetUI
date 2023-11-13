@@ -15,8 +15,6 @@ namespace ControlsSample
         };        
         private readonly Grid mainGrid = new();
         private readonly Control mainGridParent = new();
-        /*private readonly LinkLabel? linkLabel;
-        private readonly LinkLabel? linkLabel2;*/
 
         public MainWindow()
         {
@@ -25,11 +23,6 @@ namespace ControlsSample
             Icon = ImageSet.FromUrlOrNull("embres:ControlsSample.Sample.ico");
             InitializeComponent();
 
-            /*mainGrid.RowDefinitions.Add(new RowDefinition
-            {
-                Height = new GridLength(1, GridUnitType.Auto)
-            }
-            );*/
             mainGrid.RowDefinitions.Add(new RowDefinition
             {
                 Height = new GridLength(100, GridUnitType.Star)
@@ -37,52 +30,14 @@ namespace ControlsSample
             );
             mainGrid.AddAutoRow();
                 
-/*                
-                .Add(new RowDefinition
-                {
-                    Height = new GridLength(150, GridUnitType.Pixel)
-                }
-            );
-*/
-            /*var headerPanel = new HorizontalStackPanel()
-            {
-                HorizontalAlignment = HorizontalAlignment.Right,
-            };
-
-            var homePage = @"https://www.alternet-ui.com/";
-            var docsHomePage = @"https://docs.alternet-ui.com/";
-            linkLabel = new LinkLabel()
-            {
-                Text = "Home Page",
-                Margin = new Thickness(5,0,5,10),
-                Url = homePage,
-            };
-            linkLabel.LinkClicked += LinkLabel_LinkClicked;
-            
-            linkLabel2 = new LinkLabel()
-            {
-                Text = "Documentation",
-                Margin = new Thickness(5,0,10,10),
-                Url = $"{docsHomePage}introduction/getting-started.html",
-            };
-            linkLabel2.LinkClicked += LinkLabel_LinkClicked;
-
-            linkLabel.VisitedColor = linkLabel.NormalColor;
-            linkLabel2.VisitedColor = linkLabel.NormalColor;
-            headerPanel.Children.Add(linkLabel);
-            headerPanel.Children.Add(linkLabel2);          
-             */
-
-            //mainGrid.Children.Add(headerPanel);
             mainGrid.Children.Add(pageContainer);
             mainGrid.Children.Add(eventsControl);
-            //Grid.SetRow(headerPanel, 0);
             Grid.SetRow(pageContainer, 0);
             Grid.SetRow(eventsControl, 1);
 
             var pages = pageContainer.Pages;
 
-            void AddPage(string title, CreateControlAction action)
+            void AddPage(string title, Func<Control> action)
             {
                 var item = new PageContainer.Page(title, action);
                 pages.Add(item);
@@ -139,7 +94,10 @@ namespace ControlsSample
         Control CreateNumericInputPage() => new NumericInputPage() { Site = this };
         Control CreateRadioButtonsPage() => new RadioButtonsPage() { Site = this };
         Control CreateCheckBoxesPage() => new CheckBoxesPage() { Site = this };
-        Control CreateTextInputPage() => new TextInputPage() { Site = this };
+        Control CreateTextInputPage()
+        {
+            return new TextInputPage() { Site = this };
+        }
         Control CreateDateTimePage() => new DateTimePage() { Site = this };
         Control CreateNotifyIconPage() => new NotifyIconPage() { Site = this };
         Control CreateWebBrowserPage() => new WebBrowserPage() { Site = this };
