@@ -6,24 +6,56 @@ using System.Threading.Tasks;
 
 namespace Alternet.UI
 {
-    internal abstract class FLagsAndAttributes
+    internal abstract class FlagsAndAttributes : AdvDictionary<string, object>, IFlagsAndAttributes
     {
-        public abstract bool HasFlag(string name);
+        public bool HasFlag(string name) => HasAttribute(name);
 
-        public abstract void AddFlag(string name);
+        public void AddFlag(string name) => TryAdd(name, AssemblyUtils.True);
 
-        public abstract void RemoveFlag(string name);
+        public void RemoveFlag(string name) => RemoveAttribute(name);
 
-        public abstract void ToggleFlag(string name);
+        public void ToggleFlag(string name)
+        {
+            if (HasFlag(name))
+                RemoveFlag(name);
+            else
+                AddFlag(name);
+        }
 
-        public abstract bool HasAttribute(string name);
+        public bool HasAttribute(string name)
+        {
+            return ContainsKey(name);
+        }
 
-        public abstract void RemoveAttribute(string name);
+        public bool RemoveAttribute(string name)
+        {
+            return Remove(name);
+        }
 
-        public abstract void SetAttribute(string name, object? value);
+        public void SetAttribute(string name, object? value)
+        {
+            RemoveAttribute(name);
+            if(value is not null)
+                this[name] = value;
+        }
 
-        public abstract object? GetAttribute(string name);
+        public object? GetAttribute(string name)
+        {
+            if (TryGetValue(name, out var result))
+                return result;
+            return null;
+        }
 
-        public abstract T GetAttribute<T>(string name, T defaultValue);
+        public T? GetAttribute<T>(string name)
+        {
+            return (T?)GetAttribute(name);
+        }
+
+        public T GetAttribute<T>(string name, T defaultValue)
+        {
+            if (TryGetValue(name, out var result))
+                return (T)result;
+            return defaultValue;
+        }
     }
 }

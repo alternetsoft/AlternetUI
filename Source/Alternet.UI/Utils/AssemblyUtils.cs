@@ -17,6 +17,16 @@ namespace Alternet.UI
     public static class AssemblyUtils
     {
         /// <summary>
+        /// Gets <c>true</c> value as <see cref="object"/>.
+        /// </summary>
+        public static readonly object True = true;
+
+        /// <summary>
+        /// Gets <c>false</c> value as <see cref="object"/>.
+        /// </summary>
+        public static readonly object False = false;
+
+        /// <summary>
         /// Gets maximal possible variable value for the <see cref="sbyte"/> type
         /// as <see cref="object"/>.
         /// </summary>
