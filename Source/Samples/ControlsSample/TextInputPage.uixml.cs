@@ -302,7 +302,13 @@ namespace ControlsSample
 
         private void RichPanel_FileNewClick(object? sender, EventArgs e)
         {
-            richPanel.TextBox.Clear();
+            var result = MessageBox.Show(
+                "Clear all text?",
+                "Prompt",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.None);
+            if(result == MessageBoxResult.Yes)
+                richPanel.TextBox.Clear();
         }
 
         internal string GetFontStatus()
