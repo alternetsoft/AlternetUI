@@ -23,6 +23,7 @@ namespace Alternet.UI
         private static bool terminating = false;
         private static bool logFileIsEnabled;
         private static Application? current;
+        private static OperatingSystems backendOS = OperatingSystems.None;
 
         private readonly List<Window> windows = new();
         private readonly KeyboardInputProvider keyboardInputProvider;
@@ -140,6 +141,33 @@ namespace Alternet.UI
 
                 if (logFileIsEnabled)
                     LogUtils.LogToFileAppStarted();
+            }
+        }
+
+        /// <summary>
+        /// Gets operating system as <see cref="OperatingSystems"/> enumeration.
+        /// </summary>
+        public static OperatingSystems BackendOS
+        {
+            get
+            {
+                if (backendOS == OperatingSystems.None)
+                {
+                    switch (WebBrowser.GetBackendOS())
+                    {
+                        case WebBrowserBackendOS.MacOS:
+                            backendOS = OperatingSystems.MacOs;
+                            break;
+                        case WebBrowserBackendOS.Unix:
+                            backendOS = OperatingSystems.Linux;
+                            break;
+                        case WebBrowserBackendOS.Windows:
+                            backendOS = OperatingSystems.Windows;
+                            break;
+                    }
+                }
+
+                return backendOS;
             }
         }
 
@@ -715,6 +743,11 @@ namespace Alternet.UI
             windows.Add(window);
         }
 
+        internal static IDisposable BusyCursor()
+        {
+            return new BusyCursorObject();
+        }
+
         internal void UnregisterWindow(Window window)
         {
             if (this.window == window)
@@ -752,11 +785,6 @@ namespace Alternet.UI
 
                 IsDisposed = true;
             }
-        }
-
-        private static IDisposable BusyCursor()
-        {
-            return new BusyCursorObject();
         }
 
         private static void WriteToLogFileIfAllowed(string msg)
@@ -837,7 +865,7 @@ namespace Alternet.UI
             }
         }
 
-        private class BusyCursorObject : DisposableObject
+        internal class BusyCursorObject : DisposableObject
         {
             public BusyCursorObject()
             {
