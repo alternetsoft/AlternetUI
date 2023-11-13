@@ -1,3 +1,5 @@
+using System;
+
 namespace Alternet.UI
 {
     internal class NativeLabelHandler : NativeControlHandler<Label, Native.Label>
@@ -22,11 +24,8 @@ namespace Alternet.UI
             Control.TextChanged -= Control_TextChanged;
         }
 
-        private void Control_TextChanged(object? sender, System.EventArgs? e)
+        private void Control_TextChanged(object? sender, EventArgs e)
         {
-            if (e is null)
-                throw new System.ArgumentNullException(nameof(e));
-
             if (NativeControl.Text != Control.Text)
                 NativeControl.Text = Control.Text;
         }

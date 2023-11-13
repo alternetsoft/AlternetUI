@@ -29,29 +29,7 @@ namespace Alternet.UI
     [ControlCategory("Common")]
     public class Label : Control
     {
-        /// <summary>
-        /// Routed event declaration for <see cref="TextChanged"/> event.
-        /// </summary>
-        public static readonly RoutedEvent TextChangedEvent =
-            EventManager.RegisterRoutedEvent(
-                "TextChanged",
-                RoutingStrategy.Bubble,
-                typeof(TextChangedEventHandler),
-                typeof(Label));
-
-        /// <summary>
-        /// Identifies the <see cref="Text"/> dependency property.
-        /// </summary>
-        public static readonly DependencyProperty TextProperty =
-        DependencyProperty.Register(
-                "Text",
-                typeof(string),
-                typeof(Label),
-                new FrameworkPropertyMetadata(
-                        string.Empty,
-                        PropMetadataOption.AffectsLayout | PropMetadataOption.AffectsPaint,
-                        new PropertyChangedCallback(OnTextPropertyChanged),
-                        new CoerceValueCallback(CoerceText)));
+        private string text = string.Empty;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Label"/> class with specified text.
@@ -59,7 +37,7 @@ namespace Alternet.UI
         /// <param name="text">Text displayed on this label.</param>
         public Label(string text)
         {
-            Text = text;
+            Text = text ?? string.Empty;
         }
 
         /// <summary>
@@ -69,21 +47,10 @@ namespace Alternet.UI
         {
         }
 
-         /// <summary>
+        /// <summary>
         /// Occurs when the value of the <see cref="Text"/> property changes.
         /// </summary>
-        public event TextChangedEventHandler TextChanged
-        {
-            add
-            {
-                AddHandler(TextChangedEvent, value);
-            }
-
-            remove
-            {
-                RemoveHandler(TextChangedEvent, value);
-            }
-        }
+        public event EventHandler? TextChanged;
 
         /// <summary>
         /// Gets or sets the text displayed on this label.
@@ -94,12 +61,16 @@ namespace Alternet.UI
         {
             get
             {
-                return (string)GetValue(TextProperty);
+                return text;
             }
 
             set
             {
-                SetValue(TextProperty, value);
+                if (text == value)
+                    return;
+                value ??= string.Empty;
+                text = value;
+                RaiseTextChanged(EventArgs.Empty);
             }
         }
 
@@ -108,15 +79,13 @@ namespace Alternet.UI
 
         /// <summary>
         /// Raises the <see cref="TextChanged"/> event and calls
-        /// <see cref="OnTextChanged(TextChangedEventArgs)"/>.
+        /// <see cref="OnTextChanged(EventArgs)"/>.
         /// </summary>
         /// <param name="e">An <see cref="EventArgs"/> that contains the event
         /// data.</param>
-        public void RaiseTextChanged(TextChangedEventArgs e)
+        public void RaiseTextChanged(EventArgs e)
         {
-            if (e == null)
-                throw new ArgumentNullException(nameof(e));
-
+            TextChanged?.Invoke(this, e);
             OnTextChanged(e);
         }
 
@@ -144,50 +113,17 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Binds <see cref="Text"/> to the specified property of the
-        /// <see cref="FrameworkElement.DataContext"/>
+        /// Called when content in this control changes.
         /// </summary>
-        /// <param name="propName">Property name.</param>
-        public void BindText(string propName)
+        /// <param name="e">Event arguments.</param>
+        protected virtual void OnTextChanged(EventArgs e)
         {
-            Binding myBinding = new(propName) { Mode = BindingMode.TwoWay };
-            BindingOperations.SetBinding(this, Label.TextProperty, myBinding);
-        }
-
-        /// <summary>
-        /// Called when content in this Control changes.
-        /// Raises the TextChanged event.
-        /// </summary>
-        /// <param name="e"></param>
-        protected virtual void OnTextChanged(TextChangedEventArgs e)
-        {
-            RaiseEvent(e);
         }
 
         /// <inheritdoc/>
         protected override ControlHandler CreateHandler()
         {
             return GetEffectiveControlHandlerHactory().CreateLabelHandler(this);
-        }
-
-        private static object CoerceText(DependencyObject d, object value)
-            => value ?? string.Empty;
-
-        /// <summary>
-        /// Callback for changes to the Text property
-        /// </summary>
-        private static void OnTextPropertyChanged(
-            DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            Label label = (Label)d;
-            label.OnTextPropertyChanged((string)e.OldValue, (string)e.NewValue);
-        }
-
-#pragma warning disable IDE0060 // Remove unused parameter
-        private void OnTextPropertyChanged(string oldText, string newText)
-#pragma warning restore IDE0060 // Remove unused parameter
-        {
-            OnTextChanged(new TextChangedEventArgs(TextChangedEvent));
         }
     }
 }
