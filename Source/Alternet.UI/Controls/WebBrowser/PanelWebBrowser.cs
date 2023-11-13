@@ -57,6 +57,20 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets type of <see cref="WebBrowser"/> backend used for browsing.
+        /// </summary>
+        [Browsable(false)]
+        public static WebBrowserBackend UseBackend
+        {
+            get => useBackend;
+            set
+            {
+                useBackend = value;
+                WebBrowser.SetBackend(useBackend);
+            }
+        }
+
+        /// <summary>
         /// Gets id of the 'Back' toolbar item.
         /// </summary>
         [Browsable(false)]
@@ -97,19 +111,6 @@ namespace Alternet.UI
         /// </summary>
         [Browsable(false)]
         public int ButtonIdGo => buttonIdGo;
-
-        /// <summary>
-        /// Gets or sets type of <see cref="WebBrowser"/> backend used for browsing.
-        /// </summary>
-        public static WebBrowserBackend UseBackend
-        {
-            get => useBackend;
-            set
-            {
-                useBackend = value;
-                WebBrowser.SetBackend(useBackend);
-            }
-        }
 
         /// <summary>
         /// Gets <see cref="ContextMenu"/> with additional actions like "Find" and "Print".

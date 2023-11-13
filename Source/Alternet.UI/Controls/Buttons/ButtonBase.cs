@@ -21,15 +21,14 @@ namespace Alternet.UI
         {
             get
             {
-                CheckDisposed();
                 return text;
             }
 
             set
             {
-                CheckDisposed();
                 if (text == value)
                     return;
+                CheckDisposed();
 
                 text = value;
                 RaiseTextChanged(EventArgs.Empty);
@@ -47,9 +46,6 @@ namespace Alternet.UI
 
         private void RaiseTextChanged(EventArgs e)
         {
-            if (e == null)
-                throw new ArgumentNullException(nameof(e));
-
             OnTextChanged(e);
             TextChanged?.Invoke(this, e);
         }

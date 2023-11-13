@@ -100,8 +100,15 @@ namespace Alternet.UI
         [Localizability(LocalizationCategory.Text)]
         public string Text
         {
-            get { return (string)GetValue(TextProperty); }
-            set { SetValue(TextProperty, value); }
+            get
+            {
+                return (string)GetValue(TextProperty);
+            }
+
+            set
+            {
+                SetValue(TextProperty, value);
+            }
         }
 
         /// <inheritdoc/>
@@ -207,7 +214,7 @@ namespace Alternet.UI
             RaiseEvent(e);
         }
 
-         /// <summary>
+        /// <summary>
         /// Called when a link is clicked within the control.
         /// </summary>
         /// <param name="e">

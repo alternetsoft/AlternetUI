@@ -44,16 +44,14 @@ namespace Alternet.UI
         {
             get
             {
-                CheckDisposed();
                 return title;
             }
 
             set
             {
-                CheckDisposed();
                 if (title == value)
                     return;
-
+                CheckDisposed();
                 title = value;
                 RaiseTitleChanged(EventArgs.Empty);
             }

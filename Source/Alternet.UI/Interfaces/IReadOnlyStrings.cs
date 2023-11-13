@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace Alternet.UI
 {
+    /// <summary>
+    /// Contains methods and properties which allow to access array of strings in read only mode.
+    /// </summary>
     public interface IReadOnlyStrings
     {
         /// <summary>
