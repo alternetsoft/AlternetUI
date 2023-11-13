@@ -1,3 +1,65 @@
+!!!!!!!!!!
+I dont like speed of opening forms of ControlsSample
+
+- My tabcontrol FocusChild, FocusFirstChild property,
+
+- TextBox Increment(object, value)  Decrement(), buttons +-, object? IncrementDelta,
+ CanIncrement, CanDecrement, +/- buttons near number editors
+
+- POPUP: Images for button panel
+
+- PopupWindow button panel
+
+- PanelRichTextBox sample have editor on all size of form
+
+- PropGridPopup and have it to change RichToolTipColors
+
+- LogListBox: LogActions, Run Action 
+
+- TEXTBOX Add check Masks in TextBox demo / need images?
+- RegularExpressions: RegEx
+
+- TEXTBOX ValidFormats
+
+- TEXTBOX CustomValidator
+
+- wxTopLevelWindow - wxDialog, wxFrame
+
+- wxMiniFrame
+https://docs.wxwidgets.org/3.2/classwx_mini_frame.html
+
+!!!!!!!!!!!!
+Override c++ unhandled exception events and pass to c#
+Or not possible to find where an exception
+
+- Linux Ubuntu 23 return required package for the animation?
+
+- Uixml errors, XmlPreviewer errors to Vs
+!!!!!
+- Implement another gray scale methods, used in wx
+- how to get gray scaled svg and svg in another color
+
+- We need to implement MaskEdit features
+
+- Add exception notifiers cpp?
+
+- https://docs.wxwidgets.org/3.0/classwx_floating_point_validator.html
+Add code for this
+
+- SaveDialog dispose and from DisposableObject
+
+- Linux warning: when open url (click in memo)
+XEC : libEGL warning : DRI2: failed to authenticate [/media/sf_DIMA/AlternetUI/Source/Build/Alternet.UI.Pal/Alternet.UI.Pal.proj]
+  ATTENTION: default value of option mesa_glthread overridden by environment.
+
+- CustomTextEdit move there methods and props
+
+- study
+void MyTextCtrl::OnContextMenu(wxContextMenuEvent& ev)
+
+- How to disable sound which is played when I press Esc keys in textbox
+Disable it by default.
+
 - SPEED NativeObject.cs InstancesByNativePointers
 
 - SPEED TreView dictionary in NativeHandler
@@ -7,19 +69,20 @@
 - PropGridDemo:Color must have Empty item and set null if it is set in PropGrid
 Useful for BackgroundColor
 
+- Change font constructors do not create FontFamily as it is not needed
+
 ======================
 Top priority controls:
 
-- panelrichedit
-
 - DataGrid
 
-- wxHtmlWindow https://docs.wxwidgets.org/3.2/classwx_html_window.html
 ======================
 
 https://docs.wxwidgets.org/3.2/classwx_bitmap_combo_box.html
 
 https://docs.wxwidgets.org/3.2/classwx_v_list_box.html
+
+- wxHtmlWindow https://docs.wxwidgets.org/3.2/classwx_html_window.html
 
 - drawline with pen with non 1 width is different under dif oses.
 
@@ -217,8 +280,45 @@ Point asPoint = new(50, 85);
 
 - Animation - wxAC_NO_AUTORESIZE:
 	By default, the control will adjust its size to exactly fit to the size of the animation when 
-SetAnimation is called. If this style flag is given, the control will not change its size
+	SetAnimation is called. If this style flag is given, the control will not change its size
 
 - DC DrawTextAtPoint( What about textFormat support
 
-wxAlternetColourProperty(94,22) warning C4018 < signed/unsigned mismatch
+- wxAlternetColourProperty(94,22) warning C4018 < signed/unsigned mismatch
+
+===============
+SIZE IN CHARS
+    wxSize size2 = m_limited->GetSizeFromTextSize(m_limited->GetTextExtent("WWWWWWWW"));
+Length in chars
+    m_limited->SetSizeHints(size2, size2);
+
+    size2 = m_readonly->GetSizeFromTextSize(dc.GetMultiLineTextExtent(string3L));
+    m_readonly->SetMinSize(size2);
+==============
+
+
+==============
+DateTimeFormat
+	Kind
+	bool UseShort
+	DisplayShortDateFormat
+	DisplayLongDateFormat
+	DataDateFormat
+==============
+
+- Label/LinkLabel demo
+
+- TabControl demo add Tabset demo
+
+- ListControl obj to string as in TextBox
+
+- Remove all props Bindable not data related
+        <Slider
+            Minimum="{Binding MinTextWidthLimit}" TickStyle="None"
+            Maximum="{Binding MaxTextWidthLimit}"
+            Margin="0,5,5,0"
+            Value="{Binding TextWidthLimit}"
+            Enabled="{Binding TextWidthLimitEnabled}"/>
+
+- AuiManagerDemo how to return closedPanes
+
