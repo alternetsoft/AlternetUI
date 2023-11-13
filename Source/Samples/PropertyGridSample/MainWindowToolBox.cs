@@ -23,8 +23,18 @@ namespace PropertyGridSample
                 };
                 panel.LeftTreeView.Add(item);
 
+                Type[] badParentTypes =
+                {
+                  typeof(ComboBoxAndLabel),
+                  typeof(TextBoxAndLabel),
+                  typeof(ControlAndLabel),
+                  typeof(PopupWindow),
+                  typeof(PanelAuiManager),
+                };
+
                 Type[] badTypes = new Type[]
                 {
+                  typeof(PopupWindow),
                   typeof(ContextMenu), // added using other style
                   typeof(NonVisualControl), // has no sense to add
                   typeof(StatusBarPanel), // part of other control
@@ -56,9 +66,6 @@ namespace PropertyGridSample
                   typeof(TabControl), // pages are not shown. Why?
                   typeof(Window),
                   typeof(CardPanelHeader),
-                  typeof(ComboBoxAndLabel),
-                  typeof(TextBoxAndLabel),
-                  typeof(ControlAndLabel),
                 };
 
                 IEnumerable<Type> result = AssemblyUtils.GetTypeDescendants(typeof(Control));
@@ -68,7 +75,7 @@ namespace PropertyGridSample
                         continue;
                     if (type.Assembly != typeof(Control).Assembly)
                         continue;
-                    if(AssemblyUtils.TypeIsDescendant(type, badTypes))
+                    if(AssemblyUtils.TypeIsDescendant(type, badParentTypes))
                         continue;
                     item = new(type);
                     panel.LeftTreeView.Add(item);
