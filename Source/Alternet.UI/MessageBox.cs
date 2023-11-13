@@ -38,6 +38,12 @@ namespace Alternet.UI
             MessageBoxIcon icon = MessageBoxIcon.Information,
             MessageBoxDefaultButton defaultButton = MessageBoxDefaultButton.OK)
         {
+            if(buttons == MessageBoxButtons.YesNo || buttons == MessageBoxButtons.YesNoCancel)
+            {
+                if (defaultButton == MessageBoxDefaultButton.OK)
+                    defaultButton = MessageBoxDefaultButton.Yes;
+            }
+
             ValidateButtons(buttons, defaultButton);
 
             var nativeOwner = owner == null ? null :
