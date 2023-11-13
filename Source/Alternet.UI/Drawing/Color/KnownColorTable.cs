@@ -2,6 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System.Diagnostics;
+using Alternet.UI;
 
 namespace Alternet.Drawing
 {
@@ -485,6 +486,66 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Tests different methods of getting Argb of the system color.
+        /// </summary>
+        internal static void TestSystemColors()
+        {
+            void Test(KnownColor color)
+            {
+                var oldArgb = GetSystemColorArgb(color);
+                var newArgb = GetSystemColorArgbUseSystemSettings(color);
+                var equal = oldArgb == newArgb;
+
+                var oldArgbStr = oldArgb.ToString("X");
+                var newArgbStr = newArgb.ToString("X");
+
+                Application.Log($"{equal} old: {oldArgbStr} new: {newArgbStr}");
+            }
+
+            Test(KnownColor.ActiveBorder);
+            Test(KnownColor.ActiveCaption);
+            Test(KnownColor.ActiveCaptionText);
+            Test(KnownColor.AppWorkspace);
+            Test(KnownColor.Control);
+            Test(KnownColor.ControlDark);
+            Test(KnownColor.ControlDarkDark);
+            Test(KnownColor.ControlLight);
+            Test(KnownColor.ControlLightLight);
+            Test(KnownColor.ControlText);
+            Test(KnownColor.Desktop);
+            Test(KnownColor.GrayText);
+            Test(KnownColor.Highlight);
+            Test(KnownColor.HighlightText);
+            Test(KnownColor.HotTrack);
+            Test(KnownColor.InactiveBorder);
+            Test(KnownColor.InactiveCaption);
+            Test(KnownColor.InactiveCaptionText);
+            Test(KnownColor.Info);
+            Test(KnownColor.InfoText);
+            Test(KnownColor.Menu);
+            Test(KnownColor.MenuText);
+            Test(KnownColor.ScrollBar);
+            Test(KnownColor.Window);
+            Test(KnownColor.WindowFrame);
+            Test(KnownColor.WindowText);
+            Test(KnownColor.ButtonFace);
+            Test(KnownColor.ButtonHighlight);
+            Test(KnownColor.ButtonShadow);
+            Test(KnownColor.GradientActiveCaption);
+            Test(KnownColor.GradientInactiveCaption);
+            Test(KnownColor.MenuBar);
+            Test(KnownColor.MenuHighlight);
+        }
+
+        internal static uint GetSystemColorArgbUseSystemSettings(KnownColor knownColor)
+        {
+            var systemSettingsColor = ColorUtils.Convert(knownColor);
+            var color = SystemSettings.GetColor(systemSettingsColor);
+            var result = color.AsUInt();
+            return result;
+        }
+
+        /// <summary>
         /// Gets ARGB color value of the system color.
         /// </summary>
         /// <param name="color">System color.</param>
@@ -496,10 +557,12 @@ namespace Alternet.Drawing
             Debug.Assert(Color.IsKnownColorSystem(color), nameof(GetSystemColorArgb));
 
 #if FEATURE_WINDOWS_SYSTEM_COLORS
-            return ColorTranslator.COLORREFToARGB(
+            var result = ColorTranslator.COLORREFToARGB(
                 Interop.User32.GetSysColor((byte)ColorValueTable[(int)color]));
+            return result;
 #else
-            return ColorValueTable[(int)color];
+            return GetSystemColorArgbUseSystemSettings(color);
+            // return ColorValueTable[(int)color];
 #endif
         }
     }
