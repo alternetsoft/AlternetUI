@@ -69,7 +69,7 @@ namespace InputSample
             var alt = (modifiers & ModifierKeys.Alt) != 0;
             var windows = (modifiers & ModifierKeys.Windows) != 0;
 
-            var sControl = control ? (macOs ? "Cmd" : "Ctrl") : string.Empty;
+            var sControl = control ? (macOs ? "Cmd(Ctrl)" : "Ctrl") : string.Empty;
             var sShift = shift ? "Shift" : string.Empty;
             var sAlt =  alt ? "Alt" : string.Empty;
             var sWindows = windows ? "Windows" : string.Empty;
@@ -82,9 +82,9 @@ namespace InputSample
                 var macCommand = (rawModifiers & RawModifierKeys.MacCommand) != 0;
                 var macOption = (rawModifiers & RawModifierKeys.MacOption) != 0;
 
-                var sMacControl = macControl ? "Control": string.Empty;
-                var sMacCommand = macCommand ? "Command": string.Empty;
-                var sMacOption = macOption ? "Option": string.Empty;
+                var sMacControl = macControl ? "MacControl": string.Empty;
+                var sMacCommand = macCommand ? "MacCommand": string.Empty;
+                var sMacOption = macOption ? "MacOption": string.Empty;
                 sMacOs = $"{sMacControl} {sMacCommand} {sMacOption}";
             }
 
