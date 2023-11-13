@@ -1,4 +1,4 @@
-# 0.9.407 (not released, work in progress)
+# 0.9.407 (2023 November 13)
 
 - RichTextBox is now full featured rich text editor not derived from TextBox.
 - Added PanelRichTextBox, ValueEditorString, ValueEditorUrl controls.
@@ -21,12 +21,18 @@
 - FileDialog: NoShortcutFollow, ChangeDir, PreviewFiles, ShowHiddenFiles.
 - AuiToolbar better tool click handling.
 - Fixed FileDialog: FileName not assigned to dialog.
+- Fixed bad popup in CustomControlsSample.
+- Fixed system colors under Linux and MacOs. Preivously system colors under Linux and MacOs were hard coded.
+ Now we use SystemSettings to get them.
 - Fixed #57, #58.
-- Added SoundUtils.Bell, CardPanel.UseBusyCursor, PlatformDefaults.TextBoxUrlClickModifiers, ModifierKeysConverter.ToString, 
-KeyInfo.ToString, KeyInfo.GetCustomKeyLabel, KeyInfo.RegisterCustomKeyLabels.
+- Added Border.HasBorder, SoundUtils.Bell, CardPanel.UseBusyCursor, PlatformDefaults.TextBoxUrlClickModifiers,
+ ModifierKeysConverter.ToString, KeyInfo.ToString, KeyInfo.GetCustomKeyLabel, KeyInfo.RegisterCustomKeyLabels,
+Application.BackendOS.
 - Application: IsBusyCursor, BeginBusyCursor, EndBusyCursor.
 - DialogFactory: GetTextFromUser, GetNumberFromUser.
 - RichTextBox: CaretLineNumber, LastLineNumber, ShowDialogGoToLine, SaveToStream, LoadFromStream.
+- Added StringSearch class and used it in ListControl, TextBox, RichTextBox (Search property).
+- Fixed MacOs related RichTextBox key combinations.
 
 # 0.9.406 (2023 November 5)
 
