@@ -57,6 +57,48 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets id of the 'Back' toolbar item.
+        /// </summary>
+        [Browsable(false)]
+        public int ButtonIdBack => buttonIdBack;
+
+        /// <summary>
+        /// Gets id of the 'More Actions' toolbar item.
+        /// </summary>
+        [Browsable(false)]
+        public int ButtonIdMoreActions => buttonIdMoreActions;
+
+        /// <summary>
+        /// Gets id of the 'Forward' toolbar item.
+        /// </summary>
+        [Browsable(false)]
+        public int ButtonIdForward => buttonIdForward;
+
+        /// <summary>
+        /// Gets id of the 'Zoom In' toolbar item.
+        /// </summary>
+        [Browsable(false)]
+        public int ButtonIdZoomIn => buttonIdZoomIn;
+
+        /// <summary>
+        /// Gets id of the 'Zoom Out' toolbar item.
+        /// </summary>
+        [Browsable(false)]
+        public int ButtonIdZoomOut => buttonIdZoomOut;
+
+        /// <summary>
+        /// Gets id of the 'Url' toolbar item.
+        /// </summary>
+        [Browsable(false)]
+        public int ButtonIdUrl => buttonIdUrl;
+
+        /// <summary>
+        /// Gets id of the 'Go' toolbar item.
+        /// </summary>
+        [Browsable(false)]
+        public int ButtonIdGo => buttonIdGo;
+
+        /// <summary>
         /// Gets or sets type of <see cref="WebBrowser"/> backend used for browsing.
         /// </summary>
         public static WebBrowserBackend UseBackend
