@@ -7,17 +7,7 @@
 
     <HorizontalStackPanel >
 
-      <Grid Name="numericUpDownsPanel" Margin="5">
-        <Grid.ColumnDefinitions>
-          <ColumnDefinition Width="Auto"/>
-          <ColumnDefinition Width="Auto"/>
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-          <RowDefinition Height="Auto"/>
-          <RowDefinition Height="Auto"/>
-          <RowDefinition Height="Auto"/>
-          <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
+      <Grid Name="numericUpDownsPanel" Margin="5" ColumnCount="2" RowCount="4">
         <Label Text="[-50..10]" Margin="0,0,0,5" Grid.Column="0" Grid.Row="0"
                VerticalAlignment="Center"/>
         <NumericUpDown Margin="10,0,0,5" Maximum="10" Minimum="-50" Value="-5"
@@ -39,7 +29,7 @@
                        SuggestedWidth="300" Grid.Column="1" Grid.Row="3"/>
       </Grid>
 
-      <StackPanel Orientation="Vertical" Margin="10,0,5,5">
+      <StackPanel Orientation="Vertical" Margin="10,5,5,5">
         <Button Text="Increase All" Margin="0,0,0,5" Name="increaseAllButton"
                 Click="IncreaseAllButton_Click" />
         <Button Text="Has Border" Margin="0,0,0,5" Name="hasBorderButton"
