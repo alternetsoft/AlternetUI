@@ -23,6 +23,8 @@ namespace ControlsSample
                     continue;
                 tickStyleComboBox.Items.Add(item);
             }
+
+            tickStyleComboBox.SelectedItemChanged += TickStyleComboBox_SelectedItemChanged;
             tickStyleComboBox.SelectedIndex = 0;
         }
 
