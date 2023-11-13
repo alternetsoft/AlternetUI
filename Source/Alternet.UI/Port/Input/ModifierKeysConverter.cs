@@ -199,7 +199,10 @@ namespace Alternet.UI
             switch (modifierKeys)
             {
                 case ModifierKeys.Control:
-                    modifiers = "Ctrl";
+                    if (forUser && Application.IsMacOs)
+                        modifiers = StringUtils.MacCommandKeyTitle;
+                    else
+                        modifiers = "Ctrl";
                     break;
                 case ModifierKeys.Shift:
                     modifiers = "Shift";
@@ -208,10 +211,7 @@ namespace Alternet.UI
                     modifiers = "Alt";
                     break;
                 case ModifierKeys.Windows:
-                    if (forUser && Application.IsMacOs)
-                        modifiers = StringUtils.MacWindowsKeyTitle;
-                    else
-                        modifiers = "Windows";
+                    modifiers = "Windows";
                     break;
             }
             return modifiers;

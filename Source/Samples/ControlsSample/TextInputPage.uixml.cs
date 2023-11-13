@@ -422,7 +422,7 @@ namespace ControlsSample
             var modifiers = AllPlatformDefaults.PlatformCurrent.TextBoxUrlClickModifiers;
             if (e.Modifiers != modifiers)
             {
-                var modifiersText = ModifierKeysConverter.ToString(modifiers);
+                var modifiersText = ModifierKeysConverter.ToString(modifiers, true);
                 site?.LogEvent($"Use {modifiersText}+Click to open in the default browser: " + e.Url);
             }
         }

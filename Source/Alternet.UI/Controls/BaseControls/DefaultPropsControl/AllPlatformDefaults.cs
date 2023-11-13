@@ -18,7 +18,7 @@ namespace Alternet.UI
 
             PlatformLinux.TextBoxUrlClickModifiers = ModifierKeys.Control;
             PlatformWindows.TextBoxUrlClickModifiers = ModifierKeys.Control;
-            PlatformMacOs.TextBoxUrlClickModifiers = ModifierKeys.Windows;
+            PlatformMacOs.TextBoxUrlClickModifiers = ModifierKeys.Control;
 
             var platform = PlatformLinux;
 
