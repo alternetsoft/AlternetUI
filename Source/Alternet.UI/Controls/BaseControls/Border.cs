@@ -10,6 +10,7 @@ namespace Alternet.UI
     public class Border : UserPaintControl
     {
         private readonly BorderSettings settings = BorderSettings.Default.Clone();
+        private bool hasBorder = true;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Border"/> class.
@@ -68,6 +69,25 @@ namespace Alternet.UI
                     return;
                 settings.Width = value;
                 UpdatePadding();
+                Refresh();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the control has a border.
+        /// </summary>
+        public bool HasBorder
+        {
+            get
+            {
+                return hasBorder;
+            }
+
+            set
+            {
+                if (hasBorder == value)
+                    return;
+                hasBorder = value;
                 Refresh();
             }
         }

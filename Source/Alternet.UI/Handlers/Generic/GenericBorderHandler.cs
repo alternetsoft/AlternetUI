@@ -36,7 +36,8 @@ namespace Alternet.UI
             if (Control.DrawDebugPointsBefore)
                 drawingContext.DrawDebugPoints(r, Pens.Yellow);
 
-            settings.Draw(drawingContext, r);
+            if(Control.HasBorder)
+                settings.Draw(drawingContext, r);
 
             if(Control.DrawDebugPointsAfter)
                 drawingContext.DrawDebugPoints(r);
