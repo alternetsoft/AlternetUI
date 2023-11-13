@@ -265,7 +265,6 @@ namespace Alternet.Drawing
             KnownColorKindUnknown,
 
             // "System" colors, Part 1
-#if FEATURE_WINDOWS_SYSTEM_COLORS
             KnownColorKindSystem,       // ActiveBorder
             KnownColorKindSystem,       // ActiveCaption
             KnownColorKindSystem,       // ActiveCaptionText
@@ -292,35 +291,6 @@ namespace Alternet.Drawing
             KnownColorKindSystem,       // Window
             KnownColorKindSystem,       // WindowFrame
             KnownColorKindSystem,       // WindowText
-#else
-            // Hard-coded constants, based on default Windows settings.
-            KnownColorKindSystem,       // ActiveBorder
-            KnownColorKindSystem,       // ActiveCaption
-            KnownColorKindSystem,       // ActiveCaptionText
-            KnownColorKindSystem,       // AppWorkspace
-            KnownColorKindSystem,       // Control
-            KnownColorKindSystem,       // ControlDark
-            KnownColorKindSystem,       // ControlDarkDark
-            KnownColorKindSystem,       // ControlLight
-            KnownColorKindSystem,       // ControlLightLight
-            KnownColorKindSystem,       // ControlText
-            KnownColorKindSystem,       // Desktop
-            KnownColorKindSystem,       // GrayText
-            KnownColorKindSystem,       // Highlight
-            KnownColorKindSystem,       // HighlightText
-            KnownColorKindSystem,       // HotTrack
-            KnownColorKindSystem,       // InactiveBorder
-            KnownColorKindSystem,       // InactiveCaption
-            KnownColorKindSystem,       // InactiveCaptionText
-            KnownColorKindSystem,       // Info
-            KnownColorKindSystem,       // InfoText
-            KnownColorKindSystem,       // Menu
-            KnownColorKindSystem,       // MenuText
-            KnownColorKindSystem,       // ScrollBar
-            KnownColorKindSystem,       // Window
-            KnownColorKindSystem,       // WindowFrame
-            KnownColorKindSystem,       // WindowText
-#endif
 
             // "Web" Colors, Part 1
             KnownColorKindWeb,      // Transparent
@@ -464,7 +434,7 @@ namespace Alternet.Drawing
             KnownColorKindWeb,      // WhiteSmoke
             KnownColorKindWeb,      // Yellow
             KnownColorKindWeb,      // YellowGreen
-#if FEATURE_WINDOWS_SYSTEM_COLORS
+
             // "System" colors, Part 2
             KnownColorKindSystem,       // ButtonFace
             KnownColorKindSystem,       // ButtonHighlight
@@ -473,15 +443,6 @@ namespace Alternet.Drawing
             KnownColorKindSystem,       // GradientInactiveCaption
             KnownColorKindSystem,       // MenuBar
             KnownColorKindSystem,       // MenuHighlight
-#else
-            KnownColorKindSystem,       // ButtonFace
-            KnownColorKindSystem,       // ButtonHighlight
-            KnownColorKindSystem,       // ButtonShadow
-            KnownColorKindSystem,       // GradientActiveCaption
-            KnownColorKindSystem,       // GradientInactiveCaption
-            KnownColorKindSystem,       // MenuBar
-            KnownColorKindSystem,       // MenuHighlight
-#endif
 
             // "Web" colors, Part 2
             KnownColorKindWeb,      // RebeccaPurple
