@@ -171,8 +171,7 @@ namespace ControlsSample
             richPanel.Parent = tab3;
             // richEdit.CurrentPositionChanged += TextBox_CurrentPositionChanged;
             richPanel.TextBox.KeyDown += RichEdit_KeyDown;
-            if (!Application.IsMacOs)
-                richPanel.TextBox.AutoUrlOpen = true;
+            richPanel.TextBox.AutoUrlOpen = true;
             richPanel.TextBox.TextUrl += MultiLineTextBox_TextUrl;
             richPanel.TextBox.EnterPressed += RichTextBox_EnterPressed;
             // richEdit.TextUrl += MultiLineTextBox_TextUrl;
