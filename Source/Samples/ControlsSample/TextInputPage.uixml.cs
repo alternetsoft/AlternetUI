@@ -302,7 +302,7 @@ namespace ControlsSample
 
         private void RichPanel_FileNewClick(object? sender, EventArgs e)
         {
-            Application.Log("File.New");
+            richPanel.TextBox.Clear();
         }
 
         internal string GetFontStatus()

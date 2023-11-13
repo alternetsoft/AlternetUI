@@ -35,6 +35,36 @@ namespace Alternet.UI
             GetImageUrl("alternet-floppy-disk");
 
         /// <summary>
+        /// Gets or sets url used to load "Undo" svg image used in toolbars.
+        /// </summary>
+        public static string UrlImageUndo { get; set; } =
+            GetImageUrl("alternet-undo");
+
+        /// <summary>
+        /// Gets or sets url used to load "Redo" svg image used in toolbars.
+        /// </summary>
+        public static string UrlImageRedo { get; set; } =
+            GetImageUrl("alternet-redo");
+
+        /// <summary>
+        /// Gets or sets url used to load "Bold" svg image used in toolbars.
+        /// </summary>
+        public static string UrlImageBold { get; set; } =
+            GetImageUrl("alternet-bold");
+
+        /// <summary>
+        /// Gets or sets url used to load "Italic" svg image used in toolbars.
+        /// </summary>
+        public static string UrlImageItalic { get; set; } =
+            GetImageUrl("alternet-italic");
+
+        /// <summary>
+        /// Gets or sets url used to load "Underline" svg image used in toolbars.
+        /// </summary>
+        public static string UrlImageUnderline { get; set; } =
+            GetImageUrl("alternet-underline");
+
+        /// <summary>
         /// Gets or sets url used to load "File|Open" svg image used in toolbars.
         /// </summary>
         public static string UrlImageFileOpen { get; set; } =

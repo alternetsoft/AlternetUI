@@ -18,6 +18,11 @@ namespace Alternet.UI
         private int buttonIdNew;
         private int buttonIdOpen;
         private int buttonIdSave;
+        private int buttonIdUndo;
+        private int buttonIdRedo;
+        private int buttonIdBold;
+        private int buttonIdItalic;
+        private int buttonIdUnderline;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PanelRichTextBox"/> class.
@@ -61,6 +66,36 @@ namespace Alternet.UI
         public int ButtonIdSave => buttonIdSave;
 
         /// <summary>
+        /// Gets id of the 'Undo' toolbar item.
+        /// </summary>
+        [Browsable(false)]
+        public int ButtonIdUndo => buttonIdUndo;
+
+        /// <summary>
+        /// Gets id of the 'Redo' toolbar item.
+        /// </summary>
+        [Browsable(false)]
+        public int ButtonIdRedo => buttonIdRedo;
+
+        /// <summary>
+        /// Gets id of the 'Bold' toolbar item.
+        /// </summary>
+        [Browsable(false)]
+        public int ButtonIdBold => buttonIdBold;
+
+        /// <summary>
+        /// Gets id of the 'Italic' toolbar item.
+        /// </summary>
+        [Browsable(false)]
+        public int ButtonIdItalic => buttonIdItalic;
+
+        /// <summary>
+        /// Gets id of the 'Underline' toolbar item.
+        /// </summary>
+        [Browsable(false)]
+        public int ButtonIdUnderline => buttonIdUnderline;
+
+        /// <summary>
         /// Gets <see cref="RichTextBox"/> control used in this panel.
         /// </summary>
         [Browsable(false)]
@@ -99,26 +134,81 @@ namespace Alternet.UI
 
             buttonIdNew = toolbar.AddTool(
                 CommonStrings.Default.ButtonNew,
-                images.ImageFileNew,
+                images.ImgFileNew,
                 CommonStrings.Default.ButtonNew);
 
             buttonIdOpen = toolbar.AddTool(
                 CommonStrings.Default.ButtonOpen,
-                images.ImageFileOpen,
+                images.ImgFileOpen,
                 CommonStrings.Default.ButtonOpen);
 
             buttonIdSave = toolbar.AddTool(
                 CommonStrings.Default.ButtonSave,
-                images.ImageFileSave,
+                images.ImgFileSave,
                 CommonStrings.Default.ButtonSave);
+
+            buttonIdUndo = toolbar.AddTool(
+                CommonStrings.Default.ButtonUndo,
+                images.ImgUndo,
+                CommonStrings.Default.ButtonUndo);
+
+            buttonIdRedo = toolbar.AddTool(
+                CommonStrings.Default.ButtonRedo,
+                images.ImgRedo,
+                CommonStrings.Default.ButtonRedo);
+
+            buttonIdBold = toolbar.AddTool(
+                CommonStrings.Default.ButtonBold,
+                images.ImgBold,
+                CommonStrings.Default.ButtonBold);
+
+            buttonIdItalic = toolbar.AddTool(
+                CommonStrings.Default.ButtonItalic,
+                images.ImgItalic,
+                CommonStrings.Default.ButtonItalic);
+
+            buttonIdUnderline = toolbar.AddTool(
+                CommonStrings.Default.ButtonUnderline,
+                images.ImgUnderline,
+                CommonStrings.Default.ButtonUnderline);
 
             toolbar.AddToolOnClick(buttonIdNew, FileNew_Click);
             toolbar.AddToolOnClick(buttonIdOpen, FileOpen_Click);
             toolbar.AddToolOnClick(buttonIdSave, FileSave_Click);
+            toolbar.AddToolOnClick(buttonIdUndo, Undo_Click);
+            toolbar.AddToolOnClick(buttonIdRedo, Redo_Click);
+            toolbar.AddToolOnClick(buttonIdBold, Bold_Click);
+            toolbar.AddToolOnClick(buttonIdItalic, Italic_Click);
+            toolbar.AddToolOnClick(buttonIdUnderline, Underline_Click);
 
             toolbar.AddLabel("Work in progress...");
 
             toolbar.Realize();
+        }
+
+        private void Undo_Click(object? sender, EventArgs e)
+        {
+            TextBox.Undo();
+        }
+
+        private void Redo_Click(object? sender, EventArgs e)
+        {
+            TextBox.Redo();
+        }
+
+        private void Bold_Click(object? sender, EventArgs e)
+        {
+            TextBox.SelectionToggleBold();
+        }
+
+        private void Italic_Click(object? sender, EventArgs e)
+        {
+            TextBox.SelectionToggleItalic();
+        }
+
+        private void Underline_Click(object? sender, EventArgs e)
+        {
+            TextBox.SelectionToggleUnderlined();
         }
 
         private void FileNew_Click(object? sender, EventArgs e)

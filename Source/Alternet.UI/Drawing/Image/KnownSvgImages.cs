@@ -32,6 +32,11 @@ namespace Alternet.UI
         private ImageSet? imgFileNew;
         private ImageSet? imgFileOpen;
         private ImageSet? imgFileSave;
+        private ImageSet? imgBold;
+        private ImageSet? imgItalic;
+        private ImageSet? imgUnderline;
+        private ImageSet? imgUndo;
+        private ImageSet? imgRedo;
 
         private Int32Size size;
 
@@ -50,7 +55,7 @@ namespace Alternet.UI
         /// </summary>
         public ImageSet ImgBrowserBack
         {
-            get => imgBrowserBack ??= AuiToolbar.LoadSvgImage(KnownSvgUrls.UrlImageWebBrowserBack, size);
+            get => imgBrowserBack ??= Load(KnownSvgUrls.UrlImageWebBrowserBack);
             set => imgBrowserBack = value;
         }
 
@@ -60,8 +65,7 @@ namespace Alternet.UI
         /// </summary>
         public ImageSet ImgBrowserForward
         {
-            get => imgBrowserForward ??=
-                AuiToolbar.LoadSvgImage(KnownSvgUrls.UrlImageWebBrowserForward, size);
+            get => imgBrowserForward ??= Load(KnownSvgUrls.UrlImageWebBrowserForward);
             set => imgBrowserForward = value;
         }
 
@@ -70,8 +74,7 @@ namespace Alternet.UI
         /// </summary>
         public ImageSet ImgMessageBoxError
         {
-            get => imgMessageBoxError ??=
-                AuiToolbar.LoadSvgImage(KnownSvgUrls.UrlImageMessageBoxError, size);
+            get => imgMessageBoxError ??= Load(KnownSvgUrls.UrlImageMessageBoxError);
             set => imgMessageBoxError = value;
         }
 
@@ -80,38 +83,34 @@ namespace Alternet.UI
         /// </summary>
         public ImageSet ImgMessageBoxInformation
         {
-            get => imgMessageBoxInformation ??=
-                AuiToolbar.LoadSvgImage(KnownSvgUrls.UrlImageMessageBoxInformation, size);
+            get => imgMessageBoxInformation ??= Load(KnownSvgUrls.UrlImageMessageBoxInformation);
             set => imgMessageBoxInformation = value;
         }
 
         /// <summary>
         /// Gets or sets image that can be used in "File|New" toolbar items.
         /// </summary>
-        public ImageSet ImageFileNew
+        public ImageSet ImgFileNew
         {
-            get => imgFileNew ??=
-                AuiToolbar.LoadSvgImage(KnownSvgUrls.UrlImageFileNew, size);
+            get => imgFileNew ??= Load(KnownSvgUrls.UrlImageFileNew);
             set => imgFileNew = value;
         }
 
         /// <summary>
         /// Gets or sets image that can be used in "File|Save" toolbar items.
         /// </summary>
-        public ImageSet ImageFileSave
+        public ImageSet ImgFileSave
         {
-            get => imgFileSave ??=
-                AuiToolbar.LoadSvgImage(KnownSvgUrls.UrlImageFileSave, size);
+            get => imgFileSave ??= Load(KnownSvgUrls.UrlImageFileSave);
             set => imgFileSave = value;
         }
 
         /// <summary>
         /// Gets or sets image that can be used in "File|Open" toolbar items.
         /// </summary>
-        public ImageSet ImageFileOpen
+        public ImageSet ImgFileOpen
         {
-            get => imgFileOpen ??=
-                AuiToolbar.LoadSvgImage(KnownSvgUrls.UrlImageFileOpen, size);
+            get => imgFileOpen ??= Load(KnownSvgUrls.UrlImageFileOpen);
             set => imgFileOpen = value;
         }
 
@@ -120,8 +119,7 @@ namespace Alternet.UI
         /// </summary>
         public ImageSet ImgMessageBoxWarning
         {
-            get => imgMessageBoxWarning ??=
-                AuiToolbar.LoadSvgImage(KnownSvgUrls.UrlImageMessageBoxWarning, size);
+            get => imgMessageBoxWarning ??= Load(KnownSvgUrls.UrlImageMessageBoxWarning);
             set => imgMessageBoxWarning = value;
         }
 
@@ -130,7 +128,7 @@ namespace Alternet.UI
         /// </summary>
         public ImageSet ImgZoomIn
         {
-            get => imgZoomIn ??= AuiToolbar.LoadSvgImage(KnownSvgUrls.UrlImageZoomIn, size);
+            get => imgZoomIn ??= Load(KnownSvgUrls.UrlImageZoomIn);
             set => imgZoomIn = value;
         }
 
@@ -139,7 +137,7 @@ namespace Alternet.UI
         /// </summary>
         public ImageSet ImgZoomOut
         {
-            get => imgZoomOut ??= AuiToolbar.LoadSvgImage(KnownSvgUrls.UrlImageZoomOut, size);
+            get => imgZoomOut ??= Load(KnownSvgUrls.UrlImageZoomOut);
             set => imgZoomOut = value;
         }
 
@@ -149,7 +147,7 @@ namespace Alternet.UI
         /// </summary>
         public ImageSet ImgBrowserGo
         {
-            get => imgBrowserGo ??= AuiToolbar.LoadSvgImage(KnownSvgUrls.UrlImageWebBrowserGo, size);
+            get => imgBrowserGo ??= Load(KnownSvgUrls.UrlImageWebBrowserGo);
             set => imgBrowserGo = value;
         }
 
@@ -158,7 +156,7 @@ namespace Alternet.UI
         /// </summary>
         public ImageSet ImgAdd
         {
-            get => imgAdd ??= AuiToolbar.LoadSvgImage(KnownSvgUrls.UrlImagePlus, size);
+            get => imgAdd ??= Load(KnownSvgUrls.UrlImagePlus);
             set => imgAdd = value;
         }
 
@@ -167,7 +165,7 @@ namespace Alternet.UI
         /// </summary>
         public ImageSet ImgMoreActions
         {
-            get => imgMoreActions ??= AuiToolbar.LoadSvgImage(KnownSvgUrls.UrlImageMoreActions, size);
+            get => imgMoreActions ??= Load(KnownSvgUrls.UrlImageMoreActions);
             set => imgMoreActions = value;
         }
 
@@ -176,7 +174,7 @@ namespace Alternet.UI
         /// </summary>
         public ImageSet ImgRemove
         {
-            get => imgRemove ??= AuiToolbar.LoadSvgImage(KnownSvgUrls.UrlImageMinus, size);
+            get => imgRemove ??= Load(KnownSvgUrls.UrlImageMinus);
             set => imgRemove = value;
         }
 
@@ -185,7 +183,7 @@ namespace Alternet.UI
         /// </summary>
         public ImageSet ImgOk
         {
-            get => imgOk ??= AuiToolbar.LoadSvgImage(KnownSvgUrls.UrlImageOk, size);
+            get => imgOk ??= Load(KnownSvgUrls.UrlImageOk);
             set => imgOk = value;
         }
 
@@ -194,7 +192,7 @@ namespace Alternet.UI
         /// </summary>
         public ImageSet ImgCancel
         {
-            get => imgCancel ??= AuiToolbar.LoadSvgImage(KnownSvgUrls.UrlImageCancel, size);
+            get => imgCancel ??= Load(KnownSvgUrls.UrlImageCancel);
             set => imgCancel = value;
         }
 
@@ -203,7 +201,7 @@ namespace Alternet.UI
         /// </summary>
         public ImageSet ImgAddChild
         {
-            get => imgAddChild ??= AuiToolbar.LoadSvgImage(KnownSvgUrls.UrlImageAddChild, size);
+            get => imgAddChild ??= Load(KnownSvgUrls.UrlImageAddChild);
             set => imgAddChild = value;
         }
 
@@ -212,8 +210,53 @@ namespace Alternet.UI
         /// </summary>
         public ImageSet ImgRemoveAll
         {
-            get => imgRemoveAll ??= AuiToolbar.LoadSvgImage(KnownSvgUrls.UrlImageRemoveAll, size);
+            get => imgRemoveAll ??= Load(KnownSvgUrls.UrlImageRemoveAll);
             set => imgRemoveAll = value;
+        }
+
+        /// <summary>
+        /// Gets or sets image that can be used in "Undo" toolbar buttons.
+        /// </summary>
+        public ImageSet ImgUndo
+        {
+            get => imgUndo ??= Load(KnownSvgUrls.UrlImageUndo);
+            set => imgUndo = value;
+        }
+
+        /// <summary>
+        /// Gets or sets image that can be used in "Redo" toolbar buttons.
+        /// </summary>
+        public ImageSet ImgRedo
+        {
+            get => imgRedo ??= Load(KnownSvgUrls.UrlImageRedo);
+            set => imgRedo = value;
+        }
+
+        /// <summary>
+        /// Gets or sets image that can be used in "Bold" toolbar buttons.
+        /// </summary>
+        public ImageSet ImgBold
+        {
+            get => imgBold ??= Load(KnownSvgUrls.UrlImageBold);
+            set => imgBold = value;
+        }
+
+        /// <summary>
+        /// Gets or sets image that can be used in "Italic" toolbar buttons.
+        /// </summary>
+        public ImageSet ImgItalic
+        {
+            get => imgItalic ??= Load(KnownSvgUrls.UrlImageItalic);
+            set => imgItalic = value;
+        }
+
+        /// <summary>
+        /// Gets or sets image that can be used in "Underline" toolbar buttons.
+        /// </summary>
+        public ImageSet ImgUnderline
+        {
+            get => imgUnderline ??= Load(KnownSvgUrls.UrlImageUnderline);
+            set => imgUnderline = value;
         }
 
         /// <summary>
@@ -243,5 +286,7 @@ namespace Alternet.UI
             var image = imageSet.AsImage(size.Value);
             return image;
         }
+
+        private ImageSet Load(string url) => AuiToolbar.LoadSvgImage(url, size);
     }
 }
