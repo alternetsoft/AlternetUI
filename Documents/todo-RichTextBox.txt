@@ -19,3 +19,12 @@ https://docs.wxwidgets.org/3.2/classwx_rich_text_h_t_m_l_handler.html
 	Insert image
 	Insert url
 	Insert symbol				
+
+- RICHEDIT LOAD STREAM in demo
+
+- RICH EDIT TOOLBAR
+ UNDO, REDO, FONT NAME, FONT SIZE, BOLD, ITALIC, UNDERLINE, ALIGN LRCJ,
+- TEXT COLOR, BKCOLOR SINGLE POPUP AS IN MAIL -  A
+
+- StringSearch contains
+And implement find in TextBox, RichTextBox.
