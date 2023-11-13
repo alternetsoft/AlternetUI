@@ -45,8 +45,8 @@ namespace Alternet.UI
             {
                 // When invoked by the serialization engine we can convert to
                 // string only for known type
-                if (context != null && context.Instance != null && 
-					context.Instance is ModifierKeys)
+                if (context != null && context.Instance != null &&
+                    context.Instance is ModifierKeys)
                 {
                     return (IsDefinedModifierKeys((ModifierKeys)context.Instance));
                 }
@@ -70,7 +70,7 @@ namespace Alternet.UI
         public static ModifierKeys FromString(string source)
         {
             string modifiersToken = ((string)source).Trim();
-            ModifierKeys modifiers = 
+            ModifierKeys modifiers =
                 GetModifierKeys(modifiersToken, CultureInfo.InvariantCulture);
             return modifiers;
         }
@@ -79,9 +79,10 @@ namespace Alternet.UI
         /// Converts <see cref="ModifierKeys"/> to <see cref="string"/>.
         /// </summary>
         /// <param name="modifiers">Key modifiers.</param>
+        /// <param name="forUser">Result string is for user or not.</param>
         /// <returns>A <see cref="string"/> representation of <see cref="ModifierKeys"/> value.</returns>
         /// <exception cref="InvalidEnumArgumentException"></exception>
-        public static string ToString(ModifierKeys modifiers)
+        public static string ToString(ModifierKeys modifiers, bool forUser = false)
         {
             string strModifiers = "";
 
@@ -99,7 +100,7 @@ namespace Alternet.UI
                     if (strModifiers.Length > 0)
                         strModifiers += Modifier_Delimiter;
 
-                    strModifiers += MatchModifiers(key);
+                    strModifiers += MatchModifiers(key, forUser);
                 }
             }
         }
@@ -126,11 +127,11 @@ namespace Alternet.UI
                 else
                     return ToString(modifiers);
             }
-            throw GetConvertToException(value,destinationType);
+            throw GetConvertToException(value, destinationType);
         }
 
         private static ModifierKeys GetModifierKeys(
-            string modifiersToken, 
+            string modifiersToken,
             CultureInfo culture)
         {
             ModifierKeys modifiers = ModifierKeys.None;
@@ -149,12 +150,12 @@ namespace Alternet.UI
 
                     switch (token)
                     {
-                        case "CONTROL" :
-                        case "CTRL" : 
+                        case "CONTROL":
+                        case "CTRL":
                             modifiers |= ModifierKeys.Control;
                             break;
 
-                        case "SHIFT" : 
+                        case "SHIFT":
                             modifiers |= ModifierKeys.Shift;
                             break;
 
@@ -186,21 +187,32 @@ namespace Alternet.UI
                 (((int)modifierKeys & ~((int)ModifierKeysFlag)) == 0));
         }
 
-	    private const char Modifier_Delimiter = '+';
+        private const char Modifier_Delimiter = '+';
 
-        private static ModifierKeys ModifierKeysFlag  =
-            ModifierKeys.Windows | ModifierKeys.Shift | 
-            ModifierKeys.Alt     | ModifierKeys.Control ;
+        private static ModifierKeys ModifierKeysFlag =
+            ModifierKeys.Windows | ModifierKeys.Shift |
+            ModifierKeys.Alt | ModifierKeys.Control;
 
-        internal static string MatchModifiers(ModifierKeys modifierKeys)
+        internal static string MatchModifiers(ModifierKeys modifierKeys, bool forUser = false)
         {
-            string modifiers = String.Empty; 
+            string modifiers = String.Empty;
             switch (modifierKeys)
             {
-                case ModifierKeys.Control: modifiers="Ctrl";break;
-                case ModifierKeys.Shift  : modifiers="Shift";break;
-                case ModifierKeys.Alt    : modifiers="Alt";break;
-                case ModifierKeys.Windows: modifiers="Windows";break;
+                case ModifierKeys.Control:
+                    modifiers = "Ctrl";
+                    break;
+                case ModifierKeys.Shift:
+                    modifiers = "Shift";
+                    break;
+                case ModifierKeys.Alt:
+                    modifiers = "Alt";
+                    break;
+                case ModifierKeys.Windows:
+                    if (forUser && Application.IsMacOs)
+                        modifiers = StringUtils.MacWindowsKeyTitle;
+                    else
+                        modifiers = "Windows";
+                    break;
             }
             return modifiers;
         }

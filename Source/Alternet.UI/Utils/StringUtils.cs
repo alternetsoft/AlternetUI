@@ -35,6 +35,11 @@ namespace Alternet.UI
     /// </summary>
     public static class StringUtils
     {
+        /// <summary>
+        /// Gets title of the windows key on MacOs (0x2318 character).
+        /// </summary>
+        public const string MacWindowsKeyTitle = "\u2318";
+
         private static IComparer<object>? comparerObjectUsingToString;
 
         /// <summary>

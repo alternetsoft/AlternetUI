@@ -11,18 +11,28 @@ namespace Alternet.UI
     /// </summary>
     public class KeyInfo
     {
-        private static bool _registeredCustomKeyLabels = false;
+        private static bool registeredCustomKeyLabels = false;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="KeyInfo"/> class.
         /// </summary>
         /// <param name="key">Key value.</param>
         /// <param name="modifiers">Key modifier.</param>
-        public KeyInfo(Key key, ModifierKeys modifiers = ModifierKeys.None)
+        /// <param name="os"><see cref="OperatingSystems"/> in which this key combination is available.</param>
+        public KeyInfo(
+            Key key,
+            ModifierKeys modifiers = ModifierKeys.None,
+            OperatingSystems os = OperatingSystems.Any)
         {
             Key = key;
             Modifiers = modifiers;
+            BackendOS = os;
         }
+
+        /// <summary>
+        /// Gets or sets <see cref="OperatingSystems"/> in which this key combination is available.
+        /// </summary>
+        public OperatingSystems BackendOS { get; set; }
 
         /// <summary>
         /// Gets or sets key value.
@@ -39,9 +49,9 @@ namespace Alternet.UI
         /// </summary>
         public static void RegisterCustomKeyLabels()
         {
-            if (_registeredCustomKeyLabels)
+            if (registeredCustomKeyLabels)
                 return;
-            _registeredCustomKeyLabels = true;
+            registeredCustomKeyLabels = true;
             var choices = PropertyGrid.GetChoices<Key>();
             choices.SetLabelForValue(Key.D0, "0");
             choices.SetLabelForValue(Key.D1, "1");
@@ -76,7 +86,11 @@ namespace Alternet.UI
         /// <param name="setHandled">Specifies whether to set event arguments Handled property.</param>
         /// <returns><c>true</c> if key is pressed; <c>false</c> otherwise.</returns>
         /// <param name="keys">Array of keys.</param>
-        public static bool Run(KeyInfo[] keys, KeyEventArgs e, Action? action = null, bool setHandled = true)
+        public static bool Run(
+            KeyInfo[] keys,
+            KeyEventArgs e,
+            Action? action = null,
+            bool setHandled = true)
         {
             foreach (var key in keys)
             {
@@ -88,6 +102,24 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Returns filtered <see cref="KeyInfo"/> list. Result has only items which are
+        /// registered for the current backend OS.
+        /// </summary>
+        /// <param name="keys">Keys.</param>
+        public static KeyInfo[] FilterBackendOs(IEnumerable<KeyInfo> keys)
+        {
+            List<KeyInfo> result = new();
+
+            foreach(var key in keys)
+            {
+                if (key.BackendOS.HasFlag(Application.BackendOS))
+                    result.Add(key);
+            }
+
+            return result.ToArray();
+        }
+
+        /// <summary>
         /// Returns a string that represents the current object.
         /// </summary>
         /// <returns>A <see cref="string"/> that represents the current object.</returns>
@@ -96,7 +128,7 @@ namespace Alternet.UI
             var keyText = GetCustomKeyLabel(Key);
             if(Modifiers != ModifierKeys.None)
             {
-                var modifiersText = ModifierKeysConverter.ToString(Modifiers);
+                var modifiersText = ModifierKeysConverter.ToString(Modifiers, true);
                 keyText = $"{modifiersText}+{keyText}";
             }
 
@@ -118,6 +150,9 @@ namespace Alternet.UI
         /// <returns><c>true</c> if key is pressed; <c>false</c> otherwise.</returns>
         public bool Run(KeyEventArgs e, Action? action = null, bool setHandled = true)
         {
+            if (!BackendOS.HasFlag(Application.BackendOS))
+                return false;
+
             var result = IsPressed(e);
             if (result)
             {

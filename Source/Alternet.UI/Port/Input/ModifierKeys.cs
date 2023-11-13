@@ -67,5 +67,10 @@ namespace Alternet.UI
         /// Both Alt and Shift modifiers are pressed.
         /// </summary>
         AltShift = Alt | Shift,
+
+        /// <summary>
+        /// Both Windows and Shift modifiers are pressed.
+        /// </summary>
+        WindowsShift = Windows | Shift,
     }
 }

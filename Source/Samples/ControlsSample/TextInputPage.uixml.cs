@@ -787,13 +787,21 @@ namespace ControlsSample
 
             r.NewLine();
 
-            string St(KeyInfo[] keys) => StringUtils.ToString(
-                keys,
-                string.Empty,
-                string.Empty,
-                " or ");
+            static string St(KeyInfo[] keys)
+            {
+                var filteredKeys = KeyInfo.FilterBackendOs(keys);
+
+                return StringUtils.ToString(
+                                filteredKeys,
+                                string.Empty,
+                                string.Empty,
+                                " or ");
+            }
 
             r.WriteText("Keys:\n");
+
+            // Move key help to KeyInfo
+            // Move this to control
             r.WriteText($"{St(KnownKeys.RichEditKeys.ToggleBold)} - Toggle Bold style.\n");
             r.WriteText($"{St(KnownKeys.RichEditKeys.ToggleItalic)} - Toggle Italic style.\n");
             r.WriteText($"{St(KnownKeys.RichEditKeys.ToggleUnderline)} - Toggle Underline style.\n");
