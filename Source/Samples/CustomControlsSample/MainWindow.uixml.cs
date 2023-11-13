@@ -8,6 +8,7 @@ namespace CustomControlsSample
 {
     internal partial class MainWindow : Window
     {
+        private readonly Data data = new();
         private readonly CustomColorPicker colorPicker;
         private readonly TicTacToeControl ticTacToe;
         private readonly KnobControl knobControl;
@@ -20,7 +21,7 @@ namespace CustomControlsSample
 
             Icon = ImageSet.FromUrlOrNull("embres:CustomControlsSample.Sample.ico");
 
-            DataContext = new Data();
+            DataContext = data;
 
             InitializeComponent();
 
@@ -72,6 +73,7 @@ namespace CustomControlsSample
                 knobControl,
                 KnobControl.ValueProperty,
                 myBinding);
+            data.PropertyChanged += Data_PropertyChanged;
 
             SuspendLayout();
             colorPickerStackPanel.Children.Add(colorPicker);
@@ -84,7 +86,12 @@ namespace CustomControlsSample
             ResumeLayout(true);
             this.SetSizeToContent();
 
-            Application.Current.LogMessage += Current_LogMessage;
+            Application.Current.LogMessage += Current_LogMessage;            
+        }
+
+        private void Data_PropertyChanged(object? sender, PropertyChangedEventArgs e)
+        {
+            intValueLabel.Text = data.IntValue.ToString();
         }
 
         private void Current_LogMessage(object? sender, LogMessageEventArgs e)

@@ -24,7 +24,7 @@
 						VerticalAlignment="Center" Margin="0,0,10,0" SuggestedWidth="200"/>
 					<ProgressBar Minimum="0" Maximum="100" Value="{Binding IntValue}" 
 						VerticalAlignment="Center" Margin="0,0,10,0" SuggestedWidth="200"/>
-					<Label Text="{Binding IntValue}" VerticalAlignment="Center"/>
+					<Label VerticalAlignment="Center" Name="intValueLabel"/>
 				</StackPanel>
 			</GroupBox>
 			

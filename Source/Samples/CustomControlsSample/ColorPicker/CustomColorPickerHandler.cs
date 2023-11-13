@@ -8,7 +8,7 @@ namespace CustomControlsSample
     {
         private bool isPressed;
 
-        private PopupWindow? popup;
+        private PopupGridColors? popup;
 
         protected override bool NeedsPaint => true;
 
@@ -25,7 +25,7 @@ namespace CustomControlsSample
             }
         }
 
-        private PopupWindow Popup
+        private PopupGridColors Popup
         {
             get
             {
@@ -39,8 +39,7 @@ namespace CustomControlsSample
                         HideOnDoubleClick = false,
                     };
                     popup.Disposed += Popup_Disposed;
-
-                    GetColorButtonsGrid().Parent = popup.Border;
+                    popup.VisibleChanged += Popup_VisibleChanged;
                     popup.SetSizeToContent();
                 }
 
@@ -48,61 +47,16 @@ namespace CustomControlsSample
             }
         }
 
+        private void Popup_VisibleChanged(object? sender, EventArgs e)
+        {
+            if (Popup.Visible || Popup.PopupResult != ModalResult.Accepted)
+                return;
+            Control.Value = Popup.Value;
+        }
+
         private void Popup_Disposed(object? sender, EventArgs e)
         {
             popup = null;
-        }
-
-        private readonly Color[] colors = new[]
-        {
-            Color.IndianRed,
-            Color.LightSalmon,
-            Color.Firebrick,
-            Color.DarkRed,
-
-            Color.ForestGreen,
-            Color.YellowGreen,
-            Color.PaleGreen,
-            Color.Olive,
-
-            Color.PowderBlue,
-            Color.DodgerBlue,
-            Color.DarkBlue,
-            Color.SteelBlue,
-
-            Color.Silver,
-            Color.LightSlateGray,
-            Color.DarkSlateGray,
-            Color.Black
-        };
-
-        Grid GetColorButtonsGrid()
-        {
-            int RowCount = 4;
-            int ColumnCount = 4;
-
-            var grid = new Grid();
-
-            for (int y = 0; y < ColumnCount; y++)
-                grid.ColumnDefinitions.Add(new ColumnDefinition());
-
-            for (int x = 0; x < RowCount; x++)
-                grid.RowDefinitions.Add(new RowDefinition());
-
-            int i = 0;
-            for (int x = 0; x < RowCount; x++)
-            {
-                for (int y = 0; y < ColumnCount; y++)
-                {
-                    var button = new ColorButton { Value = colors[i++] };
-                    button.Click += ColorButton_Click;
-                    grid.Children.Add(button);
-                    Grid.SetRow(button, y);
-                    Grid.SetColumn(button, x);
-                }
-            }
-
-            return grid;
         }
 
         SolidBrush? colorBrush;
@@ -221,13 +175,6 @@ namespace CustomControlsSample
                 return CustomControlsColors.BackgroundFocusedBrush;
 
             return CustomControlsColors.BackgroundBrush;
-        }
-
-        private void ColorButton_Click(object? sender, EventArgs e)
-        {
-            Control.Value = ((ColorPicker)sender!).Value;
-
-            Popup.HidePopup(ModalResult.Accepted);
         }
 
         private void OpenPopup()
