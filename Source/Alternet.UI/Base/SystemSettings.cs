@@ -40,7 +40,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Return true if the background is darker than foreground. This is used by
+        /// Returns true if the background is darker than foreground. This is used by
         /// <see cref="AppearanceIsDark"/> if there is no platform-specific way to determine
         /// whether a dark mode is being used and is generally not very useful to call directly.
         /// </summary>
