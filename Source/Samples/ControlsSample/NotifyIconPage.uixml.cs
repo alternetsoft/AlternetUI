@@ -53,8 +53,6 @@ namespace ControlsSample
             LogUtils.LogColor("SystemSettings.InfoText", SystemSettings.GetColor(SystemSettingsColor.InfoText));
             LogUtils.LogColor("BkColor", RealBackgroundColor);
             LogUtils.LogColor("FgColor", RealForegroundColor);
-            Application.Log($"IsDark = {SystemSettings.AppearanceIsDark}");
-            Application.Log($"IsUsingDarkBackground = {SystemSettings.IsUsingDarkBackground}");
         }
 
         private void ShowToolTipButton_Click(object? sender, EventArgs e)
