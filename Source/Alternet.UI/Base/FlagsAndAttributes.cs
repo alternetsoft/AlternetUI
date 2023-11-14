@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Alternet.UI
 {
-    internal abstract class FlagsAndAttributes : AdvDictionary<string, object>, IFlagsAndAttributes
+    internal class FlagsAndAttributes : AdvDictionary<string, object>, IFlagsAndAttributes
     {
         public bool HasFlag(string name) => HasAttribute(name);
 
@@ -20,6 +20,14 @@ namespace Alternet.UI
                 RemoveFlag(name);
             else
                 AddFlag(name);
+        }
+
+        public void SetFlag(string name, bool value)
+        {
+            if (value)
+                AddFlag(name);
+            else
+                RemoveFlag(name);
         }
 
         public bool HasAttribute(string name)
