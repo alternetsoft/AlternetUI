@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -61,6 +62,29 @@ namespace Alternet.UI
             LogToFile(SectionSeparator);
 
             Application.Log("FontFamilies logged to file.");
+        }
+
+        /// <summary>
+        /// Logs <see cref="IEnumerable"/>.
+        /// </summary>
+        public static void Log(IEnumerable? items)
+        {
+            if (items is null)
+                return;
+            foreach (var item in items)
+                Application.Log(item);
+        }
+
+        /// <summary>
+        /// Logs <see cref="IEnumerable"/> as section.
+        /// </summary>
+        public static void LogAsSection(IEnumerable? items)
+        {
+            if (items is null)
+                return;
+            Application.LogBeginSection();
+            Log(items);
+            Application.LogEndSection();
         }
 
         /// <summary>
