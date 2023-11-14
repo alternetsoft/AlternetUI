@@ -883,6 +883,13 @@ namespace Alternet.Drawing
         public bool IsEmpty => state == 0;
 
         /// <summary>
+        /// Specifies whether this <see cref="Color"/> structure is initialized.
+        /// </summary>
+        /// <value>This property returns <c>true</c> if this color is initialized;
+        /// otherwise, <c>false</c>.</value>
+        public bool IsOk => state != 0;
+
+        /// <summary>
         /// Gets a value indicating whether this <see cref="Color"/> structure is
         /// a named color or a member of the <see cref="KnownColor"/> enumeration.
         /// </summary>
@@ -1234,6 +1241,15 @@ namespace Alternet.Drawing
             MinMaxRgb(out int min, out int max, r, g, b);
 
             return (max + min) / (byte.MaxValue * 2f);
+        }
+
+        /// <summary>
+        /// Returns the perceived brightness of the color, with 0 for black and 1
+        /// for white.
+        /// </summary>
+        public double GetLuminance()
+        {
+            return ((0.299 * R) + (0.587 * G) + (0.114 * B)) / 255.0;
         }
 
         /// <summary>
