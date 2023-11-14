@@ -1247,9 +1247,6 @@ namespace Alternet.UI
         {
             get
             {
-                LogUtils.LogColor("RealForegroundColor", RealForegroundColor);
-                LogUtils.LogColor("RealBackgroundColor", RealBackgroundColor);
-
                 var foregroundColor = RealForegroundColor;
                 var backgroundColor = RealBackgroundColor;
 
