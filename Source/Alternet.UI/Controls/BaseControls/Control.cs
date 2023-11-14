@@ -1233,6 +1233,30 @@ namespace Alternet.UI
                 if (Handler.NativeControl is null)
                     return;
                 Handler.NativeControl.IsBold = value;
+                Handler.RaiseLayoutChanged();
+                PerformLayout();
+                Refresh();
+            }
+        }
+
+        /// <summary>
+        /// Returns true if control's background color is darker than foreground color.
+        /// </summary>
+        [Browsable(false)]
+        public bool IsDarkBackground
+        {
+            get
+            {
+                LogUtils.LogColor("RealForegroundColor", RealForegroundColor);
+                LogUtils.LogColor("RealBackgroundColor", RealBackgroundColor);
+
+                var foregroundColor = RealForegroundColor;
+                var backgroundColor = RealBackgroundColor;
+
+                if (foregroundColor is null || backgroundColor is null)
+                    return SystemSettings.IsUsingDarkBackground;
+
+                return ColorUtils.IsDarkBackground(foregroundColor.Value, backgroundColor.Value);
             }
         }
 
