@@ -24,6 +24,36 @@ namespace Alternet.UI.Native
         {
         }
         
+        public bool ProcessIdle
+        {
+            get
+            {
+                CheckDisposed();
+                return NativeApi.Control_GetProcessIdle_(NativePointer);
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.Control_SetProcessIdle_(NativePointer, value);
+            }
+        }
+        
+        public bool ProcessUIUpdates
+        {
+            get
+            {
+                CheckDisposed();
+                return NativeApi.Control_GetProcessUIUpdates_(NativePointer);
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.Control_SetProcessUIUpdates_(NativePointer, value);
+            }
+        }
+        
         public bool IsBold
         {
             get
@@ -794,6 +824,26 @@ namespace Alternet.UI.Native
             return NativeApi.Control_GetScrollBarMaximum_(NativePointer, orientation);
         }
         
+        public static int DrawingFromDip(double value, System.IntPtr window)
+        {
+            return NativeApi.Control_DrawingFromDip_(value, window);
+        }
+        
+        public static double DrawingDPIScaleFactor(System.IntPtr window)
+        {
+            return NativeApi.Control_DrawingDPIScaleFactor_(window);
+        }
+        
+        public static double DrawingToDip(int value, System.IntPtr window)
+        {
+            return NativeApi.Control_DrawingToDip_(value, window);
+        }
+        
+        public static double DrawingFromDipF(double value, System.IntPtr window)
+        {
+            return NativeApi.Control_DrawingFromDipF_(value, window);
+        }
+        
         public void SetCursor(System.IntPtr handle)
         {
             CheckDisposed();
@@ -822,6 +872,10 @@ namespace Alternet.UI.Native
         {
             switch (e)
             {
+                case NativeApi.ControlEvent.Idle:
+                {
+                    Idle?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                }
                 case NativeApi.ControlEvent.Paint:
                 {
                     Paint?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
@@ -893,6 +947,7 @@ namespace Alternet.UI.Native
             }
         }
         
+        public event EventHandler? Idle;
         public event EventHandler? Paint;
         public event EventHandler? MouseEnter;
         public event EventHandler? MouseLeave;
@@ -920,6 +975,7 @@ namespace Alternet.UI.Native
             
             public enum ControlEvent
             {
+                Idle,
                 Paint,
                 MouseEnter,
                 MouseLeave,
@@ -940,6 +996,18 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Control_SetEventCallback_(ControlEventCallbackType callback);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool Control_GetProcessIdle_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Control_SetProcessIdle_(IntPtr obj, bool value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool Control_GetProcessUIUpdates_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Control_SetProcessUIUpdates_(IntPtr obj, bool value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool Control_GetIsBold_(IntPtr obj);
@@ -1258,6 +1326,18 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern int Control_GetScrollBarMaximum_(IntPtr obj, ScrollBarOrientation orientation);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int Control_DrawingFromDip_(double value, System.IntPtr window);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern double Control_DrawingDPIScaleFactor_(System.IntPtr window);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern double Control_DrawingToDip_(int value, System.IntPtr window);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern double Control_DrawingFromDipF_(double value, System.IntPtr window);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Control_SetCursor_(IntPtr obj, System.IntPtr handle);

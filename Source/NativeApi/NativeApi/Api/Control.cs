@@ -8,6 +8,14 @@ namespace NativeApi.Api
 {
     public abstract class Control
     {
+        public static int DrawingFromDip(double value, IntPtr window) => default;
+        public static double DrawingDPIScaleFactor(IntPtr window) => default;
+        public static double DrawingToDip(int value, IntPtr window) => default;
+        public static double DrawingFromDipF(double value, IntPtr window) => default;
+
+        public bool ProcessIdle { get; set; }
+        public bool ProcessUIUpdates { get; set; }
+
         public bool IsBold { get; set; }
         public void SetCursor(IntPtr handle) { }
         public bool AcceptsFocus { get; set; }
@@ -19,6 +27,7 @@ namespace NativeApi.Api
         public int LayoutDirection { get; set; }
         public string Name { get; set; }
         public int Id { get; set; }
+        public event EventHandler? Idle;
         public event EventHandler? Paint;
         public event EventHandler? MouseEnter;
         public event EventHandler? MouseLeave;

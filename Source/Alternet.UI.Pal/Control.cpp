@@ -61,6 +61,64 @@ namespace Alternet::UI
             : up ? "released" : "clicked");
     }
 
+    bool Control::HasExtraStyle(long extra)
+    {
+        auto window = GetWxWindow();
+        auto style = window->GetExtraStyle();
+        return (style & extra) != 0;
+    }
+
+    void Control::SetExtraStyle(long extra, bool value)
+    {
+        auto window = GetWxWindow();
+        auto style = window->GetExtraStyle();
+        if (value)
+            style |= extra;
+        else
+            style &= ~extra;
+        window->SetExtraStyle(style);
+    }
+
+    bool Control::GetProcessIdle()
+    {
+        return HasExtraStyle(wxWS_EX_PROCESS_IDLE);
+    }
+
+    void Control::SetProcessIdle(bool value)
+    {
+        SetExtraStyle(wxWS_EX_PROCESS_IDLE, value);
+    }
+
+    int Control::DrawingFromDip(double value, void* window)
+    {
+        return fromDip(value, (wxWindow*)window);
+    }
+
+    double Control::DrawingDPIScaleFactor(void* window)
+    {
+        return GetDPIScaleFactor((wxWindow*)window);
+    }
+
+    double Control::DrawingToDip(int value, void* window)
+    {
+        return toDip(value, (wxWindow*)window);
+    }
+
+    double Control::DrawingFromDipF(double value, void* window)
+    {
+        return fromDipF(value, (wxWindow*)window);
+    }
+
+    bool Control::GetProcessUIUpdates()
+    {
+        return HasExtraStyle(wxWS_EX_PROCESS_UI_UPDATES);            
+    }
+
+    void Control::SetProcessUIUpdates(bool value)
+    {
+        SetExtraStyle(wxWS_EX_PROCESS_UI_UPDATES, value);
+    }
+
     Control::Control() :
         _flags(ControlFlags::TabStop),
         _delayedFlags(
@@ -328,6 +386,7 @@ namespace Alternet::UI
         if (!IsRecreatingWxWindow())
             _wxWindow = nullptr;
 
+        _wxWindow->Unbind(wxEVT_IDLE, &Control::OnIdle, this);
         wxWindow->Unbind(wxEVT_PAINT, &Control::OnPaint, this);
         //wxWindow->Unbind(wxEVT_ERASE_BACKGROUND, &Control::OnEraseBackground, this);
         wxWindow->Unbind(wxEVT_DESTROY, &Control::OnDestroy, this);
@@ -789,6 +848,7 @@ namespace Alternet::UI
         _wxWindow->Bind(wxEVT_SET_FOCUS, &Control::OnGotFocus, this);
         _wxWindow->Bind(wxEVT_KILL_FOCUS, &Control::OnLostFocus, this);
         _wxWindow->Bind(wxEVT_LEFT_UP, &Control::OnMouseLeftUp, this);
+        _wxWindow->Bind(wxEVT_IDLE, &Control::OnIdle, this);
 
         if (bindScrollEvents)
         {
@@ -1241,6 +1301,12 @@ namespace Alternet::UI
     bool Control::EventsSuspended()
     {
         return _flags.IsSet(ControlFlags::CreatingWxWindow);
+    }
+
+    void Control::OnIdle(wxIdleEvent& event)
+    {
+        event.Skip();
+        RaiseEvent(ControlEvent::Idle);
     }
 
     void Control::OnPaint(wxPaintEvent& event)

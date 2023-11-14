@@ -11,6 +11,26 @@
 
 using namespace Alternet::UI;
 
+ALTERNET_UI_API c_bool Control_GetProcessIdle_(Control* obj)
+{
+    return obj->GetProcessIdle();
+}
+
+ALTERNET_UI_API void Control_SetProcessIdle_(Control* obj, c_bool value)
+{
+    obj->SetProcessIdle(value);
+}
+
+ALTERNET_UI_API c_bool Control_GetProcessUIUpdates_(Control* obj)
+{
+    return obj->GetProcessUIUpdates();
+}
+
+ALTERNET_UI_API void Control_SetProcessUIUpdates_(Control* obj, c_bool value)
+{
+    obj->SetProcessUIUpdates(value);
+}
+
 ALTERNET_UI_API c_bool Control_GetIsBold_(Control* obj)
 {
     return obj->GetIsBold();
@@ -539,6 +559,26 @@ ALTERNET_UI_API int Control_GetScrollBarLargeChange_(Control* obj, ScrollBarOrie
 ALTERNET_UI_API int Control_GetScrollBarMaximum_(Control* obj, ScrollBarOrientation orientation)
 {
     return obj->GetScrollBarMaximum(orientation);
+}
+
+ALTERNET_UI_API int Control_DrawingFromDip_(double value, void* window)
+{
+    return Control::DrawingFromDip(value, window);
+}
+
+ALTERNET_UI_API double Control_DrawingDPIScaleFactor_(void* window)
+{
+    return Control::DrawingDPIScaleFactor(window);
+}
+
+ALTERNET_UI_API double Control_DrawingToDip_(int value, void* window)
+{
+    return Control::DrawingToDip(value, window);
+}
+
+ALTERNET_UI_API double Control_DrawingFromDipF_(double value, void* window)
+{
+    return Control::DrawingFromDipF(value, window);
 }
 
 ALTERNET_UI_API void Control_SetCursor_(Control* obj, void* handle)

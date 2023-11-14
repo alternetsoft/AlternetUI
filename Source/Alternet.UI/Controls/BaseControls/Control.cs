@@ -242,6 +242,13 @@ namespace Alternet.UI
         public event EventHandler? DragLeave;
 
         /// <summary>
+        /// Occurs when the application finishes processing and is
+        /// about to enter the idle state. This is the same as <see cref="Application.Idle"/>
+        /// but on the control level.
+        /// </summary>
+        public event EventHandler? Idle;
+
+        /// <summary>
         /// Occurs when the value of the "BorderBrush" property changes.
         /// </summary>
         internal event EventHandler? BorderBrushChanged;
@@ -1339,7 +1346,38 @@ namespace Alternet.UI
         [Browsable(false)]
         public virtual ControlId ControlKind => ControlId.Control;
 
+        /// <summary>
+        /// Gets or sets whether <see cref="Idle"/> event is fired.
+        /// </summary>
+        public bool ProcessIdle
+        {
+            get
+            {
+                return Handler.NativeControl?.ProcessIdle ?? false;
+            }
+
+            set
+            {
+                if(Handler.NativeControl is not null)
+                    Handler.NativeControl.ProcessIdle = value;
+            }
+        }
+
         internal static int ScreenShotCounter { get; set; } = 0;
+
+        internal bool ProcessUIUpdates
+        {
+            get
+            {
+                return Handler.NativeControl?.ProcessUIUpdates ?? false;
+            }
+
+            set
+            {
+                if (Handler.NativeControl is not null)
+                    Handler.NativeControl.ProcessUIUpdates = value;
+            }
+        }
 
         /// <summary>
         /// Gets or sets value indicating whether this control accepts
@@ -1716,11 +1754,21 @@ namespace Alternet.UI
         /// data.</param>
         public virtual void RaiseClick(EventArgs e)
         {
-            if (e == null)
-                throw new ArgumentNullException(nameof(e));
-
             OnClick(e);
             Click?.Invoke(this, e);
+        }
+
+        /// <summary>
+        /// Raises the <see cref="Idle"/> event and calls
+        /// <see cref="OnIdle(EventArgs)"/>.
+        /// See <see cref="Idle"/> event description for more details.
+        /// </summary>
+        /// <param name="e">An <see cref="EventArgs"/> that contains the event
+        /// data.</param>
+        public virtual void RaiseIdle(EventArgs e)
+        {
+            OnIdle(e);
+            Idle?.Invoke(this, e);
         }
 
         /// <summary>
@@ -2558,6 +2606,26 @@ namespace Alternet.UI
             Handler?.EndIgnoreRecreate();
         }
 
+        internal static int DrawingFromDip(double value, Control control)
+        {
+            return Native.Control.DrawingFromDip(value, control.WxWidget);
+        }
+
+        internal static double DrawingDPIScaleFactor(Control control)
+        {
+            return Native.Control.DrawingDPIScaleFactor(control.WxWidget);
+        }
+
+        internal static double DrawingToDip(int value, Control control)
+        {
+            return Native.Control.DrawingToDip(value, control.WxWidget);
+        }
+
+        internal static double DrawingFromDipF(double value, Control control)
+        {
+            return Native.Control.DrawingFromDipF(value, control.WxWidget);
+        }
+
         internal static void NotifyCaptureLost()
         {
             Native.Control.NotifyCaptureLost();
@@ -2739,6 +2807,15 @@ namespace Alternet.UI
         /// <param name="e">An <see cref="EventArgs"/> that contains the event
         /// data.</param>
         protected virtual void OnClick(EventArgs e)
+        {
+        }
+
+        /// <summary>
+        /// Called when the application is in idle state.
+        /// </summary>
+        /// <param name="e">An <see cref="EventArgs"/> that contains the event
+        /// data.</param>
+        protected virtual void OnIdle(EventArgs e)
         {
         }
 
@@ -3025,9 +3102,6 @@ namespace Alternet.UI
         /// event data.</param>
         private void RaiseEnabledChanged(EventArgs e)
         {
-            if (e == null)
-                throw new ArgumentNullException(nameof(e));
-
             OnEnabledChanged(e);
             EnabledChanged?.Invoke(this, e);
         }

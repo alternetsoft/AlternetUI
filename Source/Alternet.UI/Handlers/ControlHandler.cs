@@ -1020,6 +1020,7 @@ namespace Alternet.UI
 
             if (NativeControl != null)
             {
+                NativeControl.Idle -= NativeControl_Idle;
                 NativeControl.Paint -= NativeControl_Paint;
                 NativeControl.VisibleChanged -= NativeControl_VisibleChanged;
                 NativeControl.MouseEnter -= NativeControl_MouseEnter;
@@ -1113,6 +1114,7 @@ namespace Alternet.UI
             NativeControl.GotFocus += NativeControl_GotFocus;
             NativeControl.LostFocus += NativeControl_LostFocus;
             NativeControl.SizeChanged += NativeControl_SizeChanged;
+            NativeControl.Idle += NativeControl_Idle;
 
 #if DEBUG
             /*Debug.WriteLine($"{GetType()} {NativeControl.Id} {NativeControl.Name}");*/
@@ -1123,6 +1125,11 @@ namespace Alternet.UI
         {
             nativeControl.handler = null;
             nativeControl.Dispose();
+        }
+
+        private void NativeControl_Idle(object? sender, EventArgs e)
+        {
+            Control.RaiseIdle(EventArgs.Empty);
         }
 
         private void NativeControl_SizeChanged(object? sender, EventArgs e)

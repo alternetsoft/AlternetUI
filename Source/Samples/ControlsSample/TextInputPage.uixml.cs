@@ -152,8 +152,6 @@ namespace ControlsSample
                 minLengthEdit.TextBox,
                 maxLengthEdit.TextBox).SuggestedWidthToMax();
 
-            Application.Current.Idle += Application_Idle;
-
             // ==== Min and Max length editors
 
             minLengthEdit.TextBox.TextChanged += MinLengthBox_TextChanged;
@@ -186,6 +184,26 @@ namespace ControlsSample
 
             richPanel.AddAction("Bell", SoundUtils.Bell);
             richPanel.AddAction("Go To Line", richPanel.TextBox.ShowDialogGoToLine);
+
+            Idle += TextInputPage_Idle;
+        }
+
+        private void TextInputPage_Idle(object? sender, EventArgs e)
+        {
+            if (tab1.Visible)
+            {
+                textBox.IdleAction();
+            }
+
+            if (tab2.Visible)
+            {
+                multiLineTextBox.IdleAction();
+            }
+
+            if (tab3.Visible)
+            {
+                // richEdit.IdleAction();
+            }
         }
 
         private void RichTextBox_TextChanged(object? sender, EventArgs e)
@@ -370,24 +388,6 @@ namespace ControlsSample
             //    fontStatus = GetFontStatus();
 
             site?.LogEventSmart($"{prefix} {currentPos.Value+1}", prefix);
-        }
-
-        private void Application_Idle(object? sender, EventArgs e)
-        {
-            if (tab1.Visible)
-            {
-                textBox.IdleAction();
-            }
-
-            if (tab2.Visible)
-            {
-                multiLineTextBox.IdleAction();
-            }
-
-            if (tab3.Visible)
-            {
-                // richEdit.IdleAction();
-            }
         }
 
         private void TextBox_TextMaxLength(object? sender, EventArgs e)

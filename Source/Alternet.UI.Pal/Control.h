@@ -76,6 +76,8 @@ namespace Alternet::UI
 
         std::vector<Control*> GetChildren();
 
+        bool HasExtraStyle(long extra);
+        void SetExtraStyle(long extra, bool value);
         bool GetDoNotDestroyWxWindow();
         void SetDoNotDestroyWxWindow(bool value);
 
@@ -268,6 +270,7 @@ namespace Alternet::UI
         void OnVisibleChanged(wxShowEvent& event);
         void OnSizeChanged(wxSizeEvent& event);
         void OnDestroy(wxWindowDestroyEvent& event);
+        void OnIdle(wxIdleEvent& event);
 
         void OnScrollTop(wxScrollWinEvent& event);
         void OnScrollBottom(wxScrollWinEvent& event);
