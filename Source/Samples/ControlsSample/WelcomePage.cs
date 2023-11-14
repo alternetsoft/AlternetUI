@@ -34,8 +34,7 @@ namespace ControlsSample
 
             r.BeginParagraphSpacing(0, 20);
 
-            var urlStyle = RichTextBox.CreateRichAttr();
-            urlStyle.SetTextColor(Color.Blue).SetFontUnderlined(true);
+            var urlStyle = r.CreateUrlAttr();
 
             r.WriteUrl(urlStyle, homePage, "Home page");
             r.WriteText("    ");
