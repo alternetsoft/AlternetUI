@@ -88,6 +88,11 @@ namespace Alternet.UI
         bool IsFlags { get; }
 
         /// <summary>
+        /// Gets custom flags and attributes provider. You can store any custom data here.
+        /// </summary>
+        IFlagsAndAttributes FlagsAndAttributes { get; }
+
+        /// <summary>
         /// Item handle.
         /// </summary>
         IntPtr Handle { get; }

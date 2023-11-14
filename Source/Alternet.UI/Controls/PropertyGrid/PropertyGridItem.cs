@@ -24,6 +24,7 @@ namespace Alternet.UI
         private PropertyInfo? propInfo;
         private Collection<IPropertyGridItem>? children;
         private IPropertyGridItem? parent;
+        private IFlagsAndAttributes? flagsAndAttributes;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PropertyGridItem"/> class.
@@ -52,6 +53,15 @@ namespace Alternet.UI
 
         /// <inheritdoc/>
         public event EventHandler? ButtonClick;
+
+        /// <inheritdoc/>
+        public IFlagsAndAttributes FlagsAndAttributes
+        {
+            get
+            {
+                return flagsAndAttributes ??= Factory.CreateFlagsAndAttributes();
+            }
+        }
 
         /// <inheritdoc/>
         public IPropertyGridNewItemParams? Params => prm;
