@@ -1008,68 +1008,131 @@ namespace Alternet::UI
     {
         wxString result = "Defines: ";
 #ifdef wxUSE_UNSAFE_WXSTRING_CONV
-        result += " wxUSE_UNSAFE_WXSTRING_CONV";
+        result += " wxUSE_UNSAFE_WXSTRING_CONV=1";
+#else
+        result += " wxUSE_UNSAFE_WXSTRING_CONV=0";
 #endif
+
 #ifdef wxUSE_ZIPSTREAM
-        result += " wxUSE_ZIPSTREAM";
+        result += " wxUSE_ZIPSTREAM=1";
+#else
+        result += " wxUSE_ZIPSTREAM=0";
 #endif
+
 #ifdef wxUSE_DPI_AWARE_MANIFEST
-        result += " wxUSE_DPI_AWARE_MANIFEST";
+        result += " wxUSE_DPI_AWARE_MANIFEST=1";
+#else
+        result += " wxUSE_DPI_AWARE_MANIFEST=0";
 #endif
+
 #ifdef wxUSE_NO_MANIFEST
-        result += " wxUSE_NO_MANIFEST";
+        result += " wxUSE_NO_MANIFEST=1";
+#else
+        result += " wxUSE_NO_MANIFEST=0";
 #endif
+
 #ifdef wxUSE_RC_MANIFEST
-        result += " wxUSE_RC_MANIFEST";
+        result += " wxUSE_RC_MANIFEST=1";
+#else
+        result += " wxUSE_RC_MANIFEST=0";
 #endif
+
 #ifdef wxUSE_VC_CRTDBG
-        result += " wxUSE_VC_CRTDBG";
+        result += " wxUSE_VC_CRTDBG=1";
+#else
+        result += " wxUSE_VC_CRTDBG=0";
 #endif
+
 #ifdef wxUSE_UXTHEME
-        result += " wxUSE_UXTHEME";
+        result += " wxUSE_UXTHEME=1";
+#else
+        result += " wxUSE_UXTHEME=0";
 #endif
+
 #ifdef wxUSE_NANOSVG_EXTERNAL_ENABLE_IMPL
-        result += " wxUSE_NANOSVG_EXTERNAL_ENABLE_IMPL";
+        result += " wxUSE_NANOSVG_EXTERNAL_ENABLE_IMPL=1";
+#else
+        result += " wxUSE_NANOSVG_EXTERNAL_ENABLE_IMPL=0";
 #endif
+
 #ifdef wxUSE_NANOSVG_EXTERNAL
-        result += " wxUSE_NANOSVG_EXTERNAL";
+        result += " wxUSE_NANOSVG_EXTERNAL=1";
+#else
+        result += " wxUSE_NANOSVG_EXTERNAL=0";
 #endif
+
 #ifdef wxUSE_FS_ZIP
-        result += " wxUSE_FS_ZIP";
+        result += " wxUSE_FS_ZIP=1";
+#else
+        result += " wxUSE_FS_ZIP=0";
 #endif
+
 #ifdef wxUSE_FS_INET
-        result += " wxUSE_FS_INET";
+        result += " wxUSE_FS_INET=1";
+#else
+        result += " wxUSE_FS_INET=0";
 #endif
+
 #ifdef wxUSE_FS_ARCHIVE
-        result += " wxUSE_FS_ARCHIVE";
+        result += " wxUSE_FS_ARCHIVE=1";
+#else
+        result += " wxUSE_FS_ARCHIVE=0";
 #endif
+
 #ifdef wxUSE_SVG
-        result += " wxUSE_SVG";
+        result += " wxUSE_SVG=1";
+#else
+        result += " wxUSE_SVG=0";
 #endif
+
 #ifdef wxUSE_NANOSVG
-        result += " wxUSE_NANOSVG";
+        result += " wxUSE_NANOSVG=1";
+#else
+        result += " wxUSE_NANOSVG=0";
 #endif
+
 #ifdef wxUSE_MEMORY_TRACING
-        result += " wxUSE_MEMORY_TRACING";
+        result += " wxUSE_MEMORY_TRACING=1";
+#else
+        result += " wxUSE_MEMORY_TRACING=0";
 #endif
+
 #ifdef wxUSE_FILESYSTEM
-        result += " wxUSE_FILESYSTEM";
+        result += " wxUSE_FILESYSTEM=1";
+#else
+        result += " wxUSE_FILESYSTEM=0";
 #endif
+
 #ifdef wxUSE_EXCEPTIONS
-        result += " wxUSE_EXCEPTIONS";
+        result += " wxUSE_EXCEPTIONS=1";
+#else
+        result += " wxUSE_EXCEPTIONS=0";
 #endif
+
 #ifdef wxUSE_STD_STRING
-        result += " wxUSE_STD_STRING";
+        result += " wxUSE_STD_STRING=1";
+#else
+        result += " wxUSE_STD_STRING=0";
 #endif
+
 #ifdef wxUSE_STL
-        result += " wxUSE_STL";
+        result += " wxUSE_STL=1";
+#else
+        result += " wxUSE_STL=0";
 #endif
+
 #ifdef wxUSE_ARCHIVE_STREAMS
-        result += " wxUSE_ARCHIVE_STREAMS";
+        result += " wxUSE_ARCHIVE_STREAMS=1";
+#else
+        result += " wxUSE_ARCHIVE_STREAMS=0";
 #endif
+
 #ifdef wxNO_UNSAFE_WXSTRING_CONV
-        result += " wxNO_UNSAFE_WXSTRING_CONV";
+        result += " wxNO_UNSAFE_WXSTRING_CONV=1";
+#else
+        result += " wxNO_UNSAFE_WXSTRING_CONV=0";
 #endif
+
         return result;
     }
 
