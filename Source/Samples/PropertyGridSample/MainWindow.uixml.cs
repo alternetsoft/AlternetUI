@@ -27,16 +27,12 @@ namespace PropertyGridSample
 
         static MainWindow()
         {
-#if DEBUG
-            Application.LogFileIsEnabled = false;
-#endif
             InitSampleLocalization();
 
             AuiNotebook.DefaultCreateStyle = AuiNotebookCreateStyle.Top;
 
             // Registers known collection property editors.
             PropertyGrid.RegisterCollectionEditors();
-
         }
 
         private static void InitSampleLocalization()
@@ -78,21 +74,6 @@ namespace PropertyGridSample
 
         public MainWindow()
         {
-/*
-            controlPanel.RowDefinitions.Add(
-                new RowDefinition { Height = new GridLength(15, GridUnitType.Pixel) });
-            controlPanel.RowDefinitions.Add(
-                new RowDefinition { Height = new GridLength(1, GridUnitType.Auto) });
-            controlPanel.RowDefinitions.Add(
-                new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
-
-            controlPanel.ColumnDefinitions.Add(
-                new ColumnDefinition { Width = new GridLength(15, GridUnitType.Pixel) });
-            controlPanel.ColumnDefinitions.Add(
-                new ColumnDefinition { Width = new GridLength(1, GridUnitType.Auto) });
-            controlPanel.ColumnDefinitions.Add(
-                new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
-*/
             panel.BindApplicationLog();
 
             PropGrid.ApplyFlags |= PropertyGridApplyFlags.PropInfoSetValue
@@ -238,11 +219,6 @@ namespace PropertyGridSample
                         control.Name = splitted[splitted.Length - 1] + LogUtils.GenNewId().ToString();
                     }
 
-                    /*if (control.SuggestedHeight < 100)
-                        control.SuggestedHeight = 100;
-                    if (control.SuggestedWidth < 100)
-                        control.SuggestedWidth = 100;*/
-
                     if(control.Parent == null)
                     {
                         control.VerticalAlignment = VerticalAlignment.Top;
@@ -289,12 +265,16 @@ namespace PropertyGridSample
                     panel.EventGrid.Clear();
                     if (instance == null)
                         return;
-                    var events = AssemblyUtils.EnumEvents(instance.GetType(), true);
+                    var type = instance.GetType();
+                    var events = AssemblyUtils.EnumEvents(type, true);
 
                     foreach(var item in events)
                     {
-                        var prop = panel.EventGrid.CreateBoolItem(item.Name, null, false);
-                        panel.EventGrid.SetPropertyReadOnly(prop, true);
+                        var isBinded = EventLogManager.IsEventLogged(type, item);
+                        var prop = panel.EventGrid.CreateBoolItem(item.Name, null, isBinded);
+                        prop.FlagsAndAttributes.SetAttribute("InstanceType",type);
+                        prop.FlagsAndAttributes.SetAttribute("EventInfo",item);
+                        prop.PropertyChanged += Event_PropertyChanged;
                         panel.EventGrid.Add(prop);
                     }
                 });
@@ -309,6 +289,16 @@ namespace PropertyGridSample
             {
                 controlPanel.ResumeLayout();
             }
+        }
+
+        private void Event_PropertyChanged(object? sender, EventArgs e)
+        {
+            if (sender is not IPropertyGridItem item)
+                return;
+            var type = item.FlagsAndAttributes.GetAttribute<Type?>("InstanceType");
+            var eventInfo = item.FlagsAndAttributes.GetAttribute<EventInfo?>("EventInfo");
+            var value = panel.EventGrid.GetPropertyValueAsBool(item);
+            EventLogManager.SetEventLogged(type, eventInfo, value);
         }
 
         public class SettingsControl : Control
