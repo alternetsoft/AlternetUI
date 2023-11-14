@@ -16,6 +16,7 @@ namespace Alternet.UI
     {
         private ContextMenu? contextMenu;
         private string? lastLogMessage;
+        private MenuItem? menuItemShowDevTools;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="LogListBox"/> class.
@@ -25,6 +26,11 @@ namespace Alternet.UI
         {
             SelectionMode = ListBoxSelectionMode.Multiple;
         }
+
+        /// <summary>
+        /// Gets 'Developer Tools' menu item.
+        /// </summary>
+        public MenuItem? MenuItemShowDevTools => menuItemShowDevTools;
 
         /// <summary>
         /// Gets the last logged message.
@@ -118,14 +124,6 @@ namespace Alternet.UI
             Application.DoEvents();
         }
 
-        internal virtual void Application_LogMessage(object? sender, LogMessageEventArgs e)
-        {
-            if (e.ReplaceLastMessage)
-                LogReplace(e.Message, e.MessagePrefix);
-            else
-                Log(e.Message);
-        }
-
         /// <summary>
         /// Adds additional information to the log messages.
         /// </summary>
@@ -159,9 +157,10 @@ namespace Alternet.UI
 
             ContextMenu.Add(new("Open log file", LogUtils.OpenLogFile));
 
-            ContextMenu.Add(new("Log Display Info", Display.Log));
+            menuItemShowDevTools = ContextMenu.Add(new("Developer Tools"));
+            menuItemShowDevTools.ClickAction = ShowDevTools;
 
-            var logToFileItem = ContextMenu.Add(new("Log to file"));
+            var logToFileItem = ContextMenu.Add(new("Enable Log to file"));
             logToFileItem.ClickAction = AlsoLogToFile;
 
             void AlsoLogToFile()
@@ -173,10 +172,23 @@ namespace Alternet.UI
                 logToFileItem.Enabled = false;
             }
 
+            void ShowDevTools()
+            {
+                DebugUtils.ShowDeveloperTools();
+            }
+
 #if DEBUG
             /*Add(
              new("C++ Throw", () => { WebBrowser.DoCommandGlobal("CppThrow"); }));*/
 #endif
+        }
+
+        private void Application_LogMessage(object? sender, LogMessageEventArgs e)
+        {
+            if (e.ReplaceLastMessage)
+                LogReplace(e.Message, e.MessagePrefix);
+            else
+                Log(e.Message);
         }
 
         private void Control_ShowMenu(object? sender, MouseButtonEventArgs e)
