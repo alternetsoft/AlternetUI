@@ -553,9 +553,15 @@ namespace Alternet.UI
         /// <summary>
         /// Begins log section.
         /// </summary>
-        public static void LogBeginSection()
+        public static void LogBeginSection(string? title = null)
         {
             Log(LogUtils.SectionSeparator);
+
+            if(title is not null)
+            {
+                Log(title);
+                Log(LogUtils.SectionSeparator);
+            }
         }
 
         /// <summary>
