@@ -2352,6 +2352,12 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Same as <see cref="Enabled"/> but implemented as method.
+        /// </summary>
+        /// <param name="value"></param>
+        public void SetEnabled(bool value) => Enabled = value;
+
+        /// <summary>
         /// Sets input focus to the control.
         /// </summary>
         /// <returns><see langword="true"/> if the input focus request was
