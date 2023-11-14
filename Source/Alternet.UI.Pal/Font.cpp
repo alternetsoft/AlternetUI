@@ -92,6 +92,56 @@ namespace Alternet::UI
         return style;
     }
 
+    Int32Size Font::GetPixelSize()
+    {
+        return _font.GetPixelSize();
+    }
+
+    bool Font::IsUsingSizeInPixels()
+    {
+        return _font.IsUsingSizeInPixels();
+    }
+
+    int Font::GetNumericWeight()
+    {
+        return _font.GetNumericWeight();
+    }
+
+    bool Font::GetUnderlined()
+    {
+        return _font.GetUnderlined();
+    }
+
+    bool Font::GetStrikethrough()
+    {
+        return _font.GetStrikethrough();
+    }
+
+    int Font::GetEncoding()
+    {
+        return _font.GetEncoding();
+    }
+
+    bool Font::IsFixedWidth()
+    {
+        return _font.IsFixedWidth();
+    }
+
+    int Font::GetDefaultEncoding()
+    {
+        return wxFont::GetDefaultEncoding();
+    }
+
+    void Font::SetDefaultEncoding(int encoding)
+    {
+        wxFont::SetDefaultEncoding((wxFontEncoding)encoding);
+    }
+
+    int Font::GetWeight()
+    {
+        return _font.GetWeight();
+    }
+
     double Font::GetSizeInPoints()
     {
         return _font.GetFractionalPointSize();

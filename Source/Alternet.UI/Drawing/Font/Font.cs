@@ -2,6 +2,7 @@ using System;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Globalization;
+using Alternet.UI;
 using Alternet.UI.Localization;
 
 namespace Alternet.Drawing
@@ -90,6 +91,44 @@ namespace Alternet.Drawing
         public static Font Default => defaultFont ??= Font.CreateDefaultFont();
 
         /// <summary>
+        /// Gets the pixel size.
+        /// </summary>
+        public Int32Size PixelSize => NativeFont.GetPixelSize();
+
+        /// <summary>
+        /// Gets whether font size is in pixels.
+        /// </summary>
+        /// <returns></returns>
+        public bool IsUsingSizeInPixels => NativeFont.IsUsingSizeInPixels();
+
+        /// <summary>
+        /// Gets the font weight as an integer value.
+        /// </summary>
+        /// <remarks>
+        ///  See <see cref="FontWeight"/> for the numeric weight values.
+        /// </remarks>
+        public int NumericWeight => NativeFont.GetNumericWeight();
+
+        /// <summary>
+        /// Gets whether this font is a fixed width (or monospaced) font.
+        /// </summary>
+        /// <returns>Returns <c>true</c> if the font is a fixed width (or monospaced) font,
+        /// <c>false</c> if it is a proportional one or font is invalid.</returns>
+        /// <remarks>
+        /// Note that this function under some platforms is different from just testing for the
+        /// font family being equal to <see cref="GenericFontFamily.Monospace"/> because native
+        /// platform-specific functions are used for the check (resulting in a more accurate
+        /// return value).
+        /// </remarks>
+        public bool IsFixedWidth => NativeFont.IsFixedWidth();
+
+        /// <summary>
+        /// Gets the font weight.
+        /// </summary>
+        /// <returns></returns>
+        public FontWeight Weight => (FontWeight)NativeFont.GetWeight();
+
+        /// <summary>
         /// Returns bold version of the font.
         /// </summary>
         [Browsable(false)]
@@ -100,7 +139,7 @@ namespace Alternet.Drawing
                 if (IsBold)
                     return this;
 
-                if(asBold == null)
+                if (asBold == null)
                     asBold = new(FontFamily, SizeInPoints, FontStyle.Bold);
 
                 return asBold;
@@ -162,7 +201,7 @@ namespace Alternet.Drawing
         /// </summary>
         /// <value><c>true</c> if this <see cref="Font"/> has a horizontal
         /// line through it; otherwise, <c>false</c>.</value>
-        public bool IsStrikethrough => (Style & FontStyle.Strikethrough) != 0;
+        public bool IsStrikethrough => NativeFont.GetStrikethrough();
 
         /// <summary>
         /// Gets a value that indicates whether this <see cref="Font"/>
@@ -170,7 +209,7 @@ namespace Alternet.Drawing
         /// </summary>
         /// <value><c>true</c> if this <see cref="Font"/> is underlined;
         /// otherwise, <c>false</c>.</value>
-        public bool IsUnderlined => (Style & FontStyle.Underlined) != 0;
+        public bool IsUnderlined => NativeFont.GetUnderlined();
 
         /// <summary>
         /// Gets the em-size, in points, of this <see cref="Font"/>.
@@ -213,6 +252,23 @@ namespace Alternet.Drawing
                 return NativeFont.Name;
             }
         }
+
+        /// <summary>
+        /// Gets or sets the default font encoding.
+        /// </summary>
+        internal static int DefaultEncoding
+        {
+            get => UI.Native.Font.GetDefaultEncoding();
+            set => UI.Native.Font.SetDefaultEncoding(value);
+        }
+
+        /// <summary>
+        /// Returns the encoding of this font.
+        /// </summary>
+        /// <remarks>
+        /// Note that under Linux the returned value is always UTF8.
+        /// </remarks>
+        internal int Encoding => NativeFont.GetEncoding();
 
         internal UI.Native.Font NativeFont { get; private set; }
 

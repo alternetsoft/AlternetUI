@@ -1,9 +1,23 @@
-﻿using System;
+﻿#pragma warning disable
+using System;
+using Alternet.Drawing;
 
 namespace NativeApi.Api
 {
+    // https://docs.wxwidgets.org/3.2/classwx_font.html
     public class Font
     {
+        public Int32Size GetPixelSize() => default;
+        public bool IsUsingSizeInPixels() => default;
+        public int GetNumericWeight() => default;
+        public bool GetUnderlined() => default;
+        public bool GetStrikethrough() => default;
+        public int GetEncoding() => default;
+        public bool IsFixedWidth() => default;
+        public static int GetDefaultEncoding() => default;
+        public static void SetDefaultEncoding(int encoding) { }
+        public int GetWeight() => default;
+
         public void Initialize(GenericFontFamily genericFamily, string? familyName, double emSizeInPoints, FontStyle style) => throw new Exception();
         public void InitializeWithDefaultFont() => throw new Exception();
 

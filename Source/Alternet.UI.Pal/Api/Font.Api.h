@@ -53,6 +53,56 @@ ALTERNET_UI_API void Font_CloseFamiliesArray_(void* array)
     Font::CloseFamiliesArray(array);
 }
 
+ALTERNET_UI_API Int32Size_C Font_GetPixelSize_(Font* obj)
+{
+    return obj->GetPixelSize();
+}
+
+ALTERNET_UI_API c_bool Font_IsUsingSizeInPixels_(Font* obj)
+{
+    return obj->IsUsingSizeInPixels();
+}
+
+ALTERNET_UI_API int Font_GetNumericWeight_(Font* obj)
+{
+    return obj->GetNumericWeight();
+}
+
+ALTERNET_UI_API c_bool Font_GetUnderlined_(Font* obj)
+{
+    return obj->GetUnderlined();
+}
+
+ALTERNET_UI_API c_bool Font_GetStrikethrough_(Font* obj)
+{
+    return obj->GetStrikethrough();
+}
+
+ALTERNET_UI_API int Font_GetEncoding_(Font* obj)
+{
+    return obj->GetEncoding();
+}
+
+ALTERNET_UI_API c_bool Font_IsFixedWidth_(Font* obj)
+{
+    return obj->IsFixedWidth();
+}
+
+ALTERNET_UI_API int Font_GetDefaultEncoding_()
+{
+    return Font::GetDefaultEncoding();
+}
+
+ALTERNET_UI_API void Font_SetDefaultEncoding_(int encoding)
+{
+    Font::SetDefaultEncoding(encoding);
+}
+
+ALTERNET_UI_API int Font_GetWeight_(Font* obj)
+{
+    return obj->GetWeight();
+}
+
 ALTERNET_UI_API void Font_Initialize_(Font* obj, GenericFontFamily genericFamily, const char16_t* familyName, double emSizeInPoints, FontStyle style)
 {
     obj->Initialize(genericFamily, ToOptional(familyName), emSizeInPoints, style);

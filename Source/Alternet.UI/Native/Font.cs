@@ -88,6 +88,64 @@ namespace Alternet.UI.Native
             
         }
         
+        public Alternet.Drawing.Int32Size GetPixelSize()
+        {
+            CheckDisposed();
+            return NativeApi.Font_GetPixelSize_(NativePointer);
+        }
+        
+        public bool IsUsingSizeInPixels()
+        {
+            CheckDisposed();
+            return NativeApi.Font_IsUsingSizeInPixels_(NativePointer);
+        }
+        
+        public int GetNumericWeight()
+        {
+            CheckDisposed();
+            return NativeApi.Font_GetNumericWeight_(NativePointer);
+        }
+        
+        public bool GetUnderlined()
+        {
+            CheckDisposed();
+            return NativeApi.Font_GetUnderlined_(NativePointer);
+        }
+        
+        public bool GetStrikethrough()
+        {
+            CheckDisposed();
+            return NativeApi.Font_GetStrikethrough_(NativePointer);
+        }
+        
+        public int GetEncoding()
+        {
+            CheckDisposed();
+            return NativeApi.Font_GetEncoding_(NativePointer);
+        }
+        
+        public bool IsFixedWidth()
+        {
+            CheckDisposed();
+            return NativeApi.Font_IsFixedWidth_(NativePointer);
+        }
+        
+        public static int GetDefaultEncoding()
+        {
+            return NativeApi.Font_GetDefaultEncoding_();
+        }
+        
+        public static void SetDefaultEncoding(int encoding)
+        {
+            NativeApi.Font_SetDefaultEncoding_(encoding);
+        }
+        
+        public int GetWeight()
+        {
+            CheckDisposed();
+            return NativeApi.Font_GetWeight_(NativePointer);
+        }
+        
         public void Initialize(GenericFontFamily genericFamily, string? familyName, double emSizeInPoints, FontStyle style)
         {
             CheckDisposed();
@@ -154,6 +212,36 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Font_CloseFamiliesArray_(System.IntPtr array);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern Alternet.Drawing.Int32Size Font_GetPixelSize_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool Font_IsUsingSizeInPixels_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int Font_GetNumericWeight_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool Font_GetUnderlined_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool Font_GetStrikethrough_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int Font_GetEncoding_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool Font_IsFixedWidth_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int Font_GetDefaultEncoding_();
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Font_SetDefaultEncoding_(int encoding);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int Font_GetWeight_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Font_Initialize_(IntPtr obj, GenericFontFamily genericFamily, string? familyName, double emSizeInPoints, FontStyle style);
