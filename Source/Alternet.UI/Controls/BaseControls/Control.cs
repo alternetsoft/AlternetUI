@@ -51,6 +51,7 @@ namespace Alternet.UI
         private static readonly Size DefaultSize = Size.NaN;
         private static int groupIndexCounter;
 
+        private IFlagsAndAttributes? flagsAndAttributes;
         private MouseButtonEventArgs? dragEventArgs;
         private Point dragEventMousePos;
         private IComponentDesigner? designer;
@@ -307,6 +308,18 @@ namespace Alternet.UI
                     Handler.NativeControl?.SetCursor(default);
                 else
                     Handler.NativeControl?.SetCursor(cursor.Handle);
+            }
+        }
+
+        /// <summary>
+        /// Gets custom flags and attributes provider associated with the control.
+        /// You can store any custom data here.
+        /// </summary>
+        public IFlagsAndAttributes FlagsAndAttributes
+        {
+            get
+            {
+                return flagsAndAttributes ??= Factory.CreateFlagsAndAttributes();
             }
         }
 
