@@ -604,7 +604,9 @@ namespace ControlsSample
 
             r.WriteText("What can you do with this thing? ");
 
-            r.WriteImage(KnownSvgImages.GetForSize(24).ImgMessageBoxInformation.AsImage(24)!);
+            r.WriteImage(KnownSvgImages.GetForSize(
+                r.GetSvgColor(KnownSvgColor.Normal),
+                24).ImgMessageBoxInformation.AsImage(24)!);
             r.WriteText(" Well, you can change text ");
 
             r.BeginTextColor(Color.Red);

@@ -14,6 +14,9 @@ namespace Alternet.UI
     {
         private static readonly AdvDictionary<Int32Size, KnownSvgImages> Images = new();
 
+        private readonly Int32Size size;
+        private readonly Color color;
+
         private ImageSet? imgBrowserBack;
         private ImageSet? imgBrowserForward;
         private ImageSet? imgZoomIn;
@@ -38,16 +41,26 @@ namespace Alternet.UI
         private ImageSet? imgUndo;
         private ImageSet? imgRedo;
 
-        private Int32Size size;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="KnownSvgImages"/> class.
         /// </summary>
         /// <param name="size">Images size.</param>
-        public KnownSvgImages(Int32Size size)
+        /// <param name="color">Images color.</param>
+        public KnownSvgImages(Color color, Int32Size size)
         {
             this.size = size;
+            this.color = color;
         }
+
+        /// <summary>
+        /// Gets images color.
+        /// </summary>
+        public Color Color => color;
+
+        /// <summary>
+        /// Gets images size.
+        /// </summary>
+        public Int32Size Size => size;
 
         /// <summary>
         /// Gets or sets image that can be used in "Back" toolbar buttons
@@ -263,9 +276,10 @@ namespace Alternet.UI
         /// Gets <see cref="KnownSvgImages"/> for the specified bitmap size.
         /// </summary>
         /// <param name="size">Image size.</param>
-        public static KnownSvgImages GetForSize(Int32Size size)
+        /// <param name="color">Image color.</param>
+        public static KnownSvgImages GetForSize(Color color, Int32Size size)
         {
-            var images = Images.GetOrCreate(size, () => new KnownSvgImages(size));
+            var images = Images.GetOrCreate(size, () => new KnownSvgImages(color, size));
             return images;
         }
 
@@ -273,16 +287,19 @@ namespace Alternet.UI
         /// Gets <see cref="KnownSvgImages"/> for the specified bitmap size.
         /// </summary>
         /// <param name="size">Image size.</param>
-        public static KnownSvgImages GetForSize(int size) => GetForSize(new Int32Size(size));
+        /// <param name="color">Image color.</param>
+        public static KnownSvgImages GetForSize(Color color, int size)
+            => GetForSize(color, new Int32Size(size));
 
         /// <summary>
         /// Gets <see cref="KnownSvgImages.ImgMessageBoxWarning"/> image for the specified bitmap size.
         /// </summary>
         /// <param name="size">Image size.</param>
-        public static Image? GetWarningImage(int? size = null)
+        /// <param name="color">Image color.</param>
+        public static Image? GetWarningImage(Color color, int? size = null)
         {
             size ??= Toolbar.GetDefaultImageSize().Width;
-            var imageSet = GetForSize(size.Value).ImgMessageBoxWarning;
+            var imageSet = GetForSize(color, size.Value).ImgMessageBoxWarning;
             var image = imageSet.AsImage(size.Value);
             return image;
         }

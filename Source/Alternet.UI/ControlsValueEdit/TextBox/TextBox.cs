@@ -1108,7 +1108,8 @@ namespace Alternet.UI
         /// <param name="picture"></param>
         public static void InitErrorPicture(PictureBox picture)
         {
-            picture.Image = KnownSvgImages.GetWarningImage();
+            picture.Image = KnownSvgImages.GetWarningImage(
+                picture.GetSvgColor(KnownSvgColor.Normal));
             picture.VerticalAlignment = VerticalAlignment.Center;
             picture.ImageVisible = false;
             picture.ImageStretch = false;

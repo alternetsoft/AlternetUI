@@ -260,7 +260,9 @@ namespace Alternet.UI
             var toolbar = Toolbar;
             var imageSize = GetToolBitmapSize();
 
-            var images = KnownSvgImages.GetForSize(imageSize);
+            var images = KnownSvgImages.GetForSize(
+                toolbar.GetSvgColor(KnownSvgColor.Normal),
+                imageSize);
 
             buttonIdBack = toolbar.AddTool(
                 CommonStrings.Default.ButtonBack,

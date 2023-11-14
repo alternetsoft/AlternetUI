@@ -1600,6 +1600,11 @@ namespace Alternet.UI
             return ControlHandler.GetFocusedControl();
         }
 
+        public Color GetSvgColor(KnownSvgColor knownSvgColor)
+        {
+            return SvgColors.GetSvgColor(knownSvgColor, this.IsDarkBackground);
+        }
+
         /// <summary>
         /// Generates new group index.
         /// </summary>

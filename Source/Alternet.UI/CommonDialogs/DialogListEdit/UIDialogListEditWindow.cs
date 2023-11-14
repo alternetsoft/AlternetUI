@@ -92,7 +92,9 @@ namespace Alternet.UI
             var imageSize = Toolbar.GetDefaultImageSize(this);
             toolbar.ToolBitmapSize = imageSize;
 
-            var images = KnownSvgImages.GetForSize(imageSize);
+            var images = KnownSvgImages.GetForSize(
+                toolbar.GetSvgColor(KnownSvgColor.Normal),
+                imageSize);
 
             buttonIdAdd = toolbar.AddTool(
                 CommonStrings.Default.ButtonAdd,
