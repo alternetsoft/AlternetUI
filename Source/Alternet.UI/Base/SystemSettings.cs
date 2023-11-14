@@ -66,6 +66,24 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Logs <see cref="SystemSettings"/>.
+        /// </summary>
+        public static void Log()
+        {
+            Application.LogBeginSection();
+            Application.Log($"IsDark = {AppearanceIsDark}");
+            Application.Log($"IsUsingDarkBackground = {IsUsingDarkBackground}");
+            Application.Log($"AppearanceName = {AppearanceName}");
+
+            foreach(SystemSettingsFeature item in Enum.GetValues(typeof(SystemSettingsFeature)))
+            {
+                Application.Log($"HasFeature({item}) = {HasFeature(item)}");
+            }
+
+            Application.LogEndSection();
+        }
+
+        /// <summary>
         /// Returns <c>true</c> if the port has certain feature.
         /// </summary>
         /// <param name="index">System feature identifier.</param>
