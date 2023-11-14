@@ -38,6 +38,15 @@ namespace Alternet.UI
             AddAction("Log font families", LogUtils.LogFontFamilies);
             AddAction("Log system fonts", SystemSettings.LogSystemFonts);
             AddAction("Log display info", Display.Log);
+            AddAction("HookExceptionEvents()", DebugUtils.HookExceptionEvents);
+            AddAction("GetUsefulDefines()", GetUsefulDefines);
+
+            void GetUsefulDefines()
+            {
+                var s = WebBrowser.DoCommandGlobal("GetUsefulDefines");
+                var splitted = s?.Split(' ');
+                LogUtils.LogAsSection(splitted);
+            }
         }
     }
 }
