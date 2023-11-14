@@ -50,6 +50,20 @@ namespace Alternet.UI
         public event UrlEventHandler? TextUrl;
 
         /// <summary>
+        /// Gets or sets default url color. This color looks good
+        /// on white background. This property was added for the convenience and currently is used
+        /// only <see cref="CreateUrlAttr"/>.
+        /// </summary>
+        public static Color DefaultUrlColorOnWhite { get; set; } = Color.Blue;
+
+        /// <summary>
+        /// Gets or sets default url color for the dark color scheme. This color looks good
+        /// on dark background. This property was added for the convenience and currently is used
+        /// only <see cref="CreateUrlAttr"/>.
+        /// </summary>
+        public static Color DefaultUrlColorOnBlack { get; set; } = Color.FromRgb(156, 220, 254);
+
+        /// <summary>
         /// Gets or sets a value indicating whether urls in the input text
         /// are opened in the default browser.
         /// </summary>
@@ -2043,6 +2057,19 @@ namespace Alternet.UI
                 (int)flags,
                 startFrom,
                 specifiedLevel);
+        }
+
+        /// <summary>
+        /// Creates default style for the urls.
+        /// </summary>
+        /// <returns></returns>
+        public ITextBoxRichAttr CreateUrlAttr()
+        {
+            var urlStyle = CreateRichAttr();
+            var color = IsDarkBackground ? DefaultUrlColorOnBlack : DefaultUrlColorOnWhite;
+
+            urlStyle.SetTextColor(color).SetFontUnderlined(true);
+            return urlStyle;
         }
 
         /// <summary>
