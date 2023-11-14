@@ -1,8 +1,8 @@
 #!/bin/bash
+echo ===================
 set -euo pipefail
 
 pushd $1
-
 
 rm -rf bin/Debug/*.*
 rm -rf bin/Release/*.*
