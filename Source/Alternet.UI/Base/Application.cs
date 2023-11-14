@@ -559,6 +559,14 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Logs separator.
+        /// </summary>
+        public static void LogSeparator()
+        {
+            Log(LogUtils.SectionSeparator);
+        }
+
+        /// <summary>
         /// Ends log section.
         /// </summary>
         public static void LogEndSection()
