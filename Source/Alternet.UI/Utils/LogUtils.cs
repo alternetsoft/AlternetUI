@@ -59,6 +59,8 @@ namespace Alternet.UI
             LogToFile("Font Families:");
             LogToFile(s);
             LogToFile(SectionSeparator);
+
+            Application.Log("FontFamilies logged to file.");
         }
 
         /// <summary>
@@ -93,7 +95,8 @@ namespace Alternet.UI
             var net = $"Net: {Environment.Version}";
             var dpi = $"DPI: {Application.FirstWindow()?.GetDPI().Width}";
             var ui = $"UI: {WebBrowser.DoCommandGlobal("UIVersion")}";
-            Application.Log($"{ui}, {net}, {wxWidgets}, {dpi}");
+            var s = $"{ui}, {net}, {wxWidgets}, {dpi}";
+            Application.Log(s);
         }
 
         /// <summary>
