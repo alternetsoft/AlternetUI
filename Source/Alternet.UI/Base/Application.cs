@@ -112,6 +112,12 @@ namespace Alternet.UI
         public event EventHandler<LogMessageEventArgs>? LogMessage;
 
         /// <summary>
+        /// Gets or sets whether to call <see cref="Debug.WriteLine(string)"/> when\
+        /// <see cref="Application.Log"/> is called. Default is <c>false</c>.
+        /// </summary>
+        public static bool DebugWriteLine { get; set; } = false;
+
+        /// <summary>
         /// Gets or sets application log file path.
         /// </summary>
         /// <remarks>
@@ -490,7 +496,8 @@ namespace Alternet.UI
 
             foreach (string s2 in result)
             {
-                Debug.WriteLine(s2);
+                if(DebugWriteLine)
+                    Debug.WriteLine(s2);
 
                 if(evt is not null)
                 {
@@ -541,6 +548,22 @@ namespace Alternet.UI
             if (windows.Count == 0)
                 return null;
             return windows[0] as T;
+        }
+
+        /// <summary>
+        /// Begins log section.
+        /// </summary>
+        public static void LogBeginSection()
+        {
+            Log(LogUtils.SectionSeparator);
+        }
+
+        /// <summary>
+        /// Ends log section.
+        /// </summary>
+        public static void LogEndSection()
+        {
+            Log(LogUtils.SectionSeparator);
         }
 
         /// <summary>
