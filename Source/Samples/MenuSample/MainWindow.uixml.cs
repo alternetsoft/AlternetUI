@@ -9,6 +9,7 @@ namespace MenuSample
     public partial class MainWindow : Window
     {
         private const string ResPrefix = "embres:MenuSample.Resources.Icons.Small.";
+        private readonly int dynamicToolbarItemsSeparatorIndex;
         private readonly CardPanelHeader panelHeader = new();
         private int newItemIndex = 0;
         Toolbar? toolbar;
@@ -24,6 +25,7 @@ namespace MenuSample
         {
             Icon = ImageSet.FromUrlOrNull("embres:MenuSample.Sample.ico");
             InitializeComponent();
+            eventsListBox.BindApplicationLog();
             InitToolbar();
 
             SaveCommand = new Command(o => LogEvent("Save"), o => saveEnabledMenuItem.Checked);
@@ -37,16 +39,10 @@ namespace MenuSample
                 toolbar!.Items.IndexOf(dynamicToolbarItemsSeparator!);
             AddDynamicToolbarItem();
 
-            clockStatusBarPanelIndex = statusBar!.Panels.IndexOf(clockStatusBarPanel!);
-            AddDynamicStatusBarPanel();
-
             foreach (var value in Enum.GetValues(typeof(ToolbarImageToText)))
                 imageToTextDisplayModeComboBox.Items.Add(value!);
             imageToTextDisplayModeComboBox.SelectedItem = 
                 ToolbarImageToText.Horizontal;
-
-            clockTimer = new Timer(TimeSpan.FromMilliseconds(200), TimerEvent);
-            clockTimer.Start();
 
             this.Closing += MainWindow_Closing;
 
@@ -56,12 +52,55 @@ namespace MenuSample
             contextMenuLabel.Font = Control.DefaultFont.AsBold;
             contextMenuBorder.PerformLayout();
 
+         /*   ControlSet.New(
+                statusAddButton,
+                showSizingGripButton,
+                statusRemoveButton,
+                statusClearButton,
+                statusNullButton,
+                statusRecreateButton).SuggestedWidthToMax();*/
+
             panelHeader.Add("Menu", menuPanel);
             panelHeader.Add("ToolBar", toolbarPanel);
             panelHeader.Add("StatusBar", statusPanel);
-            mainPanel.Children.Insert(0, panelHeader);
-            panelHeader.SelectedTab = panelHeader.Tabs[0];
+            mainPanel.Children.Prepend(panelHeader);
+            panelHeader.SelectFirstTab();
 
+            statusClearButton.Click += StatusClearButton_Click;
+            statusNullButton.Click += StatusNullButton_Click;
+            statusRecreateButton.Click += StatusRecreateButton_Click;
+            statusAddButton.Click += StatusAddButton_Click;
+            statusRemoveButton.Click += StatusRemoveButton_Click;
+
+            eventsListBox.ContextMenu.Required();
+        }
+
+        private void StatusAddButton_Click(object? sender, System.EventArgs e)
+        {
+            StatusBar ??= new();
+            StatusBar?.Add($"Panel {GenItemIndex()}");
+        }
+
+        private void StatusRemoveButton_Click(object? sender, System.EventArgs e)
+        {
+            StatusBar?.Panels.RemoveLast();
+        }
+
+        private void StatusRecreateButton_Click(object? sender, EventArgs e)
+        {
+            StatusBar ??= new();
+            StatusBar?.Add($"Panel {GenItemIndex()}");
+            StatusBar?.Add($"Panel {GenItemIndex()}");
+        }
+
+        private void StatusNullButton_Click(object? sender, EventArgs e)
+        {
+            StatusBar = null;
+        }
+
+        private void StatusClearButton_Click(object? sender, EventArgs e)
+        {
+            StatusBar?.Panels.Clear();
         }
 
         private void ImageTextVertical()
@@ -86,19 +125,7 @@ namespace MenuSample
 
         private void MainWindow_Closing(object? sender, WindowClosingEventArgs e)
         {
-            clockTimer.Stop();
         }
-
-        private void TimerEvent(object? sender, EventArgs e)
-        {
-            if (this.IsDisposed || statusBar!.IsDisposed)
-                return;
-            clockStatusBarPanel.Text = System.DateTime.Now.ToString("HH:mm:ss");
-        }
-
-        readonly Timer clockTimer;
-        readonly int dynamicToolbarItemsSeparatorIndex;
-        readonly int clockStatusBarPanelIndex;
 
         private void InitToolbar()
         {
@@ -410,35 +437,16 @@ namespace MenuSample
             toolbar!.ImageToText = (ToolbarImageToText)imageToTextDisplayModeComboBox.SelectedItem!;
         }
 
-        private void AddDynamicStatusBarPanelButton_Click(object sender, System.EventArgs e)
-        {
-            AddDynamicStatusBarPanel();
-        }
-
-        private void RemoveLastDynamicStatusBarPanelButton_Click(object? sender, System.EventArgs e)
-        {
-            if (statusBar!.Panels.Count == clockStatusBarPanelIndex + 1)
-                return;
-            statusBar.Panels.RemoveAt(statusBar.Panels.Count - 1);
-        }
-
-        private void AddDynamicStatusBarPanel()
-        {
-            int number = GenItemIndex();
-            string text = "Panel " + number;
-            statusBar.Panels.Add(new StatusBarPanel(text));
-        }
-
         private int GenItemIndex()
         {
             newItemIndex++;
             return newItemIndex;
         }
 
-        private void ShowSizingGripCheckBox_CheckedChanged(object? sender, System.EventArgs e)
+        private void ShowSizingGripButton_Click(object? sender, EventArgs e)
         {
-            if(statusBar!=null)
-                statusBar.SizingGripVisible = showSizingGripCheckBox.IsChecked;
+            if (StatusBar != null)
+                StatusBar.SizingGripVisible = !StatusBar.SizingGripVisible;
         }
     }
 }

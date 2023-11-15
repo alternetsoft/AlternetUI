@@ -50,9 +50,8 @@
     </Toolbar>
   </Window.Toolbar>
   <Window.StatusBar>
-    <StatusBar Name="statusBar">
+    <StatusBar>
       <StatusBarPanel Text="Ready" />
-      <StatusBarPanel Name="clockStatusBarPanel" />
     </StatusBar>
   </Window.StatusBar>
 
@@ -157,31 +156,31 @@
           </StackPanel>
         </HorizontalStackPanel>
         <!-- ========================= -->
-        <StackPanel Padding="5"  VerticalAlignment="Top"
-                  Margin="5,5,10,5" Visible="false" Name="statusPanel" HorizontalAlignment="Left">
-          <CheckBox
-            Text="Show Grip"
-            Name="showSizingGripCheckBox"
-            CheckedChanged="ShowSizingGripCheckBox_CheckedChanged"
-            Margin="0,0,0,10" IsChecked="True" />
+        <HorizontalStackPanel Padding="5"  VerticalAlignment="Top"
+                  Margin="5,5,5,5" Visible="false" Name="statusPanel">
+          <VerticalStackPanel>
+            <Button Text="Add item" Name="statusAddButton" Margin="0,0,0,10" />
+            <Button Text="Remove item" Name="statusRemoveButton" Margin="0,0,0,10" />
+            <Button
+              Text="Toggle Grip"
+              Name="showSizingGripButton"
+              Click="ShowSizingGripButton_Click"
+              Margin="0,0,0,10"/>
+          </VerticalStackPanel>
 
-          <Button Text="Add item"
-                  Name="addDynamicStatusBarPanelButton"
-                  Click="AddDynamicStatusBarPanelButton_Click"
-                  Margin="0,0,0,10" />
-
-          <Button Text="Remove item"
-                  Name="removeLastDynamicStatusBarPanelButton"
-                  Click="RemoveLastDynamicStatusBarPanelButton_Click"
-                  Margin="0,0,0,10" />
-        </StackPanel>
+          <VerticalStackPanel Margin="5,0,0,0">
+            <Button Text="Clear" Margin="0,0,0,10" Name="statusClearButton"/>
+            <Button Text="Null" Margin="0,0,0,10" Name="statusNullButton"/>
+            <Button Text="Recreate" Margin="0,0,0,10" Name="statusRecreateButton"/>
+          </VerticalStackPanel>
+        </HorizontalStackPanel>
         <!-- ========================= -->
 
       </StackPanel>
 
     </Border>
 
-    <ListBox Name="eventsListBox" Margin="10,5,10,10" MinHeight="200"/>
+    <LogListBox Name="eventsListBox" Margin="10,5,10,10" MinHeight="200"/>
   </VerticalStackPanel>
 
 </Window>
