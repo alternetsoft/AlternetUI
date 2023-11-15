@@ -172,6 +172,7 @@ namespace WindowPropertiesSample
 
             setIcon1Button.Enabled = haveTestWindow;
             setIcon2Button.Enabled = haveTestWindow;
+            clearIconButton.Enabled = haveTestWindow;
 
             UpdateActiveWindowInfoLabel();
         }
@@ -313,6 +314,12 @@ namespace WindowPropertiesSample
         {
             if (testWindow != null)
                 testWindow.Icon = Icons.Icon2;
+        }
+
+        private void ClearIconButton_Click(object sender, EventArgs e)
+        {
+            if (testWindow != null)
+                testWindow.Icon = null;
         }
 
         private void SetSizeButton_Click(object sender, EventArgs e)

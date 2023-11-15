@@ -41,23 +41,23 @@
       </HorizontalStackPanel>
       <!-- ========================= -->
       <HorizontalStackPanel Name="settingsPanel" Visible="false">
-          <StackPanel Padding="10" >
-            <CheckBox Text="Show In Taskbar" Name="showInTaskBarCheckBox"
-                      CheckedChanged="ShowInTaskBarCheckBox_CheckedChanged"
-                IsChecked="True" Margin="0,0,0,5"/>
-            <CheckBox Text="Can Minimize" Name="minimizeEnabledCheckBox"
-                      CheckedChanged="MinimizeEnabledCheckBox_CheckedChanged"
-                IsChecked="True" Margin="0,0,0,5"/>
-            <CheckBox Text="Can Maximize" Name="maximizeEnabledCheckBox"
-                      CheckedChanged="MaximizeEnabledCheckBox_CheckedChanged"
-                IsChecked="True" Margin="0,0,0,5"/>
-            <CheckBox Text="Can Close" Name="closeEnabledCheckBox"
-                      CheckedChanged="CloseEnabledCheckBox_CheckedChanged"
-                IsChecked="True" Margin="0,0,0,5"/>
+        <StackPanel Padding="10" >
+          <CheckBox Text="Show In Taskbar" Name="showInTaskBarCheckBox"
+                    CheckedChanged="ShowInTaskBarCheckBox_CheckedChanged"
+              IsChecked="True" Margin="0,0,0,5"/>
+          <CheckBox Text="Can Minimize" Name="minimizeEnabledCheckBox"
+                    CheckedChanged="MinimizeEnabledCheckBox_CheckedChanged"
+              IsChecked="True" Margin="0,0,0,5"/>
+          <CheckBox Text="Can Maximize" Name="maximizeEnabledCheckBox"
+                    CheckedChanged="MaximizeEnabledCheckBox_CheckedChanged"
+              IsChecked="True" Margin="0,0,0,5"/>
+          <CheckBox Text="Can Close" Name="closeEnabledCheckBox"
+                    CheckedChanged="CloseEnabledCheckBox_CheckedChanged"
+              IsChecked="True" Margin="0,0,0,5"/>
 
-            <CheckBox Text="Always On Top" Name="alwaysOnTopCheckBox" Margin="0,0,0,5"
-              CheckedChanged="AlwaysOnTopCheckBox_CheckedChanged" IsChecked="False" />
-          </StackPanel>
+          <CheckBox Text="Always On Top" Name="alwaysOnTopCheckBox" Margin="0,0,0,5"
+            CheckedChanged="AlwaysOnTopCheckBox_CheckedChanged" IsChecked="False" />
+        </StackPanel>
 
         <StackPanel Padding="10" >
           <CheckBox Text="Tool Window" Name="isToolWindowCheckBox" Margin="0,0,0,5"
@@ -71,19 +71,22 @@
         </StackPanel>
 
         <StackPanel Padding="10" >
-            <Label Text="Window State:" Margin="0,0,0,3"/>
-            <ComboBox IsEditable="false" Name="stateComboBox"
-                SelectedItemChanged="StateComboBox_SelectedItemChanged"/>
-            <CheckBox Text="Hide Window" Name="hideWindowCheckBox" Margin="0,10,0,0"
-                CheckedChanged="HideWindowCheckBox_CheckedChanged"/>
-          </StackPanel>
+          <Label Text="Window State:" Margin="0,0,0,3"/>
+          <ComboBox IsEditable="false" Name="stateComboBox"
+              SelectedItemChanged="StateComboBox_SelectedItemChanged"/>
+          <CheckBox Text="Hide Window" Name="hideWindowCheckBox" Margin="0,10,0,0"
+              CheckedChanged="HideWindowCheckBox_CheckedChanged"/>
+        </StackPanel>
 
-          <GroupBox Title="Icon"  Margin="5" VerticalAlignment="Top">
-            <HorizontalStackPanel Padding="10" >
+        <GroupBox Title="Icon"  Margin="5" VerticalAlignment="Top" Padding="5">
+          <VerticalStackPanel>
+            <HorizontalStackPanel Margin="0,0,0,5">
               <Button Text="Set 1" Name="setIcon1Button" Click="SetIcon1Button_Click"/>
               <Button Text="Set 2" Name="setIcon2Button" Click="SetIcon2Button_Click" />
             </HorizontalStackPanel>
-          </GroupBox>
+            <Button Text="Clear" Name="clearIconButton" Click="ClearIconButton_Click"/>
+          </VerticalStackPanel>
+        </GroupBox>
       </HorizontalStackPanel>
 
       <!-- ========================= -->

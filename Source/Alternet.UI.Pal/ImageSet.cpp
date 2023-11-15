@@ -68,9 +68,9 @@ namespace Alternet::UI
 		_bitmapBundle = Image::CreateFromSvgStream(stream, width, height, color);
 	}
 
-	wxIconBundle* ImageSet::GetIconBundle()
+	wxIconBundle ImageSet::GetIconBundle()
 	{
-		return &_iconBundle;
+		return _iconBundle;
 	}
 	
 	void ImageSet::InitImage(Image* image, int width, int height)

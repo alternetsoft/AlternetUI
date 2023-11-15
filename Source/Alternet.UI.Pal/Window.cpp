@@ -454,15 +454,6 @@ namespace Alternet::UI
         }
     }
 
-    void Window::ApplyIcon(Frame* value)
-    {
-        // From wxWidgets code:
-        // FIXME: SetIcons(wxNullIconBundle) should unset existing icons,
-        //        but we currently don't do that
-
-        value->SetIcons(_icon == nullptr ? wxNullIconBundle : *(_icon->GetIconBundle()));
-    }
-
     string Window::GetTitle()
     {
         return _title.Get();
@@ -746,13 +737,32 @@ namespace Alternet::UI
 
     void Window::SetIcon(ImageSet* value)
     {
+        if (_icon == value)
+            return;
         if (_icon != nullptr)
             _icon->Release();
         _icon = value;
         if (_icon != nullptr)
             _icon->AddRef();
         if (IsWxWindowCreated())
-            ApplyIcon(GetFrame());
+        {
+            if(_icon == nullptr)
+                ScheduleRecreateWxWindow();
+            else
+                ApplyIcon(GetFrame());
+        }
+    }
+
+    void Window::ApplyIcon(Frame* value)
+    {
+        if (_icon == nullptr)
+        {
+
+        }
+        else
+        {
+            value->SetIcons(ImageSet::IconBundle(_icon));
+        }
     }
 
     WindowState Window::GetState()
