@@ -313,6 +313,9 @@ namespace Alternet.UI
             return image;
         }
 
+        /// <summary>
+        /// Gets all images in <see cref="KnownSvgImages"/>.
+        /// </summary>
         public IEnumerable<ImageSet> GetAllImages()
         {
             List<ImageSet> result = new();
