@@ -6,8 +6,8 @@
 #include "wx/wxprec.h"
 #include "wx/rawbmp.h"
 
-#include "nanosvg/src/nanosvg.h"
-#include "nanosvg/src/nanosvgrast.h"
+#include "../../External/WxWidgets/3rdparty/nanosvg/src/nanosvg.h"
+#include "../../External/WxWidgets/3rdparty/nanosvg/src/nanosvgrast.h"
 
 namespace Alternet::UI
 {
