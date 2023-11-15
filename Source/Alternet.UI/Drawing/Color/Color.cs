@@ -910,6 +910,11 @@ namespace Alternet.Drawing
         public string RGBHex => $"#{RHex}{GHex}{BHex}";
 
         /// <summary>
+        /// Gets <c>true</c> if this color is black.
+        /// </summary>
+        public bool IsBlack => EqualARGB(Color.Black);
+
+        /// <summary>
         /// Gets a value indicating whether this <see cref="Color"/> structure is
         /// a named color or a member of the <see cref="KnownColor"/> enumeration.
         /// </summary>
@@ -1449,11 +1454,6 @@ namespace Alternet.Drawing
         /// <returns><c>true</c> if ARGB of the colors are equal;
         /// otherwise, <c>false</c>.</returns>
         public bool EqualARGB(Color other) => Value == other.Value;
-
-        /// <summary>
-        /// Gets <c>true</c> if this color is black.
-        /// </summary>
-        public bool IsBlack => EqualARGB(Color.Black);
 
         /// <summary>
         /// Serves as the default hash function.
