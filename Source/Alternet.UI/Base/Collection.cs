@@ -173,6 +173,24 @@ namespace Alternet.Base.Collections
         }
 
         /// <summary>
+        /// Removes the last item from the collection.
+        /// </summary>
+        public void RemoveLast()
+        {
+            if (Count > 0)
+                RemoveAt(Count - 1);
+        }
+
+        /// <summary>
+        /// Removes the first item from the collection.
+        /// </summary>
+        public void RemoveFirst()
+        {
+            if (Count > 0)
+                RemoveAt(0);
+        }
+
+        /// <summary>
         /// Same as adding of the item, but prepends the items to the beginning of the
         /// list of items owned by this collection.
         /// </summary>
