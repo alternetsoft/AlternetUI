@@ -46,11 +46,13 @@ namespace Alternet::UI
 
     wxWindow* ColorPicker::CreateWxWindowCore(wxWindow* parent)
     {
+        long style = wxCLRP_DEFAULT_STYLE;
+
         auto value = new wxColourPickerCtrl2(parent, wxID_ANY,
             *wxBLACK,
             wxDefaultPosition,
             wxDefaultSize,
-            wxCLRP_DEFAULT_STYLE,
+            style,
             wxDefaultValidator,
             wxASCII_STR(wxColourPickerCtrlNameStr));
 
