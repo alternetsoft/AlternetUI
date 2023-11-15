@@ -12,20 +12,59 @@ namespace Alternet.UI
     /// </summary>
     public class SvgColors
     {
-        public static SvgColors BlackScheme { get; } = new SvgColorsBlack();
+        /// <summary>
+        /// Gets known svg colors for the dark scheme.
+        /// </summary>
+        public static SvgColors DarkScheme { get; } = new SvgColorsDark();
 
+        /// <summary>
+        /// Gets known svg colors for the white scheme.
+        /// </summary>
         public static SvgColors WhiteScheme { get; } = new SvgColorsWhite();
 
+        /// <summary>
+        /// Normal svg color.
+        /// </summary>
         public Color Normal { get; set; }
 
+        /// <summary>
+        /// Disabled svg color.
+        /// </summary>
         public Color Disabled { get; set; }
 
+        /// <summary>
+        /// Error svg color.
+        /// </summary>
         public Color Error { get; set; }
 
+        /// <summary>
+        /// Information svg color.
+        /// </summary>
         public Color Information { get; set; }
 
+        /// <summary>
+        /// Warning svg color.
+        /// </summary>
         public Color Warning { get; set; }
 
+        /// <summary>
+        /// Gets known svg color for the specified <see cref="KnownSvgColor"/>.
+        /// </summary>
+        /// <param name="knownSvgColor">Known Svg color identifier.</param>
+        /// <param name="isDark">Chooses <see cref="DarkScheme"/>
+        /// or <see cref="WhiteScheme"/>.</param>
+        public static Color GetSvgColor(KnownSvgColor knownSvgColor, bool isDark)
+        {
+            if (isDark)
+                return DarkScheme.GetSvgColor(knownSvgColor);
+            else
+                return WhiteScheme.GetSvgColor(knownSvgColor);
+        }
+
+        /// <summary>
+        /// Gets known svg color for the specified <see cref="KnownSvgColor"/>.
+        /// </summary>
+        /// <param name="knownSvgColor">Known Svg color identifier.</param>
         public Color GetSvgColor(KnownSvgColor knownSvgColor)
         {
             switch (knownSvgColor)
@@ -44,17 +83,9 @@ namespace Alternet.UI
             }
         }
 
-        public static Color GetSvgColor(KnownSvgColor knownSvgColor, bool isDark)
+        private class SvgColorsDark : SvgColors
         {
-            if (isDark)
-                return BlackScheme.GetSvgColor(knownSvgColor);
-            else
-                return WhiteScheme.GetSvgColor(knownSvgColor);
-        }
-
-        private class SvgColorsBlack : SvgColors
-        {
-            public SvgColorsBlack()
+            public SvgColorsDark()
             {
                 Normal = Color.White;
                 Disabled = Normal;
