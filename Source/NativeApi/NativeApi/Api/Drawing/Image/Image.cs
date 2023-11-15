@@ -8,7 +8,7 @@ namespace NativeApi.Api
     public class Image
     {
         public void LoadFromStream(InputStream stream) { }
-        public void LoadSvgFromStream(InputStream stream, int width, int height) { }
+        public void LoadSvgFromStream(InputStream stream, int width, int height, Color color) { }
         public void Initialize(Size size) { }
         public void CopyFrom(Image otherImage) { }
 

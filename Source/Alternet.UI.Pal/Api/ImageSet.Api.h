@@ -40,9 +40,9 @@ ALTERNET_UI_API void ImageSet_Clear_(ImageSet* obj)
     obj->Clear();
 }
 
-ALTERNET_UI_API void ImageSet_LoadSvgFromStream_(ImageSet* obj, void* stream, int width, int height)
+ALTERNET_UI_API void ImageSet_LoadSvgFromStream_(ImageSet* obj, void* stream, int width, int height, Color color)
 {
-    obj->LoadSvgFromStream(stream, width, height);
+    obj->LoadSvgFromStream(stream, width, height, color);
 }
 
 ALTERNET_UI_API void ImageSet_InitImage_(ImageSet* obj, Image* image, int width, int height)

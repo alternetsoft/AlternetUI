@@ -9,7 +9,7 @@ bool GetIsReadOnly();
 void LoadFromStream(void* stream);
 void AddImage(Image* image);
 void Clear();
-void LoadSvgFromStream(void* stream, int width, int height);
+void LoadSvgFromStream(void* stream, int width, int height, const Color& color);
 void InitImage(Image* image, int width, int height);
 public:
 ImageSet();

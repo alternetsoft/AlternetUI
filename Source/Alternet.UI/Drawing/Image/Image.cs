@@ -182,10 +182,12 @@ namespace Alternet.Drawing
         /// <returns>Image instance with dimensions specified in <paramref name="width"/>
         /// and <paramref name="height"/> and data loaded from the specified
         /// <paramref name="url"/>. </returns>
-        public static Image FromSvgUrl(string url, int width, int height)
+        /// <param name="color">Svg fill color. Optional.
+        /// If provided, svg fill color is changed to the specified value.</param>
+        public static Image FromSvgUrl(string url, int width, int height, Color? color = null)
         {
             using var stream = ResourceLoader.StreamFromUrl(url);
-            var result = FromSvgStream(stream, width, height);
+            var result = FromSvgStream(stream, width, height, color);
             return result;
         }
 
@@ -204,12 +206,14 @@ namespace Alternet.Drawing
         /// is used to get DPI.</param>
         /// <returns><see cref="Image"/> instance loaded from Svg data for use
         /// on the toolbars.</returns>
-        public static Image FromSvgUrlForToolbar(string url, Control control)
+        /// <param name="color">Svg fill color. Optional.
+        /// If provided, svg fill color is changed to the specified value.</param>
+        public static Image FromSvgUrlForToolbar(string url, Control control, Color? color = null)
         {
             Size deviceDpi = control.GetDPI();
             var width = Toolbar.GetDefaultImageSize(deviceDpi.Width);
             var height = Toolbar.GetDefaultImageSize(deviceDpi.Height);
-            var result = Image.FromSvgUrl(url, width, height);
+            var result = Image.FromSvgUrl(url, width, height, color);
             return result;
         }
 
@@ -222,11 +226,13 @@ namespace Alternet.Drawing
         /// <param name="height">Image height.</param>
         /// <returns>Image instance with dimensions specified in <paramref name="width"/>
         /// and <paramref name="height"/> and data loaded from <paramref name="stream"/>. </returns>
-        public static Image FromSvgStream(Stream stream, int width, int height)
+        /// <param name="color">Svg fill color. Optional.
+        /// If provided, svg fill color is changed to the specified value.</param>
+        public static Image FromSvgStream(Stream stream, int width, int height, Color? color = null)
         {
             var nativeImage = new UI.Native.Image();
             using var inputStream = new UI.Native.InputStream(stream);
-            nativeImage.LoadSvgFromStream(inputStream, width, height);
+            nativeImage.LoadSvgFromStream(inputStream, width, height, color ?? Color.Black);
             var result = new Bitmap(nativeImage);
             return result;
         }

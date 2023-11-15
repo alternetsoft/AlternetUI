@@ -283,16 +283,18 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="url">File or resource url with Svg data.</param>
         /// <param name="imageSize">Svg image width and height.</param>
-        public static ImageSet LoadSvgImage(string url, Int32Size imageSize)
+        /// <param name="color">Svg fill color. Optional.
+        /// If provided, svg fill color is changed to the specified value.</param>
+        public static ImageSet LoadSvgImage(string url, Int32Size imageSize, Color? color = null)
         {
-            var result = ImageSet.FromSvgUrl(url, imageSize.Width, imageSize.Height);
+            var result = ImageSet.FromSvgUrl(url, imageSize.Width, imageSize.Height, color);
             return result;
         }
 
-        /// <inheritdoc cref="LoadSvgImage(string, Int32Size)"/>
-        public static ImageSet LoadSvgImage(string url, Size imageSize)
+        /// <inheritdoc cref="LoadSvgImage(string, Int32Size, Color?)"/>
+        public static ImageSet LoadSvgImage(string url, Size imageSize, Color? color = null)
         {
-            var result = ImageSet.FromSvgUrl(url, (int)imageSize.Width, (int)imageSize.Height);
+            var result = ImageSet.FromSvgUrl(url, (int)imageSize.Width, (int)imageSize.Height, color);
             return result;
         }
 
@@ -307,9 +309,11 @@ namespace Alternet.UI
         /// <param name="url">File or resource url with Svg data.</param>
         /// <param name="dpiControl">Control which <see cref="Control.GetDPI"/> method
         /// is used to get DPI settings.</param>
-        public static ImageSet LoadSvgImage(string url, Control dpiControl)
+        /// <param name="color">Svg fill color. Optional.
+        /// If provided, svg fill color is changed to the specified value.</param>
+        public static ImageSet LoadSvgImage(string url, Control dpiControl, Color? color = null)
         {
-            return ImageSet.FromSvgUrlForToolbar(url, dpiControl);
+            return ImageSet.FromSvgUrlForToolbar(url, dpiControl, color);
         }
 
         /// <summary>

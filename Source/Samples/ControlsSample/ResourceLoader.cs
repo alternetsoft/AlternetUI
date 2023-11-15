@@ -23,17 +23,23 @@ namespace ControlsSample
 
         private static ControlStateImages LoadButtonImages()
         {
-            static Image LoadImage(string stateName) =>
-                Image.FromSvgUrl(
+            static Image LoadImage(string stateName, bool disabled = false)
+            {
+                Color? color = disabled ? SystemColors.GrayText : null;
+
+                return Image.FromSvgUrl(
                     $"embres:ControlsSample.Resources.ButtonImages.ButtonImage{stateName}.svg",
                     24,
-                    24);
+                    24,
+                    color);
+            }
 
-            var disabledImage = LoadImage("Disabled");
+            var normalImage = LoadImage("Normal");
+            var disabledImage = LoadImage("Normal", true);
 
             return new ControlStateImages
             {
-                NormalImage = LoadImage("Normal"),
+                NormalImage = normalImage,
                 HoveredImage = LoadImage("Hovered"),
                 PressedImage = LoadImage("Pressed"),
                 DisabledImage = disabledImage,

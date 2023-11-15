@@ -60,12 +60,12 @@ namespace Alternet::UI
 		InvalidateBitmapBundle();
 	}
 
-	void ImageSet::LoadSvgFromStream(void* stream, int width, int height)
+	void ImageSet::LoadSvgFromStream(void* stream, int width, int height, const Color& color)
 	{
 		Clear();
 		_bitmapBundleValid = true;
 		_readOnly = true;
-		_bitmapBundle = Image::CreateFromSvgStream(stream, width, height);
+		_bitmapBundle = Image::CreateFromSvgStream(stream, width, height, color);
 	}
 
 	wxIconBundle* ImageSet::GetIconBundle()

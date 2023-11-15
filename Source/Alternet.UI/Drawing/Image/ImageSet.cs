@@ -148,10 +148,12 @@ namespace Alternet.UI
         /// is used to get DPI.</param>
         /// <returns><see cref="ImageSet"/> instance loaded from Svg data for use
         /// on the toolbars.</returns>
-        public static ImageSet FromSvgUrlForToolbar(string url, Control control)
+        /// <param name="color">Svg fill color. Optional.
+        /// If provided, svg fill color is changed to the specified value.</param>
+        public static ImageSet FromSvgUrlForToolbar(string url, Control control, Color? color = null)
         {
             var imageSize = Toolbar.GetDefaultImageSize(control);
-            var result = ImageSet.FromSvgUrl(url, imageSize.Width, imageSize.Height);
+            var result = ImageSet.FromSvgUrl(url, imageSize.Width, imageSize.Height, color);
             return result;
         }
 
@@ -170,10 +172,12 @@ namespace Alternet.UI
         /// </remarks>
         /// <returns><see cref="ImageSet"/> instance with svg data loaded from the specified
         /// <paramref name="url"/>. </returns>
-        public static ImageSet FromSvgUrl(string url, int width, int height)
+        /// <param name="color">Svg fill color. Optional.
+        /// If provided, svg fill color is changed to the specified value.</param>
+        public static ImageSet FromSvgUrl(string url, int width, int height, Color? color = null)
         {
             using var stream = ResourceLoader.StreamFromUrl(url);
-            var result = FromSvgStream(stream, width, height);
+            var result = FromSvgStream(stream, width, height, color);
             return result;
         }
 
@@ -184,13 +188,15 @@ namespace Alternet.UI
         /// <param name="stream">Stream with Svg data.</param>
         /// <param name="width">Image width.</param>
         /// <param name="height">Image height.</param>
+        /// <param name="color">Svg fill color. Optional.
+        /// If provided, svg fill color is changed to the specified value.</param>
         /// <returns><see cref="ImageSet"/> instance with svg data loaded from
         /// <paramref name="stream"/>. </returns>
-        public static ImageSet FromSvgStream(Stream stream, int width, int height)
+        public static ImageSet FromSvgStream(Stream stream, int width, int height, Color? color = null)
         {
             var nativeImage = new UI.Native.ImageSet();
             using var inputStream = new UI.Native.InputStream(stream);
-            nativeImage.LoadSvgFromStream(inputStream, width, height);
+            nativeImage.LoadSvgFromStream(inputStream, width, height, color ?? Color.Black);
             var result = new ImageSet(nativeImage);
             return result;
         }
@@ -216,7 +222,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets first image.
         /// </summary>
-        public Image? AsImage(Int32Size size) => new Bitmap(this, size);
+        public Image AsImage(Int32Size size) => new Bitmap(this, size);
 
         /// <summary>
         /// Releases all resources used by the <see cref="ImageList"/> object.

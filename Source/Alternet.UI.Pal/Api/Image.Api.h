@@ -30,9 +30,9 @@ ALTERNET_UI_API void Image_LoadFromStream_(Image* obj, void* stream)
     obj->LoadFromStream(stream);
 }
 
-ALTERNET_UI_API void Image_LoadSvgFromStream_(Image* obj, void* stream, int width, int height)
+ALTERNET_UI_API void Image_LoadSvgFromStream_(Image* obj, void* stream, int width, int height, Color color)
 {
-    obj->LoadSvgFromStream(stream, width, height);
+    obj->LoadSvgFromStream(stream, width, height, color);
 }
 
 ALTERNET_UI_API void Image_Initialize_(Image* obj, Size size)

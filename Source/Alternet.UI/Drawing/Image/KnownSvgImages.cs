@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Alternet.Drawing;
@@ -12,7 +13,7 @@ namespace Alternet.UI
     /// </summary>
     public class KnownSvgImages
     {
-        private static readonly AdvDictionary<Int32Size, KnownSvgImages> Images = new();
+        private static readonly AdvDictionary<Int32Size, List<KnownSvgImages>> Images = new();
 
         private readonly Int32Size size;
         private readonly Color color;
@@ -279,8 +280,16 @@ namespace Alternet.UI
         /// <param name="color">Image color.</param>
         public static KnownSvgImages GetForSize(Color color, Int32Size size)
         {
-            var images = Images.GetOrCreate(size, () => new KnownSvgImages(color, size));
-            return images;
+            var images = Images.GetOrCreate(size, () => new List<KnownSvgImages>());
+            foreach(var item in images)
+            {
+                if (item.Color.EqualARGB(color))
+                    return item;
+            }
+
+            var result = new KnownSvgImages(color, size);
+            images.Add(result);
+            return result;
         }
 
         /// <summary>
@@ -304,6 +313,28 @@ namespace Alternet.UI
             return image;
         }
 
-        private ImageSet Load(string url) => AuiToolbar.LoadSvgImage(url, size);
+        public IEnumerable<ImageSet> GetAllImages()
+        {
+            List<ImageSet> result = new();
+
+            var props = GetType().GetProperties(BindingFlags.Instance | BindingFlags.Public);
+
+            foreach (var p in props)
+            {
+                if (p.PropertyType != typeof(ImageSet))
+                    continue;
+
+                if (p.GetValue(this) is not ImageSet value)
+                    continue;
+                result.Add(value);
+            }
+
+            return result;
+        }
+
+        private ImageSet Load(string url)
+        {
+            return AuiToolbar.LoadSvgImage(url, size, color);
+        }
     }
 }

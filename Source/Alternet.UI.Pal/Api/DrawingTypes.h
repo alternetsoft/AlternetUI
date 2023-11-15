@@ -242,6 +242,11 @@ namespace Alternet::UI
     public:
         inline bool IsEmpty() const { return state == 0; }
 
+        bool IsBlack() const
+        {
+            return R == 0 && G == 0 && B == 0 && A == 255;
+        }
+
         Color(uint8_t alpha, uint8_t red, uint8_t green, uint8_t blue) :
             R(red), G(green), B(blue), A(alpha), state(1)
         {

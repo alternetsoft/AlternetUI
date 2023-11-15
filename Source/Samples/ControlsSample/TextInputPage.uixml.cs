@@ -565,6 +565,17 @@ namespace ControlsSample
             richEdit.SetDefaultStyle(taDefault);
         }
 
+        public void WriteKnownImages(RichTextBox r)
+        {
+            var images = KnownSvgImages.GetForSize(r.GetSvgColor(KnownSvgColor.Normal), 24).GetAllImages();
+            foreach (var image in images)
+            {
+                r.WriteImage(image.AsImage(24));
+                r.WriteText(" | ");
+            }
+            r.NewLine();
+        }
+
         public void InitRichEdit2()
         {
             const string itWasInJanuary =
@@ -606,7 +617,8 @@ namespace ControlsSample
 
             r.WriteImage(KnownSvgImages.GetForSize(
                 r.GetSvgColor(KnownSvgColor.Normal),
-                24).ImgMessageBoxInformation.AsImage(24)!);
+                24).ImgMessageBoxInformation.AsImage(24));
+
             r.WriteText(" Well, you can change text ");
 
             r.BeginTextColor(Color.Red);

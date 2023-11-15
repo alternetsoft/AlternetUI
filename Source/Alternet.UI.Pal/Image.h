@@ -12,7 +12,7 @@ namespace Alternet::UI
         wxBitmap GetBitmap();
         void SetBitmap(const wxBitmap& value);
 
-        static wxBitmapBundle CreateFromSvgStream(void* stream, int width, int height);
+        static wxBitmapBundle CreateFromSvgStream(void* stream, int width, int height, const Color& color);
         static void EnsureImageHandlersInitialized();
         static void wxInitAllImageHandlersV2();
 
