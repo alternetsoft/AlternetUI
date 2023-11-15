@@ -1,3 +1,18 @@
+# 0.9.408 (work in progress)
+
+- Svg image default fill color is determined using IsDark (so dark themes are supported).
+- Control: IsDarkBackground, Idle event.
+- Font: PixelSize, IsUsingSizeInPixels, NumericWeight, IsFixedWidth, Weight.
+- Application: DebugWriteLine, LogBeginSection, LogEndSection, LogSeparator.
+- Added PanelDeveloperTools, WindowDeveloperTools controls. 'Developer tools' is added to context menu of LogListBox.
+- Added IPropertyGridItem.FlagsAndAttributes, Control.FlagsAndAttributes, ICustomFlags, ICustomAttributes, IFlagsAndAttributes,
+ Factory, SvgColors.
+- RichTextBox: DefaultUrlColorOnWhite, DefaultUrlColorOnBlack, CreateUrlAttr.
+- Color: GetLuminance, IsOk, RHex, GHex, BHex, RGBHex, IsBlack.
+- Added svg load parameter: fill color override.
+
+---
+
 # 0.9.407 (2023 November 13)
 
 - RichTextBox is now full featured rich text editor not derived from TextBox.
@@ -33,6 +48,8 @@ Application.BackendOS.
 - RichTextBox: CaretLineNumber, LastLineNumber, ShowDialogGoToLine, SaveToStream, LoadFromStream.
 - Added StringSearch class and used it in ListControl, TextBox, RichTextBox (Search property).
 - Fixed MacOs related RichTextBox key combinations.
+
+---
 
 # 0.9.406 (2023 November 5)
 
