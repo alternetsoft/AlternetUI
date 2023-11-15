@@ -39,6 +39,26 @@ namespace Alternet.Drawing
     public readonly struct Color : IEquatable<Color>
     {
         /// <summary>
+        /// Gets a system-defined color.
+        /// </summary>
+        public static readonly Color White = new(KnownColor.White);
+
+        /// <summary>
+        /// Gets a system-defined color.
+        /// </summary>
+        public static readonly Color Transparent = new(KnownColor.Transparent);
+
+        /// <summary>
+        /// Gets a system-defined color.
+        /// </summary>
+        public static readonly Color Black = new(KnownColor.Black);
+
+        /// <summary>
+        /// Gets a system-defined color.
+        /// </summary>
+        public static readonly Color Blue = new(KnownColor.Blue);
+
+        /// <summary>
         /// Represents a color that is <c>null</c>.
         /// </summary>
         public static readonly Color Empty;
@@ -93,11 +113,6 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static Color Transparent => new(KnownColor.Transparent);
-
-        /// <summary>
-        /// Gets a system-defined color.
-        /// </summary>
         public static Color AliceBlue => new(KnownColor.AliceBlue);
 
         /// <summary>
@@ -133,17 +148,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static Color Black => new(KnownColor.Black);
-
-        /// <summary>
-        /// Gets a system-defined color.
-        /// </summary>
         public static Color BlanchedAlmond => new(KnownColor.BlanchedAlmond);
-
-        /// <summary>
-        /// Gets a system-defined color.
-        /// </summary>
-        public static Color Blue => new(KnownColor.Blue);
 
         /// <summary>
         /// Gets a system-defined color.
@@ -784,11 +789,6 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static Color White => new(KnownColor.White);
-
-        /// <summary>
-        /// Gets a system-defined color.
-        /// </summary>
         public static Color WhiteSmoke => new(KnownColor.WhiteSmoke);
 
         /// <summary>
@@ -888,6 +888,26 @@ namespace Alternet.Drawing
         /// <value>This property returns <c>true</c> if this color is initialized;
         /// otherwise, <c>false</c>.</value>
         public bool IsOk => state != 0;
+
+        /// <summary>
+        /// Gets <see cref="R"/> as hex <see cref="string"/>.
+        /// </summary>
+        public string RHex => R.ToString("X2");
+
+        /// <summary>
+        /// Gets <see cref="G"/> as hex <see cref="string"/>.
+        /// </summary>
+        public string GHex => G.ToString("X2");
+
+        /// <summary>
+        /// Gets <see cref="B"/> as hex <see cref="string"/>.
+        /// </summary>
+        public string BHex => B.ToString("X2");
+
+        /// <summary>
+        /// Gets RGB as hex <see cref="string"/> in the format #RRGGBB.
+        /// </summary>
+        public string RGBHex => $"#{RHex}{GHex}{BHex}";
 
         /// <summary>
         /// Gets a value indicating whether this <see cref="Color"/> structure is
@@ -1429,6 +1449,11 @@ namespace Alternet.Drawing
         /// <returns><c>true</c> if ARGB of the colors are equal;
         /// otherwise, <c>false</c>.</returns>
         public bool EqualARGB(Color other) => Value == other.Value;
+
+        /// <summary>
+        /// Gets <c>true</c> if this color is black.
+        /// </summary>
+        public bool IsBlack => EqualARGB(Color.Black);
 
         /// <summary>
         /// Serves as the default hash function.
