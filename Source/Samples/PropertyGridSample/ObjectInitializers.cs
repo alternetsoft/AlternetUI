@@ -194,6 +194,12 @@ namespace PropertyGridSample
                 control.Text = "some text";
             });
 
+            Actions.Add(typeof(ColorPicker), (c) =>
+            {
+                ColorPicker control = (c as ColorPicker)!;
+                control.Value = Color.Red;
+            });            
+
             Actions.Add(typeof(PanelOkCancelButtons), (c) =>
             {
                 PanelOkCancelButtons control = (c as PanelOkCancelButtons)!;
