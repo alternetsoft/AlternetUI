@@ -1600,15 +1600,20 @@ namespace Alternet.UI
             return ControlHandler.GetFocusedControl();
         }
 
-        public Color GetSvgColor(KnownSvgColor knownSvgColor)
-        {
-            return SvgColors.GetSvgColor(knownSvgColor, this.IsDarkBackground);
-        }
-
         /// <summary>
         /// Generates new group index.
         /// </summary>
         public static int NewGroupIndex() => groupIndexCounter++;
+
+        /// <summary>
+        /// Gets known svg color depending on the value of
+        /// <see cref="IsDarkBackground"/> property.
+        /// </summary>
+        /// <param name="knownSvgColor">Known svg color identifier.</param>
+        public Color GetSvgColor(KnownSvgColor knownSvgColor)
+        {
+            return SvgColors.GetSvgColor(knownSvgColor, IsDarkBackground);
+        }
 
         /// <summary>
         /// Resets bacgkround color to the default value.
