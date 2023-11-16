@@ -155,7 +155,6 @@ namespace Alternet::UI
                 &_foregroundColor,&_horizontalScrollBarInfo,
                 &_verticalScrollBarInfo,&_minimumSize,&_maximumSize})
     {
-        // GetDelayedValues().Add();
     }
 
     bool Control::GetIsFocusable()
@@ -1903,12 +1902,24 @@ namespace Alternet::UI
 
     void Control::ResetBackgroundColor()
     {
-        GetWxWindow()->SetBackgroundColour(wxNullColour);
+        auto window = GetWxWindow();
+        auto attr = window->GetDefaultAttributes();
+        auto& color = attr.colBg;
+        if(color.IsOk())
+            window->SetBackgroundColour(color);
+        else
+            window->SetBackgroundColour(wxNullColour);
     } 
 
     void Control::ResetForegroundColor()
     {
-        GetWxWindow()->SetForegroundColour(wxNullColour);
+        auto window = GetWxWindow();
+        auto attr = window->GetDefaultAttributes();
+        auto& color = attr.colFg;
+        if (color.IsOk())
+            window->SetForegroundColour(color);
+        else
+            window->SetForegroundColour(wxNullColour);
     }
 
     bool Control::SetFocus()
