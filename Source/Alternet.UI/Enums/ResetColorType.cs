@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Alternet.Drawing;
 
-namespace Alternet.UI.Enums
+namespace Alternet.UI
 {
     /// <summary>
     /// Enumerates possible reset color methods for <see cref="Control.ResetBackgroundColor"/>
