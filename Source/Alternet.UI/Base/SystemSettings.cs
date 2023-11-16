@@ -80,6 +80,10 @@ namespace Alternet.UI
                 Application.Log($"HasFeature({item}) = {HasFeature(item)}");
             }
 
+            var defaultColors = Control.GetStaticDefaultFontAndColor(ControlId.TextBox);
+            LogUtils.LogColor("TextBox.ForegroundColor (defaults)", defaultColors.ForegroundColor);
+            LogUtils.LogColor("TextBox.BackgroundColor (defaults)", defaultColors.BackgroundColor);
+
             Application.LogEndSection();
         }
 
