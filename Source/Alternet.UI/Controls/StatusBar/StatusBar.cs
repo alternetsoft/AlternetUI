@@ -28,6 +28,24 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets text of the first status bar panel.
+        /// </summary>
+        public string? Text
+        {
+            get
+            {
+                if (GetFieldsCount() < 0)
+                    return string.Empty;
+                return GetStatusText();
+            }
+
+            set
+            {
+                SetStatusText(value);
+            }
+        }
+
+        /// <summary>
         /// Gets a collection of <see cref="StatusBarPanel"/> objects associated with the control.
         /// </summary>
         [Content]
