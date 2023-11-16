@@ -100,6 +100,9 @@ namespace DrawingSample
 
         private void DrawShapesGrid(DrawingContext dc, Rect bounds, Cell[] cells)
         {
+            using var clip = new Region(bounds);
+            dc.Clip = clip;
+
             var textFormat = new TextFormat
             {
                 HorizontalAlignment = TextHorizontalAlignment.Center,
@@ -126,9 +129,6 @@ namespace DrawingSample
                 var cellRect = new Rect(x, y, cellSize, cellSize);
                 if (cellRect.Width <= 0 || cellRect.Height <= 0)
                     continue;
-
-                using var clip = new Region(cellRect);
-                dc.Clip = clip;
 
                 var cellNameRect = cellRect.InflatedBy(-2, -2);
                 cellNameRect.Height -= 4;
@@ -170,8 +170,6 @@ namespace DrawingSample
                         textFormat);
                 }
 
-                dc.Clip = null;
-
                 if ((i + 1) % ColumnCount == 0)
                 {
                     x = CellMargin;
@@ -182,6 +180,8 @@ namespace DrawingSample
                     x += cellSize + CellMargin;
                 }
             }
+            
+            dc.Clip = null;
         }
 
         private class Cell
