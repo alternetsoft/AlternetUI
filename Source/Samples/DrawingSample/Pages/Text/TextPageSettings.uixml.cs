@@ -39,7 +39,7 @@ namespace DrawingSample
         {
             DataContext = page;
 
-            customFontFamilyComboBox.Items.AddRange(FontFamily.Families);
+            customFontFamilyComboBox.Items.AddRange(FontFamily.FamiliesNames);
             wrappingComboBox.AddEnumValues<TextWrapping>();
             trimmingComboBox.AddEnumValues<TextTrimming>();
             verticalAlignmentComboBox.AddEnumValues<TextVerticalAlignment>();
@@ -49,6 +49,8 @@ namespace DrawingSample
             verticalAlignmentComboBox.BindSelectedItem(nameof(TextPage.VerticalAlignment));
             wrappingComboBox.BindSelectedItem(nameof(TextPage.Wrapping));
             trimmingComboBox.BindSelectedItem(nameof(TextPage.Trimming));
+
+            GetChildrenRecursive().Action<Slider>((c) => c.ClearTicks());
         }
     }
 }
