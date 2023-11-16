@@ -5,7 +5,7 @@
         Width="850" Height="550" StartLocation="CenterScreen">
   <Window.StatusBar>
     <StatusBar Name="statusBar">
-      <StatusBarPanel Name="statusPanel" />
+      <StatusBarPanel/>
     </StatusBar>
   </Window.StatusBar>
 
@@ -15,7 +15,7 @@
         <StackPanel>
           <CheckBox Text="Set Initial Dir to User Home Dir" 
             Name="setInitialDirectoryCheckBox" Margin="5" />
-
+                                        
           <CheckBox Text="Set Title to 'Custom Title'" 
                     Name="setCustomTitleCheckBox" Margin="5" />
 

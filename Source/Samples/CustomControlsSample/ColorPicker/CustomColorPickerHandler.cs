@@ -100,7 +100,7 @@ namespace CustomControlsSample
             Control.MouseLeftButtonUp += Control_MouseLeftButtonUp;
         }
 
-        private void Control_KeyDown(object sender, KeyEventArgs e)
+        private void Control_KeyDown(object? sender, KeyEventArgs e)
         {
             if(e.Key == Key.Enter)
             {
@@ -109,12 +109,12 @@ namespace CustomControlsSample
             }
         }
 
-        private void Control_LostFocus(object sender, RoutedEventArgs e)
+        private void Control_LostFocus(object? sender, EventArgs e)
         {
             Refresh();
         }
 
-        private void Control_GotFocus(object sender, RoutedEventArgs e)
+        private void Control_GotFocus(object? sender, EventArgs e)
         {
             Refresh();
         }
@@ -143,17 +143,17 @@ namespace CustomControlsSample
             Refresh();
         }
 
-        private void Control_MouseMove(object sender, MouseEventArgs e)
+        private void Control_MouseMove(object? sender, MouseEventArgs e)
         {
             Refresh();
         }
 
-        private void Control_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void Control_MouseLeftButtonDown(object? sender, MouseButtonEventArgs e)
         {
             IsPressed = true;
         }
 
-        private void Control_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        private void Control_MouseLeftButtonUp(object? sender, MouseButtonEventArgs e)
         {
             IsPressed = false;
             OpenPopup();
