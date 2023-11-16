@@ -17,11 +17,22 @@ namespace Alternet.UI
         event EventHandler<PropertyChangeEventArgs>? PropertyChanged;
 
         /// <summary>
+        /// Occurs when the control receives focus.
+        /// </summary>
+        event EventHandler ControlGotFocus;
+
+        /// <summary>
         /// Notifies designer about property change.
         /// </summary>
         /// <param name="instance">Object instance which property was changed.</param>
         /// <param name="propName">Property name. Optional. If <c>null</c>, more than one
         /// property were changed.</param>
         void RaisePropertyChanged(object? instance, string? propName);
+
+        /// <summary>
+        /// Notifiers designer when control got focus.
+        /// </summary>
+        /// <param name="control">Control which received focus.</param>
+        void RaiseGotFocus(Control control);
     }
 }

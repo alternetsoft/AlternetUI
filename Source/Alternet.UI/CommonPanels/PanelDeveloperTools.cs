@@ -24,10 +24,12 @@ namespace Alternet.UI
             mainLogListBox.ContextMenu.Required();
             mainLogListBox.MenuItemShowDevTools?.SetEnabled(false);
             mainLogListBox.BindApplicationLog();
-            ActionsControl.Required();
             var mainLogPage = CenterNotebook.AddPage(
                 mainLogListBox,
                 CommonStrings.Default.NotebookTabTitleOutput);
+            ActionsControl.Required();
+            PropGrid.Required();
+            RightNotebook.ChangeSelection(0);
             InitActions();
             DebugUtils.HookExceptionEvents();
         }

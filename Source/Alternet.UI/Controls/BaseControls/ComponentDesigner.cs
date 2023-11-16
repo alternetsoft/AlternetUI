@@ -17,6 +17,11 @@ namespace Alternet.UI
         public event EventHandler<PropertyChangeEventArgs>? PropertyChanged;
 
         /// <summary>
+        /// Occurs when the control receives focus.
+        /// </summary>
+        public event EventHandler? ControlGotFocus;
+
+        /// <summary>
         /// Gets or sets default <see cref="IComponentDesigner"/>.
         /// </summary>
         public static IComponentDesigner? Default { get; set; }
@@ -33,6 +38,15 @@ namespace Alternet.UI
         public virtual void RaisePropertyChanged(object? instance, string? propName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangeEventArgs(instance, propName));
+        }
+
+        /// <summary>
+        /// Notifiers designer when control got focus.
+        /// </summary>
+        /// <param name="control">Control which received focus.</param>
+        public void RaiseGotFocus(Control control)
+        {
+            ControlGotFocus?.Invoke(this, EventArgs.Empty);
         }
     }
 }

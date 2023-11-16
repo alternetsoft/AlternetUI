@@ -47,12 +47,11 @@ namespace Alternet.UI
 
             static void DevToolsWindow_Closing(object? sender, WindowClosingEventArgs e)
             {
-                (sender as Window)?.Hide();
-                e.Cancel = true;
             }
 
-            void DevToolsWindow_Disposed(object? sender, EventArgs e)
+            static void DevToolsWindow_Disposed(object? sender, EventArgs e)
             {
+                devToolsWindow = null;
             }
         }
 
