@@ -15,7 +15,12 @@ namespace Alternet.UI
         public override SliderTickStyle TickStyle
         {
             get => (SliderTickStyle)NativeControl.TickStyle;
-            set => NativeControl.TickStyle = (Native.SliderTickStyle)value;
+            set
+            {
+                NativeControl.TickStyle = (Native.SliderTickStyle)value;
+                if (value == SliderTickStyle.None && Application.IsLinuxOS)
+                    NativeControl.ClearTicks();
+            }
         }
 
         internal override Native.Control CreateNativeControl()
