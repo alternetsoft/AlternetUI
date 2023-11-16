@@ -40,7 +40,7 @@ namespace Alternet.UI
     /// arbitrary per-property attributes.
     /// </remarks>
     [ControlCategory("Other")]
-    public class PropertyGrid : Control, IPropertyGrid
+    public partial class PropertyGrid : Control, IPropertyGrid
     {
         internal const string PropEditClassCheckBox = "CheckBox";
         internal const string PropEditClassChoice = "Choice";
@@ -3984,7 +3984,10 @@ namespace Alternet.UI
         /// </remarks>
         public virtual bool SelectProperty(IPropertyGridItem prop, bool focus = false)
         {
-            return NativeControl.SelectProperty(prop.Handle, focus);
+            if (prop == null)
+                return false;
+            else
+                return NativeControl.SelectProperty(prop.Handle, focus);
         }
 
         /// <summary>
