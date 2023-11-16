@@ -707,6 +707,11 @@ namespace Alternet.UI
             return current.HandleThreadExceptionsCore(func);
         }
 
+        internal static IDisposable BusyCursor()
+        {
+            return new BusyCursorObject();
+        }
+
         internal static void HandleThreadExceptions(Action action)
         {
             if (current == null)
@@ -778,11 +783,6 @@ namespace Alternet.UI
         internal void RegisterWindow(Window window)
         {
             windows.Add(window);
-        }
-
-        internal static IDisposable BusyCursor()
-        {
-            return new BusyCursorObject();
         }
 
         internal void UnregisterWindow(Window window)
