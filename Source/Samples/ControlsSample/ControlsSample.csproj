@@ -166,38 +166,38 @@
       <UIXml Update="Pages\Buttons\CheckBoxesPage.uixml">
         <SubType>Designer</SubType>
       </UIXml>
-      <UIXml Update="TextInputPage.uixml">
+      <UIXml Update="Pages\Text\TextInputPage.uixml">
         <SubType>Designer</SubType>
       </UIXml>
       <UIXml Update="Pages\Buttons\RadioButtonsPage.uixml">
         <SubType>Designer</SubType>
       </UIXml>
-      <UIXml Update="NumericInputPage.uixml">
+      <UIXml Update="Pages\Other\NumericInputPage.uixml">
         <SubType>Designer</SubType>
       </UIXml>
-      <UIXml Update="SliderPage.uixml">
+      <UIXml Update="Pages\SliderProgressBar\SliderPage.uixml">
         <SubType>Designer</SubType>
       </UIXml>
-      <UIXml Update="ProgressBarPage.uixml">
+      <UIXml Update="Pages\SliderProgressBar\ProgressBarPage.uixml">
         <SubType>Designer</SubType>
       </UIXml>
       <UIXml Update="Pages\ListControls\ComboBoxPage.uixml">
         <Generator>MSBuild:Compile</Generator>
       </UIXml>
-      <UIXml Update="ListViewPage.uixml">
+      <UIXml Update="Pages\TreeAndListView\ListViewPage.uixml">
         <Generator>MSBuild:Compile</Generator>
       </UIXml>
       <UIXml Update="Pages\Layout\GridPage.uixml">
         <SubType>Designer</SubType>
       </UIXml>
-		<UIXml Update="WebBrowserPage.uixml">
+		<UIXml Update="Pages\Other\WebBrowserPage.uixml">
 			<SubType>Designer</SubType>
 		</UIXml>
-		<UIXml Update="NotifyIconPage.uixml">
+		<UIXml Update="Pages\Other\NotifyIconPage.uixml">
         <SubType>Designer</SubType>
         <Generator>MSBuild:Compile</Generator>
       </UIXml>
-      <UIXml Update="TreeViewPage.uixml">
+      <UIXml Update="Pages\TreeAndListView\TreeViewPage.uixml">
         <SubType>Designer</SubType>
         <Generator>MSBuild:Compile</Generator>
       </UIXml>
