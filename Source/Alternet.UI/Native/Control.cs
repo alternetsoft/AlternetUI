@@ -824,6 +824,69 @@ namespace Alternet.UI.Native
             return NativeApi.Control_GetScrollBarMaximum_(NativePointer, orientation);
         }
         
+        public bool IsTransparentBackgroundSupported()
+        {
+            CheckDisposed();
+            return NativeApi.Control_IsTransparentBackgroundSupported_(NativePointer);
+        }
+        
+        public bool SetBackgroundStyle(int style)
+        {
+            CheckDisposed();
+            return NativeApi.Control_SetBackgroundStyle_(NativePointer, style);
+        }
+        
+        public int GetBackgroundStyle()
+        {
+            CheckDisposed();
+            return NativeApi.Control_GetBackgroundStyle_(NativePointer);
+        }
+        
+        public void AlwaysShowScrollbars(bool hflag, bool vflag)
+        {
+            CheckDisposed();
+            NativeApi.Control_AlwaysShowScrollbars_(NativePointer, hflag, vflag);
+        }
+        
+        public Alternet.Drawing.Color GetDefaultAttributesBgColor()
+        {
+            CheckDisposed();
+            return NativeApi.Control_GetDefaultAttributesBgColor_(NativePointer);
+        }
+        
+        public Alternet.Drawing.Color GetDefaultAttributesFgColor()
+        {
+            CheckDisposed();
+            return NativeApi.Control_GetDefaultAttributesFgColor_(NativePointer);
+        }
+        
+        public Font GetDefaultAttributesFont()
+        {
+            CheckDisposed();
+            var _nnn = NativeApi.Control_GetDefaultAttributesFont_(NativePointer);
+            var _mmm = NativeObject.GetFromNativePointer<Font>(_nnn, p => new Font(p))!;
+            ReleaseNativeObjectPointer(_nnn);
+            return _mmm;
+        }
+        
+        public static Alternet.Drawing.Color GetClassDefaultAttributesBgColor(int controlType, int windowVariant)
+        {
+            return NativeApi.Control_GetClassDefaultAttributesBgColor_(controlType, windowVariant);
+        }
+        
+        public static Alternet.Drawing.Color GetClassDefaultAttributesFgColor(int controlType, int windowVariant)
+        {
+            return NativeApi.Control_GetClassDefaultAttributesFgColor_(controlType, windowVariant);
+        }
+        
+        public static Font GetClassDefaultAttributesFont(int controlType, int windowVariant)
+        {
+            var _nnn = NativeApi.Control_GetClassDefaultAttributesFont_(controlType, windowVariant);
+            var _mmm = NativeObject.GetFromNativePointer<Font>(_nnn, p => new Font(p))!;
+            ReleaseNativeObjectPointer(_nnn);
+            return _mmm;
+        }
+        
         public static int DrawingFromDip(double value, System.IntPtr window)
         {
             return NativeApi.Control_DrawingFromDip_(value, window);
@@ -1326,6 +1389,36 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern int Control_GetScrollBarMaximum_(IntPtr obj, ScrollBarOrientation orientation);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool Control_IsTransparentBackgroundSupported_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool Control_SetBackgroundStyle_(IntPtr obj, int style);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int Control_GetBackgroundStyle_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Control_AlwaysShowScrollbars_(IntPtr obj, bool hflag, bool vflag);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern NativeApiTypes.Color Control_GetDefaultAttributesBgColor_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern NativeApiTypes.Color Control_GetDefaultAttributesFgColor_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern IntPtr Control_GetDefaultAttributesFont_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern NativeApiTypes.Color Control_GetClassDefaultAttributesBgColor_(int controlType, int windowVariant);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern NativeApiTypes.Color Control_GetClassDefaultAttributesFgColor_(int controlType, int windowVariant);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern IntPtr Control_GetClassDefaultAttributesFont_(int controlType, int windowVariant);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern int Control_DrawingFromDip_(double value, System.IntPtr window);

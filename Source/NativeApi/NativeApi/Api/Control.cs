@@ -8,6 +8,17 @@ namespace NativeApi.Api
 {
     public abstract class Control
     {
+        public bool IsTransparentBackgroundSupported() => default;
+        public bool SetBackgroundStyle(int style) => default;
+        public int GetBackgroundStyle() => default;
+        public void AlwaysShowScrollbars(bool hflag = true, bool vflag = true) { }
+        public Color GetDefaultAttributesBgColor() => default;
+        public Color GetDefaultAttributesFgColor() => default;
+        public Font GetDefaultAttributesFont() => default;
+        public static Color GetClassDefaultAttributesBgColor(int controlType, int windowVariant) => default;
+        public static Color GetClassDefaultAttributesFgColor(int controlType, int windowVariant) => default;
+        public static Font GetClassDefaultAttributesFont(int controlType, int windowVariant) => default;
+
         public static int DrawingFromDip(double value, IntPtr window) => default;
         public static double DrawingDPIScaleFactor(IntPtr window) => default;
         public static double DrawingToDip(int value, IntPtr window) => default;

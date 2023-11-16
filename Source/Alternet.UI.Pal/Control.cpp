@@ -1955,4 +1955,128 @@ namespace Alternet::UI
 
         return control;
     }
+
+    bool Control::IsTransparentBackgroundSupported()
+    {
+        return GetWxWindow()->IsTransparentBackgroundSupported();
+    }
+
+    bool Control::SetBackgroundStyle(int style)
+    {
+        return GetWxWindow()->SetBackgroundStyle((wxBackgroundStyle)style);
+    }
+
+    int Control::GetBackgroundStyle()
+    {
+        return GetWxWindow()->GetBackgroundStyle();
+    }
+
+    void Control::AlwaysShowScrollbars(bool hflag, bool vflag)
+    {
+        return GetWxWindow()->AlwaysShowScrollbars(hflag, vflag);
+    }
+
+    Color Control::GetDefaultAttributesBgColor()
+    {
+        return GetWxWindow()->GetDefaultAttributes().colBg;
+    }
+
+    Color Control::GetDefaultAttributesFgColor()
+    {
+        return GetWxWindow()->GetDefaultAttributes().colFg;
+    }
+
+    Font* Control::GetDefaultAttributesFont()
+    {
+        auto fnt = GetWxWindow()->GetDefaultAttributes().font;
+        auto _font = new Font();
+        _font->SetWxFont(fnt);
+        return _font;
+    }
+
+    enum ControlId
+    {
+        ControlId_Control = 0,
+        ControlId_RichTextBox = 1,
+        ControlId_AnimationPlayer = 2,
+        ControlId_Calendar = 3,
+        ControlId_Button = 4,
+        ControlId_Border = 5,
+        ControlId_ContextMenu = 6,
+        ControlId_MainMenu = 7,
+        ControlId_MenuItem = 8,
+        ControlId_CheckBox = 9,
+        ControlId_RadioButton = 10,
+        ControlId_PropertyGrid = 11,
+        ControlId_ColorPicker = 12,
+        ControlId_DateTimePicker = 13,
+        ControlId_Grid = 14,
+        ControlId_Panel = 15,
+        ControlId_GroupBox = 16,
+        ControlId_Label = 17,
+        ControlId_LinkLabel = 18,
+        ControlId_LayoutPanel = 19,
+        ControlId_ComboBox = 20,
+        ControlId_ListBox = 21,
+        ControlId_CheckListBox = 22,
+        ControlId_ListView = 23,
+        ControlId_Menu = 24,
+        ControlId_NumericUpDown = 25,
+        ControlId_PictureBox = 26,
+        ControlId_Popup = 27,
+        ControlId_ProgressBar = 28,
+        ControlId_ScrollViewer = 29,
+        ControlId_Slider = 30,
+        ControlId_SplitterPanel = 31,
+        ControlId_StackPanel = 32,
+        ControlId_StatusBar = 33,
+        ControlId_StatusBarPanel = 34,
+        ControlId_TabControl = 35,
+        ControlId_TabPage = 36,
+        ControlId_TextBox = 37,
+        ControlId_Toolbar = 38,
+        ControlId_AuiToolbar = 39,
+        ControlId_AuiNotebook = 40,
+        ControlId_ToolbarItem = 41,
+        ControlId_TreeView = 42,
+        ControlId_UserPaintControl = 43,
+        ControlId_WebBrowser = 44,
+        ControlId_Other = 45,
+        ControlId_Window = 46,
+    };
+
+
+    static wxVisualAttributes NullVisualAttributes;
+
+    static wxVisualAttributes GetClassDefaultAttributes(int controlType, int windowVariant)
+    {
+        switch (controlType)
+        {
+        case ControlId_ListBox:
+            return wxListCtrl::GetClassDefaultAttributes((wxWindowVariant)windowVariant);
+        case ControlId_TextBox:
+            return wxTextCtrl::GetClassDefaultAttributes((wxWindowVariant)windowVariant);
+        default:
+            return NullVisualAttributes;
+        }
+    }
+
+    Color Control::GetClassDefaultAttributesBgColor(int controlType, int windowVariant)
+    {
+        return GetClassDefaultAttributes(controlType, windowVariant).colBg;
+    }
+
+    Color Control::GetClassDefaultAttributesFgColor(int controlType, int windowVariant)
+    {
+        return GetClassDefaultAttributes(controlType, windowVariant).colFg;
+    }
+
+    Font* Control::GetClassDefaultAttributesFont(int controlType, int windowVariant)
+    {
+        auto attr = GetClassDefaultAttributes(controlType, windowVariant);
+        auto font = attr.font;
+        auto _font = new Font();
+        _font->SetWxFont(font);
+        return _font;
+    }
 }

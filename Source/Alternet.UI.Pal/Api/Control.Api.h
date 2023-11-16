@@ -561,6 +561,56 @@ ALTERNET_UI_API int Control_GetScrollBarMaximum_(Control* obj, ScrollBarOrientat
     return obj->GetScrollBarMaximum(orientation);
 }
 
+ALTERNET_UI_API c_bool Control_IsTransparentBackgroundSupported_(Control* obj)
+{
+    return obj->IsTransparentBackgroundSupported();
+}
+
+ALTERNET_UI_API c_bool Control_SetBackgroundStyle_(Control* obj, int style)
+{
+    return obj->SetBackgroundStyle(style);
+}
+
+ALTERNET_UI_API int Control_GetBackgroundStyle_(Control* obj)
+{
+    return obj->GetBackgroundStyle();
+}
+
+ALTERNET_UI_API void Control_AlwaysShowScrollbars_(Control* obj, c_bool hflag, c_bool vflag)
+{
+    obj->AlwaysShowScrollbars(hflag, vflag);
+}
+
+ALTERNET_UI_API Color_C Control_GetDefaultAttributesBgColor_(Control* obj)
+{
+    return obj->GetDefaultAttributesBgColor();
+}
+
+ALTERNET_UI_API Color_C Control_GetDefaultAttributesFgColor_(Control* obj)
+{
+    return obj->GetDefaultAttributesFgColor();
+}
+
+ALTERNET_UI_API Font* Control_GetDefaultAttributesFont_(Control* obj)
+{
+    return obj->GetDefaultAttributesFont();
+}
+
+ALTERNET_UI_API Color_C Control_GetClassDefaultAttributesBgColor_(int controlType, int windowVariant)
+{
+    return Control::GetClassDefaultAttributesBgColor(controlType, windowVariant);
+}
+
+ALTERNET_UI_API Color_C Control_GetClassDefaultAttributesFgColor_(int controlType, int windowVariant)
+{
+    return Control::GetClassDefaultAttributesFgColor(controlType, windowVariant);
+}
+
+ALTERNET_UI_API Font* Control_GetClassDefaultAttributesFont_(int controlType, int windowVariant)
+{
+    return Control::GetClassDefaultAttributesFont(controlType, windowVariant);
+}
+
 ALTERNET_UI_API int Control_DrawingFromDip_(double value, void* window)
 {
     return Control::DrawingFromDip(value, window);

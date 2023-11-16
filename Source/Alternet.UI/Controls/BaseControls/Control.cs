@@ -2522,6 +2522,19 @@ namespace Alternet.UI
             throw new NotSupportedException();
         }
 
+        /* !!!!
+        public bool IsTransparentBackgroundSupported() => default
+        public bool SetBackgroundStyle(int style) => default;
+        public int GetBackgroundStyle() => default;
+        public void AlwaysShowScrollbars(bool hflag = true, bool vflag = true) { }
+        public Color GetDefaultAttributesBgColor() => default;
+        public Color GetDefaultAttributesFgColor() => default;
+        public Font GetDefaultAttributesFont() => default;
+        public static Color GetClassDefaultAttributesBgColor(int controlType, int windowVariant) => default;
+        public static Color GetClassDefaultAttributesFgColor(int controlType, int windowVariant) => default;
+        public static Font GetClassDefaultAttributesFont(int controlType, int windowVariant) => default;
+        */
+
         /// <summary>
         /// Performs some action for the each child of the control.
         /// </summary>
