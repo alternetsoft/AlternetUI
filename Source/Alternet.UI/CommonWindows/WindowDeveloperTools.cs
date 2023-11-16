@@ -82,6 +82,10 @@ namespace Alternet.UI
             LogUtils.LogColor("BackgroundColor", control.BackgroundColor);
             LogUtils.LogColor("RealBackgroundColor", control.RealBackgroundColor);
 
+            var defaultColors = control.GetDefaultFontAndColor();
+            LogUtils.LogColor("Defaults.BackgroundColor", defaultColors.BackgroundColor);
+            LogUtils.LogColor("Defaults.ForegroundColor", defaultColors.ForegroundColor);
+
             Application.LogSeparator();
         }
     }
