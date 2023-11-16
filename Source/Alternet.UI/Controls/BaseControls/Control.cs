@@ -85,6 +85,16 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Occurs when the contol gets focus.
+        /// </summary>
+        public event EventHandler? GotFocus;
+
+        /// <summary>
+        /// Occurs when the control lost focus.
+        /// </summary>
+        public event EventHandler? LostFocus;
+
+        /// <summary>
         /// Occurs when the <see cref="ToolTip"/> property value changes.
         /// </summary>
         public event EventHandler? ToolTipChanged;
@@ -2746,6 +2756,16 @@ namespace Alternet.UI
             Paint?.Invoke(this, e);
         }
 
+        internal void RaiseGotFocus(EventArgs e)
+        {
+            OnGotFocus(e);
+        }
+
+        internal void RaiseLostFocus(EventArgs e)
+        {
+            OnLostFocus(e);
+        }
+
         internal void SetParentInternal(Control? value)
         {
             parent = value;
@@ -3033,6 +3053,27 @@ namespace Alternet.UI
         protected virtual void OnDragLeave(EventArgs e)
         {
             DragLeave?.Invoke(this, e);
+        }
+
+        /// <summary>
+        /// This method is invoked when the control gets focus.
+        /// </summary>
+        /// <param name="e">The <see cref="EventArgs"/> that
+        /// contains the event data.</param>
+        protected virtual void OnGotFocus(EventArgs e)
+        {
+            GotFocus?.Invoke(this, e);
+            Designer?.RaiseGotFocus(this);
+        }
+
+        /// <summary>
+        /// This method is invoked when the control lost focus.
+        /// </summary>
+        /// <param name="e">The <see cref="EventArgs"/> that
+        /// contains the event data.</param>
+        protected virtual void OnLostFocus(EventArgs e)
+        {
+            LostFocus?.Invoke(this, e);
         }
 
         /// <inheritdoc/>

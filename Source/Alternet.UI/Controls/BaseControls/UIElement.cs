@@ -69,28 +69,6 @@ namespace Alternet.UI
                 typeof(MouseButtonEventHandler),
                 typeof(UIElement));
 
-        // !!!!! IsFocusedPropertyKey must be before IsFocusedProperty
-
-        /// <summary>
-        ///     The DependencyProperty for the IsFocused property.
-        /// </summary>
-        internal static readonly DependencyPropertyKey IsFocusedPropertyKey =
-                    DependencyProperty.RegisterReadOnly(
-                                "IsFocused",
-                                typeof(bool),
-                                typeof(UIElement),
-                                new PropertyMetadata(
-                                            BooleanBoxes.FalseBox, // default value
-                                            new PropertyChangedCallback(IsFocused_Changed)));
-
-        /// <summary>
-        ///     The DependencyProperty for IsFocused.
-        ///     Flags:              None
-        ///     Read-Only:          true
-        /// </summary>
-        public static readonly DependencyProperty IsFocusedProperty
-            = IsFocusedPropertyKey!.DependencyProperty;
-
         /// <summary>
         ///     Declaration of the routed event reporting the right mouse button was pressed
         /// </summary>
@@ -186,18 +164,6 @@ namespace Alternet.UI
         /// </summary>
         public static readonly RoutedEvent PreviewMouseDownEvent =
             Mouse.PreviewMouseDownEvent.AddOwner(typeof(UIElement));
-
-        /// <summary>
-        ///     GotFocus event
-        /// </summary>
-        public static readonly RoutedEvent GotFocusEvent =
-            FocusManager.GotFocusEvent.AddOwner(typeof(UIElement));
-
-        /// <summary>
-        ///     LostFocus event
-        /// </summary>
-        public static readonly RoutedEvent LostFocusEvent =
-            FocusManager.LostFocusEvent.AddOwner(typeof(UIElement));
 
         /// <summary>
         ///     Alias to the Keyboard.PreviewKeyUpEvent.
@@ -338,24 +304,6 @@ namespace Alternet.UI
         {
             add { AddHandler(Mouse.MouseUpEvent, value, false); }
             remove { RemoveHandler(Mouse.MouseUpEvent, value); }
-        }
-
-        /// <summary>
-        ///     An event announcing that IsFocused changed to true.
-        /// </summary>
-        public event RoutedEventHandler GotFocus
-        {
-            add { AddHandler(GotFocusEvent, value); }
-            remove { RemoveHandler(GotFocusEvent, value); }
-        }
-
-        /// <summary>
-        ///     An event announcing that IsFocused changed to false.
-        /// </summary>
-        public event RoutedEventHandler LostFocus
-        {
-            add { AddHandler(LostFocusEvent, value); }
-            remove { RemoveHandler(LostFocusEvent, value); }
         }
 
         /// <summary>
@@ -935,24 +883,6 @@ namespace Alternet.UI
         /// </summary>
         protected virtual void OnKeyUp(KeyEventArgs e)
         {
-        }
-
-        /// <summary>
-        ///     This method is invoked when the IsFocused property changes to true
-        /// </summary>
-        /// <param name="e">RoutedEventArgs</param>
-        protected virtual void OnGotFocus(RoutedEventArgs e)
-        {
-            RaiseEvent(e);
-        }
-
-        /// <summary>
-        ///     This method is invoked when the IsFocused property changes to false
-        /// </summary>
-        /// <param name="e">RoutedEventArgs</param>
-        protected virtual void OnLostFocus(RoutedEventArgs e)
-        {
-            RaiseEvent(e);
         }
 
         /// <summary>
@@ -1554,22 +1484,6 @@ namespace Alternet.UI
 
             // Raise the public changed event.
             uie.RaiseDependencyPropertyChanged(FocusableChangedKey, e);
-        }
-
-        private static void IsFocused_Changed(
-            DependencyObject d,
-            DependencyPropertyChangedEventArgs e)
-        {
-            UIElement uiElement = (UIElement)d;
-
-            if ((bool)e.NewValue)
-            {
-                uiElement.OnGotFocus(new RoutedEventArgs(GotFocusEvent, uiElement));
-            }
-            else
-            {
-                uiElement.OnLostFocus(new RoutedEventArgs(LostFocusEvent, uiElement));
-            }
         }
 
         private static void OnPreviewMouseDownThunk(object sender, MouseButtonEventArgs e)

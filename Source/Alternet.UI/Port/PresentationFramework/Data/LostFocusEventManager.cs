@@ -18,7 +18,7 @@ namespace Alternet.UI
     /// <summary>
     /// Manager for the DependencyObject.LostFocus event.
     /// </summary>
-    public class LostFocusEventManager : WeakEventManager
+    internal class LostFocusEventManager : WeakEventManager
     {
         #region Constructors
 
@@ -111,9 +111,9 @@ namespace Alternet.UI
             FrameworkElement fe;
             //FrameworkContentElement fce;
             Helper.DowncastToFEorFCE(typedSource, out fe, /*out fce,*/ true);
-
+            /*
             if (fe != null)
-                fe.LostFocus += new RoutedEventHandler(OnLostFocus);
+                fe.LostFocus += new RoutedEventHandler(OnLostFocus);*/
             //else if (fce != null)
             //    fce.LostFocus += new RoutedEventHandler(OnLostFocus);
         }
@@ -128,8 +128,8 @@ namespace Alternet.UI
             //FrameworkContentElement fce;
             Helper.DowncastToFEorFCE(typedSource, out fe, /*out fce,*/ true);
 
-            if (fe != null)
-                fe.LostFocus -= new RoutedEventHandler(OnLostFocus);
+           /* if (fe != null)
+                fe.LostFocus -= new RoutedEventHandler(OnLostFocus);*/
             //else if (fce != null)
             //    fce.LostFocus -= new RoutedEventHandler(OnLostFocus);
         }

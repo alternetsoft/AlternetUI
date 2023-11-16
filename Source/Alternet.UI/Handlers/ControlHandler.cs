@@ -1183,12 +1183,12 @@ namespace Alternet.UI
 
         private void NativeControl_GotFocus(object? sender, EventArgs e)
         {
-            Control.RaiseEvent(new RoutedEventArgs(UIElement.GotFocusEvent));
+            Control.RaiseGotFocus(EventArgs.Empty);
         }
 
         private void NativeControl_LostFocus(object? sender, EventArgs e)
         {
-            Control.RaiseEvent(new RoutedEventArgs(UIElement.LostFocusEvent));
+            Control.RaiseLostFocus(EventArgs.Empty);
         }
 
 #pragma warning disable
