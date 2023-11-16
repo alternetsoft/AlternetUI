@@ -64,7 +64,7 @@ namespace Alternet.UI
         /// <summary>
         /// Content is vertically aligned at the top.
         /// </summary>
-        AlignTop = 0,
+        AlignTop = AlignLeft,
 
         /// <summary>
         /// Content is horizontally aligned on the right.
@@ -90,7 +90,7 @@ namespace Alternet.UI
         /// Content is vertically aligned at the bottom, and horizontally
         /// aligned on the left.
         /// </summary>
-        AlignBottomLeft = AlignBottom | AlignLeft,
+        AlignBottomLeft = AlignBottom,
 
         /// <summary>
         /// Content is vertically aligned at the bottom, and horizontally
@@ -102,7 +102,7 @@ namespace Alternet.UI
         /// Content is vertically aligned at the top, and horizontally
         /// aligned on the left.
         /// </summary>
-        AlignTopLeft = AlignTop | AlignLeft,
+        AlignTopLeft = AlignLeft,
 
         /// <summary>
         /// Content is vertically aligned at the top, and horizontally
