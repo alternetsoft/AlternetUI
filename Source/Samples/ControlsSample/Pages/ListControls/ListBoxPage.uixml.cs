@@ -17,7 +17,7 @@ namespace ControlsSample
         {
             InitializeComponent();
             panelHeader.Add("ListBox", tab1);
-            panelHeader.Add("Popup ListBox", tab2);
+            panelHeader.Add("Popups", tab2);
             tabControl.Children.Prepend(panelHeader);
             panelHeader.SelectedTab = panelHeader.Tabs[0];
 

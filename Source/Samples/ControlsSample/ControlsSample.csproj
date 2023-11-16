@@ -160,16 +160,16 @@
     </ItemGroup>
 
     <ItemGroup>
-      <UIXml Update="ButtonPage.uixml">
+      <UIXml Update="Pages\Buttons\ButtonPage.uixml">
         <SubType>Designer</SubType>
       </UIXml>
-      <UIXml Update="CheckBoxesPage.uixml">
+      <UIXml Update="Pages\Buttons\CheckBoxesPage.uixml">
         <SubType>Designer</SubType>
       </UIXml>
       <UIXml Update="TextInputPage.uixml">
         <SubType>Designer</SubType>
       </UIXml>
-      <UIXml Update="RadioButtonsPage.uixml">
+      <UIXml Update="Pages\Buttons\RadioButtonsPage.uixml">
         <SubType>Designer</SubType>
       </UIXml>
       <UIXml Update="NumericInputPage.uixml">
@@ -181,13 +181,13 @@
       <UIXml Update="ProgressBarPage.uixml">
         <SubType>Designer</SubType>
       </UIXml>
-      <UIXml Update="ComboBoxPage.uixml">
+      <UIXml Update="Pages\ListControls\ComboBoxPage.uixml">
         <Generator>MSBuild:Compile</Generator>
       </UIXml>
       <UIXml Update="ListViewPage.uixml">
         <Generator>MSBuild:Compile</Generator>
       </UIXml>
-      <UIXml Update="GridPage.uixml">
+      <UIXml Update="Pages\Layout\GridPage.uixml">
         <SubType>Designer</SubType>
       </UIXml>
 		<UIXml Update="WebBrowserPage.uixml">
