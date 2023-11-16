@@ -26,7 +26,7 @@ namespace Alternet.UI.Enums
         /// <summary>
         /// Uses colors from the default attributes record using
         /// <see cref="Control.GetDefaultAttributesBgColor"/> for the background color and
-        /// <see cref="SystemColors.GetDefaultAttributesFgColor"/> for the foreground color.
+        /// <see cref="Control.GetDefaultAttributesFgColor"/> for the foreground color.
         /// </summary>
         DefaultAttributes,
 
