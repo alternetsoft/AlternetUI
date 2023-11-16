@@ -599,7 +599,7 @@ namespace Alternet.UI
         {
             get
             {
-                if(children == null)
+                if (children == null)
                 {
                     children = new Collection<Control>() { ThrowOnNullAdd = true };
                     children.ItemInserted += Children_ItemInserted;
@@ -849,7 +849,7 @@ namespace Alternet.UI
         {
             get
             {
-                if(minMargin == null)
+                if (minMargin == null)
                     margin.ApplyMin(MinMargin);
                 return margin;
             }
@@ -885,7 +885,7 @@ namespace Alternet.UI
         {
             get
             {
-                if(minPadding == null)
+                if (minPadding == null)
                     padding.ApplyMin(MinPadding);
                 return padding;
             }
@@ -1215,16 +1215,7 @@ namespace Alternet.UI
         /// Returns font event if <see cref="Font"/> property is <c>null</c>.
         /// </remarks>
         [Browsable(false)]
-        public virtual Font? RealFont
-        {
-            get
-            {
-                var fnt = Handler.NativeControl?.Font;
-                if (fnt is null)
-                    return null;
-                return new Font(fnt);
-            }
-        }
+        public virtual Font? RealFont => Font.FromInternal(Handler.NativeControl?.Font);
 
         /// <summary>
         /// Gets or sets whether control's font is bold.
@@ -1350,6 +1341,23 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets the background style of the control.
+        /// </summary>
+        public ControlBackgroundStyle BackgroundStyle
+        {
+            get
+            {
+                return (ControlBackgroundStyle?)Handler.NativeControl?.GetBackgroundStyle()
+                    ?? ControlBackgroundStyle.System;
+            }
+
+            set
+            {
+                Handler.NativeControl?.SetBackgroundStyle((int)value);
+            }
+        }
+
+        /// <summary>
         /// Gets or sets the layout direction for this control.
         /// </summary>
         /// <remarks>
@@ -1402,7 +1410,7 @@ namespace Alternet.UI
 
             set
             {
-                if(Handler.NativeControl is not null)
+                if (Handler.NativeControl is not null)
                     Handler.NativeControl.ProcessIdle = value;
             }
         }
@@ -1602,6 +1610,18 @@ namespace Alternet.UI
         private IControlHandlerFactory? ControlHandlerFactory { get; set; }
 
         /// <summary>
+        /// Gets control's default font and colors as <see cref="IReadOnlyFontAndColor"/>.
+        /// </summary>
+        /// <param name="controlType">Type of the control.</param>
+        /// <param name="renderSize">Render size. Ignored on most operating systems.</param>
+        public static IReadOnlyFontAndColor GetStaticDefaultFontAndColor(
+            ControlId controlType,
+            ControlRenderSizeVariant renderSize = ControlRenderSizeVariant.Normal)
+        {
+            return new FontAndColor.ControlStaticDefaultFontAndColor(controlType, renderSize);
+        }
+
+        /// <summary>
         /// Returns the currently focused control, or <see langword="null"/> if
         /// no control is focused.
         /// </summary>
@@ -1623,6 +1643,14 @@ namespace Alternet.UI
         public Color GetSvgColor(KnownSvgColor knownSvgColor)
         {
             return SvgColors.GetSvgColor(knownSvgColor, IsDarkBackground);
+        }
+
+        /// <summary>
+        /// Gets control's default font and colors as <see cref="IReadOnlyFontAndColor"/>.
+        /// </summary>
+        public IReadOnlyFontAndColor GetDefaultFontAndColor()
+        {
+            return new FontAndColor.ControlDefaultFontAndColor(this);
         }
 
         /// <summary>
@@ -1661,7 +1689,7 @@ namespace Alternet.UI
         /// </remarks>
         public IEnumerable<T> ChildrenOfType<T>()
         {
-            if(HasChildren)
+            if (HasChildren)
                 return Children.OfType<T>();
             return Array.Empty<T>();
         }
@@ -1863,7 +1891,7 @@ namespace Alternet.UI
             if (!HasChildren)
                 return ControlSet.Empty;
             List<Control> result = new();
-            foreach(var control in Children)
+            foreach (var control in Children)
             {
                 if (control.MemberOfGroup(groupIndex))
                     result.Add(control);
@@ -1985,7 +2013,7 @@ namespace Alternet.UI
             if (HasChildren)
             {
                 List<Control> result = new();
-                foreach(var item in Children)
+                foreach (var item in Children)
                 {
                     if (item.Visible)
                         result.Add(item);
@@ -2013,7 +2041,7 @@ namespace Alternet.UI
             {
                 if (!control.Visible)
                     continue;
-                if(index == 0)
+                if (index == 0)
                     return control;
                 index--;
             }
@@ -2210,7 +2238,7 @@ namespace Alternet.UI
             if (nativeControl is null)
                 return;
 
-            if(sizer is null)
+            if (sizer is null)
                 nativeControl.SetSizer(IntPtr.Zero, deleteOld);
             else
                 nativeControl.SetSizer(sizer.Handle, deleteOld);
@@ -2235,7 +2263,7 @@ namespace Alternet.UI
             if (nativeControl is null)
                 return;
 
-            if(sizer is null)
+            if (sizer is null)
                 nativeControl.SetSizerAndFit(IntPtr.Zero, deleteOld);
             else
                 nativeControl.SetSizerAndFit(sizer.Handle, deleteOld);
@@ -2515,25 +2543,45 @@ namespace Alternet.UI
         /// </returns>
         public virtual Size GetDPI()
         {
-            if(Handler != null)
+            if (Handler != null)
                 return Handler.GetDPI();
             if (Parent != null)
                 return Parent.GetDPI();
             throw new NotSupportedException();
         }
 
-        /* !!!!
-        public bool IsTransparentBackgroundSupported() => default
-        public bool SetBackgroundStyle(int style) => default;
-        public int GetBackgroundStyle() => default;
-        public void AlwaysShowScrollbars(bool hflag = true, bool vflag = true) { }
-        public Color GetDefaultAttributesBgColor() => default;
-        public Color GetDefaultAttributesFgColor() => default;
-        public Font GetDefaultAttributesFont() => default;
-        public static Color GetClassDefaultAttributesBgColor(int controlType, int windowVariant) => default;
-        public static Color GetClassDefaultAttributesFgColor(int controlType, int windowVariant) => default;
-        public static Font GetClassDefaultAttributesFont(int controlType, int windowVariant) => default;
-        */
+        /// <summary>
+        /// Checks whether using transparent background might work.
+        /// </summary>
+        /// <returns><c>true</c> if background transparency is supported.</returns>
+        /// <remarks>
+        /// If this function returns <c>false</c>, setting <see cref="BackgroundStyle"/> with
+        /// <see cref="ControlBackgroundStyle.Transparent"/> is not going to work. If it
+        /// returns <c>true</c>, setting transparent style should normally succeed.
+        /// </remarks>
+        /// <remarks>
+        /// Notice that this function would typically be called on the parent of a
+        /// control you want to set transparent background style for as the control for
+        /// which this method is called must be fully created.
+        /// </remarks>
+        public bool IsTransparentBackgroundSupported()
+        {
+            return Handler.NativeControl?.IsTransparentBackgroundSupported() ?? false;
+        }
+
+        /// <summary>
+        /// Call this function to force one or both scrollbars to be always shown, even if
+        /// the control is big enough to show its entire contents without scrolling.
+        /// </summary>
+        /// <param name="hflag">Whether the horizontal scroll bar should always be visible.</param>
+        /// <param name="vflag">Whether the vertical scroll bar should always be visible.</param>
+        /// <remarks>
+        /// This function is currently only implemented under Mac/Carbon.
+        /// </remarks>
+        public void AlwaysShowScrollbars(bool hflag = true, bool vflag = true)
+        {
+            Handler.NativeControl?.AlwaysShowScrollbars(hflag, vflag);
+        }
 
         /// <summary>
         /// Performs some action for the each child of the control.
@@ -2704,11 +2752,57 @@ namespace Alternet.UI
             Native.Control.NotifyCaptureLost();
         }
 
-        internal static void OnVisualStatePropertyChanged(
+        /*internal static void OnVisualStatePropertyChanged(
             Control control,
             DependencyPropertyChangedEventArgs e)
         {
             throw new NotImplementedException(); // yezo
+        }*/
+
+        internal static Color GetClassDefaultAttributesBgColor(
+            ControlId controlType,
+            ControlRenderSizeVariant renderSize = ControlRenderSizeVariant.Normal)
+        {
+            return Native.Control.GetClassDefaultAttributesBgColor(
+                (int)controlType,
+                (int)renderSize);
+        }
+
+        internal static Color GetClassDefaultAttributesFgColor(
+            ControlId controlType,
+            ControlRenderSizeVariant renderSize = ControlRenderSizeVariant.Normal)
+        {
+            return Native.Control.GetClassDefaultAttributesFgColor(
+                (int)controlType,
+                (int)renderSize);
+        }
+
+        internal static Font? GetClassDefaultAttributesFont(
+            ControlId controlType,
+            ControlRenderSizeVariant renderSize = ControlRenderSizeVariant.Normal)
+        {
+            var font = Native.Control.GetClassDefaultAttributesFont(
+                (int)controlType,
+                (int)renderSize);
+            return Font.FromInternal(font);
+        }
+
+        internal Color? GetDefaultAttributesBgColor()
+        {
+            CheckDisposed();
+            return Handler.NativeControl?.GetDefaultAttributesBgColor();
+        }
+
+        internal Color? GetDefaultAttributesFgColor()
+        {
+            CheckDisposed();
+            return Handler.NativeControl?.GetDefaultAttributesFgColor();
+        }
+
+        internal Font? GetDefaultAttributesFont()
+        {
+            CheckDisposed();
+            return Font.FromInternal(Handler.NativeControl?.GetDefaultAttributesFont());
         }
 
         /// <summary>
