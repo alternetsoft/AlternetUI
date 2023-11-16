@@ -40,7 +40,7 @@ namespace Alternet.UI
         private IListEditSource? dataSource;
         private object? lastPropInstance;
 
-        public UIDialogListEditWindow()
+        public UIDialogListEditWindow(IListEditSource source)
         {
             treeView.FullRowSelect = true;
             treeView.ShowLines = false;
@@ -96,26 +96,42 @@ namespace Alternet.UI
                 toolbar.GetSvgColor(KnownSvgColor.Normal),
                 imageSize);
 
-            buttonIdAdd = toolbar.AddTool(
-                CommonStrings.Default.ButtonAdd,
-                images.ImgAdd,
-                CommonStrings.Default.ButtonAdd);
-            buttonIdAddChild = toolbar.AddTool(
-                CommonStrings.Default.ButtonAddChild,
-                images.ImgAddChild,
-                CommonStrings.Default.ButtonAddChild);
-            buttonIdRemove = toolbar.AddTool(
-                CommonStrings.Default.ButtonRemove,
-                images.ImgRemove,
-                CommonStrings.Default.ButtonRemove);
-            buttonIdRemoveAll = toolbar.AddTool(
-                CommonStrings.Default.ButtonClear,
-                images.ImgRemoveAll,
-                CommonStrings.Default.ButtonClear);
-            buttonIdOk = toolbar.AddTool(
-                CommonStrings.Default.ButtonOk,
-                images.ImgOk,
-                CommonStrings.Default.ButtonOk);
+            if (source.AllowAdd)
+            {
+                buttonIdAdd = toolbar.AddTool(
+                    CommonStrings.Default.ButtonAdd,
+                    images.ImgAdd,
+                    CommonStrings.Default.ButtonAdd);
+            }
+
+            if(source.AllowSubItems && source.AllowAdd)
+            {
+                buttonIdAddChild = toolbar.AddTool(
+                    CommonStrings.Default.ButtonAddChild,
+                    images.ImgAddChild,
+                    CommonStrings.Default.ButtonAddChild);
+            }
+
+            if (source.AllowDelete)
+            {
+                buttonIdRemove = toolbar.AddTool(
+                    CommonStrings.Default.ButtonRemove,
+                    images.ImgRemove,
+                    CommonStrings.Default.ButtonRemove);
+                buttonIdRemoveAll = toolbar.AddTool(
+                    CommonStrings.Default.ButtonClear,
+                    images.ImgRemoveAll,
+                    CommonStrings.Default.ButtonClear);
+            }
+
+            if (source.AllowApplyData)
+            {
+                buttonIdOk = toolbar.AddTool(
+                    CommonStrings.Default.ButtonOk,
+                    images.ImgOk,
+                    CommonStrings.Default.ButtonOk);
+            }
+
             buttonIdCancel = toolbar.AddTool(
                 CommonStrings.Default.ButtonCancel,
                 images.ImgCancel,
@@ -154,6 +170,8 @@ namespace Alternet.UI
             PerformLayout();
             Closing += UIDialogListEditWindow_Closing;
             Closed += UIDialogListEditWindow_Closed;
+
+            DataSource = source;
         }
 
         public IListEditSource? DataSource
@@ -240,6 +258,8 @@ namespace Alternet.UI
 
         private void OkButton_Click(object? sender, EventArgs e)
         {
+            if (!propertyGrid.ClearSelection(true))
+                return;
             if (Modal)
                 ModalResult = ModalResult.Accepted;
             Close();

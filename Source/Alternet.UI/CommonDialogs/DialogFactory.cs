@@ -130,11 +130,7 @@ namespace Alternet.UI
             if (source == null)
                 return null;
 
-            using UIDialogListEditWindow dialog = new()
-            {
-                DataSource = source,
-            };
-
+            using UIDialogListEditWindow dialog = new(source);
             var result = dialog.ShowModal(Window.ActiveWindow) == ModalResult.Accepted;
             return result;
         }
