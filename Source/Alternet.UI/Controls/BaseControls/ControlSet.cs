@@ -143,8 +143,19 @@ namespace Alternet.UI
         public ControlSet Action<T>(Action<T> action)
             where T : Control
         {
+            if (typeof(T) == typeof(Control))
+            {
+                foreach (var item in items)
+                    action((T)item);
+                return this;
+            }
+
             foreach (var item in items)
-                action((T)item);
+            {
+                if(item is T t)
+                    action(t);
+            }
+
             return this;
         }
 
