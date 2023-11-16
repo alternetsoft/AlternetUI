@@ -96,8 +96,8 @@ namespace Alternet.UI
         /// <inheritdoc cref="Control.InUpdates"/>
         public bool InUpdates => updateCount > 0;
 
-        /// <inheritdoc/>
-        public override IReadOnlyList<FrameworkElement> ContentElements => Panels;
+        /*/// <inheritdoc/>
+        public override IReadOnlyList<FrameworkElement> ContentElements => Panels;*/
 
         /// <summary>
         /// Gets whether control is fully active and is attached to the window.
@@ -118,8 +118,8 @@ namespace Alternet.UI
             }
         }
 
-        /// <inheritdoc />
-        protected override IEnumerable<FrameworkElement> LogicalChildrenCollection => Panels;
+        /*/// <inheritdoc />
+        protected override IEnumerable<FrameworkElement> LogicalChildrenCollection => Panels;*/
 
         /// <inheritdoc cref="Control.BeginUpdate"/>
         public virtual void BeginUpdate()
