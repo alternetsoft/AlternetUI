@@ -386,7 +386,7 @@ namespace Alternet::UI
         if (!IsRecreatingWxWindow())
             _wxWindow = nullptr;
 
-        _wxWindow->Unbind(wxEVT_IDLE, &Control::OnIdle, this);
+        wxWindow->Unbind(wxEVT_IDLE, &Control::OnIdle, this);
         wxWindow->Unbind(wxEVT_PAINT, &Control::OnPaint, this);
         //wxWindow->Unbind(wxEVT_ERASE_BACKGROUND, &Control::OnEraseBackground, this);
         wxWindow->Unbind(wxEVT_DESTROY, &Control::OnDestroy, this);
