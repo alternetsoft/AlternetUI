@@ -10,6 +10,10 @@ namespace LayoutSample
             Icon = ImageSet.FromUrlOrNull("embres:LayoutSample.Sample.ico");
 
             InitializeComponent();
+
+            SetSizeToContent();
+
+            logListBox.ContextMenu.Required();
         }
 
         private void ShowGrid10x10Button_Click(object? sender, EventArgs e)

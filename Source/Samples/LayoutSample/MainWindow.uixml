@@ -8,5 +8,6 @@
       <Button Text="Grid 10x10" Margin="0,0,0,10" Click="ShowGrid10x10Button_Click" />
       <Button Text="Scrolling" Margin="0,0,0,10" Click="ShowScrollingButton_Click" />
       <Button Text="Focus" Margin="0,0,0,10" Click="ShowFocusButton_Click" />
+      <LogListBox Name="logListBox" Margin="0,0,0,10" SuggestedSize="400,150"/>
   </StackPanel>
 </Window>

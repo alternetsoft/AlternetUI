@@ -59,8 +59,8 @@ namespace PropertyGridSample
             {
                 var border = (c as Border)!;
                 border.SuggestedHeight = 150;
-                border.BorderColor = Color.Indigo;
-                border.BackgroundColor = Color.BurlyWood;
+                border.BorderColor = Color.Red;
+                border.BackgroundColor = Color.Azure;
             });
 
             Actions.Add(typeof(RichTextBox), (c) =>

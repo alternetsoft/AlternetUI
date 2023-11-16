@@ -1,3 +1,4 @@
+using System;
 using Alternet.UI;
 
 namespace LayoutSample
@@ -38,12 +39,12 @@ namespace LayoutSample
             textBox1IsFocusedValueLabel.Text = textBox1.IsFocused.ToString();
         }
 
-        private void TextBox1_GotFocus(object sender, Alternet.UI.RoutedEventArgs e)
+        private void TextBox1_GotFocus(object sender, EventArgs e)
         {
             UpdateTextBox1IsFocusedValueLabel();
         }
 
-        private void TextBox1_LostFocus(object sender, Alternet.UI.RoutedEventArgs e)
+        private void TextBox1_LostFocus(object sender, EventArgs e)
         {
             UpdateTextBox1IsFocusedValueLabel();
         }
