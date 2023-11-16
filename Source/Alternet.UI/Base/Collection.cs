@@ -274,8 +274,12 @@ namespace Alternet.Base.Collections
         /// <remarks>The base class calls this method when the list is being cleared.</remarks>
         protected override void ClearItems()
         {
+            if (Count == 0)
+                return;
             for (int i = Count - 1; i >= 0; i--)
-                OnItemRemoved(i, this[i]);
+            {
+                RemoveItem(i);
+            }
 
             base.ClearItems();
         }
