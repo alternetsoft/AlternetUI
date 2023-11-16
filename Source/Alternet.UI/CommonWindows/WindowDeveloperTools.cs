@@ -74,17 +74,18 @@ namespace Alternet.UI
 
         private void LogFocusedControl(Control control)
         {
+            var defaultColors = control.GetDefaultFontAndColor();
+
             Application.LogSeparator();
             Application.Log($"Name = {control.Name}");
             Application.Log($"Type = {control.GetType().Name}");
             LogUtils.LogColor("ForegroundColor", control.ForegroundColor);
-            LogUtils.LogColor("RealForegroundColor", control.RealForegroundColor);
-            LogUtils.LogColor("BackgroundColor", control.BackgroundColor);
-            LogUtils.LogColor("RealBackgroundColor", control.RealBackgroundColor);
+            LogUtils.LogColor("ForegroundColor (real)", control.RealForegroundColor);
+            LogUtils.LogColor("ForegroundColor (defaults)", defaultColors.ForegroundColor);
 
-            var defaultColors = control.GetDefaultFontAndColor();
-            LogUtils.LogColor("Defaults.BackgroundColor", defaultColors.BackgroundColor);
-            LogUtils.LogColor("Defaults.ForegroundColor", defaultColors.ForegroundColor);
+            LogUtils.LogColor("BackgroundColor", control.BackgroundColor);
+            LogUtils.LogColor("BackgroundColor (real)", control.RealBackgroundColor);
+            LogUtils.LogColor("BackgroundColor (defaults)", defaultColors.BackgroundColor);
 
             Application.LogSeparator();
         }
