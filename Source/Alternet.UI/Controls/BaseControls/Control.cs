@@ -1906,6 +1906,24 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets all child controls recursively.
+        /// </summary>
+        public ControlSet GetChildrenRecursive()
+        {
+            if (!HasChildren)
+                return ControlSet.Empty;
+            List<Control> result = new();
+            foreach (var control in Children)
+            {
+                result.Add(control);
+                ControlSet subSet = control.GetChildrenRecursive();
+                result.AddRange(subSet.Items);
+            }
+
+            return new ControlSet(result);
+        }
+
+        /// <summary>
         /// Gets <see cref="ControlSet"/> with all controls which have <see cref="ColumnIndex"/>
         /// property equal to <paramref name="columnIndex"/>.
         /// </summary>
