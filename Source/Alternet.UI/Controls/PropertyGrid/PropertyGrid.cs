@@ -3091,7 +3091,7 @@ namespace Alternet.UI
         /// Sets proportion of an auto-stretchable column.
         /// </summary>
         /// <param name="column">Column index.</param>
-        /// <param name="proportion"></param>
+        /// <param name="proportion"> Column proportion (must be 1 or higher).</param>
         /// <returns><c>true</c> on success, <c>false</c> on failure.</returns>
         /// <remarks>
         /// <see cref="PropertyGridCreateStyle.SplitterAutoCenter"/> style needs to be used
