@@ -20,7 +20,7 @@ namespace Alternet.UI
         public const int DefaultSpacerWidth = 5;
 
         private readonly Dictionary<int, ToolData> toolData = new();
-        private int idCounter = 0;
+        private int idCounter = 1;
         private int showingDropDown = 0;
 
         /// <summary>
@@ -375,6 +375,9 @@ namespace Alternet.UI
         /// <param name="toolId">ID of a previously added tool.</param>
         public AuiToolbarItemKind GetToolKind(int toolId)
         {
+            if (toolId <= 0)
+                return AuiToolbarItemKind.Normal;
+
             var result = NativeControl.GetToolKind(toolId);
             return (AuiToolbarItemKind)result;
         }
@@ -483,6 +486,8 @@ namespace Alternet.UI
         /// </remarks>
         public bool DeleteTool(int toolId)
         {
+            if (toolId <= 0)
+                return false;
             var result = NativeControl.DeleteTool(toolId);
             if (result)
                 toolData.Remove(toolId);
@@ -497,6 +502,8 @@ namespace Alternet.UI
         /// added tool.</returns>
         public int GetToolIndex(int toolId)
         {
+            if (toolId <= 0)
+                return -1;
             return NativeControl.GetToolIndex(toolId);
         }
 
@@ -509,6 +516,8 @@ namespace Alternet.UI
         /// </returns>
         public bool GetToolFits(int toolId)
         {
+            if (toolId <= 0)
+                return false;
             return NativeControl.GetToolFits(toolId);
         }
 
@@ -519,6 +528,8 @@ namespace Alternet.UI
         /// <returns>Position and size of the tool in the toolbar.</returns>
         public Rect GetToolRect(int toolId)
         {
+            if (toolId <= 0)
+                return Rect.Empty;
             return NativeControl.GetToolRect(toolId);
         }
 
@@ -546,6 +557,8 @@ namespace Alternet.UI
         /// </remarks>
         public void ToggleTool(int toolId, bool state)
         {
+            if (toolId <= 0)
+                return;
             NativeControl.ToggleTool(toolId, state);
         }
 
@@ -557,6 +570,8 @@ namespace Alternet.UI
         /// otherwise it is off.</returns>
         public bool GetToolToggled(int toolId)
         {
+            if (toolId <= 0)
+                return false;
             return NativeControl.GetToolToggled(toolId);
         }
 
@@ -591,7 +606,8 @@ namespace Alternet.UI
         /// enabled state of the tool.</remarks>
         public void EnableTool(int toolId, bool state)
         {
-            NativeControl.EnableTool(toolId, state);
+            if(toolId > 0)
+                NativeControl.EnableTool(toolId, state);
         }
 
         /// <summary>
@@ -602,7 +618,10 @@ namespace Alternet.UI
         /// otherwise.</returns>
         public bool GetToolEnabled(int toolId)
         {
-            return NativeControl.GetToolEnabled(toolId);
+            if (toolId > 0)
+                return NativeControl.GetToolEnabled(toolId);
+            else
+                return false;
         }
 
         /// <summary>
@@ -618,6 +637,8 @@ namespace Alternet.UI
         /// </remarks>
         public void SetToolDropDown(int toolId, bool dropdown)
         {
+            if (toolId <= 0)
+                return;
             NativeControl.SetToolDropDown(toolId, dropdown);
         }
 
@@ -632,6 +653,8 @@ namespace Alternet.UI
         /// </returns>
         public bool GetToolDropDown(int toolId)
         {
+            if (toolId <= 0)
+                return false;
             return NativeControl.GetToolDropDown(toolId);
         }
 
@@ -642,6 +665,8 @@ namespace Alternet.UI
         /// <param name="proportion">new toolbar item proportion</param>
         public void SetToolProportion(int toolId, int proportion)
         {
+            if (toolId <= 0)
+                return;
             NativeControl.SetToolProportion(toolId, proportion);
         }
 
@@ -652,6 +677,8 @@ namespace Alternet.UI
         /// <returns>Toolbar item proportion value.</returns>
         public int GetToolProportion(int toolId)
         {
+            if (toolId <= 0)
+                return -1;
             return NativeControl.GetToolProportion(toolId);
         }
 
@@ -662,6 +689,8 @@ namespace Alternet.UI
         /// <param name="sticky">new Sticky property value.</param>
         public void SetToolSticky(int toolId, bool sticky)
         {
+            if (toolId <= 0)
+                return;
             NativeControl.SetToolSticky(toolId, sticky);
         }
 
@@ -672,6 +701,8 @@ namespace Alternet.UI
         /// <param name="contextMenu">Context menu.</param>
         public void ShowDropDownMenu(int toolId, ContextMenu contextMenu)
         {
+            if (toolId <= 0)
+                return;
             ShowMe();
 
             void ShowMe()
@@ -711,6 +742,8 @@ namespace Alternet.UI
         /// <returns>Toolbar item Sticky property value.</returns>
         public bool GetToolSticky(int toolId)
         {
+            if (toolId <= 0)
+                return false;
             return NativeControl.GetToolSticky(toolId);
         }
 
@@ -720,6 +753,8 @@ namespace Alternet.UI
         /// <param name="toolId">ID of a previously added tool.</param>
         public string GetToolLabel(int toolId)
         {
+            if (toolId <= 0)
+                return string.Empty;
             return NativeControl.GetToolLabel(toolId);
         }
 
@@ -730,6 +765,8 @@ namespace Alternet.UI
         /// <param name="label">New toolbar item label text.</param>
         public void SetToolLabel(int toolId, string label)
         {
+            if (toolId <= 0)
+                return;
             NativeControl.SetToolLabel(toolId, label);
         }
 
@@ -740,6 +777,8 @@ namespace Alternet.UI
         /// <param name="bitmap">New toolbar item image.</param>
         public void SetToolBitmap(int toolId, ImageSet? bitmap)
         {
+            if (toolId <= 0)
+                return;
             NativeControl.SetToolBitmap(toolId, bitmap?.NativeImageSet);
         }
 
@@ -751,6 +790,8 @@ namespace Alternet.UI
         /// over tool item.</remarks>
         public string GetToolShortHelp(int toolId)
         {
+            if (toolId <= 0)
+                return string.Empty;
             return NativeControl.GetToolShortHelp(toolId);
         }
 
@@ -761,6 +802,8 @@ namespace Alternet.UI
         /// <param name="ev">Event handler.</param>
         public void AddToolOnClick(int toolId, EventHandler ev)
         {
+            if (toolId <= 0)
+                return;
             var toolData = GetToolData(toolId, true);
             toolData!.Click += ev;
         }
@@ -774,6 +817,8 @@ namespace Alternet.UI
         /// </remarks>
         public string? GetToolName(int toolId)
         {
+            if (toolId <= 0)
+                return string.Empty;
             var toolData = GetToolData(toolId, false);
             if (toolData == null)
                 return null;
@@ -790,6 +835,8 @@ namespace Alternet.UI
         /// </remarks>
         public void SetToolName(int toolId, string? name)
         {
+            if (toolId <= 0)
+                return;
             var toolData = GetToolData(toolId, true);
             toolData!.Name = name;
         }
@@ -800,6 +847,8 @@ namespace Alternet.UI
         /// <param name="toolId">ID of a previously added tool.</param>
         public object? GetToolTag(int toolId)
         {
+            if (toolId <= 0)
+                return null;
             var toolData = GetToolData(toolId, false);
             if (toolData == null)
                 return null;
@@ -813,6 +862,8 @@ namespace Alternet.UI
         /// <param name="tag">User data.</param>
         public void SetToolTag(int toolId, object? tag)
         {
+            if (toolId <= 0)
+                return;
             var toolData = GetToolData(toolId, true);
             toolData!.Tag = tag;
         }
@@ -824,6 +875,8 @@ namespace Alternet.UI
         /// <param name="menu">Drop down menu.</param>
         public void SetToolDropDownMenu(int toolId, ContextMenu menu)
         {
+            if (toolId <= 0)
+                return;
             var toolData = GetToolData(toolId, true);
             toolData!.DropDownMenu = menu;
         }
@@ -834,6 +887,8 @@ namespace Alternet.UI
         /// <param name="toolId">ID of a previously added tool.</param>
         public ContextMenu? GetToolDropDownMenu(int toolId)
         {
+            if (toolId <= 0)
+                return null;
             var toolData = GetToolData(toolId, false);
             if (toolData == null)
                 return null;
@@ -847,6 +902,8 @@ namespace Alternet.UI
         /// <param name="onEvent">Type of event which shows a drop down menu.</param>
         public void SetToolDropDownOnEvent(int toolId, AuiToolbarItemDropDownOnEvent onEvent)
         {
+            if (toolId <= 0)
+                return;
             var toolData = GetToolData(toolId, true);
             toolData!.DropDownOnEvent = onEvent;
         }
@@ -857,6 +914,8 @@ namespace Alternet.UI
         /// <param name="toolId">ID of a previously added tool.</param>
         public AuiToolbarItemDropDownOnEvent GetToolDropDownOnEvent(int toolId)
         {
+            if (toolId <= 0)
+                return AuiToolbarItemDropDownOnEvent.None;
             var toolData = GetToolData(toolId, false);
             if (toolData == null)
                 return AuiToolbarItemDropDownOnEvent.None;
@@ -870,6 +929,8 @@ namespace Alternet.UI
         /// <param name="ev">Event handler.</param>
         public void RemoveToolOnClick(int toolId, EventHandler ev)
         {
+            if (toolId <= 0)
+                return;
             var toolData = GetToolData(toolId, false);
             if (toolData == null)
                 return;
@@ -887,6 +948,8 @@ namespace Alternet.UI
         /// </remarks>
         public void SetToolShortHelp(int toolId, string helpString)
         {
+            if (toolId <= 0)
+                return;
             NativeControl.SetToolShortHelp(toolId, helpString);
         }
 
@@ -900,6 +963,8 @@ namespace Alternet.UI
         /// </remarks>
         public string GetToolLongHelp(int toolId)
         {
+            if (toolId <= 0)
+                return string.Empty;
             return NativeControl.GetToolLongHelp(toolId);
         }
 
@@ -914,6 +979,8 @@ namespace Alternet.UI
         /// </remarks>
         public void SetToolLongHelp(int toolId, string helpString)
         {
+            if (toolId <= 0)
+                return;
             NativeControl.SetToolLongHelp(toolId, helpString);
         }
 
@@ -932,6 +999,8 @@ namespace Alternet.UI
         /// <param name="width">New minimal width of a toolbar item.</param>
         public void SetToolMinWidth(int toolId, int width)
         {
+            if (toolId <= 0)
+                return;
             var minHeight = GetToolMinHeight(toolId);
             NativeControl.SetToolMinSize(toolId, width, minHeight);
         }
@@ -943,6 +1012,8 @@ namespace Alternet.UI
         /// <param name="width">New minimal width of a toolbar item.</param>
         public void GrowToolMinWidth(int toolId, int width)
         {
+            if (toolId <= 0)
+                return;
             var size = GetToolMinSize(toolId);
             NativeControl.SetToolMinSize(toolId, Math.Max(width, size.Width), size.Height);
         }
@@ -955,6 +1026,8 @@ namespace Alternet.UI
         /// <param name="height">New minimal height of a toolbar item.</param>
         public void GrowToolMinSize(int toolId, int width, int height)
         {
+            if (toolId <= 0)
+                return;
             var size = GetToolMinSize(toolId);
             NativeControl.SetToolMinSize(
                 toolId,
@@ -970,6 +1043,8 @@ namespace Alternet.UI
         /// <param name="height">New minimal height of a toolbar item.</param>
         public void SetToolMinSize(int toolId, int width, int height)
         {
+            if (toolId <= 0)
+                return;
             NativeControl.SetToolMinSize(toolId, width, height);
         }
 
@@ -979,6 +1054,8 @@ namespace Alternet.UI
         /// <param name="toolId">ID of a previously added toolbar item.</param>
         public Int32Size GetToolMinSize(int toolId)
         {
+            if (toolId <= 0)
+                return Int32Size.Empty;
             return NativeControl.GetToolMinSize(toolId);
         }
 
@@ -988,6 +1065,8 @@ namespace Alternet.UI
         /// <param name="toolId">ID of a previously added toolbar item.</param>
         public int GetToolMinHeight(int toolId)
         {
+            if (toolId <= 0)
+                return 0;
             return NativeControl.GetToolMinSize(toolId).Height;
         }
 
@@ -1021,17 +1100,32 @@ namespace Alternet.UI
         /// <param name="toolId">ID of a previously added toolbar item.</param>
         public int GetToolMinWidth(int toolId)
         {
+            if (toolId <= 0)
+                return 0;
             return NativeControl.GetToolMinSize(toolId).Width;
         }
 
-        internal void SetToolAlignment(int toolId, int align)
+        /// <summary>
+        /// Gets alignment of the toolbar item.
+        /// </summary>
+        /// <param name="toolId">ID of a previously added toolbar item.</param>
+        public SizerFlag GetToolAlignment(int toolId)
         {
-            NativeControl.SetAlignment(toolId, (int)align);
+            if (toolId <= 0)
+                return SizerFlag.AlignLeft;
+            return (SizerFlag)NativeControl.GetAlignment(toolId);
         }
 
-        internal int GetToolAlignment(int toolId)
+        /// <summary>
+        /// Sets alignment of the toolbar item.
+        /// </summary>
+        /// <param name="toolId">ID of a previously added toolbar item.</param>
+        /// <param name="align">New alignment value.</param>
+        internal void SetToolAlignment(int toolId, SizerFlag align)
         {
-            return NativeControl.GetAlignment(toolId);
+            if (toolId <= 0)
+                return;
+            NativeControl.SetAlignment(toolId, (int)align);
         }
 
         internal IntPtr FindControl(int windowId)
@@ -1051,6 +1145,8 @@ namespace Alternet.UI
 
         internal IntPtr FindTool(int toolId)
         {
+            if (toolId <= 0)
+                return default;
             return NativeControl.FindTool(toolId);
         }
 
@@ -1063,6 +1159,8 @@ namespace Alternet.UI
         /// was not found or if the provided index is out of range.</returns>
         internal bool DestroyTool(int toolId)
         {
+            if (toolId <= 0)
+                return false;
             return NativeControl.DestroyTool(toolId);
         }
 
