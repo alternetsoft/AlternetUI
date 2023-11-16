@@ -25,7 +25,7 @@ namespace Alternet.UI
     /// <summary>
     ///     Validation-related methods and DependencyProperties
     /// </summary>
-    public static class Validation
+    internal static class Validation
     {
         /// <summary>
         ///     ValidationError event
@@ -141,7 +141,7 @@ namespace Alternet.UI
             Control control = d as Control;
             if (control != null)
             {
-                Control.OnVisualStatePropertyChanged(control, e);
+                /*Control.OnVisualStatePropertyChanged(control, e);*/
             }
         }
 
