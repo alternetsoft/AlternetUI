@@ -436,6 +436,13 @@ namespace Alternet.Drawing
             }
         }
 
+        internal static Font? FromInternal(UI.Native.Font? font)
+        {
+            if (font is null)
+                return null;
+            return new Font(font);
+        }
+
         internal static Font CreateDefaultFont()
         {
             var nativeFont = new UI.Native.Font();
