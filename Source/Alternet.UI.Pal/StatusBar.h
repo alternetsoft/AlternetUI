@@ -1,7 +1,7 @@
 #pragma once
 #include "Common.h"
 #include "ApiTypes.h"
-#include "Control.h"
+#include "Object.h"
 
 namespace Alternet::UI
 {
@@ -9,11 +9,10 @@ namespace Alternet::UI
     class Window;
 
     // https://docs.wxwidgets.org/3.2/classwx_status_bar.html
-    class StatusBar : public Control
+    class StatusBar : public Object
     {
 #include "Api/StatusBar.inc"
     public:
-        wxWindow* CreateWxWindowCore(wxWindow* parent) override;
         wxStatusBar* GetWxStatusBar();
 
         void SetOwnerWindow(Window* window);
@@ -22,9 +21,9 @@ namespace Alternet::UI
         wxStatusBar* _wxStatusBar = nullptr;
         Window* _ownerWindow = nullptr;
 
-        void CreateWxStatusBar(Window* window);
+        void CreateWxStatusBar();
         void DestroyWxStatusBar();
-        void RecreateWxStatusBar(Window* window);
+        void RecreateWxStatusBar();
 
         bool _sizingGripperVisible = true;
     };

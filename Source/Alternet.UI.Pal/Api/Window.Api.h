@@ -6,7 +6,6 @@
 #include "ImageSet.h"
 #include "MainMenu.h"
 #include "Toolbar.h"
-#include "StatusBar.h"
 #include "ApiUtils.h"
 #include "Exceptions.h"
 
@@ -212,14 +211,14 @@ ALTERNET_UI_API void Window_SetToolbar_(Window* obj, Toolbar* value)
     obj->SetToolbar(value);
 }
 
-ALTERNET_UI_API StatusBar* Window_GetStatusBar_(Window* obj)
+ALTERNET_UI_API void* Window_GetWxStatusBar_(Window* obj)
 {
-    return obj->GetStatusBar();
+    return obj->GetWxStatusBar();
 }
 
-ALTERNET_UI_API void Window_SetStatusBar_(Window* obj, StatusBar* value)
+ALTERNET_UI_API void Window_SetWxStatusBar_(Window* obj, void* value)
 {
-    obj->SetStatusBar(value);
+    obj->SetWxStatusBar(value);
 }
 
 ALTERNET_UI_API void* Window_OpenOwnedWindowsArray_(Window* obj)

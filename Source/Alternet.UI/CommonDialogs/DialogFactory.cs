@@ -162,27 +162,34 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="control">Control which columns will be edited.</param>
         public static bool? EditColumnsWithListEditor(ListView control) =>
-            EditPropertyWithListEditor(control, "Columns");
+            EditPropertyWithListEditor(control, nameof(ListView.Columns));
 
         /// <summary>
         /// Edits <see cref="ListView.Items"/> with list editor.
         /// </summary>
         /// <param name="control">Control which items will be edited.</param>
         public static bool? EditItemsWithListEditor(ListView control) =>
-            EditPropertyWithListEditor(control, "Items");
+            EditPropertyWithListEditor(control, nameof(ListView.Items));
+
+        /// <summary>
+        /// Edits <see cref="StatusBar.Panels"/> with list editor.
+        /// </summary>
+        /// <param name="control">Control which items will be edited.</param>
+        public static bool? EditItemsWithListEditor(StatusBar control) =>
+            EditPropertyWithListEditor(control, nameof(StatusBar.Panels));
 
         /// <summary>
         /// Edits <see cref="TreeView.Items"/> with list editor.
         /// </summary>
         /// <param name="control">Control which items will be edited.</param>
         public static bool? EditItemsWithListEditor(TreeView control) =>
-            EditPropertyWithListEditor(control, "Items");
+            EditPropertyWithListEditor(control, nameof(TreeView.Items));
 
         /// <summary>
         /// Edits <see cref="ListControl.Items"/> with list editor.
         /// </summary>
         /// <param name="control">Control which items will be edited.</param>
         public static bool? EditItemsWithListEditor(ListControl control) =>
-            EditPropertyWithListEditor(control, "Items");
+            EditPropertyWithListEditor(control, nameof(ListControl.Items));
     }
 }

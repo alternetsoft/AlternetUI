@@ -112,9 +112,6 @@ namespace Alternet::UI
         Toolbar* RetrieveToolbar();
         void ApplyToolbar(Toolbar* const& value);
 
-        StatusBar* RetrieveStatusBar();
-        void ApplyStatusBar(StatusBar* const& value);
-
         long GetWindowStyle();
 
         void ApplyIcon(Frame* value);
@@ -158,11 +155,9 @@ namespace Alternet::UI
 
         DelayedValue<Window, MainMenu*> _menu;
         DelayedValue<Window, Toolbar*> _toolbar;
-        DelayedValue<Window, StatusBar*> _statusBar;
 
         MainMenu* _storedMenu = nullptr;
         Toolbar* _storedToolbar = nullptr;
-        StatusBar* _storedStatusBar = nullptr;
         ImageSet* _icon = nullptr;
         WindowState _lastState = WindowState::Normal;
 

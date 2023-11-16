@@ -44,7 +44,7 @@ namespace NativeApi.Api
         public ImageSet? Icon {get; set;}
         public MainMenu? Menu {get; set;}
         public Toolbar? Toolbar {get; set;}
-        public StatusBar? StatusBar {get; set;}
+        public IntPtr WxStatusBar { get; set; }
 
         public void AddInputBinding(string managedCommandId, Key key, ModifierKeys modifiers) { }
         public void RemoveInputBinding(string managedCommandId) { }

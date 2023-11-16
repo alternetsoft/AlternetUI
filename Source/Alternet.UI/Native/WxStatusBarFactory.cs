@@ -23,6 +23,16 @@ namespace Alternet.UI.Native
         {
         }
         
+        public static void DeleteStatusBar(System.IntPtr handle)
+        {
+            NativeApi.WxStatusBarFactory_DeleteStatusBar_(handle);
+        }
+        
+        public static System.IntPtr CreateStatusBar(System.IntPtr window, long style)
+        {
+            return NativeApi.WxStatusBarFactory_CreateStatusBar_(window, style);
+        }
+        
         public static int GetFieldsCount(System.IntPtr handle)
         {
             return NativeApi.WxStatusBarFactory_GetFieldsCount_(handle);
@@ -101,6 +111,12 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern IntPtr WxStatusBarFactory_Create_();
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void WxStatusBarFactory_DeleteStatusBar_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr WxStatusBarFactory_CreateStatusBar_(System.IntPtr window, long style);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern int WxStatusBarFactory_GetFieldsCount_(System.IntPtr handle);

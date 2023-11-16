@@ -362,21 +362,18 @@ namespace Alternet.UI.Native
             }
         }
         
-        public StatusBar? StatusBar
+        public System.IntPtr WxStatusBar
         {
             get
             {
                 CheckDisposed();
-                var _nnn = NativeApi.Window_GetStatusBar_(NativePointer);
-                var _mmm = NativeObject.GetFromNativePointer<StatusBar>(_nnn, p => new StatusBar(p));
-                ReleaseNativeObjectPointer(_nnn);
-                return _mmm;
+                return NativeApi.Window_GetWxStatusBar_(NativePointer);
             }
             
             set
             {
                 CheckDisposed();
-                NativeApi.Window_SetStatusBar_(NativePointer, value?.NativePointer ?? IntPtr.Zero);
+                NativeApi.Window_SetWxStatusBar_(NativePointer, value);
             }
         }
         
@@ -620,10 +617,10 @@ namespace Alternet.UI.Native
             public static extern void Window_SetToolbar_(IntPtr obj, IntPtr value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern IntPtr Window_GetStatusBar_(IntPtr obj);
+            public static extern System.IntPtr Window_GetWxStatusBar_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Window_SetStatusBar_(IntPtr obj, IntPtr value);
+            public static extern void Window_SetWxStatusBar_(IntPtr obj, System.IntPtr value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern System.IntPtr Window_OpenOwnedWindowsArray_(IntPtr obj);

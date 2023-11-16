@@ -52,13 +52,14 @@ namespace MenuSample
             contextMenuLabel.Font = Control.DefaultFont.AsBold;
             contextMenuBorder.PerformLayout();
 
-         /*   ControlSet.New(
-                statusAddButton,
-                showSizingGripButton,
-                statusRemoveButton,
-                statusClearButton,
-                statusNullButton,
-                statusRecreateButton).SuggestedWidthToMax();*/
+            /*   ControlSet.New(
+                   statusAddButton,
+                   statusEditButton,
+                   showSizingGripButton,
+                   statusRemoveButton,
+                   statusClearButton,
+                   statusNullButton,
+                   statusRecreateButton).SuggestedWidthToMax();*/
 
             panelHeader.Add("Menu", menuPanel);
             panelHeader.Add("ToolBar", toolbarPanel);
@@ -71,6 +72,7 @@ namespace MenuSample
             statusRecreateButton.Click += StatusRecreateButton_Click;
             statusAddButton.Click += StatusAddButton_Click;
             statusRemoveButton.Click += StatusRemoveButton_Click;
+            statusEditButton.Click += StatusEditButton_Click;
 
             eventsListBox.ContextMenu.Required();
         }
@@ -88,7 +90,7 @@ namespace MenuSample
 
         private void StatusRecreateButton_Click(object? sender, EventArgs e)
         {
-            StatusBar ??= new();
+            StatusBar = new();
             StatusBar?.Add($"Panel {GenItemIndex()}");
             StatusBar?.Add($"Panel {GenItemIndex()}");
         }
@@ -96,6 +98,12 @@ namespace MenuSample
         private void StatusNullButton_Click(object? sender, EventArgs e)
         {
             StatusBar = null;
+        }
+
+        private void StatusEditButton_Click(object? sender, EventArgs e)
+        {
+            StatusBar ??= new();
+            DialogFactory.EditItemsWithListEditor(StatusBar);
         }
 
         private void StatusClearButton_Click(object? sender, EventArgs e)

@@ -13,8 +13,10 @@ namespace Alternet.UI
     [ControlCategory("MenusAndToolbars")]
     public class StatusBar : FrameworkElement
     {
-        private Native.StatusBar statusBar = new();
+        private Window? window;
         private int updateCount = 0;
+        private bool sizingGripVisible = true;
+        private TextEllipsizeType textEllipsize = TextEllipsizeType.End;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="StatusBar"/> class.
@@ -23,7 +25,6 @@ namespace Alternet.UI
         {
             Panels.ItemInserted += OnItemInserted;
             Panels.ItemRemoved += OnItemRemoved;
-            statusBar.ControlRecreated += OnControlRecreated;
         }
 
         /// <summary>
@@ -42,13 +43,54 @@ namespace Alternet.UI
         public bool IgnorePanels { get; set; }
 
         /// <summary>
+        /// Gets <see cref="Window"/> to which this control is attached.
+        /// </summary>
+        public Window? Window
+        {
+            get => window;
+            internal set
+            {
+                if (window == value)
+                    return;
+                window = value;
+            }
+        }
+
+        /// <summary>
         /// Gets or sets a value indicating whether a sizing grip is displayed in the
         /// lower-right corner of the control.
         /// </summary>
         public bool SizingGripVisible
         {
-            get => statusBar.SizingGripVisible;
-            set => statusBar.SizingGripVisible = value;
+            get => sizingGripVisible;
+
+            set
+            {
+                if (sizingGripVisible == value)
+                    return;
+                sizingGripVisible = value;
+                RecreateWidget();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets status texts replacement method when the text widths exceed the
+        /// container's widths.
+        /// </summary>
+        public TextEllipsizeType TextEllipsize
+        {
+            get
+            {
+                return textEllipsize;
+            }
+
+            set
+            {
+                if (textEllipsize == value)
+                    return;
+                textEllipsize = value;
+                RecreateWidget();
+            }
         }
 
         /// <inheritdoc cref="Control.InUpdates"/>
@@ -60,18 +102,24 @@ namespace Alternet.UI
         /// <summary>
         /// Gets whether control is fully active and is attached to the window.
         /// </summary>
-        public bool IsOk => StatusBarHandle != IntPtr.Zero;
+        public bool IsOk => StatusBarHandle != IntPtr.Zero && !IsDisposed;
 
-        internal IntPtr StatusBarHandle => statusBar.RealHandle;
+        internal IntPtr StatusBarHandle
+        {
+            get
+            {
+                if (window is null || window.IsDisposed)
+                {
+                    window = null;
+                    return default;
+                }
 
-        internal Native.StatusBar NativeStatusBar => statusBar;
+                return window.Handler.NativeControl.WxStatusBar;
+            }
+        }
 
         /// <inheritdoc />
         protected override IEnumerable<FrameworkElement> LogicalChildrenCollection => Panels;
-
-        /*internal void SetParentWindow(Window? window)
-        {
-        }*/
 
         /// <inheritdoc cref="Control.BeginUpdate"/>
         public virtual void BeginUpdate()
@@ -95,6 +143,17 @@ namespace Alternet.UI
             if (IgnorePanels)
                 return;
             ApplyPanels(Panels);
+        }
+
+        /// <summary>
+        /// Adds new item to <see cref="Panels"/>.
+        /// </summary>
+        /// <param name="text">The text displayed in the status bar panel.</param>
+        public virtual StatusBarPanel Add(string text)
+        {
+            var result = new StatusBarPanel(text);
+            Panels.Add(result);
+            return result;
         }
 
         /// <summary>
@@ -141,7 +200,7 @@ namespace Alternet.UI
         /// </returns>
         public virtual int? GetFieldsCount()
         {
-            if (StatusBarHandle == IntPtr.Zero)
+            if (!IsOk)
                 return null;
             return Native.WxStatusBarFactory.GetFieldsCount(StatusBarHandle);
         }
@@ -168,7 +227,7 @@ namespace Alternet.UI
         /// </remarks>
         public virtual bool SetStatusText(string? text = null, int index = 0)
         {
-            if (StatusBarHandle == IntPtr.Zero)
+            if (!IsOk)
                 return false;
             text ??= string.Empty;
             Native.WxStatusBarFactory.SetStatusText(StatusBarHandle, text, index);
@@ -187,7 +246,7 @@ namespace Alternet.UI
         /// </remarks>
         public virtual string? GetStatusText(int index = 0)
         {
-            if (StatusBarHandle == IntPtr.Zero)
+            if (!IsOk)
                 return null;
             return Native.WxStatusBarFactory.GetStatusText(StatusBarHandle, index);
         }
@@ -205,7 +264,7 @@ namespace Alternet.UI
         /// <seealso cref="PopStatusText"/>
         public virtual bool PushStatusText(string? text = null, int index = 0)
         {
-            if (StatusBarHandle == IntPtr.Zero)
+            if (!IsOk)
                 return false;
             text ??= string.Empty;
             Native.WxStatusBarFactory.PushStatusText(StatusBarHandle, text, index);
@@ -229,7 +288,7 @@ namespace Alternet.UI
         /// </remarks>
         public virtual bool PopStatusText(int index = 0)
         {
-            if (StatusBarHandle == IntPtr.Zero)
+            if (!IsOk)
                 return false;
             Native.WxStatusBarFactory.PopStatusText(StatusBarHandle, index);
             return true;
@@ -269,7 +328,7 @@ namespace Alternet.UI
         /// </remarks>
         public virtual bool SetStatusWidths(int[] widths)
         {
-            if (StatusBarHandle == IntPtr.Zero || widths.Length == 0)
+            if (!IsOk || widths.Length == 0)
                 return false;
             Native.WxStatusBarFactory.SetStatusWidths(StatusBarHandle, widths);
             return true;
@@ -289,7 +348,7 @@ namespace Alternet.UI
         /// </remarks>
         public virtual bool SetFieldsCount(int count)
         {
-            if (StatusBarHandle == IntPtr.Zero || count < 1)
+            if (!IsOk || count < 1)
                 return false;
             Native.WxStatusBarFactory.SetFieldsCount(StatusBarHandle, count);
             return true;
@@ -307,7 +366,7 @@ namespace Alternet.UI
         /// </remarks>
         public virtual int? GetStatusWidth(int index)
         {
-            if (StatusBarHandle == IntPtr.Zero)
+            if (!IsOk)
                 return null;
             return Native.WxStatusBarFactory.GetStatusWidth(StatusBarHandle, index);
         }
@@ -322,7 +381,7 @@ namespace Alternet.UI
         /// </remarks>
         public virtual StatusBarPanelStyle? GetStatusStyle(int index)
         {
-            if (StatusBarHandle == IntPtr.Zero)
+            if (!IsOk)
                 return null;
             return
                 (StatusBarPanelStyle)Native.WxStatusBarFactory.GetStatusStyle(StatusBarHandle, index);
@@ -344,7 +403,7 @@ namespace Alternet.UI
         /// </remarks>
         public virtual bool SetStatusStyles(StatusBarPanelStyle[] styles)
         {
-            if (StatusBarHandle == IntPtr.Zero || styles.Length == 0)
+            if (!IsOk || styles.Length == 0)
                 return false;
             var result = styles.Cast<int>().ToArray();
             Native.WxStatusBarFactory.SetStatusStyles(StatusBarHandle, result);
@@ -363,7 +422,7 @@ namespace Alternet.UI
         /// </remarks>
         public virtual Int32Rect? GetFieldRect(int index)
         {
-            if (StatusBarHandle == IntPtr.Zero)
+            if (!IsOk)
                 return null;
             var result = Native.WxStatusBarFactory.GetFieldRect(StatusBarHandle, index);
             if (result == Int32Rect.Empty)
@@ -382,7 +441,7 @@ namespace Alternet.UI
         /// </remarks>
         public virtual bool SetMinHeight(int height)
         {
-            if (StatusBarHandle == IntPtr.Zero)
+            if (!IsOk)
                 return false;
             Native.WxStatusBarFactory.SetMinHeight(StatusBarHandle, height);
             return true;
@@ -399,7 +458,7 @@ namespace Alternet.UI
         /// </remarks>
         public virtual int? GetBorderX()
         {
-            if (StatusBarHandle == IntPtr.Zero)
+            if (!IsOk)
                 return null;
             return Native.WxStatusBarFactory.GetBorderX(StatusBarHandle);
         }
@@ -415,9 +474,17 @@ namespace Alternet.UI
         /// </remarks>
         public virtual int? GetBorderY()
         {
-            if (StatusBarHandle == IntPtr.Zero)
+            if (!IsOk)
                 return null;
             return Native.WxStatusBarFactory.GetBorderY(StatusBarHandle);
+        }
+
+        /// <summary>
+        /// Clears <see cref="Panels"/>.
+        /// </summary>
+        public virtual void Clear()
+        {
+            Panels.Clear();
         }
 
         /// <summary>
@@ -445,11 +512,57 @@ namespace Alternet.UI
             ApplyPanels();
         }
 
-        /// <inheritdoc/>
-        protected override void DisposeManagedResources()
+        internal void RecreateWidget()
         {
-            statusBar.Dispose();
-            statusBar = null!;
+            const int SIZEGRIP = 0x0010;
+            const int SHOWTIPS = 0x0020;
+            const int ELLIPSIZESTART = 0x0040;
+            const int ELLIPSIZEMIDDLE = 0x0080;
+            const int ELLIPSIZEEND = 0x0100;
+            const int FULLREPAINTONRESIZE = 0x00010000;
+
+            var handle = StatusBarHandle;
+            if (window != null)
+            {
+                window.Handler.NativeControl.WxStatusBar = default;
+                if(handle != default)
+                    Native.WxStatusBarFactory.DeleteStatusBar(handle);
+
+                window.Handler.NativeControl.WxStatusBar =
+                    Native.WxStatusBarFactory.CreateStatusBar(
+                        window.Handler.NativeControl.WxWidget,
+                        GetStyle());
+                ApplyPanels();
+            }
+
+            long GetStyle()
+            {
+                long ellipsizeStyle = 0;
+                switch (textEllipsize)
+                {
+                    case TextEllipsizeType.End:
+                        ellipsizeStyle = ELLIPSIZEEND;
+                        break;
+                    case TextEllipsizeType.Start:
+                        ellipsizeStyle = ELLIPSIZESTART;
+                        break;
+                    case TextEllipsizeType.Middle:
+                        ellipsizeStyle = ELLIPSIZEMIDDLE;
+                        break;
+                    default:
+                        break;
+                }
+
+                var result = ellipsizeStyle | SHOWTIPS | FULLREPAINTONRESIZE;
+                if (sizingGripVisible)
+                    result |= SIZEGRIP;
+                return result;
+            }
+        }
+
+        /// <inheritdoc/>
+        protected override void DisposeUnmanagedResources()
+        {
         }
     }
 }

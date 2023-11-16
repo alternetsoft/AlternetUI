@@ -536,17 +536,35 @@ namespace Alternet.UI
             {
                 if (statusBar == value)
                     return;
+                if(value is not null)
+                {
+                    if (value.IsDisposed)
+                        throw new ObjectDisposedException(nameof(StatusBar));
+                    if (value.Window is not null && value.Window != this)
+                    {
+                        throw new ArgumentException(
+                            "Object is already attached to the window",
+                            nameof(StatusBar));
+                    }
+                }
 
-                var oldValue = statusBar;
+                if(statusBar is not null)
+                {
+                    statusBar.Window = null;
+                    var oldHandle = Handler.NativeControl.WxStatusBar;
+                    if(oldHandle != default)
+                        Native.WxStatusBarFactory.DeleteStatusBar(oldHandle);
+                }
+
                 statusBar = value;
-
-                /* oldValue?.SetParentWindow(null);
-                   statusBar?.SetParentWindow(this);*/
-
-                PerformLayout();
+                if(statusBar is not null)
+                    statusBar.Window = this;
+                else
+                    Handler.NativeControl.WxStatusBar = default;
 
                 OnStatusBarChanged(EventArgs.Empty);
                 StatusBarChanged?.Invoke(this, EventArgs.Empty);
+                PerformLayout();
             }
         }
 
@@ -679,6 +697,12 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override ControlId ControlKind => ControlId.Window;
 
+        /// <summary>
+        /// Gets a <see cref="NativeWindowHandler"/> associated with this class.
+        /// </summary>
+        [Browsable(false)]
+        internal new NativeWindowHandler Handler => (NativeWindowHandler)base.Handler;
+
         /// <inheritdoc />
         protected override IEnumerable<FrameworkElement> LogicalChildrenCollection
         {
@@ -695,15 +719,6 @@ namespace Alternet.UI
 
                 if (StatusBar != null)
                     yield return StatusBar;
-            }
-        }
-
-        private new NativeWindowHandler Handler
-        {
-            get
-            {
-                CheckDisposed();
-                return (NativeWindowHandler)base.Handler;
             }
         }
 

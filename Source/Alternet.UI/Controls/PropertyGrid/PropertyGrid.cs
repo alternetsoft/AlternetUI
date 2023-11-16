@@ -524,19 +524,26 @@ namespace Alternet.UI
         /// </summary>
         public static void RegisterCollectionEditors()
         {
+            // todo: List edit for ImageList.Images
+            // todo: List edit for ImageSet.Images
+            // todo: List edit for TabControl.Pages
+            // todo: List edit for Toolbar.Items
+            // todo: List edit for Menu.Items
+            /* todo: List edit for Window.InputBindings*/
+
             if (staticStateFlags.HasFlag(StaticStateFlags.CollectionEditorsRegistered))
                 return;
             staticStateFlags |= StaticStateFlags.CollectionEditorsRegistered;
 
-            RegisterCollectionEditor(
+            /*RegisterCollectionEditor(
                 typeof(ImageList),
                 nameof(ImageList.Images),
-                null); // todo: List edit for ImageList.Images
+                null);*/
 
-            RegisterCollectionEditor(
+            /*RegisterCollectionEditor(
                 typeof(ImageSet),
                 nameof(ImageSet.Images),
-                null); // todo: List edit for ImageSet.Images
+                null);*/
 
             RegisterCollectionEditor(
                 typeof(TreeView),
@@ -564,6 +571,11 @@ namespace Alternet.UI
                 typeof(ListEditSourceListBox));
 
             RegisterCollectionEditor(
+                typeof(StatusBar),
+                nameof(StatusBar.Panels),
+                typeof(ListEditSourceStatusBar));
+
+            RegisterCollectionEditor(
                 typeof(CheckListBox),
                 nameof(CheckListBox.Items),
                 typeof(ListEditSourceListBox));
@@ -573,30 +585,25 @@ namespace Alternet.UI
                 nameof(ComboBox.Items),
                 typeof(ListEditSourceListBox));
 
-            RegisterCollectionEditor(
-                typeof(StatusBar),
-                nameof(StatusBar.Panels),
-                null); // todo: List edit for StatusBar.Panels
-
-            RegisterCollectionEditor(
+            /*RegisterCollectionEditor(
                 typeof(TabControl),
                 nameof(TabControl.Pages),
-                null); // todo: List edit for TabControl.Pages
+                null);*/
 
-            RegisterCollectionEditor(
+            /*RegisterCollectionEditor(
                 typeof(Toolbar),
                 nameof(Toolbar.Items),
-                null); // todo: List edit for Toolbar.Items
+                null);*/
 
-            RegisterCollectionEditor(
+            /*RegisterCollectionEditor(
                 typeof(Menu),
                 nameof(Menu.Items),
-                null); // todo: List edit for Menu.Items
+                null);*/
 
-            RegisterCollectionEditor(
+            /*RegisterCollectionEditor(
                 typeof(Window),
                 nameof(Window.InputBindings),
-                null); // todo: List edit for Window.InputBindings
+                null);*/
 
             RegisterCollectionEditor(
                 typeof(PropertyGridAdapterBrush),

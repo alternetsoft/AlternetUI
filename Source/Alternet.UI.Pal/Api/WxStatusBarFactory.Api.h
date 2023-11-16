@@ -13,6 +13,16 @@ ALTERNET_UI_API WxStatusBarFactory* WxStatusBarFactory_Create_()
     return new WxStatusBarFactory();
 }
 
+ALTERNET_UI_API void WxStatusBarFactory_DeleteStatusBar_(void* handle)
+{
+    WxStatusBarFactory::DeleteStatusBar(handle);
+}
+
+ALTERNET_UI_API void* WxStatusBarFactory_CreateStatusBar_(void* window, int64_t style)
+{
+    return WxStatusBarFactory::CreateStatusBar(window, style);
+}
+
 ALTERNET_UI_API int WxStatusBarFactory_GetFieldsCount_(void* handle)
 {
     return WxStatusBarFactory::GetFieldsCount(handle);

@@ -361,7 +361,7 @@ namespace Alternet.UI
 
         private void ApplyStatusBar()
         {
-            NativeControl.StatusBar = Control.StatusBar?.NativeStatusBar;
+            Control.StatusBar?.RecreateWidget();
         }
 
         private void NativeControl_Deactivated(object? sender, EventArgs e)

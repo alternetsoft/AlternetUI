@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
 
 namespace Alternet.UI
@@ -114,6 +115,33 @@ namespace Alternet.UI
                 StyleChanged?.Invoke(this, EventArgs.Empty);
                 PropertyChanged?.Invoke(this, EventArgs.Empty);
             }
+        }
+
+        /// <inheritdoc cref="ListViewItem.Tag"/>
+        [Browsable(false)]
+        public object? Tag { get; set; }
+
+        /// <summary>
+        /// Creates copy of this <see cref="StatusBarPanel"/>.
+        /// </summary>
+        public StatusBarPanel Clone()
+        {
+            var result = new StatusBarPanel();
+            result.Assign(this);
+            return result;
+        }
+
+        /// <summary>
+        /// Assigns properties from another <see cref="StatusBarPanel"/>.
+        /// </summary>
+        /// <param name="item">Source of the properties to assign.</param>
+        public void Assign(StatusBarPanel item)
+        {
+            text = item.Text;
+            width = item.Width;
+            style = item.Style;
+            Tag = item.Tag;
+            PropertyChanged?.Invoke(this, EventArgs.Empty);
         }
 
         /// <inheritdoc/>

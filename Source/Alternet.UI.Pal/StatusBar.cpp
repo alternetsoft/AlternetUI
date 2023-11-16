@@ -17,11 +17,6 @@ namespace Alternet::UI
         DestroyWxStatusBar();
     }
 
-    wxWindow* StatusBar::CreateWxWindowCore(wxWindow* parent)
-    {
-        return new wxDummyPanel("statusbar");
-    }
-
     wxStatusBar* StatusBar::GetWxStatusBar()
     {
         return _wxStatusBar;
@@ -30,42 +25,10 @@ namespace Alternet::UI
     void StatusBar::SetOwnerWindow(Window* window)
     {
         _ownerWindow = window;
-        RecreateWxStatusBar(window);
+        RecreateWxStatusBar();
     }
 
-    /*void StatusBar::ApplyItems(size_t startIndex, optional<int> count)
-    {
-        return;
-
-        auto sb = GetWxStatusBar();
-        if (sb == nullptr)
-            return;
-
-        auto itemsCount = _items.size();
-
-        auto panesCount = sb->GetFieldsCount();
-
-        if (panesCount != itemsCount)
-        {
-            auto newCount = itemsCount;
-            if (newCount < 1)
-                newCount = 1;
-            sb->SetFieldsCount(newCount);
-        }
-
-        if (itemsCount == 0)
-            return;
-
-        for (size_t i = startIndex;
-            i < itemsCount && ((!count.has_value()) || i < startIndex + count.value());
-            i++)
-        {
-            _items[i]->SetParentStatusBar(this, i);
-            sb->SetStatusText(wxStr(_items[i]->GetText()), i);
-        }
-    }*/
-
-    void StatusBar::CreateWxStatusBar(Window* window)
+    void StatusBar::CreateWxStatusBar()
     {
         if (_wxStatusBar != nullptr)
             throwExNoInfo;
@@ -83,7 +46,11 @@ namespace Alternet::UI
             return style;
         };
 
-        _wxStatusBar = window->GetFrame()->CreateStatusBar(1, getStyle());
+        _wxStatusBar = _ownerWindow->GetFrame()->CreateStatusBar(1, getStyle());
+        RaiseEvent(StatusBarEvent::ControlRecreated);
+        _ownerWindow->GetFrame()->SetStatusBar(_wxStatusBar);
+        _ownerWindow->GetFrame()->Layout();
+        _ownerWindow->GetFrame()->PostSizeEvent();
     }
 
     void StatusBar::DestroyWxStatusBar()
@@ -95,10 +62,10 @@ namespace Alternet::UI
         }
     }
 
-    void StatusBar::RecreateWxStatusBar(Window* window)
+    void StatusBar::RecreateWxStatusBar()
     {
         DestroyWxStatusBar();
-        CreateWxStatusBar(window);
+        CreateWxStatusBar();
     }
 
     bool StatusBar::GetSizingGripVisible()
@@ -114,6 +81,6 @@ namespace Alternet::UI
         _sizingGripperVisible = value;
         
         if (_ownerWindow != nullptr)
-            RecreateWxStatusBar(_ownerWindow);
+            RecreateWxStatusBar();
     }
 }

@@ -12,6 +12,9 @@ namespace NativeApi.Api
     // https://docs.wxwidgets.org/3.2/classwx_status_bar.html
     public class WxStatusBarFactory
     {
+        public static void DeleteStatusBar(IntPtr handle) { }
+        public static IntPtr CreateStatusBar(IntPtr window, long style) => default;
+
         public static int GetFieldsCount(IntPtr handle) => default;
         public static void SetStatusText(IntPtr handle, string text, int number = 0) { }
         public static string GetStatusText(IntPtr handle, int number = 0) => default;

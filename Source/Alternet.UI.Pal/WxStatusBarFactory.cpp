@@ -11,6 +11,20 @@ namespace Alternet::UI
 	{
 	}
 
+	void WxStatusBarFactory::DeleteStatusBar(void* handle)
+	{
+		if (handle == nullptr)
+			return;
+		((wxStatusBar*)handle)->Destroy();
+	}
+	
+	void* WxStatusBarFactory::CreateStatusBar(void* window, int64_t style)
+	{
+		auto result = ((wxFrame*)window)->CreateStatusBar(1, style);
+		((wxFrame*)window)->SetStatusBar(result);
+		return result;
+	}
+
 	int WxStatusBarFactory::GetFieldsCount(void* handle)
 	{
 		return ((wxStatusBar*)handle)->GetFieldsCount();

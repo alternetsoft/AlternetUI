@@ -82,8 +82,8 @@ Toolbar* GetToolbar();
 void SetToolbar(Toolbar* value);
 
 
-StatusBar* GetStatusBar();
-void SetStatusBar(StatusBar* value);
+void* GetWxStatusBar();
+void SetWxStatusBar(void* value);
 
 void* OpenOwnedWindowsArray();
 int GetOwnedWindowsItemCount(void* array);
