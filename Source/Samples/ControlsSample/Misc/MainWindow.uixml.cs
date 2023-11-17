@@ -83,9 +83,7 @@ namespace ControlsSample
         Control CreateAnimationPage() => new AnimationPage() { Site = this };
         Control CreateTreeViewPage() => new TreeViewPage() { Site = this };
         Control CreateListViewPage() => new ListViewPage() { Site = this };
-        Control CreateListBoxPage() => new ListBoxPage() { Site = this };
-        //Control CreateComboBoxPage() => new ComboBoxPage() { Site = this };
-        //Control CreateCheckListBoxPage() => new CheckListBoxPage() { Site = this };
+        Control CreateListBoxPage() => new ListControlsMain();
         Control CreateTabControlPage() => new TabControlPage() { Site = this };
         Control CreateProgressBarPage() => new ProgressBarPage() { Site = this };
         Control CreateButtonPage() => new ButtonPage() { Site = this };

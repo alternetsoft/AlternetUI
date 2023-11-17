@@ -7,36 +7,26 @@ namespace ControlsSample
 {
     internal partial class CheckListBoxPage : Control
     {
-        private IPageSite? site;
         private int newItemIndex = 0;
 
         public CheckListBoxPage()
         {
             InitializeComponent();
-        }
 
-        public IPageSite? Site
-        {
-            get => site;
+            checkListBox.Items.Add("One");
+            checkListBox.Items.Add("Two");
+            checkListBox.Items.Add("Three");
+            checkListBox.Items.Add("Four");
+            checkListBox.Items.Add("Five");
+            checkListBox.Items.Add("Six");
+            checkListBox.Items.Add("Seven");
+            checkListBox.Items.Add("Eight");
+            checkListBox.Items.Add("Nine");
+            checkListBox.Items.Add("Ten");
 
-            set
-            {
-                checkListBox.Items.Add("One");
-                checkListBox.Items.Add("Two");
-                checkListBox.Items.Add("Three");
-                checkListBox.Items.Add("Four");
-                checkListBox.Items.Add("Five");
-                checkListBox.Items.Add("Six");
-                checkListBox.Items.Add("Seven");
-                checkListBox.Items.Add("Eight");
-                checkListBox.Items.Add("Nine");
-                checkListBox.Items.Add("Ten");
-
-                checkListBox.SelectionChanged += CheckListBox_SelectionChanged;
-                allowMultipleSelectionCheckBox.IsChecked = 
-                    checkListBox.SelectionMode == ListBoxSelectionMode.Multiple;
-                site = value;
-            }
+            checkListBox.SelectionChanged += CheckListBox_SelectionChanged;
+            allowMultipleSelectionCheckBox.IsChecked =
+                checkListBox.SelectionMode == ListBoxSelectionMode.Multiple;
         }
 
         private void EditorButton_Click(object? sender, System.EventArgs e)
@@ -51,7 +41,7 @@ namespace ControlsSample
             var result = checkListBox.HitTest(e.GetPosition(checkListBox));
             var item = (result == null ? 
                 "<none>" : checkListBox.Items[result.Value]);
-            site?.LogEvent($"HitTest result: Item: '{item}'");
+            Application.Log($"HitTest result: Item: '{item}'");
         }
 
         private void HasBorderButton_Click(object? sender, EventArgs e)
@@ -89,7 +79,7 @@ namespace ControlsSample
         private void CheckListBox_CheckedChanged(object? sender, EventArgs e)
         {
             string checkedIndicesString = IndicesToStr(checkListBox.CheckedIndices);
-            site?.LogEvent(
+            Application.Log(
                 $"CheckListBox: CheckedChanged. Checked: ({checkedIndicesString})");
         }
 
@@ -97,7 +87,7 @@ namespace ControlsSample
         {
             string selectedIndicesStr = 
                 IndicesToStr(checkListBox.SelectedIndices);
-            site?.LogEvent(
+            Application.Log(
                 $"CheckListBox: SelectionChanged. Selected: ({selectedIndicesStr})");
         }
 
@@ -119,7 +109,7 @@ namespace ControlsSample
 
         private void RemoveItemsAndLog(IReadOnlyList<int> items)
         {
-            site?.LogEvent($"Remove items: ({IndicesToStr(items)})");
+            Application.Log($"Remove items: ({IndicesToStr(items)})");
             checkListBox.RemoveItems(items);
         }
 

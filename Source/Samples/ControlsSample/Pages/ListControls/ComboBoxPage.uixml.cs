@@ -5,30 +5,19 @@ namespace ControlsSample
 {
     internal partial class ComboBoxPage : Control
     {
-        private IPageSite? site;
-        bool ignoreEvents = false;
+        private bool ignoreEvents = false;
         private int newItemIndex = 0;
 
         public ComboBoxPage()
         {
+            ignoreEvents = true;
             InitializeComponent();
-        }
 
-        public IPageSite? Site
-        {
-            get => site;
-
-            set
-            {
-                site = value;
-
-                ignoreEvents = true;
-                comboBox.Items.Add("One");
-                comboBox.Items.Add("Two");
-                comboBox.Items.Add("Three");
-                comboBox.SelectedIndex = 1;
-                ignoreEvents = false;
-            }
+            comboBox.Items.Add("One");
+            comboBox.Items.Add("Two");
+            comboBox.Items.Add("Three");
+            comboBox.SelectedIndex = 1;
+            ignoreEvents = false;
         }
 
         private void Editor_Click(object? sender, System.EventArgs e)
@@ -76,7 +65,7 @@ namespace ControlsSample
                 return;
             
             var text = comboBox.Text == string.Empty ? "\"\"" : comboBox.Text;
-            site?.LogEvent($"ComboBox: TextChanged. Text: {text}");
+            Application.Log($"ComboBox: TextChanged. Text: {text}");
         }
 
         private void ComboBox_SelectedItemChanged(object? sender, EventArgs e)
@@ -84,7 +73,7 @@ namespace ControlsSample
             if (ignoreEvents)
                 return;
             var s = (comboBox.SelectedIndex == null ? "<null>" : comboBox.SelectedIndex.ToString());
-            site?.LogEvent($"ComboBox: SelectedItemChanged. SelectedIndex: {s}");
+            Application.Log($"ComboBox: SelectedItemChanged. SelectedIndex: {s}");
         }
 
         private void AllowTextEditingCheckBox_CheckedChanged(object? sender, EventArgs e)
@@ -114,7 +103,7 @@ namespace ControlsSample
             bool isEditable = comboBox.IsEditable;
 
             if (!isEditable)
-                site?.LogEvent("Cannot perform this operation on a non-editable ComboBox.");
+                Application.Log("Cannot perform this operation on a non-editable ComboBox.");
 
             return isEditable;
         }
@@ -136,7 +125,7 @@ namespace ControlsSample
             var length = comboBox.TextSelectionLength;
             var selectedText = comboBox.Text.Substring(start, length);
             var message = $"[{start}..{start + length}], selected text: '{selectedText}'";
-            site?.LogEvent("ComboBox Text Selection: " + message);
+            Application.Log("ComboBox Text Selection: " + message);
         }
 
         private void SetItem_Click(object? sender, System.EventArgs e)
