@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Alternet.Base.Collections;
 using Alternet.Drawing;
+using Alternet.UI.Localization;
 
 namespace Alternet.UI
 {
@@ -26,7 +27,7 @@ namespace Alternet.UI
 
         private readonly Label waitLabel = new()
         {
-            Text = "Loading. Please wait...",
+            Text = CommonStrings.Default.LoadingPleaseWait,
             Margin = new Thickness(100, 100, 0, 0),
         };
 
