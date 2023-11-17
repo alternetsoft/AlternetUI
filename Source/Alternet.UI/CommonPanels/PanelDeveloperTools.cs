@@ -65,6 +65,7 @@ namespace Alternet.UI
             AddAction("HookExceptionEvents()", DebugUtils.HookExceptionEvents);
             AddAction("Log useful defines", LogUsefulDefines);
             AddAction("Log OS information", LogOSInformation);
+            AddAction("C++ Throw", () => { WebBrowser.DoCommandGlobal("CppThrow"); });
         }
     }
 }
