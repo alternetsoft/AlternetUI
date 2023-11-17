@@ -9,6 +9,8 @@ namespace Alternet.UI
 {
     internal class PanelDeveloperTools : PanelAuiManager
     {
+        private readonly IAuiNotebookPage? mainLogPage;
+
         private readonly LogListBox mainLogListBox = new()
         {
             HasBorder = false,
@@ -24,7 +26,7 @@ namespace Alternet.UI
             mainLogListBox.ContextMenu.Required();
             mainLogListBox.MenuItemShowDevTools?.SetEnabled(false);
             mainLogListBox.BindApplicationLog();
-            var mainLogPage = CenterNotebook.AddPage(
+            mainLogPage = CenterNotebook.AddPage(
                 mainLogListBox,
                 CommonStrings.Default.NotebookTabTitleOutput);
             ActionsControl.Required();
@@ -34,7 +36,9 @@ namespace Alternet.UI
             DebugUtils.HookExceptionEvents();
         }
 
-        public static void LogOSInformation()
+        internal IAuiNotebookPage? MainLogPage => mainLogPage;
+
+        private static void LogOSInformation()
         {
             var os = Environment.OSVersion;
             Application.Log("Current OS Information:\n");
