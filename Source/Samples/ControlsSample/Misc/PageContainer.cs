@@ -120,18 +120,11 @@ namespace ControlsSample
         {
             private readonly Func<Control>? action;
             private Control? control;
-            private Lazy<Control>? lazyControl;
 
             public Page(string title, Func<Control> action)
             {
                 Title = title;
                 this.action = action;
-            }
-
-            public Page(string title,  Lazy<Control> lazyControl)
-            {
-                Title = title;
-                this.lazyControl = lazyControl;
             }
 
             public string Title { get; }
@@ -144,9 +137,6 @@ namespace ControlsSample
                 {
                     if(control is null)
                     {
-                        if (lazyControl is not null)
-                            control = lazyControl.Value;
-                        else
                         if (action is not null)
                             control = action();
                         else
