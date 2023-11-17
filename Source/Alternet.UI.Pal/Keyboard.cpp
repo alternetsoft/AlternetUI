@@ -1,4 +1,5 @@
 #include "Keyboard.h"
+#include "Application.h"
 
 namespace Alternet::UI
 {
@@ -65,8 +66,16 @@ namespace Alternet::UI
 
     void Keyboard::OnChar(wxKeyEvent& e, bool& handled)
     {
-        TextInputEventData textInputdata{ wcharToChar16(e.GetUnicodeKey()), e.GetTimestamp() };
+        Application::Log("============");
+        Application::Log("OnChar Begin");
+        auto unicodeKey = e.GetUnicodeKey();
+        Application::Log("OnChar unicodeKey");
+        auto char16 = wcharToChar16(unicodeKey);
+        Application::Log("OnChar char16");
+        TextInputEventData textInputdata{ char16, e.GetTimestamp() };
         handled = RaiseEvent(KeyboardEvent::TextInput, &textInputdata);
+        Application::Log("OnChar End");
+        Application::Log("============");
     }
 
     void Keyboard::OnKeyDown(wxKeyEvent& e, bool& handled)
