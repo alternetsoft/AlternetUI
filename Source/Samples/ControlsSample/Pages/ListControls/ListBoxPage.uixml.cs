@@ -10,16 +10,26 @@ namespace ControlsSample
     {
         private readonly CardPanelHeader panelHeader = new();
         private readonly PopupListBox popupListBox = new();
+        private readonly CardPanel cardPanel = new();
         private IPageSite? site;
         private int newItemIndex = 0;
 
         public ListBoxPage()
         {
             InitializeComponent();
+
+            cardPanel.Visible = false;
+            cardPanel.Parent = tabControl;
+            var checkListBoxCardIndex = cardPanel.Add(null, CreateCheckListBoxPage);
+            var comboBoxCardIndex = cardPanel.Add(null, CreateComboBoxPage);
+
+            panelHeader.CardPanel = cardPanel;
             panelHeader.Add("ListBox", tab1);
+            panelHeader.Add("CheckListBox", cardPanel[checkListBoxCardIndex].UniqueId);
+            panelHeader.Add("ComboBox", cardPanel[comboBoxCardIndex].UniqueId);
             panelHeader.Add("Popups", tab2);
             tabControl.Children.Prepend(panelHeader);
-            panelHeader.SelectedTab = panelHeader.Tabs[0];
+            panelHeader.SelectFirstTab();
 
             showPopupButton.Click += ShowPopupButton_Click;
 
@@ -33,6 +43,16 @@ namespace ControlsSample
             findExactCheckBox.BindBoolProp(this, nameof(FindExact));
             findIgnoreCaseCheckBox.BindBoolProp(this, nameof(FindIgnoreCase));
             findText.TextChanged += FindText_TextChanged;
+        }
+
+        private Control CreateCheckListBoxPage()
+        {
+            return new CheckListBoxPage() { Site = site };
+        }
+
+        private Control CreateComboBoxPage()
+        {
+            return new ComboBoxPage() { Site = site };
         }
 
         private void FindText_TextChanged(object sender, TextChangedEventArgs e)

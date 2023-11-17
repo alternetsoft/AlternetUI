@@ -47,9 +47,9 @@ namespace ControlsSample
             AddPage("Text Input", CreateTextInputPage);
             AddPage("Tree View", CreateTreeViewPage);
             AddPage("List View", CreateListViewPage);
-            AddPage("List Box", CreateListBoxPage);
-            AddPage("Combo Box", CreateComboBoxPage);
-            AddPage("Check List Box", CreateCheckListBoxPage);
+            AddPage("List Controls", CreateListBoxPage);
+            //AddPage("Combo Box", CreateComboBoxPage);
+            //AddPage("Check List Box", CreateCheckListBoxPage);
             AddPage("Progress Bar", CreateProgressBarPage);
             AddPage("Button", CreateButtonPage);
             AddPage("Slider", CreateSliderPage);
@@ -84,8 +84,8 @@ namespace ControlsSample
         Control CreateTreeViewPage() => new TreeViewPage() { Site = this };
         Control CreateListViewPage() => new ListViewPage() { Site = this };
         Control CreateListBoxPage() => new ListBoxPage() { Site = this };
-        Control CreateComboBoxPage() => new ComboBoxPage() { Site = this };
-        Control CreateCheckListBoxPage() => new CheckListBoxPage() { Site = this };
+        //Control CreateComboBoxPage() => new ComboBoxPage() { Site = this };
+        //Control CreateCheckListBoxPage() => new CheckListBoxPage() { Site = this };
         Control CreateTabControlPage() => new TabControlPage() { Site = this };
         Control CreateProgressBarPage() => new ProgressBarPage() { Site = this };
         Control CreateButtonPage() => new ButtonPage() { Site = this };
