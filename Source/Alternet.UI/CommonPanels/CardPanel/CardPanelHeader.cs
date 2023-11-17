@@ -34,6 +34,7 @@ namespace Alternet.UI
         private Size additionalSpace = new(30, 30);
         private CardPanelHeaderItem? selectedTab;
         private bool tabHasBorder = DefaultTabHasBorder;
+        private CardPanel? cardPanel;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CardPanelHeader"/> class.
@@ -42,6 +43,21 @@ namespace Alternet.UI
         {
             stackPanel.Parent = border;
             border.Parent = this;
+        }
+
+        /// <summary>
+        /// Gets or sets attached <see cref="CardPanel"/>
+        /// </summary>
+        public CardPanel? CardPanel
+        {
+            get => cardPanel;
+
+            set
+            {
+                if (cardPanel == value)
+                    return;
+                cardPanel = value;
+            }
         }
 
         /// <summary>
@@ -55,7 +71,7 @@ namespace Alternet.UI
         public static bool DefaultTabHasBorder { get; set; } = false;
 
         /// <summary>
-        /// Gets tabs added with <see cref="Add"/> method.
+        /// Gets tabs collection.
         /// </summary>
         public IReadOnlyList<CardPanelHeaderItem> Tabs => tabs;
 
@@ -156,15 +172,22 @@ namespace Alternet.UI
         {
             foreach (var tab in tabs)
             {
-                if (tab.CardControl is null || SelectedTab == tab)
+                if (SelectedTab == tab)
                     continue;
-                tab.CardControl.Visible = false;
+                tab.CardControl?.Hide();
             }
 
-            var control = SelectedTab?.CardControl;
+            var id = SelectedTab?.CardUniqueId;
+            if (id is null)
+                cardPanel?.Hide();
 
-            if (control is not null)
-                control.Visible = true;
+            SelectedTab?.CardControl?.Show();
+
+            if(id is not null)
+            {
+                cardPanel?.Show();
+                cardPanel?.SetActiveCard(id);
+            }
         }
 
         /// <summary>
@@ -249,7 +272,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="text">Item title.</param>
         /// <param name="cardControl">Associated card control.</param>
-        public virtual void Add(string text, Control? cardControl = null)
+        public virtual CardPanelHeaderItem Add(string text, Control? cardControl = null)
         {
             var control = new Button(text)
             {
@@ -265,6 +288,20 @@ namespace Alternet.UI
             };
 
             tabs.Add(item);
+
+            return item;
+        }
+
+        /// <summary>
+        /// Adds new item to the control.
+        /// </summary>
+        /// <param name="text">Item title.</param>
+        /// <param name="cardId">Associated card unique id.</param>
+        public virtual CardPanelHeaderItem Add(string text, ObjectUniqueId cardId)
+        {
+            var result = Add(text);
+            result.CardUniqueId = cardId;
+            return result;
         }
 
         /// <summary>

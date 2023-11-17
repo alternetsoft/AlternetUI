@@ -13,6 +13,7 @@ namespace Alternet.UI
     {
         private readonly Control headerControl;
         private Control? cardControl;
+        private ObjectUniqueId? cardUniqueId;
 
         internal CardPanelHeaderItem(Control headerControl)
         {
@@ -31,6 +32,15 @@ namespace Alternet.UI
         {
             get => cardControl;
             set => cardControl = value;
+        }
+
+        /// <summary>
+        /// Gets or sets associated card controls unique id.
+        /// </summary>
+        public ObjectUniqueId? CardUniqueId
+        {
+            get => cardUniqueId;
+            set => cardUniqueId = value;
         }
     }
 }

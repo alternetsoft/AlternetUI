@@ -51,21 +51,53 @@ namespace Alternet.UI
         public Collection<CardPanelItem> Cards { get; } = new Collection<CardPanelItem>();
 
         /// <summary>
-        /// Sets active page.
+        /// Gets the card at the specified index.
         /// </summary>
-        /// <param name="index">Card index.</param>
-        public void SetActiveCard(int? index)
-        {
-            if (index == null || index < 0 || index >= Cards.Count)
-                return;
+        /// <param name="index">The zero-based index of the card to get.</param>
+        /// <returns>The card at the specified index.</returns>
+        public CardPanelItem this[int index] => Cards[index];
 
+        /// <summary>
+        /// Gets card with the specified id.
+        /// </summary>
+        /// <param name="id">Card id.</param>
+        public CardPanelItem? Find(ObjectUniqueId? id)
+        {
+            if (id is null)
+                return null;
+            foreach(var item in Cards)
+            {
+                if (item.UniqueId == id)
+                    return item;
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// Sets active card by id.
+        /// </summary>
+        /// <param name="id">Card id.</param>
+        public void SetActiveCard(ObjectUniqueId? id)
+        {
+            var item = Find(id);
+            SetActiveCard(item);
+        }
+
+        /// <summary>
+        /// Sets active card.
+        /// </summary>
+        /// <param name="card">Card.</param>
+        public void SetActiveCard(CardPanelItem? card)
+        {
+            if (card is null)
+                return;
             var busyCursor = false;
             SuspendLayout();
             try
             {
                 GetVisibleChildOrNull()?.Hide();
-                var page = Cards[index.Value];
-                var loaded = page.ControlCreated;
+                var loaded = card.ControlCreated;
 
                 if (!loaded)
                 {
@@ -81,11 +113,7 @@ namespace Alternet.UI
                     Application.DoEvents();
                 }
 
-                var control = page.Control;
-
-                 /*control.HorizontalAlignment = HorizontalAlignment.Stretch;
-                 control.VerticalAlignment = VerticalAlignment.Stretch;*/
-
+                var control = card.Control;
                 control.Parent = this;
                 control.Visible = true;
                 control.PerformLayout();
@@ -100,6 +128,17 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Sets active card by index.
+        /// </summary>
+        /// <param name="index">Card index.</param>
+        public void SetActiveCard(int? index)
+        {
+            if (index == null || index < 0 || index >= Cards.Count)
+                return;
+            SetActiveCard(Cards[index.Value]);
+        }
+
+        /// <summary>
         /// Adds new page.
         /// </summary>
         /// <param name="title">Page title.</param>
@@ -109,7 +148,8 @@ namespace Alternet.UI
         /// </returns>
         public int Add(string title, Control control)
         {
-            Cards.Add(new CardPanelItem(title, control));
+            var result = new CardPanelItem(title, control);
+            Cards.Add(result);
             return Cards.Count - 1;
         }
 
@@ -121,9 +161,10 @@ namespace Alternet.UI
         /// <returns>
         /// Created page index.
         /// </returns>
-        public int Add(string title, Func<Control> fnCreate)
+        public int Add(string? title, Func<Control> fnCreate)
         {
-            Cards.Add(new CardPanelItem(title, fnCreate));
+            var result = new CardPanelItem(title, fnCreate);
+            Cards.Add(result);
             return Cards.Count - 1;
         }
     }
