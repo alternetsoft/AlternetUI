@@ -34,6 +34,24 @@ namespace Alternet.UI
             DebugUtils.HookExceptionEvents();
         }
 
+        public static void LogOSInformation()
+        {
+            var os = Environment.OSVersion;
+            Application.Log("Current OS Information:\n");
+            Application.Log($"Platform: {os.Platform:G}");
+            Application.Log($"Version String: {os.VersionString}");
+            Application.Log($"Major version: {os.Version.Major}");
+            Application.Log($"Minor version: {os.Version.Minor}");
+            Application.Log($"Service Pack: '{os.ServicePack}'");
+        }
+
+        private void LogUsefulDefines()
+        {
+            var s = WebBrowser.DoCommandGlobal("GetUsefulDefines");
+            var splitted = s?.Split(' ');
+            LogUtils.LogAsSection(splitted);
+        }
+
         private void InitActions()
         {
             AddAction("Log system settings", SystemSettings.Log);
@@ -41,14 +59,8 @@ namespace Alternet.UI
             AddAction("Log system fonts", SystemSettings.LogSystemFonts);
             AddAction("Log display info", Display.Log);
             AddAction("HookExceptionEvents()", DebugUtils.HookExceptionEvents);
-            AddAction("GetUsefulDefines()", GetUsefulDefines);
-
-            void GetUsefulDefines()
-            {
-                var s = WebBrowser.DoCommandGlobal("GetUsefulDefines");
-                var splitted = s?.Split(' ');
-                LogUtils.LogAsSection(splitted);
-            }
+            AddAction("Log useful defines", LogUsefulDefines);
+            AddAction("Log OS information", LogOSInformation);
         }
     }
 }
