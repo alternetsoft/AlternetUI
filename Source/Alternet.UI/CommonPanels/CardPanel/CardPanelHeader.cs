@@ -60,10 +60,19 @@ namespace Alternet.UI
         /// </summary>
         public static bool DefaultTabHasBorder { get; set; } = false;
 
+        /// <summary>
+        /// Gets or sets default value for the <see cref="UseTabBold"/> property.
+        /// </summary>
         public static bool DefaultUseTabBold { get; set; } = false;
 
+        /// <summary>
+        /// Gets or sets default value for the <see cref="UseTabForegroundColor"/> property.
+        /// </summary>
         public static bool DefaultUseTabForegroundColor { get; set; } = true;
 
+        /// <summary>
+        /// Gets or sets default value for the <see cref="UseTabBackgroundColor"/> property.
+        /// </summary>
         public static bool DefaultUseTabBackgroundColor { get; set; } = false;
 
         /// <summary>
@@ -76,6 +85,9 @@ namespace Alternet.UI
         /// </summary>
         public static IReadOnlyFontAndColor? DefaultInactiveTabColors { get; set; }
 
+        /// <summary>
+        /// Gets or sets whether to set bold style for the title of active tab.
+        /// </summary>
         public bool? UseTabBold
         {
             get
@@ -92,6 +104,9 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets or sets whether to set foreground color for the active tab.
+        /// </summary>
         public bool? UseTabForegroundColor
         {
             get
@@ -108,6 +123,9 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets or sets whether to set background color for the active tab.
+        /// </summary>
         public bool? UseTabBackgroundColor
         {
             get
