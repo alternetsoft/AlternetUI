@@ -58,6 +58,11 @@ namespace Alternet::UI
         static void Log(wxString msg);
         static void Log(string msg);
 
+        static void LogSeparator()
+        {
+            Log("============");
+        }
+
         bool OnFatalException();
         bool OnAssertFailure(const wxChar* file, int line, const wxChar* func,
             const wxChar* cond, const wxChar* msg);       
