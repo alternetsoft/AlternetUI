@@ -57,6 +57,13 @@ namespace Alternet::UI
             const wxLogRecordInfo& info);
         static void Log(wxString msg);
         static void Log(string msg);
+
+        bool OnFatalException();
+        bool OnAssertFailure(const wxChar* file, int line, const wxChar* func,
+            const wxChar* cond, const wxChar* msg);       
+        bool OnUnhandledException();
+        bool OnExceptionInMainLoop();
+
     private:
 
         App* _app = nullptr;

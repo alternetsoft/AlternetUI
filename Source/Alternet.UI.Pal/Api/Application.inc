@@ -73,6 +73,10 @@ enum class ApplicationEvent
     Hibernate,
     DialupConnected,
     DialupDisconnected,
+    ExceptionInMainLoop,
+    UnhandledException,
+    FatalException,
+    AssertFailure,
 };
 typedef void* (*ApplicationEventCallbackType)(Application* obj, ApplicationEvent event, void* param);
 static void SetEventCallback(ApplicationEventCallbackType value) { eventCallback = value; }

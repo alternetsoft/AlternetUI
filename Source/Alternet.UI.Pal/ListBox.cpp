@@ -251,11 +251,10 @@ namespace Alternet::UI
         switch (_selectionMode)
         {
         case ListBoxSelectionMode::Single:
+        default:
             return wxLB_SINGLE;
         case ListBoxSelectionMode::Multiple:
             return wxLB_EXTENDED;
-        default:
-            throwExInvalidOp;
         }
     }
 

@@ -57,7 +57,7 @@ namespace Alternet::UI
         void Apply() override
         {
             if (!IsNotDelayed())
-                throwExInvalidOp;
+                throwExInvalidOpWithInfo(wxStr("DelayedValue::Apply"));
 
             ApplyValue(GetDelayed());
         }
@@ -144,7 +144,7 @@ namespace Alternet::UI
         void Apply() override
         {
             if (!IsNotDelayed())
-                throwExInvalidOp;
+                throwExInvalidOpWithInfo(wxStr("DelayedValue::Apply2"));
 
             for (auto& it : _applicators)
                 ApplyValue(it.first, GetDelayed(it.first));

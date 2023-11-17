@@ -20,8 +20,8 @@ namespace Alternet::UI
     void MenuItem::CreateWxMenuItem()
     {
         if (_menuItem != nullptr)
-            throwExInvalidOp;
-
+            throwExInvalidOpWithInfo(wxStr("MenuItem::CreateWxMenuItem"));
+        
         bool checked = _flags.IsSet(MenuItemFlags::Checked);
 
         bool separator = IsSeparator();
@@ -100,8 +100,8 @@ namespace Alternet::UI
     void MenuItem::DestroyWxMenuItem()
     {
         if (_menuItem == nullptr)
-            throwExInvalidOp;
-
+            throwExInvalidOpWithInfo(wxStr("MenuItem::DestroyWxMenuItem"));
+        
         if (_parentMenu != nullptr)
         {
             if (!_roleBasedOverrideData.has_value())
@@ -152,7 +152,7 @@ namespace Alternet::UI
             if (parent != nullptr)
             {
                 if (!index.has_value())
-                    throwExInvalidOp;
+                    throwExInvalidOpWithInfo(wxStr("MenuItem::RecreateWxMenuItem()"));                
                 parent->InsertItemAt(index.value(), this);
             }
         }
@@ -310,7 +310,7 @@ namespace Alternet::UI
 
         auto menu = Menu::TryFindMenuByWxMenu(wxMenu);
         if (menu == nullptr)
-            throwExInvalidOp;
+            throwExInvalidOpWithInfo(wxStr("MenuItem::GetSubmenu"));        
 
         menu->AddRef();
 

@@ -45,8 +45,8 @@ namespace Alternet::UI
     void ImageList::AddImageCore(const wxImage& image)
     {
         if (_imageList == nullptr)
-            throwExInvalidOp;
-
+            throwExInvalidOpWithInfo(wxStr("ImageList::AddImageCore"));
+        
         auto finalImage = image;
         auto targetSize = _imageList->GetSize();
 
@@ -65,7 +65,7 @@ namespace Alternet::UI
     void ImageList::CreateImageList()
     {
         if (_imageList != nullptr)
-            throwExInvalidOp;
+            throwExInvalidOpWithInfo(wxStr("ImageList::CreateImageList"));
 
         _imageList = new wxImageList(_pixelImageSize.Width, _pixelImageSize.Height, true, 1);
     }

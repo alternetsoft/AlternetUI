@@ -570,7 +570,7 @@ namespace Alternet::UI
     void Control::BeginInit()
     {
         if (_flags.IsSet(ControlFlags::InitInProgress))
-            throwExInvalidOp;
+            throwExInvalidOpWithInfo(wxStr("Control::BeginInit"));
 
         _flags.Set(ControlFlags::InitInProgress, true);
 
@@ -580,7 +580,7 @@ namespace Alternet::UI
     void Control::EndInit()
     {
         if (!_flags.IsSet(ControlFlags::InitInProgress))
-            throwExInvalidOp;
+            throwExInvalidOpWithInfo(wxStr("Control::EndInit"));
 
         _flags.Set(ControlFlags::InitInProgress, false);
 
@@ -688,7 +688,7 @@ namespace Alternet::UI
             CreateWxWindow();
 
         if (_wxWindow == nullptr)
-            throwExInvalidOp;
+            throwExInvalidOpWithInfo(wxStr("Control::GetWxWindow"));
 
         return _wxWindow;
     }
@@ -738,7 +738,7 @@ namespace Alternet::UI
     void Control::ApplyToolTip()
     {
         if (_wxWindow == nullptr)
-            throwExInvalidOp;
+            throwExInvalidOpWithInfo(wxStr("Control::ApplyToolTip"));
 
         if (_toolTip == nullopt)
             _wxWindow->UnsetToolTip();

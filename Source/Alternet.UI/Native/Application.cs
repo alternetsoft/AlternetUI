@@ -370,6 +370,22 @@ namespace Alternet.UI.Native
                 {
                     DialupDisconnected?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
                 }
+                case NativeApi.ApplicationEvent.ExceptionInMainLoop:
+                {
+                    ExceptionInMainLoop?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                }
+                case NativeApi.ApplicationEvent.UnhandledException:
+                {
+                    UnhandledException?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                }
+                case NativeApi.ApplicationEvent.FatalException:
+                {
+                    FatalException?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                }
+                case NativeApi.ApplicationEvent.AssertFailure:
+                {
+                    AssertFailure?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                }
                 default: throw new Exception("Unexpected ApplicationEvent value: " + e);
             }
         }
@@ -382,6 +398,10 @@ namespace Alternet.UI.Native
         public event EventHandler? Hibernate;
         public event EventHandler? DialupConnected;
         public event EventHandler? DialupDisconnected;
+        public event EventHandler? ExceptionInMainLoop;
+        public event EventHandler? UnhandledException;
+        public event EventHandler? FatalException;
+        public event EventHandler? AssertFailure;
         
         [SuppressUnmanagedCodeSecurity]
         public class NativeApi : NativeApiProvider
@@ -401,6 +421,10 @@ namespace Alternet.UI.Native
                 Hibernate,
                 DialupConnected,
                 DialupDisconnected,
+                ExceptionInMainLoop,
+                UnhandledException,
+                FatalException,
+                AssertFailure,
             }
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]

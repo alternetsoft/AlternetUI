@@ -68,26 +68,35 @@ namespace Alternet::UI
 
     void App::OnFatalException()
     {
+        if (_owner != nullptr)
+            _owner->OnFatalException();
         wxApp::OnFatalException();
     }
 
     void App::OnAssertFailure(const wxChar* file, int line, const wxChar* func,
         const wxChar* cond, const wxChar* msg)
     {
+        if (_owner != nullptr)
+            _owner->OnAssertFailure(file, line, func, cond, msg);
         wxApp::OnAssertFailure(file, line, func, cond, msg);
     }
 
     void App::OnUnhandledException()
     {
+        if (_owner != nullptr)
+            _owner->OnUnhandledException();
         wxApp::OnUnhandledException();
     }
 
     bool App::OnExceptionInMainLoop()
     {
+        if (_owner != nullptr)
+            _owner->OnExceptionInMainLoop();
         return wxApp::OnExceptionInMainLoop();
     }
 
 /*
+
 wxDEFINE_EVENT( wxEVT_LEFT_DOWN, wxMouseEvent );
 wxDEFINE_EVENT( wxEVT_LEFT_UP, wxMouseEvent );
 wxDEFINE_EVENT( wxEVT_MIDDLE_DOWN, wxMouseEvent );
@@ -238,7 +247,7 @@ wxDEFINE_EVENT( wxEVT_HOTKEY, wxKeyEvent );
         Image::EnsureImageHandlersInitialized();
 
         if (s_current != nullptr)
-            throwExInvalidOp;
+            throwExInvalidOpWithInfo(wxStr("Application::Application"));
         s_current = this;
 
 #ifdef __WXMSW__    
@@ -528,5 +537,33 @@ wxDEFINE_EVENT( wxEVT_HOTKEY, wxKeyEvent );
         if (WindowsVisualThemeSupport::GetInstance().IsEnabled())
             WindowsVisualThemeSupport::GetInstance().Disable(windowsVisualThemeSupportCookie);
 #endif
+    }
+
+    bool Application::OnFatalException()
+    {
+        Application::Log("Error: Fatal Exception");
+        RaiseEvent(ApplicationEvent::FatalException);
+        return false;
+    }
+
+    bool Application::OnAssertFailure(const wxChar* file, int line, const wxChar* func,
+        const wxChar* cond, const wxChar* msg)
+    {
+        RaiseEvent(ApplicationEvent::AssertFailure);
+        return false;
+    }
+
+    bool Application::OnUnhandledException()
+    {
+        Application::Log("Error: Unhandled Exception");
+        RaiseEvent(ApplicationEvent::UnhandledException);
+        return false;
+    }
+
+    bool Application::OnExceptionInMainLoop()
+    {
+        Application::Log("Error: Exception In Main Loop");
+        RaiseEvent(ApplicationEvent::ExceptionInMainLoop);
+        return false;
     }
 }

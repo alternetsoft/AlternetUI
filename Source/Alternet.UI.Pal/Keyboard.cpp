@@ -269,7 +269,7 @@ namespace Alternet::UI
             return { WXK_WINDOWS_LEFT, WXK_WINDOWS_RIGHT };
 #endif
 
-        throwExInvalidOp;
+        throwExInvalidOpWithInfo(wxStr("Keyboard::KeyToWxKeys"));
     }
 
     bool Keyboard::KeyHasMultipleWxKeys(Key value)
@@ -379,7 +379,7 @@ namespace Alternet::UI
         case '}': return Key::None;
         case '~': return Key::None;
         default:
-            throwExInvalidOp;
+            throwExInvalidOpWithInfo(wxStr("Keyboard::WxAsciiKeyToKey"));
         }
     }
 
@@ -676,7 +676,7 @@ namespace Alternet::UI
         case WXK_LAUNCH_APP2:
             return Key::LaunchApplication2;
         default:
-            throwExInvalidOp;
+            throwExInvalidOpWithInfo(wxStr("Keyboard::WxKeyToKey"));
         }
     }
 }

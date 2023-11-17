@@ -596,6 +596,7 @@ namespace Alternet::UI
             switch (_view)
             {
             case ListViewView::List:
+            default:
                 return wxLC_LIST;
             case ListViewView::Details:
                 return wxLC_REPORT;
@@ -603,8 +604,6 @@ namespace Alternet::UI
                 return wxLC_SMALL_ICON;
             case ListViewView::LargeIcon:
                 return wxLC_ICON | wxLC_AUTOARRANGE;
-            default:
-                throwExInvalidOp;
             }
         };
 
@@ -613,11 +612,10 @@ namespace Alternet::UI
             switch (_selectionMode)
             {
             case ListViewSelectionMode::Single:
+            default:
                 return wxLC_SINGLE_SEL;
             case ListViewSelectionMode::Multiple:
                 return 0;
-            default:
-                throwExInvalidOp;
             }
         };
 
@@ -626,6 +624,7 @@ namespace Alternet::UI
             switch (_gridLinesDisplayMode)
             {
             case ListViewGridLinesDisplayMode::None:
+            default:
                 return 0;
             case ListViewGridLinesDisplayMode::Horizontal:
                 return wxLC_HRULES;
@@ -633,8 +632,6 @@ namespace Alternet::UI
                 return wxLC_VRULES;
             case ListViewGridLinesDisplayMode::VerticalAndHorizontal:
                 return wxLC_HRULES | wxLC_VRULES;
-            default:
-                throwExInvalidOp;
             }
         };
 
@@ -643,6 +640,7 @@ namespace Alternet::UI
             switch (_sortMode)
             {
             case ListViewSortMode::None:
+            default:
                 return 0;
             case ListViewSortMode::Ascending:
                 return wxLC_SORT_ASCENDING;
@@ -650,8 +648,6 @@ namespace Alternet::UI
                 return wxLC_SORT_DESCENDING;
             case ListViewSortMode::Custom:
                 return 0;
-            default:
-                throwExInvalidOp;
             }
         };
 

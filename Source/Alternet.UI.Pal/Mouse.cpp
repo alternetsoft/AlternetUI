@@ -32,7 +32,7 @@ namespace Alternet::UI
         case MouseButton::XButton2:
             return state.Aux2IsDown() ? MouseButtonState::Pressed : MouseButtonState::Released;
         default:
-            throwExInvalidOp;
+            return MouseButtonState::Released;
         }
     }
 

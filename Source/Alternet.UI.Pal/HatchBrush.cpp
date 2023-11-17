@@ -40,9 +40,8 @@ namespace Alternet::UI
         case BrushHatchStyle::Horizontal:
             return wxBrushStyle::wxBRUSHSTYLE_HORIZONTAL_HATCH;
         case BrushHatchStyle::Vertical:
-            return wxBrushStyle::wxBRUSHSTYLE_VERTICAL_HATCH;
         default:
-            throwExInvalidOp;
+            return wxBrushStyle::wxBRUSHSTYLE_VERTICAL_HATCH;
         }
     }
 }

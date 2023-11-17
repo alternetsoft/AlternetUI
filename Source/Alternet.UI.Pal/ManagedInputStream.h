@@ -38,7 +38,7 @@ namespace Alternet::UI
                 actualPosition = GetLength() - 1 - pos;
                 break;
             default:
-                throwExInvalidOp;
+                throwExInvalidOpWithInfo(wxStr("ManagedInputStream::OnSysSeek"));
             }
                 
             _inputStream->SetPosition(actualPosition);

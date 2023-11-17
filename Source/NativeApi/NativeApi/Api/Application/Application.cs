@@ -28,6 +28,10 @@ namespace NativeApi.Api
         public event EventHandler Hibernate;
         public event EventHandler DialupConnected;
         public event EventHandler DialupDisconnected;
+        public event EventHandler ExceptionInMainLoop;
+        public event EventHandler UnhandledException;
+        public event EventHandler FatalException;
+        public event EventHandler AssertFailure;
 
         public Keyboard Keyboard { get; }
         public Mouse Mouse { get; }

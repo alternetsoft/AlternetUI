@@ -176,9 +176,8 @@ namespace Alternet::UI
         case GenericFontFamily::Monospace:
             return wxFontFamily::wxFONTFAMILY_TELETYPE;
         case GenericFontFamily::Default:
-            return wxFontFamily::wxFONTFAMILY_DEFAULT;
         default:
-            throwExInvalidOp;
+            return wxFontFamily::wxFONTFAMILY_DEFAULT;
         }
     }
 
