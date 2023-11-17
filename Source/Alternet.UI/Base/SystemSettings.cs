@@ -84,6 +84,9 @@ namespace Alternet.UI
             LogUtils.LogColor("TextBox.ForegroundColor (defaults)", defaultColors.ForegroundColor);
             LogUtils.LogColor("TextBox.BackgroundColor (defaults)", defaultColors.BackgroundColor);
 
+            Application.Log($"CPP.SizeOfLong = {WebBrowser.DoCommandGlobal("SizeOfLong")}");
+            Application.Log($"CPP.IsDebug = {WebBrowser.DoCommandGlobal("IsDebug")}");
+
             Application.LogEndSection();
         }
 
