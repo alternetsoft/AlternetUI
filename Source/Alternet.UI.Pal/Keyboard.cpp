@@ -229,27 +229,27 @@ namespace Alternet::UI
 		case Key::LaunchApplication1: return WXK_LAUNCH_APP1;
 		case Key::LaunchApplication2: return WXK_LAUNCH_APP2;
 
-		case Key::ExclamationMark: '!';
-		case Key::QuotationMark:  '"';
-		case Key::NumberSign: 136, '#';
-		case Key::DollarSign: 137, '$';
-		case Key::PercentSign: 138, '%';
-		case Key::Ampersand: 139, '&';
-		case Key::LeftParenthesis:  '(';
-		case Key::RightParenthesis:')';
-		case Key::Asterisk: '*';
-		case Key::PlusSign: '+';
-		case Key::Colon: ':';
-		case Key::LessThanSign: '<';
-		case Key::GreaterThanSign: '>';
-		case Key::QuestionMark: '?';
-		case Key::CommercialAt: '@';
-		case Key::CircumflexAccent: '^';
-		case Key::LowLine: '_';
-		case Key::LeftCurlyBracket: '{';
-		case Key::VerticalLine: '|';
-		case Key::RightCurlyBracket: '}';
-		case Key::Tilde: '~';
+		case Key::ExclamationMark:return '!';
+		case Key::QuotationMark: return '"';
+		case Key::NumberSign: return '#';
+		case Key::DollarSign: return '$';
+		case Key::PercentSign: return '%';
+		case Key::Ampersand: return '&';
+		case Key::LeftParenthesis: return '(';
+		case Key::RightParenthesis: return ')';
+		case Key::Asterisk:return '*';
+		case Key::PlusSign: return '+';
+		case Key::Colon:return ':';
+		case Key::LessThanSign:return '<';
+		case Key::GreaterThanSign: return '>';
+		case Key::QuestionMark:return '?';
+		case Key::CommercialAt: return '@';
+		case Key::CircumflexAccent:return '^';
+		case Key::LowLine:return '_';
+		case Key::LeftCurlyBracket:return '{';
+		case Key::VerticalLine:return '|';
+		case Key::RightCurlyBracket: return '}';
+		case Key::Tilde:return '~';
 		default:
 			return WXK_NONE;
 		}
@@ -269,7 +269,7 @@ namespace Alternet::UI
 			result = (wxAcceleratorEntryFlags)(result | wxACCEL_RAW_CTRL);
 
 		return result;
-}
+	}
 
 	std::vector<int> Keyboard::KeyToWxKeys(Key value)
 	{
