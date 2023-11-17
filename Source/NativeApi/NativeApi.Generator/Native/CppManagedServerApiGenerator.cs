@@ -71,14 +71,16 @@ namespace ApiGenerator.Native
             var name = property.Name;
             var modifiers = GetModifiers(property);
             w.WriteLine();
-            
+
+            var throwText = $"throwExInvalidOpWithInfo(wxStr(\"{name}\"))";
+
             if (property.GetMethod != null)
             {
                 var returnType = types.GetTypeName(property.ToContextualProperty(), TypeUsage.Return);
                 w.WriteLine($"{modifiers}{returnType} Get{name}()");
                 using (new BlockIndent(w))
                 {
-                    w.WriteLine($"if (trampolineLocatorCallback == nullptr) throwExInvalidOp;");
+                    w.WriteLine($"if (trampolineLocatorCallback == nullptr) {throwText};");
                     w.WriteLine(
                         $"auto trampoline = (TGet{name})trampolineLocatorCallback(Trampoline::Get{name});");
                     w.Write($"return trampoline(");
@@ -99,7 +101,7 @@ namespace ApiGenerator.Native
                 {
                     using (new BlockIndent(w))
                     {
-                        w.WriteLine($"if (trampolineLocatorCallback == nullptr) throwExInvalidOp;");
+                        w.WriteLine($"if (trampolineLocatorCallback == nullptr) {throwText};");
                         w.WriteLine(
                             $"auto trampoline = (TSet{name})trampolineLocatorCallback(Trampoline::Set{name});");
                         w.Write($"trampoline(");
@@ -133,6 +135,7 @@ namespace ApiGenerator.Native
             var returnTypeName = types.GetTypeName(
                 method.ReturnParameter.ToContextualParameter(),
                 TypeUsage.Return);
+            var throwText = $"throwExInvalidOpWithInfo(wxStr(\"{name}\"))";
 
             var signatureParameters = new StringBuilder();
             var callParameters = new StringBuilder();
@@ -164,7 +167,7 @@ namespace ApiGenerator.Native
             
             using (new BlockIndent(w))
             {
-                w.WriteLine($"if (trampolineLocatorCallback == nullptr) throwExInvalidOp;");
+                w.WriteLine($"if (trampolineLocatorCallback == nullptr) {throwText};");
                 w.WriteLine(
                     $"auto trampoline = (T{name})trampolineLocatorCallback(Trampoline::{name});");
                 if (returnTypeName != "void")
