@@ -552,7 +552,7 @@ wxDEFINE_EVENT( wxEVT_HOTKEY, wxKeyEvent );
 
     bool Application::OnFatalException()
     {
-        LogExceptionInfo("Error: Fatal Exception");
+        Application::Log("Error: Fatal Exception");
         RaiseEvent(ApplicationEvent::FatalException);
         return false;
     }
@@ -560,20 +560,35 @@ wxDEFINE_EVENT( wxEVT_HOTKEY, wxKeyEvent );
     bool Application::OnAssertFailure(const wxChar* file, int line, const wxChar* func,
         const wxChar* cond, const wxChar* msg)
     {
+        wxString sFile = file;
+        wxString sLine = std::to_string(line);
+        wxString sFunc = func;
+        wxString sCond = cond;
+        wxString sMsg = msg;
+
+        Application::LogSeparator();
+        Application::Log("Error: Assert Failure");        
+        Application::Log("File: " + sFile);
+        Application::Log("Line: " + sLine);
+        Application::Log("Func: " + sFunc);
+        Application::Log("Cond: " + sCond);
+        Application::Log("Msg:  " + sMsg);
+
+        Application::LogSeparator();
         RaiseEvent(ApplicationEvent::AssertFailure);
         return false;
     }
 
     bool Application::OnUnhandledException()
     {
-        LogExceptionInfo("Error: Unhandled Exception");
+        Application::Log("Error: Unhandled Exception");
         RaiseEvent(ApplicationEvent::UnhandledException);
         return false;
     }
 
     bool Application::OnExceptionInMainLoop()
     {
-        LogExceptionInfo("Error: Exception In Main Loop");
+        Application::Log("Error: Exception In Main Loop");
         RaiseEvent(ApplicationEvent::ExceptionInMainLoop);
         return false;
     }

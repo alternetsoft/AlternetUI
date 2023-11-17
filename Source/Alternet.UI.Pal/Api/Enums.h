@@ -396,6 +396,30 @@ namespace Alternet::UI
         MacControl = 131,
         Windows = 132,
         Menu = 133,
+
+        // 21 new keys
+
+        ExclamationMark     = 134, // '!' 33 - 0x21 - 
+        QuotationMark       = 135, // '"' 34 - 0x22 - 
+        NumberSign          = 136, // '#' 35 - 0x23 - 
+        DollarSign          = 137, // '$' 36 - 0x24 - 
+        PercentSign         = 138, // '%' 37 - 0x25 - 
+        Ampersand           = 139, // '&' 38 - 0x26 - 
+        LeftParenthesis     = 140, // '(' 40 - 0x28 - 
+        RightParenthesis    = 141, // ')' 41 - 0x29 - 
+        Asterisk            = 142, // '*' 42 - 0x2A - 
+        PlusSign            = 143, // '+' 43 - 0x2B - 
+        Colon               = 144, // ':' 58 - 0x3A - 
+        LessThanSign        = 145, // '<' 60 - 0x3C - 
+        GreaterThanSign     = 146, // '>' 62 - 0x3E - 
+        QuestionMark        = 147, // '?' 63 - 0x3F - 
+        CommercialAt        = 148, // '@' 64 - 0x40 - 
+        CircumflexAccent    = 149, // '^' 94 - 0x5E 
+        LowLine             = 150, // '_' 95 - 0x5F 
+        LeftCurlyBracket    = 151, // '{' 123 - 0x7B - 
+        VerticalLine        = 152, // '|' 124 - 0x7C - 
+        RightCurlyBracket   = 153, // '}' 125 - 0x7D - 
+        Tilde               = 154, // '~' 126 - 0x7E - 
     };
     
     enum class KeyStates

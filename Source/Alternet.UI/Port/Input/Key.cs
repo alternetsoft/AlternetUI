@@ -28,7 +28,7 @@ namespace Alternet.UI
         /// <summary>
         ///  No key pressed.
         /// </summary>
-        None,
+        None = 0,
 
         /// <summary>
         ///  The "Backspace" key.
@@ -693,6 +693,112 @@ namespace Alternet.UI
         /// <summary>
         ///  The Microsoft "Menu" key.
         /// </summary>
-        Menu,
+        Menu = 133,
+
+
+        /// <summary>
+        ///  The '!' (33, 0x21) key.
+        /// </summary>
+        ExclamationMark = 134,
+
+        /// <summary>
+        ///  The '"' (34, 0x220) key.
+        /// </summary>
+        QuotationMark = 135,
+
+        /// <summary>
+        ///  The '#' (35, 0x23) key.
+        /// </summary>
+        NumberSign = 136,
+
+        /// <summary>
+        ///  The '$' (36, 0x24) key.
+        /// </summary>
+        DollarSign = 137,
+
+        /// <summary>
+        ///  The '%' (37, 0x25) key.
+        /// </summary>
+        PercentSign = 138,
+
+        /// <summary>
+        ///  The ampersand (38, 0x26) key.
+        /// </summary>
+        Ampersand = 139,
+
+        /// <summary>
+        ///  The '(' (40, 0x28) key.
+        /// </summary>
+        LeftParenthesis = 140,
+
+        /// <summary>
+        ///  The ')' (41, 0x29) key.
+        /// </summary>
+        RightParenthesis = 141,
+
+        /// <summary>
+        ///  The '*' (42, 0x2A) key.
+        /// </summary>
+        Asterisk = 142,
+
+        /// <summary>
+        ///  The '+' (43, 0x2B) key.
+        /// </summary>
+        PlusSign = 143,
+
+        /// <summary>
+        ///  The ':' (58, 0x3A) key.
+        /// </summary>
+        Colon = 144,
+
+        /// <summary>
+        ///  The less than sign (60, 0x3C) key.
+        /// </summary>
+        LessThanSign = 145,
+
+        /// <summary>
+        ///  The greater than sign (62, 0x3E) key.
+        /// </summary>
+        GreaterThanSign = 146,
+
+        /// <summary>
+        ///  The '?' (63, 0x3F) key.
+        /// </summary>
+        QuestionMark = 147,
+
+        /// <summary>
+        ///  The '@' (64, 0x40) key.
+        /// </summary>
+        CommercialAt = 148,
+
+        /// <summary>
+        ///  The '^' (94, 0x5E) key.
+        /// </summary>
+        CircumflexAccent = 149,
+
+        /// <summary>
+        ///  The '_' (95, 0x5F) key.
+        /// </summary>
+        LowLine = 150, 
+
+        /// <summary>
+        ///  The '{', 123, 0x7B) key.
+        /// </summary>
+        LeftCurlyBracket = 151,
+
+        /// <summary>
+        ///  The '|', 124, 0x7C) key.
+        /// </summary>
+        VerticalLine = 152,
+
+        /// <summary>
+        ///  The '}', 125, 0x7D) key.
+        /// </summary>
+        RightCurlyBracket = 153,
+
+        /// <summary>
+        ///  The '~', 126, 0x7E) key.
+        /// </summary>
+        Tilde = 154,
     }
 }
