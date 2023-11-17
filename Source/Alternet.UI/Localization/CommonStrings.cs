@@ -156,5 +156,8 @@ namespace Alternet.UI.Localization
 
         /// <inheritdoc cref="ButtonOk"/>
         public string LineNumberTemplate { get; set; } = "Line Number ({0} - {1})";
+
+        /// <inheritdoc cref="ButtonOk"/>
+        public string LoadingPleaseWait { get; set; } = "Loading. Please wait...";
     }
 }
