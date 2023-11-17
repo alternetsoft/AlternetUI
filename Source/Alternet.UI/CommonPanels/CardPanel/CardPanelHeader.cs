@@ -31,10 +31,15 @@ namespace Alternet.UI
             Margin = new(0, 0, 0, 5),
         };
 
+        private bool? useTabBold;
+        private bool? useTabForegroundColor;
+        private bool? useTabBackgroundColor;
         private Size additionalSpace = new(30, 30);
         private CardPanelHeaderItem? selectedTab;
-        private bool tabHasBorder = DefaultTabHasBorder;
+        private bool? tabHasBorder;
         private CardPanel? cardPanel;
+        private IReadOnlyFontAndColor? activeTabColors;
+        private IReadOnlyFontAndColor? inactiveTabColors;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CardPanelHeader"/> class.
@@ -43,6 +48,80 @@ namespace Alternet.UI
         {
             stackPanel.Parent = border;
             border.Parent = this;
+        }
+
+        /// <summary>
+        /// Occurs when the tab is clicked.
+        /// </summary>
+        public event EventHandler? TabClick;
+
+        /// <summary>
+        /// Gets or sets default value of the <see cref="TabHasBorder"/>.
+        /// </summary>
+        public static bool DefaultTabHasBorder { get; set; } = false;
+
+        public static bool DefaultUseTabBold { get; set; } = false;
+
+        public static bool DefaultUseTabForegroundColor { get; set; } = true;
+
+        public static bool DefaultUseTabBackgroundColor { get; set; } = false;
+
+        /// <summary>
+        /// Gets or sets default active tab colors.
+        /// </summary>
+        public static IReadOnlyFontAndColor? DefaultActiveTabColors { get; set; }
+
+        /// <summary>
+        /// Gets or sets default inactive tab colors.
+        /// </summary>
+        public static IReadOnlyFontAndColor? DefaultInactiveTabColors { get; set; }
+
+        public bool? UseTabBold
+        {
+            get
+            {
+                return useTabBold;
+            }
+
+            set
+            {
+                if (useTabBold == value)
+                    return;
+                useTabBold = value;
+                UpdateTabs();
+            }
+        }
+
+        public bool? UseTabForegroundColor
+        {
+            get
+            {
+                return useTabForegroundColor;
+            }
+
+            set
+            {
+                if (useTabForegroundColor == value)
+                    return;
+                useTabForegroundColor = value;
+                UpdateTabs();
+            }
+        }
+
+        public bool? UseTabBackgroundColor
+        {
+            get
+            {
+                return useTabBackgroundColor;
+            }
+
+            set
+            {
+                if (useTabBackgroundColor == value)
+                    return;
+                useTabBackgroundColor = value;
+                UpdateTabs();
+            }
         }
 
         /// <summary>
@@ -61,16 +140,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Occurs when the tab is clicked.
-        /// </summary>
-        public event EventHandler? TabClick;
-
-        /// <summary>
-        /// Gets or sets default value of the <see cref="TabHasBorder"/>.
-        /// </summary>
-        public static bool DefaultTabHasBorder { get; set; } = false;
-
-        /// <summary>
         /// Gets tabs collection.
         /// </summary>
         public IReadOnlyList<CardPanelHeaderItem> Tabs => tabs;
@@ -78,7 +147,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets whether tabs have border.
         /// </summary>
-        public bool TabHasBorder
+        public bool? TabHasBorder
         {
             get
             {
@@ -90,11 +159,45 @@ namespace Alternet.UI
                 if (tabHasBorder == value)
                     return;
                 tabHasBorder = value;
-                foreach (var item in Tabs)
-                {
-                    if (item.HeaderControl is Button button)
-                        button.HasBorder = tabHasBorder;
-                }
+                UpdateTabs();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets active tab colors.
+        /// </summary>
+        public IReadOnlyFontAndColor? ActiveTabColors
+        {
+            get
+            {
+                return activeTabColors;
+            }
+
+            set
+            {
+                if (activeTabColors == value)
+                    return;
+                activeTabColors = value;
+                UpdateTabs();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets inactive tab colors.
+        /// </summary>
+        public IReadOnlyFontAndColor? InactiveTabColors
+        {
+            get
+            {
+                return inactiveTabColors;
+            }
+
+            set
+            {
+                if (inactiveTabColors == value)
+                    return;
+                inactiveTabColors = value;
+                UpdateTabs();
             }
         }
 
@@ -139,14 +242,7 @@ namespace Alternet.UI
                 selectedTab = value;
                 foreach(var tab in tabs)
                 {
-                    if (selectedTab == tab)
-                    {
-                        tab.HeaderControl.IsBold = true;
-                    }
-                    else
-                    {
-                        tab.HeaderControl.IsBold = false;
-                    }
+                    UpdateTab(tab);
                 }
             }
         }
@@ -276,7 +372,7 @@ namespace Alternet.UI
         {
             var control = new Button(text)
             {
-                HasBorder = TabHasBorder,
+                HasBorder = TabHasBorder ?? DefaultTabHasBorder,
                 HorizontalAlignment = HorizontalAlignment.Center,
                 Parent = stackPanel,
             };
@@ -288,6 +384,8 @@ namespace Alternet.UI
             };
 
             tabs.Add(item);
+
+            UpdateTab(item);
 
             return item;
         }
@@ -335,6 +433,56 @@ namespace Alternet.UI
             }
 
             return result;
+        }
+
+        private IReadOnlyFontAndColor GetColors(bool isActive)
+        {
+            if (isActive)
+                return GetActiveColors();
+            return GetInactiveColors();
+        }
+
+        private IReadOnlyFontAndColor GetActiveColors()
+        {
+            var colors = ActiveTabColors ?? DefaultActiveTabColors;
+            if (colors is not null)
+                return colors;
+            Color activeColor = IsDarkBackground ? SystemColors.ControlText :
+                SystemColors.ControlText;
+            colors = new FontAndColor(activeColor);
+            return colors;
+        }
+
+        private IReadOnlyFontAndColor GetInactiveColors()
+        {
+            var colors = InactiveTabColors ?? DefaultInactiveTabColors;
+            Color color = IsDarkBackground ? SystemColors.GrayText :
+                SystemColors.GrayText;
+            colors = new FontAndColor(color);
+            return colors;
+        }
+
+        private void UpdateTab(CardPanelHeaderItem item)
+        {
+            var isSelected = item == selectedTab;
+            item.HeaderControl.IsBold = isSelected && (UseTabBold ?? DefaultUseTabBold);
+            var colors = GetColors(isSelected);
+            if (colors is null)
+                return;
+            if (UseTabForegroundColor ?? DefaultUseTabForegroundColor)
+                item.HeaderControl.ForegroundColor = colors.ForegroundColor;
+            if (UseTabBackgroundColor ?? DefaultUseTabBackgroundColor)
+                item.HeaderControl.BackgroundColor = colors.BackgroundColor;
+        }
+
+        private void UpdateTabs()
+        {
+            foreach (var item in Tabs)
+            {
+                if (item.HeaderControl is Button button)
+                    button.HasBorder = tabHasBorder ?? DefaultTabHasBorder;
+                UpdateTab(item);
+            }
         }
 
         private void Item_Click(object? sender, EventArgs e)
