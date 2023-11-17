@@ -299,8 +299,11 @@ namespace Alternet.UI
 
             if(id is not null)
             {
-                cardPanel?.Show();
                 cardPanel?.SetActiveCard(id);
+                cardPanel?.Show();
+                cardPanel?.PerformLayout();
+                cardPanel?.Refresh();
+                Application.DoEvents();
             }
         }
 
@@ -474,6 +477,8 @@ namespace Alternet.UI
         private IReadOnlyFontAndColor GetInactiveColors()
         {
             var colors = InactiveTabColors ?? DefaultInactiveTabColors;
+            if (colors is not null)
+                return colors;
             Color color = IsDarkBackground ? SystemColors.GrayText :
                 SystemColors.GrayText;
             colors = new FontAndColor(color);
