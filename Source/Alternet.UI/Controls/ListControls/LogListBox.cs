@@ -176,11 +176,6 @@ namespace Alternet.UI
             {
                 DebugUtils.ShowDeveloperTools();
             }
-
-#if DEBUG
-            /*Add(
-             new("C++ Throw", () => { WebBrowser.DoCommandGlobal("CppThrow"); }));*/
-#endif
         }
 
         private void Application_LogMessage(object? sender, LogMessageEventArgs e)
