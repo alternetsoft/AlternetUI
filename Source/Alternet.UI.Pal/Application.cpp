@@ -242,8 +242,18 @@ wxDEFINE_EVENT( wxEVT_HOTKEY, wxKeyEvent );
         Application::GetCurrent()->RaiseIdle();
     }
 
+    void LogExceptionInfo(const wxString& s)
+    {
+        Application::LogSeparator();
+        Application::Log(s);
+        Application::Log(Exception::_exception);
+        Application::LogSeparator();
+    }
+
     Application::Application()
     {
+        Exception::_logMessageProc = LogExceptionInfo;
+
         Image::EnsureImageHandlersInitialized();
 
         if (s_current != nullptr)
@@ -479,12 +489,12 @@ wxDEFINE_EVENT( wxEVT_HOTKEY, wxKeyEvent );
         return _eventArgString;
     }
 
-    void Application::Log(wxString msg)
+    void Application::Log(const wxString& msg)
     {
         Log(wxStr(msg));
     }
 
-    void Application::Log(string msg)
+    void Application::Log(const string& msg)
     {
         GetCurrent()->_eventArgString = msg;
         GetCurrent()->RaiseEvent(ApplicationEvent::LogMessage);
@@ -519,7 +529,8 @@ wxDEFINE_EVENT( wxEVT_HOTKEY, wxKeyEvent );
 
     void Application::ThrowError(int value)
     {
-        throw value;
+        throwExInvalidOpWithInfo(wxStr("Sample exception"));
+        //throw value;
     }
 
     void Application::Run(Window* window)
@@ -541,7 +552,7 @@ wxDEFINE_EVENT( wxEVT_HOTKEY, wxKeyEvent );
 
     bool Application::OnFatalException()
     {
-        Application::Log("Error: Fatal Exception");
+        LogExceptionInfo("Error: Fatal Exception");
         RaiseEvent(ApplicationEvent::FatalException);
         return false;
     }
@@ -555,14 +566,14 @@ wxDEFINE_EVENT( wxEVT_HOTKEY, wxKeyEvent );
 
     bool Application::OnUnhandledException()
     {
-        Application::Log("Error: Unhandled Exception");
+        LogExceptionInfo("Error: Unhandled Exception");
         RaiseEvent(ApplicationEvent::UnhandledException);
         return false;
     }
 
     bool Application::OnExceptionInMainLoop()
     {
-        Application::Log("Error: Exception In Main Loop");
+        LogExceptionInfo("Error: Exception In Main Loop");
         RaiseEvent(ApplicationEvent::ExceptionInMainLoop);
         return false;
     }

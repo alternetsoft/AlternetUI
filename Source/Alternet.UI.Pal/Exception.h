@@ -9,6 +9,9 @@ namespace Alternet::UI
     class Exception
     {
     public:
+        inline static wxString _exception = wxEmptyString;        
+        inline static std::function<void(wxString)> _logMessageProc;
+
         class Origin
         {
         public:
@@ -17,7 +20,12 @@ namespace Alternet::UI
             int sourceLineNumber;
         };
 
-        Exception(const string& message_, int errorCode_, const optional<Origin>& origin_) : message(message_), errorCode(errorCode_), origin(origin_) {}
+        Exception(const string& message_, int errorCode_, const optional<Origin>& origin_)
+            : message(message_), errorCode(errorCode_), origin(origin_)
+        {
+            if(_logMessageProc != nullptr)
+                _logMessageProc(wxStr(ToString()));
+        }
         ~Exception() {}
 
         inline const string& GetMessageText() const { return message; }
@@ -52,7 +60,11 @@ namespace Alternet::UI
     class InvalidOperationException : public Exception
     {
     public:
-        InvalidOperationException(const string& message_, int errorCode_, const optional<Origin>& origin_) : Exception(message_, errorCode_, origin_) {}
+        InvalidOperationException(
+            const string& message_, int errorCode_, const optional<Origin>& origin_)
+            : Exception(message_, errorCode_, origin_)
+        {
+        }
     };
 
     class ThreadStateException : public Exception

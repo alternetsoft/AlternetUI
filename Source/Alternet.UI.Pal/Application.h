@@ -55,8 +55,8 @@ namespace Alternet::UI
 
         void DoLogRecord(wxLogLevel level, const wxString& msg,
             const wxLogRecordInfo& info);
-        static void Log(wxString msg);
-        static void Log(string msg);
+        static void Log(const wxString& msg);
+        static void Log(const string& msg);
 
         static void LogSeparator()
         {
