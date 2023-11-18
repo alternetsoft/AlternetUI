@@ -64,7 +64,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Same as <see cref="Application.LogReplace(string, string)"/> but
+        /// Same as <see cref="Application.LogReplace"/> but
         /// uses only this control for the logging.
         /// </summary>
         /// <param name="message">Message text.</param>
