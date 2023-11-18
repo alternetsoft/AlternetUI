@@ -4,8 +4,8 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Alternet.UI.Localization;
 using Alternet.Drawing;
+using Alternet.UI.Localization;
 
 namespace Alternet.UI
 {
@@ -18,8 +18,8 @@ namespace Alternet.UI
             HasBorder = false,
         };
 
-        private ListBox? controlsListBox;
-        private IAuiNotebookPage? controlsPage;
+        private ListBox? typesListBox;
+        private IAuiNotebookPage? typesPage;
 
         public PanelDeveloperTools()
             : base()
@@ -39,26 +39,26 @@ namespace Alternet.UI
             RightNotebook.ChangeSelection(0);
             InitActions();
             DebugUtils.HookExceptionEvents();
-            ControlsListBox.SelectionChanged += ControlsListBox_SelectionChanged;
+            TypesListBox.SelectionChanged += ControlsListBox_SelectionChanged;
             CenterNotebook.ChangeSelection(0);
             PropGrid.SuggestedInitDefaults();
         }
 
         internal IAuiNotebookPage? MainLogPage => mainLogPage;
 
-        internal IAuiNotebookPage? ControlsPage => controlsPage;
+        internal IAuiNotebookPage? TypesPage => typesPage;
 
         /// <summary>
         /// Gets control on the bottom pane which can be used for logging.
         /// </summary>
         [Browsable(false)]
-        internal ListBox ControlsListBox
+        internal ListBox TypesListBox
         {
             get
             {
-                if (controlsListBox == null)
+                if (typesListBox == null)
                 {
-                    controlsListBox = new ListBox()
+                    typesListBox = new ListBox()
                     {
                         Parent = this,
                         HasBorder = false,
@@ -68,7 +68,7 @@ namespace Alternet.UI
 
                     void AddControl(Type type)
                     {
-                        controlsListBox.Add(type.Name, type);
+                        typesListBox.Add(type.Name, type);
                     }
 
                     AddControl(typeof(Control));
@@ -80,12 +80,12 @@ namespace Alternet.UI
                         AddControl(type);
                     }
 
-                    controlsPage = CenterNotebook.AddPage(
-                        controlsListBox,
-                        "Controls");
+                    typesPage = CenterNotebook.AddPage(
+                        typesListBox,
+                        "Types");
                 }
 
-                return controlsListBox;
+                return typesListBox;
             }
         }
 
@@ -102,7 +102,7 @@ namespace Alternet.UI
 
         private void ControlsListBox_SelectionChanged(object? sender, EventArgs e)
         {
-            var item = ControlsListBox.SelectedItem as ListControlItem;
+            var item = TypesListBox.SelectedItem as ListControlItem;
             var type = item?.Value as Type;
             EventLogManager.UpdateEventsPropertyGrid(PropGrid, type);
         }
