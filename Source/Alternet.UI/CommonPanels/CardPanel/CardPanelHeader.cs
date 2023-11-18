@@ -420,7 +420,7 @@ namespace Alternet.UI
 
             UpdateTab(item);
 
-            return tabs.Count-1;
+            return tabs.Count - 1;
         }
 
         /// <summary>
