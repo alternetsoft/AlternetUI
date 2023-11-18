@@ -478,6 +478,16 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Logs name and value pair as "{name} = {value}".
+        /// </summary>
+        /// <param name="name">Name.</param>
+        /// <param name="value">Value.</param>
+        public static void LogNameValue(string name, object? value)
+        {
+            Application.Log($"{name} = {value}");
+        }
+
+        /// <summary>
         /// Calls <see cref="LogMessage"/> event.
         /// </summary>
         /// <param name="obj">Message text or object to log.</param>
