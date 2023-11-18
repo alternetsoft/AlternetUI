@@ -17,22 +17,6 @@ namespace Alternet.UI
     public partial class Control : FrameworkElement, ISupportInitialize, IDisposable, IControl
     {
         /// <summary>
-        /// Identifies the <see cref="ToolTip"/> dependency property.
-        /// </summary>
-        public static readonly DependencyProperty ToolTipProperty =
-        DependencyProperty.Register(
-                nameof(ToolTip),
-                typeof(string),
-                typeof(Control),
-                new FrameworkPropertyMetadata(
-                        null,
-                        PropMetadataOption.None,
-                        new PropertyChangedCallback(OnToolTipPropertyChanged),
-                        null,
-                        true,
-                        UpdateSourceTrigger.PropertyChanged));
-
-        /// <summary>
         /// Identifies the <see cref="Enabled"/> dependency property.
         /// </summary>
         public static readonly DependencyProperty EnabledProperty =
@@ -76,6 +60,7 @@ namespace Alternet.UI
         private int updateCount = 0;
         private ControlFlags flags;
         private Cursor? cursor;
+        private string? toolTip;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Control"/> class.
@@ -428,15 +413,25 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets the tool-tip object that is displayed for this element
+        /// Gets or sets the tool-tip that is displayed for this element
         /// in the user interface.
         /// </summary>
         [DefaultValue(null)]
         [Localizability(LocalizationCategory.ToolTip)]
         public virtual string? ToolTip
         {
-            get { return (string?)GetValue(ToolTipProperty); }
-            set { SetValue(ToolTipProperty, value); }
+            get
+            {
+                return toolTip;
+            }
+
+            set
+            {
+                if (toolTip == value)
+                    return;
+                toolTip = value;
+                OnToolTipChanged(EventArgs.Empty);
+            }
         }
 
         /// <summary>
@@ -1041,7 +1036,7 @@ namespace Alternet.UI
                 if (Handler.NativeControl is not null)
                 {
                     if (backgroundColor is null)
-                        Handler.NativeControl.ResetBackgroundColor();
+                        ResetBackgroundColor();
                     else
                         Handler.NativeControl.BackgroundColor = backgroundColor.Value;
                     Refresh();
@@ -1108,7 +1103,7 @@ namespace Alternet.UI
                 if (Handler.NativeControl is not null)
                 {
                     if (foregroundColor is null)
-                        Handler.NativeControl.ResetForegroundColor();
+                        ResetForegroundColor();
                     else
                         Handler.NativeControl.ForegroundColor = foregroundColor.Value;
                     Invalidate();
@@ -1598,6 +1593,11 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets <see cref="NativeControl"/> attached to this control.
+        /// </summary>
+        internal Native.Control? NativeControl => Handler.NativeControl;
+
         internal ControlExtendedProps ExtendedProps
         {
             get
@@ -1658,29 +1658,31 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Hides tooltip if it is visible. This method doesn't change <see cref="ToolTip"/>
+        /// property.
+        /// </summary>
+        public virtual void HideToolTip()
+        {
+            if (NativeControl is null)
+                return;
+            NativeControl.UnsetToolTip();
+            NativeControl.ToolTip = toolTip;
+        }
+
+        /// <summary>
         /// Resets bacgkround color to the default value.
         /// </summary>
-        public virtual void ResetBackgroundColor()
+        public virtual void ResetBackgroundColor(ResetColorType method = ResetColorType.Auto)
         {
-            backgroundColor = null;
-            if (Handler.NativeControl is not null)
-            {
-                Handler.NativeControl.ResetBackgroundColor();
-                Refresh();
-            }
+            ResetColor(true, method);
         }
 
         /// <summary>
         /// Resets foreground color to the default value.
         /// </summary>
-        public virtual void ResetForegroundColor()
+        public virtual void ResetForegroundColor(ResetColorType method = ResetColorType.Auto)
         {
-            foregroundColor = null;
-            if (Handler.NativeControl is not null)
-            {
-                Handler.NativeControl.ResetForegroundColor();
-                Refresh();
-            }
+            ResetColor(false, method);
         }
 
         /// <summary>
@@ -3358,17 +3360,6 @@ namespace Alternet.UI
             control?.OnEnabledPropertyChanged((bool)e.OldValue, (bool)e.NewValue);
         }
 
-        /// <summary>
-        /// Callback for changes to the ToolTip property
-        /// </summary>
-        private static void OnToolTipPropertyChanged(
-            DependencyObject d,
-            DependencyPropertyChangedEventArgs e)
-        {
-            Control c = (Control)d;
-            c?.OnToolTipPropertyChanged((string)e.OldValue, (string)e.NewValue);
-        }
-
         private void CreateAndAttachHandler()
         {
             handler = CreateHandler();
@@ -3386,11 +3377,41 @@ namespace Alternet.UI
             item.SetParentInternal(null);
         }
 
-#pragma warning disable
-        private void OnToolTipPropertyChanged(string oldToolTip, string newToolTip)
-#pragma warning restore
+        private void ResetColor(bool isBackground, ResetColorType method = ResetColorType.Auto)
         {
-            OnToolTipChanged(EventArgs.Empty);
+            if (Handler.NativeControl is null)
+                return;
+
+            void SetColor(Color? color)
+            {
+                if (isBackground)
+                {
+                    backgroundColor = color;
+                    if (color is null)
+                        Handler.NativeControl!.ResetBackgroundColor();
+                    else
+                        Handler.NativeControl!.BackgroundColor = color.Value;
+                }
+                else
+                {
+                    foregroundColor = color;
+                    if (color is null)
+                        Handler.NativeControl!.ResetForegroundColor();
+                    else
+                        Handler.NativeControl!.ForegroundColor = color.Value;
+                }
+            }
+
+            if (method == ResetColorType.Auto)
+                SetColor(null);
+            else
+            {
+                var colors = FontAndColor.GetResetColors(method, this);
+                var color = isBackground ? colors?.BackgroundColor : colors?.ForegroundColor;
+                SetColor(color);
+            }
+
+            Refresh();
         }
 
         /// <summary>

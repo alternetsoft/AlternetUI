@@ -561,6 +561,11 @@ ALTERNET_UI_API int Control_GetScrollBarMaximum_(Control* obj, ScrollBarOrientat
     return obj->GetScrollBarMaximum(orientation);
 }
 
+ALTERNET_UI_API void Control_UnsetToolTip_(Control* obj)
+{
+    obj->UnsetToolTip();
+}
+
 ALTERNET_UI_API c_bool Control_IsTransparentBackgroundSupported_(Control* obj)
 {
     return obj->IsTransparentBackgroundSupported();

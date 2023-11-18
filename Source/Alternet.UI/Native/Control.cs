@@ -824,6 +824,12 @@ namespace Alternet.UI.Native
             return NativeApi.Control_GetScrollBarMaximum_(NativePointer, orientation);
         }
         
+        public void UnsetToolTip()
+        {
+            CheckDisposed();
+            NativeApi.Control_UnsetToolTip_(NativePointer);
+        }
+        
         public bool IsTransparentBackgroundSupported()
         {
             CheckDisposed();
@@ -1389,6 +1395,9 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern int Control_GetScrollBarMaximum_(IntPtr obj, ScrollBarOrientation orientation);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Control_UnsetToolTip_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool Control_IsTransparentBackgroundSupported_(IntPtr obj);

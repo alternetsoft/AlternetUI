@@ -21,6 +21,11 @@ namespace Alternet.UI
         /// <summary>
         /// Uses <see cref="Color.Empty"/>.
         /// </summary>
+        EmptyColor,
+
+        /// <summary>
+        /// Uses <c>null</c>.
+        /// </summary>
         NullColor,
 
         /// <summary>

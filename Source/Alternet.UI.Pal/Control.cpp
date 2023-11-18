@@ -1180,6 +1180,11 @@ namespace Alternet::UI
         }
     }
 
+    void Control::UnsetToolTip()
+    {
+        GetWxWindow()->UnsetToolTip();
+    }
+
     Font* Control::GetFont()
     {
         return new Font(GetWxWindow()->GetFont());

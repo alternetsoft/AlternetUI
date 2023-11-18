@@ -186,6 +186,7 @@ bool IsScrollBarVisible(ScrollBarOrientation orientation);
 int GetScrollBarValue(ScrollBarOrientation orientation);
 int GetScrollBarLargeChange(ScrollBarOrientation orientation);
 int GetScrollBarMaximum(ScrollBarOrientation orientation);
+void UnsetToolTip();
 bool IsTransparentBackgroundSupported();
 bool SetBackgroundStyle(int style);
 int GetBackgroundStyle();
