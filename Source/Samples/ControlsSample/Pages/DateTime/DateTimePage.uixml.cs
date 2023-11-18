@@ -6,24 +6,11 @@ namespace ControlsSample
 {
     internal partial class DateTimePage : Control
     {
-        private IPageSite? site;
-
         public DateTimePage()
         {
-            //Application.LogFileIsEnabled = true;
             InitializeComponent();
             datePicker.Value = DateTime.Now;
             timePicker.Value = DateTime.Now;
-        }
-
-        public IPageSite? Site
-        {
-            get => site;
-
-            set
-            {
-                site = value;
-            }
         }
 
         private void DatePicker_DateChanged(object? sender, EventArgs e)

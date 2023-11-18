@@ -18,11 +18,6 @@ namespace ControlsSample
             tabAlignmentComboBox.SelectedIndex = 0;
         }
 
-        public IPageSite? Site { get; set; }
-
-        private static string GetPageTitle(TabPage? page) =>
-            page == null ? "<none>" : page.Title;
-
         private int GenItemIndex()
         {
             newItemIndex++;
@@ -104,7 +99,7 @@ namespace ControlsSample
 
         private void TabControl_SelectedPageChanged(object sender, EventArgs e)
         {
-            Site?.LogEvent($"SelectedPageChanged");
+            Application.Log($"SelectedPageChanged");
         }
 
         private void TabAlignmentComboBox_SelectedItemChanged(object sender, EventArgs e)
@@ -113,8 +108,6 @@ namespace ControlsSample
                 tabControl.TabAlignment = TabAlignment.Top;
             if ((string)tabAlignmentComboBox.SelectedItem! == "Bottom")
                 tabControl.TabAlignment = TabAlignment.Bottom;
-
-            /*tabControl.TabAlignment = (TabAlignment)tabAlignmentComboBox.SelectedItem!;*/
         }
     }
 }

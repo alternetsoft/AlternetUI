@@ -11,7 +11,6 @@ namespace ControlsSample
     internal partial class ListViewPage : Control
     {
         private readonly CardPanelHeader panelHeader = new();
-        private IPageSite? site;
         private bool? slowSettingsEnabled;
         private int newItemIndex = 0;
         private int newColIndex = 2;
@@ -51,32 +50,21 @@ namespace ControlsSample
             panelHeader.Add("Events", stackPanel3);
             tabControlPanel.Children.Insert(0, panelHeader);
             panelHeader.SelectedTab = panelHeader.Tabs[0];
-        }
 
-        public IPageSite? Site
-        {
-            get => site;
+            var imageLists = ResourceLoader.LoadImageLists();
+            listView.SmallImageList = imageLists.Small;
+            listView.LargeImageList = imageLists.Large;
 
-            set
-            {
-                var imageLists = ResourceLoader.LoadImageLists();
-                listView.SmallImageList = imageLists.Small;
-                listView.LargeImageList = imageLists.Large;
+            AddDefaultItems();
 
-                AddDefaultItems();
+            viewComboBox.AddEnumValues(typeof(ListViewView), ListViewView.Details);
+            gridLinesComboBox.AddEnumValues(typeof(ListViewGridLinesDisplayMode),
+                ListViewGridLinesDisplayMode.None);
+            columnWidthModeComboBox.AddEnumValues(typeof(ListViewColumnWidthMode),
+                ListViewColumnWidthMode.AutoSize);
 
-                viewComboBox.AddEnumValues(typeof(ListViewView), ListViewView.Details);
-                gridLinesComboBox.AddEnumValues(typeof(ListViewGridLinesDisplayMode),
-                    ListViewGridLinesDisplayMode.None);
-                columnWidthModeComboBox.AddEnumValues(typeof(ListViewColumnWidthMode),
-                    ListViewColumnWidthMode.AutoSize);
-
-                listView.Items.ItemInserted += Items_ItemInserted;
-                listView.Items.ItemRemoved += Items_ItemRemoved;
-
-                site = value;
-
-            }
+            listView.Items.ItemInserted += Items_ItemInserted;
+            listView.Items.ItemRemoved += Items_ItemRemoved;
         }
 
         private void EditItemsButton_Click(object? sender, System.EventArgs e)
@@ -209,7 +197,7 @@ namespace ControlsSample
 
         private void Log(string s)
         {
-            site?.LogEvent(s);
+            Application.Log(s);
         }
 
         private void Button_SelectionChanged(object? sender, EventArgs e)
@@ -271,7 +259,7 @@ namespace ControlsSample
         private void ListView_ColumnClick(object? sender, ListViewColumnEventArgs e)
         {
             var s = listView.Columns[e.ColumnIndex].Title;
-            site?.LogEvent($"ListView: ColumnClick. Column title: '{s}'");
+            Application.Log($"ListView: ColumnClick. Column title: '{s}'");
         }
 
         private void AllowLabelEditingCheckBox_CheckedChanged(

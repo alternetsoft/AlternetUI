@@ -19,8 +19,6 @@ namespace ControlsSample
             Margin = 5,
         };
 
-        private IPageSite? site;
-
         public AnimationPage()
         {
             var defaultAnimationUrl = AnimationPlant;
@@ -53,16 +51,6 @@ namespace ControlsSample
             animation.Stop();
             animation.LoadFromUrl(url);
             animation.Play();
-        }
-
-        public IPageSite? Site
-        {
-            get => site;
-
-            set
-            {
-                site = value;
-            }
         }
     }
 }

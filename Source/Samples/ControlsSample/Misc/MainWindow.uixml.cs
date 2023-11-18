@@ -4,7 +4,7 @@ using System;
 
 namespace ControlsSample
 {
-    internal partial class MainWindow : Window, IPageSite
+    internal partial class MainWindow : Window
     {
         private readonly PageContainer pageContainer = new();
         private readonly LogListBox eventsControl = new()
@@ -47,9 +47,7 @@ namespace ControlsSample
             AddPage("Text Input", CreateTextInputPage);
             AddPage("Tree View", CreateTreeViewPage);
             AddPage("List View", CreateListViewPage);
-            AddPage("List Controls", CreateListBoxPage);
-            //AddPage("Combo Box", CreateComboBoxPage);
-            //AddPage("Check List Box", CreateCheckListBoxPage);
+            AddPage("List Controls", CreateListControlsPage);
             AddPage("Progress Bar", CreateProgressBarPage);
             AddPage("Button", CreateButtonPage);
             AddPage("Slider", CreateSliderPage);
@@ -79,30 +77,54 @@ namespace ControlsSample
                 pageContainer.PagesControl.SetFocus();
         }
 
-        Control CreateCalendarPage() => new CalendarPage() { Site = this };
-        Control CreateAnimationPage() => new AnimationPage() { Site = this };
-        Control CreateTreeViewPage() => new TreeViewPage() { Site = this };
-        Control CreateListViewPage() => new ListViewPage() { Site = this };
-        Control CreateListBoxPage() => new ListControlsMain();
-        Control CreateTabControlPage() => new TabControlPage() { Site = this };
-        Control CreateProgressBarPage() => new ProgressBarPage() { Site = this };
-        Control CreateButtonPage() => new ButtonPage() { Site = this };
-        Control CreateSliderPage() => new SliderPage() { Site = this };
-        Control CreateGridPage() => new GridPage() { Site = this };
-        Control CreateNumericInputPage() => new NumericInputPage() { Site = this };
-        Control CreateRadioButtonsPage() => new RadioButtonsPage() { Site = this };
-        Control CreateCheckBoxesPage() => new CheckBoxesPage() { Site = this };
+        Control CreateCustomPage(NameValue<Func<Control>>[] pages)
+        {
+            GenericTabControl result = new()
+            {
+                Padding = 5,
+            };
+
+            result.AddRange(pages);
+            result.SelectFirstTab();
+            return result;
+        }
+
+        Control CreateListControlsPage()
+        {
+            NameValue<Func<Control>>[] pages =
+            {
+                new("ListBox", () => new ListBoxPage()),
+                new("CheckListBox", () => new CheckListBoxPage()),
+                new("ComboBox", () => new ComboBoxPage()),
+                new("Popups", () => new ListControlsPopups()),
+            };
+
+            return CreateCustomPage(pages);
+        }
+
+        Control CreateCalendarPage() => new CalendarPage();
+        Control CreateAnimationPage() => new AnimationPage();
+        Control CreateTreeViewPage() => new TreeViewPage();
+        Control CreateListViewPage() => new ListViewPage();
+        Control CreateTabControlPage() => new TabControlPage();
+        Control CreateProgressBarPage() => new ProgressBarPage();
+        Control CreateButtonPage() => new ButtonPage();
+        Control CreateSliderPage() => new SliderPage();
+        Control CreateGridPage() => new GridPage();
+        Control CreateNumericInputPage() => new NumericInputPage();
+        Control CreateRadioButtonsPage() => new RadioButtonsPage();
+        Control CreateCheckBoxesPage() => new CheckBoxesPage();
         Control CreateTextInputPage()
         {
-            return new TextInputPage() { Site = this };
+            return new TextInputPage();
         }
-        Control CreateDateTimePage() => new DateTimePage() { Site = this };
-        Control CreateNotifyIconPage() => new NotifyIconPage() { Site = this };
-        Control CreateWebBrowserPage() => new WebBrowserPage() { Site = this };
-        Control CreateSplitterPanelPage() => new SplitterPanelPage() { Site = this };
-        Control CreateLayoutPanelPage() => new LayoutPanelPage() { Site = this };
-        Control CreateAllSamplesPage() => new AllSamplesPage() { Site = this };
-        Control CreateWelcomePage() => new WelcomePage() { Site = this };
+        Control CreateDateTimePage() => new DateTimePage();
+        Control CreateNotifyIconPage() => new NotifyIconPage();
+        Control CreateWebBrowserPage() => new WebBrowserPage();
+        Control CreateSplitterPanelPage() => new SplitterPanelPage();
+        Control CreateLayoutPanelPage() => new LayoutPanelPage();
+        Control CreateAllSamplesPage() => new AllSamplesPage();
+        Control CreateWelcomePage() => new WelcomePage();
 
         private void LinkLabel_LinkClicked(
             object? sender,

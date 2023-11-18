@@ -8,7 +8,6 @@ namespace ControlsSample
     internal partial class CalendarPage : Control
     {
         private readonly Calendar calendar = new();
-        private IPageSite? site;
 
         public CalendarPage()
         {
@@ -173,17 +172,7 @@ namespace ControlsSample
 
         private void LogEvent(string evName)
         {
-            site?.LogEvent($"Calendar event: {evName}");
-        }
-
-        public IPageSite? Site
-        {
-            get => site;
-
-            set
-            {
-                site = value;
-            }
+            Application.Log($"Calendar event: {evName}");
         }
     }
 }

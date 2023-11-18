@@ -6,7 +6,6 @@ namespace ControlsSample
 {
     internal partial class CheckBoxesPage : Control
     {
-        private IPageSite? site;
         private readonly CheckBoxesPageDataContext dataContext = new ();
 
         public CheckBoxesPage()
@@ -80,12 +79,12 @@ namespace ControlsSample
             if (checkBox.ThreeState)
                 checkBox.CheckState = CheckState.Indeterminate;
             else
-                site?.LogEvent("CheckBox.ThreeState is false, indeterminate state is not set.");
+                Application.Log("CheckBox.ThreeState is false, indeterminate state is not set.");
         }
 
         private void CheckBox_CheckedChanged(object? sender, EventArgs e)
         {
-            site?.LogEvent($"CheckBox.CheckState: {checkBox.CheckState}");
+            Application.Log($"CheckBox.CheckState: {checkBox.CheckState}");
         }
 
         private void AllowAllStatesForUserCheckBox_CheckedChanged(object? sender, EventArgs e)
@@ -101,16 +100,6 @@ namespace ControlsSample
         private void ThreeStatesCheckBox_CheckedChanged(object? sender, EventArgs e)
         {
             checkBox.ThreeState = threeStatesCheckBox.IsChecked;
-        }
-
-        public IPageSite? Site
-        {
-            get => site;
-
-            set
-            {
-                site = value;
-            }
         }
 
         internal class CheckBoxesPageDataContext

@@ -7,22 +7,10 @@ namespace ControlsSample
 {
     internal partial class ProgressBarPage : Control
     {
-        private IPageSite? site;
-
         public ProgressBarPage()
         {
             InitializeComponent();
 			VerticalProgressBarsGroupBox.Visible = !Application.IsMacOs;
-        }
-
-        public IPageSite? Site
-        {
-            get => site;
-
-            set
-            {
-                site = value;
-            }
         }
 
         private void IncreaseAllButton_Click(object? sender, EventArgs e)

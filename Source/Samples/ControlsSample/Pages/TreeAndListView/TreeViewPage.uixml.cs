@@ -10,7 +10,6 @@ namespace ControlsSample
     internal partial class TreeViewPage : Control
     {
         private readonly CardPanelHeader panelHeader = new();
-        private IPageSite? site;
         private int supressExpandEvents = 0;
         private bool? slowSettingsEnabled;
         private int newItemIndex = 0;
@@ -49,6 +48,10 @@ namespace ControlsSample
             treeView.MouseUp += TreeView_MouseUp;
             treeView.PreviewMouseUp += TreeView_PreviewMouseUp;
             treeView.MouseLeftButtonUp += TreeView_MouseLeftButtonUp;
+
+            treeView.ImageList = ResourceLoader.LoadImageLists().Small;
+            AddDefaultItems();
+            SetCustomColors();
         }
 
         private void TreeView_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
@@ -64,19 +67,6 @@ namespace ControlsSample
         private void TreeView_MouseUp(object sender, MouseButtonEventArgs e)
         {
             /*site?.LogEvent($"TreeView: MouseUp");*/
-        }
-
-        public IPageSite? Site
-        {
-            get => site;
-
-            set
-            {
-                treeView.ImageList = ResourceLoader.LoadImageLists().Small;
-                AddDefaultItems();
-                site = value;
-                SetCustomColors();
-            }
         }
 
         internal void SetCustomColors()
@@ -152,7 +142,7 @@ namespace ControlsSample
             string s = selectedItems.Count > 100 ? 
                 "too many indices to display" : 
                 string.Join(",", selectedItems.Select(x => x.Text));
-            site?.LogEvent($"TreeView: SelectionChanged. SelectedItems: ({s})");
+            Application.Log($"TreeView: SelectionChanged. SelectedItems: ({s})");
         }
 
         private void TreeView_ExpandedChanged(object? sender, TreeViewEventArgs e)
@@ -160,14 +150,14 @@ namespace ControlsSample
             if (supressExpandEvents > 0)
                 return;
             var exp = e.Item.IsExpanded;
-            site?.LogEvent($"TreeView: ExpandedChanged. Item: '{e.Item.Text}', IsExpanded: {exp}");
+            Application.Log($"TreeView: ExpandedChanged. Item: '{e.Item.Text}', IsExpanded: {exp}");
         }
 
         private void TreeView_BeforeLabelEdit(object? sender, TreeViewEditEventArgs e)
         {
             e.Cancel = cancelBeforeLabelEditEventsCheckBox.IsChecked;
             var s = e.Label ?? "<null>";
-            site?.LogEvent($"TreeView: BeforeLabelEdit. Item: '{e.Item.Text}', Label: '{s}'");
+            Application.Log($"TreeView: BeforeLabelEdit. Item: '{e.Item.Text}', Label: '{s}'");
         }
 
         private void TreeView_AfterLabelEdit(
@@ -176,7 +166,7 @@ namespace ControlsSample
         {
             e.Cancel = cancelAfterLabelEditEventsCheckBox.IsChecked;
             var s = e.Label ?? "<null>";
-            site?.LogEvent($"TreeView: AfterLabelEdit. Item: '{e.Item.Text}', Label: '{s}'");
+            Application.Log($"TreeView: AfterLabelEdit. Item: '{e.Item.Text}', Label: '{s}'");
         }
 
         private void TreeView_BeforeExpand(
@@ -186,7 +176,7 @@ namespace ControlsSample
             if (supressExpandEvents > 0)
                 return;
             e.Cancel = cancelBeforeExpandEventsCheckBox.IsChecked;
-            site?.LogEvent($"TreeView: BeforeExpand. Item: '{e.Item.Text}'");
+            Application.Log($"TreeView: BeforeExpand. Item: '{e.Item.Text}'");
         }
 
         private void TreeView_BeforeCollapse(
@@ -196,7 +186,7 @@ namespace ControlsSample
             if (supressExpandEvents > 0)
                 return;
             e.Cancel = cancelBeforeCollapseEventsCheckBox.IsChecked;
-            site?.LogEvent($"TreeView: BeforeCollapse. Item: '{e.Item.Text}'");
+            Application.Log($"TreeView: BeforeCollapse. Item: '{e.Item.Text}'");
         }
 
         private void CancelBeforeExpandEventsCheckBox_CheckedChanged(
@@ -304,7 +294,7 @@ namespace ControlsSample
         {
             var result = treeView.HitTest(e.GetPosition(treeView));
             var s = result.Item?.Text ?? "<none>";
-            site?.LogEvent($"HitTest result: Item: '{s}, Location: {result.Location}'");
+            Application.Log($"HitTest result: Item: '{s}, Location: {result.Location}'");
         }
 
         private void ModifyLastItemButton_Click(object? sender, System.EventArgs e)

@@ -17,7 +17,6 @@ namespace ControlsSample
         private static string? headerText;
 
         private readonly WebBrowser webBrowser;
-        private IPageSite? site;
         private bool historyCleared = false;
         private bool pandaLoaded = false;
 
@@ -52,25 +51,16 @@ namespace ControlsSample
             webBrowser.DocumentTitleChanged += WebBrowser1_TitleChanged;
             Grid.SetRowColumn(webBrowser, 2, 0);
             mainGrid.Children.Add(webBrowser);
-        }
 
-        public IPageSite? Site
-        {
-            get => site;
+            headerText = HeaderLabel.Text;
+            webBrowser.ZoomType = WebBrowserZoomType.Layout;
+            UrlTextBox.Items.Add(SItemPanda);
+            UrlTextBox.Items.Add(SItemGoogle);
 
-            set
-            {
-                headerText = HeaderLabel.Text;
-                webBrowser.ZoomType = WebBrowserZoomType.Layout;
-                site = value;
-                UrlTextBox.Items.Add(SItemPanda);
-                UrlTextBox.Items.Add(SItemGoogle);
-
-                if (webBrowser.Backend != WebBrowserBackend.IE &&
-                    webBrowser.Backend != WebBrowserBackend.IELatest)
-                    UrlTextBox.Items.Add(SItemPDF);
-                UrlTextBox.Items.Add(SItemImage);
-            }
+            if (webBrowser.Backend != WebBrowserBackend.IE &&
+                webBrowser.Backend != WebBrowserBackend.IELatest)
+                UrlTextBox.Items.Add(SItemPDF);
+            UrlTextBox.Items.Add(SItemImage);
         }
 
         private static string GetPandaFileName()
@@ -110,7 +100,7 @@ namespace ControlsSample
 
         private void Log(string s)
         {
-            site?.LogEvent(s);
+            Application.Log(s);
         }
 
         private void WebBrowser1_Navigated(object? sender, WebBrowserEventArgs e)

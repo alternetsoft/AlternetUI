@@ -11,7 +11,6 @@ namespace ControlsSample
     internal partial class SplitterPanelPage : Control
     {
         private readonly CardPanelHeader panelHeader = new();
-        private IPageSite? site;
         private readonly ListBox? control1;
         private readonly ListBox? control2;
         private readonly ListBox? control3;
@@ -130,15 +129,12 @@ namespace ControlsSample
             if (!LogMovingCheckbox.IsChecked)
                 return;
 
-            if (site == null)
-                return;
-
             prefix ??= s;
 
             if(once)
-                site?.LogEventSmart(s, prefix);
+                Application.LogReplace(s, prefix);
             else
-                site?.LogEvent(s);
+                Application.Log(s);
         }
 
         private void SplitterPanel_SplitterResize(
@@ -212,16 +208,6 @@ namespace ControlsSample
             e.Cancel = true;
             var index = sender == splitterPanel ? 1 : 2;
             LogEvent($"Splitter Panel {index}: Double click. X: {e.X}, Y: {e.Y}");
-        }
-
-        public IPageSite? Site
-        {
-            get => site;
-
-            set
-            {
-                site = value;
-            }
         }
 
         private void ReplaceControlButton_Click(object? sender, EventArgs e)

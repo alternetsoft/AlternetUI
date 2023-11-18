@@ -4,7 +4,6 @@ using System.Linq;
 using Alternet.Drawing;
 using Alternet.UI;
 using Alternet.Base.Collections;
-using static Alternet.UI.ControlsSampleUtils;
 using System.IO;
 using System.Diagnostics;
 
@@ -12,25 +11,13 @@ namespace ControlsSample
 {
     internal partial class AllSamplesPage : Control
     {
-        private IPageSite? site;
-
         public AllSamplesPage()
         {
             InitializeComponent();
 
             view.MakeAsListBox();
-        }
-
-        public IPageSite? Site
-        {
-            get => site;
-
-            set
-            {
-                site = value;
-                AddDefaultItems();
-                view.SelectedItem = view.FirstItem;
-            }
+            AddDefaultItems();
+            view.SelectedItem = view.FirstItem;
         }
 
         private void AddDefaultItems()
@@ -99,7 +86,7 @@ namespace ControlsSample
             if (view.SelectedItem is not CsProjItem item)
                 return;
             string path = item.CsProjPath;
-            site?.LogEvent("Run sample: " + path);
+            Application.Log("Run sample: " + path);
 
             string runext = Application.IsWindowsOS ? "bat" : "sh";
             string runutil = PathUtils.GetAppFolder() + "runsample." + runext;

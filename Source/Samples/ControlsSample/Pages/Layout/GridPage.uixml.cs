@@ -8,7 +8,6 @@ namespace ControlsSample
 {
     internal partial class GridPage : Control
     {
-        private IPageSite? site;
         private readonly ControlSet controls;
 
         public GridPage()
@@ -63,16 +62,6 @@ namespace ControlsSample
             else
                 mainGrid.Background = null;
             mainGrid.Invalidate();
-        }
-
-        public IPageSite? Site
-        {
-            get => site;
-
-            set
-            {
-                site = value;
-            }
         }
     }
 }

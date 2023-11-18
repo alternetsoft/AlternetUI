@@ -9,8 +9,6 @@ namespace ControlsSample
         public static readonly Image Image = new Bitmap(typeof(NotifyIconPage).Assembly.GetManifestResourceStream(
             "ControlsSample.Resources.Logo16x16.png") ?? throw new Exception());
 
-        private IPageSite? site;
-
         private readonly NotifyIcon? notifyIcon;
 
         public NotifyIconPage()
@@ -78,24 +76,14 @@ namespace ControlsSample
 
         public MessageBoxIcon ToolTipIcon { get; set; } = MessageBoxIcon.Warning;
 
-        public IPageSite? Site
-        {
-            get => site;
-
-            set
-            {
-                site = value;
-            }
-        }
-
         private void NotifyIcon_DoubleClick(object? sender, EventArgs e)
         {
-            site?.LogEvent("NotifyIcon: DoubleClick");
+            Application.Log("NotifyIcon: DoubleClick");
         }
 
         private void NotifyIcon_Click(object? sender, EventArgs e)
         {
-            site?.LogEvent("NotifyIcon: Click");
+            Application.Log("NotifyIcon: Click");
         }
 
         private void NotifyIconVisibleCheckBox_CheckedChanged(object sender, EventArgs e)

@@ -10,7 +10,6 @@ namespace ControlsSample
 {
     internal partial class LayoutPanelPage : Control
     {
-        private IPageSite? site;
         private readonly ListBox? control1;
         private readonly ListBox? control2;
         private readonly ListBox? control3;
@@ -98,23 +97,10 @@ namespace ControlsSample
 
         internal void LogEventOnce(string s, bool once = true)
         {
-            if (site == null)
-                return;
-
-            if (site.LastEventMessage == s && once)
-                return;
-
-            site?.LogEvent(s);
-        }
-
-        public IPageSite? Site
-        {
-            get => site;
-
-            set
-            {
-                site = value;
-            }
+            if(once)
+                Application.LogReplace(s, s);
+            else
+                Application.Log(s);
         }
     }
 }

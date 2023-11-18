@@ -68,8 +68,6 @@ namespace ControlsSample
             Margin = 5,
         };         
 
-        private IPageSite? site;
-
         static TextInputPage()
         {
         }
@@ -387,12 +385,12 @@ namespace ControlsSample
             // if (control == richEdit)
             //    fontStatus = GetFontStatus();
 
-            site?.LogEventSmart($"{prefix} {currentPos.Value+1}", prefix);
+            Application.LogReplace($"{prefix} {currentPos.Value+1}", prefix);
         }
 
         private void TextBox_TextMaxLength(object? sender, EventArgs e)
         {
-            site?.LogEvent("TextBox: Text max length reached");
+            Application.Log("TextBox: Text max length reached");
         }
 
         private void MaxLengthBox_TextChanged(object sender, TextChangedEventArgs e)
@@ -412,27 +410,17 @@ namespace ControlsSample
         private void Control_GotFocus(object sender, RoutedEventArgs e)
         {
             var name = (sender as Control)?.Name ?? sender.GetType().Name;
-            site?.LogEvent($"Focused: {name}" );
+            Application.Log($"Focused: {name}" );
         }
 
         private void MultiLineTextBox_TextUrl(object? sender, UrlEventArgs e)
         {
-            site?.LogEvent("TextBox: Url clicked =>" + e.Url);
+            Application.Log("TextBox: Url clicked =>" + e.Url);
             var modifiers = AllPlatformDefaults.PlatformCurrent.TextBoxUrlClickModifiers;
             if (e.Modifiers != modifiers)
             {
                 var modifiersText = ModifierKeysConverter.ToString(modifiers, true);
-                site?.LogEvent($"Use {modifiersText}+Click to open in the default browser: " + e.Url);
-            }
-        }
-
-        public IPageSite? Site
-        {
-            get => site;
-
-            set
-            {
-                site = value;
+                Application.Log($"Use {modifiersText}+Click to open in the default browser: " + e.Url);
             }
         }
 
@@ -455,7 +443,7 @@ namespace ControlsSample
             if (asNumber is not null)
                 asNumber = $" => {asNumber} | {asNumber.GetType().Name}";
 
-            site?.LogEventSmart($"{prefix}{value}{asNumber}", prefix);
+            Application.LogReplace($"{prefix}{value}{asNumber}", prefix);
         }
 
         private void AddLetterAButton_Click(object? sender, EventArgs e)

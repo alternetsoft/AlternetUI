@@ -19,8 +19,6 @@ namespace ControlsSample
                     new ListControlItem("Bottom", GenericDirection.Bottom),
             };
 
-        private IPageSite? site;
-
         static ButtonPage()
         {
 #if DEBUG
@@ -65,33 +63,23 @@ namespace ControlsSample
                 imageAlignComboBox,
                 comboBoxTextColor);
             editors.SuggestedHeightToMax();
-        }
 
-        public IPageSite? Site
-        {
-            get => site;
+            ApplyAll();
 
-            set
-            {
-                site = value;
-
-                ApplyAll();
-
-                comboBoxFontName.SelectedItemChanged += Button_Changed;
-                comboBoxFontSize.SelectedItemChanged += Button_Changed;
-                comboBoxTextColor.SelectedItemChanged += Button_Changed;
-                comboBoxBackColor.SelectedItemChanged += Button_Changed;
-                textAlignComboBox.SelectedItemChanged += Button_Changed;
-                imageAlignComboBox.SelectedItemChanged += Button_Changed;
-                disabledCheckBox.CheckedChanged += Button_Changed;
-                imageCheckBox.CheckedChanged += Button_Changed;
-                defaultCheckBox.CheckedChanged += Button_Changed;
-                boldCheckBox.CheckedChanged += Button_Changed;
-                hasBorderCheckBox.CheckedChanged += Button_Changed;
-                tabStopCheckBox.CheckedChanged += Button_Changed;
-                showTextCheckBox.CheckedChanged += Button_Changed;
-                exactFitCheckBox.CheckedChanged += Button_Changed;
-            }
+            comboBoxFontName.SelectedItemChanged += Button_Changed;
+            comboBoxFontSize.SelectedItemChanged += Button_Changed;
+            comboBoxTextColor.SelectedItemChanged += Button_Changed;
+            comboBoxBackColor.SelectedItemChanged += Button_Changed;
+            textAlignComboBox.SelectedItemChanged += Button_Changed;
+            imageAlignComboBox.SelectedItemChanged += Button_Changed;
+            disabledCheckBox.CheckedChanged += Button_Changed;
+            imageCheckBox.CheckedChanged += Button_Changed;
+            defaultCheckBox.CheckedChanged += Button_Changed;
+            boldCheckBox.CheckedChanged += Button_Changed;
+            hasBorderCheckBox.CheckedChanged += Button_Changed;
+            tabStopCheckBox.CheckedChanged += Button_Changed;
+            showTextCheckBox.CheckedChanged += Button_Changed;
+            exactFitCheckBox.CheckedChanged += Button_Changed;
         }
 
         public void DoInside(Action action)
@@ -150,8 +138,6 @@ namespace ControlsSample
                 button.Font = font;
             }
 
-            if (site == null)
-                return;
             if (button == null)
                 return;
 
@@ -180,14 +166,11 @@ namespace ControlsSample
 
         private void Button_Click(object? sender, System.EventArgs e)
         {
-            site?.LogEvent("Button: Click");
+            Application.Log("Button: Click");
         }
 
         private Color? GetColor(ListControl? control)
         {
-            if (site == null)
-                return null;
-
             var text = control?.SelectedItem?.ToString();
 
             if (string.IsNullOrWhiteSpace(text) || text == "Default" || StringUtils.IsHexNumber(text))

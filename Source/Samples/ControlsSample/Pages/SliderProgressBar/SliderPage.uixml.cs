@@ -7,8 +7,6 @@ namespace ControlsSample
 {
     internal partial class SliderPage : Control
     {
-        private IPageSite? site;
-
         public SliderPage()
         {
             InitializeComponent();
@@ -26,17 +24,7 @@ namespace ControlsSample
 
             tickStyleComboBox.SelectedItemChanged += TickStyleComboBox_SelectedItemChanged;
             tickStyleComboBox.SelectedIndex = 0;
-        }
-
-        public IPageSite? Site
-        {
-            get => site;
-
-            set
-            {
-                progressBarControlSlider.Value = 1;
-                site = value;
-            }
+            progressBarControlSlider.Value = 1;
         }
 
         private void TickStyleComboBox_SelectedItemChanged(object? sender, EventArgs e)
@@ -55,7 +43,7 @@ namespace ControlsSample
 
         private void Slider_ValueChanged(object? sender, EventArgs e)
         {
-            site?.LogEvent("New slider value is: " + ((Slider)sender!).Value);
+            Application.Log("New slider value is: " + ((Slider)sender!).Value);
         }
 
         private void ProgressBarControlSlider_ValueChanged(object? sender, EventArgs e)
@@ -82,7 +70,8 @@ namespace ControlsSample
 
         private IEnumerable<Slider> GetAllSliders()
         {
-            return new Control[] { horizontalSlidersPanel, verticalSlidersGrid }.SelectMany(x => x.Children.OfType<Slider>());
+            return new Control[] { horizontalSlidersPanel, verticalSlidersGrid }
+                .SelectMany(x => x.Children.OfType<Slider>());
         }
     }
 }

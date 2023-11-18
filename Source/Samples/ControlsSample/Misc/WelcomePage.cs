@@ -10,9 +10,7 @@ namespace ControlsSample
 {
     internal class WelcomePage : Control
     {
-        private IPageSite? site;
-            
-        RichTextBox richText = new()
+        private readonly RichTextBox richText = new()
         {
             HasBorder = false,
         };
@@ -73,16 +71,6 @@ namespace ControlsSample
             r.ReadOnly = true;
             r.AutoUrlOpen = true;
             r.AutoUrlModifiers = ModifierKeys.None;
-        }
-
-        public IPageSite? Site
-        {
-            get => site;
-
-            set
-            {
-                site = value;
-            }
         }
     }
 }
