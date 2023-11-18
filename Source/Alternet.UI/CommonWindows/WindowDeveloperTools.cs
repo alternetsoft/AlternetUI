@@ -77,8 +77,8 @@ namespace Alternet.UI
             var defaultColors = control.GetDefaultFontAndColor();
 
             Application.LogSeparator();
-            Application.Log($"Name = {control.Name}");
-            Application.Log($"Type = {control.GetType().Name}");
+            Application.LogNameValue("Name", control.Name);
+            Application.LogNameValue("Type", control.GetType().Name);
             LogUtils.LogColor("ForegroundColor", control.ForegroundColor);
             LogUtils.LogColor("ForegroundColor (real)", control.RealForegroundColor);
             LogUtils.LogColor("ForegroundColor (defaults)", defaultColors.ForegroundColor);
@@ -87,6 +87,9 @@ namespace Alternet.UI
             LogUtils.LogColor("BackgroundColor (real)", control.RealBackgroundColor);
             LogUtils.LogColor("BackgroundColor (defaults)", defaultColors.BackgroundColor);
 
+            Application.LogNameValue("PixelScaleFactor", control.GetPixelScaleFactor());
+            Application.LogNameValue("PixelToDip(100)", control.PixelToDip(100));
+            Application.LogNameValue("DPI", control.GetDPI());
             Application.LogSeparator();
         }
     }
