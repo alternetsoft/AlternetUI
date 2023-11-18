@@ -718,21 +718,34 @@ namespace Alternet.UI
                     if (window == null)
                         return;
 
-                    SetToolSticky(toolId, true);
-
-                    Rect toolRect = GetToolRect(toolId);
-                    Point pt = ClientToScreen(toolRect.BottomLeft);
-                    pt = window.ScreenToClient(pt);
-
-                    window.ShowPopupMenu(contextMenu, (int)pt.X, (int)pt.Y);
-                    /*DoOnCaptureLost();*/
-                    SetToolSticky(toolId, false);
+                    var pt = GetToolPopupLocation(toolId);
+                    if(pt is not null)
+                    {
+                        SetToolSticky(toolId, true);
+                        var menuLocation = window.ScreenToClient(pt.Value);
+                        window.ShowPopupMenu(contextMenu, (int)menuLocation.X, (int)menuLocation.Y);
+                        SetToolSticky(toolId, false);
+                    }
                 }
                 finally
                 {
                     showingDropDown--;
                 }
             }
+        }
+
+        /// <summary>
+        /// Gets location of the popup window for the toolbar item.
+        /// </summary>
+        /// <param name="toolId">ID of a previously added tool.</param>
+        /// <returns>Popup window location in screen coordinates.</returns>
+        public Point? GetToolPopupLocation(int toolId)
+        {
+            if (toolId <= 0)
+                return null;
+            Rect toolRect = GetToolRect(toolId);
+            Point pt = ClientToScreen(toolRect.BottomLeft);
+            return pt;
         }
 
         /// <summary>
