@@ -33,9 +33,19 @@ namespace Alternet.UI
         MacOs = 4,
 
         /// <summary>
+        /// Operating system is Android.
+        /// </summary>
+        Android = 8,
+
+        /// <summary>
+        /// Operating system is IOS.
+        /// </summary>
+        IOS = 16,
+
+        /// <summary>
         /// Any operating system.
         /// </summary>
-        Any = MacOs | Linux | Windows,
+        Any = MacOs | Linux | Windows | Android | IOS,
 
         /// <summary>
         /// Operating system is Windows or Linux.

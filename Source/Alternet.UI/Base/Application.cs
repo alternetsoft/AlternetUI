@@ -25,6 +25,11 @@ namespace Alternet.UI
         private static Application? current;
         private static OperatingSystems backendOS = OperatingSystems.None;
 
+#if NET5_0_OR_GREATER
+        private static bool? isAndroidOS;
+        private static bool? isOS;
+#endif
+
         private readonly List<Window> windows = new();
         private readonly KeyboardInputProvider keyboardInputProvider;
         private readonly MouseInputProvider mouseInputProvider;
@@ -170,10 +175,47 @@ namespace Alternet.UI
                         case WebBrowserBackendOS.Windows:
                             backendOS = OperatingSystems.Windows;
                             break;
+                        default:
+                            if(IsAndroidOS)
+                                backendOS = OperatingSystems.Android;
+                            else
+                            if(IsIOS)
+                                backendOS = OperatingSystems.IOS;
+                            break;
                     }
                 }
 
                 return backendOS;
+            }
+        }
+
+        /// <summary>
+        /// Indicates whether the current application is running on Android.
+        /// </summary>
+        public static bool IsAndroidOS
+        {
+            get
+            {
+#if NET5_0_OR_GREATER
+                return isAndroidOS ??= OperatingSystem.IsAndroid();
+#else
+                return false;
+#endif
+            }
+        }
+
+        /// <summary>
+        /// Indicates whether the current application is running on Android.
+        /// </summary>
+        public static bool IsIOS
+        {
+            get
+            {
+#if NET5_0_OR_GREATER
+                return isOS ??= OperatingSystem.IsIOS();
+#else
+                return false;
+#endif
             }
         }
 
@@ -515,6 +557,30 @@ namespace Alternet.UI
                     evt(Current, args);
                 }
             }
+        }
+
+        /// <summary>
+        /// Checks if the Android version (returned by the Linux command uname) is greater than
+        /// or equal to the specified version. This method can be used to guard APIs that were
+        /// added in the specified version.
+        /// </summary>
+        /// <param name="major">The major release number.</param>
+        /// <param name="minor">The minor release number.</param>
+        /// <param name="build">The build release number.</param>
+        /// <param name="revision">The revision release number.</param>
+        /// <returns><c>true</c> if the current application is running on an Android version that
+        /// is at least what was specified in the parameters; <c>false</c> otherwise.</returns>
+        public static bool IsAndroidVersionAtLeast(
+            int major,
+            int minor = 0,
+            int build = 0,
+            int revision = 0)
+        {
+#if NET5_0_OR_GREATER
+            return OperatingSystem.IsAndroidVersionAtLeast(major, minor, build, revision);
+#else
+            return false;
+#endif
         }
 
         /// <summary>
