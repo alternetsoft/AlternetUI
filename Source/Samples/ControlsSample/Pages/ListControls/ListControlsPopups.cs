@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Alternet.UI;
+using Alternet.Drawing;
 
 namespace ControlsSample
 {
@@ -25,7 +26,51 @@ namespace ControlsSample
 
         private readonly PopupListBox popupListBox = new();
 
+        public Rect GetPossiblePopupRect()
+        {
+            return Rect.Empty;
+        }
 
+        /*
+        $procs.getPossiblePopupRects=function(e,width,height){
+            var 
+                screen = $procs.getScreenRect(), 
+                target = $procs.getBoundingClientRect(e),
+
+                nw = {
+                    right:target.right,
+                    bottom:target.top,
+                    left:target.right-width,
+                    top:target.top-height
+                },		
+                ne = {
+                    left:target.left,
+                    bottom:target.top,
+                    right:screen.right,
+                    top:target.top-height			
+                },
+                sw = {
+                    right:target.right,
+                    top:target.bottom,
+                    left:target.right-width,
+                    bottom:screen.bottom
+                },
+                se = {
+                    left:target.left,
+                    top:target.bottom,
+                    right:screen.right,
+                    bottom:screen.bottom
+                };
+
+            return { 
+                ne:ne,
+                nw:nw,
+                sw:sw,
+                se:se,
+                items:[se,sw,ne,nw]
+            };
+        }
+         */
         public ListControlsPopups()
             : base()
         {
