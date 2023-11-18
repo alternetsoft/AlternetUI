@@ -550,6 +550,24 @@ wxDEFINE_EVENT( wxEVT_HOTKEY, wxKeyEvent );
 #endif
     }
 
+    /*
+This function may be called if something fatal happens: an unhandled exception under Win32 or a
+fatal signal under Unix, for example.
+However, this will not happen by default: you have to explicitly call wxHandleFatalExceptions()
+to enable this.
+Generally speaking, this function should only show a message to the user and return. You may
+attempt to save unsaved data but this is not guaranteed to work and, in fact, probably won't.
+
+wxHandleFatalExceptions:
+If doIt is true, the fatal exceptions (also known as general protection faults under Windows or
+segmentation violations in the Unix world) will be caught and passed to wxApp::OnFatalException.
+By default, i.e. before this function is called, they will be handled in the normal way which
+usually just means that the application will be terminated. Calling wxHandleFatalExceptions()
+with doIt equal to false will restore this default behaviour.
+Notice that this function is only available if wxUSE_ON_FATAL_EXCEPTION is 1 and under Windows
+platform this requires a compiler with support for SEH (structured exception handling) which
+currently means only Microsoft Visual C++.
+    */
     bool Application::OnFatalException()
     {
         Application::Log("Error: Fatal Exception");
@@ -557,6 +575,25 @@ wxDEFINE_EVENT( wxEVT_HOTKEY, wxKeyEvent );
         return false;
     }
 
+    /*
+This function is called when an assert failure occurs, i.e. the condition specified in wxASSERT()
+macro evaluated to false.
+It is only called in debug mode (when __WXDEBUG__ is defined) as asserts are not left in the
+release code at all. The base class version shows the default assert failure dialog box proposing to the user to stop the program, continue or ignore all subsequent asserts.
+Parameters
+file
+the name of the source file where the assert occurred
+line
+the line number in this file where the assert occurred
+func
+the name of the function where the assert occurred, may be empty if the compiler doesn't support
+C99 __FUNCTION__
+cond
+the condition of the failed assert in text form
+msg
+the message specified as argument to wxASSERT_MSG or wxFAIL_MSG, will be NULL if just wxASSERT
+or wxFAIL was used
+    */
     bool Application::OnAssertFailure(const wxChar* file, int line, const wxChar* func,
         const wxChar* cond, const wxChar* msg)
     {
@@ -579,6 +616,19 @@ wxDEFINE_EVENT( wxEVT_HOTKEY, wxKeyEvent );
         return false;
     }
 
+/*
+This function is called when an unhandled C++ exception occurs in user code called by wxWidgets.
+
+Any unhandled exceptions thrown from (overridden versions of) OnInit() and OnExit() methods
+as well as any exceptions thrown from inside the main loop and re-thrown by OnUnhandledException()
+will result in a call to this function.
+
+By the time this function is called, the program is already about to exit and the exception can't
+be handled nor ignored any more, override OnUnhandledException() or use explicit try/catch blocks
+around OnInit() body to be able to handle the exception earlier.
+
+The default implementation dumps information about the exception using wxMessageOutputBest.
+*/
     bool Application::OnUnhandledException()
     {
         Application::Log("Error: Unhandled Exception");
@@ -586,6 +636,47 @@ wxDEFINE_EVENT( wxEVT_HOTKEY, wxKeyEvent );
         return false;
     }
 
+/*
+virtual bool wxAppConsole::OnExceptionInMainLoop	(		)
+This function is called if an unhandled exception occurs inside the main application event loop.
+
+It can return true to ignore the exception and to continue running the loop or false to exit the
+loop and terminate the program.
+
+The default behaviour of this function is the latter in all ports except under Windows where a dialog
+is shown to the user which allows him to choose between the different options. You may override this
+function in your class to do something more appropriate.
+
+If this method rethrows the exception and if the exception can't be stored for later processing using
+StoreCurrentException(), the program will terminate after calling OnUnhandledException().
+
+You should consider overriding this method to perform whichever last resort exception handling that
+would be done in a typical C++ program in a try/catch block around the entire main() function. As
+this method is called during exception handling, you may use the C++ throw keyword to rethrow
+the current exception to catch it again and analyze it. For example:
+
+class MyApp : public wxApp {
+public:
+    virtual bool OnExceptionInMainLoop()
+    {
+        wxString error;
+        try {
+            throw; // Rethrow the current exception.
+        } catch (const MyException& e) {
+            error = e.GetMyErrorMessage();
+        } catch (const std::exception& e) {
+            error = e.what();
+        } catch ( ... ) {
+            error = "unknown error.";
+        }
+
+        wxLogError("Unexpected exception has occurred: %s, the program will terminate.", error);
+
+        // Exit the main loop and thus terminate the program.
+        return false;
+    }
+};
+*/
     bool Application::OnExceptionInMainLoop()
     {
         Application::Log("Error: Exception In Main Loop");
