@@ -208,7 +208,7 @@ namespace Alternet.UI
         [Browsable(false)]
         internal NativeCheckBoxHandler? NativeHandler => Handler as NativeCheckBoxHandler;
 
-        internal Native.CheckBox? NativeControl => Handler.NativeControl as Native.CheckBox;
+        internal new Native.CheckBox? NativeControl => Handler.NativeControl as Native.CheckBox;
 
         /// <summary>
         /// Binds property specified with <paramref name="instance"/> and

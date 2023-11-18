@@ -128,7 +128,7 @@ namespace Alternet.UI
             }
         }
 
-        internal Native.TabControl? NativeControl => Handler.NativeControl as Native.TabControl;
+        internal new Native.TabControl? NativeControl => Handler.NativeControl as Native.TabControl;
 
         /// <inheritdoc />
         protected override IEnumerable<FrameworkElement> LogicalChildrenCollection => Pages;

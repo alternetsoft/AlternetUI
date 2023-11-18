@@ -181,7 +181,7 @@ namespace Alternet.UI
             }
         }
 
-        internal Native.AuiNotebook NativeControl => Handler.NativeControl;
+        internal new Native.AuiNotebook NativeControl => Handler.NativeControl;
 
         /// <summary>
         /// Ensures that all tabs have the same height, even if some of them

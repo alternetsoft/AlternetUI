@@ -57,7 +57,7 @@ namespace Alternet.UI
             }
         }
 
-        internal Native.AnimationControl NativeControl => Handler.NativeControl;
+        internal new Native.AnimationControl NativeControl => Handler.NativeControl;
 
         /// <summary>
         /// Starts playing the animation.

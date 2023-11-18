@@ -403,7 +403,7 @@ namespace Alternet.UI
             }
         }
 
-        internal Native.Calendar NativeControl => Handler.NativeControl;
+        internal new Native.Calendar NativeControl => Handler.NativeControl;
 
         internal DayOfWeek FirstDayOfWeekUseGlobalization =>
             System.Globalization.DateTimeFormatInfo.CurrentInfo.FirstDayOfWeek;

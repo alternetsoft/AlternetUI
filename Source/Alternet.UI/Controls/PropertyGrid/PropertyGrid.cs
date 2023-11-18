@@ -500,7 +500,7 @@ namespace Alternet.UI
             }
         }
 
-        internal Native.PropertyGrid NativeControl => Handler.NativeControl;
+        internal new Native.PropertyGrid NativeControl => Handler.NativeControl;
 
         /// <summary>
         /// Creates new <see cref="IPropertyGrid"/> instance.

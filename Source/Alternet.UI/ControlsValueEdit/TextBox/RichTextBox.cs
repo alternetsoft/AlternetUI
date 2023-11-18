@@ -225,7 +225,7 @@ namespace Alternet.UI
             }
         }
 
-        internal Native.RichTextBox NativeControl => Handler.NativeControl;
+        internal new Native.RichTextBox NativeControl => Handler.NativeControl;
 
         string? IReadOnlyStrings.this[int index]
         {
