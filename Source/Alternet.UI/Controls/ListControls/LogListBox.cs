@@ -93,6 +93,7 @@ namespace Alternet.UI
                 lastLogMessage = message;
                 LastItem = ConstructLogMessage(message);
                 SelectedIndex = Items.Count - 1;
+                EnsureVisible(SelectedIndex.Value);
             }
             else
                 Log(message);
@@ -120,6 +121,7 @@ namespace Alternet.UI
             lastLogMessage = message;
             Add(ConstructLogMessage(message));
             SelectedIndex = Items.Count - 1;
+            EnsureVisible(SelectedIndex.Value);
 
             Application.DoEvents();
         }
