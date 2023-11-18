@@ -1671,11 +1671,10 @@ namespace Alternet::UI
         switch (orientation)
         {
         case ScrollBarOrientation::Vertical:
+        default:
             return wxOrientation::wxVERTICAL;
         case ScrollBarOrientation::Horizontal:
             return wxOrientation::wxHORIZONTAL;
-        default:
-            throwExNoInfo;
         }
     }
 
@@ -1686,9 +1685,8 @@ namespace Alternet::UI
         case wxHORIZONTAL:
             return ScrollBarOrientation::Horizontal;
         case wxVERTICAL:
-            return ScrollBarOrientation::Vertical;
         default:
-            throwExNoInfo;
+            return ScrollBarOrientation::Vertical;
         }
     }
 
