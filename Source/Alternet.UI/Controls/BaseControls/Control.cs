@@ -2267,6 +2267,12 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets <see cref="Display"/> where this control is shown.
+        /// </summary>
+        /// <returns></returns>
+        public Display GetDisplay() => new(this);
+
+        /// <summary>
         /// This method calls SetSizer() and then updates the initial control size to the
         /// size needed to accommodate all sizer elements and sets the size hints which,
         /// if this control is a top level one, prevent the user from resizing it to be
@@ -2749,37 +2755,110 @@ namespace Alternet.UI
             Handler?.EndIgnoreRecreate();
         }
 
-        internal static int DrawingFromDip(double value, Control control)
+        /// <summary>
+        /// Converts device-independent units (1/96th inch per unit) to pixels.
+        /// </summary>
+        /// <param name="value">Value in device-independent units.</param>
+        /// <returns></returns>
+        public int PixelFromDip(double value)
         {
-            return Native.Control.DrawingFromDip(value, control.WxWidget);
+            return Native.Control.DrawingFromDip(value, this.WxWidget);
         }
 
-        internal static double DrawingDPIScaleFactor(Control control)
+        /// <summary>
+        /// Converts device-independent units (1/96th inch per unit) to pixels.
+        /// </summary>
+        /// <param name="value">Value in device-independent units.</param>
+        /// <returns></returns>
+        public Int32Size PixelFromDip(Size value)
         {
-            return Native.Control.DrawingDPIScaleFactor(control.WxWidget);
+            return new(PixelFromDip(value.Width), PixelFromDip(value.Height));
         }
 
-        internal static double DrawingToDip(int value, Control control)
+        /// <summary>
+        /// Converts device-independent units (1/96th inch per unit) to pixels.
+        /// </summary>
+        /// <param name="value">Value in device-independent units.</param>
+        /// <returns></returns>
+        public Int32Point PixelFromDip(Point value)
         {
-            return Native.Control.DrawingToDip(value, control.WxWidget);
+            return new(PixelFromDip(value.X), PixelFromDip(value.Y));
         }
 
-        internal static double DrawingFromDipF(double value, Control control)
+        /// <summary>
+        /// Converts device-independent units (1/96th inch per unit) to pixels.
+        /// </summary>
+        /// <param name="value">Value in device-independent units.</param>
+        /// <returns></returns>
+        public Int32Rect PixelFromDip(Rect value)
         {
-            return Native.Control.DrawingFromDipF(value, control.WxWidget);
+            return new(PixelFromDip(value.Location), PixelFromDip(value.Size));
+        }
+
+        /// <summary>
+        /// Gets scale factor used in device-independent units (1/96th inch per unit) to/from
+        /// pixels conversions.
+        /// </summary>
+        /// <returns></returns>
+        public double GetPixelScaleFactor()
+        {
+            return Native.Control.DrawingDPIScaleFactor(this.WxWidget);
+        }
+
+        /// <summary>
+        /// Converts <see cref="Int32Size"/> to device-independent units (1/96th inch per unit).
+        /// </summary>
+        /// <param name="value"><see cref="Int32Size"/> in pixels.</param>
+        /// <returns></returns>
+        public Size PixelToDip(Int32Size value)
+        {
+            return new(PixelToDip(value.Width), PixelToDip(value.Height));
+        }
+
+        /// <summary>
+        /// Converts <see cref="Int32Point"/> to device-independent units (1/96th inch per unit).
+        /// </summary>
+        /// <param name="value"><see cref="Int32Point"/> in pixels.</param>
+        /// <returns></returns>
+        public Point PixelToDip(Int32Point value)
+        {
+            return new(PixelToDip(value.X), PixelToDip(value.Y));
+        }
+
+        /// <summary>
+        /// Converts <see cref="Int32Rect"/> to device-independent units (1/96th inch per unit).
+        /// </summary>
+        /// <param name="value"><see cref="Int32Rect"/> in pixels.</param>
+        /// <returns></returns>
+        public Rect PixelToDip(Int32Rect value)
+        {
+            return new(PixelToDip(value.Location), PixelToDip(value.Size));
+        }
+
+        /// <summary>
+        /// Converts pixels to device-independent units (1/96th inch per unit).
+        /// </summary>
+        /// <param name="value">Value in pixels.</param>
+        /// <returns></returns>
+        public double PixelToDip(int value)
+        {
+            return Native.Control.DrawingToDip(value, this.WxWidget);
+        }
+
+        /// <summary>
+        /// Converts device-independent units (1/96th inch per unit) to pixels.
+        /// </summary>
+        /// <param name="value">Value in device-independent units.</param>
+        /// <returns></returns>
+        public double PixelFromDipF(double value)
+        {
+            return Native.Control.DrawingFromDipF(value, this.WxWidget);
         }
 
         internal static void NotifyCaptureLost()
         {
             Native.Control.NotifyCaptureLost();
         }
-
-        /*internal static void OnVisualStatePropertyChanged(
-            Control control,
-            DependencyPropertyChangedEventArgs e)
-        {
-            throw new NotImplementedException(); // yezo
-        }*/
 
         internal static Color GetClassDefaultAttributesBgColor(
             ControlId controlType,
