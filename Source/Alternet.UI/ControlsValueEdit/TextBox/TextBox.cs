@@ -413,7 +413,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override ControlId ControlKind => ControlId.TextBox;
+        public override ControlTypeId ControlKind => ControlTypeId.TextBox;
 
         /// <summary>
         /// Gets or sets a value indicating whether this is a multiline text

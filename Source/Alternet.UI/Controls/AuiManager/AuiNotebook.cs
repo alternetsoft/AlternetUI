@@ -170,7 +170,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override ControlId ControlKind => ControlId.AuiNotebook;
+        public override ControlTypeId ControlKind => ControlTypeId.AuiNotebook;
 
         internal new NativeAuiNotebookHandler Handler
         {

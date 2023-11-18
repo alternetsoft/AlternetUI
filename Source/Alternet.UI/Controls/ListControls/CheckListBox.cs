@@ -77,7 +77,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override ControlId ControlKind => ControlId.CheckListBox;
+        public override ControlTypeId ControlKind => ControlTypeId.CheckListBox;
 
         /// <summary>
         /// Gets the checked items of the <see cref="CheckListBox"/>.

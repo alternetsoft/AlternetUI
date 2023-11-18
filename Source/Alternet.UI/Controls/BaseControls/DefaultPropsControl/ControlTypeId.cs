@@ -5,7 +5,7 @@ namespace Alternet.UI
     /// <summary>
     /// Defines ids for all controls in the library.
     /// </summary>
-    public enum ControlId
+    public enum ControlTypeId
     {
 #pragma warning disable
         Control = 0,

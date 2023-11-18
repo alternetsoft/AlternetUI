@@ -16,7 +16,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override ControlId ControlKind => ControlId.MainMenu;
+        public override ControlTypeId ControlKind => ControlTypeId.MainMenu;
 
         /// <inheritdoc/>
         protected override ControlHandler CreateHandler()

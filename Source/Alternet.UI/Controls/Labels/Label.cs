@@ -75,7 +75,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override ControlId ControlKind => ControlId.Label;
+        public override ControlTypeId ControlKind => ControlTypeId.Label;
 
         /// <summary>
         /// Raises the <see cref="TextChanged"/> event and calls

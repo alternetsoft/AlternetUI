@@ -125,7 +125,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override ControlId ControlKind => ControlId.Toolbar;
+        public override ControlTypeId ControlKind => ControlTypeId.Toolbar;
 
         /// <summary>
         /// Gets or sets a value indicating whether to align the toolbar at

@@ -37,7 +37,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override ControlId ControlKind => ControlId.StackPanel;
+        public override ControlTypeId ControlKind => ControlTypeId.StackPanel;
 
         /// <summary>
         /// Called when the value of the <see cref="Orientation"/> property changes.

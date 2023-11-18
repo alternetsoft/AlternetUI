@@ -15,6 +15,16 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Occurs each time when new control is created.
+        /// </summary>
+        /// <remarks>
+        /// In the <see cref="InitDefaults"/> event handler you can implement custom control
+        /// initialization. Use <see cref="Control.GetDefaults"/> to get
+        /// defaults for the specific control on the current platform.
+        /// </remarks>
+        public event EventHandler? InitDefaults;
+
+        /// <summary>
         /// Returns minimal margin value.
         /// </summary>
         public Thickness? MinMargin

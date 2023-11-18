@@ -1394,7 +1394,7 @@ namespace Alternet.UI
         /// Returns control identifier.
         /// </summary>
         [Browsable(false)]
-        public virtual ControlId ControlKind => ControlId.Control;
+        public virtual ControlTypeId ControlKind => ControlTypeId.Control;
 
         /// <summary>
         /// Gets or sets whether <see cref="Idle"/> event is fired.
@@ -1619,7 +1619,7 @@ namespace Alternet.UI
         /// <param name="controlType">Type of the control.</param>
         /// <param name="renderSize">Render size. Ignored on most operating systems.</param>
         public static IReadOnlyFontAndColor GetStaticDefaultFontAndColor(
-            ControlId controlType,
+            ControlTypeId controlType,
             ControlRenderSizeVariant renderSize = ControlRenderSizeVariant.Normal)
         {
             return new FontAndColor.ControlStaticDefaultFontAndColor(controlType, renderSize);
@@ -1638,6 +1638,14 @@ namespace Alternet.UI
         /// Generates new group index.
         /// </summary>
         public static int NewGroupIndex() => groupIndexCounter++;
+
+        /// <summary>
+        /// Gets <see cref="ControlDefaults"/> fof the specified <see cref="ControlTypeId"/>.
+        /// </summary>
+        /// <param name="controlId"></param>
+        /// <returns></returns>
+        public static ControlDefaults GetDefaults(ControlTypeId controlId) =>
+            AllPlatformDefaults.PlatformCurrent.Controls[controlId];
 
         /// <summary>
         /// Gets known svg color depending on the value of
@@ -2863,7 +2871,7 @@ namespace Alternet.UI
         }
 
         internal static Color GetClassDefaultAttributesBgColor(
-            ControlId controlType,
+            ControlTypeId controlType,
             ControlRenderSizeVariant renderSize = ControlRenderSizeVariant.Normal)
         {
             return Native.Control.GetClassDefaultAttributesBgColor(
@@ -2872,7 +2880,7 @@ namespace Alternet.UI
         }
 
         internal static Color GetClassDefaultAttributesFgColor(
-            ControlId controlType,
+            ControlTypeId controlType,
             ControlRenderSizeVariant renderSize = ControlRenderSizeVariant.Normal)
         {
             return Native.Control.GetClassDefaultAttributesFgColor(
@@ -2881,7 +2889,7 @@ namespace Alternet.UI
         }
 
         internal static Font? GetClassDefaultAttributesFont(
-            ControlId controlType,
+            ControlTypeId controlType,
             ControlRenderSizeVariant renderSize = ControlRenderSizeVariant.Normal)
         {
             var font = Native.Control.GetClassDefaultAttributesFont(

@@ -45,7 +45,7 @@ namespace Alternet.UI
         public event EventHandler? ValueChanged;
 
         /// <inheritdoc/>
-        public override ControlId ControlKind => ControlId.DateTimePicker;
+        public override ControlTypeId ControlKind => ControlTypeId.DateTimePicker;
 
         /// <summary>
         /// Gets or sets the value assigned to the <see cref="DateTimePicker"/>

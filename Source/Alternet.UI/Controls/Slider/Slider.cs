@@ -128,7 +128,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override ControlId ControlKind => ControlId.Slider;
+        public override ControlTypeId ControlKind => ControlTypeId.Slider;
 
         /// <summary>
         /// Gets or sets a value indicating the horizontal or vertical orientation of the slider.

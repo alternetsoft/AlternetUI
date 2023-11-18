@@ -69,7 +69,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override ControlId ControlKind => ControlId.ListBox;
+        public override ControlTypeId ControlKind => ControlTypeId.ListBox;
 
         /// <summary>
         /// Gets a collection that contains the zero-based indexes of all

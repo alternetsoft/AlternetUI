@@ -10,6 +10,6 @@ namespace Alternet.UI
     public class Panel : Control
     {
         /// <inheritdoc/>
-        public override ControlId ControlKind => ControlId.Panel;
+        public override ControlTypeId ControlKind => ControlTypeId.Panel;
     }
 }

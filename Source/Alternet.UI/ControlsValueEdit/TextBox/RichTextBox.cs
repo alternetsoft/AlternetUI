@@ -213,7 +213,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override ControlId ControlKind => ControlId.RichTextBox;
+        public override ControlTypeId ControlKind => ControlTypeId.RichTextBox;
 
         [Browsable(false)]
         internal new NativeRichTextBoxHandler Handler

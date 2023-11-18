@@ -47,7 +47,7 @@ namespace Alternet.UI
         public override string? ToolTip { get => base.ToolTip; set => base.ToolTip = value; }
 
         /// <inheritdoc/>
-        public override ControlId ControlKind => ControlId.ContextMenu;
+        public override ControlTypeId ControlKind => ControlTypeId.ContextMenu;
 
         /// <summary>
         /// Displays the shortcut menu at the specified position.

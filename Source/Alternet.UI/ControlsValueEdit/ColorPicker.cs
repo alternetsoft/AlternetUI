@@ -35,7 +35,7 @@ namespace Alternet.UI
         public event EventHandler? ValueChanged;
 
         /// <inheritdoc/>
-        public override ControlId ControlKind => ControlId.ColorPicker;
+        public override ControlTypeId ControlKind => ControlTypeId.ColorPicker;
 
         /// <summary>
         /// Gets or sets the value assigned to the color picker as a selected color.

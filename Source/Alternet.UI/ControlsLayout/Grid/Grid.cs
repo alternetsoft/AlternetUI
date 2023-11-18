@@ -68,7 +68,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override ControlId ControlKind => ControlId.Grid;
+        public override ControlTypeId ControlKind => ControlTypeId.Grid;
 
         /// <summary>
         /// Gets a <see cref="RowDefinitionCollection"/> defined on this instance of <see cref="Grid"/>.

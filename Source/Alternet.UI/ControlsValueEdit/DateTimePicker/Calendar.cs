@@ -301,7 +301,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override ControlId ControlKind => ControlId.Calendar;
+        public override ControlTypeId ControlKind => ControlTypeId.Calendar;
 
         /// <summary>
         /// Gets or sets the foreground color currently used for holiday highlighting.

@@ -134,7 +134,7 @@ namespace Alternet.UI
         public event EventHandler? RoleChanged;
 
         /// <inheritdoc/>
-        public override ControlId ControlKind => ControlId.MenuItem;
+        public override ControlTypeId ControlKind => ControlTypeId.MenuItem;
 
         /// <summary>
         /// Gets or sets <see cref="Action"/> which will be executed when

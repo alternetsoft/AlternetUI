@@ -50,7 +50,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override ControlId ControlKind => ControlId.TabControl;
+        public override ControlTypeId ControlKind => ControlTypeId.TabControl;
 
         /// <summary>
         /// Gets the collection of tab pages in this tab control.

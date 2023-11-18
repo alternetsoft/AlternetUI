@@ -125,7 +125,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override ControlId ControlKind => ControlId.ListView;
+        public override ControlTypeId ControlKind => ControlTypeId.ListView;
 
         /// <summary>
         /// Gets a <see cref="ListViewHandler"/> associated with this class.

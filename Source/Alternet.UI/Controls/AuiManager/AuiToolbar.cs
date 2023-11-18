@@ -264,7 +264,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override ControlId ControlKind => ControlId.AuiToolbar;
+        public override ControlTypeId ControlKind => ControlTypeId.AuiToolbar;
 
         internal new NativeAuiToolbarHandler Handler
         {

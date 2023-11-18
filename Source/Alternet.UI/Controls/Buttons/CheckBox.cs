@@ -200,7 +200,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override ControlId ControlKind => ControlId.CheckBox;
+        public override ControlTypeId ControlKind => ControlTypeId.CheckBox;
 
         /// <summary>
         /// Gets a <see cref="ControlHandler"/> associated with this class.

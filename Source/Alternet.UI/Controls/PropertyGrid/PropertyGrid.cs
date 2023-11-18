@@ -482,7 +482,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override ControlId ControlKind => ControlId.PropertyGrid;
+        public override ControlTypeId ControlKind => ControlTypeId.PropertyGrid;
 
         /// <summary>
         /// Defines default extended style for the newly created

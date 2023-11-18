@@ -29,7 +29,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override ControlId ControlKind => ControlId.UserPaintControl;
+        public override ControlTypeId ControlKind => ControlTypeId.UserPaintControl;
 
         /// <summary>
         /// Gets or sets whether to draw debug related points for the owner draw controls.

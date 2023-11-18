@@ -63,7 +63,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override ControlId ControlKind => ControlId.Button;
+        public override ControlTypeId ControlKind => ControlTypeId.Button;
 
         /// <summary>
         /// Gets or sets a value indicating whether the control has a border.

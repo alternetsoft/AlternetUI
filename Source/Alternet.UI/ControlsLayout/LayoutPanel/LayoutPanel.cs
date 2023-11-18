@@ -22,7 +22,7 @@ namespace Alternet.UI
         private LayoutPanelKind layout;
 
         /// <inheritdoc/>
-        public override ControlId ControlKind => ControlId.LayoutPanel;
+        public override ControlTypeId ControlKind => ControlTypeId.LayoutPanel;
 
         /// <summary>
         /// Gets or sets layout style of the child controls.

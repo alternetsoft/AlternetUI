@@ -25,7 +25,7 @@ namespace Alternet.UI
     public class AnimationPlayer : Control
     {
         /// <inheritdoc/>
-        public override ControlId ControlKind => ControlId.AnimationPlayer;
+        public override ControlTypeId ControlKind => ControlTypeId.AnimationPlayer;
 
         /// <summary>
         /// Gets or sets a value indicating whether to use generic calendar or native calendar.

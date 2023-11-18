@@ -38,7 +38,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override ControlId ControlKind => ControlId.Menu;
+        public override ControlTypeId ControlKind => ControlTypeId.Menu;
 
         /// <inheritdoc/>
         public override IReadOnlyList<FrameworkElement> ContentElements

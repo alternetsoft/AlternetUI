@@ -80,7 +80,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override ControlId ControlKind => ControlId.PictureBox;
+        public override ControlTypeId ControlKind => ControlTypeId.PictureBox;
 
         internal DrawImagePrimitive Primitive => primitive;
 

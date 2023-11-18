@@ -695,7 +695,7 @@ namespace Alternet.UI
         public Collection<InputBinding> InputBindings { get; } = new();
 
         /// <inheritdoc/>
-        public override ControlId ControlKind => ControlId.Window;
+        public override ControlTypeId ControlKind => ControlTypeId.Window;
 
         /// <summary>
         /// Gets a <see cref="NativeWindowHandler"/> associated with this class.

@@ -83,7 +83,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override ControlId ControlKind => ControlId.NumericUpDown;
+        public override ControlTypeId ControlKind => ControlTypeId.NumericUpDown;
 
         /// <summary>
         /// Gets or sets the minimum allowed value for the numeric up-down control.

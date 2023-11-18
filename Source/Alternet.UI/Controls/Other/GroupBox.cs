@@ -58,7 +58,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override ControlId ControlKind => ControlId.GroupBox;
+        public override ControlTypeId ControlKind => ControlTypeId.GroupBox;
 
         /// <summary>
         /// Called when the value of the <see cref="Title"/> property changes.

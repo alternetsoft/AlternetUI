@@ -86,7 +86,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override ControlId ControlKind => ControlId.SplitterPanel;
+        public override ControlTypeId ControlKind => ControlTypeId.SplitterPanel;
 
         /// <summary>
         /// Gets or sets whether splitter sash can be dragged by mouse.

@@ -173,11 +173,11 @@ namespace Alternet.UI
                 case ResetColorType.DefaultAttributes:
                     return control?.GetDefaultFontAndColor() ?? Null;
                 case ResetColorType.DefaultAttributesTextBox:
-                    return Control.GetStaticDefaultFontAndColor(ControlId.TextBox, renderSize);
+                    return Control.GetStaticDefaultFontAndColor(ControlTypeId.TextBox, renderSize);
                 case ResetColorType.DefaultAttributesListBox:
-                    return Control.GetStaticDefaultFontAndColor(ControlId.ListBox, renderSize);
+                    return Control.GetStaticDefaultFontAndColor(ControlTypeId.ListBox, renderSize);
                 case ResetColorType.DefaultAttributesButton:
-                    return Control.GetStaticDefaultFontAndColor(ControlId.Button, renderSize);
+                    return Control.GetStaticDefaultFontAndColor(ControlTypeId.Button, renderSize);
                 case ResetColorType.ColorMenu:
                     return SystemColorMenu;
                 case ResetColorType.ColorActiveCaption:
@@ -199,11 +199,11 @@ namespace Alternet.UI
 
         internal class ControlStaticDefaultFontAndColor : IReadOnlyFontAndColor
         {
-            private readonly ControlId controlType;
+            private readonly ControlTypeId controlType;
             private readonly ControlRenderSizeVariant renderSize;
 
             public ControlStaticDefaultFontAndColor(
-                ControlId controlType,
+                ControlTypeId controlType,
                 ControlRenderSizeVariant renderSize = ControlRenderSizeVariant.Normal)
             {
                 this.controlType = controlType;

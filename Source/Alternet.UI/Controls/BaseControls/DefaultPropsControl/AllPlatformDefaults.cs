@@ -77,7 +77,7 @@ namespace Alternet.UI
         /// is returned.</param>
         /// <param name="prop">Property identifier.</param>
         /// <returns></returns>
-        public static object? GetPropValue(ControlId control, ControlDefaultsId prop)
+        public static object? GetPropValue(ControlTypeId control, ControlDefaultsId prop)
         {
             object? result = GetPropValue(PlatformCurrent, control, prop);
             result ??= GetPropValue(PlatformAny, control, prop);
@@ -86,7 +86,7 @@ namespace Alternet.UI
 
         internal static object? GetPropValue(
             PlatformDefaults platform,
-            ControlId control,
+            ControlTypeId control,
             ControlDefaultsId prop)
         {
             object? result = platform.Controls.GetPropValue(control, prop);
@@ -94,7 +94,7 @@ namespace Alternet.UI
         }
 
         internal static Thickness GetAsThickness(
-            ControlId control,
+            ControlTypeId control,
             ControlDefaultsId prop)
         {
             Thickness? result =

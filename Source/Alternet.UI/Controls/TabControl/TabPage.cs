@@ -42,7 +42,7 @@ namespace Alternet.UI
         public event EventHandler? TitleChanged;
 
         /// <inheritdoc/>
-        public override ControlId ControlKind => ControlId.TabPage;
+        public override ControlTypeId ControlKind => ControlTypeId.TabPage;
 
         /// <summary>
         /// Gets or sets the text to display on the tab.

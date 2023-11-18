@@ -112,7 +112,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override ControlId ControlKind => ControlId.LinkLabel;
+        public override ControlTypeId ControlKind => ControlTypeId.LinkLabel;
 
         /// <summary>
         /// Gets or sets the URL associated with the hyperlink.

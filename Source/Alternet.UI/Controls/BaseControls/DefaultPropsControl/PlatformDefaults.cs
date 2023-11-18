@@ -59,5 +59,12 @@ namespace Alternet.UI
         /// Returns default property values for all controls in the library.
         /// </summary>
         public AllControlDefaults Controls { get; } = new();
+
+        /// <summary>
+        /// Gets <see cref="ControlDefaults"/> for the specified <paramref name="controlId"/>.
+        /// </summary>
+        /// <param name="controlId">Control identifier.</param>
+        /// <returns></returns>
+        public ControlDefaults GetDefaults(ControlTypeId controlId) => Controls[controlId];
     }
 }

@@ -110,7 +110,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override ControlId ControlKind => ControlId.ToolbarItem;
+        public override ControlTypeId ControlKind => ControlTypeId.ToolbarItem;
 
         /// <inheritdoc/>
         public override IReadOnlyList<FrameworkElement> ContentElements
