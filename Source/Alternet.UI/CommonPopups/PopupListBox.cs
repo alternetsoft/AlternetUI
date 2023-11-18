@@ -42,6 +42,24 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets selected item when popup window is closed.
+        /// </summary>
+        /// <remarks>
+        /// Use this property instead of <see cref="ListBox.SelectedItem"/> after popup is closed.
+        /// In cases when <see cref="PopupResult"/> is <see cref="ModalResult.Accepted"/>
+        /// it contains selected item.
+        /// </remarks>
+        public object? ResultItem
+        {
+            get
+            {
+                if (ResultIndex is null || ResultIndex >= MainControl.Count)
+                    return null;
+                return MainControl[ResultIndex.Value];
+            }
+        }
+
+        /// <summary>
         /// Gets index of the selected item when popup window is closed.
         /// </summary>
         /// <remarks>
