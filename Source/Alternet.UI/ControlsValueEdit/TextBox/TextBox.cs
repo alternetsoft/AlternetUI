@@ -17,7 +17,7 @@ namespace Alternet.UI
     [DefaultEvent("TextChanged")]
     [DefaultBindingProperty("Text")]
     [ControlCategory("Common")]
-    public class TextBox : CustomTextEdit, IValidatorReporter, IReadOnlyStrings
+    public class TextBox : CustomTextEdit, IValidatorReporter
     {
         /// <summary>
         /// Identifies the <see cref="Text"/> dependency property.
@@ -55,7 +55,6 @@ namespace Alternet.UI
         private int maxLength;
         private int minLength;
         private TextBoxOptions options = TextBoxOptions.IntRangeInError;
-        private StringSearch? search;
 
         static TextBox()
         {
@@ -147,60 +146,6 @@ namespace Alternet.UI
         public event EventHandler? HasBorderChanged;
 
         /// <summary>
-        /// Gets or sets a text string that can be used as a default validator error message.
-        /// </summary>
-        /// <remarks>
-        /// This property can be used when <see cref="ValidatorErrorText"/> is <c>null</c>.
-        /// </remarks>
-        public static string? DefaultValidatorErrorText { get; set; }
-
-        /// <summary>
-        /// Gets or sets default <see cref="Color"/> that can be used
-        /// as a background color for the <see cref="TextBox"/> in cases when
-        /// application needs to report user an error in <see cref="Text"/> property.
-        /// </summary>
-        public static Color DefaultErrorBackgroundColor { get; set; } = Color.Red;
-
-        /// <summary>
-        /// Gets or sets default <see cref="Color"/> that can be used
-        /// as a foreground color for the <see cref="TextBox"/> in cases when
-        /// application needs to report user an error in <see cref="Text"/> property.
-        /// </summary>
-        public static Color DefaultErrorForegroundColor { get; set; } = Color.White;
-
-        /// <summary>
-        /// Gets or sets whether to use <see cref="DefaultErrorForegroundColor"/>
-        /// when application needs to report user an error.
-        /// </summary>
-        /// <remarks>
-        /// Default value is <c>true</c> on Windows and <c>false</c> on other platforms.
-        /// Do not set <c>true</c> on MacOs as it is not supported.
-        /// </remarks>
-        public static bool DefaultErrorUseForegroundColor { get; set; }
-
-        /// <summary>
-        /// Gets or sets whether to use <see cref="DefaultErrorBackgroundColor"/>
-        /// when application needs to report user an error.
-        /// </summary>
-        /// <remarks>
-        /// Default value is <c>true</c> on Windows and <c>false</c> on other platforms.
-        /// Do not set <c>true</c> on MacOs as it is not supported.
-        /// </remarks>
-        public static bool DefaultErrorUseBackgroundColor { get; set; }
-
-        /// <summary>
-        /// Gets or sets default value for the <see cref="TextBox.ResetErrorBackgroundMethod"/>
-        /// property.
-        /// </summary>
-        public static ResetColorType DefaultResetErrorBackgroundMethod { get; set; } = ResetColorType.Auto;
-
-        /// <summary>
-        /// Gets or sets default value for the <see cref="TextBox.ResetErrorForegroundMethod"/>
-        /// property.
-        /// </summary>
-        public static ResetColorType DefaultResetErrorForegroundMethod { get; set; } = ResetColorType.Auto;
-
-        /// <summary>
         /// Gets or sets default value of the <see cref="AutoUrlOpen"/> property.
         /// </summary>
         public static bool DefaultAutoUrlOpen { get; set; } = false;
@@ -213,33 +158,6 @@ namespace Alternet.UI
         /// <see cref="PlatformDefaults.TextBoxUrlClickModifiers"/> is used as property default.
         /// </remarks>
         public static ModifierKeys? DefaultAutoUrlModifiers { get; set; }
-
-        /// <summary>
-        /// Gets or sets string search provider.
-        /// </summary>
-        public virtual StringSearch Search
-        {
-            get => search ??= new(this);
-
-            set
-            {
-                if (value is null)
-                    return;
-                search = value;
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets method which is used to clear error state
-        /// if error backround color is used for reporting it.
-        /// </summary>
-        public ResetColorType? ResetErrorBackgroundMethod { get; set; }
-
-        /// <summary>
-        /// Gets or sets method which is used to clear error state
-        /// if error foreground color is used for reporting it.
-        /// </summary>
-        public ResetColorType? ResetErrorForegroundMethod { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether urls in the input text
@@ -255,118 +173,6 @@ namespace Alternet.UI
         /// in the browser when <see cref="AutoUrlOpen"/> is <c>true</c>.
         /// </summary>
         public virtual ModifierKeys? AutoUrlModifiers { get; set; }
-
-        /// <summary>
-        /// Gets or sets a bitwise combination of <see cref="NumberStyles"/> values that indicates
-        /// the permitted format of <see cref="Text"/>.
-        /// </summary>
-        /// <remarks>
-        /// Default value is <c>null</c>. <see cref="TextBox"/> behavior is not affected
-        /// by this property, you can use it if <see cref="TextBox"/> edits a number value or
-        /// for any other purposes.
-        /// </remarks>
-        [Browsable(false)]
-        public virtual NumberStyles? NumberStyles { get; set; }
-
-        /// <summary>
-        /// Gets or sets an object that supplies culture-specific formatting information
-        /// about <see cref="Text"/> property.
-        /// </summary>
-        /// <remarks>
-        /// Default value is <c>null</c>. <see cref="TextBox"/> behavior is not affected
-        /// by this property, you can use it for any purposes.
-        /// </remarks>
-        [Browsable(false)]
-        public virtual IFormatProvider? FormatProvider { get; set; }
-
-        /// <summary>
-        /// Gets or sets default format used in value to string convertion.
-        /// </summary>
-        public virtual string? DefaultFormat { get; set; }
-
-        /// <summary>
-        /// Gets or sets <see cref="IObjectToString"/> provider which is used in
-        /// value to string convertion.
-        /// </summary>
-        [Browsable(false)]
-        public virtual IObjectToString? Converter { get; set; }
-
-        /// <summary>
-        /// Gets or sets default value for the <see cref="Text"/> property.
-        /// </summary>
-        public virtual string? DefaultText { get; set; }
-
-        /// <summary>
-        /// Gets or sets <see cref="Type"/> of the <see cref="Text"/> property.
-        /// </summary>
-        /// <remarks>
-        /// Default value is <c>null</c>. <see cref="TextBox"/> behavior is not affected
-        /// by this property, you can use it for any purposes.
-        /// </remarks>
-        [Browsable(false)]
-        public virtual Type? DataType { get; set; }
-
-        /// <summary>
-        /// Gets or sets validator reporter object or control.
-        /// </summary>
-        /// <remarks>
-        /// This propety can be used to store reference to control that
-        /// reports validation or other errors to the end users. Usually
-        /// this is a <see cref="PictureBox"/> with error image.
-        /// </remarks>
-        [Browsable(false)]
-        public virtual object? ValidatorReporter { get; set; }
-
-        /// <summary>
-        /// Gets or sets a text string that can be used as validator error message.
-        /// </summary>
-        /// <remarks>
-        /// Default value is <c>null</c>. <see cref="TextBox"/> behavior is not affected
-        /// by this property, you can use it for any purposes.
-        /// </remarks>
-        public virtual string? ValidatorErrorText { get; set; }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether empty string is allowed in <see cref="Text"/>.
-        /// </summary>
-        /// <remarks>
-        /// Default value is <c>true</c>. <see cref="TextBox"/> behavior is not affected
-        /// by this property, you can use it for any purposes.
-        /// </remarks>
-        [Browsable(false)]
-        public virtual bool AllowEmptyText { get; set; } = true;
-
-        /// <summary>
-        /// Gets or sets a value indicating whether <see cref="Text"/> is required to be not empty.
-        /// This is an opposite of <see cref="AllowEmptyText"/> property.
-        /// </summary>
-        /// <remarks>
-        /// Default value is <c>false</c>. <see cref="TextBox"/> behavior is not affected
-        /// by this property, you can use it for any purposes.
-        /// </remarks>
-        [Browsable(false)]
-        public bool IsRequired
-        {
-            get
-            {
-                return !AllowEmptyText;
-            }
-
-            set
-            {
-                AllowEmptyText = !value;
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets data value in cases when <see cref="Text"/> property is empty.
-        /// </summary>
-        /// <remarks>
-        /// Default value is <c>null</c>. <see cref="TextBox"/> behavior is not affected
-        /// by this property, you can use it for any purposes.
-        /// </remarks>
-        [Browsable(false)]
-        public virtual object? EmptyTextValue { get; set; }
 
         /// <summary>
         /// Gets or sets <see cref="IValueValidator"/> for the <see cref="TextBox"/> control.
@@ -588,7 +394,7 @@ namespace Alternet.UI
         /// the user must enter into the control.
         /// </summary>
         /// <remarks>
-        /// Currently this property doesn't affect <see cref="TextBox"/> behavior.
+        /// Currently this property doesn't affect control's behavior.
         /// You can implement your own validation rules using <see cref="TextChanged"/> event.
         /// </remarks>
         public virtual int MinLength
@@ -759,8 +565,6 @@ namespace Alternet.UI
                 return Handler.CanCut;
             }
         }
-
-        int IReadOnlyStrings.Count => GetNumberOfLines();
 
         /// <summary>
         /// Gets a value indicating whether the current selection can be replaced with
@@ -1091,21 +895,6 @@ namespace Alternet.UI
         internal new NativeTextBoxHandler Handler =>
             (NativeTextBoxHandler)base.Handler;
 
-        string? IReadOnlyStrings.this[int index]
-        {
-            get
-            {
-                try
-                {
-                    return GetLineText(index);
-                }
-                catch
-                {
-                    return string.Empty;
-                }
-            }
-        }
-
         /// <summary>
         /// Creates new custom text style.
         /// </summary>
@@ -1175,7 +964,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets "real" minimal value taking into account <see cref="DataType"/>
+        /// Gets "real" minimal value taking into account <see cref="CustomTextEdit.DataType"/>
         /// and <see cref="MinValue"/>.
         /// </summary>
         public virtual object? GetRealMinValue()
@@ -1186,7 +975,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets "real" maxmimal value taking into account <see cref="DataType"/>
+        /// Gets "real" maxmimal value taking into account <see cref="CustomTextEdit.DataType"/>
         /// and <see cref="MinValue"/>.
         /// </summary>
         public virtual object? GetRealMaxValue()
@@ -1329,10 +1118,10 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Sets <see cref="DataType"/> property to <typeparamref name="T"/>
+        /// Sets <see cref="CustomTextEdit.DataType"/> property to <typeparamref name="T"/>
         /// and <see cref="Validator"/> to the appropriate validator provider.
         /// </summary>
-        /// <typeparam name="T">New <see cref="DataType"/> property value.</typeparam>
+        /// <typeparam name="T">New <see cref="CustomTextEdit.DataType"/> property value.</typeparam>
         public virtual void UseValidator<T>()
         {
             DataType = typeof(T);
@@ -1341,7 +1130,7 @@ namespace Alternet.UI
 
         /// <summary>
         /// Reports an error if <see cref="Text"/> property is empty
-        /// and it is not allowed (<see cref="AllowEmptyText"/> is <c>false</c>).
+        /// and it is not allowed (<see cref="CustomTextEdit.AllowEmptyText"/> is <c>false</c>).
         /// </summary>
         public virtual bool ReportErrorEmptyText()
         {
@@ -1369,7 +1158,7 @@ namespace Alternet.UI
         /// validation is ok and error was not reported.</returns>
         /// <remarks>
         /// <see cref="ReportValidatorError"/> is used to report the error. If
-        /// <see cref="DataType"/> is assigned, it is also used to get possible min and max
+        /// <see cref="CustomTextEdit.DataType"/> is assigned, it is also used to get possible min and max
         /// values.
         /// </remarks>
         public virtual bool ReportErrorMinMaxValue(object? value)
@@ -1398,7 +1187,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Reports an error if <see cref="DataType"/> is a number type and
+        /// Reports an error if <see cref="CustomTextEdit.DataType"/> is a number type and
         /// <see cref="TextAsNumber"/> is <c>null</c>.
         /// </summary>
         /// <returns><c>true</c> if validation error was reported; <c>false</c> if
@@ -1545,13 +1334,8 @@ namespace Alternet.UI
             return Handler.GetLineLength(lineNo);
         }
 
-        /// <summary>
-        /// Returns the contents of a given line in the text control, not
-        /// including any trailing newline character(s).
-        /// </summary>
-        /// <param name="lineNo">Line number (starting from zero).</param>
-        /// <returns>The contents of the line.</returns>
-        public virtual string GetLineText(long lineNo)
+        /// <inheritdoc/>
+        public override string GetLineText(long lineNo)
         {
             return Handler.GetLineText(lineNo);
         }
@@ -1604,7 +1388,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Returns <see cref="TypeCode"/> for the <see cref="DataType"/> property
+        /// Returns <see cref="TypeCode"/> for the <see cref="CustomTextEdit.DataType"/> property
         /// or <see cref="TypeCode.String"/>.
         /// </summary>
         /// <returns></returns>
@@ -1617,13 +1401,13 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Returns <c>true</c> if <see cref="DataType"/> is a number type.
+        /// Returns <c>true</c> if <see cref="CustomTextEdit.DataType"/> is a number type.
         /// </summary>
         /// <returns></returns>
         public virtual bool DataTypeIsNumber() => AssemblyUtils.IsTypeCodeNumber(GetDataTypeCode());
 
         /// <summary>
-        /// Returns minimal and maximal possible values for the <see cref="DataType"/>
+        /// Returns minimal and maximal possible values for the <see cref="CustomTextEdit.DataType"/>
         /// as a range string and formats it using <paramref name="format"/>.
         /// </summary>
         /// <param name="format">Range string format. Example: "Range is [{0}]."</param>
@@ -1636,23 +1420,8 @@ namespace Alternet.UI
             return s;
         }
 
-        /// <summary>
-        /// Returns the number of lines in the text control buffer.
-        /// </summary>
-        /// <returns></returns>
-        /// <remarks>
-        /// The returned number is the number of logical lines, i.e. just the count of
-        /// the number of newline characters in the control + 1, for GTK
-        /// and OSX/Cocoa ports while it is the number of physical lines,
-        /// i.e. the count of
-        /// lines actually shown in the control, in MSW and OSX/Carbon. Because of
-        /// this discrepancy, it is not recommended to use this function.
-        /// </remarks>
-        /// <remarks>
-        /// Note that even empty text controls have one line (where the
-        /// insertion point is), so this function never returns 0.
-        /// </remarks>
-        public virtual int GetNumberOfLines()
+        /// <inheritdoc/>
+        public override int GetNumberOfLines()
         {
             return Handler.GetNumberOfLines();
         }
@@ -1843,12 +1612,12 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="value">Value.</param>
         /// <remarks>
-        /// This method uses <see cref="Converter"/>, <see cref="DefaultFormat"/> and
-        /// <see cref="FormatProvider"/> propertties. Depending
+        /// This method uses <see cref="CustomTextEdit.Converter"/>, <see cref="CustomTextEdit.DefaultFormat"/> and
+        /// <see cref="CustomTextEdit.FormatProvider"/> propertties. Depending
         /// on the values of these properties, different conversion methods are used.
         /// </remarks>
         /// <remarks>
-        /// If <see cref="DataType"/> property is <c>null</c>, it is set to
+        /// If <see cref="CustomTextEdit.DataType"/> property is <c>null</c>, it is set to
         /// the type of <paramref name="value"/>.
         /// </remarks>
         public virtual void SetTextAsObject(object? value)
@@ -2326,12 +2095,12 @@ namespace Alternet.UI
         /// <param name="showError">Indicates whether to show/hide error.</param>
         /// <param name="errorText">Specifies error text.</param>
         /// <remarks>
-        /// Uses <see cref="DefaultErrorBackgroundColor"/>, <see cref="DefaultErrorForegroundColor"/>,
-        /// <see cref="ValidatorErrorText"/>, <see cref="DefaultValidatorErrorText"/> and
-        /// <see cref="ValidatorReporter"/> properties.
+        /// Uses <see cref="CustomTextEdit.DefaultErrorBackgroundColor"/>, <see cref="CustomTextEdit.DefaultErrorForegroundColor"/>,
+        /// <see cref="CustomTextEdit.ValidatorErrorText"/>, <see cref="CustomTextEdit.DefaultValidatorErrorText"/> and
+        /// <see cref="CustomTextEdit.ValidatorReporter"/> properties.
         /// </remarks>
         /// <remarks>
-        /// <see cref="ValidatorReporter"/> property must support <see cref="IValidatorReporter"/>
+        /// <see cref="CustomTextEdit.ValidatorReporter"/> property must support <see cref="IValidatorReporter"/>
         /// interface in order to be used in this method. <see cref="PictureBox"/> supports
         /// this interface.
         /// </remarks>
@@ -2414,7 +2183,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Sets <see cref="ValidatorErrorText"/> property to <paramref name="knownError"/>.
+        /// Sets <see cref="CustomTextEdit.ValidatorErrorText"/> property to <paramref name="knownError"/>.
         /// </summary>
         /// <param name="knownError">Known error identifier.</param>
         public virtual void SetErrorText(ValueValidatorKnownError knownError)

@@ -12,7 +12,7 @@ namespace Alternet.UI
     /// </summary>
     public class StringSearch
     {
-        private IReadOnlyStrings strings;
+        private readonly IReadOnlyStrings strings;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="StringSearch"/> class.
