@@ -174,6 +174,22 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Adds <paramref name="text"/> with <paramref name="data"/> to the end of
+        /// the <see cref="Items"/> collection.
+        /// </summary>
+        /// <param name="text">Item text (title).</param>
+        /// <param name="data">Item data.</param>
+        /// <remarks>
+        /// This method creates <see cref="ListControlItem"/>, assigns its properties with
+        /// <paramref name="text"/> and <paramref name="data"/>. Created object is added to
+        /// the <see cref="Items"/> collection.
+        /// </remarks>
+        public virtual int Add(string text, object? data)
+        {
+            return Add(new ListControlItem(text, data));
+        }
+
+        /// <summary>
         /// Selects last item in the control.
         /// </summary>
         public virtual void SelectLastItem()
