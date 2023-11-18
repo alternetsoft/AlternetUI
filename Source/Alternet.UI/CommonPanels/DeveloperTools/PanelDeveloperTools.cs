@@ -38,12 +38,14 @@ namespace Alternet.UI
             RightNotebook.ChangeSelection(0);
             InitActions();
             DebugUtils.HookExceptionEvents();
-            ControlsListBox.SelectionChanged += ControlsListBox_SelectionChanged; ;
+            ControlsListBox.SelectionChanged += ControlsListBox_SelectionChanged;
             CenterNotebook.ChangeSelection(0);
             PropGrid.SuggestedInitDefaults();
         }
 
         internal IAuiNotebookPage? MainLogPage => mainLogPage;
+
+        internal IAuiNotebookPage? ControlsPage => controlsPage;
 
         /// <summary>
         /// Gets control on the bottom pane which can be used for logging.
