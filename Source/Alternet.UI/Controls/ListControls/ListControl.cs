@@ -342,7 +342,5 @@ namespace Alternet.UI
         {
             SelectedItem = null;
         }
-
-        private int GetItemCount() => Items.Count;
     }
 }
