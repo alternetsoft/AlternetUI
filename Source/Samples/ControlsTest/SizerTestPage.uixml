@@ -1,5 +1,0 @@
-﻿<Control x:Class="ControlsTest.SizerTestPage"
-        xmlns="http://schemas.alternetsoft.com/ui/2021"
-        xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
-        xmlns:local="clr-namespace:ControlsTest;assembly=ControlsTest" Name="mainControl">
-</Control>

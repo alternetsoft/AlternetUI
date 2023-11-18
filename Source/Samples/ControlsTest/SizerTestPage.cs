@@ -10,7 +10,7 @@ using Alternet.UI;
 
 namespace ControlsTest
 {
-    internal partial class SizerTestPage : Control
+    internal partial class SizerTestPage : PanelAuiManager
     {
         private readonly LayoutPanel panel = new();
         private readonly Button button1 = new("Button 1");
@@ -24,8 +24,6 @@ namespace ControlsTest
 
         public SizerTestPage()
         {
-            InitializeComponent();
-
             Size size = new(100, 100);
 
             button1.Size = size;
@@ -39,7 +37,7 @@ namespace ControlsTest
             button2.Parent = panel;
             button3.Parent = panel;
 
-            panel.Parent = mainControl;
+            panel.Parent = this;
 
             panel.PerformLayout();
 
@@ -59,23 +57,19 @@ namespace ControlsTest
                 oldSizer = sizer;
             }
 
-            MainTestWindow? mainWindow = Application.FirstWindow<MainTestWindow>();
-            if (mainWindow is null)
-                return;
-
-            mainWindow.MainPanel.AddAction("BoxSizer(Vertical)", () =>
+            AddAction("BoxSizer(Vertical)", () =>
             {
                 var sizer = SizerFactory.Default.CreateBoxSizer(true);
                 ApplySizer(sizer);
             });
 
-            mainWindow.MainPanel.AddAction("BoxSizer(Horizontal)", () =>
+            AddAction("BoxSizer(Horizontal)", () =>
             {
                 var sizer = SizerFactory.Default.CreateBoxSizer(false);
                 ApplySizer(sizer);
             });
 
-            mainWindow.MainPanel.AddAction("GridSizer(2, 10, 10)", () =>
+            AddAction("GridSizer(2, 10, 10)", () =>
             {
                 var sizer = SizerFactory.Default.CreateGridSizer(2, 10, 10);
                 ApplySizer(sizer);
@@ -93,7 +87,7 @@ namespace ControlsTest
                 ApplySizer(sizer);
             });
 */
-            mainWindow.MainPanel.AddAction("FlexGridSizer(2,10,10)", () =>
+            AddAction("FlexGridSizer(2,10,10)", () =>
             {
                 var sizer = SizerFactory.Default.CreateFlexGridSizer(2, 10, 10);
                 ApplySizer(sizer);

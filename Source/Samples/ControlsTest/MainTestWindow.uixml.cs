@@ -19,7 +19,6 @@ namespace ControlsTest
         public MainTestWindow()
         {
             mainPanel = new(InitPanel);
-            mainPanel.ActionsControl.Required();
 
             if (disableResize)
             {
@@ -65,14 +64,6 @@ namespace ControlsTest
                 return -1;
             }
 
-            if (AddLinkLabelPage)
-            {
-                mainPanel.AddAction("Create LinkLabels", () =>
-                {
-                    mainPanel.Add("PanelLinkLabels Test", new PanelLinkLabelsPage());
-                });
-            }
-
             mainPanel.Add("Sizer Test", new SizerTestPage());
             mainPanel.Add("Custom Draw Test", new CustomDrawTestPage());
             int webBrowserPageIndex = CreateWebBrowserPages();
@@ -91,8 +82,6 @@ namespace ControlsTest
             Name = "MainTestWindow";
             mainPanel.CardPanel.Name = "cardPanel";
         }
-
-        internal static bool AddLinkLabelPage { get; set; } = false;
 
         internal PanelTreeAndCards MainPanel => mainPanel;
 
