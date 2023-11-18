@@ -1,0 +1,6 @@
+
+Use command:
+
+sudo adduser $USER vboxsf
+
+after that log out
