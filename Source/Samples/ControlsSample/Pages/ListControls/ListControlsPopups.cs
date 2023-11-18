@@ -9,7 +9,8 @@ namespace ControlsSample
 {
     internal class ListControlsPopups : Control
     {
-        internal string workInProgress = "Work in progress. Currently not everything works fine in the popups...";
+        internal bool logMouseEvents = false;
+        internal string workInProgress = "Work in progress...";
 
         private readonly VerticalStackPanel panel = new()
         {
@@ -57,7 +58,8 @@ namespace ControlsSample
 
         private void PopupListBox_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            // LogPopupListBoxEvent("DoubleClick");
+            if(logMouseEvents)
+                LogPopupListBoxEvent("DoubleClick");
         }
 
         private void PopupListBox_VisibleChanged(object? sender, EventArgs e)
@@ -74,17 +76,20 @@ namespace ControlsSample
 
         private void PopupListBox_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            // LogPopupListBoxMouseEvent("MouseLeftButtonUp", e);
+            if (logMouseEvents)
+                LogPopupListBoxMouseEvent("MouseLeftButtonUp", e);
         }
 
         private void PopupListBox_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            // LogPopupListBoxMouseEvent("MouseLeftButtonDown", e);
+            if (logMouseEvents)
+                LogPopupListBoxMouseEvent("MouseLeftButtonDown", e);
         }
 
         private void PopupListBox_Click(object? sender, EventArgs e)
         {
-            // LogPopupListBoxEvent("Click");
+            if (logMouseEvents)
+                LogPopupListBoxEvent("Click");
         }
 
         private void AddDefaultItems(ListControl control)
