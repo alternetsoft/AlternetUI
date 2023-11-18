@@ -992,6 +992,7 @@ namespace Alternet.UI
 
             protected override void DisposeManagedResources()
             {
+                base.DisposeManagedResources();
                 EndBusyCursor();
             }
         }

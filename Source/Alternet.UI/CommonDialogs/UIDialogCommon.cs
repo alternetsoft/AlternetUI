@@ -91,6 +91,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override void DisposeManagedResources()
         {
+            base.DisposeManagedResources();
             if (window == null)
                 return;
             window.Dispose();

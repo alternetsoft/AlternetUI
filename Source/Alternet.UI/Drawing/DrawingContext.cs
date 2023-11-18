@@ -860,6 +860,7 @@ namespace Alternet.Drawing
         /// <inheritdoc/>
         protected override void DisposeManagedResources()
         {
+            base.DisposeManagedResources();
             dc.Dispose();
             dc = null!;
         }
