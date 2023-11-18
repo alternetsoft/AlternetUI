@@ -154,6 +154,15 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets text of the first status bar panel. Same as <see cref="Text"/>
+        /// property but implemented as method.
+        /// </summary>
+        public void SetText(string? value)
+        {
+            Text = value;
+        }
+
+        /// <summary>
         /// Applies <see cref="Panels"/> to the native control.
         /// </summary>
         public virtual void ApplyPanels()
