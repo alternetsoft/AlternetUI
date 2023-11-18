@@ -83,7 +83,6 @@ namespace PropertyGridSample
             PropGrid.ProcessException += PropertyGrid_ProcessException;
             InitIgnorePropNames(PropGrid.IgnorePropNames);
             PropGrid.CreateStyleEx = PropertyGridCreateStyleEx.AlwaysAllowFocus;
-            panel.EventGrid.Required();
 
             Icon = ImageSet.FromUrlOrNull("embres:PropertyGridSample.Sample.ico");
 
@@ -94,7 +93,6 @@ namespace PropertyGridSample
             panel.LeftTreeView.SelectionChanged += ControlsListBox_SelectionChanged;
             panel.LogControl.Required();
             panel.PropGrid.Required();
-            panel.EventGrid.Required();
 
             panel.CenterNotebook.AddPage(controlPanel, "Preview", true);
 
@@ -134,7 +132,6 @@ namespace PropertyGridSample
             }
 
             SetPropertyGridDefaults(panel.PropGrid);
-            SetPropertyGridDefaults(panel.EventGrid);
 
             panel.LeftTreeView.SelectedItem = panel.LeftTreeView.FirstItem;
 
@@ -181,7 +178,7 @@ namespace PropertyGridSample
         {
             var item = panel.LeftTreeView.SelectedItem as ControlListBoxItem;
             var type = item?.InstanceType;
-            if (type == typeof(WelcomeControl))
+            if (type == typeof(WelcomePage))
                 return;
             if(item?.Instance == e.Instance)
                 updatePropertyGrid = true;
@@ -205,7 +202,6 @@ namespace PropertyGridSample
                 if (PropGrid.FirstItemInstance == instance)
                     return;
                 PropGrid.SetProps(instance, true);
-                UpdateEventsPropertyGrid(instance);
                 return;
             }
 
@@ -236,53 +232,24 @@ namespace PropertyGridSample
                     Application.Current.ProcessPendingEvents();
                 }
 
-                if (type == typeof(WelcomeControl))
+                if (type == typeof(WelcomePage))
                 {
+                    controlPanel.BackgroundColor = SystemColors.Window;
                     InitDefaultPropertyGrid();
-                    UpdateEventsPropertyGrid(null);
                 }
                 else
                 {
+                    controlPanel.BackgroundColor = SystemColors.Control;
                     var selection = panel.RightNotebook.GetSelection();
                     if (selection == panel.PropGridPage?.Index)
                     {
                         PropGrid.SetProps(item?.PropInstance, true);
-                        panel.EventGrid.Clear();
-                    }
-                    else
-                    if (selection == panel.EventGridPage?.Index)
-                    {
-                        PropGrid.Clear();
-                        UpdateEventsPropertyGrid(item?.EventInstance);
                     }
                     else
                     {
                         PropGrid.Clear();
-                        panel.EventGrid.Clear();
                     }
                 }
-            }
-
-            void UpdateEventsPropertyGrid(object? instance)
-            {
-                panel.EventGrid.DoInsideUpdate(() =>
-                {
-                    panel.EventGrid.Clear();
-                    if (instance == null)
-                        return;
-                    var type = instance.GetType();
-                    var events = AssemblyUtils.EnumEvents(type, true);
-
-                    foreach(var item in events)
-                    {
-                        var isBinded = EventLogManager.IsEventLogged(type, item);
-                        var prop = panel.EventGrid.CreateBoolItem(item.Name, null, isBinded);
-                        prop.FlagsAndAttributes.SetAttribute("InstanceType",type);
-                        prop.FlagsAndAttributes.SetAttribute("EventInfo",item);
-                        prop.PropertyChanged += Event_PropertyChanged;
-                        panel.EventGrid.Add(prop);
-                    }
-                });
             }
 
             controlPanel.SuspendLayout();
@@ -294,16 +261,6 @@ namespace PropertyGridSample
             {
                 controlPanel.ResumeLayout();
             }
-        }
-
-        private void Event_PropertyChanged(object? sender, EventArgs e)
-        {
-            if (sender is not IPropertyGridItem item)
-                return;
-            var type = item.FlagsAndAttributes.GetAttribute<Type?>("InstanceType");
-            var eventInfo = item.FlagsAndAttributes.GetAttribute<EventInfo?>("EventInfo");
-            var value = panel.EventGrid.GetPropertyValueAsBool(item);
-            EventLogManager.SetEventLogged(type, eventInfo, value);
         }
 
         public class SettingsControl : Control

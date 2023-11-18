@@ -10,7 +10,6 @@ namespace PropertyGridSample
     internal class PropertyGridSettings
     {
         private readonly PropertyGrid propertyGrid;
-        private readonly PropertyGrid eventGrid;
         private readonly MainWindow mainWindow;
         private PropertyGridKnownColors colorScheme = PropertyGridKnownColors.Default;
 
@@ -18,7 +17,6 @@ namespace PropertyGridSample
         {
             this.mainWindow = window;
             this.propertyGrid = window.PropGrid;
-            this.eventGrid = window.panel.EventGrid;
         }
 
         public static PropertyGridSettings? Default { get; set; }
@@ -66,7 +64,6 @@ namespace PropertyGridSample
                     return;
                 colorScheme = value;
                 propertyGrid.ApplyKnownColors(colorScheme);
-                eventGrid.ApplyKnownColors(colorScheme);
             }
         }
 

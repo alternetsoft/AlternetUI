@@ -10,7 +10,7 @@ namespace Alternet.UI
 {
     public static class EventLogManager
     {
-        private static ICustomFlags flags = Factory.CreateCustomFlags();
+        private static readonly ICustomFlags flags = Factory.CreateCustomFlags();
 
         public static bool IsEventLogged(Type? type, EventInfo? evt)
         {
@@ -27,6 +27,38 @@ namespace Alternet.UI
             if (key is null)
                 return;
             flags.SetFlag(key, logged);
+        }
+
+        public static void UpdateEventsPropertyGrid(PropertyGrid eventGrid, object? instance)
+        {
+            eventGrid.DoInsideUpdate(() =>
+            {
+                eventGrid.Clear();
+                if (instance == null)
+                    return;
+                var type = instance.GetType();
+                var events = AssemblyUtils.EnumEvents(type, true);
+
+                foreach (var item in events)
+                {
+                    var isBinded = EventLogManager.IsEventLogged(type, item);
+                    var prop = eventGrid.CreateBoolItem(item.Name, null, isBinded);
+                    prop.FlagsAndAttributes.SetAttribute("InstanceType", type);
+                    prop.FlagsAndAttributes.SetAttribute("EventInfo", item);
+                    prop.PropertyChanged += Event_PropertyChanged;
+                    eventGrid.Add(prop);
+                }
+            });
+        }
+
+        private static void Event_PropertyChanged(object? sender, EventArgs e)
+        {
+            if (sender is not IPropertyGridItem item)
+                return;
+            var type = item.FlagsAndAttributes.GetAttribute<Type?>("InstanceType");
+            var eventInfo = item.FlagsAndAttributes.GetAttribute<EventInfo?>("EventInfo");
+            var value = item.Owner.GetPropertyValueAsBool(item);
+            EventLogManager.SetEventLogged(type, eventInfo, value);
         }
 
         private static string? GetKey(Type? type, EventInfo? evt)

@@ -16,12 +16,44 @@ namespace PropertyGridSample
         {
             void Fn()
             {
+                bool logAddedControls = false;
+                bool addLimitedControls = true;
 
-                ControlListBoxItem item = new(typeof(WelcomeControl))
+                ControlListBoxItem item = new(typeof(WelcomePage))
                 {
                     Text = "Welcome Page",
                 };
                 panel.LeftTreeView.Add(item);
+
+                Type[] limitedTypes =
+                {
+                    typeof(Border),
+                    typeof(Button),
+                    typeof(Calendar),
+                    typeof(CheckBox),
+                    typeof(ColorPicker),
+                    typeof(ComboBox),
+                    typeof(DateTimePicker),
+                    typeof(GroupBox),
+                    typeof(HorizontalStackPanel),
+                    typeof(Label),
+                    typeof(LinkLabel),
+                    typeof(ListBox),
+                    typeof(ListView),
+                    typeof(MultilineTextBox),
+                    typeof(NumericUpDown),
+                    typeof(Panel),
+                    typeof(PanelOkCancelButtons),
+                    typeof(PictureBox),
+                    typeof(ProgressBar),
+                    typeof(RadioButton),
+                    typeof(RichTextBox),
+                    typeof(Slider),
+                    typeof(StackPanel),
+                    typeof(TextBox),
+                    typeof(TreeView),
+                    typeof(VerticalStackPanel),
+                };
 
                 Type[] badParentTypes =
                 {
@@ -71,14 +103,21 @@ namespace PropertyGridSample
                 IEnumerable<Type> result = AssemblyUtils.GetTypeDescendants(typeof(Control));
                 foreach (Type type in result)
                 {
-                    if (Array.IndexOf(badTypes, type) >= 0)
-                        continue;
                     if (type.Assembly != typeof(Control).Assembly)
                         continue;
-                    if(AssemblyUtils.TypeIsDescendant(type, badParentTypes))
+                    if (Array.IndexOf(badTypes, type) >= 0)
                         continue;
+                    if (AssemblyUtils.TypeIsDescendant(type, badParentTypes))
+                        continue;
+                    if (addLimitedControls)
+                    {
+                        if (Array.IndexOf(limitedTypes, type) < 0)
+                            continue;
+                    }
                     item = new(type);
                     panel.LeftTreeView.Add(item);
+                    if (logAddedControls)
+                        Application.Log($"typeof({type.Name}),");
                 }
 
                 item = new(typeof(SettingsControl))
