@@ -12,7 +12,7 @@ namespace Alternet.UI
     /// </summary>
     public class Display : DisposableObject
     {
-        private Control? control;
+        private readonly Control? control;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Display"/> class.
