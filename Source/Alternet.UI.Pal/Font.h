@@ -9,6 +9,8 @@ namespace Alternet::UI
     {
 #include "Api/Font.inc"
     public:
+        Font(wxFont font);
+
         wxFont GetWxFont();
         void SetWxFont(wxFont font);
         void SetWxFontInfo(wxFontInfo fontInfo);

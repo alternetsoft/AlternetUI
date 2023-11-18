@@ -2,6 +2,11 @@
 
 namespace Alternet::UI
 {
+    Font::Font(wxFont font)
+    {
+        _font = font;
+    }
+
     Font::Font()
     {
     }

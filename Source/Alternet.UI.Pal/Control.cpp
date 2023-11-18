@@ -1182,12 +1182,7 @@ namespace Alternet::UI
 
     Font* Control::GetFont()
     {
-        auto w = GetWxWindow();
-        auto wxfont = w->GetFont();
-        auto _font = new Font();
-        _font->SetWxFont(wxfont);
-
-        return _font;
+        return new Font(GetWxWindow()->GetFont());
     }
 
     void Control::SetFont(Font* value)
@@ -1986,10 +1981,7 @@ namespace Alternet::UI
 
     Font* Control::GetDefaultAttributesFont()
     {
-        auto fnt = GetWxWindow()->GetDefaultAttributes().font;
-        auto _font = new Font();
-        _font->SetWxFont(fnt);
-        return _font;
+        return new Font(GetWxWindow()->GetDefaultAttributes().font);
     }
 
     enum ControlId
@@ -2071,10 +2063,6 @@ namespace Alternet::UI
 
     Font* Control::GetClassDefaultAttributesFont(int controlType, int windowVariant)
     {
-        auto attr = GetClassDefaultAttributes(controlType, windowVariant);
-        auto font = attr.font;
-        auto _font = new Font();
-        _font->SetWxFont(font);
-        return _font;
+        return new Font(GetClassDefaultAttributes(controlType, windowVariant).font);
     }
 }
