@@ -69,7 +69,7 @@ namespace Alternet.UI
         /// Gets or sets owner of the popup window.
         /// </summary>
         /// <remarks>Usually owner of the popup window is a control under which popup is
-        /// shown using <see cref="ShowPopup"/> method.</remarks>
+        /// shown using <see cref="ShowPopup(Control)"/> method.</remarks>
         [Browsable(false)]
         public Control? PopupOwner { get; set; }
 
