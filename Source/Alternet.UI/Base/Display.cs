@@ -12,6 +12,8 @@ namespace Alternet.UI
     /// </summary>
     public class Display : DisposableObject
     {
+        private Control? control;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="Display"/> class.
         /// </summary>
@@ -36,6 +38,7 @@ namespace Alternet.UI
         public Display(Control control)
             : base(Native.WxOtherFactory.CreateDisplay3(control.WxWidget), true)
         {
+            this.control = control;
         }
 
         /// <summary>
@@ -79,9 +82,33 @@ namespace Alternet.UI
         public Int32Rect ClientArea => Native.WxOtherFactory.DisplayGetClientArea(Handle);
 
         /// <summary>
+        /// Gets the client area of the display in the
+        /// device-independent units (1/96th inch per unit).
+        /// </summary>
+        public Rect ClientAreaDip
+        {
+            get
+            {
+                return PixelToDip(ClientArea);
+            }
+        }
+
+        /// <summary>
         /// Returns the bounding rectangle of the display.
         /// </summary>
         public Int32Rect Geometry => Native.WxOtherFactory.DisplayGetGeometry(Handle);
+
+        /// <summary>
+        /// Returns the bounding rectangle of the display in the
+        /// device-independent units (1/96th inch per unit).
+        /// </summary>
+        public Rect GeometryDip
+        {
+            get
+            {
+                return PixelToDip(Geometry);
+            }
+        }
 
         /// <summary>
         /// Returns the index of the display on which the given point lies,
@@ -121,9 +148,55 @@ namespace Alternet.UI
                 method($"IsPrimary: {display.IsPrimary}");
                 method($"ClientArea: {display.ClientArea}");
                 method($"Geometry: {display.Geometry}");
+                method($"PixelToDip(100): {display.PixelToDip(100)}");
             }
 
             method(LogUtils.SectionSeparator);
+        }
+
+        /// <summary>
+        /// Converts pixels to device-independent units (1/96th inch per unit).
+        /// </summary>
+        /// <param name="value">Value in pixels.</param>
+        /// <returns></returns>
+        public double PixelToDip(int value)
+        {
+            if (control is null)
+            {
+                return value / ScaleFactor;
+            }
+            else
+                return control.PixelToDip(value);
+        }
+
+        /// <summary>
+        /// Converts <see cref="Int32Size"/> to device-independent units (1/96th inch per unit).
+        /// </summary>
+        /// <param name="value"><see cref="Int32Size"/> in pixels.</param>
+        /// <returns></returns>
+        public Size PixelToDip(Int32Size value)
+        {
+            return new(PixelToDip(value.Width), PixelToDip(value.Height));
+        }
+
+        /// <summary>
+        /// Converts <see cref="Int32Point"/> to device-independent units (1/96th inch per unit).
+        /// </summary>
+        /// <param name="value"><see cref="Int32Point"/> in pixels.</param>
+        /// <returns></returns>
+        public Point PixelToDip(Int32Point value)
+        {
+            return new(PixelToDip(value.X), PixelToDip(value.Y));
+        }
+
+        /// <summary>
+        /// Converts <see cref="Int32Rect"/> to device-independent units (1/96th inch per unit).
+        /// </summary>
+        /// <param name="value"><see cref="Int32Rect"/> in pixels.</param>
+        /// <returns></returns>
+        public Rect PixelToDip(Int32Rect value)
+        {
+            return new(PixelToDip(value.Location), PixelToDip(value.Size));
         }
 
         /// <inheritdoc/>
