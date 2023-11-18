@@ -27,7 +27,6 @@ namespace AuiManagerSample
         private readonly ListBox listBox5;
         private readonly ListBox listBox6;
         private readonly ContextMenu contextMenu = new();
-        private readonly ContextMenu contextMenu2 = new();
 
         private readonly int calendarToolId;
         private readonly int photoToolId;
@@ -50,7 +49,7 @@ namespace AuiManagerSample
                 AuiToolbarCreateStyle.DefaultStyle;
         }
 
-        private ListBox CreateListBox(string paneName, Control? parent = null)
+        private ListBox CreateListBox(Control? parent = null)
         {
             ListBox listBox = new()
             {
@@ -62,7 +61,7 @@ namespace AuiManagerSample
             return listBox;
         }
 
-        private LogListBox CreateLogListBox(string paneName, Control? parent = null)
+        private LogListBox CreateLogListBox(Control? parent = null)
         {
             LogListBox listBox = new()
             {
@@ -90,7 +89,7 @@ namespace AuiManagerSample
             var pane1 = manager.CreatePaneInfo();
             pane1.Name("pane1").Caption("Pane 1").Left().PaneBorder(false)
                 .TopDockable(false).BottomDockable(false);
-            var listBox1 = CreateListBox("Pane 1");
+            var listBox1 = CreateListBox();
             listBox1.Add("TopDock = false");
             listBox1.Add("BottomDock = false");
             manager.AddPane(listBox1, pane1);
@@ -99,7 +98,7 @@ namespace AuiManagerSample
             var pane2 = manager.CreatePaneInfo();
             pane2.Name("pane2").Caption("Pane 2").Right().PaneBorder(false)
                 .TopDockable(false).BottomDockable(false).Image(ImageCalendar);
-            var listBox2 = CreateListBox("Pane 2");
+            var listBox2 = CreateListBox();
             listBox2.Add("TopDock = false");
             listBox2.Add("BottomDock = false");
             manager.AddPane(listBox2, pane2);
@@ -108,9 +107,10 @@ namespace AuiManagerSample
             var pane3 = manager.CreatePaneInfo();
             pane3.Name("pane3").Caption("Pane 3").Bottom().PaneBorder(false)
                 .LeftDockable(false).RightDockable(false);
-            logListBox = CreateLogListBox("Pane 3");
+            logListBox = CreateLogListBox();
             logListBox.ContextMenu.Required();
             logListBox.BindApplicationLog();
+            LogUtils.DebugLogVersion();
             manager.AddPane(logListBox, pane3);
 
             // Toolbar pane
@@ -195,8 +195,8 @@ namespace AuiManagerSample
             var pane5 = manager.CreatePaneInfo();
             pane5.Name("pane5").CenterPane().PaneBorder(false);
             notebook5 = new AuiNotebook();
-            listBox5 = CreateListBox("ListBox 5");
-            listBox6 = CreateListBox("ListBox 6");
+            listBox5 = CreateListBox();
+            listBox6 = CreateListBox();
 
             notebook5.AddPage(listBox5, "ListBox 5", false, ImagePencil);
             listBox5.Add("This page can be closed");
@@ -256,8 +256,6 @@ namespace AuiManagerSample
             toolbar4.ToolMiddleClick += Toolbar4_ToolMiddleClick;
             toolbar4.OverflowClick += Toolbar4_OverflowClick;
             toolbar4.ToolRightClick += Toolbar4_ToolRightClick;
-
-            LogUtils.DebugLogVersion();
 
             popupListBox.VisibleChanged += PopupListBox_VisibleChanged;
         }
