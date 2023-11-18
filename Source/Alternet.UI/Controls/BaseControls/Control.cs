@@ -67,6 +67,9 @@ namespace Alternet.UI
         /// </summary>
         public Control()
         {
+            var defaults = GetDefaults(ControlKind);
+            defaults.RaiseInitDefaults(this);
+            Designer?.RaiseCreated(this);
         }
 
         /// <summary>
@@ -300,9 +303,9 @@ namespace Alternet.UI
                     return;
                 cursor = value;
                 if (cursor is null)
-                    Handler.NativeControl?.SetCursor(default);
+                    NativeControl?.SetCursor(default);
                 else
-                    Handler.NativeControl?.SetCursor(cursor.Handle);
+                    NativeControl?.SetCursor(cursor.Handle);
             }
         }
 
@@ -3172,6 +3175,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override void DisposeManagedResources()
         {
+            Designer?.RaiseDisposed(this);
             /*var children = Handler.AllChildren.ToArray();*/
 
             SuspendLayout();

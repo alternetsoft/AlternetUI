@@ -28,8 +28,9 @@ namespace Alternet.UI
             panel.Update();
             SetSizeToContent();
 
-            ComponentDesigner.InitDefault();
-            ComponentDesigner.Default!.ControlGotFocus += Designer_ControlGotFocus;
+            ComponentDesigner.SafeDefault.ControlGotFocus += Designer_ControlGotFocus;
+            ComponentDesigner.SafeDefault.ControlCreated += Designer_ControlCreated;
+            ComponentDesigner.SafeDefault.ControlDisposed += Designer_ControlDisposed;
 
             panel.AddAction("Toggle GotFocus logging", () =>
             {
@@ -53,7 +54,16 @@ namespace Alternet.UI
 
         protected override void DisposeManagedResources()
         {
+            base.DisposeManagedResources();
             ComponentDesigner.Default!.ControlGotFocus -= Designer_ControlGotFocus;
+        }
+
+        private void Designer_ControlDisposed(object? sender, EventArgs e)
+        {
+        }
+
+        private void Designer_ControlCreated(object? sender, EventArgs e)
+        {
         }
 
         private void Designer_ControlGotFocus(object? sender, EventArgs e)

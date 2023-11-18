@@ -21,10 +21,30 @@ namespace Alternet.UI
         /// </summary>
         public event EventHandler? ControlGotFocus;
 
+        /// <see cref="IComponentDesigner.ControlCreated"/>
+        public event EventHandler? ControlCreated;
+
+        /// <see cref="IComponentDesigner.ControlDisposed"/>
+        public event EventHandler? ControlDisposed;
+
         /// <summary>
         /// Gets or sets default <see cref="IComponentDesigner"/>.
         /// </summary>
         public static IComponentDesigner? Default { get; set; }
+
+        /// <summary>
+        /// Gets default <see cref="IComponentDesigner"/>. Initializes <see cref="Default"/>
+        /// property if it is not already assigned.
+        /// </summary>
+        public static IComponentDesigner SafeDefault
+        {
+            get
+            {
+                if (Default is null)
+                    InitDefault();
+                return Default!;
+            }
+        }
 
         /// <summary>
         /// Initializes <see cref="Default"/> if it wasn't assigned previously.
@@ -47,6 +67,18 @@ namespace Alternet.UI
         public void RaiseGotFocus(Control control)
         {
             ControlGotFocus?.Invoke(this, EventArgs.Empty);
+        }
+
+        /// <see cref="IComponentDesigner.RaiseCreated"/>
+        public void RaiseCreated(Control control)
+        {
+            ControlCreated?.Invoke(this, EventArgs.Empty);
+        }
+
+        /// <see cref="IComponentDesigner.RaiseDisposed"/>
+        public void RaiseDisposed(Control control)
+        {
+            ControlDisposed?.Invoke(this, EventArgs.Empty);
         }
     }
 }

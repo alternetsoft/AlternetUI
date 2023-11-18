@@ -61,5 +61,11 @@ namespace Alternet.UI
         {
             props[(int)prop] = value;
         }
+
+        /// <summary>
+        /// Raises <see cref="InitDefaults"/> event.
+        /// </summary>
+        /// <param name="control"></param>
+        public void RaiseInitDefaults(Control control) => InitDefaults?.Invoke(control, EventArgs.Empty);
     }
 }

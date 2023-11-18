@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Alternet.UI.Localization;
+using Alternet.Drawing;
 
 namespace Alternet.UI
 {
@@ -41,8 +42,6 @@ namespace Alternet.UI
             ControlsListBox.SelectionChanged += ControlsListBox_SelectionChanged;
             CenterNotebook.ChangeSelection(0);
             PropGrid.SuggestedInitDefaults();
-
-            Control.GetDefaults(ControlTypeId.TextBox).InitDefaults += PanelDeveloperTools_InitDefaults;
         }
 
         internal IAuiNotebookPage? MainLogPage => mainLogPage;
@@ -113,10 +112,6 @@ namespace Alternet.UI
             var s = WebBrowser.DoCommandGlobal("GetUsefulDefines");
             var splitted = s?.Split(' ');
             LogUtils.LogAsSection(splitted);
-        }
-
-        private void PanelDeveloperTools_InitDefaults(object? sender, EventArgs e)
-        {
         }
 
         private void InitActions()
