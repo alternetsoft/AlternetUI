@@ -7,10 +7,10 @@
         <FrameworkOverridesName>FrameworksOverride.props</FrameworkOverridesName>
 	<TargetFramework48Version>net480</TargetFramework48Version>
 	<TargetFramework46Version>net462</TargetFramework46Version>
-	<UITargetFrameworksWindows>net7.0;net6.0;$(TargetFramework46Version);$(TargetFramework48Version)</UITargetFrameworksWindows>
-	<UITargetFrameworksNonWindows>net7.0;net6.0</UITargetFrameworksNonWindows>
+	<UITargetFrameworksWindows>net8.0;net7.0;net6.0;$(TargetFramework46Version);$(TargetFramework48Version)</UITargetFrameworksWindows>
+	<UITargetFrameworksNonWindows>net8.0;net7.0;net6.0</UITargetFrameworksNonWindows>
 
-        <UIIntegrationUIXmlHostAppTargetFrameworks>$(TargetFramework46Version);$(TargetFramework48Version);net6.0-windows;net7.0-windows</UIIntegrationUIXmlHostAppTargetFrameworks>
+        <UIIntegrationUIXmlHostAppTargetFrameworks>$(TargetFramework46Version);$(TargetFramework48Version);net6.0-windows;net7.0-windows;net8.0-windows</UIIntegrationUIXmlHostAppTargetFrameworks>
   </PropertyGroup>
 
   <Import Project="$(FrameworkOverridesName)" Condition="Exists($(FrameworkOverridesName))"/>
