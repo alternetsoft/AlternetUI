@@ -189,6 +189,18 @@ namespace Alternet.UI
         public static bool DefaultErrorUseBackgroundColor { get; set; }
 
         /// <summary>
+        /// Gets or sets default value for the <see cref="TextBox.ResetErrorBackgroundMethod"/>
+        /// property.
+        /// </summary>
+        public static ResetColorType DefaultResetErrorBackgroundMethod { get; set; } = ResetColorType.Auto;
+
+        /// <summary>
+        /// Gets or sets default value for the <see cref="TextBox.ResetErrorForegroundMethod"/>
+        /// property.
+        /// </summary>
+        public static ResetColorType DefaultResetErrorForegroundMethod { get; set; } = ResetColorType.Auto;
+
+        /// <summary>
         /// Gets or sets default value of the <see cref="AutoUrlOpen"/> property.
         /// </summary>
         public static bool DefaultAutoUrlOpen { get; set; } = false;
@@ -216,6 +228,18 @@ namespace Alternet.UI
                 search = value;
             }
         }
+
+        /// <summary>
+        /// Gets or sets method which is used to clear error state
+        /// if error backround color is used for reporting it.
+        /// </summary>
+        public ResetColorType? ResetErrorBackgroundMethod { get; set; }
+
+        /// <summary>
+        /// Gets or sets method which is used to clear error state
+        /// if error foreground color is used for reporting it.
+        /// </summary>
+        public ResetColorType? ResetErrorForegroundMethod { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether urls in the input text
@@ -883,8 +907,9 @@ namespace Alternet.UI
         /// text. The default is <see langword="false" />.
         /// </returns>
         /// <remarks>
-        /// This property affects control behavior when
-        /// <see cref="IsRichEdit"/> property is <see langword="true" />.
+        /// We do not suggest using this property as there is no known way to specify color
+        /// of the url text. On dark themes auto urls don’t look good on Linux. If you need
+        /// to highlight urls, use RichTextBox control.
         /// </remarks>
         /// <remarks>
         /// <see cref="TextUrl"/> event is fired when url is clicked.
@@ -1122,6 +1147,8 @@ namespace Alternet.UI
                 if (sender is not PictureBox pictureBox)
                     return;
                 e.Handled = true;
+
+                pictureBox.HideToolTip();
 
                 RichToolTip.Show(
                     ErrorMessages.Default.ErrorTitle,
@@ -2314,9 +2341,9 @@ namespace Alternet.UI
             if (!showError)
             {
                 if (DefaultErrorUseBackgroundColor)
-                    ResetBackgroundColor();
+                    ResetBackgroundColor(ResetErrorBackgroundMethod ?? DefaultResetErrorBackgroundMethod);
                 if (DefaultErrorUseForegroundColor)
-                    ResetForegroundColor();
+                    ResetForegroundColor(ResetErrorForegroundMethod ?? DefaultResetErrorForegroundMethod);
             }
             else
             {
