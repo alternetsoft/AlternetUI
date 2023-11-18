@@ -81,6 +81,50 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Adds new page.
+        /// </summary>
+        /// <param name="page">Page title and control.</param>
+        /// <returns>
+        /// Created page index.
+        /// </returns>
+        public int Add(NameValue<Control> page)
+        {
+            return Add(page.Name, page.Value);
+        }
+
+        /// <summary>
+        /// Adds new page.
+        /// </summary>
+        /// <param name="page">Page title and control creation function.</param>
+        /// <returns>
+        /// Created page index.
+        /// </returns>
+        public int Add(NameValue<Func<Control>> page)
+        {
+            return Add(page.Name, page.Value);
+        }
+
+        /// <summary>
+        /// Adds new pages.
+        /// </summary>
+        /// <param name="pages">Collection of pages.</param>
+        public void AddRange(IEnumerable<NameValue<Control>> pages)
+        {
+            foreach(var page in pages)
+                Add(page);
+        }
+
+        /// <summary>
+        /// Adds new pages.
+        /// </summary>
+        /// <param name="pages">Collection of pages.</param>
+        public void AddRange(IEnumerable<NameValue<Func<Control>>> pages)
+        {
+            foreach (var page in pages)
+                Add(page);
+        }
+
+        /// <summary>
         /// Selects the first tab if it exists.
         /// </summary>
         public virtual void SelectFirstTab()
@@ -96,8 +140,9 @@ namespace Alternet.UI
         /// <returns>
         /// Created page index.
         /// </returns>
-        public virtual int Add(string title, Control control)
+        public virtual int Add(string title, Control? control = null)
         {
+            control ??= new();
             var cardIndex = cardPanel.Add(title, control);
             Header.Add(title, cardPanel[cardIndex].UniqueId);
             return cardIndex;
