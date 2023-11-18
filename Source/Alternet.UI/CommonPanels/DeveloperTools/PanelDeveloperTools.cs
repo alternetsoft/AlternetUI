@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,11 +17,14 @@ namespace Alternet.UI
             HasBorder = false,
         };
 
+        private ListBox? controlsListBox;
+        private IAuiNotebookPage? controlsPage;
+
         public PanelDeveloperTools()
             : base()
         {
-            DefaultRightPaneBestSize = new(150, 200);
-            DefaultRightPaneMinSize = new(150, 200);
+            DefaultRightPaneBestSize = new(350, 200);
+            DefaultRightPaneMinSize = new(350, 200);
 
             mainLogListBox.Parent = CenterNotebook;
             mainLogListBox.ContextMenu.Required();
@@ -34,9 +38,53 @@ namespace Alternet.UI
             RightNotebook.ChangeSelection(0);
             InitActions();
             DebugUtils.HookExceptionEvents();
+            ControlsListBox.SelectionChanged += ControlsListBox_SelectionChanged; ;
+            CenterNotebook.ChangeSelection(0);
+            PropGrid.SuggestedInitDefaults();
         }
 
         internal IAuiNotebookPage? MainLogPage => mainLogPage;
+
+        /// <summary>
+        /// Gets control on the bottom pane which can be used for logging.
+        /// </summary>
+        [Browsable(false)]
+        internal ListBox ControlsListBox
+        {
+            get
+            {
+                if (controlsListBox == null)
+                {
+                    controlsListBox = new ListBox()
+                    {
+                        Parent = this,
+                        HasBorder = false,
+                    };
+
+                    IEnumerable<Type> result = AssemblyUtils.GetTypeDescendants(typeof(Control));
+
+                    void AddControl(Type type)
+                    {
+                        controlsListBox.Add(type.Name, type);
+                    }
+
+                    AddControl(typeof(Control));
+
+                    foreach (var type in result)
+                    {
+                        if (type.Assembly != typeof(Control).Assembly)
+                            continue;
+                        AddControl(type);
+                    }
+
+                    controlsPage = CenterNotebook.AddPage(
+                        controlsListBox,
+                        "Controls");
+                }
+
+                return controlsListBox;
+            }
+        }
 
         private static void LogOSInformation()
         {
@@ -47,6 +95,13 @@ namespace Alternet.UI
             Application.Log($"Major version: {os.Version.Major}");
             Application.Log($"Minor version: {os.Version.Minor}");
             Application.Log($"Service Pack: '{os.ServicePack}'");
+        }
+
+        private void ControlsListBox_SelectionChanged(object? sender, EventArgs e)
+        {
+            var item = ControlsListBox.SelectedItem as ListControlItem;
+            var type = item?.Value as Type;
+            EventLogManager.UpdateEventsPropertyGrid(PropGrid, type);
         }
 
         private void LogUsefulDefines()

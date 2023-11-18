@@ -8,7 +8,7 @@ using Alternet.Base.Collections;
 
 namespace Alternet.UI
 {
-    public static class EventLogManager
+    internal static class EventLogManager
     {
         private static readonly ICustomFlags flags = Factory.CreateCustomFlags();
 
@@ -18,7 +18,7 @@ namespace Alternet.UI
             if(key is null)
                 return false;
             var result = flags.HasFlag(key);
-            return result;            
+            return result;
         }
 
         public static void SetEventLogged(Type? type, EventInfo? evt, bool logged)
@@ -29,14 +29,13 @@ namespace Alternet.UI
             flags.SetFlag(key, logged);
         }
 
-        public static void UpdateEventsPropertyGrid(PropertyGrid eventGrid, object? instance)
+        public static void UpdateEventsPropertyGrid(PropertyGrid eventGrid, Type? type)
         {
             eventGrid.DoInsideUpdate(() =>
             {
                 eventGrid.Clear();
-                if (instance == null)
+                if (type == null)
                     return;
-                var type = instance.GetType();
                 var events = AssemblyUtils.EnumEvents(type, true);
 
                 foreach (var item in events)
