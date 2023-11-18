@@ -540,9 +540,9 @@ namespace Alternet.UI
         /// Works only if DEBUG conditional is defined.
         /// </remarks>
         [Conditional("DEBUG")]
-        public static void DebugLogReplace(string msg, string prefix)
+        public static void DebugLogReplace(object? obj, string? prefix = null)
         {
-            LogReplace(msg, prefix);
+            LogReplace(obj, prefix);
         }
 
         /// <summary>
@@ -601,18 +601,23 @@ namespace Alternet.UI
         /// <summary>
         /// Calls <see cref="LogMessage"/> event to add or replace log message.
         /// </summary>
-        /// <param name="msg">Message text.</param>
+        /// <param name="obj">Message text.</param>
         /// <param name="prefix">Message text prefix.</param>
         /// <remarks>
         /// If last logged message
         /// contains <paramref name="prefix"/>, last log item is replaced with
-        /// <paramref name="msg"/> instead of adding new log item.
+        /// <paramref name="obj"/> instead of adding new log item.
         /// </remarks>
-        public static void LogReplace(string msg, string prefix)
+        public static void LogReplace(object? obj, string? prefix = null)
         {
+            var msg = obj?.ToString();
+            if (string.IsNullOrEmpty(msg))
+                return;
             WriteToLogFileIfAllowed(msg);
-            Debug.WriteLine(msg);
-            Current?.LogMessage?.Invoke(Current, new LogMessageEventArgs(msg, prefix, true));
+            if (DebugWriteLine)
+                Debug.WriteLine(msg);
+            prefix ??= msg;
+            Current?.LogMessage?.Invoke(Current, new LogMessageEventArgs(msg!, prefix!, true));
         }
 
         /// <summary>Processes all messages currently in the message queue.</summary>
@@ -834,9 +839,9 @@ namespace Alternet.UI
             }
         }
 
-        private static void WriteToLogFileIfAllowed(string msg)
+        private static void WriteToLogFileIfAllowed(string? msg)
         {
-            if (!LogFileIsEnabled)
+            if (!LogFileIsEnabled || msg is null)
                 return;
             try
             {
