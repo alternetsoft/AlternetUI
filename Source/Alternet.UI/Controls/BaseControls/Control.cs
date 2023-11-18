@@ -325,6 +325,7 @@ namespace Alternet.UI
         /// Gets custom flags and attributes provider associated with the control.
         /// You can store any custom data here.
         /// </summary>
+        [Browsable(false)]
         public IFlagsAndAttributes FlagsAndAttributes
         {
             get
@@ -1128,6 +1129,7 @@ namespace Alternet.UI
         /// <remarks>
         /// This property modifies <see cref="GroupIndexes"/>.
         /// </remarks>
+        [Browsable(false)]
         public int? GroupIndex
         {
             get
@@ -1343,6 +1345,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the background style of the control.
         /// </summary>
+        [Browsable(false)]
         public ControlBackgroundStyle BackgroundStyle
         {
             get
@@ -1401,6 +1404,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets whether <see cref="Idle"/> event is fired.
         /// </summary>
+        [Browsable(false)]
         public bool ProcessIdle
         {
             get
