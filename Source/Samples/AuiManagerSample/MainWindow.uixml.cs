@@ -34,6 +34,8 @@ namespace AuiManagerSample
         private readonly int pencilToolId;
         private readonly int graphToolId;
 
+        private readonly PopupListBox popupListBox = new();
+
         static MainWindow()
         {
             WebBrowser.CrtSetDbgFlag(0);
@@ -256,6 +258,44 @@ namespace AuiManagerSample
             toolbar4.ToolRightClick += Toolbar4_ToolRightClick;
 
             LogUtils.DebugLogVersion();
+
+            popupListBox.VisibleChanged += PopupListBox_VisibleChanged;
+        }
+
+        private void AddDefaultItems(ListControl control)
+        {
+            control.Add("One");
+            control.Add("Two");
+            control.Add("Three");
+            control.Add("Four");
+            control.Add("Five");
+            control.Add("Six");
+            control.Add("Seven");
+            control.Add("Eight");
+            control.Add("Nine");
+            control.Add("Ten");
+        }
+
+        private void ShowPopupListBoxButton_Click(object? sender, EventArgs e)
+        {
+            if (popupListBox.MainControl.Items.Count == 0)
+            {
+                popupListBox.MainControl.SuggestedSize = new(150, 300);
+                AddDefaultItems(popupListBox.MainControl);
+                popupListBox.MainControl.SelectFirstItem();
+            }
+
+            var location = toolbar4.GetToolPopupLocation(toolbar4.EventToolId);
+            if(location is not null)
+                popupListBox.ShowPopup(location.Value);
+        }
+
+        private void PopupListBox_VisibleChanged(object? sender, EventArgs e)
+        {
+            if (popupListBox.Visible)
+                return;
+            var resultItem = popupListBox.ResultItem ?? "<null>";
+            Application.Log($"PopupResult: {popupListBox.PopupResult}, Item: {resultItem}");
         }
 
         private void Toolbar4_ToolCommand(object? sender, EventArgs e)
@@ -301,6 +341,7 @@ namespace AuiManagerSample
         private void PencilButton_Click(object? sender, EventArgs e)
         {
             Log("Tool Pencil clicked");
+            ShowPopupListBoxButton_Click(sender, e);
         }
 
         private void ToolDropDown_Click(object? sender, EventArgs e)
