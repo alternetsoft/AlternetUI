@@ -111,7 +111,7 @@ namespace ControlsSample
         {
             if (popupListBox.Visible)
                 return;
-            var resultItem = popupListBox.MainControl[popupListBox.ResultIndex] ?? "<null>";
+            var resultItem = popupListBox.ResultItem ?? "<null>";
             Application.Log($"PopupResult: {popupListBox.PopupResult}, Item: {resultItem}");
         }
 
