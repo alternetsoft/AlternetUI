@@ -4189,6 +4189,25 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Initializes control with suggested defaults.
+        /// </summary>
+        /// <remarks>
+        /// This method is used in our demos and other applications in order to
+        /// override default control settings to make it more usable and compatible.
+        /// You can study it to get the idea for custom default initialization.
+        /// </remarks>
+        public void SuggestedInitDefaults()
+        {
+            CenterSplitter();
+            SetVerticalSpacing();
+
+            // This call makes property editing better if scrollbar is shown.
+            // We add an empty column on the right.
+            if (Application.IsLinuxOS)
+                SetColumnCount(3);
+        }
+
+        /// <summary>
         /// Executes specified action for all property items in <paramref name="props"/> collection.
         /// </summary>
         /// <typeparam name="T1">Type of the first action parameter.</typeparam>

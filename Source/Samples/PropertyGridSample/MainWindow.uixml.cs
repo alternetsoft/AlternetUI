@@ -125,13 +125,7 @@ namespace PropertyGridSample
                 Key.DownArrow,
                 ModifierKeys.Control);
 
-            static void SetPropertyGridDefaults(PropertyGrid pg)
-            {
-                pg.CenterSplitter();
-                pg.SetVerticalSpacing();
-            }
-
-            SetPropertyGridDefaults(panel.PropGrid);
+            panel.PropGrid.SuggestedInitDefaults();
 
             panel.LeftTreeView.SelectedItem = panel.LeftTreeView.FirstItem;
 
@@ -147,11 +141,6 @@ namespace PropertyGridSample
             panel.WriteWelcomeLogMessages();
 
             panel.RightNotebook.PageChanged += RightNotebook_PageChanged;
-
-            // This call makes property editing better if scrollbar is shown.
-            // We add an empty column on the right.
-            if(Application.IsLinuxOS)
-                panel.PropGrid.SetColumnCount(3);
         }
 
         private void LeftTreeView_SizeChanged(object? sender, EventArgs e)

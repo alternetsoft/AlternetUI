@@ -154,8 +154,7 @@ namespace Alternet.UI
             toolbar.AddToolOnClick(buttonIdOk, OkButton_Click);
             toolbar.AddToolOnClick(buttonIdCancel, CancelButton_Click);
 
-            propertyGrid.CenterSplitter();
-            propertyGrid.SetVerticalSpacing();
+            propertyGrid.SuggestedInitDefaults();
 
             this.Disposed += UIDialogCollectionEdit_Disposed;
             propertyGrid.PropertyChanged += PropertyGrid_PropertyChanged;
