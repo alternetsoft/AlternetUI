@@ -63,7 +63,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets default value for the <see cref="UseTabBold"/> property.
         /// </summary>
-        public static bool DefaultUseTabBold { get; set; } = false;
+        public static bool DefaultUseTabBold { get; internal set; } = false;
 
         /// <summary>
         /// Gets or sets default value for the <see cref="UseTabForegroundColor"/> property.
@@ -86,7 +86,7 @@ namespace Alternet.UI
         public static IReadOnlyFontAndColor? DefaultInactiveTabColors { get; set; }
 
         /// <summary>
-        /// Gets or sets whether to set bold style for the title of active tab.
+        /// Gets whether to set bold style for the title of active tab.
         /// </summary>
         public bool? UseTabBold
         {
@@ -95,7 +95,7 @@ namespace Alternet.UI
                 return useTabBold;
             }
 
-            set
+            internal set
             {
                 if (useTabBold == value)
                     return;
