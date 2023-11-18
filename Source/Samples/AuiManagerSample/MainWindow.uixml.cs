@@ -21,7 +21,7 @@ namespace AuiManagerSample
         private readonly ImageSet ImageGraph = ImageSet.FromUrl(ResPrefixGraph);
         private readonly AuiManager manager = new();
         private readonly LayoutPanel panel = new();
-        private readonly LogListBox listBox3;
+        private readonly LogListBox logListBox;
         private readonly AuiToolbar toolbar4 = new();
         private readonly AuiNotebook notebook5;
         private readonly ListBox listBox5;
@@ -76,7 +76,6 @@ namespace AuiManagerSample
         {
             Icon = ImageSet.FromUrlOrNull("embres:AuiManagerSample.Sample.ico");
             InitContextMenu();
-            InitLogContextMenu();
 
             InitializeComponent();
 
@@ -90,8 +89,8 @@ namespace AuiManagerSample
             pane1.Name("pane1").Caption("Pane 1").Left().PaneBorder(false)
                 .TopDockable(false).BottomDockable(false);
             var listBox1 = CreateListBox("Pane 1");
-            listBox1.Add("TopDockable(false)");
-            listBox1.Add("BottomDockable(false)");
+            listBox1.Add("TopDock = false");
+            listBox1.Add("BottomDock = false");
             manager.AddPane(listBox1, pane1);
 
             // Right Pane
@@ -99,19 +98,18 @@ namespace AuiManagerSample
             pane2.Name("pane2").Caption("Pane 2").Right().PaneBorder(false)
                 .TopDockable(false).BottomDockable(false).Image(ImageCalendar);
             var listBox2 = CreateListBox("Pane 2");
-            listBox2.Add("TopDockable(false)");
-            listBox2.Add("BottomDockable(false)");
+            listBox2.Add("TopDock = false");
+            listBox2.Add("BottomDock = false");
             manager.AddPane(listBox2, pane2);
 
             // Bottom Pane    
             var pane3 = manager.CreatePaneInfo();
             pane3.Name("pane3").Caption("Pane 3").Bottom().PaneBorder(false)
                 .LeftDockable(false).RightDockable(false);
-            listBox3 = CreateLogListBox("Pane 3");
-            listBox3.BindApplicationLog();
-            listBox3.Add("LeftDockable(false)");
-            listBox3.Add("RightDockable(false)");
-            manager.AddPane(listBox3, pane3);
+            logListBox = CreateLogListBox("Pane 3");
+            logListBox.ContextMenu.Required();
+            logListBox.BindApplicationLog();
+            manager.AddPane(logListBox, pane3);
 
             // Toolbar pane
             var pane4 = manager.CreatePaneInfo();
@@ -257,14 +255,7 @@ namespace AuiManagerSample
             toolbar4.OverflowClick += Toolbar4_OverflowClick;
             toolbar4.ToolRightClick += Toolbar4_ToolRightClick;
 
-            listBox3.MouseRightButtonUp += Log_MouseRightButtonUp;
-
-            Log("Net Version = " + Environment.Version.ToString());
-        }
-
-        private void Log_MouseRightButtonUp(object? sender, MouseButtonEventArgs e)
-        {
-            contextMenu2.Show(listBox3, e.GetPosition(listBox3));
+            LogUtils.DebugLogVersion();
         }
 
         private void Toolbar4_ToolCommand(object? sender, EventArgs e)
@@ -294,31 +285,26 @@ namespace AuiManagerSample
 
         private void Log(string s)
         {
-            listBox3.Add(s);
-            listBox3.SelectLastItem();
+            Application.Log(s);
         }
 
         private void CalendarButton_Click(object? sender, EventArgs e)
         {
             Log("Tool Calendar clicked");
-            Log("==========");
         }
 
         private void PhotoButton_Click(object? sender, EventArgs e)
         {
             Log("Tool Photo clicked");
-            Log("==========");
         }
 
         private void PencilButton_Click(object? sender, EventArgs e)
         {
             Log("Tool Pencil clicked");
-            Log("==========");
         }
 
         private void ToolDropDown_Click(object? sender, EventArgs e)
         {
-            Log("==========");
             var isDropDownClicked = toolbar4.EventIsDropDownClicked;
             Log($"Toolbar: ToolDropDown {toolbar4.EventToolNameOrId}, DropDownPart = {isDropDownClicked}");
         }
@@ -406,7 +392,6 @@ namespace AuiManagerSample
         {
             var isDropDownClicked = toolbar4.EventIsDropDownClicked;
             Log($"Graph clicked, DropDownPart = {isDropDownClicked}");
-            Log("==========");
         }
 
         private void InitContextMenu()
@@ -429,15 +414,5 @@ namespace AuiManagerSample
             contextMenu.Items.Add(menuItem2);
         }
 
-        private void InitLogContextMenu()
-        {
-            MenuItem menuItem1 = new()
-            {
-                Text = "Clear",
-            };
-            menuItem1.Click += (sender, e) => { listBox3.Items.Clear(); };
-
-            contextMenu2.Items.Add(menuItem1);
-        }
     }
 }
