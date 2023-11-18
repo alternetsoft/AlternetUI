@@ -6,10 +6,28 @@
 - Application: DebugWriteLine, LogBeginSection, LogEndSection, LogSeparator.
 - Added PanelDeveloperTools, WindowDeveloperTools controls. 'Developer tools' is added to context menu of LogListBox.
 - Added IPropertyGridItem.FlagsAndAttributes, Control.FlagsAndAttributes, ICustomFlags, ICustomAttributes, IFlagsAndAttributes,
- Factory, SvgColors.
+ Factory, SvgColors, StatusBar.Text, FontAndColor.
 - RichTextBox: DefaultUrlColorOnWhite, DefaultUrlColorOnBlack, CreateUrlAttr.
 - Color: GetLuminance, IsOk, RHex, GHex, BHex, RGBHex, IsBlack.
 - Added svg load parameter: fill color override.
+- Fixed Window.Icon=null didn't work.
+- Collection: RemoveLast, RemoveFirst.
+- Fixed exception in Control idle event unbind.
+- Fixed Collection clear items event handling.
+- StatusBar improvements: Added visual Panel editor to MenuSample. Fixed known bugs. Added StatusBarPanel: Tag, Clone, Assign.
+ Added StatusBar: TextEllipsize, Window, Add, Clear. Improved StatusBar demo in MenuSample.
+- UIDialogListEditWindow improved: Hide toolbar buttons if they are not allowed. Apply edited property value in PropertyGrid before Ok button is pressed.
+- Add PropertyGrid methods: ClearSelection, ClearModifiedStatus, CollapseAll, EditorValidate, ExpandAll.
+- Improved in Control: ResetBackgroundColor, ResetForegroundColor.
+- Fixed Control OnGotFocus, OnLostFocus now are called.
+- Control: BackgroundStyle, GetStaticDefaultFontAndColor, GetDefaultFontAndColor, IsTransparentBackgroundSupported,
+ AlwaysShowScrollbars, GetChildrenRecursive.
+- Fixed DrawingSample bad painting on Linux.
+- CardPanel and CardPanelHeader can be used together.
+- Improved CardPanelHeader: Now possible to specify active/inactive tab foreground and background colors and whether to use them.
+ Also active tab bold style is now optional.
+- Better exception handling.
+- Fixed exception in key handling under Ubuntu 23.
 
 ---
 
