@@ -262,6 +262,9 @@ namespace Alternet.UI
                 {
                     UpdateTab(tab);
                 }
+
+                if (UpdateCardsVisible) SetCardsVisible();
+                CardsWidthToMax(UpdateCardsMode);
             }
         }
 
@@ -292,18 +295,24 @@ namespace Alternet.UI
             }
 
             var id = SelectedTab?.CardUniqueId;
-            if (id is null)
-                cardPanel?.Hide();
 
-            SelectedTab?.CardControl?.Show();
-
-            if(id is not null)
+            cardPanel?.SuspendLayout();
+            try
             {
-                cardPanel?.SetActiveCard(id);
-                cardPanel?.Show();
-                cardPanel?.PerformLayout();
-                cardPanel?.Refresh();
-                Application.DoEvents();
+                if (id is null)
+                    cardPanel?.Hide();
+
+                SelectedTab?.CardControl?.Show();
+
+                if (id is not null)
+                {
+                    cardPanel?.Show();
+                    cardPanel?.SetActiveCard(id);
+                }
+            }
+            finally
+            {
+                cardPanel?.ResumeLayout();
             }
         }
 
@@ -389,7 +398,10 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="text">Item title.</param>
         /// <param name="cardControl">Associated card control.</param>
-        public virtual CardPanelHeaderItem Add(string text, Control? cardControl = null)
+        /// <returns>
+        /// Created item index.
+        /// </returns>
+        public virtual int Add(string text, Control? cardControl = null)
         {
             var control = new Button(text)
             {
@@ -408,7 +420,7 @@ namespace Alternet.UI
 
             UpdateTab(item);
 
-            return item;
+            return tabs.Count-1;
         }
 
         /// <summary>
@@ -416,11 +428,15 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="text">Item title.</param>
         /// <param name="cardId">Associated card unique id.</param>
-        public virtual CardPanelHeaderItem Add(string text, ObjectUniqueId cardId)
+        /// <returns>
+        /// Created item index.
+        /// </returns>
+        public virtual int Add(string text, ObjectUniqueId cardId)
         {
-            var result = Add(text);
-            result.CardUniqueId = cardId;
-            return result;
+            var index = Add(text);
+            var item = tabs[index];
+            item.CardUniqueId = cardId;
+            return index;
         }
 
         /// <summary>
@@ -512,12 +528,11 @@ namespace Alternet.UI
         {
             foreach(var tab in tabs)
             {
-                if(sender == tab.HeaderControl && SelectedTab != tab)
+                if(sender == tab.HeaderControl)
                 {
                     SelectedTab = tab;
-                    if(UpdateCardsVisible) SetCardsVisible();
-                    CardsWidthToMax(UpdateCardsMode);
                     TabClick?.Invoke(this, EventArgs.Empty);
+                    return;
                 }
             }
         }

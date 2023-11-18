@@ -31,7 +31,7 @@ namespace ControlsSample
         {
             Padding = 5;
             panel.Parent = this;
-            showPopupListBoxButton.Parent = this;
+            showPopupListBoxButton.Parent = panel;
             showPopupListBoxButton.Click += ShowPopupListBoxButton_Click;
 
             popupListBox.MainControl.MouseLeftButtonUp += PopupListBox_MouseLeftButtonUp;
