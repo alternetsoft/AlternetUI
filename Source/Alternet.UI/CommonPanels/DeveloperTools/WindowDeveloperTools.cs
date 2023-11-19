@@ -66,6 +66,12 @@ namespace Alternet.UI
 
         private void Designer_ControlDisposed(object? sender, EventArgs e)
         {
+            if (panel.LastFocusedControl == sender)
+                panel.LastFocusedControl = null;
+
+            var propGridControl = panel.PropGrid.FirstItemInstance;
+            if(sender == propGridControl)
+                panel.PropGrid.Clear();
         }
 
         private void Designer_ControlParentChanged(object? sender, EventArgs e)
@@ -105,6 +111,7 @@ namespace Alternet.UI
                 return;
             if (IgnoreControl(control))
                 return;
+            panel.LastFocusedControl = control;
 
             if (logGotFocus)
                 Application.Log(control.GetType().Name);

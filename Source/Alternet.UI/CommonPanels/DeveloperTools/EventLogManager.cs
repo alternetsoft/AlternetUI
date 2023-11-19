@@ -50,6 +50,8 @@ namespace Alternet.UI
 
                 foreach (var item in events)
                 {
+                    if (item.DeclaringType != type)
+                        continue;
                     var isBinded = EventLogManager.IsEventLogged(type, item);
                     var prop = eventGrid.CreateBoolItem(item.Name, null, isBinded);
                     prop.FlagsAndAttributes.SetAttribute("InstanceType", type);
