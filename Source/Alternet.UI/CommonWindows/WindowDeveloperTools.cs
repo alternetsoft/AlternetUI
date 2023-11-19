@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
+using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -72,22 +74,43 @@ namespace Alternet.UI
 
         private void Designer_ControlCreated(object? sender, EventArgs e)
         {
+            if (sender is not Control control)
+                return;
+            if (IgnoreControl(control))
+                return;
+
+            var type = sender?.GetType();
+            if (type is null)
+                return;
+            var events = AssemblyUtils.EnumEvents(type, true);
+
+            foreach (var item in events)
+            {
+                var handler = CodeGeneratorUtils.GetEventLogDelegate(item);
+                if(handler is not null)
+                    item.AddEventHandler(sender, handler);
+            }
+        }
+
+        private bool IgnoreControl(Control control)
+        {
+            if (control.ParentWindow is WindowDeveloperTools)
+                return true;
+            return false;
         }
 
         private void Designer_ControlGotFocus(object? sender, EventArgs e)
         {
-            var focusedControl = Control.GetFocusedControl();
-            if (focusedControl is null)
+            if (sender is not Control control)
                 return;
-            var parentWindow = focusedControl.ParentWindow;
-            if (parentWindow is null || parentWindow is WindowDeveloperTools)
+            if (IgnoreControl(control))
                 return;
 
-            if(logGotFocus)
-                Application.Log(focusedControl.GetType().Name);
+            if (logGotFocus)
+                Application.Log(control.GetType().Name);
 
             if (logFocusedControl)
-                LogFocusedControl(focusedControl);
+                LogFocusedControl(control);
         }
 
         private void LogFocusedControl(Control control)
