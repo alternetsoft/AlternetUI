@@ -446,6 +446,38 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Initializes <see cref="PictureBox"/> with error image and other options.
+        /// </summary>
+        /// <param name="picture"></param>
+        public static void InitErrorPicture(PictureBox picture)
+        {
+            picture.Image = KnownSvgImages.GetWarningImage(
+                picture.GetSvgColor(KnownSvgColor.Error));
+            picture.VerticalAlignment = VerticalAlignment.Center;
+            picture.ImageVisible = false;
+            picture.ImageStretch = false;
+            picture.TabStop = false;
+
+            picture.MouseLeftButtonUp += Picture_MouseLeftButtonUp;
+
+            static void Picture_MouseLeftButtonUp(object? sender, MouseButtonEventArgs e)
+            {
+                if (sender is not PictureBox pictureBox)
+                    return;
+                e.Handled = true;
+
+                pictureBox.HideToolTip();
+
+                RichToolTip.Show(
+                    ErrorMessages.Default.ErrorTitle,
+                    pictureBox.ToolTip,
+                    pictureBox,
+                    RichToolTipKind.None,
+                    MessageBoxIcon.Error);
+            }
+        }
+
+        /// <summary>
         /// Returns the number of lines in the text control buffer.
         /// </summary>
         /// <returns></returns>
@@ -926,38 +958,6 @@ namespace Alternet.UI
                 default:
                     var defaultResult = ValidatorErrorText ?? DefaultValidatorErrorText;
                     return defaultResult ?? ErrorMessages.Default.ValidationInvalidFormat;
-            }
-        }
-
-        /// <summary>
-        /// Initializes <see cref="PictureBox"/> with error image and other options.
-        /// </summary>
-        /// <param name="picture"></param>
-        public static void InitErrorPicture(PictureBox picture)
-        {
-            picture.Image = KnownSvgImages.GetWarningImage(
-                picture.GetSvgColor(KnownSvgColor.Error));
-            picture.VerticalAlignment = VerticalAlignment.Center;
-            picture.ImageVisible = false;
-            picture.ImageStretch = false;
-            picture.TabStop = false;
-
-            picture.MouseLeftButtonUp += Picture_MouseLeftButtonUp;
-
-            static void Picture_MouseLeftButtonUp(object? sender, MouseButtonEventArgs e)
-            {
-                if (sender is not PictureBox pictureBox)
-                    return;
-                e.Handled = true;
-
-                pictureBox.HideToolTip();
-
-                RichToolTip.Show(
-                    ErrorMessages.Default.ErrorTitle,
-                    pictureBox.ToolTip,
-                    pictureBox,
-                    RichToolTipKind.None,
-                    MessageBoxIcon.Error);
             }
         }
     }
