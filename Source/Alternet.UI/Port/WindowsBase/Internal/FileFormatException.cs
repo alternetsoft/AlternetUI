@@ -128,26 +128,29 @@ namespace Alternet.UI
             _sourceUri = sourceUri;
         }
 
-        /// <summary>
+        /*/// <summary>
         /// <inheritdoc/>
         /// </summary>
-        protected FileFormatException(SerializationInfo info, StreamingContext context) : base(info, context)
+        protected FileFormatException(SerializationInfo info, StreamingContext context)
+            : base(info, context)
         {
             string? sourceUriString = info.GetString("SourceUri");
             if (sourceUriString != null)
                 _sourceUri = new Uri(sourceUriString, UriKind.RelativeOrAbsolute);
-        }
+        }*/
 
         /// <summary>
         /// Sets the SerializationInfo object with the file name and additional exception information.
         /// </summary>
         /// <param name="info">The object that holds the serialized object data.</param>
         /// <param name="context">The contextual information about the source or destination.</param>
+#pragma warning disable
         public override void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             base.GetObjectData(info, context);
             info.AddValue("SourceUri", SourceUri?.GetComponents(UriComponents.SerializationInfoString, UriFormat.SafeUnescaped), typeof(string));
         }
+#pragma warning restore
 
         /// <summary>
         /// Returns the name of a file that caused this exception. This property may be equal to an empty string

@@ -44,13 +44,13 @@ namespace Alternet.UI
         {
         }
 
-        ///<summary>
+        /*///<summary>
         /// Constructor
         ///</summary>
         protected ValueUnavailableException(System.Runtime.Serialization.SerializationInfo info,
                                             System.Runtime.Serialization.StreamingContext context) : base(info, context)
         {
-        }
+        }*/
 
         #endregion Constructors
     }

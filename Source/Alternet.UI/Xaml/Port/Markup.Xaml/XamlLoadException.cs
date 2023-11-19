@@ -10,9 +10,9 @@ namespace Alternet.UI.Markup.Xaml
         {
         }
 
-        protected XamlLoadException(SerializationInfo info, StreamingContext context): base(info, context)
+        /*protected XamlLoadException(SerializationInfo info, StreamingContext context): base(info, context)
         {
-        }
+        }*/
 
         public XamlLoadException(string message): base(message)
         {
