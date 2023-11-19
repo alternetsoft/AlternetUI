@@ -13,6 +13,8 @@ namespace Alternet.UI
     /// </summary>
     public class ListControlItem
     {
+        private ObjectUniqueId? uniqueId;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="ListControlItem"/> class.
         /// </summary>
@@ -33,6 +35,17 @@ namespace Alternet.UI
         {
             Text = text;
             Action = action;
+        }
+
+        /// <summary>
+        /// Gets unique id of this object.
+        /// </summary>
+        public ObjectUniqueId UniqueId
+        {
+            get
+            {
+                return uniqueId ??= new();
+            }
         }
 
         /// <summary>
