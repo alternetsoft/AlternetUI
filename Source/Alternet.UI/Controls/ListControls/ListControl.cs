@@ -19,6 +19,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets string search provider.
         /// </summary>
+        [Browsable(false)]
         public virtual StringSearch Search
         {
             get => search ??= new(this);
@@ -45,7 +46,15 @@ namespace Alternet.UI
         /// </summary>
         /// <value>A zero-based index of the currently selected item. A value
         /// of <c>null</c> is returned if no item is selected.</value>
+        [Browsable(false)]
         public abstract int? SelectedIndex { get; set; }
+
+        /// <summary>
+        /// Returns <see cref="Action"/> associated with the <see cref="SelectedItem"/> if it is
+        /// <see cref="ListControlItem"/>.
+        /// </summary>
+        [Browsable(false)]
+        public virtual Action? SelectedAction => (SelectedItem as ListControlItem)?.Action;
 
         /// <summary>
         /// Gets the items of the <see cref="ListControl"/>.
@@ -123,6 +132,7 @@ namespace Alternet.UI
             set => LastItem = value;
         }
 
+        [Browsable(false)]
         int IReadOnlyStrings.Count => Items.Count;
 
         /// <summary>
@@ -187,6 +197,22 @@ namespace Alternet.UI
         public virtual int Add(string text, object? data)
         {
             return Add(new ListControlItem(text, data));
+        }
+
+        /// <summary>
+        /// Adds <paramref name="text"/> with <paramref name="action"/> to the end of
+        /// the <see cref="Items"/> collection.
+        /// </summary>
+        /// <param name="text">Item text (title).</param>
+        /// <param name="action">Action associated with the item.</param>
+        /// <remarks>
+        /// This method creates <see cref="ListControlItem"/>, assigns its properties with
+        /// <paramref name="text"/> and <paramref name="action"/>. Created object is added to
+        /// the <see cref="Items"/> collection.
+        /// </remarks>
+        public virtual int Add(string text, Action action)
+        {
+            return Add(new ListControlItem(text, action));
         }
 
         /// <summary>

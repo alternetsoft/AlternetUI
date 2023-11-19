@@ -16,12 +16,23 @@ namespace Alternet.UI
         /// <summary>
         /// Initializes a new instance of the <see cref="ListControlItem"/> class.
         /// </summary>
-        /// <param name="text">Text to display in the <see cref="ListControl"/></param>
+        /// <param name="text">Text to display.</param>
         /// <param name="value">User data.</param>
         public ListControlItem(string text, object? value = null)
         {
             Text = text;
             Value = value;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ListControlItem"/> class.
+        /// </summary>
+        /// <param name="text">Text to display.</param>
+        /// <param name="action">Action associated with the item.</param>
+        public ListControlItem(string text, Action? action)
+        {
+            Text = text;
+            Action = action;
         }
 
         /// <summary>
