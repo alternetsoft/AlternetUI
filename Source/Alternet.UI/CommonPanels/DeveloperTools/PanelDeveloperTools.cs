@@ -204,7 +204,6 @@ namespace Alternet.UI
 
             AddAction("Show Props FirstWindow", ControlsActionMainForm);
             AddAction("Show Props FocusedControl", ControlsActionFocusedControl);
-
         }
     }
 }

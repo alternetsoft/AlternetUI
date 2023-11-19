@@ -34,10 +34,9 @@ namespace Alternet.UI
             // event handler method. (You can use also dynamic methods,
             // which are simpler because there is no need to create an
             // assembly, module, or type.)
-            //
             AssemblyName aName = new()
             {
-                Name = assemblyTypeName
+                Name = assemblyTypeName,
             };
             AssemblyBuilder ab = AssemblyBuilder.DefineDynamicAssembly(aName, AssemblyBuilderAccess.Run);
             moduleBuilder = ab.DefineDynamicModule(aName.Name);
@@ -97,9 +96,11 @@ namespace Alternet.UI
             // The parameter types and return type of the method are
             // the same as those of the delegate's Invoke method,
             // captured earlier.
-            MethodBuilder handler = tb.DefineMethod(dynamicHandlerName,
+            MethodBuilder handler = tb.DefineMethod(
+                dynamicHandlerName,
                 MethodAttributes.Public | MethodAttributes.Static,
-                invokeMethod?.ReturnType, parmTypes);
+                invokeMethod?.ReturnType,
+                parmTypes);
 
             // Generate code to handle the event. In this case, the
             // handler simply prints a text string to the console.

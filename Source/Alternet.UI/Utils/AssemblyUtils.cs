@@ -259,6 +259,7 @@ namespace Alternet.UI
                     continue;
                 return true;
             }
+
             return false;
         }
 
