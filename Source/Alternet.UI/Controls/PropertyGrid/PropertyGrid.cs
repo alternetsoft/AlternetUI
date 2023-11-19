@@ -1103,8 +1103,7 @@ namespace Alternet.UI
         /// <returns>Created and added property item.</returns>
         public virtual IPropertyGridItem AddConstItem(string label, string? name, object? value)
         {
-            var prm = PropertyGrid.CreateNewItemParams();
-            var item = CreateStringItem(label, name, value?.ToString() ?? string.Empty, prm);
+            var item = CreateStringItem(label, name, value?.ToString() ?? string.Empty);
             Add(item);
             SetPropertyReadOnly(item, true, false);
             return item;
