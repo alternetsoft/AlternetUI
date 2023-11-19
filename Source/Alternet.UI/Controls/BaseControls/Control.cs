@@ -3345,6 +3345,7 @@ namespace Alternet.UI
         /// <param name="e">Event arguments.</param>
         protected virtual void OnParentChanged(EventArgs e)
         {
+            Designer?.RaiseParentChanged(this);
             ParentChanged?.Invoke(this, e);
         }
 

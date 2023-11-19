@@ -28,6 +28,11 @@ namespace Alternet.UI
         public event EventHandler? ControlDisposed;
 
         /// <summary>
+        /// Occurs when the control's parent was changed.
+        /// </summary>
+        public event EventHandler? ControlParentChanged;
+
+        /// <summary>
         /// Gets or sets default <see cref="IComponentDesigner"/>.
         /// </summary>
         public static IComponentDesigner? Default { get; set; }
@@ -79,6 +84,12 @@ namespace Alternet.UI
         public void RaiseDisposed(Control control)
         {
             ControlDisposed?.Invoke(this, EventArgs.Empty);
+        }
+
+        /// <see cref="IComponentDesigner.RaiseParentChanged"/>
+        public void RaiseParentChanged(Control control)
+        {
+            ControlParentChanged?.Invoke(this, EventArgs.Empty);
         }
     }
 }

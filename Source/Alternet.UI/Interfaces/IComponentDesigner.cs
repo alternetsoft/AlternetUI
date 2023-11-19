@@ -19,17 +19,22 @@ namespace Alternet.UI
         /// <summary>
         /// Occurs when the control receives focus.
         /// </summary>
-        event EventHandler ControlGotFocus;
+        event EventHandler? ControlGotFocus;
 
         /// <summary>
         /// Occurs when the control created.
         /// </summary>
-        event EventHandler ControlCreated;
+        event EventHandler? ControlCreated;
 
         /// <summary>
         /// Occurs when the control disposed.
         /// </summary>
-        event EventHandler ControlDisposed;
+        event EventHandler? ControlDisposed;
+
+        /// <summary>
+        /// Occurs when the control's parent was changed.
+        /// </summary>
+        event EventHandler? ControlParentChanged;
 
         /// <summary>
         /// Notifies designer about property change.
@@ -56,5 +61,11 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="control">Control which was disposed.</param>
         void RaiseDisposed(Control control);
+
+        /// <summary>
+        /// Notifiers designer when control's parent was changed.
+        /// </summary>
+        /// <param name="control">Affected control.</param>
+        void RaiseParentChanged(Control control);
     }
 }
