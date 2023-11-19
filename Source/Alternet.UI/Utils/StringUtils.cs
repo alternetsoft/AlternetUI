@@ -85,6 +85,15 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Generates unique string in the format A00000000000000000000000000000000 where
+        /// 0 represents a digit.
+        /// </summary>
+        public static string GetUniqueString()
+        {
+            return $"A{Guid.NewGuid():N}";
+        }
+
+        /// <summary>
         /// Gets whether <paramref name="text"/> is a hex number.
         /// </summary>
         /// <param name="text">Text.</param>
