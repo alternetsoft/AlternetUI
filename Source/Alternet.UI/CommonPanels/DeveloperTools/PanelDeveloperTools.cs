@@ -12,7 +12,6 @@ namespace Alternet.UI
     internal class PanelDeveloperTools : PanelAuiManager
     {
         private readonly IAuiNotebookPage? mainLogPage;
-        private int? controlsItemFocusedControl;
 
         private readonly LogListBox mainLogListBox = new()
         {
@@ -23,6 +22,7 @@ namespace Alternet.UI
         private IAuiNotebookPage? typesPage;
         private ListBox? controlsListBox;
         private IAuiNotebookPage? controlsPage;
+        private bool insideSetProps;
 
         public PanelDeveloperTools()
             : base()
@@ -45,17 +45,14 @@ namespace Alternet.UI
             PropGrid.Features = PropertyGridFeature.QuestionCharInNullable;
             PropGrid.ProcessException += PropertyGrid_ProcessException;
             PropGrid.CreateStyleEx = PropertyGridCreateStyleEx.AlwaysAllowFocus;
+            PropGrid.SuggestedInitDefaults();
 
-            RightNotebook.ChangeSelection(0);
-            ControlsListBox.Required();
             InitActions();
             DebugUtils.HookExceptionEvents();
             TypesListBox.SelectionChanged += TypesListBox_SelectionChanged;
             CenterNotebook.ChangeSelection(0);
-            PropGrid.SuggestedInitDefaults();
+            RightNotebook.ChangeSelection(0);
         }
-
-        internal int? ControlsItemFocusedControl => controlsItemFocusedControl;
 
         internal IAuiNotebookPage? MainLogPage => mainLogPage;
 
@@ -117,12 +114,6 @@ namespace Alternet.UI
                         Parent = this,
                         HasBorder = false,
                     };
-
-                    controlsListBox.Add("FirstWindow", ControlsActionMainForm);
-                    controlsItemFocusedControl  = controlsListBox.Add("FocusedControl", ControlsActionFocusedControl);
-                    controlsListBox.Add("Clear", ControlsActionEmpty);
-                    controlsListBox.SelectionChanged += ControlsListBox_SelectionChanged;
-
                     controlsPage = CenterNotebook.AddPage(controlsListBox, "Controls");
                 }
 
@@ -132,25 +123,30 @@ namespace Alternet.UI
 
         internal void PropGridSetProps(object? instance)
         {
-            RightNotebook.ChangeSelection(PropGrid);
-            PropGrid.DoInsideUpdate(() =>
+            if (insideSetProps)
+                return;
+            insideSetProps = true;
+            try
             {
-                PropGrid.Clear();
-                if (instance is null)
-                    return;
-                PropGrid.AddConstItem("(type)", null, instance.GetType().Name);
-                PropGrid.AddProps(instance, null, true);
-            });
+                PropGrid.DoInsideUpdate(() =>
+                {
+                    PropGrid.Clear();
+                    if (instance is null)
+                        return;
+                    PropGrid.AddConstItem("(type)", "(type)", instance.GetType().Name);
+                    PropGrid.AddProps(instance, null, true);
+                });
+            }
+            finally
+            {
+                insideSetProps = false;
+            }
         }
 
         private void ControlsListBox_SelectionChanged(object? sender, EventArgs e)
         {
+            RightNotebook.ChangeSelection(PropGrid);
             controlsListBox?.SelectedAction?.Invoke();
-        }
-
-        private void ControlsActionEmpty()
-        {
-            PropGridSetProps(null);
         }
 
         private void PropertyGrid_ProcessException(object? sender, PropertyGridExceptionEventArgs e)
@@ -161,6 +157,7 @@ namespace Alternet.UI
 
         private void ControlsActionMainForm()
         {
+            RightNotebook.ChangeSelection(PropGrid);
             PropGridSetProps(Application.FirstWindow());
         }
 
@@ -204,6 +201,10 @@ namespace Alternet.UI
             AddAction("Log useful defines", LogUsefulDefines);
             AddAction("Log OS information", LogOSInformation);
             AddAction("C++ Throw", () => { WebBrowser.DoCommandGlobal("CppThrow"); });
+
+            AddAction("Show Props FirstWindow", ControlsActionMainForm);
+            AddAction("Show Props FocusedControl", ControlsActionFocusedControl);
+
         }
     }
 }
