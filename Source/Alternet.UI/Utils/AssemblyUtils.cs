@@ -242,6 +242,27 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets whether specified type has declared events (events declared in the parent
+        /// types are not counted).
+        /// </summary>
+        /// <param name="type">Type.</param>
+        /// <returns></returns>
+        public static bool HasOwnEvents(Type? type)
+        {
+            if (type == null)
+                return false;
+            var events = AssemblyUtils.EnumEvents(type, true);
+
+            foreach (var item in events)
+            {
+                if (item.DeclaringType != type)
+                    continue;
+                return true;
+            }
+            return false;
+        }
+
+        /// <summary>
         /// Enumerates event information for the specified <see cref="Type"/>.
         /// </summary>
         /// <param name="type">Type which events are enumerated.</param>
