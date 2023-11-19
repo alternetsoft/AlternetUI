@@ -1,0 +1,1 @@
+sudo apt -y install dotnet-sdk-8.0
