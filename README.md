@@ -17,7 +17,7 @@ Steps needed to build AlterNET UI
 - Then, to build the final packages, the artifacts (build results) from the 3 platforms need to be combined together in the last, final step.
 
 Step 1. Windows Machine Setup:
-- Install Visual Studio 2022, with C# Desktop development, C++ Desktop development workloads, VS Extenstion Development installed. Net 8.0, 6.0, 7.0, 4.62, 4.81 targeting packs are required.
+- Install Visual Studio 2022 Version 17.8.0 or later, with C# Desktop development, C++ Desktop development workloads, VS Extenstion Development installed. Net 8.0, 6.0, 7.0, 4.62, 4.81 targeting packs are required.
 - Clone the AlterNET UI repo.
 - Use the "C:\Alternet.UI" folder or any other root folder. The folder name should not contain any spaces or non-English letters.
 
