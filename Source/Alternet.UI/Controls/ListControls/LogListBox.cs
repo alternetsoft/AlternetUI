@@ -35,6 +35,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets the last logged message.
         /// </summary>
+        [Browsable(false)]
         public string? LastLogMessage
         {
             get
@@ -48,6 +49,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets context menu for the control.
         /// </summary>
+        [Browsable(false)]
         public ContextMenu ContextMenu
         {
             get
