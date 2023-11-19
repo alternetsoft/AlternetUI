@@ -207,7 +207,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets whether <see cref="Items"/> has items.
         /// </summary>
-        public bool HasItems => Items.Count > 0;
+        public bool HasItems => items.Count > 0;
 
         /// <summary>
         /// Gets first item in <see cref="Items"/>.
@@ -218,7 +218,15 @@ namespace Alternet.UI
         /// Gets <see cref="PropertyGridItem.Instance"/> of the first
         /// item in the <see cref="Items"/>.
         /// </summary>
-        public object? FirstItemInstance => Items.FirstOrDefault()?.Instance;
+        public object? FirstItemInstance
+        {
+            get
+            {
+                if (HasItems)
+                    return Items.First().Instance;
+                return null;
+            }
+        }
 
         /// <summary>
         /// Gets list of <see cref="IPropertyGridItem"/> added to this control.
@@ -1081,6 +1089,22 @@ namespace Alternet.UI
             };
             OnPropertyCreated(result, prm);
             return result;
+        }
+
+        /// <summary>
+        /// Adds constant item (readonly string).
+        /// </summary>
+        /// <param name="label">Item label.</param>
+        /// <param name="name">Item name (optional).</param>
+        /// <param name="value">Item value.</param>
+        /// <returns>Created and added property item.</returns>
+        public virtual IPropertyGridItem AddConstItem(string label, string? name, object? value)
+        {
+            var prm = PropertyGrid.CreateNewItemParams();
+            var item = CreateStringItem(label, name, value?.ToString() ?? string.Empty, prm);
+            Add(item);
+            SetPropertyReadOnly(item, true, false);
+            return item;
         }
 
         /// <summary>
@@ -2349,10 +2373,12 @@ namespace Alternet.UI
         /// added on the root level.
         /// </remarks>
         public virtual void AddProps(
-            object instance,
+            object? instance,
             IPropertyGridItem? parent = null,
             bool sort = false)
         {
+            if (instance == null)
+                return;
             var props = CreateProps(instance, sort);
             foreach (var item in props)
             {
@@ -2372,8 +2398,6 @@ namespace Alternet.UI
             try
             {
                 Clear();
-                if (instance == null)
-                    return;
                 AddProps(instance, null, sort);
             }
             finally
