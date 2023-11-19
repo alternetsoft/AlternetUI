@@ -1,5 +1,6 @@
 # 0.9.408 (work in progress)
 
+- Added Net 8.0 support.
 - Svg image default fill color is determined using IsDark (so dark themes are supported).
 - Control: IsDarkBackground, Idle event.
 - Font: PixelSize, IsUsingSizeInPixels, NumericWeight, IsFixedWidth, Weight.
@@ -28,6 +29,17 @@
  Also active tab bold style is now optional.
 - Better exception handling.
 - Fixed exception in key handling under Ubuntu 23.
+- GenericTabControl.
+- Display: ClientAreaDip, GeometryDip, PixelToDip.
+- Control: GetDisplay, PixelFromDip, GetPixelScaleFactor, PixelToDip, PixelFromDipF, HideToolTip.
+- Add PopupListBox.ResultItem, AuiToolbar.GetToolPopupLocation, PropertyGrid.SuggestedInitDefaults, StatusBar.SetText.
+- Add PopupListBox demo in AuiManagerSample (click on toolbar button opens popup list box).
+- Add PopupWindow.ShowPopup at location.
+- Control: ResetBackgroundColor, ResetForegroundColor now have 'method' parameter.
+- TextBox: DefaultResetErrorBackgroundMethod, DefaultResetErrorForegroundMethod, ResetErrorBackgroundMethod, ResetErrorForegroundMethod.
+- Application: IsAndroidOS, IsIOS, IsAndroidVersionAtLeast.
+- Control now raises global events: ControlDefaults.InitDefaults, Designer.ControlDisposed, Designer.ControlCreated.
+- Moved some props TextBox -> CustomTextEdit.
 
 ---
 
