@@ -12,6 +12,7 @@ namespace Alternet.UI
     internal class PanelDeveloperTools : PanelAuiManager
     {
         private readonly IAuiNotebookPage? mainLogPage;
+        private int? controlsItemFocusedControl;
 
         private readonly LogListBox mainLogListBox = new()
         {
@@ -53,6 +54,8 @@ namespace Alternet.UI
             CenterNotebook.ChangeSelection(0);
             PropGrid.SuggestedInitDefaults();
         }
+
+        internal int? ControlsItemFocusedControl => controlsItemFocusedControl;
 
         internal IAuiNotebookPage? MainLogPage => mainLogPage;
 
@@ -115,8 +118,8 @@ namespace Alternet.UI
                         HasBorder = false,
                     };
 
-                    controlsListBox.Add("FirstWindow (no auto refresh)", ControlsActionMainForm);
-                    controlsListBox.Add("GetFocusedControl (no auto refresh)", ControlsActionFocusedControl);
+                    controlsListBox.Add("FirstWindow", ControlsActionMainForm);
+                    controlsItemFocusedControl  = controlsListBox.Add("FocusedControl", ControlsActionFocusedControl);
                     controlsListBox.Add("Clear", ControlsActionEmpty);
                     controlsListBox.SelectionChanged += ControlsListBox_SelectionChanged;
 
@@ -125,6 +128,19 @@ namespace Alternet.UI
 
                 return controlsListBox;
             }
+        }
+
+        internal void PropGridSetProps(object? instance)
+        {
+            RightNotebook.ChangeSelection(PropGrid);
+            PropGrid.DoInsideUpdate(() =>
+            {
+                PropGrid.Clear();
+                if (instance is null)
+                    return;
+                PropGrid.AddConstItem("(type)", null, instance.GetType().Name);
+                PropGrid.AddProps(instance, null, true);
+            });
         }
 
         private void ControlsListBox_SelectionChanged(object? sender, EventArgs e)
@@ -141,19 +157,6 @@ namespace Alternet.UI
         {
             Application.LogFileIsEnabled = true;
             LogUtils.LogException(e.InnerException);
-        }
-
-        private void PropGridSetProps(object? instance)
-        {
-            RightNotebook.ChangeSelection(PropGrid);
-            PropGrid.DoInsideUpdate(() =>
-            {
-                PropGrid.Clear();
-                if (instance is null)
-                    return;
-                PropGrid.AddConstItem("(type)", null, instance.GetType().Name);
-                PropGrid.AddProps(instance, null, true);
-            });
         }
 
         private void ControlsActionMainForm()

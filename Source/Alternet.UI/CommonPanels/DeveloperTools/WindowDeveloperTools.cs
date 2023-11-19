@@ -111,6 +111,12 @@ namespace Alternet.UI
                 return;
             if (IgnoreControl(control))
                 return;
+
+            if(panel.ControlsListBox.SelectedIndex == panel.ControlsItemFocusedControl)
+            {
+                panel.PropGridSetProps(control);
+            }
+
             panel.LastFocusedControl = control;
 
             if (logGotFocus)
