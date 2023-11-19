@@ -345,8 +345,10 @@ namespace Alternet.UI
         /// <remarks>
         /// If the window is not found in the notebook, <c>null</c> is returned.
         /// </remarks>
-        public int? FindPage(Control page)
+        public int? FindPage(Control? page)
         {
+            if (page is null)
+                return null;
             var result = NativeControl.FindPage(page.WxWidget);
             if (result < 0)
                 return null;
@@ -498,9 +500,21 @@ namespace Alternet.UI
         /// This function behaves as <see cref="SetSelection"/> but does not
         /// generate the page changing events.
         /// </remarks>
-        public int ChangeSelection(int newPage)
+        public int? ChangeSelection(int? newPage)
         {
+            if (newPage is null || GetPageCount() == 0)
+                return null;
             return (int)NativeControl.ChangeSelection((ulong)newPage);
+        }
+
+        /// <summary>
+        /// Changes selected page to the page which contains <paramref name="control"/>.
+        /// </summary>
+        /// <param name="control">Control to search for.</param>
+        /// <returns></returns>
+        public int? ChangeSelection(Control? control)
+        {
+            return ChangeSelection(FindPage(control));
         }
 
         /// <summary>
