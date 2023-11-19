@@ -50,13 +50,13 @@ namespace Alternet.UI
         /// An example of such split values is <see cref="Environment.NewLine"/>
         /// which is assigned to <see cref="StringSplitToArrayChars"/> by default.
         /// </remarks>
-        public static string[] StringSplitToArrayChars { get; set; } = new string[]
-        {
+        public static string[] StringSplitToArrayChars { get; set; } =
+        [
             Environment.NewLine,
             "\r\n",
             "\n\r",
             "\n",
-        };
+        ];
 
         /// <summary>
         /// Returns <see cref="IComparer{T}"/> which converts objects to strings using

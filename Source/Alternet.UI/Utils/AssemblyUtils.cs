@@ -274,12 +274,12 @@ namespace Alternet.UI
             bool sort = false,
             BindingFlags bindingFlags = BindingFlags.Instance | BindingFlags.Public)
         {
-            List<EventInfo> result = new();
+            List<EventInfo> result = [];
 
             IList<EventInfo> props =
                 new List<EventInfo>(type.GetEvents(bindingFlags));
 
-            SortedList<string, EventInfo> addedNames = new();
+            SortedList<string, EventInfo> addedNames = [];
 
             foreach (var p in props)
             {
@@ -726,7 +726,7 @@ namespace Alternet.UI
             bool ascending = true,
             bool isPublic = true)
         {
-            List<Type> result = new();
+            List<Type> result = [];
 
             Assembly asm = type.Assembly;
 

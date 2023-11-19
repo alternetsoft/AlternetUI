@@ -30,7 +30,7 @@ namespace Alternet.UI
         private static bool? isOS;
 #endif
 
-        private readonly List<Window> windows = new();
+        private readonly List<Window> windows = [];
         private readonly KeyboardInputProvider keyboardInputProvider;
         private readonly MouseInputProvider mouseInputProvider;
 
