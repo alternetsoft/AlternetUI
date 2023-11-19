@@ -1354,6 +1354,8 @@ namespace Alternet.UI
 
             set
             {
+                if (value == ControlBackgroundStyle.Transparent)
+                    return;
                 NativeControl?.SetBackgroundStyle((int)value);
             }
         }
