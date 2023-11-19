@@ -57,6 +57,13 @@ namespace Alternet.UI
         public virtual Action? SelectedAction => (SelectedItem as ListControlItem)?.Action;
 
         /// <summary>
+        /// Returns <see cref="ObjectUniqueId"/> associated with the <see cref="SelectedItem"/> if it is
+        /// <see cref="ListControlItem"/>.
+        /// </summary>
+        [Browsable(false)]
+        public virtual ObjectUniqueId? SelectedUniqueId => (SelectedItem as ListControlItem)?.UniqueId;
+
+        /// <summary>
         /// Gets the items of the <see cref="ListControl"/>.
         /// </summary>
         /// <value>An <see cref="Collection{Object}"/> representing the items
