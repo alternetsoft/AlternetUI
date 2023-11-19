@@ -506,14 +506,14 @@ namespace Alternet.UI
                 object? SmartTextAsNumber()
                 {
                     TryParseNumberDelegate[] procs =
-                    {
+                    [
                         StringUtils.TryParseInt32,
                         StringUtils.TryParseUInt32,
                         StringUtils.TryParseInt64,
                         StringUtils.TryParseUInt64,
                         StringUtils.TryParseDouble,
                         StringUtils.TryParseDecimal,
-                    };
+                    ];
 
                     foreach (var proc in procs)
                     {
