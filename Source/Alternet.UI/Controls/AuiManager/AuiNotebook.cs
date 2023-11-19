@@ -504,7 +504,7 @@ namespace Alternet.UI
         {
             if (newPage is null || GetPageCount() == 0)
                 return null;
-            return (int)NativeControl.ChangeSelection((ulong)newPage);
+            return (int)NativeControl.ChangeSelection((ulong)newPage.Value);
         }
 
         /// <summary>
