@@ -1343,6 +1343,8 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the background style of the control.
         /// </summary>
+        /// <remarks><see cref="ControlBackgroundStyle.Transparent"/> style is not possible
+        /// to set as it is not supported on all platforms.</remarks>
         [Browsable(false)]
         public ControlBackgroundStyle BackgroundStyle
         {
