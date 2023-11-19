@@ -217,7 +217,7 @@ namespace Alternet.UI
             {
                 if (visualChildren == null)
                 {
-                    visualChildren = new Collection<Control>();
+                    visualChildren = [];
                     visualChildren.ItemInserted += VisualChildren_ItemInserted;
                     visualChildren.ItemRemoved += VisualChildren_ItemRemoved;
                 }
@@ -336,18 +336,15 @@ namespace Alternet.UI
             set => NativeControl!.AllowDrop = value;
         }
 
-        internal Native.Control? NativeControl
+        internal Native.Control NativeControl
         {
             get
             {
                 if (nativeControl == null)
                 {
-                    if (NeedsNativeControl())
-                    {
-                        nativeControl = CreateNativeControl();
-                        nativeControl.handler = this;
-                        OnNativeControlCreated();
-                    }
+                    nativeControl = CreateNativeControl();
+                    nativeControl.handler = this;
+                    OnNativeControlCreated();
                 }
 
                 return nativeControl;
@@ -364,12 +361,12 @@ namespace Alternet.UI
         /// </summary>
         protected virtual bool NeedsPaint => false;
 
-        /// <summary>
+        /*/// <summary>
         /// This property may be overridden by control handlers to indicate that
         /// the native control creation is required
         /// even if the control is a visual child. Default value is <c>false</c>.
         /// </summary>
-        protected virtual bool VisualChildNeedsNativeControl => false;
+        protected bool VisualChildNeedsNativeControl => false;*/
 
         private protected virtual bool NeedRelayoutParentOnVisibleChanged =>
             Control.Parent is not TabControl; // todo
@@ -850,21 +847,21 @@ namespace Alternet.UI
         /// </summary>
         protected virtual void OnIsVisualChildChanged()
         {
-            if (!NeedsNativeControl())
+            /*if (!NeedsNativeControl())*/
                 DisposeNativeControl();
         }
 
-        /// <summary>
+        /*/// <summary>
         /// Gets a value indicating whether the control needs a native control
         /// to be created.
         /// </summary>
-        protected virtual bool NeedsNativeControl()
+        protected bool NeedsNativeControl()
         {
-            if (IsVisualChild)
-                return VisualChildNeedsNativeControl;
+            // if (IsVisualChild)
+            //    return VisualChildNeedsNativeControl;
 
             return true;
-        }
+        }*/
 
         /// <summary>
         /// Gets the size of the control specified in its

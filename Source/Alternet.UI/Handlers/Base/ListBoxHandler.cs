@@ -16,8 +16,8 @@ namespace Alternet.UI
         /// </summary>
         public new ListBox Control => (ListBox)base.Control;
 
-        /// <inheritdoc/>
-        protected override bool VisualChildNeedsNativeControl => true;
+        /*/// <inheritdoc/>
+        protected override bool VisualChildNeedsNativeControl => true;*/
 
         /// <summary>
         /// Ensures that the item is visible within the control, scrolling

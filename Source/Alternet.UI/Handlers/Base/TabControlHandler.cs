@@ -22,7 +22,7 @@ namespace Alternet.UI
         internal new Native.TabControl NativeControl =>
             (Native.TabControl)base.NativeControl!;
 
-        /// <inheritdoc/>
-        protected override bool VisualChildNeedsNativeControl => true;
+        /*/// <inheritdoc/>
+        protected override bool VisualChildNeedsNativeControl => true;*/
     }
 }

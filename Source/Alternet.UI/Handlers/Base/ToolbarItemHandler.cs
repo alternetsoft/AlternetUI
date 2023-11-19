@@ -24,7 +24,7 @@ namespace Alternet.UI
         /// </summary>
         public abstract bool IsCheckable { get; set; }
 
-        /// <inheritdoc/>
-        protected override bool VisualChildNeedsNativeControl => true;
+        /*/// <inheritdoc/>
+        protected override bool VisualChildNeedsNativeControl => true;*/
     }
 }

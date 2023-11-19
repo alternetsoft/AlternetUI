@@ -14,7 +14,7 @@ namespace Alternet.UI
         /// </summary>
         public new ScrollViewer Control => (ScrollViewer)base.Control;
 
-        /// <inheritdoc/>
-        protected override bool VisualChildNeedsNativeControl => true;
+        /*/// <inheritdoc/>
+        protected override bool VisualChildNeedsNativeControl => true;*/
     }
 }

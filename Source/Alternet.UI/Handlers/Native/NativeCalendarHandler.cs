@@ -8,8 +8,8 @@ namespace Alternet.UI
 
         public new Calendar Control => (Calendar)base.Control;
 
-        /// <inheritdoc/>
-        protected override bool VisualChildNeedsNativeControl => true;
+        /*/// <inheritdoc/>
+        protected override bool VisualChildNeedsNativeControl => true;*/
 
         internal override Native.Control CreateNativeControl()
         {

@@ -41,8 +41,8 @@ namespace Alternet.UI
         /// </summary>
         public abstract ListViewGridLinesDisplayMode GridLinesDisplayMode { get; set; }
 
-        /// <inheritdoc/>
-        protected override bool VisualChildNeedsNativeControl => true;
+        /*/// <inheritdoc/>
+        protected override bool VisualChildNeedsNativeControl => true;*/
 
         /// <summary>
         /// Provides list view item information, at a given client point, in device-independent units (1/96th inch per

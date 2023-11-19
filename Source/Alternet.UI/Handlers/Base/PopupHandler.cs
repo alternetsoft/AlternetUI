@@ -10,8 +10,8 @@ namespace Alternet.UI
         /// </summary>
         public new Popup Control => (Popup)base.Control;
 
-        /// <inheritdoc/>
-        protected override bool VisualChildNeedsNativeControl => true;
+        /*/// <inheritdoc/>
+        protected override bool VisualChildNeedsNativeControl => true;*/
 
         /// <summary>
         /// Changes size of the popup to fit the size of its content.

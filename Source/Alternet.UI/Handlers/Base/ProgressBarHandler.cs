@@ -22,7 +22,7 @@ namespace Alternet.UI
         /// <value>One of the <see cref="ProgressBarOrientation"/> values.</value>
         public abstract ProgressBarOrientation Orientation { get; set; }
 
-        /// <inheritdoc/>
-        protected override bool VisualChildNeedsNativeControl => true;
+        /*/// <inheritdoc/>
+        protected override bool VisualChildNeedsNativeControl => true;*/
     }
 }

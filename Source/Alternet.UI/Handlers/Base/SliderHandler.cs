@@ -24,7 +24,7 @@ namespace Alternet.UI
         /// </summary>
         public abstract SliderTickStyle TickStyle { get; set; }
 
-        /// <inheritdoc/>
-        protected override bool VisualChildNeedsNativeControl => true;
+        /*/// <inheritdoc/>
+        protected override bool VisualChildNeedsNativeControl => true;*/
     }
 }

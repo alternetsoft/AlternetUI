@@ -16,7 +16,7 @@ namespace Alternet.UI
         /// </summary>
         public new CheckListBox Control => (CheckListBox)base.Control;
 
-        /// <inheritdoc/>
-        protected override bool VisualChildNeedsNativeControl => true;
+        /*/// <inheritdoc/>
+        protected override bool VisualChildNeedsNativeControl => true;*/
     }
 }

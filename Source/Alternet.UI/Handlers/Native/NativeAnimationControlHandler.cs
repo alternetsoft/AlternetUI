@@ -8,22 +8,12 @@ namespace Alternet.UI
 
         public new AnimationPlayer Control => (AnimationPlayer)base.Control;
 
-        /// <inheritdoc/>
-        protected override bool VisualChildNeedsNativeControl => true;
+        /*/// <inheritdoc/>
+        protected override bool VisualChildNeedsNativeControl => true;*/
 
         internal override Native.Control CreateNativeControl()
         {
             return new Native.AnimationControl();
-        }
-
-        protected override void OnAttach()
-        {
-            base.OnAttach();
-        }
-
-        protected override void OnDetach()
-        {
-            base.OnDetach();
         }
     }
 }

@@ -48,8 +48,8 @@ namespace Alternet.UI
         /// </summary>
         public abstract ControlStateImages StateImages { get; set; }
 
-        /// <inheritdoc/>
-        protected override bool VisualChildNeedsNativeControl => true;
+        /*/// <inheritdoc/>
+        protected override bool VisualChildNeedsNativeControl => true;*/
 
         /// <inheritdoc cref="Button.SetImagePosition"/>
         public abstract void SetImagePosition(GenericDirection dir);

@@ -1036,12 +1036,12 @@ namespace Alternet.UI
                     return;
                 backgroundColor = value;
 
-                if (Handler.NativeControl is not null)
+                if (NativeControl is not null)
                 {
                     if (backgroundColor is null)
                         ResetBackgroundColor();
                     else
-                        Handler.NativeControl.BackgroundColor = backgroundColor.Value;
+                        NativeControl.BackgroundColor = backgroundColor.Value;
                     Refresh();
                 }
             }
@@ -1065,7 +1065,7 @@ namespace Alternet.UI
         {
             get
             {
-                var result = Handler.NativeControl?.BackgroundColor;
+                var result = NativeControl?.BackgroundColor;
                 return result;
             }
         }
@@ -1082,7 +1082,7 @@ namespace Alternet.UI
         {
             get
             {
-                var result = Handler.NativeControl?.ForegroundColor;
+                var result = NativeControl?.ForegroundColor;
                 return result;
             }
         }
@@ -1103,12 +1103,12 @@ namespace Alternet.UI
                     return;
                 foregroundColor = value;
 
-                if (Handler.NativeControl is not null)
+                if (NativeControl is not null)
                 {
                     if (foregroundColor is null)
                         ResetForegroundColor();
                     else
-                        Handler.NativeControl.ForegroundColor = foregroundColor.Value;
+                        NativeControl.ForegroundColor = foregroundColor.Value;
                     Invalidate();
                 }
             }
@@ -1142,7 +1142,7 @@ namespace Alternet.UI
                 if (value is null)
                     GroupIndexes = null;
                 else
-                    GroupIndexes = new int[] { value.Value };
+                    GroupIndexes = [value.Value];
             }
         }
 
@@ -1215,7 +1215,7 @@ namespace Alternet.UI
         /// Returns font event if <see cref="Font"/> property is <c>null</c>.
         /// </remarks>
         [Browsable(false)]
-        public virtual Font? RealFont => Font.FromInternal(Handler.NativeControl?.Font);
+        public virtual Font? RealFont => Font.FromInternal(NativeControl?.Font);
 
         /// <summary>
         /// Gets or sets whether control's font is bold.
@@ -1224,16 +1224,16 @@ namespace Alternet.UI
         {
             get
             {
-                if (Handler.NativeControl is null)
+                if (NativeControl is null)
                     return false;
-                return Handler.NativeControl.IsBold;
+                return NativeControl.IsBold;
             }
 
             set
             {
-                if (Handler.NativeControl is null)
+                if (NativeControl is null)
                     return;
-                Handler.NativeControl.IsBold = value;
+                NativeControl.IsBold = value;
                 Handler.RaiseLayoutChanged();
                 PerformLayout();
                 Refresh();
@@ -1348,13 +1348,13 @@ namespace Alternet.UI
         {
             get
             {
-                return (ControlBackgroundStyle?)Handler.NativeControl?.GetBackgroundStyle()
+                return (ControlBackgroundStyle?)NativeControl?.GetBackgroundStyle()
                     ?? ControlBackgroundStyle.System;
             }
 
             set
             {
-                Handler.NativeControl?.SetBackgroundStyle((int)value);
+                NativeControl?.SetBackgroundStyle((int)value);
             }
         }
 
@@ -1369,7 +1369,7 @@ namespace Alternet.UI
         {
             get
             {
-                var control = Handler.NativeControl;
+                var control = NativeControl;
                 if (control is null)
                     return LayoutDirection.Default;
 
@@ -1380,7 +1380,7 @@ namespace Alternet.UI
             {
                 if (value == LayoutDirection.Default)
                     return;
-                var control = Handler.NativeControl;
+                var control = NativeControl;
                 if (control is null)
                     return;
                 control.LayoutDirection = (int)value;
@@ -1407,13 +1407,13 @@ namespace Alternet.UI
         {
             get
             {
-                return Handler.NativeControl?.ProcessIdle ?? false;
+                return NativeControl?.ProcessIdle ?? false;
             }
 
             set
             {
-                if (Handler.NativeControl is not null)
-                    Handler.NativeControl.ProcessIdle = value;
+                if (NativeControl is not null)
+                    NativeControl.ProcessIdle = value;
             }
         }
 
@@ -1423,13 +1423,13 @@ namespace Alternet.UI
         {
             get
             {
-                return Handler.NativeControl?.ProcessUIUpdates ?? false;
+                return NativeControl?.ProcessUIUpdates ?? false;
             }
 
             set
             {
-                if (Handler.NativeControl is not null)
-                    Handler.NativeControl.ProcessUIUpdates = value;
+                if (NativeControl is not null)
+                    NativeControl.ProcessUIUpdates = value;
             }
         }
 
@@ -1444,15 +1444,15 @@ namespace Alternet.UI
         {
             get
             {
-                var result = Handler.NativeControl?.AcceptsFocus;
+                var result = NativeControl?.AcceptsFocus;
                 return result ?? false;
             }
 
             set
             {
-                if (Handler.NativeControl is null)
+                if (NativeControl is null)
                     return;
-                Handler.NativeControl.AcceptsFocus = value;
+                NativeControl.AcceptsFocus = value;
             }
         }
 
@@ -1473,15 +1473,15 @@ namespace Alternet.UI
         {
             get
             {
-                var result = Handler.NativeControl?.AcceptsFocusFromKeyboard;
+                var result = NativeControl?.AcceptsFocusFromKeyboard;
                 return result ?? false;
             }
 
             set
             {
-                if (Handler.NativeControl is null)
+                if (NativeControl is null)
                     return;
-                Handler.NativeControl.AcceptsFocusFromKeyboard = value;
+                NativeControl.AcceptsFocusFromKeyboard = value;
             }
         }
 
@@ -1495,15 +1495,15 @@ namespace Alternet.UI
         {
             get
             {
-                var result = Handler.NativeControl?.AcceptsFocusRecursively;
+                var result = NativeControl?.AcceptsFocusRecursively;
                 return result ?? false;
             }
 
             set
             {
-                if (Handler.NativeControl is null)
+                if (NativeControl is null)
                     return;
-                Handler.NativeControl.AcceptsFocusRecursively = value;
+                NativeControl.AcceptsFocusRecursively = value;
             }
         }
 
@@ -1511,15 +1511,15 @@ namespace Alternet.UI
         {
             get
             {
-                var result = Handler.NativeControl?.AcceptsFocusAll;
+                var result = NativeControl?.AcceptsFocusAll;
                 return result ?? false;
             }
 
             set
             {
-                if (Handler.NativeControl is null)
+                if (NativeControl is null)
                     return;
-                Handler.NativeControl.AcceptsFocusAll = value;
+                NativeControl.AcceptsFocusAll = value;
             }
         }
 
@@ -1540,7 +1540,7 @@ namespace Alternet.UI
             }
         }
 
-        internal IntPtr WxWidget => Handler.NativeControl!.WxWidget;
+        internal IntPtr WxWidget => NativeControl!.WxWidget;
 
         internal virtual bool IsDummy => false;
 
@@ -1581,7 +1581,7 @@ namespace Alternet.UI
         {
             get
             {
-                var nc = Handler.NativeControl;
+                var nc = NativeControl;
                 if (nc is null)
                     return ControlBorderStyle.Default;
                 return (ControlBorderStyle)nc.BorderStyle;
@@ -1589,7 +1589,7 @@ namespace Alternet.UI
 
             set
             {
-                var nc = Handler.NativeControl;
+                var nc = NativeControl;
                 if (nc is null)
                     return;
                 nc.BorderStyle = (int)value;
@@ -1733,7 +1733,7 @@ namespace Alternet.UI
         /// </summary>
         public void HandleNeeded()
         {
-            Handler.NativeControl?.Required();
+            NativeControl?.Required();
         }
 
         /// <summary>
@@ -1748,7 +1748,7 @@ namespace Alternet.UI
         {
             if (method == null)
                 throw new ArgumentNullException(nameof(method));
-            return BeginInvoke(method, Array.Empty<object>());
+            return BeginInvoke(method, []);
         }
 
         /// <summary>
@@ -1762,7 +1762,7 @@ namespace Alternet.UI
         {
             if (action == null)
                 throw new ArgumentNullException(nameof(action));
-            return BeginInvoke(action, Array.Empty<object>());
+            return BeginInvoke(action, []);
         }
 
         /// <summary>
@@ -1813,7 +1813,7 @@ namespace Alternet.UI
         {
             if (method == null)
                 throw new ArgumentNullException(nameof(method));
-            return Invoke(method, Array.Empty<object>());
+            return Invoke(method, []);
         }
 
         /// <summary>
@@ -1825,7 +1825,7 @@ namespace Alternet.UI
         {
             if (action == null)
                 throw new ArgumentNullException(nameof(action));
-            Invoke(action, Array.Empty<object>());
+            Invoke(action, []);
         }
 
         /// <summary>
@@ -1907,7 +1907,7 @@ namespace Alternet.UI
         {
             if (!HasChildren)
                 return ControlSet.Empty;
-            List<Control> result = new();
+            List<Control> result = [];
             foreach (var control in Children)
             {
                 if (control.MemberOfGroup(groupIndex))
@@ -1929,7 +1929,7 @@ namespace Alternet.UI
         {
             if (!HasChildren)
                 return ControlSet.Empty;
-            List<Control> result = new();
+            List<Control> result = [];
             foreach (var control in Children)
             {
                 result.Add(control);
@@ -1950,7 +1950,7 @@ namespace Alternet.UI
         {
             if (!HasChildren)
                 return ControlSet.Empty;
-            List<Control> result = new();
+            List<Control> result = [];
             foreach (var control in Children)
             {
                 if (control.ColumnIndex == columnIndex)
@@ -1975,7 +1975,7 @@ namespace Alternet.UI
         {
             if (!HasChildren)
                 return ControlSet.Empty;
-            List<Control> result = new();
+            List<Control> result = [];
             foreach (var control in Children)
             {
                 if (control.RowIndex == rowIndex)
@@ -2047,7 +2047,7 @@ namespace Alternet.UI
         {
             if (HasChildren)
             {
-                List<Control> result = new();
+                List<Control> result = [];
                 foreach (var item in Children)
                 {
                     if (item.Visible)
@@ -2607,7 +2607,7 @@ namespace Alternet.UI
         /// </remarks>
         public bool IsTransparentBackgroundSupported()
         {
-            return Handler.NativeControl?.IsTransparentBackgroundSupported() ?? false;
+            return NativeControl?.IsTransparentBackgroundSupported() ?? false;
         }
 
         /// <summary>
@@ -2621,7 +2621,7 @@ namespace Alternet.UI
         /// </remarks>
         public void AlwaysShowScrollbars(bool hflag = true, bool vflag = true)
         {
-            Handler.NativeControl?.AlwaysShowScrollbars(hflag, vflag);
+            NativeControl?.AlwaysShowScrollbars(hflag, vflag);
         }
 
         /// <summary>
@@ -2904,19 +2904,19 @@ namespace Alternet.UI
         internal Color? GetDefaultAttributesBgColor()
         {
             CheckDisposed();
-            return Handler.NativeControl?.GetDefaultAttributesBgColor();
+            return NativeControl?.GetDefaultAttributesBgColor();
         }
 
         internal Color? GetDefaultAttributesFgColor()
         {
             CheckDisposed();
-            return Handler.NativeControl?.GetDefaultAttributesFgColor();
+            return NativeControl?.GetDefaultAttributesFgColor();
         }
 
         internal Font? GetDefaultAttributesFont()
         {
             CheckDisposed();
-            return Font.FromInternal(Handler.NativeControl?.GetDefaultAttributesFont());
+            return Font.FromInternal(NativeControl?.GetDefaultAttributesFont());
         }
 
         /// <summary>
@@ -3391,7 +3391,7 @@ namespace Alternet.UI
 
         private void ResetColor(bool isBackground, ResetColorType method = ResetColorType.Auto)
         {
-            if (Handler.NativeControl is null)
+            if (NativeControl is null)
                 return;
 
             void SetColor(Color? color)
@@ -3400,17 +3400,17 @@ namespace Alternet.UI
                 {
                     backgroundColor = color;
                     if (color is null)
-                        Handler.NativeControl!.ResetBackgroundColor();
+                        NativeControl.ResetBackgroundColor();
                     else
-                        Handler.NativeControl!.BackgroundColor = color.Value;
+                        NativeControl.BackgroundColor = color.Value;
                 }
                 else
                 {
                     foregroundColor = color;
                     if (color is null)
-                        Handler.NativeControl!.ResetForegroundColor();
+                        NativeControl.ResetForegroundColor();
                     else
-                        Handler.NativeControl!.ForegroundColor = color.Value;
+                        NativeControl.ForegroundColor = color.Value;
                 }
             }
 

@@ -8,6 +8,6 @@
 
         public new TNativeControl NativeControl => (TNativeControl)base.NativeControl!;
 
-        protected override bool VisualChildNeedsNativeControl => true;
+        /*protected override bool VisualChildNeedsNativeControl => true;*/
     }
 }
