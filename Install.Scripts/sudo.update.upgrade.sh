@@ -1,1 +1,1 @@
-sudo apt -y update && sudo apt -y upgrade && echo done
+sudo apt -y update && echo "update done" && sudo apt -y upgrade && echo "upgrade done"
