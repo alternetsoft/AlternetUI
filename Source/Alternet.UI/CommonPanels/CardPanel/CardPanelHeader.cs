@@ -294,7 +294,7 @@ namespace Alternet.UI
                 tab.CardControl?.Hide();
             }
 
-            var id = SelectedTab?.UniqueId;
+            var id = SelectedTab?.CardUniqueId;
 
             cardPanel?.SuspendLayout();
             try
@@ -307,7 +307,7 @@ namespace Alternet.UI
                 if (id is not null)
                 {
                     cardPanel?.Show();
-                    cardPanel?.SetActiveCard(id);
+                    cardPanel?.SelectCard(id);
                 }
             }
             finally
