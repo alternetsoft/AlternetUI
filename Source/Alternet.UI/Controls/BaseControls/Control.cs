@@ -91,7 +91,7 @@ namespace Alternet.UI
         /// <summary>
         /// Occurs when the control is clicked.
         /// </summary>
-        public event EventHandler? Click;
+        public virtual event EventHandler? Click;
 
         /// <summary>
         /// Occurs when <see cref="Parent"/> is changed.
@@ -2726,6 +2726,23 @@ namespace Alternet.UI
             };
 
             return result;
+        }
+
+        /// <summary>
+        /// Gets whether one of this control's parents equals <paramref name="testParent"/>.
+        /// </summary>
+        /// <param name="testParent">Control to test as an indirect parent.</param>
+        public virtual bool HasIndirectParent(Control? testParent)
+        {
+            var p = Parent;
+            while (true)
+            {
+                if (p == testParent)
+                    return true;
+                if (p == null)
+                    return false;
+                p = p.Parent;
+            }
         }
 
         /// <summary>
