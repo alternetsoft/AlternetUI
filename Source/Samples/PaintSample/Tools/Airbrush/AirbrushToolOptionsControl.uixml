@@ -5,10 +5,10 @@
 
 	<StackPanel Orientation="Horizontal">
 		<Label Text="Size:" Margin="0,0,5,0" VerticalAlignment="Center"/>
-		<NumericUpDown Name="sizeNumericUpDown" Minimum="1" Maximum="100" VerticalAlignment="Center" Value="{Binding Size}"/>
+		<NumericUpDown Name="sizeNumericUpDown" Minimum="1" Maximum="100" VerticalAlignment="Center"/>
 
 		<Label Text="Flow:" Margin="10,0,5,0" VerticalAlignment="Center"/>
-		<NumericUpDown Name="flowNumericUpDown" Minimum="1" Maximum="100" VerticalAlignment="Center" Value="{Binding Flow}"/>
+		<NumericUpDown Name="flowNumericUpDown" Minimum="1" Maximum="100" VerticalAlignment="Center"/>
 	</StackPanel>
 	
 </Control>

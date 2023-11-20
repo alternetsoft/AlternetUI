@@ -8,6 +8,9 @@ namespace PaintSample
         public AirbrushToolOptionsControl()
         {
             InitializeComponent();
+
+            sizeNumericUpDown.BindValue("Size");
+            flowNumericUpDown.BindValue("Flow");
         }
 
         public AirbrushTool? Tool
