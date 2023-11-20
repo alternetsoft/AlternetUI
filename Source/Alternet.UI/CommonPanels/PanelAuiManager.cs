@@ -478,8 +478,6 @@ namespace Alternet.UI
         public virtual void WriteWelcomeLogMessages()
         {
             LogUtils.DebugLogVersion();
-            if (Application.LogFileIsEnabled)
-                Application.DebugLog($"Log File = {Application.LogFilePath}");
         }
 
         /// <summary>
