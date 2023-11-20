@@ -301,6 +301,17 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Binds <see cref="Value"/> to the specified property of the
+        /// <see cref="FrameworkElement.DataContext"/>
+        /// </summary>
+        /// <param name="propName">Property name.</param>
+        public void BindValue(string propName)
+        {
+            Binding myBinding = new(propName) { Mode = BindingMode.TwoWay };
+            BindingOperations.SetBinding(this, Slider.ValueProperty, myBinding);
+        }
+
+        /// <summary>
         /// Clears the ticks.
         /// </summary>
         /// <remarks>

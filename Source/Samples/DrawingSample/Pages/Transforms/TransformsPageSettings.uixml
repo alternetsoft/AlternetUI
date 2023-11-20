@@ -4,18 +4,18 @@
         xmlns:local="clr-namespace:DrawingSample;assembly=DrawingSample">
     <StackPanel Orientation="Vertical" Margin="5">
         <Label Text="Translation X:" />
-        <Slider Minimum="0" Maximum="100" Margin="0,0,0,10" Value="{Binding TranslationX}" />
+        <Slider Name="translationXSlider" Minimum="0" Maximum="100" Margin="0,0,0,10"/>
 
         <Label Text="Translation Y:" />
-        <Slider Minimum="0" Maximum="100" Margin="0,0,0,10" Value="{Binding TranslationY}" />
+        <Slider Name="translationYSlider" Minimum="0" Maximum="100" Margin="0,0,0,10"/>
 
         <Label Text="Scale X:" />
-        <Slider Minimum="0" Maximum="100" Margin="0,0,0,10" Value="{Binding ScaleFactorX}" />
+        <Slider Name="scaleFactorXSlider" Minimum="0" Maximum="100" Margin="0,0,0,10"/>
 
         <Label Text="Scale Y:" />
-        <Slider Minimum="0" Maximum="100" Margin="0,0,0,10" Value="{Binding ScaleFactorY}" />
+        <Slider Name="scaleFactorYSlider" Minimum="0" Maximum="100" Margin="0,0,0,10"/>
 
         <Label Text="Rotation:" />
-        <Slider Minimum="0" Maximum="90" Margin="0,0,0,20" Value="{Binding Rotation}" />
+        <Slider Name="rotationSlider" Minimum="0" Maximum="90" Margin="0,0,0,20"/>
     </StackPanel>
 </Control>
