@@ -3,6 +3,16 @@
 
   <Import Project="../Alternet.UI.Common/Alternet.UI.Common.props"/>
 
+    <ItemGroup Condition="$([MSBuild]::IsOsPlatform('OSX'))">
+	    <DotNetRunCmd>dotnet run --nologo --property WarningLevel=0 --framework net7.0</DotNetRunCmd>
+    </ItemGroup>
+    <ItemGroup Condition="$([MSBuild]::IsOsPlatform('Linux'))">
+	    <DotNetRunCmd>dotnet run --nologo --property WarningLevel=0 --framework net8.0</DotNetRunCmd>
+    </ItemGroup>
+    <ItemGroup Condition="$([MSBuild]::IsOsPlatform('Windows'))">
+	    <DotNetRunCmd>dotnet run --nologo --property WarningLevel=0 --framework net8.0</DotNetRunCmd>
+    </ItemGroup>
+
   <PropertyGroup>
     <DotNetBuildCmd>dotnet build --nologo --property WarningLevel=0</DotNetBuildCmd>
     <DotNetBuildDebugCmd>dotnet build --configuration Debug --nologo --property WarningLevel=0</DotNetBuildDebugCmd>
@@ -11,7 +21,6 @@
     <DotNetBuildDebugCmdNoIncremental>$(DotNetBuildDebugCmd) --no-incremental</DotNetBuildDebugCmdNoIncremental>
     <DotNetBuildReleaseCmdNoIncremental>$(DotNetBuildReleaseCmd) --no-incremental</DotNetBuildReleaseCmdNoIncremental>
 
-    <DotNetRunCmd>dotnet run --nologo --property WarningLevel=0 --framework net6.0</DotNetRunCmd>
     <ManagedBuildConfiguration>Release</ManagedBuildConfiguration>
     <NativeBuildConfiguration>Release</NativeBuildConfiguration>
     <RootDirectoryPath>$(MSBuildProjectDirectory)\..\..\..\</RootDirectoryPath>
