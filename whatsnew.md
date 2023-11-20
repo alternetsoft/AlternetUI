@@ -1,4 +1,4 @@
-# 0.9.408 (work in progress)
+# 0.9.408 (2023 November 20)
 
 - Added Net 8.0 support.
 - Svg image default fill color is determined using IsDark (so dark themes are supported).
@@ -31,15 +31,20 @@
 - Fixed exception in key handling under Ubuntu 23.
 - GenericTabControl.
 - Display: ClientAreaDip, GeometryDip, PixelToDip.
-- Control: GetDisplay, PixelFromDip, GetPixelScaleFactor, PixelToDip, PixelFromDipF, HideToolTip.
-- Add PopupListBox.ResultItem, AuiToolbar.GetToolPopupLocation, PropertyGrid.SuggestedInitDefaults, StatusBar.SetText.
+- Control: GetDisplay, PixelFromDip, GetPixelScaleFactor, PixelToDip, PixelFromDipF, HideToolTip, UniqueId.
+- Add PopupListBox.ResultItem, AuiToolbar.GetToolPopupLocation, PropertyGrid.SuggestedInitDefaults, StatusBar.SetText,
+PropertyGrid.AddConstItem, Slider.BindValue.
 - Add PopupListBox demo in AuiManagerSample (click on toolbar button opens popup list box).
 - Add PopupWindow.ShowPopup at location.
 - Control: ResetBackgroundColor, ResetForegroundColor now have 'method' parameter.
 - TextBox: DefaultResetErrorBackgroundMethod, DefaultResetErrorForegroundMethod, ResetErrorBackgroundMethod, ResetErrorForegroundMethod.
 - Application: IsAndroidOS, IsIOS, IsAndroidVersionAtLeast.
-- Control now raises global events: ControlDefaults.InitDefaults, Designer.ControlDisposed, Designer.ControlCreated.
+- Control now raises global events: ControlDefaults.InitDefaults, Designer.ControlDisposed, Designer.ControlCreated, Designer.ControlParentChanged.
 - Moved some props TextBox -> CustomTextEdit.
+- Custom event logger in Developer Tools.
+- ListControl: SelectedAction, Add(string,Action).
+- Changed base class of control items like TreeViewItem to BaseControlItem. All items have now UniqueId property.
+- CardPanel: WaitControlContainer , WaitControl, UseWaitControl, SelectedCard, Find(Control).
 
 ---
 
