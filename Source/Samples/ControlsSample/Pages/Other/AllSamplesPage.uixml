@@ -13,9 +13,9 @@
 
         <VerticalStackPanel Margin="10,0,0,0" Padding="5"
                     Grid.Column="1" Grid.Row="0" >
-            <Button Text="Run" Name="runButton" Margin="0,0,0,5"
+            <Button Text="Run Sample" Name="runButton" Margin="0,0,0,5"
                     Click="RunButton_Click" HorizontalAlignment="Center" />
-          <Button Text="Build" Name="buildButton" Margin="0,0,0,5" Enabled="false" Visible="false"
+          <Button Text="Build Sample" Name="buildButton" Margin="0,0,0,5" Enabled="true" Visible="true"
                   Click="BuildButton_Click" HorizontalAlignment="Center" />
           <Button Text="Run All" Name="runAllButton" Margin="0,0,0,5" Enabled="false" Visible="false"
                   Click="RunAllButton_Click" HorizontalAlignment="Center"/>

@@ -14,39 +14,65 @@ namespace ControlsSample
         public AllSamplesPage()
         {
             InitializeComponent();
-
             view.MakeAsListBox();
             AddDefaultItems();
-            view.SelectedItem = view.FirstItem;
+            view.SelectFirstItem();
+
+            ControlSet.New([runButton, buildButton]).SuggestedWidthToMax();
         }
 
-        private void AddDefaultItems()
+        internal static IEnumerable<string> EnumProjectsOld(string path)
         {
-            string folder1 = PathUtils.GetAppFolder()+@"../../../../";
-            string folder2 = folder1+ @"../";
+            var result = Directory.EnumerateFiles(
+                path,
+                "*.csproj",
+                SearchOption.AllDirectories);
+            return result;
+        }
+
+        private string GetSamplesFolder()
+        {
+            string folder1 = PathUtils.GetAppFolder() + @"../../../../";
+            string folder2 = folder1 + @"../";
             folder1 = Path.GetFullPath(folder1);
             folder2 = Path.GetFullPath(folder2);
 
             var trimmed = PathUtils.TrimEndDirectorySeparator(folder2);
             if (trimmed is not null && trimmed.EndsWith("Samples"))
                 folder1 = folder2;
+            return folder1;
+        }
 
-            List<string> csproj = new();
+        private IEnumerable<string> EnumerateSamples()
+        {
+            var samplesFolder = GetSamplesFolder();
 
-            static IEnumerable<string> EnumProjects(string path)
+            List<string> csproj = [];
+
+            static IEnumerable<string> EnumProjectsFast(string path)
             {
-                var result = Directory.EnumerateFiles(
-                    path, 
-                    "*.csproj", 
-                    SearchOption.AllDirectories);
-                return result;                
+                var dirs = Directory.EnumerateDirectories(
+                    path,
+                    "*",
+                    SearchOption.TopDirectoryOnly);
+
+                List<string> result = [];
+
+                foreach (var dir in dirs)
+                {
+                    var name = Path.GetFileName(dir);
+                    var csproj = PathUtils.AddDirectorySeparatorChar(dir) + name + ".csproj";
+                    result.Add(csproj);
+                }
+
+                return result;
             }
 
-            var files1 = EnumProjects(folder1);
+            var files1 = EnumProjectsFast(samplesFolder);
 
             csproj.AddRange(files1);
 
-            for (int i = csproj.Count-1; i >=0 ; i--)
+            for (int i = csproj.Count - 1; i >= 0; i--)
             {
                 if (csproj[i].EndsWith("/ControlsSample.csproj") ||
                     csproj[i].EndsWith(@"\ControlsSample.csproj"))
@@ -54,14 +80,21 @@ namespace ControlsSample
                     csproj.RemoveAt(i);
                     continue;
                 }
-                if(csproj[i].EndsWith("Sample.csproj") || csproj[i].EndsWith("Test.csproj"))
+                if (csproj[i].EndsWith("Sample.csproj") || csproj[i].EndsWith("Test.csproj"))
                     continue;
                 csproj.RemoveAt(i);
             }
 
             var csproj2 = csproj.Distinct();
+            return csproj2;
+        }
+
+        private void AddDefaultItems()
+        {
+            var samples = EnumerateSamples();
+
             int index = 1;
-            foreach (string s in csproj2)
+            foreach (string s in samples)
             {
                 CsProjItem item = new(s, 0, index);
                 index++;
@@ -81,25 +114,70 @@ namespace ControlsSample
             public string CsProjPath { get; set; }
         }
 
+        private void RunCsProjInFolder(string folder)
+        {
+            RunDotNetOnCsProjInFolder(folder, "run");
+        }
+
+        private void RunDotNetOnCsProjInFolder(string folder, string dotnetCmd = "run")
+        {
+            // Could use these params:
+            // --nologo
+
+            var targetFramework = AppUtils.GetMyTargetFrameworkName();
+            var cmdRunWindows =
+              $"dotnet {dotnetCmd} /p:Platform=x64 --arch x64 --property WarningLevel=0 --framework {targetFramework}";
+            var cmdRunOther =
+                $"dotnet {dotnetCmd} --property WarningLevel=0 --framework {targetFramework}";
+            var cmd = Application.IsWindowsOS ? cmdRunWindows : cmdRunOther;
+            ExecuteTerminalCommand(cmd, folder);
+        }
+
+        private void BuildCsProjInFolder(string folder)
+        {
+            RunDotNetOnCsProjInFolder(folder, "build");
+        }
+
         private void RunButton_Click(object? sender, EventArgs e)
         {
             if (view.SelectedItem is not CsProjItem item)
                 return;
             string path = item.CsProjPath;
             Application.Log("Run sample: " + path);
-
-            string runext = Application.IsWindowsOS ? "bat" : "sh";
-            string runutil = PathUtils.GetAppFolder() + "runsample." + runext;
             path = Path.GetDirectoryName(path)!;
+            RunCsProjInFolder(path);
+        }
 
-            RunSample(runutil,$"\"{path}\"");
+        private void BuildButton_Click(object? sender, EventArgs e)
+        {
+            if (view.SelectedItem is not CsProjItem item)
+                return;
+            string path = item.CsProjPath;
+            Application.Log("Run sample: " + path);
+            path = Path.GetDirectoryName(path)!;
+            BuildCsProjInFolder(path);
+        }
 
+        public void ExecuteTerminalCommand(string command, string? folder = null)
+        {
+            ProcessStartInfo processInfo;
+            var cmdName = Application.IsWindowsOS ? "cmd.exe" : "/bin/bash";
+            var cmdPrefix = Application.IsWindowsOS ? "/c " : string.Empty;
+            Application.Log("Run: "+cmdName+" "+ cmdPrefix + command);
+            processInfo = new(cmdName, cmdPrefix + command)
+            {
+                CreateNoWindow = false,
+                UseShellExecute = false,
+            };
+            if (folder != null)
+                processInfo.WorkingDirectory = folder;
+            Process.Start(processInfo);
         }
 
         private static bool RunSample(
-            string filePath, 
-            string args, 
-            string? folder=null)
+            string filePath,
+            string args,
+            string? folder = null)
         {
             Process process = new();
             process.StartInfo.Verb = "open";
@@ -118,10 +196,6 @@ namespace ControlsSample
             {
                 return false;
             }
-        }
-
-        private void BuildButton_Click(object? sender, EventArgs e)
-        {
         }
 
         private void RunAllButton_Click(object? sender, EventArgs e)
