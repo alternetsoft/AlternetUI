@@ -313,6 +313,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets unique id of this control.
         /// </summary>
+        [Browsable(false)]
         public ObjectUniqueId UniqueId
         {
             get
