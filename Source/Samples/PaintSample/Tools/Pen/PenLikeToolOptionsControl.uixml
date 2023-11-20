@@ -5,7 +5,7 @@
 
 	<StackPanel Orientation="Horizontal">
 		<Label Text="Thickness:" Margin="0,0,5,0" VerticalAlignment="Center"/>
-		<NumericUpDown Name="thicknessNumericUpDown" Minimum="1" Maximum="20" VerticalAlignment="Center" Value="{Binding Thickness}"/>
+		<NumericUpDown Name="thicknessNumericUpDown" Minimum="1" Maximum="20" VerticalAlignment="Center"/>
 	</StackPanel>
 	
 </Control>

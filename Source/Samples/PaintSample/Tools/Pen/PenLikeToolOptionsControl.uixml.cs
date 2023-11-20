@@ -10,6 +10,8 @@ namespace PaintSample
         public PenLikeToolOptionsControl()
         {
             InitializeComponent();
+
+            thicknessNumericUpDown.BindValue("Thickness");
         }
 
         public PenLikeTool? Tool
