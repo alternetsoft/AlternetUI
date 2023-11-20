@@ -111,6 +111,7 @@ namespace Alternet.UI
         {
             ContextMenu.Required();
             Application.Current.LogMessage += Application_LogMessage;
+            LogUtils.DebugLogVersion();
         }
 
         /// <summary>
