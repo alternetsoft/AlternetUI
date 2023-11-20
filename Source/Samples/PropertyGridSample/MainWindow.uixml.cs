@@ -16,11 +16,8 @@ namespace PropertyGridSample
     {
         internal readonly PanelAuiManager panel = new();
 
-        private readonly StackPanel controlPanel = new()
+        private readonly Control controlPanel = new()
         {
-            Padding = new(15, 15, 15, 15),
-            HorizontalAlignment = HorizontalAlignment.Left,
-            VerticalAlignment = VerticalAlignment.Top,
         };
 
         private bool updatePropertyGrid = false;
@@ -94,7 +91,24 @@ namespace PropertyGridSample
             panel.LogControl.Required();
             panel.PropGrid.Required();
 
-            panel.CenterNotebook.AddPage(controlPanel, "Preview", true);
+            var controlPanelParent = new Border()
+            {
+                BorderColor = Color.Red,
+                HorizontalAlignment = HorizontalAlignment.Left,
+                VerticalAlignment = VerticalAlignment.Top,
+                Padding = 0,
+            };
+
+            controlPanel.Parent = controlPanelParent;
+
+            VerticalStackPanel parentParent = new()
+            {
+                Padding = new(15, 15, 15, 15),
+            };
+
+            controlPanelParent.Parent = parentParent;
+
+            panel.CenterNotebook.AddPage(parentParent, "Preview", true);
 
             panel.CenterNotebook.SizeChanged += CenterNotebook_SizeChanged;
             panel.CenterNotebook.LayoutUpdated += CenterNotebook_LayoutUpdated;

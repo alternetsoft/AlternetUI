@@ -23,7 +23,7 @@ namespace PropertyGridSample
             return imageLists;
         }
 
-        public static readonly Dictionary<Type, Action<Object>> Actions = new();
+        public static readonly Dictionary<Type, Action<Object>> Actions = [];
 
         private const string ResPrefix =
             "embres:PropertyGridSample.Resources.";
@@ -34,7 +34,8 @@ namespace PropertyGridSample
 
         static ObjectInitializers()
         {
-            const int defaultListHeight = 300;
+            const int defaultListHeight = 250;
+            Size defaultListSize = new(defaultListHeight, defaultListHeight);
 
             Actions.Add(typeof(ContextMenu), InitContextMenu);
 
@@ -58,21 +59,41 @@ namespace PropertyGridSample
             Actions.Add(typeof(Border), (c) =>
             {
                 var border = (c as Border)!;
-                border.SuggestedHeight = 150;
+                border.SuggestedSize = defaultListSize;
                 border.BorderColor = Color.Red;
-                border.BackgroundColor = Color.Azure;
+                border.BackgroundColor = Color.Cornsilk;
+            });
+
+            Actions.Add(typeof(CardPanel), (c) =>
+            {
+                var control = (c as CardPanel)!;
+                control.SuggestedSize = defaultListSize;
+                control.Add("card 1", CreatePanelWithButtons("Card 1"));
+                control.Add("card 2", CreatePanelWithButtons("Card 2"));
+                control.SelectCard(0);
+            });
+
+            Actions.Add(typeof(CardPanelHeader), (c) =>
+            {
+                var control = (c as CardPanelHeader)!;
+                control.SuggestedSize = defaultListSize;
+                control.Add("tab 1");
+                control.Add("tab 2");
+                control.Add("tab 3");
+                control.SelectFirstTab();
+                control.BackgroundColor = Color.Cornsilk;
             });
 
             Actions.Add(typeof(RichTextBox), (c) =>
             {
                 var control = (c as RichTextBox)!;
-                control.SuggestedHeight = 200;
+                control.SuggestedSize = defaultListSize;
             });
 
             Actions.Add(typeof(MultilineTextBox), (c) =>
             {
                 var control = (c as MultilineTextBox)!;
-                control.SuggestedHeight = 200;
+                control.SuggestedSize = defaultListSize;
             });
 
             Actions.Add(typeof(Button), (c) =>
@@ -97,21 +118,21 @@ namespace PropertyGridSample
             Actions.Add(typeof(TreeView), (c) =>
             {
                 TreeView treeView = (c as TreeView)!;
-                treeView.SuggestedHeight = defaultListHeight;
+                treeView.SuggestedSize = defaultListSize;
                 InitTreeView(treeView);
             });
 
             Actions.Add(typeof(ListView), (c) =>
             {
                 ListView listView = (c as ListView)!;
-                listView.SuggestedHeight = defaultListHeight;
+                listView.SuggestedSize = defaultListSize;
                 InitListView(listView);
             });
 
             Actions.Add(typeof(ListBox), (c) =>
             {
                 ListBox listBox = (c as ListBox)!;
-                listBox.SuggestedHeight = defaultListHeight;
+                listBox.SuggestedSize = defaultListSize;
                 AddTenItems(listBox.Items);
             });
 
@@ -126,7 +147,7 @@ namespace PropertyGridSample
             Actions.Add(typeof(CheckListBox), (c) =>
             {
                 CheckListBox checkListBox = (c as CheckListBox)!;
-                checkListBox.SuggestedHeight = defaultListHeight;
+                checkListBox.SuggestedSize = defaultListHeight;
                 AddTenItems(checkListBox.Items);
             });
 
@@ -141,7 +162,7 @@ namespace PropertyGridSample
             {
                 GroupBox groupBox = (c as GroupBox)!;
                 groupBox.Title = "GroupBox";
-                groupBox.SuggestedHeight = 150;
+                groupBox.SuggestedSize = 150;
             });
 
             Actions.Add(typeof(PictureBox), (c) =>
@@ -153,21 +174,20 @@ namespace PropertyGridSample
             Actions.Add(typeof(Panel), (c) =>
             {
                 Panel panel = (c as Panel)!;
-                panel.SuggestedHeight = 150;
-                panel.BackgroundColor = Color.BurlyWood;
+                panel.SuggestedSize = 150;
+                panel.BackgroundColor = Color.Cornsilk;
             });
-
 
             Actions.Add(typeof(Control), (c) =>
             {
                 Control control = (c as Control)!;
-                control.SuggestedHeight = 150;
+                control.SuggestedSize = defaultListHeight;
             });
 
             Actions.Add(typeof(TabControl), (c) =>
             {
                 TabControl control = (c as TabControl)!;
-                control.SuggestedHeight = 300;
+                control.SuggestedSize = defaultListHeight;
                 InsertPage(control, null);
                 InsertPage(control, null);
                 InsertPage(control, null);
@@ -176,7 +196,7 @@ namespace PropertyGridSample
             Actions.Add(typeof(AuiNotebook), (c) =>
             {
                 AuiNotebook control = (c as AuiNotebook)!;
-                control.SuggestedHeight = 300;
+                control.SuggestedHeight = defaultListHeight;
                 InsertPage(control);
                 InsertPage(control);
                 InsertPage(control);
