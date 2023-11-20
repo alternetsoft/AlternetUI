@@ -92,12 +92,12 @@ namespace ControlsSample
         Control CreateListControlsPage()
         {
             NameValue<Func<Control>>[] pages =
-            {
+            [
                 new("ListBox", () => new ListBoxPage()),
                 new("CheckListBox", () => new CheckListBoxPage()),
                 new("ComboBox", () => new ComboBoxPage()),
                 new("Popups", () => new ListControlsPopups()),
-            };
+            ];
 
             return CreateCustomPage(pages);
         }

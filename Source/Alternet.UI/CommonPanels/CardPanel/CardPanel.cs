@@ -66,7 +66,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets pages with child controls.
         /// </summary>
-        public Collection<CardPanelItem> Cards { get; } = new Collection<CardPanelItem>();
+        public Collection<CardPanelItem> Cards { get; } = [];
 
         /// <summary>
         /// Gets or sets selected card.
@@ -185,6 +185,7 @@ namespace Alternet.UI
                     Application.EndBusyCursor();
                 ResumeLayout();
             }
+
             return this;
         }
 

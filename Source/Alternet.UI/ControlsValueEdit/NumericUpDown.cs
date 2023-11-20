@@ -163,6 +163,9 @@ namespace Alternet.UI
             set => Handler.HasBorder = value;
         }
 
+        internal new NativeNumericUpDownHandler Handler =>
+            (NativeNumericUpDownHandler)base.Handler;
+
         /// <summary>
         /// Binds <see cref="Value"/> to the specified property of the
         /// <see cref="FrameworkElement.DataContext"/>
@@ -173,9 +176,6 @@ namespace Alternet.UI
             Binding myBinding = new(propName) { Mode = BindingMode.TwoWay };
             BindingOperations.SetBinding(this, NumericUpDown.ValueProperty, myBinding);
         }
-
-        internal new NativeNumericUpDownHandler Handler =>
-            (NativeNumericUpDownHandler)base.Handler;
 
         /// <summary>
         /// Raises the <see cref="ValueChanged"/> event and calls

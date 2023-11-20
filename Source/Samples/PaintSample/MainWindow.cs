@@ -11,37 +11,37 @@ namespace PaintSample
     {
         private const string FileDialogImageFilesFilter =
             "Image files (*.png; *.jpg)|*.png;*.jpg|All files (*.*)|*.*";
-        private Tools? tools;
+        private readonly Tools? tools;
 
         private Document? document;
 
-        private UndoService? undoService;
+        private readonly UndoService? undoService;
 
-        private CanvasControl canvasControl;
-        private Toolbar toolbar;
-        private ColorSelector colorSelector;
-        private Border border;
-        private Grid mainGrid;
+        private readonly CanvasControl canvasControl;
+        private readonly Toolbar toolbar;
+        private readonly ColorSelector colorSelector;
+        private readonly Border border;
+        private readonly Grid mainGrid;
 
         CommandButton? undoButton;
         CommandButton? redoButton;
 
-        MenuItem toolsMenu;
-        MenuItem helpMainMenu;
-        MenuItem aboutMenuItem;
-        MenuItem editMainMenu;
-        MenuItem undoMenuItem;
-        MenuItem redoMenuItem;
-        MenuItem copyMenuItem;
-        MenuItem pasteMenuItem;
-        MenuItem fileMainMenu;
-        MenuItem newMenuItem;
-        MenuItem openMenuItem;
-        MenuItem saveMenuItem;
-        MenuItem saveAsMenuItem;
-        MenuItem exitMenuItem;
+        private readonly MenuItem toolsMenu;
+        private readonly MenuItem helpMainMenu;
+        private readonly MenuItem aboutMenuItem;
+        private readonly MenuItem editMainMenu;
+        private readonly MenuItem undoMenuItem;
+        private readonly MenuItem redoMenuItem;
+        private readonly MenuItem copyMenuItem;
+        private readonly MenuItem pasteMenuItem;
+        private readonly MenuItem fileMainMenu;
+        private readonly MenuItem newMenuItem;
+        private readonly MenuItem openMenuItem;
+        private readonly MenuItem saveMenuItem;
+        private readonly MenuItem saveAsMenuItem;
+        private readonly MenuItem exitMenuItem;
 
-        string? baseTitle;
+        private readonly string? baseTitle;
 
         public MainWindow()
         {
@@ -229,13 +229,17 @@ namespace PaintSample
 
         private void InitializeCommandButtons()
         {
-            undoButton = new CommandButton("Undo");
-            undoButton.ToolTip = "Undo";
+            undoButton = new("Undo")
+            {
+                ToolTip = "Undo"
+            };
             undoButton.Click += UndoButton_Click;
             toolbar.CommandButtons.Add(undoButton);
 
-            redoButton = new CommandButton("Redo");
-            redoButton.ToolTip = "Redo";
+            redoButton = new("Redo")
+            {
+                ToolTip = "Redo"
+            };
             redoButton.Click += RedoButton_Click;
             toolbar.CommandButtons.Add(redoButton);
         }
@@ -357,8 +361,7 @@ namespace PaintSample
         private void Save()
         {
             var fileName = Document.FileName;
-            if (fileName == null)
-                fileName = PromptForSaveFileName();
+            fileName ??= PromptForSaveFileName();
             if (fileName == null)
                 return;
 

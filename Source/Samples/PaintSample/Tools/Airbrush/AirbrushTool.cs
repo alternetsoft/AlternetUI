@@ -21,8 +21,10 @@ namespace PaintSample
 
         protected override Control? CreateOptionsControl()
         {
-            var control = new AirbrushToolOptionsControl();
-            control.Tool = this;
+            var control = new AirbrushToolOptionsControl
+            {
+                Tool = this
+            };
             return control;
         }
 

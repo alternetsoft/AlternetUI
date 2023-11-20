@@ -7,14 +7,11 @@ namespace DrawingSample
 {
     internal sealed class ClippingPage : DrawingPage
     {
+        private readonly Timer timer;
+        private readonly List<ClipAreaPart> clipAreaParts = [];
+
         private double x;
-
-        private Timer timer;
-
         private bool mouseDown;
-
-        private List<ClipAreaPart> clipAreaParts = new List<ClipAreaPart>();
-
         private ClipOperation selectedClipOperation = ClipOperation.Union;
 
         public ClippingPage()
@@ -61,7 +58,9 @@ namespace DrawingSample
                     lines.Add(MathUtils.GetPointOnCircle(c, r, a));
                 }
 
+#pragma warning disable
                 return lines.ToArray();
+#pragma warning restore
             }
 
             using var region = new Region(GetPolygonPoints());
