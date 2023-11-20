@@ -8,8 +8,8 @@ using System.Diagnostics;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Defines the functionality that is used by the <see cref="ColumnDefinitionCollection"/> and
-    /// <see cref="RowDefinitionCollection"/> classes. This is an abstract class.
+    /// Defines the functionality that is used by the <see cref="GridColumnCollection"/> and
+    /// <see cref="GridRowCollection"/> classes. This is an abstract class.
     /// </summary>
     public abstract class GridDefinitionBase : FrameworkElement
     {
