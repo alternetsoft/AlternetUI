@@ -9,11 +9,9 @@ namespace Alternet.UI
     /// <summary>
     /// Base class with properties and methods common to all Alternet.UI objects.
     /// </summary>
-    public class BaseObject
+    public class BaseObject : IBaseObject
     {
-        /// <summary>
-        /// Marks object as required.
-        /// </summary>
+        /// <inheritdoc/>
         public virtual void Required()
         {
         }
