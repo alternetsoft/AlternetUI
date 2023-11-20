@@ -35,7 +35,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets associated card controls unique id.
+        /// Gets or sets associated <see cref="CardPanelItem"/> unique id.
         /// </summary>
         public ObjectUniqueId? CardUniqueId
         {
