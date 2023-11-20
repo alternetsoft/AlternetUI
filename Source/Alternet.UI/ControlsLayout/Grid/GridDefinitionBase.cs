@@ -11,9 +11,9 @@ namespace Alternet.UI
     /// Defines the functionality that is used by the <see cref="ColumnDefinitionCollection"/> and
     /// <see cref="RowDefinitionCollection"/> classes. This is an abstract class.
     /// </summary>
-    public abstract class DefinitionBase : FrameworkElement
+    public abstract class GridDefinitionBase : FrameworkElement
     {
-        internal DefinitionBase(bool isColumnDefinition)
+        internal GridDefinitionBase(bool isColumnDefinition)
         {
             _isColumnDefinition = isColumnDefinition;
             _parentIndex = -1;
@@ -624,7 +624,7 @@ namespace Alternet.UI
                 Debug.Assert(sharedSizeScope != null && sharedSizeGroupId != null);
                 _sharedSizeScope = sharedSizeScope;
                 _sharedSizeGroupId = sharedSizeGroupId;
-                _registry = new List<DefinitionBase>();
+                _registry = new List<GridDefinitionBase>();
                 _layoutUpdated = new EventHandler(OnLayoutUpdated);
                 _broadcastInvalidation = true;
             }
@@ -632,7 +632,7 @@ namespace Alternet.UI
             /// <summary>
             /// Adds / registers a definition instance.
             /// </summary>
-            internal void AddMember(DefinitionBase member)
+            internal void AddMember(GridDefinitionBase member)
             {
                 Debug.Assert(!_registry.Contains(member));
                 _registry.Add(member);
@@ -646,7 +646,7 @@ namespace Alternet.UI
             /// If the collection of registered definitions becomes empty
             /// instantiates self removal from owner's collection.
             /// </remarks>
-            internal void RemoveMember(DefinitionBase member)
+            internal void RemoveMember(GridDefinitionBase member)
             {
                 Invalidate();
                 _registry.Remove(member);
@@ -762,7 +762,7 @@ namespace Alternet.UI
                 //  compare accumulated min size with min sizes of the individual definitions
                 for (int i = 0, count = _registry.Count; i < count; ++i)
                 {
-                    DefinitionBase definitionBase = _registry[i];
+                    GridDefinitionBase definitionBase = _registry[i];
 
                     // we'll set d.UseSharedMinimum to maintain the invariant:
                     //      d.UseSharedMinimum iff d._minSize < this.MinSize
@@ -836,7 +836,7 @@ namespace Alternet.UI
 
             private readonly SharedSizeScope _sharedSizeScope;  //  the scope this state belongs to
             private readonly string _sharedSizeGroupId;         //  Id of the shared size group this object is servicing
-            private readonly List<DefinitionBase> _registry;    //  registry of participating definitions
+            private readonly List<GridDefinitionBase> _registry;    //  registry of participating definitions
             private readonly EventHandler _layoutUpdated;       //  instance event handler for layout updated event
             private Control _layoutUpdatedHost;               //  UIElement for which layout updated event handler is registered
             private bool _broadcastInvalidation;                //  "true" when broadcasting of invalidation is needed

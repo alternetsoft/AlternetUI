@@ -8,7 +8,7 @@ namespace Alternet.UI
     /// <summary>
     /// Defines row-specific properties that apply to <see cref="Grid"/> controls.
     /// </summary>
-    public class RowDefinition : DefinitionBase
+    public class RowDefinition : GridDefinitionBase
     {
         private GridLength height = GridLength.Star;
         private double minHeight;

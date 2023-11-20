@@ -49,19 +49,19 @@ namespace Alternet.UI
         // }
 
         /// <summary>
-        /// Gets a <see cref="ColumnDefinitionCollection"/> defined on this instance
+        /// Gets a <see cref="GridColumnCollection"/> defined on this instance
         /// of <see cref="Grid"/>.
         /// </summary>
         /// <remarks>
         /// This collection contains one or more <see cref="ColumnDefinition"/> objects.
         /// Each such <see cref="ColumnDefinition"/> becomes a placeholder representing a column in the final grid layout.
         /// </remarks>
-        public ColumnDefinitionCollection ColumnDefinitions
+        public GridColumnCollection ColumnDefinitions
         {
             get
             {
                 if (_data == null) { _data = new ExtendedData(); }
-                if (_data.ColumnDefinitions == null) { _data.ColumnDefinitions = new ColumnDefinitionCollection(this); }
+                if (_data.ColumnDefinitions == null) { _data.ColumnDefinitions = new GridColumnCollection(this); }
 
                 return (_data.ColumnDefinitions);
             }
@@ -71,18 +71,18 @@ namespace Alternet.UI
         public override ControlTypeId ControlKind => ControlTypeId.Grid;
 
         /// <summary>
-        /// Gets a <see cref="RowDefinitionCollection"/> defined on this instance of <see cref="Grid"/>.
+        /// Gets a <see cref="GridRowCollection"/> defined on this instance of <see cref="Grid"/>.
         /// </summary>
         /// <remarks>
         /// This collection contains one or more <see cref="RowDefinition"/> objects.
         /// Each such <see cref="RowDefinition"/> becomes a placeholder representing a column in the final grid layout.
         /// </remarks>
-        public RowDefinitionCollection RowDefinitions
+        public GridRowCollection RowDefinitions
         {
             get
             {
                 if (_data == null) { _data = new ExtendedData(); }
-                if (_data.RowDefinitions == null) { _data.RowDefinitions = new RowDefinitionCollection(this); }
+                if (_data.RowDefinitions == null) { _data.RowDefinitions = new GridRowCollection(this); }
 
                 return (_data.RowDefinitions);
             }
@@ -526,7 +526,7 @@ namespace Alternet.UI
             //  actual value calculations require structure to be up-to-date
             if (!ColumnDefinitionCollectionDirty)
             {
-                DefinitionBase[] definitions = DefinitionsU;
+                GridDefinitionBase[] definitions = DefinitionsU;
                 value = definitions[(columnIndex + 1) % definitions.Length].FinalOffset;
                 if (columnIndex != 0) { value -= definitions[columnIndex].FinalOffset; }
             }
@@ -548,7 +548,7 @@ namespace Alternet.UI
             //  actual value calculations require structure to be up-to-date
             if (!RowDefinitionCollectionDirty)
             {
-                DefinitionBase[] definitions = DefinitionsV;
+                GridDefinitionBase[] definitions = DefinitionsV;
                 value = definitions[(rowIndex + 1) % definitions.Length].FinalOffset;
                 if (rowIndex != 0) { value -= definitions[rowIndex].FinalOffset; }
             }
@@ -715,7 +715,7 @@ namespace Alternet.UI
                 {
                     if (extData.DefinitionsU == null)
                     {
-                        extData.DefinitionsU = new DefinitionBase[] { new ColumnDefinition() };
+                        extData.DefinitionsU = new GridDefinitionBase[] { new ColumnDefinition() };
                     }
                 }
                 else
@@ -726,7 +726,7 @@ namespace Alternet.UI
                     {
                         //  if column definitions collection is empty
                         //  mockup array with one column
-                        extData.DefinitionsU = new DefinitionBase[] { new ColumnDefinition() };
+                        extData.DefinitionsU = new GridDefinitionBase[] { new ColumnDefinition() };
                     }
                     else
                     {
@@ -762,7 +762,7 @@ namespace Alternet.UI
                 {
                     if (extData.DefinitionsV == null)
                     {
-                        extData.DefinitionsV = new DefinitionBase[] { new RowDefinition() };
+                        extData.DefinitionsV = new GridDefinitionBase[] { new RowDefinition() };
                     }
                 }
                 else
@@ -773,7 +773,7 @@ namespace Alternet.UI
                     {
                         //  if row definitions collection is empty
                         //  mockup array with one row
-                        extData.DefinitionsV = new DefinitionBase[] { new RowDefinition() };
+                        extData.DefinitionsV = new GridDefinitionBase[] { new RowDefinition() };
                     }
                     else
                     {
@@ -796,7 +796,7 @@ namespace Alternet.UI
         /// <param name="definitions">Array of definitions to update.</param>
         /// <param name="treatStarAsAuto">if "true" then star definitions are treated as Auto.</param>
         private void ValidateDefinitionsLayout(
-            DefinitionBase[] definitions,
+            GridDefinitionBase[] definitions,
             bool treatStarAsAuto)
         {
             for (int i = 0; i < definitions.Length; ++i)
@@ -1097,7 +1097,7 @@ namespace Alternet.UI
         /// For "Auto" definitions MinWidth is used in place of PreferredSize.
         /// </remarks>
         private double GetMeasureSizeForRange(
-            DefinitionBase[] definitions,
+            GridDefinitionBase[] definitions,
             int start,
             int count)
         {
@@ -1124,7 +1124,7 @@ namespace Alternet.UI
         /// <param name="count">Number of definitions included in the range.</param>
         /// <returns>Length type for given range.</returns>
         private LayoutTimeSizeType GetLengthTypeForRange(
-            DefinitionBase[] definitions,
+            GridDefinitionBase[] definitions,
             int start,
             int count)
         {
@@ -1150,7 +1150,7 @@ namespace Alternet.UI
         /// <param name="definitions">Definition array receiving distribution.</param>
         /// <param name="percentReferenceSize">Size used to resolve percentages.</param>
         private void EnsureMinSizeInDefinitionRange(
-            DefinitionBase[] definitions,
+            GridDefinitionBase[] definitions,
             int start,
             int count,
             double requestedSize,
@@ -1161,7 +1161,7 @@ namespace Alternet.UI
             //  avoid processing when asked to distribute "0"
             if (!_IsZero(requestedSize))
             {
-                DefinitionBase[] tempDefinitions = TempDefinitions; //  temp array used to remember definitions for sorting
+                GridDefinitionBase[] tempDefinitions = TempDefinitions; //  temp array used to remember definitions for sorting
                 int end = start + count;
                 int autoDefinitionsCount = 0;
                 double rangeMinSize = 0;
@@ -1338,7 +1338,7 @@ namespace Alternet.UI
         /// Must initialize LayoutSize for all Star entries in given array of definitions.
         /// </remarks>
         private void ResolveStar(
-            DefinitionBase[] definitions,
+            GridDefinitionBase[] definitions,
             double availableSize)
         {
             if (StarDefinitionsCanExceedAvailableSpace)
@@ -1353,10 +1353,10 @@ namespace Alternet.UI
 
         // original implementation, used from 3.0 through 4.6.2
         private void ResolveStarLegacy(
-            DefinitionBase[] definitions,
+            GridDefinitionBase[] definitions,
             double availableSize)
         {
-            DefinitionBase[] tempDefinitions = TempDefinitions;
+            GridDefinitionBase[] tempDefinitions = TempDefinitions;
             int starDefinitionsCount = 0;
             double takenSize = 0;
 
@@ -1453,11 +1453,11 @@ namespace Alternet.UI
         //      change in available space resulting in large change to one def's allocation.
         // 3. Correct handling of large *-values, including Infinity.
         private void ResolveStarMaxDiscrepancy(
-            DefinitionBase[] definitions,
+            GridDefinitionBase[] definitions,
             double availableSize)
         {
             int defCount = definitions.Length;
-            DefinitionBase[] tempDefinitions = TempDefinitions;
+            GridDefinitionBase[] tempDefinitions = TempDefinitions;
             int minCount = 0, maxCount = 0;
             double takenSize = 0;
             double totalStarWeight = 0;
@@ -1468,7 +1468,7 @@ namespace Alternet.UI
             double maxStar = 0;
             for (int i = 0; i < defCount; ++i)
             {
-                DefinitionBase def = definitions[i];
+                GridDefinitionBase def = definitions[i];
 
                 if (def.SizeType == LayoutTimeSizeType.Star)
                 {
@@ -1515,7 +1515,7 @@ namespace Alternet.UI
 
                 for (int i = 0; i < defCount; ++i)
                 {
-                    DefinitionBase def = definitions[i];
+                    GridDefinitionBase def = definitions[i];
 
                     switch (def.SizeType)
                     {
@@ -1578,7 +1578,7 @@ namespace Alternet.UI
 
                         for (int i = 0; i < defCount; ++i)
                         {
-                            DefinitionBase def = definitions[i];
+                            GridDefinitionBase def = definitions[i];
                             if (def.SizeType == LayoutTimeSizeType.Star && def.MeasureSize > 0)
                             {
                                 totalStarWeight += StarWeight(def, scale);
@@ -1603,7 +1603,7 @@ namespace Alternet.UI
                     }
 
                     // get the chosen definition and its resolved size
-                    DefinitionBase resolvedDef;
+                    GridDefinitionBase resolvedDef;
                     double resolvedSize;
                     if (chooseMin == true)
                     {
@@ -1665,7 +1665,7 @@ namespace Alternet.UI
                     // resolved as 'min'.   Their allocation can be increased to make up the gap.
                     for (int i = minCount; i < minCountPhase2; ++i)
                     {
-                        DefinitionBase def = tempDefinitions[i];
+                        GridDefinitionBase def = tempDefinitions[i];
                         if (def != null)
                         {
                             def.MeasureSize = 1;      // mark as 'not yet resolved'
@@ -1681,7 +1681,7 @@ namespace Alternet.UI
                     // resolved as 'max'.   Their allocation can be decreased to make up the gap.
                     for (int i = maxCount; i < maxCountPhase2; ++i)
                     {
-                        DefinitionBase def = tempDefinitions[defCount + i];
+                        GridDefinitionBase def = tempDefinitions[defCount + i];
                         if (def != null)
                         {
                             def.MeasureSize = 1;      // mark as 'not yet resolved'
@@ -1696,7 +1696,7 @@ namespace Alternet.UI
             starCount = 0;
             for (int i = 0; i < defCount; ++i)
             {
-                DefinitionBase def = definitions[i];
+                GridDefinitionBase def = definitions[i];
 
                 if (def.SizeType == LayoutTimeSizeType.Star)
                 {
@@ -1723,7 +1723,7 @@ namespace Alternet.UI
                 totalStarWeight = 0;
                 for (int i = 0; i < starCount; ++i)
                 {
-                    DefinitionBase def = tempDefinitions[i];
+                    GridDefinitionBase def = tempDefinitions[i];
                     totalStarWeight += def.MeasureSize;
                     def.SizeCache = totalStarWeight;
                 }
@@ -1731,7 +1731,7 @@ namespace Alternet.UI
                 // resolve the defs, in decreasing order of weight
                 for (int i = starCount - 1; i >= 0; --i)
                 {
-                    DefinitionBase def = tempDefinitions[i];
+                    GridDefinitionBase def = tempDefinitions[i];
                     double resolvedSize = (def.MeasureSize > 0) ? Math.Max(availableSize - takenSize, 0) * (def.MeasureSize / def.SizeCache) : 0;
 
                     // min and max should have no effect by now, but just in case...
@@ -1750,7 +1750,7 @@ namespace Alternet.UI
         /// <param name="definitions">Array of definitions to use for calculations.</param>
         /// <returns>Desired size.</returns>
         private double CalculateDesiredSize(
-            DefinitionBase[] definitions)
+            GridDefinitionBase[] definitions)
         {
             double desiredSize = 0;
 
@@ -1769,7 +1769,7 @@ namespace Alternet.UI
         /// <param name="finalSize">Final size to lay out to.</param>
         /// <param name="columns">True if sizing column definitions, false for rows</param>
         private void SetFinalSize(
-            DefinitionBase[] definitions,
+            GridDefinitionBase[] definitions,
             double finalSize,
             bool columns)
         {
@@ -1818,7 +1818,7 @@ namespace Alternet.UI
 
         // original implementation, used from 3.0 through 4.6.2
         private void SetFinalSizeLegacy(
-            DefinitionBase[] definitions,
+            GridDefinitionBase[] definitions,
             double finalSize,
             bool columns)
         {
@@ -2017,7 +2017,7 @@ namespace Alternet.UI
                         int i = definitions.Length - 1;
                         while ((adjustedSize > finalSize && !_AreClose(adjustedSize, finalSize)) && i >= 0)
                         {
-                            DefinitionBase definition = definitions[definitionIndices[i]];
+                            GridDefinitionBase definition = definitions[definitionIndices[i]];
                             double final = definition.SizeCache - dpiIncrement;
                             final = Math.Max(final, definition.MinSizeForArrange);
                             if (final < definition.SizeCache)
@@ -2033,7 +2033,7 @@ namespace Alternet.UI
                         int i = 0;
                         while ((adjustedSize < finalSize && !_AreClose(adjustedSize, finalSize)) && i < definitions.Length)
                         {
-                            DefinitionBase definition = definitions[definitionIndices[i]];
+                            GridDefinitionBase definition = definitions[definitionIndices[i]];
                             double final = definition.SizeCache + dpiIncrement;
                             final = Math.Max(final, definition.MinSizeForArrange);
                             if (final > definition.SizeCache)
@@ -2067,7 +2067,7 @@ namespace Alternet.UI
         //      comes into play at high DPI - greater than 134.
         // 3. Applies rounding only to real pixel values (not to ratios)
         private void SetFinalSizeMaxDiscrepancy(
-            DefinitionBase[] definitions,
+            GridDefinitionBase[] definitions,
             double finalSize,
             bool columns)
         {
@@ -2083,7 +2083,7 @@ namespace Alternet.UI
             double maxStar = 0;
             for (int i = 0; i < defCount; ++i)
             {
-                DefinitionBase def = definitions[i];
+                GridDefinitionBase def = definitions[i];
 
                 if (def.UserSize.IsStar)
                 {
@@ -2131,7 +2131,7 @@ namespace Alternet.UI
 
                 for (int i = 0; i < defCount; ++i)
                 {
-                    DefinitionBase def = definitions[i];
+                    GridDefinitionBase def = definitions[i];
 
                     if (def.UserSize.IsStar)
                     {
@@ -2224,7 +2224,7 @@ namespace Alternet.UI
 
                         for (int i = 0; i < defCount; ++i)
                         {
-                            DefinitionBase def = definitions[i];
+                            GridDefinitionBase def = definitions[i];
                             if (def.UserSize.IsStar && def.MeasureSize > 0)
                             {
                                 totalStarWeight += StarWeight(def, scale);
@@ -2250,7 +2250,7 @@ namespace Alternet.UI
 
                     // get the chosen definition and its resolved size
                     int resolvedIndex;
-                    DefinitionBase resolvedDef;
+                    GridDefinitionBase resolvedDef;
                     double resolvedSize;
                     if (chooseMin == true)
                     {
@@ -2316,7 +2316,7 @@ namespace Alternet.UI
                     {
                         if (definitionIndices[i] >= 0)
                         {
-                            DefinitionBase def = definitions[definitionIndices[i]];
+                            GridDefinitionBase def = definitions[definitionIndices[i]];
                             def.MeasureSize = 1;      // mark as 'not yet resolved'
                             ++starCount;
                             runPhase2and3 = true;       // found a candidate, so re-run Phases 2 and 3
@@ -2332,7 +2332,7 @@ namespace Alternet.UI
                     {
                         if (definitionIndices[defCount + i] >= 0)
                         {
-                            DefinitionBase def = definitions[definitionIndices[defCount + i]];
+                            GridDefinitionBase def = definitions[definitionIndices[defCount + i]];
                             def.MeasureSize = 1;      // mark as 'not yet resolved'
                             ++starCount;
                             runPhase2and3 = true;    // found a candidate, so re-run Phases 2 and 3
@@ -2345,7 +2345,7 @@ namespace Alternet.UI
             starCount = 0;
             for (int i = 0; i < defCount; ++i)
             {
-                DefinitionBase def = definitions[i];
+                GridDefinitionBase def = definitions[i];
 
                 if (def.UserSize.IsStar)
                 {
@@ -2373,7 +2373,7 @@ namespace Alternet.UI
                 totalStarWeight = 0;
                 for (int i = 0; i < starCount; ++i)
                 {
-                    DefinitionBase def = definitions[definitionIndices[i]];
+                    GridDefinitionBase def = definitions[definitionIndices[i]];
                     totalStarWeight += def.MeasureSize;
                     def.SizeCache = totalStarWeight;
                 }
@@ -2381,7 +2381,7 @@ namespace Alternet.UI
                 // resolve the defs, in decreasing order of weight.
                 for (int i = starCount - 1; i >= 0; --i)
                 {
-                    DefinitionBase def = definitions[definitionIndices[i]];
+                    GridDefinitionBase def = definitions[definitionIndices[i]];
                     double resolvedSize = (def.MeasureSize > 0) ? Math.Max(finalSize - takenSize, 0) * (def.MeasureSize / def.SizeCache) : 0;
 
                     // min and max should have no effect by now, but just in case...
@@ -2409,7 +2409,7 @@ namespace Alternet.UI
                 // round each of the allocated sizes, keeping track of the deltas
                 for (int i = 0; i < definitions.Length; ++i)
                 {
-                    DefinitionBase def = definitions[i];
+                    GridDefinitionBase def = definitions[i];
                     double roundedSize = RoundLayoutValue(def.SizeCache, dpi);
                     roundingErrors[i] = (roundedSize - def.SizeCache);
                     def.SizeCache = roundedSize;
@@ -2477,7 +2477,7 @@ namespace Alternet.UI
                         int i = definitions.Length - 1;
                         while ((adjustedSize > finalSize && !_AreClose(adjustedSize, finalSize)) && i >= 0)
                         {
-                            DefinitionBase definition = definitions[definitionIndices[i]];
+                            GridDefinitionBase definition = definitions[definitionIndices[i]];
                             double final = definition.SizeCache - dpiIncrement;
                             final = Math.Max(final, definition.MinSizeForArrange);
                             if (final < definition.SizeCache)
@@ -2493,7 +2493,7 @@ namespace Alternet.UI
                         int i = 0;
                         while ((adjustedSize < finalSize && !_AreClose(adjustedSize, finalSize)) && i < definitions.Length)
                         {
-                            DefinitionBase definition = definitions[definitionIndices[i]];
+                            GridDefinitionBase definition = definitions[definitionIndices[i]];
                             double final = definition.SizeCache + dpiIncrement;
                             final = Math.Max(final, definition.MinSizeForArrange);
                             if (final > definition.SizeCache)
@@ -2589,7 +2589,7 @@ namespace Alternet.UI
         /// <param name="count">Number of items in the range.</param>
         /// <returns>Final size.</returns>
         private double GetFinalSizeForRange(
-            DefinitionBase[] definitions,
+            GridDefinitionBase[] definitions,
             int start,
             int count)
         {
@@ -2777,7 +2777,7 @@ namespace Alternet.UI
         /// <summary>
         /// Private version returning array of column definitions.
         /// </summary>
-        private DefinitionBase[] DefinitionsU
+        private GridDefinitionBase[] DefinitionsU
         {
             get { return (ExtData.DefinitionsU); }
         }
@@ -2785,7 +2785,7 @@ namespace Alternet.UI
         /// <summary>
         /// Private version returning array of row definitions.
         /// </summary>
-        private DefinitionBase[] DefinitionsV
+        private GridDefinitionBase[] DefinitionsV
         {
             get { return (ExtData.DefinitionsV); }
         }
@@ -2793,7 +2793,7 @@ namespace Alternet.UI
         /// <summary>
         /// Helper accessor to layout time array of definitions.
         /// </summary>
-        private DefinitionBase[] TempDefinitions
+        private GridDefinitionBase[] TempDefinitions
         {
             get
             {
@@ -2806,16 +2806,16 @@ namespace Alternet.UI
                     WeakReference tempDefinitionsWeakRef = (WeakReference)Thread.GetData(s_tempDefinitionsDataSlot);
                     if (tempDefinitionsWeakRef == null)
                     {
-                        extData.TempDefinitions = new DefinitionBase[requiredLength];
+                        extData.TempDefinitions = new GridDefinitionBase[requiredLength];
                         Thread.SetData(s_tempDefinitionsDataSlot, new WeakReference(extData.TempDefinitions));
                     }
                     else
                     {
-                        extData.TempDefinitions = (DefinitionBase[])tempDefinitionsWeakRef.Target;
+                        extData.TempDefinitions = (GridDefinitionBase[])tempDefinitionsWeakRef.Target;
                         if (extData.TempDefinitions == null
                             || extData.TempDefinitions.Length < requiredLength)
                         {
-                            extData.TempDefinitions = new DefinitionBase[requiredLength];
+                            extData.TempDefinitions = new GridDefinitionBase[requiredLength];
                             tempDefinitionsWeakRef.Target = extData.TempDefinitions;
                         }
                     }
@@ -2966,7 +2966,7 @@ namespace Alternet.UI
         /// <summary>
         /// Returns *-weight, adjusted for scale computed during Phase 1
         /// </summary>
-        static double StarWeight(DefinitionBase def, double scale)
+        static double StarWeight(GridDefinitionBase def, double scale)
         {
             if (scale < 0)
             {
@@ -3008,16 +3008,16 @@ namespace Alternet.UI
         /// </summary>
         private class ExtendedData
         {
-            internal ColumnDefinitionCollection ColumnDefinitions;  //  collection of column definitions (logical tree support)
-            internal RowDefinitionCollection RowDefinitions;        //  collection of row definitions (logical tree support)
-            internal DefinitionBase[] DefinitionsU;                 //  collection of column definitions used during calc
-            internal DefinitionBase[] DefinitionsV;                 //  collection of row definitions used during calc
+            internal GridColumnCollection ColumnDefinitions;  //  collection of column definitions (logical tree support)
+            internal GridRowCollection RowDefinitions;        //  collection of row definitions (logical tree support)
+            internal GridDefinitionBase[] DefinitionsU;                 //  collection of column definitions used during calc
+            internal GridDefinitionBase[] DefinitionsV;                 //  collection of row definitions used during calc
             internal CellCache[] CellCachesCollection;              //  backing store for logical children
             internal int CellGroup1;                                //  index of the first cell in first cell group
             internal int CellGroup2;                                //  index of the first cell in second cell group
             internal int CellGroup3;                                //  index of the first cell in third cell group
             internal int CellGroup4;                                //  index of the first cell in forth cell group
-            internal DefinitionBase[] TempDefinitions;              //  temporary array used during layout for various purposes
+            internal GridDefinitionBase[] TempDefinitions;              //  temporary array used during layout for various purposes
                                                                     //  TempDefinitions.Length == Max(definitionsU.Length, definitionsV.Length)
         }
 
@@ -3163,8 +3163,8 @@ namespace Alternet.UI
         {
             public int Compare(object x, object y)
             {
-                DefinitionBase definitionX = x as DefinitionBase;
-                DefinitionBase definitionY = y as DefinitionBase;
+                GridDefinitionBase definitionX = x as GridDefinitionBase;
+                GridDefinitionBase definitionY = y as GridDefinitionBase;
 
                 int result;
 
@@ -3205,8 +3205,8 @@ namespace Alternet.UI
         {
             public int Compare(object x, object y)
             {
-                DefinitionBase definitionX = x as DefinitionBase;
-                DefinitionBase definitionY = y as DefinitionBase;
+                GridDefinitionBase definitionX = x as GridDefinitionBase;
+                GridDefinitionBase definitionY = y as GridDefinitionBase;
 
                 int result;
 
@@ -3247,8 +3247,8 @@ namespace Alternet.UI
         {
             public int Compare(object x, object y)
             {
-                DefinitionBase definitionX = x as DefinitionBase;
-                DefinitionBase definitionY = y as DefinitionBase;
+                GridDefinitionBase definitionX = x as GridDefinitionBase;
+                GridDefinitionBase definitionY = y as GridDefinitionBase;
 
                 int result;
 
@@ -3268,8 +3268,8 @@ namespace Alternet.UI
         {
             public int Compare(object x, object y)
             {
-                DefinitionBase definitionX = x as DefinitionBase;
-                DefinitionBase definitionY = y as DefinitionBase;
+                GridDefinitionBase definitionX = x as GridDefinitionBase;
+                GridDefinitionBase definitionY = y as GridDefinitionBase;
 
                 int result;
 
@@ -3290,9 +3290,9 @@ namespace Alternet.UI
         /// </summary>
         private class StarDistributionOrderIndexComparer : IComparer
         {
-            private readonly DefinitionBase[] definitions;
+            private readonly GridDefinitionBase[] definitions;
 
-            internal StarDistributionOrderIndexComparer(DefinitionBase[] definitions)
+            internal StarDistributionOrderIndexComparer(GridDefinitionBase[] definitions)
             {
                 Debug.Assert(definitions != null);
                 this.definitions = definitions;
@@ -3303,8 +3303,8 @@ namespace Alternet.UI
                 int? indexX = x as int?;
                 int? indexY = y as int?;
 
-                DefinitionBase definitionX = null;
-                DefinitionBase definitionY = null;
+                GridDefinitionBase definitionX = null;
+                GridDefinitionBase definitionY = null;
 
                 if (indexX != null)
                 {
@@ -3332,9 +3332,9 @@ namespace Alternet.UI
         /// </summary>
         private class DistributionOrderIndexComparer : IComparer
         {
-            private readonly DefinitionBase[] definitions;
+            private readonly GridDefinitionBase[] definitions;
 
-            internal DistributionOrderIndexComparer(DefinitionBase[] definitions)
+            internal DistributionOrderIndexComparer(GridDefinitionBase[] definitions)
             {
                 Debug.Assert(definitions != null);
                 this.definitions = definitions;
@@ -3345,8 +3345,8 @@ namespace Alternet.UI
                 int? indexX = x as int?;
                 int? indexY = y as int?;
 
-                DefinitionBase definitionX = null;
-                DefinitionBase definitionY = null;
+                GridDefinitionBase definitionX = null;
+                GridDefinitionBase definitionY = null;
 
                 if (indexX != null)
                 {
@@ -3411,8 +3411,8 @@ namespace Alternet.UI
         {
             public int Compare(object x, object y)
             {
-                DefinitionBase definitionX = x as DefinitionBase;
-                DefinitionBase definitionY = y as DefinitionBase;
+                GridDefinitionBase definitionX = x as GridDefinitionBase;
+                GridDefinitionBase definitionY = y as GridDefinitionBase;
 
                 int result;
 
@@ -3434,8 +3434,8 @@ namespace Alternet.UI
         {
             public int Compare(object x, object y)
             {
-                DefinitionBase definitionX = x as DefinitionBase;
-                DefinitionBase definitionY = y as DefinitionBase;
+                GridDefinitionBase definitionX = x as GridDefinitionBase;
+                GridDefinitionBase definitionY = y as GridDefinitionBase;
 
                 int result;
 
@@ -3456,8 +3456,8 @@ namespace Alternet.UI
         {
             public int Compare(object x, object y)
             {
-                DefinitionBase definitionX = x as DefinitionBase;
-                DefinitionBase definitionY = y as DefinitionBase;
+                GridDefinitionBase definitionX = x as GridDefinitionBase;
+                GridDefinitionBase definitionY = y as GridDefinitionBase;
 
                 int result;
 
@@ -3475,9 +3475,9 @@ namespace Alternet.UI
         /// </summary>
         private class MinRatioIndexComparer : IComparer
         {
-            private readonly DefinitionBase[] definitions;
+            private readonly GridDefinitionBase[] definitions;
 
-            internal MinRatioIndexComparer(DefinitionBase[] definitions)
+            internal MinRatioIndexComparer(GridDefinitionBase[] definitions)
             {
                 Debug.Assert(definitions != null);
                 this.definitions = definitions;
@@ -3488,8 +3488,8 @@ namespace Alternet.UI
                 int? indexX = x as int?;
                 int? indexY = y as int?;
 
-                DefinitionBase definitionX = null;
-                DefinitionBase definitionY = null;
+                GridDefinitionBase definitionX = null;
+                GridDefinitionBase definitionY = null;
 
                 if (indexX != null)
                 {
@@ -3516,9 +3516,9 @@ namespace Alternet.UI
         /// </summary>
         private class MaxRatioIndexComparer : IComparer
         {
-            private readonly DefinitionBase[] definitions;
+            private readonly GridDefinitionBase[] definitions;
 
-            internal MaxRatioIndexComparer(DefinitionBase[] definitions)
+            internal MaxRatioIndexComparer(GridDefinitionBase[] definitions)
             {
                 Debug.Assert(definitions != null);
                 this.definitions = definitions;
@@ -3529,8 +3529,8 @@ namespace Alternet.UI
                 int? indexX = x as int?;
                 int? indexY = y as int?;
 
-                DefinitionBase definitionX = null;
-                DefinitionBase definitionY = null;
+                GridDefinitionBase definitionX = null;
+                GridDefinitionBase definitionY = null;
 
                 if (indexX != null)
                 {
@@ -3557,9 +3557,9 @@ namespace Alternet.UI
         /// </summary>
         private class StarWeightIndexComparer : IComparer
         {
-            private readonly DefinitionBase[] definitions;
+            private readonly GridDefinitionBase[] definitions;
 
-            internal StarWeightIndexComparer(DefinitionBase[] definitions)
+            internal StarWeightIndexComparer(GridDefinitionBase[] definitions)
             {
                 Debug.Assert(definitions != null);
                 this.definitions = definitions;
@@ -3570,8 +3570,8 @@ namespace Alternet.UI
                 int? indexX = x as int?;
                 int? indexY = y as int?;
 
-                DefinitionBase definitionX = null;
-                DefinitionBase definitionY = null;
+                GridDefinitionBase definitionX = null;
+                GridDefinitionBase definitionY = null;
 
                 if (indexX != null)
                 {
@@ -3603,8 +3603,8 @@ namespace Alternet.UI
             {
                 Debug.Assert(grid != null);
                 _currentEnumerator = -1;
-                _enumerator0 = new ColumnDefinitionCollection.Enumerator(grid.ExtData != null ? grid.ExtData.ColumnDefinitions : null);
-                _enumerator1 = new RowDefinitionCollection.Enumerator(grid.ExtData != null ? grid.ExtData.RowDefinitions : null);
+                _enumerator0 = new GridColumnCollection.Enumerator(grid.ExtData != null ? grid.ExtData.ColumnDefinitions : null);
+                _enumerator1 = new GridRowCollection.Enumerator(grid.ExtData != null ? grid.ExtData.RowDefinitions : null);
                 // GridLineRenderer is NOT included into this enumerator.
                 _enumerator2Index = 0;
                 if (includeChildren)
@@ -3676,8 +3676,8 @@ namespace Alternet.UI
 
             private int _currentEnumerator;
             private Object _currentChild;
-            private ColumnDefinitionCollection.Enumerator _enumerator0;
-            private RowDefinitionCollection.Enumerator _enumerator1;
+            private GridColumnCollection.Enumerator _enumerator0;
+            private GridRowCollection.Enumerator _enumerator1;
             private Collection<Control> _enumerator2Collection;
             private int _enumerator2Index;
             private int _enumerator2Count;

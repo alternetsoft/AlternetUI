@@ -8,17 +8,17 @@ namespace Alternet.UI
 {
     /// <summary>Provides access to an ordered, strongly typed collection of
     /// <see cref="RowDefinition" /> objects.</summary>
-    public sealed class RowDefinitionCollection : IList<RowDefinition>, ICollection<RowDefinition>,
+    public sealed class GridRowCollection : IList<RowDefinition>, ICollection<RowDefinition>,
         IEnumerable<RowDefinition>, IEnumerable, IList, ICollection
     {
-        internal RowDefinitionCollection(Grid owner)
+        internal GridRowCollection(Grid owner)
         {
             this._owner = owner;
             this.PrivateOnModified();
         }
 
         /// <summary>Copies the elements of the collection to an <see cref="System.Array" />, starting at a particular <see cref="System.Array" /> index.</summary>
-        /// <param name="array">A zero-based <see cref="System.Array" /> that receives the copied items from the <see cref="RowDefinitionCollection" />.</param>
+        /// <param name="array">A zero-based <see cref="System.Array" /> that receives the copied items from the <see cref="GridRowCollection" />.</param>
         /// <param name="index">The first position in the specified <see cref="System.Array" /> to receive the copied contents.</param>
         void ICollection.CopyTo(Array array, int index)
         {
@@ -48,7 +48,7 @@ namespace Alternet.UI
             }
         }
 
-        /// <summary>Copies an array of <see cref="RowDefinition" /> objects to a given index position within a <see cref="RowDefinitionCollection" />.</summary>
+        /// <summary>Copies an array of <see cref="RowDefinition" /> objects to a given index position within a <see cref="GridRowCollection" />.</summary>
         /// <param name="array">An array of <see cref="RowDefinition" /> objects.</param>
         /// <param name="index">Identifies the index position within <paramref name="array" /> to which the <see cref="RowDefinition" /> objects are copied.</param>
         /// <exception cref="System.ArgumentNullException">
@@ -81,7 +81,7 @@ namespace Alternet.UI
         }
 
         /// <summary>Adds an item to the collection.</summary>
-        /// <param name="value">The <see cref="System.Object" /> to add to the <see cref="RowDefinitionCollection" />.</param>
+        /// <param name="value">The <see cref="System.Object" /> to add to the <see cref="GridRowCollection" />.</param>
         /// <returns>The position into which the new element was inserted.</returns>
         int IList.Add(object value)
         {
@@ -91,7 +91,7 @@ namespace Alternet.UI
             return this._size - 1;
         }
 
-        /// <summary>Adds a <see cref="RowDefinition" /> element to a <see cref="RowDefinitionCollection" />.</summary>
+        /// <summary>Adds a <see cref="RowDefinition" /> element to a <see cref="GridRowCollection" />.</summary>
         /// <param name="value">Identifies the <see cref="RowDefinition" /> to add to the collection.</param>
         public void Add(RowDefinition value)
         {
@@ -100,7 +100,7 @@ namespace Alternet.UI
             this.PrivateInsert(this._size, value);
         }
 
-        /// <summary>Clears the content of the <see cref="RowDefinitionCollection" />.</summary>
+        /// <summary>Clears the content of the <see cref="GridRowCollection" />.</summary>
         public void Clear()
         {
             this.PrivateVerifyWriteAccess();
@@ -114,16 +114,16 @@ namespace Alternet.UI
         }
 
         /// <summary>Determines whether the collection contains a specific value.</summary>
-        /// <param name="value">The <see cref="System.Object" /> to locate in the <see cref="RowDefinitionCollection" />.</param>
+        /// <param name="value">The <see cref="System.Object" /> to locate in the <see cref="GridRowCollection" />.</param>
         /// <returns>
-        ///     <see langword="true" /> if the <see cref="System.Object" /> is found in the <see cref="RowDefinitionCollection" />; otherwise, <see langword="false" />.</returns>
+        ///     <see langword="true" /> if the <see cref="System.Object" /> is found in the <see cref="GridRowCollection" />; otherwise, <see langword="false" />.</returns>
         bool IList.Contains(object value)
         {
             RowDefinition rowDefinition = value as RowDefinition;
             return rowDefinition != null && rowDefinition.LogicalParent == this._owner;
         }
 
-        /// <summary>Determines whether a given <see cref="RowDefinition" /> exists within a <see cref="RowDefinitionCollection" />.</summary>
+        /// <summary>Determines whether a given <see cref="RowDefinition" /> exists within a <see cref="GridRowCollection" />.</summary>
         /// <param name="value">Identifies the <see cref="RowDefinition" /> that is being tested.</param>
         /// <returns>
         ///     <see langword="true" /> if the <see cref="RowDefinition" /> exists within the collection; otherwise <see langword="false" />.</returns>
@@ -133,14 +133,14 @@ namespace Alternet.UI
         }
 
         /// <summary>Determines the index of a specific item in the collection.</summary>
-        /// <param name="value">The <see cref="System.Object" /> to locate in the <see cref="RowDefinitionCollection" />.</param>
+        /// <param name="value">The <see cref="System.Object" /> to locate in the <see cref="GridRowCollection" />.</param>
         /// <returns>The index of <paramref name="value" /> if found in the list; otherwise, -1.</returns>
         int IList.IndexOf(object value)
         {
             return this.IndexOf(value as RowDefinition);
         }
 
-        /// <summary>Returns the index position of a given <see cref="RowDefinition" /> within a <see cref="RowDefinitionCollection" />.</summary>
+        /// <summary>Returns the index position of a given <see cref="RowDefinition" /> within a <see cref="GridRowCollection" />.</summary>
         /// <param name="value">The <see cref="RowDefinition" /> whose index position is desired.</param>
         /// <returns>The index of <paramref name="value" /> if found in the collection; otherwise, -1.</returns>
         public int IndexOf(RowDefinition value)
@@ -155,7 +155,7 @@ namespace Alternet.UI
 
         /// <summary>Inserts an item to the collection at the specified index.</summary>
         /// <param name="index">The zero-based index at which to insert the <see cref="System.Object" />.</param>
-        /// <param name="value">The <see cref="System.Object" /> to insert into the <see cref="RowDefinitionCollection" />.</param>
+        /// <param name="value">The <see cref="System.Object" /> to insert into the <see cref="GridRowCollection" />.</param>
         void IList.Insert(int index, object value)
         {
             this.PrivateVerifyWriteAccess();
@@ -167,7 +167,7 @@ namespace Alternet.UI
             this.PrivateInsert(index, value as RowDefinition);
         }
 
-        /// <summary>Inserts a <see cref="RowDefinition" /> at the specified index position within a <see cref="RowDefinitionCollection" />. </summary>
+        /// <summary>Inserts a <see cref="RowDefinition" /> at the specified index position within a <see cref="GridRowCollection" />. </summary>
         /// <param name="index">The position within the collection where the item is inserted.</param>
         /// <param name="value">The <see cref="RowDefinition" /> to insert.</param>
         /// <exception cref="System.ArgumentOutOfRangeException">
@@ -184,7 +184,7 @@ namespace Alternet.UI
         }
 
         /// <summary>Removes the first occurrence of a specific object from the collection.</summary>
-        /// <param name="value">The <see cref="object" /> to remove from the <see cref="RowDefinitionCollection" />.</param>
+        /// <param name="value">The <see cref="object" /> to remove from the <see cref="GridRowCollection" />.</param>
         void IList.Remove(object value)
         {
             this.PrivateVerifyWriteAccess();
@@ -195,7 +195,7 @@ namespace Alternet.UI
             }
         }
 
-        /// <summary>Removes a <see cref="RowDefinition" /> from a <see cref="RowDefinitionCollection" />.</summary>
+        /// <summary>Removes a <see cref="RowDefinition" /> from a <see cref="GridRowCollection" />.</summary>
         /// <param name="value">The <see cref="RowDefinition" /> to remove from the collection.</param>
         /// <returns>
         ///     <see langword="true" /> if the <see cref="RowDefinition" /> was found in the collection and removed; otherwise, <see langword="false" />.</returns>
@@ -209,7 +209,7 @@ namespace Alternet.UI
             return flag;
         }
 
-        /// <summary>Removes a <see cref="RowDefinition" /> from a <see cref="RowDefinitionCollection" /> at the specified index position.</summary>
+        /// <summary>Removes a <see cref="RowDefinition" /> from a <see cref="GridRowCollection" /> at the specified index position.</summary>
         /// <param name="index">The position within the collection at which the <see cref="RowDefinition" /> is removed.</param>
         public void RemoveAt(int index)
         {
@@ -221,7 +221,7 @@ namespace Alternet.UI
             this.PrivateRemove(this._items[index]);
         }
 
-        /// <summary>Removes a range of <see cref="RowDefinition" /> objects from a <see cref="RowDefinitionCollection" />. </summary>
+        /// <summary>Removes a range of <see cref="RowDefinition" /> objects from a <see cref="GridRowCollection" />. </summary>
         /// <param name="index">The position within the collection at which the first <see cref="RowDefinition" /> is removed.</param>
         /// <param name="count">The total number of <see cref="RowDefinition" /> objects to remove from the collection.</param>
         public void RemoveRange(int index, int count)
@@ -260,15 +260,15 @@ namespace Alternet.UI
         /// <returns>An <see cref="System.Collections.IEnumerator" /> object that can be used to iterate through the collection.</returns>
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return new RowDefinitionCollection.Enumerator(this);
+            return new GridRowCollection.Enumerator(this);
         }
 
         IEnumerator<RowDefinition> IEnumerable<RowDefinition>.GetEnumerator()
         {
-            return new RowDefinitionCollection.Enumerator(this);
+            return new GridRowCollection.Enumerator(this);
         }
 
-        /// <summary>Gets the total number of items within this instance of <see cref="RowDefinitionCollection" />.</summary>
+        /// <summary>Gets the total number of items within this instance of <see cref="GridRowCollection" />.</summary>
         /// <returns>The total number of items in the collection. This property has no default value.</returns>
         public int Count
         {
@@ -280,7 +280,7 @@ namespace Alternet.UI
 
         /// <summary>Gets a value indicating whether the collection has a fixed size.</summary>
         /// <returns>
-        ///     <see langword="true" /> if the the <see cref="RowDefinitionCollection" /> has a fixed size; otherwise, <see langword="false" />.</returns>
+        ///     <see langword="true" /> if the the <see cref="GridRowCollection" /> has a fixed size; otherwise, <see langword="false" />.</returns>
         bool IList.IsFixedSize
         {
             get
@@ -289,7 +289,7 @@ namespace Alternet.UI
             }
         }
 
-        /// <summary>Gets a value that indicates whether a <see cref="RowDefinitionCollection" /> is read-only. </summary>
+        /// <summary>Gets a value that indicates whether a <see cref="GridRowCollection" /> is read-only. </summary>
         /// <returns>
         ///     <see langword="true" /> if the collection is read-only; otherwise <see langword="false" />. This property has no default value.</returns>
         public bool IsReadOnly
@@ -300,7 +300,7 @@ namespace Alternet.UI
             }
         }
 
-        /// <summary>Gets a value that indicates whether access to this <see cref="RowDefinitionCollection" /> is synchronized (thread-safe).</summary>
+        /// <summary>Gets a value that indicates whether access to this <see cref="GridRowCollection" /> is synchronized (thread-safe).</summary>
         /// <returns>
         ///     <see langword="true" /> if access to this collection is synchronized; otherwise, <see langword="false" />.</returns>
         public bool IsSynchronized
@@ -311,8 +311,8 @@ namespace Alternet.UI
             }
         }
 
-        /// <summary>Gets an object that can be used to synchronize access to the <see cref="RowDefinitionCollection" />.</summary>
-        /// <returns>An object that can be used to synchronize access to the <see cref="RowDefinitionCollection" />.</returns>
+        /// <summary>Gets an object that can be used to synchronize access to the <see cref="GridRowCollection" />.</summary>
+        /// <returns>An object that can be used to synchronize access to the <see cref="GridRowCollection" />.</returns>
         public object SyncRoot
         {
             get
@@ -352,7 +352,7 @@ namespace Alternet.UI
             }
         }
 
-        /// <summary>Gets a value that indicates the current item within a <see cref="RowDefinitionCollection" />. </summary>
+        /// <summary>Gets a value that indicates the current item within a <see cref="GridRowCollection" />. </summary>
         /// <param name="index">The current item in the collection.</param>
         /// <returns>The element at the specified index.</returns>
         /// <exception cref="System.ArgumentOutOfRangeException">
@@ -396,7 +396,7 @@ namespace Alternet.UI
             }
         }
 
-        internal DefinitionBase[] InternalItems
+        internal GridDefinitionBase[] InternalItems
         {
             get
             {
@@ -446,7 +446,7 @@ namespace Alternet.UI
             return rowDefinition.LogicalParent == this._owner;
         }
 
-        private void PrivateConnectChild(int index, DefinitionBase value)
+        private void PrivateConnectChild(int index, GridDefinitionBase value)
         {
             this._items[index] = value;
             value.Index = index;
@@ -455,7 +455,7 @@ namespace Alternet.UI
             // value.OnEnterParentTree();
         }
 
-        private void PrivateDisconnectChild(DefinitionBase value)
+        private void PrivateDisconnectChild(GridDefinitionBase value)
         {
             value.OnExitParentTree();
             this._items[value.Index] = null;
@@ -464,7 +464,7 @@ namespace Alternet.UI
             // this._owner.RemoveLogicalChild(value); // yezo
         }
 
-        private void PrivateInsert(int index, DefinitionBase value)
+        private void PrivateInsert(int index, GridDefinitionBase value)
         {
             this.PrivateOnModified();
             if (this._items == null)
@@ -485,7 +485,7 @@ namespace Alternet.UI
             this.PrivateConnectChild(index, value);
         }
 
-        private void PrivateRemove(DefinitionBase value)
+        private void PrivateRemove(GridDefinitionBase value)
         {
             this.PrivateOnModified();
             int index = value.Index;
@@ -526,7 +526,7 @@ namespace Alternet.UI
 
         private readonly Grid _owner;
 
-        private DefinitionBase[] _items;
+        private GridDefinitionBase[] _items;
 
         private int _size;
 
@@ -537,7 +537,7 @@ namespace Alternet.UI
         internal struct Enumerator : IEnumerator<RowDefinition>,
             IDisposable, IEnumerator
         {
-            private RowDefinitionCollection fcollection;
+            private GridRowCollection fcollection;
 
             private int findex;
 
@@ -545,7 +545,7 @@ namespace Alternet.UI
 
             private object fcurrentElement;
 
-            internal Enumerator(RowDefinitionCollection collection)
+            internal Enumerator(GridRowCollection collection)
             {
                 this.fcollection = collection;
                 this.findex = -1;

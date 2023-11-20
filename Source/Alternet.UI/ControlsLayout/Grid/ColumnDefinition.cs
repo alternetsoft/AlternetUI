@@ -7,7 +7,7 @@ namespace Alternet.UI
 {
     /// <summary>Defines column-specific properties that apply to <see cref="Grid" />
     /// controls. </summary>
-    public class ColumnDefinition : DefinitionBase
+    public class ColumnDefinition : GridDefinitionBase
     {
         private GridLength width = GridLength.Star;
         private double minWidth;
