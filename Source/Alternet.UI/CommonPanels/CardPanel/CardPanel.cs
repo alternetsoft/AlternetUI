@@ -40,15 +40,51 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets wait control container which is shown when card is loaded
+        /// and <see cref="UseWaitControl"/> is <c>true</c>.
+        /// </summary>
+        public Control WaitControlContainer => waitLabelContainer;
+
+        /// <summary>
+        /// Gets wait control which is shown when card is loaded
+        /// and <see cref="UseWaitControl"/> is <c>true</c>.
+        /// </summary>
+        public Control WaitControl => waitLabel;
+
+        /// <summary>
         /// Gets or sets whether to call <see cref="Application.BeginBusyCursor"/> when
         /// page is created. By default is <c>true</c>.
         /// </summary>
         public bool UseBusyCursor { get; set; } = true;
 
         /// <summary>
+        /// Gets or sets whether to show wait control when
+        /// page is created. By default is <c>true</c>.
+        /// </summary>
+        public bool UseWaitControl { get; set; } = true;
+
+        /// <summary>
         /// Gets pages with child controls.
         /// </summary>
         public Collection<CardPanelItem> Cards { get; } = new Collection<CardPanelItem>();
+
+        /// <summary>
+        /// Gets or sets selected card.
+        /// </summary>
+        public CardPanelItem? SelectedCard
+        {
+            get
+            {
+                var child = GetVisibleChildOrNull();
+                var result = Find(child);
+                return result;
+            }
+
+            set
+            {
+                SelectCard(value);
+            }
+        }
 
         /// <summary>
         /// Gets the card at the specified index.
@@ -75,23 +111,43 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets card with the specified control.
+        /// </summary>
+        /// <param name="control">Control attached to the card.</param>
+        public CardPanelItem? Find(Control? control)
+        {
+            if (control is null)
+                return null;
+            foreach (var item in Cards)
+            {
+                if (item.ControlCreated && item.Control == control)
+                    return item;
+            }
+
+            return null;
+        }
+
+        /// <summary>
         /// Sets active card by id.
         /// </summary>
         /// <param name="id">Card id.</param>
-        public void SetActiveCard(ObjectUniqueId? id)
+        public CardPanel SelectCard(ObjectUniqueId? id)
         {
             var item = Find(id);
-            SetActiveCard(item);
+            SelectCard(item);
+            return this;
         }
 
         /// <summary>
         /// Sets active card.
         /// </summary>
         /// <param name="card">Card.</param>
-        public void SetActiveCard(CardPanelItem? card)
+        public CardPanel SelectCard(CardPanelItem? card)
         {
             if (card is null)
-                return;
+                return this;
+            if (card == SelectedCard)
+                return this;
             var busyCursor = false;
             SuspendLayout();
             try
@@ -107,17 +163,21 @@ namespace Alternet.UI
                         busyCursor = true;
                     }
 
-                    waitLabelContainer.Parent = this;
-                    waitLabelContainer.Visible = true;
-                    waitLabelContainer.Refresh();
-                    Application.DoEvents();
+                    if (UseWaitControl)
+                    {
+                        waitLabelContainer.Parent = this;
+                        waitLabelContainer.Visible = true;
+                        waitLabelContainer.Refresh();
+                        Application.DoEvents();
+                    }
                 }
 
                 var control = card.Control;
                 control.Parent = this;
                 control.Visible = true;
-                control.PerformLayout();
-                waitLabelContainer.Visible = false;
+                if (UseWaitControl)
+                    waitLabelContainer.Visible = false;
+                PerformLayout();
             }
             finally
             {
@@ -125,17 +185,18 @@ namespace Alternet.UI
                     Application.EndBusyCursor();
                 ResumeLayout();
             }
+            return this;
         }
 
         /// <summary>
         /// Sets active card by index.
         /// </summary>
         /// <param name="index">Card index.</param>
-        public void SetActiveCard(int? index)
+        public CardPanel SelectCard(int? index)
         {
             if (index == null || index < 0 || index >= Cards.Count)
-                return;
-            SetActiveCard(Cards[index.Value]);
+                return this;
+            return SelectCard(Cards[index.Value]);
         }
 
         /// <summary>
