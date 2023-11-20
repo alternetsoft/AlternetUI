@@ -20,21 +20,44 @@ namespace Alternet.UI
     [ControlCategory("Hidden")]
     public class CardPanelHeader : Control
     {
+        /// <summary>
+        /// Gets or sets default value of the <see cref="BorderWidth"/> property.
+        /// </summary>
+        public static Thickness DefaultBorderWidth = new(0, 0, 0, 1);
+
+        /// <summary>
+        /// Gets or sets default value of the <see cref="BorderPadding"/> property.
+        /// </summary>
+        public static Thickness DefaultBorderPadding = new(0, 0, 0, 5);
+
+        /// <summary>
+        /// Gets or sets default value of the <see cref="BorderMargin"/> property.
+        /// </summary>
+        public static Thickness DefaultBorderMargin = new (0, 0, 0, 5);
+
+        /// <summary>
+        /// Gets or sets default value of the <see cref="AdditionalSpace"/> property.
+        /// </summary>
+        public static Size DefaultAdditionalSpace = new(30, 30);
+
         private readonly Collection<CardPanelHeaderItem> tabs = [];
-        private readonly HorizontalStackPanel stackPanel = new();
+        private readonly StackPanel stackPanel = new()
+        {
+            Orientation = StackPanelOrientation.Horizontal,
+        };
 
         private readonly Border border = new()
         {
             VerticalAlignment = VerticalAlignment.Stretch,
-            BorderWidth = new(0, 0, 0, 3),
-            Padding = new(0, 0, 0, 5),
-            Margin = new(0, 0, 0, 5),
+            BorderWidth = DefaultBorderWidth,
+            Padding = DefaultBorderPadding,
+            Margin = DefaultBorderMargin,
         };
 
         private bool? useTabBold;
         private bool? useTabForegroundColor;
         private bool? useTabBackgroundColor;
-        private Size additionalSpace = new(30, 30);
+        private Size additionalSpace = DefaultAdditionalSpace;
         private CardPanelHeaderItem? selectedTab;
         private bool? tabHasBorder;
         private CardPanel? cardPanel;
@@ -84,6 +107,132 @@ namespace Alternet.UI
         /// Gets or sets default inactive tab colors.
         /// </summary>
         public static IReadOnlyFontAndColor? DefaultInactiveTabColors { get; set; }
+
+        /// <summary>
+        /// Gets <see cref="Border"/> control used as border.
+        /// </summary>
+        public Border Border => border;
+
+        /// <summary>
+        /// Gets or sets <see cref="HorizontalAlignment"/> of the tabs.
+        /// </summary>
+        public HorizontalAlignment TabHorizontalAlignment
+        {
+            get
+            {
+                return stackPanel.HorizontalAlignment;
+            }
+
+            set
+            {
+                stackPanel.HorizontalAlignment = value;
+            }
+        }
+
+        /// <inheritdoc cref="Border.BorderWidth"/>
+        public Thickness BorderWidth
+        {
+            get
+            {
+                return border.BorderWidth;
+            }
+
+            set
+            {
+                border.BorderWidth = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets border padding.
+        /// </summary>
+        public Thickness BorderPadding
+        {
+            get
+            {
+                return border.Padding;
+            }
+
+            set
+            {
+                border.Padding = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets border margin.
+        /// </summary>
+        public Thickness BorderMargin
+        {
+            get
+            {
+                return border.Margin;
+            }
+
+            set
+            {
+                border.Margin = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets <see cref="HorizontalAlignment"/> of the tab group.
+        /// </summary>
+        public HorizontalAlignment TabGroupHorizontalAlignment
+        {
+            get
+            {
+                return border.HorizontalAlignment;
+            }
+
+            set
+            {
+                border.HorizontalAlignment = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets <see cref="VerticalAlignment"/> of the tabs.
+        /// </summary>
+        public VerticalAlignment TabVerticalAlignment
+        {
+            get
+            {
+                return stackPanel.VerticalAlignment;
+            }
+
+            set
+            {
+                stackPanel.VerticalAlignment = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets <see cref="VerticalAlignment"/> of the tab group.
+        /// </summary>
+        public VerticalAlignment TabGroupVerticalAlignment
+        {
+            get
+            {
+                return border.VerticalAlignment;
+            }
+
+            set
+            {
+                border.VerticalAlignment = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value that indicates the dimension by which header
+        /// buttons are stacked.
+        /// </summary>
+        public StackPanelOrientation Orientation
+        {
+            get => stackPanel.Orientation;
+
+            set => stackPanel.Orientation = value;
+        }
 
         /// <summary>
         /// Gets whether to set bold style for the title of active tab.
