@@ -61,6 +61,7 @@ namespace Alternet.UI
         private ControlFlags flags;
         private Cursor? cursor;
         private string? toolTip;
+        private ObjectUniqueId? uniqueId;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Control"/> class.
@@ -306,6 +307,17 @@ namespace Alternet.UI
                     NativeControl?.SetCursor(default);
                 else
                     NativeControl?.SetCursor(cursor.Handle);
+            }
+        }
+
+        /// <summary>
+        /// Gets unique id of this control.
+        /// </summary>
+        public ObjectUniqueId UniqueId
+        {
+            get
+            {
+                return uniqueId ??= new();
             }
         }
 
