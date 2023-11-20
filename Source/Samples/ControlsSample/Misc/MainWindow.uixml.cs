@@ -61,9 +61,9 @@ namespace ControlsSample
             AddPage("Layout Panel", CreateLayoutPanelPage);
             AddPage("Calendar", CreateCalendarPage);
             AddPage("Animation", CreateAnimationPage);
-            AddPage("Notify & ToolTip", CreateNotifyIconPage);
+            AddPage("Notify and ToolTip", CreateNotifyIconPage);
             AddPage("Tab Control", CreateTabControlPage);
-            AddPage("All Samples", CreateAllSamplesPage);
+            AddPage("Other Samples", CreateAllSamplesPage);
 
             pageContainer.SelectedIndex = 0;
 

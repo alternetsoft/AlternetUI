@@ -403,12 +403,12 @@ namespace Alternet.UI
         /// </returns>
         public virtual int Add(string text, Control? cardControl = null)
         {
-            var control = new Button(text)
-            {
-                HasBorder = TabHasBorder ?? DefaultTabHasBorder,
-                HorizontalAlignment = HorizontalAlignment.Center,
-                Parent = stackPanel,
-            };
+            var control = CreateHeaderButton();
+
+            control.Text = text;
+            control.HasBorder = TabHasBorder ?? DefaultTabHasBorder;
+            control.HorizontalAlignment = HorizontalAlignment.Center;
+            control.Parent = stackPanel;
             control.Click += Item_Click;
 
             var item = new CardPanelHeaderItem(control)
@@ -421,6 +421,17 @@ namespace Alternet.UI
             UpdateTab(item);
 
             return tabs.Count - 1;
+        }
+
+        /// <summary>
+        /// Creates header button control inherited from <see cref="CardPanelCustomButton"/>.
+        /// </summary>
+        /// <remarks>
+        /// By default creates <see cref="CardPanelHeaderButton"/>
+        /// </remarks>
+        public virtual CardPanelCustomButton CreateHeaderButton()
+        {
+            return CardPanelCustomButton.CreateButton?.Invoke() ?? new CardPanelHeaderButton();
         }
 
         /// <summary>
@@ -504,31 +515,32 @@ namespace Alternet.UI
         private void UpdateTab(CardPanelHeaderItem item)
         {
             var isSelected = item == selectedTab;
-            item.HeaderControl.IsBold = isSelected && (UseTabBold ?? DefaultUseTabBold);
+            item.HeaderButton.IsBold = isSelected && (UseTabBold ?? DefaultUseTabBold);
             var colors = GetColors(isSelected);
             if (colors is null)
                 return;
             if (UseTabForegroundColor ?? DefaultUseTabForegroundColor)
-                item.HeaderControl.ForegroundColor = colors.ForegroundColor;
+                item.HeaderButton.ForegroundColor = colors.ForegroundColor;
             if (UseTabBackgroundColor ?? DefaultUseTabBackgroundColor)
-                item.HeaderControl.BackgroundColor = colors.BackgroundColor;
+                item.HeaderButton.BackgroundColor = colors.BackgroundColor;
         }
 
         private void UpdateTabs()
         {
             foreach (var item in Tabs)
             {
-                if (item.HeaderControl is Button button)
-                    button.HasBorder = tabHasBorder ?? DefaultTabHasBorder;
+                item.HeaderButton.HasBorder = tabHasBorder ?? DefaultTabHasBorder;
                 UpdateTab(item);
             }
         }
 
         private void Item_Click(object? sender, EventArgs e)
         {
+            if (sender is not Control control)
+                return;
             foreach(var tab in tabs)
             {
-                if(sender == tab.HeaderControl)
+                if(control == tab.HeaderButton || control.HasIndirectParent(tab.HeaderButton))
                 {
                     SelectedTab = tab;
                     TabClick?.Invoke(this, EventArgs.Empty);

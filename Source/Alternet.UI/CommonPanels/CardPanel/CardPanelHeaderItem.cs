@@ -11,11 +11,11 @@ namespace Alternet.UI
     /// </summary>
     public class CardPanelHeaderItem : BaseControlItem
     {
-        private readonly Control headerControl;
+        private readonly CardPanelCustomButton headerControl;
         private Control? cardControl;
         private ObjectUniqueId? cardUniqueId;
 
-        internal CardPanelHeaderItem(Control headerControl)
+        internal CardPanelHeaderItem(CardPanelCustomButton headerControl)
         {
             this.headerControl = headerControl;
         }
@@ -23,7 +23,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets associated header control.
         /// </summary>
-        public Control HeaderControl => headerControl;
+        public CardPanelCustomButton HeaderButton => headerControl;
 
         /// <summary>
         /// Gets or sets associated card control.

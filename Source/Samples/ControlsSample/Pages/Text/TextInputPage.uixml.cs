@@ -29,8 +29,7 @@ namespace ControlsSample
         private const string LoremIpsum =
             "Lorem ipsum dolor sit amet,\nconsectetur adipiscing elit. "+
             "Suspendisse tincidunt orci vitae arcu congue commodo. "+
-            "Proin fermentum rhoncus dictum.\n\n"+
-            "Sample url: https://www.alternet-ui.com/\n";
+            "Proin fermentum rhoncus dictum.\n";
 
         private readonly CardPanelHeader panelHeader = new();
         private readonly PanelRichTextBox richPanel = new();
@@ -119,10 +118,18 @@ namespace ControlsSample
 
             // ==== multiLineTextBox
 
-            multiLineTextBox.AutoUrl = true;
             if(!Application.IsMacOs)
                 multiLineTextBox.AutoUrlOpen = true;
             multilineParent.Children.Prepend(multiLineTextBox);
+
+            var multilineDemoText = LoremIpsum;
+
+            if (!SystemSettings.AppearanceIsDark || Application.IsWindowsOS)
+            {
+                multiLineTextBox.AutoUrl = true;
+                multilineDemoText += "\nSample url: https://www.alternet-ui.com/\n";
+            }
+
             multiLineTextBox.Text = LoremIpsum;
             multiLineTextBox.TextUrl += MultiLineTextBox_TextUrl;
             multiLineTextBox.CurrentPositionChanged += TextBox_CurrentPositionChanged;
