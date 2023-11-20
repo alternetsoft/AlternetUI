@@ -247,6 +247,19 @@ namespace Alternet.UI
             AppUtils.ShellExecute(Application.LogFilePath);
         }
 
+        internal static void LogAppDomainTargetFrameworkName()
+        {
+            Application.Log(AppDomain.CurrentDomain.SetupInformation.TargetFrameworkName);
+
+            var frameworkName = new System.Runtime.Versioning.FrameworkName(
+                AppDomain.CurrentDomain.SetupInformation.TargetFrameworkName!);
+
+            if (frameworkName.Version >= new Version(4, 5))
+            {
+                // run code
+            }
+        }
+
         /// <summary>
         /// Writes to log file "Application started" header text.
         /// </summary>
