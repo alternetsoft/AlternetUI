@@ -14,6 +14,7 @@ namespace Alternet.UI
     /// This control is implemented inside the Alternet.UI and doesn't
     /// use native tab control.
     /// </remarks>
+    [ControlCategory("Containers")]
     public class GenericTabControl : Control
     {
         private readonly CardPanel cardPanel = new();
