@@ -20,7 +20,7 @@ namespace Alternet.UI
     [ControlCategory("Hidden")]
     public class CardPanelHeader : Control
     {
-        private readonly Collection<CardPanelHeaderItem> tabs = new();
+        private readonly Collection<CardPanelHeaderItem> tabs = [];
         private readonly HorizontalStackPanel stackPanel = new();
 
         private readonly Border border = new()
@@ -294,7 +294,7 @@ namespace Alternet.UI
                 tab.CardControl?.Hide();
             }
 
-            var id = SelectedTab?.CardUniqueId;
+            var id = SelectedTab?.UniqueId;
 
             cardPanel?.SuspendLayout();
             try
