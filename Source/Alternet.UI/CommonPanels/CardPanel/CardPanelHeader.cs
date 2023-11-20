@@ -48,7 +48,7 @@ namespace Alternet.UI
 
         private readonly Border border = new()
         {
-            HorizontalAlignment = HorizontalAlignment.Left,
+            HorizontalAlignment = HorizontalAlignment.Stretch, // do not change, horizontal line must be on full width
             VerticalAlignment = VerticalAlignment.Top,
             BorderWidth = DefaultBorderWidth,
             Padding = DefaultBorderPadding,
