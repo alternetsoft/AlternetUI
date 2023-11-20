@@ -2,7 +2,8 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <SamplesTargetFrameworksWindows>net8.0;net7.0;net6.0;net462;net480</SamplesTargetFrameworksWindows>
-    <SamplesTargetFrameworksNonWindows>net8.0;net7.0;net6.0</SamplesTargetFrameworksNonWindows>
+    <SamplesTargetFrameworksLinux>net8.0;net7.0;net6.0</SamplesTargetFrameworksLinux>
+    <SamplesTargetFrameworksMacOs>net7.0;net6.0</SamplesTargetFrameworksMacOs>
     <FrameworkOverridesName>FrameworksOverride.props</FrameworkOverridesName>
   </PropertyGroup>
 
@@ -10,8 +11,12 @@
     <TargetFrameworks>$(SamplesTargetFrameworksWindows)</TargetFrameworks>
   </PropertyGroup>
 
-  <PropertyGroup Condition="!$([MSBuild]::IsOsPlatform('Windows'))">
-    <TargetFrameworks>$(SamplesTargetFrameworksNonWindows)</TargetFrameworks>
+  <PropertyGroup Condition="$([MSBuild]::IsOsPlatform('Linux'))">
+    <TargetFrameworks>$(SamplesTargetFrameworksLinux)</TargetFrameworks>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="$([MSBuild]::IsOsPlatform('OSX'))">
+    <TargetFrameworks>$(SamplesTargetFrameworksMacOs)</TargetFrameworks>
   </PropertyGroup>
 
   <ItemGroup>

@@ -5,7 +5,11 @@
     <TargetFrameworks>net8.0</TargetFrameworks>
   </PropertyGroup>
 
-  <PropertyGroup Condition="!$([MSBuild]::IsOsPlatform('Windows'))">
+  <PropertyGroup Condition="$([MSBuild]::IsOsPlatform('OSX'))">
+    <TargetFrameworks>net7.0</TargetFrameworks>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="$([MSBuild]::IsOsPlatform('Linux'))">
     <TargetFrameworks>net8.0</TargetFrameworks>
   </PropertyGroup>
 </Project>

@@ -8,7 +8,8 @@
 	<TargetFramework48Version>net480</TargetFramework48Version>
 	<TargetFramework46Version>net462</TargetFramework46Version>
 	<UITargetFrameworksWindows>net8.0;net7.0;net6.0;$(TargetFramework46Version);$(TargetFramework48Version)</UITargetFrameworksWindows>
-	<UITargetFrameworksNonWindows>net8.0;net7.0;net6.0</UITargetFrameworksNonWindows>
+	<UITargetFrameworksLinux>net8.0;net7.0;net6.0</UITargetFrameworksLinux>
+	<UITargetFrameworksMacOs>net7.0;net6.0</UITargetFrameworksMacOs>
 
         <UIIntegrationUIXmlHostAppTargetFrameworks>$(TargetFramework46Version);$(TargetFramework48Version);net6.0-windows;net7.0-windows;net8.0-windows</UIIntegrationUIXmlHostAppTargetFrameworks>
   </PropertyGroup>

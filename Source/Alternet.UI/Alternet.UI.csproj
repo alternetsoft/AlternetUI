@@ -40,8 +40,12 @@
     <TargetFrameworks>$(UITargetFrameworksWindows)</TargetFrameworks>
   </PropertyGroup>
 
-  <PropertyGroup Condition="!$([MSBuild]::IsOsPlatform('Windows'))">
-    <TargetFrameworks>$(UITargetFrameworksNonWindows)</TargetFrameworks>
+  <PropertyGroup Condition="$([MSBuild]::IsOsPlatform('Linux'))">
+    <TargetFrameworks>$(UITargetFrameworksLinux)</TargetFrameworks>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="$([MSBuild]::IsOsPlatform('OSX'))">
+    <TargetFrameworks>$(UITargetFrameworksMacOs)</TargetFrameworks>
   </PropertyGroup>
 
   <ItemGroup>
