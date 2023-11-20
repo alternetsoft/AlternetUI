@@ -17,7 +17,7 @@ namespace Alternet.UI
     /// Allows to switch cards in the <see cref="CardPanel"/> control by clicking
     /// on the card title.
     /// </remarks>
-    [ControlCategory("Hidden")]
+    [ControlCategory("Panels")]
     public class CardPanelHeader : Control
     {
         /// <summary>
@@ -48,7 +48,8 @@ namespace Alternet.UI
 
         private readonly Border border = new()
         {
-            VerticalAlignment = VerticalAlignment.Stretch,
+            HorizontalAlignment = HorizontalAlignment.Left,
+            VerticalAlignment = VerticalAlignment.Top,
             BorderWidth = DefaultBorderWidth,
             Padding = DefaultBorderPadding,
             Margin = DefaultBorderMargin,
@@ -111,6 +112,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets <see cref="Border"/> control used as border.
         /// </summary>
+        [Browsable(false)]
         public Border Border => border;
 
         /// <summary>
@@ -294,6 +296,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets attached <see cref="CardPanel"/>
         /// </summary>
+        [Browsable(false)]
         public CardPanel? CardPanel
         {
             get => cardPanel;
@@ -309,6 +312,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets tabs collection.
         /// </summary>
+        [Browsable(false)]
         public IReadOnlyList<CardPanelHeaderItem> Tabs => tabs;
 
         /// <summary>
@@ -333,6 +337,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets active tab colors.
         /// </summary>
+        [Browsable(false)]
         public IReadOnlyFontAndColor? ActiveTabColors
         {
             get
@@ -352,6 +357,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets inactive tab colors.
         /// </summary>
+        [Browsable(false)]
         public IReadOnlyFontAndColor? InactiveTabColors
         {
             get
@@ -399,6 +405,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets selected tab.
         /// </summary>
+        [Browsable(false)]
         public CardPanelHeaderItem? SelectedTab
         {
             get => selectedTab;
@@ -420,6 +427,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets selected tab index or <c>null</c> if no tab is selected.
         /// </summary>
+        [Browsable(false)]
         public int? SelectedTabIndex
         {
             get
