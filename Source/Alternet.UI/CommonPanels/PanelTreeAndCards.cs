@@ -81,7 +81,7 @@ namespace Alternet.UI
         private void LeftTreeView_SelectionChanged(object? sender, System.EventArgs e)
         {
             var tag = LeftTreeView.SelectedItem?.Tag;
-            cardPanel.SetActiveCard(tag as int?);
+            cardPanel.SelectCard(tag as int?);
         }
     }
 }
