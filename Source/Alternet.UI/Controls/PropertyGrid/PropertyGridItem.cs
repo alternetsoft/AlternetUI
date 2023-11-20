@@ -11,7 +11,7 @@ namespace Alternet.UI
     /// <summary>
     /// Default implementation of the <see cref="IPropertyGridItem"/> interface.
     /// </summary>
-    public class PropertyGridItem : IPropertyGridItem
+    public class PropertyGridItem : BaseControlItem, IPropertyGridItem
     {
         private readonly IntPtr handle;
         private readonly string defaultName;
@@ -104,7 +104,7 @@ namespace Alternet.UI
             {
                 if(children == null)
                 {
-                    children = new Collection<IPropertyGridItem>();
+                    children = [];
                     children.ItemInserted += Children_ItemInserted;
                     children.ItemRemoved += Children_ItemRemoved;
                 }

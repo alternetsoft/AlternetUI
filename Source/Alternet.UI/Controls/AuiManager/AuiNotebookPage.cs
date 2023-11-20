@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Alternet.UI
 {
-    internal class AuiNotebookPage : IAuiNotebookPage
+    internal class AuiNotebookPage : BaseControlItem, IAuiNotebookPage
     {
         private AuiNotebook? notebook;
 

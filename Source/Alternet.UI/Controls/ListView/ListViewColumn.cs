@@ -16,7 +16,7 @@ namespace Alternet.UI
     /// <see cref="ICollection{ListViewColumn}.Add"/> method of the collection returned
     /// by <see cref="ListView.Columns"/> property.
     /// </remarks>
-    public class ListViewColumn
+    public class ListViewColumn : BaseControlItem
     {
         private double width = 80;
         private ListViewColumnWidthMode widthMode;

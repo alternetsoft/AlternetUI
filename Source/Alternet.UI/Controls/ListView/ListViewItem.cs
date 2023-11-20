@@ -44,7 +44,7 @@ namespace Alternet.UI
     /// item by using <see cref="Cells"/> property of the <see cref="ListViewItem"/>.
     /// </para>
     /// </remarks>
-    public class ListViewItem
+    public class ListViewItem : BaseControlItem
     {
         private readonly Collection<ListViewItemCell> cells = new() { ThrowOnNullAdd = true };
         private ListView? listView;

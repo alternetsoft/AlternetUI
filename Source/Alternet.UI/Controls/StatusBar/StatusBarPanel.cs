@@ -9,7 +9,7 @@ namespace Alternet.UI
     /// Represents an individual item that is displayed within a status bar.
     /// </summary>
     [ControlCategory("Hidden")]
-    public class StatusBarPanel : BaseObject
+    public class StatusBarPanel : BaseControlItem
     {
         private string text = string.Empty;
         private int width = -1;

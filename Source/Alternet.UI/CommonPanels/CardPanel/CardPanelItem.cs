@@ -9,11 +9,10 @@ namespace Alternet.UI
     /// <summary>
     /// Individual page of the <see cref="CardPanel"/>
     /// </summary>
-    public class CardPanelItem : BaseObject
+    public class CardPanelItem : BaseControlItem
     {
         private readonly Func<Control>? action;
         private Control? control;
-        private ObjectUniqueId? id;
 
         internal CardPanelItem(string? title, Control control)
         {
@@ -25,18 +24,6 @@ namespace Alternet.UI
         {
             Title = title;
             this.action = action;
-        }
-
-        /// <summary>
-        /// Gets unique id of this object.
-        /// </summary>
-        public ObjectUniqueId UniqueId
-        {
-            get
-            {
-                id ??= new ObjectUniqueId();
-                return id.Value;
-            }
         }
 
         /// <summary>

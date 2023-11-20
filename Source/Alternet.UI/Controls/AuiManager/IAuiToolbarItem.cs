@@ -9,7 +9,7 @@ namespace Alternet.UI
     /// <summary>
     /// Provides access to methods and properties of the <see cref="AuiToolbar"/> item.
     /// </summary>
-    internal interface IAuiToolbarItem
+    internal interface IAuiToolbarItem : IBaseControlItem
     {
     }
 }

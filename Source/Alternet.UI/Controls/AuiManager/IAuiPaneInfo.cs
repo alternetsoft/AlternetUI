@@ -17,7 +17,7 @@ namespace Alternet.UI
     /// floating position, preferred size, minimum size, caption text among
     /// many other parameters.
     /// </remarks>
-    public interface IAuiPaneInfo : IDisposable
+    public interface IAuiPaneInfo : IBaseControlItem, IDisposable
     {
         /// <summary>
         /// Returns handle of the pane info object.

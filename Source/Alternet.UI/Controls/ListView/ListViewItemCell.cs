@@ -15,7 +15,7 @@ namespace Alternet.UI
     /// Cells are displayed when the <see cref="ListView.View"/> property of the
     /// <see cref="ListView"/> control is set to <see cref="ListViewView.Details"/>.
     /// </remarks>
-    public class ListViewItemCell
+    public class ListViewItemCell : BaseControlItem
     {
         private string text = string.Empty;
         private int? imageIndex;

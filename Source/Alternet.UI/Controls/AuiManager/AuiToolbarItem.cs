@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Alternet.UI
 {
-    internal class AuiToolbarItem : IAuiToolbarItem
+    internal class AuiToolbarItem : BaseControlItem, IAuiToolbarItem
     {
         public AuiToolbarItem()
         {

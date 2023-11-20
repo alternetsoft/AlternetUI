@@ -7,7 +7,7 @@ using Alternet.Drawing;
 
 namespace Alternet.UI
 {
-    internal class AuiPaneInfo : IDisposable, IAuiPaneInfo
+    internal class AuiPaneInfo : BaseControlItem, IDisposable, IAuiPaneInfo
     {
         private IntPtr handle;
 

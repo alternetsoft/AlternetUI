@@ -57,7 +57,7 @@ namespace Alternet.UI
     /// alternate between the expanded and collapsed states.
     /// </para>
     /// </remarks>
-    public class TreeViewItem
+    public class TreeViewItem : BaseControlItem
     {
         private string text = string.Empty;
         private TreeView? treeView;

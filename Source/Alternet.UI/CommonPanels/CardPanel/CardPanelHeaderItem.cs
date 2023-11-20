@@ -9,7 +9,7 @@ namespace Alternet.UI
     /// <summary>
     /// Individual page of the <see cref="CardPanelHeader"/>
     /// </summary>
-    public class CardPanelHeaderItem : BaseObject
+    public class CardPanelHeaderItem : BaseControlItem
     {
         private readonly Control headerControl;
         private Control? cardControl;
