@@ -25,6 +25,7 @@ namespace Alternet.UI
         {
             AppStartLogged = 1,
             AppFinishLogged = 2,
+            VersionLogged = 4,
         }
 
         /// <summary>
@@ -115,12 +116,17 @@ namespace Alternet.UI
         [Conditional("DEBUG")]
         public static void DebugLogVersion()
         {
+            if (flags.HasFlag(Flags.VersionLogged))
+                return;
+            flags |= Flags.VersionLogged;
             var wxWidgets = WebBrowser.GetLibraryVersionString();
             var net = $"Net: {Environment.Version}";
             var dpi = $"DPI: {Application.FirstWindow()?.GetDPI().Width}";
             var ui = $"UI: {WebBrowser.DoCommandGlobal("UIVersion")}";
             var s = $"{ui}, {net}, {wxWidgets}, {dpi}";
             Application.Log(s);
+            if (Application.LogFileIsEnabled)
+                Application.DebugLog($"Log File = {Application.LogFilePath}");
         }
 
         /// <summary>
