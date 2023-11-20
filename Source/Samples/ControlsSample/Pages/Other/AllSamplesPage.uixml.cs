@@ -159,8 +159,10 @@ namespace ControlsSample
             if (view.SelectedItem is not CsProjItem item)
                 return;
             string path = item.CsProjPath;
-            Application.Log("Run sample: " + path);
             path = Path.GetDirectoryName(path)!;
+            if (DeleteBin)
+                PathUtils.DeleteBinObjFiles(path);
+            Application.Log("Run sample: " + path);
             RunCsProjInFolder(path);
         }
 
@@ -171,6 +173,8 @@ namespace ControlsSample
             string path = item.CsProjPath;
             Application.Log("Build sample: " + path);
             path = Path.GetDirectoryName(path)!;
+            if (DeleteBin)
+                PathUtils.DeleteBinObjFiles(path);
             BuildCsProjInFolder(path);
         }
 
@@ -179,6 +183,8 @@ namespace ControlsSample
             Application.Log("Build Alternet.UI.dll");
             var s = GetUIFolder();
             Application.Log("Path: " + s);
+            if (DeleteBin)
+                PathUtils.DeleteBinObjFiles(s);
             BuildCsProjInFolder(s);
         }
 
@@ -187,6 +193,8 @@ namespace ControlsSample
             Application.Log("Build Alternet.UI.Pal");
             var s = GetPalFolder();
             Application.Log("Path: " + s);
+            if (DeleteBin)
+                PathUtils.DeleteBinObjFiles(s);
         }
 
         public void ExecuteTerminalCommand(string command, string? folder = null)
