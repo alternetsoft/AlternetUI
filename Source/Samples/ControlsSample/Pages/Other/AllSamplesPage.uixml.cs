@@ -18,8 +18,11 @@ namespace ControlsSample
             AddDefaultItems();
             view.SelectFirstItem();
 
-            ControlSet.New([runButton, buildButton]).SuggestedWidthToMax();
+            ControlSet.New([runButton, buildButton, buildUIButton, buildPalButton]).SuggestedWidthToMax();
+            deleteBinCheckBox.BindBoolProp(this, nameof(DeleteBin));
         }
+
+        public bool DeleteBin { get; set; }
 
         internal static IEnumerable<string> EnumProjectsOld(string path)
         {
@@ -41,6 +44,22 @@ namespace ControlsSample
             if (trimmed is not null && trimmed.EndsWith("Samples"))
                 folder1 = folder2;
             return folder1;
+        }
+
+        private string GetPalFolder()
+        {
+            string samplesFolder = GetSamplesFolder();
+            string relativePath = Path.Combine(samplesFolder, "..", "Alternet.UI.Pal");
+            string result = Path.GetFullPath(relativePath);
+            return result;
+        }
+
+        private string GetUIFolder()
+        {
+            string samplesFolder = GetSamplesFolder();
+            string relativePath = Path.Combine(samplesFolder, "..", "Alternet.UI");
+            string result = Path.GetFullPath(relativePath);
+            return result;
         }
 
         private IEnumerable<string> EnumerateSamples()
@@ -121,14 +140,11 @@ namespace ControlsSample
 
         private void RunDotNetOnCsProjInFolder(string folder, string dotnetCmd = "run")
         {
-            // Could use these params:
-            // --nologo
-
             var targetFramework = AppUtils.GetMyTargetFrameworkName();
             var cmdRunWindows =
-              $"dotnet {dotnetCmd} /p:Platform=x64 --arch x64 --property WarningLevel=0 --framework {targetFramework}";
+              $"dotnet {dotnetCmd} /p:Platform=x64 --nologo --arch x64 --property WarningLevel=0 --framework {targetFramework}";
             var cmdRunOther =
-                $"dotnet {dotnetCmd} --property WarningLevel=0 --framework {targetFramework}";
+                $"dotnet {dotnetCmd} --property --nologo WarningLevel=0 --framework {targetFramework}";
             var cmd = Application.IsWindowsOS ? cmdRunWindows : cmdRunOther;
             ExecuteTerminalCommand(cmd, folder);
         }
@@ -153,9 +169,24 @@ namespace ControlsSample
             if (view.SelectedItem is not CsProjItem item)
                 return;
             string path = item.CsProjPath;
-            Application.Log("Run sample: " + path);
+            Application.Log("Build sample: " + path);
             path = Path.GetDirectoryName(path)!;
             BuildCsProjInFolder(path);
+        }
+
+        private void BuildUIButton_Click(object? sender, EventArgs e)
+        {
+            Application.Log("Build Alternet.UI.dll");
+            var s = GetUIFolder();
+            Application.Log("Path: " + s);
+            BuildCsProjInFolder(s);
+        }
+
+        private void BuildPalButton_Click(object? sender, EventArgs e)
+        {
+            Application.Log("Build Alternet.UI.Pal");
+            var s = GetPalFolder();
+            Application.Log("Path: " + s);
         }
 
         public void ExecuteTerminalCommand(string command, string? folder = null)

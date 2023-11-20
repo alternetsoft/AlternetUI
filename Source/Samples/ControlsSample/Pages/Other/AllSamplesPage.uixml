@@ -17,11 +17,13 @@
                     Click="RunButton_Click" HorizontalAlignment="Center" />
           <Button Text="Build Sample" Name="buildButton" Margin="0,0,0,5" Enabled="true" Visible="true"
                   Click="BuildButton_Click" HorizontalAlignment="Center" />
-          <Button Text="Run All" Name="runAllButton" Margin="0,0,0,5" Enabled="false" Visible="false"
-                  Click="RunAllButton_Click" HorizontalAlignment="Center"/>
-          <Button Text="Build All" Name="buildAllButton" Margin="0,0,0,5" Enabled="false"
-                  Visible="false"
-                  Click="BuildAllButton_Click" HorizontalAlignment="Center"/>
+          <Button Text="Build UI" Name="buildUIButton" Margin="0,0,0,5" Enabled="true" Visible="true"
+                  Click="BuildUIButton_Click" HorizontalAlignment="Center"/>
+          <Button Text="Build Pal" Name="buildPalButton" Margin="0,0,0,5" Enabled="false"
+                  Visible="true"
+                  Click="BuildPalButton_Click" HorizontalAlignment="Center"/>
+          <CheckBox Text="Delete Bin" Name="deleteBinCheckBox" Margin="0,0,0,5"
+                  Enabled="false" Visible="true"/>
         </VerticalStackPanel>
     </HorizontalStackPanel>
 
