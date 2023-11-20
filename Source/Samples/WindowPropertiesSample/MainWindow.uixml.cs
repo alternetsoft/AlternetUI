@@ -30,6 +30,9 @@ namespace WindowPropertiesSample
             panelHeader.Add("Bounds", boundsPanel);
             pageControl.Children.Insert(0, panelHeader);
             panelHeader.SelectedTab = panelHeader.Tabs[0];
+
+            eventsListBox.BindApplicationLog();
+            eventsListBox.ContextMenu.Required();
         }
 
         private void CreateAndShowWindowButton_Click(object sender, EventArgs e)

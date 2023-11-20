@@ -11,7 +11,7 @@ namespace DragAndDropSample
     public partial class MainWindow : Window
     {
         private static readonly string[] SupportedFormats =
-            new[] { DataFormats.Text, DataFormats.Files, DataFormats.Bitmap };
+            [DataFormats.Text, DataFormats.Files, DataFormats.Bitmap];
 
         private Bitmap testBitmap;
 
@@ -24,6 +24,9 @@ namespace DragAndDropSample
             testBitmap = new Bitmap(new Size(64, 64));
 
             SetSizeToContent();
+
+            eventsListBox.BindApplicationLog();
+            eventsListBox.ContextMenu.Required();
         }
 
         private DragDropEffects GetDropEffect(DragDropEffects defaultEffect)

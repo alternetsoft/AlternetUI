@@ -18,12 +18,14 @@ namespace HelloWorldSample
             DataContext = new MyData(System.DateTime.Now);
 
             SetSizeToContent();
+
+            LogControl.BindApplicationLog();
+            LogControl.ContextMenu.Required();
         }
 
         private void ShowDataButton_Click(object? sender, EventArgs e)
         {
-            LogControl.Add("MyDataProperty: " + ((MyData)DataContext!).MyDataProperty);
-            LogControl.SelectAndShowItem(LogControl.LastItem);
+            Application.Log("MyDataProperty: " + ((MyData)DataContext!).MyDataProperty);
         }
 
         private void UpdateDataButton_Click(object? sender, EventArgs e)

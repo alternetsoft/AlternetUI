@@ -15,6 +15,6 @@
       <Button Name="updateData" Text="Update Data With Current Time" Click="UpdateDataButton_Click"
               Margin="0,5,0,10"/>
 
-      <TreeView Name="LogControl" Margin="0,5,0,10" SuggestedSize="400,300"/>
+      <LogListBox Name="LogControl" Margin="0,5,0,10" SuggestedSize="400,300"/>
 	</StackPanel>
 </Window>
