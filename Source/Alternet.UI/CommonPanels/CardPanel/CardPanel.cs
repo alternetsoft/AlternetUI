@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,7 +16,7 @@ namespace Alternet.UI
     /// <remarks>
     /// It behaves like <see cref="TabControl"/> but has no tab titles.
     /// </remarks>
-    [ControlCategory("Hidden")]
+    [ControlCategory("Containers")]
     public class CardPanel : Control
     {
         private readonly VerticalStackPanel waitLabelContainer = new()
@@ -43,12 +44,14 @@ namespace Alternet.UI
         /// Gets wait control container which is shown when card is loaded
         /// and <see cref="UseWaitControl"/> is <c>true</c>.
         /// </summary>
+        [Browsable(false)]
         public Control WaitControlContainer => waitLabelContainer;
 
         /// <summary>
         /// Gets wait control which is shown when card is loaded
         /// and <see cref="UseWaitControl"/> is <c>true</c>.
         /// </summary>
+        [Browsable(false)]
         public Control WaitControl => waitLabel;
 
         /// <summary>
@@ -66,11 +69,13 @@ namespace Alternet.UI
         /// <summary>
         /// Gets pages with child controls.
         /// </summary>
+        [Browsable(false)]
         public Collection<CardPanelItem> Cards { get; } = [];
 
         /// <summary>
         /// Gets or sets selected card.
         /// </summary>
+        [Browsable(false)]
         public CardPanelItem? SelectedCard
         {
             get
@@ -82,6 +87,26 @@ namespace Alternet.UI
 
             set
             {
+                if (value is null)
+                    return;
+                SelectCard(value);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets selected card index.
+        /// </summary>
+        public int? SelectedCardIndex
+        {
+            get
+            {
+                return IndexOf(SelectedCard);
+            }
+
+            set
+            {
+                if (value is null || value < 0 || value >= Cards.Count)
+                    return;
                 SelectCard(value);
             }
         }
@@ -105,6 +130,23 @@ namespace Alternet.UI
             {
                 if (item.UniqueId == id)
                     return item;
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// Gets index of the specified card.
+        /// </summary>
+        /// <param name="item">Card.</param>
+        public int? IndexOf(CardPanelItem? item)
+        {
+            if (item == null)
+                return null;
+            for(int i = 0; i < Cards.Count - 1; i++)
+            {
+                if (item == Cards[i])
+                    return i;
             }
 
             return null;
