@@ -13,6 +13,21 @@ namespace Alternet.UI
     public static class AppUtils
     {
         /// <summary>
+        /// Gets this application target framework in the form like 'net8.0' or 'net462'.
+        /// </summary>
+        /// <returns></returns>
+        public static string GetMyTargetFrameworkName()
+        {
+            var version = Environment.Version;
+#if NETFRAMEWORK
+            var result = $"net{version.Major}{version.Minor}";
+#else
+            var result = $"net{version.Major}.{version.Minor}";
+#endif
+            return result;
+        }
+
+        /// <summary>
         /// Uses <see cref="Process"/> to start the application.
         /// </summary>
         /// <param name="filePath">Path to the application.</param>
