@@ -43,7 +43,7 @@ namespace Alternet.UI
         {
             get
             {
-                control ??= action!();
+                control ??= action?.Invoke() ?? new Control();
                 return control;
             }
         }
