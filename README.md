@@ -10,9 +10,10 @@ For increased developer productivity, AlterNET UI extension for Visual Studio is
 
 ------------
 
-Steps needed to build AlterNET UI
+How to build AlterNET UI
 
 - 3 build machines are needed: Windows, macOS, Linux.
+- On all machines installations of .NET SDK 8.0, 6.0, 7.0 are required.
 - First, AlterNET UI need to be built on all 3 platforms.
 - Then, to build the final packages, the artifacts (build results) from the 3 platforms need to be combined together in the last, final step.
 
@@ -22,7 +23,7 @@ Step 1. Windows Machine Setup:
 - Use the "C:\Alternet.UI" folder or any other root folder. The folder name should not contain any spaces or non-English letters.
 
 Step 2. macOS Machine Setup:
-- macOS 10.15 or newer is required.
+- macOS 10.15 (Catalina) or newer is required.
 - Install XCode and CMake.
 - Make folder with Windows Alternet.UI installation accessible for macOS Machine.
 
