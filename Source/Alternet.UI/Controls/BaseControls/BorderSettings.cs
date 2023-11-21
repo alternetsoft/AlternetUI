@@ -32,9 +32,24 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Occurs when the border is redrawn.
+        /// </summary>
+        public event EventHandler<PaintEventArgs>? Paint;
+
+        /// <summary>
         /// Occurs when a property value changes.
         /// </summary>
         public event PropertyChangedEventHandler? PropertyChanged;
+
+        /// <summary>
+        /// Gets or sets whether to draw default border. 
+        /// </summary>
+        /// <remarks>
+        /// If <see cref="DrawDefaultBorder"/> is <c>false</c>, border can be painted
+        /// using <see cref="Paint"/> event handler.
+        /// </remarks>
+        [Browsable(false)]
+        public bool DrawDefaultBorder { get; set; } = true;
 
         /// <summary>
         /// Gets whether all sides have same color and width.
@@ -123,6 +138,63 @@ namespace Alternet.UI
             IsUniformVerticalColor && IsUniformHorizontalColor;
 
         /// <summary>
+        /// <see cref="Paint"/> event handler implementation which draws design corners used
+        /// to indicate control's bounds.
+        /// </summary>
+        /// <param name="sender"><see cref="BorderSettings"/> instance.</param>
+        /// <param name="args">Event arguments.</param>
+        public static void DrawDesignCorners(object? sender, PaintEventArgs args)
+        {
+            const double cornerSize = 5;
+
+            void DrawHorizontal(DrawingContext dc, Brush brush, Rect rect)
+            {
+                var rect1 = rect;
+                var rect2 = rect;
+                rect1.Width = cornerSize;
+                rect2.Location = rect2.TopRight - new Size(cornerSize, 0);
+                rect2.Width = cornerSize;
+                dc.FillRectangle(brush, rect1);
+                dc.FillRectangle(brush, rect2);
+            }
+
+            void DrawVertical(DrawingContext dc, Brush brush, Rect rect)
+            {
+                var rect1 = rect;
+                var rect2 = rect;
+                rect1.Height = cornerSize;
+                rect2.Location = rect2.BottomLeft - new Size(0, cornerSize);
+                rect2.Height = cornerSize;
+                dc.FillRectangle(brush, rect1);
+                dc.FillRectangle(brush, rect2);
+            }
+
+            if (sender is not BorderSettings border)
+                return;
+            var dc = args.DrawingContext;
+            var rect = args.Bounds;
+            if (border.Top.Width > 0)
+            {
+                DrawHorizontal(dc, border.Top.Brush, border.GetTopRectangle(rect));
+            }
+
+            if (border.Bottom.Width > 0)
+            {
+                DrawHorizontal(dc, border.Bottom.Brush, border.GetBottomRectangle(rect));
+            }
+
+            if (border.Left.Width > 0)
+            {
+                DrawVertical(dc, border.Left.Brush, border.GetLeftRectangle(rect));
+            }
+
+            if (border.Right.Width > 0)
+            {
+                DrawVertical(dc, border.Right.Brush, border.GetRightRectangle(rect));
+            }
+        }
+
+        /// <summary>
         /// Gets rectangle of the top border edge.
         /// </summary>
         /// <param name="rect">Border rectangle.</param>
@@ -171,8 +243,13 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="dc">Drawing context.</param>
         /// <param name="rect">Rectangle.</param>
-        public void Draw(DrawingContext dc, Rect rect)
+        public virtual void Draw(DrawingContext dc, Rect rect)
         {
+            Paint?.Invoke(this, new PaintEventArgs(dc, rect));
+
+            if (!DrawDefaultBorder)
+                return;
+
             if (Top.Width > 0)
             {
                 dc.FillRectangle(Top.Brush, GetTopRectangle(rect));

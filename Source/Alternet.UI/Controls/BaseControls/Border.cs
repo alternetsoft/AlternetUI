@@ -9,7 +9,7 @@ namespace Alternet.UI
     [ControlCategory("Containers")]
     public class Border : UserPaintControl
     {
-        private readonly BorderSettings settings = BorderSettings.Default.Clone();
+        private readonly BorderSettings settings;
         private bool hasBorder = true;
 
         /// <summary>
@@ -17,6 +17,8 @@ namespace Alternet.UI
         /// </summary>
         public Border()
         {
+            settings = CreateBorderSettings();
+            settings.Assign(BorderSettings.Default);
             UpdatePadding();
             settings.PropertyChanged += Settings_PropertyChanged;
         }
@@ -190,6 +192,15 @@ namespace Alternet.UI
         {
             return base.GetPreferredSize(availableSize) +
                 new Size(settings.Width.Horizontal, settings.Width.Vertical);
+        }
+
+        /// <summary>
+        /// Creates used <see cref="BorderSettings"/> instance. Override to use have border
+        /// painting or non-default behavior.
+        /// </summary>
+        protected virtual BorderSettings CreateBorderSettings()
+        {
+            return new();
         }
 
         /// <inheritdoc/>

@@ -22,12 +22,12 @@ namespace PropertyGridSample
         {
         };
 
-        VerticalStackPanel parentParent = new()
+        private readonly VerticalStackPanel parentParent = new()
         {
             Padding = controlPadding,
         };
 
-        private readonly Border controlPanelParent = new()
+        private readonly Border controlPanelBorder = new()
         {
             BorderColor = Color.Red,
             HorizontalAlignment = HorizontalAlignment.Left,
@@ -86,6 +86,9 @@ namespace PropertyGridSample
 
         public MainWindow()
         {
+            controlPanelBorder.Settings.Paint += BorderSettings.DrawDesignCorners;
+            controlPanelBorder.Settings.DrawDefaultBorder = false;
+
             panel.BindApplicationLog();
 
             PropGrid.ApplyFlags |= PropertyGridApplyFlags.PropInfoSetValue
@@ -106,9 +109,9 @@ namespace PropertyGridSample
             panel.LogControl.Required();
             panel.PropGrid.Required();
 
-            controlPanel.Parent = controlPanelParent;
+            controlPanel.Parent = controlPanelBorder;
 
-            controlPanelParent.Parent = parentParent;
+            controlPanelBorder.Parent = parentParent;
 
             panel.CenterNotebook.AddPage(parentParent, "Preview", true);
 
@@ -213,8 +216,7 @@ namespace PropertyGridSample
             void DoAction()
             {
                 controlPanel.GetVisibleChildOrNull()?.Hide();
-                var item = panel.LeftTreeView.SelectedItem as ControlListBoxItem;
-                if(item == null)
+                if (panel.LeftTreeView.SelectedItem is not ControlListBoxItem item)
                 {
                     PropGrid.Clear();
                     return;
@@ -225,7 +227,7 @@ namespace PropertyGridSample
 
                 if (item.Instance is Control control)
                 {
-                    controlPanelParent.HasBorder = item.HasTicks && 
+                    controlPanelBorder.HasBorder = item.HasTicks && 
                         !control.FlagsAndAttributes.HasFlag("NoDesignBorder");
 
                     if (control.Name == null)
@@ -244,11 +246,10 @@ namespace PropertyGridSample
 
                     control.Visible = true;
 			        control.PerformLayout();
-                    Application.Current.ProcessPendingEvents();
                 }
                 else
                 {
-                    controlPanelParent.HasBorder = false;
+                    controlPanelBorder.HasBorder = false;
                 }
 
                 if (type == typeof(WelcomePage))
@@ -271,15 +272,7 @@ namespace PropertyGridSample
                 }
             }
 
-            controlPanel.SuspendLayout();
-            try
-            {
-                DoAction();
-            }
-            finally
-            {
-                controlPanel.ResumeLayout();
-            }
+            parentParent.DoInsideLayout(DoAction);
         }
 
         public class SettingsControl : Control

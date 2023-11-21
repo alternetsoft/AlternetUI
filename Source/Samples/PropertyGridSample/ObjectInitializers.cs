@@ -60,8 +60,8 @@ namespace PropertyGridSample
             {
                 var border = (c as Border)!;
                 border.SuggestedSize = defaultListSize;
-                border.BorderColor = Color.Red;
-                border.BackgroundColor = Color.Cornsilk;
+                //border.BorderColor = Color.Red;
+                //border.BackgroundColor = Color.Cornsilk;
                 border.FlagsAndAttributes.AddFlag("NoDesignBorder");
             });
 
@@ -82,7 +82,7 @@ namespace PropertyGridSample
                 control.Add("tab 2");
                 control.Add("tab 3");
                 control.SelectFirstTab();
-                control.BackgroundColor = Color.Cornsilk;
+                //control.BackgroundColor = Color.Cornsilk;
             });
 
             Actions.Add(typeof(RichTextBox), (c) =>
@@ -176,7 +176,7 @@ namespace PropertyGridSample
             {
                 Panel panel = (c as Panel)!;
                 panel.SuggestedSize = 150;
-                panel.BackgroundColor = Color.Cornsilk;
+                //panel.BackgroundColor = Color.Cornsilk;
             });
 
             Actions.Add(typeof(Control), (c) =>
@@ -224,7 +224,7 @@ namespace PropertyGridSample
             Actions.Add(typeof(PanelOkCancelButtons), (c) =>
             {
                 PanelOkCancelButtons control = (c as PanelOkCancelButtons)!;
-                control.BackgroundColor = Color.Cornsilk;
+                //control.BackgroundColor = Color.Cornsilk;
             });
         }
 
@@ -328,7 +328,7 @@ namespace PropertyGridSample
         {
             var parent = control as Control;
             parent!.SuggestedHeight = 250;
-            parent.BackgroundColor = Color.Cornsilk;
+            //parent.BackgroundColor = Color.Cornsilk;
 
 #pragma warning disable
             Button OkButton = new()

@@ -117,6 +117,7 @@ namespace PropertyGridSample
                     item = new(type)
                     {
                         HasTicks = true,
+                        HasMargins = true,
                     };
 
                     panel.LeftTreeView.Add(item);
@@ -160,6 +161,7 @@ namespace PropertyGridSample
             {
                 PropInstance = dialog,
                 EventInstance = new object(),
+                HasMargins = true,
             };
             panel.LeftTreeView.Add(item);
         }
