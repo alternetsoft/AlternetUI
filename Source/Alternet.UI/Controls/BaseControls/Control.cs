@@ -1135,7 +1135,7 @@ namespace Alternet.UI
 
         /// <summary>
         /// Gets or sets group indexes of this control. Group indexes are used
-        /// in <see cref="GetGroup"/> method.
+        /// in <see cref="GetGroup(int, bool)"/> method.
         /// </summary>
         /// <remarks>
         /// This property modifies <see cref="GroupIndexes"/>.
@@ -1913,6 +1913,12 @@ namespace Alternet.UI
                 return null;
             return Children[index];
         }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ControlSet"/> class.
+        /// </summary>
+        /// <param name="controls">Controls.</param>
+        public ControlSet Group(params Control[] controls) => new (controls);
 
         /// <summary>
         /// Gets <see cref="ControlSet"/> with all controls which are members of the
