@@ -14,10 +14,25 @@ namespace PropertyGridSample
 {
     public partial class MainWindow : Window
     {
+        private static readonly Thickness controlPadding = new (15, 15, 15, 15);
+
         internal readonly PanelAuiManager panel = new();
 
         private readonly Control controlPanel = new()
         {
+        };
+
+        VerticalStackPanel parentParent = new()
+        {
+            Padding = controlPadding,
+        };
+
+        private readonly Border controlPanelParent = new()
+        {
+            BorderColor = Color.Red,
+            HorizontalAlignment = HorizontalAlignment.Left,
+            VerticalAlignment = VerticalAlignment.Top,
+            Padding = 0,
         };
 
         private bool updatePropertyGrid = false;
@@ -91,20 +106,7 @@ namespace PropertyGridSample
             panel.LogControl.Required();
             panel.PropGrid.Required();
 
-            var controlPanelParent = new Border()
-            {
-                BorderColor = Color.Red,
-                HorizontalAlignment = HorizontalAlignment.Left,
-                VerticalAlignment = VerticalAlignment.Top,
-                Padding = 0,
-            };
-
             controlPanel.Parent = controlPanelParent;
-
-            VerticalStackPanel parentParent = new()
-            {
-                Padding = new(15, 15, 15, 15),
-            };
 
             controlPanelParent.Parent = parentParent;
 
@@ -212,11 +214,21 @@ namespace PropertyGridSample
             {
                 controlPanel.GetVisibleChildOrNull()?.Hide();
                 var item = panel.LeftTreeView.SelectedItem as ControlListBoxItem;
-                var type = item?.InstanceType;
-
-                if (item?.Instance is Control control)
+                if(item == null)
                 {
-                    if(control.Name == null)
+                    PropGrid.Clear();
+                    return;
+                }
+
+                parentParent.Padding = item.HasMargins ? controlPadding : Thickness.Empty;
+                var type = item.InstanceType;
+
+                if (item.Instance is Control control)
+                {
+                    controlPanelParent.HasBorder = item.HasTicks && 
+                        !control.FlagsAndAttributes.HasFlag("NoDesignBorder");
+
+                    if (control.Name == null)
                     {
                         var s = control.GetType().ToString();
                         var splitted = s.Split('.');
@@ -234,6 +246,10 @@ namespace PropertyGridSample
 			        control.PerformLayout();
                     Application.Current.ProcessPendingEvents();
                 }
+                else
+                {
+                    controlPanelParent.HasBorder = false;
+                }
 
                 if (type == typeof(WelcomePage))
                 {
@@ -246,7 +262,7 @@ namespace PropertyGridSample
                     var selection = panel.RightNotebook.GetSelection();
                     if (selection == panel.PropGridPage?.Index)
                     {
-                        PropGrid.SetProps(item?.PropInstance, true);
+                        PropGrid.SetProps(item.PropInstance, true);
                     }
                     else
                     {

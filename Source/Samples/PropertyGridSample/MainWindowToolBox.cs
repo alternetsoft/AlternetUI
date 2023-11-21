@@ -114,7 +114,11 @@ namespace PropertyGridSample
                         if (Array.IndexOf(limitedTypes, type) < 0)
                             continue;
                     }
-                    item = new(type);
+                    item = new(type)
+                    {
+                        HasTicks = true,
+                    };
+
                     panel.LeftTreeView.Add(item);
                     if (logAddedControls)
                         Application.Log($"typeof({type.Name}),");

@@ -24,6 +24,10 @@ namespace PropertyGridSample
 
         public Type InstanceType => type;
 
+        public bool HasTicks { get; set; }
+
+        public bool HasMargins { get; set; }
+
         public object? EventInstance
         {
             get

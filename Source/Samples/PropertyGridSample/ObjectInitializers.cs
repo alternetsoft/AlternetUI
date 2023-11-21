@@ -62,6 +62,7 @@ namespace PropertyGridSample
                 border.SuggestedSize = defaultListSize;
                 border.BorderColor = Color.Red;
                 border.BackgroundColor = Color.Cornsilk;
+                border.FlagsAndAttributes.AddFlag("NoDesignBorder");
             });
 
             Actions.Add(typeof(CardPanel), (c) =>
