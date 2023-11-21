@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Alternet.UI
 {
     /// <summary>
-    /// This interface is used when object is assigned to <see cref="CustomTextEdit.ValidatorReporter"/>
+    /// This interface is used when object is assigned to <see cref="CustomTextBox.ValidatorReporter"/>
     /// property and validation error is shown.
     /// </summary>
     public interface IValidatorReporter

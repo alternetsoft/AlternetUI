@@ -17,7 +17,7 @@ namespace Alternet.UI
     [DefaultEvent("TextChanged")]
     [DefaultBindingProperty("Text")]
     [ControlCategory("Common")]
-    public class TextBox : CustomTextEdit
+    public class TextBox : CustomTextBox
     {
         /// <summary>
         /// Identifies the <see cref="Text"/> dependency property.
@@ -870,10 +870,10 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Sets <see cref="CustomTextEdit.DataType"/> property to <typeparamref name="T"/>
+        /// Sets <see cref="CustomTextBox.DataType"/> property to <typeparamref name="T"/>
         /// and <see cref="Validator"/> to the appropriate validator provider.
         /// </summary>
-        /// <typeparam name="T">New <see cref="CustomTextEdit.DataType"/> property value.</typeparam>
+        /// <typeparam name="T">New <see cref="CustomTextBox.DataType"/> property value.</typeparam>
         public virtual void UseValidator<T>()
         {
             DataType = typeof(T);
@@ -1519,7 +1519,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Sets <see cref="CustomTextEdit.ValidatorErrorText"/> property
+        /// Sets <see cref="CustomTextBox.ValidatorErrorText"/> property
         /// to <paramref name="knownError"/>.
         /// </summary>
         /// <param name="knownError">Known error identifier.</param>

@@ -29,7 +29,7 @@ namespace Alternet.UI
         IntRangeInError = 2,
 
         /// <summary>
-        /// Perform default value validation using <see cref="CustomTextEdit.RunDefaultValidation"/>.
+        /// Perform default value validation using <see cref="CustomTextBox.RunDefaultValidation"/>.
         /// </summary>
         DefaultValidation = 4,
     }

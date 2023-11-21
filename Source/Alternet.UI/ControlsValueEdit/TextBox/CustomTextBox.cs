@@ -13,7 +13,7 @@ namespace Alternet.UI
     /// <summary>
     /// Base class for text editors.
     /// </summary>
-    public abstract class CustomTextEdit : Control, IReadOnlyStrings, IValidatorReporter
+    public abstract class CustomTextBox : Control, IReadOnlyStrings, IValidatorReporter
     {
         private StringSearch? search;
         private int minLength;
@@ -509,7 +509,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets "real" minimal value taking into account <see cref="CustomTextEdit.DataType"/>
+        /// Gets "real" minimal value taking into account <see cref="CustomTextBox.DataType"/>
         /// and <see cref="MinValue"/>.
         /// </summary>
         public virtual object? GetRealMinValue()
@@ -520,7 +520,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets "real" maxmimal value taking into account <see cref="CustomTextEdit.DataType"/>
+        /// Gets "real" maxmimal value taking into account <see cref="CustomTextBox.DataType"/>
         /// and <see cref="MinValue"/>.
         /// </summary>
         public virtual object? GetRealMaxValue()
@@ -545,7 +545,7 @@ namespace Alternet.UI
 
         /// <summary>
         /// Reports an error if <see cref="Text"/> property is empty
-        /// and it is not allowed (<see cref="CustomTextEdit.AllowEmptyText"/> is <c>false</c>).
+        /// and it is not allowed (<see cref="CustomTextBox.AllowEmptyText"/> is <c>false</c>).
         /// </summary>
         public virtual bool ReportErrorEmptyText()
         {
@@ -573,7 +573,7 @@ namespace Alternet.UI
         /// validation is ok and error was not reported.</returns>
         /// <remarks>
         /// <see cref="ReportValidatorError"/> is used to report the error. If
-        /// <see cref="CustomTextEdit.DataType"/> is assigned, it is also used to get possible min and max
+        /// <see cref="CustomTextBox.DataType"/> is assigned, it is also used to get possible min and max
         /// values.
         /// </remarks>
         public virtual bool ReportErrorMinMaxValue(object? value)
@@ -602,7 +602,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Reports an error if <see cref="CustomTextEdit.DataType"/> is a number type and
+        /// Reports an error if <see cref="CustomTextBox.DataType"/> is a number type and
         /// <see cref="TextAsNumber"/> is <c>null</c>.
         /// </summary>
         /// <returns><c>true</c> if validation error was reported; <c>false</c> if
@@ -683,7 +683,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Returns <see cref="TypeCode"/> for the <see cref="CustomTextEdit.DataType"/> property
+        /// Returns <see cref="TypeCode"/> for the <see cref="CustomTextBox.DataType"/> property
         /// or <see cref="TypeCode.String"/>.
         /// </summary>
         /// <returns></returns>
@@ -696,13 +696,13 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Returns <c>true</c> if <see cref="CustomTextEdit.DataType"/> is a number type.
+        /// Returns <c>true</c> if <see cref="CustomTextBox.DataType"/> is a number type.
         /// </summary>
         /// <returns></returns>
         public virtual bool DataTypeIsNumber() => AssemblyUtils.IsTypeCodeNumber(GetDataTypeCode());
 
         /// <summary>
-        /// Returns minimal and maximal possible values for the <see cref="CustomTextEdit.DataType"/>
+        /// Returns minimal and maximal possible values for the <see cref="CustomTextBox.DataType"/>
         /// as a range string and formats it using <paramref name="format"/>.
         /// </summary>
         /// <param name="format">Range string format. Example: "Range is [{0}]."</param>
@@ -805,12 +805,12 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="value">Value.</param>
         /// <remarks>
-        /// This method uses <see cref="CustomTextEdit.Converter"/>, <see cref="CustomTextEdit.DefaultFormat"/> and
-        /// <see cref="CustomTextEdit.FormatProvider"/> propertties. Depending
+        /// This method uses <see cref="CustomTextBox.Converter"/>, <see cref="CustomTextBox.DefaultFormat"/> and
+        /// <see cref="CustomTextBox.FormatProvider"/> propertties. Depending
         /// on the values of these properties, different conversion methods are used.
         /// </remarks>
         /// <remarks>
-        /// If <see cref="CustomTextEdit.DataType"/> property is <c>null</c>, it is set to
+        /// If <see cref="CustomTextBox.DataType"/> property is <c>null</c>, it is set to
         /// the type of <paramref name="value"/>.
         /// </remarks>
         public virtual void SetTextAsObject(object? value)
@@ -867,12 +867,12 @@ namespace Alternet.UI
         /// <param name="showError">Indicates whether to show/hide error.</param>
         /// <param name="errorText">Specifies error text.</param>
         /// <remarks>
-        /// Uses <see cref="CustomTextEdit.DefaultErrorBackgroundColor"/>, <see cref="CustomTextEdit.DefaultErrorForegroundColor"/>,
-        /// <see cref="CustomTextEdit.ValidatorErrorText"/>, <see cref="CustomTextEdit.DefaultValidatorErrorText"/> and
-        /// <see cref="CustomTextEdit.ValidatorReporter"/> properties.
+        /// Uses <see cref="CustomTextBox.DefaultErrorBackgroundColor"/>, <see cref="CustomTextBox.DefaultErrorForegroundColor"/>,
+        /// <see cref="CustomTextBox.ValidatorErrorText"/>, <see cref="CustomTextBox.DefaultValidatorErrorText"/> and
+        /// <see cref="CustomTextBox.ValidatorReporter"/> properties.
         /// </remarks>
         /// <remarks>
-        /// <see cref="CustomTextEdit.ValidatorReporter"/> property must support <see cref="IValidatorReporter"/>
+        /// <see cref="CustomTextBox.ValidatorReporter"/> property must support <see cref="IValidatorReporter"/>
         /// interface in order to be used in this method. <see cref="PictureBox"/> supports
         /// this interface.
         /// </remarks>
