@@ -21,9 +21,12 @@ namespace Alternet.UI
     public class CardPanelHeader : Control
     {
         /// <summary>
-        /// Gets or sets default value of the <see cref="BorderWidth"/> property.
+        /// Gets or sets default border side width.
         /// </summary>
-        public static Thickness DefaultBorderWidth = new(0, 0, 0, 1);
+        /// <remarks>
+        /// <see cref="DefaultBorderWidth"/> by default is calculated dynamically using this field.
+        /// </remarks>
+        public static double DefaultBorderSideWidth = 1;
 
         /// <summary>
         /// Gets or sets default value of the <see cref="BorderPadding"/> property.
@@ -39,6 +42,8 @@ namespace Alternet.UI
         /// Gets or sets default value of the <see cref="AdditionalSpace"/> property.
         /// </summary>
         public static Size DefaultAdditionalSpace = new(30, 30);
+
+        private static Thickness? defaultBorderWidth;
 
         private readonly Collection<CardPanelHeaderItem> tabs = [];
         private readonly StackPanel stackPanel = new()
@@ -81,6 +86,24 @@ namespace Alternet.UI
         /// Occurs when the tab is clicked.
         /// </summary>
         public event EventHandler? TabClick;
+
+        /// <summary>
+        /// Gets or sets default value of the <see cref="BorderWidth"/> property.
+        /// </summary>
+        public static Thickness DefaultBorderWidth
+        {
+            get
+            {
+                if (defaultBorderWidth is null)
+                    return new(0, 0, 0, DefaultBorderSideWidth);
+                return defaultBorderWidth.Value;
+            }
+
+            set
+            {
+                defaultBorderWidth = value;
+            }
+        }
 
         /// <summary>
         /// Gets or sets default value of the <see cref="TabHasBorder"/>.
