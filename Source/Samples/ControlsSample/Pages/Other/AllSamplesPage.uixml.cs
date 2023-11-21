@@ -18,7 +18,7 @@ namespace ControlsSample
             AddDefaultItems();
             view.SelectFirstItem();
 
-            ControlSet.New([runButton, buildButton, buildUIButton, buildPalButton]).SuggestedWidthToMax();
+            Group([runButton, buildButton, buildUIButton, buildPalButton]).SuggestedWidthToMax();
             deleteBinCheckBox.BindBoolProp(this, nameof(DeleteBin));
         }
 
@@ -35,7 +35,7 @@ namespace ControlsSample
 
         public static string? GetSamplesFolder()
         {
-            bool ValidFolder(string s)
+            static bool ValidFolder(string s)
             {
                 var trimmed = PathUtils.TrimEndDirectorySeparator(s);
                 var result = (trimmed is not null && trimmed.EndsWith("Samples"));
@@ -215,18 +215,38 @@ namespace ControlsSample
 
         public void ExecuteTerminalCommand(string command, string? folder = null)
         {
-            ProcessStartInfo processInfo;
-            var cmdName = Application.IsWindowsOS ? "cmd.exe" : "/bin/bash";
-            var cmdPrefix = Application.IsWindowsOS ? "/c " : string.Empty;
-            Application.Log("Run: "+cmdName+" "+ cmdPrefix + command);
-            processInfo = new(cmdName, cmdPrefix + command)
+            void ExecuteOnWindows()
             {
-                CreateNoWindow = false,
-                UseShellExecute = false,
-            };
-            if (folder != null)
-                processInfo.WorkingDirectory = folder;
-            Process.Start(processInfo);
+                ProcessStartInfo processInfo;
+                var cmdName = "cmd.exe";
+                var cmdPrefix = "/c ";
+                Application.Log("Run: " + cmdName + " " + cmdPrefix + command);
+                processInfo = new(cmdName, cmdPrefix + command)
+                {
+                    CreateNoWindow = false,
+                    UseShellExecute = false,
+                };
+                if (folder != null)
+                    processInfo.WorkingDirectory = folder;
+                Process.Start(processInfo);
+            }
+
+            void ExecuteOnOther()
+            {
+                Process proc = new();
+                proc.StartInfo.FileName = "/bin/bash";
+                proc.StartInfo.Arguments = "-c \" " + command + " \"";
+                proc.StartInfo.UseShellExecute = false;
+                if (folder != null)
+                    proc.StartInfo.WorkingDirectory = folder;
+                proc.Start();
+            }
+
+            if (Application.IsWindowsOS)
+                ExecuteOnWindows();
+            else
+                ExecuteOnOther();
+
         }
 
         private static bool RunSample(
