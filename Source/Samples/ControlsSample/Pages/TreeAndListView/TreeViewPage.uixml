@@ -16,7 +16,7 @@
       <VerticalStackPanel Name="pageControl" Margin="10,0,0,0" >
 
         <!-- ========================= -->
-        <VerticalStackPanel Name="stackPanel1">
+        <VerticalStackPanel Name="stackPanel1" Padding="0,5,0,0">
 
           <HorizontalStackPanel>
             <Button Text="Add" Name="addItemButton" Click="AddItemButton_Click" />
@@ -80,7 +80,7 @@
 
         <!-- ========================= -->
 
-        <VerticalStackPanel Name="stackPanel2" Visible="false">
+        <VerticalStackPanel Name="stackPanel2" Visible="false" Padding="0,5,0,0">
           <CheckBox Text="Allow Edit Label" Name="allowLabelEditingCheckBox"
                     Margin="0,5,0,0"
                     CheckedChanged="AllowLabelEditingCheckBox_CheckedChanged"
@@ -110,7 +110,7 @@
 
         <!-- ========================= -->
 
-        <VerticalStackPanel Name="stackPanel3" Visible="false">
+        <VerticalStackPanel Name="stackPanel3" Visible="false" Padding="0,5,0,0">
           <Button Text="Log Selected" Margin="0,3,0,0"
                   Name="viewSelectedButton" Click="TreeView_SelectionChanged"/>
           <GroupBox Title="Cancel Events" Margin="0,3,0,3" Padding="3" >

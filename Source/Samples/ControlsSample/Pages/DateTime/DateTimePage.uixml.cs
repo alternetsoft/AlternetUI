@@ -17,14 +17,14 @@ namespace ControlsSample
         {
             var v = datePicker.Value;
             var s = v.ToShortDateString();
-            dateLabel.Text = $"Selected Value: {s}";
+            dateLabel.Text = $"Selected: {s}";
         }
 
         private void TimePicker_Changed(object? sender, EventArgs e)
         {
             var v = timePicker.Value;
             var s = v.ToLongTimeString();
-            timeLabel.Text = $"Selected Value: {s}";
+            timeLabel.Text = $"Selected: {s}";
         }
 
         private void SetNow_Click(object? sender, EventArgs e)

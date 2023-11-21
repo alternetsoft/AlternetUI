@@ -91,9 +91,9 @@ namespace ControlsSample
             numbersPanel.GetColumnGroup(0, true).SuggestedWidthToMax();
 
             panelHeader.Add("Text", tab1);
-            panelHeader.Add("Multiline", tab2);
-            panelHeader.Add("Rich Text", tab3);
-            panelHeader.Add("Numbers", tab4);
+            panelHeader.Add("Memo", tab2);
+            panelHeader.Add("Rich", tab3);
+            panelHeader.Add("Number", tab4);
             panelHeader.Add("Other", tab5);
             tabControl.Children.Prepend(panelHeader);
             panelHeader.SelectFirstTab();

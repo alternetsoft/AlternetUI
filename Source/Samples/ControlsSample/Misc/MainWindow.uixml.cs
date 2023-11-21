@@ -44,22 +44,22 @@ namespace ControlsSample
             }
 
             AddPage("Welcome", CreateWelcomePage);
-            AddPage("Text Input", CreateTextInputPage);
-            AddPage("List Controls", CreateListControlsPage);
+            AddPage("Text", CreateTextInputPage);
+            AddPage("ListBoxes", CreateListControlsPage);
             AddPage("Buttons", CreateButtonsPage);
-            AddPage("Tree View", CreateTreeViewPage);
-            AddPage("List View", CreateListViewPage);
-            AddPage("Date and Time", CreateDateTimePage);
-            AddPage("Web Browser", CreateWebBrowserPage);
-            AddPage("Numeric Input", CreateNumericInputPage);
-            AddPage("Slider and Progress", CreateSliderAndProgressPage);
+            AddPage("TreeView", CreateTreeViewPage);
+            AddPage("ListView", CreateListViewPage);
+            AddPage("DateTime", CreateDateTimePage);
+            AddPage("WebBrowser", CreateWebBrowserPage);
+            AddPage("Number", CreateNumericInputPage);
+            AddPage("Slider, Progress", CreateSliderAndProgressPage);
             AddPage("Layout", CreateLayoutPage);
             AddPage("Animation", CreateAnimationPage);
-            AddPage("Notify and ToolTip", CreateNotifyIconPage);
-            AddPage("Tab Control", CreateTabControlPage);
+            AddPage("Notify, ToolTip", CreateNotifyIconPage);
+            AddPage("TabControl", CreateTabControlPage);
 
             if(AllSamplesPage.GetSamplesFolder() is not null)
-                AddPage("Other Samples", CreateAllSamplesPage);
+                AddPage("Other", CreateAllSamplesPage);
 
             pageContainer.SelectedIndex = 0;
 
@@ -82,6 +82,8 @@ namespace ControlsSample
 
             result.AddRange(pages);
             result.SelectFirstTab();
+            if(result.Header.Tabs.Count <= 1)
+                result.Header.Hide();
             return result;
         }
 
@@ -89,10 +91,10 @@ namespace ControlsSample
         {
             NameValue<Func<Control>>[] pages =
             [
-                new("ListBox", () => new ListBoxPage()),
-                new("CheckListBox", () => new CheckListBoxPage()),
-                new("ComboBox", () => new ComboBoxPage()),
-                new("Popups", () => new ListControlsPopups()),
+                new("List", () => new ListBoxPage()),
+                new("Checks", () => new CheckListBoxPage()),
+                new("Combo", () => new ComboBoxPage()),
+                new("Popup", () => new ListControlsPopups()),
             ];
 
             return CreateCustomPage(pages);
@@ -103,8 +105,8 @@ namespace ControlsSample
             NameValue<Func<Control>>[] pages =
             [
                 new("Button", () => new ButtonPage()),
-                new("CheckBox", () => new CheckBoxesPage()),
-                new("RadioButton", () => new RadioButtonsPage()),
+                new("Check", () => new CheckBoxesPage()),
+                new("Radio", () => new RadioButtonsPage()),
             ];
 
             return CreateCustomPage(pages);
@@ -115,7 +117,7 @@ namespace ControlsSample
             NameValue<Func<Control>>[] pages =
             [
                 new("Slider", () => new SliderPage()),
-                new("ProgressBar", () => new ProgressBarPage()),
+                new("Progress", () => new ProgressBarPage()),
             ];
 
             return CreateCustomPage(pages);
@@ -135,7 +137,7 @@ namespace ControlsSample
         {
             NameValue<Func<Control>>[] pages =
             [
-                new("SplitterPanel", () => new SplitterPanelPage()),
+                new("Splitter", () => new SplitterPanelPage()),
                 new("Grid", () => new GridPage()),
                 new("LayoutPanel", () => new LayoutPanelPage()),
             ];
@@ -147,7 +149,7 @@ namespace ControlsSample
         {
             NameValue<Func<Control>>[] pages =
             [
-                new("DateTimeEdit", () => new DateTimePage()),
+                new("DateTime", () => new DateTimePage()),
                 new("Calendar", () => new CalendarPage()),
             ];
 

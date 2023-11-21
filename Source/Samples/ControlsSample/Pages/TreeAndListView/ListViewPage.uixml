@@ -22,7 +22,7 @@
                   VerticalAlignment="Stretch">
 
         <!-- ========================= -->
-        <StackPanel Orientation="Vertical"
+        <StackPanel Orientation="Vertical" Padding="0,5,0,0"
                       VerticalAlignment="Stretch" Name="stackPanel1">
 
           <HorizontalStackPanel>
@@ -86,7 +86,7 @@
         </StackPanel>
         <!-- ========================= -->
 
-        <VerticalStackPanel VerticalAlignment="Stretch" Name="stackPanel2" Visible="false">
+        <VerticalStackPanel VerticalAlignment="Stretch" Name="stackPanel2" Visible="false" Padding="0,5,0,0">
           <CheckBox Text="Multiple Selection"
                     Name="allowMultipleSelectionCheckBox"
                     IsChecked="True" Margin="0,5,0,0"
@@ -118,7 +118,8 @@
                             "ColumnWidthModeComboBox_SelectedItemChanged"/>
         </VerticalStackPanel>
         <!-- ========================= -->
-        <VerticalStackPanel VerticalAlignment="Stretch" Name="stackPanel3" Visible="false">
+        <VerticalStackPanel VerticalAlignment="Stretch" Name="stackPanel3" Visible="false"
+                             Padding="0,5,0,0">
 
           <GroupBox Title="Cancel Events" Margin="0,5,0,5" Padding="5" >
             <VerticalStackPanel>

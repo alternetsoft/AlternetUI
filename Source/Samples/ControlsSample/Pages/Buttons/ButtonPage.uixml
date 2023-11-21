@@ -24,21 +24,21 @@
             <RowDefinition Height="Auto"/>
           </Grid.RowDefinitions>
 
-          <Label Text="Text: " Margin="0,0,0,0" Grid.Column="0" Grid.Row="0" VerticalAlignment="Center"/>
+          <Label Text="Text " Margin="0,0,0,0" Grid.Column="0" Grid.Row="0" VerticalAlignment="Center"/>
           <TextBox Text="Test Button" Name="textTextBox" Margin="5,0,0,0"
                    TextChanged="Button_Changed" Grid.Column="1" Grid.Row="0"/>
 
-          <Label Text="Text Font:" Name="labelFont" Margin="0,5,0,0" VerticalAlignment="Center"
+          <Label Text="Text Font" Name="labelFont" Margin="0,5,0,0" VerticalAlignment="Center"
                  Grid.Column="0" Grid.Row="1"/>
           <ComboBox Name="comboBoxFontName" IsEditable="false" Margin="5,5,0,0"
                      Grid.Column="1" Grid.Row="1"/>
 
-          <Label Text="Text Size:" Name="labelSize" Margin="0,5,0,0" VerticalAlignment="Center"
+          <Label Text="Text Size" Name="labelSize" Margin="0,5,0,0" VerticalAlignment="Center"
                  Grid.Column="0" Grid.Row="2"/>
           <ComboBox Width="5" Name="comboBoxFontSize" IsEditable="false"
                     Margin="5,5,0,0"  Grid.Column="1" Grid.Row="2"/>
 
-          <Label Text="BackGround:" Name="labelBackColor" Margin="0,5,0,0"
+          <Label Text="BackGround" Name="labelBackColor" Margin="0,5,0,0"
                  VerticalAlignment="Center" Grid.Column="0" Grid.Row="3"/>
           <ComboBox Name="comboBoxBackColor"
                     Margin="5,5,0,0" IsEditable="false"  Grid.Column="1" Grid.Row="3"/>
@@ -55,17 +55,17 @@
             <RowDefinition Height="Auto"/>
           </Grid.RowDefinitions>
 
-          <Label Text="Text Align:" VerticalAlignment="Center" Margin="0,0,0,0"
+          <Label Text="Align" VerticalAlignment="Center" Margin="0,0,0,0"
                  Grid.Column="0" Grid.Row="0" />
           <ComboBox IsEditable="false" Name="textAlignComboBox" Margin="5,0,0,0"
                     Grid.Column="1" Grid.Row="0" />
 
-          <Label Text="Image Align:" VerticalAlignment="Center" Margin="0,5,0,0"
+          <Label Text="Image" VerticalAlignment="Center" Margin="0,5,0,0"
                  Grid.Column="0" Grid.Row="1" />
           <ComboBox IsEditable="false" Name="imageAlignComboBox" Margin="5,5,0,0"
                     Grid.Column="1" Grid.Row="1"/>
 
-          <Label Text="Foreground:" VerticalAlignment="Center" Grid.Column="0" Grid.Row="2"
+          <Label Text="Color" VerticalAlignment="Center" Grid.Column="0" Grid.Row="2"
                  Name="labelTextColor" Margin="0,5,0,0"/>
           <ComboBox Name="comboBoxTextColor" Margin="5,5,0,0" IsEditable="false"
                     Grid.Column="1" Grid.Row="2"/>
