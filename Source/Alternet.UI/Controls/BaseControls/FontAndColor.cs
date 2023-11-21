@@ -147,6 +147,43 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Creates new <see cref="IReadOnlyFontAndColor"/> instance and assigns it to
+        /// <paramref name="colors"/> with the modified background or foreground color value.
+        /// </summary>
+        /// <param name="colors">Colors to change.</param>
+        /// <param name="value">New color value.</param>
+        /// <param name="isBackground">If <c>true</c>, background color is assigned; otherwise
+        /// foreground color is assigned.</param>
+        /// <param name="action">When color value is really changed, this action is called.</param>
+        public static void ChangeColor(
+            ref IReadOnlyFontAndColor? colors,
+            Color? value,
+            bool isBackground,
+            Action? action = null)
+        {
+            if (value is null && colors is null)
+                return;
+            Color? oldColor = isBackground ? colors?.BackgroundColor : colors?.ForegroundColor;
+            if (oldColor == value)
+                return;
+            var result = new FontAndColor(null, null, colors?.Font);
+
+            if (isBackground)
+            {
+                result.BackgroundColor = value;
+                result.ForegroundColor = colors?.ForegroundColor;
+            }
+            else
+            {
+                result.ForegroundColor = value;
+                result.BackgroundColor = colors?.BackgroundColor;
+            }
+
+            colors = result;
+            action?.Invoke();
+        }
+
+        /// <summary>
         /// Gets <see cref="IReadOnlyFontAndColor"/> instance for the specified
         /// <paramref name="method"/>.
         /// </summary>
