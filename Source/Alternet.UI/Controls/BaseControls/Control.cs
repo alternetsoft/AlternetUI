@@ -58,7 +58,7 @@ namespace Alternet.UI
         private bool visible = true;
         private Control? parent;
         private int updateCount = 0;
-        private ControlFlags flags;
+        private ControlFlags stateFlags;
         private Cursor? cursor;
         private string? toolTip;
         private ObjectUniqueId? uniqueId;
@@ -350,7 +350,7 @@ namespace Alternet.UI
         /// Gets control flags.
         /// </summary>
         [Browsable(false)]
-        public ControlFlags Flags => flags;
+        public ControlFlags StateFlags => stateFlags;
 
         /// <summary>
         /// Executes assigned action immediately.
@@ -660,7 +660,7 @@ namespace Alternet.UI
                 parent?.Children.Remove(this);
                 value?.Children.Add(this);
                 OnParentChanged(EventArgs.Empty);
-                flags |= ControlFlags.ParentAssigned;
+                stateFlags |= ControlFlags.ParentAssigned;
             }
         }
 

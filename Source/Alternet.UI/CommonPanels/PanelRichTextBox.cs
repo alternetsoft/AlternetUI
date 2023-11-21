@@ -113,7 +113,7 @@ namespace Alternet.UI
         {
             base.OnParentChanged(e);
 
-            if (Parent == null || Flags.HasFlag(ControlFlags.ParentAssigned))
+            if (Parent == null || StateFlags.HasFlag(ControlFlags.ParentAssigned))
                 return;
 
             Manager.AddPane(TextBox, CenterPane);

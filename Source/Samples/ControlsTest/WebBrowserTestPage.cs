@@ -251,7 +251,7 @@ namespace ControlsTest
         {
             base.OnParentChanged(e);
 
-            if (Parent == null || Flags.HasFlag(ControlFlags.ParentAssigned))
+            if (Parent == null || StateFlags.HasFlag(ControlFlags.ParentAssigned))
                 return;
 
             scriptMessageHandlerAdded = WebBrowser.AddScriptMessageHandler("wx_msg");
