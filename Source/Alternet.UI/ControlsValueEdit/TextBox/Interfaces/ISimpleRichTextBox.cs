@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Alternet.Drawing;
 
 namespace Alternet.UI
 {
@@ -12,6 +13,17 @@ namespace Alternet.UI
     /// </summary>
     internal interface ISimpleRichTextBox
     {
+        /// <inheritdoc cref="RichTextBox.CurrentPositionChanged"/>
+        event EventHandler? CurrentPositionChanged;
+
+        /// <summary>
+        /// Gets or sets name of the control.
+        /// </summary>
+        string? Name { get; set; }
+
+        /// <inheritdoc cref="RichTextBox.CurrentPosition"/>
+        Int32Point? CurrentPosition { get; set; }
+
         /// <inheritdoc cref="RichTextBox.LastLineNumber"/>
         long LastLineNumber { get; }
 
