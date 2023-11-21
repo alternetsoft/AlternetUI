@@ -222,30 +222,32 @@ namespace PropertyGridSample
                     return;
                 }
 
-                parentParent.Padding = item.HasMargins ? controlPadding : Thickness.Empty;
+                // parentParent.Padding = item.HasMargins ? controlPadding : Thickness.Empty;
                 var type = item.InstanceType;
 
                 if (item.Instance is Control control)
                 {
-                    controlPanelBorder.HasBorder = item.HasTicks && 
-                        !control.FlagsAndAttributes.HasFlag("NoDesignBorder");
-
-                    if (control.Name == null)
+                    parentParent.DoInsideLayout(() =>
                     {
-                        var s = control.GetType().ToString();
-                        var splitted = s.Split('.');
-                        control.Name = splitted[splitted.Length - 1] + LogUtils.GenNewId().ToString();
-                    }
+                        controlPanelBorder.HasBorder = item.HasTicks &&
+                            !control.FlagsAndAttributes.HasFlag("NoDesignBorder");
 
-                    if(control.Parent == null)
-                    {
-                        control.VerticalAlignment = VerticalAlignment.Top;
-                        control.MinWidth = 100;
-                        control.Parent = controlPanel;
-                    }
+                        if (control.Name == null)
+                        {
+                            var s = control.GetType().ToString();
+                            var splitted = s.Split('.');
+                            control.Name = splitted[splitted.Length - 1] + LogUtils.GenNewId().ToString();
+                        }
 
-                    control.Visible = true;
-			        control.PerformLayout();
+                        if (control.Parent == null)
+                        {
+                            control.VerticalAlignment = VerticalAlignment.Top;
+                            control.MinWidth = 100;
+                            control.Parent = controlPanel;
+                        }
+
+                        control.Visible = true;
+                    });
                 }
                 else
                 {
@@ -254,12 +256,12 @@ namespace PropertyGridSample
 
                 if (type == typeof(WelcomePage))
                 {
-                    controlPanel.BackgroundColor = SystemColors.Window;
+                    SetBackground(SystemColors.Window);
                     InitDefaultPropertyGrid();
                 }
                 else
                 {
-                    controlPanel.BackgroundColor = SystemColors.Control;
+                    SetBackground(SystemColors.Control);
                     var selection = panel.RightNotebook.GetSelection();
                     if (selection == panel.PropGridPage?.Index)
                     {
@@ -272,7 +274,14 @@ namespace PropertyGridSample
                 }
             }
 
-            parentParent.DoInsideLayout(DoAction);
+            DoAction();
+
+            void SetBackground(Color color)
+            {
+                parentParent.BackgroundColor = color;
+                controlPanelBorder.BackgroundColor = color;
+                controlPanel.BackgroundColor = color;
+            }
         }
 
         public class SettingsControl : Control

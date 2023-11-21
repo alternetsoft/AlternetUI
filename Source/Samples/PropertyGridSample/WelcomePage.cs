@@ -17,8 +17,8 @@ namespace PropertyGridSample
 
         public WelcomePage()
         {
-            Padding = new(10,0,0,0);
-            SuggestedSize = new(400, 500);
+            //Padding = new(10,0,0,0);
+            SuggestedSize = new(300, 400);
             var homePage = @"https://www.alternet-ui.com/";
             var docsHomePage = @"https://docs.alternet-ui.com/";
             var docsUrl = $"{docsHomePage}introduction/getting-started.html";
