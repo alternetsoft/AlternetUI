@@ -3207,6 +3207,15 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        protected override void OnKeyDown(KeyEventArgs e)
+        {
+            base.OnKeyDown(e);
+#if DEBUG
+            KeyInfo.Run(KnownKeys.ShowDeveloperTools, e, DebugUtils.ShowDeveloperTools);
+#endif
+        }
+
+        /// <inheritdoc/>
         protected override void DisposeManagedResources()
         {
             Designer?.RaiseDisposed(this);

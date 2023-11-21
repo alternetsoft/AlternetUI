@@ -59,6 +59,11 @@ namespace Alternet.UI
         ControlShift = Control | Shift,
 
         /// <summary>
+        /// Control+Shift+Alt pressed.
+        /// </summary>
+        ControlShiftAlt = Control | Shift | Alt,
+
+        /// <summary>
         /// Both Control and Alt modifiers are pressed.
         /// </summary>
         ControlAlt = Control | Alt,
