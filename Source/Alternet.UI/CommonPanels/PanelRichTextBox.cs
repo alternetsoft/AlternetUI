@@ -183,7 +183,7 @@ namespace Alternet.UI
             toolbar.AddToolOnClick(buttonIdItalic, Italic_Click);
             toolbar.AddToolOnClick(buttonIdUnderline, Underline_Click);
 
-            toolbar.AddLabel("Work in progress...");
+            /* toolbar.AddLabel("Work in progress..."); */
 
             toolbar.Realize();
         }
