@@ -69,7 +69,9 @@ namespace PropertyGridSample
             {
                 var control = (c as CardPanel)!;
                 control.SuggestedSize = defaultListSize;
-                control.Add("card 1", CreatePanelWithButtons("Card 1"));
+                var panel = CreatePanelWithButtons("Card 1");
+                panel.AddLabel("SelectedCardIndex changes active card.").Margin = 5;
+                control.Add("card 1", panel);
                 control.Add("card 2", CreatePanelWithButtons("Card 2"));
                 control.SelectCard(0);
             });
@@ -78,6 +80,7 @@ namespace PropertyGridSample
             {
                 var control = (c as CardPanelHeader)!;
                 control.SuggestedSize = defaultListSize;
+                control.UseTabBackgroundColor = true;
                 control.Add("tab 1");
                 control.Add("tab 2");
                 control.Add("tab 3");
