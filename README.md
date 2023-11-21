@@ -33,13 +33,16 @@ Step 3. Linux Machine Setup:
 - Install required packages, run Install.Scripts/Ubuntu.Install.Packages.sh.
 - Make folder with Windows Alternet.UI installation accessible for Linux Machine.
 
-Step 4. Build:
+Step 4. (Optional) You can modify list of target frameworks in files
+"Source\Samples\CommonData\TargetFrameworks.props" and "Source\Version\TargetFrameworks.props".
+
+Step 5. Build:
 - Exit Visual Studio before running Install script.
 - Run Install.sh (or Install.ps1) on macOs Machine. It collects artifacts in Publish/Artifacts/Build/macOS.
 - Run Install.sh (or Install.ps1) on Linux Machine. It collects artifacts in Publish/Artifacts/Build/Linux.
 - Run Install.bat (or Install.ps1) on Windows Machine. It collects artifacts in Publish/Artifacts/Build/Windows.
 
-Step 5. Build NuGet packages on Windows Machine (optional):
+Step 6. Build NuGet packages on Windows Machine (optional):
 - Collect all the artifacts from all the 3 previous builds in the locations as they were on the source machines.
 - Run Install.Scripts/MSW.Publish.1.Build.Nuget.Pal.bat.
 - Run Install.Scripts/MSW.Publish.2.Build.NuGet.Managed.bat.
