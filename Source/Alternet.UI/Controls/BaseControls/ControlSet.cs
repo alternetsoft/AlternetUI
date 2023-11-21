@@ -14,7 +14,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets <see cref="ControlSet"/> without items.
         /// </summary>
-        public static readonly ControlSet Empty = new(Array.Empty<Control>());
+        public static readonly ControlSet Empty = new([]);
 
         private readonly IReadOnlyList<Control> items;
 
