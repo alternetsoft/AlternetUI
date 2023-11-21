@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel;
 
 namespace Alternet.UI
 {
@@ -8,6 +9,7 @@ namespace Alternet.UI
     public abstract class ButtonBase : Control
     {
         private string text = string.Empty;
+        private Action? clickAction;
 
         /// <summary>
         /// Occurs when the value of the <see cref="Text"/> property changes.
@@ -37,11 +39,34 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets <see cref="Action"/> which will be executed when
+        /// this <see cref="MenuItem"/> is clicked by the user.
+        /// </summary>
+        [Browsable(false)]
+        public Action? ClickAction
+        {
+            get => clickAction;
+            set
+            {
+                if (clickAction != null)
+                    Click -= OnClickAction;
+                clickAction = value;
+                if (clickAction != null)
+                    Click += OnClickAction;
+            }
+        }
+
+        /// <summary>
         /// Called when the value of the <see cref="Text"/> property changes.
         /// </summary>
         /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
         protected virtual void OnTextChanged(EventArgs e)
         {
+        }
+
+        private void OnClickAction(object? sender, EventArgs? e)
+        {
+            clickAction?.Invoke();
         }
 
         private void RaiseTextChanged(EventArgs e)
