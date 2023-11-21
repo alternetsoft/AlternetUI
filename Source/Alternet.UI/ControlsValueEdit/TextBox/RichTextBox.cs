@@ -13,7 +13,7 @@ namespace Alternet.UI
     /// <summary>
     /// Implements rich text editor functionality.
     /// </summary>
-    public partial class RichTextBox : Control, IReadOnlyStrings
+    public partial class RichTextBox : Control, IReadOnlyStrings, IRichTextBox
     {
         private bool hasBorder = true;
         private StringSearch? search;
@@ -169,11 +169,11 @@ namespace Alternet.UI
         /// Gets the line number (zero-based) with the cursor.
         /// </summary>
         [Browsable(false)]
-        public virtual long CaretLineNumber
+        public virtual long InsertionPointLineNumber
         {
             get
             {
-                var currentPosition = GetCaretPosition();
+                var currentPosition = GetInsertionPoint();
                 var caretLineNumber = PositionToXY(currentPosition).Y;
                 return caretLineNumber;
             }
@@ -567,6 +567,14 @@ namespace Alternet.UI
         public bool GetDragging()
         {
             return NativeControl.GetDragging();
+        }
+
+        /// <summary>
+        /// Shows 'Go To Line' dialog.
+        /// </summary>
+        public virtual void ShowDialogGoToLine()
+        {
+            TextBoxUtils.ShowDialogGoToLine(this);
         }
 
         /// <summary>
@@ -2003,30 +2011,6 @@ namespace Alternet.UI
                 cols,
                 tableAttrPtr,
                 cellAttrPtr);
-        }
-
-        /// <summary>
-        /// Shows 'Go To Line' dialog.
-        /// </summary>
-        public virtual void ShowDialogGoToLine()
-        {
-            var lastLineNumber = LastLineNumber + 1;
-            var prompt = string.Format(CommonStrings.Default.LineNumberTemplate, 1, lastLineNumber);
-            var result = DialogFactory.GetNumberFromUser(
-                null,
-                prompt,
-                CommonStrings.Default.WindowTitleGoToLine,
-                CaretLineNumber + 1,
-                1,
-                lastLineNumber,
-                this);
-            if (result is null)
-                return;
-            var newPosition = XYToPosition(0, result.Value - 1);
-            SetCaretPosition(newPosition, true);
-            ShowPosition(newPosition);
-            if (CanAcceptFocus)
-                SetFocus();
         }
 
         /// <summary>

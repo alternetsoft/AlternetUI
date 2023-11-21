@@ -14,7 +14,7 @@ namespace Alternet.UI
     [DesignerCategory("Code")]
     [DefaultProperty("Text")]
     [DefaultEvent("Click")]
-    public partial class Control : FrameworkElement, ISupportInitialize, IDisposable, IControl
+    public partial class Control : FrameworkElement, ISupportInitialize, IDisposable, IControl, IFocusable
     {
         /// <summary>
         /// Identifies the <see cref="Enabled"/> dependency property.

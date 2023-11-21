@@ -17,7 +17,7 @@ namespace Alternet.UI
     [DefaultEvent("TextChanged")]
     [DefaultBindingProperty("Text")]
     [ControlCategory("Common")]
-    public class TextBox : CustomTextBox
+    public class TextBox : CustomTextBox, ISimpleRichTextBox
     {
         /// <summary>
         /// Identifies the <see cref="Text"/> dependency property.
@@ -528,6 +528,34 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets the line number (zero-based) with the cursor.
+        /// </summary>
+        [Browsable(false)]
+        public virtual long InsertionPointLineNumber
+        {
+            get
+            {
+                var currentPosition = GetInsertionPoint();
+                var caretLineNumber = PositionToXY(currentPosition).Y;
+                return caretLineNumber;
+            }
+        }
+
+        /// <summary>
+        /// Gets the last line number (zero-based).
+        /// </summary>
+        [Browsable(false)]
+        public virtual long LastLineNumber
+        {
+            get
+            {
+                var lastPosition = GetLastPosition();
+                var lastLineNumber = PositionToXY(lastPosition).Y;
+                return lastLineNumber;
+            }
+        }
+
+        /// <summary>
         /// Gets or sets a value indicating whether the <see cref="EnterPressed"/>
         /// event is fired.
         /// </summary>
@@ -809,6 +837,14 @@ namespace Alternet.UI
             var attr = CreateTextAttr();
             attr.SetFlags(TextBoxTextAttrFlags.All);
             SetSelectionStyle(attr);
+        }
+
+        /// <summary>
+        /// Shows 'Go To Line' dialog.
+        /// </summary>
+        public virtual void ShowDialogGoToLine()
+        {
+            TextBoxUtils.ShowDialogGoToLine(this);
         }
 
         /// <summary>

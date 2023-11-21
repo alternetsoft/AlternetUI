@@ -134,6 +134,8 @@ namespace ControlsSample
             multiLineTextBox.TextUrl += MultiLineTextBox_TextUrl;
             multiLineTextBox.CurrentPositionChanged += TextBox_CurrentPositionChanged;
 
+            multilineGoToButton.ClickAction = multiLineTextBox.ShowDialogGoToLine;
+
             // ==== Other initializations
 
             wordWrapComboBox.BindEnumProp(multiLineTextBox, nameof(TextBox.TextWrap));

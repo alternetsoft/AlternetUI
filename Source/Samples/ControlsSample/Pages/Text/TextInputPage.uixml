@@ -48,6 +48,9 @@
         <Label Text="Word Wrap:" Margin="5,0,0,0"/>
         <ComboBox Name="wordWrapComboBox" Margin="5"/>
       </VerticalStackPanel>
+      <VerticalStackPanel Margin="5">
+        <Button Text="Go To" Name="multilineGoToButton"/>
+      </VerticalStackPanel>
     </HorizontalStackPanel>
 
     <!-- ========================= -->
