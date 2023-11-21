@@ -13,7 +13,7 @@ namespace Alternet.UI
     /// <summary>
     /// Base class for text editors.
     /// </summary>
-    public abstract class CustomTextBox : Control, IReadOnlyStrings, IValidatorReporter
+    public abstract class CustomTextBox : Control, ICustomTextBox, IReadOnlyStrings, IValidatorReporter
     {
         private StringSearch? search;
         private int minLength;
@@ -178,7 +178,7 @@ namespace Alternet.UI
         /// this is a <see cref="PictureBox"/> with error image.
         /// </remarks>
         [Browsable(false)]
-        public virtual object? ValidatorReporter { get; set; }
+        public virtual IValidatorReporter? ValidatorReporter { get; set; }
 
         /// <summary>
         /// Gets or sets a text string that can be used as validator error message.
@@ -208,7 +208,7 @@ namespace Alternet.UI
         /// by this property, you can use it for any purposes.
         /// </remarks>
         [Browsable(false)]
-        public bool IsRequired
+        public virtual bool IsRequired
         {
             get
             {
