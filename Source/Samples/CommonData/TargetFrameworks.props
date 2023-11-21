@@ -3,7 +3,7 @@
   <PropertyGroup>
     <SamplesTargetFrameworksWindows>net8.0;net7.0;net6.0;net462;net480</SamplesTargetFrameworksWindows>
     <SamplesTargetFrameworksLinux>net8.0;net7.0;net6.0</SamplesTargetFrameworksLinux>
-    <SamplesTargetFrameworksMacOs>net7.0;net6.0</SamplesTargetFrameworksMacOs>
+    <SamplesTargetFrameworksMacOs>net8.0;net7.0;net6.0</SamplesTargetFrameworksMacOs>
     <FrameworkOverridesName>FrameworksOverride.props</FrameworkOverridesName>
   </PropertyGroup>
 
