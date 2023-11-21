@@ -14,13 +14,34 @@ namespace Alternet.UI
     public static class TextBoxUtils
     {
         /// <summary>
+        /// Logs current insert position of the control.
+        /// </summary>
+        /// <param name="textBox"></param>
+        /// <remarks>
+        /// <paramref name="textBox"/> parameter must support <see cref="ISimpleRichTextBox"/>
+        /// interface.
+        /// </remarks>
+        public static void LogPosition(object? textBox)
+        {
+            if (textBox is not ISimpleRichTextBox richTextBox)
+                return;
+
+            var currentPos = richTextBox.CurrentPosition;
+            if (currentPos is null)
+                return;
+            var name = richTextBox.Name ?? textBox.GetType().Name;
+            var prefix = $"{name}.CurrentPos:";
+            Application.LogReplace($"{prefix} {currentPos.Value + 1}", prefix);
+        }
+
+        /// <summary>
         /// Shows 'Go To Line' dialog.
         /// </summary>
         /// <remarks>
         /// <paramref name="textBox"/> parameter must support <see cref="ISimpleRichTextBox"/>
         /// interface.
         /// </remarks>
-        public static bool ShowDialogGoToLine(object textBox)
+        public static bool ShowDialogGoToLine(object? textBox)
         {
             if (textBox is not ISimpleRichTextBox richTextBox)
                 return false;
