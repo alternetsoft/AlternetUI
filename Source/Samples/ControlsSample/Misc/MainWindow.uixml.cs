@@ -127,7 +127,11 @@ namespace ControlsSample
         {
             NameValue<Func<Control>>[] pages =
             [
-                new("Old", () => new TextInputPage()),
+                new("Text", () => new TextInputPage()),
+                new("Numbers", () => new TextNumbersPage()),
+                new("Memo", () => new TextMemoPage()),
+                new("Rich", () => new TextRichPage()),
+                new("Other", () => new TextOtherPage()),                
             ];
 
             return CreateCustomPage(pages);

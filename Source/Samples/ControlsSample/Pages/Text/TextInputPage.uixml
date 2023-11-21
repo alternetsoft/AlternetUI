@@ -43,42 +43,5 @@
 
     <!-- ========================= -->
 
-    <HorizontalStackPanel Name="tab2" Visible="false">
-      <VerticalStackPanel Name="multilineParent">
-        <Label Text="Word Wrap:" Margin="5,0,0,0"/>
-        <ComboBox Name="wordWrapComboBox" Margin="5"/>
-      </VerticalStackPanel>
-      <VerticalStackPanel Margin="5">
-        <Button Text="Go To" Name="multilineGoToButton"/>
-      </VerticalStackPanel>
-    </HorizontalStackPanel>
-
-    <!-- ========================= -->
-
-    <Control Name="tab3" Visible="false">
-    </Control>
-
-    <!-- ========================= -->
-
-    <HorizontalStackPanel Name="tab4" Visible="false">
-      <VerticalStackPanel  Margin="5" Name="numbersPanel">
-        <Label Text="Try to enter invalid numbers" Margin="0,0,0,5"/>
-
-        <VerticalStackPanel  Margin="0,5,0,5" >
-          <CheckBox Text="Bell On Error" Name="bellOnErrorCheckBox"/>
-        </VerticalStackPanel>
-
-      </VerticalStackPanel>
-    </HorizontalStackPanel>
-    
-    <!-- ========================= -->
-
-    <HorizontalStackPanel Name="tab5" Visible="false">
-      <VerticalStackPanel  Margin="5" Name="otherParent">
-      </VerticalStackPanel>
-    </HorizontalStackPanel>
-
-    <!-- ========================= -->
-
   </VerticalStackPanel>
 </Control>
