@@ -1,0 +1,7 @@
+Remove leading zeros from numerical text and convert to a number.
+
+Truncate numerical data to 15 digits of precision and convert to a number that may be displayed in scientific notation, if needed.
+
+Convert numerical data surrounding the letter “E” to a number displayed in scientific notation.
+
+Convert a continuous string of letters and numbers to a date.
