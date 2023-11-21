@@ -158,9 +158,9 @@ namespace ControlsSample
         {
             var targetFramework = AppUtils.GetMyTargetFrameworkName();
             var cmdRunWindows =
-              $"dotnet {dotnetCmd} /p:Platform=x64 --nologo --arch x64 --property WarningLevel=0 --framework {targetFramework}";
+              $"dotnet {dotnetCmd} /p:Platform=x64 --arch x64 --property WarningLevel=0 --framework {targetFramework}";
             var cmdRunOther =
-                $"dotnet {dotnetCmd} --property --nologo WarningLevel=0 --framework {targetFramework}";
+                $"dotnet {dotnetCmd} --property WarningLevel=0 --framework {targetFramework}";
             var cmd = Application.IsWindowsOS ? cmdRunWindows : cmdRunOther;
             ExecuteTerminalCommand(cmd, folder);
         }

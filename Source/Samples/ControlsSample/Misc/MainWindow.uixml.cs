@@ -45,21 +45,15 @@ namespace ControlsSample
 
             AddPage("Welcome", CreateWelcomePage);
             AddPage("Text Input", CreateTextInputPage);
+            AddPage("List Controls", CreateListControlsPage);
+            AddPage("Buttons", CreateButtonsPage);
             AddPage("Tree View", CreateTreeViewPage);
             AddPage("List View", CreateListViewPage);
-            AddPage("List Controls", CreateListControlsPage);
-            AddPage("Progress Bar", CreateProgressBarPage);
-            AddPage("Button", CreateButtonPage);
-            AddPage("Slider", CreateSliderPage);
-            AddPage("Grid", CreateGridPage);
-            AddPage("Numeric Input", CreateNumericInputPage);
-            AddPage("Radio Button", CreateRadioButtonsPage);
-            AddPage("Check Box", CreateCheckBoxesPage);
-            AddPage("Date Time", CreateDateTimePage);
+            AddPage("Date and Time", CreateDateTimePage);
             AddPage("Web Browser", CreateWebBrowserPage);
-            AddPage("Splitter Panel", CreateSplitterPanelPage);
-            AddPage("Layout Panel", CreateLayoutPanelPage);
-            AddPage("Calendar", CreateCalendarPage);
+            AddPage("Numeric Input", CreateNumericInputPage);
+            AddPage("Slider and Progress", CreateSliderAndProgressPage);
+            AddPage("Layout", CreateLayoutPage);
             AddPage("Animation", CreateAnimationPage);
             AddPage("Notify and ToolTip", CreateNotifyIconPage);
             AddPage("Tab Control", CreateTabControlPage);
@@ -104,27 +98,69 @@ namespace ControlsSample
             return CreateCustomPage(pages);
         }
 
-        Control CreateCalendarPage() => new CalendarPage();
+        Control CreateButtonsPage()
+        {
+            NameValue<Func<Control>>[] pages =
+            [
+                new("Button", () => new ButtonPage()),
+                new("CheckBox", () => new CheckBoxesPage()),
+                new("RadioButton", () => new RadioButtonsPage()),
+            ];
+
+            return CreateCustomPage(pages);
+        }
+
+        Control CreateSliderAndProgressPage()
+        {
+            NameValue<Func<Control>>[] pages =
+            [
+                new("Slider", () => new SliderPage()),
+                new("ProgressBar", () => new ProgressBarPage()),
+            ];
+
+            return CreateCustomPage(pages);
+        }
+
+        Control CreateTextInputPage()
+        {
+            NameValue<Func<Control>>[] pages =
+            [
+                new("Old", () => new TextInputPage()),
+            ];
+
+            return CreateCustomPage(pages);
+        }
+
+        Control CreateLayoutPage()
+        {
+            NameValue<Func<Control>>[] pages =
+            [
+                new("SplitterPanel", () => new SplitterPanelPage()),
+                new("Grid", () => new GridPage()),
+                new("LayoutPanel", () => new LayoutPanelPage()),
+            ];
+
+            return CreateCustomPage(pages);
+        }
+
+        Control CreateDateTimePage()
+        {
+            NameValue<Func<Control>>[] pages =
+            [
+                new("DateTimeEdit", () => new DateTimePage()),
+                new("Calendar", () => new CalendarPage()),
+            ];
+
+            return CreateCustomPage(pages);
+        }
+
         Control CreateAnimationPage() => new AnimationPage();
         Control CreateTreeViewPage() => new TreeViewPage();
         Control CreateListViewPage() => new ListViewPage();
         Control CreateTabControlPage() => new TabControlPage();
-        Control CreateProgressBarPage() => new ProgressBarPage();
-        Control CreateButtonPage() => new ButtonPage();
-        Control CreateSliderPage() => new SliderPage();
-        Control CreateGridPage() => new GridPage();
         Control CreateNumericInputPage() => new NumericInputPage();
-        Control CreateRadioButtonsPage() => new RadioButtonsPage();
-        Control CreateCheckBoxesPage() => new CheckBoxesPage();
-        Control CreateTextInputPage()
-        {
-            return new TextInputPage();
-        }
-        Control CreateDateTimePage() => new DateTimePage();
         Control CreateNotifyIconPage() => new NotifyIconPage();
         Control CreateWebBrowserPage() => new WebBrowserPage();
-        Control CreateSplitterPanelPage() => new SplitterPanelPage();
-        Control CreateLayoutPanelPage() => new LayoutPanelPage();
         Control CreateAllSamplesPage() => new AllSamplesPage();
         Control CreateWelcomePage() => new WelcomePage();
 

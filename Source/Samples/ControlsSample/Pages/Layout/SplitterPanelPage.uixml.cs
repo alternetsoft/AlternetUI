@@ -29,10 +29,11 @@ namespace ControlsSample
         {
             InitializeComponent();
 
+            panelHeader.BorderWidth = CardPanelHeader.DefaultBorderSideWidth;
             panelHeader.Add("Actions", pageActions);
             panelHeader.Add("Settings", pageProps);
-            pageControl.Children.Insert(0, panelHeader);
-            panelHeader.SelectedTab = panelHeader.Tabs[0];
+            pageControl.Children.Prepend(panelHeader);
+            panelHeader.SelectFirstTab();
 
             control1 = new()
             {

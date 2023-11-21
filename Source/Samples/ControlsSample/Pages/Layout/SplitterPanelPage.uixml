@@ -3,13 +3,13 @@
         xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
         xmlns:local="clr-namespace:ControlsSample;assembly=ControlsSample" Padding="10,0,10,0">
 
-  <HorizontalStackPanel Name="mainPanel">
+  <HorizontalStackPanel Name="mainPanel" Margin="10">
 
     <SplitterPanel SuggestedWidth="400" Name="splitterPanel">
     </SplitterPanel>
 
     <VerticalStackPanel Name="pageControl" Margin="10,0,0,0">     
-        <VerticalStackPanel Name="pageActions">
+        <VerticalStackPanel Name="pageActions" Margin="0,5,0,0">
           <Button Text="Split Horizontal" Click="SplitHorizontalButton_Click"
                   Margin="0,0,0,5" Enabled="true"/>
           <Button Text="Split Vertical" Click="SplitVerticalButton_Click"
@@ -26,7 +26,7 @@
                   Margin="0,0,0,5" Enabled="true"/>
         </VerticalStackPanel>
 
-        <VerticalStackPanel Name="pageProps" Visible="false">
+        <VerticalStackPanel Name="pageProps" Visible="false" Margin="0,5,0,0">
           <Button Text="Sash Visible" Click="SashVisibleButton_Click"
                   Margin="0,0,0,5" Enabled="true"/>
           <Button Text="Set Min Pane Size" Click="SetMinPaneSizeButton_Click"
