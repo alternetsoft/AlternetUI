@@ -402,6 +402,18 @@ namespace Alternet.UI
         public WindowSizeToContentMode UpdateCardsMode { get; set; } =
             WindowSizeToContentMode.WidthAndHeight;
 
+        /// <inheritdoc/>
+        public override Color? BackgroundColor
+        {
+            get => base.BackgroundColor;
+
+            set
+            {
+                base.BackgroundColor = value;
+                border.BackgroundColor = value;
+            }
+        }
+
         /// <summary>
         /// Gets selected tab.
         /// </summary>
