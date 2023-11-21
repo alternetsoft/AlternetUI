@@ -55,12 +55,12 @@ namespace Alternet.UI
             Margin = DefaultBorderMargin,
         };
 
-        private bool? useTabBold;
-        private bool? useTabForegroundColor;
-        private bool? useTabBackgroundColor;
+        private bool useTabBold = DefaultUseTabBold;
+        private bool useTabForegroundColor = DefaultUseTabForegroundColor;
+        private bool useTabBackgroundColor = DefaultUseTabBackgroundColor;
         private Size additionalSpace = DefaultAdditionalSpace;
         private CardPanelHeaderItem? selectedTab;
-        private bool? tabHasBorder;
+        private bool tabHasBorder = DefaultTabHasBorder;
         private CardPanel? cardPanel;
         private IReadOnlyFontAndColor? activeTabColors;
         private IReadOnlyFontAndColor? inactiveTabColors;
@@ -70,6 +70,9 @@ namespace Alternet.UI
         /// </summary>
         public CardPanelHeader()
         {
+            tabs.ThrowOnNullAdd = true;
+            tabs.ItemInserted += Tabs_ItemInserted;
+            tabs.ItemRemoved += Tabs_ItemRemoved;
             stackPanel.Parent = border;
             border.Parent = this;
         }
@@ -239,7 +242,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets whether to set bold style for the title of active tab.
         /// </summary>
-        public bool? UseTabBold
+        public bool UseTabBold
         {
             get
             {
@@ -258,7 +261,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets whether to set foreground color for the active tab.
         /// </summary>
-        public bool? UseTabForegroundColor
+        public bool UseTabForegroundColor
         {
             get
             {
@@ -277,7 +280,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets whether to set background color for the active tab.
         /// </summary>
-        public bool? UseTabBackgroundColor
+        public bool UseTabBackgroundColor
         {
             get
             {
@@ -318,7 +321,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets whether tabs have border.
         /// </summary>
-        public bool? TabHasBorder
+        public bool TabHasBorder
         {
             get
             {
@@ -375,9 +378,74 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets background color of the active tab.
+        /// </summary>
+        public Color? BackgroundColorActiveTab
+        {
+            get
+            {
+                return ActiveTabColors?.BackgroundColor;
+            }
+
+            set
+            {
+                FontAndColor.ChangeColor(ref activeTabColors, value, true, UpdateTabs);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets background color of the inactive tab.
+        /// </summary>
+        public Color? BackgroundColorInactiveTab
+        {
+            get
+            {
+                return InactiveTabColors?.BackgroundColor;
+            }
+
+            set
+            {
+                FontAndColor.ChangeColor(ref inactiveTabColors, value, true, UpdateTabs);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets foreground color of the active tab.
+        /// </summary>
+        public Color? ForegroundColorActiveTab
+        {
+            get
+            {
+                return ActiveTabColors?.ForegroundColor;
+            }
+
+            set
+            {
+                FontAndColor.ChangeColor(ref activeTabColors, value, false, UpdateTabs);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets foreground color of the inactive tab.
+        /// </summary>
+        public Color? ForegroundColorInactiveTab
+        {
+            get
+            {
+                return InactiveTabColors?.ForegroundColor;
+            }
+
+            set
+            {
+                FontAndColor.ChangeColor(ref inactiveTabColors, value, false, UpdateTabs);
+            }
+        }
+
+        /// <summary>
         /// Gets or sets size of the additional space which is added when
         /// <see cref="UpdateCardsMode"/> is not <see cref="WindowSizeToContentMode.None"/>.
         /// </summary>
+        [Browsable(false)]
         public Size AdditionalSpace
         {
             get
@@ -411,6 +479,29 @@ namespace Alternet.UI
             {
                 base.BackgroundColor = value;
                 border.BackgroundColor = value;
+            }
+        }
+
+        /// <inheritdoc/>
+        public override Color? ForegroundColor
+        {
+            get => base.ForegroundColor;
+
+            set
+            {
+                base.ForegroundColor = value;
+                border.BorderColor = value;
+            }
+        }
+
+        /// <inheritdoc/>
+        [Browsable(false)]
+        public override bool IsBold
+        {
+            get => false;
+
+            set
+            {
             }
         }
 
@@ -575,7 +666,7 @@ namespace Alternet.UI
             var control = CreateHeaderButton();
 
             control.Text = text;
-            control.HasBorder = TabHasBorder ?? DefaultTabHasBorder;
+            control.HasBorder = TabHasBorder;
             control.HorizontalAlignment = HorizontalAlignment.Center;
             control.Parent = stackPanel;
             control.Click += Item_Click;
@@ -684,13 +775,13 @@ namespace Alternet.UI
         private void UpdateTab(CardPanelHeaderItem item)
         {
             var isSelected = item == selectedTab;
-            item.HeaderButton.IsBold = isSelected && (UseTabBold ?? DefaultUseTabBold);
+            item.HeaderButton.IsBold = isSelected && UseTabBold;
             var colors = GetColors(isSelected);
             if (colors is null)
                 return;
-            if (UseTabForegroundColor ?? DefaultUseTabForegroundColor)
+            if (UseTabForegroundColor)
                 item.HeaderButton.ForegroundColor = colors.ForegroundColor;
-            if (UseTabBackgroundColor ?? DefaultUseTabBackgroundColor)
+            if (UseTabBackgroundColor)
                 item.HeaderButton.BackgroundColor = colors.BackgroundColor;
         }
 
@@ -698,9 +789,17 @@ namespace Alternet.UI
         {
             foreach (var item in Tabs)
             {
-                item.HeaderButton.HasBorder = tabHasBorder ?? DefaultTabHasBorder;
+                item.HeaderButton.HasBorder = tabHasBorder;
                 UpdateTab(item);
             }
+        }
+
+        private void Tabs_ItemRemoved(object? sender, int index, CardPanelHeaderItem item)
+        {
+        }
+
+        private void Tabs_ItemInserted(object? sender, int index, CardPanelHeaderItem item)
+        {
         }
 
         private void Item_Click(object? sender, EventArgs e)

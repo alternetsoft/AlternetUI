@@ -32,11 +32,16 @@ namespace Alternet.UI
             Margin = new Thickness(100, 100, 0, 0),
         };
 
+        private CardPanelItem? selectedCard;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="CardPanel"/> class.
         /// </summary>
         public CardPanel()
         {
+            Cards.ThrowOnNullAdd = true;
+            Cards.ItemInserted += Cards_ItemInserted;
+            Cards.ItemRemoved += Cards_ItemRemoved;
             waitLabel.Parent = waitLabelContainer;
         }
 
@@ -80,9 +85,7 @@ namespace Alternet.UI
         {
             get
             {
-                var child = GetVisibleChildOrNull();
-                var result = Find(child);
-                return result;
+                return selectedCard;
             }
 
             set
@@ -90,6 +93,17 @@ namespace Alternet.UI
                 if (value is null)
                     return;
                 SelectCard(value);
+            }
+        }
+
+        /// <inheritdoc/>
+        [Browsable(false)]
+        public override bool IsBold
+        {
+            get => false;
+
+            set
+            {
             }
         }
 
@@ -188,8 +202,9 @@ namespace Alternet.UI
         {
             if (card is null)
                 return this;
-            if (card == SelectedCard)
+            if (card == selectedCard)
                 return this;
+            selectedCard = card;
             var busyCursor = false;
             SuspendLayout();
             try
@@ -270,6 +285,18 @@ namespace Alternet.UI
             var result = new CardPanelItem(title, fnCreate);
             Cards.Add(result);
             return Cards.Count - 1;
+        }
+
+        private void Cards_ItemRemoved(object? sender, int index, CardPanelItem item)
+        {
+            if (item == selectedCard)
+            {
+                selectedCard = null;
+            }
+        }
+
+        private void Cards_ItemInserted(object? sender, int index, CardPanelItem item)
+        {
         }
     }
 }
