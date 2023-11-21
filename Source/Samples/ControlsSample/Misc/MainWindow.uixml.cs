@@ -63,7 +63,9 @@ namespace ControlsSample
             AddPage("Animation", CreateAnimationPage);
             AddPage("Notify and ToolTip", CreateNotifyIconPage);
             AddPage("Tab Control", CreateTabControlPage);
-            AddPage("Other Samples", CreateAllSamplesPage);
+
+            if(AllSamplesPage.GetSamplesFolder() is not null)
+                AddPage("Other Samples", CreateAllSamplesPage);
 
             pageContainer.SelectedIndex = 0;
 

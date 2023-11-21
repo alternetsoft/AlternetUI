@@ -33,30 +33,44 @@ namespace ControlsSample
             return result;
         }
 
-        private string GetSamplesFolder()
+        public static string? GetSamplesFolder()
         {
+            bool ValidFolder(string s)
+            {
+                var trimmed = PathUtils.TrimEndDirectorySeparator(s);
+                var result = (trimmed is not null && trimmed.EndsWith("Samples"));
+                return result;
+            }
+
             string folder1 = PathUtils.GetAppFolder() + @"../../../../";
             string folder2 = folder1 + @"../";
             folder1 = Path.GetFullPath(folder1);
             folder2 = Path.GetFullPath(folder2);
 
-            var trimmed = PathUtils.TrimEndDirectorySeparator(folder2);
-            if (trimmed is not null && trimmed.EndsWith("Samples"))
-                folder1 = folder2;
-            return folder1;
+            if (ValidFolder(folder1))
+                return folder1;
+
+            if (ValidFolder(folder2))
+                return folder2;
+
+            return null;
         }
 
-        private string GetPalFolder()
+        private string? GetPalFolder()
         {
-            string samplesFolder = GetSamplesFolder();
+            var samplesFolder = GetSamplesFolder();
+            if (samplesFolder is null)
+                return null;
             string relativePath = Path.Combine(samplesFolder, "..", "Alternet.UI.Pal");
             string result = Path.GetFullPath(relativePath);
             return result;
         }
 
-        private string GetUIFolder()
+        private string? GetUIFolder()
         {
-            string samplesFolder = GetSamplesFolder();
+            var samplesFolder = GetSamplesFolder();
+            if (samplesFolder is null)
+                return null;
             string relativePath = Path.Combine(samplesFolder, "..", "Alternet.UI");
             string result = Path.GetFullPath(relativePath);
             return result;
@@ -65,6 +79,8 @@ namespace ControlsSample
         private IEnumerable<string> EnumerateSamples()
         {
             var samplesFolder = GetSamplesFolder();
+            if (samplesFolder is null)
+                return [];
 
             List<string> csproj = [];
 
