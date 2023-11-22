@@ -1040,7 +1040,12 @@ namespace Alternet.Drawing
         /// are different; otherwise, <c>false</c>.</returns>
         public static bool operator !=(Color left, Color right) => !(left == right);
 
-         /// <summary>
+        /// <summary>
+        /// Converts the specified <see cref='string'/> to a <see cref='Color'/>.
+        /// </summary>
+        public static implicit operator Color(string s) => Color.Parse(s);
+
+        /// <summary>
         /// Creates a <see cref="Color"/> structure from a 32-bit ARGB value.
         /// </summary>
         /// <param name="argb">A value specifying the 32-bit ARGB value.</param>
@@ -1218,7 +1223,7 @@ namespace Alternet.Drawing
         /// </summary>
         public static IReadOnlyList<Color> GetKnownColors()
         {
-            List<Color> colors = new();
+            List<Color> colors = [];
 
             foreach (KnownColor knownColor in Enum.GetValues(typeof(KnownColor)))
             {
@@ -1235,7 +1240,7 @@ namespace Alternet.Drawing
         /// </summary>
         public static IReadOnlyList<Color> GetKnownColors(params KnownColorCategory[] cats)
         {
-            List<Color> colors = new();
+            List<Color> colors = [];
 
             var items = ColorUtils.GetColorInfos();
 
