@@ -13,16 +13,6 @@ The framework includes a platform-independent graphic device interface for rende
 
 For increased developer productivity, [AlterNET UI extension for Visual Studio](https://marketplace.visualstudio.com/items?itemName=AlternetSoftwarePTYLTD.AlternetUIForVS2022) is available.
 
-AlterNET UI Beta 2 implements some major features primarily adopted from the WPF framework: Layout Engine, Dependency Properties, Data Binding, Keyboard and Mouse Input, Routed Events, and more.
-
-AlterNET UI Beta 3 adds important features like menus, keyboard shortcuts, commands, modal windows, advanced window management, and more.
-
-AlterNET UI Beta 4 adds support for UIXML preview in Visual Studio, drag-and-drop, clipboard, common dialogs, thread synchronization, context menus, and more.
-
-In AlterNET UI Beta 5, we have added support for some missing functionality as well as wrapping up the features that were previously released. These include printing and print preview support, a much more complete implementation of DrawingContext, tray icons, and tooltips.
-
-AlterNET UI Beta 6 adds many advanced features to the standard control set and several new controls: Toolbar and StatusBar. The amended controls include TreeView, ListView, ComboBox, ListBox, Slider, ProgressBar, TabControl, Window, and Button. 
-
 AlterNET UI 0.9.x - final betas of AlterNET UI before we wrap things up and announce the first public release.
 
 For more info, see [alternet-ui.com](https://alternet-ui.com).
