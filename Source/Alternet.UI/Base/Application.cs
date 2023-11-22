@@ -560,6 +560,24 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Executes <paramref name="action"/> between calls to <see cref="BeginBusyCursor"/>
+        /// and <see cref="EndBusyCursor"/>.
+        /// </summary>
+        /// <param name="action">Action that will be executed.</param>
+        public static void DoInsideBusyCursor(Action action)
+        {
+            BeginBusyCursor();
+            try
+            {
+                action();
+            }
+            finally
+            {
+                EndBusyCursor();
+            }
+        }
+
+        /// <summary>
         /// Checks if the Android version (returned by the Linux command uname) is greater than
         /// or equal to the specified version. This method can be used to guard APIs that were
         /// added in the specified version.
@@ -788,11 +806,6 @@ namespace Alternet.UI
             return current.HandleThreadExceptionsCore(func);
         }
 
-        internal static IDisposable BusyCursor()
-        {
-            return new BusyCursorObject();
-        }
-
         internal static void HandleThreadExceptions(Action action)
         {
             if (current == null)
@@ -982,19 +995,5 @@ namespace Alternet.UI
                     LogUtils.LogToFileAppFinished();
             }
         }
-
-        internal class BusyCursorObject : DisposableObject
-        {
-            public BusyCursorObject()
-            {
-                BeginBusyCursor();
-            }
-
-            protected override void DisposeManagedResources()
-            {
-                base.DisposeManagedResources();
-                EndBusyCursor();
-            }
-        }
-    }
+   }
 }
