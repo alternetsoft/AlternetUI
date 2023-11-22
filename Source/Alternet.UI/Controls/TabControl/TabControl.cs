@@ -14,6 +14,15 @@ namespace Alternet.UI
     public class TabControl : Control
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="TabControl"/> class.
+        /// </summary>
+        public TabControl()
+        {
+            if (Application.IsWindowsOS)
+                UserPaint = true;
+        }
+
+        /// <summary>
         /// Occurs when the <see cref="SelectedPage"/> property has changed.
         /// </summary>
         [Category("Behavior")]

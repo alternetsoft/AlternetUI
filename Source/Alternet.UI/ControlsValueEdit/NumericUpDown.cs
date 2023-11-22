@@ -36,6 +36,15 @@ namespace Alternet.UI
         private int maximum = 100;
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="NumericUpDown"/> class.
+        /// </summary>
+        public NumericUpDown()
+        {
+            if (Application.IsWindowsOS)
+                UserPaint = true;
+        }
+
+        /// <summary>
         /// Occurs when the <see cref="Value"/> property has been changed in some way.
         /// </summary>
         /// <remarks>For the <see cref="ValueChanged"/> event to occur, the

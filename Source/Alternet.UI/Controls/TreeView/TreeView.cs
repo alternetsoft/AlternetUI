@@ -86,6 +86,8 @@ namespace Alternet.UI
         {
             Items.ItemInserted += Items_ItemInserted;
             Items.ItemRemoved += Items_ItemRemoved;
+            if (Application.IsWindowsOS)
+                UserPaint = true;
         }
 
         /// <summary>
