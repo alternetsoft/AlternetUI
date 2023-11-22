@@ -707,14 +707,14 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Creates header button control inherited from <see cref="CardPanelCustomButton"/>.
+        /// Creates header button control inherited from <see cref="CustomButton"/>.
         /// </summary>
         /// <remarks>
         /// By default creates <see cref="CardPanelHeaderButton"/>
         /// </remarks>
-        public virtual CardPanelCustomButton CreateHeaderButton()
+        public virtual CustomButton CreateHeaderButton()
         {
-            return CardPanelCustomButton.CreateButton?.Invoke() ?? new CardPanelHeaderButton();
+            return CustomButton.CreateButton?.Invoke() ?? new CardPanelHeaderButton();
         }
 
         /// <summary>

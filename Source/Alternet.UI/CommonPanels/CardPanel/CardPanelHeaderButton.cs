@@ -10,7 +10,7 @@ namespace Alternet.UI
     /// <summary>
     /// Implements default button for the <see cref="CardPanelHeader"/> control.
     /// </summary>
-    public class CardPanelHeaderButton : CardPanelCustomButton
+    public class CardPanelHeaderButton : CustomButton
     {
         private readonly Button button = new();
 
@@ -19,13 +19,13 @@ namespace Alternet.UI
         /// </summary>
         public CardPanelHeaderButton()
         {
-            button.Parent = this;    
+            button.Parent = this;
         }
 
         /// <inheritdoc/>
         public override event EventHandler? Click
         {
-            add => button.Click+=value;
+            add => button.Click += value;
             remove => button.Click -= value;
         }
 
@@ -79,7 +79,7 @@ namespace Alternet.UI
             set
             {
                 if (value == BackgroundColor)
-                    return;                    
+                    return;
                 base.BackgroundColor = value;
                 button.BackgroundColor = value;
             }

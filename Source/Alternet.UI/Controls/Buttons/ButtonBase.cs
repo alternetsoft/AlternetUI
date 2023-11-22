@@ -6,7 +6,7 @@ namespace Alternet.UI
     /// <summary>
     /// Implements the basic functionality common to button controls.
     /// </summary>
-    public abstract class ButtonBase : Control
+    public abstract class ButtonBase : CustomButton
     {
         private string text = string.Empty;
         private Action? clickAction;
@@ -19,7 +19,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the text displayed on this button.
         /// </summary>
-        public string Text
+        public override string Text
         {
             get
             {
