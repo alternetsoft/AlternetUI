@@ -36,6 +36,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="text">Text displayed on this label.</param>
         public Label(string text)
+            : this()
         {
             Text = text ?? string.Empty;
         }
@@ -45,6 +46,8 @@ namespace Alternet.UI
         /// </summary>
         public Label()
         {
+            if (Application.IsWindowsOS)
+                UserPaint = true;
         }
 
         /// <summary>

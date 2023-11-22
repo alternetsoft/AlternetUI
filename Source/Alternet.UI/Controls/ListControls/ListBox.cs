@@ -26,10 +26,19 @@ namespace Alternet.UI
     [ControlCategory("Common")]
     public class ListBox : ListControl
     {
-        private readonly HashSet<int> selectedIndices = new();
+        private readonly HashSet<int> selectedIndices = [];
         private int ignoreSelectEvents = 0;
 
         private ListBoxSelectionMode selectionMode = ListBoxSelectionMode.Single;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ListBox"/> class.
+        /// </summary>
+        public ListBox()
+        {
+            if (Application.IsWindowsOS)
+                UserPaint = true;
+        }
 
         /// <summary>
         /// Occurs when the <see cref="SelectedIndex"/> property or the

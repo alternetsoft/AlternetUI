@@ -71,6 +71,15 @@ namespace Alternet.UI
         private bool isEditable = true;
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="ComboBox"/> class.
+        /// </summary>
+        public ComboBox()
+        {
+            if (Application.IsWindowsOS)
+                UserPaint = true;
+        }
+
+        /// <summary>
         /// Occurs when the <see cref="SelectedItem"/> property value changes.
         /// </summary>
         /// <remarks>

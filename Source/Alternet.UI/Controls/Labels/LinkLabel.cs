@@ -13,42 +13,20 @@ namespace Alternet.UI
     public class LinkLabel : Control
     {
         /// <summary>
-        /// Identifies the <see cref="Text"/> dependency property.
-        /// </summary>
-        public static readonly DependencyProperty TextProperty =
-        DependencyProperty.Register(
-                "Text",
-                typeof(string),
-                typeof(LinkLabel),
-                new FrameworkPropertyMetadata(
-                        string.Empty,
-                        PropMetadataOption.AffectsLayout | PropMetadataOption.AffectsPaint,
-                        new PropertyChangedCallback(OnTextPropertyChanged),
-                        new CoerceValueCallback(CoerceText)));
-
-        /// <summary>
-        /// Event for "Text has changed"
-        /// </summary>
-        public static readonly RoutedEvent TextChangedEvent =
-            EventManager.RegisterRoutedEvent(
-                "TextChanged",
-                RoutingStrategy.Bubble,
-                typeof(TextChangedEventHandler),
-                typeof(LinkLabel));
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="LinkLabel"/> class.
         /// </summary>
         public LinkLabel()
             : base()
         {
+            if (Application.IsWindowsOS)
+                UserPaint = true;
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="LinkLabel"/> class with the specified text.
         /// </summary>
         public LinkLabel(string text)
-            : base()
+            : this()
         {
             Text = text;
         }
@@ -56,18 +34,7 @@ namespace Alternet.UI
         /// <summary>
         /// Occurs when the value of the <see cref="Text"/> property changes.
         /// </summary>
-        public event TextChangedEventHandler TextChanged
-        {
-            add
-            {
-                AddHandler(TextChangedEvent, value);
-            }
-
-            remove
-            {
-                RemoveHandler(TextChangedEvent, value);
-            }
-        }
+        public event EventHandler? TextChanged;
 
         /// <summary>
         /// Occurs when a link is clicked within the control.
@@ -102,12 +69,16 @@ namespace Alternet.UI
         {
             get
             {
-                return (string)GetValue(TextProperty);
+                return Handler.NativeControl.Text;
             }
 
             set
             {
-                SetValue(TextProperty, value);
+                value ??= string.Empty;
+                if (Text == value)
+                    return;
+                Handler.NativeControl.Text = value;
+                RaiseTextChanged(EventArgs.Empty);
             }
         }
 
@@ -174,16 +145,14 @@ namespace Alternet.UI
 
         /// <summary>
         /// Raises the <see cref="TextChanged"/> event and calls
-        /// <see cref="OnTextChanged(TextChangedEventArgs)"/>.
+        /// <see cref="OnTextChanged"/>.
         /// </summary>
         /// <param name="e">An <see cref="EventArgs"/> that contains the event
         /// data.</param>
-        public void RaiseTextChanged(TextChangedEventArgs e)
+        public void RaiseTextChanged(EventArgs e)
         {
-            if (e == null)
-                throw new ArgumentNullException(nameof(e));
-
             OnTextChanged(e);
+            TextChanged?.Invoke(this, e);
         }
 
         internal void RaiseLinkClicked(CancelEventArgs e)
@@ -206,12 +175,10 @@ namespace Alternet.UI
 
         /// <summary>
         /// Called when content in this Control changes.
-        /// Raises the TextChanged event.
         /// </summary>
         /// <param name="e"></param>
-        protected virtual void OnTextChanged(TextChangedEventArgs e)
+        protected virtual void OnTextChanged(EventArgs e)
         {
-            RaiseEvent(e);
         }
 
         /// <summary>
@@ -223,26 +190,5 @@ namespace Alternet.UI
         protected virtual void OnLinkClicked(CancelEventArgs e)
         {
         }
-
-        private static object CoerceText(DependencyObject d, object value)
-            => value ?? string.Empty;
-
-        /// <summary>
-        /// Callback for changes to the Text property
-        /// </summary>
-        private static void OnTextPropertyChanged(
-            DependencyObject d,
-            DependencyPropertyChangedEventArgs e)
-        {
-            LinkLabel label = (LinkLabel)d;
-            label.OnTextPropertyChanged((string)e.OldValue, (string)e.NewValue);
-        }
-
-#pragma warning disable IDE0060 // Remove unused parameter
-        private void OnTextPropertyChanged(string oldText, string newText)
-#pragma warning restore IDE0060 // Remove unused parameter
-        {
-            OnTextChanged(new TextChangedEventArgs(TextChangedEvent));
-        }
-    }
+   }
 }

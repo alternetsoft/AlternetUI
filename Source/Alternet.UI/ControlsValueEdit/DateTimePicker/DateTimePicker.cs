@@ -35,6 +35,15 @@ namespace Alternet.UI
                     UpdateSourceTrigger.PropertyChanged));
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="DateTimePicker"/> class.
+        /// </summary>
+        public DateTimePicker()
+        {
+            if (Application.IsWindowsOS)
+                UserPaint = true;
+        }
+
+        /// <summary>
         /// Occurs when the <see cref="Value"/> property has been changed in
         /// some way.
         /// </summary>

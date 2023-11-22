@@ -44,6 +44,15 @@ namespace Alternet.UI
     public class Calendar : CustomDateEdit
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="Calendar"/> class.
+        /// </summary>
+        public Calendar()
+        {
+            if (Application.IsWindowsOS)
+                UserPaint = true;
+        }
+
+        /// <summary>
         /// Occurs when the selected date changed.
         /// </summary>
         public event EventHandler? SelectionChanged;

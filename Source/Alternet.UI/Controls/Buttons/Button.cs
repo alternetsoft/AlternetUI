@@ -15,12 +15,15 @@ namespace Alternet.UI
         /// </summary>
         public Button()
         {
+            if (Application.IsWindowsOS)
+                UserPaint = true;
         }
 
         /// <summary>
         /// Initializes a new <see cref="Button"/> instance with the specified text.
         /// </summary>
         public Button(string text)
+            : this()
         {
             Text = text;
         }

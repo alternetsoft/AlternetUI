@@ -46,6 +46,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="text"></param>
         public CheckBox(string text)
+            : this()
         {
             Text = text;
         }
@@ -55,6 +56,8 @@ namespace Alternet.UI
         /// </summary>
         public CheckBox()
         {
+            if (Application.IsWindowsOS)
+                UserPaint = true;
         }
 
         /// <summary>

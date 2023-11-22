@@ -69,6 +69,15 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="TextBox"/> class.
+        /// </summary>
+        public TextBox()
+        {
+            if (Application.IsWindowsOS)
+                UserPaint = true;
+        }
+
+        /// <summary>
         /// Occurs when <see cref="Multiline"/> property value changes.
         /// </summary>
         public event EventHandler? MultilineChanged;
