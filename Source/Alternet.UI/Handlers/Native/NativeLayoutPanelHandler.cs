@@ -21,15 +21,5 @@ namespace Alternet.UI
         {
             return new Native.Panel();
         }
-
-        protected override void OnAttach()
-        {
-            base.OnAttach();
-        }
-
-        protected override void OnDetach()
-        {
-            base.OnDetach();
-        }
     }
 }
