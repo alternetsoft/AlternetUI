@@ -66,6 +66,7 @@ namespace Alternet.UI
                 if (focusable.CanAcceptFocus)
                     focusable.SetFocus();
             }
+
             return true;
         }
     }
