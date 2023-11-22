@@ -143,6 +143,17 @@ namespace Alternet.UI
             }
         }
 
+        private static void LogOSInformation()
+        {
+            var os = Environment.OSVersion;
+            Application.Log("Current OS Information:\n");
+            Application.Log($"Platform: {os.Platform:G}");
+            Application.Log($"Version String: {os.VersionString}");
+            Application.Log($"Major version: {os.Version.Major}");
+            Application.Log($"Minor version: {os.Version.Minor}");
+            Application.Log($"Service Pack: '{os.ServicePack}'");
+        }
+
         private void ControlsListBox_SelectionChanged(object? sender, EventArgs e)
         {
             RightNotebook.ChangeSelection(PropGrid);
@@ -164,17 +175,6 @@ namespace Alternet.UI
         private void ControlsActionFocusedControl()
         {
             PropGridSetProps(LastFocusedControl);
-        }
-
-        private static void LogOSInformation()
-        {
-            var os = Environment.OSVersion;
-            Application.Log("Current OS Information:\n");
-            Application.Log($"Platform: {os.Platform:G}");
-            Application.Log($"Version String: {os.VersionString}");
-            Application.Log($"Major version: {os.Version.Major}");
-            Application.Log($"Minor version: {os.Version.Minor}");
-            Application.Log($"Service Pack: '{os.ServicePack}'");
         }
 
         private void TypesListBox_SelectionChanged(object? sender, EventArgs e)
