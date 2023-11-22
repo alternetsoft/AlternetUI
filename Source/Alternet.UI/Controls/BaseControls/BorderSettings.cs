@@ -42,7 +42,7 @@ namespace Alternet.UI
         public event PropertyChangedEventHandler? PropertyChanged;
 
         /// <summary>
-        /// Gets or sets whether to draw default border. 
+        /// Gets or sets whether to draw default border.
         /// </summary>
         /// <remarks>
         /// If <see cref="DrawDefaultBorder"/> is <c>false</c>, border can be painted
