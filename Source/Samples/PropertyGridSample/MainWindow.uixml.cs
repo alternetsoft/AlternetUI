@@ -182,7 +182,7 @@ namespace PropertyGridSample
             updatePropertyGrid = true;
         }
 
-        private void Default_PropertyChanged(object? sender, PropertyChangeEventArgs e)
+        private void Default_PropertyChanged(object? sender, ObjectPropertyChangedEventArgs e)
         {
             var item = panel.LeftTreeView.SelectedItem as ControlListBoxItem;
             var type = item?.InstanceType;
