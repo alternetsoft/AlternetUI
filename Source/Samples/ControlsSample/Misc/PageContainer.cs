@@ -5,7 +5,7 @@ using Alternet.UI;
 
 namespace ControlsSample
 {
-    public class PageContainer : Control
+    public class _PageContainer : Control
     {
         private readonly TreeView pagesControl = new()
         {
@@ -31,7 +31,7 @@ namespace ControlsSample
             Margin = new Thickness(100, 100, 0, 0),
         };
 
-        public PageContainer()
+        public _PageContainer()
         {
             grid = new Grid();
             grid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
@@ -67,7 +67,7 @@ namespace ControlsSample
 
         public TreeView PagesControl => pagesControl;
 
-        public Collection<Page> Pages { get; } = new Collection<Page>();
+        public Collection<Page> Pages { get; } = [];
 
         private void PagesListBox_SelectionChanged(object? sender, System.EventArgs e)
         {

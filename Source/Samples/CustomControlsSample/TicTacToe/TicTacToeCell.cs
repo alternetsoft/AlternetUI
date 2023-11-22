@@ -105,17 +105,17 @@ namespace CustomControlsSample
 
             private void Control_MouseLeave(object? sender, EventArgs e)
             {
-                Refresh();
+                Control.Refresh();
             }
 
             private void Control_MouseEnter(object? sender, EventArgs e)
             {
-                Refresh();
+                Control.Refresh();
             }
 
             private void Control_MouseMove(object sender, MouseEventArgs e)
             {
-                Refresh();
+                Control.Refresh();
             }
 
             private void Control_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -135,7 +135,7 @@ namespace CustomControlsSample
                 if (IsMouseOver)
                     return CustomControlsColors.BackgroundHoveredBrush;
 
-                return null;// CustomControlsColors.BackgroundBrush;
+                return null;
             }
         }
     }

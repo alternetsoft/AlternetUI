@@ -8,22 +8,14 @@ namespace CustomControlsSample
 {
     public class KnobHandler : SliderHandler
     {
-        private Brush gaugeBackgroundBrush = new SolidBrush(Color.Parse("#484854"));
-
-        private Pen gaugeBorderPen = new Pen(Color.Parse("#9EAABA"), 2);
-
-        private Pen knobBorderPen = new Pen(Color.Black, 2);
-
-        private Pen largeTickPen = new Pen(Color.Black, 2);
-
-        private Pen smallTickPen = new Pen(Color.Parse("#FFFFFF"), 2);
-
-        private Pen knobPointerPen1 = new Pen(Color.Parse("#FC4154"), 3);
-
-        private Pen knobPointerPen2 = new Pen(Color.Parse("#FF827D"), 1);
-
+        private readonly SolidBrush gaugeBackgroundBrush = new("#484854");
+        private readonly Pen gaugeBorderPen = new("#9EAABA", 2);
+        private readonly Pen knobBorderPen = new(Color.Black, 2);
+        private readonly Pen largeTickPen = new(Color.Black, 2);
+        private readonly Pen smallTickPen = new("#FFFFFF", 2);
+        private readonly Pen knobPointerPen1 = new("#FC4154", 3);
+        private readonly Pen knobPointerPen2 = new("#FF827D", 1);
         private bool dragging = false;
-
         private Point dragStartPosition;
 
         public override SliderOrientation Orientation { get; set; }
@@ -45,15 +37,14 @@ namespace CustomControlsSample
             using var scaleGradientBrush = new LinearGradientBrush(new Point(0, 0), new Point(0, scaleBounds.Height),
                 new[]
                 {
-                        new GradientStop(Color.Parse("#1B222C"), 0),
-                        new GradientStop(Color.Parse("#80767E"), 0.5),
-                        new GradientStop(Color.Parse("#0C1013"), 1),
+                        new GradientStop("#1B222C", 0),
+                        new GradientStop("#80767E", 0.5),
+                        new GradientStop("#0C1013", 1),
                 });
 
             dc.FillRectangle(scaleGradientBrush, scaleBounds);
 
             dc.DrawRectangle(gaugeBorderPen, gaugeBounds);
-
 
             var center = GetControlCenter();
             double controlRadius = GetControlRadius();
@@ -65,9 +56,9 @@ namespace CustomControlsSample
             using var knobGradientBrush = new LinearGradientBrush(new Point(0, 0), new Point(knobRadius * 2, knobRadius * 2),
                 new[]
                 {
-                    new GradientStop(Color.Parse("#A9A9A9"), 0),
-                    new GradientStop(Color.Parse("#676767"), 0.5),
-                    new GradientStop(Color.Parse("#353535"), 1),
+                    new GradientStop("#A9A9A9", 0),
+                    new GradientStop("#676767", 0.5),
+                    new GradientStop("#353535", 1),
                 });
 
             dc.FillCircle(knobGradientBrush, center, knobRadius);
@@ -158,12 +149,12 @@ namespace CustomControlsSample
 
         private void Control_MouseLeave(object sender, EventArgs e)
         {
-            Refresh();
+            Control.Refresh();
         }
 
         private void Control_MouseEnter(object sender, EventArgs e)
         {
-            Refresh();
+            Control.Refresh();
         }
 
         private void Control_MouseMove(object sender, MouseEventArgs e)
@@ -237,7 +228,7 @@ namespace CustomControlsSample
 
         private void Control_ValueChanged(object sender, EventArgs e)
         {
-            Refresh();
+            Control.Refresh();
         }
     }
 }

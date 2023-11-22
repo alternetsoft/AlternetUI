@@ -21,7 +21,7 @@ namespace CustomControlsSample
                     return;
 
                 isPressed = value;
-                Refresh();
+                Control.Refresh();
             }
         }
 
@@ -111,12 +111,12 @@ namespace CustomControlsSample
 
         private void Control_LostFocus(object? sender, EventArgs e)
         {
-            Refresh();
+            Control.Refresh();
         }
 
         private void Control_GotFocus(object? sender, EventArgs e)
         {
-            Refresh();
+            Control.Refresh();
         }
 
         protected override void OnDetach()
@@ -135,17 +135,17 @@ namespace CustomControlsSample
 
         private void Control_MouseLeave(object? sender, EventArgs e)
         {
-            Refresh();
+            Control.Refresh();
         }
 
         private void Control_MouseEnter(object? sender, EventArgs e)
         {
-            Refresh();
+            Control.Refresh();
         }
 
         private void Control_MouseMove(object? sender, MouseEventArgs e)
         {
-            Refresh();
+            Control.Refresh();
         }
 
         private void Control_MouseLeftButtonDown(object? sender, MouseButtonEventArgs e)
@@ -162,7 +162,7 @@ namespace CustomControlsSample
         private void Control_ValueChanged(object? sender, EventArgs e)
         {
             colorBrush = null;
-            Refresh();
+            Control.Refresh();
         }
 
         private Brush GetBackgroundBrush()

@@ -8,15 +8,15 @@ namespace CustomControlsSample.Gauge
 {
     public class GaugeHandler : ProgressBarHandler
     {
-        private Brush gaugeBackgroundBrush = new SolidBrush(Color.Parse("#484854"));
+        private readonly SolidBrush gaugeBackgroundBrush = new("#484854");
 
-        private Pen gaugeBorderPen = new Pen(Color.Parse("#9EAABA"), 2);
+        private readonly Pen gaugeBorderPen = new("#9EAABA", 2);
 
-        private Font font = Alternet.UI.Control.DefaultFont;
+        private readonly Font font = Font.Default;
 
-        private Pen pointerPen1 = new Pen(Color.Parse("#FC4154"), 3);
+        private readonly Pen pointerPen1 = new("#FC4154", 3);
 
-        private Pen pointerPen2 = new Pen(Color.Parse("#FF827D"), 1);
+        private readonly Pen pointerPen2 = new("#FF827D", 1);
 
         public override bool IsIndeterminate { get; set; }
 
@@ -39,12 +39,13 @@ namespace CustomControlsSample.Gauge
             dc.FillRectangle(gaugeBackgroundBrush, gaugeBounds);
 
 
-            using var scaleGradientBrush = new LinearGradientBrush(new Point(0, 0), new Point(0, scaleBounds.Height),
+            using var scaleGradientBrush =
+                new LinearGradientBrush(new Point(0, 0), new Point(0, scaleBounds.Height),
                 new[]
                 {
-                        new GradientStop(Color.Parse("#1B222C"), 0),
-                        new GradientStop(Color.Parse("#80767E"), 0.5),
-                        new GradientStop(Color.Parse("#0C1013"), 1),
+                        new GradientStop("#1B222C", 0),
+                        new GradientStop("#80767E", 0.5),
+                        new GradientStop("#0C1013", 1),
                 });
 
             dc.FillRectangle(scaleGradientBrush, scaleBounds);
@@ -108,7 +109,7 @@ namespace CustomControlsSample.Gauge
 
         private void Control_ValueChanged(object sender, EventArgs e)
         {
-            Refresh();
+            Control.Refresh();
         }
     }
 }
