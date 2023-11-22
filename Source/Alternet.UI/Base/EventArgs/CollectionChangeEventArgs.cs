@@ -1,4 +1,5 @@
 using System;
+using Alternet.UI;
 
 namespace Alternet.Base.Collections
 {
@@ -6,7 +7,7 @@ namespace Alternet.Base.Collections
     /// Provides data for the <see cref="Collection{T}.ItemInserted"/> and <see cref="Collection{T}.ItemRemoved"/> events.
     /// </summary>
     /// <typeparam name="T">The type of elements in the collection.</typeparam>
-    public class CollectionChangeEventArgs<T> : EventArgs
+    public class CollectionChangeEventArgs<T> : BaseEventArgs
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="CollectionChangeEventArgs{T}"/> class.

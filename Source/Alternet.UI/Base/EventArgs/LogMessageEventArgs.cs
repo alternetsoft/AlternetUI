@@ -9,14 +9,14 @@ namespace Alternet.UI
     /// <summary>
     /// Provides data for the log events.
     /// </summary>
-    public class LogMessageEventArgs : EventArgs
+    public class LogMessageEventArgs : BaseEventArgs
     {
         private readonly string? prefix;
         private readonly bool replaceLast;
         private string? message;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="PropertyChangeEventArgs"/> class.
+        /// Initializes a new instance of the <see cref="LogMessageEventArgs"/> class.
         /// </summary>
         /// <param name="message">Message that needs to be logged.</param>
         public LogMessageEventArgs(string? message = null)

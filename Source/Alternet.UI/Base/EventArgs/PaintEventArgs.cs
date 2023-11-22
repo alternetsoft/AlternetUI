@@ -11,7 +11,7 @@ namespace Alternet.UI
     /// A <see cref="PaintEventArgs"/> specifies the <see cref="DrawingContext"/> to use
     /// to paint the control and the <see cref="Bounds"/> in which to paint.
     /// </remarks>
-    public class PaintEventArgs : EventArgs
+    public class PaintEventArgs : BaseEventArgs
     {
         internal PaintEventArgs(DrawingContext drawingContext, Rect bounds)
         {

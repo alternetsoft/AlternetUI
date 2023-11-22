@@ -18,7 +18,7 @@ namespace Alternet.UI
     /// <summary>
     /// Provides data for the events that have an url argument.
     /// </summary>
-    public class ValidationEventArgs : EventArgs
+    public class ValidationEventArgs : BaseEventArgs
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ValidationEventArgs"/> class.

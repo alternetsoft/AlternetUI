@@ -19,7 +19,7 @@ namespace Alternet.UI
     /// <summary>
     /// Provides data for the <see cref="CustomTextBox.ErrorStatusChanged"/> and similar events.
     /// </summary>
-    public class ErrorStatusEventArgs : EventArgs
+    public class ErrorStatusEventArgs : BaseEventArgs
     {
         private readonly bool showError;
         private readonly string? errorMessage;

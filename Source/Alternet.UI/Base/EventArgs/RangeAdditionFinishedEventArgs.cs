@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Alternet.UI;
 
 namespace Alternet.Base.Collections
 {
@@ -7,7 +8,7 @@ namespace Alternet.Base.Collections
     /// Provides data for the <see cref="Collection{T}.ItemRangeAdditionFinished"/> event.
     /// </summary>
     /// <typeparam name="T">The type of elements in the collection.</typeparam>
-    public class RangeAdditionFinishedEventArgs<T> : EventArgs
+    public class RangeAdditionFinishedEventArgs<T> : BaseEventArgs
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="RangeAdditionFinishedEventArgs{T}"/> class.

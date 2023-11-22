@@ -17,7 +17,7 @@ namespace Alternet.UI
     /// <summary>
     /// Provides data for the events that have an url argument.
     /// </summary>
-    public class UrlEventArgs : CancelEventArgs
+    public class UrlEventArgs : BaseCancelEventArgs
     {
         private string? url;
 
