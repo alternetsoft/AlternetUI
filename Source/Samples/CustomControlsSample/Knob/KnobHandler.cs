@@ -8,13 +8,13 @@ namespace CustomControlsSample
 {
     public class KnobHandler : SliderHandler
     {
-        private readonly SolidBrush gaugeBackgroundBrush = new("#484854");
-        private readonly Pen gaugeBorderPen = new("#9EAABA", 2);
+        private readonly SolidBrush gaugeBackgroundBrush = new((Color)"#484854");
+        private readonly Pen gaugeBorderPen = new((Color)"#9EAABA", 2);
         private readonly Pen knobBorderPen = new(Color.Black, 2);
         private readonly Pen largeTickPen = new(Color.Black, 2);
-        private readonly Pen smallTickPen = new("#FFFFFF", 2);
-        private readonly Pen knobPointerPen1 = new("#FC4154", 3);
-        private readonly Pen knobPointerPen2 = new("#FF827D", 1);
+        private readonly Pen smallTickPen = new((Color)"#FFFFFF", 2);
+        private readonly Pen knobPointerPen1 = new((Color)"#FC4154", 3);
+        private readonly Pen knobPointerPen2 = new((Color)"#FF827D", 1);
         private bool dragging = false;
         private Point dragStartPosition;
 
@@ -37,9 +37,9 @@ namespace CustomControlsSample
             using var scaleGradientBrush = new LinearGradientBrush(new Point(0, 0), new Point(0, scaleBounds.Height),
                 new[]
                 {
-                        new GradientStop("#1B222C", 0),
-                        new GradientStop("#80767E", 0.5),
-                        new GradientStop("#0C1013", 1),
+                        new GradientStop((Color)"#1B222C", 0),
+                        new GradientStop((Color)"#80767E", 0.5),
+                        new GradientStop((Color)"#0C1013", 1),
                 });
 
             dc.FillRectangle(scaleGradientBrush, scaleBounds);
@@ -56,9 +56,9 @@ namespace CustomControlsSample
             using var knobGradientBrush = new LinearGradientBrush(new Point(0, 0), new Point(knobRadius * 2, knobRadius * 2),
                 new[]
                 {
-                    new GradientStop("#A9A9A9", 0),
-                    new GradientStop("#676767", 0.5),
-                    new GradientStop("#353535", 1),
+                    new GradientStop((Color)"#A9A9A9", 0),
+                    new GradientStop((Color)"#676767", 0.5),
+                    new GradientStop((Color)"#353535", 1),
                 });
 
             dc.FillCircle(knobGradientBrush, center, knobRadius);

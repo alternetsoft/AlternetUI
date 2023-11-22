@@ -10,37 +10,37 @@ namespace ControlsSample
         private readonly LogListBox eventsControl = new()
         {
             HasBorder = false,
-            Margin = new(0, 10, 0, 0),
-            SuggestedHeight = 150,
-        };        
-        private readonly Grid mainGrid = new();
-        private readonly Control mainGridParent = new();
+            Margin = (0, 10, 0, 0),
+        };
+
+        private readonly SplitterPanel splitterPanel = new()
+        {
+        };
+
+        private readonly Control panel = new()
+        {
+            Padding = 10,
+        };
 
         public MainWindow()
         {
+            Initialize();
+        }
+
+        public void Initialize()
+        {
+            panel.Parent = this;
+            Title = "Alternet UI Controls Sample";
+            Size = (900, 700);
+            StartLocation = WindowStartLocation.CenterScreen;
+
             eventsControl.BindApplicationLog();
 
             Icon = ImageSet.FromUrlOrNull("embres:ControlsSample.Sample.ico");
-            InitializeComponent();
-
-            mainGrid.RowDefinitions.Add(new RowDefinition
-            {
-                Height = new GridLength(100, GridUnitType.Star)
-            }
-            );
-            mainGrid.AddAutoRow();
-                
-            mainGrid.Children.Add(pageContainer);
-            mainGrid.Children.Add(eventsControl);
-            Grid.SetRow(pageContainer, 0);
-            Grid.SetRow(eventsControl, 1);
-
-            var pages = pageContainer.Pages;
 
             void AddPage(string title, Func<Control> action)
             {
-                var item = new PageContainer.Page(title, action);
-                pages.Add(item);
+                pageContainer.Add(title, action);
             }
 
             AddPage("Welcome", CreateWelcomePage);
@@ -58,16 +58,18 @@ namespace ControlsSample
             AddPage("Notify, ToolTip", CreateNotifyIconPage);
             AddPage("TabControl", CreateTabControlPage);
 
-            if(AllSamplesPage.GetSamplesFolder() is not null)
+            if (AllSamplesPage.GetSamplesFolder() is not null)
                 AddPage("Other", CreateAllSamplesPage);
 
-            pageContainer.SelectedIndex = 0;
-
-            mainGridParent.Padding = 10;
-            mainGridParent.Children.Add(mainGrid);
-            Children.Add(mainGridParent);
-
             LogUtils.DebugLogVersion();
+
+            splitterPanel.Parent = panel;
+            pageContainer.Parent = splitterPanel;
+            eventsControl.Parent = splitterPanel;
+
+            splitterPanel.SplitHorizontal(pageContainer, eventsControl, PixelFromDip(-150));
+
+            pageContainer.SelectedIndex = 0;
 
             if (pageContainer.PagesControl.CanAcceptFocus)
                 pageContainer.PagesControl.SetFocus();
@@ -77,12 +79,11 @@ namespace ControlsSample
         {
             GenericTabControl result = new()
             {
-                Padding = 5,
             };
 
             result.AddRange(pages);
             result.SelectFirstTab();
-            if(result.Header.Tabs.Count <= 1)
+            if (result.Header.Tabs.Count <= 1)
                 result.Header.Hide();
             return result;
         }
@@ -128,26 +129,26 @@ namespace ControlsSample
             NameValue<Func<Control>>[] pages =
             [
                 new("Text", () => new TextInputPage()),
-                
+
                 new("Numbers", () =>
                 {
                     return new TextNumbersPage();
                 }),
-                
+
                 new("Memo", () =>
                 {
                     return new TextMemoPage();
                 }),
-                
+
                 new("Rich", () =>
                 {
                     return new TextRichPage();
                 }),
-                
+
                 new("Other", () =>
                 {
                     return new TextOtherPage();
-                }),                
+                }),
             ];
 
             return CreateCustomPage(pages);

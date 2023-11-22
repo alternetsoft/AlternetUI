@@ -17,7 +17,8 @@ namespace ControlsSample
 
         public WelcomePage()
         {
-            Padding = new(10,0,0,0);
+            VerticalAlignment = VerticalAlignment.Stretch;
+            HorizontalAlignment = HorizontalAlignment.Stretch;
             var homePage = @"https://www.alternet-ui.com/";
             var docsHomePage = @"https://docs.alternet-ui.com/";
             var docsUrl = $"{docsHomePage}introduction/getting-started.html";

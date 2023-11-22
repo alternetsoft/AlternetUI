@@ -57,7 +57,6 @@
       <None Remove="WebBrowserPage.uixml" />
       <None Remove="ListBoxPage.uixml" />
       <None Remove="ListViewPage.uixml" />
-      <None Remove="MainWindow.uixml" />
       <None Remove="NumericInputPage.uixml" />
       <None Remove="ProgressBarPage.uixml" />
       <None Remove="RadioButtonsPage.uixml" />

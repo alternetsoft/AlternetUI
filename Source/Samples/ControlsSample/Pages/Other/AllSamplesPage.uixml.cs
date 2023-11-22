@@ -196,8 +196,13 @@ namespace ControlsSample
 
         private void BuildUIButton_Click(object? sender, EventArgs e)
         {
-            Application.Log("Build Alternet.UI.dll");
             var s = GetUIFolder();
+            if (s is null)
+            {
+                buildUIButton.Enabled = false;
+                return;
+            }
+            Application.Log("Build Alternet.UI.dll");
             Application.Log("Path: " + s);
             if (DeleteBin)
                 PathUtils.DeleteBinObjFiles(s);
@@ -208,6 +213,11 @@ namespace ControlsSample
         {
             Application.Log("Build Alternet.UI.Pal");
             var s = GetPalFolder();
+            if (s is null)
+            {
+                buildPalButton.Enabled = false;
+                return;
+            }
             Application.Log("Path: " + s);
             if (DeleteBin)
                 PathUtils.DeleteBinObjFiles(s);

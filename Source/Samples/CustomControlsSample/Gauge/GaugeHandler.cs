@@ -8,15 +8,15 @@ namespace CustomControlsSample.Gauge
 {
     public class GaugeHandler : ProgressBarHandler
     {
-        private readonly SolidBrush gaugeBackgroundBrush = new("#484854");
+        private readonly SolidBrush gaugeBackgroundBrush = new((Color)"#484854");
 
-        private readonly Pen gaugeBorderPen = new("#9EAABA", 2);
+        private readonly Pen gaugeBorderPen = new((Color)"#9EAABA", 2);
 
         private readonly Font font = Font.Default;
 
-        private readonly Pen pointerPen1 = new("#FC4154", 3);
+        private readonly Pen pointerPen1 = new((Color)"#FC4154", 3);
 
-        private readonly Pen pointerPen2 = new("#FF827D", 1);
+        private readonly Pen pointerPen2 = new((Color)"#FF827D", 1);
 
         public override bool IsIndeterminate { get; set; }
 
@@ -43,9 +43,9 @@ namespace CustomControlsSample.Gauge
                 new LinearGradientBrush(new Point(0, 0), new Point(0, scaleBounds.Height),
                 new[]
                 {
-                        new GradientStop("#1B222C", 0),
-                        new GradientStop("#80767E", 0.5),
-                        new GradientStop("#0C1013", 1),
+                        new GradientStop((Color)"#1B222C", 0),
+                        new GradientStop((Color)"#80767E", 0.5),
+                        new GradientStop((Color)"#0C1013", 1),
                 });
 
             dc.FillRectangle(scaleGradientBrush, scaleBounds);

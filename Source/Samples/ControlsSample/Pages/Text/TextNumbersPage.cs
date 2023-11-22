@@ -38,6 +38,8 @@ namespace ControlsSample
             bellOnErrorCheckBox.BindBoolProp(
                 ValueValidatorFactory.Default,
                 nameof(ValueValidatorFactory.BellOnError));
+
+            label.Parent = this;
         }
 
         private void SetDoubleMinMMButton_Click(object? sender, EventArgs e)

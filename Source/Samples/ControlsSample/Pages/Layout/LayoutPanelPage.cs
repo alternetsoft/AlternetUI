@@ -10,12 +10,13 @@ namespace ControlsSample
 {
     internal partial class LayoutPanelPage : Control
     {
-        private readonly ListBox? control1;
-        private readonly ListBox? control2;
-        private readonly ListBox? control3;
-        private readonly ListBox? control4;
-        private readonly ListBox? control5;
-        private readonly ListBox? control6;
+        private readonly ListBox control1 = new();
+        private readonly ListBox control2 = new();
+        private readonly ListBox control3 = new();
+        private readonly ListBox control4 = new();
+        private readonly ListBox control5 = new();
+        private readonly ListBox control6 = new();
+        private readonly LayoutPanel layoutPanel = new();
 
         static LayoutPanelPage()
         {
@@ -23,43 +24,15 @@ namespace ControlsSample
 
         public LayoutPanelPage()
         {
-            InitializeComponent();
-
-            control1 = new()
+            static void Initialize(ListBox control)
             {
-                Margin = 5,
-                Bounds = new(0, 0, 100, 100),
-            };
+                control.Margin = 5;
+                control.SuggestedSize = new(100, 100);
+            }
 
-            control2 = new()
-            {
-                Margin = 5,
-                Bounds = new(150, 0, 100, 100),
-            };
+            BackgroundColor = Color.Yellow;
 
-            control3 = new()
-            {
-                Margin = 5,
-                Bounds = new(0, 150, 100, 100),
-            };
-
-            control4 = new()
-            {
-                Margin = 5,
-                Bounds = new(150, 150, 100, 100),
-            };
-
-            control5 = new()
-            {
-                Margin = 5,
-                Bounds = new(300, 300, 100, 100),
-            };
-
-            control6 = new()
-            {
-                Margin = 5,
-                Bounds = new(500, 500, 100, 100),
-            };
+            Group(control1, control2, control3, control4, control5).Action<ListBox>(Initialize).Parent(layoutPanel);
 
             control1.Items.Add("Control 1");
             control1.Items.Add("Dock = Right");
@@ -91,8 +64,7 @@ namespace ControlsSample
             layoutPanel.Children.Add(control3);
             layoutPanel.Children.Add(control4);
             //layoutPanel.Children.Add(control6);
-            //layoutPanel.PerformLayout();
-
+            layoutPanel.Parent = this;
         }
 
         internal void LogEventOnce(string s, bool once = true)
