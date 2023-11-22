@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using Alternet.Base.Collections;
 using Alternet.Drawing;
@@ -32,7 +33,13 @@ namespace Alternet.UI
                             isAnimationProhibited: true,
                             UpdateSourceTrigger.PropertyChanged));
 
-        private static readonly Size DefaultSize = Size.NaN;
+        /// <summary>
+        /// Gets or sets whether <see cref="DebugBackgroundColor"/> property is used.
+        /// </summary>
+        public static bool UseDebugBackgroundColor = false;
+
+        private static readonly Size DefaultControlSize = Size.NaN;
+
         private static int groupIndexCounter;
 
         private IFlagsAndAttributes? flagsAndAttributes;
@@ -42,7 +49,7 @@ namespace Alternet.UI
         private Color? backgroundColor;
         private Color? foregroundColor;
         private Collection<Control>? children;
-        private Size suggestedSize = DefaultSize;
+        private Size suggestedSize = DefaultControlSize;
         private Thickness margin;
         private Thickness padding;
         private ControlHandler? handler;
@@ -2801,6 +2808,18 @@ namespace Alternet.UI
                 Orientation = orientation,
             };
             return result;
+        }
+
+        /// <summary>
+        /// Sets background color if <see cref="UseDebugBackgroundColor"/> is <c>true</c>
+        /// and DEBUG conditional is defined.
+        /// </summary>
+        /// <param name="color"></param>
+        [Conditional("DEBUG")]
+        public virtual void DebugBackgroundColor(Color? color)
+        {
+            if (UseDebugBackgroundColor)
+                BackgroundColor = color;
         }
 
         /// <summary>
