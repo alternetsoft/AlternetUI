@@ -2204,9 +2204,13 @@ namespace Alternet.UI
 
         /// <summary>
         /// Forces the control to invalidate itself and immediately redraw itself
-        /// and any child controls.
+        /// and any child controls. Calls <see cref="Invalidate"/> and <see cref="Update"/>.
         /// </summary>
-        public virtual void Refresh() => Handler?.Refresh();
+        public virtual void Refresh()
+        {
+            Invalidate();
+            Update();
+        }
 
         /// <summary>
         /// Temporarily suspends the layout logic for the control.
