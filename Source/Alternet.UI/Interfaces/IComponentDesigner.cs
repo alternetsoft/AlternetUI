@@ -14,7 +14,7 @@ namespace Alternet.UI
         /// <summary>
         /// Occurs when the property value changes.
         /// </summary>
-        event EventHandler<PropertyChangeEventArgs>? PropertyChanged;
+        event EventHandler<ObjectPropertyChangedEventArgs>? PropertyChanged;
 
         /// <summary>
         /// Occurs when the control receives focus.

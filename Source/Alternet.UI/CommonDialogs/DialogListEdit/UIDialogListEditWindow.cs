@@ -220,7 +220,7 @@ namespace Alternet.UI
             }
         }
 
-        private void OnDesignerPropertyChanged(object? sender, PropertyChangeEventArgs e)
+        private void OnDesignerPropertyChanged(object? sender, ObjectPropertyChangedEventArgs e)
         {
             if (IsDisposed)
                 return;
