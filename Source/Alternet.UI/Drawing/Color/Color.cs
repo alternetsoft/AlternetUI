@@ -1015,6 +1015,11 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Converts the specified <see cref='string'/> to a <see cref='Color'/>.
+        /// </summary>
+        public static explicit operator Color(string s) => Color.Parse(s);
+
+        /// <summary>
         /// Tests whether two specified <see cref="Color"/> structures are equivalent.
         /// </summary>
         /// <param name="left">The <see cref="Color"/> that is to the left
@@ -1039,11 +1044,6 @@ namespace Alternet.Drawing
         /// <returns><c>true</c> if the two <see cref="Color"/> structures
         /// are different; otherwise, <c>false</c>.</returns>
         public static bool operator !=(Color left, Color right) => !(left == right);
-
-        /// <summary>
-        /// Converts the specified <see cref='string'/> to a <see cref='Color'/>.
-        /// </summary>
-        public static implicit operator Color(string s) => Color.Parse(s);
 
         /// <summary>
         /// Creates a <see cref="Color"/> structure from a 32-bit ARGB value.
