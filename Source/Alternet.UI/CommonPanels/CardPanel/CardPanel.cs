@@ -19,19 +19,6 @@ namespace Alternet.UI
     [ControlCategory("Containers")]
     public class CardPanel : Control
     {
-        private readonly VerticalStackPanel waitLabelContainer = new()
-        {
-            HorizontalAlignment = HorizontalAlignment.Center,
-            VerticalAlignment = VerticalAlignment.Center,
-            SuggestedSize = new Size(400, 400),
-        };
-
-        private readonly Label waitLabel = new()
-        {
-            Text = CommonStrings.Default.LoadingPleaseWait,
-            Margin = new Thickness(100, 100, 0, 0),
-        };
-
         private CardPanelItem? selectedCard;
 
         /// <summary>
@@ -42,34 +29,13 @@ namespace Alternet.UI
             Cards.ThrowOnNullAdd = true;
             Cards.ItemInserted += Cards_ItemInserted;
             Cards.ItemRemoved += Cards_ItemRemoved;
-            waitLabel.Parent = waitLabelContainer;
         }
-
-        /// <summary>
-        /// Gets wait control container which is shown when card is loaded
-        /// and <see cref="UseWaitControl"/> is <c>true</c>.
-        /// </summary>
-        [Browsable(false)]
-        public Control WaitControlContainer => waitLabelContainer;
-
-        /// <summary>
-        /// Gets wait control which is shown when card is loaded
-        /// and <see cref="UseWaitControl"/> is <c>true</c>.
-        /// </summary>
-        [Browsable(false)]
-        public Control WaitControl => waitLabel;
 
         /// <summary>
         /// Gets or sets whether to call <see cref="Application.BeginBusyCursor"/> when
         /// page is created. By default is <c>true</c>.
         /// </summary>
         public bool UseBusyCursor { get; set; } = true;
-
-        /// <summary>
-        /// Gets or sets whether to show wait control when
-        /// page is created. By default is <c>true</c>.
-        /// </summary>
-        public bool UseWaitControl { get; set; } = true;
 
         /// <summary>
         /// Gets pages with child controls.
@@ -219,21 +185,11 @@ namespace Alternet.UI
                         Application.BeginBusyCursor();
                         busyCursor = true;
                     }
-
-                    if (UseWaitControl)
-                    {
-                        waitLabelContainer.Parent = this;
-                        waitLabelContainer.Visible = true;
-                        waitLabelContainer.Refresh();
-                        Application.DoEvents();
-                    }
                 }
 
                 var control = card.Control;
                 control.Parent = this;
                 control.Visible = true;
-                if (UseWaitControl)
-                    waitLabelContainer.Visible = false;
                 PerformLayout();
             }
             finally
