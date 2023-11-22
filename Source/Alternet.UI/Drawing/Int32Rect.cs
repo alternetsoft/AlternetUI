@@ -166,6 +166,14 @@ namespace Alternet.Drawing
         public readonly bool IsEmpty => height == 0 && width == 0 && x == 0 && y == 0;
 
         /// <summary>
+        /// Implicit operator convertion from tuple with four <see cref="int"/> values
+        /// to <see cref="Int32Rect"/>.
+        /// </summary>
+        /// <param name="d">New rectangle value.</param>
+        public static implicit operator Int32Rect((int, int, int, int) d) =>
+            new(d.Item1, d.Item2, d.Item3, d.Item4);
+
+        /// <summary>
         /// Tests whether two <see cref='Drawing.Int32Rect'/> objects have equal location and size.
         /// </summary>
         public static bool operator ==(Int32Rect left, Int32Rect right) =>
@@ -420,14 +428,14 @@ namespace Alternet.Drawing
         public override readonly string ToString()
         {
             string[] names =
-            {
+            [
                 PropNameStrings.Default.X,
                 PropNameStrings.Default.Y,
                 PropNameStrings.Default.Width,
                 PropNameStrings.Default.Height,
-            };
+            ];
 
-            int[] values = { x, y, width, height };
+            int[] values = [x, y, width, height];
 
             return StringUtils.ToString<int>(names, values);
         }

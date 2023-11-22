@@ -263,6 +263,14 @@ namespace Alternet.Drawing
         public static explicit operator Rect(Vector4 vector) => new(vector);
 
         /// <summary>
+        /// Implicit operator convertion from tuple with four <see cref="double"/> values
+        /// to <see cref="Rect"/>.
+        /// </summary>
+        /// <param name="d">New rectangle value.</param>
+        public static implicit operator Rect((double, double, double, double) d) =>
+            new(d.Item1, d.Item2, d.Item3, d.Item4);
+
+        /// <summary>
         /// Converts the specified <see cref='Drawing.Int32Rect'/> to a
         /// <see cref='Rect'/>.
         /// </summary>

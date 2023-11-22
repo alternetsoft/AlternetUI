@@ -167,6 +167,14 @@ namespace Alternet.UI
         public static implicit operator Thickness(int d) => new(d);
 
         /// <summary>
+        /// Implicit operator convertion from tuple with four <see cref="double"/> values
+        /// to <see cref="Thickness"/>.
+        /// </summary>
+        /// <param name="d">New thickness value.</param>
+        public static implicit operator Thickness((double, double, double, double) d) =>
+            new(d.Item1, d.Item2, d.Item3, d.Item4);
+
+        /// <summary>
         /// Overloaded operator to compare two Thicknesses for equality.
         /// </summary>
         /// <param name="t1">first Thickness to compare</param>
@@ -307,14 +315,14 @@ namespace Alternet.UI
         public override readonly string ToString()
         {
             string[] names =
-            {
+            [
                 PropNameStrings.Default.Left,
                 PropNameStrings.Default.Top,
                 PropNameStrings.Default.Right,
                 PropNameStrings.Default.Bottom,
-            };
+            ];
 
-            double[] values = { left, top, right, bottom };
+            double[] values = [left, top, right, bottom];
 
             return StringUtils.ToString<double>(names, values);
         }

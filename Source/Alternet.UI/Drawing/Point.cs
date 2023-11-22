@@ -108,6 +108,13 @@ namespace Alternet.Drawing
         public static explicit operator Point(Vector2 vector) => new(vector);
 
         /// <summary>
+        /// Implicit operator convertion from tuple with two <see cref="double"/> values
+        /// to <see cref="Point"/>.
+        /// </summary>
+        /// <param name="d">New point value.</param>
+        public static implicit operator Point((double, double) d) => new(d.Item1, d.Item2);
+
+        /// <summary>
         /// Translates a <see cref='Drawing.Point'/> by a given <see cref='Drawing.Int32Size'/>.
         /// </summary>
         public static Point operator +(Point pt, Int32Size sz) => Add(pt, sz);

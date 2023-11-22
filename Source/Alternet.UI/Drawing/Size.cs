@@ -144,6 +144,13 @@ namespace Alternet.Drawing
         public static explicit operator Point(Size size) =>
             new(size.Width, size.Height);
 
+        /// <summary>
+        /// Implicit operator convertion from tuple with two <see cref="double"/> values
+        /// to <see cref="Size"/>.
+        /// </summary>
+        /// <param name="d">New size value.</param>
+        public static implicit operator Size((double, double) d) => new(d.Item1, d.Item2);
+
         /* TODO: uncommment when Double System.Numerics is availble.
          See https://github.com/dotnet/runtime/issues/24168
         /// <summary>
@@ -425,8 +432,8 @@ namespace Alternet.Drawing
         /// </summary>
         public override readonly string ToString()
         {
-            string[] names = { PropNameStrings.Default.Width, PropNameStrings.Default.Height };
-            double[] values = { width, height };
+            string[] names = [PropNameStrings.Default.Width, PropNameStrings.Default.Height];
+            double[] values = [width, height];
 
             return StringUtils.ToString<double>(names, values);
         }

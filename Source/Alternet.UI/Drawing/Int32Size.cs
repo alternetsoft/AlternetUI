@@ -109,6 +109,13 @@ namespace Alternet.Drawing
             new(size.Width, size.Height);
 
         /// <summary>
+        /// Implicit operator convertion from tuple with two <see cref="int"/> values
+        /// to <see cref="Int32Size"/>.
+        /// </summary>
+        /// <param name="d">New size value.</param>
+        public static implicit operator Int32Size((int, int) d) => new(d.Item1, d.Item2);
+
+        /// <summary>
         /// Converts the specified <see cref='Int32Size'/> to a <see cref='Size'/>.
         /// </summary>
         public static implicit operator Size(Int32Size p) => new(p.Width, p.Height);
@@ -282,8 +289,8 @@ namespace Alternet.Drawing
         /// </summary>
         public override readonly string ToString()
         {
-            string[] names = { PropNameStrings.Default.Width, PropNameStrings.Default.Height };
-            int[] values = { width, height };
+            string[] names = [PropNameStrings.Default.Width, PropNameStrings.Default.Height];
+            int[] values = [width, height];
 
             return StringUtils.ToString<int>(names, values);
         }
