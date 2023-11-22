@@ -464,16 +464,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Forces the control to invalidate itself and immediately redraw itself
-        /// and any child controls.
-        /// </summary>
-        public void Refresh()
-        {
-            Invalidate();
-            Update();
-        }
-
-        /// <summary>
         /// This property may be overridden by control handlers to paint the
         /// control visual representation.
         /// </summary>
@@ -1175,7 +1165,7 @@ namespace Alternet.UI
             ApplyFont();
             RaiseLayoutChanged();
             PerformLayout();
-            Refresh();
+            Control.Refresh();
         }
 
         private void NativeControl_GotFocus(object? sender, EventArgs e)
