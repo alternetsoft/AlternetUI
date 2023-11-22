@@ -166,7 +166,7 @@ namespace ControlsSample
             [
                 new("Splitter", () => new SplitterPanelPage()),
                 new("Grid", () => new GridPage()),
-                new("LayoutPanel", () => new LayoutPanelPage()),
+                // new("LayoutPanel", () => new LayoutPanelPage()),
             ];
 
             return CreateCustomPage(pages);

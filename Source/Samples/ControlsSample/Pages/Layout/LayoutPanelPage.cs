@@ -24,15 +24,18 @@ namespace ControlsSample
 
         public LayoutPanelPage()
         {
+            DoInsideLayout(Initialize);
+        }
+
+        public void Initialize()
+        {
             static void Initialize(ListBox control)
             {
                 control.Margin = 5;
-                control.SuggestedSize = new(100, 100);
+                control.Size = (100, 100);
             }
 
-            BackgroundColor = Color.Yellow;
-
-            Group(control1, control2, control3, control4, control5).Action<ListBox>(Initialize).Parent(layoutPanel);
+            layoutPanel.BackgroundColor = Color.Yellow;
 
             control1.Items.Add("Control 1");
             control1.Items.Add("Dock = Right");
@@ -58,12 +61,9 @@ namespace ControlsSample
             LayoutPanel.SetDock(control4, DockStyle.Bottom);
             LayoutPanel.SetDock(control5, DockStyle.Fill);
 
-            layoutPanel.Children.Add(control5);
-            layoutPanel.Children.Add(control1);
-            layoutPanel.Children.Add(control2);
-            layoutPanel.Children.Add(control3);
-            layoutPanel.Children.Add(control4);
-            //layoutPanel.Children.Add(control6);
+            Group(control1, control2, control3, control4, control5)
+                .Action<ListBox>(Initialize).Parent(layoutPanel);
+
             layoutPanel.Parent = this;
         }
 
