@@ -1,0 +1,18 @@
+sudo xip --expand *.xip
+
+
+Download the
+
+Extract xip archive: 
+
+xip --expand ~/Downloads/Xcode_14.3.1.xip
+
+Ignore warning message xip: signing certificate was "Software Update" (validation not attempted)
+
+Wait a very very long time for archive to extract with no feedback (I did it overnight)
+
+Move expanded folder to /Applications:
+
+ sudo mv Xcode.app /Applications
+
+To run Xcode you must use full path to executable or lese you will get an error: /Applications/Xcode.app/Contents/MacOS/Xcode
