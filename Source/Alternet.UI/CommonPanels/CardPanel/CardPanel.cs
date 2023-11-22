@@ -32,6 +32,11 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Occurs when the card's property value changes.
+        /// </summary>
+        public event EventHandler<ObjectPropertyChangedEventArgs>? CardPropertyChanged;
+
+        /// <summary>
         /// Gets or sets whether to call <see cref="Application.BeginBusyCursor"/> when
         /// page is created. By default is <c>true</c>.
         /// </summary>
@@ -245,6 +250,7 @@ namespace Alternet.UI
 
         private void Cards_ItemRemoved(object? sender, int index, CardPanelItem item)
         {
+            item.PropertyChanged -= Item_PropertyChanged;
             if (item == selectedCard)
             {
                 selectedCard = null;
@@ -253,6 +259,12 @@ namespace Alternet.UI
 
         private void Cards_ItemInserted(object? sender, int index, CardPanelItem item)
         {
+            item.PropertyChanged += Item_PropertyChanged;
+        }
+
+        private void Item_PropertyChanged(object? sender, PropertyChangedEventArgs e)
+        {
+            CardPropertyChanged?.Invoke(this, new(sender, e.PropertyName));
         }
     }
 }
