@@ -152,7 +152,7 @@ namespace Alternet.UI
 
         void EndUpdate();
 
-        void PerformLayout();
+        void PerformLayout(bool layoutParent = true);
 
         Size GetPreferredSize(Size availableSize);
 

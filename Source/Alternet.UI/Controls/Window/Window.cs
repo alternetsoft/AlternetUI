@@ -200,7 +200,7 @@ namespace Alternet.UI
         /// this application.
         /// </summary>
         [Browsable(false)]
-        public bool IsActive => Handler.IsActive;
+        public bool IsActive => NativeControl.IsActive;
 
         /// <summary>
         /// Gets or sets a boolean value indicating whether window has title bar.
@@ -606,7 +606,7 @@ namespace Alternet.UI
             get
             {
                 CheckDisposed();
-                return Handler.Modal;
+                return NativeControl.Modal;
             }
         }
 
@@ -622,13 +622,13 @@ namespace Alternet.UI
             get
             {
                 CheckDisposed();
-                return Handler.ModalResult;
+                return (ModalResult)NativeControl.ModalResult;
             }
 
             set
             {
                 CheckDisposed();
-                Handler.ModalResult = value;
+                NativeControl.ModalResult = (Native.ModalResult)value;
             }
         }
 
@@ -692,7 +692,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets the collection of input bindings associated with this window.
         /// </summary>
-        public Collection<InputBinding> InputBindings { get; } = new();
+        public Collection<InputBinding> InputBindings { get; } = [];
 
         /// <inheritdoc/>
         public override ControlTypeId ControlKind => ControlTypeId.Window;
@@ -702,6 +702,9 @@ namespace Alternet.UI
         /// </summary>
         [Browsable(false)]
         internal new NativeWindowHandler Handler => (NativeWindowHandler)base.Handler;
+
+        [Browsable(false)]
+        internal new Native.Window NativeControl => (Native.Window)base.NativeControl;
 
         /// <inheritdoc />
         protected override IEnumerable<FrameworkElement> LogicalChildrenCollection
@@ -722,6 +725,14 @@ namespace Alternet.UI
             }
         }
 
+        /// <inheritdoc/>
+        public override void PerformLayout(bool layoutParent = true)
+        {
+            if (IsLayoutPerform || IsLayoutSuspended)
+                return;
+            base.PerformLayout(layoutParent);
+        }
+
         /// <summary>
         /// Changes size of the window to fit the size of its content.
         /// </summary>
@@ -740,7 +751,7 @@ namespace Alternet.UI
         /// Activating a window brings it to the front if this is the active application,
         /// or it flashes the window caption if this is not the active application.
         /// </remarks>
-        public void Activate() => Handler.Activate();
+        public void Activate() => NativeControl.Activate();
 
         /// <summary>
         /// Opens a window and returns only when the newly opened window is closed.
@@ -799,7 +810,7 @@ namespace Alternet.UI
 
             ModalResult = ModalResult.None;
             Owner = owner;
-            Handler.ShowModal();
+            NativeControl.ShowModal();
 
             return ModalResult;
         }

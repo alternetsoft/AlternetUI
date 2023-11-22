@@ -42,6 +42,7 @@ namespace Alternet.UI
 
         private static int groupIndexCounter;
 
+        private int layoutSuspendCount;
         private IFlagsAndAttributes? flagsAndAttributes;
         private MouseButtonEventArgs? dragEventArgs;
         private Point dragEventMousePos;
@@ -58,6 +59,7 @@ namespace Alternet.UI
         private Font? font;
         private Brush? borderBrush;
         private VerticalAlignment verticalAlignment = VerticalAlignment.Stretch;
+        private bool inLayout;
         private HorizontalAlignment horizontalAlignment = HorizontalAlignment.Stretch;
         private ControlExtendedProps? extendedProps = null;
         private Thickness? minMargin;
@@ -375,6 +377,16 @@ namespace Alternet.UI
                 value?.Invoke(this);
             }
         }
+
+        /// <summary>
+        /// Gets whether layout is suspended.
+        /// </summary>
+        public bool IsLayoutSuspended => layoutSuspendCount != 0;
+
+        /// <summary>
+        /// Gets whether layout is currently performed.
+        /// </summary>
+        public bool IsLayoutPerform => inLayout;
 
         /// <summary>
         /// Gets or sets <see cref="IComponentDesigner"/> instance which
@@ -1383,6 +1395,39 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets a rectangle which describes the client area inside of the
+        /// <see cref="Control"/>,
+        /// in device-independent units (1/96th inch per unit).
+        /// </summary>
+        public virtual Rect ClientRectangle => new(Point.Empty, ClientSize);
+
+        /// <summary>
+        /// Gets a rectangle which describes an area inside of the
+        /// <see cref="Control"/> available
+        /// for positioning (layout) of its child controls, in device-independent
+        /// units (1/96th inch per unit).
+        /// </summary>
+        [Browsable(false)]
+        public virtual Rect ChildrenLayoutBounds
+        {
+            get
+            {
+                var childrenBounds = ClientRectangle;
+                if (childrenBounds.IsEmpty)
+                    return Rect.Empty;
+
+                var padding = Padding;
+                var intrinsicPadding = NativeControl.IntrinsicLayoutPadding;
+
+                return new Rect(
+                    new Point(
+                        padding.Left + intrinsicPadding.Left,
+                        padding.Top + intrinsicPadding.Top),
+                    childrenBounds.Size - padding.Size - intrinsicPadding.Size);
+            }
+        }
+
+        /// <summary>
         /// Gets or sets the layout direction for this control.
         /// </summary>
         /// <remarks>
@@ -1623,7 +1668,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets <see cref="NativeControl"/> attached to this control.
         /// </summary>
-        internal Native.Control? NativeControl => Handler.NativeControl;
+        internal Native.Control NativeControl => Handler.NativeControl;
 
         internal ControlExtendedProps ExtendedProps
         {
@@ -2238,7 +2283,7 @@ namespace Alternet.UI
         /// </remarks>
         public void SuspendLayout()
         {
-            Handler?.SuspendLayout();
+            layoutSuspendCount++;
         }
 
         /// <summary>
@@ -2424,9 +2469,15 @@ namespace Alternet.UI
         /// </remarks>
         public virtual void ResumeLayout(bool performLayout = true)
         {
-            Handler?.ResumeLayout(performLayout);
-            if (performLayout)
-                PerformLayout();
+            layoutSuspendCount--;
+            if (layoutSuspendCount < 0)
+                throw new InvalidOperationException();
+
+            if (!IsLayoutSuspended)
+            {
+                if (performLayout)
+                    PerformLayout();
+            }
         }
 
         /// <summary>
@@ -2458,9 +2509,30 @@ namespace Alternet.UI
         /// the <see cref="PerformLayout"/> method,
         /// the layout is suppressed.
         /// </remarks>
-        public virtual void PerformLayout()
+        /// <param name="layoutParent">Specifies whether to call parent's
+        /// <see cref="PerformLayout"/>. Optional. By default is <c>true</c>.</param>
+        public virtual void PerformLayout(bool layoutParent = true)
         {
-            Handler?.PerformLayout();
+            if (IsLayoutSuspended)
+                return;
+
+            if (inLayout)
+                return;
+
+            inLayout = true;
+            try
+            {
+                if(layoutParent)
+                    Parent?.PerformLayout();
+
+                OnLayout();
+            }
+            finally
+            {
+                inLayout = false;
+            }
+
+            RaiseLayoutUpdated();
         }
 
         /// <summary>
@@ -2645,6 +2717,14 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Called when the control should reposition its child controls.
+        /// </summary>
+        public virtual void OnLayout()
+        {
+            Handler?.OnLayout();
+        }
+
+        /// <summary>
         /// Call this function to force one or both scrollbars to be always shown, even if
         /// the control is big enough to show its entire contents without scrolling.
         /// </summary>
@@ -2814,12 +2894,17 @@ namespace Alternet.UI
         /// Sets background color if <see cref="UseDebugBackgroundColor"/> is <c>true</c>
         /// and DEBUG conditional is defined.
         /// </summary>
-        /// <param name="color"></param>
+        /// <param name="color">Debug background color.</param>
+        /// <param name="debugMsg">Optional debug message to show in log.</param>
         [Conditional("DEBUG")]
-        public virtual void DebugBackgroundColor(Color? color)
+        public virtual void DebugBackgroundColor(Color? color, string? debugMsg = default)
         {
             if (UseDebugBackgroundColor)
+            {
                 BackgroundColor = color;
+                if(debugMsg is not null)
+                    LogUtils.LogColor(debugMsg, color);
+            }
         }
 
         /// <summary>
@@ -3026,9 +3111,30 @@ namespace Alternet.UI
         internal void RaiseChildRemoved(Control childControl) =>
             OnChildInserted(childControl);
 
-        internal void InvokeOnLayout()
+        internal void PerformDefaultControlLayout()
         {
-            OnLayout();
+            var childrenLayoutBounds = ChildrenLayoutBounds;
+            foreach (var control in Handler.AllChildrenIncludedInLayout)
+            {
+                var preferredSize = control.GetPreferredSizeLimited(childrenLayoutBounds.Size);
+
+                var horizontalPosition =
+                    AlignedLayout.AlignHorizontal(
+                        childrenLayoutBounds,
+                        control,
+                        preferredSize);
+                var verticalPosition =
+                    AlignedLayout.AlignVertical(
+                        childrenLayoutBounds,
+                        control,
+                        preferredSize);
+
+                control.Handler.Bounds = new Rect(
+                    horizontalPosition.Origin,
+                    verticalPosition.Origin,
+                    horizontalPosition.Size,
+                    verticalPosition.Size);
+            }
         }
 
         internal void RaisePaint(PaintEventArgs e)
@@ -3126,16 +3232,6 @@ namespace Alternet.UI
         /// event data.</param>
         protected virtual void OnLocationChanged(EventArgs e) =>
             LocationChanged?.Invoke(this, e);
-
-        /// <summary>
-        /// Called when the control should reposition the child controls of
-        /// the control.
-        /// </summary>
-        protected virtual void OnLayout()
-        {
-            Handler?.OnLayout();
-            RaiseLayoutUpdated();
-        }
 
         /// <summary>
         /// Called when a <see cref="Control"/> is inserted into

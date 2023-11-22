@@ -6,7 +6,7 @@ namespace ControlsSample
 {
     internal partial class MainWindow : Window
     {
-        private readonly PageContainer pageContainer = new();
+        private readonly PageContainer pageContainer;
         private readonly LogListBox eventsControl = new()
         {
             HasBorder = false,
@@ -22,19 +22,25 @@ namespace ControlsSample
             Padding = 10,
         };
 
+        static MainWindow()
+        {
+            // UseDebugBackgroundColor = true;
+        }
+
         public MainWindow()
         {
-            Initialize();
+            eventsControl.BindApplicationLog();
+            pageContainer = new();
+            DoInsideLayout(Initialize);
         }
 
         public void Initialize()
         {
+            DebugBackgroundColor(Color.Red, nameof(MainWindow));
             panel.Parent = this;
             Title = "Alternet UI Controls Sample";
             Size = (900, 700);
             StartLocation = WindowStartLocation.CenterScreen;
-
-            eventsControl.BindApplicationLog();
 
             Icon = ImageSet.FromUrlOrNull("embres:ControlsSample.Sample.ico");
 

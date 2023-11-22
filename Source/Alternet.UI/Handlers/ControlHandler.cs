@@ -13,10 +13,7 @@ namespace Alternet.UI
     /// </summary>
     public abstract class ControlHandler : BaseObject
     {
-        private int layoutSuspendCount;
-        private bool inLayout;
         private Control? control;
-        private Rect bounds;
         private Native.Control? nativeControl;
         private bool isVisualChild;
         private Collection<Control>? visualChildren;
@@ -35,8 +32,6 @@ namespace Alternet.UI
         {
             get
             {
-                if (NativeControl is null)
-                    return Size.Default;
                 return NativeControl.MinimumSize;
             }
 
@@ -44,8 +39,8 @@ namespace Alternet.UI
             {
                 if (MinimumSize == value)
                     return;
-                if (NativeControl is not null) NativeControl.MinimumSize = value;
-                PerformLayout();
+                NativeControl.MinimumSize = value;
+                Control.PerformLayout();
             }
         }
 
@@ -56,8 +51,6 @@ namespace Alternet.UI
         {
             get
             {
-                if (NativeControl is null)
-                    return Size.Default;
                 return NativeControl.MaximumSize;
             }
 
@@ -65,8 +58,8 @@ namespace Alternet.UI
             {
                 if (MaximumSize == value)
                     return;
-                if (NativeControl is not null) NativeControl.MaximumSize = value;
-                PerformLayout();
+                NativeControl.MaximumSize = value;
+                Control.PerformLayout();
             }
         }
 
@@ -100,14 +93,13 @@ namespace Alternet.UI
         /// </summary>
         public virtual Rect Bounds
         {
-            get => NativeControl != null ? NativeControl.Bounds : bounds;
+            get => NativeControl.Bounds;
             set
             {
+                if (NativeControl.Bounds == value)
+                    return;
                 var oldBounds = Bounds;
-
-                if (NativeControl != null)
-                    NativeControl.Bounds = value;
-                bounds = value;
+                NativeControl.Bounds = value;
                 ReportBoundsChanged(oldBounds, value);
             }
         }
@@ -122,55 +114,17 @@ namespace Alternet.UI
             {
                 if (Control.IsDummy)
                     return Size.Empty;
-                return NativeControl != null ? NativeControl.ClientSize : bounds.Size;
+                return NativeControl.ClientSize;
             }
 
             set
             {
-                if (NativeControl != null)
-                    NativeControl.ClientSize = value;
-                else
-                    bounds = new Rect(bounds.Location, value);
-
-                PerformLayout(); // todo: use event
+                if (ClientSize == value)
+                    return;
+                NativeControl.ClientSize = value;
+                Control.PerformLayout();
             }
         }
-
-        /// <summary>
-        /// Gets a rectangle which describes an area inside of the
-        /// <see cref="Control"/> available
-        /// for positioning (layout) of its child controls, in device-independent
-        /// units (1/96th inch per unit).
-        /// </summary>
-        public virtual Rect ChildrenLayoutBounds
-        {
-            get
-            {
-                var childrenBounds = ClientRectangle;
-                if (childrenBounds.IsEmpty)
-                    return Rect.Empty;
-
-                var padding = Control.Padding;
-
-                var intrinsicPadding = new Thickness();
-                var nativeControl = NativeControl;
-                if (nativeControl != null)
-                    intrinsicPadding = nativeControl.IntrinsicLayoutPadding;
-
-                return new Rect(
-                    new Point(
-                        padding.Left + intrinsicPadding.Left,
-                        padding.Top + intrinsicPadding.Top),
-                    childrenBounds.Size - padding.Size - intrinsicPadding.Size);
-            }
-        }
-
-        /// <summary>
-        /// Gets a rectangle which describes the client area inside of the
-        /// <see cref="Control"/>,
-        /// in device-independent units (1/96th inch per unit).
-        /// </summary>
-        public virtual Rect ClientRectangle => new(Point.Empty, ClientSize);
 
         /// <inheritdoc cref="Control.DrawClientRectangle"/>
         public virtual Rect DrawClientRectangle => Control.DrawClientRectangle;
@@ -371,8 +325,6 @@ namespace Alternet.UI
         private protected virtual bool NeedRelayoutParentOnVisibleChanged =>
             Control.Parent is not TabControl; // todo
 
-        private bool IsLayoutSuspended => layoutSuspendCount != 0;
-
         /// <summary>
         /// Returns the currently focused control, or <see langword="null"/> if
         /// no control is focused.
@@ -484,41 +436,7 @@ namespace Alternet.UI
         /// </summary>
         public virtual void OnLayout()
         {
-            var childrenLayoutBounds = ChildrenLayoutBounds;
-            foreach (var control in AllChildrenIncludedInLayout)
-            {
-                var preferredSize = control.GetPreferredSizeLimited(childrenLayoutBounds.Size);
-
-                var horizontalPosition =
-                    AlignedLayout.AlignHorizontal(
-                        childrenLayoutBounds,
-                        control,
-                        preferredSize);
-                var verticalPosition =
-                    AlignedLayout.AlignVertical(
-                        childrenLayoutBounds,
-                        control,
-                        preferredSize);
-
-                control.Handler.Bounds = new Rect(
-                    horizontalPosition.Origin,
-                    verticalPosition.Origin,
-                    horizontalPosition.Size,
-                    verticalPosition.Size);
-
-                // var margin = control.Margin;
-
-                // var specifiedWidth = control.Width;
-                // var specifiedHeight = control.Height;
-
-                // control.Handler.Bounds = new RectangleF(
-                //    childrenLayoutBounds.Location + new SizeF(margin.Left, margin.Top),
-                //    new SizeF(
-                //        double.IsNaN(specifiedWidth) ?
-                //        childrenLayoutBounds.Width - margin.Horizontal : specifiedWidth,
-                //        double.IsNaN(specifiedHeight) ?
-                //        childrenLayoutBounds.Height - margin.Vertical : specifiedHeight));
-            }
+            Control.PerformDefaultControlLayout();
         }
 
         /// <summary>
@@ -534,32 +452,6 @@ namespace Alternet.UI
             if (Control.HasChildren || HasVisualChildren)
                 return GetSpecifiedOrChildrenPreferredSize(availableSize);
             return GetNativeControlSize(availableSize);
-        }
-
-        /// <summary>
-        /// Temporarily suspends the layout logic for the control.
-        /// </summary>
-        public void SuspendLayout()
-        {
-            layoutSuspendCount++;
-        }
-
-        /// <summary>
-        /// Resumes the usual layout logic.
-        /// </summary>
-        /// <param name="performLayout"><c>true</c> to execute pending layout
-        /// requests; otherwise, <c>false</c>.</param>
-        public void ResumeLayout(bool performLayout = true)
-        {
-            layoutSuspendCount--;
-            if (layoutSuspendCount < 0)
-                throw new InvalidOperationException();
-
-            if (!IsLayoutSuspended)
-            {
-                if (performLayout)
-                    PerformLayout();
-            }
         }
 
         /// <summary>
@@ -579,31 +471,6 @@ namespace Alternet.UI
         public void EndUpdate()
         {
             NativeControl?.EndUpdate();
-        }
-
-        /// <summary>
-        /// Forces the control to apply layout logic to child controls.
-        /// </summary>
-        public void PerformLayout()
-        {
-            if (IsLayoutSuspended)
-                return;
-
-            if (inLayout)
-                return;
-
-            inLayout = true;
-            try
-            {
-                var parent = Control.Parent;
-                parent?.PerformLayout();
-
-                Control.InvokeOnLayout();
-            }
-            finally
-            {
-                inLayout = false;
-            }
         }
 
         /// <summary>
@@ -1137,7 +1004,7 @@ namespace Alternet.UI
 
             if (locationChanged || sizeChanged)
             {
-                PerformLayout();
+                Control.PerformLayout();
             }
         }
 
@@ -1164,7 +1031,7 @@ namespace Alternet.UI
         {
             ApplyFont();
             RaiseLayoutChanged();
-            PerformLayout();
+            Control.PerformLayout();
             Control.Refresh();
         }
 
@@ -1234,13 +1101,13 @@ namespace Alternet.UI
         private void Control_VerticalAlignmentChanged(object? sender, EventArgs e)
         {
             RaiseLayoutChanged();
-            PerformLayout();
+            Control.PerformLayout();
         }
 
         private void Control_HorizontalAlignmentChanged(object? sender, EventArgs e)
         {
             RaiseLayoutChanged();
-            PerformLayout();
+            Control.PerformLayout();
         }
 
         private void ApplyChildren()
@@ -1257,7 +1124,7 @@ namespace Alternet.UI
             item.Handler.IsVisualChild = true;
 
             RaiseChildInserted(item);
-            PerformLayout();
+            Control.PerformLayout();
         }
 
         private void VisualChildren_ItemRemoved(object? sender, int index, Control item)
@@ -1266,7 +1133,7 @@ namespace Alternet.UI
             item.Handler.IsVisualChild = false;
 
             RaiseChildRemoved(item);
-            PerformLayout();
+            Control.PerformLayout();
         }
 
         private void DisposeNativeControl()
@@ -1416,7 +1283,7 @@ namespace Alternet.UI
                     // Doing this on Windows results in strange glitches like disappearing
                     // tab controls' tab.
                     // See https://forums.wxwidgets.org/viewtopic.php?f=1&t=47439
-                    PerformLayout();
+                    Control.PerformLayout();
                 }
             }
         }
@@ -1433,26 +1300,26 @@ namespace Alternet.UI
 
         private void Control_MarginChanged(object? sender, EventArgs? e)
         {
-            PerformLayout();
+            Control.PerformLayout();
         }
 
         private void Control_PaddingChanged(object? sender, EventArgs? e)
         {
-            PerformLayout();
+            Control.PerformLayout();
         }
 
         private void Children_ItemInserted(object? sender, int index, Control item)
         {
             RaiseChildInserted(item);
             RaiseLayoutChanged();
-            PerformLayout();
+            Control.PerformLayout();
         }
 
         private void Children_ItemRemoved(object? sender, int index, Control item)
         {
             RaiseChildRemoved(item);
             RaiseLayoutChanged();
-            PerformLayout();
+            Control.PerformLayout();
         }
 
         private void NativeControl_Paint(object? sender, System.EventArgs? e)
@@ -1470,7 +1337,7 @@ namespace Alternet.UI
                 new DrawingContext(NativeControl.OpenPaintDrawingContext());
 
             if (Control.UserPaint)
-                Control.RaisePaint(new PaintEventArgs(dc, ClientRectangle));
+                Control.RaisePaint(new PaintEventArgs(dc, Control.ClientRectangle));
 
             if (NeedsPaint || hasVisualChildren)
                 PaintSelfAndVisualChildren(dc);

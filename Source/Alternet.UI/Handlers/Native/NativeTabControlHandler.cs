@@ -99,7 +99,7 @@ namespace Alternet.UI
                 var page = Control.Pages[selectedPageIndex];
 
                 if (Application.IsLinuxOS && selectedPageIndex == 0 && !skipLinuxFix)
-                    page.Handler.Bounds = ChildrenLayoutBounds;
+                    page.Handler.Bounds = Control.ChildrenLayoutBounds;
 
                 page.Handler.OnLayout();
             }
@@ -120,7 +120,7 @@ namespace Alternet.UI
             var pageNativeControl = page.Handler.NativeControl
                 ?? throw new InvalidOperationException();
             NativeControl.InsertPage(index, pageNativeControl, page.Title);
-            PerformLayout();
+            Control.PerformLayout();
         }
 
         private void RemovePage(int index, TabPage page)

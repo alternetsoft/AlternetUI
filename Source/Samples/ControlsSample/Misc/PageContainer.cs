@@ -23,7 +23,18 @@ namespace ControlsSample
             pagesControl.SelectionChanged += PagesListBox_SelectionChanged;
             pagesControl.Parent = this;
             cardPanel.Parent = this;
+            cardPanel.DebugBackgroundColor(Color.Yellow, "PageContainer.cardPanel");
+            cardPanel.CardPropertyChanged += CardPanel_CardPropertyChanged;
             SplitVertical(pagesControl, cardPanel, PixelFromDip(140));
+            DebugBackgroundColor(Color.Green, nameof(PageContainer));
+        }
+
+        private void CardPanel_CardPropertyChanged(object? sender, ObjectPropertyChangedEventArgs e)
+        {
+            if (e.Instance is not CardPanelItem card)
+                return;
+            if (card.ControlCreated)
+                card.Control.DebugBackgroundColor(Color.Navy, "PageContainer.cardPanel.card");
         }
 
         public int? SelectedIndex
@@ -45,8 +56,10 @@ namespace ControlsSample
         public void Add(string title, Func<Control> action)
         {
             var index = cardPanel.Add(title, action);
-            var item = new TreeViewItem(title);
-            item.Tag = index;
+            var item = new TreeViewItem(title)
+            {
+                Tag = index
+            };
             pagesControl.Add(item);
         }
 

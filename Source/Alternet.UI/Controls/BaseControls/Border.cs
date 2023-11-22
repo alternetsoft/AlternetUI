@@ -54,6 +54,20 @@ namespace Alternet.UI
             }
         }
 
+        /// <inheritdoc/>
+        public override Rect ChildrenLayoutBounds
+        {
+            get
+            {
+                var bounds = base.ChildrenLayoutBounds;
+                bounds.X += BorderWidth.Left;
+                bounds.Y += BorderWidth.Top;
+                bounds.Width -= BorderWidth.Horizontal;
+                bounds.Height -= BorderWidth.Vertical;
+                return bounds;
+            }
+        }
+
         /// <summary>
         /// Gets or sets the border width for the <see cref="Border"/> control.
         /// </summary>

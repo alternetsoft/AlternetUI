@@ -9,10 +9,10 @@ namespace Alternet.UI
         public override void OnPaint(DrawingContext drawingContext)
         {
             if (Control.Background != null)
-                drawingContext.FillRectangle(Control.Background, ClientRectangle);
+                drawingContext.FillRectangle(Control.Background, Control.ClientRectangle);
 
             var primitive = Control.Primitive;
-            primitive.DestRect = ClientRectangle;
+            primitive.DestRect = Control.ClientRectangle;
             primitive.Draw(drawingContext);
         }
 

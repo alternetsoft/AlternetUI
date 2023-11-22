@@ -128,6 +128,12 @@ namespace Alternet.UI
             return control.ExtendedProps.MinimumSize;
         }
 
+        /// <inheritdoc />
+        public override void OnLayout()
+        {
+            base.OnLayout();
+        }
+
         internal static void SetAnchor(Control control, AnchorStyles value)
         {
             if (control == null)
@@ -200,12 +206,6 @@ namespace Alternet.UI
         protected override void OnChildRemoved(Control childControl)
         {
             base.OnChildRemoved(childControl);
-        }
-
-        /// <inheritdoc />
-        protected override void OnLayout()
-        {
-            base.OnLayout();
         }
     }
 }

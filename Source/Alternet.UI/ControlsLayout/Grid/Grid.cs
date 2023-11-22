@@ -416,11 +416,11 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        protected override void OnLayout()
+        public override void OnLayout()
         {
             GetPreferredSize(new Size(double.PositiveInfinity, double.PositiveInfinity)); // yezo
 
-            var arrangeSize = Handler.ChildrenLayoutBounds.Size;
+            var arrangeSize = ChildrenLayoutBounds.Size;
             try
             {
                 EnterCounterScope(Counters.ArrangeOverride);

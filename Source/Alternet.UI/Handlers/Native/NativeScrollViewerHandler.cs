@@ -59,7 +59,7 @@ namespace Alternet.UI
 
         private void LayoutCore()
         {
-            var childrenLayoutBounds = ChildrenLayoutBounds;
+            var childrenLayoutBounds = Control.ChildrenLayoutBounds;
             foreach (var control in AllChildrenIncludedInLayout)
             {
                 var boundedPreferredSize = control.GetPreferredSize(childrenLayoutBounds.Size);
@@ -107,7 +107,7 @@ namespace Alternet.UI
         {
             var preferredSize = GetChildrenMaxPreferredSizePadded(
                 new Size(double.PositiveInfinity, double.PositiveInfinity));
-            var size = ClientRectangle.Size;
+            var size = Control.ClientRectangle.Size;
 
             if (preferredSize.Width <= size.Width)
                 NativeControl.SetScrollBar(Native.ScrollBarOrientation.Horizontal, false, 0, 0, 0);
@@ -144,7 +144,7 @@ namespace Alternet.UI
             LayoutOffset = new Size(
                 -NativeControl.GetScrollBarValue(Native.ScrollBarOrientation.Horizontal),
                 LayoutOffset.Height);
-            PerformLayout();
+            Control.PerformLayout();
             settingLayoutOffset = false;
         }
 
@@ -154,7 +154,7 @@ namespace Alternet.UI
             LayoutOffset = new Size(
                 LayoutOffset.Width,
                 -NativeControl.GetScrollBarValue(Native.ScrollBarOrientation.Vertical));
-            PerformLayout();
+            Control.PerformLayout();
             settingLayoutOffset = false;
         }
     }

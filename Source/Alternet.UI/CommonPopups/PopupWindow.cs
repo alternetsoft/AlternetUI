@@ -175,7 +175,7 @@ namespace Alternet.UI
         public void ShowPopup(Control control)
         {
             PopupOwner = control;
-            var bl = control.Handler.ClientRectangle.BottomLeft;
+            var bl = control.ClientRectangle.BottomLeft;
             var blScreen = control.ClientToScreen(bl);
 
             control.BeginInvoke(() =>

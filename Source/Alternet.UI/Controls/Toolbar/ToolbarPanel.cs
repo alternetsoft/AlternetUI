@@ -39,7 +39,7 @@ namespace Alternet.UI
         /// <summary>
         /// <inheritdoc />
         /// </summary>
-        protected override void OnLayout()
+        public override void OnLayout()
         {
             base.OnLayout();
             if (Toolbar.IsVertical)

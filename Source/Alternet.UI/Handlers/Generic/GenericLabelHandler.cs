@@ -9,7 +9,13 @@ namespace Alternet.UI
         public override void OnPaint(DrawingContext drawingContext)
         {
             if (Control.Text != null)
-                drawingContext.DrawText(Control.Text, Control.Font ?? UI.Control.DefaultFont, Control.Foreground ?? Brushes.Black, ChildrenLayoutBounds.Location);
+            {
+                drawingContext.DrawText(
+                    Control.Text,
+                    Control.Font ?? UI.Control.DefaultFont,
+                    Control.Foreground ?? Brushes.Black,
+                    Control.ChildrenLayoutBounds.Location);
+            }
         }
 
         public override Size GetPreferredSize(Size availableSize)

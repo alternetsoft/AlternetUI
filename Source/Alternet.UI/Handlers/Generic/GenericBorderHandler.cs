@@ -5,19 +5,6 @@ namespace Alternet.UI
 {
     internal class GenericBorderHandler : ControlHandler<Border>
     {
-        public override Rect ChildrenLayoutBounds
-        {
-            get
-            {
-                var bounds = base.ChildrenLayoutBounds;
-                bounds.X += Control.BorderWidth.Left;
-                bounds.Y += Control.BorderWidth.Top;
-                bounds.Width -= Control.BorderWidth.Horizontal;
-                bounds.Height -= Control.BorderWidth.Vertical;
-                return bounds;
-            }
-        }
-
         protected override bool NeedsPaint => true;
 
         public override void OnPaint(DrawingContext drawingContext)

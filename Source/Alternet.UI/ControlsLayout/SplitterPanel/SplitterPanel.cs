@@ -643,6 +643,13 @@ namespace Alternet.UI
             return r;
         }
 
+        /// <inheritdoc/>
+        public override void OnLayout()
+        {
+            InitAutoSplit();
+            PerformChildsLayout();
+        }
+
         /// <summary>
         /// Leaves only one control inside the <see cref="SplitterPanel"/>.
         /// </summary>
@@ -682,30 +689,40 @@ namespace Alternet.UI
         {
             OnSplitterDoubleClick(e);
             SplitterDoubleClick?.Invoke(this, e);
+            if (!e.Cancel)
+                PerformChildsLayout();
         }
 
         internal void RaiseSplitterMoved(SplitterPanelEventArgs e)
         {
             OnSplitterMoved(e);
             SplitterMoved?.Invoke(this, e);
+            if (!e.Cancel)
+                PerformChildsLayout();
         }
 
         internal void RaiseSplitterResize(SplitterPanelEventArgs e)
         {
             OnSplitterResize(e);
             SplitterResize?.Invoke(this, e);
+            if (!e.Cancel)
+                PerformChildsLayout();
         }
 
         internal void RaiseSplitterMoving(SplitterPanelEventArgs e)
         {
             OnSplitterMoving(e);
             SplitterMoving?.Invoke(this, e);
+            if (!e.Cancel)
+                PerformChildsLayout();
         }
 
         internal void RaiseUnsplit(SplitterPanelEventArgs e)
         {
             OnUnsplit(e);
             Unsplit?.Invoke(this, e);
+            if (!e.Cancel)
+                PerformChildsLayout();
         }
 
         /// <summary>
@@ -758,15 +775,6 @@ namespace Alternet.UI
         {
         }
 
-        /// <inheritdoc/>
-        protected override void OnLayout()
-        {
-            if (initAutoSplit)
-                return;
-            initAutoSplit = true;
-            InitAutoSplit();
-        }
-
         /// <inheritdoc />
         protected override void OnChildInserted(Control childControl)
         {
@@ -785,8 +793,18 @@ namespace Alternet.UI
             return new NativeSplitterPanelHandler();
         }
 
+        private void PerformChildsLayout()
+        {
+            Control1?.PerformLayout(false);
+            Control2?.PerformLayout(false);
+        }
+
         private void InitAutoSplit()
         {
+            if (initAutoSplit)
+                return;
+            initAutoSplit = true;
+
             if (SplitMethod == SplitterPanelSplitMethod.Manual)
                 return;
             if (IsSplit || control1 != null)

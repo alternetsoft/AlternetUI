@@ -35,7 +35,7 @@ namespace Alternet.UI
 
             public override void Layout()
             {
-                var childrenLayoutBounds = Handler.ChildrenLayoutBounds;
+                var childrenLayoutBounds = Handler.Control.ChildrenLayoutBounds;
 
                 double y = childrenLayoutBounds.Top;
                 foreach (var control in Handler.AllChildrenIncludedInLayout)

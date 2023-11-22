@@ -10,7 +10,7 @@ namespace Alternet.UI
     /// <summary>
     ///     Provides data for the <see cref="SplitterPanel"/> events.
     /// </summary>
-    public class SplitterPanelEventArgs : CancelEventArgs
+    public class SplitterPanelEventArgs : BaseCancelEventArgs
     {
         /// <summary>
         /// Creates <see cref="SplitterPanelEventArgs"/> instance.
