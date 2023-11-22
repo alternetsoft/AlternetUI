@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -27,25 +28,43 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Occurs when property value changes.
+        /// </summary>
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+        /// <summary>
         /// Gets page title.
         /// </summary>
-        public string? Title { get; }
+        public string? Title
+        {
+            get;
+        }
 
         /// <summary>
         /// Gets whether child control was created.
         /// </summary>
+        [Browsable(false)]
         public bool ControlCreated => control != null;
 
         /// <summary>
         /// Child control.
         /// </summary>
+        [Browsable(false)]
         public Control Control
         {
             get
             {
+                var oldControl = control;
                 control ??= action?.Invoke() ?? new Control();
+                if(oldControl != control)
+                    RaisePropertyChanged(nameof(Control));
                 return control;
             }
+        }
+
+        private void RaisePropertyChanged(string propName)
+        {
+            PropertyChanged?.Invoke(this, new(propName));
         }
     }
 }
