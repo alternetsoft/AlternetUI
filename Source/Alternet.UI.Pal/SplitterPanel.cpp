@@ -61,11 +61,11 @@ namespace Alternet::UI
 
 	bool wxSplitterWindow2::SetCursor(const wxCursor& cursor) 
 	{
-#if defined(__WXGTK__)
-		return false;
-#else
+//#if defined(__WXGTK__)
+		//return false;
+//#else
 		return wxSplitterWindow::SetCursor(cursor);
-#endif
+//#endif
 	}
 
 	wxWindow* SplitterPanel::CreateWxWindowCore(wxWindow* parent) 
