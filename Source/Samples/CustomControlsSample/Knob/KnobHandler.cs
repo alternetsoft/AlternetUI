@@ -26,7 +26,7 @@ namespace CustomControlsSample
 
         public override void OnPaint(DrawingContext dc)
         {
-            var bounds = ClientRectangle;
+            var bounds = Control.ClientRectangle;
 
             var gaugeBounds = bounds.InflatedBy(-2, -2);
             var scaleBounds = gaugeBounds.InflatedBy(-4, -4);
@@ -137,14 +137,14 @@ namespace CustomControlsSample
 
         private double GetControlRadius()
         {
-            var bounds = ClientRectangle;
+            var bounds = Control.ClientRectangle;
             var gaugePadding = 10;
             return Math.Min(bounds.Width, bounds.Height) / 2 - gaugePadding;
         }
 
         private Point GetControlCenter()
         {
-            return ClientRectangle.Center;
+            return Control.ClientRectangle.Center;
         }
 
         private void Control_MouseLeave(object sender, EventArgs e)

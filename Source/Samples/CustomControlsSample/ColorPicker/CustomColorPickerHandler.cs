@@ -74,7 +74,7 @@ namespace CustomControlsSample
 
         public override void OnPaint(DrawingContext dc)
         {
-            var bounds = ClientRectangle;
+            var bounds = Control.ClientRectangle;
             dc.FillRectangle(GetBackgroundBrush(), bounds);
             dc.DrawRectangle(CustomControlsColors.BorderPen, bounds);
             dc.FillRectangle(ColorBrush, bounds.InflatedBy(-5, -5));

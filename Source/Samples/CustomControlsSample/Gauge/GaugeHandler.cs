@@ -31,7 +31,7 @@ namespace CustomControlsSample.Gauge
 
         public override void OnPaint(DrawingContext dc)
         {
-            var bounds = ClientRectangle;
+            var bounds = Control.ClientRectangle;
 
             var gaugeBounds = bounds.InflatedBy(-2, -2);
             var scaleBounds = gaugeBounds.InflatedBy(-4, -4);

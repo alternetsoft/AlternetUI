@@ -52,7 +52,7 @@ namespace CustomControlsSample
 
             public override void OnPaint(DrawingContext dc)
             {
-                var bounds = ClientRectangle;
+                var bounds = Control.ClientRectangle;
                 var brush = GetBackgroundBrush();
                 if(brush !=null)
                     dc.FillRectangle(brush, bounds);

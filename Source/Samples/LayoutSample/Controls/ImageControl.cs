@@ -39,7 +39,7 @@ namespace LayoutSample
 
         protected override void OnPaint(PaintEventArgs e)
         {
-            var bounds = Handler.ClientRectangle;
+            var bounds = ClientRectangle;
             e.DrawingContext.FillRectangle(Brushes.White, bounds);
 
             var image = Image;
