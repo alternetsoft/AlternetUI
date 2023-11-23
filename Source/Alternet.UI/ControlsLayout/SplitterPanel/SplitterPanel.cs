@@ -583,8 +583,9 @@ namespace Alternet.UI
                 return false;
             if(window1 == null || window2 == null)
                 return false;
-            if (window1.Parent != this || window2.Parent != this)
-                return false;
+
+            window1.Parent = this;
+            window2.Parent = this;
 
             Native.Control? nc1 = window1.Handler.NativeControl;
             Native.Control? nc2 = window2.Handler.NativeControl;
@@ -639,11 +640,12 @@ namespace Alternet.UI
                 return false;
             if (window1 == null || window2 == null)
                 return false;
-            if (window1.Parent != this || window2.Parent != this)
-                return false;
 
-            Native.Control? nc1 = window1.Handler.NativeControl;
-            Native.Control? nc2 = window2.Handler.NativeControl;
+            window1.Parent = this;
+            window2.Parent = this;
+
+            Native.Control? nc1 = window1.NativeControl;
+            Native.Control? nc2 = window2.NativeControl;
 
             if (nc1 == null || nc2 == null)
                 return false;
