@@ -2,8 +2,9 @@
 #include "Common.h"
 #include "ApiTypes.h"
 #include "Control.h"
-#include "wx/datetime.h"
-#include "wx/timectrl.h"
+
+#include <wx/datetime.h>
+#include <wx/timectrl.h>
 
 namespace Alternet::UI
 {

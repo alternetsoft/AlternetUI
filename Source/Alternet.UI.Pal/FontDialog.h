@@ -4,7 +4,8 @@
 #include "Object.h"
 #include "Font.h"
 #include "Window.h"
-#include "wx/fontdlg.h"
+
+#include <wx/fontdlg.h>
 
 namespace Alternet::UI
 {

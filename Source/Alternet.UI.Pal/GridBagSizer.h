@@ -2,7 +2,8 @@
 #include "Common.h"
 #include "ApiTypes.h"
 #include "Object.h"
-#include "wx/gbsizer.h"
+
+#include <wx/gbsizer.h>
 
 namespace Alternet::UI
 {

@@ -3,8 +3,9 @@
 #include "ApiTypes.h"
 #include "Object.h"
 #include "Control.h"
-#include "wx/calctrl.h"
-#include "wx/generic/calctrlg.h"
+
+#include <wx/calctrl.h>
+#include <wx/generic/calctrlg.h>
 
 namespace Alternet::UI
 {

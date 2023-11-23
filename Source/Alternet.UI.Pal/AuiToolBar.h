@@ -4,6 +4,7 @@
 #include "Object.h"
 #include "Control.h"
 #include "ImageSet.h"
+
 #include <wx/aui/aui.h>
 
 namespace Alternet::UI

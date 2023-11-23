@@ -1,5 +1,6 @@
 #include "BoxSizer.h"
-#include "wx/sizer.h"
+
+#include <wx/sizer.h>
 
 namespace Alternet::UI
 {

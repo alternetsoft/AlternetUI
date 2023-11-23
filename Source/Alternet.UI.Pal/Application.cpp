@@ -3,7 +3,8 @@
 #include "Window.h"
 #include "Image.h"
 #include "Exceptions.h"
-#include "wx/sysopt.h"
+
+#include <wx/sysopt.h>
 
 IMPLEMENT_APP_NO_MAIN(Alternet::UI::App);
 IMPLEMENT_WX_THEME_SUPPORT;

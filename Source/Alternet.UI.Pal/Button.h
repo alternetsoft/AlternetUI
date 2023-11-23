@@ -2,7 +2,8 @@
 
 #include "Common.h"
 #include "Control.h"
-#include "wx/defs.h"
+
+#include <wx/defs.h>
 
 namespace Alternet::UI
 {
