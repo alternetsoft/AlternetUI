@@ -108,9 +108,47 @@ namespace Alternet.UI
             }
         }
 
+        /// <inheritdoc cref="BorderSettings.UniformCornerRadius"/>
+        public double? UniformCornerRadius
+        {
+            get
+            {
+                return settings.UniformCornerRadius;
+            }
+
+            set
+            {
+                if (settings.UniformCornerRadius == value)
+                    return;
+                settings.UniformCornerRadius = value;
+                Refresh();
+            }
+        }
+
+        /// <inheritdoc cref="BorderSettings.UniformRadiusIsPercent"/>
+        public bool? UniformRadiusIsPercent
+        {
+            get
+            {
+                return settings.UniformRadiusIsPercent;
+            }
+
+            set
+            {
+                if (settings.UniformRadiusIsPercent == value)
+                    return;
+                settings.UniformRadiusIsPercent = value;
+                Refresh();
+            }
+        }
+
         /// <summary>
-        /// Gets or sets the border width for the <see cref="Border"/> control.
+        /// Gets or sets the uniform border width for the <see cref="Border"/> control.
         /// </summary>
+        /// <remarks>
+        /// This value is applied to all the sides. If returned value is not null, all border sides
+        /// have the same settings.
+        /// </remarks>
 #if DEBUG
         [Browsable(true)]
 #else

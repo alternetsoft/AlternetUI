@@ -8,6 +8,9 @@ using Alternet.Drawing;
 
 namespace Alternet.UI
 {
+    // https://developer.mozilla.org/en-US/docs/Web/CSS/border-radius
+    // https://developer.mozilla.org/en-US/docs/Web/CSS/border-top-left-radius
+
     /// <summary>
     /// Specifies <see cref="Border"/> drawing settings.
     /// </summary>
@@ -19,6 +22,12 @@ namespace Alternet.UI
         private readonly BorderSideSettings top = new();
         private readonly BorderSideSettings right = new();
         private readonly BorderSideSettings bottom = new();
+        private double? uniformCornerRadius;
+        private bool? uniformRadiusIsPercent = true;
+        private BorderCornerRadius? topLeftRadius;
+        private BorderCornerRadius? topRightRadius;
+        private BorderCornerRadius? bottomRightRadius;
+        private BorderCornerRadius? bottomLeftRadius;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="BorderSettings"/> class.
@@ -40,6 +49,117 @@ namespace Alternet.UI
         /// Occurs when a property value changes.
         /// </summary>
         public event PropertyChangedEventHandler? PropertyChanged;
+
+        /// <summary>
+        /// Gets or sets the uniform corner radius for the <see cref="Border"/> control.
+        /// </summary>
+        /// <remarks>
+        /// This value is applied to all the corners. If returned value is not null, all border corners
+        /// have the same settings.
+        /// </remarks>
+        public double? UniformCornerRadius
+        {
+            get
+            {
+                return uniformCornerRadius;
+            }
+
+            set
+            {
+                if (uniformCornerRadius == value)
+                    return;
+                uniformCornerRadius = value;
+                PropertyChanged?.Invoke(this, new(nameof(UniformCornerRadius)));
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets whether the uniform corner radius for the <see cref="Border"/> control
+        /// is specified in percents.
+        /// </summary>
+        /// <remarks>
+        /// This value is applied to all the corners. If returned value is not null, all border corners
+        /// have the same settings.
+        /// </remarks>
+        public bool? UniformRadiusIsPercent
+        {
+            get
+            {
+                return uniformRadiusIsPercent;
+            }
+
+            set
+            {
+                if (uniformRadiusIsPercent == value)
+                    return;
+                uniformRadiusIsPercent = value;
+                PropertyChanged?.Invoke(this, new(nameof(UniformCornerRadius)));
+            }
+        }
+
+        internal BorderCornerRadius? TopLeftRadius
+        {
+            get
+            {
+                return topLeftRadius;
+            }
+
+            set
+            {
+                if (topLeftRadius == value)
+                    return;
+                topLeftRadius = value;
+                PropertyChanged?.Invoke(this, new(nameof(TopLeftRadius)));
+            }
+        }
+
+        internal BorderCornerRadius? TopRightRadius
+        {
+            get
+            {
+                return topRightRadius;
+            }
+
+            set
+            {
+                if (topRightRadius == value)
+                    return;
+                topRightRadius = value;
+                PropertyChanged?.Invoke(this, new(nameof(TopRightRadius)));
+            }
+        }
+
+        internal BorderCornerRadius? BottomRightRadius
+        {
+            get
+            {
+                return bottomRightRadius;
+            }
+
+            set
+            {
+                if (bottomRightRadius == value)
+                    return;
+                bottomRightRadius = value;
+                PropertyChanged?.Invoke(this, new(nameof(BottomRightRadius)));
+            }
+        }
+
+        internal BorderCornerRadius? BottomLeftRadius
+        {
+            get
+            {
+                return bottomLeftRadius;
+            }
+
+            set
+            {
+                if (bottomLeftRadius == value)
+                    return;
+                bottomLeftRadius = value;
+                PropertyChanged?.Invoke(this, new(nameof(BottomLeftRadius)));
+            }
+        }
 
         /// <summary>
         /// Gets or sets whether to draw default border.
@@ -239,6 +359,28 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets real uniform corner radius using <see cref="UniformCornerRadius"/>,
+        /// <see cref="UniformRadiusIsPercent"/> and <paramref name="rect"/>.
+        /// </summary>
+        /// <param name="rect">Ractangle for percentage calculation.</param>
+        /// <returns></returns>
+        public double? GetUniformCornerRadius(Rect rect)
+        {
+            var radius = UniformCornerRadius;
+            if (radius is null)
+                return null;
+            var isPercent = UniformRadiusIsPercent;
+            if (isPercent is null)
+                return null;
+            if (isPercent.Value)
+            {
+                return rect.PercentOfMinSize(radius.Value);
+            }
+            else
+                return radius.Value;            
+        }
+
+        /// <summary>
         /// Draws border in the specified rectangle of the drawing context.
         /// </summary>
         /// <param name="dc">Drawing context.</param>
@@ -249,6 +391,14 @@ namespace Alternet.UI
 
             if (!DrawDefaultBorder)
                 return;
+
+            var radius = GetUniformCornerRadius(rect);
+
+            if (radius != null)
+            {
+                dc.DrawRoundedRectangle(Top.Pen, rect, radius.Value);
+                return;
+            }
 
             if (Top.Width > 0)
             {

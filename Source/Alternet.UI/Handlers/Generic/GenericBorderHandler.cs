@@ -7,27 +7,30 @@ namespace Alternet.UI
     {
         protected override bool NeedsPaint => true;
 
-        public override void OnPaint(DrawingContext drawingContext)
+        public override void OnPaint(DrawingContext dc)
         {
+            var r = DrawClientRectangle;
+
+            var radius = Control.Settings.GetUniformCornerRadius(r);
+
             if (Control.Background != null)
             {
-                drawingContext.FillRectangle(
-                    Control.Background,
-                    DrawClientRectangle);
+                if (radius is null)
+                    dc.FillRectangle(Control.Background, r);
+                else
+                    dc.FillRoundedRectangle(Control.Background, r , radius.Value);
             }
 
             var settings = Control.Settings;
 
-            var r = DrawClientRectangle;
-
             if (Control.DrawDebugPointsBefore)
-                drawingContext.DrawDebugPoints(r, Pens.Yellow);
+                dc.DrawDebugPoints(r, Pens.Yellow);
 
-            if(Control.HasBorder)
-                settings.Draw(drawingContext, r);
+            if(Control.HasBorder && radius is null)
+                settings.Draw(dc, r);
 
             if(Control.DrawDebugPointsAfter)
-                drawingContext.DrawDebugPoints(r);
+                dc.DrawDebugPoints(r);
         }
 
         public override Size GetPreferredSize(Size availableSize)
