@@ -6,7 +6,7 @@ namespace ControlsSample
 {
     internal partial class MainWindow : Window
     {
-        private readonly SplittedTreeAndCards pageContainer;
+        private SplittedTreeAndCards? pageContainer;
         private readonly LogListBox eventsControl = new()
         {
             HasBorder = false,
@@ -30,15 +30,15 @@ namespace ControlsSample
         public MainWindow()
         {
             eventsControl.BindApplicationLog();
-            pageContainer = new();
-            pageContainer.TreeView.MakeAsListBox();
-            pageContainer.SetDebugColors();
             DoInsideLayout(Initialize);
         }
 
         public void Initialize()
         {
             DebugBackgroundColor(Color.Red, nameof(MainWindow));
+            pageContainer = new();
+            pageContainer.TreeView.MakeAsListBox();
+            pageContainer.SetDebugColors();
             panel.Parent = this;
             Title = "Alternet UI Controls Sample";
             Size = (900, 700);
