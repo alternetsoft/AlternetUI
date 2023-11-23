@@ -1,8 +1,9 @@
 #include "ImageSet.h"
 #include "Api/InputStream.h"
 #include "ManagedInputStream.h"
-#include "wx/wxprec.h"
 #include "Image.h"
+
+#include <wx/wxprec.h>
 
 namespace Alternet::UI
 {

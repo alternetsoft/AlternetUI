@@ -1,6 +1,7 @@
 #include "WxOtherFactory.h"
 #include "WxAlternet/wxAlternetRichToolTip.h"
-#include "wx/numdlg.h"
+
+#include <wx/numdlg.h>
 
 namespace Alternet::UI
 {

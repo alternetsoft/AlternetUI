@@ -2,8 +2,9 @@
 #include "Common.h"
 #include "ApiTypes.h"
 #include "Object.h"
-#include "wx/variant.h"
-#include "wx/propgrid/advprops.h"
+
+#include <wx/variant.h>
+#include <wx/propgrid/advprops.h>
 
 namespace Alternet::UI
 {

@@ -3,8 +3,9 @@
 #include "Api/OutputStream.h"
 #include "ManagedInputStream.h"
 #include "ManagedOutputStream.h"
-#include "wx/wxprec.h"
-#include "wx/rawbmp.h"
+
+#include <wx/wxprec.h>
+#include <wx/rawbmp.h>
 
 #include "../../External/WxWidgets/3rdparty/nanosvg/src/nanosvg.h"
 #include "../../External/WxWidgets/3rdparty/nanosvg/src/nanosvgrast.h"

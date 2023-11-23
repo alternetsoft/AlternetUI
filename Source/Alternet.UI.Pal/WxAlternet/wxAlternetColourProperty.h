@@ -1,7 +1,9 @@
 #pragma once
-#include "wx/defs.h"
-#include "wx/propgrid/props.h"
-#include "wx/propgrid/advprops.h"
+
+#include <wx/defs.h>
+#include <wx/propgrid/props.h>
+#include <wx/propgrid/advprops.h>
+
 #include "wxAlternet.h"
 
 namespace Alternet::UI

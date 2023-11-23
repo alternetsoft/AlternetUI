@@ -8,7 +8,7 @@
 #include "Control.h"
 #include "Exceptions.h"
 
-#include "wx/webview.h"
+#include <wx/webview.h>
 
 namespace Alternet::UI
 {

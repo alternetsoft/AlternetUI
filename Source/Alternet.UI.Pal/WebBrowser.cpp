@@ -1,11 +1,11 @@
-#include "wx/version.h"
-#include "wx/webviewarchivehandler.h"
-#include "wx/filesys.h"
+#include <wx/version.h>
+#include <wx/webviewarchivehandler.h>
+#include <wx/filesys.h>
 #include <wx/webviewfshandler.h>
-#include "wx/fs_mem.h"
+#include <wx/fs_mem.h>
 
 #if defined(__WXOSX__)
-#include "wx/osx/webview_webkit.h"
+#include <wx/osx/webview_webkit.h>
 #endif
 
 #if defined(__WXGTK__)
@@ -13,27 +13,27 @@
 #endif
 
 #if defined(__WXMSW__)
-#include "wx/msw/webview_ie.h"
+#include <wx/msw/webview_ie.h>
 #endif
 
 #if defined(__WXMSW__)
-#include "wx/private/jsscriptwrapper.h"
-#include "mshtml.h"
-#include "wx/msw/private/comptr.h"
-#include "wx/msw/ole/automtn.h"
+#include <wx/private/jsscriptwrapper.h>
+#include <mshtml.h>
+#include <wx/msw/private/comptr.h>
+#include <wx/msw/ole/automtn.h>
 #endif
 
-#include "wx/webviewarchivehandler.h"
-#include "wx/webviewfshandler.h"
-#include "wx/filesys.h"
-#include "wx/fs_arc.h"
-#include "wx/fs_mem.h"
-#include "wx/log.h"
+#include <wx/webviewarchivehandler.h>
+#include <wx/webviewfshandler.h>
+#include <wx/filesys.h>
+#include <wx/fs_arc.h>
+#include <wx/fs_mem.h>
+#include <wx/log.h>
 
 #if defined(__WXMSW__)
 #ifdef wxUSE_WEBVIEW_EDGE
 #define _MSW_EGDE_
-#include "wx/msw/webview_edge.h"
+#include <wx/msw/webview_edge.h>
 #include "../../External/WxWidgets/3rdparty/webview2/build/native/include/WebView2EnvironmentOptions.h"
 #include "../../External/WxWidgets/3rdparty/webview2/build/native/include/WebView2.h"
 #endif

@@ -2,9 +2,10 @@
 #include "Common.h"
 #include "ApiTypes.h"
 #include "Object.h"
-#include "wx/splitter.h"
 #include "Control.h"
 #include "Api/NativeEventDataTypes.h"
+
+#include <wx/splitter.h>
 
 namespace Alternet::UI
 {

@@ -2,7 +2,8 @@
 #include "Common.h"
 #include "ApiTypes.h"
 #include "Object.h"
-#include "wx/wrapsizer.h"
+
+#include <wx/wrapsizer.h>
 
 namespace Alternet::UI
 {

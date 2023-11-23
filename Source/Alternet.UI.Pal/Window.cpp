@@ -3,7 +3,8 @@
 #include "IdManager.h"
 #include "NotifyIcon.h"
 #include "Button.h"
-#include "wx/gdicmn.h"
+
+#include <wx/gdicmn.h>
 
 namespace Alternet::UI
 {

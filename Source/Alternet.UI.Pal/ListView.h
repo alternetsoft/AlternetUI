@@ -2,7 +2,8 @@
 #include "Control.h"
 #include "ImageList.h"
 #include "ApiTypes.h"
-#include "wx/dynarray.h"
+
+#include <wx/dynarray.h>
 
 namespace Alternet::UI
 {

@@ -5,13 +5,15 @@
 #include "ApiTypes.h"
 #include "Object.h"
 #include "PropertyGridChoices.h"
-#include "wx/propgrid/propgrid.h"
-#include "wx/propgrid/propgridiface.h"
-#include "wx/propgrid/props.h"
-#include "wx/propgrid/advprops.h"
-#include "wx/propgrid/property.h"
-#include "wx/variant.h"
-#include "wx/propgrid/editors.h"
+
+#include <wx/propgrid/propgrid.h>
+#include <wx/propgrid/propgridiface.h>
+#include <wx/propgrid/props.h>
+#include <wx/propgrid/advprops.h>
+#include <wx/propgrid/property.h>
+#include <wx/variant.h>
+#include <wx/propgrid/editors.h>
+
 #include "PropertyGridVariant.h"
 #include "WxAlternet/wxAlternetColourProperty.h"
 

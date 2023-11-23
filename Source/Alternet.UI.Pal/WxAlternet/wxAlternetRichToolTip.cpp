@@ -1,30 +1,30 @@
 #include "wxAlternetRichToolTip.h"
 
 #ifndef WX_PRECOMP
-#include "wx/dcmemory.h"
-#include "wx/icon.h"
-#include "wx/region.h"
-#include "wx/settings.h"
-#include "wx/sizer.h"
-#include "wx/statbmp.h"
-#include "wx/stattext.h"
-#include "wx/timer.h"
-#include "wx/utils.h"
+#include <wx/dcmemory.h>
+#include <wx/icon.h>
+#include <wx/region.h>
+#include <wx/settings.h>
+#include <wx/sizer.h>
+#include <wx/statbmp.h>
+#include <wx/stattext.h>
+#include <wx/timer.h>
+#include <wx/utils.h>
 #endif // WX_PRECOMP
 
-#include "wx/private/richtooltip.h"
-#include "wx/generic/private/richtooltip.h"
+#include <wx/private/richtooltip.h>
+#include <wx/generic/private/richtooltip.h>
 
-#include "wx/artprov.h"
-#include "wx/custombgwin.h"
-#include "wx/display.h"
-#include "wx/graphics.h"
-#include "wx/popupwin.h"
-#include "wx/textwrapper.h"
+#include <wx/artprov.h>
+#include <wx/custombgwin.h>
+#include <wx/display.h>
+#include <wx/graphics.h>
+#include <wx/popupwin.h>
+#include <wx/textwrapper.h>
 
 #ifdef __WXMSW__
 #if wxUSE_UXTHEME
-#include "wx/msw/uxtheme.h"
+#include <wx/msw/uxtheme.h>
 #define HAVE_MSW_THEME
 #endif
 #endif

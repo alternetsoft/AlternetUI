@@ -1,5 +1,5 @@
 #pragma once
-#include "wx/log.h"
+#include <wx/log.h>
 
 namespace Alternet::UI
 {

@@ -1,12 +1,12 @@
 #pragma once
 
-#include "wx/font.h"
-#include "wx/tooltip.h"
-#include "wx/private/richtooltip.h"
-#include "wx/bmpbndl.h"
-#include "wx/colour.h"
-#include "wx/artprov.h"
-#include "wx/generic/private/richtooltip.h"
+#include <wx/font.h>
+#include <wx/tooltip.h>
+#include <wx/private/richtooltip.h>
+#include <wx/bmpbndl.h>
+#include <wx/colour.h>
+#include <wx/artprov.h>
+#include <wx/generic/private/richtooltip.h>
 
 
 class wxAlternetRichToolTipImpl : public wxRichToolTipImpl

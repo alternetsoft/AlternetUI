@@ -3,7 +3,8 @@
 #include "ApiTypes.h"
 #include "Object.h"
 #include "Validator.h"
-#include "wx/valtext.h"
+
+#include <wx/valtext.h>
 
 namespace Alternet::UI
 {
