@@ -3048,6 +3048,14 @@ namespace Alternet.UI
             return Native.Control.DrawingFromDipF(value, this.WxWidget);
         }
 
+        public static Control SubstituteControl(Control control)
+        {
+            var parent = new Control();
+            control.Parent = parent;
+            control = parent;
+            return control;
+        }
+
         internal static void NotifyCaptureLost()
         {
             Native.Control.NotifyCaptureLost();
