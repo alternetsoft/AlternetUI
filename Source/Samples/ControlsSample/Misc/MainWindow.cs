@@ -58,11 +58,14 @@ namespace ControlsSample
             AddPage("DateTime", CreateDateTimePage);
             AddPage("WebBrowser", CreateWebBrowserPage);
             AddPage("Number", CreateNumericInputPage);
-            AddPage("Slider, Progress", CreateSliderAndProgressPage);
+            AddPage("Slider and Progress", CreateSliderAndProgressPage);
             AddPage("Layout", CreateLayoutPage);
-            AddPage("Animation", CreateAnimationPage);
-            AddPage("Notify, ToolTip", CreateNotifyIconPage);
+            AddPage("Notify and ToolTip", CreateNotifyIconPage);
             AddPage("TabControl", CreateTabControlPage);
+
+            // On Ubuntu 23 animation is not working properly.
+            if (!Application.IsLinuxOS)
+                AddPage("Animation", CreateAnimationPage);
 
             if (AllSamplesPage.GetSamplesFolder() is not null)
                 AddPage("Other", CreateAllSamplesPage);
