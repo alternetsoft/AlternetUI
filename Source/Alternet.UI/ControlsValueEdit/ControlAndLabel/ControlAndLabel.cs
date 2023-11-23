@@ -152,7 +152,7 @@ namespace Alternet.UI
 
         CustomLabel IControlAndLabel.Label => Label;
 
-        Control IControlAndLabel.Control => MainControl;
+        Control IControlAndLabel.MainControl => MainControl;
 
         /// <summary>
         /// Creates main child control.
