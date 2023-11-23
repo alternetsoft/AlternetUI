@@ -21,6 +21,11 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Always returns <c>false</c>.
+        /// </summary>
+        public override bool CanUserPaint => false;
+
+        /// <summary>
         /// Always returns <c>true</c>.
         /// </summary>
         public override bool Multiline
