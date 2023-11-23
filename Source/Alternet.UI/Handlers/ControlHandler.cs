@@ -266,19 +266,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or set a value indicating whether the control paints itself rather
-        /// than the operating system doing so.
-        /// </summary>
-        /// <value>If <c>true</c>, the control paints itself rather than the
-        /// operating system doing so.
-        /// If <c>false</c>, the <see cref="Control.Paint"/> event is not raised.</value>
-        public bool UserPaint
-        {
-            get => NativeControl!.UserPaint;
-            set => NativeControl!.UserPaint = value;
-        }
-
-        /// <summary>
         /// Gets or sets a value indicating whether the control can accept data that
         /// the user drags onto it.
         /// </summary>
