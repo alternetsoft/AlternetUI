@@ -37,6 +37,9 @@ namespace Alternet.UI.Localization
         public string Height { get; set; } = "Height";
 
         /// <inheritdoc cref="Left"/>
+        public string Center { get; set; } = "Center";
+
+        /// <inheritdoc cref="Left"/>
         public string X { get; set; } = "X";
 
         /// <inheritdoc cref="Left"/>
