@@ -33,15 +33,16 @@ namespace ControlsSample
 
             // ==== Other initializations
 
-            textAlignComboBox.BindEnumProp(textBox, nameof(TextBox.TextAlign));
+            textAlignEdit.ComboBox.BindEnumProp(textBox, nameof(TextBox.TextAlign));
 
             readOnlyCheckBox.BindBoolProp(textBox, nameof(TextBox.ReadOnly));
             passwordCheckBox.BindBoolProp(textBox, nameof(TextBox.IsPassword));
             hasBorderCheckBox.BindBoolProp(textBox, nameof(TextBox.HasBorder));
             logPositionCheckBox.BindBoolProp(this, nameof(LogPosition));
 
-            Group(textAlignLabel, minLengthEdit.Label, maxLengthEdit.Label).SuggestedWidthToMax();
-            Group(textAlignComboBox, minLengthEdit.TextBox, maxLengthEdit.TextBox).SuggestedWidthToMax();
+            Group(textAlignEdit, minLengthEdit, maxLengthEdit)
+                .LabelSuggestedWidthToMax()
+                .InnerSuggestedWidthToMax();
 
             // ==== Min and Max length editors
 
