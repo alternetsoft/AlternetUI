@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Implements custom abstract button for the <see cref="CardPanelHeader"/> control.
+    /// Implements custom abstract button.
     /// </summary>
     public abstract class CustomButton : Control
     {
