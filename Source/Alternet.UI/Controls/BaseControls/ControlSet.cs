@@ -78,6 +78,28 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets the maximum inner control width among all controls in the set.
+        /// </summary>
+        /// <remarks>
+        /// Useful for <see cref="ControlAndLabel"/> and other controls that have inner controls.
+        /// This function works with <see cref="ControlAndLabel.MainControl"/>.
+        /// </remarks>
+        public double InnerMaxWidth
+        {
+            get
+            {
+                double result = 0;
+                foreach (var item in items)
+                {
+                    if (item is IControlAndLabel control)
+                        result = Math.Max(result, control.MainControl.Width);
+                }
+
+                return result;
+            }
+        }
+
+        /// <summary>
         /// Gets the maximum height among all controls in the set.
         /// </summary>
         public double MaxHeight
@@ -285,6 +307,15 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Sets suggested width for inner childs of the controls in the set.
+        /// </summary>
+        public ControlSet InnerSuggestedWidthToMax()
+        {
+            var v = InnerMaxWidth;
+            return InnerSuggestedWidth(v);
+        }
+
+        /// <summary>
         /// Sets suggested width for all the controls in the set.
         /// </summary>
         public ControlSet LabelSuggestedWidthToMax()
@@ -317,7 +348,7 @@ namespace Alternet.UI
             foreach (var item in Items)
             {
                 if (item is IControlAndLabel control)
-                    control.Control.SuggestedWidth = value;
+                    control.MainControl.SuggestedWidth = value;
             }
 
             return this;
