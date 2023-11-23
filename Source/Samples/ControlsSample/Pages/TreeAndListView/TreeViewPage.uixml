@@ -16,7 +16,7 @@
       <VerticalStackPanel Name="pageControl" Margin="10,0,0,0" >
 
         <!-- ========================= -->
-        <VerticalStackPanel Name="stackPanel1" Padding="0,5,0,0">
+        <VerticalStackPanel Name="stackPanel1" Padding="0,5,5,0">
 
           <HorizontalStackPanel>
             <Button Text="Add" Name="addItemButton" Click="AddItemButton_Click" />
@@ -39,9 +39,9 @@
           </HorizontalStackPanel>
 
           <HorizontalStackPanel>
-            <Button Text="Expand Childs" Name="expandAllChildrenButton" Margin="0,3,0,0"
+            <Button Text="Expand Child" Name="expandAllChildrenButton" Margin="0,3,0,0"
                     Click="ExpandAllChildrenButton_Click" />
-            <Button Text="Collapse Childs" Name="collapseAllChildrenButton" Margin="0,3,0,0"
+            <Button Text="Collapse Child" Name="collapseAllChildrenButton" Margin="0,3,0,0"
                     Click="CollapseAllChildrenButton_Click" />
           </HorizontalStackPanel>
 
@@ -53,8 +53,7 @@
                     Click="EditorButton_Click"/>
           </HorizontalStackPanel>
 
-          <Label Text="Last Item" Margin="0,10,0,0"/>
-          <Border BorderWidth="0,3,0,0" Margin="0,5,0,5"/>
+          <HeaderLabel Text="Last Item" Margin="0,10,0,10"/>
 
           <HorizontalStackPanel>
             <Button Text="Make Visible" Name="ensureLastItemVisibleButton"

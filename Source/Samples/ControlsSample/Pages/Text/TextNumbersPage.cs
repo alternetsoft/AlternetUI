@@ -24,7 +24,7 @@ namespace ControlsSample
 
         public TextNumbersPage()
         {
-            Margin = 5;
+            Margin = 10;
 
             static void BindTextChanged(ValueEditorCustom control)
             {

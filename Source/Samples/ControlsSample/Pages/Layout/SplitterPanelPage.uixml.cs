@@ -11,11 +11,12 @@ namespace ControlsSample
     internal partial class SplitterPanelPage : Control
     {
         private readonly CardPanelHeader panelHeader = new();
-        private readonly ListBox? control1;
-        private readonly ListBox? control2;
-        private readonly ListBox? control3;
-        private readonly ListBox? control4;
+        private readonly ListBox? control1 = new();
+        private readonly ListBox? control2 = new();
+        private readonly ListBox? control3 = new();
+        private readonly ListBox? control4 = new();
         private readonly SplitterPanel splitterPanel2;
+        private bool firstTimeCalled;
         private string info1 = string.Empty;
         private string info2 = string.Empty;
         private bool info1Changed;
@@ -29,32 +30,13 @@ namespace ControlsSample
         {
             InitializeComponent();
 
-            panelHeader.BorderWidth = CardPanelHeader.DefaultBorderSideWidth;
             panelHeader.Add("Actions", pageActions);
             panelHeader.Add("Settings", pageProps);
             pageControl.Children.Prepend(panelHeader);
             panelHeader.SelectFirstTab();
 
-            control1 = new()
-            {
-                Margin = 5,
-            };
-
-            control2 = new()
-            {
-                Margin = 5,
-            };
-
-            control3 = new()
-            {
-                Margin = 5,
-            };
-
-            control4 = new()
-            {
-                Margin = 5,
-                Visible = false,
-            };
+            Group(control1, control2, control3, control4).Margin(5);
+            control4.Visible = false;
 
             splitterPanel2 = new()
             {
@@ -63,23 +45,13 @@ namespace ControlsSample
                 MinPaneSize = 20,
             };
 
-            static void Repeat(int times, Action action)
-            {
-                for(int i=0; i < times; i++)        
-                    action();
-            }
+            AppUtils.RepeatAction(3, ()=>control1.Items.Add("Control 1"));
+            AppUtils.RepeatAction(3, ()=>control2.Items.Add("Control 2"));
+            AppUtils.RepeatAction(3, ()=>control3.Items.Add("Control 3"));
+            AppUtils.RepeatAction(3, ()=>control4.Items.Add("Control 4"));
 
-            Repeat(3, ()=>control1.Items.Add("Control 1"));
-            Repeat(3, ()=>control2.Items.Add("Control 2"));
-            Repeat(3, ()=>control3.Items.Add("Control 3"));
-            Repeat(3, ()=>control4.Items.Add("Control 4"));
-
-            splitterPanel.Children.Add(control1);
-            splitterPanel.Children.Add(splitterPanel2);
-
-            splitterPanel2.Children.Add(control2);
-            splitterPanel2.Children.Add(control3);
-            splitterPanel2.Children.Add(control4);
+            Group(control1, splitterPanel2).Parent(splitterPanel);
+            Group(control2, control3, control4).Parent(splitterPanel2);
 
             splitterPanel.SplitterDoubleClick += SplitterPanel_SplitterDoubleClick;
             splitterPanel.SplitterMoved += SplitterPanel_SplitterMoved;
@@ -103,6 +75,12 @@ namespace ControlsSample
 
         private void LogMovingCheckbox_CheckedChanged(object? sender, EventArgs e)
         {
+            if (!firstTimeCalled)
+            {
+                firstTimeCalled = true;
+                Application.LogNameValue("DefaultNativeSashSize", splitterPanel.DefaultSashSize);
+            }
+
             var log = LogMovingCheckbox.IsChecked;
             label1.Visible = log;
             label2.Visible = log;

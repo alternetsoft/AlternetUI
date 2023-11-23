@@ -24,6 +24,8 @@ namespace ControlsSample
 
         public TextMemoPage()
         {
+            Margin = 10;
+
             Group(multiLineTextBox, wordWrapComboBox, multilineGoToButton).Margin(5).Parent(this)
                 .HorizontalAlignment(HorizontalAlignment.Left);
             if (!Application.IsMacOs)

@@ -22,7 +22,7 @@ namespace ControlsSample
 
         public TextOtherPage()
         {
-            Margin = 5;
+            Margin = 10;
             Group(emailEdit, urlEdit).Parent(this).LabelSuggestedWidthToMax();
         }
     }

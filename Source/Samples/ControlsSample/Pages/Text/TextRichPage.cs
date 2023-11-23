@@ -26,6 +26,7 @@ namespace ControlsSample
 
         public TextRichPage()
         {
+            Margin = 10;
             richPanel.ActionsControl.Required();
             richPanel.SuggestedSize = new(500, 400); // how without it?
             richPanel.Parent = this;
