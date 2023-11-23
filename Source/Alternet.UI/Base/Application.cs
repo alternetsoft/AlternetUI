@@ -18,7 +18,7 @@ namespace Alternet.UI
     [System.ComponentModel.DesignerCategory("Code")]
     public partial class Application : IDisposable
     {
-        internal const int BuildCounter = 2;
+        internal const int BuildCounter = 3;
         internal static readonly Destructor MyDestructor = new();
 
         private static bool terminating = false;
