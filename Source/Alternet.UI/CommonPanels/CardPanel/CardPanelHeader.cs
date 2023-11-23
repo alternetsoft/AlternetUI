@@ -142,6 +142,27 @@ namespace Alternet.UI
         public Border Border => border;
 
         /// <summary>
+        /// Gets or sets text of the first tab.
+        /// </summary>
+        public string Text
+        {
+            get
+            {
+                if (Tabs.Count == 0)
+                    return string.Empty;
+                return Tabs[0].HeaderButton.Text;
+            }
+
+            set
+            {
+                if (Tabs.Count == 0)
+                    Add(value);
+                else
+                    Tabs[0].HeaderButton.Text = value;
+            }
+        }
+
+        /// <summary>
         /// Gets or sets <see cref="HorizontalAlignment"/> of the tabs.
         /// </summary>
         public HorizontalAlignment TabHorizontalAlignment
