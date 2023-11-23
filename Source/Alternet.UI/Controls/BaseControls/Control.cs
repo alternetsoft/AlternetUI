@@ -861,9 +861,19 @@ namespace Alternet.UI
         [Browsable(false)]
         public virtual bool UserPaint
         {
-            get => Handler.UserPaint;
-            set => Handler.UserPaint = value;
+            get => NativeControl.UserPaint;
+            set
+            {
+                if (value && !CanUserPaint)
+                    return;
+                NativeControl.UserPaint = value;
+            }
         }
+
+        /// <summary>
+        /// Gets whether user paint is supported for this control.
+        /// </summary>
+        public virtual bool CanUserPaint => true;
 
         /// <summary>
         /// Gets or sets the outer margin of a control.
