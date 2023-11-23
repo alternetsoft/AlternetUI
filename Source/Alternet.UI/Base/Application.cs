@@ -21,6 +21,7 @@ namespace Alternet.UI
         internal const int BuildCounter = 3;
         internal static readonly Destructor MyDestructor = new();
 
+        private static readonly Queue<(Action<object?>, object?)> idleTasks = new();
         private static bool terminating = false;
         private static bool logFileIsEnabled;
         private static Application? current;
@@ -511,6 +512,18 @@ namespace Alternet.UI
         public static void EndBusyCursor() => Native.WxOtherFactory.EndBusyCursor();
 
         /// <summary>
+        /// Adds <paramref name="task"/> which will be executed one time
+        /// when the application finished processing events and is
+        /// about to enter the idle state.
+        /// </summary>
+        /// <param name="task">Task action.</param>
+        /// <param name="param">Task parameter.</param>
+        public static void AddIdleTask(Action<object?> task, object? param = null)
+        {
+            idleTasks.Enqueue((task, param));
+        }
+
+        /// <summary>
         /// Sets wxSystemOptions value.
         /// </summary>
         /// <param name="name">Option name.</param>
@@ -967,9 +980,16 @@ namespace Alternet.UI
             }
         }
 
-        private void NativeApplication_Idle(
-            object? sender,
-            EventArgs e) => Idle?.Invoke(this, EventArgs.Empty);
+        private void NativeApplication_Idle(object? sender, EventArgs e)
+        {
+            if (idleTasks.Count > 0)
+            {
+                var task = idleTasks.Dequeue();
+                task.Item1(task.Item2);
+            }
+
+            Idle?.Invoke(this, EventArgs.Empty);
+        } 
 
         private void OnVisualThemeChanged()
         {
