@@ -41,6 +41,18 @@ namespace Alternet.UI
         ReloadAllAfterSetValue = 0x08,
 
         /// <summary>
+        /// Flags <see cref="ReloadAfterSetValue"/> and <see cref="PropInfoSetValue"/>
+        /// are turned on.
+        /// </summary>
+        SetValueAndReload = ReloadAfterSetValue | PropInfoSetValue,
+
+        /// <summary>
+        /// Flags <see cref="ReloadAllAfterSetValue"/> and <see cref="PropInfoSetValue"/>
+        /// are turned on.
+        /// </summary>
+        SetValueAndReloadAll = ReloadAllAfterSetValue | PropInfoSetValue,
+
+        /// <summary>
         /// Default value for the <see cref="PropertyGrid.ApplyFlags"/> property.
         /// </summary>
         Default = PropertyGridApplyFlags.PropEvent,
