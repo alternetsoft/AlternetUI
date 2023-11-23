@@ -2599,6 +2599,17 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Sets input focus to the control if it can accept it.
+        /// </summary>
+        public virtual bool SetFocusIfPossible()
+        {
+            if (CanAcceptFocus)
+                return SetFocus();
+            else
+                return false;
+        }
+
+        /// <summary>
         /// Saves screenshot of this control.
         /// </summary>
         /// <param name="fileName">Name of the file to which screenshot
