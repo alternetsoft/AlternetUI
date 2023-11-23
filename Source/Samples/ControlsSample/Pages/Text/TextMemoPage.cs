@@ -7,47 +7,64 @@ using Alternet.UI;
 
 namespace ControlsSample
 {
-    internal class TextMemoPage : VerticalStackPanel
+    internal class TextMemoPage : Control
     {
         private const string LoremIpsum =
             "Lorem ipsum dolor sit amet,\nconsectetur adipiscing elit. " +
             "Suspendisse tincidunt orci vitae arcu congue commodo. " +
             "Proin fermentum rhoncus dictum.\n";
 
-        private readonly MultilineTextBox multiLineTextBox = new()
-        {
-            SuggestedSize = new(350, 130),
-        };
-
-        private readonly ComboBoxAndLabel wordWrapComboBox = new("Word Wrap:");
-        private readonly Button multilineGoToButton = new("Go To...");
+        private readonly PanelMultilineTextBox memoPanel = new();
 
         public TextMemoPage()
         {
             Margin = 10;
+            memoPanel.ActionsControl.Required();
+            memoPanel.SuggestedSize = new(500, 400); // how without it?
+            memoPanel.TextBox.KeyDown += TextBox_KeyDown;
+            memoPanel.TextBox.AutoUrlOpen = true;
+            memoPanel.TextBox.TextUrl += MultiLineTextBox_TextUrl;
+            //memoPanel.FileNewClick += MemoPanel_FileNewClick;
+            //memoPanel.FileOpenClick += MemoPanel_FileOpenClick;
+            //memoPanel.FileSaveClick += MemoPanel_FileSaveClick;
 
-            Group(multiLineTextBox, wordWrapComboBox, multilineGoToButton).Margin(5).Parent(this)
-                .HorizontalAlignment(HorizontalAlignment.Left);
             if (!Application.IsMacOs)
-                multiLineTextBox.AutoUrlOpen = true;
+                memoPanel.TextBox.AutoUrlOpen = true;
 
             var multilineDemoText = LoremIpsum;
 
             if (!SystemSettings.AppearanceIsDark || Application.IsWindowsOS)
             {
-                multiLineTextBox.AutoUrl = true;
+                memoPanel.TextBox.AutoUrl = true;
                 multilineDemoText += "\nSample url: https://www.alternet-ui.com/\n";
             }
 
-            multiLineTextBox.Text = LoremIpsum;
-            multiLineTextBox.TextUrl += MultiLineTextBox_TextUrl;
-            multiLineTextBox.CurrentPositionChanged += TextBox_CurrentPositionChanged;
+            memoPanel.TextBox.CurrentPositionChanged += TextBox_CurrentPositionChanged;
 
-            multilineGoToButton.ClickAction = multiLineTextBox.ShowDialogGoToLine;
+            memoPanel.AddAction("Go To Line", memoPanel.TextBox.ShowDialogGoToLine);
 
-            wordWrapComboBox.MainControl.BindEnumProp(multiLineTextBox, nameof(TextBox.TextWrap));
+            PerformLayout();
 
             Idle += TextInputPage_Idle;
+
+            memoPanel.Parent = this;
+            memoPanel.TextBox.Text = multilineDemoText;
+            memoPanel.TextBox.SetInsertionPoint(0);
+            memoPanel.Toolbar.EnableTool(memoPanel.ButtonIdNew, false);
+            memoPanel.Toolbar.EnableTool(memoPanel.ButtonIdOpen, false);
+            memoPanel.Toolbar.EnableTool(memoPanel.ButtonIdSave, false);
+
+            //wordWrapComboBox.MainControl.BindEnumProp(multiLineTextBox, nameof(TextBox.TextWrap));
+        }
+
+        private void TextBox_KeyDown(object? sender, KeyEventArgs e)
+        {
+            static void Test()
+            {
+            }
+
+            if (KnownKeys.RunTest.Run(e, Test))
+                return;
         }
 
         private void TextBox_CurrentPositionChanged(object? sender, EventArgs e)
@@ -70,7 +87,7 @@ namespace ControlsSample
         private void TextInputPage_Idle(object? sender, EventArgs e)
         {
             if(Visible)
-                multiLineTextBox.IdleAction();
+                memoPanel.TextBox.IdleAction();
         }
 
     }
