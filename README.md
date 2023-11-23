@@ -64,5 +64,5 @@ Steps needed to create new wxWidgets control
 - The generated public methods definitions are in Api/MyNewControl.inc.
 - You will need to create the corresponding implementations of this methods in the MyNewControl.cpp.
 - Each of the controls is based on the corresponding wxWidgets control, see the existing controls for how they are implemented
-- To check what functionality is supported by wxWidgets, inspect the documentation at https://docs.wxwidgets.org/3.0/ .
+- To check what functionality is supported by wxWidgets, inspect the documentation at https://docs.wxwidgets.org/3.2/ .
 - After you created new UI control or added new event, call Install.Scripts\UpdateWellKnownApiInfo.bat.
