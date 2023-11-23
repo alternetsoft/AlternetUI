@@ -15,17 +15,23 @@ namespace Alternet.UI
     /// in order to implement your own custom labeled control.</remarks>
     public abstract class ControlAndLabel : StackPanel, IControlAndLabel
     {
-        private readonly Label label = new()
-        {
-            Margin = new Thickness(0, 0, 5, 0),
-            VerticalAlignment = VerticalAlignment.Center,
-        };
+        /// <summary>
+        /// Gets or sets default distance between control and label.
+        /// </summary>
+        public static double DefaultControlLabelDistance = 5;
+
+        /// <summary>
+        /// Gets or sets function that creates default labels for the <see cref="ControlAndLabel"/>
+        /// controls.
+        /// </summary>
+        public static Func<CustomLabel> CreateDefaultLabel = () => new Label();
 
         private readonly PictureBox errorPicture = new()
         {
-            Margin = new Thickness(5, 0, 0, 0),
+            Margin = new Thickness(DefaultControlLabelDistance, 0, 0, 0),
         };
 
+        private readonly CustomLabel label;
         private readonly Control mainControl;
 
         /// <summary>
@@ -34,6 +40,10 @@ namespace Alternet.UI
         public ControlAndLabel()
             : base()
         {
+            label = CreateLabel();
+            label.Margin = new Thickness(0, 0, DefaultControlLabelDistance, 0);
+            label.VerticalAlignment = VerticalAlignment.Center;
+
             Orientation = StackPanelOrientation.Horizontal;
             label.Parent = this;
             mainControl = CreateControl();
@@ -99,7 +109,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets attached <see cref="Label"/> control.
         /// </summary>
-        public Label Label => label;
+        public CustomLabel Label => label;
 
         /// <summary>
         /// Gets or sets visibility of the attached <see cref="Label"/> control.
@@ -140,7 +150,7 @@ namespace Alternet.UI
         /// </summary>
         public Control MainControl => mainControl;
 
-        Control IControlAndLabel.Label => Label;
+        CustomLabel IControlAndLabel.Label => Label;
 
         Control IControlAndLabel.Control => MainControl;
 
@@ -151,5 +161,13 @@ namespace Alternet.UI
         /// For example, main control for the <see cref="TextBoxAndLabel"/> is <see cref="TextBox"/>.
         /// </remarks>
         protected abstract Control CreateControl();
+
+        /// <summary>
+        /// Creates label control.
+        /// </summary>
+        /// <remarks>
+        /// By default <see cref="Label"/> is created.
+        /// </remarks>
+        protected virtual CustomLabel CreateLabel() => CreateDefaultLabel();
     }
 }
