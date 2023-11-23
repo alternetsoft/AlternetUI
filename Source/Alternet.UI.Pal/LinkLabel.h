@@ -14,17 +14,7 @@ namespace Alternet::UI
         wxWindow* CreateWxWindowCore(wxWindow* parent) override;
 
     private:
-
-        DelayedValue<LinkLabel, string> _text;
-        DelayedValue<LinkLabel, string> _url;
-
         wxHyperlinkCtrlBase* GetStaticText();
         void OnHyperlinkClick(wxHyperlinkEvent& event);
-
-        string RetrieveText();
-        string RetrieveUrl();
-
-        void ApplyText(const string& value);
-        void ApplyUrl(const string& value);
     };
 }

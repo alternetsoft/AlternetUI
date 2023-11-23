@@ -12,23 +12,21 @@ namespace Alternet.UI
     [ControlCategory("Other")]
     public class LinkLabel : CustomLabel
     {
+        private string? text;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="LinkLabel"/> class.
         /// </summary>
         public LinkLabel()
-            : base()
         {
-            if (Application.IsWindowsOS)
-                UserPaint = true;
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="LinkLabel"/> class with the specified text.
         /// </summary>
-        public LinkLabel(string text)
-            : this()
+        public LinkLabel(string? text)
         {
-            Text = text;
+            this.text = text;
         }
 
         /// <summary>
@@ -65,15 +63,15 @@ namespace Alternet.UI
         {
             get
             {
-                return Handler.NativeControl.Text;
+                return text ?? string.Empty;
             }
 
             set
             {
-                value ??= string.Empty;
-                if (Text == value)
+                if (text == value)
                     return;
-                Handler.NativeControl.Text = value;
+                text = value;
+                NativeControl.Text = text ?? " ";
                 RaiseTextChanged(EventArgs.Empty);
             }
         }
@@ -86,8 +84,15 @@ namespace Alternet.UI
         /// </summary>
         public string Url
         {
-            get { return Handler.Url; }
-            set { Handler.Url = value; }
+            get
+            {
+                return NativeControl.Url; 
+            }
+            
+            set
+            {
+                NativeControl.Url = value; 
+            }
         }
 
         /// <summary>
@@ -97,8 +102,8 @@ namespace Alternet.UI
         [Browsable(false)]
         public Color HoverColor
         {
-            get => Handler.HoverColor;
-            set => Handler.HoverColor = value;
+            get => NativeControl.HoverColor;
+            set => NativeControl.HoverColor = value;
         }
 
         /// <summary>
@@ -109,8 +114,8 @@ namespace Alternet.UI
         [Browsable(false)]
         public Color NormalColor
         {
-            get => Handler.NormalColor;
-            set => Handler.NormalColor = value;
+            get => NativeControl.NormalColor;
+            set => NativeControl.NormalColor = value;
         }
 
         /// <summary>
@@ -121,8 +126,8 @@ namespace Alternet.UI
         [Browsable(false)]
         public Color VisitedColor
         {
-            get => Handler.VisitedColor;
-            set => Handler.VisitedColor = value;
+            get => NativeControl.VisitedColor;
+            set => NativeControl.VisitedColor = value;
         }
 
         /// <summary>
@@ -132,9 +137,12 @@ namespace Alternet.UI
         [Browsable(false)]
         public bool Visited
         {
-            get => Handler.Visited;
-            set => Handler.Visited = value;
+            get => NativeControl.Visited;
+            set => NativeControl.Visited = value;
         }
+
+        internal new Native.LinkLabel NativeControl =>
+             (Native.LinkLabel)base.NativeControl;
 
         internal new NativeLinkLabelHandler Handler =>
             (NativeLinkLabelHandler)base.Handler;

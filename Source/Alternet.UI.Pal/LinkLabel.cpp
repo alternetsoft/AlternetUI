@@ -27,14 +27,8 @@ namespace Alternet::UI
 		UseGenericLinkLabel = value;
 	}
 
-	LinkLabel::LinkLabel() :
-		_text(*this, u"", &Control::IsWxWindowCreated, &LinkLabel::RetrieveText,
-			&LinkLabel::ApplyText),
-		_url(*this, u"", &Control::IsWxWindowCreated, &LinkLabel::RetrieveUrl,
-			&LinkLabel::ApplyUrl)
+	LinkLabel::LinkLabel()
 	{
-		GetDelayedValues().Add(&_text);
-		GetDelayedValues().Add(&_url);
 	}
 
 	LinkLabel::~LinkLabel()
@@ -61,22 +55,22 @@ namespace Alternet::UI
 
 	string LinkLabel::GetText()
 	{
-		return _text.Get();
+		return wxStr(GetStaticText()->GetLabel());
 	}
 
 	void LinkLabel::SetText(const string& value)
 	{
-		_text.Set(value);
+		GetStaticText()->SetLabel(wxStr(value));
 	}
 
 	string LinkLabel::GetUrl() 
 	{
-		return _url.Get();
+		return wxStr(GetStaticText()->GetURL());
 	}
-	
+
 	void LinkLabel::SetUrl(const string& value)
 	{
-		_url.Set(value);
+		GetStaticText()->SetURL(wxStr(value)); 
 	}
 
 	class wxHyperlinkCtrl2 : public wxHyperlinkCtrl, public wxWidgetExtender
@@ -140,16 +134,6 @@ namespace Alternet::UI
 		return dynamic_cast<wxHyperlinkCtrlBase*>(GetWxWindow());
 	}
 
-	string LinkLabel::RetrieveUrl()
-	{
-		return wxStr(GetStaticText()->GetURL());
-	}
-
-	void LinkLabel::ApplyUrl(const string& value)
-	{
-		GetStaticText()->SetURL(wxStr(value));
-	}
-
 	Color LinkLabel::GetHoverColor()
 	{
 		return GetStaticText()->GetHoverColour();
@@ -189,15 +173,4 @@ namespace Alternet::UI
 	{
 		GetStaticText()->SetVisited(value);
 	}
-
-	string LinkLabel::RetrieveText()
-	{
-		return wxStr(GetStaticText()->GetLabel());
-	}
-
-	void LinkLabel::ApplyText(const string& value)
-	{
-		GetStaticText()->SetLabel(wxStr(value));
-	}
-
 }

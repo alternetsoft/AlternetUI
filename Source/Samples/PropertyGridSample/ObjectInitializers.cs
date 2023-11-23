@@ -158,8 +158,9 @@ namespace PropertyGridSample
             Actions.Add(typeof(LinkLabel), (c) =>
             {
                 LinkLabel linkLabel = (c as LinkLabel)!;
+                var s = "https://www.google.com";
                 linkLabel.Text = "LinkLabel";
-                linkLabel.Url = "https://www.google.com/";
+                linkLabel.Url = s;
             });
 
             Actions.Add(typeof(GroupBox), (c) =>
