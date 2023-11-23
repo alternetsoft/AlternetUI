@@ -96,12 +96,12 @@ namespace Alternet.UI
         {
             get
             {
-                return StateImages.NormalImage;
+                return StateImages.Normal;
             }
 
             set
             {
-                StateImages.NormalImage = value;
+                StateImages.Normal = value;
             }
         }
 
@@ -110,8 +110,8 @@ namespace Alternet.UI
         /// </summary>
         public Image? HoveredImage
         {
-            get => StateImages.HoveredImage;
-            set => StateImages.HoveredImage = value;
+            get => StateImages.Hovered;
+            set => StateImages.Hovered = value;
         }
 
         /// <summary>
@@ -119,8 +119,8 @@ namespace Alternet.UI
         /// </summary>
         public Image? FocusedImage
         {
-            get => StateImages.FocusedImage;
-            set => StateImages.FocusedImage = value;
+            get => StateImages.Focused;
+            set => StateImages.Focused = value;
         }
 
         /// <summary>
@@ -128,8 +128,8 @@ namespace Alternet.UI
         /// </summary>
         public Image? PressedImage
         {
-            get => StateImages.PressedImage;
-            set => StateImages.PressedImage = value;
+            get => StateImages.Pressed;
+            set => StateImages.Pressed = value;
         }
 
         /// <summary>
@@ -137,8 +137,8 @@ namespace Alternet.UI
         /// </summary>
         public Image? DisabledImage
         {
-            get => StateImages.DisabledImage;
-            set => StateImages.DisabledImage = value;
+            get => StateImages.Disabled;
+            set => StateImages.Disabled = value;
         }
 
         /// <summary>

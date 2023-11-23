@@ -119,11 +119,11 @@ namespace Alternet.UI
         {
             var nativeControl = NativeControl;
             var images = StateImages;
-            nativeControl.NormalImage = images.NormalImage?.NativeImage;
-            nativeControl.HoveredImage = images.HoveredImage?.NativeImage;
-            nativeControl.PressedImage = images.PressedImage?.NativeImage;
-            nativeControl.DisabledImage = images.DisabledImage?.NativeImage;
-            nativeControl.FocusedImage = images.FocusedImage?.NativeImage;
+            nativeControl.NormalImage = images.Normal?.NativeImage;
+            nativeControl.HoveredImage = images.Hovered?.NativeImage;
+            nativeControl.PressedImage = images.Pressed?.NativeImage;
+            nativeControl.DisabledImage = images.Disabled?.NativeImage;
+            nativeControl.FocusedImage = images.Focused?.NativeImage;
         }
 
         private void OnImageChanged()
@@ -143,17 +143,17 @@ namespace Alternet.UI
 
             switch (e.PropertyName)
             {
-                case nameof(ControlStateImages.NormalImage):
-                    nativeControl.NormalImage = images.NormalImage?.NativeImage;
+                case nameof(ControlStateImages.Normal):
+                    nativeControl.NormalImage = images.Normal?.NativeImage;
                     break;
-                case nameof(ControlStateImages.HoveredImage):
-                    nativeControl.HoveredImage = images.HoveredImage?.NativeImage;
+                case nameof(ControlStateImages.Hovered):
+                    nativeControl.HoveredImage = images.Hovered?.NativeImage;
                     break;
-                case nameof(ControlStateImages.PressedImage):
-                    nativeControl.PressedImage = images.PressedImage?.NativeImage;
+                case nameof(ControlStateImages.Pressed):
+                    nativeControl.PressedImage = images.Pressed?.NativeImage;
                     break;
-                case nameof(ControlStateImages.DisabledImage):
-                    nativeControl.DisabledImage = images.DisabledImage?.NativeImage;
+                case nameof(ControlStateImages.Disabled):
+                    nativeControl.DisabledImage = images.Disabled?.NativeImage;
                     break;
                 default:
                     throw new Exception();
@@ -170,19 +170,19 @@ namespace Alternet.UI
 
             var normalImage = nativeControl.NormalImage;
             if (normalImage != null)
-                images.NormalImage = new Bitmap(normalImage);
+                images.Normal = new Bitmap(normalImage);
 
             var hoveredImage = nativeControl.HoveredImage;
             if (hoveredImage != null)
-                images.HoveredImage = new Bitmap(hoveredImage);
+                images.Hovered = new Bitmap(hoveredImage);
 
             var pressedImage = nativeControl.PressedImage;
             if (pressedImage != null)
-                images.PressedImage = new Bitmap(pressedImage);
+                images.Pressed = new Bitmap(pressedImage);
 
             var disabledImage = nativeControl.DisabledImage;
             if (disabledImage != null)
-                images.DisabledImage = new Bitmap(disabledImage);
+                images.Disabled = new Bitmap(disabledImage);
 
             StateImages = images;
         }

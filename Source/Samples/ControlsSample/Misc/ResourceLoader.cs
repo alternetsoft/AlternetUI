@@ -39,11 +39,11 @@ namespace ControlsSample
 
             return new ControlStateImages
             {
-                NormalImage = normalImage,
-                HoveredImage = LoadImage("Hovered"),
-                PressedImage = LoadImage("Pressed"),
-                DisabledImage = disabledImage,
-				FocusedImage = LoadImage("Focused"),
+                Normal = normalImage,
+                Hovered = LoadImage("Hovered"),
+                Pressed = LoadImage("Pressed"),
+                Disabled = disabledImage,
+				Focused = LoadImage("Focused"),
             };
         }
 
