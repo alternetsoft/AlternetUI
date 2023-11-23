@@ -10,7 +10,7 @@ namespace Alternet.UI
     /// <summary>
     /// Implements custom abstract label.
     /// </summary>
-    public abstract class CustomLabel : Control
+    public abstract class CustomLabel : Control, ITextProperty
     {
         /// <summary>
         /// Gets or sets the text displayed on this label.

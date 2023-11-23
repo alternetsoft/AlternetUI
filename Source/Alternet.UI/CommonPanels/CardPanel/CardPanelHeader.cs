@@ -18,7 +18,7 @@ namespace Alternet.UI
     /// on the card title.
     /// </remarks>
     [ControlCategory("Panels")]
-    public class CardPanelHeader : Control
+    public class CardPanelHeader : Control, ITextProperty
     {
         /// <summary>
         /// Gets or sets default border side width.
@@ -26,7 +26,7 @@ namespace Alternet.UI
         /// <remarks>
         /// <see cref="DefaultBorderWidth"/> by default is calculated dynamically using this field.
         /// </remarks>
-        public static double DefaultBorderSideWidth = 1;
+        public static double DefaultBorderSideWidth = 3;
 
         /// <summary>
         /// Gets or sets default value of the <see cref="BorderPadding"/> property.

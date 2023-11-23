@@ -10,7 +10,7 @@ namespace Alternet.UI
     /// <summary>
     /// Implements custom abstract button.
     /// </summary>
-    public abstract class CustomButton : Control
+    public abstract class CustomButton : Control, ITextProperty
     {
         /// <summary>
         /// Gets or sets function which creates button for the <see cref="CardPanelHeader"/>.
