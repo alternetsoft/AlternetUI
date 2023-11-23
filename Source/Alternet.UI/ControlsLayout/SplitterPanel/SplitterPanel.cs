@@ -337,6 +337,23 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets the sash position in
+        /// device-independent units (1/96th inch per unit).
+        /// </summary>
+        public virtual double SashPositionDip
+        {
+            get
+            {
+                return PixelToDip(SashPosition);
+            }
+
+            set
+            {
+                SashPosition = PixelFromDip(value);
+            }
+        }
+
+        /// <summary>
         /// Gets maximal splitter sash position if control is splitted or -1
         /// if it's unsplitted.
         /// </summary>
