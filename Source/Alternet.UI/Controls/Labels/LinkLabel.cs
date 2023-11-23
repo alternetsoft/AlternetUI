@@ -60,7 +60,7 @@ namespace Alternet.UI
         /// </remarks>
         public static bool UseShellExecute { get; set; } = true;
 
-        /// <inheritdoc/>        
+        /// <inheritdoc/>
         public override string Text
         {
             get
