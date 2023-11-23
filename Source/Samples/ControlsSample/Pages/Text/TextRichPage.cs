@@ -95,8 +95,8 @@ namespace ControlsSample
                 TextBoxTextAttrUnderlineType.Special,
                 Color.Red);
 
-            List<object> list = new()
-            {
+            List<object> list =
+            [
                 "Text color is ", taTextColorRed, "red", taDefault, ".\n",
                 "Background color is ", taBackColorYellow, "yellow", taDefault, ".\n",
                 "Font is ", "<u>", "underlined", "</u>", ".\n",
@@ -107,7 +107,7 @@ namespace ControlsSample
                 "Font is ", taUnderlined2, "special underlined", taDefault, ".\n",
                 "This is url: ",taUrl, homePage, taDefault, ".\n",
                 "\n",
-            };
+            ];
 
             // richEdit.AutoUrl = true;
 

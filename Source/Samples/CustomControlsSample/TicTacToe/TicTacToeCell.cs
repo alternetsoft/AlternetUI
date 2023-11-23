@@ -84,7 +84,7 @@ namespace CustomControlsSample
             {
                 base.OnAttach();
 
-                UserPaint = true;
+                Control.UserPaint = true;
                 Control.MouseMove += Control_MouseMove;
                 Control.MouseEnter += Control_MouseEnter;
                 Control.MouseLeave += Control_MouseLeave;

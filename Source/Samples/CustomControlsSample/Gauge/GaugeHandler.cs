@@ -96,7 +96,7 @@ namespace CustomControlsSample.Gauge
         protected override void OnAttach()
         {
             base.OnAttach();
-            UserPaint = true;
+            Control.UserPaint = true;
             Control.ValueChanged += Control_ValueChanged;
         }
 

@@ -63,7 +63,7 @@ namespace CustomControlsSample
             {
                 base.OnAttach();
 
-                UserPaint = true;
+                Control.UserPaint = true;
                 Control.ValueChanged += Control_ValueChanged;
                 Control.MouseMove += Control_MouseMove;
                 Control.MouseEnter += Control_MouseEnter;
