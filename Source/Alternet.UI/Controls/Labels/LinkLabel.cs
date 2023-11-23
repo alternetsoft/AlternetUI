@@ -86,12 +86,12 @@ namespace Alternet.UI
         {
             get
             {
-                return NativeControl.Url; 
+                return NativeControl.Url;
             }
-            
+
             set
             {
-                NativeControl.Url = value; 
+                NativeControl.Url = value;
             }
         }
 
@@ -194,5 +194,5 @@ namespace Alternet.UI
         protected virtual void OnLinkClicked(CancelEventArgs e)
         {
         }
-   }
+    }
 }
