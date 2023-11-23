@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Implements <see cref="ComboBox"/> with attached <see cref="Label"/>.
+    /// Implements <see cref="UI.ComboBox"/> with attached <see cref="Label"/>.
     /// </summary>
     public class ComboBoxAndLabel : ControlAndLabel
     {
@@ -35,7 +35,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets main child control, same as <see cref="MainControl"/>.
         /// </summary>
-        public ComboBox TextBox => (ComboBox)base.MainControl;
+        public ComboBox ComboBox => (ComboBox)base.MainControl;
 
         /// <inheritdoc/>
         protected override Control CreateControl() => new ComboBox();
