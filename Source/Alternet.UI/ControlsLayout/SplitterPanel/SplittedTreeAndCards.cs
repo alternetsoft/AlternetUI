@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using Alternet.Base.Collections;
 using Alternet.Drawing;
 
@@ -23,10 +24,13 @@ namespace Alternet.UI
         /// </summary>
         public SplittedTreeAndCards()
         {
-            treeView.SelectionChanged += PagesListBox_SelectionChanged;
-            treeView.Parent = this;
-            cardPanel.Parent = this;
-            SplitVertical(treeView, cardPanel, PixelFromDip(140));
+            DoInsideLayout(() =>
+            {
+                treeView.SelectionChanged += PagesListBox_SelectionChanged;
+                treeView.Parent = this;
+                cardPanel.Parent = this;
+                SplitVertical(treeView, cardPanel, PixelFromDip(DefaultSashPosition));
+            });
         }
 
         /// <summary>
@@ -51,13 +55,22 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets default sash position.
+        /// </summary>
+        protected virtual double DefaultSashPosition => 140;
+
+        /// <summary>
+        /// Sets debug background colors for the different parts of the control.
+        /// </summary>
+        [Conditional("DEBUG")]
         public void SetDebugColors()
         {
             DebugBackgroundColor(Color.Green, nameof(SplittedTreeAndCards));
             Cards.DebugBackgroundColor(Color.Yellow, "SplittedTreeAndCards.Cards");
-            Cards.CardPropertyChanged += CardPanel_CardPropertyChanged;
+            Cards.CardPropertyChanged += CardPropertyChanged;
 
-            void CardPanel_CardPropertyChanged(object? sender, ObjectPropertyChangedEventArgs e)
+            static void CardPropertyChanged(object? sender, ObjectPropertyChangedEventArgs e)
             {
                 if (e.Instance is not CardPanelItem card)
                     return;
