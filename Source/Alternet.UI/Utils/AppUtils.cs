@@ -13,6 +13,17 @@ namespace Alternet.UI
     public static class AppUtils
     {
         /// <summary>
+        /// Repeats <paramref name="action"/> specified number of <paramref name="times"/>.
+        /// </summary>
+        /// <param name="times">Repeat count.</param>
+        /// <param name="action">Action to repeat</param>
+        public static void RepeatAction(int times, Action action)
+        {
+            for (int i = 0; i < times; i++)
+                action();
+        }
+
+        /// <summary>
         /// Gets this application target framework in the form like 'net8.0' or 'net462'.
         /// </summary>
         /// <returns></returns>
