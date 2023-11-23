@@ -2018,6 +2018,15 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Sets or releases mouse capture.
+        /// </summary>
+        /// <param name="value"><c>true</c> to set mouse capture; <c>false</c> to release it.</param>
+        public void SetMouseCapture(bool value)
+        {
+            NativeControl.SetMouseCapture(value);
+        }
+
+        /// <summary>
         /// Gets <see cref="ControlSet"/> with all controls which have <see cref="ColumnIndex"/>
         /// property equal to <paramref name="columnIndex"/>.
         /// </summary>
