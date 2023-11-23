@@ -65,21 +65,25 @@ namespace Alternet.UI
 
         private void NativeControl_ToolCommand(object? sender, EventArgs e)
         {
+            Control.SetMouseCapture(false);
             Control.RaiseToolCommand(e);
         }
 
         private void NativeControl_ToolRightClick(object? sender, EventArgs e)
         {
+            Control.SetMouseCapture(false);
             Control.RaiseToolRightClick(e);
         }
 
         private void NativeControl_OverflowClick(object? sender, EventArgs e)
         {
+            Control.SetMouseCapture(false);
             Control.RaiseOverflowClick(e);
         }
 
         private void NativeControl_ToolMiddleClick(object? sender, EventArgs e)
         {
+            Control.SetMouseCapture(false);
             Control.RaiseToolMiddleClick(e);
         }
 
@@ -90,6 +94,7 @@ namespace Alternet.UI
 
         private void NativeControl_ToolDropDown(object? sender, EventArgs e)
         {
+            Control.SetMouseCapture(false);
             Control.RaiseToolDropDown(e);
         }
 
