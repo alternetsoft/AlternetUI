@@ -10,6 +10,6 @@ namespace Alternet.UI
     {
         CustomLabel Label { get; }
 
-        Control Control { get; }
+        Control MainControl { get; }
     }
 }
