@@ -13,7 +13,7 @@
                 MouseLeftButtonDown="TreeView_MouseLeftButtonDown"
                 />
 
-      <VerticalStackPanel Name="pageControl" Margin="10,0,0,0" >
+      <VerticalStackPanel Name="pageControl" Margin="10,0,10,0" >
 
         <!-- ========================= -->
         <VerticalStackPanel Name="stackPanel1" Padding="0,5,5,0">
@@ -39,9 +39,9 @@
           </HorizontalStackPanel>
 
           <HorizontalStackPanel>
-            <Button Text="Expand Child" Name="expandAllChildrenButton" Margin="0,3,0,0"
+            <Button Text="Expand" Name="expandAllChildrenButton" Margin="0,3,0,0"
                     Click="ExpandAllChildrenButton_Click" />
-            <Button Text="Collapse Child" Name="collapseAllChildrenButton" Margin="0,3,0,0"
+            <Button Text="Collapse" Name="collapseAllChildrenButton" Margin="0,3,0,0"
                     Click="CollapseAllChildrenButton_Click" />
           </HorizontalStackPanel>
 

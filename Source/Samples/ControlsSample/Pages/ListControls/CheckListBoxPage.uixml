@@ -20,10 +20,7 @@
                   Click="RemoveItemButton_Click"/>
           <Button Text="Add 5000 Items" Name="addManyItemsButton" Margin="0,3,0,0"
                   Click="AddManyItemsButton_Click" />
-          <CheckBox Text="Multiple Selection" Name="allowMultipleSelectionCheckBox"
-                    Margin="0,3,0,0" IsChecked="true"
-                    CheckedChanged="AllowMultipleSelectionCheckBox_CheckedChanged"/>
-          <Button Text="Make Last Item Visible" Name="ensureLastItemVisibleButton"
+          <Button Text="Make Last Visible" Name="ensureLastItemVisibleButton"
                   Margin="0,3,0,0" Click="EnsureLastItemVisibleButton_Click" />
           <Button Text="Check Item: 2" Name="checkItemAtIndex2Button"
                   Margin="0,3,0,0" Click="CheckItemAtIndex2Button_Click" />
@@ -36,7 +33,13 @@
           <Button Text="Edit Items..."
                   Margin="0,3,0,3" Click="EditorButton_Click" />
         </StackPanel>
-        
+
+        <StackPanel Orientation="Vertical" Margin="10,0,5,5">
+          <CheckBox Text="Multiple Selection" Name="allowMultipleSelectionCheckBox"
+                    Margin="0,3,0,0" IsChecked="true"
+                    CheckedChanged="AllowMultipleSelectionCheckBox_CheckedChanged"/>
+        </StackPanel>
+
       </StackPanel>
   </Control>
 </Control>
