@@ -250,6 +250,8 @@ namespace Alternet.UI
 
         private void CancelButton_Click(object? sender, EventArgs e)
         {
+            SetFocusIfPossible();
+            Application.DoEvents();
             if (Modal)
                 ModalResult = ModalResult.Canceled;
             Close();
@@ -259,6 +261,8 @@ namespace Alternet.UI
         {
             if (!propertyGrid.ClearSelection(true))
                 return;
+            SetFocusIfPossible();
+            Application.DoEvents();
             if (Modal)
                 ModalResult = ModalResult.Accepted;
             Close();
