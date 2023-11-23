@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,10 +16,15 @@ namespace ControlsSample
             "Proin fermentum rhoncus dictum.\n";
 
         private readonly PanelMultilineTextBox memoPanel = new();
+        private readonly TextMemoPageProperties properties;
 
         public TextMemoPage()
         {
+            properties = new(this);
             Margin = 10;
+            memoPanel.DefaultRightPaneBestSize = 250;
+            memoPanel.DefaultRightPaneMinSize = 250;
+
             memoPanel.ActionsControl.Required();
             memoPanel.SuggestedSize = new(500, 400); // how without it?
             memoPanel.TextBox.KeyDown += TextBox_KeyDown;
@@ -47,14 +53,36 @@ namespace ControlsSample
 
             Idle += TextInputPage_Idle;
 
+            memoPanel.PropGrid.SuggestedInitDefaults();
+            memoPanel.PropGrid.ApplyFlags |= PropertyGridApplyFlags.SetValueAndReload;
+
+            memoPanel.PropGrid.SetProps(properties);
             memoPanel.Parent = this;
             memoPanel.TextBox.Text = multilineDemoText;
             memoPanel.TextBox.SetInsertionPoint(0);
             memoPanel.Toolbar.EnableTool(memoPanel.ButtonIdNew, false);
             memoPanel.Toolbar.EnableTool(memoPanel.ButtonIdOpen, false);
             memoPanel.Toolbar.EnableTool(memoPanel.ButtonIdSave, false);
+        }
 
-            //wordWrapComboBox.MainControl.BindEnumProp(multiLineTextBox, nameof(TextBox.TextWrap));
+        internal void AddTestIdleTasks()
+        {
+            memoPanel.AddAction("Add Idle Tasks", () =>
+            {
+                for(int i = 0; i <= 5; i++)
+                {
+                    Application.AddIdleTask((a) =>
+                    {
+                        Application.Log(a);
+                    }, i);
+                }
+            });
+        }
+
+        private void TextInputPage_Idle(object? sender, EventArgs e)
+        {
+            if (Visible)
+                memoPanel.TextBox.IdleAction();
         }
 
         private void TextBox_KeyDown(object? sender, KeyEventArgs e)
@@ -84,11 +112,26 @@ namespace ControlsSample
             }
         }
 
-        private void TextInputPage_Idle(object? sender, EventArgs e)
+        internal class TextMemoPageProperties : BaseChildObject<TextMemoPage>
         {
-            if(Visible)
-                memoPanel.TextBox.IdleAction();
-        }
+            public TextMemoPageProperties(TextMemoPage owner) : base(owner)
+            {
+            }
 
+            [Browsable(false)]
+            public TextBox Control => Owner.memoPanel.TextBox;
+
+            public TextBoxTextWrap WordWrap
+            {
+                get => Control.TextWrap;
+                set => Control.TextWrap = value;
+            }
+
+            public bool ReadOnly
+            {
+                get => Control.ReadOnly;
+                set => Control.ReadOnly = value;
+            }
+        }
     }
 }
