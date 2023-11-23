@@ -13,7 +13,7 @@ namespace Alternet.UI
     /// <remarks> This is an abstract class. You can use <see cref="TextBoxAndLabel"/>,
     /// <see cref="ComboBoxAndLabel"/> or derive from <see cref="ControlAndLabel"/>
     /// in order to implement your own custom labeled control.</remarks>
-    public abstract class ControlAndLabel : StackPanel
+    public abstract class ControlAndLabel : StackPanel, IControlAndLabel
     {
         private readonly Label label = new()
         {
@@ -139,6 +139,10 @@ namespace Alternet.UI
         /// Gets main child control.
         /// </summary>
         public Control MainControl => mainControl;
+
+        Control IControlAndLabel.Label => Label;
+
+        Control IControlAndLabel.Control => MainControl;
 
         /// <summary>
         /// Creates main child control.

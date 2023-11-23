@@ -68,7 +68,7 @@ namespace Alternet.UI
                 double result = 0;
                 foreach (var item in items)
                 {
-                    if (item is ControlAndLabel control)
+                    if (item is IControlAndLabel control)
                         result = Math.Max(result, control.Label.Width);
                 }
 
@@ -265,8 +265,8 @@ namespace Alternet.UI
         {
             foreach (var item in Items)
             {
-                if (item is ControlAndLabel control)
-                    control.LabelSuggestedWidth = value;
+                if (item is IControlAndLabel control)
+                    control.Label.SuggestedWidth = value;
             }
 
             return this;
@@ -289,8 +289,8 @@ namespace Alternet.UI
         {
             foreach (var item in Items)
             {
-                if (item is ControlAndLabel control)
-                    control.LabelColumnIndex = value;
+                if (item is IControlAndLabel control)
+                    control.Label.ColumnIndex = value;
             }
 
             return this;
@@ -304,8 +304,8 @@ namespace Alternet.UI
         {
             foreach (var item in Items)
             {
-                if (item is ControlAndLabel control)
-                    control.InnerSuggestedWidth = value;
+                if (item is IControlAndLabel control)
+                    control.Control.SuggestedWidth = value;
             }
 
             return this;
