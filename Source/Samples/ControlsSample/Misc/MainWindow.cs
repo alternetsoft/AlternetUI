@@ -6,7 +6,7 @@ namespace ControlsSample
 {
     internal partial class MainWindow : Window
     {
-        private readonly PageContainer pageContainer;
+        private readonly SplittedTreeAndCards pageContainer;
         private readonly LogListBox eventsControl = new()
         {
             HasBorder = false,
@@ -24,13 +24,15 @@ namespace ControlsSample
 
         static MainWindow()
         {
-            // UseDebugBackgroundColor = true;
+            UseDebugBackgroundColor = false;
         }
 
         public MainWindow()
         {
             eventsControl.BindApplicationLog();
             pageContainer = new();
+            pageContainer.TreeView.MakeAsListBox();
+            pageContainer.SetDebugColors();
             DoInsideLayout(Initialize);
         }
 
@@ -77,11 +79,12 @@ namespace ControlsSample
             eventsControl.Parent = splitterPanel;
 
             splitterPanel.SplitHorizontal(pageContainer, eventsControl, PixelFromDip(-150));
+            splitterPanel.SashGravity = 1.0;
 
             pageContainer.SelectedIndex = 0;
 
-            if (pageContainer.PagesControl.CanAcceptFocus)
-                pageContainer.PagesControl.SetFocus();
+            pageContainer.TreeView.SetFocusIfPossible();
+            pageContainer.SashPositionDip = 140;
         }
 
         Control CreateCustomPage(NameValue<Func<Control>>[] pages)
@@ -169,7 +172,7 @@ namespace ControlsSample
             [
                 new("Splitter", () => new SplitterPanelPage()),
                 new("Grid", () => new GridPage()),
-                // new("LayoutPanel", () => new LayoutPanelPage()),
+                new("LayoutPanel", () => new LayoutPanelPage()),
             ];
 
             return CreateCustomPage(pages);
