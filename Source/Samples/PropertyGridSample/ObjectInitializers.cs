@@ -245,11 +245,11 @@ namespace PropertyGridSample
 
             return new ControlStateImages
             {
-                NormalImage = LoadImage("Normal"),
-                HoveredImage = LoadImage("Hovered"),
-                PressedImage = LoadImage("Pressed"),
-                DisabledImage = LoadImage("Disabled"),
-                FocusedImage = LoadImage("Focused"),
+                Normal = LoadImage("Normal"),
+                Hovered = LoadImage("Hovered"),
+                Pressed = LoadImage("Pressed"),
+                Disabled = LoadImage("Disabled"),
+                Focused = LoadImage("Focused"),
             };
         }
 
