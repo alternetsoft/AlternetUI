@@ -108,7 +108,7 @@ namespace Alternet.UI
                 switch (dock)
                 {
                     case DockStyle.None:
-                        child.Handler.OnLayout();
+                        child.PerformLayout(false);
                         /*
                         var horizontalPosition =
                             AlignedLayout.AlignHorizontal(
