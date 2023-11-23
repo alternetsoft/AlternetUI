@@ -21,6 +21,11 @@ namespace Alternet.UI
         private T? focused;
 
         /// <summary>
+        /// Occurs when a property value changes.
+        /// </summary>
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+        /// <summary>
         /// Gets or sets whether object is immutable (properties can not be changed).
         /// </summary>
         public bool Immutable
@@ -35,11 +40,6 @@ namespace Alternet.UI
                 immutable = true;
             }
         }
-
-        /// <summary>
-        /// Occurs when a property value changes.
-        /// </summary>
-        public event PropertyChangedEventHandler? PropertyChanged;
 
         /// <summary>
         /// Gets or sets an object for normal control state.
