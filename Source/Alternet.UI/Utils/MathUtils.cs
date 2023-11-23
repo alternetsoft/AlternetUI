@@ -27,6 +27,18 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets percentage of <paramref name="value"/>.
+        /// </summary>
+        /// <param name="value">Value.</param>
+        /// <param name="percent">Value from 0 to 100.</param>
+        /// <returns></returns>
+        public static double PercentOf(double value, double percent)
+        {
+            double result = (percent / 100) * value;
+            return result;
+        }
+
+        /// <summary>
         /// Calculates distance between two points.
         /// </summary>
         /// <param name="p1">First point.</param>
