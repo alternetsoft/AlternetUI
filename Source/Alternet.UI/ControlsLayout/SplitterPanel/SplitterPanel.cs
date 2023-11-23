@@ -92,7 +92,7 @@ namespace Alternet.UI
         /// Gets or sets whether splitter sash can be dragged by mouse.
         /// </summary>
         /// <remarks>Default value is true.</remarks>
-        public bool CanMoveSplitter
+        public virtual bool CanMoveSplitter
         {
             get
             {
@@ -109,7 +109,7 @@ namespace Alternet.UI
         /// Gets or sets whether double click unsplits the control.
         /// </summary>
         /// <remarks>Default value is true.</remarks>
-        public bool CanDoubleClick
+        public virtual bool CanDoubleClick
         {
             get
             {
@@ -141,7 +141,7 @@ namespace Alternet.UI
         /// of the panes. To prevent this behaviour (and veto out-of-range
         /// sash dragging), set a minimum size (for example 20 pixels).
         /// </remarks>
-        public int MinPaneSize
+        public virtual int MinPaneSize
         {
             get
             {
@@ -164,7 +164,7 @@ namespace Alternet.UI
         /// If control is already split, you can use this property to change
         /// the split mode  (for example from horizontal to vertical).
         /// </remarks>
-        public bool IsSplitVertical
+        public virtual bool IsSplitVertical
         {
             get
             {
@@ -194,7 +194,7 @@ namespace Alternet.UI
         /// If control is already split, you can use this property to change
         /// the split mode (for example from vertical to horizontal).
         /// </remarks>
-        public bool IsSplitHorizontal
+        public virtual bool IsSplitHorizontal
         {
             get
             {
@@ -231,7 +231,7 @@ namespace Alternet.UI
         /// 0.5: both windows grow by equal size.
         /// 1.0: only left/top window grows.
         /// </remarks>
-        public double SashGravity
+        public virtual double SashGravity
         {
             get
             {
@@ -250,7 +250,7 @@ namespace Alternet.UI
         /// <remarks>
         /// Returns 0 if sash is invisible.
         /// </remarks>
-        public int SashSize
+        public virtual int SashSize
         {
             get
             {
@@ -281,7 +281,7 @@ namespace Alternet.UI
         /// If false, the sash is always invisible, else it
         /// is shown when the window is split.
         /// </returns>
-        public bool SashVisible
+        public virtual bool SashVisible
         {
             get
             {
@@ -303,7 +303,7 @@ namespace Alternet.UI
         /// <returns>
         /// Returns true if the control is split, false otherwise.
         /// </returns>
-        public bool IsSplit
+        public virtual bool IsSplit
         {
             get
             {
@@ -321,7 +321,7 @@ namespace Alternet.UI
         /// <remarks>
         /// Does not currently check for an out-of-range value.
         /// </remarks>
-        public int SashPosition
+        public virtual int SashPosition
         {
             get
             {
@@ -340,7 +340,7 @@ namespace Alternet.UI
         /// Gets maximal splitter sash position if control is splitted or -1
         /// if it's unsplitted.
         /// </summary>
-        public int MaxSashPosition
+        public virtual int MaxSashPosition
         {
             get
             {
@@ -366,7 +366,7 @@ namespace Alternet.UI
         /// Gets or sets whether to resize the panes and redraw the sash and
         /// border on <see cref="SashPosition"/> property change.
         /// </summary>
-        public bool RedrawOnSashPosition
+        public virtual bool RedrawOnSashPosition
         {
             get
             {
@@ -380,7 +380,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets the default sash size in pixels.
+        /// Gets the default sash size in pixels. Returns value for the native control.
         /// </summary>
         /// <remarks>
         /// The size of the sash is its width for a vertically split window
@@ -406,7 +406,7 @@ namespace Alternet.UI
         /// <remarks>
         /// When this property is changed, control is recreated.
         /// </remarks>
-        public SplitterPanelCreateStyle CreateStyle
+        public virtual SplitterPanelCreateStyle CreateStyle
         {
             get
             {
@@ -436,7 +436,7 @@ namespace Alternet.UI
         /// by sending a size event to the parent control), and then call
         /// this function, before showing the top-level window.
         /// </remarks>
-        public void UpdateSize()
+        public virtual void UpdateSize()
         {
             Handler.UpdateSize();
         }
@@ -455,7 +455,7 @@ namespace Alternet.UI
         /// This should be called if you wish to initially view only a single
         /// pane in the control.
         /// </remarks>
-        public bool InitUnsplitted(Control window)
+        public virtual bool InitUnsplitted(Control window)
         {
             if (window == null)
                 return false;
@@ -504,7 +504,7 @@ namespace Alternet.UI
         /// Both parameters should be non-NULL and winOld must specify one
         /// of the controls managed by the <see cref="SplitterPanel"/>.
         /// </remarks>
-        public bool ReplaceControl(Control? winOld, Control? winNew)
+        public virtual bool ReplaceControl(Control? winOld, Control? winNew)
         {
             if (winOld == null || winNew == null)
                 return false;
@@ -557,7 +557,7 @@ namespace Alternet.UI
         /// called at any time, but the application should check that the
         /// control is not currently split using <see cref="IsSplit"/>.
         /// </remarks>
-        public bool SplitHorizontal(
+        public virtual bool SplitHorizontal(
             Control? window1,
             Control? window2,
             int sashPosition = 0)
@@ -613,7 +613,7 @@ namespace Alternet.UI
         /// called at any time, but the application should check that the
         /// control is not currently split using <see cref="IsSplit"/>.
         /// </remarks>
-        public bool SplitVertical(
+        public virtual bool SplitVertical(
             Control? window1,
             Control? window2,
             int sashPosition = 0)
@@ -661,7 +661,7 @@ namespace Alternet.UI
         /// This call will not actually delete the control being removed.
         /// By default, the control being removed is hidden.
         /// </remarks>
-        public bool DoUnsplit(Control? toRemove = null)
+        public virtual bool DoUnsplit(Control? toRemove = null)
         {
             if (!IsSplit)
                 return true;
