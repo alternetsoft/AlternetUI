@@ -95,7 +95,7 @@ namespace Alternet.UI
             if (Parent == null || StateFlags.HasFlag(ControlFlags.ParentAssigned))
                 return;
 
-            Manager.AddPane(TextBox, CenterPane);
+            Manager.AddPane(Control.SubstituteControl(TextBox), CenterPane);
             Manager.AddPane(Toolbar, ToolbarPane);
 
             Manager.Update();
