@@ -14,7 +14,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets <see cref="ControlStateImages"/>.
         /// </summary>
-        public ControlStateImages? Images {get; set;}
+        public ControlStateImages? Images { get; set; }
 
         /// <summary>
         /// Gets or sets <see cref="ControlStateImageSets"/>.
