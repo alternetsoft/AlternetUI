@@ -78,13 +78,14 @@ namespace ControlsSample
             pageContainer.Parent = splitterPanel;
             eventsControl.Parent = splitterPanel;
 
-            splitterPanel.SplitHorizontal(pageContainer, eventsControl, PixelFromDip(-150));
             splitterPanel.SashGravity = 1.0;
 
+            // Split is called at the end. This is done because we need to be sure that
+            // used controls will not be recreated due to property changes.
+            pageContainer.SplitVerticalDip(140);
+            splitterPanel.SplitHorizontalDip(pageContainer, eventsControl, -150);
             pageContainer.SelectedIndex = 0;
-
             pageContainer.TreeView.SetFocusIfPossible();
-            pageContainer.SashPositionDip = 140;
         }
 
         Control CreateCustomPage(NameValue<Func<Control>>[] pages)

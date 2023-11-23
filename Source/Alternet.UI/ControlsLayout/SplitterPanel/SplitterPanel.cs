@@ -660,6 +660,32 @@ namespace Alternet.UI
             return r;
         }
 
+        /// <inheritdoc cref="SplitVertical"/>
+        /// <remarks>
+        /// Same as <see cref="SplitVertical"/>, but <paramref name="sashPosition"/> is in
+        /// device-independent units (1/96th inch per unit).
+        /// </remarks>
+        public virtual bool SplitVerticalDip(
+            Control? window1,
+            Control? window2,
+            double sashPosition = 0)
+        {
+            return SplitVertical(window1, window2, PixelFromDip(sashPosition));
+        }
+
+        /// <inheritdoc cref="SplitHorizontal"/>
+        /// <remarks>
+        /// Same as <see cref="SplitHorizontal"/>, but <paramref name="sashPosition"/> is in
+        /// device-independent units (1/96th inch per unit).
+        /// </remarks>
+        public virtual bool SplitHorizontalDip(
+            Control? window1,
+            Control? window2,
+            double sashPosition = 0)
+        {
+            return SplitHorizontal(window1, window2, PixelFromDip(sashPosition));
+        }
+
         /// <inheritdoc/>
         public override void OnLayout()
         {

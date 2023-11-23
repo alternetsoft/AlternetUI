@@ -24,13 +24,9 @@ namespace Alternet.UI
         /// </summary>
         public SplittedTreeAndCards()
         {
-            DoInsideLayout(() =>
-            {
-                treeView.SelectionChanged += PagesListBox_SelectionChanged;
-                treeView.Parent = this;
-                cardPanel.Parent = this;
-                SplitVertical(treeView, cardPanel, PixelFromDip(DefaultSashPosition));
-            });
+            treeView.SelectionChanged += PagesListBox_SelectionChanged;
+            treeView.Parent = this;
+            cardPanel.Parent = this;
         }
 
         /// <summary>
@@ -61,6 +57,15 @@ namespace Alternet.UI
         protected virtual double DefaultSashPosition => 140;
 
         /// <summary>
+        /// Splits controls vertically.
+        /// </summary>
+        /// <param name="sashPosition">Sash position in dips.</param>
+        public void SplitVerticalDip(double sashPosition = 0)
+        {
+            SplitVertical(TreeView, Cards, PixelFromDip(sashPosition));
+        }
+
+        /// <summary>
         /// Sets debug background colors for the different parts of the control.
         /// </summary>
         [Conditional("DEBUG")]
@@ -89,7 +94,7 @@ namespace Alternet.UI
             var index = cardPanel.Add(title, action);
             var item = new TreeViewItem(title)
             {
-                Tag = index
+                Tag = index,
             };
             treeView.Add(item);
         }
