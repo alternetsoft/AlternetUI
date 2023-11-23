@@ -18,7 +18,7 @@ namespace Alternet.UI
                 if (radius is null)
                     dc.FillRectangle(Control.Background, r);
                 else
-                    dc.FillRoundedRectangle(Control.Background, r , radius.Value);
+                    dc.FillRoundedRectangle(Control.Background, r, radius.Value);
             }
 
             var settings = Control.Settings;

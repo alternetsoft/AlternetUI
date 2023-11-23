@@ -354,29 +354,6 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Gets percentage of <see cref="Width"/>.
-        /// </summary>
-        /// <param name="percent">Value from 0 to 100.</param>
-        /// <returns></returns>
-        public double PercentOfWidth(double percent) => MathUtils.PercentOf(width, percent);
-
-        /// <summary>
-        /// Gets percentage of minimal size. Chooses minimum of <see cref="Width"/> and
-        /// <see cref="Height"/>) and calculates <paramref name="percent"/> of this value.
-        /// </summary>
-        /// <param name="percent">Value from 0 to 100.</param>
-        /// <returns></returns>
-        public double PercentOfMinSize(double percent) =>
-            MathUtils.PercentOf(MinWidthHeight, percent);
-
-        /// <summary>
-        /// Gets percentage of <see cref="Height"/>.
-        /// </summary>
-        /// <param name="percent">Value from 0 to 100.</param>
-        /// <returns></returns>
-        public double PercentOfHeight(double percent) => MathUtils.PercentOf(height, percent);
-
-        /// <summary>
         /// Returns an instance converted from the provided string using
         /// the culture "en-US"
         /// <param name="source">string with Rect data.</param>
@@ -432,6 +409,29 @@ namespace Alternet.Drawing
         /// <see cref='Rect'/> .
         /// </summary>
         public readonly bool Contains(Point pt) => Contains(pt.X, pt.Y);
+
+        /// <summary>
+        /// Gets percentage of <see cref="Width"/>.
+        /// </summary>
+        /// <param name="percent">Value from 0 to 100.</param>
+        /// <returns></returns>
+        public readonly double PercentOfWidth(double percent) => MathUtils.PercentOf(width, percent);
+
+        /// <summary>
+        /// Gets percentage of minimal size. Chooses minimum of <see cref="Width"/> and
+        /// <see cref="Height"/>) and calculates <paramref name="percent"/> of this value.
+        /// </summary>
+        /// <param name="percent">Value from 0 to 100.</param>
+        /// <returns></returns>
+        public readonly double PercentOfMinSize(double percent) =>
+            MathUtils.PercentOf(MinWidthHeight, percent);
+
+        /// <summary>
+        /// Gets percentage of <see cref="Height"/>.
+        /// </summary>
+        /// <param name="percent">Value from 0 to 100.</param>
+        /// <returns></returns>
+        public readonly double PercentOfHeight(double percent) => MathUtils.PercentOf(height, percent);
 
         /// <summary>
         /// Tests whether <paramref name="obj"/> is a <see cref='Rect'/> with the

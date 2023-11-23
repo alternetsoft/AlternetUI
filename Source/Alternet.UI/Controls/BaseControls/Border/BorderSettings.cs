@@ -97,70 +97,6 @@ namespace Alternet.UI
             }
         }
 
-        internal BorderCornerRadius? TopLeftRadius
-        {
-            get
-            {
-                return topLeftRadius;
-            }
-
-            set
-            {
-                if (topLeftRadius == value)
-                    return;
-                topLeftRadius = value;
-                PropertyChanged?.Invoke(this, new(nameof(TopLeftRadius)));
-            }
-        }
-
-        internal BorderCornerRadius? TopRightRadius
-        {
-            get
-            {
-                return topRightRadius;
-            }
-
-            set
-            {
-                if (topRightRadius == value)
-                    return;
-                topRightRadius = value;
-                PropertyChanged?.Invoke(this, new(nameof(TopRightRadius)));
-            }
-        }
-
-        internal BorderCornerRadius? BottomRightRadius
-        {
-            get
-            {
-                return bottomRightRadius;
-            }
-
-            set
-            {
-                if (bottomRightRadius == value)
-                    return;
-                bottomRightRadius = value;
-                PropertyChanged?.Invoke(this, new(nameof(BottomRightRadius)));
-            }
-        }
-
-        internal BorderCornerRadius? BottomLeftRadius
-        {
-            get
-            {
-                return bottomLeftRadius;
-            }
-
-            set
-            {
-                if (bottomLeftRadius == value)
-                    return;
-                bottomLeftRadius = value;
-                PropertyChanged?.Invoke(this, new(nameof(BottomLeftRadius)));
-            }
-        }
-
         /// <summary>
         /// Gets or sets whether to draw default border.
         /// </summary>
@@ -245,6 +181,70 @@ namespace Alternet.UI
         /// Gets whether colors of the left and right edges of the border are equal.
         /// </summary>
         public bool IsUniformVerticalColor => left.Color == right.Color;
+
+        internal BorderCornerRadius? TopLeftRadius
+        {
+            get
+            {
+                return topLeftRadius;
+            }
+
+            set
+            {
+                if (topLeftRadius == value)
+                    return;
+                topLeftRadius = value;
+                PropertyChanged?.Invoke(this, new(nameof(TopLeftRadius)));
+            }
+        }
+
+        internal BorderCornerRadius? TopRightRadius
+        {
+            get
+            {
+                return topRightRadius;
+            }
+
+            set
+            {
+                if (topRightRadius == value)
+                    return;
+                topRightRadius = value;
+                PropertyChanged?.Invoke(this, new(nameof(TopRightRadius)));
+            }
+        }
+
+        internal BorderCornerRadius? BottomRightRadius
+        {
+            get
+            {
+                return bottomRightRadius;
+            }
+
+            set
+            {
+                if (bottomRightRadius == value)
+                    return;
+                bottomRightRadius = value;
+                PropertyChanged?.Invoke(this, new(nameof(BottomRightRadius)));
+            }
+        }
+
+        internal BorderCornerRadius? BottomLeftRadius
+        {
+            get
+            {
+                return bottomLeftRadius;
+            }
+
+            set
+            {
+                if (bottomLeftRadius == value)
+                    return;
+                bottomLeftRadius = value;
+                PropertyChanged?.Invoke(this, new(nameof(BottomLeftRadius)));
+            }
+        }
 
         /// <summary>
         /// Gets whether colors of the top and bottom edges of the border are equal.
@@ -377,7 +377,7 @@ namespace Alternet.UI
                 return rect.PercentOfMinSize(radius.Value);
             }
             else
-                return radius.Value;            
+                return radius.Value;
         }
 
         /// <summary>
