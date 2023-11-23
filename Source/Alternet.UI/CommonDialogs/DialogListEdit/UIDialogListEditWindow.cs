@@ -250,6 +250,7 @@ namespace Alternet.UI
 
         private void CancelButton_Click(object? sender, EventArgs e)
         {
+            toolbar.SetMouseCapture(false);
             SetFocusIfPossible();
             Application.DoEvents();
             if (Modal)
@@ -259,6 +260,7 @@ namespace Alternet.UI
 
         private void OkButton_Click(object? sender, EventArgs e)
         {
+            toolbar.SetMouseCapture(false);
             if (!propertyGrid.ClearSelection(true))
                 return;
             SetFocusIfPossible();
