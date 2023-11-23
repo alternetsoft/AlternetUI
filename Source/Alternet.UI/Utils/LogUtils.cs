@@ -116,8 +116,6 @@ namespace Alternet.UI
         [Conditional("DEBUG")]
         public static void DebugLogVersion()
         {
-            const int counter = 1;
-
             if (flags.HasFlag(Flags.VersionLogged))
                 return;
             flags |= Flags.VersionLogged;
@@ -125,7 +123,7 @@ namespace Alternet.UI
             var net = $"Net: {Environment.Version}";
             var dpi = $"DPI: {Application.FirstWindow()?.GetDPI().Width}";
             var ui = $"UI: {WebBrowser.DoCommandGlobal("UIVersion")}";
-            var counterStr = $"Counter: {counter}";
+            var counterStr = $"Counter: {Application.BuildCounter}";
             var s = $"{ui}, {net}, {wxWidgets}, {dpi}, {counterStr}";
             Application.Log(s);
             if (Application.LogFileIsEnabled)
