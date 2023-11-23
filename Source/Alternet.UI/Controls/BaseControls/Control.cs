@@ -381,11 +381,13 @@ namespace Alternet.UI
         /// <summary>
         /// Gets whether layout is suspended.
         /// </summary>
+        [Browsable(false)]
         public bool IsLayoutSuspended => layoutSuspendCount != 0;
 
         /// <summary>
         /// Gets whether layout is currently performed.
         /// </summary>
+        [Browsable(false)]
         public bool IsLayoutPerform => inLayout;
 
         /// <summary>
