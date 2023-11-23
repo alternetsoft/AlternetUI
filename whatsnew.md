@@ -1,5 +1,7 @@
 # 0.9.409 (work in progress)
 
+## 2023 November 23
+
 - Fixed controls flickering on Windows: TextBox, Button, CheckBox, RadioButton, Label, ComboBox, LinkLabel,
  ListBox, DateTimePicker, Calendar, TabControl, TreeView, NumericUpDown.
 - Improved Layout in controls: SplitterPanel.
