@@ -8,7 +8,7 @@ namespace Alternet.UI
 {
     internal interface IControlAndLabel
     {
-        Control Label { get; }
+        CustomLabel Label { get; }
 
         Control Control { get; }
     }

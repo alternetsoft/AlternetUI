@@ -10,7 +10,7 @@ namespace Alternet.UI
     [DefaultProperty("Text")]
     [DefaultBindingProperty("Text")]
     [ControlCategory("Other")]
-    public class LinkLabel : Control
+    public class LinkLabel : CustomLabel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="LinkLabel"/> class.
@@ -60,12 +60,8 @@ namespace Alternet.UI
         /// </remarks>
         public static bool UseShellExecute { get; set; } = true;
 
-        /// <summary>
-        /// Gets or sets the text displayed on this label.
-        /// </summary>
-        [DefaultValue("")]
-        [Localizability(LocalizationCategory.Text)]
-        public string Text
+        /// <inheritdoc/>        
+        public override string Text
         {
             get
             {

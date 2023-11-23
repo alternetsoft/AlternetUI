@@ -27,7 +27,7 @@ namespace Alternet.UI
     [DefaultProperty("Text")]
     [DefaultBindingProperty("Text")]
     [ControlCategory("Common")]
-    public class Label : Control
+    public class Label : CustomLabel
     {
         private string text = string.Empty;
 
@@ -55,12 +55,8 @@ namespace Alternet.UI
         /// </summary>
         public event EventHandler? TextChanged;
 
-        /// <summary>
-        /// Gets or sets the text displayed on this label.
-        /// </summary>
-        [DefaultValue("")]
-        [Localizability(LocalizationCategory.Text)]
-        public string Text
+        /// <inheritdoc/>
+        public override string Text
         {
             get
             {
