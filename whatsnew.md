@@ -1,3 +1,31 @@
+# 0.9.409 (work in progress)
+
+- Fixed controls flickering on Windows: TextBox, Button, CheckBox, RadioButton, Label, ComboBox, LinkLabel,
+ ListBox, DateTimePicker, Calendar, TabControl, TreeView, NumericUpDown.
+- Improved Layout in controls: SplitterPanel.
+- Border: UniformCornerRadius, UniformRadiusIsPercent. Allows to draw background with rounded corners. 
+- CardPanelHeader: DefaultBorderWidth, DefaultBorderPadding, DefaultBorderMargin, DefaultAdditionalSpace, 
+Border, TabHorizontalAlignment, BorderWidth, BorderPadding, DefaultBorderSideWidth, 
+BorderMargin, TabGroupHorizontalAlignment, TabVerticalAlignment,
+TabGroupVerticalAlignment, Orientation.
+- Added CardPanelHeaderButton. Now it is possible to customize button used in CardPanelHeader, just assign
+ CustomButton.CreateButton property or override CardPanelHeader.CreateHeaderButton() method.
+- CardPanel: SelectedCardIndex, IndexOf, BackgroundColorActiveTab, BackgroundColorInactiveTab,
+ ForegroundColorActiveTab, ForegroundColorInactiveTab, CardPropertyChanged.
+- Draw design corners in PropertyGridSample. Also Border control can draw such borders.
+- Ctrl+Shift+Alt+F12 if DEBUG shows Developer Tools. If it is not what is wanted, clear KnownKeys.ShowDeveloperTools.
+- Added Application.DoInsideBusyCursor, Control.Group, TreeView.SelectFirstItem, Control.HasIndirectParent,
+ FontAndColor.ChangeColor, ButtonBase.ClickAction, TextBox.ShowDialogGoToLine.
+- RichTextBox: CurrentPosition, event CurrentPositionChanged.
+- ControlSet: LabelMaxWidth, LabelSuggestedWidthToMax.
+- Rect, Size, Point, Thickness implicit convert from tuple. Example: Size size = (5, 10);
+- Control: DebugBacgkroundColor, UseDebugBackgroundColor.
+- Fixed SplitterPanel cursor problems on Linux.
+- Improved ControlsSample, PropertyGridSample and other.
+- Rect: MinWidthHeight, MaxWidthHeight, PercentOfWidth, PercentOfHeight, PercentOfMinSize.
+
+---
+
 # 0.9.408 (2023 November 20)
 
 - Added Net 8.0 support.
