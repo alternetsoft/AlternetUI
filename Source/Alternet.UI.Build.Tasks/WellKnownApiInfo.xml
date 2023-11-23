@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ApiInfo>
-  <Assembly Name="Alternet.UI, Version=0.9.407.0, Culture=neutral, PublicKeyToken=d211ec79d306281b">
+  <Assembly Name="Alternet.UI, Version=0.9.409.0, Culture=neutral, PublicKeyToken=d211ec79d306281b">
     <Type Name="XamlX.Runtime.IXamlParentStackProviderV1" />
     <Type Name="XamlX.Runtime.IXamlXmlNamespaceInfoProviderV1" />
     <Type Name="XamlX.Runtime.XamlXmlNamespaceInfoV1" />
@@ -23,7 +23,7 @@
     <Type Name="Alternet.Drawing.KnownColorCategory" />
     <Type Name="Alternet.Drawing.KnownColorTable" />
     <Type Name="Alternet.Drawing.SystemColors" />
-    <Type Name="Alternet.Drawing.WxSystemColor" />
+    <Type Name="Alternet.Drawing.SystemSettingsColor" />
     <Type Name="Alternet.Drawing.DrawingContext">
       <Event Name="Disposed" />
     </Type>
@@ -43,6 +43,7 @@
     <Type Name="Alternet.Drawing.ImageList" />
     <Type Name="Alternet.Drawing.ImageSetConverter" />
     <Type Name="Alternet.Drawing.InterpolationMode" />
+    <Type Name="Alternet.Drawing.SvgUtils" />
     <Type Name="Alternet.Drawing.Int32Point" />
     <Type Name="Alternet.Drawing.Int32Rect" />
     <Type Name="Alternet.Drawing.Int32Size" />
@@ -92,21 +93,43 @@
       <Event Name="Idle" />
       <Event Name="LogMessage" />
     </Type>
-    <Type Name="Alternet.UI.UnhandledExceptionMode" />
     <Type Name="Alternet.UI.ControlCategoryAttribute" />
     <Type Name="Alternet.UI.BaseComponent" />
+    <Type Name="Alternet.UI.BaseControlItem" />
     <Type Name="Alternet.UI.BaseObject" />
+    <Type Name="Alternet.UI.Caret">
+      <Event Name="Disposed" />
+    </Type>
+    <Type Name="Alternet.UI.Cursor">
+      <Event Name="Disposed" />
+    </Type>
+    <Type Name="Alternet.UI.Cursors" />
+    <Type Name="Alternet.UI.Display">
+      <Event Name="Disposed" />
+    </Type>
     <Type Name="Alternet.UI.DisposableObject">
       <Event Name="Disposed" />
     </Type>
+    <Type Name="Alternet.UI.BaseCancelEventArgs" />
+    <Type Name="Alternet.UI.BaseEventArgs" />
     <Type Name="Alternet.UI.ErrorStatusEventHandler" />
     <Type Name="Alternet.UI.ErrorStatusEventArgs" />
     <Type Name="Alternet.UI.LogMessageEventArgs" />
+    <Type Name="Alternet.UI.ObjectPropertyChangedEventArgs" />
     <Type Name="Alternet.UI.PaintEventArgs" />
-    <Type Name="Alternet.UI.PropertyChangeEventArgs" />
+    <Type Name="Alternet.UI.UrlEventHandler" />
+    <Type Name="Alternet.UI.UrlEventArgs" />
+    <Type Name="Alternet.UI.ValidationEventHandler" />
+    <Type Name="Alternet.UI.ValidationEventArgs" />
+    <Type Name="Alternet.UI.Factory" />
     <Type Name="Alternet.UI.KeyInfo" />
     <Type Name="Alternet.UI.KnownKeys" />
+    <Type Name="Alternet.UI.NameValue`1" />
     <Type Name="Alternet.UI.ObjectToStringFactory" />
+    <Type Name="Alternet.UI.ObjectUniqueId" />
+    <Type Name="Alternet.UI.StringSearch" />
+    <Type Name="Alternet.UI.SystemSettings" />
+    <Type Name="Alternet.UI.UnhandledExceptionMode" />
     <Type Name="Alternet.UI.Clipboard" />
     <Type Name="Alternet.UI.DataFormats" />
     <Type Name="Alternet.UI.DataObject" />
@@ -134,8 +157,6 @@
       <Event Name="PreviewMouseRightButtonUp" />
       <Event Name="PreviewMouseMove" />
       <Event Name="MouseUp" />
-      <Event Name="GotFocus" />
-      <Event Name="LostFocus" />
       <Event Name="MouseRightButtonUp" />
       <Event Name="PreviewMouseLeftButtonDown" />
       <Event Name="KeyDown" />
@@ -166,8 +187,6 @@
       <Event Name="PreviewMouseRightButtonUp" />
       <Event Name="PreviewMouseMove" />
       <Event Name="MouseUp" />
-      <Event Name="GotFocus" />
-      <Event Name="LostFocus" />
       <Event Name="MouseRightButtonUp" />
       <Event Name="PreviewMouseLeftButtonDown" />
       <Event Name="KeyDown" />
@@ -220,6 +239,8 @@
       <Event Name="HasTitleBarChanged" />
       <Event Name="Activated" />
       <Event Name="Deactivated" />
+      <Event Name="GotFocus" />
+      <Event Name="LostFocus" />
       <Event Name="ToolTipChanged" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
@@ -243,6 +264,7 @@
       <Event Name="DragOver" />
       <Event Name="DragEnter" />
       <Event Name="DragLeave" />
+      <Event Name="Idle" />
       <Event Name="DataContextChanged" />
       <Event Name="PreviewKeyDown" />
       <Event Name="MouseMove" />
@@ -255,8 +277,6 @@
       <Event Name="PreviewMouseRightButtonUp" />
       <Event Name="PreviewMouseMove" />
       <Event Name="MouseUp" />
-      <Event Name="GotFocus" />
-      <Event Name="LostFocus" />
       <Event Name="MouseRightButtonUp" />
       <Event Name="PreviewMouseLeftButtonDown" />
       <Event Name="KeyDown" />
@@ -274,6 +294,9 @@
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.CardPanel">
+      <Event Name="CardPropertyChanged" />
+      <Event Name="GotFocus" />
+      <Event Name="LostFocus" />
       <Event Name="ToolTipChanged" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
@@ -297,6 +320,7 @@
       <Event Name="DragOver" />
       <Event Name="DragEnter" />
       <Event Name="DragLeave" />
+      <Event Name="Idle" />
       <Event Name="DataContextChanged" />
       <Event Name="PreviewKeyDown" />
       <Event Name="MouseMove" />
@@ -309,8 +333,6 @@
       <Event Name="PreviewMouseRightButtonUp" />
       <Event Name="PreviewMouseMove" />
       <Event Name="MouseUp" />
-      <Event Name="GotFocus" />
-      <Event Name="LostFocus" />
       <Event Name="MouseRightButtonUp" />
       <Event Name="PreviewMouseLeftButtonDown" />
       <Event Name="KeyDown" />
@@ -329,6 +351,8 @@
     </Type>
     <Type Name="Alternet.UI.CardPanelHeader">
       <Event Name="TabClick" />
+      <Event Name="GotFocus" />
+      <Event Name="LostFocus" />
       <Event Name="ToolTipChanged" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
@@ -352,6 +376,7 @@
       <Event Name="DragOver" />
       <Event Name="DragEnter" />
       <Event Name="DragLeave" />
+      <Event Name="Idle" />
       <Event Name="DataContextChanged" />
       <Event Name="PreviewKeyDown" />
       <Event Name="MouseMove" />
@@ -364,8 +389,61 @@
       <Event Name="PreviewMouseRightButtonUp" />
       <Event Name="PreviewMouseMove" />
       <Event Name="MouseUp" />
+      <Event Name="MouseRightButtonUp" />
+      <Event Name="PreviewMouseLeftButtonDown" />
+      <Event Name="KeyDown" />
+      <Event Name="PreviewMouseDoubleClick" />
+      <Event Name="MouseDoubleClick" />
+      <Event Name="PreviewMouseUp" />
+      <Event Name="PreviewTextInput" />
+      <Event Name="TextInput" />
+      <Event Name="PreviewKeyUp" />
+      <Event Name="PreviewMouseRightButtonDown" />
+      <Event Name="PreviewMouseWheel" />
+      <Event Name="MouseWheel" />
+      <Event Name="MouseLeftButtonUp" />
+      <Event Name="KeyUp" />
+      <Event Name="Disposed" />
+    </Type>
+    <Type Name="Alternet.UI.CardPanelHeaderButton">
+      <Event Name="Click" />
       <Event Name="GotFocus" />
       <Event Name="LostFocus" />
+      <Event Name="ToolTipChanged" />
+      <Event Name="ParentChanged" />
+      <Event Name="Paint" />
+      <Event Name="MarginChanged" />
+      <Event Name="PaddingChanged" />
+      <Event Name="VisibleChanged" />
+      <Event Name="MouseCaptureLost" />
+      <Event Name="MouseEnter" />
+      <Event Name="MouseLeave" />
+      <Event Name="EnabledChanged" />
+      <Event Name="BackgroundChanged" />
+      <Event Name="ForegroundChanged" />
+      <Event Name="FontChanged" />
+      <Event Name="VerticalAlignmentChanged" />
+      <Event Name="HorizontalAlignmentChanged" />
+      <Event Name="SizeChanged" />
+      <Event Name="LocationChanged" />
+      <Event Name="DragStart" />
+      <Event Name="DragDrop" />
+      <Event Name="DragOver" />
+      <Event Name="DragEnter" />
+      <Event Name="DragLeave" />
+      <Event Name="Idle" />
+      <Event Name="DataContextChanged" />
+      <Event Name="PreviewKeyDown" />
+      <Event Name="MouseMove" />
+      <Event Name="PreviewMouseDown" />
+      <Event Name="MouseDown" />
+      <Event Name="LayoutUpdated" />
+      <Event Name="MouseLeftButtonDown" />
+      <Event Name="PreviewMouseLeftButtonUp" />
+      <Event Name="MouseRightButtonDown" />
+      <Event Name="PreviewMouseRightButtonUp" />
+      <Event Name="PreviewMouseMove" />
+      <Event Name="MouseUp" />
       <Event Name="MouseRightButtonUp" />
       <Event Name="PreviewMouseLeftButtonDown" />
       <Event Name="KeyDown" />
@@ -383,8 +461,12 @@
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.CardPanelHeaderItem" />
-    <Type Name="Alternet.UI.CardPanelItem" />
-    <Type Name="Alternet.UI.PanelAuiManager">
+    <Type Name="Alternet.UI.CardPanelItem">
+      <Event Name="PropertyChanged" />
+    </Type>
+    <Type Name="Alternet.UI.GenericTabControl">
+      <Event Name="GotFocus" />
+      <Event Name="LostFocus" />
       <Event Name="ToolTipChanged" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
@@ -408,6 +490,7 @@
       <Event Name="DragOver" />
       <Event Name="DragEnter" />
       <Event Name="DragLeave" />
+      <Event Name="Idle" />
       <Event Name="DataContextChanged" />
       <Event Name="PreviewKeyDown" />
       <Event Name="MouseMove" />
@@ -420,8 +503,61 @@
       <Event Name="PreviewMouseRightButtonUp" />
       <Event Name="PreviewMouseMove" />
       <Event Name="MouseUp" />
+      <Event Name="MouseRightButtonUp" />
+      <Event Name="PreviewMouseLeftButtonDown" />
+      <Event Name="KeyDown" />
+      <Event Name="PreviewMouseDoubleClick" />
+      <Event Name="MouseDoubleClick" />
+      <Event Name="PreviewMouseUp" />
+      <Event Name="PreviewTextInput" />
+      <Event Name="TextInput" />
+      <Event Name="PreviewKeyUp" />
+      <Event Name="PreviewMouseRightButtonDown" />
+      <Event Name="PreviewMouseWheel" />
+      <Event Name="MouseWheel" />
+      <Event Name="MouseLeftButtonUp" />
+      <Event Name="KeyUp" />
+      <Event Name="Disposed" />
+    </Type>
+    <Type Name="Alternet.UI.PanelAuiManager">
       <Event Name="GotFocus" />
       <Event Name="LostFocus" />
+      <Event Name="ToolTipChanged" />
+      <Event Name="Click" />
+      <Event Name="ParentChanged" />
+      <Event Name="Paint" />
+      <Event Name="MarginChanged" />
+      <Event Name="PaddingChanged" />
+      <Event Name="VisibleChanged" />
+      <Event Name="MouseCaptureLost" />
+      <Event Name="MouseEnter" />
+      <Event Name="MouseLeave" />
+      <Event Name="EnabledChanged" />
+      <Event Name="BackgroundChanged" />
+      <Event Name="ForegroundChanged" />
+      <Event Name="FontChanged" />
+      <Event Name="VerticalAlignmentChanged" />
+      <Event Name="HorizontalAlignmentChanged" />
+      <Event Name="SizeChanged" />
+      <Event Name="LocationChanged" />
+      <Event Name="DragStart" />
+      <Event Name="DragDrop" />
+      <Event Name="DragOver" />
+      <Event Name="DragEnter" />
+      <Event Name="DragLeave" />
+      <Event Name="Idle" />
+      <Event Name="DataContextChanged" />
+      <Event Name="PreviewKeyDown" />
+      <Event Name="MouseMove" />
+      <Event Name="PreviewMouseDown" />
+      <Event Name="MouseDown" />
+      <Event Name="LayoutUpdated" />
+      <Event Name="MouseLeftButtonDown" />
+      <Event Name="PreviewMouseLeftButtonUp" />
+      <Event Name="MouseRightButtonDown" />
+      <Event Name="PreviewMouseRightButtonUp" />
+      <Event Name="PreviewMouseMove" />
+      <Event Name="MouseUp" />
       <Event Name="MouseRightButtonUp" />
       <Event Name="PreviewMouseLeftButtonDown" />
       <Event Name="KeyDown" />
@@ -439,6 +575,8 @@
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.PanelAuiManagerBase">
+      <Event Name="GotFocus" />
+      <Event Name="LostFocus" />
       <Event Name="ToolTipChanged" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
@@ -462,6 +600,7 @@
       <Event Name="DragOver" />
       <Event Name="DragEnter" />
       <Event Name="DragLeave" />
+      <Event Name="Idle" />
       <Event Name="DataContextChanged" />
       <Event Name="PreviewKeyDown" />
       <Event Name="MouseMove" />
@@ -474,8 +613,6 @@
       <Event Name="PreviewMouseRightButtonUp" />
       <Event Name="PreviewMouseMove" />
       <Event Name="MouseUp" />
-      <Event Name="GotFocus" />
-      <Event Name="LostFocus" />
       <Event Name="MouseRightButtonUp" />
       <Event Name="PreviewMouseLeftButtonDown" />
       <Event Name="KeyDown" />
@@ -494,6 +631,8 @@
     </Type>
     <Type Name="Alternet.UI.PanelOkCancelButtons">
       <Event Name="OrientationChanged" />
+      <Event Name="GotFocus" />
+      <Event Name="LostFocus" />
       <Event Name="ToolTipChanged" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
@@ -517,6 +656,7 @@
       <Event Name="DragOver" />
       <Event Name="DragEnter" />
       <Event Name="DragLeave" />
+      <Event Name="Idle" />
       <Event Name="DataContextChanged" />
       <Event Name="PreviewKeyDown" />
       <Event Name="MouseMove" />
@@ -529,8 +669,64 @@
       <Event Name="PreviewMouseRightButtonUp" />
       <Event Name="PreviewMouseMove" />
       <Event Name="MouseUp" />
+      <Event Name="MouseRightButtonUp" />
+      <Event Name="PreviewMouseLeftButtonDown" />
+      <Event Name="KeyDown" />
+      <Event Name="PreviewMouseDoubleClick" />
+      <Event Name="MouseDoubleClick" />
+      <Event Name="PreviewMouseUp" />
+      <Event Name="PreviewTextInput" />
+      <Event Name="TextInput" />
+      <Event Name="PreviewKeyUp" />
+      <Event Name="PreviewMouseRightButtonDown" />
+      <Event Name="PreviewMouseWheel" />
+      <Event Name="MouseWheel" />
+      <Event Name="MouseLeftButtonUp" />
+      <Event Name="KeyUp" />
+      <Event Name="Disposed" />
+    </Type>
+    <Type Name="Alternet.UI.PanelRichTextBox">
+      <Event Name="FileNewClick" />
+      <Event Name="FileOpenClick" />
+      <Event Name="FileSaveClick" />
       <Event Name="GotFocus" />
       <Event Name="LostFocus" />
+      <Event Name="ToolTipChanged" />
+      <Event Name="Click" />
+      <Event Name="ParentChanged" />
+      <Event Name="Paint" />
+      <Event Name="MarginChanged" />
+      <Event Name="PaddingChanged" />
+      <Event Name="VisibleChanged" />
+      <Event Name="MouseCaptureLost" />
+      <Event Name="MouseEnter" />
+      <Event Name="MouseLeave" />
+      <Event Name="EnabledChanged" />
+      <Event Name="BackgroundChanged" />
+      <Event Name="ForegroundChanged" />
+      <Event Name="FontChanged" />
+      <Event Name="VerticalAlignmentChanged" />
+      <Event Name="HorizontalAlignmentChanged" />
+      <Event Name="SizeChanged" />
+      <Event Name="LocationChanged" />
+      <Event Name="DragStart" />
+      <Event Name="DragDrop" />
+      <Event Name="DragOver" />
+      <Event Name="DragEnter" />
+      <Event Name="DragLeave" />
+      <Event Name="Idle" />
+      <Event Name="DataContextChanged" />
+      <Event Name="PreviewKeyDown" />
+      <Event Name="MouseMove" />
+      <Event Name="PreviewMouseDown" />
+      <Event Name="MouseDown" />
+      <Event Name="LayoutUpdated" />
+      <Event Name="MouseLeftButtonDown" />
+      <Event Name="PreviewMouseLeftButtonUp" />
+      <Event Name="MouseRightButtonDown" />
+      <Event Name="PreviewMouseRightButtonUp" />
+      <Event Name="PreviewMouseMove" />
+      <Event Name="MouseUp" />
       <Event Name="MouseRightButtonUp" />
       <Event Name="PreviewMouseLeftButtonDown" />
       <Event Name="KeyDown" />
@@ -548,6 +744,8 @@
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.PanelTreeAndCards">
+      <Event Name="GotFocus" />
+      <Event Name="LostFocus" />
       <Event Name="ToolTipChanged" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
@@ -571,6 +769,7 @@
       <Event Name="DragOver" />
       <Event Name="DragEnter" />
       <Event Name="DragLeave" />
+      <Event Name="Idle" />
       <Event Name="DataContextChanged" />
       <Event Name="PreviewKeyDown" />
       <Event Name="MouseMove" />
@@ -583,8 +782,6 @@
       <Event Name="PreviewMouseRightButtonUp" />
       <Event Name="PreviewMouseMove" />
       <Event Name="MouseUp" />
-      <Event Name="GotFocus" />
-      <Event Name="LostFocus" />
       <Event Name="MouseRightButtonUp" />
       <Event Name="PreviewMouseLeftButtonDown" />
       <Event Name="KeyDown" />
@@ -623,6 +820,8 @@
       <Event Name="HasTitleBarChanged" />
       <Event Name="Activated" />
       <Event Name="Deactivated" />
+      <Event Name="GotFocus" />
+      <Event Name="LostFocus" />
       <Event Name="ToolTipChanged" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
@@ -646,6 +845,7 @@
       <Event Name="DragOver" />
       <Event Name="DragEnter" />
       <Event Name="DragLeave" />
+      <Event Name="Idle" />
       <Event Name="DataContextChanged" />
       <Event Name="PreviewKeyDown" />
       <Event Name="MouseMove" />
@@ -658,8 +858,6 @@
       <Event Name="PreviewMouseRightButtonUp" />
       <Event Name="PreviewMouseMove" />
       <Event Name="MouseUp" />
-      <Event Name="GotFocus" />
-      <Event Name="LostFocus" />
       <Event Name="MouseRightButtonUp" />
       <Event Name="PreviewMouseLeftButtonDown" />
       <Event Name="KeyDown" />
@@ -698,6 +896,8 @@
       <Event Name="HasTitleBarChanged" />
       <Event Name="Activated" />
       <Event Name="Deactivated" />
+      <Event Name="GotFocus" />
+      <Event Name="LostFocus" />
       <Event Name="ToolTipChanged" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
@@ -721,6 +921,7 @@
       <Event Name="DragOver" />
       <Event Name="DragEnter" />
       <Event Name="DragLeave" />
+      <Event Name="Idle" />
       <Event Name="DataContextChanged" />
       <Event Name="PreviewKeyDown" />
       <Event Name="MouseMove" />
@@ -733,8 +934,6 @@
       <Event Name="PreviewMouseRightButtonUp" />
       <Event Name="PreviewMouseMove" />
       <Event Name="MouseUp" />
-      <Event Name="GotFocus" />
-      <Event Name="LostFocus" />
       <Event Name="MouseRightButtonUp" />
       <Event Name="PreviewMouseLeftButtonDown" />
       <Event Name="KeyDown" />
@@ -773,6 +972,8 @@
       <Event Name="HasTitleBarChanged" />
       <Event Name="Activated" />
       <Event Name="Deactivated" />
+      <Event Name="GotFocus" />
+      <Event Name="LostFocus" />
       <Event Name="ToolTipChanged" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
@@ -796,6 +997,7 @@
       <Event Name="DragOver" />
       <Event Name="DragEnter" />
       <Event Name="DragLeave" />
+      <Event Name="Idle" />
       <Event Name="DataContextChanged" />
       <Event Name="PreviewKeyDown" />
       <Event Name="MouseMove" />
@@ -808,8 +1010,6 @@
       <Event Name="PreviewMouseRightButtonUp" />
       <Event Name="PreviewMouseMove" />
       <Event Name="MouseUp" />
-      <Event Name="GotFocus" />
-      <Event Name="LostFocus" />
       <Event Name="MouseRightButtonUp" />
       <Event Name="PreviewMouseLeftButtonDown" />
       <Event Name="KeyDown" />
@@ -848,6 +1048,8 @@
       <Event Name="HasTitleBarChanged" />
       <Event Name="Activated" />
       <Event Name="Deactivated" />
+      <Event Name="GotFocus" />
+      <Event Name="LostFocus" />
       <Event Name="ToolTipChanged" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
@@ -871,6 +1073,7 @@
       <Event Name="DragOver" />
       <Event Name="DragEnter" />
       <Event Name="DragLeave" />
+      <Event Name="Idle" />
       <Event Name="DataContextChanged" />
       <Event Name="PreviewKeyDown" />
       <Event Name="MouseMove" />
@@ -883,8 +1086,6 @@
       <Event Name="PreviewMouseRightButtonUp" />
       <Event Name="PreviewMouseMove" />
       <Event Name="MouseUp" />
-      <Event Name="GotFocus" />
-      <Event Name="LostFocus" />
       <Event Name="MouseRightButtonUp" />
       <Event Name="PreviewMouseLeftButtonDown" />
       <Event Name="KeyDown" />
@@ -923,6 +1124,8 @@
       <Event Name="HasTitleBarChanged" />
       <Event Name="Activated" />
       <Event Name="Deactivated" />
+      <Event Name="GotFocus" />
+      <Event Name="LostFocus" />
       <Event Name="ToolTipChanged" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
@@ -946,6 +1149,7 @@
       <Event Name="DragOver" />
       <Event Name="DragEnter" />
       <Event Name="DragLeave" />
+      <Event Name="Idle" />
       <Event Name="DataContextChanged" />
       <Event Name="PreviewKeyDown" />
       <Event Name="MouseMove" />
@@ -958,8 +1162,6 @@
       <Event Name="PreviewMouseRightButtonUp" />
       <Event Name="PreviewMouseMove" />
       <Event Name="MouseUp" />
-      <Event Name="GotFocus" />
-      <Event Name="LostFocus" />
       <Event Name="MouseRightButtonUp" />
       <Event Name="PreviewMouseLeftButtonDown" />
       <Event Name="KeyDown" />
@@ -998,6 +1200,8 @@
       <Event Name="HasTitleBarChanged" />
       <Event Name="Activated" />
       <Event Name="Deactivated" />
+      <Event Name="GotFocus" />
+      <Event Name="LostFocus" />
       <Event Name="ToolTipChanged" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
@@ -1021,6 +1225,7 @@
       <Event Name="DragOver" />
       <Event Name="DragEnter" />
       <Event Name="DragLeave" />
+      <Event Name="Idle" />
       <Event Name="DataContextChanged" />
       <Event Name="PreviewKeyDown" />
       <Event Name="MouseMove" />
@@ -1033,8 +1238,6 @@
       <Event Name="PreviewMouseRightButtonUp" />
       <Event Name="PreviewMouseMove" />
       <Event Name="MouseUp" />
-      <Event Name="GotFocus" />
-      <Event Name="LostFocus" />
       <Event Name="MouseRightButtonUp" />
       <Event Name="PreviewMouseLeftButtonDown" />
       <Event Name="KeyDown" />
@@ -1073,6 +1276,8 @@
       <Event Name="HasTitleBarChanged" />
       <Event Name="Activated" />
       <Event Name="Deactivated" />
+      <Event Name="GotFocus" />
+      <Event Name="LostFocus" />
       <Event Name="ToolTipChanged" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
@@ -1096,6 +1301,7 @@
       <Event Name="DragOver" />
       <Event Name="DragEnter" />
       <Event Name="DragLeave" />
+      <Event Name="Idle" />
       <Event Name="DataContextChanged" />
       <Event Name="PreviewKeyDown" />
       <Event Name="MouseMove" />
@@ -1108,8 +1314,6 @@
       <Event Name="PreviewMouseRightButtonUp" />
       <Event Name="PreviewMouseMove" />
       <Event Name="MouseUp" />
-      <Event Name="GotFocus" />
-      <Event Name="LostFocus" />
       <Event Name="MouseRightButtonUp" />
       <Event Name="PreviewMouseLeftButtonDown" />
       <Event Name="KeyDown" />
@@ -1139,40 +1343,6 @@
       <Event Name="PreviewMouseRightButtonUp" />
       <Event Name="PreviewMouseMove" />
       <Event Name="MouseUp" />
-      <Event Name="GotFocus" />
-      <Event Name="LostFocus" />
-      <Event Name="MouseRightButtonUp" />
-      <Event Name="PreviewMouseLeftButtonDown" />
-      <Event Name="KeyDown" />
-      <Event Name="PreviewMouseDoubleClick" />
-      <Event Name="MouseDoubleClick" />
-      <Event Name="PreviewMouseUp" />
-      <Event Name="PreviewTextInput" />
-      <Event Name="TextInput" />
-      <Event Name="PreviewKeyUp" />
-      <Event Name="PreviewMouseRightButtonDown" />
-      <Event Name="PreviewMouseWheel" />
-      <Event Name="MouseWheel" />
-      <Event Name="MouseLeftButtonUp" />
-      <Event Name="KeyUp" />
-      <Event Name="Disposed" />
-    </Type>
-    <Type Name="Alternet.UI.ColumnDefinitionCollection" />
-    <Type Name="Alternet.UI.DefinitionBase">
-      <Event Name="DataContextChanged" />
-      <Event Name="PreviewKeyDown" />
-      <Event Name="MouseMove" />
-      <Event Name="PreviewMouseDown" />
-      <Event Name="MouseDown" />
-      <Event Name="LayoutUpdated" />
-      <Event Name="MouseLeftButtonDown" />
-      <Event Name="PreviewMouseLeftButtonUp" />
-      <Event Name="MouseRightButtonDown" />
-      <Event Name="PreviewMouseRightButtonUp" />
-      <Event Name="PreviewMouseMove" />
-      <Event Name="MouseUp" />
-      <Event Name="GotFocus" />
-      <Event Name="LostFocus" />
       <Event Name="MouseRightButtonUp" />
       <Event Name="PreviewMouseLeftButtonDown" />
       <Event Name="KeyDown" />
@@ -1190,6 +1360,8 @@
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.Grid">
+      <Event Name="GotFocus" />
+      <Event Name="LostFocus" />
       <Event Name="ToolTipChanged" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
@@ -1213,6 +1385,7 @@
       <Event Name="DragOver" />
       <Event Name="DragEnter" />
       <Event Name="DragLeave" />
+      <Event Name="Idle" />
       <Event Name="DataContextChanged" />
       <Event Name="PreviewKeyDown" />
       <Event Name="MouseMove" />
@@ -1225,8 +1398,36 @@
       <Event Name="PreviewMouseRightButtonUp" />
       <Event Name="PreviewMouseMove" />
       <Event Name="MouseUp" />
-      <Event Name="GotFocus" />
-      <Event Name="LostFocus" />
+      <Event Name="MouseRightButtonUp" />
+      <Event Name="PreviewMouseLeftButtonDown" />
+      <Event Name="KeyDown" />
+      <Event Name="PreviewMouseDoubleClick" />
+      <Event Name="MouseDoubleClick" />
+      <Event Name="PreviewMouseUp" />
+      <Event Name="PreviewTextInput" />
+      <Event Name="TextInput" />
+      <Event Name="PreviewKeyUp" />
+      <Event Name="PreviewMouseRightButtonDown" />
+      <Event Name="PreviewMouseWheel" />
+      <Event Name="MouseWheel" />
+      <Event Name="MouseLeftButtonUp" />
+      <Event Name="KeyUp" />
+      <Event Name="Disposed" />
+    </Type>
+    <Type Name="Alternet.UI.GridColumnCollection" />
+    <Type Name="Alternet.UI.GridDefinitionBase">
+      <Event Name="DataContextChanged" />
+      <Event Name="PreviewKeyDown" />
+      <Event Name="MouseMove" />
+      <Event Name="PreviewMouseDown" />
+      <Event Name="MouseDown" />
+      <Event Name="LayoutUpdated" />
+      <Event Name="MouseLeftButtonDown" />
+      <Event Name="PreviewMouseLeftButtonUp" />
+      <Event Name="MouseRightButtonDown" />
+      <Event Name="PreviewMouseRightButtonUp" />
+      <Event Name="PreviewMouseMove" />
+      <Event Name="MouseUp" />
       <Event Name="MouseRightButtonUp" />
       <Event Name="PreviewMouseLeftButtonDown" />
       <Event Name="KeyDown" />
@@ -1245,6 +1446,7 @@
     </Type>
     <Type Name="Alternet.UI.GridLength" />
     <Type Name="Alternet.UI.GridLengthConverter" />
+    <Type Name="Alternet.UI.GridRowCollection" />
     <Type Name="Alternet.UI.GridUnitType" />
     <Type Name="Alternet.UI.LengthConverter" />
     <Type Name="Alternet.UI.RowDefinition">
@@ -1260,8 +1462,6 @@
       <Event Name="PreviewMouseRightButtonUp" />
       <Event Name="PreviewMouseMove" />
       <Event Name="MouseUp" />
-      <Event Name="GotFocus" />
-      <Event Name="LostFocus" />
       <Event Name="MouseRightButtonUp" />
       <Event Name="PreviewMouseLeftButtonDown" />
       <Event Name="KeyDown" />
@@ -1278,13 +1478,14 @@
       <Event Name="KeyUp" />
       <Event Name="Disposed" />
     </Type>
-    <Type Name="Alternet.UI.RowDefinitionCollection" />
     <Type Name="Alternet.UI.AnchorStyles" />
     <Type Name="Alternet.UI.AutoSizeMode" />
     <Type Name="Alternet.UI.BoundsSpecified" />
     <Type Name="Alternet.UI.DockStyle" />
     <Type Name="Alternet.UI.LayoutFactory" />
     <Type Name="Alternet.UI.LayoutPanel">
+      <Event Name="GotFocus" />
+      <Event Name="LostFocus" />
       <Event Name="ToolTipChanged" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
@@ -1308,6 +1509,7 @@
       <Event Name="DragOver" />
       <Event Name="DragEnter" />
       <Event Name="DragLeave" />
+      <Event Name="Idle" />
       <Event Name="DataContextChanged" />
       <Event Name="PreviewKeyDown" />
       <Event Name="MouseMove" />
@@ -1320,8 +1522,6 @@
       <Event Name="PreviewMouseRightButtonUp" />
       <Event Name="PreviewMouseMove" />
       <Event Name="MouseUp" />
-      <Event Name="GotFocus" />
-      <Event Name="LostFocus" />
       <Event Name="MouseRightButtonUp" />
       <Event Name="PreviewMouseLeftButtonDown" />
       <Event Name="KeyDown" />
@@ -1358,6 +1558,8 @@
       <Event Name="SplitterMoving" />
       <Event Name="Unsplit" />
       <Event Name="SplitterResize" />
+      <Event Name="GotFocus" />
+      <Event Name="LostFocus" />
       <Event Name="ToolTipChanged" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
@@ -1381,6 +1583,7 @@
       <Event Name="DragOver" />
       <Event Name="DragEnter" />
       <Event Name="DragLeave" />
+      <Event Name="Idle" />
       <Event Name="DataContextChanged" />
       <Event Name="PreviewKeyDown" />
       <Event Name="MouseMove" />
@@ -1393,8 +1596,6 @@
       <Event Name="PreviewMouseRightButtonUp" />
       <Event Name="PreviewMouseMove" />
       <Event Name="MouseUp" />
-      <Event Name="GotFocus" />
-      <Event Name="LostFocus" />
       <Event Name="MouseRightButtonUp" />
       <Event Name="PreviewMouseLeftButtonDown" />
       <Event Name="KeyDown" />
@@ -1416,6 +1617,8 @@
     <Type Name="Alternet.UI.SplitterPanelSplitMethod" />
     <Type Name="Alternet.UI.HorizontalStackPanel">
       <Event Name="OrientationChanged" />
+      <Event Name="GotFocus" />
+      <Event Name="LostFocus" />
       <Event Name="ToolTipChanged" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
@@ -1439,6 +1642,7 @@
       <Event Name="DragOver" />
       <Event Name="DragEnter" />
       <Event Name="DragLeave" />
+      <Event Name="Idle" />
       <Event Name="DataContextChanged" />
       <Event Name="PreviewKeyDown" />
       <Event Name="MouseMove" />
@@ -1451,8 +1655,6 @@
       <Event Name="PreviewMouseRightButtonUp" />
       <Event Name="PreviewMouseMove" />
       <Event Name="MouseUp" />
-      <Event Name="GotFocus" />
-      <Event Name="LostFocus" />
       <Event Name="MouseRightButtonUp" />
       <Event Name="PreviewMouseLeftButtonDown" />
       <Event Name="KeyDown" />
@@ -1471,6 +1673,8 @@
     </Type>
     <Type Name="Alternet.UI.StackPanel">
       <Event Name="OrientationChanged" />
+      <Event Name="GotFocus" />
+      <Event Name="LostFocus" />
       <Event Name="ToolTipChanged" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
@@ -1494,6 +1698,7 @@
       <Event Name="DragOver" />
       <Event Name="DragEnter" />
       <Event Name="DragLeave" />
+      <Event Name="Idle" />
       <Event Name="DataContextChanged" />
       <Event Name="PreviewKeyDown" />
       <Event Name="MouseMove" />
@@ -1506,8 +1711,6 @@
       <Event Name="PreviewMouseRightButtonUp" />
       <Event Name="PreviewMouseMove" />
       <Event Name="MouseUp" />
-      <Event Name="GotFocus" />
-      <Event Name="LostFocus" />
       <Event Name="MouseRightButtonUp" />
       <Event Name="PreviewMouseLeftButtonDown" />
       <Event Name="KeyDown" />
@@ -1527,6 +1730,8 @@
     <Type Name="Alternet.UI.StackPanelOrientation" />
     <Type Name="Alternet.UI.VerticalStackPanel">
       <Event Name="OrientationChanged" />
+      <Event Name="GotFocus" />
+      <Event Name="LostFocus" />
       <Event Name="ToolTipChanged" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
@@ -1550,6 +1755,7 @@
       <Event Name="DragOver" />
       <Event Name="DragEnter" />
       <Event Name="DragLeave" />
+      <Event Name="Idle" />
       <Event Name="DataContextChanged" />
       <Event Name="PreviewKeyDown" />
       <Event Name="MouseMove" />
@@ -1562,8 +1768,6 @@
       <Event Name="PreviewMouseRightButtonUp" />
       <Event Name="PreviewMouseMove" />
       <Event Name="MouseUp" />
-      <Event Name="GotFocus" />
-      <Event Name="LostFocus" />
       <Event Name="MouseRightButtonUp" />
       <Event Name="PreviewMouseLeftButtonDown" />
       <Event Name="KeyDown" />
@@ -1582,6 +1786,8 @@
     </Type>
     <Type Name="Alternet.UI.ColorPicker">
       <Event Name="ValueChanged" />
+      <Event Name="GotFocus" />
+      <Event Name="LostFocus" />
       <Event Name="ToolTipChanged" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
@@ -1605,6 +1811,7 @@
       <Event Name="DragOver" />
       <Event Name="DragEnter" />
       <Event Name="DragLeave" />
+      <Event Name="Idle" />
       <Event Name="DataContextChanged" />
       <Event Name="PreviewKeyDown" />
       <Event Name="MouseMove" />
@@ -1617,8 +1824,6 @@
       <Event Name="PreviewMouseRightButtonUp" />
       <Event Name="PreviewMouseMove" />
       <Event Name="MouseUp" />
-      <Event Name="GotFocus" />
-      <Event Name="LostFocus" />
       <Event Name="MouseRightButtonUp" />
       <Event Name="PreviewMouseLeftButtonDown" />
       <Event Name="KeyDown" />
@@ -1637,6 +1842,8 @@
     </Type>
     <Type Name="Alternet.UI.ComboBoxAndLabel">
       <Event Name="OrientationChanged" />
+      <Event Name="GotFocus" />
+      <Event Name="LostFocus" />
       <Event Name="ToolTipChanged" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
@@ -1660,6 +1867,7 @@
       <Event Name="DragOver" />
       <Event Name="DragEnter" />
       <Event Name="DragLeave" />
+      <Event Name="Idle" />
       <Event Name="DataContextChanged" />
       <Event Name="PreviewKeyDown" />
       <Event Name="MouseMove" />
@@ -1672,8 +1880,6 @@
       <Event Name="PreviewMouseRightButtonUp" />
       <Event Name="PreviewMouseMove" />
       <Event Name="MouseUp" />
-      <Event Name="GotFocus" />
-      <Event Name="LostFocus" />
       <Event Name="MouseRightButtonUp" />
       <Event Name="PreviewMouseLeftButtonDown" />
       <Event Name="KeyDown" />
@@ -1692,6 +1898,8 @@
     </Type>
     <Type Name="Alternet.UI.ControlAndLabel">
       <Event Name="OrientationChanged" />
+      <Event Name="GotFocus" />
+      <Event Name="LostFocus" />
       <Event Name="ToolTipChanged" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
@@ -1715,6 +1923,7 @@
       <Event Name="DragOver" />
       <Event Name="DragEnter" />
       <Event Name="DragLeave" />
+      <Event Name="Idle" />
       <Event Name="DataContextChanged" />
       <Event Name="PreviewKeyDown" />
       <Event Name="MouseMove" />
@@ -1727,8 +1936,6 @@
       <Event Name="PreviewMouseRightButtonUp" />
       <Event Name="PreviewMouseMove" />
       <Event Name="MouseUp" />
-      <Event Name="GotFocus" />
-      <Event Name="LostFocus" />
       <Event Name="MouseRightButtonUp" />
       <Event Name="PreviewMouseLeftButtonDown" />
       <Event Name="KeyDown" />
@@ -1748,6 +1955,8 @@
     <Type Name="Alternet.UI.HexEditorUInt32">
       <Event Name="TextChanged" />
       <Event Name="OrientationChanged" />
+      <Event Name="GotFocus" />
+      <Event Name="LostFocus" />
       <Event Name="ToolTipChanged" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
@@ -1771,6 +1980,7 @@
       <Event Name="DragOver" />
       <Event Name="DragEnter" />
       <Event Name="DragLeave" />
+      <Event Name="Idle" />
       <Event Name="DataContextChanged" />
       <Event Name="PreviewKeyDown" />
       <Event Name="MouseMove" />
@@ -1783,8 +1993,6 @@
       <Event Name="PreviewMouseRightButtonUp" />
       <Event Name="PreviewMouseMove" />
       <Event Name="MouseUp" />
-      <Event Name="GotFocus" />
-      <Event Name="LostFocus" />
       <Event Name="MouseRightButtonUp" />
       <Event Name="PreviewMouseLeftButtonDown" />
       <Event Name="KeyDown" />
@@ -1804,6 +2012,8 @@
     <Type Name="Alternet.UI.TextBoxAndLabel">
       <Event Name="TextChanged" />
       <Event Name="OrientationChanged" />
+      <Event Name="GotFocus" />
+      <Event Name="LostFocus" />
       <Event Name="ToolTipChanged" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
@@ -1827,6 +2037,7 @@
       <Event Name="DragOver" />
       <Event Name="DragEnter" />
       <Event Name="DragLeave" />
+      <Event Name="Idle" />
       <Event Name="DataContextChanged" />
       <Event Name="PreviewKeyDown" />
       <Event Name="MouseMove" />
@@ -1839,8 +2050,6 @@
       <Event Name="PreviewMouseRightButtonUp" />
       <Event Name="PreviewMouseMove" />
       <Event Name="MouseUp" />
-      <Event Name="GotFocus" />
-      <Event Name="LostFocus" />
       <Event Name="MouseRightButtonUp" />
       <Event Name="PreviewMouseLeftButtonDown" />
       <Event Name="KeyDown" />
@@ -1860,6 +2069,8 @@
     <Type Name="Alternet.UI.ValueEditorByte">
       <Event Name="TextChanged" />
       <Event Name="OrientationChanged" />
+      <Event Name="GotFocus" />
+      <Event Name="LostFocus" />
       <Event Name="ToolTipChanged" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
@@ -1883,6 +2094,7 @@
       <Event Name="DragOver" />
       <Event Name="DragEnter" />
       <Event Name="DragLeave" />
+      <Event Name="Idle" />
       <Event Name="DataContextChanged" />
       <Event Name="PreviewKeyDown" />
       <Event Name="MouseMove" />
@@ -1895,8 +2107,6 @@
       <Event Name="PreviewMouseRightButtonUp" />
       <Event Name="PreviewMouseMove" />
       <Event Name="MouseUp" />
-      <Event Name="GotFocus" />
-      <Event Name="LostFocus" />
       <Event Name="MouseRightButtonUp" />
       <Event Name="PreviewMouseLeftButtonDown" />
       <Event Name="KeyDown" />
@@ -1916,6 +2126,8 @@
     <Type Name="Alternet.UI.ValueEditorCustom">
       <Event Name="TextChanged" />
       <Event Name="OrientationChanged" />
+      <Event Name="GotFocus" />
+      <Event Name="LostFocus" />
       <Event Name="ToolTipChanged" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
@@ -1939,6 +2151,7 @@
       <Event Name="DragOver" />
       <Event Name="DragEnter" />
       <Event Name="DragLeave" />
+      <Event Name="Idle" />
       <Event Name="DataContextChanged" />
       <Event Name="PreviewKeyDown" />
       <Event Name="MouseMove" />
@@ -1951,8 +2164,6 @@
       <Event Name="PreviewMouseRightButtonUp" />
       <Event Name="PreviewMouseMove" />
       <Event Name="MouseUp" />
-      <Event Name="GotFocus" />
-      <Event Name="LostFocus" />
       <Event Name="MouseRightButtonUp" />
       <Event Name="PreviewMouseLeftButtonDown" />
       <Event Name="KeyDown" />
@@ -1972,6 +2183,8 @@
     <Type Name="Alternet.UI.ValueEditorDouble">
       <Event Name="TextChanged" />
       <Event Name="OrientationChanged" />
+      <Event Name="GotFocus" />
+      <Event Name="LostFocus" />
       <Event Name="ToolTipChanged" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
@@ -1995,6 +2208,7 @@
       <Event Name="DragOver" />
       <Event Name="DragEnter" />
       <Event Name="DragLeave" />
+      <Event Name="Idle" />
       <Event Name="DataContextChanged" />
       <Event Name="PreviewKeyDown" />
       <Event Name="MouseMove" />
@@ -2007,8 +2221,6 @@
       <Event Name="PreviewMouseRightButtonUp" />
       <Event Name="PreviewMouseMove" />
       <Event Name="MouseUp" />
-      <Event Name="GotFocus" />
-      <Event Name="LostFocus" />
       <Event Name="MouseRightButtonUp" />
       <Event Name="PreviewMouseLeftButtonDown" />
       <Event Name="KeyDown" />
@@ -2026,8 +2238,11 @@
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.ValueEditorEMail">
+      <Event Name="TextValidation" />
       <Event Name="TextChanged" />
       <Event Name="OrientationChanged" />
+      <Event Name="GotFocus" />
+      <Event Name="LostFocus" />
       <Event Name="ToolTipChanged" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
@@ -2051,6 +2266,7 @@
       <Event Name="DragOver" />
       <Event Name="DragEnter" />
       <Event Name="DragLeave" />
+      <Event Name="Idle" />
       <Event Name="DataContextChanged" />
       <Event Name="PreviewKeyDown" />
       <Event Name="MouseMove" />
@@ -2063,8 +2279,6 @@
       <Event Name="PreviewMouseRightButtonUp" />
       <Event Name="PreviewMouseMove" />
       <Event Name="MouseUp" />
-      <Event Name="GotFocus" />
-      <Event Name="LostFocus" />
       <Event Name="MouseRightButtonUp" />
       <Event Name="PreviewMouseLeftButtonDown" />
       <Event Name="KeyDown" />
@@ -2084,6 +2298,8 @@
     <Type Name="Alternet.UI.ValueEditorInt16">
       <Event Name="TextChanged" />
       <Event Name="OrientationChanged" />
+      <Event Name="GotFocus" />
+      <Event Name="LostFocus" />
       <Event Name="ToolTipChanged" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
@@ -2107,6 +2323,7 @@
       <Event Name="DragOver" />
       <Event Name="DragEnter" />
       <Event Name="DragLeave" />
+      <Event Name="Idle" />
       <Event Name="DataContextChanged" />
       <Event Name="PreviewKeyDown" />
       <Event Name="MouseMove" />
@@ -2119,8 +2336,6 @@
       <Event Name="PreviewMouseRightButtonUp" />
       <Event Name="PreviewMouseMove" />
       <Event Name="MouseUp" />
-      <Event Name="GotFocus" />
-      <Event Name="LostFocus" />
       <Event Name="MouseRightButtonUp" />
       <Event Name="PreviewMouseLeftButtonDown" />
       <Event Name="KeyDown" />
@@ -2140,6 +2355,8 @@
     <Type Name="Alternet.UI.ValueEditorInt32">
       <Event Name="TextChanged" />
       <Event Name="OrientationChanged" />
+      <Event Name="GotFocus" />
+      <Event Name="LostFocus" />
       <Event Name="ToolTipChanged" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
@@ -2163,6 +2380,7 @@
       <Event Name="DragOver" />
       <Event Name="DragEnter" />
       <Event Name="DragLeave" />
+      <Event Name="Idle" />
       <Event Name="DataContextChanged" />
       <Event Name="PreviewKeyDown" />
       <Event Name="MouseMove" />
@@ -2175,8 +2393,6 @@
       <Event Name="PreviewMouseRightButtonUp" />
       <Event Name="PreviewMouseMove" />
       <Event Name="MouseUp" />
-      <Event Name="GotFocus" />
-      <Event Name="LostFocus" />
       <Event Name="MouseRightButtonUp" />
       <Event Name="PreviewMouseLeftButtonDown" />
       <Event Name="KeyDown" />
@@ -2196,6 +2412,8 @@
     <Type Name="Alternet.UI.ValueEditorInt64">
       <Event Name="TextChanged" />
       <Event Name="OrientationChanged" />
+      <Event Name="GotFocus" />
+      <Event Name="LostFocus" />
       <Event Name="ToolTipChanged" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
@@ -2219,6 +2437,7 @@
       <Event Name="DragOver" />
       <Event Name="DragEnter" />
       <Event Name="DragLeave" />
+      <Event Name="Idle" />
       <Event Name="DataContextChanged" />
       <Event Name="PreviewKeyDown" />
       <Event Name="MouseMove" />
@@ -2231,8 +2450,6 @@
       <Event Name="PreviewMouseRightButtonUp" />
       <Event Name="PreviewMouseMove" />
       <Event Name="MouseUp" />
-      <Event Name="GotFocus" />
-      <Event Name="LostFocus" />
       <Event Name="MouseRightButtonUp" />
       <Event Name="PreviewMouseLeftButtonDown" />
       <Event Name="KeyDown" />
@@ -2252,6 +2469,8 @@
     <Type Name="Alternet.UI.ValueEditorSByte">
       <Event Name="TextChanged" />
       <Event Name="OrientationChanged" />
+      <Event Name="GotFocus" />
+      <Event Name="LostFocus" />
       <Event Name="ToolTipChanged" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
@@ -2275,6 +2494,7 @@
       <Event Name="DragOver" />
       <Event Name="DragEnter" />
       <Event Name="DragLeave" />
+      <Event Name="Idle" />
       <Event Name="DataContextChanged" />
       <Event Name="PreviewKeyDown" />
       <Event Name="MouseMove" />
@@ -2287,8 +2507,6 @@
       <Event Name="PreviewMouseRightButtonUp" />
       <Event Name="PreviewMouseMove" />
       <Event Name="MouseUp" />
-      <Event Name="GotFocus" />
-      <Event Name="LostFocus" />
       <Event Name="MouseRightButtonUp" />
       <Event Name="PreviewMouseLeftButtonDown" />
       <Event Name="KeyDown" />
@@ -2308,6 +2526,8 @@
     <Type Name="Alternet.UI.ValueEditorSingle">
       <Event Name="TextChanged" />
       <Event Name="OrientationChanged" />
+      <Event Name="GotFocus" />
+      <Event Name="LostFocus" />
       <Event Name="ToolTipChanged" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
@@ -2331,6 +2551,7 @@
       <Event Name="DragOver" />
       <Event Name="DragEnter" />
       <Event Name="DragLeave" />
+      <Event Name="Idle" />
       <Event Name="DataContextChanged" />
       <Event Name="PreviewKeyDown" />
       <Event Name="MouseMove" />
@@ -2343,8 +2564,64 @@
       <Event Name="PreviewMouseRightButtonUp" />
       <Event Name="PreviewMouseMove" />
       <Event Name="MouseUp" />
+      <Event Name="MouseRightButtonUp" />
+      <Event Name="PreviewMouseLeftButtonDown" />
+      <Event Name="KeyDown" />
+      <Event Name="PreviewMouseDoubleClick" />
+      <Event Name="MouseDoubleClick" />
+      <Event Name="PreviewMouseUp" />
+      <Event Name="PreviewTextInput" />
+      <Event Name="TextInput" />
+      <Event Name="PreviewKeyUp" />
+      <Event Name="PreviewMouseRightButtonDown" />
+      <Event Name="PreviewMouseWheel" />
+      <Event Name="MouseWheel" />
+      <Event Name="MouseLeftButtonUp" />
+      <Event Name="KeyUp" />
+      <Event Name="Disposed" />
+    </Type>
+    <Type Name="Alternet.UI.ValueEditorString">
+      <Event Name="TextValidation" />
+      <Event Name="TextChanged" />
+      <Event Name="OrientationChanged" />
       <Event Name="GotFocus" />
       <Event Name="LostFocus" />
+      <Event Name="ToolTipChanged" />
+      <Event Name="Click" />
+      <Event Name="ParentChanged" />
+      <Event Name="Paint" />
+      <Event Name="MarginChanged" />
+      <Event Name="PaddingChanged" />
+      <Event Name="VisibleChanged" />
+      <Event Name="MouseCaptureLost" />
+      <Event Name="MouseEnter" />
+      <Event Name="MouseLeave" />
+      <Event Name="EnabledChanged" />
+      <Event Name="BackgroundChanged" />
+      <Event Name="ForegroundChanged" />
+      <Event Name="FontChanged" />
+      <Event Name="VerticalAlignmentChanged" />
+      <Event Name="HorizontalAlignmentChanged" />
+      <Event Name="SizeChanged" />
+      <Event Name="LocationChanged" />
+      <Event Name="DragStart" />
+      <Event Name="DragDrop" />
+      <Event Name="DragOver" />
+      <Event Name="DragEnter" />
+      <Event Name="DragLeave" />
+      <Event Name="Idle" />
+      <Event Name="DataContextChanged" />
+      <Event Name="PreviewKeyDown" />
+      <Event Name="MouseMove" />
+      <Event Name="PreviewMouseDown" />
+      <Event Name="MouseDown" />
+      <Event Name="LayoutUpdated" />
+      <Event Name="MouseLeftButtonDown" />
+      <Event Name="PreviewMouseLeftButtonUp" />
+      <Event Name="MouseRightButtonDown" />
+      <Event Name="PreviewMouseRightButtonUp" />
+      <Event Name="PreviewMouseMove" />
+      <Event Name="MouseUp" />
       <Event Name="MouseRightButtonUp" />
       <Event Name="PreviewMouseLeftButtonDown" />
       <Event Name="KeyDown" />
@@ -2364,6 +2641,8 @@
     <Type Name="Alternet.UI.ValueEditorUDouble">
       <Event Name="TextChanged" />
       <Event Name="OrientationChanged" />
+      <Event Name="GotFocus" />
+      <Event Name="LostFocus" />
       <Event Name="ToolTipChanged" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
@@ -2387,6 +2666,7 @@
       <Event Name="DragOver" />
       <Event Name="DragEnter" />
       <Event Name="DragLeave" />
+      <Event Name="Idle" />
       <Event Name="DataContextChanged" />
       <Event Name="PreviewKeyDown" />
       <Event Name="MouseMove" />
@@ -2399,8 +2679,6 @@
       <Event Name="PreviewMouseRightButtonUp" />
       <Event Name="PreviewMouseMove" />
       <Event Name="MouseUp" />
-      <Event Name="GotFocus" />
-      <Event Name="LostFocus" />
       <Event Name="MouseRightButtonUp" />
       <Event Name="PreviewMouseLeftButtonDown" />
       <Event Name="KeyDown" />
@@ -2420,6 +2698,8 @@
     <Type Name="Alternet.UI.ValueEditorUInt16">
       <Event Name="TextChanged" />
       <Event Name="OrientationChanged" />
+      <Event Name="GotFocus" />
+      <Event Name="LostFocus" />
       <Event Name="ToolTipChanged" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
@@ -2443,6 +2723,7 @@
       <Event Name="DragOver" />
       <Event Name="DragEnter" />
       <Event Name="DragLeave" />
+      <Event Name="Idle" />
       <Event Name="DataContextChanged" />
       <Event Name="PreviewKeyDown" />
       <Event Name="MouseMove" />
@@ -2455,8 +2736,6 @@
       <Event Name="PreviewMouseRightButtonUp" />
       <Event Name="PreviewMouseMove" />
       <Event Name="MouseUp" />
-      <Event Name="GotFocus" />
-      <Event Name="LostFocus" />
       <Event Name="MouseRightButtonUp" />
       <Event Name="PreviewMouseLeftButtonDown" />
       <Event Name="KeyDown" />
@@ -2476,6 +2755,8 @@
     <Type Name="Alternet.UI.ValueEditorUInt32">
       <Event Name="TextChanged" />
       <Event Name="OrientationChanged" />
+      <Event Name="GotFocus" />
+      <Event Name="LostFocus" />
       <Event Name="ToolTipChanged" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
@@ -2499,6 +2780,7 @@
       <Event Name="DragOver" />
       <Event Name="DragEnter" />
       <Event Name="DragLeave" />
+      <Event Name="Idle" />
       <Event Name="DataContextChanged" />
       <Event Name="PreviewKeyDown" />
       <Event Name="MouseMove" />
@@ -2511,8 +2793,6 @@
       <Event Name="PreviewMouseRightButtonUp" />
       <Event Name="PreviewMouseMove" />
       <Event Name="MouseUp" />
-      <Event Name="GotFocus" />
-      <Event Name="LostFocus" />
       <Event Name="MouseRightButtonUp" />
       <Event Name="PreviewMouseLeftButtonDown" />
       <Event Name="KeyDown" />
@@ -2532,6 +2812,8 @@
     <Type Name="Alternet.UI.ValueEditorUInt64">
       <Event Name="TextChanged" />
       <Event Name="OrientationChanged" />
+      <Event Name="GotFocus" />
+      <Event Name="LostFocus" />
       <Event Name="ToolTipChanged" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
@@ -2555,6 +2837,7 @@
       <Event Name="DragOver" />
       <Event Name="DragEnter" />
       <Event Name="DragLeave" />
+      <Event Name="Idle" />
       <Event Name="DataContextChanged" />
       <Event Name="PreviewKeyDown" />
       <Event Name="MouseMove" />
@@ -2567,8 +2850,64 @@
       <Event Name="PreviewMouseRightButtonUp" />
       <Event Name="PreviewMouseMove" />
       <Event Name="MouseUp" />
+      <Event Name="MouseRightButtonUp" />
+      <Event Name="PreviewMouseLeftButtonDown" />
+      <Event Name="KeyDown" />
+      <Event Name="PreviewMouseDoubleClick" />
+      <Event Name="MouseDoubleClick" />
+      <Event Name="PreviewMouseUp" />
+      <Event Name="PreviewTextInput" />
+      <Event Name="TextInput" />
+      <Event Name="PreviewKeyUp" />
+      <Event Name="PreviewMouseRightButtonDown" />
+      <Event Name="PreviewMouseWheel" />
+      <Event Name="MouseWheel" />
+      <Event Name="MouseLeftButtonUp" />
+      <Event Name="KeyUp" />
+      <Event Name="Disposed" />
+    </Type>
+    <Type Name="Alternet.UI.ValueEditorUrl">
+      <Event Name="TextValidation" />
+      <Event Name="TextChanged" />
+      <Event Name="OrientationChanged" />
       <Event Name="GotFocus" />
       <Event Name="LostFocus" />
+      <Event Name="ToolTipChanged" />
+      <Event Name="Click" />
+      <Event Name="ParentChanged" />
+      <Event Name="Paint" />
+      <Event Name="MarginChanged" />
+      <Event Name="PaddingChanged" />
+      <Event Name="VisibleChanged" />
+      <Event Name="MouseCaptureLost" />
+      <Event Name="MouseEnter" />
+      <Event Name="MouseLeave" />
+      <Event Name="EnabledChanged" />
+      <Event Name="BackgroundChanged" />
+      <Event Name="ForegroundChanged" />
+      <Event Name="FontChanged" />
+      <Event Name="VerticalAlignmentChanged" />
+      <Event Name="HorizontalAlignmentChanged" />
+      <Event Name="SizeChanged" />
+      <Event Name="LocationChanged" />
+      <Event Name="DragStart" />
+      <Event Name="DragDrop" />
+      <Event Name="DragOver" />
+      <Event Name="DragEnter" />
+      <Event Name="DragLeave" />
+      <Event Name="Idle" />
+      <Event Name="DataContextChanged" />
+      <Event Name="PreviewKeyDown" />
+      <Event Name="MouseMove" />
+      <Event Name="PreviewMouseDown" />
+      <Event Name="MouseDown" />
+      <Event Name="LayoutUpdated" />
+      <Event Name="MouseLeftButtonDown" />
+      <Event Name="PreviewMouseLeftButtonUp" />
+      <Event Name="MouseRightButtonDown" />
+      <Event Name="PreviewMouseRightButtonUp" />
+      <Event Name="PreviewMouseMove" />
+      <Event Name="MouseUp" />
       <Event Name="MouseRightButtonUp" />
       <Event Name="PreviewMouseLeftButtonDown" />
       <Event Name="KeyDown" />
@@ -2588,6 +2927,8 @@
     <Type Name="Alternet.UI.ValueEditorUSingle">
       <Event Name="TextChanged" />
       <Event Name="OrientationChanged" />
+      <Event Name="GotFocus" />
+      <Event Name="LostFocus" />
       <Event Name="ToolTipChanged" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
@@ -2611,6 +2952,7 @@
       <Event Name="DragOver" />
       <Event Name="DragEnter" />
       <Event Name="DragLeave" />
+      <Event Name="Idle" />
       <Event Name="DataContextChanged" />
       <Event Name="PreviewKeyDown" />
       <Event Name="MouseMove" />
@@ -2623,62 +2965,6 @@
       <Event Name="PreviewMouseRightButtonUp" />
       <Event Name="PreviewMouseMove" />
       <Event Name="MouseUp" />
-      <Event Name="GotFocus" />
-      <Event Name="LostFocus" />
-      <Event Name="MouseRightButtonUp" />
-      <Event Name="PreviewMouseLeftButtonDown" />
-      <Event Name="KeyDown" />
-      <Event Name="PreviewMouseDoubleClick" />
-      <Event Name="MouseDoubleClick" />
-      <Event Name="PreviewMouseUp" />
-      <Event Name="PreviewTextInput" />
-      <Event Name="TextInput" />
-      <Event Name="PreviewKeyUp" />
-      <Event Name="PreviewMouseRightButtonDown" />
-      <Event Name="PreviewMouseWheel" />
-      <Event Name="MouseWheel" />
-      <Event Name="MouseLeftButtonUp" />
-      <Event Name="KeyUp" />
-      <Event Name="Disposed" />
-    </Type>
-    <Type Name="Alternet.UI.CustomTextEdit">
-      <Event Name="ToolTipChanged" />
-      <Event Name="Click" />
-      <Event Name="ParentChanged" />
-      <Event Name="Paint" />
-      <Event Name="MarginChanged" />
-      <Event Name="PaddingChanged" />
-      <Event Name="VisibleChanged" />
-      <Event Name="MouseCaptureLost" />
-      <Event Name="MouseEnter" />
-      <Event Name="MouseLeave" />
-      <Event Name="EnabledChanged" />
-      <Event Name="BackgroundChanged" />
-      <Event Name="ForegroundChanged" />
-      <Event Name="FontChanged" />
-      <Event Name="VerticalAlignmentChanged" />
-      <Event Name="HorizontalAlignmentChanged" />
-      <Event Name="SizeChanged" />
-      <Event Name="LocationChanged" />
-      <Event Name="DragStart" />
-      <Event Name="DragDrop" />
-      <Event Name="DragOver" />
-      <Event Name="DragEnter" />
-      <Event Name="DragLeave" />
-      <Event Name="DataContextChanged" />
-      <Event Name="PreviewKeyDown" />
-      <Event Name="MouseMove" />
-      <Event Name="PreviewMouseDown" />
-      <Event Name="MouseDown" />
-      <Event Name="LayoutUpdated" />
-      <Event Name="MouseLeftButtonDown" />
-      <Event Name="PreviewMouseLeftButtonUp" />
-      <Event Name="MouseRightButtonDown" />
-      <Event Name="PreviewMouseRightButtonUp" />
-      <Event Name="PreviewMouseMove" />
-      <Event Name="MouseUp" />
-      <Event Name="GotFocus" />
-      <Event Name="LostFocus" />
       <Event Name="MouseRightButtonUp" />
       <Event Name="PreviewMouseLeftButtonDown" />
       <Event Name="KeyDown" />
@@ -2701,6 +2987,8 @@
       <Event Name="WeekNumberClick" />
       <Event Name="DayHeaderClick" />
       <Event Name="DayDoubleClick" />
+      <Event Name="GotFocus" />
+      <Event Name="LostFocus" />
       <Event Name="ToolTipChanged" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
@@ -2724,6 +3012,7 @@
       <Event Name="DragOver" />
       <Event Name="DragEnter" />
       <Event Name="DragLeave" />
+      <Event Name="Idle" />
       <Event Name="DataContextChanged" />
       <Event Name="PreviewKeyDown" />
       <Event Name="MouseMove" />
@@ -2736,8 +3025,6 @@
       <Event Name="PreviewMouseRightButtonUp" />
       <Event Name="PreviewMouseMove" />
       <Event Name="MouseUp" />
-      <Event Name="GotFocus" />
-      <Event Name="LostFocus" />
       <Event Name="MouseRightButtonUp" />
       <Event Name="PreviewMouseLeftButtonDown" />
       <Event Name="KeyDown" />
@@ -2756,6 +3043,8 @@
     </Type>
     <Type Name="Alternet.UI.CalendarDateBorder" />
     <Type Name="Alternet.UI.CustomDateEdit">
+      <Event Name="GotFocus" />
+      <Event Name="LostFocus" />
       <Event Name="ToolTipChanged" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
@@ -2779,6 +3068,7 @@
       <Event Name="DragOver" />
       <Event Name="DragEnter" />
       <Event Name="DragLeave" />
+      <Event Name="Idle" />
       <Event Name="DataContextChanged" />
       <Event Name="PreviewKeyDown" />
       <Event Name="MouseMove" />
@@ -2791,8 +3081,6 @@
       <Event Name="PreviewMouseRightButtonUp" />
       <Event Name="PreviewMouseMove" />
       <Event Name="MouseUp" />
-      <Event Name="GotFocus" />
-      <Event Name="LostFocus" />
       <Event Name="MouseRightButtonUp" />
       <Event Name="PreviewMouseLeftButtonDown" />
       <Event Name="KeyDown" />
@@ -2812,6 +3100,8 @@
     <Type Name="Alternet.UI.DatePickerStyleFlags" />
     <Type Name="Alternet.UI.DateTimePicker">
       <Event Name="ValueChanged" />
+      <Event Name="GotFocus" />
+      <Event Name="LostFocus" />
       <Event Name="ToolTipChanged" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
@@ -2835,6 +3125,7 @@
       <Event Name="DragOver" />
       <Event Name="DragEnter" />
       <Event Name="DragLeave" />
+      <Event Name="Idle" />
       <Event Name="DataContextChanged" />
       <Event Name="PreviewKeyDown" />
       <Event Name="MouseMove" />
@@ -2847,8 +3138,6 @@
       <Event Name="PreviewMouseRightButtonUp" />
       <Event Name="PreviewMouseMove" />
       <Event Name="MouseUp" />
-      <Event Name="GotFocus" />
-      <Event Name="LostFocus" />
       <Event Name="MouseRightButtonUp" />
       <Event Name="PreviewMouseLeftButtonDown" />
       <Event Name="KeyDown" />
@@ -2872,6 +3161,8 @@
       <Event Name="ValueChanged" />
       <Event Name="MinimumChanged" />
       <Event Name="MaximumChanged" />
+      <Event Name="GotFocus" />
+      <Event Name="LostFocus" />
       <Event Name="ToolTipChanged" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
@@ -2895,6 +3186,7 @@
       <Event Name="DragOver" />
       <Event Name="DragEnter" />
       <Event Name="DragLeave" />
+      <Event Name="Idle" />
       <Event Name="DataContextChanged" />
       <Event Name="PreviewKeyDown" />
       <Event Name="MouseMove" />
@@ -2907,8 +3199,6 @@
       <Event Name="PreviewMouseRightButtonUp" />
       <Event Name="PreviewMouseMove" />
       <Event Name="MouseUp" />
-      <Event Name="GotFocus" />
-      <Event Name="LostFocus" />
       <Event Name="MouseRightButtonUp" />
       <Event Name="PreviewMouseLeftButtonDown" />
       <Event Name="KeyDown" />
@@ -2925,17 +3215,10 @@
       <Event Name="KeyUp" />
       <Event Name="Disposed" />
     </Type>
-    <Type Name="Alternet.UI.ITextBoxTextAttr" />
-    <Type Name="Alternet.UI.MultilineTextBox">
-      <Event Name="MultilineChanged" />
-      <Event Name="ReadOnlyChanged" />
-      <Event Name="CurrentPositionChanged" />
+    <Type Name="Alternet.UI.CustomTextBox">
       <Event Name="ErrorStatusChanged" />
-      <Event Name="TextChanged" />
-      <Event Name="EnterPressed" />
-      <Event Name="TextUrl" />
-      <Event Name="TextMaxLength" />
-      <Event Name="HasBorderChanged" />
+      <Event Name="GotFocus" />
+      <Event Name="LostFocus" />
       <Event Name="ToolTipChanged" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
@@ -2959,6 +3242,7 @@
       <Event Name="DragOver" />
       <Event Name="DragEnter" />
       <Event Name="DragLeave" />
+      <Event Name="Idle" />
       <Event Name="DataContextChanged" />
       <Event Name="PreviewKeyDown" />
       <Event Name="MouseMove" />
@@ -2971,8 +3255,88 @@
       <Event Name="PreviewMouseRightButtonUp" />
       <Event Name="PreviewMouseMove" />
       <Event Name="MouseUp" />
+      <Event Name="MouseRightButtonUp" />
+      <Event Name="PreviewMouseLeftButtonDown" />
+      <Event Name="KeyDown" />
+      <Event Name="PreviewMouseDoubleClick" />
+      <Event Name="MouseDoubleClick" />
+      <Event Name="PreviewMouseUp" />
+      <Event Name="PreviewTextInput" />
+      <Event Name="TextInput" />
+      <Event Name="PreviewKeyUp" />
+      <Event Name="PreviewMouseRightButtonDown" />
+      <Event Name="PreviewMouseWheel" />
+      <Event Name="MouseWheel" />
+      <Event Name="MouseLeftButtonUp" />
+      <Event Name="KeyUp" />
+      <Event Name="Disposed" />
+    </Type>
+    <Type Name="Alternet.UI.RichTextFileType" />
+    <Type Name="Alternet.UI.RichTextHandlerFlags" />
+    <Type Name="Alternet.UI.RichTextInsertFlags" />
+    <Type Name="Alternet.UI.RichTextSetPropFlags" />
+    <Type Name="Alternet.UI.RichTextSetStyleFlags" />
+    <Type Name="Alternet.UI.TextBoxOptions" />
+    <Type Name="Alternet.UI.TextBoxTextAttrAlignment" />
+    <Type Name="Alternet.UI.TextBoxTextAttrBulletStyle" />
+    <Type Name="Alternet.UI.TextBoxTextAttrEffects" />
+    <Type Name="Alternet.UI.TextBoxTextAttrFlags" />
+    <Type Name="Alternet.UI.TextBoxTextAttrLineSpacing" />
+    <Type Name="Alternet.UI.TextBoxTextAttrUnderlineType" />
+    <Type Name="Alternet.UI.TextBoxTextWrap" />
+    <Type Name="Alternet.UI.ICustomTextBox">
+      <Event Name="ErrorStatusChanged" />
+    </Type>
+    <Type Name="Alternet.UI.ITextBoxRichAttr" />
+    <Type Name="Alternet.UI.ITextBoxTextAttr" />
+    <Type Name="Alternet.UI.MultilineTextBox">
+      <Event Name="MultilineChanged" />
+      <Event Name="ReadOnlyChanged" />
+      <Event Name="CurrentPositionChanged" />
+      <Event Name="TextChanged" />
+      <Event Name="EnterPressed" />
+      <Event Name="TextUrl" />
+      <Event Name="TextMaxLength" />
+      <Event Name="HasBorderChanged" />
+      <Event Name="ErrorStatusChanged" />
       <Event Name="GotFocus" />
       <Event Name="LostFocus" />
+      <Event Name="ToolTipChanged" />
+      <Event Name="Click" />
+      <Event Name="ParentChanged" />
+      <Event Name="Paint" />
+      <Event Name="MarginChanged" />
+      <Event Name="PaddingChanged" />
+      <Event Name="VisibleChanged" />
+      <Event Name="MouseCaptureLost" />
+      <Event Name="MouseEnter" />
+      <Event Name="MouseLeave" />
+      <Event Name="EnabledChanged" />
+      <Event Name="BackgroundChanged" />
+      <Event Name="ForegroundChanged" />
+      <Event Name="FontChanged" />
+      <Event Name="VerticalAlignmentChanged" />
+      <Event Name="HorizontalAlignmentChanged" />
+      <Event Name="SizeChanged" />
+      <Event Name="LocationChanged" />
+      <Event Name="DragStart" />
+      <Event Name="DragDrop" />
+      <Event Name="DragOver" />
+      <Event Name="DragEnter" />
+      <Event Name="DragLeave" />
+      <Event Name="Idle" />
+      <Event Name="DataContextChanged" />
+      <Event Name="PreviewKeyDown" />
+      <Event Name="MouseMove" />
+      <Event Name="PreviewMouseDown" />
+      <Event Name="MouseDown" />
+      <Event Name="LayoutUpdated" />
+      <Event Name="MouseLeftButtonDown" />
+      <Event Name="PreviewMouseLeftButtonUp" />
+      <Event Name="MouseRightButtonDown" />
+      <Event Name="PreviewMouseRightButtonUp" />
+      <Event Name="PreviewMouseMove" />
+      <Event Name="MouseUp" />
       <Event Name="MouseRightButtonUp" />
       <Event Name="PreviewMouseLeftButtonDown" />
       <Event Name="KeyDown" />
@@ -2990,15 +3354,12 @@
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.RichTextBox">
-      <Event Name="MultilineChanged" />
-      <Event Name="ReadOnlyChanged" />
       <Event Name="CurrentPositionChanged" />
-      <Event Name="ErrorStatusChanged" />
       <Event Name="TextChanged" />
       <Event Name="EnterPressed" />
       <Event Name="TextUrl" />
-      <Event Name="TextMaxLength" />
-      <Event Name="HasBorderChanged" />
+      <Event Name="GotFocus" />
+      <Event Name="LostFocus" />
       <Event Name="ToolTipChanged" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
@@ -3022,6 +3383,7 @@
       <Event Name="DragOver" />
       <Event Name="DragEnter" />
       <Event Name="DragLeave" />
+      <Event Name="Idle" />
       <Event Name="DataContextChanged" />
       <Event Name="PreviewKeyDown" />
       <Event Name="MouseMove" />
@@ -3034,8 +3396,6 @@
       <Event Name="PreviewMouseRightButtonUp" />
       <Event Name="PreviewMouseMove" />
       <Event Name="MouseUp" />
-      <Event Name="GotFocus" />
-      <Event Name="LostFocus" />
       <Event Name="MouseRightButtonUp" />
       <Event Name="PreviewMouseLeftButtonDown" />
       <Event Name="KeyDown" />
@@ -3056,12 +3416,14 @@
       <Event Name="MultilineChanged" />
       <Event Name="ReadOnlyChanged" />
       <Event Name="CurrentPositionChanged" />
-      <Event Name="ErrorStatusChanged" />
       <Event Name="TextChanged" />
       <Event Name="EnterPressed" />
       <Event Name="TextUrl" />
       <Event Name="TextMaxLength" />
       <Event Name="HasBorderChanged" />
+      <Event Name="ErrorStatusChanged" />
+      <Event Name="GotFocus" />
+      <Event Name="LostFocus" />
       <Event Name="ToolTipChanged" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
@@ -3085,6 +3447,7 @@
       <Event Name="DragOver" />
       <Event Name="DragEnter" />
       <Event Name="DragLeave" />
+      <Event Name="Idle" />
       <Event Name="DataContextChanged" />
       <Event Name="PreviewKeyDown" />
       <Event Name="MouseMove" />
@@ -3097,8 +3460,6 @@
       <Event Name="PreviewMouseRightButtonUp" />
       <Event Name="PreviewMouseMove" />
       <Event Name="MouseUp" />
-      <Event Name="GotFocus" />
-      <Event Name="LostFocus" />
       <Event Name="MouseRightButtonUp" />
       <Event Name="PreviewMouseLeftButtonDown" />
       <Event Name="KeyDown" />
@@ -3115,13 +3476,6 @@
       <Event Name="KeyUp" />
       <Event Name="Disposed" />
     </Type>
-    <Type Name="Alternet.UI.TextBoxOptions" />
-    <Type Name="Alternet.UI.TextBoxTextAttrAlignment" />
-    <Type Name="Alternet.UI.TextBoxTextAttrBulletStyle" />
-    <Type Name="Alternet.UI.TextBoxTextAttrEffects" />
-    <Type Name="Alternet.UI.TextBoxTextAttrFlags" />
-    <Type Name="Alternet.UI.TextBoxTextAttrUnderlineType" />
-    <Type Name="Alternet.UI.TextBoxTextWrap" />
     <Type Name="Alternet.UI.TextChangedEventHandler" />
     <Type Name="Alternet.UI.TextChangedEventArgs" />
     <Type Name="Alternet.UI.AuiManager" />
@@ -3141,6 +3495,8 @@
       <Event Name="TabRightMouseDown" />
       <Event Name="TabRightMouseUp" />
       <Event Name="BgDoubleClick" />
+      <Event Name="GotFocus" />
+      <Event Name="LostFocus" />
       <Event Name="ToolTipChanged" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
@@ -3164,6 +3520,7 @@
       <Event Name="DragOver" />
       <Event Name="DragEnter" />
       <Event Name="DragLeave" />
+      <Event Name="Idle" />
       <Event Name="DataContextChanged" />
       <Event Name="PreviewKeyDown" />
       <Event Name="MouseMove" />
@@ -3176,8 +3533,6 @@
       <Event Name="PreviewMouseRightButtonUp" />
       <Event Name="PreviewMouseMove" />
       <Event Name="MouseUp" />
-      <Event Name="GotFocus" />
-      <Event Name="LostFocus" />
       <Event Name="MouseRightButtonUp" />
       <Event Name="PreviewMouseLeftButtonDown" />
       <Event Name="KeyDown" />
@@ -3201,6 +3556,8 @@
       <Event Name="ToolMiddleClick" />
       <Event Name="OverflowClick" />
       <Event Name="ToolRightClick" />
+      <Event Name="GotFocus" />
+      <Event Name="LostFocus" />
       <Event Name="ToolTipChanged" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
@@ -3224,6 +3581,7 @@
       <Event Name="DragOver" />
       <Event Name="DragEnter" />
       <Event Name="DragLeave" />
+      <Event Name="Idle" />
       <Event Name="DataContextChanged" />
       <Event Name="PreviewKeyDown" />
       <Event Name="MouseMove" />
@@ -3236,8 +3594,6 @@
       <Event Name="PreviewMouseRightButtonUp" />
       <Event Name="PreviewMouseMove" />
       <Event Name="MouseUp" />
-      <Event Name="GotFocus" />
-      <Event Name="LostFocus" />
       <Event Name="MouseRightButtonUp" />
       <Event Name="PreviewMouseLeftButtonDown" />
       <Event Name="KeyDown" />
@@ -3272,6 +3628,8 @@
     <Type Name="Alternet.UI.IAuiPaneInfo" />
     <Type Name="Alternet.UI.IAuiToolbarArt" />
     <Type Name="Alternet.UI.Border">
+      <Event Name="GotFocus" />
+      <Event Name="LostFocus" />
       <Event Name="ToolTipChanged" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
@@ -3295,6 +3653,7 @@
       <Event Name="DragOver" />
       <Event Name="DragEnter" />
       <Event Name="DragLeave" />
+      <Event Name="Idle" />
       <Event Name="DataContextChanged" />
       <Event Name="PreviewKeyDown" />
       <Event Name="MouseMove" />
@@ -3307,8 +3666,6 @@
       <Event Name="PreviewMouseRightButtonUp" />
       <Event Name="PreviewMouseMove" />
       <Event Name="MouseUp" />
-      <Event Name="GotFocus" />
-      <Event Name="LostFocus" />
       <Event Name="MouseRightButtonUp" />
       <Event Name="PreviewMouseLeftButtonDown" />
       <Event Name="KeyDown" />
@@ -3326,6 +3683,7 @@
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.BorderSettings">
+      <Event Name="Paint" />
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.BorderSideSettings">
@@ -3333,8 +3691,14 @@
     </Type>
     <Type Name="Alternet.UI.ComponentDesigner">
       <Event Name="PropertyChanged" />
+      <Event Name="ControlGotFocus" />
+      <Event Name="ControlCreated" />
+      <Event Name="ControlDisposed" />
+      <Event Name="ControlParentChanged" />
     </Type>
     <Type Name="Alternet.UI.Control">
+      <Event Name="GotFocus" />
+      <Event Name="LostFocus" />
       <Event Name="ToolTipChanged" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
@@ -3358,6 +3722,7 @@
       <Event Name="DragOver" />
       <Event Name="DragEnter" />
       <Event Name="DragLeave" />
+      <Event Name="Idle" />
       <Event Name="DataContextChanged" />
       <Event Name="PreviewKeyDown" />
       <Event Name="MouseMove" />
@@ -3370,8 +3735,6 @@
       <Event Name="PreviewMouseRightButtonUp" />
       <Event Name="PreviewMouseMove" />
       <Event Name="MouseUp" />
-      <Event Name="GotFocus" />
-      <Event Name="LostFocus" />
       <Event Name="MouseRightButtonUp" />
       <Event Name="PreviewMouseLeftButtonDown" />
       <Event Name="KeyDown" />
@@ -3391,14 +3754,17 @@
     <Type Name="Alternet.UI.ControlSet" />
     <Type Name="Alternet.UI.AllControlDefaults" />
     <Type Name="Alternet.UI.AllPlatformDefaults" />
-    <Type Name="Alternet.UI.ControlDefaults" />
+    <Type Name="Alternet.UI.ControlDefaults">
+      <Event Name="InitDefaults" />
+    </Type>
     <Type Name="Alternet.UI.ControlDefaultsId" />
-    <Type Name="Alternet.UI.ControlId" />
+    <Type Name="Alternet.UI.ControlTypeId" />
     <Type Name="Alternet.UI.PlatformDefaults" />
     <Type Name="Alternet.UI.DragAction" />
     <Type Name="Alternet.UI.DragDropEffects" />
     <Type Name="Alternet.UI.DragEventArgs" />
     <Type Name="Alternet.UI.DragStartEventArgs" />
+    <Type Name="Alternet.UI.FontAndColor" />
     <Type Name="Alternet.UI.FrameworkElement">
       <Event Name="DataContextChanged" />
       <Event Name="PreviewKeyDown" />
@@ -3412,8 +3778,6 @@
       <Event Name="PreviewMouseRightButtonUp" />
       <Event Name="PreviewMouseMove" />
       <Event Name="MouseUp" />
-      <Event Name="GotFocus" />
-      <Event Name="LostFocus" />
       <Event Name="MouseRightButtonUp" />
       <Event Name="PreviewMouseLeftButtonDown" />
       <Event Name="KeyDown" />
@@ -3431,6 +3795,8 @@
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.NonVisualControl">
+      <Event Name="GotFocus" />
+      <Event Name="LostFocus" />
       <Event Name="ToolTipChanged" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
@@ -3454,6 +3820,7 @@
       <Event Name="DragOver" />
       <Event Name="DragEnter" />
       <Event Name="DragLeave" />
+      <Event Name="Idle" />
       <Event Name="DataContextChanged" />
       <Event Name="PreviewKeyDown" />
       <Event Name="MouseMove" />
@@ -3466,8 +3833,6 @@
       <Event Name="PreviewMouseRightButtonUp" />
       <Event Name="PreviewMouseMove" />
       <Event Name="MouseUp" />
-      <Event Name="GotFocus" />
-      <Event Name="LostFocus" />
       <Event Name="MouseRightButtonUp" />
       <Event Name="PreviewMouseLeftButtonDown" />
       <Event Name="KeyDown" />
@@ -3485,6 +3850,8 @@
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.Panel">
+      <Event Name="GotFocus" />
+      <Event Name="LostFocus" />
       <Event Name="ToolTipChanged" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
@@ -3508,6 +3875,7 @@
       <Event Name="DragOver" />
       <Event Name="DragEnter" />
       <Event Name="DragLeave" />
+      <Event Name="Idle" />
       <Event Name="DataContextChanged" />
       <Event Name="PreviewKeyDown" />
       <Event Name="MouseMove" />
@@ -3520,8 +3888,6 @@
       <Event Name="PreviewMouseRightButtonUp" />
       <Event Name="PreviewMouseMove" />
       <Event Name="MouseUp" />
-      <Event Name="GotFocus" />
-      <Event Name="LostFocus" />
       <Event Name="MouseRightButtonUp" />
       <Event Name="PreviewMouseLeftButtonDown" />
       <Event Name="KeyDown" />
@@ -3539,6 +3905,8 @@
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.ScrollViewer">
+      <Event Name="GotFocus" />
+      <Event Name="LostFocus" />
       <Event Name="ToolTipChanged" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
@@ -3562,6 +3930,7 @@
       <Event Name="DragOver" />
       <Event Name="DragEnter" />
       <Event Name="DragLeave" />
+      <Event Name="Idle" />
       <Event Name="DataContextChanged" />
       <Event Name="PreviewKeyDown" />
       <Event Name="MouseMove" />
@@ -3574,8 +3943,6 @@
       <Event Name="PreviewMouseRightButtonUp" />
       <Event Name="PreviewMouseMove" />
       <Event Name="MouseUp" />
-      <Event Name="GotFocus" />
-      <Event Name="LostFocus" />
       <Event Name="MouseRightButtonUp" />
       <Event Name="PreviewMouseLeftButtonDown" />
       <Event Name="KeyDown" />
@@ -3604,8 +3971,6 @@
       <Event Name="PreviewMouseRightButtonUp" />
       <Event Name="PreviewMouseMove" />
       <Event Name="MouseUp" />
-      <Event Name="GotFocus" />
-      <Event Name="LostFocus" />
       <Event Name="MouseRightButtonUp" />
       <Event Name="PreviewMouseLeftButtonDown" />
       <Event Name="KeyDown" />
@@ -3623,6 +3988,8 @@
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.UserPaintControl">
+      <Event Name="GotFocus" />
+      <Event Name="LostFocus" />
       <Event Name="ToolTipChanged" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
@@ -3646,6 +4013,7 @@
       <Event Name="DragOver" />
       <Event Name="DragEnter" />
       <Event Name="DragLeave" />
+      <Event Name="Idle" />
       <Event Name="DataContextChanged" />
       <Event Name="PreviewKeyDown" />
       <Event Name="MouseMove" />
@@ -3658,8 +4026,6 @@
       <Event Name="PreviewMouseRightButtonUp" />
       <Event Name="PreviewMouseMove" />
       <Event Name="MouseUp" />
-      <Event Name="GotFocus" />
-      <Event Name="LostFocus" />
       <Event Name="MouseRightButtonUp" />
       <Event Name="PreviewMouseLeftButtonDown" />
       <Event Name="KeyDown" />
@@ -3678,6 +4044,8 @@
     </Type>
     <Type Name="Alternet.UI.Button">
       <Event Name="TextChanged" />
+      <Event Name="GotFocus" />
+      <Event Name="LostFocus" />
       <Event Name="ToolTipChanged" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
@@ -3701,6 +4069,7 @@
       <Event Name="DragOver" />
       <Event Name="DragEnter" />
       <Event Name="DragLeave" />
+      <Event Name="Idle" />
       <Event Name="DataContextChanged" />
       <Event Name="PreviewKeyDown" />
       <Event Name="MouseMove" />
@@ -3713,8 +4082,6 @@
       <Event Name="PreviewMouseRightButtonUp" />
       <Event Name="PreviewMouseMove" />
       <Event Name="MouseUp" />
-      <Event Name="GotFocus" />
-      <Event Name="LostFocus" />
       <Event Name="MouseRightButtonUp" />
       <Event Name="PreviewMouseLeftButtonDown" />
       <Event Name="KeyDown" />
@@ -3733,6 +4100,8 @@
     </Type>
     <Type Name="Alternet.UI.ButtonBase">
       <Event Name="TextChanged" />
+      <Event Name="GotFocus" />
+      <Event Name="LostFocus" />
       <Event Name="ToolTipChanged" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
@@ -3756,6 +4125,7 @@
       <Event Name="DragOver" />
       <Event Name="DragEnter" />
       <Event Name="DragLeave" />
+      <Event Name="Idle" />
       <Event Name="DataContextChanged" />
       <Event Name="PreviewKeyDown" />
       <Event Name="MouseMove" />
@@ -3768,8 +4138,6 @@
       <Event Name="PreviewMouseRightButtonUp" />
       <Event Name="PreviewMouseMove" />
       <Event Name="MouseUp" />
-      <Event Name="GotFocus" />
-      <Event Name="LostFocus" />
       <Event Name="MouseRightButtonUp" />
       <Event Name="PreviewMouseLeftButtonDown" />
       <Event Name="KeyDown" />
@@ -3789,6 +4157,8 @@
     <Type Name="Alternet.UI.CheckBox">
       <Event Name="CheckedChanged" />
       <Event Name="TextChanged" />
+      <Event Name="GotFocus" />
+      <Event Name="LostFocus" />
       <Event Name="ToolTipChanged" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
@@ -3812,6 +4182,7 @@
       <Event Name="DragOver" />
       <Event Name="DragEnter" />
       <Event Name="DragLeave" />
+      <Event Name="Idle" />
       <Event Name="DataContextChanged" />
       <Event Name="PreviewKeyDown" />
       <Event Name="MouseMove" />
@@ -3824,8 +4195,6 @@
       <Event Name="PreviewMouseRightButtonUp" />
       <Event Name="PreviewMouseMove" />
       <Event Name="MouseUp" />
-      <Event Name="GotFocus" />
-      <Event Name="LostFocus" />
       <Event Name="MouseRightButtonUp" />
       <Event Name="PreviewMouseLeftButtonDown" />
       <Event Name="KeyDown" />
@@ -3846,9 +4215,9 @@
     <Type Name="Alternet.UI.ControlStateImages">
       <Event Name="PropertyChanged" />
     </Type>
-    <Type Name="Alternet.UI.RadioButton">
-      <Event Name="CheckedChanged" />
-      <Event Name="TextChanged" />
+    <Type Name="Alternet.UI.CustomButton">
+      <Event Name="GotFocus" />
+      <Event Name="LostFocus" />
       <Event Name="ToolTipChanged" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
@@ -3872,6 +4241,7 @@
       <Event Name="DragOver" />
       <Event Name="DragEnter" />
       <Event Name="DragLeave" />
+      <Event Name="Idle" />
       <Event Name="DataContextChanged" />
       <Event Name="PreviewKeyDown" />
       <Event Name="MouseMove" />
@@ -3884,8 +4254,173 @@
       <Event Name="PreviewMouseRightButtonUp" />
       <Event Name="PreviewMouseMove" />
       <Event Name="MouseUp" />
+      <Event Name="MouseRightButtonUp" />
+      <Event Name="PreviewMouseLeftButtonDown" />
+      <Event Name="KeyDown" />
+      <Event Name="PreviewMouseDoubleClick" />
+      <Event Name="MouseDoubleClick" />
+      <Event Name="PreviewMouseUp" />
+      <Event Name="PreviewTextInput" />
+      <Event Name="TextInput" />
+      <Event Name="PreviewKeyUp" />
+      <Event Name="PreviewMouseRightButtonDown" />
+      <Event Name="PreviewMouseWheel" />
+      <Event Name="MouseWheel" />
+      <Event Name="MouseLeftButtonUp" />
+      <Event Name="KeyUp" />
+      <Event Name="Disposed" />
+    </Type>
+    <Type Name="Alternet.UI.RadioButton">
+      <Event Name="CheckedChanged" />
+      <Event Name="TextChanged" />
       <Event Name="GotFocus" />
       <Event Name="LostFocus" />
+      <Event Name="ToolTipChanged" />
+      <Event Name="Click" />
+      <Event Name="ParentChanged" />
+      <Event Name="Paint" />
+      <Event Name="MarginChanged" />
+      <Event Name="PaddingChanged" />
+      <Event Name="VisibleChanged" />
+      <Event Name="MouseCaptureLost" />
+      <Event Name="MouseEnter" />
+      <Event Name="MouseLeave" />
+      <Event Name="EnabledChanged" />
+      <Event Name="BackgroundChanged" />
+      <Event Name="ForegroundChanged" />
+      <Event Name="FontChanged" />
+      <Event Name="VerticalAlignmentChanged" />
+      <Event Name="HorizontalAlignmentChanged" />
+      <Event Name="SizeChanged" />
+      <Event Name="LocationChanged" />
+      <Event Name="DragStart" />
+      <Event Name="DragDrop" />
+      <Event Name="DragOver" />
+      <Event Name="DragEnter" />
+      <Event Name="DragLeave" />
+      <Event Name="Idle" />
+      <Event Name="DataContextChanged" />
+      <Event Name="PreviewKeyDown" />
+      <Event Name="MouseMove" />
+      <Event Name="PreviewMouseDown" />
+      <Event Name="MouseDown" />
+      <Event Name="LayoutUpdated" />
+      <Event Name="MouseLeftButtonDown" />
+      <Event Name="PreviewMouseLeftButtonUp" />
+      <Event Name="MouseRightButtonDown" />
+      <Event Name="PreviewMouseRightButtonUp" />
+      <Event Name="PreviewMouseMove" />
+      <Event Name="MouseUp" />
+      <Event Name="MouseRightButtonUp" />
+      <Event Name="PreviewMouseLeftButtonDown" />
+      <Event Name="KeyDown" />
+      <Event Name="PreviewMouseDoubleClick" />
+      <Event Name="MouseDoubleClick" />
+      <Event Name="PreviewMouseUp" />
+      <Event Name="PreviewTextInput" />
+      <Event Name="TextInput" />
+      <Event Name="PreviewKeyUp" />
+      <Event Name="PreviewMouseRightButtonDown" />
+      <Event Name="PreviewMouseWheel" />
+      <Event Name="MouseWheel" />
+      <Event Name="MouseLeftButtonUp" />
+      <Event Name="KeyUp" />
+      <Event Name="Disposed" />
+    </Type>
+    <Type Name="Alternet.UI.CustomLabel">
+      <Event Name="GotFocus" />
+      <Event Name="LostFocus" />
+      <Event Name="ToolTipChanged" />
+      <Event Name="Click" />
+      <Event Name="ParentChanged" />
+      <Event Name="Paint" />
+      <Event Name="MarginChanged" />
+      <Event Name="PaddingChanged" />
+      <Event Name="VisibleChanged" />
+      <Event Name="MouseCaptureLost" />
+      <Event Name="MouseEnter" />
+      <Event Name="MouseLeave" />
+      <Event Name="EnabledChanged" />
+      <Event Name="BackgroundChanged" />
+      <Event Name="ForegroundChanged" />
+      <Event Name="FontChanged" />
+      <Event Name="VerticalAlignmentChanged" />
+      <Event Name="HorizontalAlignmentChanged" />
+      <Event Name="SizeChanged" />
+      <Event Name="LocationChanged" />
+      <Event Name="DragStart" />
+      <Event Name="DragDrop" />
+      <Event Name="DragOver" />
+      <Event Name="DragEnter" />
+      <Event Name="DragLeave" />
+      <Event Name="Idle" />
+      <Event Name="DataContextChanged" />
+      <Event Name="PreviewKeyDown" />
+      <Event Name="MouseMove" />
+      <Event Name="PreviewMouseDown" />
+      <Event Name="MouseDown" />
+      <Event Name="LayoutUpdated" />
+      <Event Name="MouseLeftButtonDown" />
+      <Event Name="PreviewMouseLeftButtonUp" />
+      <Event Name="MouseRightButtonDown" />
+      <Event Name="PreviewMouseRightButtonUp" />
+      <Event Name="PreviewMouseMove" />
+      <Event Name="MouseUp" />
+      <Event Name="MouseRightButtonUp" />
+      <Event Name="PreviewMouseLeftButtonDown" />
+      <Event Name="KeyDown" />
+      <Event Name="PreviewMouseDoubleClick" />
+      <Event Name="MouseDoubleClick" />
+      <Event Name="PreviewMouseUp" />
+      <Event Name="PreviewTextInput" />
+      <Event Name="TextInput" />
+      <Event Name="PreviewKeyUp" />
+      <Event Name="PreviewMouseRightButtonDown" />
+      <Event Name="PreviewMouseWheel" />
+      <Event Name="MouseWheel" />
+      <Event Name="MouseLeftButtonUp" />
+      <Event Name="KeyUp" />
+      <Event Name="Disposed" />
+    </Type>
+    <Type Name="Alternet.UI.HeaderLabel">
+      <Event Name="GotFocus" />
+      <Event Name="LostFocus" />
+      <Event Name="ToolTipChanged" />
+      <Event Name="Click" />
+      <Event Name="ParentChanged" />
+      <Event Name="Paint" />
+      <Event Name="MarginChanged" />
+      <Event Name="PaddingChanged" />
+      <Event Name="VisibleChanged" />
+      <Event Name="MouseCaptureLost" />
+      <Event Name="MouseEnter" />
+      <Event Name="MouseLeave" />
+      <Event Name="EnabledChanged" />
+      <Event Name="BackgroundChanged" />
+      <Event Name="ForegroundChanged" />
+      <Event Name="FontChanged" />
+      <Event Name="VerticalAlignmentChanged" />
+      <Event Name="HorizontalAlignmentChanged" />
+      <Event Name="SizeChanged" />
+      <Event Name="LocationChanged" />
+      <Event Name="DragStart" />
+      <Event Name="DragDrop" />
+      <Event Name="DragOver" />
+      <Event Name="DragEnter" />
+      <Event Name="DragLeave" />
+      <Event Name="Idle" />
+      <Event Name="DataContextChanged" />
+      <Event Name="PreviewKeyDown" />
+      <Event Name="MouseMove" />
+      <Event Name="PreviewMouseDown" />
+      <Event Name="MouseDown" />
+      <Event Name="LayoutUpdated" />
+      <Event Name="MouseLeftButtonDown" />
+      <Event Name="PreviewMouseLeftButtonUp" />
+      <Event Name="MouseRightButtonDown" />
+      <Event Name="PreviewMouseRightButtonUp" />
+      <Event Name="PreviewMouseMove" />
+      <Event Name="MouseUp" />
       <Event Name="MouseRightButtonUp" />
       <Event Name="PreviewMouseLeftButtonDown" />
       <Event Name="KeyDown" />
@@ -3904,6 +4439,8 @@
     </Type>
     <Type Name="Alternet.UI.Label">
       <Event Name="TextChanged" />
+      <Event Name="GotFocus" />
+      <Event Name="LostFocus" />
       <Event Name="ToolTipChanged" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
@@ -3927,6 +4464,7 @@
       <Event Name="DragOver" />
       <Event Name="DragEnter" />
       <Event Name="DragLeave" />
+      <Event Name="Idle" />
       <Event Name="DataContextChanged" />
       <Event Name="PreviewKeyDown" />
       <Event Name="MouseMove" />
@@ -3939,8 +4477,6 @@
       <Event Name="PreviewMouseRightButtonUp" />
       <Event Name="PreviewMouseMove" />
       <Event Name="MouseUp" />
-      <Event Name="GotFocus" />
-      <Event Name="LostFocus" />
       <Event Name="MouseRightButtonUp" />
       <Event Name="PreviewMouseLeftButtonDown" />
       <Event Name="KeyDown" />
@@ -3960,6 +4496,8 @@
     <Type Name="Alternet.UI.LinkLabel">
       <Event Name="TextChanged" />
       <Event Name="LinkClicked" />
+      <Event Name="GotFocus" />
+      <Event Name="LostFocus" />
       <Event Name="ToolTipChanged" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
@@ -3983,6 +4521,7 @@
       <Event Name="DragOver" />
       <Event Name="DragEnter" />
       <Event Name="DragLeave" />
+      <Event Name="Idle" />
       <Event Name="DataContextChanged" />
       <Event Name="PreviewKeyDown" />
       <Event Name="MouseMove" />
@@ -3995,8 +4534,6 @@
       <Event Name="PreviewMouseRightButtonUp" />
       <Event Name="PreviewMouseMove" />
       <Event Name="MouseUp" />
-      <Event Name="GotFocus" />
-      <Event Name="LostFocus" />
       <Event Name="MouseRightButtonUp" />
       <Event Name="PreviewMouseLeftButtonDown" />
       <Event Name="KeyDown" />
@@ -4017,6 +4554,8 @@
       <Event Name="CheckedChanged" />
       <Event Name="SelectionChanged" />
       <Event Name="SelectionModeChanged" />
+      <Event Name="GotFocus" />
+      <Event Name="LostFocus" />
       <Event Name="ToolTipChanged" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
@@ -4040,6 +4579,7 @@
       <Event Name="DragOver" />
       <Event Name="DragEnter" />
       <Event Name="DragLeave" />
+      <Event Name="Idle" />
       <Event Name="DataContextChanged" />
       <Event Name="PreviewKeyDown" />
       <Event Name="MouseMove" />
@@ -4052,8 +4592,6 @@
       <Event Name="PreviewMouseRightButtonUp" />
       <Event Name="PreviewMouseMove" />
       <Event Name="MouseUp" />
-      <Event Name="GotFocus" />
-      <Event Name="LostFocus" />
       <Event Name="MouseRightButtonUp" />
       <Event Name="PreviewMouseLeftButtonDown" />
       <Event Name="KeyDown" />
@@ -4074,6 +4612,8 @@
       <Event Name="SelectedItemChanged" />
       <Event Name="TextChanged" />
       <Event Name="IsEditableChanged" />
+      <Event Name="GotFocus" />
+      <Event Name="LostFocus" />
       <Event Name="ToolTipChanged" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
@@ -4097,6 +4637,7 @@
       <Event Name="DragOver" />
       <Event Name="DragEnter" />
       <Event Name="DragLeave" />
+      <Event Name="Idle" />
       <Event Name="DataContextChanged" />
       <Event Name="PreviewKeyDown" />
       <Event Name="MouseMove" />
@@ -4109,8 +4650,6 @@
       <Event Name="PreviewMouseRightButtonUp" />
       <Event Name="PreviewMouseMove" />
       <Event Name="MouseUp" />
-      <Event Name="GotFocus" />
-      <Event Name="LostFocus" />
       <Event Name="MouseRightButtonUp" />
       <Event Name="PreviewMouseLeftButtonDown" />
       <Event Name="KeyDown" />
@@ -4130,6 +4669,8 @@
     <Type Name="Alternet.UI.ListBox">
       <Event Name="SelectionChanged" />
       <Event Name="SelectionModeChanged" />
+      <Event Name="GotFocus" />
+      <Event Name="LostFocus" />
       <Event Name="ToolTipChanged" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
@@ -4153,6 +4694,7 @@
       <Event Name="DragOver" />
       <Event Name="DragEnter" />
       <Event Name="DragLeave" />
+      <Event Name="Idle" />
       <Event Name="DataContextChanged" />
       <Event Name="PreviewKeyDown" />
       <Event Name="MouseMove" />
@@ -4165,8 +4707,6 @@
       <Event Name="PreviewMouseRightButtonUp" />
       <Event Name="PreviewMouseMove" />
       <Event Name="MouseUp" />
-      <Event Name="GotFocus" />
-      <Event Name="LostFocus" />
       <Event Name="MouseRightButtonUp" />
       <Event Name="PreviewMouseLeftButtonDown" />
       <Event Name="KeyDown" />
@@ -4185,6 +4725,8 @@
     </Type>
     <Type Name="Alternet.UI.ListBoxSelectionMode" />
     <Type Name="Alternet.UI.ListControl">
+      <Event Name="GotFocus" />
+      <Event Name="LostFocus" />
       <Event Name="ToolTipChanged" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
@@ -4208,6 +4750,7 @@
       <Event Name="DragOver" />
       <Event Name="DragEnter" />
       <Event Name="DragLeave" />
+      <Event Name="Idle" />
       <Event Name="DataContextChanged" />
       <Event Name="PreviewKeyDown" />
       <Event Name="MouseMove" />
@@ -4220,8 +4763,6 @@
       <Event Name="PreviewMouseRightButtonUp" />
       <Event Name="PreviewMouseMove" />
       <Event Name="MouseUp" />
-      <Event Name="GotFocus" />
-      <Event Name="LostFocus" />
       <Event Name="MouseRightButtonUp" />
       <Event Name="PreviewMouseLeftButtonDown" />
       <Event Name="KeyDown" />
@@ -4242,6 +4783,8 @@
     <Type Name="Alternet.UI.LogListBox">
       <Event Name="SelectionChanged" />
       <Event Name="SelectionModeChanged" />
+      <Event Name="GotFocus" />
+      <Event Name="LostFocus" />
       <Event Name="ToolTipChanged" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
@@ -4265,6 +4808,7 @@
       <Event Name="DragOver" />
       <Event Name="DragEnter" />
       <Event Name="DragLeave" />
+      <Event Name="Idle" />
       <Event Name="DataContextChanged" />
       <Event Name="PreviewKeyDown" />
       <Event Name="MouseMove" />
@@ -4277,8 +4821,6 @@
       <Event Name="PreviewMouseRightButtonUp" />
       <Event Name="PreviewMouseMove" />
       <Event Name="MouseUp" />
-      <Event Name="GotFocus" />
-      <Event Name="LostFocus" />
       <Event Name="MouseRightButtonUp" />
       <Event Name="PreviewMouseLeftButtonDown" />
       <Event Name="KeyDown" />
@@ -4304,6 +4846,8 @@
       <Event Name="ColumnClick" />
       <Event Name="BeforeLabelEdit" />
       <Event Name="AfterLabelEdit" />
+      <Event Name="GotFocus" />
+      <Event Name="LostFocus" />
       <Event Name="ToolTipChanged" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
@@ -4327,6 +4871,7 @@
       <Event Name="DragOver" />
       <Event Name="DragEnter" />
       <Event Name="DragLeave" />
+      <Event Name="Idle" />
       <Event Name="DataContextChanged" />
       <Event Name="PreviewKeyDown" />
       <Event Name="MouseMove" />
@@ -4339,8 +4884,6 @@
       <Event Name="PreviewMouseRightButtonUp" />
       <Event Name="PreviewMouseMove" />
       <Event Name="MouseUp" />
-      <Event Name="GotFocus" />
-      <Event Name="LostFocus" />
       <Event Name="MouseRightButtonUp" />
       <Event Name="PreviewMouseLeftButtonDown" />
       <Event Name="KeyDown" />
@@ -4370,6 +4913,8 @@
     <Type Name="Alternet.UI.ListViewSelectionMode" />
     <Type Name="Alternet.UI.ListViewView" />
     <Type Name="Alternet.UI.ContextMenu">
+      <Event Name="GotFocus" />
+      <Event Name="LostFocus" />
       <Event Name="ToolTipChanged" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
@@ -4393,6 +4938,7 @@
       <Event Name="DragOver" />
       <Event Name="DragEnter" />
       <Event Name="DragLeave" />
+      <Event Name="Idle" />
       <Event Name="DataContextChanged" />
       <Event Name="PreviewKeyDown" />
       <Event Name="MouseMove" />
@@ -4405,8 +4951,6 @@
       <Event Name="PreviewMouseRightButtonUp" />
       <Event Name="PreviewMouseMove" />
       <Event Name="MouseUp" />
-      <Event Name="GotFocus" />
-      <Event Name="LostFocus" />
       <Event Name="MouseRightButtonUp" />
       <Event Name="PreviewMouseLeftButtonDown" />
       <Event Name="KeyDown" />
@@ -4424,6 +4968,8 @@
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.MainMenu">
+      <Event Name="GotFocus" />
+      <Event Name="LostFocus" />
       <Event Name="ToolTipChanged" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
@@ -4447,6 +4993,7 @@
       <Event Name="DragOver" />
       <Event Name="DragEnter" />
       <Event Name="DragLeave" />
+      <Event Name="Idle" />
       <Event Name="DataContextChanged" />
       <Event Name="PreviewKeyDown" />
       <Event Name="MouseMove" />
@@ -4459,8 +5006,6 @@
       <Event Name="PreviewMouseRightButtonUp" />
       <Event Name="PreviewMouseMove" />
       <Event Name="MouseUp" />
-      <Event Name="GotFocus" />
-      <Event Name="LostFocus" />
       <Event Name="MouseRightButtonUp" />
       <Event Name="PreviewMouseLeftButtonDown" />
       <Event Name="KeyDown" />
@@ -4478,6 +5023,8 @@
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.Menu">
+      <Event Name="GotFocus" />
+      <Event Name="LostFocus" />
       <Event Name="ToolTipChanged" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
@@ -4501,6 +5048,7 @@
       <Event Name="DragOver" />
       <Event Name="DragEnter" />
       <Event Name="DragLeave" />
+      <Event Name="Idle" />
       <Event Name="DataContextChanged" />
       <Event Name="PreviewKeyDown" />
       <Event Name="MouseMove" />
@@ -4513,8 +5061,6 @@
       <Event Name="PreviewMouseRightButtonUp" />
       <Event Name="PreviewMouseMove" />
       <Event Name="MouseUp" />
-      <Event Name="GotFocus" />
-      <Event Name="LostFocus" />
       <Event Name="MouseRightButtonUp" />
       <Event Name="PreviewMouseLeftButtonDown" />
       <Event Name="KeyDown" />
@@ -4536,6 +5082,8 @@
       <Event Name="ShortcutChanged" />
       <Event Name="CheckedChanged" />
       <Event Name="RoleChanged" />
+      <Event Name="GotFocus" />
+      <Event Name="LostFocus" />
       <Event Name="ToolTipChanged" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
@@ -4559,6 +5107,7 @@
       <Event Name="DragOver" />
       <Event Name="DragEnter" />
       <Event Name="DragLeave" />
+      <Event Name="Idle" />
       <Event Name="DataContextChanged" />
       <Event Name="PreviewKeyDown" />
       <Event Name="MouseMove" />
@@ -4571,8 +5120,6 @@
       <Event Name="PreviewMouseRightButtonUp" />
       <Event Name="PreviewMouseMove" />
       <Event Name="MouseUp" />
-      <Event Name="GotFocus" />
-      <Event Name="LostFocus" />
       <Event Name="MouseRightButtonUp" />
       <Event Name="PreviewMouseLeftButtonDown" />
       <Event Name="KeyDown" />
@@ -4593,6 +5140,8 @@
     <Type Name="Alternet.UI.MenuItemRoleConverter" />
     <Type Name="Alternet.UI.MenuItemRoles" />
     <Type Name="Alternet.UI.AnimationPlayer">
+      <Event Name="GotFocus" />
+      <Event Name="LostFocus" />
       <Event Name="ToolTipChanged" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
@@ -4616,6 +5165,7 @@
       <Event Name="DragOver" />
       <Event Name="DragEnter" />
       <Event Name="DragLeave" />
+      <Event Name="Idle" />
       <Event Name="DataContextChanged" />
       <Event Name="PreviewKeyDown" />
       <Event Name="MouseMove" />
@@ -4628,8 +5178,6 @@
       <Event Name="PreviewMouseRightButtonUp" />
       <Event Name="PreviewMouseMove" />
       <Event Name="MouseUp" />
-      <Event Name="GotFocus" />
-      <Event Name="LostFocus" />
       <Event Name="MouseRightButtonUp" />
       <Event Name="PreviewMouseLeftButtonDown" />
       <Event Name="KeyDown" />
@@ -4648,6 +5196,8 @@
     </Type>
     <Type Name="Alternet.UI.GroupBox">
       <Event Name="TitleChanged" />
+      <Event Name="GotFocus" />
+      <Event Name="LostFocus" />
       <Event Name="ToolTipChanged" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
@@ -4671,6 +5221,7 @@
       <Event Name="DragOver" />
       <Event Name="DragEnter" />
       <Event Name="DragLeave" />
+      <Event Name="Idle" />
       <Event Name="DataContextChanged" />
       <Event Name="PreviewKeyDown" />
       <Event Name="MouseMove" />
@@ -4683,8 +5234,6 @@
       <Event Name="PreviewMouseRightButtonUp" />
       <Event Name="PreviewMouseMove" />
       <Event Name="MouseUp" />
-      <Event Name="GotFocus" />
-      <Event Name="LostFocus" />
       <Event Name="MouseRightButtonUp" />
       <Event Name="PreviewMouseLeftButtonDown" />
       <Event Name="KeyDown" />
@@ -4703,6 +5252,8 @@
     </Type>
     <Type Name="Alternet.UI.PictureBox">
       <Event Name="ImageChanged" />
+      <Event Name="GotFocus" />
+      <Event Name="LostFocus" />
       <Event Name="ToolTipChanged" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
@@ -4726,6 +5277,7 @@
       <Event Name="DragOver" />
       <Event Name="DragEnter" />
       <Event Name="DragLeave" />
+      <Event Name="Idle" />
       <Event Name="DataContextChanged" />
       <Event Name="PreviewKeyDown" />
       <Event Name="MouseMove" />
@@ -4738,8 +5290,6 @@
       <Event Name="PreviewMouseRightButtonUp" />
       <Event Name="PreviewMouseMove" />
       <Event Name="MouseUp" />
-      <Event Name="GotFocus" />
-      <Event Name="LostFocus" />
       <Event Name="MouseRightButtonUp" />
       <Event Name="PreviewMouseLeftButtonDown" />
       <Event Name="KeyDown" />
@@ -4760,6 +5310,8 @@
       <Event Name="ValueChanged" />
       <Event Name="MinimumChanged" />
       <Event Name="MaximumChanged" />
+      <Event Name="GotFocus" />
+      <Event Name="LostFocus" />
       <Event Name="ToolTipChanged" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
@@ -4783,6 +5335,7 @@
       <Event Name="DragOver" />
       <Event Name="DragEnter" />
       <Event Name="DragLeave" />
+      <Event Name="Idle" />
       <Event Name="DataContextChanged" />
       <Event Name="PreviewKeyDown" />
       <Event Name="MouseMove" />
@@ -4795,8 +5348,6 @@
       <Event Name="PreviewMouseRightButtonUp" />
       <Event Name="PreviewMouseMove" />
       <Event Name="MouseUp" />
-      <Event Name="GotFocus" />
-      <Event Name="LostFocus" />
       <Event Name="MouseRightButtonUp" />
       <Event Name="PreviewMouseLeftButtonDown" />
       <Event Name="KeyDown" />
@@ -4879,6 +5430,8 @@
       <Event Name="ColBeginDrag" />
       <Event Name="ColDragging" />
       <Event Name="ColEndDrag" />
+      <Event Name="GotFocus" />
+      <Event Name="LostFocus" />
       <Event Name="ToolTipChanged" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
@@ -4902,6 +5455,7 @@
       <Event Name="DragOver" />
       <Event Name="DragEnter" />
       <Event Name="DragLeave" />
+      <Event Name="Idle" />
       <Event Name="DataContextChanged" />
       <Event Name="PreviewKeyDown" />
       <Event Name="MouseMove" />
@@ -4914,8 +5468,6 @@
       <Event Name="PreviewMouseRightButtonUp" />
       <Event Name="PreviewMouseMove" />
       <Event Name="MouseUp" />
-      <Event Name="GotFocus" />
-      <Event Name="LostFocus" />
       <Event Name="MouseRightButtonUp" />
       <Event Name="PreviewMouseLeftButtonDown" />
       <Event Name="KeyDown" />
@@ -4949,6 +5501,8 @@
       <Event Name="SmallChangeChanged" />
       <Event Name="LargeChangeChanged" />
       <Event Name="TickFrequencyChanged" />
+      <Event Name="GotFocus" />
+      <Event Name="LostFocus" />
       <Event Name="ToolTipChanged" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
@@ -4972,6 +5526,7 @@
       <Event Name="DragOver" />
       <Event Name="DragEnter" />
       <Event Name="DragLeave" />
+      <Event Name="Idle" />
       <Event Name="DataContextChanged" />
       <Event Name="PreviewKeyDown" />
       <Event Name="MouseMove" />
@@ -4984,8 +5539,6 @@
       <Event Name="PreviewMouseRightButtonUp" />
       <Event Name="PreviewMouseMove" />
       <Event Name="MouseUp" />
-      <Event Name="GotFocus" />
-      <Event Name="LostFocus" />
       <Event Name="MouseRightButtonUp" />
       <Event Name="PreviewMouseLeftButtonDown" />
       <Event Name="KeyDown" />
@@ -5017,8 +5570,6 @@
       <Event Name="PreviewMouseRightButtonUp" />
       <Event Name="PreviewMouseMove" />
       <Event Name="MouseUp" />
-      <Event Name="GotFocus" />
-      <Event Name="LostFocus" />
       <Event Name="MouseRightButtonUp" />
       <Event Name="PreviewMouseLeftButtonDown" />
       <Event Name="KeyDown" />
@@ -5040,40 +5591,13 @@
       <Event Name="WidthChanged" />
       <Event Name="StyleChanged" />
       <Event Name="PropertyChanged" />
-      <Event Name="DataContextChanged" />
-      <Event Name="PreviewKeyDown" />
-      <Event Name="MouseMove" />
-      <Event Name="PreviewMouseDown" />
-      <Event Name="MouseDown" />
-      <Event Name="LayoutUpdated" />
-      <Event Name="MouseLeftButtonDown" />
-      <Event Name="PreviewMouseLeftButtonUp" />
-      <Event Name="MouseRightButtonDown" />
-      <Event Name="PreviewMouseRightButtonUp" />
-      <Event Name="PreviewMouseMove" />
-      <Event Name="MouseUp" />
-      <Event Name="GotFocus" />
-      <Event Name="LostFocus" />
-      <Event Name="MouseRightButtonUp" />
-      <Event Name="PreviewMouseLeftButtonDown" />
-      <Event Name="KeyDown" />
-      <Event Name="PreviewMouseDoubleClick" />
-      <Event Name="MouseDoubleClick" />
-      <Event Name="PreviewMouseUp" />
-      <Event Name="PreviewTextInput" />
-      <Event Name="TextInput" />
-      <Event Name="PreviewKeyUp" />
-      <Event Name="PreviewMouseRightButtonDown" />
-      <Event Name="PreviewMouseWheel" />
-      <Event Name="MouseWheel" />
-      <Event Name="MouseLeftButtonUp" />
-      <Event Name="KeyUp" />
-      <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.StatusBarPanelStyle" />
     <Type Name="Alternet.UI.TabAlignment" />
     <Type Name="Alternet.UI.TabControl">
       <Event Name="SelectedPageChanged" />
+      <Event Name="GotFocus" />
+      <Event Name="LostFocus" />
       <Event Name="ToolTipChanged" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
@@ -5097,6 +5621,7 @@
       <Event Name="DragOver" />
       <Event Name="DragEnter" />
       <Event Name="DragLeave" />
+      <Event Name="Idle" />
       <Event Name="DataContextChanged" />
       <Event Name="PreviewKeyDown" />
       <Event Name="MouseMove" />
@@ -5109,8 +5634,6 @@
       <Event Name="PreviewMouseRightButtonUp" />
       <Event Name="PreviewMouseMove" />
       <Event Name="MouseUp" />
-      <Event Name="GotFocus" />
-      <Event Name="LostFocus" />
       <Event Name="MouseRightButtonUp" />
       <Event Name="PreviewMouseLeftButtonDown" />
       <Event Name="KeyDown" />
@@ -5129,6 +5652,8 @@
     </Type>
     <Type Name="Alternet.UI.TabPage">
       <Event Name="TitleChanged" />
+      <Event Name="GotFocus" />
+      <Event Name="LostFocus" />
       <Event Name="ToolTipChanged" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
@@ -5152,6 +5677,7 @@
       <Event Name="DragOver" />
       <Event Name="DragEnter" />
       <Event Name="DragLeave" />
+      <Event Name="Idle" />
       <Event Name="DataContextChanged" />
       <Event Name="PreviewKeyDown" />
       <Event Name="MouseMove" />
@@ -5164,8 +5690,6 @@
       <Event Name="PreviewMouseRightButtonUp" />
       <Event Name="PreviewMouseMove" />
       <Event Name="MouseUp" />
-      <Event Name="GotFocus" />
-      <Event Name="LostFocus" />
       <Event Name="MouseRightButtonUp" />
       <Event Name="PreviewMouseLeftButtonDown" />
       <Event Name="KeyDown" />
@@ -5185,6 +5709,8 @@
     <Type Name="Alternet.UI.TabPageChangedEventHandler" />
     <Type Name="Alternet.UI.TabPageChangedEventArgs" />
     <Type Name="Alternet.UI.Toolbar">
+      <Event Name="GotFocus" />
+      <Event Name="LostFocus" />
       <Event Name="ToolTipChanged" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
@@ -5208,6 +5734,7 @@
       <Event Name="DragOver" />
       <Event Name="DragEnter" />
       <Event Name="DragLeave" />
+      <Event Name="Idle" />
       <Event Name="DataContextChanged" />
       <Event Name="PreviewKeyDown" />
       <Event Name="MouseMove" />
@@ -5220,8 +5747,6 @@
       <Event Name="PreviewMouseRightButtonUp" />
       <Event Name="PreviewMouseMove" />
       <Event Name="MouseUp" />
-      <Event Name="GotFocus" />
-      <Event Name="LostFocus" />
       <Event Name="MouseRightButtonUp" />
       <Event Name="PreviewMouseLeftButtonDown" />
       <Event Name="KeyDown" />
@@ -5243,6 +5768,8 @@
       <Event Name="ImageChanged" />
       <Event Name="TextChanged" />
       <Event Name="CheckedChanged" />
+      <Event Name="GotFocus" />
+      <Event Name="LostFocus" />
       <Event Name="ToolTipChanged" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
@@ -5266,6 +5793,7 @@
       <Event Name="DragOver" />
       <Event Name="DragEnter" />
       <Event Name="DragLeave" />
+      <Event Name="Idle" />
       <Event Name="DataContextChanged" />
       <Event Name="PreviewKeyDown" />
       <Event Name="MouseMove" />
@@ -5278,8 +5806,6 @@
       <Event Name="PreviewMouseRightButtonUp" />
       <Event Name="PreviewMouseMove" />
       <Event Name="MouseUp" />
-      <Event Name="GotFocus" />
-      <Event Name="LostFocus" />
       <Event Name="MouseRightButtonUp" />
       <Event Name="PreviewMouseLeftButtonDown" />
       <Event Name="KeyDown" />
@@ -5316,6 +5842,8 @@
       <Event Name="AfterLabelEdit" />
       <Event Name="ExpandedChanged" />
       <Event Name="ImageListChanged" />
+      <Event Name="GotFocus" />
+      <Event Name="LostFocus" />
       <Event Name="ToolTipChanged" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
@@ -5339,6 +5867,7 @@
       <Event Name="DragOver" />
       <Event Name="DragEnter" />
       <Event Name="DragLeave" />
+      <Event Name="Idle" />
       <Event Name="DataContextChanged" />
       <Event Name="PreviewKeyDown" />
       <Event Name="MouseMove" />
@@ -5351,8 +5880,6 @@
       <Event Name="PreviewMouseRightButtonUp" />
       <Event Name="PreviewMouseMove" />
       <Event Name="MouseUp" />
-      <Event Name="GotFocus" />
-      <Event Name="LostFocus" />
       <Event Name="MouseRightButtonUp" />
       <Event Name="PreviewMouseLeftButtonDown" />
       <Event Name="KeyDown" />
@@ -5399,6 +5926,8 @@
     <Type Name="Alternet.UI.IWebBrowserLite" />
     <Type Name="Alternet.UI.IWebBrowserMemoryFS" />
     <Type Name="Alternet.UI.PanelWebBrowser">
+      <Event Name="GotFocus" />
+      <Event Name="LostFocus" />
       <Event Name="ToolTipChanged" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
@@ -5422,6 +5951,7 @@
       <Event Name="DragOver" />
       <Event Name="DragEnter" />
       <Event Name="DragLeave" />
+      <Event Name="Idle" />
       <Event Name="DataContextChanged" />
       <Event Name="PreviewKeyDown" />
       <Event Name="MouseMove" />
@@ -5434,8 +5964,6 @@
       <Event Name="PreviewMouseRightButtonUp" />
       <Event Name="PreviewMouseMove" />
       <Event Name="MouseUp" />
-      <Event Name="GotFocus" />
-      <Event Name="LostFocus" />
       <Event Name="MouseRightButtonUp" />
       <Event Name="PreviewMouseLeftButtonDown" />
       <Event Name="KeyDown" />
@@ -5463,6 +5991,8 @@
       <Event Name="Error" />
       <Event Name="NewWindow" />
       <Event Name="DocumentTitleChanged" />
+      <Event Name="GotFocus" />
+      <Event Name="LostFocus" />
       <Event Name="ToolTipChanged" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
@@ -5486,6 +6016,7 @@
       <Event Name="DragOver" />
       <Event Name="DragEnter" />
       <Event Name="DragLeave" />
+      <Event Name="Idle" />
       <Event Name="DataContextChanged" />
       <Event Name="PreviewKeyDown" />
       <Event Name="MouseMove" />
@@ -5498,8 +6029,6 @@
       <Event Name="PreviewMouseRightButtonUp" />
       <Event Name="PreviewMouseMove" />
       <Event Name="MouseUp" />
-      <Event Name="GotFocus" />
-      <Event Name="LostFocus" />
       <Event Name="MouseRightButtonUp" />
       <Event Name="PreviewMouseLeftButtonDown" />
       <Event Name="KeyDown" />
@@ -5541,6 +6070,8 @@
       <Event Name="HasTitleBarChanged" />
       <Event Name="Activated" />
       <Event Name="Deactivated" />
+      <Event Name="GotFocus" />
+      <Event Name="LostFocus" />
       <Event Name="ToolTipChanged" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
@@ -5564,6 +6095,7 @@
       <Event Name="DragOver" />
       <Event Name="DragEnter" />
       <Event Name="DragLeave" />
+      <Event Name="Idle" />
       <Event Name="DataContextChanged" />
       <Event Name="PreviewKeyDown" />
       <Event Name="MouseMove" />
@@ -5576,8 +6108,6 @@
       <Event Name="PreviewMouseRightButtonUp" />
       <Event Name="PreviewMouseMove" />
       <Event Name="MouseUp" />
-      <Event Name="GotFocus" />
-      <Event Name="LostFocus" />
       <Event Name="MouseRightButtonUp" />
       <Event Name="PreviewMouseLeftButtonDown" />
       <Event Name="KeyDown" />
@@ -5599,16 +6129,24 @@
     <Type Name="Alternet.UI.WindowSizeToContentMode" />
     <Type Name="Alternet.UI.WindowStartLocation" />
     <Type Name="Alternet.UI.WindowState" />
+    <Type Name="Alternet.UI.SystemFonts" />
     <Type Name="Alternet.UI.ImageSet">
       <Event Name="Changed" />
     </Type>
+    <Type Name="Alternet.UI.KnownSvgColor" />
     <Type Name="Alternet.UI.KnownSvgImages" />
+    <Type Name="Alternet.UI.KnownSvgUrls" />
+    <Type Name="Alternet.UI.SvgColors" />
     <Type Name="Alternet.UI.PageSetupDialog" />
     <Type Name="Alternet.UI.PrintDialog" />
     <Type Name="Alternet.UI.PrintPreviewDialog" />
     <Type Name="Alternet.UI.Thickness" />
     <Type Name="Alternet.UI.AnimationType" />
+    <Type Name="Alternet.UI.BitmapType" />
+    <Type Name="Alternet.UI.ControlBackgroundStyle" />
     <Type Name="Alternet.UI.ControlBorderStyle" />
+    <Type Name="Alternet.UI.ControlRenderSizeVariant" />
+    <Type Name="Alternet.UI.CursorType" />
     <Type Name="Alternet.UI.GenericAlignment" />
     <Type Name="Alternet.UI.GenericControlState" />
     <Type Name="Alternet.UI.GenericDirection" />
@@ -5619,6 +6157,12 @@
     <Type Name="Alternet.UI.MessageBoxDefaultButton" />
     <Type Name="Alternet.UI.MessageBoxIcon" />
     <Type Name="Alternet.UI.MessageBoxResult" />
+    <Type Name="Alternet.UI.OperatingSystems" />
+    <Type Name="Alternet.UI.ResetColorType" />
+    <Type Name="Alternet.UI.SystemSettingsFeature" />
+    <Type Name="Alternet.UI.SystemSettingsFont" />
+    <Type Name="Alternet.UI.SystemSettingsMetric" />
+    <Type Name="Alternet.UI.TextEllipsizeType" />
     <Type Name="Alternet.UI.ValueInRangeResult" />
     <Type Name="Alternet.UI.VerticalAlignment" />
     <Type Name="Alternet.UI.ButtonHandler" />
@@ -5639,16 +6183,28 @@
     <Type Name="Alternet.UI.IControlHandlerFactory" />
     <Type Name="Alternet.UI.NativeControlHandlerFactory" />
     <Type Name="Alternet.UI.StockControlHandlerFactories" />
+    <Type Name="Alternet.UI.IBaseControlItem" />
+    <Type Name="Alternet.UI.IBaseObject" />
     <Type Name="Alternet.UI.IComponentDesigner">
       <Event Name="PropertyChanged" />
+      <Event Name="ControlGotFocus" />
+      <Event Name="ControlCreated" />
+      <Event Name="ControlDisposed" />
+      <Event Name="ControlParentChanged" />
     </Type>
+    <Type Name="Alternet.UI.ICustomAttributes" />
+    <Type Name="Alternet.UI.ICustomFlags" />
     <Type Name="Alternet.UI.IDisposableObject">
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.IEnumerableTree" />
     <Type Name="Alternet.UI.IEnumerableTree`1" />
+    <Type Name="Alternet.UI.IFlagsAndAttributes" />
+    <Type Name="Alternet.UI.IFocusable" />
     <Type Name="Alternet.UI.IObjectToString" />
     <Type Name="Alternet.UI.IPropInfoAndInstance" />
+    <Type Name="Alternet.UI.IReadOnlyFontAndColor" />
+    <Type Name="Alternet.UI.IReadOnlyStrings" />
     <Type Name="Alternet.UI.IValidatorReporter" />
     <Type Name="Alternet.UI.MessageBox" />
     <Type Name="Alternet.UI.NotifyIcon">
@@ -5792,9 +6348,6 @@
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.GroupDescriptionSelectorCallback" />
-    <Type Name="Alternet.UI.LostFocusEventManager">
-      <Event Name="Disposed" />
-    </Type>
     <Type Name="Alternet.UI.MultiBinding" />
     <Type Name="Alternet.UI.MultiBindingExpression" />
     <Type Name="Alternet.UI.NotifyDataErrorValidationRule" />
@@ -5809,7 +6362,6 @@
     <Type Name="Alternet.UI.RelativeSourceMode" />
     <Type Name="Alternet.UI.RelativeSource" />
     <Type Name="Alternet.UI.UIPropertyMetadata" />
-    <Type Name="Alternet.UI.Validation" />
     <Type Name="Alternet.UI.ValidationError" />
     <Type Name="Alternet.UI.ValidationErrorEventAction" />
     <Type Name="Alternet.UI.ValidationErrorEventArgs" />
@@ -5905,16 +6457,20 @@
     </Type>
     <Type Name="Alternet.UI.AppUtils" />
     <Type Name="Alternet.UI.AssemblyUtils" />
+    <Type Name="Alternet.UI.CodeGeneratorUtils" />
     <Type Name="Alternet.UI.DateUtils" />
     <Type Name="Alternet.UI.DebugUtils" />
     <Type Name="Alternet.UI.EnumerableUtils" />
     <Type Name="Alternet.UI.ListControlUtils" />
+    <Type Name="Alternet.UI.ListUtils" />
     <Type Name="Alternet.UI.LogUtils" />
     <Type Name="Alternet.UI.MathUtils" />
     <Type Name="Alternet.UI.PathUtils" />
+    <Type Name="Alternet.UI.SoundUtils" />
+    <Type Name="Alternet.UI.StreamUtils" />
     <Type Name="Alternet.UI.TryParseNumberDelegate" />
     <Type Name="Alternet.UI.StringUtils" />
-    <Type Name="Alternet.UI.SvgUtils" />
+    <Type Name="Alternet.UI.TextBoxUtils" />
     <Type Name="Alternet.UI.ValueValidatorKind" />
     <Type Name="Alternet.UI.ValueValidatorKnownError" />
     <Type Name="Alternet.UI.ValueValidatorNumStyle" />
