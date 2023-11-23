@@ -226,13 +226,18 @@ namespace Alternet.UI
             return Count - 1;
         }
 
-        public int Add(object value, ImageSet? bitmap = null)
+        public int Add(string text, object value, ImageSet? bitmap = null)
         {
-            var text = value?.ToString();
             var intValue = 0;
             if (value is not null)
                 intValue = (int)value;
             return Add(text, intValue, bitmap);
+        }
+
+        public int Add(object value, ImageSet? bitmap = null)
+        {
+            var text = value?.ToString();
+            return Add(text ?? string.Empty, value ?? 0, bitmap);
         }
 
         public void Insert(int index, string text, int value, ImageSet? bitmap)
