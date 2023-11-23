@@ -82,7 +82,7 @@ namespace Alternet.UI
         int Add(object value, ImageSet? bitmap = null);
 
         /// <summary>
-        /// 
+        /// Adds new item.
         /// </summary>
         /// <param name="text">Item title.</param>
         /// <param name="value">Item value.</param>
