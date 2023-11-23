@@ -11,16 +11,8 @@ namespace ControlsSample
 {
     internal partial class TextInputPage : Control
     {
-        private readonly ValueEditorUInt32 minLengthEdit = new("Min Length")
-        {
-            Margin = new(0, 0, 0, 5),
-            Text = "0",
-        };
-        private readonly ValueEditorUInt32 maxLengthEdit = new("Max Length")
-        {
-            Margin = new(0, 0, 0, 5),
-            Text = "0",
-        };
+        private readonly ValueEditorUInt32 minLengthEdit = new("Min Length", 0);
+        private readonly ValueEditorUInt32 maxLengthEdit = new("Max Length", 0);
 
         static TextInputPage()
         {
@@ -53,13 +45,12 @@ namespace ControlsSample
 
             // ==== Min and Max length editors
 
+            Group(minLengthEdit, maxLengthEdit).Margin((0, 0, 0, 5)).Parent(textBoxOptionsPanel);
+
             minLengthEdit.TextBox.TextChanged += MinLengthBox_TextChanged;
             minLengthEdit.TextBox.IsRequired = true;
-            minLengthEdit.Parent = textBoxOptionsPanel;
-
             maxLengthEdit.TextBox.TextChanged += MaxLengthBox_TextChanged;
             maxLengthEdit.TextBox.IsRequired = true;
-            maxLengthEdit.Parent = textBoxOptionsPanel;
 
             Idle += TextInputPage_Idle;
         }
@@ -121,9 +112,11 @@ namespace ControlsSample
             Application.LogReplace($"{prefix}{value}{asNumber}", prefix);
         }
 
-        private void AddLetterAButton_Click(object? sender, EventArgs e)
+        private void ChangeTextButton_Click(object? sender, EventArgs e)
         {
-            textBox.Text += "A";
+            var result = DialogFactory.GetTextFromUser("Text", "Enter text value", textBox.Text);
+            if(result is not null)
+                textBox.Text = result;
         }
     }
 }

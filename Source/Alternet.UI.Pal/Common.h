@@ -7,8 +7,11 @@
 #include "Api/DrawingTypes.h"
 #include "DelayedValue.h"
 
+
 namespace Alternet::UI
 {
+    constexpr auto DialogCancelGuid = "5DB20A10B5974CD4885CFCF346AF0F81";
+
     const double DegToRad = M_PI / 180;
 
     namespace Collections

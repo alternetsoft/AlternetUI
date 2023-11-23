@@ -13,6 +13,8 @@ namespace Alternet.UI
     /// </summary>
     public static class DialogFactory
     {
+        internal const string DialogCancelGuid = "5DB20A10B5974CD4885CFCF346AF0F81";
+
         /// <summary>
         /// Pop up a dialog box with title set to <paramref name="caption"/>,
         /// <paramref name="message"/>, and a <paramref name="defaultValue"/>.
@@ -48,7 +50,7 @@ namespace Alternet.UI
                 x,
                 y,
                 centre);
-            if (result == string.Empty)
+            if (result == DialogCancelGuid)
                 return null;
             return result;
         }

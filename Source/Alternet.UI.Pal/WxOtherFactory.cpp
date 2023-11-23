@@ -540,10 +540,34 @@ namespace Alternet::UI
 		wxBell();
 	}
 
+	static wxString wxGetTextFromUser2(const wxString& message, const wxString& caption,
+		const wxString& defaultValue, wxWindow* parent,
+		wxCoord x, wxCoord y, bool centre)
+	{
+		wxString str;
+		long style = wxTextEntryDialogStyle;
+
+		if (centre)
+			style |= wxCENTRE;
+		else
+			style &= ~wxCENTRE;
+
+		wxTextEntryDialog dialog(parent, message, caption, defaultValue, style, wxPoint(x, y));
+
+		if (dialog.ShowModal() == wxID_OK)
+		{
+			str = dialog.GetValue();
+		}
+		else
+			str = DialogCancelGuid;
+
+		return str;
+	}
+
 	string WxOtherFactory::GetTextFromUser(const string& message,
 		const string& caption, const string& defaultValue, void* parent, int x, int y, bool centre)
 	{
-		return wxStr(wxGetTextFromUser(wxStr(message),
+		return wxStr(wxGetTextFromUser2(wxStr(message),
 			wxStr(caption), wxStr(defaultValue), (wxWindow*)parent, x, y, centre));
 	}
 
