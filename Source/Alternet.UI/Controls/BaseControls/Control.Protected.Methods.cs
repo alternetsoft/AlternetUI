@@ -110,6 +110,27 @@ namespace Alternet.UI
         {
         }
 
+        /// <inheritdoc/>
+        protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
+        {
+            base.OnMouseLeftButtonDown(e);
+            IsMouseLeftButtonDown = true;
+        }
+
+        /// <inheritdoc/>
+        protected override void OnMouseLeftButtonUp(MouseButtonEventArgs e)
+        {
+            base.OnMouseLeftButtonUp(e);
+            IsMouseLeftButtonDown = false;
+        }
+
+        /// <summary>
+        /// Called when <see cref="IsMouseOver"/> property is changed.
+        /// </summary>
+        protected virtual void OnIsMouseOverChanged()
+        {
+        }
+
         /// <summary>
         /// Called when the mouse pointer leaves the control.
         /// </summary>

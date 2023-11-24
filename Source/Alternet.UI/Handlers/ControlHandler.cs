@@ -130,21 +130,6 @@ namespace Alternet.UI
         public virtual Rect DrawClientRectangle => Control.DrawClientRectangle;
 
         /// <summary>
-        /// Gets a value indicating whether the mouse pointer is over the
-        /// <see cref="Control"/>.
-        /// </summary>
-        public virtual bool IsMouseOver
-        {
-            get
-            {
-                if (NativeControl == null)
-                    return false;
-
-                return NativeControl.IsMouseOver;
-            }
-        }
-
-        /// <summary>
         /// Gets a value indicating whether the <see cref="Control"/> is contained in a
         /// <see cref="VisualChildren"/> collection.
         /// </summary>

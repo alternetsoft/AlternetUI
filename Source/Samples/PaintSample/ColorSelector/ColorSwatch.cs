@@ -45,7 +45,7 @@ namespace PaintSample
             ReleaseMouseCapture();
             IsPressed = false;
 
-            if (Handler.IsMouseOver)
+            if (IsMouseOver)
                 RaiseClick(EventArgs.Empty);
         }
 

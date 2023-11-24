@@ -88,12 +88,20 @@ namespace Alternet.UI
 
         internal void RaiseMouseEnter()
         {
+            RaiseIsMouseOverChanged();
             OnMouseEnter();
             MouseEnter?.Invoke(this, EventArgs.Empty);
         }
 
+        internal void RaiseIsMouseOverChanged()
+        {
+            OnIsMouseOverChanged();
+            IsMouseOverChanged?.Invoke(this, EventArgs.Empty);
+        }
+
         internal void RaiseMouseLeave()
         {
+            RaiseIsMouseOverChanged();
             OnMouseLeave();
             MouseLeave?.Invoke(this, EventArgs.Empty);
         }

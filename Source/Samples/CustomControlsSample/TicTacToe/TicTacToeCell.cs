@@ -132,7 +132,7 @@ namespace CustomControlsSample
                 if (Control.IsWinningCell)
                     return winningCellBrush;
 
-                if (IsMouseOver)
+                if (Control.IsMouseOver)
                     return CustomControlsColors.BackgroundHoveredBrush;
 
                 return null;

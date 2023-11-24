@@ -120,7 +120,7 @@ namespace CustomControlsSample
             {
                 if (IsPressed)
                     return CustomControlsColors.BackgroundPressedBrush;
-                if (IsMouseOver)
+                if (Control.IsMouseOver)
                     return CustomControlsColors.BackgroundHoveredBrush;
 
                 return CustomControlsColors.BackgroundBrush;

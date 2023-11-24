@@ -109,7 +109,7 @@ namespace Alternet.UI
 
             var borderColor = Color.FromArgb(unchecked((int)0xFF92A0B5));
             var backgroundColor = Color.FromArgb(unchecked((int)0xFFB5C7E2));
-            if (IsMouseOver)
+            if (Control.IsMouseOver)
             {
                 borderColor = Color.FromArgb(unchecked((int)0xFF5C7FB2));
                 backgroundColor = Color.FromArgb(unchecked((int)0xFF80AFF2));
@@ -123,7 +123,7 @@ namespace Alternet.UI
 
         private void NativeControl_MouseClick(object? sender, EventArgs? e)
         {
-            if (IsMouseOver)
+            if (Control.IsMouseOver)
                 Control.RaiseClick(EventArgs.Empty);
         }
 

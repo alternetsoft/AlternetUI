@@ -27,7 +27,7 @@ namespace PaintSample
             return new Bitmap(stream);
         }
 
-        Image image;
+        private readonly Image image;
 
         private bool IsPressed
         {
@@ -78,7 +78,7 @@ namespace PaintSample
             ReleaseMouseCapture();
             IsPressed = false;
 
-            if (Handler.IsMouseOver)
+            if (IsMouseOver)
             {
                 RaiseClick(EventArgs.Empty);
                 

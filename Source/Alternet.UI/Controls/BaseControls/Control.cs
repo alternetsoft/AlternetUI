@@ -26,8 +26,8 @@ namespace Alternet.UI
 
         private static int groupIndexCounter;
 
+        private bool isMouseLeftButtonDown;
         private bool enabled = true;
-        private GenericControlState currentState;
         private int layoutSuspendCount;
         private IFlagsAndAttributes? flagsAndAttributes;
         private MouseButtonEventArgs? dragEventArgs;
@@ -82,6 +82,11 @@ namespace Alternet.UI
         /// Occurs when the <see cref="ToolTip"/> property value changes.
         /// </summary>
         public event EventHandler? ToolTipChanged;
+
+        /// <summary>
+        /// Occurs when the <see cref="IsMouseOver"/> property value changes.
+        /// </summary>
+        public event EventHandler? IsMouseOverChanged;
 
         /// <summary>
         /// Occurs when the control is clicked.
@@ -395,10 +400,43 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets a value indicating whether the mouse pointer is over the
+        /// <see cref="Control"/>.
+        /// </summary>
+        [Browsable(false)]
+        public virtual bool IsMouseOver
+        {
+            get
+            {
+                return NativeControl.IsMouseOver;
+            }
+        }
+
+        /// <summary>
         /// Gets a value indicating whether the mouse is captured to this control.
         /// </summary>
         [Browsable(false)]
         public virtual bool IsMouseCaptured => Handler.IsMouseCaptured;
+
+        /// <summary>
+        /// Gets or sets background brushes attached to this control.
+        /// </summary>
+        [Browsable(false)]
+        public virtual ControlStateBrushes? Backgrounds
+        {
+            get => background;
+            set => background = value;
+        }
+
+        /// <summary>
+        /// Gets or sets foreground brushes attached to this control.
+        /// </summary>
+        [Browsable(false)]
+        public virtual ControlStateBrushes? Foregrounds
+        {
+            get => foreground;
+            set => background = value;
+        }
 
         /// <summary>
         /// Gets whether this control itself can have focus.
@@ -575,7 +613,7 @@ namespace Alternet.UI
                 if (enabled == value)
                     return;
                 enabled = value;
-                EnabledChanged?.Invoke(this, EventArgs.Empty);
+                RaiseEnabledChanged(EventArgs.Empty);
             }
         }
 
@@ -860,6 +898,23 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets whether left mouse button is over control and is down.
+        /// </summary>
+        [Browsable(false)]
+        public virtual bool IsMouseLeftButtonDown
+        {
+            get
+            {
+                return isMouseLeftButtonDown && IsMouseOver;
+            }
+
+            internal set
+            {
+                isMouseLeftButtonDown = value;
+            }
+        }
+
+        /// <summary>
         /// Gets current <see cref="GenericControlState"/>.
         /// </summary>
         [Browsable(false)]
@@ -867,7 +922,19 @@ namespace Alternet.UI
         {
             get
             {
-                return currentState;
+                if (!enabled)
+                    return GenericControlState.Disabled;
+                if (IsMouseOver)
+                {
+                    if(IsMouseLeftButtonDown)
+                        return GenericControlState.Pressed;
+                    else
+                        return GenericControlState.Hovered;
+                }
+
+                if (IsFocused)
+                    return GenericControlState.Focused;
+                return GenericControlState.Normal;
             }
         }
 
@@ -1416,6 +1483,7 @@ namespace Alternet.UI
         /// <see cref="Control"/>,
         /// in device-independent units (1/96th inch per unit).
         /// </summary>
+        [Browsable(false)]
         public virtual Rect ClientRectangle => new(Point.Empty, ClientSize);
 
         /// <summary>

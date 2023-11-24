@@ -80,7 +80,7 @@ namespace Alternet.UI
                 throw new InvalidOperationException();
 
             var color = Color.FromArgb(unchecked((int)0xFF92A0B5));
-            if (IsMouseOver)
+            if (Control.IsMouseOver)
             {
                 color = Color.FromArgb(unchecked((int)0xFF5C7FB2));
             }
