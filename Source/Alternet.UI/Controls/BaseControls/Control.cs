@@ -18,22 +18,6 @@ namespace Alternet.UI
     public partial class Control : FrameworkElement, ISupportInitialize, IDisposable, IControl, IFocusable
     {
         /// <summary>
-        /// Identifies the <see cref="Enabled"/> dependency property.
-        /// </summary>
-        public static readonly DependencyProperty EnabledProperty =
-            DependencyProperty.Register(
-                    "Enabled",
-                    typeof(bool),
-                    typeof(Control),
-                    new FrameworkPropertyMetadata(
-                            true,
-                            PropMetadataOption.AffectsPaint,
-                            new PropertyChangedCallback(OnEnabledPropertyChanged),
-                            null,
-                            isAnimationProhibited: true,
-                            UpdateSourceTrigger.PropertyChanged));
-
-        /// <summary>
         /// Gets or sets whether <see cref="DebugBackgroundColor"/> property is used.
         /// </summary>
         public static bool UseDebugBackgroundColor = false;
@@ -42,6 +26,7 @@ namespace Alternet.UI
 
         private static int groupIndexCounter;
 
+        private bool enabled = true;
         private GenericControlState currentState;
         private int layoutSuspendCount;
         private IFlagsAndAttributes? flagsAndAttributes;
@@ -582,12 +567,15 @@ namespace Alternet.UI
         {
             get
             {
-                return (bool)GetValue(EnabledProperty);
+                return enabled;
             }
 
             set
             {
-                SetValue(EnabledProperty, value);
+                if (enabled == value)
+                    return;
+                enabled = value;
+                EnabledChanged?.Invoke(this, EventArgs.Empty);
             }
         }
 
