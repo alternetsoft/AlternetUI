@@ -10,18 +10,19 @@ namespace Alternet.UI
         public override void OnPaint(DrawingContext dc)
         {
             var r = DrawClientRectangle;
+            var settings = Control.GetSettings(Control.CurrentState);
 
-            var radius = Control.Settings.GetUniformCornerRadius(r);
+            var radius = settings.GetUniformCornerRadius(r);
 
-            if (Control.Background != null)
+            var brush = Control.GetBackground(Control.CurrentState);
+
+            if (brush != null)
             {
                 if (radius is null)
-                    dc.FillRectangle(Control.Background, r);
+                    dc.FillRectangle(brush, r);
                 else
-                    dc.FillRoundedRectangle(Control.Background, r, radius.Value);
+                    dc.FillRoundedRectangle(brush, r, radius.Value);
             }
-
-            var settings = Control.Settings;
 
             if (Control.DrawDebugPointsBefore)
                 dc.DrawDebugPoints(r, Pens.Yellow);
