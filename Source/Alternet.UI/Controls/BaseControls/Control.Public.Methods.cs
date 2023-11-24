@@ -59,6 +59,22 @@ namespace Alternet.UI
             AllPlatformDefaults.PlatformCurrent.Controls[controlId];
 
         /// <summary>
+        /// Gets the background brush for specified state of the control.
+        /// </summary>
+        public virtual Brush? GetBackground(GenericControlState state)
+        {
+            return background?.GetObjectOrNull(state);
+        }
+
+        /// <summary>
+        /// Gets the foreground brush for specified state of the control.
+        /// </summary>
+        public virtual Brush? GetForeground(GenericControlState state)
+        {
+            return foreground?.GetObjectOrNull(state);
+        }
+
+        /// <summary>
         /// Gets known svg color depending on the value of
         /// <see cref="IsDarkBackground"/> property.
         /// </summary>
