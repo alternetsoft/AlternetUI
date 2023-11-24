@@ -76,6 +76,24 @@ namespace EmployeeFormSample
             panelHeader.SelectedTab = panelHeader.Tabs[0];
 */
             this.MinimumSize = new(900, 700);
+
+            firstNameTextBox.BindText(nameof(Employee.FirstName));
+            lastNameTextBox.BindText(nameof(Employee.LastName));
+            statusTextBox.BindText(nameof(Employee.Status));
+            emailTextBox.BindText(nameof(Employee.Email));
+            skypeTextBox.BindText(nameof(Employee.Skype));            
+            titleTextBox.BindText(nameof(Employee.Title));
+            addressTextBox.BindText(nameof(Employee.Address));
+            cityTextBox.BindText(nameof(Employee.City));
+            zipCodeTextBox.BindText(nameof(Employee.ZipCode));
+            homePhoneTextBox.BindText(nameof(Employee.HomePhone));
+            mobilePhone.BindText(nameof(Employee.MobilePhone));
+            prefixComboBox.BindSelectedItem(nameof(Employee.Prefix));
+            stateComboBox.BindSelectedItem(nameof(Employee.State));
+            departmentComboBox.BindSelectedItem(nameof(Employee.Department));
+            birthDatePicker.BindValue(nameof(Employee.BirthDate));
+            hireDatePicker.BindValue(nameof(Employee.HireDate));          
+
             this.SetSizeToContent();
         }
 

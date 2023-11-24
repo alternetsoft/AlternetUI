@@ -37,61 +37,61 @@
 
         <Label Text="First Name" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center"
                Margin="0,0,10,5"/>
-        <TextBox Text="{Binding FirstName}" Grid.Row="0" Grid.Column="1" Name="firstNameTextBox"
+        <TextBox Grid.Row="0" Grid.Column="1" Name="firstNameTextBox"
                  VerticalAlignment="Center" Margin="0,0,0,5"/>
 
         <Label Text="Last Name" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center"
                Margin="0,0,10,5"/>
-        <TextBox Text="{Binding LastName}" Grid.Row="1" Grid.Column="1"
+        <TextBox Grid.Row="1" Grid.Column="1" Name="lastNameTextBox"
                  VerticalAlignment="Center" Margin="0,0,0,5"/>
 
         <Label Text="Birth Date" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center"
                Margin="0,0,10,5"/>
-        <DateTimePicker Value="{Binding BirthDate}" Grid.Row="2" Grid.Column="1"
+        <DateTimePicker Grid.Row="2" Grid.Column="1" Name="birthDatePicker"
                  VerticalAlignment="Center" Margin="0,0,0,5"/>
 
         <Label Text="Title" Grid.Row="3" Grid.Column="0" VerticalAlignment="Center"
                Margin="0,0,10,5"/>
-        <TextBox Text="{Binding Title}" Grid.Row="3" Grid.Column="1"
+        <TextBox Grid.Row="3" Grid.Column="1" Name="titleTextBox"
                  VerticalAlignment="Center" Margin="0,0,0,5"/>
 
         <Label Text="Prefix" Grid.Row="4" Grid.Column="0" VerticalAlignment="Center"
                Margin="0,0,10,20"/>
-        <ComboBox SelectedItem="{Binding Prefix}" Name="prefixComboBox"
+        <ComboBox Name="prefixComboBox"
                   Grid.Row="4" Grid.Column="1" IsEditable="false"
                   VerticalAlignment="Center" Margin="0,0,0,10"/>
 
         <Label Text="Address" Grid.Row="5" Grid.Column="0" VerticalAlignment="Center"
                Margin="0,0,0,5"/>
-        <TextBox Text="{Binding Address}" Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2"
-            VerticalAlignment="Center" Margin="0,0,0,5"/>
+        <TextBox Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2"
+            VerticalAlignment="Center" Margin="0,0,0,5" Name="addressTextBox"/>
 
         <Label Text="City" Grid.Row="6" Grid.Column="0" VerticalAlignment="Center"
                Margin="0,0,10,5"/>
-        <TextBox Text="{Binding City}" Grid.Row="6" Grid.Column="1"
+        <TextBox Grid.Row="6" Grid.Column="1" Name="cityTextBox"
                  Grid.ColumnSpan="2" VerticalAlignment="Center"
             Margin="0,0,0,5"/>
 
         <Label Text="State" Grid.Row="7" Grid.Column="0" VerticalAlignment="Center"
                Margin="0,0,10,5"/>
-        <ComboBox SelectedItem="{Binding State}" Name="stateComboBox" Grid.ColumnSpan="2"
+        <ComboBox Name="stateComboBox" Grid.ColumnSpan="2"
             Grid.Row="7" Grid.Column="1" IsEditable="false" VerticalAlignment="Center"
                   Margin="0,0,0,5"/>
 
         <Label Text="ZIP Code" VerticalAlignment="Center" Margin="0,0,10,5" Grid.Row="8"
                Grid.Column="0"/>
-        <TextBox Text="{Binding ZipCode}" VerticalAlignment="Center"  Grid.ColumnSpan="2"
-            Grid.Row="8" Grid.Column="1" Margin="0,0,0,5"/>
+        <TextBox VerticalAlignment="Center"  Grid.ColumnSpan="2"
+            Grid.Row="8" Grid.Column="1" Margin="0,0,0,5" Name="zipCodeTextBox"/>
 
         <Label Text="Home Phone" Grid.Row="9" Grid.Column="0" VerticalAlignment="Center"
                Margin="0,0,10,5"/>
-        <TextBox Text="{Binding HomePhone}" Grid.Row="9" Grid.Column="1" Grid.ColumnSpan="2"
-                 VerticalAlignment="Center" Margin="0,0,0,5"/>
+        <TextBox Grid.Row="9" Grid.Column="1" Grid.ColumnSpan="2"
+                 VerticalAlignment="Center" Margin="0,0,0,5" Name="homePhoneTextBox"/>
 
         <Label Text="Mobile Phone" Grid.Row="10" Grid.Column="0" VerticalAlignment="Center"
                Margin="0,0,10,5"/>
-        <TextBox Text="{Binding MobilePhone}" Grid.Row="10" Grid.Column="1" Grid.ColumnSpan="2"
-                 VerticalAlignment="Center" Margin="0,0,0,5"/>
+        <TextBox Grid.Row="10" Grid.Column="1" Grid.ColumnSpan="2"
+                 VerticalAlignment="Center" Margin="0,0,0,5" Name="mobilePhone"/>
       </Grid>
 
       <Grid Margin="20,0,0,0" Grid.Column="1">
@@ -111,29 +111,29 @@
 
         <Label Text="Department" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center"
                Margin="0,0,10,5"/>
-        <ComboBox SelectedItem="{Binding Department}" Name="departmentComboBox" Grid.Row="0"
+        <ComboBox Name="departmentComboBox" Grid.Row="0"
                   Grid.Column="1" IsEditable="false"
                   VerticalAlignment="Center" Margin="0,0,0,5"/>
 
         <Label Text="Hire Date" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center"
                Margin="0,0,10,5"/>
-        <DateTimePicker Value="{Binding HireDate}" Grid.Row="1" Grid.Column="1"
-                        VerticalAlignment="Center" Margin="0,0,0,5"/>
+        <DateTimePicker Grid.Row="1" Grid.Column="1"
+                        VerticalAlignment="Center" Margin="0,0,0,5" Name="hireDatePicker"/>
 
         <Label Text="Status" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center"
                Margin="0,0,10,5"/>
-        <TextBox Text="{Binding Status}" Grid.Row="2" Grid.Column="1" VerticalAlignment="Center"
-                 Margin="0,0,0,5"/>
+        <TextBox Grid.Row="2" Grid.Column="1" VerticalAlignment="Center"
+                 Margin="0,0,0,5" Name="statusTextBox"/>
 
         <Label Text="E-Mail" Grid.Row="3" Grid.Column="0" VerticalAlignment="Center"
                Margin="0,0,10,5"/>
-        <TextBox Text="{Binding Email}" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2"
-                 VerticalAlignment="Center" Margin="0,0,0,5"/>
+        <TextBox Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2"
+                 VerticalAlignment="Center" Margin="0,0,0,5" Name="emailTextBox"/>
 
         <Label Text="Skype" Grid.Row="4" Grid.Column="0" VerticalAlignment="Center"
                Margin="0,0,10,5"/>
-        <TextBox Text="{Binding Skype}" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2"
-                 VerticalAlignment="Center" Margin="0,0,0,0"/>
+        <TextBox Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2"
+                 VerticalAlignment="Center" Margin="0,0,0,0" Name="skypeTextBox"/>
 
         <Label Text="Evaluations" Grid.Row="5" Grid.Column="0" VerticalAlignment="Center"
                  Margin="0,10,0,5"/>

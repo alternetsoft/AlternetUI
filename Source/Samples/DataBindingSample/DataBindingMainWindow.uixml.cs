@@ -2,7 +2,7 @@ using System;
 using System.ComponentModel;
 using Alternet.UI;
 
-namespace HelloWorldSample
+namespace DataBindingSample
 {
     public partial class MainWindow : Window
     {

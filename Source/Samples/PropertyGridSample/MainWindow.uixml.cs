@@ -86,8 +86,8 @@ namespace PropertyGridSample
 
         public MainWindow()
         {
-            controlPanelBorder.Settings.Paint += BorderSettings.DrawDesignCorners;
-            controlPanelBorder.Settings.DrawDefaultBorder = false;
+            controlPanelBorder.Normal.Paint += BorderSettings.DrawDesignCorners;
+            controlPanelBorder.Normal.DrawDefaultBorder = false;
 
             panel.BindApplicationLog();
 
@@ -162,19 +162,24 @@ namespace PropertyGridSample
             panel.RightNotebook.PageChanged += RightNotebook_PageChanged;
         }
 
+        internal bool LogSize { get; set; } = false;
+
         private void LeftTreeView_SizeChanged(object? sender, EventArgs e)
         {
-            Application.Log("LeftTreeView_SizeChanged");
+            if(LogSize)
+                Application.Log("LeftTreeView_SizeChanged");
         }
 
         private void CenterNotebook_LayoutUpdated(object? sender, EventArgs e)
         {
-            Application.Log("CenterNotebook_LayoutUpdated");
+            if (LogSize)
+                Application.Log("CenterNotebook_LayoutUpdated");
         }
 
         private void CenterNotebook_SizeChanged(object? sender, EventArgs e)
         {
-            Application.Log("CenterNotebook_SizeChanged");
+            if (LogSize)
+                Application.Log("CenterNotebook_SizeChanged");
         }
 
         private void RightNotebook_PageChanged(object? sender, EventArgs e)

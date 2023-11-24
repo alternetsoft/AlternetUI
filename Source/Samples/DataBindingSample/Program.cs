@@ -3,7 +3,7 @@ using System;
 using System.ComponentModel;
 using Alternet.Drawing;
 
-namespace HelloWorldSample
+namespace DataBindingSample
 {
     internal class Program
     {
