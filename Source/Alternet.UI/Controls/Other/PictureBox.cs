@@ -40,6 +40,38 @@ namespace Alternet.UI
                 RaiseImageChanged(EventArgs.Empty);
             }
         }
+        
+        /// <inheritdoc/>
+        [Browsable(false)]
+        internal new Color? ForegroundColor
+        {
+            get => null;
+            set { }
+        }
+
+        /// <inheritdoc/>
+        [Browsable(false)]
+        internal new LayoutDirection LayoutDirection
+        {
+            get => LayoutDirection.Default;
+            set { }
+        }
+
+        /// <inheritdoc/>
+        [Browsable(false)]
+        internal new bool IsBold
+        {
+            get => false;
+            set { }
+        }
+
+        /// <inheritdoc/>
+        [Browsable(false)]
+        internal new Font? Font
+        {
+            get => null;
+            set { }
+        }
 
         /// <summary>
         /// Gets or sets a value indicating whether to draw image stretched to the size of the control.
