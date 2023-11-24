@@ -26,7 +26,7 @@ namespace Alternet.UI
             : base()
         {
             MakeAsPopup();
-            border.Settings = Settings;
+            border.Normal = Settings;
             border.Parent = this;
             Deactivated += Popup_Deactivated;
             KeyDown += PopupWindow_KeyDown;
