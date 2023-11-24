@@ -37,6 +37,61 @@ namespace PropertyGridSample
             const int defaultListHeight = 250;
             Size defaultListSize = new(defaultListHeight, defaultListHeight);
 
+            static void SetBackgrounds(Control control)
+            {
+                control.Backgrounds = new()
+                {
+                    Normal = Color.PaleTurquoise.AsBrush,
+                    Hovered = Color.IndianRed.AsBrush,
+                    Disabled = Color.Orchid.AsBrush,
+                    Pressed = Color.Cornsilk.AsBrush,
+                    Focused = Color.DarkOrange.AsBrush,
+                };
+            }
+
+            Actions.Add(typeof(PictureBox), (c) =>
+            {
+                PictureBox pictureBox = (c as PictureBox)!;
+                pictureBox.ImageStretch = false;
+                SetBackgrounds(pictureBox);
+                pictureBox.SuggestedSize = 150;
+                
+                pictureBox.Borders ??= new();
+                var border = BorderSettings.Default.Clone();
+                border.UniformCornerRadius = 15;
+                border.UniformRadiusIsPercent = true;
+                pictureBox.Borders.SetAll(border);
+
+                pictureBox.Image = DefaultImage;
+
+                var disabledImage = DefaultImage.Clone();
+                disabledImage.GrayScale();
+                pictureBox.SetImage(disabledImage, GenericControlState.Disabled);
+
+                pictureBox.CurrentStateChanged += CurrentStateChanged;
+
+                static void CurrentStateChanged(object? sender, EventArgs e)
+                {
+                    Application.LogNameValue("PictureBox.CurrentState", (sender as PictureBox)?.CurrentState);
+                }
+            });
+
+            Actions.Add(typeof(Border), (c) =>
+            {
+                var border = (c as Border)!;
+                border.SuggestedSize = defaultListSize;
+                SetBackgrounds(border);
+
+                border.CurrentStateChanged += Border_CurrentStateChanged;
+
+                static void Border_CurrentStateChanged(object? sender, EventArgs e)
+                {
+                    Application.LogNameValue("Border.CurrentState", (sender as Border)?.CurrentState);
+                }
+
+                //border.FlagsAndAttributes.AddFlag("NoDesignBorder");
+            });
+
             Actions.Add(typeof(ContextMenu), InitContextMenu);
 
             Actions.Add(typeof(Label), (c) =>
@@ -54,30 +109,6 @@ namespace PropertyGridSample
             {
                 (c as StatusBar)!.Panels.Add(new("text1"));
                 (c as StatusBar)!.Panels.Add(new("text2"));
-            });
-
-            Actions.Add(typeof(Border), (c) =>
-            {
-                var border = (c as Border)!;
-                border.SuggestedSize = defaultListSize;
-                border.Backgrounds = new()
-                {
-                    Hovered = Color.Red.AsBrush,
-                    Disabled = Color.Yellow.AsBrush,
-                    Pressed = Color.Cornsilk.AsBrush,
-                    Focused = Color.White.AsBrush,
-                };
-
-                border.CurrentStateChanged += Border_CurrentStateChanged;
-
-                static void Border_CurrentStateChanged(object? sender, EventArgs e)
-                {
-                    Application.LogNameValue("Border.CurrentState", (sender as Border)?.CurrentState);
-                }
-
-                //border.BorderColor = Color.Red;
-                //border.BackgroundColor = Color.Cornsilk;
-                //border.FlagsAndAttributes.AddFlag("NoDesignBorder");
             });
 
             Actions.Add(typeof(CardPanel), (c) =>
@@ -183,12 +214,6 @@ namespace PropertyGridSample
                 GroupBox groupBox = (c as GroupBox)!;
                 groupBox.Title = "GroupBox";
                 groupBox.SuggestedSize = 150;
-            });
-
-            Actions.Add(typeof(PictureBox), (c) =>
-            {
-                PictureBox pictureBox = (c as PictureBox)!;
-                pictureBox.Image = DefaultImage;
             });
 
             Actions.Add(typeof(Panel), (c) =>

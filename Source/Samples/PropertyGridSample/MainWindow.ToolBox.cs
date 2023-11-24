@@ -28,6 +28,8 @@ namespace PropertyGridSample
                 Type[] limitedTypes =
                 [
                     typeof(Border),
+                    typeof(PictureBox),
+                    typeof(Label),
                     typeof(Button),
                     typeof(Calendar),
                     typeof(CheckBox),
@@ -36,7 +38,6 @@ namespace PropertyGridSample
                     typeof(DateTimePicker),
                     typeof(GroupBox),
                     typeof(HorizontalStackPanel),
-                    typeof(Label),
                     typeof(LinkLabel),
                     typeof(ListBox),
                     typeof(ListView),
@@ -44,7 +45,6 @@ namespace PropertyGridSample
                     typeof(NumericUpDown),
                     typeof(Panel),
                     typeof(PanelOkCancelButtons),
-                    typeof(PictureBox),
                     typeof(ProgressBar),
                     typeof(RadioButton),
                     typeof(RichTextBox),
@@ -97,10 +97,11 @@ namespace PropertyGridSample
                   typeof(CheckListBox), // as empty items error
                   typeof(PanelWebBrowser),
                   typeof(TabControl), // pages are not shown. Why?
-                  typeof(Window),
+                  typeof(Window),                
                 ];
 
-                IEnumerable<Type> result = AssemblyUtils.GetTypeDescendants(typeof(Control));
+                IEnumerable<Type> result = addLimitedControls ? limitedTypes : AssemblyUtils.GetTypeDescendants(typeof(Control));
+                
                 foreach (Type type in result)
                 {
                     if (type.Assembly != typeof(Control).Assembly)
@@ -109,11 +110,6 @@ namespace PropertyGridSample
                         continue;
                     if (AssemblyUtils.TypeIsDescendant(type, badParentTypes))
                         continue;
-                    if (addLimitedControls)
-                    {
-                        if (Array.IndexOf(limitedTypes, type) < 0)
-                            continue;
-                    }
                     item = new(type)
                     {
                         HasTicks = true,
