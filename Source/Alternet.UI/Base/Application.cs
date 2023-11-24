@@ -21,7 +21,7 @@ namespace Alternet.UI
         internal const int BuildCounter = 3;
         internal static readonly Destructor MyDestructor = new();
 
-        private static readonly Queue<(Action<object?>, object?)> idleTasks = new();
+        private static readonly Queue<(Action<object?>, object?)> IdleTasks = new();
         private static bool terminating = false;
         private static bool logFileIsEnabled;
         private static Application? current;
@@ -520,7 +520,7 @@ namespace Alternet.UI
         /// <param name="param">Task parameter.</param>
         public static void AddIdleTask(Action<object?> task, object? param = null)
         {
-            idleTasks.Enqueue((task, param));
+            IdleTasks.Enqueue((task, param));
         }
 
         /// <summary>
@@ -982,14 +982,14 @@ namespace Alternet.UI
 
         private void NativeApplication_Idle(object? sender, EventArgs e)
         {
-            if (idleTasks.Count > 0)
+            if (IdleTasks.Count > 0)
             {
-                var task = idleTasks.Dequeue();
+                var task = IdleTasks.Dequeue();
                 task.Item1(task.Item2);
             }
 
             Idle?.Invoke(this, EventArgs.Empty);
-        } 
+        }
 
         private void OnVisualThemeChanged()
         {
