@@ -1406,7 +1406,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Draw default background
+        /// Draw default background.
         /// </summary>
         /// <param name="dc">Drawing context.</param>
         /// <param name="rect">Ractangle.</param>

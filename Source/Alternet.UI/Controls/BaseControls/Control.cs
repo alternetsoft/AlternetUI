@@ -298,6 +298,12 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets different behavior and visualization options.
+        /// </summary>
+        [Browsable(false)]
+        public virtual ControlOptions BehaviorOptions { get; set; }
+
+        /// <summary>
         /// Gets or sets the cursor that the control should normally display.
         /// </summary>
         /// <remarks>
@@ -964,6 +970,18 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets override value for the <see cref="CurrentState"/>
+        /// property.
+        /// </summary>
+        /// <remarks>
+        /// When <see cref="CurrentStateOverride"/> is specified, it's value
+        /// used instead of dynamic state calculation when <see cref="CurrentState"/>
+        /// returns its value.
+        /// </remarks>
+        [Browsable(false)]
+        public virtual GenericControlState? CurrentStateOverride { get; set; }
+
+        /// <summary>
         /// Gets current <see cref="GenericControlState"/>.
         /// </summary>
         [Browsable(false)]
@@ -971,6 +989,9 @@ namespace Alternet.UI
         {
             get
             {
+                if (CurrentStateOverride is not null)
+                    return CurrentStateOverride.Value;
+
                 if (!enabled)
                     return GenericControlState.Disabled;
                 if (IsMouseOver)
