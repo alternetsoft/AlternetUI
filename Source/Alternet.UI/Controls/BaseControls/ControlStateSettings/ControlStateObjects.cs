@@ -42,6 +42,31 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets whether <see cref="Normal"/> property is assigned.
+        /// </summary>
+        public bool HasNormal => normal != null;
+
+        /// <summary>
+        /// Gets whether <see cref="Hovered"/> property is assigned.
+        /// </summary>
+        public bool HasHovered => hovered != null;
+
+        /// <summary>
+        /// Gets whether <see cref="Pressed"/> property is assigned.
+        /// </summary>
+        public bool HasPressed => pressed != null;
+
+        /// <summary>
+        /// Gets whether <see cref="Disabled"/> property is assigned.
+        /// </summary>
+        public bool HasDisabled => disabled != null;
+
+        /// <summary>
+        /// Gets whether <see cref="Focused"/> property is assigned.
+        /// </summary>
+        public bool HasFocused => focused != null;
+
+        /// <summary>
         /// Gets or sets an object for normal control state.
         /// </summary>
         public virtual T? Normal
@@ -99,6 +124,13 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets whether a value is assigned for the specified state.
+        /// </summary>
+        /// <param name="state">Control state.</param>
+        /// <returns></returns>
+        public bool HasObject(GenericControlState state) => GetObjectOrNormal(state) != null;
+
+        /// <summary>
         /// Gets an object for the specified state or <see cref="Normal"/> if
         /// object for that state is not specified.
         /// </summary>
@@ -151,6 +183,18 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets an object for the specified state or calls an <paramref name="action"/>
+        /// if object for that state is not specified.
+        /// </summary>
+        /// <param name="state">Control state.</param>
+        /// <param name="action">Action to call if no object is assigned for the state.</param>
+        /// <returns></returns>
+        public T GetObjectOrAction(GenericControlState state, Func<T> action)
+        {
+            return GetObjectOrNull(state) ?? action();
+        }
+
+        /// <summary>
         /// Gets an object for the specified state or <paramref name="defaultValue"/> if
         /// object for that state is not specified.
         /// </summary>
@@ -190,6 +234,9 @@ namespace Alternet.UI
             T? value,
             [CallerMemberName] string? propertyName = null)
         {
+            if (immutable)
+                return false;
+
             if (Equals(storage, value))
             {
                 return false;
