@@ -9,7 +9,7 @@ namespace Alternet.UI
     [ControlCategory("Containers")]
     public class Border : UserPaintControl
     {
-        private readonly BorderSettings settings;
+        private readonly ControlStateBorders borders = new();
         private bool hasBorder = true;
 
         /// <summary>
@@ -17,10 +17,9 @@ namespace Alternet.UI
         /// </summary>
         public Border()
         {
-            settings = CreateBorderSettings();
-            settings.Assign(BorderSettings.Default);
+            borders.Normal = CreateBorderSettings(BorderSettings.Default);
             UpdatePadding();
-            settings.PropertyChanged += Settings_PropertyChanged;
+            borders.Normal.PropertyChanged += Settings_PropertyChanged;
         }
 
         /// <summary>
@@ -77,13 +76,13 @@ namespace Alternet.UI
         /// </remarks>
         public Thickness BorderWidth
         {
-            get => settings.Width;
+            get => Normal.Width;
             set
             {
                 value.ApplyMin(0);
-                if (settings.Width == value)
+                if (Normal.Width == value)
                     return;
-                settings.Width = value;
+                Normal.SetWidth(value);
                 UpdatePadding();
                 Refresh();
             }
@@ -113,14 +112,14 @@ namespace Alternet.UI
         {
             get
             {
-                return settings.UniformCornerRadius;
+                return Normal.UniformCornerRadius;
             }
 
             set
             {
-                if (settings.UniformCornerRadius == value)
+                if (Normal.UniformCornerRadius == value)
                     return;
-                settings.UniformCornerRadius = value;
+                Normal.UniformCornerRadius = value;
                 Refresh();
             }
         }
@@ -130,14 +129,14 @@ namespace Alternet.UI
         {
             get
             {
-                return settings.UniformRadiusIsPercent;
+                return Normal.UniformRadiusIsPercent;
             }
 
             set
             {
-                if (settings.UniformRadiusIsPercent == value)
+                if (Normal.UniformRadiusIsPercent == value)
                     return;
-                settings.UniformRadiusIsPercent = value;
+                Normal.UniformRadiusIsPercent = value;
                 Refresh();
             }
         }
@@ -158,8 +157,8 @@ namespace Alternet.UI
         {
             get
             {
-                if (settings.Width.IsUniform)
-                    return settings.Width.Left;
+                if (Normal.Width.IsUniform)
+                    return Normal.Width.Left;
                 else
                     return null;
             }
@@ -173,15 +172,13 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc cref="Control.Background"/>
-        public new Brush? Background
+        [Browsable(true)]
+        public override Brush? Background
         {
             get => base.Background;
             set
             {
-                if (Background == value)
-                    return;
                 base.Background = value;
-                Refresh();
             }
         }
 
@@ -199,15 +196,15 @@ namespace Alternet.UI
         {
             get
             {
-                return settings.Color;
+                return Normal.Color;
             }
 
             set
             {
                 if (value == null)
-                    settings.Color = BorderSettings.Default.Color;
+                    Normal.Color = BorderSettings.Default.Color;
                 else
-                    settings.Color = (Color)value;
+                    Normal.Color = (Color)value;
                 Refresh();
             }
         }
@@ -216,43 +213,52 @@ namespace Alternet.UI
         /// Gets or sets individual border side settings.
         /// </summary>
         [Browsable(false)]
-        public BorderSettings Settings
+        public BorderSettings Normal
         {
             get
             {
-                return settings;
+                return borders.Normal ??= new(BorderSettings.Default);
             }
 
             set
             {
                 if (value == null)
-                    settings.Assign(BorderSettings.Default);
+                    borders.Normal?.Assign(BorderSettings.Default);
                 else
-                    settings.Assign(value);
+                    borders.Normal?.Assign(value);
             }
+        }
+
+        /// <summary>
+        /// Gets <see cref="BorderSettings"/> for the specified control state.
+        /// </summary>
+        /// <param name="state">Control state</param>
+        public BorderSettings GetSettings(GenericControlState state)
+        {
+            return borders.GetObjectOrDefault(state, Normal);
         }
 
         /// <inheritdoc cref="BorderSettings.SetColors"/>
         public void SetColors(Color left, Color top, Color right, Color bottom)
         {
-            if (settings.SetColors(left, top, right, bottom))
+            if (Normal.SetColors(left, top, right, bottom))
                 Refresh();
         }
 
         /// <inheritdoc/>
         public override Size GetPreferredSize(Size availableSize)
         {
-            return base.GetPreferredSize(availableSize) +
-                new Size(settings.Width.Horizontal, settings.Width.Vertical);
+            var width = Normal.Width;
+            return base.GetPreferredSize(availableSize) + (width.Horizontal, width.Vertical);
         }
 
         /// <summary>
         /// Creates used <see cref="BorderSettings"/> instance. Override to use have border
         /// painting or non-default behavior.
         /// </summary>
-        protected virtual BorderSettings CreateBorderSettings()
+        protected virtual BorderSettings CreateBorderSettings(BorderSettings defaultSettings)
         {
-            return new();
+            return new(defaultSettings);
         }
 
         /// <inheritdoc/>
@@ -264,7 +270,7 @@ namespace Alternet.UI
 
         private void UpdatePadding()
         {
-            Thickness result = settings.Width;
+            Thickness result = Normal.Width;
             Padding = result;
         }
 
