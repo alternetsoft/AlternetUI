@@ -97,6 +97,17 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets an object for the specified state or <paramref name="defaultValue"/> if
+        /// object for that state is not specified.
+        /// </summary>
+        /// <param name="state">Control state.</param>
+        /// <param name="defaultValue">Default result value.</param>
+        public T GetObjectOrDefault(GenericControlState state, T defaultValue)
+        {
+            return GetObjectOrNull(state) ?? defaultValue;
+        }
+
+        /// <summary>
         /// Gets an object for the specified state or <c>null</c> if image for that state
         /// is not specified.
         /// </summary>
