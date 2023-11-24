@@ -334,25 +334,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets a <see cref="UI.VisualTheme"/> that is used by
-        /// UI controls in the application.
-        /// </summary>
-        public virtual VisualTheme VisualTheme
-        {
-            get => visualTheme;
-            set
-            {
-                if (visualTheme == value)
-                    return;
-
-                visualTheme = value;
-
-                OnVisualThemeChanged();
-                VisualThemeChanged?.Invoke(this, EventArgs.Empty);
-            }
-        }
-
-        /// <summary>
         /// Gets or sets the application name.
         /// </summary>
         /// <remarks>
@@ -468,6 +449,25 @@ namespace Alternet.UI
         /// the foreground.
         /// </summary>
         public virtual bool IsActive => nativeApplication.IsActive();
+
+        /// <summary>
+        /// Gets or sets a <see cref="UI.VisualTheme"/> that is used by
+        /// UI controls in the application.
+        /// </summary>
+        internal virtual VisualTheme VisualTheme
+        {
+            get => visualTheme;
+            set
+            {
+                if (visualTheme == value)
+                    return;
+
+                visualTheme = value;
+
+                OnVisualThemeChanged();
+                VisualThemeChanged?.Invoke(this, EventArgs.Empty);
+            }
+        }
 
         internal Window? MainWindow
         {
