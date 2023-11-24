@@ -42,6 +42,7 @@ namespace Alternet.UI
 
         private static int groupIndexCounter;
 
+        private GenericControlState currentState;
         private int layoutSuspendCount;
         private IFlagsAndAttributes? flagsAndAttributes;
         private MouseButtonEventArgs? dragEventArgs;
@@ -871,8 +872,21 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets current <see cref="GenericControlState"/>.
+        /// </summary>
+        [Browsable(false)]
+        public virtual GenericControlState CurrentState
+        {
+            get
+            {
+                return currentState;
+            }
+        }
+
+        /// <summary>
         /// Gets whether user paint is supported for this control.
         /// </summary>
+        [Browsable(false)]
         public virtual bool CanUserPaint => true;
 
         /// <summary>
@@ -1215,6 +1229,7 @@ namespace Alternet.UI
                 background ??= new();
                 background.Normal = value;
                 BackgroundChanged?.Invoke(this, EventArgs.Empty);
+                Refresh();
             }
         }
 
