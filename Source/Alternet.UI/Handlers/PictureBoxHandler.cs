@@ -8,13 +8,7 @@ namespace Alternet.UI
 
         public override void OnPaint(DrawingContext drawingContext)
         {
-            var r = Control.DrawClientRectangle;
-
-            Control.DrawDefaultBackground(drawingContext, r);
-
-            var primitive = Control.Primitive;
-            primitive.DestRect = r;
-            primitive.Draw(drawingContext);
+            Control.DefaultPaint(drawingContext, Control.DrawClientRectangle);
         }
 
         public override Size GetPreferredSize(Size availableSize)

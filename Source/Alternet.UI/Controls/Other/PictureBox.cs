@@ -13,9 +13,18 @@ namespace Alternet.UI
     [DefaultProperty("Image")]
     [DefaultBindingProperty("Image")]
     [ControlCategory("Common")]
-    public class PictureBox : Control, IValidatorReporter
+    public class PictureBox : UserPaintControl, IValidatorReporter
     {
         private readonly DrawImagePrimitive primitive = new();
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PictureBox"/> class.
+        /// </summary>
+        public PictureBox()
+        {
+            BehaviorOptions = ControlOptions.DrawDefaultBackground | ControlOptions.DrawDefaultBorder
+                | ControlOptions.RefreshOnCurrentState;
+        }
 
         /// <summary>
         /// Occurs when the <see cref="Image"/> property changes.
@@ -128,6 +137,19 @@ namespace Alternet.UI
             ImageChanged?.Invoke(this, e);
         }
 
+        internal override void DefaultPaint(DrawingContext dc, Rect rect)
+        {
+            BeforePaint(dc, rect);
+
+            DrawDefaultBackground(dc, rect);
+
+            var primitive = Primitive;
+            primitive.DestRect = rect;
+            primitive.Draw(dc);
+
+            AfterPaint(dc, rect);
+        }
+
         void IValidatorReporter.SetErrorStatus(object? sender, bool showError, string? errorText)
         {
             ToolTip = errorText ?? string.Empty;
@@ -141,6 +163,14 @@ namespace Alternet.UI
         /// data.</param>
         protected virtual void OnImageChanged(EventArgs e)
         {
+        }
+
+        /// <inheritdoc/>
+        protected override void OnCurrentStateChanged()
+        {
+            base.OnCurrentStateChanged();
+            if (Backgrounds?.HasOtherStates ?? false)
+                Refresh();
         }
 
         /// <inheritdoc/>

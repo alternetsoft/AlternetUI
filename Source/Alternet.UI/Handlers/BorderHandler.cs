@@ -9,21 +9,7 @@ namespace Alternet.UI
 
         public override void OnPaint(DrawingContext dc)
         {
-            var r = DrawClientRectangle;
-            var settings = Control.GetSettings(Control.CurrentState);
-
-            var radius = settings.GetUniformCornerRadius(r);
-
-            Control.DrawDefaultBackground(dc, r);
-
-            if (Control.DrawDebugPointsBefore)
-                dc.DrawDebugPoints(r, Pens.Yellow);
-
-            if(Control.HasBorder && radius is null)
-                settings.Draw(dc, r);
-
-            if(Control.DrawDebugPointsAfter)
-                dc.DrawDebugPoints(r);
+            Control.DefaultPaint(dc, DrawClientRectangle);
         }
 
         public override Size GetPreferredSize(Size availableSize)

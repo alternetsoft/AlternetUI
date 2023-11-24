@@ -10,13 +10,15 @@ namespace Alternet.UI
     [ControlCategory("Containers")]
     public class Border : UserPaintControl
     {
-        private bool hasBorder = true;
+        private bool hasBorder = true; // !! to border settings
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Border"/> class.
         /// </summary>
         public Border()
         {
+            BehaviorOptions = ControlOptions.DrawDefaultBackground | ControlOptions.DrawDefaultBorder
+                | ControlOptions.RefreshOnCurrentState;
             Borders ??= new();
             Borders.Normal = CreateBorderSettings(BorderSettings.Default);
             UpdatePadding();
@@ -233,12 +235,31 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets <see cref="BorderSettings"/> for the specified control state.
+        /// Draw default border.
         /// </summary>
-        /// <param name="state">Control state</param>
-        public BorderSettings GetSettings(GenericControlState state)
+        /// <param name="dc">Drawing context.</param>
+        /// <param name="rect">Ractangle.</param>
+        public virtual void DrawDefaultBorder(DrawingContext dc, Rect rect)
         {
-            return Borders?.GetObjectOrNull(state) ?? Normal;
+            if (HasBorder)
+            {
+                var settings = Borders?.GetObjectOrNull(CurrentState) ?? new(BorderSettings.Default);
+                var radius = settings.GetUniformCornerRadius(rect);
+                if (radius is null)
+                {
+                    settings.Draw(dc, rect);
+                }
+            }
+        }
+
+        internal override void DefaultPaint(DrawingContext dc, Rect rect)
+        {
+            BeforePaint(dc, rect);
+
+            DrawDefaultBackground(dc, rect);
+            DrawDefaultBorder(dc, rect);
+
+            AfterPaint(dc, rect);
         }
 
         /// <inheritdoc cref="BorderSettings.SetColors"/>
@@ -275,8 +296,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override ControlHandler CreateHandler()
         {
-            return GetEffectiveControlHandlerHactory().
-                CreateBorderHandler(this);
+            return GetEffectiveControlHandlerHactory().CreateBorderHandler(this);
         }
 
         private void UpdatePadding()

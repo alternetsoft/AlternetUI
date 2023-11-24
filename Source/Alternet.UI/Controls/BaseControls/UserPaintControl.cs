@@ -93,9 +93,48 @@ namespace Alternet.UI
             }
         }
 
+        internal virtual void BeforePaint(DrawingContext dc, Rect rect)
+        {
+#if DEBUG
+            if (DrawDebugPointsBefore)
+                dc.DrawDebugPoints(rect, Pens.Yellow);
+#endif
+        }
+
+        internal virtual void DefaultPaint(DrawingContext dc, Rect rect)
+        {
+        }
+
+        internal virtual void AfterPaint(DrawingContext dc, Rect rect)
+        {
+#if DEBUG
+            if (DrawDebugPointsAfter)
+                dc.DrawDebugPoints(rect);
+#endif
+        }
+
         /// <inheritdoc/>
         protected override void OnPaint(PaintEventArgs e)
         {
+        }
+
+        /// <inheritdoc/>
+        protected override ControlHandler CreateHandler()
+        {
+            return new UserPaintHandler();
+        }
+
+        private class UserPaintHandler : ControlHandler<UserPaintControl>
+        {
+            protected override bool NeedsPaint => true;
+
+            public override void OnPaint(DrawingContext dc)
+            {
+                var r = DrawClientRectangle;
+                Control.BeforePaint(dc, r);
+                Control.DefaultPaint(dc, r);
+                Control.AfterPaint(dc, r);
+            }
         }
     }
 }
