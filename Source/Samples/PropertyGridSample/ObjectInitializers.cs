@@ -60,9 +60,16 @@ namespace PropertyGridSample
             {
                 var border = (c as Border)!;
                 border.SuggestedSize = defaultListSize;
+                border.Backgrounds = new()
+                {
+                    Hovered = Color.Red.AsBrush,
+                    Disabled = Color.Yellow.AsBrush,
+                    Pressed = Color.Cornsilk.AsBrush,
+                    Focused = Color.White.AsBrush,
+                };
                 //border.BorderColor = Color.Red;
                 //border.BackgroundColor = Color.Cornsilk;
-                border.FlagsAndAttributes.AddFlag("NoDesignBorder");
+                //border.FlagsAndAttributes.AddFlag("NoDesignBorder");
             });
 
             Actions.Add(typeof(CardPanel), (c) =>
