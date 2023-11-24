@@ -238,6 +238,16 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Gets <see cref="DrawingContext"/> for this image on which you can paint.
+        /// </summary>
+        /// <returns></returns>
+        public DrawingContext GetDrawingContext()
+        {
+            var dc = DrawingContext.FromImage(this);
+            return dc;
+        }
+
+        /// <summary>
         /// Makes image grayscaled.
         /// </summary>
         /// <returns><c>true</c> if operation is successful. </returns>
@@ -246,7 +256,7 @@ namespace Alternet.Drawing
             void GrayScaleWithBrush()
             {
                 var size = Size;
-                using var dc = DrawingContext.FromImage(this);
+                using var dc = GetDrawingContext();
                 dc.FillRectangle(
                     DisabledBrush,
                     new(0, 0, size.Width, size.Height));
@@ -266,6 +276,15 @@ namespace Alternet.Drawing
                     GrayScaleWithBrush();
                     return true;
             }
+        }
+
+        /// <summary>
+        /// Creates a clone of this image with fully copied image data.
+        /// </summary>
+        /// <returns></returns>
+        public Image Clone()
+        {
+            return new Bitmap(this);
         }
 
         /// <summary>
