@@ -1,0 +1,14 @@
+Copy CMake.app into /Applications (or a custom location) and then double click to run it.
+ Then follow the “How to Install For Command Line Use” menu item
+
+Once you install the cmake it will automatically be available in the PATH. but in case
+ you don’t have that automatically and get the cmake: command not found error, then you need to
+ set up the cmake PATH manually using the following commands –
+
+How to setup PATH for cmake in macOS
+Open .bash_profile or .bashrc in your home directory using vim or nano editor.
+Add the following line to the end of the file and save the file.
+export PATH="/Applications/CMake.app/Contents/bin":"$PATH"
+
+If you want to create symlinks to ‘/usr/local/bin’, run the following command from the terminal
+$ sudo "/Applications/CMake.app/Contents/bin/cmake-gui" --install
