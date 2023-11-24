@@ -41,6 +41,17 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="BorderSettings"/> class
+        /// and assign its properties from <paramref name="source"/>.
+        /// </summary>
+        /// <param name="source"></param>
+        public BorderSettings(BorderSettings source)
+            : this()
+        {
+            Assign(source);
+        }
+
+        /// <summary>
         /// Occurs when the border is redrawn.
         /// </summary>
         public event EventHandler<PaintEventArgs>? Paint;
@@ -312,6 +323,15 @@ namespace Alternet.UI
             {
                 DrawVertical(dc, border.Right.Brush, border.GetRightRectangle(rect));
             }
+        }
+
+        /// <summary>
+        /// Same as <see cref="Width"/> but implemented as method.
+        /// </summary>
+        /// <param name="value">New width.</param>
+        public void SetWidth(Thickness value)
+        {
+            Width = value;
         }
 
         /// <summary>
