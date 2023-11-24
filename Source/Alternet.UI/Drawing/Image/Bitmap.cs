@@ -46,6 +46,9 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="image">The <see cref="Image"/> from which to create the
         /// new <see cref="Bitmap"/>.</param>
+        /// <remarks>
+        /// Full image data is copied from the original image.
+        /// </remarks>
         public Bitmap(Image image)
             : base()
         {
