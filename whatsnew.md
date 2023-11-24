@@ -1,5 +1,23 @@
 # 0.9.409 (work in progress)
 
+## 2023 November 24
+
+- Added HeaderLabel, SplittedTreeAndCards, PanelMultilineTextBox controls.
+- Added CardPanelHeader.Text, Application.AddIdleTask, TextBox.BindText, DateTimePicker.BindValue.
+- ControlAndLabel: DefaultControlLabelDistance, CreateDefaultLabel, CreateLabel.
+- Control: SetFocusIfPossible, SetMouseCapture, CanUserPaint, IsMouseOverChanged, IsMouseOver,
+ Backgrounds, Foregrounds, CurrentState, IsMouseLeftButtonDown, OnIsMouseOverChanged.
+- ControlSet: Size, InnerMaxWidth, InnerSuggestedWidthToMax.
+- SplitterPanel: SashPositionDip, SplitVerticalDip, SplitHorizontalDip.
+- Fixed LayoutPanelPage in ControlsSample.
+- Added different ControlState* classes.
+- Fixed LinkLabel (#62).
+- No more wxWidgets code warnings in Visual Studio.
+- Improved DialogFactory.GetTextFromUser.
+- Fixed AuiToolbar MouseCapture problems on Linux/MacOs.
+- Fixed TextBox text alignment enum choices.
+- Border: Borders for different control states.
+
 ## 2023 November 23
 
 - Fixed controls flickering on Windows: TextBox, Button, CheckBox, RadioButton, Label, ComboBox, LinkLabel,
