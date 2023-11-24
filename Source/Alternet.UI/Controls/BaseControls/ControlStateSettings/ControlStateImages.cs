@@ -79,7 +79,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="state">Control state.</param>
         [Obsolete("'GetImage' is deprecated, please use 'GetObject' instead.")]
-        public Image? GetImage(GenericControlState state) => GetObject(state);
+        public Image? GetImage(GenericControlState state) => GetObjectOrNormal(state);
 
         /// <summary>
         /// Gets <see cref="Image"/> for the specified state or <c>null</c> if image for that state

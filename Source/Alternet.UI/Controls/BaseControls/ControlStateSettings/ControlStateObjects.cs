@@ -103,9 +103,51 @@ namespace Alternet.UI
         /// object for that state is not specified.
         /// </summary>
         /// <param name="state">Control state.</param>
-        public T? GetObject(GenericControlState state)
+        public T? GetObjectOrNormal(GenericControlState state)
         {
             return GetObjectOrNull(state) ?? normal;
+        }
+
+        /// <summary>
+        /// Sets an object for the specified state.
+        /// </summary>
+        /// <param name="state">Control state.</param>
+        /// <param name="value">Object value.</param>
+        public void SetObject(T? value, GenericControlState state = GenericControlState.Normal)
+        {
+            switch (state)
+            {
+                case GenericControlState.Normal:
+                    Normal = value;
+                    return;
+                case GenericControlState.Hovered:
+                    Hovered = value;
+                    return;
+                case GenericControlState.Pressed:
+                    Pressed = value;
+                    return;
+                case GenericControlState.Disabled:
+                    Disabled = value;
+                    return;
+                case GenericControlState.Focused:
+                    Focused = value;
+                    return;
+                default:
+                    return;
+            }
+        }
+
+        /// <summary>
+        /// Sets data for all the states with the <paramref name="value"/>.
+        /// </summary>
+        /// <param name="value">Object value.</param>
+        public void SetAll(T? value)
+        {
+            Normal = value;
+            Hovered = value;
+            Pressed = value;
+            Disabled = value;
+            Focused = value;
         }
 
         /// <summary>

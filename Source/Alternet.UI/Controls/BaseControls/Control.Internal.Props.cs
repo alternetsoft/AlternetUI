@@ -116,23 +116,6 @@ namespace Alternet.UI
             }
         }
 
-        /// <summary>
-        /// Gets or sets the border brush of the control.
-        /// </summary>
-        [Browsable(false)]
-        internal virtual Brush? BorderBrush
-        {
-            get => borderBrush;
-            set
-            {
-                if (borderBrush == value)
-                    return;
-
-                borderBrush = value;
-                BorderBrushChanged?.Invoke(this, EventArgs.Empty);
-            }
-        }
-
         internal IntPtr WxWidget => NativeControl!.WxWidget;
 
         internal virtual bool IsDummy => false;

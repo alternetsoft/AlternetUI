@@ -117,8 +117,8 @@ namespace Alternet.UI
                     borderColor = Color.FromArgb(unchecked((int)0xFF729DD8));
             }
 
-            border.BorderBrush = new SolidBrush(borderColor);
-            border.Background = new SolidBrush(backgroundColor);
+            border.BorderColor = borderColor;
+            border.Background = backgroundColor.AsBrush;
         }
 
         private void NativeControl_MouseClick(object? sender, EventArgs? e)

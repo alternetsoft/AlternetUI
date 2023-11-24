@@ -41,10 +41,8 @@ namespace Alternet.UI
         private Thickness margin;
         private Thickness padding;
         private ControlHandler? handler;
-        private ControlStateBrushes? background;
-        private ControlStateBrushes? foreground;
+        private ControlStateSettings? stateObjects;
         private Font? font;
-        private Brush? borderBrush;
         private VerticalAlignment verticalAlignment = VerticalAlignment.Stretch;
         private bool inLayout;
         private HorizontalAlignment horizontalAlignment = HorizontalAlignment.Stretch;
@@ -255,11 +253,6 @@ namespace Alternet.UI
         public event EventHandler? Idle;
 
         /// <summary>
-        /// Occurs when the value of the "BorderBrush" property changes.
-        /// </summary>
-        internal event EventHandler? BorderBrushChanged;
-
-        /// <summary>
         /// Internal control flags.
         /// </summary>
         [Flags]
@@ -285,6 +278,24 @@ namespace Alternet.UI
         /// of their system.
         /// </value>
         public static Font DefaultFont => Font.Default;
+
+        /// <summary>
+        /// Gets border for all states of the control.
+        /// </summary>
+        [Browsable(false)]
+        public virtual ControlStateBorders? Borders
+        {
+            get
+            {
+                return stateObjects?.Borders;
+            }
+
+            set
+            {
+                stateObjects ??= new();
+                stateObjects.Borders = value;
+            }
+        }
 
         /// <summary>
         /// Gets or sets the cursor that the control should normally display.
@@ -425,13 +436,41 @@ namespace Alternet.UI
         public virtual bool IsMouseCaptured => Handler.IsMouseCaptured;
 
         /// <summary>
+        /// Gets or sets data (images, colors, borders, pens, brushes, etc.) for different
+        /// control states.
+        /// </summary>
+        /// <remarks>
+        /// Usage of this data depends on the control.
+        /// </remarks>
+        [Browsable(false)]
+        public ControlStateSettings? StateObjects
+        {
+            get
+            {
+                return stateObjects;
+            }
+
+            set
+            {
+                stateObjects = value;
+            }
+        }
+
+        /// <summary>
         /// Gets or sets background brushes attached to this control.
         /// </summary>
+        /// <remarks>
+        /// Usage of this data depends on the control.
+        /// </remarks>
         [Browsable(false)]
         public virtual ControlStateBrushes? Backgrounds
         {
-            get => background;
-            set => background = value;
+            get => stateObjects?.Backgrounds;
+            set
+            {
+                stateObjects ??= new();
+                stateObjects.Backgrounds = value;
+            }
         }
 
         /// <summary>
@@ -440,8 +479,12 @@ namespace Alternet.UI
         [Browsable(false)]
         public virtual ControlStateBrushes? Foregrounds
         {
-            get => foreground;
-            set => background = value;
+            get => stateObjects?.Foregrounds;
+            set
+            {
+                stateObjects ??= new();
+                stateObjects.Foregrounds = value;
+            }
         }
 
         /// <summary>
@@ -1281,14 +1324,11 @@ namespace Alternet.UI
         [Browsable(false)]
         public virtual Brush? Background
         {
-            get => background?.Normal;
+            get => Backgrounds?.Normal;
             set
             {
-                if (background?.Normal == value)
-                    return;
-
-                background ??= new();
-                background.Normal = value;
+                Backgrounds ??= new();
+                Backgrounds.Normal = value;
                 BackgroundChanged?.Invoke(this, EventArgs.Empty);
                 Refresh();
             }
@@ -1300,15 +1340,13 @@ namespace Alternet.UI
         [Browsable(false)]
         public virtual Brush? Foreground
         {
-            get => foreground?.Normal;
+            get => Foregrounds?.Normal;
             set
             {
-                if (foreground?.Normal == value)
-                    return;
-
-                foreground ??= new();
-                foreground.Normal = value;
+                Foregrounds ??= new();
+                Foregrounds.Normal = value;
                 ForegroundChanged?.Invoke(this, EventArgs.Empty);
+                Refresh();
             }
         }
 

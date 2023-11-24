@@ -107,10 +107,13 @@ namespace Alternet.UI
                 backgroundColor = Color.FromArgb(unchecked((int)0xFF80AFF2));
             }
 
-            outerBorder.BorderBrush = new SolidBrush(borderColor);
-            outerBorder.Background = new SolidBrush(backgroundColor);
+            outerBorder.BorderColor = borderColor;
+            outerBorder.Background = backgroundColor.AsBrush;
 
-            innerBorder.Background = new SolidBrush(Control.IsChecked ? Color.FromArgb(unchecked((int)0xFF4A5C77)) : Color.Transparent);
+            var innerBorderColor = Control.IsChecked? Color.FromArgb(unchecked((int)0xFF4A5C77))
+                : Color.Transparent;
+
+            innerBorder.Background = innerBorderColor.AsBrush;
         }
 
         private void Control_TextChanged(object? sender, System.EventArgs? e)

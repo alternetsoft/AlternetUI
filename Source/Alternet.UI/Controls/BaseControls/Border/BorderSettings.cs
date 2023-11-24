@@ -16,7 +16,10 @@ namespace Alternet.UI
     /// </summary>
     public class BorderSettings : BaseObject, INotifyPropertyChanged
     {
-        internal static readonly BorderSettings Default = new();
+        /// <summary>
+        /// Default border settings.
+        /// </summary>
+        public static readonly BorderSettings Default = new();
 
         private readonly BorderSideSettings left = new();
         private readonly BorderSideSettings top = new();

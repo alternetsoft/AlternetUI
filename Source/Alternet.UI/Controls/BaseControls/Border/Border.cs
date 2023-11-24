@@ -10,7 +10,6 @@ namespace Alternet.UI
     [ControlCategory("Containers")]
     public class Border : UserPaintControl
     {
-        private readonly ControlStateBorders borders = new();
         private bool hasBorder = true;
 
         /// <summary>
@@ -18,9 +17,10 @@ namespace Alternet.UI
         /// </summary>
         public Border()
         {
-            borders.Normal = CreateBorderSettings(BorderSettings.Default);
+            Borders ??= new();
+            Borders.Normal = CreateBorderSettings(BorderSettings.Default);
             UpdatePadding();
-            borders.Normal.PropertyChanged += Settings_PropertyChanged;
+            Borders.Normal.PropertyChanged += Settings_PropertyChanged;
         }
 
         /// <summary>
@@ -53,12 +53,6 @@ namespace Alternet.UI
                 BorderSettings.Default.Color = value;
             }
         }
-
-        /// <summary>
-        /// Gets border for all states of the control.
-        /// </summary>
-        [Browsable(false)]
-        public ControlStateBorders Borders => borders;
 
         /// <inheritdoc/>
         public override Rect ChildrenLayoutBounds
@@ -224,15 +218,17 @@ namespace Alternet.UI
         {
             get
             {
-                return borders.Normal ??= new(BorderSettings.Default);
+                Borders ??= new();
+                return Borders.Normal ??= new(BorderSettings.Default);
             }
 
             set
             {
+                Borders ??= new();
                 if (value == null)
-                    borders.Normal?.Assign(BorderSettings.Default);
+                    Borders.Normal?.Assign(BorderSettings.Default);
                 else
-                    borders.Normal?.Assign(value);
+                    Borders.Normal?.Assign(value);
             }
         }
 
@@ -242,7 +238,7 @@ namespace Alternet.UI
         /// <param name="state">Control state</param>
         public BorderSettings GetSettings(GenericControlState state)
         {
-            return borders.GetObjectOrDefault(state, Normal);
+            return Borders?.GetObjectOrNull(state) ?? Normal;
         }
 
         /// <inheritdoc cref="BorderSettings.SetColors"/>
@@ -272,7 +268,7 @@ namespace Alternet.UI
         protected override void OnCurrentStateChanged()
         {
             base.OnCurrentStateChanged();
-            if (borders.HasOtherStates || (Backgrounds?.HasOtherStates ?? false))
+            if ((Borders?.HasOtherStates ?? false) || (Backgrounds?.HasOtherStates ?? false))
                 Refresh();
         }
 

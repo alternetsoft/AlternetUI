@@ -14,15 +14,7 @@ namespace Alternet.UI
 
             var radius = settings.GetUniformCornerRadius(r);
 
-            var brush = Control.GetBackground(Control.CurrentState);
-
-            if (brush != null)
-            {
-                if (radius is null)
-                    dc.FillRectangle(brush, r);
-                else
-                    dc.FillRoundedRectangle(brush, r, radius.Value);
-            }
+            Control.DrawDefaultBackground(dc, r);
 
             if (Control.DrawDebugPointsBefore)
                 dc.DrawDebugPoints(r, Pens.Yellow);

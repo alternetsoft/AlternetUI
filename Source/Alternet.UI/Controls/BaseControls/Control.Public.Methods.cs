@@ -63,7 +63,7 @@ namespace Alternet.UI
         /// </summary>
         public virtual Brush? GetBackground(GenericControlState state)
         {
-            return background?.GetObjectOrNull(state);
+            return Backgrounds?.GetObjectOrNull(state);
         }
 
         /// <summary>
@@ -71,7 +71,7 @@ namespace Alternet.UI
         /// </summary>
         public virtual Brush? GetForeground(GenericControlState state)
         {
-            return foreground?.GetObjectOrNull(state);
+            return Foregrounds?.GetObjectOrNull(state);
         }
 
         /// <summary>
@@ -1379,6 +1379,52 @@ namespace Alternet.UI
         public double PixelToDip(int value)
         {
             return Native.Control.DrawingToDip(value, this.WxWidget);
+        }
+
+        /// <summary>
+        /// Sets image for the specified control state.
+        /// </summary>
+        /// <param name="value">Image.</param>
+        /// <param name="state">Control state.</param>
+        public void SetImage(Image? value, GenericControlState state = GenericControlState.Normal)
+        {
+            StateObjects ??= new();
+            StateObjects.Images ??= new();
+            StateObjects.Images.SetObject(value, state);
+        }
+
+        /// <summary>
+        /// Sets background brush for the specified control state.
+        /// </summary>
+        /// <param name="value">Background brush.</param>
+        /// <param name="state">Control state.</param>
+        public void SetBackground(Brush? value, GenericControlState state = GenericControlState.Normal)
+        {
+            StateObjects ??= new();
+            StateObjects.Backgrounds ??= new();
+            StateObjects.Backgrounds.SetObject(value, state);
+        }
+
+        /// <summary>
+        /// Draw default background
+        /// </summary>
+        /// <param name="dc">Drawing context.</param>
+        /// <param name="rect">Ractangle.</param>
+        public virtual void DrawDefaultBackground(DrawingContext dc, Rect rect)
+        {
+            var state = CurrentState;
+            var brush = GetBackground(state);
+
+            if (brush != null)
+            {
+                var border = Borders?.GetObjectOrNormal(state);
+                var radius = border?.GetUniformCornerRadius(rect);
+
+                if (radius is null)
+                    dc.FillRectangle(brush, rect);
+                else
+                    dc.FillRoundedRectangle(brush, rect, radius.Value);
+            }
         }
 
         /// <summary>

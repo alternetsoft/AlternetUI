@@ -85,7 +85,7 @@ namespace Alternet.UI
                 color = Color.FromArgb(unchecked((int)0xFF5C7FB2));
             }
 
-            border.BorderBrush = new SolidBrush(color);
+            border.BorderColor = color;
         }
 
         private void Control_TextChanged(object? sender, System.EventArgs? e)
