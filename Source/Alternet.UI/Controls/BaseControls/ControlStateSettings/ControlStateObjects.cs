@@ -87,6 +87,18 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets whether there are other data for states except <see cref="Normal"/>.
+        /// </summary>
+        public virtual bool HasOtherStates
+        {
+            get
+            {
+                return (disabled is not null) || (hovered is not null) || (pressed is not null)
+                    || (focused is not null);
+            }
+        }
+
+        /// <summary>
         /// Gets an object for the specified state or <see cref="Normal"/> if
         /// object for that state is not specified.
         /// </summary>
