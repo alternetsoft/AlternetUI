@@ -26,7 +26,8 @@ Step 1. Windows Machine Setup:
 Step 2. macOS Machine Setup:
 - macOS 10.15 (Catalina) or newer is required.
 - Install appropriate XCode version (for example Xcode 12.4 for macOS 10.15). See this [page](https://developer.apple.com/support/xcode/).
-- Install [CMake](https://cmake.org/download/).
+- Install [CMake](https://cmake.org/download/). Copy CMake.app into /Applications (or another location), double click to run it.
+ Follow the "How to Install For Command Line Use" menu item.
 - Make folder with Windows Alternet.UI installation accessible for macOS Machine.
 
 Step 3. Linux Machine Setup:
