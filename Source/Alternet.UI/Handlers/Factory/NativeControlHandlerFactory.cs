@@ -27,7 +27,7 @@ namespace Alternet.UI
 
         /// <inheritdoc/>
         public ControlHandler CreateBorderHandler(Control control) =>
-            new GenericBorderHandler();
+            new BorderHandler();
 
         /// <inheritdoc/>
         public ControlHandler CreatePictureBoxHandler(Control control) =>

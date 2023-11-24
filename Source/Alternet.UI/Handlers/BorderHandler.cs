@@ -3,7 +3,7 @@ using Alternet.Drawing;
 
 namespace Alternet.UI
 {
-    internal class GenericBorderHandler : ControlHandler<Border>
+    internal class BorderHandler : ControlHandler<Border>
     {
         protected override bool NeedsPaint => true;
 
