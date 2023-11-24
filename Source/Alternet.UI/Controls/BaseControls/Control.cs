@@ -1710,6 +1710,20 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Substitutes <paramref name="control"/> with dummy <see cref="Control"/>, adding
+        /// <paramref name="control"/> as its child.
+        /// </summary>
+        /// <param name="control">Control to substitute.</param>
+        /// <returns></returns>
+        public static Control SubstituteControl(Control control)
+        {
+            var parent = new Control();
+            control.Parent = parent;
+            control = parent;
+            return control;
+        }
+
+        /// <summary>
         /// Returns the currently focused control, or <see langword="null"/> if
         /// no control is focused.
         /// </summary>
@@ -3046,14 +3060,6 @@ namespace Alternet.UI
         public double PixelFromDipF(double value)
         {
             return Native.Control.DrawingFromDipF(value, this.WxWidget);
-        }
-
-        public static Control SubstituteControl(Control control)
-        {
-            var parent = new Control();
-            control.Parent = parent;
-            control = parent;
-            return control;
         }
 
         internal static void NotifyCaptureLost()
