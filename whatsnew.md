@@ -2,11 +2,12 @@
 
 ## 2023 November 24
 
+- Control: CurrentState prop and CurrentStateChanged event.
 - Added HeaderLabel, SplittedTreeAndCards, PanelMultilineTextBox controls.
 - Added CardPanelHeader.Text, Application.AddIdleTask, TextBox.BindText, DateTimePicker.BindValue.
 - ControlAndLabel: DefaultControlLabelDistance, CreateDefaultLabel, CreateLabel.
 - Control: SetFocusIfPossible, SetMouseCapture, CanUserPaint, IsMouseOverChanged, IsMouseOver,
- Backgrounds, Foregrounds, CurrentState, IsMouseLeftButtonDown, OnIsMouseOverChanged.
+ Backgrounds, Foregrounds, IsMouseLeftButtonDown, OnIsMouseOverChanged.
 - ControlSet: Size, InnerMaxWidth, InnerSuggestedWidthToMax.
 - SplitterPanel: SashPositionDip, SplitVerticalDip, SplitHorizontalDip.
 - Fixed LayoutPanelPage in ControlsSample.
