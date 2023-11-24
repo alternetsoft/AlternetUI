@@ -93,10 +93,17 @@ namespace Alternet.UI
             MouseEnter?.Invoke(this, EventArgs.Empty);
         }
 
+        internal void RaiseCurrentStateChanged()
+        {
+            OnCurrentStateChanged();
+            CurrentStateChanged?.Invoke(this, EventArgs.Empty);
+        }
+
         internal void RaiseIsMouseOverChanged()
         {
             OnIsMouseOverChanged();
             IsMouseOverChanged?.Invoke(this, EventArgs.Empty);
+            RaiseCurrentStateChanged();
         }
 
         internal void RaiseMouseLeave()
@@ -150,11 +157,16 @@ namespace Alternet.UI
         internal void RaiseGotFocus(EventArgs e)
         {
             OnGotFocus(e);
+            GotFocus?.Invoke(this, e);
+            Designer?.RaiseGotFocus(this);
+            RaiseCurrentStateChanged();
         }
 
         internal void RaiseLostFocus(EventArgs e)
         {
             OnLostFocus(e);
+            LostFocus?.Invoke(this, e);
+            RaiseCurrentStateChanged();
         }
 
         internal void SetParentInternal(Control? value)

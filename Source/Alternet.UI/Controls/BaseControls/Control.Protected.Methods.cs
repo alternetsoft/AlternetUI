@@ -115,6 +115,7 @@ namespace Alternet.UI
         {
             base.OnMouseLeftButtonDown(e);
             IsMouseLeftButtonDown = true;
+            RaiseCurrentStateChanged();
         }
 
         /// <inheritdoc/>
@@ -122,12 +123,20 @@ namespace Alternet.UI
         {
             base.OnMouseLeftButtonUp(e);
             IsMouseLeftButtonDown = false;
+            RaiseCurrentStateChanged();
         }
 
         /// <summary>
         /// Called when <see cref="IsMouseOver"/> property is changed.
         /// </summary>
         protected virtual void OnIsMouseOverChanged()
+        {
+        }
+
+        /// <summary>
+        /// Called when <see cref="CurrentStateChanged"/> property is changed.
+        /// </summary>
+        protected virtual void OnCurrentStateChanged()
         {
         }
 
@@ -291,8 +300,6 @@ namespace Alternet.UI
         /// contains the event data.</param>
         protected virtual void OnGotFocus(EventArgs e)
         {
-            GotFocus?.Invoke(this, e);
-            Designer?.RaiseGotFocus(this);
         }
 
         /// <summary>
@@ -302,7 +309,6 @@ namespace Alternet.UI
         /// contains the event data.</param>
         protected virtual void OnLostFocus(EventArgs e)
         {
-            LostFocus?.Invoke(this, e);
         }
 
         /// <inheritdoc/>
@@ -363,6 +369,7 @@ namespace Alternet.UI
         /// event data.</param>
         protected virtual void OnEnabledChanged(EventArgs e)
         {
+            RaiseCurrentStateChanged();
         }
     }
 }

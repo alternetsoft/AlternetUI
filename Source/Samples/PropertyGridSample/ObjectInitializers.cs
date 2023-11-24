@@ -67,6 +67,14 @@ namespace PropertyGridSample
                     Pressed = Color.Cornsilk.AsBrush,
                     Focused = Color.White.AsBrush,
                 };
+
+                border.CurrentStateChanged += Border_CurrentStateChanged;
+
+                static void Border_CurrentStateChanged(object? sender, EventArgs e)
+                {
+                    Application.LogNameValue("Border.CurrentState", (sender as Border)?.CurrentState);
+                }
+
                 //border.BorderColor = Color.Red;
                 //border.BackgroundColor = Color.Cornsilk;
                 //border.FlagsAndAttributes.AddFlag("NoDesignBorder");

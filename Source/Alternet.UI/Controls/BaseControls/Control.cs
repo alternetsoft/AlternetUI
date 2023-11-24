@@ -15,7 +15,8 @@ namespace Alternet.UI
     [DesignerCategory("Code")]
     [DefaultProperty("Text")]
     [DefaultEvent("Click")]
-    public partial class Control : FrameworkElement, ISupportInitialize, IDisposable, IControl, IFocusable
+    public partial class Control
+        : FrameworkElement, ISupportInitialize, IDisposable, IControl, IFocusable
     {
         /// <summary>
         /// Gets or sets whether <see cref="DebugBackgroundColor"/> property is used.
@@ -77,6 +78,11 @@ namespace Alternet.UI
         /// Occurs when the control lost focus.
         /// </summary>
         public event EventHandler? LostFocus;
+
+        /// <summary>
+        /// Occurs when the <see cref="CurrentState"/> property value changes.
+        /// </summary>
+        public event EventHandler? CurrentStateChanged;
 
         /// <summary>
         /// Occurs when the <see cref="ToolTip"/> property value changes.

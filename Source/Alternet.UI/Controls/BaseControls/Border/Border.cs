@@ -268,57 +268,12 @@ namespace Alternet.UI
             return new(defaultSettings);
         }
 
-        /// <summary>
-        /// Refreshes control if specified state data is present.
-        /// </summary>
-        /// <param name="state"></param>
-        protected virtual void RefreshIfHasStateData(GenericControlState state)
-        {
-            if (borders.GetObjectOrNull(state) is null && GetBackground(state) is null)
-                return;
-            Refresh();
-        }
-
         /// <inheritdoc/>
-        protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
+        protected override void OnCurrentStateChanged()
         {
-            base.OnMouseLeftButtonDown(e);
-            RefreshIfHasStateData(GenericControlState.Pressed);
-        }
-
-        /// <inheritdoc/>
-        protected override void OnMouseLeftButtonUp(MouseButtonEventArgs e)
-        {
-            base.OnMouseLeftButtonUp(e);
-            RefreshIfHasStateData(GenericControlState.Pressed);
-        }
-
-        /// <inheritdoc/>
-        protected override void OnIsMouseOverChanged()
-        {
-            base.OnIsMouseOverChanged();
-            RefreshIfHasStateData(GenericControlState.Hovered);
-        }
-
-        /// <inheritdoc/>
-        protected override void OnEnabledChanged(EventArgs e)
-        {
-            base.OnEnabledChanged(e);
-            RefreshIfHasStateData(GenericControlState.Disabled);
-        }
-
-        /// <inheritdoc/>
-        protected override void OnGotFocus(EventArgs e)
-        {
-            base.OnGotFocus(e);
-            RefreshIfHasStateData(GenericControlState.Focused);
-        }
-
-        /// <inheritdoc/>
-        protected override void OnLostFocus(EventArgs e)
-        {
-            base.OnLostFocus(e);
-            RefreshIfHasStateData(GenericControlState.Focused);
+            base.OnCurrentStateChanged();
+            if (borders.HasOtherStates || (Backgrounds?.HasOtherStates ?? false))
+                Refresh();
         }
 
         /// <inheritdoc/>
