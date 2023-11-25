@@ -16,12 +16,14 @@ namespace Alternet.UI
         Manual,
 
         /// <summary>
-        /// The window is centered on the current display, and has the dimensions specified in the windows's size.
+        /// The window is centered on the current display, and has the dimensions specified
+        /// in the windows's size.
         /// </summary>
         CenterScreen,
 
         /// <summary>
-        /// The startup location of a <see cref="Window"/> is the center of the <see cref="Window"/> that owns it,
+        /// The startup location of a <see cref="Window"/> is the center of the
+        /// <see cref="Window"/> that owns it,
         /// as specified by the <see cref="Window.Owner"/> property.
         /// </summary>
         CenterOwner,
