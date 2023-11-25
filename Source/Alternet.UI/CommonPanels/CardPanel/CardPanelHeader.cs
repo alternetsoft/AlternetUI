@@ -31,12 +31,12 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets default value of the <see cref="BorderPadding"/> property.
         /// </summary>
-        public static Thickness DefaultBorderPadding = new(0, 0, 0, 5);
+        public static Thickness DefaultBorderPadding = DefaultBorderSideWidth;
 
         /// <summary>
         /// Gets or sets default value of the <see cref="BorderMargin"/> property.
         /// </summary>
-        public static Thickness DefaultBorderMargin = new (0, 0, 0, 5);
+        public static Thickness DefaultBorderMargin = new (0,0,0,5);
 
         /// <summary>
         /// Gets or sets default value for the tab margin.
