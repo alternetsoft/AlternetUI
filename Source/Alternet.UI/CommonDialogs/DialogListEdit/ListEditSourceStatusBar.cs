@@ -20,7 +20,7 @@ namespace Alternet.UI
             if (Instance is not StatusBar statusBar)
                 return;
 
-            List<StatusBarPanel> items = new();
+            List<StatusBarPanel> items = [];
             items.AddRange(EnumerableUtils.GetItems<StatusBarPanel>(tree));
             statusBar.BeginUpdate();
             try

@@ -20,7 +20,7 @@ namespace Alternet.UI
         /// </remarks>
         public static Func<Control> CreateInnerControl = CreateDefaultInnerControl;
 
-        private Control control;
+        private readonly Control control;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="HeaderLabel"/> class.
@@ -51,9 +51,11 @@ namespace Alternet.UI
         /// </summary>
         public static Control CreateDefaultInnerControl()
         {
-            var panel = new CardPanelHeader();
-            panel.TabHasBorder = false;
-            panel.Text = string.Empty;
+            var panel = new CardPanelHeader
+            {
+                TabHasBorder = false,
+                Text = string.Empty,
+            };
             panel.SelectFirstTab();
             return panel;
         }

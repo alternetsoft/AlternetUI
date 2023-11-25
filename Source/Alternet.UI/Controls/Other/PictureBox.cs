@@ -49,38 +49,6 @@ namespace Alternet.UI
                 RaiseImageChanged(EventArgs.Empty);
             }
         }
-        
-        /// <inheritdoc/>
-        [Browsable(false)]
-        internal new Color? ForegroundColor
-        {
-            get => null;
-            set { }
-        }
-
-        /// <inheritdoc/>
-        [Browsable(false)]
-        internal new LayoutDirection LayoutDirection
-        {
-            get => LayoutDirection.Default;
-            set { }
-        }
-
-        /// <inheritdoc/>
-        [Browsable(false)]
-        internal new bool IsBold
-        {
-            get => false;
-            set { }
-        }
-
-        /// <inheritdoc/>
-        [Browsable(false)]
-        internal new Font? Font
-        {
-            get => null;
-            set { }
-        }
 
         /// <summary>
         /// Gets or sets a value indicating whether to draw image stretched to the size of the control.
@@ -123,7 +91,41 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override ControlTypeId ControlKind => ControlTypeId.PictureBox;
 
+        [Browsable(false)]
+        internal new Color? ForegroundColor
+        {
+            get => null;
+            set { }
+        }
+
+        [Browsable(false)]
+        internal new LayoutDirection LayoutDirection
+        {
+            get => LayoutDirection.Default;
+            set { }
+        }
+
+        [Browsable(false)]
+        internal new bool IsBold
+        {
+            get => false;
+            set { }
+        }
+
+        [Browsable(false)]
+        internal new Font? Font
+        {
+            get => null;
+            set { }
+        }
+
         internal DrawImagePrimitive Primitive => primitive;
+
+        void IValidatorReporter.SetErrorStatus(object? sender, bool showError, string? errorText)
+        {
+            ToolTip = errorText ?? string.Empty;
+            ImageVisible = showError;
+        }
 
         /// <summary>
         /// Raises the <see cref="ImageChanged"/> event and calls
@@ -148,12 +150,6 @@ namespace Alternet.UI
             primitive.Draw(dc);
 
             AfterPaint(dc, rect);
-        }
-
-        void IValidatorReporter.SetErrorStatus(object? sender, bool showError, string? errorText)
-        {
-            ToolTip = errorText ?? string.Empty;
-            ImageVisible = showError;
         }
 
         /// <summary>

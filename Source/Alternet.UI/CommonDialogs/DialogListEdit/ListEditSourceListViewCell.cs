@@ -32,7 +32,7 @@ namespace Alternet.UI
                 return;
             ListViewItem listViewItem = ListViewItem;
 
-            List<ListViewItemCell> cells = new();
+            List<ListViewItemCell> cells = [];
             cells.AddRange(EnumerableUtils.GetItems<ListViewItemCell>(tree));
             listViewItem.Cells.SetCount(cells.Count, () => new ListViewItemCell());
             for (int i = 0; i < cells.Count; i++)

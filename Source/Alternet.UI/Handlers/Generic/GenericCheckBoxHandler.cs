@@ -110,7 +110,7 @@ namespace Alternet.UI
             outerBorder.BorderColor = borderColor;
             outerBorder.Background = backgroundColor.AsBrush;
 
-            var innerBorderColor = Control.IsChecked? Color.FromArgb(unchecked((int)0xFF4A5C77))
+            var innerBorderColor = Control.IsChecked ? Color.FromArgb(unchecked((int)0xFF4A5C77))
                 : Color.Transparent;
 
             innerBorder.Background = innerBorderColor.AsBrush;

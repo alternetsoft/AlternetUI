@@ -105,7 +105,7 @@ namespace Alternet.Drawing.Printing
             set
             {
                 if (value == null)
-                    throw new ArgumentNullException();
+                    throw new ArgumentNullException(nameof(PaperSize));
 
                 NativePageSettings.UseCustomPaperSize = value.IsCustom;
 
@@ -141,7 +141,7 @@ namespace Alternet.Drawing.Printing
             set
             {
                 if (value == null)
-                    throw new ArgumentNullException();
+                    throw new ArgumentNullException(nameof(PrinterResolution));
 
                 NativePageSettings.PrinterResolution = (UI.Native.PrinterResolutionKind)value.Kind;
             }

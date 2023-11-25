@@ -16,7 +16,7 @@ namespace Alternet.Drawing
         /// All known color values (in order of definition in the <see cref="KnownColor"/>).
         /// </summary>
         private static readonly SystemSettingsColor[] ColorValueTable =
-        {
+        [
             // "not a known color"
             SystemSettingsColor.Max,
 
@@ -202,7 +202,7 @@ namespace Alternet.Drawing
 
             // "Web" colors, Part 2
             SystemSettingsColor.Max,     // RebeccaPurple
-        };
+        ];
 
         private static AdvDictionary<KnownColor, IKnownColorInfo>? knownColorItems;
 
@@ -212,7 +212,7 @@ namespace Alternet.Drawing
             {
                 if (knownColorItems == null)
                 {
-                    knownColorItems = new();
+                    knownColorItems = [];
                     RegisterKnownColors();
                 }
 
@@ -266,8 +266,8 @@ namespace Alternet.Drawing
         /// <returns>Converted color value.</returns>
         public static KnownColor Convert(SystemSettingsColor color)
         {
-            KnownColor[] table = new KnownColor[]
-            {
+            KnownColor[] table =
+            [
                 /*0x00*/KnownColor.ScrollBar,
                 /*0x01*/KnownColor.Desktop,
                 /*0x02*/KnownColor.ActiveCaption,
@@ -299,7 +299,7 @@ namespace Alternet.Drawing
                 /*0x1C*/KnownColor.GradientInactiveCaption,
                 /*0x1D*/KnownColor.MenuHighlight,
                 /*0x1E*/KnownColor.MenuBar,
-            };
+            ];
 
             if (color >= 0 && (int)color <= 0x1E)
                 return table[(int)color];

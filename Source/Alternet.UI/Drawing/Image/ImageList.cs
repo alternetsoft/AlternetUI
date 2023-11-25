@@ -31,7 +31,7 @@ namespace Alternet.Drawing
         /// Gets the <see cref="Image"/> collection for this image list.
         /// </summary>
         /// <value>The collection of images.</value>
-        public Collection<Image> Images { get; } = new Collection<Image>();
+        public Collection<Image> Images { get; } = [];
 
         /// <summary>
         /// Gets or sets the size of the images in the image list, in pixels.

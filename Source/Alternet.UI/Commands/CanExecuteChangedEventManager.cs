@@ -15,7 +15,9 @@ namespace Alternet.UI
     public class CanExecuteChangedEventManager : WeakEventManager
     {
         private static readonly object StaticSource = new NamedObject("StaticSource");
+#pragma warning disable
         private readonly ConditionalWeakTable<object, object> cwt = new();
+#pragma warning restore
 
         private CanExecuteChangedEventManager()
         {
@@ -107,7 +109,7 @@ namespace Alternet.UI
                 {
                     if (sink.IsInactive)
                     {
-                        toRemove ??= new List<HandlerSink>();
+                        toRemove ??= [];
 
                         toRemove.Add(sink);
                     }
@@ -160,7 +162,7 @@ namespace Alternet.UI
             List<HandlerSink> list = (List<HandlerSink>)this[source];
             if (list == null)
             {
-                list = new List<HandlerSink>();
+                list = [];
                 this[source] = list;
             }
 

@@ -5,14 +5,29 @@ namespace Alternet.UI
 {
     internal class AlignedLayout
     {
-        public static AlignedPosition AlignHorizontal(Rect layoutBounds, Control childControl, Size childPreferredSize) =>
-            AlignHorizontal(layoutBounds, childControl, childPreferredSize, childControl.HorizontalAlignment);
+        public static AlignedPosition AlignHorizontal(
+            Rect layoutBounds,
+            Control childControl,
+            Size childPreferredSize) => AlignHorizontal(
+                layoutBounds,
+                childControl,
+                childPreferredSize,
+                childControl.HorizontalAlignment);
 
-        public static AlignedPosition AlignVertical(Rect layoutBounds, Control childControl, Size childPreferredSize) =>
-            AlignVertical(layoutBounds, childControl, childPreferredSize, childControl.VerticalAlignment);
+        public static AlignedPosition AlignVertical(
+            Rect layoutBounds,
+            Control childControl,
+            Size childPreferredSize) => AlignVertical(
+                layoutBounds,
+                childControl,
+                childPreferredSize,
+                childControl.VerticalAlignment);
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0066:Convert switch statement to expression", Justification = "OK")]
-        public static AlignedPosition AlignHorizontal(Rect layoutBounds, Control childControl, Size childPreferredSize, HorizontalAlignment alignment)
+        public static AlignedPosition AlignHorizontal(
+            Rect layoutBounds,
+            Control childControl,
+            Size childPreferredSize,
+            HorizontalAlignment alignment)
         {
             switch (alignment)
             {
@@ -38,8 +53,11 @@ namespace Alternet.UI
             }
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0066:Convert switch statement to expression", Justification = "OK")]
-        public static AlignedPosition AlignVertical(Rect layoutBounds, Control control, Size childPreferredSize, VerticalAlignment alignment)
+        public static AlignedPosition AlignVertical(
+            Rect layoutBounds,
+            Control control,
+            Size childPreferredSize,
+            VerticalAlignment alignment)
         {
             switch (alignment)
             {

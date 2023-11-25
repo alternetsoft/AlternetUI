@@ -62,7 +62,9 @@ namespace Alternet.UI
         /// Content is vertically aligned at the bottom, and horizontally
         /// aligned on the left.
         /// </summary>
+#pragma warning disable
         BottomLeft = Bottom | Left,
+#pragma warning restore
 
         /// <summary>
         /// Content is vertically aligned at the bottom, and horizontally
@@ -74,13 +76,17 @@ namespace Alternet.UI
         /// Content is vertically aligned at the top, and horizontally
         /// aligned on the left.
         /// </summary>
+#pragma warning disable
         TopLeft = Top | Left,
+#pragma warning restore
 
         /// <summary>
         /// Content is vertically aligned at the top, and horizontally
         /// aligned on the right.
         /// </summary>
+#pragma warning disable
         TopRight = Top | Right,
+#pragma warning restore
 
         /// <summary>
         /// Content is vertically aligned at the center, and horizontally

@@ -65,6 +65,11 @@ namespace Alternet.Drawing
         {
         }
 
+        internal Bitmap(UI.Native.Image nativeImage)
+            : base(nativeImage)
+        {
+        }
+
         /// <summary>
         /// Creates a clone of this image with fully copied image data.
         /// </summary>
@@ -72,11 +77,6 @@ namespace Alternet.Drawing
         public new Bitmap Clone()
         {
             return new Bitmap(this);
-        }
-
-        internal Bitmap(UI.Native.Image nativeImage)
-            : base(nativeImage)
-        {
         }
     }
 }

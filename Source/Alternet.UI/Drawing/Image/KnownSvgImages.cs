@@ -13,7 +13,7 @@ namespace Alternet.UI
     /// </summary>
     public class KnownSvgImages
     {
-        private static readonly AdvDictionary<Int32Size, List<KnownSvgImages>> Images = new();
+        private static readonly AdvDictionary<Int32Size, List<KnownSvgImages>> Images = [];
 
         private readonly Int32Size size;
         private readonly Color color;
@@ -318,7 +318,7 @@ namespace Alternet.UI
         /// </summary>
         public IEnumerable<ImageSet> GetAllImages()
         {
-            List<ImageSet> result = new();
+            List<ImageSet> result = [];
 
             var props = GetType().GetProperties(BindingFlags.Instance | BindingFlags.Public);
 

@@ -108,7 +108,7 @@ namespace Alternet.UI
         /// <param name="keys">Keys.</param>
         public static KeyInfo[] FilterBackendOs(IEnumerable<KeyInfo> keys)
         {
-            List<KeyInfo> result = new();
+            List<KeyInfo> result = [];
 
             foreach(var key in keys)
             {

@@ -28,7 +28,7 @@ namespace Alternet.UI
         private const int SPLITHORIZONTAL = 1;
         private const int SPLITVERTICAL = 2;
 
-        private static bool MinSashSizeApplied;
+        private static bool minSashSizeApplied;
 
         private Control? control1;
         private Control? control2;
@@ -41,9 +41,9 @@ namespace Alternet.UI
         /// </summary>
         public SplitterPanel()
         {
-            if (ApplyMinSashSize && !MinSashSizeApplied)
+            if (ApplyMinSashSize && !minSashSizeApplied)
             {
-                MinSashSizeApplied = true;
+                minSashSizeApplied = true;
                 var minSize = AllPlatformDefaults.PlatformCurrent.MinSplitterSashSize;
                 SetMinSashSize(minSize);
             }

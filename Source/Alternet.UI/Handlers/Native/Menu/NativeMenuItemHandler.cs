@@ -129,13 +129,13 @@ namespace Alternet.UI
             EnsureNativeSubmenuCreated().InsertItemAt(index, handler.NativeControl);
         }
 
-        private void NativeControl_Click(object? sender, EventArgs? e)
+        private void NativeControl_Click(object? sender, EventArgs e)
         {
             Control.Checked = NativeControl.Checked;
-            Control.RaiseClick(e ?? throw new ArgumentNullException());
+            Control.RaiseClick(e);
         }
 
-        private void Control_TextChanged(object? sender, EventArgs? e)
+        private void Control_TextChanged(object? sender, EventArgs e)
         {
             ApplyText();
         }

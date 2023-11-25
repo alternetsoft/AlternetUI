@@ -1,4 +1,5 @@
-﻿#pragma warning disable CA1822 // Mark members as static
+﻿#pragma warning disable IDE0079
+#pragma warning disable CA1822 // Mark members as static
 using System;
 using System.Collections.Generic;
 using System.Linq;

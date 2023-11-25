@@ -24,7 +24,7 @@ namespace Alternet.UI
         private BrushHatchStyle hatchStyle;
 
         // (Color color, double offset)
-        private GradientStop[] gradientStops = Array.Empty<GradientStop>();
+        private GradientStop[] gradientStops = [];
 
         /// <summary>
         /// Gets or sets default value for the <see cref="LinearGradientStart"/> property.
@@ -230,8 +230,8 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override IEnumerable<IPropertyGridItem> CreateProps(IPropertyGrid propGrid)
         {
-            List<IPropertyGridItem> list = new()
-            {
+            List<IPropertyGridItem> list =
+            [
                 propGrid.CreateProperty(this, nameof(BrushType))!,
                 propGrid.CreateProperty(this, nameof(Color))!,
                 propGrid.CreateProperty(this, nameof(EndColor))!,
@@ -242,7 +242,7 @@ namespace Alternet.UI
                 propGrid.CreateProperty(this, nameof(RadialGradientRadius))!,
                 propGrid.CreateProperty(this, nameof(GradientStops))!,
                 propGrid.CreateProperty(this, nameof(HatchStyle))!,
-            };
+            ];
             return list;
         }
 

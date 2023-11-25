@@ -29,8 +29,8 @@ namespace Alternet.Drawing
         /// <summary>
         /// All known color values (in order of definition in the <see cref="KnownColor"/>).
         /// </summary>
-        public static readonly uint[] ColorValueTable = new uint[]
-        {
+        public static readonly uint[] ColorValueTable =
+        [
             // "not a known color"
             0,
 
@@ -255,7 +255,7 @@ namespace Alternet.Drawing
 
             // "Web" colors, Part 2
             0xFF663399,     // RebeccaPurple
-        };
+        ];
 
         /// <summary>
         /// All known color kinds (in order of definition in the <see cref="KnownColor"/> enum).
@@ -490,7 +490,7 @@ namespace Alternet.Drawing
         /// </summary>
         internal static void TestSystemColors()
         {
-            void Test(KnownColor color)
+            static void Test(KnownColor color)
             {
                 var oldArgb = GetSystemColorArgb(color);
                 var newArgb = GetSystemColorArgbUseSystemSettings(color);

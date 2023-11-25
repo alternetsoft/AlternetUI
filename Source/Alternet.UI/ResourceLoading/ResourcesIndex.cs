@@ -90,7 +90,7 @@ namespace Alternet.UI
 #pragma warning restore
     {
         [DataMember]
-        public List<UIResourcesIndexEntry> Entries { get; set; } = new List<UIResourcesIndexEntry>();
+        public List<UIResourcesIndexEntry> Entries { get; set; } = [];
     }
 
     // #if !BUILDTASK
