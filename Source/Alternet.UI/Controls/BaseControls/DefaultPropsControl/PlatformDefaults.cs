@@ -56,6 +56,32 @@ namespace Alternet.UI
             Application.IsWindowsOS ? 3 : 2;
 
         /// <summary>
+        /// Gets or sets whether <see cref="Button.HasBorder"/> is used
+        /// for tabs customization in <see cref="CardPanelHeader"/>, <see cref="GenericTabControl"/>
+        /// and other places.
+        /// </summary>
+        public bool AllowButtonHasBorder { get; set; }
+
+        /// <summary>
+        /// Gets or sets whether background color of <see cref="Button"/> control is used
+        /// for tabs customization in <see cref="CardPanelHeader"/>, <see cref="GenericTabControl"/>
+        /// and other places.
+        /// </summary>
+        public bool AllowButtonBackground { get; set; }
+
+        /// <summary>
+        /// Gets or sets whether foreground color of <see cref="Button"/> control is used
+        /// for tabs customization in <see cref="CardPanelHeader"/>, <see cref="GenericTabControl"/>
+        /// and other places.
+        /// </summary>
+        public bool AllowButtonForeground { get; set; }
+
+        /// <summary>
+        /// Gets or sets minimum splitter sash size.
+        /// </summary>
+        public int MinSplitterSashSize { get; set; } = 7;
+
+        /// <summary>
         /// Returns default property values for all controls in the library.
         /// </summary>
         public AllControlDefaults Controls { get; } = new();

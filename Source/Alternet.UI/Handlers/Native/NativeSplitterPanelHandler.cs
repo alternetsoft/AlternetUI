@@ -62,19 +62,6 @@ namespace Alternet.UI
             }
         }
 
-        public int SashSize
-        {
-            get
-            {
-                return NativeControl.SashSize;
-            }
-
-            set
-            {
-                NativeControl.SashSize = value;
-            }
-        }
-
         public bool SashVisible
         {
             get
@@ -127,6 +114,14 @@ namespace Alternet.UI
             get
             {
                 return NativeControl.DefaultSashSize;
+            }
+        }
+
+        public int SashSize
+        {
+            get
+            {
+                return NativeControl.SashSize;
             }
         }
 

@@ -5,141 +5,14 @@
 
 namespace Alternet::UI
 {
-
-#ifdef __WXGTK__
-	bool AlternetRichTooltip = true;
-#endif
-
-#ifdef __WXMSW__
-	bool AlternetRichTooltip = true;
-#endif
-
-#ifdef __WXOSX__
-	bool AlternetRichTooltip = true;
-#endif
-
-	class wxRichToolTip2
-	{
-	public:
-		wxAlternetRichToolTipImpl* GetAlternetImpl()
-		{
-			return dynamic_cast<wxAlternetRichToolTipImpl*>(m_impl);
-		}
-
-		wxRichToolTip2(const wxString& title, const wxString& message)
-		{
-			// m_impl = new wxRichToolTipGenericImpl(title, message);
-			if(AlternetRichTooltip)
-				m_impl = new wxAlternetRichToolTipImpl(title, message);
-			else
-				m_impl = wxRichToolTipImpl::Create(title, message);
-		}
-
-		void SetForegroundColour(const wxColour& col)
-		{
-			auto impl = GetAlternetImpl();
-			if (impl != nullptr)
-				impl->SetForegroundColour(col);
-		}
-
-		void SetTitleForegroundColour(const wxColour& col)
-		{
-			auto impl = GetAlternetImpl();
-			if (impl != nullptr)
-				impl->SetTitleForegroundColour(col);
-		}
-
-		// Set the background colour: if two colours are specified, the background
-		// is drawn using a gradient from top to bottom, otherwise a single solid
-		// colour is used.
-		void SetBackgroundColour(const wxColour& col,
-			const wxColour& colEnd = wxColour());
-
-		// Set the small icon to show: either one of the standard information/
-		// warning/error ones (the question icon doesn't make sense for a tooltip)
-		// or a custom icon.
-		void SetIcon(int icon = wxICON_INFORMATION);
-		void SetIcon(const wxBitmapBundle& icon);
-
-		// Set timeout after which the tooltip should disappear, in milliseconds.
-		// By default the tooltip is hidden after system-dependent interval of time
-		// elapses but this method can be used to change this or also disable
-		// hiding the tooltip automatically entirely by passing 0 in this parameter
-		// (but doing this can result in native version not being used).
-		// Optionally specify a show delay.
-		void SetTimeout(unsigned milliseconds, unsigned millisecondsShowdelay = 0);
-
-		// Choose the tip kind, possibly none. By default the tip is positioned
-		// automatically, as if wxTipKind_Auto was used.
-		void SetTipKind(wxTipKind tipKind);
-
-		// Set the title text font. By default it's emphasized using the font style
-		// or colour appropriate for the current platform.
-		void SetTitleFont(const wxFont& font);
-
-		// Show the tooltip for the given window and optionally a specified area.
-		void ShowFor(wxWindow* win, const wxRect* rect = NULL);
-
-		// Non-virtual dtor as this class is not supposed to be derived from.
-		~wxRichToolTip2();
-
-	private:
-		wxRichToolTipImpl* m_impl;
-
-		wxDECLARE_NO_COPY_CLASS(wxRichToolTip2);
-	};
-
-	void wxRichToolTip2::SetBackgroundColour(const wxColour& col, const wxColour& colEnd)
-	{
-		m_impl->SetBackgroundColour(col, colEnd);
-	}
-
-	void wxRichToolTip2::SetIcon(int icon)
-	{
-		m_impl->SetStandardIcon(icon);
-	}
-
-	void wxRichToolTip2::SetIcon(const wxBitmapBundle& icon)
-	{
-		m_impl->SetCustomIcon(icon);
-	}
-
-	void wxRichToolTip2::SetTimeout(unsigned milliseconds,
-		unsigned millisecondsDelay)
-	{
-		m_impl->SetTimeout(milliseconds, millisecondsDelay);
-	}
-
-	void wxRichToolTip2::SetTipKind(wxTipKind tipKind)
-	{
-		m_impl->SetTipKind(tipKind);
-	}
-
-	void wxRichToolTip2::SetTitleFont(const wxFont& font)
-	{
-		m_impl->SetTitleFont(font);
-	}
-
-	void wxRichToolTip2::ShowFor(wxWindow* win, const wxRect* rect)
-	{
-		wxCHECK_RET(win, wxS("Must have a valid window"));
-
-		m_impl->ShowFor(win, rect);
-	}
-
-	wxRichToolTip2::~wxRichToolTip2()
-	{
-		delete m_impl;
-	}
-	
 	bool WxOtherFactory::GetRichToolTipUseGeneric()
 	{
-		return AlternetRichTooltip;
+		return wxRichToolTip2::AlternetRichTooltip;
 	}
 	
 	void WxOtherFactory::SetRichToolTipUseGeneric(bool value)
 	{
-		AlternetRichTooltip = value;
+		wxRichToolTip2::AlternetRichTooltip = value;
 	}
 
 	void WxOtherFactory::RichToolTipSetTitleFgColor(void* handle, const Color& color)

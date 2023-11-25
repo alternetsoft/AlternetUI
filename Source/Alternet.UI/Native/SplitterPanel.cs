@@ -69,6 +69,16 @@ namespace Alternet.UI.Native
             }
         }
         
+        public int DefaultSashSize
+        {
+            get
+            {
+                CheckDisposed();
+                return NativeApi.SplitterPanel_GetDefaultSashSize_(NativePointer);
+            }
+            
+        }
+        
         public int SashSize
         {
             get
@@ -77,11 +87,6 @@ namespace Alternet.UI.Native
                 return NativeApi.SplitterPanel_GetSashSize_(NativePointer);
             }
             
-            set
-            {
-                CheckDisposed();
-                NativeApi.SplitterPanel_SetSashSize_(NativePointer, value);
-            }
         }
         
         public int SplitMode
@@ -184,16 +189,6 @@ namespace Alternet.UI.Native
             }
         }
         
-        public int DefaultSashSize
-        {
-            get
-            {
-                CheckDisposed();
-                return NativeApi.SplitterPanel_GetDefaultSashSize_(NativePointer);
-            }
-            
-        }
-        
         public Control Control1
         {
             get
@@ -223,6 +218,11 @@ namespace Alternet.UI.Native
         public static System.IntPtr CreateEx(long styles)
         {
             return NativeApi.SplitterPanel_CreateEx_(styles);
+        }
+        
+        public static void SetMinSashSize(int value)
+        {
+            NativeApi.SplitterPanel_SetMinSashSize_(value);
         }
         
         public void Initialize(Control window)
@@ -360,10 +360,10 @@ namespace Alternet.UI.Native
             public static extern void SplitterPanel_SetSashGravity_(IntPtr obj, double value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int SplitterPanel_GetSashSize_(IntPtr obj);
+            public static extern int SplitterPanel_GetDefaultSashSize_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void SplitterPanel_SetSashSize_(IntPtr obj, int value);
+            public static extern int SplitterPanel_GetSashSize_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern int SplitterPanel_GetSplitMode_(IntPtr obj);
@@ -405,9 +405,6 @@ namespace Alternet.UI.Native
             public static extern void SplitterPanel_SetRedrawOnSashPosition_(IntPtr obj, bool value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int SplitterPanel_GetDefaultSashSize_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern IntPtr SplitterPanel_GetControl1_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
@@ -415,6 +412,9 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern System.IntPtr SplitterPanel_CreateEx_(long styles);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void SplitterPanel_SetMinSashSize_(int value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void SplitterPanel_Initialize_(IntPtr obj, IntPtr window);

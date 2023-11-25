@@ -12,7 +12,10 @@ namespace NativeApi.Api
         public long Styles { get; set; }
         public int MinimumPaneSize { get; set; }
         public double SashGravity { get; set; }
-        public int SashSize { get; set; }
+        public int DefaultSashSize { get; }
+        public int SashSize { get; }
+
+        public static void SetMinSashSize(int value) { }
 
         public int SplitMode { get; set; }
 
@@ -26,7 +29,6 @@ namespace NativeApi.Api
         public int SashPosition { get; set; }
         public bool RedrawOnSashPosition { get; set; }
 
-        public int DefaultSashSize { get; }
         public Control Control1 { get; }
         public Control Control2 { get; }
         public void Initialize (Control window) => throw new Exception();

@@ -1,4 +1,5 @@
 #include "SplitterPanel.h"
+#include "WxAlternet/wxAlternetRendererNative.h"
 
 namespace Alternet::UI
 {
@@ -249,9 +250,16 @@ namespace Alternet::UI
 		return GetSplitterWindow()->GetSashSize();
 	}
 
-	void SplitterPanel::SetSashSize(int value)
+	int SplitterPanel::GetDefaultSashSize()
 	{
-		//GetSplitterWindow()->SetSashSize(value);
+		return GetSplitterWindow()->GetDefaultSashSize();
+	}
+
+	void SplitterPanel::SetMinSashSize(int value)
+	{
+		wxAlternetRendererNative::MinSplitterSize = value;
+		wxAlternetRendererNative::UpdateRenderer();
+		wxAlternetRendererNative::UpdateRenderer();
 	}
 
 	int SplitterPanel::GetSplitMode()
@@ -297,11 +305,6 @@ namespace Alternet::UI
 	void SplitterPanel::SetRedrawOnSashPosition(bool value)
 	{
 		_redrawOnSashPosition = value;
-	}
-
-	int SplitterPanel::GetDefaultSashSize()
-	{
-		return GetSplitterWindow()->GetDefaultSashSize();
 	}
 
 	Control* SplitterPanel::GetControl1()

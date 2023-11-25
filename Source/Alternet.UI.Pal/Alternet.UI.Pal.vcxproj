@@ -573,6 +573,7 @@
     <ClInclude Include="WxAlternet\wxAlternet.h" />
     <ClInclude Include="WxAlternet\wxAlternetColourProperty.h" />
     <ClInclude Include="WxAlternet\wxAlternetLogFormatter.h" />
+    <ClInclude Include="WxAlternet\wxAlternetRendererNative.h" />
     <ClInclude Include="WxAlternet\wxAlternetRichToolTip.h" />
     <ClInclude Include="WxControlFactory.h" />
     <ClInclude Include="WxOtherFactory.h" />

@@ -44,14 +44,14 @@ ALTERNET_UI_API void SplitterPanel_SetSashGravity_(SplitterPanel* obj, double va
     obj->SetSashGravity(value);
 }
 
+ALTERNET_UI_API int SplitterPanel_GetDefaultSashSize_(SplitterPanel* obj)
+{
+    return obj->GetDefaultSashSize();
+}
+
 ALTERNET_UI_API int SplitterPanel_GetSashSize_(SplitterPanel* obj)
 {
     return obj->GetSashSize();
-}
-
-ALTERNET_UI_API void SplitterPanel_SetSashSize_(SplitterPanel* obj, int value)
-{
-    obj->SetSashSize(value);
 }
 
 ALTERNET_UI_API int SplitterPanel_GetSplitMode_(SplitterPanel* obj)
@@ -119,11 +119,6 @@ ALTERNET_UI_API void SplitterPanel_SetRedrawOnSashPosition_(SplitterPanel* obj, 
     obj->SetRedrawOnSashPosition(value);
 }
 
-ALTERNET_UI_API int SplitterPanel_GetDefaultSashSize_(SplitterPanel* obj)
-{
-    return obj->GetDefaultSashSize();
-}
-
 ALTERNET_UI_API Control* SplitterPanel_GetControl1_(SplitterPanel* obj)
 {
     return obj->GetControl1();
@@ -137,6 +132,11 @@ ALTERNET_UI_API Control* SplitterPanel_GetControl2_(SplitterPanel* obj)
 ALTERNET_UI_API void* SplitterPanel_CreateEx_(int64_t styles)
 {
     return SplitterPanel::CreateEx(styles);
+}
+
+ALTERNET_UI_API void SplitterPanel_SetMinSashSize_(int value)
+{
+    SplitterPanel::SetMinSashSize(value);
 }
 
 ALTERNET_UI_API void SplitterPanel_Initialize_(SplitterPanel* obj, Control* window)

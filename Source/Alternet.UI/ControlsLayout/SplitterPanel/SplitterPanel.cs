@@ -19,14 +19,35 @@ namespace Alternet.UI
     [ControlCategory("Containers")]
     public class SplitterPanel : Control
     {
+        /// <summary>
+        /// Gets or sets whether to check sash size and make it at least equal to
+        /// <see cref="PlatformDefaults.MinSplitterSashSize"/>.
+        /// </summary>
+        public static bool ApplyMinSashSize = true;
+
         private const int SPLITHORIZONTAL = 1;
         private const int SPLITVERTICAL = 2;
+
+        private static bool MinSashSizeApplied;
 
         private Control? control1;
         private Control? control2;
         private bool initAutoSplit = false;
         private SplitterPanelSplitMethod splitMethod =
             SplitterPanelSplitMethod.Manual;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SplitterPanel"/> class.
+        /// </summary>
+        public SplitterPanel()
+        {
+            if (ApplyMinSashSize && !MinSashSizeApplied)
+            {
+                MinSashSizeApplied = true;
+                var minSize = AllPlatformDefaults.PlatformCurrent.MinSplitterSashSize;
+                SetMinSashSize(minSize);
+            }
+        }
 
         /// <summary>
         /// Occurs when the splitter sash is double clicked.
@@ -245,24 +266,16 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets the default sash size in pixels.
+        /// Gets current sash size in pixels.
         /// </summary>
         /// <remarks>
         /// Returns 0 if sash is invisible.
         /// </remarks>
-        public virtual int SashSize
+        public int SashSize
         {
             get
             {
                 return Handler.SashSize;
-            }
-
-            set
-            {
-                if (Handler.SashSize == value)
-                    return;
-                Handler.SashSize = value;
-                UpdateSize();
             }
         }
 
@@ -440,6 +453,15 @@ namespace Alternet.UI
 
         internal new NativeSplitterPanelHandler Handler =>
             (NativeSplitterPanelHandler)base.Handler;
+
+        /// <summary>
+        /// Sets minimal value for the sash size.
+        /// </summary>
+        /// <param name="minSize">Minimal sash size.</param>
+        public static void SetMinSashSize(int minSize)
+        {
+            Native.SplitterPanel.SetMinSashSize(minSize);
+        }
 
         /// <summary>
         /// Causes any pending sizing of the sash and child panes to

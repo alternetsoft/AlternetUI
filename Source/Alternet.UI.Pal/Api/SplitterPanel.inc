@@ -13,8 +13,10 @@ double GetSashGravity();
 void SetSashGravity(double value);
 
 
+int GetDefaultSashSize();
+
+
 int GetSashSize();
-void SetSashSize(int value);
 
 
 int GetSplitMode();
@@ -44,15 +46,13 @@ bool GetRedrawOnSashPosition();
 void SetRedrawOnSashPosition(bool value);
 
 
-int GetDefaultSashSize();
-
-
 Control* GetControl1();
 
 
 Control* GetControl2();
 
 static void* CreateEx(int64_t styles);
+static void SetMinSashSize(int value);
 void Initialize(Control* window);
 bool Replace(Control* winOld, Control* winNew);
 bool SplitHorizontally(Control* window1, Control* window2, int sashPosition);
