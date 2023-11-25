@@ -1405,14 +1405,12 @@ namespace Alternet.UI
         {
             get
             {
-                if (NativeControl is null)
-                    return false;
                 return NativeControl.IsBold;
             }
 
             set
             {
-                if (NativeControl is null)
+                if (IsBold == value)
                     return;
                 NativeControl.IsBold = value;
                 Handler.RaiseLayoutChanged();
