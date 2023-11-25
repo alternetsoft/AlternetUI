@@ -60,21 +60,21 @@ namespace Alternet.UI
         /// for tabs customization in <see cref="CardPanelHeader"/>, <see cref="GenericTabControl"/>
         /// and other places.
         /// </summary>
-        public bool AllowButtonHasBorder { get; set; }
+        public bool AllowButtonHasBorder { get; set; } = true;
 
         /// <summary>
         /// Gets or sets whether background color of <see cref="Button"/> control is used
         /// for tabs customization in <see cref="CardPanelHeader"/>, <see cref="GenericTabControl"/>
         /// and other places.
         /// </summary>
-        public bool AllowButtonBackground { get; set; }
+        public bool AllowButtonBackground { get; set; } = true;
 
         /// <summary>
         /// Gets or sets whether foreground color of <see cref="Button"/> control is used
         /// for tabs customization in <see cref="CardPanelHeader"/>, <see cref="GenericTabControl"/>
         /// and other places.
         /// </summary>
-        public bool AllowButtonForeground { get; set; }
+        public bool AllowButtonForeground { get; set; } = true;
 
         /// <summary>
         /// Gets or sets minimum splitter sash size.

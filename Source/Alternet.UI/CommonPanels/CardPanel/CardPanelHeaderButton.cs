@@ -44,6 +44,20 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        public override bool IsBold
+        {
+            get
+            {
+                return button.IsBold;
+            }
+
+            set
+            {
+                button.IsBold = value;
+            }
+        }
+
+        /// <inheritdoc/>
         public override bool HasBorder
         {
             get
@@ -53,7 +67,8 @@ namespace Alternet.UI
 
             set
             {
-                button.HasBorder = value;
+                if(AllPlatformDefaults.PlatformCurrent.AllowButtonHasBorder)
+                    button.HasBorder = value;
             }
         }
 
@@ -64,6 +79,8 @@ namespace Alternet.UI
 
             set
             {
+                if (!AllPlatformDefaults.PlatformCurrent.AllowButtonForeground)
+                    return;
                 if (value == ForegroundColor)
                     return;
                 base.ForegroundColor = value;
@@ -78,6 +95,8 @@ namespace Alternet.UI
 
             set
             {
+                if (!AllPlatformDefaults.PlatformCurrent.AllowButtonBackground)
+                    return;
                 if (value == BackgroundColor)
                     return;
                 base.BackgroundColor = value;

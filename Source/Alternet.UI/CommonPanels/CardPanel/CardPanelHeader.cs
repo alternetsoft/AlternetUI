@@ -818,14 +818,24 @@ namespace Alternet.UI
 
         private void UpdateTab(CardPanelHeaderItem item)
         {
+            var platform = AllPlatformDefaults.PlatformCurrent;
+            var canForeground = platform.AllowButtonForeground;
+            var canBackground = platform.AllowButtonBackground;
+            var useBold = !canForeground && !canBackground;
+
             var isSelected = item == selectedTab;
-            item.HeaderButton.IsBold = isSelected && UseTabBold;
+
+            if(UseTabBold || useBold)
+            {
+                item.HeaderButton.IsBold = isSelected;
+            }
+
             var colors = GetColors(isSelected);
             if (colors is null)
                 return;
-            if (UseTabForegroundColor)
+            if (UseTabForegroundColor && canForeground)
                 item.HeaderButton.ForegroundColor = colors.ForegroundColor;
-            if (UseTabBackgroundColor)
+            if (UseTabBackgroundColor && canBackground)
                 item.HeaderButton.BackgroundColor = colors.BackgroundColor;
         }
 

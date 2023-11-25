@@ -8,31 +8,67 @@ namespace Alternet.UI
     /// </summary>
     public static class AllPlatformDefaults
     {
+        private static PlatformDefaults? platformCurrent;
+
         static AllPlatformDefaults()
         {
-            var minCheckBoxMargin = new Thickness(3);
-
-            PlatformLinux.Controls.RadioButton.MinMargin = minCheckBoxMargin;
-            PlatformLinux.Controls.CheckBox.MinMargin = minCheckBoxMargin;
-            PlatformLinux.AdjustTextBoxesHeight = true;
-
-            PlatformLinux.TextBoxUrlClickModifiers = ModifierKeys.Control;
-            PlatformWindows.TextBoxUrlClickModifiers = ModifierKeys.Control;
-            PlatformMacOs.TextBoxUrlClickModifiers = ModifierKeys.Control;
-
-            var platform = PlatformLinux;
-
-            if (SystemSettings.AppearanceIsDark)
-            {
-                platform.RichToolTipBackgroundColor = Color.FromArgb(39, 39, 39);
-                platform.RichToolTipForegroundColor = Color.White;
-                platform.RichToolTipTitleForegroundColor = Color.FromRgb(156, 220, 254);
-            }
+            if (PlatformCurrent == PlatformWindows)
+                InitWindows();
             else
+            if (PlatformCurrent == PlatformLinux)
+                InitLinux();
+            else
+            if (PlatformCurrent == PlatformMacOs)
+                InitMacOs();
+
+            void InitLinux()
             {
-                platform.RichToolTipBackgroundColor = Color.White;
-                platform.RichToolTipForegroundColor = Color.Black;
-                platform.RichToolTipTitleForegroundColor = Color.Navy;
+                var platform = PlatformLinux;
+
+                platform.AllowButtonHasBorder = false;
+                platform.AllowButtonBackground = false;
+                // platform.AllowButtonForeground = false;
+
+                var minCheckBoxMargin = new Thickness(3);
+                platform.Controls.RadioButton.MinMargin = minCheckBoxMargin;
+                platform.Controls.CheckBox.MinMargin = minCheckBoxMargin;
+                platform.AdjustTextBoxesHeight = true;
+                platform.TextBoxUrlClickModifiers = ModifierKeys.Control;
+
+                if (SystemSettings.AppearanceIsDark)
+                {
+                    platform.RichToolTipBackgroundColor = Color.FromArgb(39, 39, 39);
+                    platform.RichToolTipForegroundColor = Color.White;
+                    platform.RichToolTipTitleForegroundColor = Color.FromRgb(156, 220, 254);
+                }
+                else
+                {
+                    platform.RichToolTipBackgroundColor = Color.White;
+                    platform.RichToolTipForegroundColor = Color.Black;
+                    platform.RichToolTipTitleForegroundColor = Color.Navy;
+                }
+            }
+
+            void InitWindows()
+            {
+                var platform = PlatformWindows;
+
+                // platform.AllowButtonHasBorder = false;
+                // platform.AllowButtonBackground = false;
+                // platform.AllowButtonForeground = false;
+
+                platform.TextBoxUrlClickModifiers = ModifierKeys.Control;
+            }
+
+            void InitMacOs()
+            {
+                var platform = PlatformMacOs;
+
+                platform.TextBoxUrlClickModifiers = ModifierKeys.Control;
+
+                platform.AllowButtonHasBorder = false;
+                platform.AllowButtonBackground = false;
+                platform.AllowButtonForeground = false;
             }
         }
 
@@ -67,7 +103,7 @@ namespace Alternet.UI
         /// from the operating system on which application is executed.
         /// </remarks>
         public static PlatformDefaults PlatformCurrent { get; } =
-            GetPlatformCurrent();
+            platformCurrent ??= GetPlatformCurrent();
 
         /// <summary>
         /// Returns default property value for the control on the
