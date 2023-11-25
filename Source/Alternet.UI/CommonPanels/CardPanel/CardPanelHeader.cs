@@ -39,6 +39,11 @@ namespace Alternet.UI
         public static Thickness DefaultBorderMargin = new (0, 0, 0, 5);
 
         /// <summary>
+        /// Gets or sets default value for the tab margin.
+        /// </summary>
+        public static Thickness DefaultTabMargin = 3;
+
+        /// <summary>
         /// Gets or sets default value of the <see cref="AdditionalSpace"/> property.
         /// </summary>
         public static Size DefaultAdditionalSpace = new(30, 30);
@@ -710,6 +715,7 @@ namespace Alternet.UI
             var control = CreateHeaderButton();
 
             control.Text = text;
+            control.Margin = DefaultTabMargin;
             control.HasBorder = TabHasBorder;
             control.HorizontalAlignment = HorizontalAlignment.Center;
             control.Parent = stackPanel;
