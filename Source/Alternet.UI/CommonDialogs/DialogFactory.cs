@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Alternet.Drawing;
+using Alternet.UI.Localization;
 
 namespace Alternet.UI
 {
@@ -41,7 +42,8 @@ namespace Alternet.UI
             var handle = parent?.WxWidget ?? IntPtr.Zero;
             defaultValue ??= string.Empty;
             message ??= string.Empty;
-            caption ??= string.Empty;
+            caption ??= CommonStrings.Default.WindowTitleInput;
+
             var result = Native.WxOtherFactory.GetTextFromUser(
                 message,
                 caption,
@@ -94,7 +96,7 @@ namespace Alternet.UI
         {
             message ??= string.Empty;
             prompt ??= string.Empty;
-            caption ??= string.Empty;
+            caption ??= CommonStrings.Default.WindowTitleInput;
 
             pos ??= Int32Point.MinusOne;
             var handle = parent?.WxWidget ?? IntPtr.Zero;
