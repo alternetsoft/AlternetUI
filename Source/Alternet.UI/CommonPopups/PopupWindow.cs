@@ -199,6 +199,8 @@ namespace Alternet.UI
             SetSizeToContent();
             Show();
             FocusChildControl();
+
+            Application.LogNameValue("Popup:", Location);
         }
 
         /// <summary>
