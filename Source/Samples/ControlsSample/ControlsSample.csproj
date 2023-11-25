@@ -33,6 +33,7 @@
       <None Remove="Html\SampleArchive\Images\panda2.jpg" />
       <None Remove="Html\SampleArchive\root.html" />
       <None Remove="Html\SampleArchive\Styles\default.css" />
+      <None Remove="Resources\Animation\Alternet.gif" />
       <None Remove="Resources\Animation\HourGlass.gif" />
       <None Remove="Resources\Animation\Spinner.gif" />
       <None Remove="Resources\ButtonImages\ButtonImageDisabled.svg" />
@@ -79,6 +80,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <EmbeddedResource Include="Resources\Animation\Alternet.gif" />
       <EmbeddedResource Include="Resources\Animation\HourGlass.gif" />
       <EmbeddedResource Include="Resources\Animation\Plant.gif" />
       <EmbeddedResource Include="Resources\Animation\Spinner.gif" />
