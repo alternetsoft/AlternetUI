@@ -10,5 +10,7 @@ rm -rf obj/Debug/*.*
 rm -rf obj/Release/*.*
 rm -rf obj/*.*
 
-dotnet build
+dotnet build --framework net6.0
+dotnet build --framework net7.0
+dotnet build --framework net8.0
 popd
