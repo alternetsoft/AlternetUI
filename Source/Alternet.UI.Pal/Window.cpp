@@ -357,8 +357,8 @@ namespace Alternet::UI
 
     void Window::ApplyBounds(const Rect& value)
     {
-        Control::ApplyBounds(value);
-      /*  auto wxWindow = GetWxWindow();
+    //    Control::ApplyBounds(value);
+        auto wxWindow = GetWxWindow();
         wxRect rect(fromDip(value, wxWindow));
 
         if (_startLocation == WindowStartLocation::Manual ||
@@ -372,7 +372,6 @@ namespace Alternet::UI
         }
 
         wxWindow->Refresh();
-*/
     }
 
     void Window::ApplyDefaultLocation()

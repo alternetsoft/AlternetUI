@@ -220,7 +220,6 @@ namespace Alternet::UI
         Size _clientSizeCache;
 
         DelayedFlags<Control, DelayedControlFlags> _delayedFlags;
-        DelayedValue<Control, Rect> _bounds;
         DelayedValue<Control, Color> _backgroundColor;
         DelayedValue<Control, Color> _foregroundColor;
         DelayedValue<Control, ScrollInfo> _verticalScrollBarInfo;

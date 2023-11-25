@@ -133,9 +133,6 @@ namespace Alternet::UI
                 {DelayedControlFlags::Enabled, std::make_tuple(&Control::RetrieveEnabled,
                     &Control::ApplyEnabled)},
             }),
-            _bounds(*this, Rect(), &Control::IsWxWindowCreated, &Control::RetrieveBounds,
-                &Control::ApplyBounds),
-            
             _backgroundColor(*this, Color(), &Control::IsWxWindowCreated,
                 &Control::RetrieveBackgroundColor, &Control::ApplyBackgroundColor),
             
@@ -151,7 +148,7 @@ namespace Alternet::UI
                 &Control::RetrieveHorizontalScrollBarInfo, &Control::ApplyHorizontalScrollBarInfo),
             _verticalScrollBarInfo(*this, ScrollInfo(), &Control::CanSetScrollbar,
                 &Control::RetrieveVerticalScrollBarInfo, &Control::ApplyVerticalScrollBarInfo),
-            _delayedValues({&_delayedFlags, &_bounds, &_backgroundColor,
+            _delayedValues({&_delayedFlags, &_backgroundColor,
                 &_foregroundColor,&_horizontalScrollBarInfo,
                 &_verticalScrollBarInfo,&_minimumSize,&_maximumSize})
     {
@@ -1283,20 +1280,6 @@ namespace Alternet::UI
         return Thickness();
     }
 
-    Rect Control::RetrieveBounds()
-    {
-        auto wxWindow = GetWxWindow();
-        return toDip(wxWindow->GetRect(), wxWindow);
-    }
-
-    void Control::ApplyBounds(const Rect& value)
-    {
-        auto wxWindow = GetWxWindow();
-        wxRect rect(fromDip(value, wxWindow));
-        wxWindow->SetSize(rect);
-        wxWindow->Refresh();
-    }
-
     bool Control::EventsSuspended()
     {
         return _flags.IsSet(ControlFlags::CreatingWxWindow);
@@ -1462,14 +1445,28 @@ namespace Alternet::UI
         SetBounds(Rect(value, GetSize()));
     }
 
+    Rect Control::RetrieveBounds()
+    {
+        auto wxWindow = GetWxWindow();
+        return toDip(wxWindow->GetRect(), wxWindow);
+    }
+
+    void Control::ApplyBounds(const Rect& value)
+    {
+        auto wxWindow = GetWxWindow();
+        wxRect rect(fromDip(value, wxWindow));
+        wxWindow->SetSize(rect);
+        wxWindow->Refresh();
+    }
+
     Rect Control::GetBounds()
     {
-        return _bounds.Get();
+        return RetrieveBounds();
     }
 
     void Control::SetBounds(const Rect& value)
     {
-        _bounds.Set(value);
+        ApplyBounds(value);
     }
 
     bool Control::GetVisible()
