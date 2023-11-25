@@ -1,0 +1,19 @@
+## On Windows
+
+- See video about it and do like there.
+
+## Machine
+- Enable audio in/out
+- 128 MB video memory
+- 2 CPUS, 8 GB RAM
+- Bridged networking
+- Enable USB 3.0
+- Set HD size 200 GB
+- Run catalina.bat
+
+## After installation:
+- Open Settings. Enable file sharing for the user (button on top), add shared folders
+ Read/Write to the network folder where AlternetUI is located.
+- download and install net 6,7,8 sdk from Microsoft.
+- install cmake (read cmake-problems.txt)
+- install xcode (takes long time).
