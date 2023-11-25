@@ -4,7 +4,7 @@
   <Import Project="../Alternet.UI.Common/Alternet.UI.Common.props"/>
 
     <PropertyGroup Condition="$([MSBuild]::IsOsPlatform('OSX'))">
-	    <DotNetRunCmd>dotnet run --nologo --property WarningLevel=0 --framework net7.0</DotNetRunCmd>
+	    <DotNetRunCmd>dotnet run --nologo --property WarningLevel=0 --framework net8.0</DotNetRunCmd>
     </PropertyGroup>
 
     <PropertyGroup Condition="$([MSBuild]::IsOsPlatform('Linux'))">
