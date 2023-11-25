@@ -176,7 +176,11 @@ namespace Alternet.UI
         {
             PopupOwner = control;
             var bl = control.ClientRectangle.BottomLeft;
+            Application.LogNameValue("control.ClientRectangle.BottomLeft", bl);
             var blScreen = control.ClientToScreen(bl);
+            Application.LogNameValue("control.ClientToScreen", blScreen);
+
+            Application.LogNameValue("ParentWindow:", control.ParentWindow?.Location);
 
             control.BeginInvoke(() =>
             {
