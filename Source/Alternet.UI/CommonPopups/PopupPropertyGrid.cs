@@ -44,12 +44,15 @@ namespace Alternet.UI
                 Title = CommonStrings.Default.WindowTitleProperties,
                 HasTitleBar = true,
                 HasBorder = true,
+                Resizable = true,
                 CloseEnabled = true,
                 HideOnEnter = false,
                 HideOnClick = false,
                 HideOnDoubleClick = false,
                 HideOnDeactivate = false
             };
+            popupWindowProps.StatusBar = new();
+            popupWindowProps.Border.HasBorder = false;
             popupWindowProps.MainControl.SuggestedInitDefaults();
             popupWindowProps.MainControl.ApplyFlags |= PropertyGridApplyFlags.PropInfoSetValue
                 | PropertyGridApplyFlags.ReloadAllAfterSetValue;
