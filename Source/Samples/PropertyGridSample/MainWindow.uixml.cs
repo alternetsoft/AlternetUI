@@ -193,7 +193,7 @@ namespace PropertyGridSample
             var type = item?.InstanceType;
             if (type == typeof(WelcomePage))
                 return;
-            if(item?.Instance == e.Instance)
+            if(item?.Instance == e.Instance || e.Instance is null)
                 updatePropertyGrid = true;
         }
 

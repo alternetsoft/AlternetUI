@@ -14,6 +14,11 @@ namespace PropertyGridSample
 {
     internal class ObjectInitializers
     {
+        private const string LoremIpsum =
+            "Lorem ipsum dolor sit amet,\nconsectetur adipiscing elit. " +
+            "Suspendisse tincidunt orci vitae arcu congue commodo. " +
+            "Proin fermentum rhoncus dictum.\n";
+
         private static ImageLists? imageLists;
 
         public static ImageLists LoadImageLists()
@@ -76,6 +81,24 @@ namespace PropertyGridSample
                 }
             });
 
+            Actions.Add(typeof(Slider), (c) =>
+            {
+                Slider control = (c as Slider)!;
+                control.SuggestedSize = 200;
+            });
+
+            Actions.Add(typeof(NumericUpDown), (c) =>
+            {
+                NumericUpDown control = (c as NumericUpDown)!;
+                control.SuggestedWidth = 200;
+            });
+
+            Actions.Add(typeof(DateTimePicker), (c) =>
+            {
+                DateTimePicker control = (c as DateTimePicker)!;
+                control.SuggestedWidth = 200;
+            });
+
             Actions.Add(typeof(Border), (c) =>
             {
                 var border = (c as Border)!;
@@ -88,8 +111,6 @@ namespace PropertyGridSample
                 {
                     Application.LogNameValue("Border.CurrentState", (sender as Border)?.CurrentState);
                 }
-
-                //border.FlagsAndAttributes.AddFlag("NoDesignBorder");
             });
 
             Actions.Add(typeof(ContextMenu), InitContextMenu);
@@ -116,7 +137,8 @@ namespace PropertyGridSample
                 var control = (c as CardPanel)!;
                 control.SuggestedSize = defaultListSize;
                 var panel = CreatePanelWithButtons("Card 1");
-                panel.AddLabel("SelectedCardIndex changes active card.").Margin = 5;
+                panel.AddLabel("Use SelectedCardIndex").Margin = 5;
+                panel.AddLabel("to change active card").Margin = 5;
                 control.Add("card 1", panel);
                 control.Add("card 2", CreatePanelWithButtons("Card 2"));
                 control.SelectCard(0);
@@ -129,9 +151,7 @@ namespace PropertyGridSample
                 control.UseTabBackgroundColor = true;
                 control.Add("tab 1");
                 control.Add("tab 2");
-                control.Add("tab 3");
                 control.SelectFirstTab();
-                //control.BackgroundColor = Color.Cornsilk;
             });
 
             Actions.Add(typeof(RichTextBox), (c) =>
@@ -144,6 +164,7 @@ namespace PropertyGridSample
             {
                 var control = (c as MultilineTextBox)!;
                 control.SuggestedSize = defaultListSize;
+                control.Text = LoremIpsum;
             });
 
             Actions.Add(typeof(Button), (c) =>
@@ -191,7 +212,7 @@ namespace PropertyGridSample
                 ComboBox comboBox = (c as ComboBox)!;
                 AddTenItems(comboBox.Items);
                 comboBox.HorizontalAlignment = HorizontalAlignment.Left;
-                comboBox.SuggestedWidth = 150;
+                comboBox.SuggestedWidth = 200;
             });
 
             Actions.Add(typeof(CheckListBox), (c) =>
@@ -220,7 +241,6 @@ namespace PropertyGridSample
             {
                 Panel panel = (c as Panel)!;
                 panel.SuggestedSize = 150;
-                //panel.BackgroundColor = Color.Cornsilk;
             });
 
             Actions.Add(typeof(Control), (c) =>
@@ -251,12 +271,14 @@ namespace PropertyGridSample
             {
                 ProgressBar control = (c as ProgressBar)!;
                 control.Value = 50;
+                control.SuggestedWidth = 200;
             });
 
             Actions.Add(typeof(TextBox), (c) =>
             {
                 TextBox control = (c as TextBox)!;
                 control.Text = "some text";
+                control.SuggestedWidth = 200;
             });
 
             Actions.Add(typeof(ColorPicker), (c) =>

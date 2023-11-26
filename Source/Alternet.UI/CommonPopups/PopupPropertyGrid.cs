@@ -13,6 +13,11 @@ namespace Alternet.UI
     /// </summary>
     public class PopupPropertyGrid : PopupWindow
     {
+        static PopupPropertyGrid()
+        {
+            PropertyGrid.RegisterCollectionEditors();
+        }
+
         /// <summary>
         /// Gets or sets <see cref="ListBox"/> control used in the popup window.
         /// </summary>
@@ -36,15 +41,16 @@ namespace Alternet.UI
         {
             PopupPropertyGrid popupWindowProps = new()
             {
-                HasTitleBar = true,
-                CloseEnabled = true,
-                IsToolWindow = true,
                 Title = CommonStrings.Default.WindowTitleProperties,
+                HasTitleBar = true,
+                HasBorder = true,
+                CloseEnabled = true,
                 HideOnEnter = false,
                 HideOnClick = false,
                 HideOnDoubleClick = false,
                 HideOnDeactivate = false
             };
+            popupWindowProps.MainControl.SuggestedInitDefaults();
             popupWindowProps.MainControl.ApplyFlags |= PropertyGridApplyFlags.PropInfoSetValue
                 | PropertyGridApplyFlags.ReloadAllAfterSetValue;
             popupWindowProps.AfterHide += PopupWindowProps_AfterHide;
