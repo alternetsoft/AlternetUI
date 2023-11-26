@@ -12,6 +12,11 @@ namespace Alternet.UI
     public class ComponentDesigner : IComponentDesigner
     {
         /// <summary>
+        /// Occurs when the left mouse button was pressed on the control
+        /// </summary>
+        public event EventHandler<MouseButtonEventArgs>? MouseLeftButtonDown;
+
+        /// <summary>
         /// Occurs when the property value changes.
         /// </summary>
         public event EventHandler<ObjectPropertyChangedEventArgs>? PropertyChanged;
@@ -90,6 +95,12 @@ namespace Alternet.UI
         public void RaiseParentChanged(Control control)
         {
             ControlParentChanged?.Invoke(control, EventArgs.Empty);
+        }
+
+        /// <see cref="IComponentDesigner.RaiseMouseLeftButtonDown"/>
+        public void RaiseMouseLeftButtonDown(Control control, MouseButtonEventArgs e)
+        {
+            MouseLeftButtonDown?.Invoke(control, e);
         }
     }
 }

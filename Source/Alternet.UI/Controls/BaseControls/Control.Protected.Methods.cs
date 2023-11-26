@@ -116,6 +116,7 @@ namespace Alternet.UI
             base.OnMouseLeftButtonDown(e);
             IsMouseLeftButtonDown = true;
             RaiseCurrentStateChanged();
+            Designer?.RaiseMouseLeftButtonDown(this, e);
         }
 
         /// <inheritdoc/>

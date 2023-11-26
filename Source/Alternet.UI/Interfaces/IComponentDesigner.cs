@@ -17,6 +17,11 @@ namespace Alternet.UI
         event EventHandler<ObjectPropertyChangedEventArgs>? PropertyChanged;
 
         /// <summary>
+        /// Occurs when the left mouse button was pressed on the control
+        /// </summary>
+        event EventHandler<MouseButtonEventArgs>? MouseLeftButtonDown;
+
+        /// <summary>
         /// Occurs when the control receives focus.
         /// </summary>
         event EventHandler? ControlGotFocus;
@@ -67,5 +72,12 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="control">Affected control.</param>
         void RaiseParentChanged(Control control);
+
+        /// <summary>
+        /// Notifiers designer when the left mouse button was pressed on the control.
+        /// </summary>
+        /// <param name="control">Affected control.</param>
+        /// <param name="e">Event arguments.</param>
+        void RaiseMouseLeftButtonDown(Control control, MouseButtonEventArgs e);
     }
 }
