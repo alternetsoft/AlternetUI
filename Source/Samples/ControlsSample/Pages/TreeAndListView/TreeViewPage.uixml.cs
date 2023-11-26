@@ -24,7 +24,7 @@ namespace ControlsSample
             pageControl.Children.Insert(0, panelHeader);
             panelHeader.SelectedTab = panelHeader.Tabs[0];
 
-            ControlSet buttons = new(
+            Group(
                 addItemButton,
                 removeItemButton,
                 addManyItemsButton,
@@ -38,10 +38,7 @@ namespace ControlsSample
                 editorButton,
                 scrollLastItemIntoViewButton,
                 focusLastItemButton,
-                modifyLastItemButton,
-                addLastItemSiblingButton,
-                dummyButton);
-            buttons.SuggestedWidthToMax();
+                modifyLastItemButton).SuggestedWidthToMax();
 
             treeView.Items.ItemInserted += Items_ItemInserted;
             treeView.Items.ItemRemoved += Items_ItemRemoved;

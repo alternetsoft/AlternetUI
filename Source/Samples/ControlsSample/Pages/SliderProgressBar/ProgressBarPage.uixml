@@ -2,7 +2,7 @@
         xmlns="http://schemas.alternetsoft.com/ui/2021"
         xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
         xmlns:local="clr-namespace:ControlsSample;assembly=ControlsSample">
-    <StackPanel Orientation="Vertical" Padding="10">
+    <StackPanel Orientation="Vertical" Padding="0,5,10,10">
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>

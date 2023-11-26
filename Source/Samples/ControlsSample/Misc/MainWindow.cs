@@ -19,7 +19,7 @@ namespace ControlsSample
 
         private readonly Control panel = new()
         {
-            Padding = 10,
+            Padding = 5,
         };
 
         static MainWindow()

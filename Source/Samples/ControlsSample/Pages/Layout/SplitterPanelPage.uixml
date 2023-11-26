@@ -18,12 +18,14 @@
                   Margin="0,0,0,5" Enabled="true"/>
           <Button Text="Replace Control" Click="ReplaceControlButton_Click"
                   Margin="0,0,0,5" Enabled="true"/>
-          <Button Text="Resize Pane 1" Click="SashGravity10Button_Click"
-                  Margin="0,0,0,5" Enabled="true"/>
-          <Button Text="Resize Pane 2" Click="SashGravity00Button_Click"
-                  Margin="0,0,0,5" Enabled="true"/>
           <Button Text="Resize Panes Equal" Click="SashGravity05Button_Click"
                   Margin="0,0,0,5" Enabled="true"/>
+          <HorizontalStackPanel HorizontalAlignment="Center">
+            <Button Text="Resize 1" Click="SashGravity10Button_Click"
+                    Margin="0,0,0,5" Enabled="true"/>
+            <Button Text="Resize 2" Click="SashGravity00Button_Click"
+                    Margin="5,0,0,5" Enabled="true"/>
+          </HorizontalStackPanel>
         </VerticalStackPanel>
 
         <VerticalStackPanel Name="pageProps" Visible="false" Margin="0,5,0,0">
