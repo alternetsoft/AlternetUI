@@ -112,9 +112,9 @@
         <GroupBox Title="Size to Content"  Margin="5">
           <VerticalStackPanel Padding="10">
             <HorizontalStackPanel Margin="0,0,0,10">
-              <ComboBox IsEditable="false" Name="sizeToContentModeComboBox"/>
+              <ComboBox IsEditable="false" Name="sizeToContentModeComboBox" VerticalAlignment="Center"/>
               <Button Name="setSizeToContentButton" Click="SetSizeToContentButton_Click"
-                  Text="Size to Content"/>
+                  Text="Size to Content" VerticalAlignment="Center"/>
             </HorizontalStackPanel>
             <Button Text="Set Bounds Ex" Click="SetBoundsExButton_Click" Name="setBoundsExButton"
                     Margin="0,0,0,10"/>

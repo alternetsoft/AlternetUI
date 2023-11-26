@@ -37,13 +37,17 @@ namespace WindowPropertiesSample
             popupSetBounds.Title = "Set Bounds (hide to change)";
             popupSetBounds.HasTitleBar = true;
             popupSetBounds.HasBorder = true;
+            popupSetBounds.Border.HasBorder = false;
+            popupSetBounds.Resizable = true;
             popupSetBounds.CloseEnabled = true;
             popupSetBounds.AfterHide += PopupSetBounds_AfterHide;
             popupSetBounds.MainControl.ApplyFlags |= PropertyGridApplyFlags.PropInfoSetValue;
-            popupSetBounds.HideOnEnter = true;
+            popupSetBounds.HideOnEnter = false;
+            popupSetBounds.HideOnDeactivate = false;
             popupSetBounds.HideOnClick = false;
             popupSetBounds.HideOnDoubleClick = false;
             popupSetBounds.MainControl.SuggestedInitDefaults();
+            popupSetBounds.StatusBar = new();
 
             popupWindowProps = PopupPropertyGrid.CreatePropertiesPopup();
         }

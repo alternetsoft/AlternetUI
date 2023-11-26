@@ -152,7 +152,8 @@ namespace PropertyGridSample
             RunTests();
 
             ComponentDesigner.InitDefault();
-            ComponentDesigner.Default!.PropertyChanged += Default_PropertyChanged;
+            ComponentDesigner.SafeDefault.PropertyChanged += Designer_PropertyChanged;
+            ComponentDesigner.SafeDefault.MouseLeftButtonDown += Designer_MouseLeftButtonDown;
 
             controlPanel.MouseDown += ControlPanel_MouseDown;
             controlPanel.DragStart += ControlPanel_DragStart;
@@ -160,6 +161,17 @@ namespace PropertyGridSample
             panel.WriteWelcomeLogMessages();
 
             panel.RightNotebook.PageChanged += RightNotebook_PageChanged;
+        }
+
+        private static void Designer_MouseLeftButtonDown(object? sender, MouseButtonEventArgs e)
+        {
+            if (sender is not GroupBox groupBox)
+                return;
+            Application.LogNameValue("groupBox.GetTopBorderForSizer", groupBox.GetTopBorderForSizer());
+            Application.LogNameValue("groupBox.GetOtherBorderForSizer", groupBox.GetOtherBorderForSizer());
+            Application.LogNameValue("groupBox.IntrinsicPreferredSizePadding", groupBox.IntrinsicPreferredSizePadding);
+            Application.LogNameValue("groupBox.Padding", groupBox.Padding);
+            Application.LogNameValue("groupBox.IntrinsicLayoutPadding", groupBox.IntrinsicLayoutPadding);
         }
 
         internal bool LogSize { get; set; } = false;
@@ -187,7 +199,7 @@ namespace PropertyGridSample
             updatePropertyGrid = true;
         }
 
-        private void Default_PropertyChanged(object? sender, ObjectPropertyChangedEventArgs e)
+        private void Designer_PropertyChanged(object? sender, ObjectPropertyChangedEventArgs e)
         {
             var item = panel.LeftTreeView.SelectedItem as ControlListBoxItem;
             var type = item?.InstanceType;
