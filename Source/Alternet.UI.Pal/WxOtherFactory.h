@@ -12,6 +12,7 @@
 #include <wx/caret.h>
 #include <wx/private/richtooltip.h>
 #include <wx/generic/private/richtooltip.h>
+#include <wx/renderer.h>
 
 namespace Alternet::UI
 {

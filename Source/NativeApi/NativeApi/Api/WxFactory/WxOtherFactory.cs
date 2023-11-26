@@ -15,6 +15,7 @@ namespace NativeApi.Api
     // https://docs.wxwidgets.org/3.2/classwx_display.html
     // https://docs.wxwidgets.org/3.2/classwx_caret.html
     // https://docs.wxwidgets.org/3.2/classwx_cursor.html
+    // https://docs.wxwidgets.org/3.2/classwx_renderer_native.html
     public class WxOtherFactory
     {
         // =================== RichToolTip
@@ -281,7 +282,7 @@ namespace NativeApi.Api
         public static void RendererDrawSplitterBorder(IntPtr renderer, IntPtr win, IntPtr dc, Int32Rect rect, int flags = 0) { }
 
         // draw a (vertical) sash
-        public static void DrawSplitterSash(IntPtr renderer, IntPtr win,
+        public static void RendererDrawSplitterSash(IntPtr renderer, IntPtr win,
             IntPtr dcReal,
             Int32Size sizeReal,
             int position,

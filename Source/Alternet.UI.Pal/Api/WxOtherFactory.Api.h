@@ -26,6 +26,71 @@ ALTERNET_UI_API void WxOtherFactory_SetRichToolTipUseGeneric_(c_bool value)
     WxOtherFactory::SetRichToolTipUseGeneric(value);
 }
 
+ALTERNET_UI_API Int32Size_C WxOtherFactory_RendererGetExpanderSize_(void* renderer, void* win)
+{
+    return WxOtherFactory::RendererGetExpanderSize(renderer, win);
+}
+
+ALTERNET_UI_API void WxOtherFactory_RendererDrawPushButton_(void* renderer, void* win, void* dc, Int32Rect rect, int flags)
+{
+    WxOtherFactory::RendererDrawPushButton(renderer, win, dc, rect, flags);
+}
+
+ALTERNET_UI_API void WxOtherFactory_RendererDrawCollapseButton_(void* renderer, void* win, void* dc, Int32Rect rect, int flags)
+{
+    WxOtherFactory::RendererDrawCollapseButton(renderer, win, dc, rect, flags);
+}
+
+ALTERNET_UI_API Int32Size_C WxOtherFactory_RendererGetCollapseButtonSize_(void* renderer, void* win, void* dc)
+{
+    return WxOtherFactory::RendererGetCollapseButtonSize(renderer, win, dc);
+}
+
+ALTERNET_UI_API void WxOtherFactory_RendererDrawItemSelectionRect_(void* renderer, void* win, void* dc, Int32Rect rect, int flags)
+{
+    WxOtherFactory::RendererDrawItemSelectionRect(renderer, win, dc, rect, flags);
+}
+
+ALTERNET_UI_API void WxOtherFactory_RendererDrawFocusRect_(void* renderer, void* win, void* dc, Int32Rect rect, int flags)
+{
+    WxOtherFactory::RendererDrawFocusRect(renderer, win, dc, rect, flags);
+}
+
+ALTERNET_UI_API void WxOtherFactory_RendererDrawChoice_(void* renderer, void* win, void* dc, Int32Rect rect, int flags)
+{
+    WxOtherFactory::RendererDrawChoice(renderer, win, dc, rect, flags);
+}
+
+ALTERNET_UI_API void WxOtherFactory_RendererDrawComboBox_(void* renderer, void* win, void* dc, Int32Rect rect, int flags)
+{
+    WxOtherFactory::RendererDrawComboBox(renderer, win, dc, rect, flags);
+}
+
+ALTERNET_UI_API void WxOtherFactory_RendererDrawTextCtrl_(void* renderer, void* win, void* dc, Int32Rect rect, int flags)
+{
+    WxOtherFactory::RendererDrawTextCtrl(renderer, win, dc, rect, flags);
+}
+
+ALTERNET_UI_API void WxOtherFactory_RendererDrawRadioBitmap_(void* renderer, void* win, void* dc, Int32Rect rect, int flags)
+{
+    WxOtherFactory::RendererDrawRadioBitmap(renderer, win, dc, rect, flags);
+}
+
+ALTERNET_UI_API void WxOtherFactory_RendererDrawGauge_(void* renderer, void* win, void* dc, Int32Rect rect, int value, int max, int flags)
+{
+    WxOtherFactory::RendererDrawGauge(renderer, win, dc, rect, value, max, flags);
+}
+
+ALTERNET_UI_API void WxOtherFactory_RendererDrawItemText_(void* renderer, void* win, void* dc, const char16_t* text, Int32Rect rect, int align, int flags, int ellipsizeMode)
+{
+    WxOtherFactory::RendererDrawItemText(renderer, win, dc, text, rect, align, flags, ellipsizeMode);
+}
+
+ALTERNET_UI_API char16_t* WxOtherFactory_RendererGetVersion_(void* renderer)
+{
+    return AllocPInvokeReturnString(WxOtherFactory::RendererGetVersion(renderer));
+}
+
 ALTERNET_UI_API void* WxOtherFactory_CreateRichToolTip_(const char16_t* title, const char16_t* message)
 {
     return WxOtherFactory::CreateRichToolTip(title, message);
@@ -374,5 +439,70 @@ ALTERNET_UI_API char16_t* WxOtherFactory_GetTextFromUser_(const char16_t* messag
 ALTERNET_UI_API int64_t WxOtherFactory_GetNumberFromUser_(const char16_t* message, const char16_t* prompt, const char16_t* caption, int64_t value, int64_t min, int64_t max, void* parent, Int32Point pos)
 {
     return WxOtherFactory::GetNumberFromUser(message, prompt, caption, value, min, max, parent, pos);
+}
+
+ALTERNET_UI_API int WxOtherFactory_RendererDrawHeaderButton_(void* renderer, void* win, void* dc, Int32Rect rect, int flags, int sortArrow, void* headerButtonParams)
+{
+    return WxOtherFactory::RendererDrawHeaderButton(renderer, win, dc, rect, flags, sortArrow, headerButtonParams);
+}
+
+ALTERNET_UI_API int WxOtherFactory_RendererDrawHeaderButtonContents_(void* renderer, void* win, void* dc, Int32Rect rect, int flags, int sortArrow, void* headerButtonParams)
+{
+    return WxOtherFactory::RendererDrawHeaderButtonContents(renderer, win, dc, rect, flags, sortArrow, headerButtonParams);
+}
+
+ALTERNET_UI_API int WxOtherFactory_RendererGetHeaderButtonHeight_(void* renderer, void* win)
+{
+    return WxOtherFactory::RendererGetHeaderButtonHeight(renderer, win);
+}
+
+ALTERNET_UI_API int WxOtherFactory_RendererGetHeaderButtonMargin_(void* renderer, void* win)
+{
+    return WxOtherFactory::RendererGetHeaderButtonMargin(renderer, win);
+}
+
+ALTERNET_UI_API void WxOtherFactory_RendererDrawTreeItemButton_(void* renderer, void* win, void* dc, Int32Rect rect, int flags)
+{
+    WxOtherFactory::RendererDrawTreeItemButton(renderer, win, dc, rect, flags);
+}
+
+ALTERNET_UI_API void WxOtherFactory_RendererDrawSplitterBorder_(void* renderer, void* win, void* dc, Int32Rect rect, int flags)
+{
+    WxOtherFactory::RendererDrawSplitterBorder(renderer, win, dc, rect, flags);
+}
+
+ALTERNET_UI_API void WxOtherFactory_RendererDrawSplitterSash_(void* renderer, void* win, void* dcReal, Int32Size sizeReal, int position, int orientation, int flags)
+{
+    WxOtherFactory::RendererDrawSplitterSash(renderer, win, dcReal, sizeReal, position, orientation, flags);
+}
+
+ALTERNET_UI_API void WxOtherFactory_RendererDrawComboBoxDropButton_(void* renderer, void* win, void* dc, Int32Rect rect, int flags)
+{
+    WxOtherFactory::RendererDrawComboBoxDropButton(renderer, win, dc, rect, flags);
+}
+
+ALTERNET_UI_API void WxOtherFactory_RendererDrawDropArrow_(void* renderer, void* win, void* dc, Int32Rect rect, int flags)
+{
+    WxOtherFactory::RendererDrawDropArrow(renderer, win, dc, rect, flags);
+}
+
+ALTERNET_UI_API void WxOtherFactory_RendererDrawCheckBox_(void* renderer, void* win, void* dc, Int32Rect rect, int flags)
+{
+    WxOtherFactory::RendererDrawCheckBox(renderer, win, dc, rect, flags);
+}
+
+ALTERNET_UI_API void WxOtherFactory_RendererDrawCheckMark_(void* renderer, void* win, void* dc, Int32Rect rect, int flags)
+{
+    WxOtherFactory::RendererDrawCheckMark(renderer, win, dc, rect, flags);
+}
+
+ALTERNET_UI_API Int32Size_C WxOtherFactory_RendererGetCheckBoxSize_(void* renderer, void* win, int flags)
+{
+    return WxOtherFactory::RendererGetCheckBoxSize(renderer, win, flags);
+}
+
+ALTERNET_UI_API Int32Size_C WxOtherFactory_RendererGetCheckMarkSize_(void* renderer, void* win)
+{
+    return WxOtherFactory::RendererGetCheckMarkSize(renderer, win);
 }
 

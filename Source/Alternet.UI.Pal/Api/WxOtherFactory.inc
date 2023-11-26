@@ -4,6 +4,19 @@ public:
 static bool GetRichToolTipUseGeneric();
 static void SetRichToolTipUseGeneric(bool value);
 
+static Int32Size RendererGetExpanderSize(void* renderer, void* win);
+static void RendererDrawPushButton(void* renderer, void* win, void* dc, const Int32Rect& rect, int flags);
+static void RendererDrawCollapseButton(void* renderer, void* win, void* dc, const Int32Rect& rect, int flags);
+static Int32Size RendererGetCollapseButtonSize(void* renderer, void* win, void* dc);
+static void RendererDrawItemSelectionRect(void* renderer, void* win, void* dc, const Int32Rect& rect, int flags);
+static void RendererDrawFocusRect(void* renderer, void* win, void* dc, const Int32Rect& rect, int flags);
+static void RendererDrawChoice(void* renderer, void* win, void* dc, const Int32Rect& rect, int flags);
+static void RendererDrawComboBox(void* renderer, void* win, void* dc, const Int32Rect& rect, int flags);
+static void RendererDrawTextCtrl(void* renderer, void* win, void* dc, const Int32Rect& rect, int flags);
+static void RendererDrawRadioBitmap(void* renderer, void* win, void* dc, const Int32Rect& rect, int flags);
+static void RendererDrawGauge(void* renderer, void* win, void* dc, const Int32Rect& rect, int value, int max, int flags);
+static void RendererDrawItemText(void* renderer, void* win, void* dc, const string& text, const Int32Rect& rect, int align, int flags, int ellipsizeMode);
+static string RendererGetVersion(void* renderer);
 static void* CreateRichToolTip(const string& title, const string& message);
 static void DeleteRichToolTip(void* handle);
 static void RichToolTipSetBkColor(void* handle, const Color& color, const Color& endColor);
@@ -74,6 +87,19 @@ static void EndBusyCursor();
 static void Bell();
 static string GetTextFromUser(const string& message, const string& caption, const string& defaultValue, void* parent, int x, int y, bool centre);
 static int64_t GetNumberFromUser(const string& message, const string& prompt, const string& caption, int64_t value, int64_t min, int64_t max, void* parent, const Int32Point& pos);
+static int RendererDrawHeaderButton(void* renderer, void* win, void* dc, const Int32Rect& rect, int flags, int sortArrow, void* headerButtonParams);
+static int RendererDrawHeaderButtonContents(void* renderer, void* win, void* dc, const Int32Rect& rect, int flags, int sortArrow, void* headerButtonParams);
+static int RendererGetHeaderButtonHeight(void* renderer, void* win);
+static int RendererGetHeaderButtonMargin(void* renderer, void* win);
+static void RendererDrawTreeItemButton(void* renderer, void* win, void* dc, const Int32Rect& rect, int flags);
+static void RendererDrawSplitterBorder(void* renderer, void* win, void* dc, const Int32Rect& rect, int flags);
+static void RendererDrawSplitterSash(void* renderer, void* win, void* dcReal, const Int32Size& sizeReal, int position, int orientation, int flags);
+static void RendererDrawComboBoxDropButton(void* renderer, void* win, void* dc, const Int32Rect& rect, int flags);
+static void RendererDrawDropArrow(void* renderer, void* win, void* dc, const Int32Rect& rect, int flags);
+static void RendererDrawCheckBox(void* renderer, void* win, void* dc, const Int32Rect& rect, int flags);
+static void RendererDrawCheckMark(void* renderer, void* win, void* dc, const Int32Rect& rect, int flags);
+static Int32Size RendererGetCheckBoxSize(void* renderer, void* win, int flags);
+static Int32Size RendererGetCheckMarkSize(void* renderer, void* win);
 public:
 WxOtherFactory();
 protected:

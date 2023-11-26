@@ -451,4 +451,166 @@ namespace Alternet::UI
 		return wxGetNumberFromUser(wxStr(message), wxStr(prompt),
 			wxStr(caption), value, min, max, (wxWindow*)parent, pos);
 	}
+
+// ============================================
+
+	Int32Size WxOtherFactory::RendererGetExpanderSize(void* renderer, void* win)
+	{
+		return wxRendererNative::Get().GetExpanderSize((wxWindow*)win);
+	}
+	
+	void WxOtherFactory::RendererDrawPushButton(void* renderer, void* win, void* dc,
+		const Int32Rect& rect, int flags)
+	{
+		wxRendererNative::Get().DrawPushButton((wxWindow*)win, *(wxDC*) dc, rect, flags);
+	}
+
+	void WxOtherFactory::RendererDrawCollapseButton(void* renderer, void* win, void* dc,
+		const Int32Rect& rect, int flags)
+	{
+		wxRendererNative::Get().DrawCollapseButton((wxWindow*)win, *(wxDC*)dc, rect, flags);
+	}
+
+	Int32Size WxOtherFactory::RendererGetCollapseButtonSize(void* renderer, void* win, void* dc)
+	{
+		return wxRendererNative::Get().GetCollapseButtonSize((wxWindow*)win, *(wxDC*)dc);
+	}
+
+	void WxOtherFactory::RendererDrawItemSelectionRect(void* renderer, void* win,
+		void* dc, const Int32Rect& rect,
+		int flags)
+	{
+		wxRendererNative::Get().DrawItemSelectionRect((wxWindow*)win, *(wxDC*)dc, rect, flags);
+	}
+
+	void WxOtherFactory::RendererDrawFocusRect(void* renderer, void* win, void* dc,
+		const Int32Rect& rect, int flags)
+	{
+		wxRendererNative::Get().DrawFocusRect((wxWindow*)win, *(wxDC*)dc, rect, flags);
+	}
+
+	void WxOtherFactory::RendererDrawChoice(void* renderer, void* win, void* dc,
+		const Int32Rect& rect, int flags)
+	{
+		wxRendererNative::Get().DrawChoice((wxWindow*)win, *(wxDC*)dc, rect, flags);
+	}
+
+	void WxOtherFactory::RendererDrawComboBox(void* renderer, void* win, void* dc,
+		const Int32Rect& rect, int flags)
+	{
+		wxRendererNative::Get().DrawComboBox((wxWindow*)win, *(wxDC*)dc, rect, flags);
+	}
+
+	void WxOtherFactory::RendererDrawTextCtrl(void* renderer, void* win, void* dc,
+		const Int32Rect& rect, int flags)
+	{
+		wxRendererNative::Get().DrawTextCtrl((wxWindow*)win, *(wxDC*)dc, rect, flags);
+	}
+
+	void WxOtherFactory::RendererDrawRadioBitmap(void* renderer, void* win, void* dc,
+		const Int32Rect& rect, int flags)
+	{
+		wxRendererNative::Get().DrawRadioBitmap((wxWindow*)win, *(wxDC*)dc, rect, flags);
+	}
+
+	void WxOtherFactory::RendererDrawGauge(void* renderer, void* win, void* dc,
+		const Int32Rect& rect, int value,
+		int max, int flags)
+	{
+		wxRendererNative::Get().DrawGauge((wxWindow*)win, *(wxDC*)dc, rect, value, max,flags);
+	}
+
+	void WxOtherFactory::RendererDrawItemText(void* renderer, void* win, void* dc, const string& text,
+		const Int32Rect& rect, int align, int flags, int ellipsizeMode)
+	{
+		wxRendererNative::Get().DrawItemText((wxWindow*)win, *(wxDC*)dc, wxStr(text), rect, align,
+			flags,(wxEllipsizeMode) ellipsizeMode);
+	}
+
+	string WxOtherFactory::RendererGetVersion(void* renderer)
+	{
+		auto version = wxRendererNative::Get().GetVersion();
+		auto result = std::to_string(version.version) + "." + std::to_string(version.age);
+		return wxStr(result);
+	}
+
+	int WxOtherFactory::RendererDrawHeaderButton(void* renderer, void* win, void* dc,
+		const Int32Rect& rect,
+		int flags, int sortArrow, void* headerButtonParams)
+	{
+		return wxRendererNative::Get().DrawHeaderButton((wxWindow*)win, *(wxDC*)dc, rect, flags,
+			(wxHeaderSortIconType)sortArrow, (wxHeaderButtonParams*) headerButtonParams);
+	}
+
+	int WxOtherFactory::RendererDrawHeaderButtonContents(void* renderer, void* win,
+		void* dc, const Int32Rect& rect,
+		int flags, int sortArrow, void* headerButtonParams)
+	{
+		return wxRendererNative::Get().DrawHeaderButtonContents((wxWindow*)win, *(wxDC*)dc, rect, flags,
+			(wxHeaderSortIconType)sortArrow, (wxHeaderButtonParams*)headerButtonParams);
+	}
+
+	int WxOtherFactory::RendererGetHeaderButtonHeight(void* renderer, void* win)
+	{
+		return wxRendererNative::Get().GetHeaderButtonHeight((wxWindow*)win);
+	}
+
+	int WxOtherFactory::RendererGetHeaderButtonMargin(void* renderer, void* win)
+	{
+		return wxRendererNative::Get().GetHeaderButtonMargin((wxWindow*)win);
+	}
+
+	void WxOtherFactory::RendererDrawTreeItemButton(void* renderer, void* win, void* dc,
+		const Int32Rect& rect, int flags)
+	{
+		wxRendererNative::Get().DrawTreeItemButton((wxWindow*)win, *(wxDC*)dc, rect, flags);
+	}
+
+	void WxOtherFactory::RendererDrawSplitterBorder(void* renderer, void* win, void* dc,
+		const Int32Rect& rect, int flags)
+	{
+		wxRendererNative::Get().DrawSplitterBorder((wxWindow*)win, *(wxDC*)dc, rect, flags);
+	}
+
+	void WxOtherFactory::RendererDrawSplitterSash(void* renderer, void* win, void* dcReal,
+		const Int32Size& sizeReal,
+		int position, int orientation, int flags)
+	{
+		wxRendererNative::Get().DrawSplitterSash((wxWindow*)win, *(wxDC*)dcReal,
+			sizeReal, position, (wxOrientation)orientation, flags);
+	}
+
+	void WxOtherFactory::RendererDrawComboBoxDropButton(void* renderer, void* win, void* dc,
+		const Int32Rect& rect, int flags)
+	{
+		wxRendererNative::Get().DrawComboBoxDropButton((wxWindow*)win, *(wxDC*)dc, rect, flags);
+	}
+
+	void WxOtherFactory::RendererDrawDropArrow(void* renderer, void* win, void* dc,
+		const Int32Rect& rect, int flags)
+	{
+		wxRendererNative::Get().DrawDropArrow((wxWindow*)win, *(wxDC*)dc, rect, flags);
+	}
+
+	void WxOtherFactory::RendererDrawCheckBox(void* renderer, void* win, void* dc,
+		const Int32Rect& rect, int flags)
+	{
+		wxRendererNative::Get().DrawCheckBox((wxWindow*)win, *(wxDC*)dc, rect, flags);
+	}
+
+	void WxOtherFactory::RendererDrawCheckMark(void* renderer, void* win, void* dc,
+		const Int32Rect& rect, int flags)
+	{
+		wxRendererNative::Get().DrawCheckMark((wxWindow*)win, *(wxDC*)dc, rect, flags);
+	}
+
+	Int32Size WxOtherFactory::RendererGetCheckBoxSize(void* renderer, void* win, int flags)
+	{
+		return wxRendererNative::Get().GetCheckBoxSize((wxWindow*)win, flags);
+	}
+
+	Int32Size WxOtherFactory::RendererGetCheckMarkSize(void* renderer, void* win)
+	{
+		return wxRendererNative::Get().GetCheckMarkSize((wxWindow*)win);
+	}
 }
