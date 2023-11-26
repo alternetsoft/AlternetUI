@@ -170,7 +170,7 @@ namespace Alternet.UI
                     };
                     propGridPage = RightNotebook.AddPage(
                         propertyGrid,
-                        CommonStrings.Default.NotebookTabTitleProperties);
+                        CommonStrings.Default.WindowTitleProperties);
                 }
 
                 return propertyGrid;
