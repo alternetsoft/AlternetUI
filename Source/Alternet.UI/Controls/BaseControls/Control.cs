@@ -1344,6 +1344,22 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets intrinsic layout padding of the native control.
+        /// </summary>
+        [Browsable(false)]
+        public virtual Thickness IntrinsicLayoutPadding
+        {
+            get => NativeControl.IntrinsicLayoutPadding;
+        }
+
+        /// <summary>
+        /// Gets intrinsic preferred size padding of the native control.
+        /// </summary>
+        [Browsable(false)]
+        public virtual Thickness IntrinsicPreferredSizePadding
+            => NativeControl.IntrinsicPreferredSizePadding;
+
+        /// <summary>
         /// Gets or sets column index which is used in <see cref="GetColumnGroup"/> and
         /// by the <see cref="Grid"/> control.
         /// </summary>
