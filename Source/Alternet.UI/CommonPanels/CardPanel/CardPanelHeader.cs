@@ -83,8 +83,8 @@ namespace Alternet.UI
             tabs.ThrowOnNullAdd = true;
             tabs.ItemInserted += Tabs_ItemInserted;
             tabs.ItemRemoved += Tabs_ItemRemoved;
-            stackPanel.Parent = border;
             border.Parent = this;
+            stackPanel.Parent = border;
         }
 
         /// <summary>
@@ -852,6 +852,8 @@ namespace Alternet.UI
                 item.HeaderButton.HasBorder = tabHasBorder;
                 UpdateTab(item);
             }
+
+            PerformLayout();
         }
 
         private void Tabs_ItemRemoved(object? sender, int index, CardPanelHeaderItem item)
