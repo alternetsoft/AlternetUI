@@ -18,19 +18,48 @@ namespace Alternet.UI
     [System.ComponentModel.DesignerCategory("Code")]
     public partial class Application : IDisposable
     {
-        internal const int BuildCounter = 3;
+        /// <summary>
+        /// Returns true if operating system is Windows.
+        /// </summary>
+        public static readonly bool IsWindowsOS;
+
+        /// <summary>
+        /// Returns true if operating system is Linux.
+        /// </summary>
+        public static readonly bool IsLinuxOS;
+
+        /// <summary>
+        /// Returns true if operating system is Apple macOS.
+        /// </summary>
+        public static readonly bool IsMacOS;
+
+        /// <summary>
+        /// Indicates whether the current application is running on Android.
+        /// </summary>
+        public static readonly bool IsAndroidOS;
+
+        /// <summary>
+        /// Indicates whether the current application is running on unknown OS.
+        /// </summary>
+        public static readonly bool IsUnknownOS;
+
+        /// <summary>
+        /// Indicates whether the current application is running on Apple iOS.
+        /// </summary>
+        public static readonly bool IsIOS;
+
+        /// <summary>
+        /// Gets operating system as <see cref="OperatingSystems"/> enumeration.
+        /// </summary>
+        public static OperatingSystems BackendOS;
+
+        internal const int BuildCounter = 4;
         internal static readonly Destructor MyDestructor = new();
 
         private static readonly Queue<(Action<object?>, object?)> IdleTasks = new();
         private static bool terminating = false;
         private static bool logFileIsEnabled;
         private static Application? current;
-        private static OperatingSystems backendOS = OperatingSystems.None;
-
-#if NET5_0_OR_GREATER
-        private static bool? isAndroidOS;
-        private static bool? isOS;
-#endif
 
         private readonly List<Window> windows = [];
         private readonly KeyboardInputProvider keyboardInputProvider;
@@ -46,6 +75,51 @@ namespace Alternet.UI
 
         static Application()
         {
+            var backend = WebBrowser.GetBackendOS();
+
+            IsWindowsOS = backend == WebBrowserBackendOS.Windows;
+
+            if (IsWindowsOS)
+            {
+                BackendOS = OperatingSystems.Windows;
+                return;
+            }
+
+            IsMacOS = backend == WebBrowserBackendOS.MacOS;
+
+            if(IsMacOS)
+            {
+                BackendOS = OperatingSystems.MacOs;
+                return;
+            }
+
+            IsLinuxOS = backend == WebBrowserBackendOS.Unix;
+
+            if (IsLinuxOS)
+            {
+                BackendOS = OperatingSystems.Linux;
+                return;
+            }
+
+#if NET5_0_OR_GREATER
+            IsAndroidOS = OperatingSystem.IsAndroid();
+
+            if (IsAndroidOS)
+            {
+                BackendOS = OperatingSystems.Android;
+                return;
+            }
+
+            IsIOS = OperatingSystem.IsIOS();
+
+            if (IsIOS)
+            {
+                BackendOS = OperatingSystems.IOS;
+                return;
+            }
+#endif
+            BackendOS = OperatingSystems.Unknown;
+            IsUnknownOS = true;
         }
 
         /// <summary>
@@ -158,107 +232,10 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets operating system as <see cref="OperatingSystems"/> enumeration.
-        /// </summary>
-        public static OperatingSystems BackendOS
-        {
-            get
-            {
-                if (backendOS == OperatingSystems.None)
-                {
-                    switch (WebBrowser.GetBackendOS())
-                    {
-                        case WebBrowserBackendOS.MacOS:
-                            backendOS = OperatingSystems.MacOs;
-                            break;
-                        case WebBrowserBackendOS.Unix:
-                            backendOS = OperatingSystems.Linux;
-                            break;
-                        case WebBrowserBackendOS.Windows:
-                            backendOS = OperatingSystems.Windows;
-                            break;
-                        default:
-                            if(IsAndroidOS)
-                                backendOS = OperatingSystems.Android;
-                            else
-                            if(IsIOS)
-                                backendOS = OperatingSystems.IOS;
-                            break;
-                    }
-                }
-
-                return backendOS;
-            }
-        }
-
-        /// <summary>
-        /// Indicates whether the current application is running on Android.
-        /// </summary>
-        public static bool IsAndroidOS
-        {
-            get
-            {
-#if NET5_0_OR_GREATER
-                return isAndroidOS ??= OperatingSystem.IsAndroid();
-#else
-                return false;
-#endif
-            }
-        }
-
-        /// <summary>
-        /// Indicates whether the current application is running on Android.
-        /// </summary>
-        public static bool IsIOS
-        {
-            get
-            {
-#if NET5_0_OR_GREATER
-                return isOS ??= OperatingSystem.IsIOS();
-#else
-                return false;
-#endif
-            }
-        }
-
-        /// <summary>
-        /// Returns true if operating system is Windows.
-        /// </summary>
-        public static bool IsWindowsOS
-        {
-            get
-            {
-                return WebBrowser.GetBackendOS() == WebBrowserBackendOS.Windows;
-            }
-        }
-
-        /// <summary>
-        /// Returns true if operating system is Linux.
-        /// </summary>
-        public static bool IsLinuxOS
-        {
-            get
-            {
-                return WebBrowser.GetBackendOS() == WebBrowserBackendOS.Unix;
-            }
-        }
-
-        /// <summary>
         /// Returns true if between two <see cref="BeginBusyCursor"/> and
         /// <see cref="EndBusyCursor"/> calls.
         /// </summary>
         public static bool IsBusyCursor => Native.WxOtherFactory.IsBusyCursor();
-
-        /// <summary>
-        /// Returns true if operating system is Apple macOS.
-        /// </summary>
-        public static bool IsMacOs
-        {
-            get
-            {
-                return WebBrowser.GetBackendOS() == WebBrowserBackendOS.MacOS;
-            }
-        }
 
         /// <summary>
         /// Gets a value that indicates whether a debugger is attached to the process.

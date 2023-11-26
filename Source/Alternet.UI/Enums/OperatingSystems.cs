@@ -43,9 +43,14 @@ namespace Alternet.UI
         IOS = 16,
 
         /// <summary>
+        /// Unknown operating system.
+        /// </summary>
+        Unknown = 32,
+
+        /// <summary>
         /// Any operating system.
         /// </summary>
-        Any = MacOs | Linux | Windows | Android | IOS,
+        Any = MacOs | Linux | Windows | Android | IOS | Unknown,
 
         /// <summary>
         /// Operating system is Windows or Linux.

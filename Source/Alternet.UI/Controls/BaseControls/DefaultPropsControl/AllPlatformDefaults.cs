@@ -8,18 +8,62 @@ namespace Alternet.UI
     /// </summary>
     public static class AllPlatformDefaults
     {
-        private static PlatformDefaults? platformCurrent;
+        /// <summary>
+        /// Defines default control property values for the current platfrom.
+        /// </summary>
+        /// <remarks>
+        /// This property returns <see cref="PlatformWindows"/>,
+        /// <see cref="PlatformLinux"/> or <see cref="PlatformMacOs"/> depending
+        /// from the operating system on which application is executed.
+        /// </remarks>
+        public static readonly PlatformDefaults PlatformCurrent;
+
+        /// <summary>
+        /// Defines default control property values for all the platforms. This
+        /// is used if default property value for the current platform
+        /// is not specified.
+        /// </summary>
+        public static readonly PlatformDefaults PlatformAny = new();
+
+        /// <summary>
+        /// Defines default control property values for Windows platfrom.
+        /// </summary>
+        public static readonly PlatformDefaults PlatformWindows = new();
+
+        /// <summary>
+        /// Defines default control property values for Linux platfrom.
+        /// </summary>
+        public static readonly PlatformDefaults PlatformLinux = new();
+
+        /// <summary>
+        /// Defines default control property values for macOs platfrom.
+        /// </summary>
+        public static readonly PlatformDefaults PlatformMacOs = new();
 
         static AllPlatformDefaults()
         {
-            if (PlatformCurrent == PlatformWindows)
+            if (Application.IsWindowsOS)
+            {
+                PlatformCurrent = PlatformWindows;
                 InitWindows();
-            else
-            if (PlatformCurrent == PlatformLinux)
+                return;
+            }
+
+            if (Application.IsLinuxOS)
+            {
+                PlatformCurrent = PlatformLinux;
                 InitLinux();
-            else
-            if (PlatformCurrent == PlatformMacOs)
+                return;
+            }
+
+            if (Application.IsMacOS)
+            {
+                PlatformCurrent = PlatformMacOs;
                 InitMacOs();
+                return;
+            }
+
+            PlatformCurrent = PlatformAny;
 
             void InitLinux()
             {
@@ -27,12 +71,11 @@ namespace Alternet.UI
 
                 platform.AllowButtonHasBorder = false;
                 platform.AllowButtonBackground = false;
-                // platform.AllowButtonForeground = false;
 
-                var minCheckBoxMargin = new Thickness(3);
-                platform.Controls.RadioButton.MinMargin = minCheckBoxMargin;
-                platform.Controls.Button.MinMargin = minCheckBoxMargin;
-                platform.Controls.CheckBox.MinMargin = minCheckBoxMargin;
+                var minMargin = new Thickness(3);
+                platform.Controls.RadioButton.MinMargin = minMargin;
+                platform.Controls.Button.MinMargin = minMargin;
+                platform.Controls.CheckBox.MinMargin = minMargin;
                 platform.AdjustTextBoxesHeight = true;
                 platform.TextBoxUrlClickModifiers = ModifierKeys.Control;
 
@@ -52,13 +95,9 @@ namespace Alternet.UI
 
             void InitWindows()
             {
-                var platform = PlatformWindows;
-
-                // platform.AllowButtonHasBorder = false;
-                // platform.AllowButtonBackground = false;
-                // platform.AllowButtonForeground = false;
-
-                platform.TextBoxUrlClickModifiers = ModifierKeys.Control;
+                PlatformWindows.TextBoxUrlClickModifiers = ModifierKeys.Control;
+                PlatformWindows.AllowButtonHasBorder = false;
+                PlatformWindows.Controls.Button.MinMargin = 3;
             }
 
             void InitMacOs()
@@ -72,39 +111,6 @@ namespace Alternet.UI
                 platform.AllowButtonForeground = false;
             }
         }
-
-        /// <summary>
-        /// Defines default control property values for all the platforms. This
-        /// is used if default property value for the current platform
-        /// is not specified.
-        /// </summary>
-        public static PlatformDefaults PlatformAny { get; } = new();
-
-        /// <summary>
-        /// Defines default control property values for Windows platfrom.
-        /// </summary>
-        public static PlatformDefaults PlatformWindows { get; } = new();
-
-        /// <summary>
-        /// Defines default control property values for Linux platfrom.
-        /// </summary>
-        public static PlatformDefaults PlatformLinux { get; } = new();
-
-        /// <summary>
-        /// Defines default control property values for macOs platfrom.
-        /// </summary>
-        public static PlatformDefaults PlatformMacOs { get; } = new();
-
-        /// <summary>
-        /// Defines default control property values for the current platfrom.
-        /// </summary>
-        /// <remarks>
-        /// This property returns <see cref="PlatformWindows"/>,
-        /// <see cref="PlatformLinux"/> or <see cref="PlatformMacOs"/> depending
-        /// from the operating system on which application is executed.
-        /// </remarks>
-        public static PlatformDefaults PlatformCurrent { get; } =
-            platformCurrent ??= GetPlatformCurrent();
 
         /// <summary>
         /// Returns default property value for the control on the
@@ -141,16 +147,5 @@ namespace Alternet.UI
             else
                 return result.Value;
         }
-
-        private static PlatformDefaults GetPlatformCurrent()
-        {
-            if (Application.IsWindowsOS)
-                return PlatformWindows;
-            if (Application.IsLinuxOS)
-                return PlatformLinux;
-            if (Application.IsMacOs)
-                return PlatformMacOs;
-            return PlatformAny;
-        }
-    }
+     }
 }

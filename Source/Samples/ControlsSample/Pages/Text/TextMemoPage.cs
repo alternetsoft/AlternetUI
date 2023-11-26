@@ -34,7 +34,7 @@ namespace ControlsSample
             //memoPanel.FileOpenClick += MemoPanel_FileOpenClick;
             //memoPanel.FileSaveClick += MemoPanel_FileSaveClick;
 
-            if (!Application.IsMacOs)
+            if (!Application.IsMacOS)
                 memoPanel.TextBox.AutoUrlOpen = true;
 
             var multilineDemoText = LoremIpsum;
