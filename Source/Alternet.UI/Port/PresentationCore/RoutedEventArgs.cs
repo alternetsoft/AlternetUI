@@ -31,7 +31,7 @@ namespace Alternet.UI
     ///     providing extra event state info, and invoking the
     ///     handler associated with the RoutedEvent
     /// </remarks>
-    public class RoutedEventArgs : EventArgs
+    public class RoutedEventArgs : BaseEventArgs
     {
         /// <summary>
         ///     Constructor for <see cref="RoutedEventArgs"/>
