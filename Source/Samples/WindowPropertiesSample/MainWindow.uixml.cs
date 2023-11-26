@@ -1,5 +1,6 @@
 using Alternet.Drawing;
 using Alternet.UI;
+using Alternet.UI.Localization;
 using System;
 
 namespace WindowPropertiesSample
@@ -7,17 +8,13 @@ namespace WindowPropertiesSample
     public partial class MainWindow : Window
     {
         private readonly CardPanelHeader panelHeader = new();
-
-        private readonly PopupPropertyGrid popupPropertyGrid = new()
-        {
-        };
-
-        private readonly SetBoundsProperties setBoundsProperties;
+        private readonly PopupPropertyGrid popupSetBounds = new();
+        private readonly SetBoundsProperties setBoundsProperties = new();
+        private readonly PopupPropertyGrid popupWindowProps;
         private TestWindow? testWindow;
         
         public MainWindow()
         {
-            setBoundsProperties = new();
             Icon = ImageSet.FromUrlOrNull("embres:WindowPropertiesSample.Sample.ico");
 
             InitializeComponent();
@@ -36,14 +33,16 @@ namespace WindowPropertiesSample
             eventsListBox.BindApplicationLog();
             eventsListBox.ContextMenu.Required();
 
-            popupPropertyGrid.AfterHide += PopupPropertyGrid_AfterHide;
-            popupPropertyGrid.MainControl.ApplyFlags |= PropertyGridApplyFlags.PropInfoSetValue;
-            popupPropertyGrid.HideOnEnter = true;
-            popupPropertyGrid.HideOnClick = false;
-            popupPropertyGrid.HideOnDoubleClick = false;
+            popupSetBounds.AfterHide += PopupSetBounds_AfterHide;
+            popupSetBounds.MainControl.ApplyFlags |= PropertyGridApplyFlags.PropInfoSetValue;
+            popupSetBounds.HideOnEnter = true;
+            popupSetBounds.HideOnClick = false;
+            popupSetBounds.HideOnDoubleClick = false;
+
+            popupWindowProps = PopupPropertyGrid.CreatePropertiesPopup();
         }
 
-        private void PopupPropertyGrid_AfterHide(object? sender, EventArgs e)
+        private void PopupSetBounds_AfterHide(object? sender, EventArgs e)
         {
             /*
             if (popupPropertyGrid.PopupResult != ModalResult.Accepted)
@@ -51,6 +50,14 @@ namespace WindowPropertiesSample
             */
             var rect = (setBoundsProperties.X, setBoundsProperties.Y, setBoundsProperties.Width, setBoundsProperties.Height);
             testWindow?.SetBounds(rect, setBoundsProperties.Flags);
+        }
+
+        private void PropertiesButton_Click(object? sender, EventArgs e)
+        {
+            if (testWindow is null)
+                return;
+            popupWindowProps.MainControl.SetProps(testWindow);
+            popupWindowProps.ShowPopup(propertiesButton);
         }
 
         private void SetBoundsExButton_Click(object? sender, EventArgs e)
@@ -61,12 +68,12 @@ namespace WindowPropertiesSample
             setBoundsProperties.Y = testWindow.Location.Y;
             setBoundsProperties.Width = testWindow.Size.Width;
             setBoundsProperties.Height = testWindow.Size.Height;
-            popupPropertyGrid.MainControl.SuggestedSize = (400, 300);
-            popupPropertyGrid.SetSizeToContent();
-            popupPropertyGrid.MainControl.SetProps(setBoundsProperties);
-            var flagsItem = popupPropertyGrid.MainControl.GetProperty("Flags");
-            popupPropertyGrid.MainControl.Expand(flagsItem);
-            popupPropertyGrid.ShowPopup(setBoundsExButton);
+            popupSetBounds.MainControl.SuggestedSize = (400, 300);
+            popupSetBounds.SetSizeToContent();
+            popupSetBounds.MainControl.SetProps(setBoundsProperties);
+            var flagsItem = popupSetBounds.MainControl.GetProperty("Flags");
+            popupSetBounds.MainControl.Expand(flagsItem);
+            popupSetBounds.ShowPopup(setBoundsExButton);
         }
 
         private void CreateAndShowWindowButton_Click(object sender, EventArgs e)
@@ -181,30 +188,31 @@ namespace WindowPropertiesSample
         {
             var haveTestWindow = testWindow != null;
 
-            hideWindowCheckBox.Enabled = haveTestWindow;
-            createAndShowWindowButton.Enabled = !haveTestWindow;
-            createAndShowModalWindowButton.Enabled = !haveTestWindow;
-            startLocationComboBox.Enabled = !haveTestWindow;
+            Group(
+                createAndShowWindowButton,
+                createAndShowModalWindowButton,
+                startLocationComboBox).Enabled(!haveTestWindow);
 
-            activateButton.Enabled = haveTestWindow;
-            addOwnedWindow.Enabled = haveTestWindow;
-            stateComboBox.Enabled = haveTestWindow;
+            Group(
+                hideWindowCheckBox,
+                activateButton,
+                addOwnedWindow,
+                stateComboBox,
+                sizeToContentModeComboBox,
+                setSizeToContentButton,
+                setSizeButton,
+                setClientSizeButton,
+                setBoundsButton,
+                increaseLocationButton,
+                setMinMaxSizeButton,
+                setIcon1Button,
+                setIcon2Button,
+                clearIconButton,
+                setBoundsExButton,
+                propertiesButton).Enabled(haveTestWindow);
 
-            sizeToContentModeComboBox.Enabled = haveTestWindow;
-            setSizeToContentButton.Enabled = haveTestWindow;
-            setSizeButton.Enabled = haveTestWindow;
-            setClientSizeButton.Enabled = haveTestWindow;
-            setBoundsButton.Enabled = haveTestWindow;
-            increaseLocationButton.Enabled = haveTestWindow;
-            setMinMaxSizeButton.Enabled = haveTestWindow;
             if (!haveTestWindow)
                 currentBoundsLabel.Text = string.Empty;
-
-            setIcon1Button.Enabled = haveTestWindow;
-            setIcon2Button.Enabled = haveTestWindow;
-            clearIconButton.Enabled = haveTestWindow;
-
-            setBoundsExButton.Enabled = haveTestWindow;
 
             UpdateActiveWindowInfoLabel();
         }

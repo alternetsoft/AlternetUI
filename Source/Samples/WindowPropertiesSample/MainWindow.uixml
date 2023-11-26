@@ -78,15 +78,14 @@
               CheckedChanged="HideWindowCheckBox_CheckedChanged"/>
         </StackPanel>
 
-        <GroupBox Title="Icon"  Margin="5" VerticalAlignment="Top" Padding="5">
-          <VerticalStackPanel>
-            <HorizontalStackPanel Margin="0,0,0,5">
-              <Button Text="Set 1" Name="setIcon1Button" Click="SetIcon1Button_Click"/>
-              <Button Text="Set 2" Name="setIcon2Button" Click="SetIcon2Button_Click" />
+          <VerticalStackPanel Padding="5">
+            <HorizontalStackPanel  Margin="0,0,0,5">
+              <Button Text="Icon 1" Name="setIcon1Button" Click="SetIcon1Button_Click"/>
+              <Button Text="Icon 2" Name="setIcon2Button" Click="SetIcon2Button_Click" />
             </HorizontalStackPanel>
-            <Button Text="Clear" Name="clearIconButton" Click="ClearIconButton_Click"/>
+            <Button Text="Clear Icon" Name="clearIconButton" Click="ClearIconButton_Click" Margin="0,0,0,5"/>
+            <Button Text="Properties..." Name="propertiesButton" Click="PropertiesButton_Click" Margin="0,0,0,5"/>
           </VerticalStackPanel>
-        </GroupBox>
       </HorizontalStackPanel>
 
       <!-- ========================= -->
