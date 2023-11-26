@@ -234,6 +234,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets string search provider.
         /// </summary>
+        [Browsable(false)]
         public virtual StringSearch Search
         {
             get => search ??= new(this);

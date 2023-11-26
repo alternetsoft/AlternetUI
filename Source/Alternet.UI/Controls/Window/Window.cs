@@ -692,6 +692,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets the collection of input bindings associated with this window.
         /// </summary>
+        [Browsable(false)]
         public Collection<InputBinding> InputBindings { get; } = [];
 
         /// <inheritdoc/>

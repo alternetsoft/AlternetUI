@@ -88,6 +88,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets string search provider.
         /// </summary>
+        [Browsable(false)]
         public virtual StringSearch Search
         {
             get => search ??= new(this);
@@ -111,6 +112,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the current filename associated with the control.
         /// </summary>
+        [Browsable(false)]
         public virtual string FileName
         {
             get

@@ -228,6 +228,7 @@ namespace Alternet.UI
         /// control; otherwise, <see langword="false"/>. The default
         /// is <see langword="false"/>.
         /// </value>
+        [Browsable(false)]
         public virtual bool Multiline
         {
             get
@@ -251,6 +252,7 @@ namespace Alternet.UI
         /// In the rich edit mode it is possible to apply text formatting (for example
         /// change text font or color). Also it is possible to edit large texts.
         /// </remarks>
+        [Browsable(false)]
         public virtual bool IsRichEdit
         {
             get
