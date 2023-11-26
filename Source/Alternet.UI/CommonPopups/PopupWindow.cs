@@ -17,7 +17,11 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets whether to log popup window bounds.
         /// </summary>
+#if DEBUG
         public static bool LogDebugInfo = true;
+#else
+        public static bool LogDebugInfo = false;
+#endif
 
         private static readonly BorderSettings Settings = BorderSettings.Default.Clone();
         private readonly Border border = new();
