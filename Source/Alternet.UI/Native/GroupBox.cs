@@ -38,6 +38,18 @@ namespace Alternet.UI.Native
             }
         }
         
+        public int GetTopBorderForSizer()
+        {
+            CheckDisposed();
+            return NativeApi.GroupBox_GetTopBorderForSizer_(NativePointer);
+        }
+        
+        public int GetOtherBorderForSizer()
+        {
+            CheckDisposed();
+            return NativeApi.GroupBox_GetOtherBorderForSizer_(NativePointer);
+        }
+        
         
         [SuppressUnmanagedCodeSecurity]
         public class NativeApi : NativeApiProvider
@@ -52,6 +64,12 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void GroupBox_SetTitle_(IntPtr obj, string? value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int GroupBox_GetTopBorderForSizer_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int GroupBox_GetOtherBorderForSizer_(IntPtr obj);
             
         }
     }

@@ -37,11 +37,8 @@ namespace Alternet.UI
             Control.TitleChanged -= Control_TitleChanged;
         }
 
-        private void Control_TitleChanged(object? sender, System.EventArgs? e)
+        private void Control_TitleChanged(object? sender, EventArgs e)
         {
-            if (e is null)
-                throw new System.ArgumentNullException(nameof(e));
-
             NativeControl.Title = Control.Title;
         }
     }

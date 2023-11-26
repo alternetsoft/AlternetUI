@@ -60,6 +60,34 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override ControlTypeId ControlKind => ControlTypeId.GroupBox;
 
+        internal new Native.GroupBox NativeControl => (Native.GroupBox)base.NativeControl;
+
+        /// <summary>
+        /// Gets the top border ( it is the margin at the top where the title is).
+        /// </summary>
+        /// <returns></returns>
+        /// <remarks>
+        /// This is used to account for the
+        /// need for extra space taken by the <see cref="GroupBox"/>.
+        /// </remarks>
+        public int GetTopBorderForSizer()
+        {
+            return NativeControl.GetTopBorderForSizer();
+        }
+
+        /// <summary>
+        /// Gets the margin on all other sides except top side.
+        /// </summary>
+        /// <returns></returns>
+        /// <remarks>
+        /// This is used to account for the
+        /// need for extra space taken by the <see cref="GroupBox"/>.
+        /// </remarks>
+        public int GetOtherBorderForSizer()
+        {
+            return NativeControl.GetOtherBorderForSizer();
+        }
+
         /// <summary>
         /// Called when the value of the <see cref="Title"/> property changes.
         /// </summary>

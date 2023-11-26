@@ -59,6 +59,22 @@ namespace Alternet::UI
         return GetIntrinsicPadding(/*preferredSize:*/ true);
     }
 
+    int GroupBox::GetTopBorderForSizer()
+    {
+        auto staticBox = GetStaticBox();
+        int topBorder = 0, otherBorder = 0;
+        staticBox->GetBordersForSizer(&topBorder, &otherBorder);
+        return topBorder;
+    }
+    
+    int GroupBox::GetOtherBorderForSizer()
+    {
+        auto staticBox = GetStaticBox();
+        int topBorder = 0, otherBorder = 0;
+        staticBox->GetBordersForSizer(&topBorder, &otherBorder);
+        return otherBorder;
+    }
+
     Thickness GroupBox::GetIntrinsicPadding(bool preferredSize)
     {
         auto staticBox = GetStaticBox();

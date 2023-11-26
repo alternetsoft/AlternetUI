@@ -4,6 +4,8 @@ public:
 optional<string> GetTitle();
 void SetTitle(optional<string> value);
 
+int GetTopBorderForSizer();
+int GetOtherBorderForSizer();
 public:
 GroupBox();
 protected:

@@ -23,3 +23,13 @@ ALTERNET_UI_API void GroupBox_SetTitle_(GroupBox* obj, const char16_t* value)
     obj->SetTitle(ToOptional(value));
 }
 
+ALTERNET_UI_API int GroupBox_GetTopBorderForSizer_(GroupBox* obj)
+{
+    return obj->GetTopBorderForSizer();
+}
+
+ALTERNET_UI_API int GroupBox_GetOtherBorderForSizer_(GroupBox* obj)
+{
+    return obj->GetOtherBorderForSizer();
+}
+
