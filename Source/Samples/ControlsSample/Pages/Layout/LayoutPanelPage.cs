@@ -10,14 +10,6 @@ namespace ControlsSample
 {
     internal partial class LayoutPanelPage : Control
     {
-        private readonly ListBox control1 = new();
-        private readonly ListBox control2 = new();
-        private readonly ListBox control3 = new();
-        private readonly ListBox control4 = new();
-        private readonly ListBox control5 = new();
-        private readonly ListBox control6 = new();
-        private readonly LayoutPanel layoutPanel = new();
-
         static LayoutPanelPage()
         {
         }
@@ -30,23 +22,27 @@ namespace ControlsSample
 
         public void Initialize()
         {
-            control1.Items.Add("Control 1");
-            control1.Items.Add("Dock = Right");
+            Control Create(params string[] items)
+            {
+                ListBox listBox = new()
+                {
+                    HasBorder = false,
+                };
 
-            control2.Items.Add("Control 2");
-            control2.Items.Add("Dock = Left");
+                Border border = new();
 
-            control3.Items.Add("Control 3");
-            control3.Items.Add("Dock = Top");
+                listBox.Parent = border;
+                listBox.Items.AddRange(items);
+                return border;
+            }
 
-            control4.Items.Add("Control 4");
-            control4.Items.Add("Dock = Bottom");
-
-            control5.Items.Add("Control 5");
-            control5.Items.Add("Dock = Fill");
-
-            control6.Items.Add("Control 6");
-            control6.Items.Add("Dock = None");
+            var control1 = Create("Control 1", "Dock = Right");
+            var control2 = Create("Control 2", "Dock = Left");
+            var control3 = Create("Control 3", "Dock = Top");
+            var control4 = Create("Control 4", "Dock = Bottom");
+            var control5 = Create("Control 5", "Dock = Fill");
+            var control6 = Create("Control 6", "Dock = None");
+            LayoutPanel layoutPanel = new();
 
             LayoutPanel.SetDock(control1, DockStyle.Right);
             LayoutPanel.SetDock(control2, DockStyle.Left);
