@@ -18,7 +18,6 @@
 - WindowPropertiesSample: Add 'Properties...' button.
 - Control.RowIndex and Control.ColumnIndex used in Grid.
 - Set Button.MinMargin = 3 on Linux.
-- CardPanelHeader now uses GroupBox as border.
 - Designer.MouseLeftButton is called when mouse button is clicked.
 - Optimized OS detection and defaults.
 
