@@ -30,6 +30,9 @@ namespace Alternet.UI
             DefaultRightPaneBestSize = new(350, 200);
             DefaultRightPaneMinSize = new(350, 200);
 
+            CenterNotebookDefaultCreateStyle = AuiNotebookCreateStyle.Top;
+            RightNotebookDefaultCreateStyle = AuiNotebookCreateStyle.Top;
+
             mainLogListBox.Parent = CenterNotebook;
             mainLogListBox.ContextMenu.Required();
             mainLogListBox.MenuItemShowDevTools?.SetEnabled(false);

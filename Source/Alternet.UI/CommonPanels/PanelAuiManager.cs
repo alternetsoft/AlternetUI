@@ -212,6 +212,8 @@ namespace Alternet.UI
                 if (leftNotebook == null)
                 {
                     leftNotebook = new();
+                    if (LeftNotebookDefaultCreateStyle is not null)
+                        leftNotebook.CreateStyle = LeftNotebookDefaultCreateStyle.Value;
                     Manager.AddPane(leftNotebook, LeftPane);
                 }
 
@@ -230,12 +232,38 @@ namespace Alternet.UI
                 if (rightNotebook == null)
                 {
                     rightNotebook = new();
+                    if (RightNotebookDefaultCreateStyle is not null)
+                        rightNotebook.CreateStyle = RightNotebookDefaultCreateStyle.Value;
                     Manager.AddPane(rightNotebook, RightPane);
                 }
 
                 return rightNotebook;
             }
         }
+
+        /// <summary>
+        /// Gets or sets default create style for the <see cref="LeftNotebook"/>.
+        /// </summary>
+        [Browsable(false)]
+        public AuiNotebookCreateStyle? LeftNotebookDefaultCreateStyle { get; set; }
+
+        /// <summary>
+        /// Gets or sets default create style for the <see cref="BottomNotebook"/>.
+        /// </summary>
+        [Browsable(false)]
+        public AuiNotebookCreateStyle? BottomNotebookDefaultCreateStyle { get; set; }
+
+        /// <summary>
+        /// Gets or sets default create style for the <see cref="CenterNotebook"/>.
+        /// </summary>
+        [Browsable(false)]
+        public AuiNotebookCreateStyle? CenterNotebookDefaultCreateStyle { get; set; }
+
+        /// <summary>
+        /// Gets or sets default create style for the <see cref="RightNotebook"/>.
+        /// </summary>
+        [Browsable(false)]
+        public AuiNotebookCreateStyle? RightNotebookDefaultCreateStyle { get; set; }
 
         /// <summary>
         /// Gets <see cref="AuiNotebook"/> control which is located on the bottom pane.
@@ -248,6 +276,8 @@ namespace Alternet.UI
                 if (centerNotebook == null)
                 {
                     centerNotebook = new();
+                    if (CenterNotebookDefaultCreateStyle is not null)
+                        centerNotebook.CreateStyle = CenterNotebookDefaultCreateStyle.Value;
                     Manager.AddPane(centerNotebook, CenterPane);
                 }
 
@@ -266,6 +296,8 @@ namespace Alternet.UI
                 if (bottomNotebook == null)
                 {
                     bottomNotebook = new();
+                    if (BottomNotebookDefaultCreateStyle is not null)
+                        BottomNotebook.CreateStyle = BottomNotebookDefaultCreateStyle.Value;
                     Manager.AddPane(bottomNotebook, BottomPane);
                 }
 

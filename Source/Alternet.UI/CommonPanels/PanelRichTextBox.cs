@@ -232,6 +232,7 @@ namespace Alternet.UI
         {
             DefaultRightPaneBestSize = new(150, 200);
             DefaultRightPaneMinSize = new(150, 200);
+            RightNotebookDefaultCreateStyle = AuiNotebookCreateStyle.Top;
             TextBox.HasBorder = false;
             DefaultToolbarStyle &=
                 ~(AuiToolbarCreateStyle.Text | AuiToolbarCreateStyle.HorzLayout);
