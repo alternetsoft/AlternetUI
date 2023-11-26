@@ -9,12 +9,13 @@ namespace WindowPropertiesSample
     {
         private readonly CardPanelHeader panelHeader = new();
         private readonly PopupPropertyGrid popupSetBounds = new();
-        private readonly SetBoundsProperties setBoundsProperties = new();
         private readonly PopupPropertyGrid popupWindowProps;
         private TestWindow? testWindow;
-        
+        private SetBoundsProperties setBoundsProperties;
+
         public MainWindow()
         {
+            setBoundsProperties = new(this);
             Icon = ImageSet.FromUrlOrNull("embres:WindowPropertiesSample.Sample.ico");
 
             InitializeComponent();
@@ -33,21 +34,22 @@ namespace WindowPropertiesSample
             eventsListBox.BindApplicationLog();
             eventsListBox.ContextMenu.Required();
 
+            popupSetBounds.Title = "Set Bounds (hide to change)";
+            popupSetBounds.HasTitleBar = true;
+            popupSetBounds.HasBorder = true;
+            popupSetBounds.CloseEnabled = true;
             popupSetBounds.AfterHide += PopupSetBounds_AfterHide;
             popupSetBounds.MainControl.ApplyFlags |= PropertyGridApplyFlags.PropInfoSetValue;
             popupSetBounds.HideOnEnter = true;
             popupSetBounds.HideOnClick = false;
             popupSetBounds.HideOnDoubleClick = false;
+            popupSetBounds.MainControl.SuggestedInitDefaults();
 
             popupWindowProps = PopupPropertyGrid.CreatePropertiesPopup();
         }
 
         private void PopupSetBounds_AfterHide(object? sender, EventArgs e)
         {
-            /*
-            if (popupPropertyGrid.PopupResult != ModalResult.Accepted)
-                return;
-            */
             var rect = (setBoundsProperties.X, setBoundsProperties.Y, setBoundsProperties.Width, setBoundsProperties.Height);
             testWindow?.SetBounds(rect, setBoundsProperties.Flags);
         }
@@ -68,7 +70,7 @@ namespace WindowPropertiesSample
             setBoundsProperties.Y = testWindow.Location.Y;
             setBoundsProperties.Width = testWindow.Size.Width;
             setBoundsProperties.Height = testWindow.Size.Height;
-            popupSetBounds.MainControl.SuggestedSize = (400, 300);
+            popupSetBounds.MainControl.SuggestedSize = (400, 400);
             popupSetBounds.SetSizeToContent();
             popupSetBounds.MainControl.SetProps(setBoundsProperties);
             var flagsItem = popupSetBounds.MainControl.GetProperty("Flags");
@@ -409,15 +411,37 @@ namespace WindowPropertiesSample
 
         public class SetBoundsProperties
         {
-            public SetBoundsProperties()
+            private MainWindow owner;
+
+            public SetBoundsProperties(MainWindow owner)
             {
+                this.owner = owner;
             }
 
-            public double X { get; set;}
-            public double Y { get; set; }
-            public double Width { get; set; }
-            public double Height { get; set; }
-            public SetBoundsFlags Flags { get; set; }
+            public double X
+            {
+                get; set;
+            }
+            
+            public double Y
+            {
+                get; set; 
+            }
+            
+            public double Width
+            {
+                get; set; 
+            }
+            
+            public double Height
+            {
+                get; set; 
+            }
+            
+            public SetBoundsFlags Flags
+            {
+                get; set;
+            }
         }
     }
 }
