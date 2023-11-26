@@ -20,13 +20,13 @@ namespace Alternet.UI
     [ControlCategory("Panels")]
     public class CardPanelHeader : Control, ITextProperty
     {
-        /*/// <summary>
+        /// <summary>
         /// Gets or sets default border side width.
         /// </summary>
         /// <remarks>
         /// <see cref="DefaultBorderWidth"/> by default is calculated dynamically using this field.
         /// </remarks>
-        public static double DefaultBorderSideWidth = 3;*/
+        public static double DefaultBorderSideWidth = 1;
 
         /// <summary>
         /// Gets or sets default value of the <see cref="BorderPadding"/> property.
@@ -36,7 +36,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets default value of the <see cref="BorderMargin"/> property.
         /// </summary>
-        public static Thickness DefaultBorderMargin = new (0,0,0,5);
+        public static Thickness DefaultBorderMargin = new (0, 0, 0, 5);
 
         /// <summary>
         /// Gets or sets default value for the tab margin.
@@ -48,7 +48,7 @@ namespace Alternet.UI
         /// </summary>
         public static Size DefaultAdditionalSpace = new(30, 30);
 
-        /*private static Thickness? defaultBorderWidth;*/
+        private static Thickness? defaultBorderWidth;
 
         private readonly Collection<CardPanelHeaderItem> tabs = [];
         private readonly StackPanel stackPanel = new()
@@ -56,22 +56,22 @@ namespace Alternet.UI
             Orientation = StackPanelOrientation.Horizontal,
         };
 
-        /*private readonly Border border = new()
+        private readonly Border control = new()
         {
             HorizontalAlignment = HorizontalAlignment.Stretch, // do not change, horizontal line must be on full width
             VerticalAlignment = VerticalAlignment.Top,
             BorderWidth = DefaultBorderWidth,
             Padding = DefaultBorderPadding,
             Margin = DefaultBorderMargin,
-        };*/
+        };
 
-        private readonly GroupBox groupBox = new()
+        /*private readonly GroupBox groupBox = new()
         {
             HorizontalAlignment = HorizontalAlignment.Stretch, // do not change, horizontal line must be on full width
             VerticalAlignment = VerticalAlignment.Top,
             Padding = DefaultBorderPadding,
             Margin = DefaultBorderMargin,
-        };
+        };*/
 
         private bool useTabBold = DefaultUseTabBold;
         private bool useTabForegroundColor = DefaultUseTabForegroundColor;
@@ -91,8 +91,8 @@ namespace Alternet.UI
             tabs.ThrowOnNullAdd = true;
             tabs.ItemInserted += Tabs_ItemInserted;
             tabs.ItemRemoved += Tabs_ItemRemoved;
-            groupBox.Parent = this;
-            stackPanel.Parent = groupBox;
+            control.Parent = this;
+            stackPanel.Parent = control;
         }
 
         /// <summary>
@@ -100,7 +100,7 @@ namespace Alternet.UI
         /// </summary>
         public event EventHandler? TabClick;
 
-        /*/// <summary>
+        /// <summary>
         /// Gets or sets default value of the border width.
         /// </summary>
         public static Thickness DefaultBorderWidth
@@ -116,7 +116,7 @@ namespace Alternet.UI
             {
                 defaultBorderWidth = value;
             }
-        }*/
+        }
 
         /// <summary>
         /// Gets or sets default value of the <see cref="TabHasBorder"/>.
@@ -157,6 +157,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets text of the first tab.
         /// </summary>
+        [Browsable(false)]
         public string Text
         {
             get
@@ -192,21 +193,21 @@ namespace Alternet.UI
             }
         }
 
-        /*/// <inheritdoc cref="Border.BorderWidth"/>
+        /// <inheritdoc cref="Border.BorderWidth"/>
         public Thickness BorderWidth
         {
             get
             {
-                return border.BorderWidth;
+                return control.BorderWidth;
             }
 
             set
             {
-                border.BorderWidth = value;
+                control.BorderWidth = value;
                 PerformLayout();
                 Refresh();
             }
-        }*/
+        }
 
         /// <summary>
         /// Gets or sets border padding.
@@ -215,12 +216,12 @@ namespace Alternet.UI
         {
             get
             {
-                return groupBox.Padding;
+                return control.Padding;
             }
 
             set
             {
-                groupBox.Padding = value;
+                control.Padding = value;
                 PerformLayout();
                 Refresh();
             }
@@ -233,12 +234,12 @@ namespace Alternet.UI
         {
             get
             {
-                return groupBox.Margin;
+                return control.Margin;
             }
 
             set
             {
-                groupBox.Margin = value;
+                control.Margin = value;
                 PerformLayout();
                 Refresh();
             }
@@ -251,12 +252,12 @@ namespace Alternet.UI
         {
             get
             {
-                return groupBox.HorizontalAlignment;
+                return control.HorizontalAlignment;
             }
 
             set
             {
-                groupBox.HorizontalAlignment = value;
+                control.HorizontalAlignment = value;
             }
         }
 
@@ -283,12 +284,12 @@ namespace Alternet.UI
         {
             get
             {
-                return groupBox.VerticalAlignment;
+                return control.VerticalAlignment;
             }
 
             set
             {
-                groupBox.VerticalAlignment = value;
+                control.VerticalAlignment = value;
             }
         }
 
@@ -542,7 +543,7 @@ namespace Alternet.UI
             set
             {
                 base.BackgroundColor = value;
-                groupBox.BackgroundColor = value;
+                control.BackgroundColor = value;
             }
         }
 
@@ -554,7 +555,7 @@ namespace Alternet.UI
             set
             {
                 base.ForegroundColor = value;
-                groupBox.ForegroundColor = value;
+                control.ForegroundColor = value;
             }
         }
 
