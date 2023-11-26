@@ -20,18 +20,18 @@ namespace Alternet.UI
     [ControlCategory("Panels")]
     public class CardPanelHeader : Control, ITextProperty
     {
-        /// <summary>
+        /*/// <summary>
         /// Gets or sets default border side width.
         /// </summary>
         /// <remarks>
         /// <see cref="DefaultBorderWidth"/> by default is calculated dynamically using this field.
         /// </remarks>
-        public static double DefaultBorderSideWidth = 3;
+        public static double DefaultBorderSideWidth = 3;*/
 
         /// <summary>
         /// Gets or sets default value of the <see cref="BorderPadding"/> property.
         /// </summary>
-        public static Thickness DefaultBorderPadding = DefaultBorderSideWidth;
+        public static Thickness DefaultBorderPadding = 3;
 
         /// <summary>
         /// Gets or sets default value of the <see cref="BorderMargin"/> property.
@@ -48,7 +48,7 @@ namespace Alternet.UI
         /// </summary>
         public static Size DefaultAdditionalSpace = new(30, 30);
 
-        private static Thickness? defaultBorderWidth;
+        /*private static Thickness? defaultBorderWidth;*/
 
         private readonly Collection<CardPanelHeaderItem> tabs = [];
         private readonly StackPanel stackPanel = new()
@@ -56,11 +56,19 @@ namespace Alternet.UI
             Orientation = StackPanelOrientation.Horizontal,
         };
 
-        private readonly Border border = new()
+        /*private readonly Border border = new()
         {
             HorizontalAlignment = HorizontalAlignment.Stretch, // do not change, horizontal line must be on full width
             VerticalAlignment = VerticalAlignment.Top,
             BorderWidth = DefaultBorderWidth,
+            Padding = DefaultBorderPadding,
+            Margin = DefaultBorderMargin,
+        };*/
+
+        private readonly GroupBox groupBox = new()
+        {
+            HorizontalAlignment = HorizontalAlignment.Stretch, // do not change, horizontal line must be on full width
+            VerticalAlignment = VerticalAlignment.Top,
             Padding = DefaultBorderPadding,
             Margin = DefaultBorderMargin,
         };
@@ -83,8 +91,8 @@ namespace Alternet.UI
             tabs.ThrowOnNullAdd = true;
             tabs.ItemInserted += Tabs_ItemInserted;
             tabs.ItemRemoved += Tabs_ItemRemoved;
-            border.Parent = this;
-            stackPanel.Parent = border;
+            groupBox.Parent = this;
+            stackPanel.Parent = groupBox;
         }
 
         /// <summary>
@@ -92,8 +100,8 @@ namespace Alternet.UI
         /// </summary>
         public event EventHandler? TabClick;
 
-        /// <summary>
-        /// Gets or sets default value of the <see cref="BorderWidth"/> property.
+        /*/// <summary>
+        /// Gets or sets default value of the border width.
         /// </summary>
         public static Thickness DefaultBorderWidth
         {
@@ -108,7 +116,7 @@ namespace Alternet.UI
             {
                 defaultBorderWidth = value;
             }
-        }
+        }*/
 
         /// <summary>
         /// Gets or sets default value of the <see cref="TabHasBorder"/>.
@@ -140,11 +148,11 @@ namespace Alternet.UI
         /// </summary>
         public static IReadOnlyFontAndColor? DefaultInactiveTabColors { get; set; }
 
-        /// <summary>
+        /*/// <summary>
         /// Gets <see cref="Border"/> control used as border.
         /// </summary>
         [Browsable(false)]
-        public Border Border => border;
+        public Border Border => border;*/
 
         /// <summary>
         /// Gets or sets text of the first tab.
@@ -184,7 +192,7 @@ namespace Alternet.UI
             }
         }
 
-        /// <inheritdoc cref="Border.BorderWidth"/>
+        /*/// <inheritdoc cref="Border.BorderWidth"/>
         public Thickness BorderWidth
         {
             get
@@ -198,7 +206,7 @@ namespace Alternet.UI
                 PerformLayout();
                 Refresh();
             }
-        }
+        }*/
 
         /// <summary>
         /// Gets or sets border padding.
@@ -207,12 +215,12 @@ namespace Alternet.UI
         {
             get
             {
-                return border.Padding;
+                return groupBox.Padding;
             }
 
             set
             {
-                border.Padding = value;
+                groupBox.Padding = value;
                 PerformLayout();
                 Refresh();
             }
@@ -225,12 +233,12 @@ namespace Alternet.UI
         {
             get
             {
-                return border.Margin;
+                return groupBox.Margin;
             }
 
             set
             {
-                border.Margin = value;
+                groupBox.Margin = value;
                 PerformLayout();
                 Refresh();
             }
@@ -243,12 +251,12 @@ namespace Alternet.UI
         {
             get
             {
-                return border.HorizontalAlignment;
+                return groupBox.HorizontalAlignment;
             }
 
             set
             {
-                border.HorizontalAlignment = value;
+                groupBox.HorizontalAlignment = value;
             }
         }
 
@@ -275,12 +283,12 @@ namespace Alternet.UI
         {
             get
             {
-                return border.VerticalAlignment;
+                return groupBox.VerticalAlignment;
             }
 
             set
             {
-                border.VerticalAlignment = value;
+                groupBox.VerticalAlignment = value;
             }
         }
 
@@ -534,7 +542,7 @@ namespace Alternet.UI
             set
             {
                 base.BackgroundColor = value;
-                border.BackgroundColor = value;
+                groupBox.BackgroundColor = value;
             }
         }
 
@@ -546,7 +554,7 @@ namespace Alternet.UI
             set
             {
                 base.ForegroundColor = value;
-                border.BorderColor = value;
+                groupBox.ForegroundColor = value;
             }
         }
 
