@@ -4250,7 +4250,7 @@ namespace Alternet.UI
         {
             if (string.IsNullOrEmpty(name))
                 return null;
-            var result = NativeControl.GetProperty(name);
+            var result = NativeControl.GetProperty(name!);
             return PtrToItem(result);
         }
 
@@ -4263,7 +4263,7 @@ namespace Alternet.UI
         {
             if (string.IsNullOrEmpty(label))
                 return null;
-            var result = NativeControl.GetPropertyByLabel(label);
+            var result = NativeControl.GetPropertyByLabel(label!);
             return PtrToItem(result);
         }
 
@@ -4276,7 +4276,7 @@ namespace Alternet.UI
         {
             if (string.IsNullOrEmpty(name))
                 return null;
-            var result = NativeControl.GetPropertyByName(name);
+            var result = NativeControl.GetPropertyByName(name!);
             return PtrToItem(result);
         }
 
@@ -4291,7 +4291,7 @@ namespace Alternet.UI
         {
             if (string.IsNullOrEmpty(name) || string.IsNullOrEmpty(subname))
                 return null;
-            var result = NativeControl.GetPropertyByNameAndSubName(name, subname);
+            var result = NativeControl.GetPropertyByNameAndSubName(name!, subname!);
             return PtrToItem(result);
         }
 
