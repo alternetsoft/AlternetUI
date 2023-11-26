@@ -284,6 +284,17 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Adds enum values to <see cref="Items"/> property of the control.
+        /// </summary>
+        /// <typeparam name="T">Type of the enum which values are added.</typeparam>
+        /// <param name="selectValue">New <see cref="SelectedItem"/> value.</param>
+        public virtual void AddEnumValues<T>(T selectValue)
+            where T : Enum
+        {
+            AddEnumValues(typeof(T), selectValue);
+        }
+
+        /// <summary>
         /// Removed all items from the control.
         /// </summary>
         public virtual void RemoveAll()
