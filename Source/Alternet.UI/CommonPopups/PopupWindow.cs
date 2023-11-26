@@ -36,6 +36,11 @@ namespace Alternet.UI
             Deactivated += Popup_Deactivated;
             KeyDown += PopupWindow_KeyDown;
             MainControl.Required();
+            Disposed += PopupWindow_Disposed;
+        }
+
+        private void PopupWindow_Disposed(object? sender, EventArgs e)
+        {
         }
 
         /// <summary>
@@ -246,6 +251,13 @@ namespace Alternet.UI
                 e.Handled = true;
                 HidePopup(ModalResult.Accepted);
             }
+        }
+
+        /// <inheritdoc/>
+        protected override void OnClosing(WindowClosingEventArgs e)
+        {
+            e.Cancel = true;
+            HidePopup(ModalResult.Canceled);
         }
 
         /// <summary>
