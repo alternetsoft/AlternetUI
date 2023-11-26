@@ -48,7 +48,8 @@ namespace NativeApi.Api
         //(but doing this can result in native version not being used).
         // Optionally specify a show delay.
         public static void RichToolTipSetTimeout(IntPtr handle, uint milliseconds,
-            uint millisecondsShowdelay = 0) { }
+            uint millisecondsShowdelay = 0)
+        { }
 
         // Choose the tip kind, possibly none. By default the tip is positioned
         // automatically, as if wxTipKind_Auto was used.
@@ -56,7 +57,7 @@ namespace NativeApi.Api
 
         // Set the title text font. By default it's emphasized using the font style
         // or colour appropriate for the current platform.
-        public static void RichToolTipSetTitleFont(IntPtr handle, Font? font) {}
+        public static void RichToolTipSetTitleFont(IntPtr handle, Font? font) { }
 
         // Show the tooltip for the given window and optionally a specified area.
         public static void RichToolTipShowFor(IntPtr handle, IntPtr window, Int32Rect rect) { }
@@ -234,7 +235,7 @@ namespace NativeApi.Api
         public static bool IsBusyCursor() => default;
 
         public static void BeginBusyCursor() { }
-        
+
         public static void EndBusyCursor() { }
 
         // Ring the system bell.
@@ -248,5 +249,197 @@ namespace NativeApi.Api
         public static long GetNumberFromUser(string message, string prompt, string caption,
             long value, long min, long max, IntPtr parent, Int32Point pos) => default;
         // ===================
+
+        public static int RendererDrawHeaderButton(IntPtr renderer, IntPtr win,
+            IntPtr dc,
+            Int32Rect rect,
+            int flags /*= 0*/,
+            int sortArrow /*= wxHDR_SORT_ICON_NONE*/,
+            IntPtr headerButtonParams /*= NULL*/) => default;
+
+        // Draw the contents of a header control button (label, sort arrows, etc.)
+        // Normally only called by DrawHeaderButton.
+        public static int RendererDrawHeaderButtonContents(IntPtr renderer, IntPtr win,
+            IntPtr dc,
+            Int32Rect rect,
+            int flags /*= 0*/,
+            int sortArrow /*= wxHDR_SORT_ICON_NONE*/,
+            IntPtr headerButtonParams /*= NULL*/) => default;
+
+        // Returns the default height of a header button, either a fixed platform
+        // height if available, or a generic height based on the window's font.
+        public static int RendererGetHeaderButtonHeight(IntPtr renderer, IntPtr win) => default;
+
+        // Returns the margin on left and right sides of header button's label
+        public static int RendererGetHeaderButtonMargin(IntPtr renderer, IntPtr win) => default;
+
+        // draw the expanded/collapsed icon for a tree control item
+        public static void RendererDrawTreeItemButton(IntPtr renderer, IntPtr win, IntPtr dc, Int32Rect rect, int flags = 0) { }
+
+        // draw the border for sash window: this border must be such that the sash
+        // drawn by DrawSash() blends into it well
+        public static void RendererDrawSplitterBorder(IntPtr renderer, IntPtr win, IntPtr dc, Int32Rect rect, int flags = 0) { }
+
+        // draw a (vertical) sash
+        public static void DrawSplitterSash(IntPtr renderer, IntPtr win,
+            IntPtr dcReal,
+            Int32Size sizeReal,
+            int position,
+            int orientation,
+            int flags = 0)
+        {
+        }
+
+        // draw a combobox dropdown button
+        // flags may use wxCONTROL_PRESSED and wxCONTROL_CURRENT
+        public static void RendererDrawComboBoxDropButton(IntPtr renderer, IntPtr win,
+            IntPtr dc,
+            Int32Rect rect,
+            int flags = 0)
+        {
+        }
+
+        // draw a dropdown arrow
+        // flags may use wxCONTROL_PRESSED and wxCONTROL_CURRENT
+        public static void RendererDrawDropArrow(IntPtr renderer, IntPtr win,
+            IntPtr dc,
+                Int32Rect rect,
+            int flags = 0)
+        {
+        }
+
+        // draw check button
+        // flags may use wxCONTROL_CHECKED, wxCONTROL_UNDETERMINED and wxCONTROL_CURRENT
+        public static void RendererDrawCheckBox(IntPtr renderer, IntPtr win,
+            IntPtr dc,
+                Int32Rect rect,
+            int flags = 0)
+        {
+        }
+
+        // draw check mark
+        // flags may use wxCONTROL_DISABLED
+        public static void RendererDrawCheckMark(IntPtr renderer, IntPtr win,
+            IntPtr dc,
+                Int32Rect rect,
+            int flags = 0)
+        {
+        }
+
+        // Returns the default size of a check box.
+        public static Int32Size RendererGetCheckBoxSize(IntPtr renderer, IntPtr win, int flags = 0) => default;
+
+        // Returns the default size of a check mark.
+        public static Int32Size RendererGetCheckMarkSize(IntPtr renderer, IntPtr win) => default;
+
+        // Returns the default size of a expander.
+        public static Int32Size RendererGetExpanderSize(IntPtr renderer, IntPtr win) => default;
+
+        // draw blank button
+        //
+        // flags may use wxCONTROL_PRESSED, wxCONTROL_CURRENT and wxCONTROL_ISDEFAULT
+        public static void RendererDrawPushButton(IntPtr renderer, IntPtr win,
+            IntPtr dc,
+            Int32Rect rect,
+            int flags = 0)
+        {
+        }
+
+        // draw collapse button
+        //
+        // flags may use wxCONTROL_CHECKED, wxCONTROL_UNDETERMINED and wxCONTROL_CURRENT
+        public static void RendererDrawCollapseButton(IntPtr renderer, IntPtr win,
+            IntPtr dc,
+                Int32Rect rect,
+            int flags = 0)
+        {
+        }
+
+        // Returns the default size of a collapse button
+        public static Int32Size RendererGetCollapseButtonSize(IntPtr renderer, IntPtr win, IntPtr dc) => default;
+
+        // draw rectangle indicating that an item in e.g. a list control
+        // has been selected or focused
+        //
+        // flags may use
+        // wxCONTROL_SELECTED (item is selected, e.g. draw background)
+        // wxCONTROL_CURRENT (item is the current item, e.g. dotted border)
+        // wxCONTROL_FOCUSED (the whole control has focus, e.g. blue background vs. grey otherwise)
+        public static void RendererDrawItemSelectionRect(IntPtr renderer, IntPtr win,
+            IntPtr dc,
+                Int32Rect rect,
+            int flags = 0)
+        {
+        }
+
+        // draw the focus rectangle around the label contained in the given rect
+        //
+        // only wxCONTROL_SELECTED makes sense in flags here
+        public static void RendererDrawFocusRect(IntPtr renderer, IntPtr win,
+            IntPtr dc,
+                Int32Rect rect,
+            int flags = 0)
+        {
+        }
+
+        // Draw a native wxChoice
+        public static void RendererDrawChoice(IntPtr renderer, IntPtr win,
+            IntPtr dc,
+                Int32Rect rect,
+            int flags = 0)
+        {
+        }
+
+        // Draw a native wxComboBox
+        public static void RendererDrawComboBox(IntPtr renderer, IntPtr win,
+            IntPtr dc,
+                Int32Rect rect,
+            int flags = 0)
+        {
+        }
+
+        // Draw a native wxTextCtrl frame
+        public static void RendererDrawTextCtrl(IntPtr renderer, IntPtr win,
+            IntPtr dc,
+                Int32Rect rect,
+            int flags = 0)
+        {
+        }
+
+        // Draw a native wxRadioButton bitmap
+        public static void RendererDrawRadioBitmap(IntPtr renderer, IntPtr win,
+            IntPtr dc,
+                Int32Rect rect,
+            int flags = 0)
+        {
+        }
+
+        // Draw a gauge with native style like a wxGauge would display.
+        // wxCONTROL_SPECIAL flag must be used for drawing vertical gauges.
+        public static void RendererDrawGauge(IntPtr renderer, IntPtr win,
+            IntPtr dc,
+                Int32Rect rect,
+            int value,
+            int max,
+            int flags = 0)
+        {
+        }
+
+        // Draw text using the appropriate color for normal and selected states.
+        public static void RendererDrawItemText(IntPtr renderer, IntPtr win,
+            IntPtr dc,
+            string text,
+            Int32Rect rect,
+            int align /*= wxALIGN_LEFT | wxALIGN_TOP*/,
+            int flags /*= 0*/,
+            int ellipsizeMode /*= wxELLIPSIZE_END*/)
+        { }
+
+        public static string RendererGetVersion(IntPtr renderer) => default;
     }
 }
+
+/*
+
+ 
+ */
