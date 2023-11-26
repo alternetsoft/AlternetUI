@@ -1,5 +1,27 @@
 # 0.9.409 (work in progress)
 
+## 2023 November 26
+
+- Added PopupPropertyGrid popup window.
+- SplitterPanel: Now is possible to set min sash size.
+- PropertyGrid: GetPropertyParent, GetFirstChild, GetPropertyCategory, GetFirst, GetProperty, GetPropertyByLabel,
+ GetPropertyByName, GetPropertyByNameAndSubName, GetSelection.
+- Bitmap.Clone, Image: GetDrawingContext, Clone.
+- Control: Borders, StateObjects, SetImage, SetBackground, DrawDefaultBackground, BehaviorOptions, CurrentStateOverride.
+- Control: AfterShow event, AfterHide event, SetBounds(Rect, SetBoundsFlags).
+- Border and PictureBox: improved painting.
+- New PlatformDefaults settings: AllowButtonHasBorder, AllowButtonBackground, AllowButtonForeground.
+ This is related to bad look of customized buttons on MacOs and Linux.
+- ControlSet.Enabled, CardPanelHeader.DefaultTabMargin, Application.LogNameValueIf, ListControl.AddEnumValues<T>(T selectValue).
+- Improved animation page in ControlsSample (thanks to @neoxeo).
+- Improved different samples.
+- WindowPropertiesSample: Add 'Properties...' button.
+- Control.RowIndex and Control.ColumnIndex used in Grid.
+- Set Button.MinMargin = 3 on Linux.
+- CardPanelHeader now uses GroupBox as border.
+- Designer.MouseLeftButton is called when mouse button is clicked.
+- Optimized OS detection and defaults.
+
 ## 2023 November 24
 
 - Control: CurrentState prop and CurrentStateChanged event.
