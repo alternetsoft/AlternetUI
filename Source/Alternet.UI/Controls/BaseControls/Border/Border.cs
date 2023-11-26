@@ -87,6 +87,7 @@ namespace Alternet.UI
                     return;
                 Normal.SetWidth(value);
                 UpdatePadding();
+                PerformLayout();
                 Refresh();
             }
         }
