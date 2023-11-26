@@ -965,7 +965,7 @@ namespace Alternet.UI
         {
             // Under MacOs url parameter of the event data is always empty,
             // so event is not fired. Also on MacOs url is opened automatically.
-            if (Application.IsMacOs)
+            if (Application.IsMacOS)
                 return;
             TextUrl?.Invoke(this, e);
             if (e.Cancel)
