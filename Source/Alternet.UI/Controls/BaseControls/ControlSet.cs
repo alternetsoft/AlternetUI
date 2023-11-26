@@ -171,11 +171,22 @@ namespace Alternet.UI
         /// <summary>
         /// Sets <see cref="Control.Visible"/> property for all the controls in the set.
         /// </summary>
-        /// <param name="value">New visible property setting.</param>
+        /// <param name="value">New property value.</param>
         public ControlSet Visible(bool value)
         {
             foreach (var item in items)
                 item.Visible = value;
+            return this;
+        }
+
+        /// <summary>
+        /// Sets <see cref="Control.Enabled"/> property for all the controls in the set.
+        /// </summary>
+        /// <param name="value">New property value.</param>
+        public ControlSet Enabled(bool value)
+        {
+            foreach (var item in items)
+                item.Enabled = value;
             return this;
         }
 
