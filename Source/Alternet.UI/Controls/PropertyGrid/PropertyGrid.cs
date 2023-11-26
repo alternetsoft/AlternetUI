@@ -2742,8 +2742,10 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="prop">Property item to collapse.</param>
         /// <returns><c>true</c> if operation was successful, <c>false</c> otherwise.</returns>
-        public virtual bool Collapse(IPropertyGridItem prop)
+        public virtual bool Collapse(IPropertyGridItem? prop)
         {
+            if (prop is null)
+                return false;
             return NativeControl.Collapse(prop.Handle);
         }
 
@@ -2751,8 +2753,10 @@ namespace Alternet.UI
         /// Removes property from the <see cref="PropertyGrid"/>.
         /// </summary>
         /// <param name="prop">Property item to remove.</param>
-        public virtual void RemoveProperty(IPropertyGridItem prop)
+        public virtual void RemoveProperty(IPropertyGridItem? prop)
         {
+            if (prop is null)
+                return;
             NativeControl.RemoveProperty(prop.Handle);
             items.Remove(prop.Handle);
         }
@@ -2773,8 +2777,10 @@ namespace Alternet.UI
         /// <param name="prop">Property item.</param>
         /// <param name="enable">New enabled state value.</param>
         /// <returns><c>true</c> if operation was successful, <c>false</c> otherwise.</returns>
-        public virtual bool EnableProperty(IPropertyGridItem prop, bool enable = true)
+        public virtual bool EnableProperty(IPropertyGridItem? prop, bool enable = true)
         {
+            if (prop is null)
+                return false;
             return NativeControl.EnableProperty(prop.Handle, enable);
         }
 
@@ -2783,8 +2789,10 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="prop">Property item to expand.</param>
         /// <returns><c>true</c> if operation was successful, <c>false</c> otherwise.</returns>
-        public virtual bool Expand(IPropertyGridItem prop)
+        public virtual bool Expand(IPropertyGridItem? prop)
         {
+            if (prop is null)
+                return false;
             return NativeControl.Expand(prop.Handle);
         }
 
@@ -4187,6 +4195,117 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets parent of the property item.
+        /// </summary>
+        /// <param name="prop">Property item.</param>
+        public IPropertyGridItem? GetPropertyParent(IPropertyGridItem? prop)
+        {
+            if (prop is null)
+                return null;
+            var result = NativeControl.GetPropertyParent(prop.Handle);
+            return PtrToItem(result);
+        }
+
+        /// <summary>
+        /// Gets first child of the property item.
+        /// </summary>
+        /// <param name="prop">Property item.</param>
+        public IPropertyGridItem? GetFirstChild(IPropertyGridItem? prop)
+        {
+            if (prop is null)
+                return null;
+            var result = NativeControl.GetFirstChild(prop.Handle);
+            return PtrToItem(result);
+        }
+
+        /// <summary>
+        /// Gets category of the property item.
+        /// </summary>
+        /// <param name="prop">Property item.</param>
+        public IPropertyGridItem? GetPropertyCategory(IPropertyGridItem? prop)
+        {
+            if (prop is null)
+                return null;
+            var result = NativeControl.GetPropertyCategory(prop.Handle);
+            return PtrToItem(result);
+        }
+
+        /// <summary>
+        /// Gets first property item which satisfies search criteria specified by
+        /// <paramref name="flags"/>.
+        /// </summary>
+        /// <param name="flags">Filter flags.</param>
+        public IPropertyGridItem? GetFirst(PropertyGridIteratorFlags flags)
+        {
+            var result = NativeControl.GetFirst((int)flags);
+            return PtrToItem(result);
+        }
+
+        /// <summary>
+        /// Gets property item with the specified <paramref name="name"/>.
+        /// </summary>
+        /// <param name="name">Name of the property item.</param>
+        /// <returns></returns>
+        public IPropertyGridItem? GetProperty(string? name)
+        {
+            if (string.IsNullOrEmpty(name))
+                return null;
+            var result = NativeControl.GetProperty(name);
+            return PtrToItem(result);
+        }
+
+        /// <summary>
+        /// Gets property item with the specified <paramref name="label"/>.
+        /// </summary>
+        /// <param name="label">label of the property item.</param>
+        /// <returns></returns>
+        public IPropertyGridItem? GetPropertyByLabel(string? label)
+        {
+            if (string.IsNullOrEmpty(label))
+                return null;
+            var result = NativeControl.GetPropertyByLabel(label);
+            return PtrToItem(result);
+        }
+
+        /// <summary>
+        /// Gets property item with the specified <paramref name="name"/>.
+        /// </summary>
+        /// <param name="name">Name of the property item.</param>
+        /// <returns></returns>
+        public IPropertyGridItem? GetPropertyByName(string? name)
+        {
+            if (string.IsNullOrEmpty(name))
+                return null;
+            var result = NativeControl.GetPropertyByName(name);
+            return PtrToItem(result);
+        }
+
+        /// <summary>
+        /// Gets property item with the specified <paramref name="name"/>
+        /// and <paramref name="subname"/>.
+        /// </summary>
+        /// <param name="name">Name of the property item.</param>
+        /// <param name="subname">Subname of the property item.</param>
+        /// <returns></returns>
+        public IPropertyGridItem? GetPropertyByNameAndSubName(string? name, string? subname)
+        {
+            if (string.IsNullOrEmpty(name) || string.IsNullOrEmpty(subname))
+                return null;
+            var result = NativeControl.GetPropertyByNameAndSubName(name, subname);
+            return PtrToItem(result);
+        }
+
+        /// <summary>
+        /// Gets selected property item.
+        /// </summary>
+        /// <returns></returns>
+        public IPropertyGridItem? GetSelection()
+        {
+            var result = NativeControl.GetSelection();
+            return PtrToItem(result);
+        }
+
+        /// <summary>
         /// Executes specified action for all property items in <paramref name="props"/> collection.
         /// </summary>
         /// <typeparam name="T">Type of the action parameter.</typeparam>
@@ -4432,60 +4551,6 @@ namespace Alternet.UI
         internal void SetPropertyEditor(IPropertyGridItem prop, IntPtr editor)
         {
             NativeControl.SetPropertyEditor(prop.Handle, editor);
-        }
-
-        internal IPropertyGridItem? GetPropertyParent(IPropertyGridItem prop)
-        {
-            var result = NativeControl.GetPropertyParent(prop.Handle);
-            return PtrToItem(result);
-        }
-
-        internal IPropertyGridItem? GetFirstChild(IPropertyGridItem prop)
-        {
-            var result = NativeControl.GetFirstChild(prop.Handle);
-            return PtrToItem(result);
-        }
-
-        internal IPropertyGridItem? GetPropertyCategory(IPropertyGridItem prop)
-        {
-            var result = NativeControl.GetPropertyCategory(prop.Handle);
-            return PtrToItem(result);
-        }
-
-        internal IPropertyGridItem? GetFirst(PropertyGridIteratorFlags flags)
-        {
-            var result = NativeControl.GetFirst((int)flags);
-            return PtrToItem(result);
-        }
-
-        internal IPropertyGridItem? GetProperty(string name)
-        {
-            var result = NativeControl.GetProperty(name);
-            return PtrToItem(result);
-        }
-
-        internal IPropertyGridItem? GetPropertyByLabel(string label)
-        {
-            var result = NativeControl.GetPropertyByLabel(label);
-            return PtrToItem(result);
-        }
-
-        internal IPropertyGridItem? GetPropertyByName(string name)
-        {
-            var result = NativeControl.GetPropertyByName(name);
-            return PtrToItem(result);
-        }
-
-        internal IPropertyGridItem? GetPropertyByNameAndSubName(string name, string subname)
-        {
-            var result = NativeControl.GetPropertyByNameAndSubName(name, subname);
-            return PtrToItem(result);
-        }
-
-        internal IPropertyGridItem? GetSelection()
-        {
-            var result = NativeControl.GetSelection();
-            return PtrToItem(result);
         }
 
         internal void DeleteProperty(IPropertyGridItem prop)
