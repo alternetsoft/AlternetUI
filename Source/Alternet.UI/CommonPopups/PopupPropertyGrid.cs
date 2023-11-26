@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Alternet.UI.Localization;
 
 namespace Alternet.UI
 {
@@ -20,6 +21,41 @@ namespace Alternet.UI
         {
             get => (PropertyGrid)base.MainControl;
             set => base.MainControl = value;
+        }
+
+        /// <summary>
+        /// Creates properties popup window. 
+        /// </summary>
+        /// <remarks>
+        /// In order to use properties popup window you can call <see cref="PropertyGrid.SetProps"/>
+        /// for the <see cref="PopupPropertyGrid.MainControl"/> and show the popup with call
+        /// to <see cref="PopupWindow.ShowPopup(Control)"/>. Thats it!
+        /// </remarks>
+        /// <returns></returns>
+        public static PopupPropertyGrid CreatePropertiesPopup()
+        {
+            PopupPropertyGrid popupWindowProps = new()
+            {
+                HasTitleBar = true,
+                CloseEnabled = true,
+                IsToolWindow = true,
+                Title = CommonStrings.Default.WindowTitleProperties,
+                HideOnEnter = false,
+                HideOnClick = false,
+                HideOnDoubleClick = false,
+                HideOnDeactivate = false
+            };
+            popupWindowProps.MainControl.ApplyFlags |= PropertyGridApplyFlags.PropInfoSetValue
+                | PropertyGridApplyFlags.ReloadAllAfterSetValue;
+            popupWindowProps.AfterHide += PopupWindowProps_AfterHide;
+            popupWindowProps.MainControl.SuggestedSize = (400, 300);
+            popupWindowProps.SetSizeToContent();
+            return popupWindowProps;
+
+            static void PopupWindowProps_AfterHide(object? sender, EventArgs e)
+            {
+                (sender as PopupPropertyGrid)?.MainControl.Clear();
+            }
         }
 
         /// <inheritdoc/>
