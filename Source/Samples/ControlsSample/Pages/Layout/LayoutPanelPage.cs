@@ -22,7 +22,7 @@ namespace ControlsSample
 
         public void Initialize()
         {
-            Control Create(params string[] items)
+            static Control Create(params string[] items)
             {
                 ListBox listBox = new()
                 {
@@ -41,7 +41,6 @@ namespace ControlsSample
             var control3 = Create("Control 3", "Dock = Top");
             var control4 = Create("Control 4", "Dock = Bottom");
             var control5 = Create("Control 5", "Dock = Fill");
-            var control6 = Create("Control 6", "Dock = None");
             LayoutPanel layoutPanel = new();
 
             LayoutPanel.SetDock(control1, DockStyle.Right);

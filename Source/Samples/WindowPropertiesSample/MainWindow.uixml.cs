@@ -10,8 +10,8 @@ namespace WindowPropertiesSample
         private readonly CardPanelHeader panelHeader = new();
         private readonly PopupPropertyGrid popupSetBounds = new();
         private readonly PopupPropertyGrid popupWindowProps;
+        private readonly SetBoundsProperties setBoundsProperties;
         private TestWindow? testWindow;
-        private SetBoundsProperties setBoundsProperties;
 
         public MainWindow()
         {
@@ -58,7 +58,7 @@ namespace WindowPropertiesSample
         {
             if (testWindow is null)
                 return;
-            popupWindowProps.MainControl.SetProps(testWindow);
+            popupWindowProps.MainControl.SetProps(testWindow, true);
             popupWindowProps.ShowPopup(propertiesButton);
         }
 
@@ -409,13 +409,11 @@ namespace WindowPropertiesSample
                 (WindowSizeToContentMode)sizeToContentModeComboBox.SelectedItem!);
         }
 
-        public class SetBoundsProperties
+        public class SetBoundsProperties : BaseChildObject<MainWindow>
         {
-            private MainWindow owner;
-
             public SetBoundsProperties(MainWindow owner)
+                : base(owner)
             {
-                this.owner = owner;
             }
 
             public double X
