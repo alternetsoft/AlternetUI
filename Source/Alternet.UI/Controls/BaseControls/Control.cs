@@ -1344,12 +1344,14 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets column index which is used in <see cref="GetColumnGroup"/>.
+        /// Gets or sets column index which is used in <see cref="GetColumnGroup"/> and
+        /// by the <see cref="Grid"/> control.
         /// </summary>
         public int? ColumnIndex { get; set; }
 
         /// <summary>
-        /// Gets or sets row index which is used in <see cref="GetRowGroup"/>.
+        /// Gets or sets row index which is used in <see cref="GetRowGroup"/> and
+        /// by the <see cref="Grid"/> control.
         /// </summary>
         public int? RowIndex { get; set; }
 

@@ -64,7 +64,7 @@ namespace Alternet.UI
 
             if (value < 0)
                 throw new ArgumentOutOfRangeException(nameof(value));
-            control.ExtendedProps.GridColumn = value;
+            control.ColumnIndex = value;
             OnCellAttachedPropertyChanged(control);
         }
 
@@ -91,10 +91,10 @@ namespace Alternet.UI
         {
             if (control is null)
                 throw new ArgumentNullException(nameof(control));
-            if (control.HasExtendedProps)
-                return control.ExtendedProps.GridColumn;
-            else
+            if (control.ColumnIndex is null)
                 return 0;
+            else
+                return control.ColumnIndex.Value;
         }
 
         /// <summary>
@@ -110,7 +110,7 @@ namespace Alternet.UI
 
             if (value < 0)
                 throw new ArgumentOutOfRangeException(nameof(value));
-            control.ExtendedProps.GridRow = value;
+            control.RowIndex = value;
             OnCellAttachedPropertyChanged(control);
         }
 
@@ -123,11 +123,10 @@ namespace Alternet.UI
         {
             if (control is null)
                 throw new ArgumentNullException(nameof(control));
-            if (control.HasExtendedProps)
-                return control.ExtendedProps.GridRow;
-            else
+            if (control.RowIndex is null)
                 return 0;
-
+            else
+                return control.RowIndex.Value;
         }
 
         /// <summary>
