@@ -110,10 +110,10 @@ namespace Alternet.UI.Localization
         /// <inheritdoc cref="ButtonOk"/>
         public string WindowTitleInput { get; set; } = "Input";
 
+        /// <inheritdoc cref="ButtonOk"/>
+        public string WindowTitleProperties { get; set; } = "Properties";
         // ========================
 
-        /// <inheritdoc cref="ButtonOk"/>
-        public string NotebookTabTitleProperties { get; set; } = "Properties";
 
         /// <inheritdoc cref="ButtonOk"/>
         public string NotebookTabTitleBrowser { get; set; } = "Browser";
