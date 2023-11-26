@@ -544,6 +544,19 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Logs name and value pair as "{name} = {value}" if <paramref name="condition"/>
+        /// is <c>true</c>.
+        /// </summary>
+        /// <param name="name">Name.</param>
+        /// <param name="value">Value.</param>
+        /// <param name="condition">Log if <c>true</c>.</param>
+        public static void LogNameValueIf(string name, object? value, bool condition)
+        {
+            if (condition)
+                LogNameValue(name, value);
+        }
+
+        /// <summary>
         /// Calls <see cref="LogMessage"/> event.
         /// </summary>
         /// <param name="obj">Message text or object to log.</param>
