@@ -123,6 +123,8 @@ namespace NativeApi.Api
         public void SendMouseDownEvent(int x, int y) { }
         public void SendMouseUpEvent(int x, int y) { }
 
+        public void SetBoundsEx(Rect rect, int flags) { }
+
         public IntPtr GetContainingSizer() => default;
         public IntPtr GetSizer() => default;
         public void SetSizer(IntPtr sizer, bool deleteOld) { }

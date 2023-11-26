@@ -128,6 +128,16 @@ namespace Alternet.UI
         public event EventHandler? VisibleChanged;
 
         /// <summary>
+        /// Occurs after control was shown.
+        /// </summary>
+        public event EventHandler? AfterShow;
+
+        /// <summary>
+        /// Occurs after control was hidden.
+        /// </summary>
+        public event EventHandler? AfterHide;
+
+        /// <summary>
         /// Occurs when the control loses mouse capture.
         /// </summary>
         /// <remarks>
@@ -639,6 +649,10 @@ namespace Alternet.UI
                 visible = value;
                 OnVisibleChanged(EventArgs.Empty);
                 VisibleChanged?.Invoke(this, EventArgs.Empty);
+                if(visible)
+                    AfterShow?.Invoke(this, EventArgs.Empty);
+                else
+                    AfterHide?.Invoke(this, EventArgs.Empty);
             }
         }
 

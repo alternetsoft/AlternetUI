@@ -177,6 +177,7 @@ void SaveScreenshot(const string& fileName);
 void SendSizeEvent();
 void SendMouseDownEvent(int x, int y);
 void SendMouseUpEvent(int x, int y);
+void SetBoundsEx(const Rect& rect, int flags);
 void* GetContainingSizer();
 void* GetSizer();
 void SetSizer(void* sizer, bool deleteOld);

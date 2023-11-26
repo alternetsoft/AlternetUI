@@ -516,6 +516,11 @@ ALTERNET_UI_API void Control_SendMouseUpEvent_(Control* obj, int x, int y)
     obj->SendMouseUpEvent(x, y);
 }
 
+ALTERNET_UI_API void Control_SetBoundsEx_(Control* obj, Rect rect, int flags)
+{
+    obj->SetBoundsEx(rect, flags);
+}
+
 ALTERNET_UI_API void* Control_GetContainingSizer_(Control* obj)
 {
     return obj->GetContainingSizer();
