@@ -7,32 +7,66 @@ namespace WindowPropertiesSample
     public partial class MainWindow : Window
     {
         private readonly CardPanelHeader panelHeader = new();
+
+        private readonly PopupPropertyGrid popupPropertyGrid = new()
+        {
+        };
+
+        private readonly SetBoundsProperties setBoundsProperties;
         private TestWindow? testWindow;
-
-        private int lastEventNumber = 1;
-
+        
         public MainWindow()
         {
-            Icon = ImageSet.FromUrlOrNull(
-                "embres:WindowPropertiesSample.Sample.ico");
+            setBoundsProperties = new();
+            Icon = ImageSet.FromUrlOrNull("embres:WindowPropertiesSample.Sample.ico");
 
             InitializeComponent();
 
-            stateComboBox.AddEnumValues(typeof(WindowState));
-            startLocationComboBox.AddEnumValues(typeof(WindowStartLocation),
-                WindowStartLocation.Default);
-            sizeToContentModeComboBox.AddEnumValues(typeof(WindowSizeToContentMode),
-                WindowSizeToContentMode.WidthAndHeight);
+            stateComboBox.AddEnumValues<WindowState>();
+            startLocationComboBox.AddEnumValues(WindowStartLocation.Default);
+            sizeToContentModeComboBox.AddEnumValues(WindowSizeToContentMode.WidthAndHeight);
             UpdateControls();
 
             panelHeader.Add("Actions", actionsPanel);
             panelHeader.Add("Settings", settingsPanel);
             panelHeader.Add("Bounds", boundsPanel);
-            pageControl.Children.Insert(0, panelHeader);
-            panelHeader.SelectedTab = panelHeader.Tabs[0];
+            pageControl.Children.Prepend(panelHeader);
+            panelHeader.SelectFirstTab();
 
             eventsListBox.BindApplicationLog();
             eventsListBox.ContextMenu.Required();
+
+            popupPropertyGrid.AfterHide += PopupPropertyGrid_AfterHide;
+            popupPropertyGrid.MainControl.ApplyFlags |= PropertyGridApplyFlags.PropInfoSetValue;
+            popupPropertyGrid.HideOnEnter = true;
+            popupPropertyGrid.HideOnClick = false;
+            popupPropertyGrid.HideOnDoubleClick = false;
+        }
+
+        private void PopupPropertyGrid_AfterHide(object? sender, EventArgs e)
+        {
+            /*
+            if (popupPropertyGrid.PopupResult != ModalResult.Accepted)
+                return;
+            */
+            var rect = (setBoundsProperties.X, setBoundsProperties.Y, setBoundsProperties.Width, setBoundsProperties.Height);
+            testWindow?.SetBounds(rect, setBoundsProperties.Flags);
+        }
+
+        private void SetBoundsExButton_Click(object? sender, EventArgs e)
+        {
+            if (testWindow is null)
+                return;
+            setBoundsProperties.X = testWindow.Location.X;
+            setBoundsProperties.Y = testWindow.Location.Y;
+            setBoundsProperties.Width = testWindow.Size.Width;
+            setBoundsProperties.Height = testWindow.Size.Height;
+            popupPropertyGrid.MainControl.SuggestedSize = (400, 300);
+            popupPropertyGrid.SetSizeToContent();
+            popupPropertyGrid.MainControl.SetProps(setBoundsProperties);
+            var flagsItem = popupPropertyGrid.MainControl.GetProperty("Flags");
+            popupPropertyGrid.MainControl.Expand(flagsItem);
+            popupPropertyGrid.ShowPopup(setBoundsExButton);
         }
 
         private void CreateAndShowWindowButton_Click(object sender, EventArgs e)
@@ -57,7 +91,7 @@ namespace WindowPropertiesSample
 
             testWindow.ShowModal();
 
-            LogEvent("ModalResult: " + testWindow.ModalResult);
+            Application.Log("ModalResult: " + testWindow.ModalResult);
             testWindow.Dispose();
             OnWindowClosed();
         }
@@ -99,17 +133,19 @@ namespace WindowPropertiesSample
 
         private void TestWindow_LocationChanged(object? sender, EventArgs e)
         {
-            LogEvent("LocationChanged. Bounds: "+testWindow?.Bounds.ToString());
+            var s = "LocationChanged. Bounds: ";
+            Application.LogReplace(s+testWindow?.Bounds.ToString(),s);
         }
 
         private void TestWindow_SizeChanged(object? sender, EventArgs e)
         {
-            LogEvent("SizeChanged. Bounds: "+testWindow?.Bounds.ToString());
+            var s = "SizeChanged. Bounds: ";
+            Application.LogReplace(s+testWindow?.Bounds.ToString(), s);
         }
 
         private void TestWindow_StateChanged(object? sender, EventArgs e)
         {
-            LogEvent("StateChanged"); 
+            Application.Log("StateChanged"); 
             UpdateWindowState();
         }
 
@@ -131,23 +167,14 @@ namespace WindowPropertiesSample
 
         private void TestWindow_Deactivated(object? sender, EventArgs e)
         {
-            LogEvent("Deactivated");
+            Application.Log("Deactivated");
             UpdateActiveWindowInfoLabel();
         }
 
         private void TestWindow_Activated(object? sender, EventArgs e)
         {
-            LogEvent("Activated");
+            Application.Log("Activated");
             UpdateActiveWindowInfoLabel();
-        }
-
-        private void LogEvent(string message)
-        {
-            if (eventsListBox.IsDisposed)
-                return;
-
-            eventsListBox.Items.Add($"{lastEventNumber++}. {message}");
-            eventsListBox.SelectedIndex = eventsListBox.Items.Count - 1;
         }
 
         private void UpdateControls()
@@ -177,12 +204,14 @@ namespace WindowPropertiesSample
             setIcon2Button.Enabled = haveTestWindow;
             clearIconButton.Enabled = haveTestWindow;
 
+            setBoundsExButton.Enabled = haveTestWindow;
+
             UpdateActiveWindowInfoLabel();
         }
 
         private void TestWindow_Closed(object? sender, WindowClosedEventArgs e)
         {
-            LogEvent("Closed");
+            Application.Log("Closed");
 
             if (testWindow == null)
                 throw new InvalidOperationException();
@@ -214,7 +243,7 @@ namespace WindowPropertiesSample
 
         private void TestWindow_Closing(object? sender, WindowClosingEventArgs e)
         {
-            LogEvent("Closing");
+            Application.Log("Closing");
             e.Cancel = cancelClosingCheckBox.IsChecked;
         }
 
@@ -368,6 +397,19 @@ namespace WindowPropertiesSample
         {
             testWindow?.SetSizeToContent(
                 (WindowSizeToContentMode)sizeToContentModeComboBox.SelectedItem!);
+        }
+
+        public class SetBoundsProperties
+        {
+            public SetBoundsProperties()
+            {
+            }
+
+            public double X { get; set;}
+            public double Y { get; set; }
+            public double Width { get; set; }
+            public double Height { get; set; }
+            public SetBoundsFlags Flags { get; set; }
         }
     }
 }

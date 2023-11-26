@@ -8,11 +8,11 @@
 		Activated="Window_Activated"
 		Deactivated="Window_Deactivated">
 
-  <VerticalStackPanel  Padding="10" VerticalAlignment="Stretch">
-    <VerticalStackPanel Name="pageControl" VerticalAlignment="Top">
+  <VerticalStackPanel  Padding="10" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+    <VerticalStackPanel Name="pageControl" VerticalAlignment="Top" HorizontalAlignment="Stretch">
 
       <!-- ========================= -->
-      <HorizontalStackPanel Name="actionsPanel">
+      <HorizontalStackPanel Name="actionsPanel" HorizontalAlignment="Stretch">
 
         <GroupBox Title="Window" Margin="5">
           <StackPanel Padding="10" >
@@ -29,9 +29,9 @@
             <ComboBox IsEditable="false" Name="startLocationComboBox" Margin="0,0,0,5"/>
           </StackPanel>
         </GroupBox>
-        <GroupBox Title="Activation"
-            Grid.ColumnSpan="2"  Margin="5" SuggestedWidth="200">
-          <StackPanel Padding="10" >
+        <GroupBox Title="Activation" HorizontalAlignment="Stretch"
+            Grid.ColumnSpan="2"  Margin="5">
+          <StackPanel Padding="10" HorizontalAlignment="Stretch" SuggestedWidth="400">
             <Label Text="Active window title:" Margin="0,0,0,3"/>
             <Label Name="activeWindowTitleLabel" Margin="0,0,0,3"/>
             <Label Name="isWindowActiveLabel" Margin="0,0,0,3"/>
@@ -111,12 +111,15 @@
         </GroupBox>
 
         <GroupBox Title="Size to Content"  Margin="5">
-          <StackPanel Padding="10" >
-            <ComboBox IsEditable="false" Name="sizeToContentModeComboBox" Margin="0,0,0,5"/>
-            <Button Name="setSizeToContentButton" Click="SetSizeToContentButton_Click"
-                Text="Size to Content"
-                Margin="0,0,0,0"/>
-          </StackPanel>
+          <VerticalStackPanel Padding="10">
+            <HorizontalStackPanel Margin="0,0,0,10">
+              <ComboBox IsEditable="false" Name="sizeToContentModeComboBox"/>
+              <Button Name="setSizeToContentButton" Click="SetSizeToContentButton_Click"
+                  Text="Size to Content"/>
+            </HorizontalStackPanel>
+            <Button Text="Set Bounds Ex" Click="SetBoundsExButton_Click" Name="setBoundsExButton"
+                    Margin="0,0,0,10"/>
+          </VerticalStackPanel>
         </GroupBox>
 
       </HorizontalStackPanel>
