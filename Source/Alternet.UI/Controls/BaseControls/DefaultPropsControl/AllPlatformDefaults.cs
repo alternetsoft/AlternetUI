@@ -31,6 +31,7 @@ namespace Alternet.UI
 
                 var minCheckBoxMargin = new Thickness(3);
                 platform.Controls.RadioButton.MinMargin = minCheckBoxMargin;
+                platform.Controls.Button.MinMargin = minCheckBoxMargin;
                 platform.Controls.CheckBox.MinMargin = minCheckBoxMargin;
                 platform.AdjustTextBoxesHeight = true;
                 platform.TextBoxUrlClickModifiers = ModifierKeys.Control;
