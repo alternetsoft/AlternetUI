@@ -14,6 +14,11 @@ namespace Alternet.UI
     /// </summary>
     public class PopupWindow : Window
     {
+        /// <summary>
+        /// Gets or sets whether to log popup window bounds.
+        /// </summary>
+        public static bool LogDebugInfo = true;
+
         private static readonly BorderSettings Settings = BorderSettings.Default.Clone();
         private readonly Border border = new();
         private ModalResult popupResult;
@@ -176,11 +181,11 @@ namespace Alternet.UI
         {
             PopupOwner = control;
             var bl = control.ClientRectangle.BottomLeft;
-            Application.LogNameValue("control.ClientRectangle.BottomLeft", bl);
+            Application.LogNameValueIf("control.ClientRectangle.BottomLeft", bl, LogDebugInfo);
             var blScreen = control.ClientToScreen(bl);
-            Application.LogNameValue("control.ClientToScreen", blScreen);
+            Application.LogNameValueIf("control.ClientToScreen", blScreen, LogDebugInfo);
 
-            Application.LogNameValue("ParentWindow:", control.ParentWindow?.Location);
+            Application.LogNameValueIf("ParentWindow:", control.ParentWindow?.Location, LogDebugInfo);
 
             control.BeginInvoke(() =>
             {
@@ -200,7 +205,7 @@ namespace Alternet.UI
             Show();
             FocusChildControl();
 
-            Application.LogNameValue("Popup:", Location);
+            Application.LogNameValueIf("Popup:", Location,LogDebugInfo);
         }
 
         /// <summary>
