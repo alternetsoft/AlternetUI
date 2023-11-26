@@ -164,6 +164,7 @@ namespace Alternet.UI
                     Add(value);
                 else
                     Tabs[0].HeaderButton.Text = value;
+                Refresh();
             }
         }
 
@@ -194,6 +195,8 @@ namespace Alternet.UI
             set
             {
                 border.BorderWidth = value;
+                PerformLayout();
+                Refresh();
             }
         }
 
@@ -210,6 +213,8 @@ namespace Alternet.UI
             set
             {
                 border.Padding = value;
+                PerformLayout();
+                Refresh();
             }
         }
 
@@ -226,6 +231,8 @@ namespace Alternet.UI
             set
             {
                 border.Margin = value;
+                PerformLayout();
+                Refresh();
             }
         }
 
@@ -854,6 +861,7 @@ namespace Alternet.UI
             }
 
             PerformLayout();
+            Refresh();
         }
 
         private void Tabs_ItemRemoved(object? sender, int index, CardPanelHeaderItem item)
