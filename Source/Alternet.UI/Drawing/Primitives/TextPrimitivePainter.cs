@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Alternet.Drawing
 {
-    internal class DrawTextPrimitive : DrawPrimitive
+    internal class TextPrimitivePainter : PrimitivePainter
     {
     }
 }
