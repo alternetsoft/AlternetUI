@@ -25,7 +25,6 @@ namespace ControlsSample
             memoPanel.DefaultRightPaneBestSize = 250;
             memoPanel.DefaultRightPaneMinSize = 250;
 
-            memoPanel.ActionsControl.Required();
             memoPanel.SuggestedSize = new(500, 400); // how without it?
             memoPanel.TextBox.KeyDown += TextBox_KeyDown;
             memoPanel.TextBox.AutoUrlOpen = true;
@@ -47,13 +46,10 @@ namespace ControlsSample
 
             memoPanel.TextBox.CurrentPositionChanged += TextBox_CurrentPositionChanged;
 
-            memoPanel.AddAction("Go To Line", memoPanel.TextBox.ShowDialogGoToLine);
-
             PerformLayout();
 
             Idle += TextInputPage_Idle;
 
-            memoPanel.PropGrid.SuggestedInitDefaults();
             memoPanel.PropGrid.ApplyFlags |= PropertyGridApplyFlags.SetValueAndReload;
 
             memoPanel.PropGrid.SetProps(properties);
@@ -63,6 +59,16 @@ namespace ControlsSample
             memoPanel.Toolbar.EnableTool(memoPanel.ButtonIdNew, false);
             memoPanel.Toolbar.EnableTool(memoPanel.ButtonIdOpen, false);
             memoPanel.Toolbar.EnableTool(memoPanel.ButtonIdSave, false);
+            memoPanel.PropGrid.SuggestedInitDefaults();
+            memoPanel.PropGrid.GotFocus += PropGrid_GotFocus;
+            memoPanel.ActionsControl.Required();
+            memoPanel.AddAction("Go To Line", memoPanel.TextBox.ShowDialogGoToLine);
+
+        }
+
+        private void PropGrid_GotFocus(object? sender, EventArgs e)
+        {
+            memoPanel.PropGrid.SetSplitterLeft();
         }
 
         internal void AddTestIdleTasks()
