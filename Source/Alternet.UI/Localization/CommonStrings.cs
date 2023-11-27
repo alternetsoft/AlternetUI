@@ -113,6 +113,9 @@ namespace Alternet.UI.Localization
         /// <inheritdoc cref="ButtonOk"/>
         public string WindowTitleProperties { get; set; } = "Properties";
 
+        /// <inheritdoc cref="ButtonOk"/>
+        public string WindowTitleApplicationAlert { get; set; } = "Aplication says";
+
         // ========================
 
         /// <inheritdoc cref="ButtonOk"/>
