@@ -435,7 +435,6 @@ namespace Alternet.UI
                     };
                     actionsControl.MouseDoubleClick += Actions_MouseDoubleClick;
                     actionsControl.Parent = RightNotebook;
-                    actionsControl.Add("Hello");
                     actionsPage = RightNotebook.AddPage(
                         actionsControl,
                         CommonStrings.Default.NotebookTabTitleActions);
