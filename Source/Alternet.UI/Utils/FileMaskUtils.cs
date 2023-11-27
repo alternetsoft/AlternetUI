@@ -47,7 +47,7 @@ namespace Alternet.UI
 
         /// <summary>
         /// Generates file dialog filter.
-        /// Result example:"Image Files (*.png; *.jpg)|*.png;*.jpg|All Files (*.*)|*.*".  
+        /// Result example:"Image Files (*.png; *.jpg)|*.png;*.jpg|All Files (*.*)|*.*".
         /// </summary>
         /// <param name="extensions">Array of extensions. Each item is an extension with "."
         /// in the beginning (like ".exe").</param>
