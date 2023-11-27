@@ -161,7 +161,6 @@ namespace PropertyGridSample
 
             panel.WriteWelcomeLogMessages();
 
-            panel.PropGrid.GotFocus += PropGrid_GotFocus;
             panel.ActionsControl.GotFocus += ActionsControl_GotFocus;
             panel.ActionsControl.DisableRecreate();
         }
@@ -173,11 +172,6 @@ namespace PropertyGridSample
                 return;
             var type = item.InstanceType;
             panel.AddActions(type);
-        }
-
-        private void PropGrid_GotFocus(object? sender, EventArgs e)
-        {
-            panel.PropGrid.SetSplitterLeft();
         }
 
         private static void Designer_MouseLeftButtonDown(object? sender, MouseButtonEventArgs e)

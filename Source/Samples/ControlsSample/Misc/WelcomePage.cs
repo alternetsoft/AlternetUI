@@ -33,15 +33,6 @@ namespace ControlsSample
 
             r.BeginParagraphSpacing(0, 20);
 
-            var urlStyle = r.CreateUrlAttr();
-
-            r.WriteUrl(urlStyle, homePage, "Home page");
-            r.WriteText("    ");
-            r.WriteUrl(urlStyle, docsUrl, "Documentation");
-            r.ApplyAlignmentToSelection(TextBoxTextAttrAlignment.Right);
-
-            r.NewLine();
-
             r.ApplyAlignmentToSelection(TextBoxTextAttrAlignment.Center);
 
             r.BeginBold();
@@ -66,6 +57,13 @@ namespace ControlsSample
                 "Use established .NET standards and productivity tools for your cross-platform"+
                 " desktop application. Keep up good engineering practices. Deliver your application"+
                 " quickly. Be native on the desktop, whether it is Windows, macOS, or Linux.");
+
+            r.NewLine(2);
+
+            var urlStyle = r.CreateUrlAttr();
+            r.WriteUrl(urlStyle, homePage, "Home page");
+            r.WriteText("    ");
+            r.WriteUrl(urlStyle, docsUrl, "Documentation");
 
             r.EndSuppressUndo();
             r.EndUpdate();

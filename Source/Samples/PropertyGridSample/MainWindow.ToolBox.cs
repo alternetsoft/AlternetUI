@@ -19,7 +19,9 @@ namespace PropertyGridSample
 
         private void InitToolBox()
         {
+#if DEBUG
             PropertyGrid.AddSimpleAction<PictureBox>("Open image", PictureBoxLoadImageFromFile);
+#endif
 
             void Fn()
             {

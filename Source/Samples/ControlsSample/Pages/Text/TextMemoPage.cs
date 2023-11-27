@@ -52,7 +52,7 @@ namespace ControlsSample
 
             memoPanel.PropGrid.ApplyFlags |= PropertyGridApplyFlags.SetValueAndReload;
 
-            memoPanel.PropGrid.SetProps(properties);
+            memoPanel.PropGrid.SetProps(properties, true);
             memoPanel.Parent = this;
             memoPanel.TextBox.Text = multilineDemoText;
             memoPanel.TextBox.SetInsertionPoint(0);
@@ -60,15 +60,18 @@ namespace ControlsSample
             memoPanel.Toolbar.EnableTool(memoPanel.ButtonIdOpen, false);
             memoPanel.Toolbar.EnableTool(memoPanel.ButtonIdSave, false);
             memoPanel.PropGrid.SuggestedInitDefaults();
-            memoPanel.PropGrid.GotFocus += PropGrid_GotFocus;
+            memoPanel.RightNotebook.PageChanged += RightNotebook_PageChanged;
             memoPanel.ActionsControl.Required();
             memoPanel.AddAction("Go To Line", memoPanel.TextBox.ShowDialogGoToLine);
-
         }
 
-        private void PropGrid_GotFocus(object? sender, EventArgs e)
+        private void RightNotebook_PageChanged(object? sender, EventArgs e)
         {
-            memoPanel.PropGrid.SetSplitterLeft();
+            if(memoPanel.RightNotebook.EventSelection == memoPanel.PropGridPage?.Index)
+            {
+                memoPanel.PropGrid.CenterSplitter();
+                memoPanel.RightNotebook.PageChanged -= RightNotebook_PageChanged;
+            }
         }
 
         internal void AddTestIdleTasks()
