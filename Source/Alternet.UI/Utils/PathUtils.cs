@@ -117,6 +117,30 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets sub-folder path in the application folder.
+        /// </summary>
+        /// <param name="subFolder">Name of the sub folder.</param>
+        /// <remarks>
+        /// Application folder is combined with the <paramref name="subFolder"/>
+        /// using <see cref="Path.Combine(string, string)"/> 
+        /// and converted to the full path using <see cref="Path.GetFullPath(string)"/>.
+        /// If result path doesn't exist, an application folder is returned.
+        /// </remarks>
+        /// <returns></returns>
+        public static string GetAppSubFolder(string subFolder)
+        {
+            var appFolder = GetAppFolder();
+            var result = Path.Combine(appFolder, subFolder);
+            result = PathUtils.AddDirectorySeparatorChar(result);
+            result = Path.GetFullPath(result);
+
+            if(Directory.Exists(result))
+                return result;
+
+            return appFolder;           
+        }
+
+        /// <summary>
         /// Returns path to the application folder.
         /// </summary>
         /// <returns><see cref="string"/> containing path to the application folder
