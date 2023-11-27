@@ -98,6 +98,7 @@ namespace PropertyGridSample
             PropGrid.ProcessException += PropertyGrid_ProcessException;
             InitIgnorePropNames(PropGrid.IgnorePropNames);
             PropGrid.CreateStyleEx = PropertyGridCreateStyleEx.AlwaysAllowFocus;
+            panel.ActionsControl.Required();
 
             Icon = new("embres:PropertyGridSample.Sample.ico");
 
@@ -159,8 +160,6 @@ namespace PropertyGridSample
             controlPanel.DragStart += ControlPanel_DragStart;
 
             panel.WriteWelcomeLogMessages();
-
-            panel.RightNotebook.PageChanged += RightNotebook_PageChanged;
         }
 
         private static void Designer_MouseLeftButtonDown(object? sender, MouseButtonEventArgs e)
@@ -192,11 +191,6 @@ namespace PropertyGridSample
         {
             if (LogSize)
                 Application.Log("CenterNotebook_SizeChanged");
-        }
-
-        private void RightNotebook_PageChanged(object? sender, EventArgs e)
-        {
-            updatePropertyGrid = true;
         }
 
         private void Designer_PropertyChanged(object? sender, ObjectPropertyChangedEventArgs e)
@@ -239,7 +233,6 @@ namespace PropertyGridSample
                     return;
                 }
 
-                // parentParent.Padding = item.HasMargins ? controlPadding : Thickness.Empty;
                 var type = item.InstanceType;
 
                 if (item.Instance is Control control)
@@ -275,19 +268,14 @@ namespace PropertyGridSample
                 {
                     SetBackground(SystemColors.Window);
                     InitDefaultPropertyGrid();
+                    panel.RemoveActions();
                 }
                 else
                 {
                     SetBackground(SystemColors.Control);
-                    var selection = panel.RightNotebook.GetSelection();
-                    if (selection == panel.PropGridPage?.Index)
-                    {
-                        PropGrid.SetProps(item.PropInstance, true);
-                    }
-                    else
-                    {
-                        PropGrid.Clear();
-                    }
+                    PropGrid.SetProps(item.PropInstance, true);
+                    panel.RemoveActions();
+                    panel.AddActions(type);
                 }
             }
 

@@ -12,8 +12,16 @@ namespace PropertyGridSample
 {
     public partial class MainWindow
     {
+        void PictureBoxLoadImageFromFile()
+        {
+            Application.Alert();
+        }
+
         private void InitToolBox()
         {
+            PropertyGrid.AddSimpleAction<PictureBox>("Open image", PictureBoxLoadImageFromFile);
+
+
             void Fn()
             {
                 bool logAddedControls = false;
