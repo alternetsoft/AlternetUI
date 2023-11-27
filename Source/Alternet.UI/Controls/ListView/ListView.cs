@@ -38,6 +38,10 @@ namespace Alternet.UI
         /// </summary>
         public ListView()
         {
+            bool? hasBorder = AllPlatformDefaults.GetHasBorderOverride(ControlKind);
+
+            if (hasBorder is not null)
+                HasBorder = hasBorder.Value;
         }
 
         /// <summary>

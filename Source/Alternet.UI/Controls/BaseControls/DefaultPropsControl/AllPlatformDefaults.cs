@@ -95,9 +95,11 @@ namespace Alternet.UI
 
             void InitWindows()
             {
-                PlatformWindows.TextBoxUrlClickModifiers = ModifierKeys.Control;
-                PlatformWindows.AllowButtonHasBorder = false;
-                PlatformWindows.Controls.Button.MinMargin = 3;
+                var platform = PlatformWindows;
+
+                platform.TextBoxUrlClickModifiers = ModifierKeys.Control;
+                platform.AllowButtonHasBorder = false;
+                platform.Controls.Button.MinMargin = 3;
             }
 
             void InitMacOs()
@@ -109,6 +111,9 @@ namespace Alternet.UI
                 platform.AllowButtonHasBorder = false;
                 platform.AllowButtonBackground = false;
                 platform.AllowButtonForeground = false;
+
+                platform.Controls.MultilineTextBox.HasBorderOnBlack = false;
+                platform.Controls.ListBox.HasBorderOnBlack = false;
             }
         }
 
@@ -124,6 +129,21 @@ namespace Alternet.UI
         {
             object? result = GetPropValue(PlatformCurrent, control, prop);
             result ??= GetPropValue(PlatformAny, control, prop);
+            return result;
+        }
+
+        /// <summary>
+        /// Gets "HasBorder" property override specific to platform and color theme. 
+        /// </summary>
+        /// <param name="controlKind">Control kind.</param>
+        /// <returns></returns>
+        public static bool? GetHasBorderOverride(ControlTypeId controlKind)
+        {
+            bool? result;
+            if (SystemSettings.IsUsingDarkBackground)
+                result = AllPlatformDefaults.PlatformCurrent.Controls[controlKind].HasBorderOnBlack;
+            else
+                result = AllPlatformDefaults.PlatformCurrent.Controls[controlKind].HasBorderOnWhite;
             return result;
         }
 

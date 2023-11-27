@@ -38,6 +38,11 @@ namespace Alternet.UI
         {
            if (Application.IsWindowsOS)
                 UserPaint = true;
+
+            bool? hasBorder = AllPlatformDefaults.GetHasBorderOverride(ControlKind);
+
+            if (hasBorder is not null)
+                HasBorder = hasBorder.Value;
         }
 
         /// <summary>

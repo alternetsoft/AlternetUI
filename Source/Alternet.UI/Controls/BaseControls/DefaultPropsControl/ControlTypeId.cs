@@ -55,7 +55,8 @@ namespace Alternet.UI
         WebBrowser = 44,
         Other = 45,
         Window = 46,
+        MultilineTextBox = 47,
 
-        MaxValue = Window,
+        MaxValue,
     }
 }

@@ -71,6 +71,11 @@ namespace Alternet.UI
         public ControlDefaults ComboBox => GetProps(ControlTypeId.ComboBox);
 
         /// <summary>
+        /// Contains default property values for the <see cref="MultilineTextBox"/>.
+        /// </summary>
+        public ControlDefaults MultilineTextBox => GetProps(ControlTypeId.MultilineTextBox);
+
+        /// <summary>
         /// Contains default property values for the <see cref="ListBox"/>.
         /// </summary>
         public ControlDefaults ListBox => GetProps(ControlTypeId.ListBox);

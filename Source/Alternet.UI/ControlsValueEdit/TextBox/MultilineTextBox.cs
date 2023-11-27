@@ -18,6 +18,11 @@ namespace Alternet.UI
         {
             ProcessTab = true;
             base.Multiline = true;
+
+            bool? hasBorder = AllPlatformDefaults.GetHasBorderOverride(ControlKind);
+
+            if (hasBorder is not null)
+                HasBorder = hasBorder.Value;
         }
 
         /// <summary>
@@ -36,5 +41,8 @@ namespace Alternet.UI
             {
             }
         }
+
+        /// <inheritdoc/>
+        public override ControlTypeId ControlKind => ControlTypeId.MultilineTextBox;
     }
 }

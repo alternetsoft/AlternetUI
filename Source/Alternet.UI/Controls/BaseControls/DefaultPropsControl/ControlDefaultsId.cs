@@ -13,6 +13,16 @@ namespace Alternet.UI
         MinMargin,
 
         /// <summary>
+        /// Specifies whether control has border when color scheme is white.
+        /// </summary>
+        HasBorderOnWhite,
+
+        /// <summary>
+        /// Specifies whether control has border when color scheme is black.
+        /// </summary>
+        HasBorderOnBlack,
+
+        /// <summary>
         /// Padding property minimal value.
         /// </summary>
         MinPadding,

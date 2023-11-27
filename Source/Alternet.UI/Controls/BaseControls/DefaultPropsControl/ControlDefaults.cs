@@ -25,7 +25,7 @@ namespace Alternet.UI
         public event EventHandler? InitDefaults;
 
         /// <summary>
-        /// Returns minimal margin value.
+        /// Gets or sets minimal margin value.
         /// </summary>
         public Thickness? MinMargin
         {
@@ -34,7 +34,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Returns minimal padding value.
+        /// Gets or sets minimal padding value.
         /// </summary>
         public Thickness? MinPadding
         {
@@ -43,7 +43,25 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Returns default property value.
+        /// Gets or sets whether control has border when color scheme is white.
+        /// </summary>
+        public bool? HasBorderOnWhite
+        {
+            get => (bool?)GetProp(ControlDefaultsId.HasBorderOnWhite);
+            set => SetProp(ControlDefaultsId.HasBorderOnWhite, value);
+        }
+
+        /// <summary>
+        /// Gets or sets whether control has border when color scheme is black.
+        /// </summary>
+        public bool? HasBorderOnBlack
+        {
+            get => (bool?)GetProp(ControlDefaultsId.HasBorderOnBlack);
+            set => SetProp(ControlDefaultsId.HasBorderOnBlack, value);
+        }
+
+        /// <summary>
+        /// Gets default property value.
         /// </summary>
         /// <param name="prop">Property identifier.</param>
         /// <returns></returns>
