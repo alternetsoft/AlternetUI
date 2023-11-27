@@ -120,6 +120,12 @@ namespace Alternet.Drawing
         public readonly bool IsEmpty => width == 0 && height == 0;
 
         /// <summary>
+        /// Tests whether this <see cref='Size'/> has zero width or height.
+        /// </summary>
+        [Browsable(false)]
+        public readonly bool AnyIsEmpty => width == 0 || height == 0;
+
+        /// <summary>
         /// Represents the horizontal component of this <see cref='Drawing.Size'/>.
         /// </summary>
         public double Width
@@ -138,8 +144,8 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Converts the specified <see cref='Drawing.Size'/> to a
-        /// <see cref='Drawing.Point'/>.
+        /// Converts the specified <see cref='Size'/> to a
+        /// <see cref='Point'/>.
         /// </summary>
         public static explicit operator Point(Size size) =>
             new(size.Width, size.Height);
