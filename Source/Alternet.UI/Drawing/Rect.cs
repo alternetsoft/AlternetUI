@@ -543,6 +543,20 @@ namespace Alternet.Drawing
         public void Offset(Point pos) => Offset(pos.X, pos.Y);
 
         /// <summary>
+        /// Centers this rectangle in the given (usually, but not necessarily, larger) one.
+        /// </summary>
+        /// <param name="r">Container rectangle.</param>
+        /// <param name="centerHorz">Specifies whether to center horizontally.</param>
+        /// <param name="centerVert">Specifies whether to center vertically.</param>
+        /// <returns></returns>
+        public readonly Rect CenterIn(Rect r, bool centerHorz = true, bool centerVert = true)
+        {
+            return new Rect(centerHorz ? r.x + (r.width - width)/2 : x,
+                          centerVert ? r.y + (r.height - height)/2 : y,
+                          width, height);
+        }
+
+        /// <summary>
         /// Adjusts the location of this rectangle by the specified amount.
         /// </summary>
         public void Offset(double dx, double dy)
@@ -572,14 +586,14 @@ namespace Alternet.Drawing
 
         /// <summary>
         /// Creates a string representation of this object based on the format string
-        /// and IFormatProvider passed in.
-        /// If the provider is null, the CurrentCulture is used.
-        /// See the documentation for IFormattable for more information.
+        /// and <see cref="IFormatProvider"/> passed in.
+        /// If the provider is null, the <see cref="System.Globalization.CultureInfo.CurrentCulture"/> is used.
+        /// See the documentation for <see cref="IFormattable"/> for more information.
         /// </summary>
         /// <returns>
         /// A string representation of this object.
         /// </returns>
-        internal readonly string ConvertToString(string format, IFormatProvider provider)
+        public readonly string ConvertToString(string format, IFormatProvider provider)
         {
             if (IsEmpty)
             {
