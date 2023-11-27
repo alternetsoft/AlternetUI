@@ -9,8 +9,8 @@ namespace PaintSample
 {
     public partial class MainWindow : Window
     {
-        private const string FileDialogImageFilesFilter =
-            "Image files (*.png; *.jpg)|*.png;*.jpg|All files (*.*)|*.*";
+        /*private const string FileDialogImageFilesFilter =
+            "Image files (*.png; *.jpg)|*.png;*.jpg|All files (*.*)|*.*";*/
         private readonly Tools? tools;
 
         private Document? document;
@@ -331,7 +331,7 @@ namespace PaintSample
 
             using var dialog = new OpenFileDialog
             {
-                Filter = FileDialogImageFilesFilter
+                Filter = FileMaskUtils.GetFileDialogFilterForImageOpen(false),
             };
 
             if (dialog.ShowModal(this) != ModalResult.Accepted || dialog.FileName == null)
@@ -344,7 +344,7 @@ namespace PaintSample
         {
             using var dialog = new SaveFileDialog
             {
-                Filter = FileDialogImageFilesFilter
+                Filter = FileMaskUtils.GetFileDialogFilterForImageSave()
             };
 
             if (dialog.ShowModal(this) != ModalResult.Accepted || dialog.FileName == null)
