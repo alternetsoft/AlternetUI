@@ -357,18 +357,24 @@ namespace Alternet::UI
 
     void Window::ApplyBounds(const Rect& value)
     {
+        if (value.IsEmpty())
+            return;
+
     //    Control::ApplyBounds(value);
         auto wxWindow = GetWxWindow();
-        wxRect rect(fromDip(value, wxWindow));
+        auto rect = fromDip(value, wxWindow);
+
 
         if (_startLocation == WindowStartLocation::Manual ||
             _flags.IsSet(WindowFlags::ShownOnce))
         {
             wxWindow->SetSize(rect);
+            Control::LogRectMethod("ApplyBounds", value, rect);
         }
         else
         {
             wxWindow->SetSize(rect.width, rect.height);
+            Control::LogRectMethod("ApplyBounds WH", value, rect);
         }
 
         wxWindow->Refresh();

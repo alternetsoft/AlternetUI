@@ -305,8 +305,9 @@ namespace Alternet::UI
         wxOrientation GetWxScrollOrientation(ScrollBarOrientation orientation);
         ScrollBarOrientation GetScrollOrientation(wxOrientation orientation);
         DelayedValue<Control, ScrollInfo>& GetScrollInfoDelayedValue(ScrollBarOrientation orientation);
-
-        void LogMethod(std::string methodName, const Size& value);
+    public:
+        void LogSizeMethod(std::string methodName, const Size& value);
+        void LogRectMethod(wxString name, const Rect& value, const wxRect& wx);
     };
 }
 

@@ -175,11 +175,23 @@ namespace Alternet::UI
         return _appliedMinimumSize;
     }
 
-    void Control::LogMethod(std::string methodName, const Size& value)
+    void Control::LogRectMethod(wxString name, const Rect& value, const wxRect& wx)
+    {
+        auto dips = value.ToString();
+        Int32Rect rect = wx;
+        auto pxs = rect.ToString();
+        Int32Rect resultRect = GetWxWindow()->GetRect();
+        Int32Rect resultScreenRect = GetWxWindow()->GetScreenRect();
+        wxString s = name + " dip " + dips + ", px " + pxs + ", result " + resultRect.ToString()
+            + ", screen " + resultScreenRect.ToString();
+        Application::Log(s);
+    }
+
+    void Control::LogSizeMethod(std::string methodName, const Size& value)
     {
         auto window = GetWxWindow();
-        if (window->GetName() != wxDatePickerCtrlNameStr)
-            return;
+        /*if (window->GetName() != wxDatePickerCtrlNameStr)
+            return;*/
         auto minSize = Size(window->GetMinSize());
         auto maxSize = Size(window->GetMaxSize());
         auto s = methodName + ": " + value.ToString() + ", minSize: " + minSize.ToString() + 
@@ -1454,6 +1466,9 @@ namespace Alternet::UI
 
     void Control::ApplyBounds(const Rect& value)
     {
+        if (value.IsEmpty())
+            return;
+
         auto wxWindow = GetWxWindow();
         wxRect rect(fromDip(value, wxWindow));
         wxWindow->SetSize(rect);
