@@ -66,6 +66,21 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Inserts <paramref name="prefix"/> in the beginning of the each string
+        /// in <paramref name="items"/>.
+        /// </summary>
+        /// <param name="items">Strings.</param>
+        /// <param name="prefix">This string is inserted in the beginning.</param>
+        /// <returns></returns>
+        public static IEnumerable<string> InsertPrefix(IEnumerable<string> items, string prefix)
+        {
+            List<string> result = [];
+            foreach (var item in items)
+                result.Add($"{prefix}{item}");
+            return result;
+        }
+
+        /// <summary>
         /// Calls <paramref name="func"/> action for the each item of the
         /// <see cref="IEnumerableTree"/>.
         /// </summary>
