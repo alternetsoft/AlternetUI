@@ -15,7 +15,7 @@ namespace Alternet.UI
     [ControlCategory("Common")]
     public class PictureBox : UserPaintControl, IValidatorReporter
     {
-        private readonly DrawImagePrimitive primitive = new();
+        private readonly ImagePrimitivePainter primitive = new();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PictureBox"/> class.
@@ -47,6 +47,46 @@ namespace Alternet.UI
                     return;
                 primitive.Image = value;
                 RaiseImageChanged(EventArgs.Empty);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets whether to center image vertically in the control rectangle.
+        /// Default is <c>true</c>. This property is used when image is not stretched.
+        /// </summary>
+        public bool CenterVert
+        {
+            get
+            {
+                return primitive.CenterVert;
+            }
+
+            set
+            {
+                if (primitive.CenterVert == value)
+                    return;
+                primitive.CenterVert = value;
+                Refresh();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets whether to center image horizontally in the control rectangle.
+        /// Default is <c>true</c>. This property is used when image is not stretched.
+        /// </summary>
+        public bool CenterHorz
+        {
+            get
+            {
+                return primitive.CenterHorz;
+            }
+
+            set
+            {
+                if (primitive.CenterHorz == value)
+                    return;
+                primitive.CenterHorz = value;
+                Refresh();
             }
         }
 
@@ -119,7 +159,7 @@ namespace Alternet.UI
             set { }
         }
 
-        internal DrawImagePrimitive Primitive => primitive;
+        internal ImagePrimitivePainter Primitive => primitive;
 
         void IValidatorReporter.SetErrorStatus(object? sender, bool showError, string? errorText)
         {
