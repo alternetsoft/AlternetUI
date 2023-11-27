@@ -260,6 +260,11 @@ namespace Alternet::UI
         Rect(const Point& location, const Size& size)
             : Rect(location.X, location.Y, size.Width, size.Height) {}
 
+        bool IsEmpty() const
+        {
+            return X == 0 && Y == 0 && Width == 0 && Height == 0;
+        }
+
         inline Point GetLocation() const { return Point(X, Y); };
         inline Size GetSize() const { return Size(Width, Height); };
 
