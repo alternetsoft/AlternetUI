@@ -53,5 +53,18 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="propName">Property name.</param>
         IPropertyGridPropInfoRegistry? GetPropRegistryOrNull(string propName);
+
+        /// <summary>
+        /// Adds simple named action which can be used for any purpose.
+        /// </summary>
+        /// <param name="name">Action name.</param>
+        /// <param name="action">Action method.</param>
+        void AddSimpleAction(string name, Action action);
+
+        /// <summary>
+        /// Gets list of simple actions which were previously added with <see cref="AddSimpleAction"/>.
+        /// </summary>
+        /// <returns><c>null</c> if no actions were added; list of actions otherwise.</returns>
+        IEnumerable<(string, Action)>? GetSimpleActions();
     }
 }
