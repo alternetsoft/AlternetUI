@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
@@ -281,6 +282,49 @@ namespace Alternet.Drawing
             var result = new Bitmap(nativeImage);
             return result;
         }
+
+        /// <summary>
+        /// Gets list of extensions (including ".") which can be used to filter out
+        /// supported image formats when using
+        /// <see cref="OpenFileDialog"/> and <see cref="SaveFileDialog"/>.
+        /// </summary>
+        public static IEnumerable<string> GetExtensionsForOpenSave()
+        {
+            return [
+                ".bmp",
+                ".png",
+                ".jpeg",
+                ".jpg",
+                ".gif",
+                ".pcx",
+                ".pnm",
+                ".tiff",
+                ".tga",
+                ".xpm",
+                ".ico",
+                ".cur"];
+        }
+
+        /// <summary>
+        /// Gets list of extensions (including ".") which can be used to filter out
+        /// supported image formats when using
+        /// <see cref="OpenFileDialog"/>.
+        /// </summary>
+        public static IEnumerable<string> GetExtensionsForOpen()
+        {
+            var result = new List<string>();
+            result.AddRange(GetExtensionsForOpenSave());
+            result.Add("iff");
+            result.Add("ani");
+            return result;
+        }
+
+        /// <summary>
+        /// Gets list of extensions (including ".") which can be used to filter out
+        /// supported image formats when using
+        /// <see cref="SaveFileDialog"/>.
+        /// </summary>
+        public static IEnumerable<string> GetExtensionsForSave() => GetExtensionsForOpenSave();
 
         /// <summary>
         /// Gets <see cref="DrawingContext"/> for this image on which you can paint.
