@@ -10,6 +10,13 @@ namespace Alternet::UI
     {
 #include "Api/IconSet.inc"
     public:
+    
+        static wxIconBundle IconBundle(IconSet* iconBundle)
+        {
+            if (iconBundle == nullptr)
+                return wxIconBundle();
+            return iconBundle->_iconBundle;
+        }
     private:
         wxIconBundle _iconBundle;
     };
