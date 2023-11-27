@@ -143,6 +143,16 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Logs <see cref="Exception"/> information if DEBUG is defined.
+        /// </summary>
+        /// <param name="e">Exception to log.</param>
+        [Conditional("DEBUG")]
+        public static void LogExceptionIfDebug(Exception e)
+        {
+            LogExceptionIfDebug(e);
+        }
+
+        /// <summary>
         /// Writes to log property value of the specified object.
         /// </summary>
         /// <param name="obj">Object instance.</param>
