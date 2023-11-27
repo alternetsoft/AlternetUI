@@ -16,24 +16,13 @@ namespace Alternet.UI
     [ControlCategory("Hidden")]
     public class Window : Control
     {
+        private readonly WindowInfo info = new();
         private string title = string.Empty;
-        private bool minimizeEnabled = true;
-        private bool maximizeEnabled = true;
-        private bool showInTaskbar = true;
-        private WindowState state = WindowState.Normal;
-        private bool closeEnabled = true;
-        private bool hasSystemMenu = true;
-        private bool hasBorder = true;
-        private bool alwaysOnTop = false;
-        private bool isToolWindow = false;
-        private bool isPopupWindow = false;
         private Toolbar? toolbar = null;
         private StatusBar? statusBar = null;
         private IconSet? icon = null;
         private MainMenu? menu = null;
         private Window? owner;
-        private bool resizable = true;
-        private bool hasTitleBar = true;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Window"/> class.
@@ -43,7 +32,7 @@ namespace Alternet.UI
             Application.Current.RegisterWindow(this);
             SetVisibleValue(false);
             DefaultDPI ??= GetDPI();
-            Bounds = new Rect(100, 100, 400, 400);
+            Bounds = GetDefaultBounds();
         }
 
         /// <summary>
@@ -200,20 +189,20 @@ namespace Alternet.UI
         /// this application.
         /// </summary>
         [Browsable(false)]
-        public bool IsActive => NativeControl.IsActive;
+        public virtual bool IsActive => NativeControl.IsActive;
 
         /// <summary>
         /// Gets or sets a boolean value indicating whether window has title bar.
         /// </summary>
-        public bool HasTitleBar
+        public virtual bool HasTitleBar
         {
-            get => hasTitleBar;
+            get => info.HasTitleBar;
 
             set
             {
-                if (hasTitleBar == value)
+                if (info.HasTitleBar == value)
                     return;
-                hasTitleBar = value;
+                info.HasTitleBar = value;
                 OnHasTitleBarChanged(EventArgs.Empty);
                 HasTitleBarChanged?.Invoke(this, EventArgs.Empty);
             }
@@ -231,15 +220,15 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets a value indicating whether the window has a border.
         /// </summary>
-        public bool HasBorder
+        public virtual bool HasBorder
         {
-            get => hasBorder;
+            get => info.HasBorder;
 
             set
             {
-                if (hasBorder == value)
+                if (info.HasBorder == value)
                     return;
-                hasBorder = value;
+                info.HasBorder = value;
                 OnHasBorderChanged(EventArgs.Empty);
                 HasBorderChanged?.Invoke(this, EventArgs.Empty);
             }
@@ -248,15 +237,15 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets a value indicating whether the window can be resized by user.
         /// </summary>
-        public bool Resizable
+        public virtual bool Resizable
         {
-            get => resizable;
+            get => info.Resizable;
 
             set
             {
-                if (resizable == value)
+                if (info.Resizable == value)
                     return;
-                resizable = value;
+                info.Resizable = value;
                 OnResizableChanged(EventArgs.Empty);
                 ResizableChanged?.Invoke(this, EventArgs.Empty);
             }
@@ -267,15 +256,15 @@ namespace Alternet.UI
         /// when the user presses ALT+TAB.
         /// On Windows, a tool window doesn't have minimize and maximize buttons.
         /// </summary>
-        public bool IsToolWindow
+        public virtual bool IsToolWindow
         {
-            get => isToolWindow;
+            get => info.IsToolWindow;
 
             set
             {
-                if (isToolWindow == value)
+                if (info.IsToolWindow == value)
                     return;
-                isToolWindow = value;
+                info.IsToolWindow = value;
                 OnIsToolWindowChanged(EventArgs.Empty);
                 IsToolWindowChanged?.Invoke(this, EventArgs.Empty);
             }
@@ -289,15 +278,16 @@ namespace Alternet.UI
         /// on top of other windows, will capture the mouse and will be dismissed when
         /// the mouse is clicked outside of it or if it loses focus in any other way.
         /// </remarks>
-        public bool IsPopupWindow
+        [Browsable(false)]
+        public virtual bool IsPopupWindow
         {
-            get => isPopupWindow;
+            get => info.IsPopupWindow;
 
             set
             {
-                if (isPopupWindow == value)
+                if (info.IsPopupWindow == value)
                     return;
-                isPopupWindow = value;
+                info.IsPopupWindow = value;
                 Handler.NativeControl.IsPopupWindow = value;
             }
         }
@@ -305,18 +295,18 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets whether system menu is visible for this window.
         /// </summary>
-        public bool HasSystemMenu
+        public virtual bool HasSystemMenu
         {
             get
             {
-                return hasSystemMenu;
+                return info.HasSystemMenu;
             }
 
             set
             {
-                if (hasSystemMenu == value)
+                if (info.HasSystemMenu == value)
                     return;
-                hasSystemMenu = value;
+                info.HasSystemMenu = value;
                 OnHasSystemMenuChanged(EventArgs.Empty);
                 HasSystemMenuChanged?.Invoke(this, EventArgs.Empty);
             }
@@ -327,15 +317,15 @@ namespace Alternet.UI
         /// non-topmost windows and
         /// should stay above them, even when the window is deactivated.
         /// </summary>
-        public bool AlwaysOnTop
+        public virtual bool AlwaysOnTop
         {
-            get => alwaysOnTop;
+            get => info.AlwaysOnTop;
 
             set
             {
-                if (alwaysOnTop == value)
+                if (info.AlwaysOnTop == value)
                     return;
-                alwaysOnTop = value;
+                info.AlwaysOnTop = value;
                 OnAlwaysOnTopChanged(EventArgs.Empty);
                 AlwaysOnTopChanged?.Invoke(this, EventArgs.Empty);
             }
@@ -344,15 +334,15 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets a value indicating whether the window has an enabled close button.
         /// </summary>
-        public bool CloseEnabled
+        public virtual bool CloseEnabled
         {
-            get => closeEnabled;
+            get => info.CloseEnabled;
 
             set
             {
-                if (closeEnabled == value)
+                if (info.CloseEnabled == value)
                     return;
-                closeEnabled = value;
+                info.CloseEnabled = value;
                 OnCloseEnabledChanged(EventArgs.Empty);
                 CloseEnabledChanged?.Invoke(this, EventArgs.Empty);
             }
@@ -361,15 +351,15 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets a value indicating whether the window has an enabled maximize button.
         /// </summary>
-        public bool MaximizeEnabled
+        public virtual bool MaximizeEnabled
         {
-            get => maximizeEnabled;
+            get => info.MaximizeEnabled;
 
             set
             {
-                if (maximizeEnabled == value)
+                if (info.MaximizeEnabled == value)
                     return;
-                maximizeEnabled = value;
+                info.MaximizeEnabled = value;
                 OnMaximizeEnabledChanged(EventArgs.Empty);
                 MaximizeEnabledChanged?.Invoke(this, EventArgs.Empty);
             }
@@ -390,15 +380,15 @@ namespace Alternet.UI
         /// because you would need both the application's main window and the Find and Replace
         /// tool window displayed in order to process searches appropriately.
         /// </remarks>
-        public bool ShowInTaskbar
+        public virtual bool ShowInTaskbar
         {
-            get => showInTaskbar;
+            get => info.ShowInTaskbar;
 
             set
             {
-                if (showInTaskbar == value)
+                if (info.ShowInTaskbar == value)
                     return;
-                showInTaskbar = value;
+                info.ShowInTaskbar = value;
                 OnShowInTaskbarChanged(EventArgs.Empty);
                 ShowInTaskbarChanged?.Invoke(this, EventArgs.Empty);
             }
@@ -407,15 +397,15 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets a value indicating whether the window has an enabled minimize button.
         /// </summary>
-        public bool MinimizeEnabled
+        public virtual bool MinimizeEnabled
         {
-            get => minimizeEnabled;
+            get => info.MinimizeEnabled;
 
             set
             {
-                if (minimizeEnabled == value)
+                if (info.MinimizeEnabled == value)
                     return;
-                minimizeEnabled = value;
+                info.MinimizeEnabled = value;
                 OnMinimizeEnabledChanged(EventArgs.Empty);
                 MinimizeEnabledChanged?.Invoke(this, EventArgs.Empty);
             }
@@ -431,7 +421,7 @@ namespace Alternet.UI
         /// When a window is owned by another window, it is closed or hidden with the owner window.
         /// </remarks>
         [Browsable(false)]
-        public Window? Owner
+        public virtual Window? Owner
         {
             get => owner;
 
@@ -450,7 +440,7 @@ namespace Alternet.UI
         /// </summary>
         /// <remarks>A string that contains a title of this window. Default value is empty
         /// string ("").</remarks>
-        public string Title
+        public virtual string Title
         {
             get
             {
@@ -476,10 +466,16 @@ namespace Alternet.UI
         /// first shown.
         /// This property should be set before the window is shown.
         /// </remarks>
-        public WindowStartLocation StartLocation
+        public virtual WindowStartLocation StartLocation
         {
-            get => Handler.StartLocation;
-            set => Handler.StartLocation = value;
+            get => info.StartLocation;
+            set
+            {
+                if (info.StartLocation == value)
+                    return;
+                info.StartLocation = value;
+                Handler.StartLocation = value;
+            }
         }
 
         /// <summary>
@@ -497,22 +493,22 @@ namespace Alternet.UI
         /// with the owner window.
         /// </remarks>
         [Browsable(false)]
-        public Window[] OwnedWindows { get => Handler.OwnedWindows; }
+        public virtual Window[] OwnedWindows { get => Handler.OwnedWindows; }
 
         /// <summary>
         /// Gets or sets a value that indicates whether window is minimized,
         /// maximized, or normal.
         /// </summary>
-        public WindowState State
+        public virtual WindowState State
         {
-            get => state;
+            get => info.State;
 
             set
             {
-                if (state == value)
+                if (info.State == value)
                     return;
 
-                state = value;
+                info.State = value;
                 OnStateChanged(EventArgs.Empty);
                 StateChanged?.Invoke(this, EventArgs.Empty);
             }
@@ -528,7 +524,7 @@ namespace Alternet.UI
         /// You can use this property to switch between complete status bar sets at run time.
         /// </remarks>
         [Browsable(false)]
-        public StatusBar? StatusBar
+        public virtual StatusBar? StatusBar
         {
             get => statusBar;
 
@@ -577,7 +573,7 @@ namespace Alternet.UI
         /// <remarks>
         /// You can use this property to switch between complete menu sets at run time.
         /// </remarks>
-        public MainMenu? Menu
+        public virtual MainMenu? Menu
         {
             get => menu;
 
@@ -601,7 +597,7 @@ namespace Alternet.UI
         /// Gets a value indicating whether this window is displayed modally.
         /// </summary>
         [Browsable(false)]
-        public bool Modal
+        public virtual bool Modal
         {
             get
             {
@@ -617,7 +613,7 @@ namespace Alternet.UI
         /// <see cref="ShowModal()"/> is called.
         /// </summary>
         [Browsable(false)]
-        public ModalResult ModalResult
+        public virtual ModalResult ModalResult
         {
             get
             {
@@ -644,7 +640,7 @@ namespace Alternet.UI
         /// If images of several sizes are contained within the <see cref="ImageSet"/>, the
         /// most fitting size is selected automatically.
         /// </remarks>
-        public IconSet? Icon
+        public virtual IconSet? Icon
         {
             get => icon;
 
@@ -669,7 +665,7 @@ namespace Alternet.UI
         /// You can use this property to switch between complete toolbar sets at run time.
         /// </remarks>
         [Browsable(false)]
-        public Toolbar? Toolbar
+        public virtual Toolbar? Toolbar
         {
             get => toolbar;
 
@@ -693,7 +689,7 @@ namespace Alternet.UI
         /// Gets the collection of input bindings associated with this window.
         /// </summary>
         [Browsable(false)]
-        public Collection<InputBinding> InputBindings { get; } = [];
+        public virtual Collection<InputBinding> InputBindings { get; } = [];
 
         /// <inheritdoc/>
         public override ControlTypeId ControlKind => ControlTypeId.Window;
@@ -739,7 +735,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="mode">Specifies how a window will size itself to fit the size of
         /// its content.</param>
-        public void SetSizeToContent(
+        public virtual void SetSizeToContent(
             WindowSizeToContentMode mode = WindowSizeToContentMode.WidthAndHeight)
         {
             Handler.SetSizeToContent(mode);
@@ -752,7 +748,7 @@ namespace Alternet.UI
         /// Activating a window brings it to the front if this is the active application,
         /// or it flashes the window caption if this is not the active application.
         /// </remarks>
-        public void Activate() => NativeControl.Activate();
+        public virtual void Activate() => NativeControl.Activate();
 
         /// <summary>
         /// Opens a window and returns only when the newly opened window is closed.
@@ -763,9 +759,18 @@ namespace Alternet.UI
         /// The return value is the value of the <see cref="ModalResult"/> property before
         /// window closes.
         /// </returns>
-        public ModalResult ShowModal()
+        public virtual ModalResult ShowModal()
         {
             return ShowModal(Owner);
+        }
+
+        /// <summary>
+        /// Gets default bounds assigned to the window.
+        /// </summary>
+        /// <returns></returns>
+        public virtual Rect GetDefaultBounds()
+        {
+            return new(100, 100, 400, 400);
         }
 
         /// <summary>
@@ -784,7 +789,7 @@ namespace Alternet.UI
         /// window using <see cref="ShowModal()"/>.
         /// In this case, you will need to call <see cref="IDisposable.Dispose"/> manually.
         /// </remarks>
-        public void Close()
+        public virtual void Close()
         {
             Visible = false;
 
@@ -805,7 +810,7 @@ namespace Alternet.UI
         /// The return value is the value of the <see cref="ModalResult"/> property before
         /// window closes.
         /// </returns>
-        public ModalResult ShowModal(Window? owner)
+        public virtual ModalResult ShowModal(Window? owner)
         {
             CheckDisposed();
 
@@ -819,7 +824,7 @@ namespace Alternet.UI
         /// <summary>
         /// Initializes <see cref="Window"/> properties so it looks like popup window.
         /// </summary>
-        public void MakeAsPopup()
+        public virtual void MakeAsPopup()
         {
             ShowInTaskbar = false;
             StartLocation = WindowStartLocation.Manual;
@@ -830,6 +835,7 @@ namespace Alternet.UI
             MinimizeEnabled = false;
             MaximizeEnabled = false;
             Resizable = false;
+            HasSystemMenu = false;
         }
 
         internal static Window? GetParentWindow(DependencyObject dp)
