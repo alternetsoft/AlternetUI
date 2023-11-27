@@ -36,7 +36,7 @@ namespace Alternet.UI
         /// </summary>
         public ListBox()
         {
-            if (Application.IsWindowsOS)
+           if (Application.IsWindowsOS)
                 UserPaint = true;
         }
 
