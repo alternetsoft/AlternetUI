@@ -329,10 +329,13 @@ namespace PaintSample
             if (cancel)
                 return;
 
+            var s = PathUtils.GetAppSubFolder("SampleImages");
+
             using var dialog = new OpenFileDialog
             {
                 Filter = FileMaskUtils.GetFileDialogFilterForImageOpen(false),
-            };
+                InitialDirectory = s,
+            };            
 
             if (dialog.ShowModal(this) != ModalResult.Accepted || dialog.FileName == null)
                 return;
@@ -344,7 +347,8 @@ namespace PaintSample
         {
             using var dialog = new SaveFileDialog
             {
-                Filter = FileMaskUtils.GetFileDialogFilterForImageSave()
+                Filter = FileMaskUtils.GetFileDialogFilterForImageSave(),
+                InitialDirectory = PathUtils.GetAppSubFolder("SampleImages"),
             };
 
             if (dialog.ShowModal(this) != ModalResult.Accepted || dialog.FileName == null)
