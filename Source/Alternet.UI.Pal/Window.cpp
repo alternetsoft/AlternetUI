@@ -369,12 +369,12 @@ namespace Alternet::UI
             _flags.IsSet(WindowFlags::ShownOnce))
         {
             wxWindow->SetSize(rect);
-            Control::LogRectMethod("ApplyBounds", value, rect);
+            // Control::LogRectMethod("ApplyBounds", value, rect);
         }
         else
         {
             wxWindow->SetSize(rect.width, rect.height);
-            Control::LogRectMethod("ApplyBounds WH", value, rect);
+            // Control::LogRectMethod("ApplyBounds WH", value, rect);
         }
 
         wxWindow->Refresh();
