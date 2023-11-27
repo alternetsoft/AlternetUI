@@ -10,11 +10,21 @@ CommonUtils.ParseCmdLine(args);
 CommandLineArgs.Default.ParseArgs(args);
 //CommandLineArgs.Default.ParseDefaults();
 
-//Console.WriteLine($"Arguments: {CommonUtils.ToString(args)}");
-//Console.WriteLine($"{CommonUtils.CmdLineExecCommands}");
 //Console.WriteLine($"{CommandLineArgs.Default}");
 
 Console.WriteLine();
+
+
+if(CommonUtils.CmdLineExecCommands is null)
+{
+    Console.WriteLine("No commands are specified.");
+    return;
+}
+
+Console.WriteLine($"Arguments: {CommonUtils.ToString(args)}");
+Console.WriteLine($"Commands: {CommonUtils.CmdLineExecCommands}");
+Console.WriteLine();
+
 
 bool IsCommand(string s)
 {
@@ -43,7 +53,7 @@ if (IsCommand("runControlsSample"))
     path = Path.GetFullPath(path);
     string? pathFolder = Path.GetDirectoryName(path)?.TrimEnd('\\')?.TrimEnd('/');
     Console.WriteLine("Run ControlsSample: "+path);
-    CommonUtils.ProcessStart("dotnet", $"run --framework net6.0", pathFolder);
+    CommonUtils.ProcessStart("dotnet", $"run --framework net8.0", pathFolder);
     return;
 }
 
