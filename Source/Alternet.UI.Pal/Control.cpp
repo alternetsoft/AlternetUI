@@ -904,6 +904,9 @@ namespace Alternet::UI
         if (_ignoreRecreate>0 || !IsWxWindowCreated())
             return;
 
+        if (_disableRecreateCounter > 0)
+            Application::Log("Native window recreated");
+
         SetRecreatingWxWindow(true);
         DestroyWxWindow();
         CreateWxWindow();
@@ -1456,6 +1459,17 @@ namespace Alternet::UI
     void Control::SetLocation(const Point& value)
     {
         SetBounds(Rect(value, GetSize()));
+    }
+
+    void Control::DisableRecreate()
+    {
+        auto wxWindow = GetWxWindow();
+        _disableRecreateCounter++;
+    }
+
+    void Control::EnableRecreate()
+    {
+        _disableRecreateCounter--;
     }
 
     Rect Control::RetrieveBounds()

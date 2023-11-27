@@ -830,6 +830,18 @@ namespace Alternet.UI.Native
             return NativeApi.Control_GetScrollBarMaximum_(NativePointer, orientation);
         }
         
+        public void DisableRecreate()
+        {
+            CheckDisposed();
+            NativeApi.Control_DisableRecreate_(NativePointer);
+        }
+        
+        public void EnableRecreate()
+        {
+            CheckDisposed();
+            NativeApi.Control_EnableRecreate_(NativePointer);
+        }
+        
         public void UnsetToolTip()
         {
             CheckDisposed();
@@ -1404,6 +1416,12 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern int Control_GetScrollBarMaximum_(IntPtr obj, ScrollBarOrientation orientation);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Control_DisableRecreate_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Control_EnableRecreate_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Control_UnsetToolTip_(IntPtr obj);

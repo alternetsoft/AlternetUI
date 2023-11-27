@@ -8,6 +8,8 @@ namespace NativeApi.Api
 {
     public abstract class Control
     {
+        public void DisableRecreate() { }
+        public void EnableRecreate() { }
         public void UnsetToolTip() { }
         public bool IsTransparentBackgroundSupported() => default;
         public bool SetBackgroundStyle(int style) => default;

@@ -107,6 +107,7 @@ namespace Alternet::UI
         bool bindScrollEvents = true;
         int _ignoreRecreate = 0;
         int _borderStyle = 0;
+        int _disableRecreateCounter = 0;
 
         virtual void OnParentChanged();
         virtual void OnAnyParentChanged();
