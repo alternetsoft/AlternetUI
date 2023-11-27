@@ -471,6 +471,22 @@ namespace Alternet.UI
         internal string EventArgString => NativeApplication.EventArgString;
 
         /// <summary>
+        /// Instructs the application to display a dialog with an optional <paramref name="message"/>,
+        /// and to wait until the user dismisses the dialog.
+        /// </summary>
+        /// <param name="message">A string you want to display in the alert dialog, or,
+        /// alternatively, an object that is converted into a string and displayed.</param>
+        public static void Alert(object? message = null)
+        {
+            MessageBox.Show(
+                FirstWindow(),
+                message,
+                CommonStrings.Default.WindowTitleApplicationAlert,
+                MessageBoxButtons.OK,
+                MessageBoxIcon.None);        
+        }
+
+        /// <summary>
         /// Changes the cursor to the given cursor for all windows in the application.
         /// </summary>
         /// <remarks>
