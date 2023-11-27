@@ -9,6 +9,33 @@ namespace Alternet.UI
     public partial class PropertyGrid
     {
         /// <summary>
+        /// Adds simple action for the specified <typeparamref name="T"/>.
+        /// </summary>
+        /// <typeparam name="T">Type for which action is registered.</typeparam>
+        /// <param name="name">Action name.</param>
+        /// <param name="action">Action.</param>
+        /// <returns><see cref="IPropertyGridTypeRegistry"/> of the specified
+        /// <typeparamref name="T"/> type so you can chain calls and perform other actions
+        /// on it.</returns>
+        public static IPropertyGridTypeRegistry AddSimpleAction<T>(string name, Action action)
+        {
+            var registry = PropertyGrid.GetTypeRegistry(typeof(T));
+            registry.AddSimpleAction(name, action);
+            return registry;
+        }
+
+        /// <summary>
+        /// Gets list of simple actions or <c>null</c> if there are no actions.
+        /// </summary>
+        /// <param name="t">Type for which actions are requested.</param>
+        /// <returns></returns>
+        public static IEnumerable<(string, Action)>? GetSimpleActions(Type t)
+        {
+            var registry = PropertyGrid.GetTypeRegistryOrNull(t);
+            return registry?.GetSimpleActions();
+        }
+
+        /// <summary>
         /// Clears current selection, if any.
         /// </summary>
         /// <param name="validation">If set to false, deselecting the property will
