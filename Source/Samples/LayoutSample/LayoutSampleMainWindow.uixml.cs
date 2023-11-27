@@ -7,7 +7,7 @@ namespace LayoutSample
     {
         public MainWindow()
         {
-            Icon = ImageSet.FromUrlOrNull("embres:LayoutSample.Sample.ico");
+            Icon = new("embres:LayoutSample.Sample.ico");
 
             InitializeComponent();
 

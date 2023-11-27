@@ -75,7 +75,7 @@ namespace AuiManagerSample
 
         public MainWindow()
         {
-            Icon = ImageSet.FromUrlOrNull("embres:AuiManagerSample.Sample.ico");
+            Icon = new("embres:AuiManagerSample.Sample.ico");
             InitContextMenu();
 
             InitializeComponent();
@@ -241,7 +241,7 @@ namespace AuiManagerSample
             notebook5.TabRightMouseUp += NotebookTabRightMouseUp;
             notebook5.BgDoubleClick += NotebookBgDclickMouse;
 
-            if (!Application.IsMacOs)
+            if (!Application.IsMacOS)
             {
                 // Under MacOs we have exceptions when drop down menus are shown.
                 toolbar4.SetToolDropDownOnEvent(photoToolId, AuiToolbarItemDropDownOnEvent.Click);

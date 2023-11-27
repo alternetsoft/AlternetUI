@@ -32,7 +32,7 @@ namespace ControlsTest
                     .MaxSize(mainPanel.DefaultRightPaneBestSize).Fixed();
             }
 
-            Icon = ImageSet.FromUrlOrNull("embres:ControlsTest.Sample.ico");
+            Icon = new("embres:ControlsTest.Sample.ico");
 
             InitializeComponent();
 

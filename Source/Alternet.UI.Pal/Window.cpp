@@ -717,14 +717,14 @@ namespace Alternet::UI
         //_frame->SetBackgroundColour(value);
     }
 
-    ImageSet* Window::GetIcon()
+    IconSet* Window::GetIcon()
     {
         if (_icon != nullptr)
             _icon->AddRef();
         return _icon;
     }
 
-    void Window::SetIcon(ImageSet* value)
+    void Window::SetIcon(IconSet* value)
     {
         if (_icon == value)
             return;
@@ -750,7 +750,7 @@ namespace Alternet::UI
         }
         else
         {
-            value->SetIcons(ImageSet::IconBundle(_icon));
+            value->SetIcons(IconSet::IconBundle(_icon));
         }
     }
 

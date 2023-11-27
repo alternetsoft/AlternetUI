@@ -6,8 +6,8 @@ namespace DrawingSample
 {
     internal partial class MainWindow : Window
     {
-        private readonly DrawingPage[] drawingPages = new DrawingPage[]
-        {
+        private readonly DrawingPage[] drawingPages =
+        [
             new ShapesPage(),
             new TextPage(),
             new BrushesAndPensPage(),
@@ -15,13 +15,13 @@ namespace DrawingSample
             new TransformsPage(),
             new ClippingPage(),
             new ImagesPage(),
-        };
+        ];
 
         private TabPage? selectedPage;
 
         public MainWindow()
         {
-            Icon = ImageSet.FromUrlOrNull("embres:DrawingSample.Sample.ico");
+            Icon = new("embres:DrawingSample.Sample.ico");
 
             InitializeComponent();
             InitializePages();

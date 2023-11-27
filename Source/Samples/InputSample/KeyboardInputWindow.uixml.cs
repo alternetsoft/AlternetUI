@@ -60,7 +60,7 @@ namespace InputSample
 
         private void UpdateModifierKeys()
         {
-            var macOs = Application.IsMacOs;
+            var macOs = Application.IsMacOS;
 
             var modifiers = Keyboard.Modifiers;
 

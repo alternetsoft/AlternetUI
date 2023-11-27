@@ -105,7 +105,7 @@ namespace PaintSample
             mainGrid.RowDefinitions.Add(new RowDefinition { 
                 Height = new GridLength() });
 
-            Icon = ImageSet.FromUrlOrNull("embres:PaintSample.Sample.ico");
+            Icon = new("embres:PaintSample.Sample.ico");
 
             border = new();
             mainGrid.Children.Add(border);

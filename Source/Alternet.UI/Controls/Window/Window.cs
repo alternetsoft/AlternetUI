@@ -29,7 +29,7 @@ namespace Alternet.UI
         private bool isPopupWindow = false;
         private Toolbar? toolbar = null;
         private StatusBar? statusBar = null;
-        private ImageSet? icon = null;
+        private IconSet? icon = null;
         private MainMenu? menu = null;
         private Window? owner;
         private bool resizable = true;
@@ -644,7 +644,7 @@ namespace Alternet.UI
         /// If images of several sizes are contained within the <see cref="ImageSet"/>, the
         /// most fitting size is selected automatically.
         /// </remarks>
-        public ImageSet? Icon
+        public IconSet? Icon
         {
             get => icon;
 

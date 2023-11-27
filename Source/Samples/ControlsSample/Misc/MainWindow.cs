@@ -44,7 +44,7 @@ namespace ControlsSample
             Size = (900, 700);
             StartLocation = WindowStartLocation.CenterScreen;
 
-            Icon = ImageSet.FromUrlOrNull("embres:ControlsSample.Sample.ico");
+            Icon = new("embres:ControlsSample.Sample.ico");
 
             void AddPage(string title, Func<Control> action)
             {

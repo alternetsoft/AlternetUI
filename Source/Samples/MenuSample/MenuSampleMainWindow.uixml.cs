@@ -23,7 +23,7 @@ namespace MenuSample
 
         public MainWindow()
         {
-            Icon = ImageSet.FromUrlOrNull("embres:MenuSample.Sample.ico");
+            Icon = new("embres:MenuSample.Sample.ico");
             InitializeComponent();
             eventsListBox.BindApplicationLog();
             InitToolbar();
@@ -200,7 +200,7 @@ namespace MenuSample
 
         private void PlatformSpecificInitialize()
         {
-            roleControlsPanel.Visible = Application.IsMacOs;
+            roleControlsPanel.Visible = Application.IsMacOS;
         }
 
         public Command? SaveCommand { get; private set; }

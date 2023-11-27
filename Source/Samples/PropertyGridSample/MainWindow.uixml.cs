@@ -99,7 +99,7 @@ namespace PropertyGridSample
             InitIgnorePropNames(PropGrid.IgnorePropNames);
             PropGrid.CreateStyleEx = PropertyGridCreateStyleEx.AlwaysAllowFocus;
 
-            Icon = ImageSet.FromUrlOrNull("embres:PropertyGridSample.Sample.ico");
+            Icon = new("embres:PropertyGridSample.Sample.ico");
 
             InitializeComponent();
 

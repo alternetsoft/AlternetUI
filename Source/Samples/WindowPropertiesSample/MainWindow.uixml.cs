@@ -16,7 +16,7 @@ namespace WindowPropertiesSample
         public MainWindow()
         {
             setBoundsProperties = new(this);
-            Icon = ImageSet.FromUrlOrNull("embres:WindowPropertiesSample.Sample.ico");
+            Icon = new("embres:WindowPropertiesSample.Sample.ico");
 
             InitializeComponent();
 

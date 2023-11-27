@@ -8,7 +8,7 @@ namespace DataBindingSample
     {
         public MainWindow()
         {
-            Icon = ImageSet.FromUrlOrNull("embres:DataBindingSample.Sample.ico");
+            Icon = new("embres:DataBindingSample.Sample.ico");
 
             InitializeComponent();
 

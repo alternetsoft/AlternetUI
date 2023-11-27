@@ -3,7 +3,7 @@
 #pragma once
 
 #include "Window.h"
-#include "ImageSet.h"
+#include "IconSet.h"
 #include "MainMenu.h"
 #include "Toolbar.h"
 #include "ApiUtils.h"
@@ -181,12 +181,12 @@ ALTERNET_UI_API void Window_SetState_(Window* obj, WindowState value)
     obj->SetState(value);
 }
 
-ALTERNET_UI_API ImageSet* Window_GetIcon_(Window* obj)
+ALTERNET_UI_API IconSet* Window_GetIcon_(Window* obj)
 {
     return obj->GetIcon();
 }
 
-ALTERNET_UI_API void Window_SetIcon_(Window* obj, ImageSet* value)
+ALTERNET_UI_API void Window_SetIcon_(Window* obj, IconSet* value)
 {
     obj->SetIcon(value);
 }

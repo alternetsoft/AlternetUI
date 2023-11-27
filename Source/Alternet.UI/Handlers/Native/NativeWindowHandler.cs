@@ -280,20 +280,19 @@ namespace Alternet.UI
 
         private void ApplyIcon(object? sender, EventArgs e)
         {
-            NativeControl.Icon = Control.Icon?.NativeImageSet ?? null;
+            NativeControl.Icon = Control.Icon?.NativeIconSet;
         }
 
         private void ApplyMenu(object? sender, EventArgs e)
         {
             NativeControl.Menu =
-                (Control.Menu?.Handler as NativeMainMenuHandler)?.NativeControl ?? null;
+                (Control.Menu?.Handler as NativeMainMenuHandler)?.NativeControl;
         }
 
         private void ApplyToolbar(object? sender, EventArgs e)
         {
             NativeControl.Toolbar =
-                (Control.Toolbar?.Handler as NativeToolbarHandler)?
-                .NativeControl ?? null;
+                (Control.Toolbar?.Handler as NativeToolbarHandler)?.NativeControl;
         }
 
         private void ApplyStatusBar(object? sender, EventArgs e)

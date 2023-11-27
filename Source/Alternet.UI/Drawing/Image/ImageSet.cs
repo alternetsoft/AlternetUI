@@ -7,8 +7,8 @@ using Alternet.Drawing;
 namespace Alternet.UI
 {
     /// <summary>
-    /// An image set to be used with UI elements (for example, <see cref="Window.Icon"/>).
-    /// Can be used for specifying several size representations of the same picture.
+    /// <see cref="ImageSet"/> can be used for specifying several size representations of the
+    /// same picture.
     /// </summary>
     [TypeConverter(typeof(ImageSetConverter))]
     public class ImageSet : BaseComponent, IDisposable
@@ -119,8 +119,8 @@ namespace Alternet.UI
         /// var ImageSize = 16;
         /// var ResPrefix = $"embres:ControlsTest.Resources.Png._{ImageSize}.";
         /// var url = $"{ResPrefix}arrow-left-{ImageSize}.png";
-        /// ImageSet imageSet = ImageSet.FromUrl(url); // can raise an exception
-        /// ImageSet imageSet2 = ImageSet.FromUrlOrNull(url); // return null instead of exception
+        /// ImageSet imageSet = ImageSet.FromUrl(url); // can raise an exception if file not found
+        /// ImageSet imageSet2 = ImageSet.FromUrlOrNull(url); // return null instead of exception if file not found
         /// </code>
         /// </example>
         /// <remarks>
@@ -205,6 +205,7 @@ namespace Alternet.UI
         /// <remarks>
         /// Returns null if error occurs during image load.
         /// No exceptions are raised.
+        /// If DEBUG is defined, exception info is logged.
         /// </remarks>
         public static ImageSet? FromUrlOrNull(string url)
         {
@@ -213,8 +214,9 @@ namespace Alternet.UI
                 var result = ImageSet.FromUrl(url);
                 return result;
             }
-            catch
+            catch(Exception e)
             {
+                LogUtils.LogExceptionIfDebug(e);
                 return null;
             }
         }
@@ -263,7 +265,6 @@ namespace Alternet.UI
             OnChanged();
 
             // todo
-            throw new NotImplementedException();
         }
 
         private void OnChanged()

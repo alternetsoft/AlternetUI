@@ -70,8 +70,8 @@ WindowState GetState();
 void SetState(WindowState value);
 
 
-ImageSet* GetIcon();
-void SetIcon(ImageSet* value);
+IconSet* GetIcon();
+void SetIcon(IconSet* value);
 
 
 MainMenu* GetMenu();

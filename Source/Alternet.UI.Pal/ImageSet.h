@@ -10,7 +10,6 @@ namespace Alternet::UI
     {
 #include "Api/ImageSet.inc"
     public:
-        wxIconBundle GetIconBundle();
         wxBitmapBundle GetBitmapBundle();
 
         static wxBitmapBundle BitmapBundle(ImageSet* bimtapBundle)
@@ -26,8 +25,6 @@ namespace Alternet::UI
             return bimtapBundle->GetIconBundle();
         }
     private:
-        wxIconBundle _iconBundle;
-        
         bool _readOnly = false;
         bool _bitmapBundleValid = false;
         wxBitmapBundle _bitmapBundle;
@@ -35,5 +32,6 @@ namespace Alternet::UI
         wxVector<wxBitmap> _bitmaps;
 
         void InvalidateBitmapBundle();
+        wxIconBundle GetIconBundle();
     };
 }

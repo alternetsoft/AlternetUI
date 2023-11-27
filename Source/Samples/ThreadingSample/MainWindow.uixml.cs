@@ -9,7 +9,7 @@ namespace ThreadingSample
     {
         public MainWindow()
         {
-            Icon = ImageSet.FromUrlOrNull("embres:ThreadingSample.Sample.ico");
+            Icon = new("embres:ThreadingSample.Sample.ico");
 
             InitializeComponent();
 

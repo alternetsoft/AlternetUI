@@ -13,11 +13,11 @@ namespace DragAndDropSample
         private static readonly string[] SupportedFormats =
             [DataFormats.Text, DataFormats.Files, DataFormats.Bitmap];
 
-        private Bitmap testBitmap;
+        private readonly Bitmap testBitmap;
 
         public MainWindow()
         {
-            Icon = ImageSet.FromUrlOrNull("embres:DragAndDropSample.Sample.ico");
+            Icon = new("embres:DragAndDropSample.Sample.ico");
 
             InitializeComponent();
 
@@ -49,7 +49,7 @@ namespace DragAndDropSample
             if (allowedEffects.Contains(defaultEffect))
                 return defaultEffect;
 
-            return allowedEffects.First();
+            return allowedEffects[0];
         }
 
         private IReadOnlyList<DragDropEffects> GetAllowedEffects()
@@ -134,11 +134,11 @@ namespace DragAndDropSample
                 result.SetText("Test data string.");
 
             if (filesFormatCheckBox!.IsChecked)
-                result.SetFiles(new string[]
-                    {
+                result.SetFiles(
+                    [
                         (Assembly.GetEntryAssembly() ?? throw new Exception()).Location,
                         typeof(Application).Assembly.Location
-                    });
+                    ]);
 
             if (bitmapFormatCheckBox!.IsChecked)
                 result.SetBitmap(testBitmap);

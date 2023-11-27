@@ -308,13 +308,13 @@ namespace Alternet.UI.Native
             }
         }
         
-        public ImageSet? Icon
+        public IconSet? Icon
         {
             get
             {
                 CheckDisposed();
                 var _nnn = NativeApi.Window_GetIcon_(NativePointer);
-                var _mmm = NativeObject.GetFromNativePointer<ImageSet>(_nnn, p => new ImageSet(p));
+                var _mmm = NativeObject.GetFromNativePointer<IconSet>(_nnn, p => new IconSet(p));
                 ReleaseNativeObjectPointer(_nnn);
                 return _mmm;
             }

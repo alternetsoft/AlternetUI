@@ -3,6 +3,7 @@
 #include "Common.h"
 #include "Control.h"
 #include "ImageSet.h"
+#include "IconSet.h"
 #include "MainMenu.h"
 #include "Toolbar.h"
 #include "StatusBar.h"
@@ -158,7 +159,7 @@ namespace Alternet::UI
 
         MainMenu* _storedMenu = nullptr;
         Toolbar* _storedToolbar = nullptr;
-        ImageSet* _icon = nullptr;
+        IconSet* _icon = nullptr;
         WindowState _lastState = WindowState::Normal;
 
         inline static FrameDisabler* _modalWindowDisabler = nullptr;

@@ -15,7 +15,7 @@ namespace EmployeeFormSample
 */
         public MainWindow()
         {
-            Icon = ImageSet.FromUrlOrNull("embres:EmployeeFormSample.Sample.ico");
+            Icon = new("embres:EmployeeFormSample.Sample.ico");
 
             InitializeComponent();
 

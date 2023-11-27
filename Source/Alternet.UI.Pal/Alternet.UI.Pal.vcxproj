@@ -249,6 +249,7 @@
     <ClCompile Include="GridSizer.cpp" />
     <ClCompile Include="GroupBox.cpp" />
     <ClCompile Include="HatchBrush.cpp" />
+    <ClCompile Include="IconSet.cpp" />
     <ClCompile Include="Image.cpp" />
     <ClCompile Include="ImageList.cpp" />
     <ClCompile Include="ImageSet.cpp" />
@@ -371,6 +372,7 @@
     <ClInclude Include="Api\GridSizer.Api.h" />
     <ClInclude Include="Api\GroupBox.Api.h" />
     <ClInclude Include="Api\HatchBrush.Api.h" />
+    <ClInclude Include="Api\IconSet.Api.h" />
     <ClInclude Include="Api\Image.Api.h" />
     <ClInclude Include="Api\ImageList.Api.h" />
     <ClInclude Include="Api\ImageSet.Api.h" />
@@ -495,6 +497,7 @@
     <ClInclude Include="GridSizer.h" />
     <ClInclude Include="GroupBox.h" />
     <ClInclude Include="HatchBrush.h" />
+    <ClInclude Include="IconSet.h" />
     <ClInclude Include="IdManager.h" />
     <ClInclude Include="Image.h" />
     <ClInclude Include="ImageList.h" />
@@ -621,6 +624,7 @@
     <None Include="Api\GridSizer.inc" />
     <None Include="Api\GroupBox.inc" />
     <None Include="Api\HatchBrush.inc" />
+    <None Include="Api\IconSet.inc" />
     <None Include="Api\Image.inc" />
     <None Include="Api\ImageList.inc" />
     <None Include="Api\ImageSet.inc" />

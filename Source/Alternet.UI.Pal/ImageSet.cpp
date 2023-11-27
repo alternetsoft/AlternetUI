@@ -19,9 +19,6 @@ namespace Alternet::UI
 	{
 		if (_readOnly)
 			return;
-		wxIcon icon;
-		icon.CopyFromBitmap(image->GetBitmap());
-		_iconBundle.AddIcon(icon);
 		_bitmaps.push_back(image->GetBitmap());
 		InvalidateBitmapBundle();
 	}
@@ -35,8 +32,6 @@ namespace Alternet::UI
 
 		Image::EnsureImageHandlersInitialized();
 
-		managedInputStream.SeekI(0);
-		_iconBundle.AddIcon(managedInputStream);
 		managedInputStream.SeekI(0);
 		_bitmaps.push_back(wxBitmap(managedInputStream));
 		InvalidateBitmapBundle();
@@ -57,7 +52,6 @@ namespace Alternet::UI
 		if (_readOnly || _bitmaps.empty())
 			return;
 		_bitmaps.clear();
-		_iconBundle = wxIconBundle();
 		InvalidateBitmapBundle();
 	}
 
@@ -71,7 +65,9 @@ namespace Alternet::UI
 
 	wxIconBundle ImageSet::GetIconBundle()
 	{
-		return _iconBundle;
+		auto icons = wxIconBundle();
+
+		return icons;
 	}
 	
 	void ImageSet::InitImage(Image* image, int width, int height)

@@ -11,7 +11,7 @@ namespace ExplorerUISample
     {
         public MainWindow()
         {
-            Icon = ImageSet.FromUrlOrNull("embres:ExplorerUISample.Sample.ico");
+            Icon = new("embres:ExplorerUISample.Sample.ico");
 
             InitializeComponent();
 

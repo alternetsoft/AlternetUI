@@ -19,7 +19,7 @@ namespace CustomControlsSample
         {
             Name = "MainWindow";
 
-            Icon = ImageSet.FromUrlOrNull("embres:CustomControlsSample.Sample.ico");
+            Icon = new("embres:CustomControlsSample.Sample.ico");
 
             DataContext = data;
 
