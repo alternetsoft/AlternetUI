@@ -76,6 +76,20 @@ namespace Alternet::UI
 
         inline bool operator==(const Int32Size& rhs) { return Width == rhs.Width && Height == rhs.Height; }
         inline bool operator!=(const Int32Size& rhs) { return !(*this == rhs); }
+
+        std::string ToString() const
+        {
+            std::string w = std::to_string(Width);
+            std::string h = std::to_string(Height);
+
+            std::string prefix("(");
+            std::string suffix(")");
+            std::string comma(", ");
+
+            std::string result = prefix + w + comma + h + suffix;
+
+            return result;
+        }
     };
 
     struct Size
@@ -110,7 +124,7 @@ namespace Alternet::UI
 
             std::string prefix("(");
             std::string suffix(")");
-            std::string comma(",");
+            std::string comma(", ");
 
             std::string result = prefix + w + comma + h + suffix;
 
@@ -134,6 +148,20 @@ namespace Alternet::UI
 
         inline bool operator==(const Int32Point& rhs) { return X == rhs.X && Y == rhs.Y; }
         inline bool operator!=(const Int32Point& rhs) { return !(*this == rhs); }
+
+        std::string ToString() const
+        {
+            std::string x = std::to_string(X);
+            std::string y = std::to_string(Y);
+
+            std::string prefix("(");
+            std::string suffix(")");
+            std::string comma(", ");
+
+            std::string result = prefix + x + comma + y + suffix;
+
+            return result;
+        }
     };
 
     struct Point
@@ -153,6 +181,20 @@ namespace Alternet::UI
 
         inline bool operator==(const Point& rhs) { return X == rhs.X && Y == rhs.Y; }
         inline bool operator!=(const Point& rhs) { return !(*this == rhs); }
+
+        std::string ToString() const
+        {
+            std::string x = std::to_string(X);
+            std::string y = std::to_string(Y);
+
+            std::string prefix("(");
+            std::string suffix(")");
+            std::string comma(", ");
+
+            std::string result = prefix + x + comma + y + suffix;
+
+            return result;
+        }
     };
 
     struct Int32Rect
@@ -184,6 +226,22 @@ namespace Alternet::UI
         { return X == rhs.X && Y == rhs.Y && Width == rhs.Width && Height == rhs.Height; }
         
         inline bool operator!=(const Int32Rect& rhs) { return !(*this == rhs); }
+
+        std::string ToString() const
+        {
+            std::string x = std::to_string(X);
+            std::string y = std::to_string(Y);
+            std::string width = std::to_string(Width);
+            std::string height = std::to_string(Height);
+
+            std::string prefix("(");
+            std::string suffix(")");
+            std::string comma(", ");
+
+            std::string result = prefix + x + comma + y + comma + width + comma + height + suffix;
+
+            return result;
+        }
     };
 
     struct Rect
@@ -214,6 +272,22 @@ namespace Alternet::UI
         { return X == rhs.X && Y == rhs.Y && Width == rhs.Width && Height == rhs.Height; }
         
         inline bool operator!=(const Rect& rhs) { return !(*this == rhs); }
+
+        std::string ToString() const
+        {
+            std::string x = std::to_string(X);
+            std::string y = std::to_string(Y);
+            std::string width = std::to_string(Width);
+            std::string height = std::to_string(Height);
+
+            std::string prefix("(");
+            std::string suffix(")");
+            std::string comma(", ");
+
+            std::string result = prefix + x + comma + y + comma + width + comma + height + suffix;
+
+            return result;
+        }
     };
 
     struct Thickness
@@ -230,7 +304,23 @@ namespace Alternet::UI
         inline bool operator==(const Thickness& rhs) { return Left == rhs.Left
             && Top == rhs.Top && Right == rhs.Right && Bottom == rhs.Bottom; }
         inline bool operator!=(const Thickness& rhs) { return !(*this == rhs); }
-    };   
+
+        std::string ToString() const
+        {
+            std::string v1 = std::to_string(Left);
+            std::string v2 = std::to_string(Top);
+            std::string v3 = std::to_string(Right);
+            std::string v4 = std::to_string(Bottom);
+
+            std::string prefix("(");
+            std::string suffix(")");
+            std::string comma(", ");
+
+            std::string result = prefix + v1 + comma + v2 + comma + v3 + comma + v4 + suffix;
+
+            return result;
+        }
+    };
 
 
     struct Color
