@@ -98,7 +98,6 @@ namespace PropertyGridSample
             PropGrid.ProcessException += PropertyGrid_ProcessException;
             InitIgnorePropNames(PropGrid.IgnorePropNames);
             PropGrid.CreateStyleEx = PropertyGridCreateStyleEx.AlwaysAllowFocus;
-            panel.ActionsControl.Required();
 
             Icon = new("embres:PropertyGridSample.Sample.ico");
 
@@ -109,6 +108,7 @@ namespace PropertyGridSample
             panel.LeftTreeView.SelectionChanged += ControlsListBox_SelectionChanged;
             panel.LogControl.Required();
             panel.PropGrid.Required();
+            panel.ActionsControl.Required();
 
             controlPanel.Parent = controlPanelBorder;
 
@@ -160,10 +160,35 @@ namespace PropertyGridSample
             controlPanel.DragStart += ControlPanel_DragStart;
 
             panel.WriteWelcomeLogMessages();
+
+            panel.PropGrid.GotFocus += PropGrid_GotFocus;
+            panel.ActionsControl.GotFocus += ActionsControl_GotFocus;
+            panel.ActionsControl.DisableRecreate();
+        }
+
+        private void ActionsControl_GotFocus(object? sender, EventArgs e)
+        {
+            panel.RemoveActions();
+            if (panel.LeftTreeView.SelectedItem is not ControlListBoxItem item)
+                return;
+            var type = item.InstanceType;
+            panel.AddActions(type);
+        }
+
+        private void PropGrid_GotFocus(object? sender, EventArgs e)
+        {
+            panel.PropGrid.SetSplitterLeft();
         }
 
         private static void Designer_MouseLeftButtonDown(object? sender, MouseButtonEventArgs e)
         {
+            /*if(sender is Control control)
+            {
+                var name = control.Name ?? control.GetType().Name;
+                Application.LogNameValue("MouseLeftButtonDown", name);
+            }*/
+
+            /*
             if (sender is not GroupBox groupBox)
                 return;
             Application.LogNameValue("groupBox.GetTopBorderForSizer", groupBox.GetTopBorderForSizer());
@@ -171,6 +196,7 @@ namespace PropertyGridSample
             Application.LogNameValue("groupBox.IntrinsicPreferredSizePadding", groupBox.IntrinsicPreferredSizePadding);
             Application.LogNameValue("groupBox.Padding", groupBox.Padding);
             Application.LogNameValue("groupBox.IntrinsicLayoutPadding", groupBox.IntrinsicLayoutPadding);
+            */
         }
 
         internal bool LogSize { get; set; } = false;
@@ -268,14 +294,14 @@ namespace PropertyGridSample
                 {
                     SetBackground(SystemColors.Window);
                     InitDefaultPropertyGrid();
-                    panel.RemoveActions();
+                    //panel.RemoveActions();
                 }
                 else
                 {
                     SetBackground(SystemColors.Control);
                     PropGrid.SetProps(item.PropInstance, true);
-                    panel.RemoveActions();
-                    panel.AddActions(type);
+                    //panel.RemoveActions();
+                    //panel.AddActions(type);
                 }
             }
 

@@ -21,7 +21,6 @@ namespace PropertyGridSample
         {
             PropertyGrid.AddSimpleAction<PictureBox>("Open image", PictureBoxLoadImageFromFile);
 
-
             void Fn()
             {
                 bool logAddedControls = false;
