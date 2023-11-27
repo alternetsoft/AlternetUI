@@ -435,6 +435,7 @@ namespace Alternet.UI
                     };
                     actionsControl.MouseDoubleClick += Actions_MouseDoubleClick;
                     actionsControl.Parent = RightNotebook;
+                    actionsControl.Add("Hello");
                     actionsPage = RightNotebook.AddPage(
                         actionsControl,
                         CommonStrings.Default.NotebookTabTitleActions);
@@ -510,6 +511,31 @@ namespace Alternet.UI
         public virtual void WriteWelcomeLogMessages()
         {
             LogUtils.DebugLogVersion();
+        }
+
+        /// <summary>
+        /// Adds simple actions for <paramref name="type"/>.
+        /// </summary>
+        /// <param name="type">Type for which required simple actions are registered.</param>
+        public virtual void AddActions(Type type)
+        {
+            var actions = PropertyGrid.GetSimpleActions(type);
+            if (actions is null)
+                return;
+            foreach (var action in actions)
+            {
+                AddAction(action.Item1, action.Item2);
+            }
+        }
+
+        /// <summary>
+        /// Removes all actions from the <see cref="ActionsControl"/>
+        /// </summary>
+        public virtual void RemoveActions()
+        {
+            if (actionsControl is null)
+                return;
+            actionsControl.RemoveAll();
         }
 
         /// <summary>
