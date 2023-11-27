@@ -253,16 +253,6 @@ namespace Alternet.UI
             }
         }
 
-        internal override void DefaultPaint(DrawingContext dc, Rect rect)
-        {
-            BeforePaint(dc, rect);
-
-            DrawDefaultBackground(dc, rect);
-            DrawDefaultBorder(dc, rect);
-
-            AfterPaint(dc, rect);
-        }
-
         /// <inheritdoc cref="BorderSettings.SetColors"/>
         public void SetColors(Color left, Color top, Color right, Color bottom)
         {
@@ -275,6 +265,16 @@ namespace Alternet.UI
         {
             var width = Normal.Width;
             return base.GetPreferredSize(availableSize) + (width.Horizontal, width.Vertical);
+        }
+
+        internal override void DefaultPaint(DrawingContext dc, Rect rect)
+        {
+            BeforePaint(dc, rect);
+
+            DrawDefaultBackground(dc, rect);
+            DrawDefaultBorder(dc, rect);
+
+            AfterPaint(dc, rect);
         }
 
         /// <summary>

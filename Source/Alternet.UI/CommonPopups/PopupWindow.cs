@@ -43,10 +43,6 @@ namespace Alternet.UI
             Disposed += PopupWindow_Disposed;
         }
 
-        private void PopupWindow_Disposed(object? sender, EventArgs e)
-        {
-        }
-
         /// <summary>
         /// Gets or sets default border of the <see cref="PopupWindow"/>.
         /// </summary>
@@ -214,7 +210,7 @@ namespace Alternet.UI
             Show();
             FocusChildControl();
 
-            Application.LogNameValueIf("Popup:", Location,LogDebugInfo);
+            Application.LogNameValueIf("Popup:", Location, LogDebugInfo);
         }
 
         /// <summary>
@@ -317,6 +313,10 @@ namespace Alternet.UI
                 e.Handled = true;
                 HidePopup(ModalResult.Accepted);
             }
+        }
+
+        private void PopupWindow_Disposed(object? sender, EventArgs e)
+        {
         }
 
         private void Popup_Deactivated(object? sender, EventArgs e)

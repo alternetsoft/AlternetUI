@@ -29,7 +29,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Creates properties popup window. 
+        /// Creates properties popup window.
         /// </summary>
         /// <remarks>
         /// In order to use properties popup window you can call <see cref="PropertyGrid.SetProps"/>
@@ -49,9 +49,9 @@ namespace Alternet.UI
                 HideOnEnter = false,
                 HideOnClick = false,
                 HideOnDoubleClick = false,
-                HideOnDeactivate = false
+                HideOnDeactivate = false,
+                StatusBar = new(),
             };
-            popupWindowProps.StatusBar = new();
             popupWindowProps.Border.HasBorder = false;
             popupWindowProps.MainControl.SuggestedInitDefaults();
             popupWindowProps.MainControl.ApplyFlags |= PropertyGridApplyFlags.PropInfoSetValue

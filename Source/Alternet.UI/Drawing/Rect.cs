@@ -551,9 +551,11 @@ namespace Alternet.Drawing
         /// <returns></returns>
         public readonly Rect CenterIn(Rect r, bool centerHorz = true, bool centerVert = true)
         {
-            return new Rect(centerHorz ? r.x + (r.width - width)/2 : x,
-                          centerVert ? r.y + (r.height - height)/2 : y,
-                          width, height);
+            return new Rect(
+                centerHorz ? r.x + ((r.width - width) / 2) : x,
+                centerVert ? r.y + ((r.height - height) / 2) : y,
+                width,
+                height);
         }
 
         /// <summary>

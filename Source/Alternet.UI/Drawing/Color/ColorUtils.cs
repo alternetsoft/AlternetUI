@@ -17,10 +17,10 @@ namespace Alternet.Drawing
         /// </summary>
         private static readonly SystemSettingsColor[] ColorValueTable =
         [
-            // "not a known color"
+            /*"not a known color"*/
             SystemSettingsColor.Max,
 
-            // "System" colors, Part 1
+            /*"System" colors, Part 1*/
             SystemSettingsColor.ActiveBorder,     // ActiveBorder
             SystemSettingsColor.ActiveCaption,     // ActiveCaption
             SystemSettingsColor.ActiveCaptionText,     // ActiveCaptionText

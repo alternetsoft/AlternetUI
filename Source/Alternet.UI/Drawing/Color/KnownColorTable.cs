@@ -31,10 +31,10 @@ namespace Alternet.Drawing
         /// </summary>
         public static readonly uint[] ColorValueTable =
         [
-            // "not a known color"
+            /*"not a known color"*/
             0,
 
-            // "System" colors, Part 1
+            /*"System" colors, Part 1*/
 #if FEATURE_WINDOWS_SYSTEM_COLORS
             (uint)(byte)Interop.User32.Win32SystemColors.ActiveBorder,
             (uint)(byte)Interop.User32.Win32SystemColors.ActiveCaption,
