@@ -46,6 +46,7 @@ namespace Alternet.UI
                 HasBorder = true,
                 Resizable = true,
                 CloseEnabled = true,
+                AlwaysOnTop = true,
                 HideOnEnter = false,
                 HideOnClick = false,
                 HideOnDoubleClick = false,
