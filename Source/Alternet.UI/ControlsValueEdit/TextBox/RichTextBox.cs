@@ -986,9 +986,16 @@ namespace Alternet.UI
         /// <summary>
         /// Inserts a new paragraph at the current insertion point. See <see cref="LineBreak"/>.
         /// </summary>
-        public bool NewLine()
+        public bool NewLine(int count = 1)
         {
-            return NativeControl.Newline();
+            for(int i = 0; i < count; i++)
+            {
+               var result = NativeControl.Newline();
+                if (!result)
+                    return false;
+            }
+
+            return true;                
         }
 
         /// <summary>
