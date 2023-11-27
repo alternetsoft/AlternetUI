@@ -501,7 +501,7 @@ namespace Alternet.UI
             };
 
             ActionsControl.Required();
-            (actionsControl as ListBox)?.Add(item);
+            actionsControl?.Add(item);
         }
 
         /// <summary>
