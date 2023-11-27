@@ -6,6 +6,9 @@ Size GetSize();
 
 Int32Size GetPixelSize();
 
+
+bool GetIsOk();
+
 void LoadFromStream(void* stream);
 void LoadSvgFromStream(void* stream, int width, int height, const Color& color);
 void Initialize(const Size& size);

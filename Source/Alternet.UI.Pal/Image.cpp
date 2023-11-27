@@ -327,6 +327,11 @@ namespace Alternet::UI
 		return toDip(_bitmap.GetSize(), nullptr);
 	}
 
+	bool Image::GetIsOk()
+	{
+		return _bitmap.IsOk();
+	}
+
 	Int32Size Image::GetPixelSize()
 	{
 		if (!_bitmap.IsOk())

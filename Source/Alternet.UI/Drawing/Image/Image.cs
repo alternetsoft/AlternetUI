@@ -1,5 +1,6 @@
 using System;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using Alternet.UI;
 
@@ -107,9 +108,31 @@ namespace Alternet.Drawing
         public Size Size => NativeImage.Size;
 
         /// <summary>
+        /// Gets image rect as (0, 0, Size.Width, Size.Height).
+        /// </summary>
+        public Rect Rect
+        {
+            get
+            {
+                var size = Size;
+                return (0, 0, size.Width, size.Height);
+            }
+        }
+
+        /// <summary>
         /// Gets the size of the image in pixels.
         /// </summary>
         public Int32Size PixelSize => NativeImage.PixelSize;
+
+        /// <summary>
+        /// Gets whether image is ok (is not disposed and has non-zero width and height).
+        /// </summary>
+        public bool IsOk => !IsEmpty;
+
+        /// <summary>
+        /// Gets whether image is empty (is disposed or has an empty width or height).
+        /// </summary>
+        public bool IsEmpty => isDisposed || !NativeImage.IsOk || Size.AnyIsEmpty;
 
         // Color.FromArgb(171, 71, 71, 71)
         // Color.FromArgb(128, 0, 0, 0)
@@ -135,6 +158,28 @@ namespace Alternet.Drawing
                 CheckDisposed();
                 return nativeImage;
             }
+        }
+
+        /// <summary>
+        /// Indicates whether the specified image is <c>null</c> or has an empty width (or height).
+        /// </summary>
+        /// <param name="image">The image to test.</param>
+        /// <returns><c>true</c> if the <paramref name="image"/> parameter is <c>null</c> or
+        /// has an empty width (or height); otherwise, <c>false</c>.</returns>
+        public static bool IsNullOrEmpty([NotNullWhen(false)] Image? image)
+        {
+            return (image is null) || image.IsEmpty;
+        }
+
+        /// <summary>
+        /// Indicates whether the specified image is not <c>null</c> and has non-empty width and height.
+        /// </summary>
+        /// <param name="image">The image to test.</param>
+        /// <returns><c>true</c> if the <paramref name="image"/> parameter is not <c>null</c> and
+        /// has non-empty width and height; otherwise, <c>false</c>.</returns>
+        public static bool IsNotNullAndOk([NotNullWhen(true)] Image? image)
+        {
+            return (image is not null) && image.IsOk;
         }
 
         /// <summary>

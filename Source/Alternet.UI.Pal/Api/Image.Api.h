@@ -25,6 +25,11 @@ ALTERNET_UI_API Int32Size_C Image_GetPixelSize_(Image* obj)
     return obj->GetPixelSize();
 }
 
+ALTERNET_UI_API c_bool Image_GetIsOk_(Image* obj)
+{
+    return obj->GetIsOk();
+}
+
 ALTERNET_UI_API void Image_LoadFromStream_(Image* obj, void* stream)
 {
     obj->LoadFromStream(stream);

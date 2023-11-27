@@ -43,6 +43,16 @@ namespace Alternet.UI.Native
             
         }
         
+        public bool IsOk
+        {
+            get
+            {
+                CheckDisposed();
+                return NativeApi.Image_GetIsOk_(NativePointer);
+            }
+            
+        }
+        
         public void LoadFromStream(InputStream stream)
         {
             CheckDisposed();
@@ -99,6 +109,9 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern Alternet.Drawing.Int32Size Image_GetPixelSize_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool Image_GetIsOk_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Image_LoadFromStream_(IntPtr obj, IntPtr stream);
