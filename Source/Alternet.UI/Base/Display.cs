@@ -176,10 +176,62 @@ namespace Alternet.UI
         {
             if (control is null)
             {
-                return value / ScaleFactor;
+                var scaleFactor = ScaleFactor;
+                if (scaleFactor == 1)
+                    return value;
+                else
+                    return value / scaleFactor;
             }
             else
                 return control.PixelToDip(value);
+        }
+
+        /// <summary>
+        /// Converts device-independent units (1/96th inch per unit) to pixels.
+        /// </summary>
+        /// <param name="value">Value in device-independent units.</param>
+        /// <returns></returns>
+        public int PixelFromDip(double value)
+        {
+            if (control is null)
+            {
+                var scaleFactor = ScaleFactor;
+                if (scaleFactor == 1)
+                    return (int)value;
+                return (int)Math.Round(value * scaleFactor);
+            }
+            else
+                return control.PixelFromDip(value);
+        }
+
+        /// <summary>
+        /// Converts device-independent units (1/96th inch per unit) to pixels.
+        /// </summary>
+        /// <param name="value">Value in device-independent units.</param>
+        /// <returns></returns>
+        public Int32Size PixelFromDip(Size value)
+        {
+            return new(PixelFromDip(value.Width), PixelFromDip(value.Height));
+        }
+
+        /// <summary>
+        /// Converts device-independent units (1/96th inch per unit) to pixels.
+        /// </summary>
+        /// <param name="value">Value in device-independent units.</param>
+        /// <returns></returns>
+        public Int32Point PixelFromDip(Point value)
+        {
+            return new(PixelFromDip(value.X), PixelFromDip(value.Y));
+        }
+
+        /// <summary>
+        /// Converts device-independent units (1/96th inch per unit) to pixels.
+        /// </summary>
+        /// <param name="value">Value in device-independent units.</param>
+        /// <returns></returns>
+        public Int32Rect PixelFromDip(Rect value)
+        {
+            return new(PixelFromDip(value.Location), PixelFromDip(value.Size));
         }
 
         /// <summary>
