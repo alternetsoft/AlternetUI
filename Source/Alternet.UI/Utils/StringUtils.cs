@@ -113,7 +113,7 @@ namespace Alternet.UI
         /// <param name="suffix">Suffix string to add after items text.</param>
         /// <param name="separator">Separator string to add between each item text.</param>
         public static string ToString<T>(
-            T[] items,
+            IEnumerable<T> items,
             string? prefix = default,
             string? suffix = default,
             string? separator = default)
@@ -121,9 +121,6 @@ namespace Alternet.UI
             prefix ??= "(";
             suffix ??= ")";
             separator ??= ", ";
-            var length = items.Length;
-            if (length == 0)
-                return $"{prefix}{suffix}";
             string result = string.Empty;
             foreach(var item in items)
             {
@@ -132,6 +129,9 @@ namespace Alternet.UI
                 else
                     result += $"{separator}{item}";
             }
+
+            if (result == string.Empty)
+                return $"{prefix}{suffix}";
 
             result += suffix;
 
