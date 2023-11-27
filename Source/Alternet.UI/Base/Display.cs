@@ -82,6 +82,18 @@ namespace Alternet.UI
         public Int32Rect ClientArea => Native.WxOtherFactory.DisplayGetClientArea(Handle);
 
         /// <summary>
+        /// Gets whether display height is bigger than width.
+        /// </summary>
+        public bool IsVertical
+        {
+            get
+            {
+                var clientArea = ClientArea;
+                return clientArea.Height > clientArea.Width;
+            }
+        }
+
+        /// <summary>
         /// Gets the client area of the display in the
         /// device-independent units (1/96th inch per unit).
         /// </summary>
@@ -146,6 +158,7 @@ namespace Alternet.UI
                 method($"DPI: {display.DPI}");
                 method($"ScaleFactor: {display.ScaleFactor}");
                 method($"IsPrimary: {display.IsPrimary}");
+                method($"IsVertical: {display.IsVertical}");
                 method($"ClientArea: {display.ClientArea}");
                 method($"Geometry: {display.Geometry}");
                 method($"PixelToDip(100): {display.PixelToDip(100)}");
