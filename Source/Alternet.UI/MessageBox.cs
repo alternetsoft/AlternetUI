@@ -10,7 +10,7 @@ namespace Alternet.UI
     /// </summary>
     /// <remarks>
     /// To display a message box, call the static method
-    /// <see cref="Show(Window, string, string, MessageBoxButtons, MessageBoxIcon, MessageBoxDefaultButton)"/>.
+    /// <see cref="Show(Window, object, string, MessageBoxButtons, MessageBoxIcon, MessageBoxDefaultButton)"/>.
     /// The title, message, buttons, and icons
     /// displayed in the message box are determined by parameters that you pass to this method.
     /// </remarks>
@@ -32,7 +32,7 @@ namespace Alternet.UI
         /// <returns>One of the <see cref="MessageBoxResult"/> values.</returns>
         public static MessageBoxResult Show(
             Window? owner,
-            string text,
+            object? text = null,
             string? caption = null,
             MessageBoxButtons buttons = MessageBoxButtons.OK,
             MessageBoxIcon icon = MessageBoxIcon.Information,
@@ -50,7 +50,7 @@ namespace Alternet.UI
                 ((NativeWindowHandler)owner.Handler).NativeControl;
             return (MessageBoxResult)Native.MessageBox.Show(
                 nativeOwner,
-                text,
+                text?.ToString() ?? string.Empty,
                 caption,
                 (Native.MessageBoxButtons)buttons,
                 (Native.MessageBoxIcon)icon,
@@ -71,7 +71,7 @@ namespace Alternet.UI
         /// that specifies a default button for the message box.</param>
         /// <returns>One of the <see cref="MessageBoxResult"/> values.</returns>
         public static MessageBoxResult Show(
-            string text,
+            object? text = null,
             string? caption = null,
             MessageBoxButtons buttons = MessageBoxButtons.OK,
             MessageBoxIcon icon = MessageBoxIcon.Information,
