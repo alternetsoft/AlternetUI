@@ -1,0 +1,4 @@
+- Open PowerShell in administrator mode
+- Run: set-executionpolicy unrestricted
+- Open a regular PowerShell window and run your script.
+- Make sure to run set-ExecutionPolicy default once you're done, or you will be exposed to security risks.
