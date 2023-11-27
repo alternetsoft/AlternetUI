@@ -2071,6 +2071,7 @@ namespace Alternet::UI
         ControlId_WebBrowser = 44,
         ControlId_Other = 45,
         ControlId_Window = 46,
+        ControlId_MultilineTextBox = 47,
     };
 
 
