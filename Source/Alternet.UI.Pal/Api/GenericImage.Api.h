@@ -4,7 +4,6 @@
 
 #include "GenericImage.h"
 #include "InputStream.h"
-#include "Int32Point&.h"
 #include "OutputStream.h"
 #include "ApiUtils.h"
 #include "Exceptions.h"
@@ -16,24 +15,19 @@ ALTERNET_UI_API GenericImage* GenericImage_Create_()
     return new GenericImage();
 }
 
-ALTERNET_UI_API void* GenericImage_FindHandler_(const char16_t* name)
+ALTERNET_UI_API void* GenericImage_FindHandlerByExt_(const char16_t* extension, int bitmapType)
 {
-    return GenericImage::FindHandler(name);
+    return GenericImage::FindHandlerByExt(extension, bitmapType);
 }
 
-ALTERNET_UI_API void* GenericImage_FindHandler_(const char16_t* extension, int bitmapType)
+ALTERNET_UI_API void* GenericImage_FindHandlerByBitmapType_(int bitmapType)
 {
-    return GenericImage::FindHandler(extension, bitmapType);
+    return GenericImage::FindHandlerByBitmapType(bitmapType);
 }
 
-ALTERNET_UI_API void* GenericImage_FindHandler_(int bitmapType)
+ALTERNET_UI_API void* GenericImage_FindHandlerByMime_(const char16_t* mimetype)
 {
-    return GenericImage::FindHandler(bitmapType);
-}
-
-ALTERNET_UI_API void* GenericImage_FindHandlerMime_(const char16_t* mimetype)
-{
-    return GenericImage::FindHandlerMime(mimetype);
+    return GenericImage::FindHandlerByMime(mimetype);
 }
 
 ALTERNET_UI_API void GenericImage_InsertHandler_(void* handler)
@@ -76,6 +70,11 @@ ALTERNET_UI_API c_bool GenericImage_CreateAlphaData_(void* handle, int width, in
     return GenericImage::CreateAlphaData(handle, width, height, data, alpha, static_data);
 }
 
+ALTERNET_UI_API void GenericImage_SetAlphaData_(void* handle, void* alpha, c_bool static_data)
+{
+    GenericImage::SetAlphaData(handle, alpha, static_data);
+}
+
 ALTERNET_UI_API void GenericImage_SetData_(void* handle, void* data, c_bool static_data)
 {
     GenericImage::SetData(handle, data, static_data);
@@ -86,49 +85,44 @@ ALTERNET_UI_API void GenericImage_SetDataWithSize_(void* handle, void* data, int
     GenericImage::SetDataWithSize(handle, data, new_width, new_height, static_data);
 }
 
-ALTERNET_UI_API void GenericImage_SetAlpha_(void* handle, void* alpha, c_bool static_data)
+ALTERNET_UI_API void* GenericImage_CreateImage_()
 {
-    GenericImage::SetAlpha(handle, alpha, static_data);
+    return GenericImage::CreateImage();
 }
 
-ALTERNET_UI_API void* GenericImage_CreateGenericImage_()
+ALTERNET_UI_API void* GenericImage_CreateImageWithSize_(int width, int height, c_bool clear)
 {
-    return GenericImage::CreateGenericImage();
+    return GenericImage::CreateImageWithSize(width, height, clear);
 }
 
-ALTERNET_UI_API void* GenericImage_CreateGenericImageWithSize_(int width, int height, c_bool clear)
+ALTERNET_UI_API void* GenericImage_CreateImageFromFileWithBitmapType_(const char16_t* name, int bitmapType, int index)
 {
-    return GenericImage::CreateGenericImageWithSize(width, height, clear);
+    return GenericImage::CreateImageFromFileWithBitmapType(name, bitmapType, index);
 }
 
-ALTERNET_UI_API void* GenericImage_CreateGenericImageFromFileWithBitmapType_(const char16_t* name, int bitmapType, int index)
+ALTERNET_UI_API void* GenericImage_CreateImageFromFileWithMimeType_(const char16_t* name, const char16_t* mimetype, int index)
 {
-    return GenericImage::CreateGenericImageFromFileWithBitmapType(name, bitmapType, index);
+    return GenericImage::CreateImageFromFileWithMimeType(name, mimetype, index);
 }
 
-ALTERNET_UI_API void* GenericImage_CreateGenericImageFromFileWithMimeType_(const char16_t* name, const char16_t* mimetype, int index)
+ALTERNET_UI_API void* GenericImage_CreateImageFromStreamWithBitmapData_(void* stream, int bitmapType, int index)
 {
-    return GenericImage::CreateGenericImageFromFileWithMimeType(name, mimetype, index);
+    return GenericImage::CreateImageFromStreamWithBitmapData(stream, bitmapType, index);
 }
 
-ALTERNET_UI_API void* GenericImage_CreateGenericImageFromStreamWithBitmapData_(void* stream, int bitmapType, int index)
+ALTERNET_UI_API void* GenericImage_CreateImageFromStreamWithMimeType_(void* stream, const char16_t* mimetype, int index)
 {
-    return GenericImage::CreateGenericImageFromStreamWithBitmapData(stream, bitmapType, index);
+    return GenericImage::CreateImageFromStreamWithMimeType(stream, mimetype, index);
 }
 
-ALTERNET_UI_API void* GenericImage_CreateGenericImageFromStreamWithMimeType_(void* stream, const char16_t* mimetype, int index)
+ALTERNET_UI_API void* GenericImage_CreateImageWithSizeAndData_(int width, int height, void* data, c_bool static_data)
 {
-    return GenericImage::CreateGenericImageFromStreamWithMimeType(stream, mimetype, index);
+    return GenericImage::CreateImageWithSizeAndData(width, height, data, static_data);
 }
 
-ALTERNET_UI_API void* GenericImage_CreateGenericImage_(int width, int height, void* data, c_bool static_data)
+ALTERNET_UI_API void* GenericImage_CreateImageWithAlpha_(int width, int height, void* data, void* alpha, c_bool static_data)
 {
-    return GenericImage::CreateGenericImage(width, height, data, static_data);
-}
-
-ALTERNET_UI_API void* GenericImage_CreateGenericImageWithAlpha_(int width, int height, void* data, void* alpha, c_bool static_data)
-{
-    return GenericImage::CreateGenericImageWithAlpha(width, height, data, alpha, static_data);
+    return GenericImage::CreateImageWithAlpha(width, height, data, alpha, static_data);
 }
 
 ALTERNET_UI_API void GenericImage_DeleteImage_(void* handle)
@@ -186,9 +180,9 @@ ALTERNET_UI_API void GenericImage_SetRGBRect_(void* handle, Int32Rect rect, uint
     GenericImage::SetRGBRect(handle, rect, red, green, blue);
 }
 
-ALTERNET_UI_API void GenericImage_SetType_(void* handle, int type)
+ALTERNET_UI_API void GenericImage_SetImageType_(void* handle, int type)
 {
-    GenericImage::SetType(handle, type);
+    GenericImage::SetImageType(handle, type);
 }
 
 ALTERNET_UI_API void GenericImage_SetDefaultLoadFlags_(int flags)
@@ -206,9 +200,9 @@ ALTERNET_UI_API void* GenericImage_Copy_(void* handle)
     return GenericImage::Copy(handle);
 }
 
-ALTERNET_UI_API c_bool GenericImage_Create_(void* handle, int width, int height, c_bool clear)
+ALTERNET_UI_API c_bool GenericImage_CreateFreshImage_(void* handle, int width, int height, c_bool clear)
 {
-    return GenericImage::Create(handle, width, height, clear);
+    return GenericImage::CreateFreshImage(handle, width, height, clear);
 }
 
 ALTERNET_UI_API void GenericImage_Clear_(void* handle, uint8_t value)
@@ -266,11 +260,6 @@ ALTERNET_UI_API void* GenericImage_Resize_(void* handle, Int32Size size, Int32Po
     return GenericImage::Resize(handle, size, pos, red, green, blue);
 }
 
-ALTERNET_UI_API void* GenericImage_Rotate_(void* handle, double angle, Int32Point rotationCentre, c_bool interpolating, Int32Point&* offsetAfterRotation)
-{
-    return GenericImage::Rotate(handle, angle, rotationCentre, interpolating, offsetAfterRotation);
-}
-
 ALTERNET_UI_API void* GenericImage_Rotate90_(void* handle, c_bool clockwise)
 {
     return GenericImage::Rotate90(handle, clockwise);
@@ -316,14 +305,14 @@ ALTERNET_UI_API c_bool GenericImage_ConvertAlphaToMask_(void* handle, uint8_t th
     return GenericImage::ConvertAlphaToMask(handle, threshold);
 }
 
-ALTERNET_UI_API c_bool GenericImage_ConvertAlphaToMask_(void* handle, uint8_t mr, uint8_t mg, uint8_t mb, uint8_t threshold)
+ALTERNET_UI_API c_bool GenericImage_ConvertAlphaToMaskUseColor_(void* handle, uint8_t mr, uint8_t mg, uint8_t mb, uint8_t threshold)
 {
-    return GenericImage::ConvertAlphaToMask(handle, mr, mg, mb, threshold);
+    return GenericImage::ConvertAlphaToMaskUseColor(handle, mr, mg, mb, threshold);
 }
 
-ALTERNET_UI_API void* GenericImage_ConvertToGreyscale_(void* handle, double weight_r, double weight_g, double weight_b)
+ALTERNET_UI_API void* GenericImage_ConvertToGreyscaleEx_(void* handle, double weight_r, double weight_g, double weight_b)
 {
-    return GenericImage::ConvertToGreyscale(handle, weight_r, weight_g, weight_b);
+    return GenericImage::ConvertToGreyscaleEx(handle, weight_r, weight_g, weight_b);
 }
 
 ALTERNET_UI_API void* GenericImage_ConvertToGreyscale_(void* handle)
@@ -411,9 +400,9 @@ ALTERNET_UI_API void* GenericImage_GetSubImage_(void* handle, Int32Rect rect)
     return GenericImage::GetSubImage(handle, rect);
 }
 
-ALTERNET_UI_API int GenericImage_GetBitmapType_(void* handle)
+ALTERNET_UI_API int GenericImage_GetImageType_(void* handle)
 {
-    return GenericImage::GetBitmapType(handle);
+    return GenericImage::GetImageType(handle);
 }
 
 ALTERNET_UI_API c_bool GenericImage_HasAlpha_(void* handle)
@@ -441,9 +430,9 @@ ALTERNET_UI_API c_bool GenericImage_IsTransparent_(void* handle, int x, int y, u
     return GenericImage::IsTransparent(handle, x, y, threshold);
 }
 
-ALTERNET_UI_API c_bool GenericImage_LoadFileFromStreamWithBitmapType_(void* handle, void* stream, int bitmapType, int index)
+ALTERNET_UI_API c_bool GenericImage_LoadStreamWithBitmapType_(void* handle, void* stream, int bitmapType, int index)
 {
-    return GenericImage::LoadFileFromStreamWithBitmapType(handle, stream, bitmapType, index);
+    return GenericImage::LoadStreamWithBitmapType(handle, stream, bitmapType, index);
 }
 
 ALTERNET_UI_API c_bool GenericImage_LoadFileWithBitmapType_(void* handle, const char16_t* name, int bitmapType, int index)
@@ -456,14 +445,14 @@ ALTERNET_UI_API c_bool GenericImage_LoadFileWithMimeType_(void* handle, const ch
     return GenericImage::LoadFileWithMimeType(handle, name, mimetype, index);
 }
 
-ALTERNET_UI_API c_bool GenericImage_LoadFileFromStreamWithMimeType_(void* handle, void* stream, const char16_t* mimetype, int index)
+ALTERNET_UI_API c_bool GenericImage_LoadStreamWithMimeType_(void* handle, void* stream, const char16_t* mimetype, int index)
 {
-    return GenericImage::LoadFileFromStreamWithMimeType(handle, stream, mimetype, index);
+    return GenericImage::LoadStreamWithMimeType(handle, stream, mimetype, index);
 }
 
-ALTERNET_UI_API c_bool GenericImage_SaveFileToStreamWithMimeType_(void* handle, void* stream, const char16_t* mimetype)
+ALTERNET_UI_API c_bool GenericImage_SaveStreamWithMimeType_(void* handle, void* stream, const char16_t* mimetype)
 {
-    return GenericImage::SaveFileToStreamWithMimeType(handle, stream, mimetype);
+    return GenericImage::SaveStreamWithMimeType(handle, stream, mimetype);
 }
 
 ALTERNET_UI_API c_bool GenericImage_SaveFileWithBitmapType_(void* handle, const char16_t* name, int bitmapType)
@@ -481,9 +470,9 @@ ALTERNET_UI_API c_bool GenericImage_SaveFile_(void* handle, const char16_t* name
     return GenericImage::SaveFile(handle, name);
 }
 
-ALTERNET_UI_API c_bool GenericImage_SaveFileToStreamWithBitmapType_(void* handle, void* stream, int type)
+ALTERNET_UI_API c_bool GenericImage_SaveStreamWithBitmapType_(void* handle, void* stream, int type)
 {
-    return GenericImage::SaveFileToStreamWithBitmapType(handle, stream, type);
+    return GenericImage::SaveStreamWithBitmapType(handle, stream, type);
 }
 
 ALTERNET_UI_API c_bool GenericImage_CanRead_(const char16_t* filename)
@@ -514,5 +503,10 @@ ALTERNET_UI_API void GenericImage_AddHandler_(void* handler)
 ALTERNET_UI_API void GenericImage_CleanUpHandlers_()
 {
     GenericImage::CleanUpHandlers();
+}
+
+ALTERNET_UI_API void* GenericImage_FindHandlerByName_(const char16_t* name)
+{
+    return GenericImage::FindHandlerByName(name);
 }
 

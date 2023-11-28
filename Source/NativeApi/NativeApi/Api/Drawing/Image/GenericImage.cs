@@ -9,35 +9,35 @@ namespace NativeApi.Api
     public class GenericImage
     {
         // Creates an empty wxImage object without an alpha channel.
-        public static IntPtr CreateGenericImage() => default;
+        public static IntPtr CreateImage() => default;
 
         // Creates an image with the given size and clears it if requested.
-        public static IntPtr CreateGenericImageWithSize(int width, int height, bool clear = true) => default;
+        public static IntPtr CreateImageWithSize(int width, int height, bool clear = true) => default;
 
         // Creates an image from a file.
-        public static IntPtr CreateGenericImageFromFileWithBitmapType(string name,
+        public static IntPtr CreateImageFromFileWithBitmapType(string name,
             int bitmapType /*= wxBITMAP_TYPE_ANY*/,
             int index = -1) => default;
 
         // Creates an image from a file using MIME-types to specify the type.
-        public static IntPtr CreateGenericImageFromFileWithMimeType(string name, string mimetype,
+        public static IntPtr CreateImageFromFileWithMimeType(string name, string mimetype,
             int index = -1) => default;
 
         // Creates an image from a stream.
-        public static IntPtr CreateGenericImageFromStreamWithBitmapData(InputStream stream,
+        public static IntPtr CreateImageFromStreamWithBitmapData(InputStream stream,
             int bitmapType /*= wxBITMAP_TYPE_ANY*/, int index = -1) => default;
 
         // Creates an image from a stream using MIME-types to specify the type.
-        public static IntPtr CreateGenericImageFromStreamWithMimeType(InputStream stream,
+        public static IntPtr CreateImageFromStreamWithMimeType(InputStream stream,
             string mimetype,
             int index = -1) => default;
 
         // Creates an image from data in memory.
-        public static IntPtr CreateGenericImage(int width, int height, IntPtr data,
+        public static IntPtr CreateImageWithSizeAndData(int width, int height, IntPtr data,
             bool static_data = false) => default;
 
         // Creates an image from data in memory.
-        public static IntPtr CreateGenericImageWithAlpha(int width, int height, IntPtr data, IntPtr alpha,
+        public static IntPtr CreateImageWithAlpha(int width, int height, IntPtr data, IntPtr alpha,
             bool static_data = false) => default;
 
         public static void DeleteImage(IntPtr handle) { }
@@ -76,7 +76,7 @@ namespace NativeApi.Api
             byte green, byte blue) { }
 
         // Sets the type of image returned by GetType().
-        public static void SetType(IntPtr handle, int type) { }
+        public static void SetImageType(IntPtr handle, int type) { }
 
         // Sets the default value for the flags used for loading image files. 
         public static void SetDefaultLoadFlags(int flags) { } // real static
@@ -88,7 +88,7 @@ namespace NativeApi.Api
         public static IntPtr Copy(IntPtr handle) => default;
 
         // Creates a fresh image.
-        public static bool Create(IntPtr handle, int width, int height, bool clear = true) => default;
+        public static bool CreateFreshImage(IntPtr handle, int width, int height, bool clear = true) => default;
 
         // Initialize the image data with zeroes(the default) or with the byte value given as value.
         public static void Clear(IntPtr handle, byte value = 0) { }
@@ -130,10 +130,6 @@ namespace NativeApi.Api
         public static IntPtr Resize(IntPtr handle, Int32Size size, Int32Point pos, int red = -1,
             int green = -1, int blue = -1) => default;
 
-        //Rotates the image about the given point, by angle radians.
-        public static IntPtr Rotate(IntPtr handle, double angle, Int32Point rotationCentre,
-            bool interpolating /*= true*/, out Int32Point offsetAfterRotation /*= NULL*/) => default;
-
         //Returns a copy of the image rotated 90 degrees in the direction indicated by clockwise.
         public static IntPtr Rotate90(IntPtr handle, bool clockwise = true) => default;
 
@@ -169,11 +165,11 @@ namespace NativeApi.Api
 
         // If the image has alpha channel, this method converts it to mask using the
         // specified color as the mask color.
-        public static bool ConvertAlphaToMask(IntPtr handle, byte mr, byte mg, byte mb,
+        public static bool ConvertAlphaToMaskUseColor(IntPtr handle, byte mr, byte mg, byte mb,
             byte threshold /*= wxIMAGE_ALPHA_THRESHOLD*/) => default;
 
         // Returns a greyscale version of the image.
-        public static IntPtr ConvertToGreyscale(IntPtr handle, double weight_r, double weight_g,
+        public static IntPtr ConvertToGreyscaleEx(IntPtr handle, double weight_r, double weight_g,
             double weight_b) => default;
            
         //Returns a greyscale version of the image.
@@ -228,7 +224,7 @@ namespace NativeApi.Api
         public static IntPtr GetSubImage(IntPtr handle, Int32Rect rect) => default;
 
         // Gets the type of image found by LoadFile() or specified with SaveFile().
-        public static int GetBitmapType(IntPtr handle) => default;
+        public static int GetImageType(IntPtr handle) => default;
 
         // Returns true if this image has alpha channel, false otherwise.
         public static bool HasAlpha(IntPtr handle) => default;
@@ -249,7 +245,7 @@ namespace NativeApi.Api
             byte threshold /*= wxIMAGE_ALPHA_THRESHOLD*/) => default;
 
         // Loads an image from an input stream.
-        public static bool LoadFileFromStreamWithBitmapType(IntPtr handle, InputStream stream,
+        public static bool LoadStreamWithBitmapType(IntPtr handle, InputStream stream,
             int bitmapType /*= wxBITMAP_TYPE_ANY*/, int index = -1) => default;
 
         // Loads an image from a file.
@@ -261,11 +257,11 @@ namespace NativeApi.Api
             int index = -1) => default;
 
         // Loads an image from an input stream.
-        public static bool LoadFileFromStreamWithMimeType(IntPtr handle, InputStream stream,
+        public static bool LoadStreamWithMimeType(IntPtr handle, InputStream stream,
             string mimetype, int index = -1) => default;
 
         // Saves an image in the given stream.
-        public static bool SaveFileToStreamWithMimeType(IntPtr handle, OutputStream stream,
+        public static bool SaveStreamWithMimeType(IntPtr handle, OutputStream stream,
             string mimetype) => default;
 
         // Saves an image in the named file.
@@ -278,7 +274,7 @@ namespace NativeApi.Api
         public static bool SaveFile(IntPtr handle, string name) => default;
 
         // Saves an image in the given stream.
-        public static bool SaveFileToStreamWithBitmapType(IntPtr handle, OutputStream stream,
+        public static bool SaveStreamWithBitmapType(IntPtr handle, OutputStream stream,
             int type) => default;
 
         // Returns true if at least one of the available image handlers can read the file
@@ -303,16 +299,16 @@ namespace NativeApi.Api
         public static void CleanUpHandlers() { }// real static
 
         // Finds the handler with the given name.
-        public static IntPtr FindHandler(string name) => default;// real static
+        public static IntPtr FindHandlerByName(string name) => default;// real static
 
         // Finds the handler associated with the given extension and type.
-        public static IntPtr FindHandler(string extension, int bitmapType) => default;// real static
+        public static IntPtr FindHandlerByExt(string extension, int bitmapType) => default;// real static
 
         // Finds the handler associated with the given image type.
-        public static IntPtr FindHandler(int bitmapType) => default;// real static
+        public static IntPtr FindHandlerByBitmapType(int bitmapType) => default;// real static
 
         // Finds the handler associated with the given MIME type.
-        public static IntPtr FindHandlerMime(string mimetype) => default;// real static
+        public static IntPtr FindHandlerByMime(string mimetype) => default;// real static
 
         //Adds a handler at the start of the static list of format handlers.
         public static void InsertHandler(IntPtr handler) { }// real static
@@ -344,14 +340,18 @@ namespace NativeApi.Api
         public static bool CreateAlphaData(IntPtr handle, int width, int height, IntPtr data,
             IntPtr alpha, bool static_data = false) => default;
 
+        //This function is similar to SetData() and has similar restrictions.
+        public static void SetAlphaData(IntPtr handle, IntPtr alpha = default,
+            bool static_data = false)
+        { }
+
         //Sets the image data without performing checks.
         public static void SetData(IntPtr handle, IntPtr data, bool static_data = false) { }
 
         //This is an overloaded member function, provided for convenience.
-        public static void SetDataWithSize(IntPtr handle, IntPtr data, int new_width, int new_height, bool static_data = false) { }
+        public static void SetDataWithSize(IntPtr handle, IntPtr data, int new_width,
+            int new_height, bool static_data = false) { }
 
-        //This function is similar to SetData() and has similar restrictions.
-        public static void SetAlpha(IntPtr handle, IntPtr alpha = default, bool static_data = false) { }
     }
 }
 
@@ -367,7 +367,7 @@ public static wxImage::RGBValue HSVtoRGB(wxImage::HSVValue &hsv) => default;// r
 public static void 	SetPalette(wxPalette &palette){}
  
 // Creates an image from XPM data.
-public static IntPtr CreateGenericImage(char **xpmData) => default;
+public static IntPtr CreateImage(char **xpmData) => default;
 
 // Computes the histogram of the image.
 public static ulong ComputeHistogram(wxImageHistogram &histogram) => default;
@@ -384,5 +384,8 @@ public static wxPalette & 	GetPalette() => default;
 
 // Returns the static list of image format handlers.
 public static wxList & 	GetHandlers() => default;// real static
-  
- */
+
+        //Rotates the image about the given point, by angle radians.
+        public static IntPtr Rotate(IntPtr handle, double angle, Int32Point rotationCentre,
+            bool interpolating = true, out Int32Point offsetAfterRotation = NULL) => default;
+*/
