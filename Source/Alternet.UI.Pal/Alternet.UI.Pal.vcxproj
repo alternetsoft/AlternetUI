@@ -244,6 +244,7 @@
     <ClCompile Include="FlexGridSizer.cpp" />
     <ClCompile Include="Font.cpp" />
     <ClCompile Include="FontDialog.cpp" />
+    <ClCompile Include="GenericImage.cpp" />
     <ClCompile Include="GraphicsPath.cpp" />
     <ClCompile Include="GridBagSizer.cpp" />
     <ClCompile Include="GridSizer.cpp" />
@@ -367,6 +368,7 @@
     <ClInclude Include="Api\FlexGridSizer.Api.h" />
     <ClInclude Include="Api\Font.Api.h" />
     <ClInclude Include="Api\FontDialog.Api.h" />
+    <ClInclude Include="Api\GenericImage.Api.h" />
     <ClInclude Include="Api\GraphicsPath.Api.h" />
     <ClInclude Include="Api\GridBagSizer.Api.h" />
     <ClInclude Include="Api\GridSizer.Api.h" />
@@ -492,6 +494,7 @@
     <ClInclude Include="FloodFill.h" />
     <ClInclude Include="Font.h" />
     <ClInclude Include="FontDialog.h" />
+    <ClInclude Include="GenericImage.h" />
     <ClInclude Include="GraphicsPath.h" />
     <ClInclude Include="GridBagSizer.h" />
     <ClInclude Include="GridSizer.h" />
@@ -619,6 +622,7 @@
     <None Include="Api\FlexGridSizer.inc" />
     <None Include="Api\Font.inc" />
     <None Include="Api\FontDialog.inc" />
+    <None Include="Api\GenericImage.inc" />
     <None Include="Api\GraphicsPath.inc" />
     <None Include="Api\GridBagSizer.inc" />
     <None Include="Api\GridSizer.inc" />
