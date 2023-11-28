@@ -36,7 +36,7 @@ namespace Alternet.UI
         /// </summary>
         public ListBox()
         {
-           if (Application.IsWindowsOS)
+            if (Application.IsWindowsOS)
                 UserPaint = true;
 
             bool? hasBorder = AllPlatformDefaults.GetHasBorderOverride(ControlKind);
@@ -192,7 +192,9 @@ namespace Alternet.UI
         {
             get
             {
+#pragma warning disable
                 int[] sortedCopy = SelectedIndices.OrderByDescending(i => i).ToArray();
+#pragma warning restore
                 return sortedCopy;
             }
         }

@@ -87,7 +87,7 @@ namespace Alternet.UI
 
             IsMacOS = backend == WebBrowserBackendOS.MacOS;
 
-            if(IsMacOS)
+            if (IsMacOS)
             {
                 BackendOS = OperatingSystems.MacOs;
                 return;
@@ -483,7 +483,7 @@ namespace Alternet.UI
                 message,
                 CommonStrings.Default.WindowTitleApplicationAlert,
                 MessageBoxButtons.OK,
-                MessageBoxIcon.None);        
+                MessageBoxIcon.None);
         }
 
         /// <summary>
@@ -568,10 +568,10 @@ namespace Alternet.UI
 
             foreach (string s2 in result)
             {
-                if(DebugWriteLine)
+                if (DebugWriteLine)
                     Debug.WriteLine(s2);
 
-                if(evt is not null)
+                if (evt is not null)
                 {
                     args.Message = s2;
                     evt(Current, args);
@@ -671,7 +671,7 @@ namespace Alternet.UI
         {
             Log(LogUtils.SectionSeparator);
 
-            if(title is not null)
+            if (title is not null)
             {
                 Log(title);
                 Log(LogUtils.SectionSeparator);
@@ -1018,9 +1018,9 @@ namespace Alternet.UI
         {
             ~Destructor()
             {
-                if(logFileIsEnabled)
+                if (logFileIsEnabled)
                     LogUtils.LogToFileAppFinished();
             }
         }
-   }
+    }
 }

@@ -988,14 +988,14 @@ namespace Alternet.UI
         /// </summary>
         public bool NewLine(int count = 1)
         {
-            for(int i = 0; i < count; i++)
+            for (int i = 0; i < count; i++)
             {
-               var result = NativeControl.Newline();
+                var result = NativeControl.Newline();
                 if (!result)
                     return false;
             }
 
-            return true;                
+            return true;
         }
 
         /// <summary>
@@ -2992,7 +2992,7 @@ namespace Alternet.UI
         protected override void OnKeyDown(KeyEventArgs e)
         {
             base.OnKeyDown(e);
-            if(AllowAdditionalKeys)
+            if (AllowAdditionalKeys)
                 HandleAdditionalKeys(e);
         }
     }

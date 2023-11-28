@@ -122,7 +122,7 @@ namespace Alternet.UI
         /// <param name="subFolder">Name of the sub folder.</param>
         /// <remarks>
         /// Application folder is combined with the <paramref name="subFolder"/>
-        /// using <see cref="Path.Combine(string, string)"/> 
+        /// using <see cref="Path.Combine(string, string)"/>
         /// and converted to the full path using <see cref="Path.GetFullPath(string)"/>.
         /// If result path doesn't exist, an application folder is returned.
         /// </remarks>
