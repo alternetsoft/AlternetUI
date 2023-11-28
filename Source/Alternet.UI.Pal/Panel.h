@@ -10,6 +10,7 @@ namespace Alternet::UI
 #include "Api/Panel.inc"
     public:
         wxWindow* CreateWxWindowCore(wxWindow* parent) override;
+        wxWindow* CreateWxWindowUnparented() override;
 
     private:
     

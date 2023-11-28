@@ -9,7 +9,8 @@ namespace Alternet::UI
 #include "Api/ProgressBar.inc"
     public:
         wxWindow* CreateWxWindowCore(wxWindow* parent) override;
-    
+        wxWindow* CreateWxWindowUnparented() override;
+
     protected:
         virtual void OnWxWindowCreated() override;
 

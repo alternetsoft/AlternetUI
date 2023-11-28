@@ -14,7 +14,8 @@ namespace Alternet::UI
 #include "Api/SplitterPanel.inc"
     public:
         wxWindow* CreateWxWindowCore(wxWindow* parent) override;
-        
+        wxWindow* CreateWxWindowUnparented() override;
+
         SplitterPanel(long styles);
 
     private:

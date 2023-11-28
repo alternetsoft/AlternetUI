@@ -138,6 +138,11 @@ namespace Alternet::UI
         RecreateWxWindowIfNeeded();
     }
 
+    wxWindow* Button::CreateWxWindowUnparented()
+    {
+        return new wxButton2();
+    }
+
     wxWindow* Button::CreateWxWindowCore(wxWindow* parent)
     {
         long style = 0;

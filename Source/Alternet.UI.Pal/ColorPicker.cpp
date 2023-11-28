@@ -34,6 +34,8 @@ namespace Alternet::UI
     class wxColourPickerCtrl2 : public wxColourPickerCtrl, public wxWidgetExtender
     {
     public:
+        wxColourPickerCtrl2(){}
+
         wxColourPickerCtrl2(wxWindow* parent, wxWindowID id,
             const wxColour& col = *wxBLACK, const wxPoint& pos = wxDefaultPosition,
             const wxSize& size = wxDefaultSize, long style = wxCLRP_DEFAULT_STYLE,
@@ -43,6 +45,11 @@ namespace Alternet::UI
             Create(parent, id, col, pos, size, style, validator, name);
         }
     };
+
+    wxWindow* ColorPicker::CreateWxWindowUnparented()
+    {
+        return new wxColourPickerCtrl2();
+    }
 
     wxWindow* ColorPicker::CreateWxWindowCore(wxWindow* parent)
     {

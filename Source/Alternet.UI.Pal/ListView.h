@@ -12,6 +12,7 @@ namespace Alternet::UI
 #include "Api/ListView.inc"
     public:
         wxWindow* CreateWxWindowCore(wxWindow* parent) override;
+        wxWindow* CreateWxWindowUnparented() override;
 
         void OnItemSelected(wxListEvent& event);
         void OnItemDeselected(wxListEvent& event);

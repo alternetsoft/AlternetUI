@@ -18,6 +18,7 @@ namespace Alternet::UI
         public wxWidgetExtender
     {
     public:
+        wxPopupTransientWindow2(){}
         wxPopupTransientWindow2(wxWindow* parent, int style = wxBORDER_NONE)
         {
             Create(parent, style);
@@ -28,6 +29,7 @@ namespace Alternet::UI
         public wxWidgetExtender
     {
     public:
+        wxPopupWindow2(){}
         wxPopupWindow2(wxWindow* parent, int style = wxBORDER_NONE)
         {
             Create(parent, style);
@@ -45,6 +47,14 @@ namespace Alternet::UI
             return;
         _puContainsControls = value;
         RecreateWxWindowIfNeeded();
+    }
+
+    wxWindow* Popup::CreateWxWindowUnparented()
+    {
+        if (_isTransient)
+            return new wxPopupTransientWindow2();
+        else
+            return new wxPopupWindow2();
     }
 
     wxWindow* Popup::CreateWxWindowCore(wxWindow* parent)

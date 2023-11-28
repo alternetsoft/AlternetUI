@@ -66,6 +66,7 @@ namespace Alternet::UI
     class wxGauge2 : public wxGauge, public wxWidgetExtender
     {
     public:
+        wxGauge2(){}
         wxGauge2(wxWindow* parent,
             wxWindowID id,
             int range,
@@ -78,6 +79,11 @@ namespace Alternet::UI
             Create(parent, id, range, pos, size, style, validator, name);
         }
     };
+
+    wxWindow* ProgressBar::CreateWxWindowUnparented()
+    {
+        return new wxGauge2();
+    }
 
     wxWindow* ProgressBar::CreateWxWindowCore(wxWindow* parent)
     {

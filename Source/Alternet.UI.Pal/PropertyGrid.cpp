@@ -5,6 +5,7 @@ namespace Alternet::UI
 	class wxPropertyGrid2 : public wxPropertyGrid, public wxWidgetExtender
 	{
 	public:
+		wxPropertyGrid2(){}
 		wxPropertyGrid2(wxWindow* parent, wxWindowID id = wxID_ANY,
 			const wxPoint& pos = wxDefaultPosition,
 			const wxSize& size = wxDefaultSize,
@@ -14,6 +15,11 @@ namespace Alternet::UI
 		{
 		}
 	};
+
+	wxWindow* PropertyGrid::CreateWxWindowUnparented()
+	{
+		return new wxPropertyGrid2();
+	}
 
 	void PropertyGrid::KnownColorsClear()
 	{

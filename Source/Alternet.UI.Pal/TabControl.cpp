@@ -34,6 +34,7 @@ namespace Alternet::UI
     class wxNotebook2 : public wxNotebook, public wxWidgetExtender
     {
     public:
+        wxNotebook2(){}
         wxNotebook2(wxWindow* parent,
             wxWindowID id,
             const wxPoint& pos = wxDefaultPosition,
@@ -44,6 +45,11 @@ namespace Alternet::UI
             Create(parent, id, pos, size, style, name);
         }
     };
+
+    wxWindow* TabControl::CreateWxWindowUnparented()
+    {
+        return new wxNotebook2();
+    }
 
     wxWindow* TabControl::CreateWxWindowCore(wxWindow* parent)
     {

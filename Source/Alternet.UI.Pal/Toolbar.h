@@ -13,6 +13,7 @@ namespace Alternet::UI
 #include "Api/Toolbar.inc"
     public:
         wxWindow* CreateWxWindowCore(wxWindow* parent) override;
+        wxWindow* CreateWxWindowUnparented() override;
 
         wxToolBar* GetWxToolBar();
 

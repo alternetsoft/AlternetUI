@@ -9,6 +9,7 @@ namespace Alternet::UI
 #include "Api/CheckBox.inc"
 
         wxWindow* CreateWxWindowCore(wxWindow* parent) override;
+        wxWindow* CreateWxWindowUnparented() override;
         void OnCheckedChanged(wxCommandEvent& event);
 
     public:

@@ -13,6 +13,10 @@ namespace Alternet::UI
         {
             Create(parent, id, pos, size, style);
         }
+
+        wxAuiNotebook2()
+        {
+        }
     };
 
 	AuiNotebook::AuiNotebook()
@@ -207,6 +211,11 @@ namespace Alternet::UI
             return;
         _createStyle = value;
         RecreateWxWindowIfNeeded();
+    }
+
+    wxWindow* AuiNotebook::CreateWxWindowUnparented()
+    {
+        return new wxAuiNotebook2();
     }
 
     wxWindow* AuiNotebook::CreateWxWindowCore(wxWindow* parent)

@@ -15,6 +15,7 @@ namespace Alternet::UI
     public:
         wxAuiNotebook* GetNotebook();
         wxWindow* CreateWxWindowCore(wxWindow* parent) override;
+        wxWindow* CreateWxWindowUnparented() override;
         AuiNotebook(long styles);
 
         void FromEventData(wxAuiNotebookEvent& event);

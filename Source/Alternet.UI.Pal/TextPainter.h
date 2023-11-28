@@ -22,9 +22,11 @@ namespace
             TextTrimming trimming)
         {
             if (wrapping == TextWrapping::Word)
-                return WrapByWord(dc, graphicsContext, useDC, str, maxWidth, maxHeight, wrapping, trimming);
+                return WrapByWord(dc, graphicsContext, useDC, str, maxWidth, maxHeight,
+                    wrapping, trimming);
             else
-                return WrapByCharacter(dc, graphicsContext, useDC, str, maxWidth, maxHeight, wrapping, trimming);
+                return WrapByCharacter(dc, graphicsContext, useDC, str, maxWidth, maxHeight,
+                    wrapping, trimming);
         }
     
     private:
@@ -110,7 +112,8 @@ namespace
 
             lines.Add(currentLine);
 
-            return GetTrimmedString(dc, graphicsContext, useDC, lines, trimming, maxHeight, needToTrimLastLine);
+            return GetTrimmedString(dc, graphicsContext, useDC, lines, trimming, maxHeight,
+                needToTrimLastLine);
         }
 
         static void SplitToWords(const wxString& text, wxArrayString& words)
@@ -242,7 +245,8 @@ namespace
 
             lines.Add(currentLine);
 
-            return GetTrimmedString(dc, graphicsContext, useDC, lines, trimming, maxHeight, needToTrimLastLine);
+            return GetTrimmedString(dc, graphicsContext, useDC, lines, trimming, maxHeight,
+                needToTrimLastLine);
         }
 
         static wxString GetTrimmedString(
@@ -369,7 +373,8 @@ namespace Alternet::UI
                 if (!isnan(maximumWidth))
                 {
                     auto window = DrawingContext::GetWindow(_dc);
-                    str = TextWrapper::Wrap(_dc, _graphicsContext, _useDC, str, fromDip(maximumWidth, window), INT_MAX, wrapping, TextTrimming::None);
+                    str = TextWrapper::Wrap(_dc, _graphicsContext, _useDC,
+                        str, fromDip(maximumWidth, window), INT_MAX, wrapping, TextTrimming::None);
                 }
 
                 _dc->GetMultiLineTextExtent(str, &x, &y, nullptr, &wxFont);
@@ -385,7 +390,8 @@ namespace Alternet::UI
                 if (!isnan(maximumWidth))
                 {
                     auto window = DrawingContext::GetWindow(_dc);
-                    str = TextWrapper::Wrap(_dc, _graphicsContext, _useDC, str, fromDip(maximumWidth, window), INT_MAX, wrapping, TextTrimming::None);
+                    str = TextWrapper::Wrap(_dc, _graphicsContext, _useDC, str,
+                        fromDip(maximumWidth, window), INT_MAX, wrapping, TextTrimming::None);
                 }
 
                 _graphicsContext->GetTextExtent(str, &x, &y);

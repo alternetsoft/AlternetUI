@@ -26,6 +26,7 @@ namespace Alternet::UI
     class wxStaticBox2 : public wxStaticBox, public wxWidgetExtender
     {
     public:
+        wxStaticBox2(){}
         wxStaticBox2(wxWindow* parent, wxWindowID id,
             const wxString& label,
             const wxPoint& pos = wxDefaultPosition,
@@ -36,6 +37,11 @@ namespace Alternet::UI
             Create(parent, id, label, pos, size, style, name);
         }
     };
+
+    wxWindow* GroupBox::CreateWxWindowUnparented()
+    {
+        return new wxStaticBox2();
+    }
 
     wxWindow* GroupBox::CreateWxWindowCore(wxWindow* parent)
     {

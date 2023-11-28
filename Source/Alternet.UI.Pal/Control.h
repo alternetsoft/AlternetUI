@@ -70,6 +70,7 @@ namespace Alternet::UI
         static wxString GetMouseEventDesc(const wxMouseEvent& ev);
 
         virtual wxWindow* CreateWxWindowCore(wxWindow* parent) = 0;
+        virtual wxWindow* CreateWxWindowUnparented() = 0;
 
         wxWindow* GetWxWindow();
         bool IsWxWindowCreated();

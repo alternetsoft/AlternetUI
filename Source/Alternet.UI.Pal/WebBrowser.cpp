@@ -324,6 +324,11 @@ namespace Alternet::UI
             style);
     }
 
+    wxWindow* WebBrowser::CreateWxWindowUnparented()
+    {
+        return nullptr;
+    }
+
     wxWindow* WebBrowser::CreateWxWindowCore(wxWindow* parent)
     {
         Backend = WebBrowser::DefaultBackend;

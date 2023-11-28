@@ -323,6 +323,11 @@ namespace Alternet::UI
         _menuItem->SetSubMenu(value->GetWxMenu());
     }
 
+    wxWindow* MenuItem::CreateWxWindowUnparented()
+    {
+        return new wxDummyPanel("menu");
+    }
+
     wxWindow* MenuItem::CreateWxWindowCore(wxWindow* parent)
     {
         return new wxDummyPanel("menuitem");

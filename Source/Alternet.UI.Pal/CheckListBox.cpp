@@ -24,6 +24,8 @@ namespace Alternet::UI
     class wxCheckListBox2 : public wxCheckListBox, public wxWidgetExtender
     {
     public:
+        wxCheckListBox2(){}
+
         wxCheckListBox2(wxWindow* parent,
             wxWindowID id,
             const wxPoint& pos = wxDefaultPosition,
@@ -37,6 +39,11 @@ namespace Alternet::UI
             Create(parent, id, pos, size, nStrings, choices, style, validator, name);
         }
     };
+
+    wxWindow* CheckListBox::CreateWxWindowUnparented()
+    {
+        return new wxCheckListBox2();
+    }
 
     wxWindow* CheckListBox::CreateWxWindowCore(wxWindow* parent)
     {

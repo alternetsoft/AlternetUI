@@ -73,6 +73,8 @@ namespace Alternet::UI
             const wxString& name = wxASCII_STR(wxAnimationCtrlNameStr))
             : wxAnimationCtrl(parent, id, anim, pos, size, style, name)
         {}
+
+        wxAnimationCtrl2() {}
     };
 
     class wxGenericAnimationCtrl2 : public wxGenericAnimationCtrl, public wxWidgetExtender
@@ -87,7 +89,17 @@ namespace Alternet::UI
             const wxString& name = wxASCII_STR(wxAnimationCtrlNameStr))
             : wxGenericAnimationCtrl(parent, id, anim, pos, size, style, name)
         {}
+
+        wxGenericAnimationCtrl2(){}
     };
+
+    wxWindow* AnimationControl::CreateWxWindowUnparented()
+    {
+        if (_useGeneric)
+            return new wxGenericAnimationCtrl2();
+        else
+            return new wxAnimationCtrl2();
+    }
 
     wxWindow* AnimationControl::CreateWxWindowCore(wxWindow* parent)
     {

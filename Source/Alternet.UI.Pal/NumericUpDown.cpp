@@ -72,6 +72,7 @@ namespace Alternet::UI
     class wxSpinCtrl2 : public wxSpinCtrl, public wxWidgetExtender
     {
     public:
+        wxSpinCtrl2(){}
         wxSpinCtrl2(wxWindow* parent,
             wxWindowID id = wxID_ANY,
             const wxString& value = wxEmptyString,
@@ -84,6 +85,11 @@ namespace Alternet::UI
             Create(parent, id, value, pos, size, style, min, max, initial, name);
         }
     };
+
+    wxWindow* NumericUpDown::CreateWxWindowUnparented()
+    {
+        return new wxSpinCtrl2();
+    }
 
     wxWindow* NumericUpDown::CreateWxWindowCore(wxWindow* parent)
     {

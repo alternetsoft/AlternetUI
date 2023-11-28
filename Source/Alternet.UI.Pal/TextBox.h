@@ -10,6 +10,7 @@ namespace Alternet::UI
 #include "Api/TextBox.inc"
     public:
         wxWindow* CreateWxWindowCore(wxWindow* parent) override;
+        wxWindow* CreateWxWindowUnparented() override;
         void OnTextChanged(wxCommandEvent& event);
         void OnTextEnter(wxCommandEvent& event);
         void OnTextUrl(wxTextUrlEvent& event);
@@ -45,6 +46,7 @@ namespace Alternet::UI
         class TextCtrlEx : public wxTextCtrl, public wxWidgetExtender
         {
         public:
+            TextCtrlEx(){}
             TextCtrlEx(wxWindow* parent, wxWindowID id,
                 const wxString& value = wxEmptyString,
                 const wxPoint& pos = wxDefaultPosition,

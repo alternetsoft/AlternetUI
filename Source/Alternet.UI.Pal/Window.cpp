@@ -10,8 +10,14 @@ namespace Alternet::UI
 {
 #define UseDebugPaintColors false
 
-    Frame::Frame(Window* window, long style) :
-        wxFrame(NULL, wxID_ANY, "", wxDefaultPosition, wxDefaultSize, style),
+    Frame::Frame(Window* window, wxWindow* parent,
+        wxWindowID id,
+        const wxString& title,
+        const wxPoint& pos,
+        const wxSize& size,
+        long style,
+        const wxString& name)
+            :wxFrame(parent, id, title, pos, size, style, name),
             _window(window)
     {
         _allFrames.push_back(this);
@@ -132,12 +138,17 @@ namespace Alternet::UI
         ModifierKeys modifiers)
     {
         if (managedCommandId.empty())
-            throwExInvalidArg(managedCommandId, u"Command ID must not be empty.");
+        {
+            DebugLogInvalidArg(managedCommandId, u"Command ID must not be empty.");
+            return;
+        }
 
-        if (_acceleratorsByCommandIds.find(managedCommandId) != 
+        if (_acceleratorsByCommandIds.find(managedCommandId) !=
             _acceleratorsByCommandIds.end())
-            throwExInvalidArg(managedCommandId,
+        {
+            DebugLogInvalidArg(managedCommandId,
                 u"Input binding with this command ID was already added to this window.");
+        }
 
         auto keyboard = Application::GetCurrent()->GetKeyboardInternal();
         auto wxKey = keyboard->KeyToWxKey(key);
@@ -535,11 +546,21 @@ namespace Alternet::UI
         return style;
     }
 
+    wxWindow* Window::CreateWxWindowUnparented()
+    {
+        return CreateWxWindowCore(nullptr);
+    }
+
     wxWindow* Window::CreateWxWindowCore(wxWindow* parent)
     {
         auto style = GetWindowStyle();
 
-        _frame = new Frame(this, style);
+        _frame = new Frame(this, nullptr,
+            wxID_ANY,
+            "",
+            wxDefaultPosition,
+            wxDefaultSize,
+            style);
 
         ApplyIcon(_frame);
         UpdateAcceleratorTable();

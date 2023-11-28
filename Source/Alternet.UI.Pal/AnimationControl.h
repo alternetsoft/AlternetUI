@@ -17,6 +17,7 @@ namespace Alternet::UI
 #include "Api/AnimationControl.inc"
     public:
         wxWindow* CreateWxWindowCore(wxWindow* parent) override;
+        wxWindow* CreateWxWindowUnparented() override;
 
 #if defined(__WXGTK__)
         bool _useGeneric = true;

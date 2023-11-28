@@ -9,6 +9,7 @@ namespace Alternet::UI
 #include "Api/NumericUpDown.inc"
     public:
         wxWindow* CreateWxWindowCore(wxWindow* parent) override;
+        wxWindow* CreateWxWindowUnparented() override;
 
         void OnSpinCtrlValueChanged(wxCommandEvent& event);
 

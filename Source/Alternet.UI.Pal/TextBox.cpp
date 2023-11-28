@@ -59,6 +59,11 @@ namespace Alternet::UI
 		GetTextCtrl()->SetValidator(*(wxValidator*)_validator);
 	}
 
+	wxWindow* TextBox::CreateWxWindowUnparented()
+	{
+		return new TextCtrlEx();
+	}
+
 	wxWindow* TextBox::CreateWxWindowCore(wxWindow* parent)
 	{
 		long style = GetCreateStyle() | GetBorderStyle();

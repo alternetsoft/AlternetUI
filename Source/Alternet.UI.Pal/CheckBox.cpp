@@ -36,19 +36,20 @@ namespace Alternet::UI
             const wxSize& size,
             long style,
             const wxValidator& validator,
-            const wxString& name);
+            const wxString& name)
+        {
+            Create(parent, id, label, pos, size, style, validator, name);
+        }
+
+        wxCheckBox2()
+        {
+
+        }
     };
 
-    wxCheckBox2::wxCheckBox2(wxWindow* parent,
-        wxWindowID id,
-        const wxString& label,
-        const wxPoint& pos = wxDefaultPosition,
-        const wxSize& size = wxDefaultSize,
-        long style = 0,
-        const wxValidator& validator = wxDefaultValidator,
-        const wxString& name = wxASCII_STR(wxCheckBoxNameStr))
+    wxWindow* CheckBox::CreateWxWindowUnparented()
     {
-        Create(parent, id, label, pos, size, style, validator, name);
+        return new wxCheckBox2();
     }
 
     wxWindow* CheckBox::CreateWxWindowCore(wxWindow* parent)

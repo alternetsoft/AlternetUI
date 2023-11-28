@@ -43,7 +43,9 @@ namespace Alternet::UI
 	{
 	public:
 		bool SetCursor(const wxCursor& cursor) override;
-		
+
+		wxSplitterWindow2(){}
+
 		wxSplitterWindow2(wxWindow* parent, wxWindowID id,
 			const wxPoint& pos,
 			const wxSize& size,
@@ -69,7 +71,12 @@ namespace Alternet::UI
 //#endif
 	}
 
-	wxWindow* SplitterPanel::CreateWxWindowCore(wxWindow* parent) 
+	wxWindow* SplitterPanel::CreateWxWindowUnparented()
+	{
+		return new wxSplitterWindow2();
+	}
+
+	wxWindow* SplitterPanel::CreateWxWindowCore(wxWindow* parent)
 	{
 		long styles = GetStyles();
 

@@ -124,6 +124,11 @@ namespace Alternet::UI
         wxWindow->PopupMenu(_menu, fromDip(position, wxWindow));
     }
 
+    wxWindow* Menu::CreateWxWindowUnparented()
+    {
+        return new wxDummyPanel("menu");
+    }
+
     wxWindow* Menu::CreateWxWindowCore(wxWindow* parent)
     {
         return new wxDummyPanel("menu");

@@ -13,6 +13,8 @@ namespace Alternet::UI
         {
             Create(parent, id, pos, size, style);
         }
+
+        wxAuiToolBar2(){}
         
         void OnLeaveWindow(wxMouseEvent& evt) 
         {
@@ -59,6 +61,11 @@ namespace Alternet::UI
             wxAuiToolBar::OnMotion(evt);
         }
     };
+
+    wxWindow* AuiToolBar::CreateWxWindowUnparented()
+    {
+        return new wxAuiToolBar2();
+    }
 
     void AuiToolBar::DoOnCaptureLost()
     {

@@ -9,6 +9,7 @@ namespace Alternet::UI
 #include "Api/Slider.inc"
     public:
         wxWindow* CreateWxWindowCore(wxWindow* parent) override;
+        wxWindow* CreateWxWindowUnparented() override;
 
         void OnSliderValueChanged(wxCommandEvent& event);
 

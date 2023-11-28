@@ -173,6 +173,7 @@ namespace Alternet::UI
     class wxTreeCtrl2 : public wxTreeCtrl, public wxWidgetExtender
     {
     public:
+        wxTreeCtrl2(){}
         wxTreeCtrl2(wxWindow* parent, wxWindowID id = wxID_ANY,
             const wxPoint& pos = wxDefaultPosition,
             const wxSize& size = wxDefaultSize,
@@ -206,6 +207,11 @@ namespace Alternet::UI
         }
 */
     };
+
+    wxWindow* TreeView::CreateWxWindowUnparented()
+    {
+        return new wxTreeCtrl2();
+    }
 
     int64_t TreeView::GetCreateStyle()
     {

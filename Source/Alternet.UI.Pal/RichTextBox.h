@@ -22,6 +22,7 @@ namespace Alternet::UI
 #include "Api/RichTextBox.inc"
     public:
         wxWindow* CreateWxWindowCore(wxWindow* parent) override;
+        wxWindow* CreateWxWindowUnparented() override;
         wxRichTextCtrl* GetTextCtrl();
         void OnTextChanged(wxCommandEvent& event);
         void OnTextEnter(wxCommandEvent& event);

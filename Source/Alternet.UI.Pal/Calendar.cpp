@@ -10,6 +10,7 @@ namespace Alternet::UI
     class wxCalendarCtrl2 : public wxCalendarCtrl
     {
     public:
+        wxCalendarCtrl2(){}
         wxCalendarCtrl2(wxWindow* parent,
             wxWindowID id,
             const wxDateTime& date = wxDefaultDateTime,
@@ -25,6 +26,7 @@ namespace Alternet::UI
     class wxGenericCalendarCtrl2 : public wxGenericCalendarCtrl
     {
     public:
+        wxGenericCalendarCtrl2(){}
         wxGenericCalendarCtrl2(wxWindow* parent,
             wxWindowID id,
             const wxDateTime& date = wxDefaultDateTime,
@@ -53,6 +55,18 @@ namespace Alternet::UI
     void Calendar::RecreateWxWindowIfNeeded()
     {
         Control::RecreateWxWindowIfNeeded();
+    }
+
+    wxWindow* Calendar::CreateWxWindowUnparented()
+    {
+        if (_useGeneric)
+        {
+            return new wxGenericCalendarCtrl2();
+        }
+        else
+        {
+            return new wxCalendarCtrl2();
+        }
     }
 
     wxWindow* Calendar::CreateWxWindowCore(wxWindow* parent)

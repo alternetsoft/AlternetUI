@@ -10,6 +10,7 @@ namespace Alternet::UI
 #include "Api/Popup.inc"
     public:
         wxWindow* CreateWxWindowCore(wxWindow* parent) override;
+        wxWindow* CreateWxWindowUnparented() override;
 
         static std::vector<wxWindow*> GetVisiblePopupWindows();
 

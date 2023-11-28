@@ -9,6 +9,7 @@ namespace Alternet::UI
 #include "Api/ComboBox.inc"
     public:
         wxWindow* CreateWxWindowCore(wxWindow* parent) override;
+        wxWindow* CreateWxWindowUnparented() override;
 
         void OnSelectedItemChanged(wxCommandEvent& event);
         void OnTextChanged(wxCommandEvent& event);

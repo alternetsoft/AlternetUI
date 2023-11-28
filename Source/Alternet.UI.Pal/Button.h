@@ -12,7 +12,7 @@ namespace Alternet::UI
     class wxButton2 : public wxButton, public wxWidgetExtender
     {
     public:
-        Button* _owner;
+        Button* _owner = nullptr;
 
         virtual bool AcceptsFocus() const override;
         virtual bool AcceptsFocusFromKeyboard() const override;
@@ -32,6 +32,8 @@ namespace Alternet::UI
             _owner = owner;
             Create(parent, id, label, pos, size, style, validator, name);
         }
+
+        wxButton2(){}
     };
 
     class Button : public Control
@@ -39,6 +41,7 @@ namespace Alternet::UI
 #include "Api/Button.inc"
     public:
         wxWindow* CreateWxWindowCore(wxWindow* parent) override;
+        wxWindow* CreateWxWindowUnparented() override;
         void OnButtonClick(wxCommandEvent& event);
 
         void RaiseClick();

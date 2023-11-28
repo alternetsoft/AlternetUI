@@ -8,6 +8,7 @@ namespace Alternet::UI
     class wxToolBar2 : public wxToolBar, public wxWidgetExtender
     {
     public:
+        wxToolBar2(){}
         wxToolBar2(wxWindow* parent,
             wxWindowID id,
             const wxPoint& pos = wxDefaultPosition,
@@ -62,6 +63,11 @@ namespace Alternet::UI
     Toolbar::~Toolbar()
     {
         DestroyWxToolbar();
+    }
+
+    wxWindow* Toolbar::CreateWxWindowUnparented()
+    {
+        return new wxDummyPanel("toolbar");
     }
 
     wxWindow* Toolbar::CreateWxWindowCore(wxWindow* parent)

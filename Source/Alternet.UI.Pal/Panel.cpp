@@ -13,12 +13,13 @@ namespace Alternet::UI
     class wxPanel2 : public wxPanel, public wxWidgetExtender
     {
     public:
-        Panel* _owner;
+        Panel* _owner = nullptr;
             
         virtual bool AcceptsFocus() const override;
         virtual bool AcceptsFocusFromKeyboard() const override;
         virtual bool AcceptsFocusRecursively() const override;
 
+        wxPanel2(){}
         wxPanel2(
             Panel* owner,
             wxWindow* parent,
@@ -55,6 +56,11 @@ namespace Alternet::UI
             return wxPanel::AcceptsFocusRecursively();
         else
             return _owner->_acceptsFocusRecursively;
+    }
+
+    wxWindow* Panel::CreateWxWindowUnparented()
+    {
+        return new wxPanel2();
     }
 
     wxWindow* Panel::CreateWxWindowCore(wxWindow* parent)

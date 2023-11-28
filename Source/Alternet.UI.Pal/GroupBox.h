@@ -9,6 +9,7 @@ namespace Alternet::UI
 #include "Api/GroupBox.inc"
     public:
         wxWindow* CreateWxWindowCore(wxWindow* parent) override;
+        wxWindow* CreateWxWindowUnparented() override;
 
         Thickness GetIntrinsicLayoutPadding() override;
         Thickness GetIntrinsicPreferredSizePadding() override;

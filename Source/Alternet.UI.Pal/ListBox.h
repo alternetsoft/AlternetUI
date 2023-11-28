@@ -11,6 +11,7 @@ namespace Alternet::UI
         ListBox(int64_t styles);
 
         wxWindow* CreateWxWindowCore(wxWindow* parent) override;
+        wxWindow* CreateWxWindowUnparented() override;
 
         void OnSelectionChanged(wxCommandEvent& event);
 

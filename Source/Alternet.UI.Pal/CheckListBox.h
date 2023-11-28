@@ -10,6 +10,7 @@ namespace Alternet::UI
 #include "Api/CheckListBox.inc"
     public:
         wxWindow* CreateWxWindowCore(wxWindow* parent) override;
+        wxWindow* CreateWxWindowUnparented() override;
 
         void OnCheckedChanged(wxCommandEvent& event);
         void OnSelectionChanged(wxCommandEvent& event);

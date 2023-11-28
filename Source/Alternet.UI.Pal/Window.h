@@ -18,7 +18,13 @@ namespace Alternet::UI
     class Frame : public wxFrame, public wxWidgetExtender
     {
     public:
-        Frame(Window* window, long style);
+        Frame(Window* window, wxWindow* parent,
+            wxWindowID id,
+            const wxString& title,
+            const wxPoint& pos = wxDefaultPosition,
+            const wxSize& size = wxDefaultSize,
+            long style = wxDEFAULT_FRAME_STYLE,
+            const wxString& name = wxASCII_STR(wxFrameNameStr));
         virtual ~Frame();
 
         static std::vector<Frame*> GetAllFrames();
@@ -57,6 +63,7 @@ namespace Alternet::UI
 #include "Api/Window.inc"
     public:
         wxWindow* CreateWxWindowCore(wxWindow* parent) override;
+        wxWindow* CreateWxWindowUnparented() override;
 
         void SetAcceptButton(Button* button);
         Button* GetAcceptButton();

@@ -76,6 +76,7 @@ namespace Alternet::UI
 	class wxHyperlinkCtrl2 : public wxHyperlinkCtrl, public wxWidgetExtender
 	{
 	public:
+		wxHyperlinkCtrl2(){}
 		wxHyperlinkCtrl2(wxWindow* parent,
 			wxWindowID id,
 			const wxString& label, const wxString& url,
@@ -96,6 +97,7 @@ namespace Alternet::UI
 	class wxGenericHyperlinkCtrl2 : public wxGenericHyperlinkCtrl, public wxWidgetExtender
 	{
 	public:
+		wxGenericHyperlinkCtrl2(){}
 		wxGenericHyperlinkCtrl2(wxWindow* parent,
 			wxWindowID id,
 			const wxString& label, const wxString& url,
@@ -107,6 +109,18 @@ namespace Alternet::UI
 			Create(parent, id, label, url, pos, size, style, name);
 		}
 	};
+
+	wxWindow* LinkLabel::CreateWxWindowUnparented()
+	{
+		if (UseGenericLinkLabel)
+		{
+			return new wxGenericHyperlinkCtrl2();
+		}
+		else
+		{
+			return new wxHyperlinkCtrl2();
+		}
+	}
 
 	wxWindow* LinkLabel::CreateWxWindowCore(wxWindow* parent)
 	{

@@ -81,6 +81,7 @@ namespace Alternet::UI
     class wxTimePickerCtrl2 : public wxTimePickerCtrl, public wxWidgetExtender
     {
     public:
+        wxTimePickerCtrl2(){}
         wxTimePickerCtrl2(wxWindow* parent,
             wxWindowID id,
             const wxDateTime& dt = wxDefaultDateTime,
@@ -97,6 +98,7 @@ namespace Alternet::UI
     class wxDatePickerCtrl2 : public wxDatePickerCtrl, public wxWidgetExtender
     {
     public:
+        wxDatePickerCtrl2(){}
         wxDatePickerCtrl2(wxWindow* parent,
             wxWindowID id,
             const wxDateTime& dt = wxDefaultDateTime,
@@ -109,6 +111,14 @@ namespace Alternet::UI
             Create(parent, id, dt, pos, size, style, validator, name);
         }
     };
+
+    wxWindow* DateTimePicker::CreateWxWindowUnparented()
+    {
+        if (_valueKind == 1)
+            return new wxTimePickerCtrl2();
+        else
+            return new wxDatePickerCtrl2();
+    }
 
     wxWindow* DateTimePicker::CreateWxWindowCore(wxWindow* parent)
     {

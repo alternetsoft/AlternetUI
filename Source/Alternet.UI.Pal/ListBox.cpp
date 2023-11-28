@@ -77,6 +77,7 @@ namespace Alternet::UI
     class wxListBox2 : public wxListBox, public wxWidgetExtender
     {
     public:
+        wxListBox2() {}
         wxListBox2(wxWindow* parent, wxWindowID id,
             const wxPoint& pos = wxDefaultPosition,
             const wxSize& size = wxDefaultSize,
@@ -88,6 +89,11 @@ namespace Alternet::UI
             Create(parent, id, pos, size, n, choices, style, validator, name);
         }
     };
+
+    wxWindow* ListBox::CreateWxWindowUnparented()
+    {
+        return new wxListBox2();
+    }
 
     wxWindow* ListBox::CreateWxWindowCore(wxWindow* parent)
     {

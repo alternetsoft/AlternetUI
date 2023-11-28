@@ -76,6 +76,11 @@ namespace Alternet::UI
         GetWxMenuBar()->SetMenuLabel(wxIndex, MenuItem::CoerceWxItemText(text, nullptr));
     }
 
+    wxWindow* MainMenu::CreateWxWindowUnparented()
+    {
+        return new wxMenuBar();
+    }
+
     wxWindow* MainMenu::CreateWxWindowCore(wxWindow* parent)
     {
         auto menuBar = new wxMenuBar();

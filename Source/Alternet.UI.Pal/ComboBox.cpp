@@ -138,6 +138,7 @@ namespace Alternet::UI
     class wxChoice2 : public wxChoice, public wxWidgetExtender
     {
     public:
+        wxChoice2(){}
         wxChoice2(wxWindow* parent,
             wxWindowID id,
             const wxPoint& pos = wxDefaultPosition,
@@ -154,6 +155,7 @@ namespace Alternet::UI
     class wxComboBox2 : public wxComboBox, public wxWidgetExtender
     {
     public:
+        wxComboBox2() {}
         wxComboBox2(wxWindow* parent, wxWindowID id,
             const wxString& value = wxEmptyString,
             const wxPoint& pos = wxDefaultPosition,
@@ -164,9 +166,22 @@ namespace Alternet::UI
             const wxString& name = wxASCII_STR(wxComboBoxNameStr))
         {
             Create(parent, id, value, pos, size, n, choices, style, validator, name);
-
         }
     };
+
+    wxWindow* ComboBox::CreateWxWindowUnparented()
+    {
+        if (!_isEditable && UseChoiceControlForReadOnlyComboBox)
+        {
+            auto value = new wxChoice2();
+            return value;
+        }
+        else
+        {
+            auto value = new wxComboBox2();
+            return value;
+        }
+    }
 
     wxWindow* ComboBox::CreateWxWindowCore(wxWindow* parent)
     {

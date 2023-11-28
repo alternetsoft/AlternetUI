@@ -13,6 +13,7 @@ namespace Alternet::UI
 #include "Api/LinkLabel.inc"
     public:
         wxWindow* CreateWxWindowCore(wxWindow* parent) override;
+        wxWindow* CreateWxWindowUnparented() override;
 
     private:
         wxHyperlinkCtrlBase* GetStaticText();

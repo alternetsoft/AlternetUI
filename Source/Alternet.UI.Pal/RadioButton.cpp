@@ -46,7 +46,16 @@ namespace Alternet::UI
         {
             Create(parent, id, label, pos, size, style, validator, name);
         }
+
+        wxRadioButton2()
+        {
+        }
     };
+
+    wxWindow* RadioButton::CreateWxWindowUnparented()
+    {
+        return new wxRadioButton2();
+    }
 
     wxWindow* RadioButton::CreateWxWindowCore(wxWindow* parent)
     {

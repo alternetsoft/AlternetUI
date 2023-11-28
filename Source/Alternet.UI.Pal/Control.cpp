@@ -828,12 +828,17 @@ namespace Alternet::UI
         _flags.Set(ControlFlags::CreatingWxWindow, true);
         _flags.Set(ControlFlags::DestroyingWxWindow, false);
         wxWindow* parentingWxWindow = nullptr;
-        if (_parent != nullptr)
-            parentingWxWindow = _parent->GetParentingWxWindow(this);
-        else
+
+        if (_parent == nullptr)
+        {
             parentingWxWindow = ParkingWindow::GetWindow();
-        
-        _wxWindow = CreateWxWindowCore(parentingWxWindow);
+            _wxWindow = CreateWxWindowCore(parentingWxWindow);
+        }
+        else
+        {
+            parentingWxWindow = _parent->GetParentingWxWindow(this);
+            _wxWindow = CreateWxWindowCore(parentingWxWindow);
+        }
 
         ApplyToolTip();
 

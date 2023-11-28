@@ -27,6 +27,7 @@ namespace Alternet::UI
 	class wxStaticText2 : public wxStaticText, public wxWidgetExtender
 	{
 	public:
+		wxStaticText2(){}
 		wxStaticText2(wxWindow* parent,
 			wxWindowID id,
 			const wxString& label,
@@ -45,6 +46,11 @@ namespace Alternet::UI
 	BEGIN_EVENT_TABLE(wxStaticText2, wxStaticText)
 		EVT_ERASE_BACKGROUND(wxStaticText2::OnEraseBackGround)
 		END_EVENT_TABLE()
+
+	wxWindow* Label::CreateWxWindowUnparented()
+	{
+		return new wxStaticText2();
+	}
 
 	wxWindow* Label::CreateWxWindowCore(wxWindow* parent)
 	{

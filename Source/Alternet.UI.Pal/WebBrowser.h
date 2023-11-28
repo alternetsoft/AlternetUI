@@ -69,6 +69,7 @@ namespace Alternet::UI
         WebBrowserBackend GetBackend();
 
         wxWindow* CreateWxWindowCore(wxWindow* parent) override;
+        wxWindow* CreateWxWindowUnparented() override;
         wxWebView* GetWebViewCtrl();
 
         void RegisterHandlerZip(const string& schemeName);

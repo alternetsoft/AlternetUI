@@ -5,6 +5,7 @@ namespace Alternet::UI
 	class wxRichTextCtrl2 : public wxRichTextCtrl, public wxWidgetExtender
 	{
 	public:
+		wxRichTextCtrl2(){}
 		wxRichTextCtrl2(wxWindow* parent, wxWindowID id = -1,
 			const wxString& value = wxEmptyString, const wxPoint& pos = wxDefaultPosition,
 			const wxSize& size = wxDefaultSize,
@@ -14,6 +15,11 @@ namespace Alternet::UI
 		{}
 
 	};
+
+	wxWindow* RichTextBox::CreateWxWindowUnparented()
+	{
+		return new wxRichTextCtrl2();
+	}
 
 	bool RichTextBox::GetHasBorder()
 	{

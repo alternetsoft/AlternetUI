@@ -14,6 +14,7 @@ namespace Alternet::UI
     public:
 
         wxWindow* CreateWxWindowCore(wxWindow* parent) override;
+        wxWindow* CreateWxWindowUnparented() override;
         void OnDateTimePickerValueChanged(wxDateEvent& event);
 
         // Under Linux without this height of DateTimePicker will be 0

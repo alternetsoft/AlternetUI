@@ -174,6 +174,7 @@ namespace Alternet::UI
     class wxListView2 : public wxListView, public wxWidgetExtender
     {
     public:
+        wxListView2(){}
         wxListView2(wxWindow* parent,
             wxWindowID winid = wxID_ANY,
             const wxPoint& pos = wxDefaultPosition,
@@ -185,6 +186,11 @@ namespace Alternet::UI
             Create(parent, winid, pos, size, style, validator, name);
         }
     };
+
+    wxWindow* ListView::CreateWxWindowUnparented()
+    {
+        return new wxListView2();
+    }
 
     wxWindow* ListView::CreateWxWindowCore(wxWindow* parent)
     {

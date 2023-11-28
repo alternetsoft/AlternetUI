@@ -152,6 +152,11 @@ namespace Alternet::UI
         RecreateTool();
     }
 
+    wxWindow* ToolbarItem::CreateWxWindowUnparented()
+    {
+        return new wxDummyPanel("toolbaritem");
+    }
+
     wxWindow* ToolbarItem::CreateWxWindowCore(wxWindow* parent)
     {
         return new wxDummyPanel("toolbaritem");

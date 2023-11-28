@@ -134,6 +134,7 @@ namespace Alternet::UI
     class wxSlider2 : public wxSlider, public wxWidgetExtender
     {
     public:
+        wxSlider2(){}
         wxSlider2(wxWindow* parent,
             wxWindowID id,
             int value,
@@ -149,6 +150,11 @@ namespace Alternet::UI
                 pos, size, style, validator, name);
         }
     };
+
+    wxWindow* Slider::CreateWxWindowUnparented()
+    {
+        return new wxSlider2();
+    }
 
     wxWindow* Slider::CreateWxWindowCore(wxWindow* parent)
     {

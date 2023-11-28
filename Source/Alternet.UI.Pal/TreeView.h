@@ -10,6 +10,7 @@ namespace Alternet::UI
 #include "Api/TreeView.inc"
     public:
         wxWindow* CreateWxWindowCore(wxWindow* parent) override;
+        wxWindow* CreateWxWindowUnparented() override;
 
         void OnSelectionChanged(wxCommandEvent& event);
         void OnItemCollapsed(wxTreeEvent& event);

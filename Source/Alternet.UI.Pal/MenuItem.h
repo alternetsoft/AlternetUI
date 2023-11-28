@@ -21,6 +21,7 @@ namespace Alternet::UI
         };
 
         wxWindow* CreateWxWindowCore(wxWindow* parent) override;
+        wxWindow* CreateWxWindowUnparented() override;
 
         wxMenuItem* GetWxMenuItem();
 
