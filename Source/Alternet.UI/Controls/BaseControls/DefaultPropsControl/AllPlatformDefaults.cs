@@ -133,7 +133,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets "HasBorder" property override specific to platform and color theme. 
+        /// Gets "HasBorder" property override specific to platform and color theme.
         /// </summary>
         /// <param name="controlKind">Control kind.</param>
         /// <returns></returns>

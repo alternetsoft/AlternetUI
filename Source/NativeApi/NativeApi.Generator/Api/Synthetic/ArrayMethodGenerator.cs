@@ -23,14 +23,14 @@ namespace ApiGenerator.Api
                 property.DeclaringType,
                 $"Open{property.Name}Array",
                 isStatic,
-                new SyntheticParameterInfo[0],
+                Array.Empty<SyntheticParameterInfo>(),
                 typeof(IntPtr));
 
             yield return new SyntheticMethodInfo(
                 property.DeclaringType,
                 $"Get{property.Name}ItemCount",
                 isStatic,
-                new SyntheticParameterInfo[] { new SyntheticParameterInfo(typeof(IntPtr), "array") },
+                new SyntheticParameterInfo[] { new(typeof(IntPtr), "array") },
                 typeof(int));
 
             yield return new SyntheticMethodInfo(
@@ -44,7 +44,7 @@ namespace ApiGenerator.Api
                 property.DeclaringType,
                 $"Close{property.Name}Array",
                 isStatic,
-                new SyntheticParameterInfo[] { new SyntheticParameterInfo(typeof(IntPtr), "array") },
+                new SyntheticParameterInfo[] { new(typeof(IntPtr), "array") },
                 typeof(void));
         }
     }
