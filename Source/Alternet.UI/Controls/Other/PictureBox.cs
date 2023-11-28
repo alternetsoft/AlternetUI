@@ -38,14 +38,16 @@ namespace Alternet.UI
         {
             get
             {
-                return primitive.Image;
+                return StateObjects?.Images?.GetObjectOrNull(GenericControlState.Normal);
             }
 
             set
             {
-                if (primitive.Image == value)
+                if (Image == value)
                     return;
-                primitive.Image = value;
+                StateObjects ??= new();
+                StateObjects.Images ??= new();
+                StateObjects.Images.Normal = value;
                 RaiseImageChanged(EventArgs.Empty);
             }
         }
@@ -186,6 +188,9 @@ namespace Alternet.UI
             DrawDefaultBackground(dc, rect);
 
             var primitive = Primitive;
+            var state = CurrentState;
+
+            primitive.Image = StateObjects?.Images?.GetObjectOrNormal(state);
             primitive.DestRect = rect;
             primitive.Draw(dc);
 
