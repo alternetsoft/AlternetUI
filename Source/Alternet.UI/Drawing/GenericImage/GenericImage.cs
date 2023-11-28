@@ -169,6 +169,63 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Returns true if at least one of the available image handlers can read the file
+        /// with the given name.
+        /// </summary>
+        public static bool CanRead(string filename)
+        {
+            return false;
+        }
+
+        /// <summary>
+        /// Returns true if at least one of the available image handlers can read the data in
+        /// the given stream.
+        /// </summary>
+        public static bool CanReadStream(Stream stream)
+        {
+            return false;
+        }
+
+        /// <summary>
+        /// Iterates all registered wxImageHandler objects, and returns a string containing
+        /// file extension masks suitable for passing to file open/save dialog boxes.
+        /// </summary>
+        public static string GetImageExtWildcard()
+        {
+            return string.Empty;
+        }
+
+        /// <summary>
+        /// Finds the handler with the given name, and removes it.
+        /// </summary>
+        public static bool RemoveHandler(string name)
+        {
+            return false;
+        }
+
+        /// <summary>
+        /// If the image file contains more than one image and the image handler is capable of
+        /// retrieving these individually, this function will return the number of available images.
+        /// </summary>
+        public static int GetImageCountInFile(
+            string filename,
+            BitmapType bitmapType = BitmapType.Any)
+        {
+            return 0;
+        }
+
+        /// <summary>
+        /// If the image stream contains more than one image and the image handler is capable of
+        /// retrieving these individually, this function will return the number of available images.
+        /// </summary>
+        public static int GetImageCountInStream(
+            Stream stream,
+            BitmapType bitmapType = BitmapType.Any)
+        {
+            return 0;
+        }
+
+        /// <summary>
         /// Sets the alpha value for the given pixel.
         /// </summary>
         public void SetAlpha(int x, int y, byte alpha)
@@ -179,13 +236,6 @@ namespace Alternet.Drawing
         /// Removes the alpha channel from the image.
         /// </summary>
         public void ClearAlpha()
-        {
-        }
-
-        /// <summary>
-        /// Sets the flags used for loading image files by this object.
-        /// </summary>
-        internal void SetLoadFlags(int flags)
         {
         }
 
@@ -209,6 +259,7 @@ namespace Alternet.Drawing
         /// </summary>
         public bool SetMaskFromImage(GenericImage image, byte mr, byte mg, byte mb)
         {
+            return false;
         }
 
         /// <summary>
@@ -248,23 +299,8 @@ namespace Alternet.Drawing
         /// <summary>
         /// Sets the type of image returned by GetType().
         /// </summary>
-        internal void SetImageType(int type)
+        public void SetImageType(BitmapType type)
         {
-        }
-
-        /// <summary>
-        /// Sets the default value for the flags used for loading image files.
-        /// </summary>
-        internal static void SetDefaultLoadFlags(int flags)
-        {
-        }
-
-        /// <summary>
-        /// Returns the file load flags used for this object.
-        /// </summary>
-        internal int GetLoadFlags(IntPtr handle)
-        {
-            return;
         }
 
         /// <summary>
@@ -272,6 +308,7 @@ namespace Alternet.Drawing
         /// </summary>
         public GenericImage Copy()
         {
+            return new();
         }
 
         /// <summary>
@@ -279,7 +316,7 @@ namespace Alternet.Drawing
         /// </summary>
         public bool CreateFreshImage(int width, int height, bool clear = true)
         {
-            return;
+            return false;
         }
 
         /// <summary>
@@ -309,7 +346,7 @@ namespace Alternet.Drawing
         /// </summary>
         public GenericImage Blur(int blurRadius)
         {
-            return;
+            return new();
         }
 
         /// <summary>
@@ -317,7 +354,7 @@ namespace Alternet.Drawing
         /// </summary>
         public GenericImage BlurHorizontal(int blurRadius)
         {
-            return;
+            return new();
         }
 
         /// <summary>
@@ -325,7 +362,7 @@ namespace Alternet.Drawing
         /// </summary>
         public GenericImage BlurVertical(int blurRadius)
         {
-            return;
+            return new();
         }
 
         /// <summary>
@@ -333,7 +370,7 @@ namespace Alternet.Drawing
         /// </summary>
         public GenericImage Mirror(bool horizontally = true)
         {
-            return;
+            return new();
         }
 
         /// <summary>
@@ -363,7 +400,7 @@ namespace Alternet.Drawing
             int height,
             GenericImageResizeQuality quality = GenericImageResizeQuality.Normal)
         {
-            return;
+            return new();
         }
 
         /// <summary>
@@ -377,7 +414,7 @@ namespace Alternet.Drawing
             int green = -1,
             int blue = -1)
         {
-            return;
+            return new();
         }
 
         /// <summary>
@@ -385,7 +422,7 @@ namespace Alternet.Drawing
         /// </summary>
         public GenericImage Rotate90(bool clockwise = true)
         {
-            return;
+            return new();
         }
 
         /// <summary>
@@ -393,7 +430,7 @@ namespace Alternet.Drawing
         /// </summary>
         public GenericImage Rotate180()
         {
-            return;
+            return new();
         }
 
         /// <summary>
@@ -405,49 +442,49 @@ namespace Alternet.Drawing
         {
         }
 
-        // Changes the saturation of each pixel in the image.
         /// <summary>
+        /// Changes the saturation of each pixel in the image.
         /// </summary>
         public void ChangeSaturation(double factor)
         {
         }
 
-        // Changes the brightness(value) of each pixel in the image.
         /// <summary>
+        /// Changes the brightness(value) of each pixel in the image.
         /// </summary>
         public void ChangeBrightness(double factor)
         {
         }
 
-        // Changes the hue, the saturation and the brightness(value) of each pixel in the image.
         /// <summary>
+        /// Changes the hue, the saturation and the brightness(value) of each pixel in the image.
         /// </summary>
         public void ChangeHSV(double angleH, double factorS, double factorV)
         {
         }
 
-        // Returns a scaled version of the image.
         /// <summary>
+        /// Returns a scaled version of the image.
         /// </summary>
         public GenericImage Scale(
             int width,
             int height,
             GenericImageResizeQuality quality = GenericImageResizeQuality.Normal)
         {
-            return;
+            return new();
         }
 
-        // If the image has alpha channel, this method converts it to mask.
         /// <summary>
+        /// If the image has alpha channel, this method converts it to mask.
         /// </summary>
         public bool ConvertAlphaToMask(byte threshold = AlphaChannelThreshold)
         {
-            return;
+            return false;
         }
 
-        // If the image has alpha channel, this method converts it to mask using the
-        // specified color as the mask color.
         /// <summary>
+        /// If the image has alpha channel, this method converts it to mask using the
+        /// specified color as the mask color.
         /// </summary>
         public bool ConvertAlphaToMaskUseColor(
             byte mr,
@@ -455,432 +492,268 @@ namespace Alternet.Drawing
             byte mb,
             byte threshold = AlphaChannelThreshold)
         {
-            return;
+            return false;
         }
 
-        // Returns a greyscale version of the image.
         /// <summary>
+        /// Returns a greyscale version of the image.
         /// </summary>
         public GenericImage ConvertToGreyscale(double weight_r, double weight_g, double weight_b)
         {
-            return;
+            return new();
         }
 
-        // Returns a greyscale version of the image.
         /// <summary>
+        /// Returns a greyscale version of the image.
         /// </summary>
         public GenericImage ConvertToGreyscale()
         {
-            return;
+            return new();
         }
 
-        // Returns monochromatic version of the image.
         /// <summary>
+        /// Returns monochromatic version of the image.
         /// </summary>
         public GenericImage ConvertToMono(byte r, byte g, byte b)
         {
-            return;
+            return new();
         }
 
-        // Returns disabled(dimmed) version of the image.
         /// <summary>
+        /// Returns disabled(dimmed) version of the image.
         /// </summary>
         public GenericImage ConvertToDisabled(byte brightness = 255)
         {
-            return;
+            return new();
         }
 
-        // Returns a changed version of the image based on the given lightness.
         /// <summary>
+        /// Returns a changed version of the image based on the given lightness.
         /// </summary>
         public GenericImage ChangeLightness(int alpha)
         {
-            return;
+            return new();
         }
 
-        // Return alpha value at given pixel location.
         /// <summary>
+        /// Return alpha value at given pixel location.
         /// </summary>
         public byte GetAlpha(int x, int y)
         {
-            return;
+            return 0;
         }
 
-        // Returns the red intensity at the given coordinate.
         /// <summary>
+        /// Returns the red intensity at the given coordinate.
         /// </summary>
         public byte GetRed(int x, int y)
         {
-            return;
+            return 0;
         }
 
-        // Returns the green intensity at the given coordinate.
         /// <summary>
+        /// Returns the green intensity at the given coordinate.
         /// </summary>
         public byte GetGreen(int x, int y)
         {
-            return;
+            return 0;
         }
 
-        // Returns the blue intensity at the given coordinate.
         /// <summary>
+        /// Returns the blue intensity at the given coordinate.
         /// </summary>
         public byte GetBlue(int x, int y)
         {
-            return;
+            return 0;
         }
 
-        // Gets the red value of the mask color.
         /// <summary>
+        /// Gets the red value of the mask color.
         /// </summary>
         public byte GetMaskRed()
         {
-            return;
+            return 0;
         }
 
-        // Gets the green value of the mask color.
         /// <summary>
+        /// Gets the green value of the mask color.
         /// </summary>
         public byte GetMaskGreen()
         {
-            return;
+            return 0;
         }
 
-        // Gets the blue value of the mask color.
         /// <summary>
+        /// Gets the blue value of the mask color.
         /// </summary>
         public byte GetMaskBlue()
         {
-            return;
+            return 0;
         }
 
-        // Gets a user-defined string-valued option.
         /// <summary>
+        /// Gets a user-defined string-valued option.
         /// </summary>
         /// <remarks>
         /// See <see cref="GenericImageOptionNames"/> for known option names.
         /// </remarks>
         public string GetOptionAsString(string name)
         {
-            return;
+            return string.Empty;
         }
 
-        // Gets a user-defined integer-valued option.
         /// <summary>
+        /// Gets a user-defined integer-valued option.
         /// </summary>
         /// <remarks>
         /// See <see cref="GenericImageOptionNames"/> for known option names.
         /// </remarks>
         public int GetOptionAsInt(string name)
         {
-            return;
+            return 0;
         }
 
-        // Returns a sub image of the current one as long as the rect belongs entirely to the image.
         /// <summary>
+        /// Returns a sub image of the current one as long as the rect belongs entirely to the image.
         /// </summary>
         public GenericImage GetSubImage(Int32Rect rect)
         {
-            return;
+            return new();
         }
 
-        // Gets the type of image found when image was loaded or specified when image was saved.
         /// <summary>
+        /// Gets the type of image found when image was loaded or specified when image was saved.
         /// </summary>
         public int GetImageType()
         {
-            return;
+            return 0;
         }
 
-        // Returns true if this image has alpha channel, false otherwise.
         /// <summary>
+        /// Returns true if this image has alpha channel, false otherwise.
         /// </summary>
         public bool HasAlpha()
         {
-            return;
+            return false;
         }
 
-        // Returns true if there is a mask active, false otherwise.
         /// <summary>
+        /// Returns true if there is a mask active, false otherwise.
         /// </summary>
         public bool HasMask()
         {
-            return;
+            return false;
         }
 
-        // Returns true if the given option is present.
         /// <summary>
+        /// Returns true if the given option is present.
         /// </summary>
         /// <remarks>
         /// See <see cref="GenericImageOptionNames"/> for known option names.
         /// </remarks>
         public bool HasOption(string name)
         {
-            return;
+            return false;
         }
 
-        // Returns true if image data is present.
         /// <summary>
+        /// Returns true if image data is present.
         /// </summary>
-        public bool IsOk(IntPtr handle)
+        public bool IsOk()
         {
-            return;
+            return false;
         }
 
-        // Returns true if the given pixel is transparent, i.e. either has the mask
-        // color if this image has a mask or if this image has alpha channel and alpha value of
-        // this pixel is strictly less than threshold.
         /// <summary>
+        /// Returns true if the given pixel is transparent, i.e. either has the mask
+        /// color if this image has a mask or if this image has alpha channel and alpha value of
+        /// this pixel is strictly less than threshold.
         /// </summary>
         public bool IsTransparent(int x, int y, byte threshold = AlphaChannelThreshold)
         {
-            return;
+            return false;
         }
 
-        // Loads an image from an input stream.
         /// <summary>
+        /// Loads an image from an input stream.
         /// </summary>
         public bool LoadFromStream(
             Stream stream,
             BitmapType bitmapType = BitmapType.Any,
             int index = -1)
         {
-            return;
+            return false;
         }
 
-        // Loads an image from a file.
         /// <summary>
+        /// Loads an image from a file.
         /// </summary>
         public bool LoadFromFile(
             string filename,
             BitmapType bitmapType = BitmapType.Any,
             int index = -1)
         {
-            return;
+            return false;
         }
 
-        // Loads an image from a file.
         /// <summary>
+        /// Loads an image from a file.
         /// </summary>
         public bool LoadFromFile(string name, string mimetype, int index = -1)
         {
-            return;
+            return false;
         }
 
-        // Loads an image from an input stream.
         /// <summary>
+        /// Loads an image from an input stream.
         /// </summary>
         public bool LoadFromStream(Stream stream, string mimetype, int index = -1)
         {
-            return;
+            return false;
         }
 
-        // Saves an image in the given stream.
         /// <summary>
+        /// Saves an image in the given stream.
         /// </summary>
         public bool SaveToStream(Stream stream, string mimetype)
         {
-            return;
+            return false;
         }
 
-        // Saves an image in the named file.
         /// <summary>
+        /// Saves an image in the named file.
         /// </summary>
         public bool SaveToFile(string filename, BitmapType bitmapType)
         {
-            return;
+            return false;
         }
 
-        // Saves an image in the named file.
         /// <summary>
+        /// Saves an image in the named file.
         /// </summary>
         public bool SaveToFile(string filename, string mimetype)
         {
-            return;
+            return false;
         }
 
-        // Saves an image in the named file.
         /// <summary>
+        /// Saves an image in the named file.
         /// </summary>
         public bool SaveToFile(string filename)
         {
-            return;
+            return false;
         }
 
-        // Saves an image in the given stream.
         /// <summary>
+        /// Saves an image in the given stream.
         /// </summary>
         public bool SaveToStream(Stream stream, BitmapType type)
         {
-            return;
+            return false;
         }
 
-        // Returns true if at least one of the available image handlers can read the file
-        // with the given name.
         /// <summary>
-        /// </summary>
-        public static bool CanRead(string filename)
-        {
-            return;
-        }
-
-        // Returns true if at least one of the available image handlers can read the data in
-        // the given stream.
-        /// <summary>
-        /// </summary>
-        public static bool CanReadStream(Stream stream)
-        {
-            return;
-        }
-
-        // Returns the currently used default file load flags.
-        /// <summary>
-        /// </summary>
-        internal static int GetDefaultLoadFlags()
-        {
-            return;
-        }
-
-        // Iterates all registered wxImageHandler objects, and returns a string containing
-        // file extension masks suitable for passing to file open/save dialog boxes.
-        /// <summary>
-        /// </summary>
-        public static string GetImageExtWildcard()
-        {
-            return;
-        }
-
-        // Register an image handler.
-        /// <summary>
-        /// </summary>
-        internal static void AddHandler(IntPtr handler)
-        {
-        }
-
-        // Deletes all image handlers.
-        /// <summary>
-        /// </summary>
-        internal static void CleanUpHandlers()
-        {
-        }
-
-        // Finds the handler with the given name.
-        /// <summary>
-        /// </summary>
-        internal static IntPtr FindHandlerByName(string name)
-        {
-            return;
-        }
-
-        // Finds the handler associated with the given extension and type.
-        /// <summary>
-        /// </summary>
-        internal static IntPtr FindHandlerByExt(string extension, BitmapType bitmapType)
-        {
-            return;
-        }
-
-        // Finds the handler associated with the given image type.
-        /// <summary>
-        /// </summary>
-        internal static IntPtr FindHandlerByBitmapType(BitmapType bitmapType)
-        {
-            return;
-        }
-
-        // Finds the handler associated with the given MIME type.
-        /// <summary>
-        /// </summary>
-        internal static IntPtr FindHandlerByMime(string mimetype)
-        {
-            return;
-        }
-
-        // Adds a handler at the start of the static list of format handlers.
-        /// <summary>
-        /// </summary>
-        internal static void InsertHandler(IntPtr handler)
-        {
-        }
-
-        // Finds the handler with the given name, and removes it.
-        /// <summary>
-        /// </summary>
-        public static bool RemoveHandler(string name)
-        {
-            return;
-        }
-
-        // If the image file contains more than one image and the image handler is capable of
-        // retrieving these individually, this function will return the number of available images.
-        /// <summary>
-        /// </summary>
-        public static int GetImageCountInFile(
-            string filename,
-            BitmapType bitmapType = BitmapType.Any)
-        {
-            return;
-        }
-
-        // If the image stream contains more than one image and the image handler is capable of
-        // retrieving these individually, this function will return the number of available images.
-        /// <summary>
-        /// </summary>
-        public static int GetImageCountInStream(
-            Stream stream,
-            BitmapType bitmapType = BitmapType.Any)
-        {
-            return;
-        }
-
-        // Returns pointer to the array storing the alpha values for this image.
-        /// <summary>
-        /// </summary>
-        internal IntPtr GetAlphaData()
-        {
-            return;
-        }
-
-        // Returns the image data as an array.
-        /// <summary>
-        /// </summary>
-        internal IntPtr GetData()
-        {
-            return;
-        }
-
-        // Creates a fresh image.
-        /// <summary>
-        /// </summary>
-        internal bool CreateData(int width, int height, IntPtr data, bool static_data = false)
-        {
-            return;
-        }
-
-        // Creates a fresh image.
-        /// <summary>
-        /// </summary>
-        internal bool CreateData(int width, int height, IntPtr data, IntPtr alpha, bool static_data = false)
-        {
-            return;
-        }
-
-        // Sets the image data without performing checks.
-        /// <summary>
-        /// </summary>
-        internal void SetAlphaData(IntPtr alpha = default, bool static_data = false)
-        {
-        }
-
-        // Sets the image data without performing checks.
-        /// <summary>
-        /// </summary>
-        internal void SetData(IntPtr data, bool static_data = false)
-        {
-        }
-
-        // Sets the image data without performing checks.
-        /// <summary>
+        /// Sets the image data without performing checks.
         /// </summary>
         internal static void SetData(
             IntPtr data,
@@ -888,6 +761,135 @@ namespace Alternet.Drawing
             int new_height,
             bool static_data = false)
         {
+        }
+
+        /// <summary>
+        /// Returns the currently used default file load flags.
+        /// </summary>
+        internal static int GetDefaultLoadFlags()
+        {
+            return 0;
+        }
+
+        /// <summary>
+        /// Sets the default value for the flags used for loading image files.
+        /// </summary>
+        internal static void SetDefaultLoadFlags(int flags)
+        {
+        }
+
+        /// <summary>
+        /// Register an image handler.
+        /// </summary>
+        internal static void AddHandler(IntPtr handler)
+        {
+        }
+
+        /// <summary>
+        /// Deletes all image handlers.
+        /// </summary>
+        internal static void CleanUpHandlers()
+        {
+        }
+
+        /// <summary>
+        /// Finds the handler with the given name.
+        /// </summary>
+        internal static IntPtr FindHandlerByName(string name)
+        {
+            return default;
+        }
+
+        /// <summary>
+        /// Finds the handler associated with the given extension and type.
+        /// </summary>
+        internal static IntPtr FindHandlerByExt(string extension, BitmapType bitmapType)
+        {
+            return default;
+        }
+
+        /// <summary>
+        /// Finds the handler associated with the given image type.
+        /// </summary>
+        internal static IntPtr FindHandlerByBitmapType(BitmapType bitmapType)
+        {
+            return default;
+        }
+
+        /// <summary>
+        /// Finds the handler associated with the given MIME type.
+        /// </summary>
+        internal static IntPtr FindHandlerByMime(string mimetype)
+        {
+            return default;
+        }
+
+        /// <summary>
+        /// Adds a handler at the start of the static list of format handlers.
+        /// </summary>
+        internal static void InsertHandler(IntPtr handler)
+        {
+        }
+
+        /// <summary>
+        /// Sets the flags used for loading image files by this object.
+        /// </summary>
+        internal void SetLoadFlags(int flags)
+        {
+        }
+
+        /// <summary>
+        /// Returns pointer to the array storing the alpha values for this image.
+        /// </summary>
+        internal IntPtr GetAlphaData()
+        {
+            return default;
+        }
+
+        /// <summary>
+        /// Returns the image data as an array.
+        /// </summary>
+        internal IntPtr GetData()
+        {
+            return default;
+        }
+
+        /// <summary>
+        /// Creates a fresh image.
+        /// </summary>
+        internal bool CreateData(int width, int height, IntPtr data, bool static_data = false)
+        {
+            return false;
+        }
+
+        /// <summary>
+        /// Creates a fresh image.
+        /// </summary>
+        internal bool CreateData(int width, int height, IntPtr data, IntPtr alpha, bool static_data = false)
+        {
+            return false;
+        }
+
+        /// <summary>
+        /// Sets the image data without performing checks.
+        /// </summary>
+        internal void SetAlphaData(IntPtr alpha = default, bool static_data = false)
+        {
+        }
+
+        /// <summary>
+        /// Sets the image data without performing checks.
+        /// </summary>
+        internal void SetData(IntPtr data, bool static_data = false)
+        {
+        }
+
+        /// <summary>
+        /// Returns the file load flags used for this object.
+        /// </summary>
+        internal int GetLoadFlags(IntPtr handle)
+        {
+            return 0;
         }
 
         /// <inheritdoc/>
