@@ -48,7 +48,7 @@ namespace PropertyGridSample
                 {
                     Normal = Color.PaleTurquoise.AsBrush,
                     Hovered = Color.IndianRed.AsBrush,
-                    Disabled = Color.Orchid.AsBrush,
+                    Disabled = Color.DarkGray.AsBrush,
                     Pressed = Color.Cornsilk.AsBrush,
                     Focused = Color.DarkOrange.AsBrush,
                 };
@@ -69,8 +69,7 @@ namespace PropertyGridSample
 
                 pictureBox.Image = DefaultImage;
 
-                var disabledImage = DefaultImage.Clone();
-                disabledImage.GrayScale();
+                var disabledImage = DefaultImage.ToGrayScale();
                 pictureBox.SetImage(disabledImage, GenericControlState.Disabled);
 
                 pictureBox.CurrentStateChanged += CurrentStateChanged;
@@ -306,12 +305,15 @@ namespace PropertyGridSample
                         $"PropertyGridSample.Resources.ButtonImages.ButtonImage{stateName}.png")
                     ?? throw new Exception());
 
+            var normal = LoadImage("Normal");
+            var disabled = normal.ToGrayScale();
+
             return new ControlStateImages
             {
-                Normal = LoadImage("Normal"),
+                Normal = normal,
                 Hovered = LoadImage("Hovered"),
                 Pressed = LoadImage("Pressed"),
-                Disabled = LoadImage("Disabled"),
+                Disabled = disabled,
                 Focused = LoadImage("Focused"),
             };
         }

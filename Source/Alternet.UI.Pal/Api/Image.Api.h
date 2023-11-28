@@ -30,6 +30,31 @@ ALTERNET_UI_API c_bool Image_GetIsOk_(Image* obj)
     return obj->GetIsOk();
 }
 
+ALTERNET_UI_API c_bool Image_GetHasAlpha_(Image* obj)
+{
+    return obj->GetHasAlpha();
+}
+
+ALTERNET_UI_API void Image_SetHasAlpha_(Image* obj, c_bool value)
+{
+    obj->SetHasAlpha(value);
+}
+
+ALTERNET_UI_API int Image_GetPixelWidth_(Image* obj)
+{
+    return obj->GetPixelWidth();
+}
+
+ALTERNET_UI_API int Image_GetPixelHeight_(Image* obj)
+{
+    return obj->GetPixelHeight();
+}
+
+ALTERNET_UI_API int Image_GetDepth_(Image* obj)
+{
+    return obj->GetDepth();
+}
+
 ALTERNET_UI_API void Image_LoadFromStream_(Image* obj, void* stream)
 {
     obj->LoadFromStream(stream);
@@ -60,8 +85,63 @@ ALTERNET_UI_API void Image_SaveToFile_(Image* obj, const char16_t* fileName)
     obj->SaveToFile(fileName);
 }
 
+ALTERNET_UI_API void* Image_ConvertToGenericImage_(Image* obj)
+{
+    return obj->ConvertToGenericImage();
+}
+
+ALTERNET_UI_API void Image_LoadFromGenericImage_(Image* obj, void* image, int depth)
+{
+    obj->LoadFromGenericImage(image, depth);
+}
+
 ALTERNET_UI_API c_bool Image_GrayScale_(Image* obj)
 {
     return obj->GrayScale();
+}
+
+ALTERNET_UI_API void Image_ResetAlpha_(Image* obj)
+{
+    obj->ResetAlpha();
+}
+
+ALTERNET_UI_API c_bool Image_LoadFile_(Image* obj, const char16_t* name, int type)
+{
+    return obj->LoadFile(name, type);
+}
+
+ALTERNET_UI_API c_bool Image_SaveFile_(Image* obj, const char16_t* name, int type)
+{
+    return obj->SaveFile(name, type);
+}
+
+ALTERNET_UI_API c_bool Image_SaveStream_(Image* obj, void* stream, int type)
+{
+    return obj->SaveStream(stream, type);
+}
+
+ALTERNET_UI_API c_bool Image_LoadStream_(Image* obj, void* stream, int type)
+{
+    return obj->LoadStream(stream, type);
+}
+
+ALTERNET_UI_API Image* Image_GetSubBitmap_(Image* obj, Int32Rect rect)
+{
+    return obj->GetSubBitmap(rect);
+}
+
+ALTERNET_UI_API Image* Image_ConvertToDisabled_(Image* obj, uint8_t brightness)
+{
+    return obj->ConvertToDisabled(brightness);
+}
+
+ALTERNET_UI_API void Image_Rescale_(Image* obj, Int32Size sizeNeeded)
+{
+    obj->Rescale(sizeNeeded);
+}
+
+ALTERNET_UI_API int Image_GetDefaultBitmapType_()
+{
+    return Image::GetDefaultBitmapType();
 }
 

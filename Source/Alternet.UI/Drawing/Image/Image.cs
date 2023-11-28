@@ -12,14 +12,35 @@ namespace Alternet.Drawing
     /// displayed in a UI control.
     /// </summary>
     [TypeConverter(typeof(ImageConverter))]
-    public abstract class Image : IDisposable
+    public class Image : IDisposable
     {
-        private static ImageGrayScaleMethod defaultGrayScaleMethod = ImageGrayScaleMethod.SetColorRGB150;
-        private static Brush? disabledBrush = null;
-        private static Color disabledBrushColor = Color.FromArgb(171, 71, 71, 71);
+        /// <summary>
+        /// Gets or sets default disabled image brightness used in <see cref="ToGrayScale"/>.
+        /// </summary>
+        public byte DefaultDisabledBrightness = 170;
+
+        //private static ImageGrayScaleMethod defaultGrayScaleMethod = ImageGrayScaleMethod.SetColorRGB150;
+        //private static Brush? disabledBrush = null;
+        //private static Color disabledBrushColor = Color.FromArgb(171, 71, 71, 71);
 
         private bool isDisposed;
         private UI.Native.Image nativeImage;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Image"/> class from
+        /// the specified <see cref="GenericImage"/>.
+        /// </summary>
+        /// <param name="genericImage">Generic image.</param>
+        /// <param name="depth">Specifies the depth of the bitmap.
+        /// Some platforms only support (1) for monochrome and (-1) for the current color setting.
+        /// A depth of 32 including an alpha channel is supported under MSW, Mac and Linux.
+        /// If this parameter is omitted
+        /// (= -1), the display depth of the screen is used.</param>
+        private protected Image(GenericImage genericImage, int depth = -1)
+        {
+            nativeImage = new UI.Native.Image();
+            NativeImage.LoadFromGenericImage(genericImage.Handle, depth);
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Image"/> class from
@@ -63,7 +84,7 @@ namespace Alternet.Drawing
             this.nativeImage = nativeImage;
         }
 
-        /// <summary>
+        /*/// <summary>
         /// Gets or sets default gray scale method used in <see cref="GrayScale"/>
         /// and other functions.
         /// </summary>
@@ -80,9 +101,9 @@ namespace Alternet.Drawing
                     return;
                 defaultGrayScaleMethod = value;
             }
-        }
+        }*/
 
-        /// <summary>
+        /*/// <summary>
         /// Get or set color used when gray scale method is
         /// <see cref="ImageGrayScaleMethod.FillWithDisabledBrush"/>.
         /// </summary>
@@ -99,6 +120,17 @@ namespace Alternet.Drawing
                     return;
                 disabledBrushColor = value;
                 disabledBrush = null;
+            }
+        }*/
+
+        /// <summary>
+        /// Converts this object to <see cref="GenericImage"/>.
+        /// </summary>
+        public GenericImage AsGeneric
+        {
+            get
+            {
+                return new GenericImage(NativeImage.ConvertToGenericImage());
             }
         }
 
@@ -135,7 +167,7 @@ namespace Alternet.Drawing
         /// </summary>
         public bool IsEmpty => isDisposed || !NativeImage.IsOk || Size.AnyIsEmpty;
 
-        // Color.FromArgb(171, 71, 71, 71)
+        /*// Color.FromArgb(171, 71, 71, 71)
         // Color.FromArgb(128, 0, 0, 0)
         internal static Brush DisabledBrush
         {
@@ -150,6 +182,50 @@ namespace Alternet.Drawing
             {
                 disabledBrush = value;
             }
+        }*/
+
+        /// <summary>
+        /// Gets or sets whether this image has an alpha channel.
+        /// </summary>
+        public bool HasAlpha
+        {
+            get
+            {
+                return NativeImage.HasAlpha;
+            }
+
+            set
+            {
+                NativeImage.HasAlpha = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets image width in pixels.
+        /// </summary>
+        public int PixelWidth => NativeImage.PixelWidth;
+
+        /// <summary>
+        /// Gets image height in pixels.
+        /// </summary>
+        public int PixelHeight => NativeImage.PixelHeight;
+
+        /// <summary>
+        /// Gets default <see cref="BitmapType"/> value for the current operating system.
+        /// </summary>
+        /// <returns></returns>
+        public static BitmapType DefaultBitmapType
+            => (BitmapType) UI.Native.Image.GetDefaultBitmapType();
+
+        /// <summary>
+        /// Gets the color depth of the image. Returned value is 32, 24, or other.
+        /// </summary>
+        public int Depth
+        {
+            get
+            {
+                return NativeImage.Depth;
+            }
         }
 
         internal UI.Native.Image NativeImage
@@ -159,6 +235,126 @@ namespace Alternet.Drawing
                 CheckDisposed();
                 return nativeImage;
             }
+        }
+
+        /// <summary>
+        /// Loads an image from a file or resource.
+        /// </summary>
+        /// <param name="name">Either a filename or a resource name. The meaning of name
+        /// is determined by the type parameter.</param>
+        /// <param name="type">One of the <see cref="BitmapType"/> values</param>
+        /// <returns><c>true</c> if the operation succeeded, <c>false</c> otherwise.</returns>
+        /// <remarks>
+        /// Note: Not all values of <see cref="BitmapType"/> enumeration
+        /// may be supported by the library and operating system for the load operation.
+        /// </remarks>
+        /// <remarks>
+        /// You can specify <see cref="BitmapType.Any"/> to guess image type using file extension.
+        /// </remarks>
+        public bool Load(string name, BitmapType type)
+        {
+            return NativeImage.LoadFile(name, (int) type);
+        }
+
+        /// <summary>
+        /// Saves this <see cref="Image"/> to the specified file.
+        /// </summary>
+        /// <param name="name">A string that contains the name of the file
+        /// to which to save this <see cref="Image"/>.</param>
+        /// <param name="type">An <see cref="BitmapType"/> that specifies
+        /// the format of the saved image.</param>
+        /// <remarks>
+        /// Note: Not all values of <see cref="BitmapType"/> enumeration
+        /// may be supported by the library and operating system for the save operation.
+        /// </remarks>
+        /// <returns><c>true</c> if the operation succeeded, <c>false</c> otherwise.</returns>
+        public bool Save(string name, BitmapType type)
+        {
+            return NativeImage.SaveFile(name, (int)type); 
+        }
+
+        /// <summary>
+        /// Saves this image to the specified stream in the specified format defined
+        /// in <paramref name="type"/>.
+        /// </summary>
+        /// <param name="stream">The <see cref="Stream"/> where the image will be
+        /// saved.</param>
+        /// <param name="type">An <see cref="BitmapType"/> that specifies
+        /// the format of the saved image.</param>
+        /// <remarks>
+        /// Note: Not all values of <see cref="BitmapType"/> enumeration
+        /// may be supported by the library and operating system for the save operation.
+        /// </remarks>
+        /// <returns><c>true</c> if the operation succeeded, <c>false</c> otherwise.</returns>
+        public bool Save(Stream stream, BitmapType type)
+        {
+            var outputStream = new UI.Native.OutputStream(stream);
+            return NativeImage.SaveStream(outputStream, (int)type);
+        }
+
+        /// <summary>
+        /// Loads an image from an input stream.
+        /// </summary>
+        /// <param name="stream">The <see cref="Stream"/> from where the image will be
+        /// loaded.</param>
+        /// <param name="type">One of the <see cref="BitmapType"/> values</param>
+        /// <remarks>
+        /// Note: Not all values of <see cref="BitmapType"/> enumeration
+        /// may be supported by the library and operating system for the load operation.
+        /// </remarks>
+        /// <returns><c>true</c> if the operation succeeded, <c>false</c> otherwise.</returns>
+        public bool Load(Stream stream, BitmapType type)
+        {
+            using var inputStream = new UI.Native.InputStream(stream);
+            return NativeImage.LoadStream(inputStream, (int) type);
+        }
+
+        /// <summary>
+        /// Returns a sub image of the current one as long as the <paramref name="rect"/> belongs
+        /// entirely to the image.
+        /// </summary>
+        /// <param name="rect">Rectangle in this image.</param>
+        /// <returns></returns>
+        public Image GetSubBitmap(Int32Rect rect)
+        {
+            var converted = NativeImage.GetSubBitmap(rect);
+            return new Bitmap(converted);
+        }
+
+        /// <summary>
+        /// Returns disabled (dimmed) version of the image.
+        /// </summary>
+        /// <param name="brightness">Brightness. Default is 255.</param>
+        /// <returns></returns>
+        public Image ConvertToDisabled(byte brightness = 255)
+        {
+            var converted = NativeImage.ConvertToDisabled(brightness);
+            return new Bitmap(converted);
+        }
+
+        /// <summary>
+        /// Rescales this image to the requested size.
+        /// </summary>
+        /// <remarks>
+        /// This function is just a convenient wrapper for <see cref="GenericImage.Rescale"/> used to
+        /// resize the given image to the requested size. If you need more control over
+        /// resizing, e.g.to specify the quality option different from
+        /// <see cref="GenericImageResizeQuality.Nearest"/> used by this function, please use
+        /// the <see cref="GenericImage"/> function
+        /// directly instead. Size must be valid.
+        /// </remarks>
+        /// <param name="sizeNeeded"></param>
+        public void Rescale(Int32Size sizeNeeded)
+        {
+            NativeImage.Rescale(sizeNeeded);
+        }
+
+        /// <summary>
+        /// Resets alpha channel.
+        /// </summary>
+        public void ResetAlpha()
+        {
+            NativeImage.ResetAlpha();
         }
 
         /// <summary>
@@ -336,7 +532,7 @@ namespace Alternet.Drawing
             return dc;
         }
 
-        /// <summary>
+        /*/// <summary>
         /// Makes image grayscaled.
         /// </summary>
         /// <returns><c>true</c> if operation is successful. </returns>
@@ -360,12 +556,12 @@ namespace Alternet.Drawing
             {
                 case ImageGrayScaleMethod.SetColorRGB150:
                 default:
-                    return NativeImage.GrayScale();
+                    return ConvertToDisabled();
                 case ImageGrayScaleMethod.FillWithDisabledBrush:
                     GrayScaleWithBrush();
                     return true;
             }
-        }
+        }*/
 
         /// <summary>
         /// Creates a clone of this image with fully copied image data.
@@ -380,19 +576,9 @@ namespace Alternet.Drawing
         /// Creates grayscaled version of the image.
         /// </summary>
         /// <returns>Returns new grayscaled image from this image.</returns>
-        /// <remarks>
-        /// This method uses <see cref="GrayScale"/> and if it is unsuccessfull,
-        /// it fills the image with <see cref="DisabledBrushColor"/>.
-        /// </remarks>
-        public Image ToGrayScale(ImageGrayScaleMethod method = ImageGrayScaleMethod.Default)
+        public Image ToGrayScale()
         {
-            Bitmap bitmap = new(this);
-
-            if (bitmap.GrayScale(method))
-                return bitmap;
-
-            bitmap.GrayScale(ImageGrayScaleMethod.FillWithDisabledBrush);
-            return bitmap;
+            return ConvertToDisabled(DefaultDisabledBrightness);
         }
 
         /// <summary>

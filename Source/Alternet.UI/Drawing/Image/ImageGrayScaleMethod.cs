@@ -9,7 +9,7 @@ namespace Alternet.Drawing
     /// <summary>
     /// Defines possible gray scale methods.
     /// </summary>
-    public enum ImageGrayScaleMethod
+    internal enum ImageGrayScaleMethod
     {
         /// <summary>
         /// Uses default gray scale method.
@@ -22,7 +22,7 @@ namespace Alternet.Drawing
         SetColorRGB150,
 
         /// <summary>
-        /// Fills image with <see cref="Image.DisabledBrush"/>.
+        /// Fills image with disabled brush.
         /// </summary>
         FillWithDisabledBrush,
     }

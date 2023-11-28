@@ -9,13 +9,37 @@ Int32Size GetPixelSize();
 
 bool GetIsOk();
 
+
+bool GetHasAlpha();
+void SetHasAlpha(bool value);
+
+
+int GetPixelWidth();
+
+
+int GetPixelHeight();
+
+
+int GetDepth();
+
 void LoadFromStream(void* stream);
 void LoadSvgFromStream(void* stream, int width, int height, const Color& color);
 void Initialize(const Size& size);
 void CopyFrom(Image* otherImage);
 void SaveToStream(void* stream, const string& format);
 void SaveToFile(const string& fileName);
+void* ConvertToGenericImage();
+void LoadFromGenericImage(void* image, int depth);
 bool GrayScale();
+void ResetAlpha();
+bool LoadFile(const string& name, int type);
+bool SaveFile(const string& name, int type);
+bool SaveStream(void* stream, int type);
+bool LoadStream(void* stream, int type);
+Image* GetSubBitmap(const Int32Rect& rect);
+Image* ConvertToDisabled(uint8_t brightness);
+void Rescale(const Int32Size& sizeNeeded);
+static int GetDefaultBitmapType();
 public:
 Image();
 protected:

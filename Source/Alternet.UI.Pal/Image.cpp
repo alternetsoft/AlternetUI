@@ -3,6 +3,7 @@
 #include "Api/OutputStream.h"
 #include "ManagedInputStream.h"
 #include "ManagedOutputStream.h"
+#include "GenericImage.h"
 
 #include <wx/wxprec.h>
 #include <wx/rawbmp.h>
@@ -205,6 +206,8 @@ namespace Alternet::UI
 		return wxBitmapBundle::FromImpl(new wxBitmapBundleImplSVG(svgImage, sizeDef, color));
 	}
 
+//================================================
+
 	wxBitmapBundle Image::CreateFromSvgStream(void* stream, int width, int height, const Color& color)
 	{
 		InputStream inputStream(stream);
@@ -244,6 +247,16 @@ namespace Alternet::UI
 		ManagedInputStream managedInputStream(&inputStream);
 
 		_bitmap = wxBitmap(managedInputStream);
+	}
+
+	void* Image::ConvertToGenericImage()
+	{
+		return new GenericImage(_bitmap.ConvertToImage());
+	}
+
+	void Image::LoadFromGenericImage(void* image, int depth)
+	{
+		_bitmap = wxBitmap(((GenericImage*)image)->_image, depth);
 	}
 
 	void Image::SaveToStream(void* stream, const string& format)
@@ -514,4 +527,99 @@ namespace Alternet::UI
 	}
 
 	*/
+
+	void Image::Rescale(const Int32Size& sizeNeeded)
+	{
+		wxBitmap::Rescale(_bitmap, sizeNeeded);
+	}
+
+	int Image::GetDefaultBitmapType()
+	{
+		return wxBITMAP_DEFAULT_TYPE;
+	}
+
+	bool Image::GetHasAlpha()
+	{
+		return _bitmap.HasAlpha();
+	}
+
+	void Image::SetHasAlpha(bool value)
+	{
+		_bitmap.UseAlpha(value);
+	}
+
+	int Image::GetPixelWidth()
+	{
+		return _bitmap.GetWidth();
+	}
+	int Image::GetPixelHeight()
+	{
+		return _bitmap.GetHeight();
+	}
+
+	int Image::GetDepth()
+	{
+		return _bitmap.GetDepth();
+	}
+
+	void Image::ResetAlpha()
+	{
+		_bitmap.ResetAlpha();
+	}
+
+	bool Image::LoadFile(const string& name, int type)
+	{
+		return _bitmap.LoadFile(wxStr(name), (wxBitmapType)type);
+	}
+
+	bool Image::SaveFile(const string& name, int type)
+	{
+		return _bitmap.SaveFile(wxStr(name), (wxBitmapType)type);
+	}
+
+	bool Image::SaveStream(void* stream, int type)
+	{
+		OutputStream outputStream(stream);
+		ManagedOutputStream managedOutputStream(&outputStream);
+
+		auto image = _bitmap.ConvertToImage();
+
+		return image.SaveFile(managedOutputStream, (wxBitmapType)type);
+	}
+
+	bool Image::LoadStream(void* stream, int type)
+	{
+		InputStream inputStream(stream);
+		ManagedInputStream managedInputStream(&inputStream);
+
+		wxImage image;
+		auto result = image.LoadFile(managedInputStream, (wxBitmapType)type);
+
+		if (result)
+		{
+			_bitmap = wxBitmap(image);
+			return true;
+		}
+		else
+		{
+			_bitmap = wxBitmap();
+			return false;
+		}
+	}
+
+	Image* Image::ConvertToDisabled(uint8_t brightness)
+	{
+		auto disabled = _bitmap.ConvertToDisabled(brightness);
+		auto result = new Image();
+		result->_bitmap = disabled;
+		return result;
+	}
+
+	Image* Image::GetSubBitmap(const Int32Rect& rect)
+	{
+		auto sub = _bitmap.GetSubBitmap(rect);
+		auto result = new Image();
+		result->_bitmap = sub;
+		return result;
+	}
 }
