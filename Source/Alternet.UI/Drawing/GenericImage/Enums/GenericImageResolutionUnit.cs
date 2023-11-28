@@ -9,7 +9,7 @@ namespace Alternet.Drawing
     /// <summary>
     /// Enumerates possible values for the image resolution option in <see cref="GenericImage"/>.
     /// </summary>
-    public enum GenericImageResolution
+    public enum GenericImageResolutionUnit
     {
         /// <summary>
         /// Resolution not specified.
