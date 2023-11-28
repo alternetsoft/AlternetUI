@@ -23,6 +23,506 @@ namespace Alternet.UI.Native
         {
         }
         
+        public static System.IntPtr FindHandler(string name)
+        {
+            return NativeApi.GenericImage_FindHandler_(name);
+        }
+        
+        public static System.IntPtr FindHandler(string extension, int bitmapType)
+        {
+            return NativeApi.GenericImage_FindHandler_(extension, bitmapType);
+        }
+        
+        public static System.IntPtr FindHandler(int bitmapType)
+        {
+            return NativeApi.GenericImage_FindHandler_(bitmapType);
+        }
+        
+        public static System.IntPtr FindHandlerMime(string mimetype)
+        {
+            return NativeApi.GenericImage_FindHandlerMime_(mimetype);
+        }
+        
+        public static void InsertHandler(System.IntPtr handler)
+        {
+            NativeApi.GenericImage_InsertHandler_(handler);
+        }
+        
+        public static bool RemoveHandler(string name)
+        {
+            return NativeApi.GenericImage_RemoveHandler_(name);
+        }
+        
+        public static int GetImageCountInFile(string filename, int bitmapType)
+        {
+            return NativeApi.GenericImage_GetImageCountInFile_(filename, bitmapType);
+        }
+        
+        public static int GetImageCountInStream(InputStream stream, int bitmapType)
+        {
+            return NativeApi.GenericImage_GetImageCountInStream_(stream.NativePointer, bitmapType);
+        }
+        
+        public static System.IntPtr GetAlphaData(System.IntPtr handle)
+        {
+            return NativeApi.GenericImage_GetAlphaData_(handle);
+        }
+        
+        public static System.IntPtr GetData(System.IntPtr handle)
+        {
+            return NativeApi.GenericImage_GetData_(handle);
+        }
+        
+        public static bool CreateData(System.IntPtr handle, int width, int height, System.IntPtr data, bool static_data)
+        {
+            return NativeApi.GenericImage_CreateData_(handle, width, height, data, static_data);
+        }
+        
+        public static bool CreateAlphaData(System.IntPtr handle, int width, int height, System.IntPtr data, System.IntPtr alpha, bool static_data)
+        {
+            return NativeApi.GenericImage_CreateAlphaData_(handle, width, height, data, alpha, static_data);
+        }
+        
+        public static void SetData(System.IntPtr handle, System.IntPtr data, bool static_data)
+        {
+            NativeApi.GenericImage_SetData_(handle, data, static_data);
+        }
+        
+        public static void SetDataWithSize(System.IntPtr handle, System.IntPtr data, int new_width, int new_height, bool static_data)
+        {
+            NativeApi.GenericImage_SetDataWithSize_(handle, data, new_width, new_height, static_data);
+        }
+        
+        public static void SetAlpha(System.IntPtr handle, System.IntPtr alpha, bool static_data)
+        {
+            NativeApi.GenericImage_SetAlpha_(handle, alpha, static_data);
+        }
+        
+        public static System.IntPtr CreateGenericImage()
+        {
+            return NativeApi.GenericImage_CreateGenericImage_();
+        }
+        
+        public static System.IntPtr CreateGenericImageWithSize(int width, int height, bool clear)
+        {
+            return NativeApi.GenericImage_CreateGenericImageWithSize_(width, height, clear);
+        }
+        
+        public static System.IntPtr CreateGenericImageFromFileWithBitmapType(string name, int bitmapType, int index)
+        {
+            return NativeApi.GenericImage_CreateGenericImageFromFileWithBitmapType_(name, bitmapType, index);
+        }
+        
+        public static System.IntPtr CreateGenericImageFromFileWithMimeType(string name, string mimetype, int index)
+        {
+            return NativeApi.GenericImage_CreateGenericImageFromFileWithMimeType_(name, mimetype, index);
+        }
+        
+        public static System.IntPtr CreateGenericImageFromStreamWithBitmapData(InputStream stream, int bitmapType, int index)
+        {
+            return NativeApi.GenericImage_CreateGenericImageFromStreamWithBitmapData_(stream.NativePointer, bitmapType, index);
+        }
+        
+        public static System.IntPtr CreateGenericImageFromStreamWithMimeType(InputStream stream, string mimetype, int index)
+        {
+            return NativeApi.GenericImage_CreateGenericImageFromStreamWithMimeType_(stream.NativePointer, mimetype, index);
+        }
+        
+        public static System.IntPtr CreateGenericImage(int width, int height, System.IntPtr data, bool static_data)
+        {
+            return NativeApi.GenericImage_CreateGenericImage_(width, height, data, static_data);
+        }
+        
+        public static System.IntPtr CreateGenericImageWithAlpha(int width, int height, System.IntPtr data, System.IntPtr alpha, bool static_data)
+        {
+            return NativeApi.GenericImage_CreateGenericImageWithAlpha_(width, height, data, alpha, static_data);
+        }
+        
+        public static void DeleteImage(System.IntPtr handle)
+        {
+            NativeApi.GenericImage_DeleteImage_(handle);
+        }
+        
+        public static void SetAlpha(System.IntPtr handle, int x, int y, byte alpha)
+        {
+            NativeApi.GenericImage_SetAlpha_(handle, x, y, alpha);
+        }
+        
+        public static void ClearAlpha(System.IntPtr handle)
+        {
+            NativeApi.GenericImage_ClearAlpha_(handle);
+        }
+        
+        public static void SetLoadFlags(System.IntPtr handle, int flags)
+        {
+            NativeApi.GenericImage_SetLoadFlags_(handle, flags);
+        }
+        
+        public static void SetMask(System.IntPtr handle, bool hasMask)
+        {
+            NativeApi.GenericImage_SetMask_(handle, hasMask);
+        }
+        
+        public static void SetMaskColor(System.IntPtr handle, byte red, byte green, byte blue)
+        {
+            NativeApi.GenericImage_SetMaskColor_(handle, red, green, blue);
+        }
+        
+        public static bool SetMaskFromImage(System.IntPtr handle, System.IntPtr image, byte mr, byte mg, byte mb)
+        {
+            return NativeApi.GenericImage_SetMaskFromImage_(handle, image, mr, mg, mb);
+        }
+        
+        public static void SetOptionString(System.IntPtr handle, string name, string value)
+        {
+            NativeApi.GenericImage_SetOptionString_(handle, name, value);
+        }
+        
+        public static void SetOptionInt(System.IntPtr handle, string name, int value)
+        {
+            NativeApi.GenericImage_SetOptionInt_(handle, name, value);
+        }
+        
+        public static void SetRGB(System.IntPtr handle, int x, int y, byte r, byte g, byte b)
+        {
+            NativeApi.GenericImage_SetRGB_(handle, x, y, r, g, b);
+        }
+        
+        public static void SetRGBRect(System.IntPtr handle, Alternet.Drawing.Int32Rect rect, byte red, byte green, byte blue)
+        {
+            NativeApi.GenericImage_SetRGBRect_(handle, rect, red, green, blue);
+        }
+        
+        public static void SetType(System.IntPtr handle, int type)
+        {
+            NativeApi.GenericImage_SetType_(handle, type);
+        }
+        
+        public static void SetDefaultLoadFlags(int flags)
+        {
+            NativeApi.GenericImage_SetDefaultLoadFlags_(flags);
+        }
+        
+        public static int GetLoadFlags(System.IntPtr handle)
+        {
+            return NativeApi.GenericImage_GetLoadFlags_(handle);
+        }
+        
+        public static System.IntPtr Copy(System.IntPtr handle)
+        {
+            return NativeApi.GenericImage_Copy_(handle);
+        }
+        
+        public static bool Create(System.IntPtr handle, int width, int height, bool clear)
+        {
+            return NativeApi.GenericImage_Create_(handle, width, height, clear);
+        }
+        
+        public static void Clear(System.IntPtr handle, byte value)
+        {
+            NativeApi.GenericImage_Clear_(handle, value);
+        }
+        
+        public static void DestroyImageData(System.IntPtr handle)
+        {
+            NativeApi.GenericImage_DestroyImageData_(handle);
+        }
+        
+        public static void InitAlpha(System.IntPtr handle)
+        {
+            NativeApi.GenericImage_InitAlpha_(handle);
+        }
+        
+        public static System.IntPtr Blur(System.IntPtr handle, int blurRadius)
+        {
+            return NativeApi.GenericImage_Blur_(handle, blurRadius);
+        }
+        
+        public static System.IntPtr BlurHorizontal(System.IntPtr handle, int blurRadius)
+        {
+            return NativeApi.GenericImage_BlurHorizontal_(handle, blurRadius);
+        }
+        
+        public static System.IntPtr BlurVertical(System.IntPtr handle, int blurRadius)
+        {
+            return NativeApi.GenericImage_BlurVertical_(handle, blurRadius);
+        }
+        
+        public static System.IntPtr Mirror(System.IntPtr handle, bool horizontally)
+        {
+            return NativeApi.GenericImage_Mirror_(handle, horizontally);
+        }
+        
+        public static void Paste(System.IntPtr handle, System.IntPtr image, int x, int y, int alphaBlend)
+        {
+            NativeApi.GenericImage_Paste_(handle, image, x, y, alphaBlend);
+        }
+        
+        public static void Replace(System.IntPtr handle, byte r1, byte g1, byte b1, byte r2, byte g2, byte b2)
+        {
+            NativeApi.GenericImage_Replace_(handle, r1, g1, b1, r2, g2, b2);
+        }
+        
+        public static System.IntPtr Rescale(System.IntPtr handle, int width, int height, int quality)
+        {
+            return NativeApi.GenericImage_Rescale_(handle, width, height, quality);
+        }
+        
+        public static System.IntPtr Resize(System.IntPtr handle, Alternet.Drawing.Int32Size size, Alternet.Drawing.Int32Point pos, int red, int green, int blue)
+        {
+            return NativeApi.GenericImage_Resize_(handle, size, pos, red, green, blue);
+        }
+        
+        public static System.IntPtr Rotate(System.IntPtr handle, double angle, Alternet.Drawing.Int32Point rotationCentre, bool interpolating, Alternet.Drawing.Int32Point& offsetAfterRotation)
+        {
+            return NativeApi.GenericImage_Rotate_(handle, angle, rotationCentre, interpolating, offsetAfterRotation.NativePointer);
+        }
+        
+        public static System.IntPtr Rotate90(System.IntPtr handle, bool clockwise)
+        {
+            return NativeApi.GenericImage_Rotate90_(handle, clockwise);
+        }
+        
+        public static System.IntPtr Rotate180(System.IntPtr handle)
+        {
+            return NativeApi.GenericImage_Rotate180_(handle);
+        }
+        
+        public static void RotateHue(System.IntPtr handle, double angle)
+        {
+            NativeApi.GenericImage_RotateHue_(handle, angle);
+        }
+        
+        public static void ChangeSaturation(System.IntPtr handle, double factor)
+        {
+            NativeApi.GenericImage_ChangeSaturation_(handle, factor);
+        }
+        
+        public static void ChangeBrightness(System.IntPtr handle, double factor)
+        {
+            NativeApi.GenericImage_ChangeBrightness_(handle, factor);
+        }
+        
+        public static void ChangeHSV(System.IntPtr handle, double angleH, double factorS, double factorV)
+        {
+            NativeApi.GenericImage_ChangeHSV_(handle, angleH, factorS, factorV);
+        }
+        
+        public static System.IntPtr Scale(System.IntPtr handle, int width, int height, int quality)
+        {
+            return NativeApi.GenericImage_Scale_(handle, width, height, quality);
+        }
+        
+        public static System.IntPtr Size(System.IntPtr handle, Alternet.Drawing.Int32Size size, Alternet.Drawing.Int32Point pos, int red, int green, int blue)
+        {
+            return NativeApi.GenericImage_Size_(handle, size, pos, red, green, blue);
+        }
+        
+        public static bool ConvertAlphaToMask(System.IntPtr handle, byte threshold)
+        {
+            return NativeApi.GenericImage_ConvertAlphaToMask_(handle, threshold);
+        }
+        
+        public static bool ConvertAlphaToMask(System.IntPtr handle, byte mr, byte mg, byte mb, byte threshold)
+        {
+            return NativeApi.GenericImage_ConvertAlphaToMask_(handle, mr, mg, mb, threshold);
+        }
+        
+        public static System.IntPtr ConvertToGreyscale(System.IntPtr handle, double weight_r, double weight_g, double weight_b)
+        {
+            return NativeApi.GenericImage_ConvertToGreyscale_(handle, weight_r, weight_g, weight_b);
+        }
+        
+        public static System.IntPtr ConvertToGreyscale(System.IntPtr handle)
+        {
+            return NativeApi.GenericImage_ConvertToGreyscale_(handle);
+        }
+        
+        public static System.IntPtr ConvertToMono(System.IntPtr handle, byte r, byte g, byte b)
+        {
+            return NativeApi.GenericImage_ConvertToMono_(handle, r, g, b);
+        }
+        
+        public static System.IntPtr ConvertToDisabled(System.IntPtr handle, byte brightness)
+        {
+            return NativeApi.GenericImage_ConvertToDisabled_(handle, brightness);
+        }
+        
+        public static System.IntPtr ChangeLightness(System.IntPtr handle, int alpha)
+        {
+            return NativeApi.GenericImage_ChangeLightness_(handle, alpha);
+        }
+        
+        public static byte GetAlpha(System.IntPtr handle, int x, int y)
+        {
+            return NativeApi.GenericImage_GetAlpha_(handle, x, y);
+        }
+        
+        public static byte GetRed(System.IntPtr handle, int x, int y)
+        {
+            return NativeApi.GenericImage_GetRed_(handle, x, y);
+        }
+        
+        public static byte GetGreen(System.IntPtr handle, int x, int y)
+        {
+            return NativeApi.GenericImage_GetGreen_(handle, x, y);
+        }
+        
+        public static byte GetBlue(System.IntPtr handle, int x, int y)
+        {
+            return NativeApi.GenericImage_GetBlue_(handle, x, y);
+        }
+        
+        public static byte GetMaskRed(System.IntPtr handle)
+        {
+            return NativeApi.GenericImage_GetMaskRed_(handle);
+        }
+        
+        public static byte GetMaskGreen(System.IntPtr handle)
+        {
+            return NativeApi.GenericImage_GetMaskGreen_(handle);
+        }
+        
+        public static byte GetMaskBlue(System.IntPtr handle)
+        {
+            return NativeApi.GenericImage_GetMaskBlue_(handle);
+        }
+        
+        public static int GetWidth(System.IntPtr handle)
+        {
+            return NativeApi.GenericImage_GetWidth_(handle);
+        }
+        
+        public static int GetHeight(System.IntPtr handle)
+        {
+            return NativeApi.GenericImage_GetHeight_(handle);
+        }
+        
+        public static Alternet.Drawing.Int32Size GetSize(System.IntPtr handle)
+        {
+            return NativeApi.GenericImage_GetSize_(handle);
+        }
+        
+        public static string GetOptionString(System.IntPtr handle, string name)
+        {
+            return NativeApi.GenericImage_GetOptionString_(handle, name);
+        }
+        
+        public static int GetOptionInt(System.IntPtr handle, string name)
+        {
+            return NativeApi.GenericImage_GetOptionInt_(handle, name);
+        }
+        
+        public static System.IntPtr GetSubImage(System.IntPtr handle, Alternet.Drawing.Int32Rect rect)
+        {
+            return NativeApi.GenericImage_GetSubImage_(handle, rect);
+        }
+        
+        public static int GetBitmapType(System.IntPtr handle)
+        {
+            return NativeApi.GenericImage_GetBitmapType_(handle);
+        }
+        
+        public static bool HasAlpha(System.IntPtr handle)
+        {
+            return NativeApi.GenericImage_HasAlpha_(handle);
+        }
+        
+        public static bool HasMask(System.IntPtr handle)
+        {
+            return NativeApi.GenericImage_HasMask_(handle);
+        }
+        
+        public static bool HasOption(System.IntPtr handle, string name)
+        {
+            return NativeApi.GenericImage_HasOption_(handle, name);
+        }
+        
+        public static bool IsOk(System.IntPtr handle)
+        {
+            return NativeApi.GenericImage_IsOk_(handle);
+        }
+        
+        public static bool IsTransparent(System.IntPtr handle, int x, int y, byte threshold)
+        {
+            return NativeApi.GenericImage_IsTransparent_(handle, x, y, threshold);
+        }
+        
+        public static bool LoadFileFromStreamWithBitmapType(System.IntPtr handle, InputStream stream, int bitmapType, int index)
+        {
+            return NativeApi.GenericImage_LoadFileFromStreamWithBitmapType_(handle, stream.NativePointer, bitmapType, index);
+        }
+        
+        public static bool LoadFileWithBitmapType(System.IntPtr handle, string name, int bitmapType, int index)
+        {
+            return NativeApi.GenericImage_LoadFileWithBitmapType_(handle, name, bitmapType, index);
+        }
+        
+        public static bool LoadFileWithMimeType(System.IntPtr handle, string name, string mimetype, int index)
+        {
+            return NativeApi.GenericImage_LoadFileWithMimeType_(handle, name, mimetype, index);
+        }
+        
+        public static bool LoadFileFromStreamWithMimeType(System.IntPtr handle, InputStream stream, string mimetype, int index)
+        {
+            return NativeApi.GenericImage_LoadFileFromStreamWithMimeType_(handle, stream.NativePointer, mimetype, index);
+        }
+        
+        public static bool SaveFileToStreamWithMimeType(System.IntPtr handle, OutputStream stream, string mimetype)
+        {
+            return NativeApi.GenericImage_SaveFileToStreamWithMimeType_(handle, stream.NativePointer, mimetype);
+        }
+        
+        public static bool SaveFileWithBitmapType(System.IntPtr handle, string name, int bitmapType)
+        {
+            return NativeApi.GenericImage_SaveFileWithBitmapType_(handle, name, bitmapType);
+        }
+        
+        public static bool SaveFileWithMimeType(System.IntPtr handle, string name, string mimetype)
+        {
+            return NativeApi.GenericImage_SaveFileWithMimeType_(handle, name, mimetype);
+        }
+        
+        public static bool SaveFile(System.IntPtr handle, string name)
+        {
+            return NativeApi.GenericImage_SaveFile_(handle, name);
+        }
+        
+        public static bool SaveFileToStreamWithBitmapType(System.IntPtr handle, OutputStream stream, int type)
+        {
+            return NativeApi.GenericImage_SaveFileToStreamWithBitmapType_(handle, stream.NativePointer, type);
+        }
+        
+        public static bool CanRead(string filename)
+        {
+            return NativeApi.GenericImage_CanRead_(filename);
+        }
+        
+        public static bool CanReadStream(InputStream stream)
+        {
+            return NativeApi.GenericImage_CanReadStream_(stream.NativePointer);
+        }
+        
+        public static int GetDefaultLoadFlags()
+        {
+            return NativeApi.GenericImage_GetDefaultLoadFlags_();
+        }
+        
+        public static string GetImageExtWildcard()
+        {
+            return NativeApi.GenericImage_GetImageExtWildcard_();
+        }
+        
+        public static void AddHandler(System.IntPtr handler)
+        {
+            NativeApi.GenericImage_AddHandler_(handler);
+        }
+        
+        public static void CleanUpHandlers()
+        {
+            NativeApi.GenericImage_CleanUpHandlers_();
+        }
+        
         
         [SuppressUnmanagedCodeSecurity]
         public class NativeApi : NativeApiProvider
@@ -31,6 +531,306 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern IntPtr GenericImage_Create_();
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr GenericImage_FindHandler_(string name);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr GenericImage_FindHandler_(string extension, int bitmapType);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr GenericImage_FindHandler_(int bitmapType);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr GenericImage_FindHandlerMime_(string mimetype);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void GenericImage_InsertHandler_(System.IntPtr handler);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool GenericImage_RemoveHandler_(string name);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int GenericImage_GetImageCountInFile_(string filename, int bitmapType);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int GenericImage_GetImageCountInStream_(IntPtr stream, int bitmapType);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr GenericImage_GetAlphaData_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr GenericImage_GetData_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool GenericImage_CreateData_(System.IntPtr handle, int width, int height, System.IntPtr data, bool static_data);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool GenericImage_CreateAlphaData_(System.IntPtr handle, int width, int height, System.IntPtr data, System.IntPtr alpha, bool static_data);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void GenericImage_SetData_(System.IntPtr handle, System.IntPtr data, bool static_data);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void GenericImage_SetDataWithSize_(System.IntPtr handle, System.IntPtr data, int new_width, int new_height, bool static_data);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void GenericImage_SetAlpha_(System.IntPtr handle, System.IntPtr alpha, bool static_data);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr GenericImage_CreateGenericImage_();
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr GenericImage_CreateGenericImageWithSize_(int width, int height, bool clear);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr GenericImage_CreateGenericImageFromFileWithBitmapType_(string name, int bitmapType, int index);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr GenericImage_CreateGenericImageFromFileWithMimeType_(string name, string mimetype, int index);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr GenericImage_CreateGenericImageFromStreamWithBitmapData_(IntPtr stream, int bitmapType, int index);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr GenericImage_CreateGenericImageFromStreamWithMimeType_(IntPtr stream, string mimetype, int index);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr GenericImage_CreateGenericImage_(int width, int height, System.IntPtr data, bool static_data);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr GenericImage_CreateGenericImageWithAlpha_(int width, int height, System.IntPtr data, System.IntPtr alpha, bool static_data);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void GenericImage_DeleteImage_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void GenericImage_SetAlpha_(System.IntPtr handle, int x, int y, byte alpha);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void GenericImage_ClearAlpha_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void GenericImage_SetLoadFlags_(System.IntPtr handle, int flags);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void GenericImage_SetMask_(System.IntPtr handle, bool hasMask);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void GenericImage_SetMaskColor_(System.IntPtr handle, byte red, byte green, byte blue);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool GenericImage_SetMaskFromImage_(System.IntPtr handle, System.IntPtr image, byte mr, byte mg, byte mb);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void GenericImage_SetOptionString_(System.IntPtr handle, string name, string value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void GenericImage_SetOptionInt_(System.IntPtr handle, string name, int value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void GenericImage_SetRGB_(System.IntPtr handle, int x, int y, byte r, byte g, byte b);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void GenericImage_SetRGBRect_(System.IntPtr handle, Alternet.Drawing.Int32Rect rect, byte red, byte green, byte blue);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void GenericImage_SetType_(System.IntPtr handle, int type);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void GenericImage_SetDefaultLoadFlags_(int flags);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int GenericImage_GetLoadFlags_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr GenericImage_Copy_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool GenericImage_Create_(System.IntPtr handle, int width, int height, bool clear);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void GenericImage_Clear_(System.IntPtr handle, byte value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void GenericImage_DestroyImageData_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void GenericImage_InitAlpha_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr GenericImage_Blur_(System.IntPtr handle, int blurRadius);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr GenericImage_BlurHorizontal_(System.IntPtr handle, int blurRadius);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr GenericImage_BlurVertical_(System.IntPtr handle, int blurRadius);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr GenericImage_Mirror_(System.IntPtr handle, bool horizontally);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void GenericImage_Paste_(System.IntPtr handle, System.IntPtr image, int x, int y, int alphaBlend);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void GenericImage_Replace_(System.IntPtr handle, byte r1, byte g1, byte b1, byte r2, byte g2, byte b2);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr GenericImage_Rescale_(System.IntPtr handle, int width, int height, int quality);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr GenericImage_Resize_(System.IntPtr handle, Alternet.Drawing.Int32Size size, Alternet.Drawing.Int32Point pos, int red, int green, int blue);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr GenericImage_Rotate_(System.IntPtr handle, double angle, Alternet.Drawing.Int32Point rotationCentre, bool interpolating, Alternet.Drawing.Int32Point& offsetAfterRotation);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr GenericImage_Rotate90_(System.IntPtr handle, bool clockwise);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr GenericImage_Rotate180_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void GenericImage_RotateHue_(System.IntPtr handle, double angle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void GenericImage_ChangeSaturation_(System.IntPtr handle, double factor);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void GenericImage_ChangeBrightness_(System.IntPtr handle, double factor);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void GenericImage_ChangeHSV_(System.IntPtr handle, double angleH, double factorS, double factorV);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr GenericImage_Scale_(System.IntPtr handle, int width, int height, int quality);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr GenericImage_Size_(System.IntPtr handle, Alternet.Drawing.Int32Size size, Alternet.Drawing.Int32Point pos, int red, int green, int blue);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool GenericImage_ConvertAlphaToMask_(System.IntPtr handle, byte threshold);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool GenericImage_ConvertAlphaToMask_(System.IntPtr handle, byte mr, byte mg, byte mb, byte threshold);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr GenericImage_ConvertToGreyscale_(System.IntPtr handle, double weight_r, double weight_g, double weight_b);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr GenericImage_ConvertToGreyscale_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr GenericImage_ConvertToMono_(System.IntPtr handle, byte r, byte g, byte b);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr GenericImage_ConvertToDisabled_(System.IntPtr handle, byte brightness);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr GenericImage_ChangeLightness_(System.IntPtr handle, int alpha);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern byte GenericImage_GetAlpha_(System.IntPtr handle, int x, int y);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern byte GenericImage_GetRed_(System.IntPtr handle, int x, int y);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern byte GenericImage_GetGreen_(System.IntPtr handle, int x, int y);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern byte GenericImage_GetBlue_(System.IntPtr handle, int x, int y);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern byte GenericImage_GetMaskRed_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern byte GenericImage_GetMaskGreen_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern byte GenericImage_GetMaskBlue_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int GenericImage_GetWidth_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int GenericImage_GetHeight_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern Alternet.Drawing.Int32Size GenericImage_GetSize_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern string GenericImage_GetOptionString_(System.IntPtr handle, string name);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int GenericImage_GetOptionInt_(System.IntPtr handle, string name);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr GenericImage_GetSubImage_(System.IntPtr handle, Alternet.Drawing.Int32Rect rect);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int GenericImage_GetBitmapType_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool GenericImage_HasAlpha_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool GenericImage_HasMask_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool GenericImage_HasOption_(System.IntPtr handle, string name);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool GenericImage_IsOk_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool GenericImage_IsTransparent_(System.IntPtr handle, int x, int y, byte threshold);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool GenericImage_LoadFileFromStreamWithBitmapType_(System.IntPtr handle, IntPtr stream, int bitmapType, int index);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool GenericImage_LoadFileWithBitmapType_(System.IntPtr handle, string name, int bitmapType, int index);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool GenericImage_LoadFileWithMimeType_(System.IntPtr handle, string name, string mimetype, int index);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool GenericImage_LoadFileFromStreamWithMimeType_(System.IntPtr handle, IntPtr stream, string mimetype, int index);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool GenericImage_SaveFileToStreamWithMimeType_(System.IntPtr handle, IntPtr stream, string mimetype);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool GenericImage_SaveFileWithBitmapType_(System.IntPtr handle, string name, int bitmapType);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool GenericImage_SaveFileWithMimeType_(System.IntPtr handle, string name, string mimetype);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool GenericImage_SaveFile_(System.IntPtr handle, string name);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool GenericImage_SaveFileToStreamWithBitmapType_(System.IntPtr handle, IntPtr stream, int type);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool GenericImage_CanRead_(string filename);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool GenericImage_CanReadStream_(IntPtr stream);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int GenericImage_GetDefaultLoadFlags_();
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern string GenericImage_GetImageExtWildcard_();
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void GenericImage_AddHandler_(System.IntPtr handler);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void GenericImage_CleanUpHandlers_();
             
         }
     }

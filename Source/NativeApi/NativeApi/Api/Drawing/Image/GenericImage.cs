@@ -320,12 +320,16 @@ namespace NativeApi.Api
         //Finds the handler with the given name, and removes it.
         public static bool RemoveHandler(string name) => default;// real static
 
+        // If the image file contains more than one image and the image handler is capable of
+        // retrieving these individually, this function will return the number of available images.
         public static int GetImageCountInFile(string filename,
             int bitmapType /*= wxBITMAP_TYPE_ANY*/) => default;// real static
-                                                                                                           /If the image file contains more than one image and the image handler is capable of retrieving these individually, this function will return the number of available images.
+
+        // If the image stream contains more than one image and the image handler is capable of
+        // retrieving these individually, this function will return the number of available images.
         public static int GetImageCountInStream(InputStream stream,
             int bitmapType /*= wxBITMAP_TYPE_ANY*/) => default;// real static
-                                                                                                                 //If the image file contains more than one image and the image handler is capable of retrieving these individually, this function will return the number of available images.
+
  	    // Returns pointer to the array storing the alpha values for this image.
         public static IntPtr GetAlphaData(IntPtr handle) => default;
  
