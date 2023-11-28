@@ -214,7 +214,7 @@ namespace Alternet.Drawing
         /// highest as white. If you want a greyscale image it is also sufficient to only specify
         /// <see cref="TiffPhotometric"/> and set it to either
         /// <see cref="GenericImageTiffPhotometric.MINISWHITE"/> or
-        ///<see cref="GenericImageTiffPhotometric.MINISBLACK"/>. The other values are taken care of.
+        /// <see cref="GenericImageTiffPhotometric.MINISBLACK"/>. The other values are taken care of.
         /// </summary>
         public const string TiffPhotometric = "Photometric";
 
@@ -222,6 +222,5 @@ namespace Alternet.Drawing
         /// Tiff image option name for setting image descriptor.
         /// </summary>
         public const string TiffImageDescriptor = "ImageDescriptor";
-
     }
 }

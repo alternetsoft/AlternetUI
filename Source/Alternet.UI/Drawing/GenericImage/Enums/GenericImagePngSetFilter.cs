@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Alternet.Drawing
 {
     /// <summary>
-    /// Flags for PNG handling to specify which filters to use.  
+    /// Flags for PNG handling to specify which filters to use.
     /// </summary>
     /// <remarks>
     /// See libpng (http://www.libpng.org/pub/png/libpng-1.2.5-manual.html)

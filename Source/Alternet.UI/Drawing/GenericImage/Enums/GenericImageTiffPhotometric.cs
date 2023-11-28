@@ -59,6 +59,6 @@ namespace Alternet.Drawing
         /// <summary>
         /// Photometric 'ITU L*a*b*'.
         /// </summary>
-        ITULAB = 10,	
+        ITULAB = 10,
     }
 }

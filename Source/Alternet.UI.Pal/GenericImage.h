@@ -11,7 +11,12 @@ namespace Alternet::UI
     {
 #include "Api/GenericImage.inc"
     public:
-    
+        wxImage _image;
+
+        GenericImage(const wxImage& image)
+        {
+            _image = image;
+        }
     private:
     
     };

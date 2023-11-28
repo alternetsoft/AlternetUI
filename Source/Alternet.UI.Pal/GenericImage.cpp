@@ -1,4 +1,8 @@
 #include "GenericImage.h"
+#include "Api/InputStream.h"
+#include "Api/OutputStream.h"
+#include "ManagedInputStream.h"
+#include "ManagedOutputStream.h"
 
 namespace Alternet::UI
 {
@@ -10,119 +14,63 @@ namespace Alternet::UI
 	{
 	}
 
-	void* GenericImage::FindHandlerByName(const string& name)
-	{
-		return nullptr;
-	}
-
-	void* GenericImage::FindHandlerByExt(const string& extension, int bitmapType)
-	{
-		return nullptr;
-	}
-
-	void* GenericImage::FindHandlerByBitmapType(int bitmapType)
-	{
-		return nullptr;
-	}
-
-	void* GenericImage::FindHandlerByMime(const string& mimetype)
-	{
-		return nullptr;
-	}
-
-	void GenericImage::InsertHandler(void* handler)
-	{
-	}
-
-	bool GenericImage::RemoveHandler(const string& name)
-	{
-		return false;
-	}
-
-	int GenericImage::GetImageCountInFile(const string& filename, int bitmapType)
-	{
-		return 0;
-	}
-
-	int GenericImage::GetImageCountInStream(void* stream, int bitmapType)
-	{
-		return 0;
-	}
-
-	void* GenericImage::GetAlphaData(void* handle)
-	{
-		return nullptr;
-	}
-
-	void* GenericImage::GetData(void* handle)
-	{
-		return nullptr;
-	}
-
-	bool GenericImage::CreateData(void* handle, int width, int height, void* data, bool static_data)
-	{
-		return false;
-	}
-
-	bool GenericImage::CreateAlphaData(void* handle, int width, int height, void* data, void* alpha, bool static_data)
-	{
-		return false;
-	}
-
-	void GenericImage::SetData(void* handle, void* data, bool static_data)
-	{
-	}
-
-	void GenericImage::SetDataWithSize(void* handle, void* data, int new_width, int new_height, bool static_data)
-	{
-	}
-
-	void GenericImage::SetAlphaData(void* handle, void* alpha, bool static_data)
-	{
-	}
-
 	void* GenericImage::CreateImage()
 	{
-		return nullptr;
+		return new GenericImage();
 	}
 
 	void* GenericImage::CreateImageWithSize(int width, int height, bool clear)
 	{
-		return nullptr;
+		return new GenericImage(wxImage(width, height, clear));
+	}
+
+	void* GenericImage::ConvertToDisabled(void* handle, uint8_t brightness)
+	{
+		auto image = ((GenericImage*)handle)->_image.ConvertToDisabled(brightness);
+		return new GenericImage(image);
 	}
 
 	void* GenericImage::CreateImageFromFileWithBitmapType(const string& name, int bitmapType, int index)
 	{
-		return nullptr;
+		return new GenericImage(wxImage(wxStr(name), (wxBitmapType)bitmapType, index));
 	}
 
 	void* GenericImage::CreateImageFromFileWithMimeType(const string& name, const string& mimetype, int index)
 	{
-		return nullptr;
+		return new GenericImage(wxImage(wxStr(name), wxStr(mimetype), index));
 	}
 
 	void* GenericImage::CreateImageFromStreamWithBitmapData(void* stream, int bitmapType, int index)
 	{
-		return nullptr;
+		InputStream inputStream(stream);
+		ManagedInputStream managedInputStream(&inputStream);
+		auto image = wxImage(managedInputStream, (wxBitmapType)bitmapType, index);
+		return new GenericImage(image);
 	}
 
 	void* GenericImage::CreateImageFromStreamWithMimeType(void* stream, const string& mimetype, int index)
 	{
-		return nullptr;
+		InputStream inputStream(stream);
+		ManagedInputStream managedInputStream(&inputStream);
+		auto image = wxImage(managedInputStream, wxStr(mimetype), index);
+		return new GenericImage(image);
 	}
 
 	void* GenericImage::CreateImageWithSizeAndData(int width, int height, void* data, bool static_data)
 	{
-		return nullptr;
+		auto image = wxImage(width, height, (unsigned char*)data, static_data);
+		return new GenericImage(image);
 	}
 
 	void* GenericImage::CreateImageWithAlpha(int width, int height, void* data, void* alpha, bool static_data)
 	{
-		return nullptr;
+		auto image = wxImage(width, height, (unsigned char*)data, (unsigned char*)alpha, static_data);
+		return new GenericImage(image);
 	}
 
 	void GenericImage::DeleteImage(void* handle)
 	{
+		delete (GenericImage*)handle;
 	}
 
 	void GenericImage::SetAlpha(void* handle, int x, int y, uint8_t alpha)
@@ -300,11 +248,6 @@ namespace Alternet::UI
 		return nullptr;
 	}
 
-	void* GenericImage::ConvertToDisabled(void* handle, uint8_t brightness)
-	{
-		return nullptr;
-	}
-
 	void* GenericImage::ChangeLightness(void* handle, int alpha)
 	{
 		return nullptr;
@@ -475,6 +418,77 @@ namespace Alternet::UI
 	}
 
 	void GenericImage::CleanUpHandlers()
+	{
+	}
+
+	void* GenericImage::FindHandlerByName(const string& name)
+	{
+		return nullptr;
+	}
+
+	void* GenericImage::FindHandlerByExt(const string& extension, int bitmapType)
+	{
+		return nullptr;
+	}
+
+	void* GenericImage::FindHandlerByBitmapType(int bitmapType)
+	{
+		return nullptr;
+	}
+
+	void* GenericImage::FindHandlerByMime(const string& mimetype)
+	{
+		return nullptr;
+	}
+
+	void GenericImage::InsertHandler(void* handler)
+	{
+	}
+
+	bool GenericImage::RemoveHandler(const string& name)
+	{
+		return false;
+	}
+
+	int GenericImage::GetImageCountInFile(const string& filename, int bitmapType)
+	{
+		return 0;
+	}
+
+	int GenericImage::GetImageCountInStream(void* stream, int bitmapType)
+	{
+		return 0;
+	}
+
+	void* GenericImage::GetAlphaData(void* handle)
+	{
+		return nullptr;
+	}
+
+	void* GenericImage::GetData(void* handle)
+	{
+		return nullptr;
+	}
+
+	bool GenericImage::CreateData(void* handle, int width, int height, void* data, bool static_data)
+	{
+		return false;
+	}
+
+	bool GenericImage::CreateAlphaData(void* handle, int width, int height, void* data, void* alpha, bool static_data)
+	{
+		return false;
+	}
+
+	void GenericImage::SetData(void* handle, void* data, bool static_data)
+	{
+	}
+
+	void GenericImage::SetDataWithSize(void* handle, void* data, int new_width, int new_height, bool static_data)
+	{
+	}
+
+	void GenericImage::SetAlphaData(void* handle, void* alpha, bool static_data)
 	{
 	}
 }
