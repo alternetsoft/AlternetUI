@@ -61,10 +61,12 @@ namespace Alternet.Drawing
         /// Creates an image from a file.
         /// </summary>
         /// <param name="fileName">Path to file.</param>
-        /// <param name="bitmapType">Type of the bitmap. Depending on how library and OS has been configured and
+        /// <param name="bitmapType">Type of the bitmap. Depending on how library
+        /// and OS has been configured and
         /// by which handlers have been loaded, not all formats may be available. If value is
         /// <see cref="BitmapType.Any"/>, function will try to autodetect the format.</param>
-        /// <param name="index">Index of the image to load in the case that the image file contains multiple images.
+        /// <param name="index">Index of the image to load in the case that the image
+        /// file contains multiple images.
         /// This is only used by GIF, ICO and TIFF handlers.The default value(-1) means
         /// "choose the default image" and is interpreted as the first image(index= 0) by the GIF and
         /// TIFF handler and as the largest and most colorful one by the ICO handler.</param>
@@ -84,7 +86,8 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="name">Name of the file from which to load the image.</param>
         /// <param name="mimetype">MIME type string (for example 'image/jpeg').</param>
-        /// <param name="index">See description in <see cref="GenericImage(string, BitmapType, int)"/></param>
+        /// <param name="index">See description in
+        /// <see cref="GenericImage(string, BitmapType, int)"/></param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public GenericImage(string name, string mimetype, int index = -1)
             : base(UI.Native.GenericImage.CreateImageFromFileWithMimeType(name, mimetype, index), true)
@@ -95,9 +98,12 @@ namespace Alternet.Drawing
         /// Initializes a new instance of the <see cref="GenericImage"/> class.
         /// Creates an image from a stream.
         /// </summary>
-        /// <param name="stream">Opened input stream from which to load the image. Currently, the stream must support seeking.</param>
-        /// <param name="bitmapType">See description in <see cref="GenericImage(string, BitmapType, int)"/>.</param>
-        /// <param name="index">See description in <see cref="GenericImage(string, BitmapType, int)"/>.</param>
+        /// <param name="stream">Opened input stream from which to load the image.
+        /// Currently, the stream must support seeking.</param>
+        /// <param name="bitmapType">See description in
+        /// <see cref="GenericImage(string, BitmapType, int)"/>.</param>
+        /// <param name="index">See description in
+        /// <see cref="GenericImage(string, BitmapType, int)"/>.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public GenericImage(Stream stream, BitmapType bitmapType = BitmapType.Any, int index = -1)
             : this(new UI.Native.InputStream(stream), bitmapType, index)
@@ -108,9 +114,11 @@ namespace Alternet.Drawing
         /// Initializes a new instance of the <see cref="GenericImage"/> class.
         /// Creates an image from a stream.
         /// </summary>
-        /// <param name="stream">Opened input stream from which to load the image. Currently, the stream must support seeking.</param>
+        /// <param name="stream">Opened input stream from which to load the image.
+        /// Currently, the stream must support seeking.</param>
         /// <param name="mimeType">MIME type string (for example 'image/jpeg').</param>
-        /// <param name="index">See description in <see cref="GenericImage(string, BitmapType, int)"/></param>
+        /// <param name="index">See description in
+        /// <see cref="GenericImage(string, BitmapType, int)"/></param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public GenericImage(Stream stream, string mimeType, int index = -1)
             : this(new UI.Native.InputStream(stream), mimeType, index)
@@ -124,8 +132,10 @@ namespace Alternet.Drawing
         /// <param name="width">Specifies the width of the image.</param>
         /// <param name="height">Specifies the height of the image.</param>
         /// <param name="data">A pointer to RGB data</param>
-        /// <param name="staticData">Indicates if the data should be free'd after use. If static_data is false then the
-        /// library will take ownership of the data and free it afterwards.For this, it has to be allocated with
+        /// <param name="staticData">Indicates if the data should be free'd after use.
+        /// If static_data is <c>false</c> then the
+        /// library will take ownership of the data and free it afterwards.For this,
+        /// it has to be allocated with
         /// malloc.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public GenericImage(int width, int height, IntPtr data, bool staticData = false)
@@ -143,8 +153,10 @@ namespace Alternet.Drawing
         /// <param name="height">Specifies the height of the image.</param>
         /// <param name="data">A pointer to RGB data</param>
         /// <param name="alpha">A pointer to alpha-channel data</param>
-        /// <param name="staticData">Indicates if the data should be free'd after use. If static_data is false then the
-        /// library will take ownership of the data and free it afterwards.For this, it has to be allocated with
+        /// <param name="staticData">Indicates if the data should be free'd after use.
+        /// If <paramref name="staticData"/> is <c>false</c> then the
+        /// library will take ownership of the data and free it afterwards.For this,
+        /// it has to be allocated with
         /// malloc.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public GenericImage(int width, int height, IntPtr data, IntPtr alpha, bool staticData = false)
@@ -176,8 +188,10 @@ namespace Alternet.Drawing
         /// Initializes a new instance of the <see cref="GenericImage"/> class.
         /// Creates an image from a stream.
         /// </summary>
-        /// <param name="stream">Opened input stream from which to load the image. Currently, the stream must support seeking.</param>
-        /// <param name="bitmapType">Type of the bitmap. Depending on how library and OS has been configured and
+        /// <param name="stream">Opened input stream from which to load the image.
+        /// Currently, the stream must support seeking.</param>
+        /// <param name="bitmapType">Type of the bitmap. Depending on how library and OS has
+        /// been configured and
         /// by which handlers have been loaded, not all formats may be available. If value is
         /// <see cref="BitmapType.Any"/>, function will try to autodetect the format.</param>
         /// <param name="index"></param>
@@ -230,7 +244,7 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Returns true if at least one of the available image handlers can read the file
+        /// Returns <c>true</c> if at least one of the available image handlers can read the file
         /// with the given name.
         /// </summary>
         /// <param name="filename">Name of the file from which to load the image.</param>
@@ -242,10 +256,11 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Returns true if at least one of the available image handlers can read the data in
+        /// Returns <c>true</c> if at least one of the available image handlers can read the data in
         /// the given stream.
         /// </summary>
-        /// <param name="stream">Opened input stream from which to load the image. Currently, the stream must support seeking.</param>
+        /// <param name="stream">Opened input stream from which to load the image. Currently,
+        /// the stream must support seeking.</param>
         /// <returns></returns>
         /// <remarks>
         /// This function doesn't modify the current stream position
@@ -277,7 +292,7 @@ namespace Alternet.Drawing
         /// Finds image load/save handler with the given name, and removes it.
         /// </summary>
         /// <param name="name">Name of the handler.</param>
-        /// <returns></returns>
+        /// <returns><c>true</c> if the call succeeded, <c>false</c> otherwise.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool RemoveHandler(string name)
         {
@@ -289,10 +304,13 @@ namespace Alternet.Drawing
         /// retrieving these individually, this function will return the number of available images.
         /// </summary>
         /// <param name="filename">Name of the file from which to load the image.</param>
-        /// <param name="bitmapType">Type of the bitmap. Depending on how library and OS has been configured and
+        /// <param name="bitmapType">Type of the bitmap. Depending on how library and OS has
+        /// been configured and
         /// by which handlers have been loaded, not all formats may be available. If value is
         /// <see cref="BitmapType.Any"/>, function will try to autodetect the format.</param>
-        /// <returns></returns>
+        /// <returns>Number of available images. For most image handlers, this is 1
+        /// (exceptions are TIFF and ICO formats as well as animated GIFs for which this function
+        /// returns the number of frames in the animation).</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static int GetImageCount(
             string filename,
@@ -305,11 +323,15 @@ namespace Alternet.Drawing
         /// If the image stream contains more than one image and the image handler is capable of
         /// retrieving these individually, this function will return the number of available images.
         /// </summary>
-        /// <param name="stream">Opened input stream from which to load the image. Currently, the stream must support seeking.</param>
-        /// <param name="bitmapType">Type of the bitmap. Depending on how library and OS has been configured and
+        /// <param name="stream">Opened input stream from which to load the image. Currently,
+        /// the stream must support seeking.</param>
+        /// <param name="bitmapType">Type of the bitmap. Depending on how library and OS has
+        /// been configured and
         /// by which handlers have been loaded, not all formats may be available. If value is
         /// <see cref="BitmapType.Any"/>, function will try to autodetect the format.</param>
-        /// <returns></returns>
+        /// <returns>Number of available images. For most image handlers, this is 1
+        /// (exceptions are TIFF and ICO formats as well as animated GIFs for which this function
+        /// returns the number of frames in the animation).</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static int GetImageCount(
             Stream stream,
@@ -351,9 +373,13 @@ namespace Alternet.Drawing
         /// <summary>
         /// Sets the alpha value for the given pixel.
         /// </summary>
-        /// <param name="x"></param>
-        /// <param name="y"></param>
-        /// <param name="alpha"></param>
+        /// <param name="x">X coordinate of the pixel.</param>
+        /// <param name="y">Y coordinate of the pixel.</param>
+        /// <param name="alpha">New alpha channel (transparency) value of the pixels.</param>
+        /// <remarks>
+        /// This function should only be called if the image has alpha channel data,
+        /// use <see cref="HasAlpha"/> to check for this.
+        /// </remarks>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void SetAlpha(int x, int y, byte alpha)
         {
@@ -363,6 +389,10 @@ namespace Alternet.Drawing
         /// <summary>
         /// Removes the alpha channel from the image.
         /// </summary>
+        /// <remarks>
+        /// This function should only be called if the image has alpha channel data,
+        /// use <see cref="HasAlpha"/> to check for this.
+        /// </remarks>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void ClearAlpha()
         {
@@ -395,11 +425,26 @@ namespace Alternet.Drawing
         /// Sets image's mask so that the pixels that have RGB value of mr,mg,mb in
         /// mask will be masked in the image.
         /// </summary>
-        /// <param name="image"></param>
-        /// <param name="mr"></param>
-        /// <param name="mg"></param>
-        /// <param name="mb"></param>
-        /// <returns></returns>
+        /// <param name="image">Mask image to extract mask shape from. It must have the
+        /// same dimensions as the image.</param>
+        /// <param name="mr">Red values of the pixels in mask that will be
+        /// used to create the mask.</param>
+        /// <param name="mg">Green values of the pixels in mask that will be
+        /// used to create the mask.</param>
+        /// <param name="mb">Blue values of the pixels in mask that will be
+        /// used to create the mask.</param>
+        /// <returns>Returns <c>false</c> if mask does not have same dimensions as the image
+        /// or if there is no unused color left. Returns <c>true</c> if the mask was
+        /// successfully applied.</returns>
+        /// <remarks>
+        /// This is done by first finding an unused color in the image, setting this color
+        /// as the mask color and then using this color to draw all pixels in the image
+        /// who corresponding pixel in mask has given RGB value.
+        /// </remarks>
+        /// <remarks>
+        /// Note that this method involves computing the histogram, which
+        /// is a computationally intensive operation.
+        /// </remarks>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool SetMaskFromImage(GenericImage image, byte mr, byte mg, byte mb)
         {
@@ -412,8 +457,8 @@ namespace Alternet.Drawing
         /// <remarks>
         /// See <see cref="GenericImageOptionNames"/> for known option names.
         /// </remarks>
-        /// <param name="name"></param>
-        /// <param name="value"></param>
+        /// <param name="name">The name of the option, case-insensitive.</param>
+        /// <param name="value">New option value.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void SetOptionAsString(string name, string value)
         {
@@ -426,8 +471,8 @@ namespace Alternet.Drawing
         /// <remarks>
         /// See <see cref="GenericImageOptionNames"/> for known option names.
         /// </remarks>
-        /// <param name="name"></param>
-        /// <param name="value"></param>
+        /// <param name="name">The name of the option, case-insensitive.</param>
+        /// <param name="value">New option value.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void SetOptionAsInt(string name, int value)
         {
@@ -437,11 +482,15 @@ namespace Alternet.Drawing
         /// <summary>
         /// Sets the color of the pixel at the given x and y coordinate.
         /// </summary>
-        /// <param name="x"></param>
-        /// <param name="y"></param>
-        /// <param name="r"></param>
-        /// <param name="g"></param>
-        /// <param name="b"></param>
+        /// <param name="x">X coordinate of the pixel.</param>
+        /// <param name="y">Y coordinate of the pixel.</param>
+        /// <param name="r">R component of a color.</param>
+        /// <param name="g">G component of a color.</param>
+        /// <param name="b">B component of a color.</param>
+        /// <remarks>
+        /// This routine performs bounds-checks for the coordinate so it can be
+        /// considered a safe way to manipulate the data.
+        /// </remarks>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void SetRGB(int x, int y, byte r, byte g, byte b)
         {
@@ -487,7 +536,7 @@ namespace Alternet.Drawing
         /// <param name="width"></param>
         /// <param name="height"></param>
         /// <param name="clear"></param>
-        /// <returns></returns>
+        /// <returns><c>true</c> if the call succeeded, <c>false</c> otherwise.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool Reset(int width, int height, bool clear = true)
         {
@@ -519,14 +568,16 @@ namespace Alternet.Drawing
         /// <param name="startR">Defines the initial value of the color (R component).</param>
         /// <param name="startG">Defines the initial value of the color (G component)</param>
         /// <param name="startB">Defines the initial value of the color (B component)</param>
-        /// <returns>Returns false if there is no unused color left, true on success.</returns>
+        /// <returns>Returns <c>false</c> if there is no unused color left, <c>true</c>
+        /// on success.</returns>
         /// <remarks>
         /// The search begins at given initial color and continues by increasing R, G and B
         /// components (in this order) by 1 until an unused color is found or the color space
         /// exhausted.
         /// </remarks>
         /// <remarks>
-        /// The parameters startR, startG, startB define the initial values of the color. The returned
+        /// The parameters startR, startG, startB define the initial values of the color.
+        /// The returned
         /// color will have RGB values equal to or greater than these.
         /// </remarks>
         /// <remarks>
@@ -541,6 +592,11 @@ namespace Alternet.Drawing
         /// <summary>
         /// Initializes the image alpha channel data.
         /// </summary>
+        /// <remarks>
+        /// It is an error to call it if the image already has alpha data. If it doesn't,
+        /// alpha data will be by default initialized to all pixels being fully opaque.
+        /// But if the image has a mask color, all mask pixels will be completely transparent.
+        /// </remarks>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void InitAlpha()
         {
@@ -604,10 +660,16 @@ namespace Alternet.Drawing
         /// <summary>
         /// Copy the data of the given image to the specified position in this image.
         /// </summary>
-        /// <param name="image"></param>
-        /// <param name="x"></param>
-        /// <param name="y"></param>
-        /// <param name="alphaBlend"></param>
+        /// <param name="image">The image containing the data to copy, must be valid.</param>
+        /// <param name="x">The horizontal position of the position to copy the data to.</param>
+        /// <param name="y">The vertical position of the position to copy the data to.</param>
+        /// <param name="alphaBlend">This parameter determines whether the alpha values of
+        /// the original
+        /// image replace(default) or are composed with the alpha channel of this image.
+        /// Notice that alpha blending overrides the mask handling.</param>
+        /// <remarks>
+        /// Takes care of the mask color and out of bounds problems.
+        /// </remarks>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Paste(
             GenericImage image,
@@ -658,6 +720,12 @@ namespace Alternet.Drawing
         /// <param name="red"></param>
         /// <param name="green"></param>
         /// <param name="blue"></param>
+        /// <remarks>
+        /// The image is pasted into a new image with the given size and background color
+        /// at the position pos relative to the upper left of the new image.
+        /// If red = green = blue = -1 then use either the current mask color if
+        /// set or find, use, and set a suitable mask color for any newly exposed areas.
+        /// </remarks>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void ResizeNoScale(
             Int32Size size,
@@ -690,7 +758,6 @@ namespace Alternet.Drawing
         /// color(which will be allocated automatically if it isn't currently set).
         /// Otherwise, the areas will be filled with the color with the specified RGB components.
         /// </remarks>
-        /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public GenericImage SizeNoScale(Int32Size size, Int32Point pos, int red, int green, int blue)
         {
@@ -781,7 +848,8 @@ namespace Alternet.Drawing
         /// <summary>
         /// Changes the hue, the saturation and the brightness(value) of each pixel in the image.
         /// </summary>
-        /// <param name="angleH">A double in the range [-1.0..+1.0], where -1.0 corresponds to -360 degrees and
+        /// <param name="angleH">A double in the range [-1.0..+1.0], where -1.0 corresponds
+        /// to -360 degrees and
         /// +1.0 corresponds to +360 degrees</param>
         /// <param name="factorS">a double in the range [-1.0..+1.0], where -1.0
         /// corresponds to -100 percent and +1.0 corresponds to +100 percent</param>
@@ -808,7 +876,8 @@ namespace Alternet.Drawing
         /// limit is 2^48 and so not relevant in practice.
         /// </remarks>
         /// <remarks>
-        /// It should be noted that although using <see cref="GenericImageResizeQuality.High"/> produces
+        /// It should be noted that although using <see cref="GenericImageResizeQuality.High"/>
+        /// produces
         /// much nicer looking results it is a slower method. Downsampling will use the box
         /// averaging method which seems to operate very fast. If you are upsampling larger images
         /// using this method you will most likely notice that it is a bit slower and
@@ -833,7 +902,7 @@ namespace Alternet.Drawing
         /// If the image has alpha channel, this method converts it to mask.
         /// </summary>
         /// <param name="threshold"></param>
-        /// <returns>Returns true on success, false on error.</returns>
+        /// <returns>Returns <c>true</c> on success, <c>false</c> on error.</returns>
         /// <remarks>
         /// If the image has an alpha channel, all pixels with alpha value less
         /// than threshold are replaced with the mask color and the alpha channel
@@ -861,7 +930,7 @@ namespace Alternet.Drawing
         /// transparent, i.e.the corresponding mask pixels are set. Pixels with
         /// the alpha values above the
         /// threshold are considered to be opaque.</param>
-        /// <returns>Returns true on success, false on error.</returns>
+        /// <returns>Returns <c>true</c> on success, <c>false</c> on error.</returns>
         /// <remarks>
         /// If the image has an alpha channel, all pixels with alpha value less
         /// than threshold are replaced
@@ -908,9 +977,9 @@ namespace Alternet.Drawing
         /// <summary>
         /// Returns monochromatic version of the image.
         /// </summary>
-        /// <param name="r"></param>
-        /// <param name="g"></param>
-        /// <param name="b"></param>
+        /// <param name="r">R component of a color.</param>
+        /// <param name="g">G component of a color.</param>
+        /// <param name="b">B component of a color.</param>
         /// <returns> The returned image has white color where the original has (r,g,b)
         /// color and black color everywhere else.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -949,8 +1018,8 @@ namespace Alternet.Drawing
         /// <summary>
         /// Return alpha value at given pixel location.
         /// </summary>
-        /// <param name="x"></param>
-        /// <param name="y"></param>
+        /// <param name="x">X coordinate of the pixel.</param>
+        /// <param name="y">Y coordinate of the pixel.</param>
         /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public byte GetAlpha(int x, int y)
@@ -961,8 +1030,8 @@ namespace Alternet.Drawing
         /// <summary>
         /// Returns the red intensity at the given coordinate.
         /// </summary>
-        /// <param name="x"></param>
-        /// <param name="y"></param>
+        /// <param name="x">X coordinate of the pixel.</param>
+        /// <param name="y">Y coordinate of the pixel.</param>
         /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public byte GetRed(int x, int y)
@@ -973,8 +1042,8 @@ namespace Alternet.Drawing
         /// <summary>
         /// Returns the green intensity at the given coordinate.
         /// </summary>
-        /// <param name="x"></param>
-        /// <param name="y"></param>
+        /// <param name="x">X coordinate of the pixel.</param>
+        /// <param name="y">Y coordinate of the pixel.</param>
         /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public byte GetGreen(int x, int y)
@@ -985,8 +1054,8 @@ namespace Alternet.Drawing
         /// <summary>
         /// Returns the blue intensity at the given coordinate.
         /// </summary>
-        /// <param name="x"></param>
-        /// <param name="y"></param>
+        /// <param name="x">X coordinate of the pixel.</param>
+        /// <param name="y">Y coordinate of the pixel.</param>
         /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public byte GetBlue(int x, int y)
@@ -1030,7 +1099,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// See <see cref="GenericImageOptionNames"/> for known option names.
         /// </remarks>
-        /// <param name="name"></param>
+        /// <param name="name">The name of the option, case-insensitive.</param>
         /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public string GetOptionAsString(string name)
@@ -1044,7 +1113,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// See <see cref="GenericImageOptionNames"/> for known option names.
         /// </remarks>
-        /// <param name="name"></param>
+        /// <param name="name">The name of the option, case-insensitive.</param>
         /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public int GetOptionAsInt(string name)
@@ -1074,7 +1143,7 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Returns true if this image has alpha channel, false otherwise.
+        /// Returns <c>true</c> if this image has alpha channel, <c>false</c> otherwise.
         /// </summary>
         /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -1084,7 +1153,7 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Returns true if there is a mask active, false otherwise.
+        /// Returns <c>true</c> if there is a mask active, <c>false</c> otherwise.
         /// </summary>
         /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -1094,12 +1163,12 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Returns true if the given option is present.
+        /// Returns <c>true</c> if the given option is present.
         /// </summary>
         /// <remarks>
         /// See <see cref="GenericImageOptionNames"/> for known option names.
         /// </remarks>
-        /// <param name="name"></param>
+        /// <param name="name">The name of the option, case-insensitive.</param>
         /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool HasOption(string name)
@@ -1108,7 +1177,7 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Returns true if image data is present.
+        /// Returns <c>true</c> if image data is present.
         /// </summary>
         public bool IsOk
         {
@@ -1116,13 +1185,13 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Returns true if the given pixel is transparent, i.e. either has the mask
+        /// Returns <c>true</c> if the given pixel is transparent, i.e. either has the mask
         /// color if this image has a mask or if this image has alpha channel and alpha value of
         /// this pixel is strictly less than threshold.
         /// </summary>
-        /// <param name="x"></param>
-        /// <param name="y"></param>
-        /// <param name="threshold"></param>
+        /// <param name="x">X coordinate of the pixel.</param>
+        /// <param name="y">Y coordinate of the pixel.</param>
+        /// <param name="threshold">Alpha value treshold.</param>
         /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool IsTransparent(int x, int y, byte threshold = AlphaChannelThreshold)
@@ -1133,10 +1202,14 @@ namespace Alternet.Drawing
         /// <summary>
         /// Loads an image from an input stream.
         /// </summary>
-        /// <param name="stream"></param>
-        /// <param name="bitmapType"></param>
-        /// <param name="index">See description in <see cref="GenericImage(string, BitmapType, int)"/></param>
-        /// <returns></returns>
+        /// <param name="stream">Input stream with image data.</param>
+        /// <param name="bitmapType">Type of the bitmap. Depending on how library and OS has
+        /// been configured and
+        /// by which handlers have been loaded, not all formats may be available. If value is
+        /// <see cref="BitmapType.Any"/>, function will try to autodetect the format.</param>
+        /// <param name="index">See description in
+        /// <see cref="GenericImage(string, BitmapType, int)"/></param>
+        /// <returns><c>true</c> if the call succeeded, <c>false</c> otherwise.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool LoadFromStream(
             Stream stream,
@@ -1154,10 +1227,14 @@ namespace Alternet.Drawing
         /// <summary>
         /// Loads an image from a file.
         /// </summary>
-        /// <param name="filename"></param>
-        /// <param name="bitmapType"></param>
-        /// <param name="index">See description in <see cref="GenericImage(string, BitmapType, int)"/></param>
-        /// <returns></returns>
+        /// <param name="filename">Path to file.</param>
+        /// <param name="bitmapType">Type of the bitmap. Depending on how library and OS has
+        /// been configured and
+        /// by which handlers have been loaded, not all formats may be available. If value is
+        /// <see cref="BitmapType.Any"/>, function will try to autodetect the format.</param>
+        /// <param name="index">See description in
+        /// <see cref="GenericImage(string, BitmapType, int)"/></param>
+        /// <returns><c>true</c> if the call succeeded, <c>false</c> otherwise.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool LoadFromFile(
             string filename,
@@ -1174,10 +1251,11 @@ namespace Alternet.Drawing
         /// <summary>
         /// Loads an image from a file.
         /// </summary>
-        /// <param name="name"></param>
+        /// <param name="name">Path to file.</param>
         /// <param name="mimetype">MIME type string (for example 'image/jpeg').</param>
-        /// <param name="index">See description in <see cref="GenericImage(string, BitmapType, int)"/></param>
-        /// <returns></returns>
+        /// <param name="index">See description in
+        /// <see cref="GenericImage(string, BitmapType, int)"/></param>
+        /// <returns><c>true</c> if the call succeeded, <c>false</c> otherwise.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool LoadFromFile(string name, string mimetype, int index = -1)
         {
@@ -1187,10 +1265,11 @@ namespace Alternet.Drawing
         /// <summary>
         /// Loads an image from an input stream.
         /// </summary>
-        /// <param name="stream"></param>
+        /// <param name="stream">Input stream with image data.</param>
         /// <param name="mimetype">MIME type string (for example 'image/jpeg').</param>
-        /// <param name="index">See description in <see cref="GenericImage(string, BitmapType, int)"/></param>
-        /// <returns></returns>
+        /// <param name="index">See description in
+        /// <see cref="GenericImage(string, BitmapType, int)"/></param>
+        /// <returns><c>true</c> if the call succeeded, <c>false</c> otherwise.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool LoadFromStream(Stream stream, string mimetype, int index = -1)
         {
@@ -1201,9 +1280,9 @@ namespace Alternet.Drawing
         /// <summary>
         /// Saves an image in the given stream.
         /// </summary>
-        /// <param name="stream"></param>
+        /// <param name="stream">Output stream.</param>
         /// <param name="mimetype">MIME type string (for example 'image/jpeg').</param>
-        /// <returns></returns>
+        /// <returns><c>true</c> if the call succeeded, <c>false</c> otherwise.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool SaveToStream(Stream stream, string mimetype)
         {
@@ -1214,9 +1293,11 @@ namespace Alternet.Drawing
         /// <summary>
         /// Saves an image in the named file.
         /// </summary>
-        /// <param name="filename"></param>
-        /// <param name="bitmapType"></param>
-        /// <returns></returns>
+        /// <param name="filename">Path to file.</param>
+        /// <param name="bitmapType">Type of the bitmap. Depending on how library and OS
+        /// has been configured and
+        /// by which handlers have been loaded, not all formats may be available.</param>
+        /// <returns><c>true</c> if the call succeeded, <c>false</c> otherwise.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool SaveToFile(string filename, BitmapType bitmapType)
         {
@@ -1226,9 +1307,9 @@ namespace Alternet.Drawing
         /// <summary>
         /// Saves an image in the named file.
         /// </summary>
-        /// <param name="filename"></param>
+        /// <param name="filename">Name of the file to save the image to.</param>
         /// <param name="mimetype">MIME type string (for example 'image/jpeg').</param>
-        /// <returns></returns>
+        /// <returns><c>true</c> if the call succeeded, <c>false</c> otherwise.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool SaveToFile(string filename, string mimetype)
         {
@@ -1238,8 +1319,14 @@ namespace Alternet.Drawing
         /// <summary>
         /// Saves an image in the named file.
         /// </summary>
-        /// <param name="filename"></param>
-        /// <returns></returns>
+        /// <param name="filename">Path to file.</param>
+        /// <returns><c>true</c> if the call succeeded, <c>false</c> otherwise.</returns>
+        /// <remarks>
+        /// File type is determined from the extension of the file name.
+        /// Note that this function may fail if the extension is not recognized!
+        /// You can use one of the overload methods to save images to files
+        /// with non-standard extensions.
+        /// </remarks>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool SaveToFile(string filename)
         {
@@ -1249,9 +1336,9 @@ namespace Alternet.Drawing
         /// <summary>
         /// Saves an image in the given stream.
         /// </summary>
-        /// <param name="stream"></param>
+        /// <param name="stream">Output stream</param>
         /// <param name="type"></param>
-        /// <returns></returns>
+        /// <returns><c>true</c> if the call succeeded, <c>false</c> otherwise.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool SaveToStream(Stream stream, BitmapType type)
         {
@@ -1279,7 +1366,9 @@ namespace Alternet.Drawing
         /// <summary>
         /// Returns pointer to the array storing the alpha values for this image.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>This pointer is NULL for the images without the alpha channel.
+        /// If the image does have it, this pointer may be used to directly manipulate the
+        /// alpha values which are stored as the RGB ones.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public IntPtr GetNativeAlphaData()
         {
@@ -1289,6 +1378,15 @@ namespace Alternet.Drawing
         /// <summary>
         /// Returns the image data as an array.
         /// </summary>
+        /// <remarks>
+        /// This is most often used when doing direct image manipulation. The return value
+        /// points to an array of bytes in RGBRGBRGB...format in the top-to-bottom,
+        /// left-to-right order, that is the first RGB triplet corresponds to the first pixel
+        /// of the first row, the second one — to the second pixel of the first row and so on
+        /// until the end of the first row, with second row following after it and so on.
+        /// You should not delete the returned pointer nor pass it to
+        /// <see cref="SetNativeData(IntPtr, bool)"/> and similar methods.
+        /// </remarks>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public IntPtr GetNativeData()
         {
@@ -1298,52 +1396,90 @@ namespace Alternet.Drawing
         /// <summary>
         /// Creates a fresh image.
         /// </summary>
-        /// <param name="width"></param>
-        /// <param name="height"></param>
-        /// <param name="data"></param>
-        /// <param name="static_data"></param>
-        /// <returns></returns>
+        /// <param name="width">Specifies the width of the image.</param>
+        /// <param name="height">Specifies the height of the image.</param>
+        /// <param name="data">A pointer to RGB data</param>
+        /// <param name="staticData">Indicates if the data should be free'd after use.
+        /// If <paramref name="staticData"/> is <c>false</c> then the
+        /// library will take ownership of the data and free it afterwards.For this,
+        /// it has to be allocated with malloc.</param>
+        /// <returns><c>true</c> if the call succeeded, <c>false</c> otherwise.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public bool CreateNativeData(int width, int height, IntPtr data, bool static_data = false)
+        public bool CreateNativeData(int width, int height, IntPtr data, bool staticData = false)
         {
-            return UI.Native.GenericImage.CreateData(Handle,  width, height, data, static_data);
+            return UI.Native.GenericImage.CreateData(Handle,  width, height, data, staticData);
         }
 
         /// <summary>
         /// Creates a fresh image.
         /// </summary>
-        /// <param name="width"></param>
-        /// <param name="height"></param>
-        /// <param name="data"></param>
-        /// <param name="alpha"></param>
-        /// <param name="static_data"></param>
-        /// <returns></returns>
+        /// <param name="width">Specifies the width of the image.</param>
+        /// <param name="height">Specifies the height of the image.</param>
+        /// <param name="data">A pointer to RGB data</param>
+        /// <param name="staticData">Indicates if the data should be free'd after use.
+        /// If <paramref name="staticData"/> is <c>false</c> then the
+        /// library will take ownership of the data and free it afterwards.For this,
+        /// it has to be allocated with malloc.</param>
+        /// <param name="alpha">A pointer to alpha-channel data</param>
+        /// <returns><c>true</c> if the call succeeded, <c>false</c> otherwise.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public bool CreateNativeData(int width, int height, IntPtr data, IntPtr alpha, bool static_data = false)
+        public bool CreateNativeData(
+            int width,
+            int height,
+            IntPtr data,
+            IntPtr alpha,
+            bool staticData = false)
         {
-            return UI.Native.GenericImage.CreateAlphaData(Handle, width, height, data, alpha, static_data);
+            return UI.Native.GenericImage.CreateAlphaData(Handle, width, height, data, alpha, staticData);
         }
 
         /// <summary>
         /// Sets the image data without performing checks.
         /// </summary>
-        /// <param name="alpha"></param>
-        /// <param name="static_data"></param>
+        /// <param name="alpha">Pointer to alpha channel data.</param>
+        /// <param name="staticData">Specifies whether data is static.</param>
+        /// <remarks>
+        /// This function is similar to <see cref="SetNativeData(IntPtr, bool)"/>
+        /// and has similar restrictions.
+        /// </remarks>
+        /// <remarks>
+        /// The pointer passed to it may however be <c>null</c> in which case the function will
+        /// allocate the alpha array internally – this is useful to add alpha channel
+        /// data to an image which doesn't have any.
+        /// </remarks>
+        /// <remarks>
+        /// If the pointer is not <c>null</c>, it must have one byte for each image
+        /// pixel and be allocated with malloc(). Library takes ownership of the pointer
+        /// and will free it unless <paramref name="staticData"/> parameter is set
+        /// to <c>true</c> – in this case the caller should do it.
+        /// </remarks>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void SetNativeAlphaData(IntPtr alpha = default, bool static_data = false)
+        public void SetNativeAlphaData(IntPtr alpha = default, bool staticData = false)
         {
-            UI.Native.GenericImage.SetAlphaData(Handle, alpha, static_data);
+            UI.Native.GenericImage.SetAlphaData(Handle, alpha, staticData);
         }
 
         /// <summary>
         /// Sets the image data without performing checks.
         /// </summary>
-        /// <param name="data"></param>
-        /// <param name="static_data"></param>
+        /// <param name="data">Pointer to RGB data.</param>
+        /// <param name="staticData">Specifies whether data is static.</param>
+        /// <remarks>
+        /// The data given must have the size (width*height*3) or results will be unexpected.
+        /// Don't use this method if you aren't sure you know what you are doing.
+        /// </remarks>
+        /// <remarks>
+        /// The data must have been allocated with malloc(), NOT with operator new.
+        /// </remarks>
+        /// <remarks>
+        /// If <paramref name="staticData"/> is false, after this call the pointer to the data is owned
+        /// by the Library, that will be responsible for deleting it. Do not pass to
+        /// this function a pointer obtained through GetData().
+        /// </remarks>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void SetNativeData(IntPtr data, bool static_data = false)
+        public void SetNativeData(IntPtr data, bool staticData = false)
         {
-            UI.Native.GenericImage.SetData(Handle, data, static_data);
+            UI.Native.GenericImage.SetData(Handle, data, staticData);
         }
 
         /// <summary>
@@ -1418,683 +1554,3 @@ namespace Alternet.Drawing
         }
     }
 }
-
-
-/*
-
-
-==============
-ChangeSaturation()
-void wxImage::ChangeSaturation	(	double 	factor	)	
-Changes the saturation of each pixel in the image.
-
-==============
-Clear()
-void wxImage::Clear	(	unsigned char 	value = 0	)	
-Initialize the image data with zeroes (the default) or with the byte value given as value.
-==============
-ClearAlpha()
-void wxImage::ClearAlpha	(		)	
-Removes the alpha channel from the image.
-
-This function should only be called if the image has alpha channel data, use HasAlpha() to
-check for this.
-
-==============
-Create() [4/6]
-bool wxImage::Create	(	int 	width,
-int 	height,
-bool 	clear = true 
-)		
-Creates a fresh image.
-
-See wxImage::wxImage(int,int,bool) for more info.
-
-Returns
-true if the call succeeded, false otherwise.
-==============
-Create() [5/6]
-bool wxImage::Create	(	int 	width,
-int 	height,
-unsigned char * 	data,
-bool 	static_data = false 
-)		
-Creates a fresh image.
-
-See wxImage::wxImage(int,int,unsigned char*,bool) for more info.
-
-Returns
-true if the call succeeded, false otherwise.
-==============
-Create() [6/6]
-bool wxImage::Create	(	int 	width,
-int 	height,
-unsigned char * 	data,
-unsigned char * 	alpha,
-bool 	static_data = false 
-)		
-Creates a fresh image.
-
-See wxImage::wxImage(int,int,unsigned char*,unsigned char*,bool) for more info.
-
-Returns
-true if the call succeeded, false otherwise.
-==============
-
-==============
-GetAlpha() [1/2]
-unsigned char* wxImage::GetAlpha	(		)	const
-Returns pointer to the array storing the alpha values for this image.
-
-This pointer is NULL for the images without the alpha channel. If the image does have it,
-this pointer may be used to directly manipulate the alpha values which are stored as the RGB ones.
-
-==============
-GetAlpha() [2/2]
-unsigned char wxImage::GetAlpha	(	int 	x,
-int 	y 
-)		const
-Return alpha value at given pixel location.
-
-==============
-GetBlue()
-unsigned char wxImage::GetBlue	(	int 	x,
-int 	y 
-)		const
-Returns the blue intensity at the given coordinate.
-
-==============
-GetData()
-unsigned char* wxImage::GetData	(		)	const
-Returns the image data as an array.
-
-This is most often used when doing direct image manipulation. The return value points to an array
-of characters in RGBRGBRGB... format in the top-to-bottom, left-to-right order, that is the first
-RGB triplet corresponds to the first pixel of the first row, the second one — to the second pixel
-of the first row and so on until the end of the first row, with second row following after it and
-so on.
-
-You should not delete the returned pointer nor pass it to SetData().
-==============
-GetGreen()
-unsigned char wxImage::GetGreen	(	int 	x,
-int 	y 
-)		const
-Returns the green intensity at the given coordinate.
-
-==============
-GetImageCount() [1/2]
-static int wxImage::GetImageCount	(	const wxString & 	filename,
-wxBitmapType 	type = wxBITMAP_TYPE_ANY 
-)		
-static
-If the image file contains more than one image and the image handler is capable of retrieving
-these individually, this function will return the number of available images.
-
-For the overload taking the parameter filename, that's the name of the file to query. For the
-overload taking the parameter stream, that's the opened input stream with image data.
-
-The parameter type may be one of the following values:
-
-wxBITMAP_TYPE_BMP: Load a Windows bitmap file.
-wxBITMAP_TYPE_GIF: Load a GIF bitmap file.
-wxBITMAP_TYPE_JPEG: Load a JPEG bitmap file.
-wxBITMAP_TYPE_PNG: Load a PNG bitmap file.
-wxBITMAP_TYPE_PCX: Load a PCX bitmap file.
-wxBITMAP_TYPE_PNM: Load a PNM bitmap file.
-wxBITMAP_TYPE_TIFF: Load a TIFF bitmap file.
-wxBITMAP_TYPE_TGA: Load a TGA bitmap file.
-wxBITMAP_TYPE_XPM: Load a XPM bitmap file.
-wxBITMAP_TYPE_ICO: Load a Windows icon file (ICO).
-wxBITMAP_TYPE_CUR: Load a Windows cursor file (CUR).
-wxBITMAP_TYPE_ANI: Load a Windows animated cursor file (ANI).
-wxBITMAP_TYPE_ANY: Will try to autodetect the format.
-Returns
-Number of available images. For most image handlers, this is 1 (exceptions are TIFF and ICO
-formats as well as animated GIFs for which this function returns the number of frames in the
-animation).
-==============
-GetImageCount() [2/2]
-static int wxImage::GetImageCount	(	wxInputStream & 	stream,
-wxBitmapType 	type = wxBITMAP_TYPE_ANY 
-)		
-static
-If the image file contains more than one image and the image handler is capable of retrieving
-these individually, this function will return the number of available images.
-
-For the overload taking the parameter filename, that's the name of the file to query. For the
-overload taking the parameter stream, that's the opened input stream with image data.
-
-See wxImageHandler::GetImageCount() for more info.
-
-The parameter type may be one of the following values:
-
-wxBITMAP_TYPE_BMP: Load a Windows bitmap file.
-wxBITMAP_TYPE_GIF: Load a GIF bitmap file.
-wxBITMAP_TYPE_JPEG: Load a JPEG bitmap file.
-wxBITMAP_TYPE_PNG: Load a PNG bitmap file.
-wxBITMAP_TYPE_PCX: Load a PCX bitmap file.
-wxBITMAP_TYPE_PNM: Load a PNM bitmap file.
-wxBITMAP_TYPE_TIFF: Load a TIFF bitmap file.
-wxBITMAP_TYPE_TGA: Load a TGA bitmap file.
-wxBITMAP_TYPE_XPM: Load a XPM bitmap file.
-wxBITMAP_TYPE_ICO: Load a Windows icon file (ICO).
-wxBITMAP_TYPE_CUR: Load a Windows cursor file (CUR).
-wxBITMAP_TYPE_ANI: Load a Windows animated cursor file (ANI).
-wxBITMAP_TYPE_ANY: Will try to autodetect the format.
-Returns
-Number of available images. For most image handlers, this is 1 (exceptions are TIFF and ICO
-formats as well as animated GIFs for which this function returns the number of frames in the animation).
-==============
-GetMaskBlue()
-unsigned char wxImage::GetMaskBlue	(		)	const
-Gets the blue value of the mask color.
-==============
-GetMaskGreen()
-unsigned char wxImage::GetMaskGreen	(		)	const
-Gets the green value of the mask color.
-==============
-GetMaskRed()
-unsigned char wxImage::GetMaskRed	(		)	const
-Gets the red value of the mask color.
-==============
-GetOption()
-wxString wxImage::GetOption	(	const wxString & 	name	)	const
-Gets a user-defined string-valued option.
-
-Parameters
-name	The name of the option, case-insensitive.
-Returns
-The value of the option or an empty string if not found. Use HasOption() if an empty string can
-be a valid option value.
-==============
-GetOptionInt()
-int wxImage::GetOptionInt	(	const wxString & 	name	)	const
-Gets a user-defined integer-valued option.
-
-The function is case-insensitive to name. If the given option is not present,
-the function returns 0. Use HasOption() if 0 is a possibly valid value for the option.
-
-Parameters
-name	The name of the option, case-insensitive.
-Returns
-The value of the option or 0 if not found. Use HasOption() if 0 can be a valid option value.
-
-===========
-GetOrFindMaskcolor()
-bool wxImage::GetOrFindMaskcolor	(	unsigned char * 	r,
-unsigned char * 	g,
-unsigned char * 	b 
-)		const
-Get the current mask color or find a suitable unused color that could be used as a mask color.
-
-Returns true if the image currently has a mask.
-===========
-HasOption()
-bool wxImage::HasOption	(	const wxString & 	name	)	const
-Returns true if the given option is present.
-
-The function is case-insensitive to name.
-===========
-HSVtoRGB()
-static wxImage::RGBValue wxImage::HSVtoRGB	(	const wxImage::HSVValue & 	hsv	)	
-static
-Converts a color in HSV color space to RGB color space.
-
-InitAlpha()
-void wxImage::InitAlpha	(		)	
-Initializes the image alpha channel data.
-
-It is an error to call it if the image already has alpha data. If it doesn't, alpha data will be
-by default initialized to all pixels being fully opaque. But if the image has a mask color, all mask pixels will be completely transparent.
-
-===========
-IsTransparent()
-bool wxImage::IsTransparent	(	int 	x,
-int 	y,
-unsigned char 	threshold = wxIMAGE_ALPHA_THRESHOLD 
-)		const
-Returns true if the given pixel is transparent, i.e. either has the mask color if this image has
-a mask or if this image has alpha channel and alpha value of this pixel is strictly less than threshold.
-
-===========
-LoadFile() [1/4]
-virtual bool wxImage::LoadFile	(	const wxString & 	name,
-const wxString & 	mimetype,
-int 	index = -1 
-)		
-virtual
-Loads an image from a file.
-
-If no handler type is provided, the library will try to autodetect the format.
-
-Parameters
-name	Name of the file from which to load the image.
-mimetype	MIME type string (for example 'image/jpeg')
-index	See the description in the LoadFile(wxInputStream&, wxBitmapType, int) overload.
-===========
-LoadFile() [2/4]
-virtual bool wxImage::LoadFile	(	const wxString & 	name,
-wxBitmapType 	type = wxBITMAP_TYPE_ANY,
-int 	index = -1 
-)		
-virtual
-Loads an image from a file.
-
-If no handler type is provided, the library will try to autodetect the format.
-
-name	Name of the file from which to load the image.
-type	See the description in the LoadFile(wxInputStream&, wxBitmapType, int) overload.
-index	See the description in the LoadFile(wxInputStream&, wxBitmapType, int) overload.
-=======================
-LoadFile() [3/4]
-virtual bool wxImage::LoadFile	(	wxInputStream & 	stream,
-const wxString & 	mimetype,
-int 	index = -1 
-)		
-virtual
-Loads an image from an input stream.
-
-stream	Opened input stream from which to load the image. Currently, the stream must support seeking.
-mimetype	MIME type string (for example 'image/jpeg')
-index	See the description in the LoadFile(wxInputStream&, wxBitmapType, int) overload.
-
-===========
-LoadFile() [4/4]
-virtual bool wxImage::LoadFile	(	wxInputStream & 	stream,
-wxBitmapType 	type = wxBITMAP_TYPE_ANY,
-int 	index = -1 
-)		
-Loads an image from an input stream.
-
-If the file can't be loaded, this function returns false and logs an error using wxLogError().
-If the file can be loaded but some problems were detected while doing it, it can also call
-wxLogWarning() to notify about these problems. If this is undesirable, use SetLoadFlags()
-to reset Load_Verbose flag and suppress these warnings.
-
-stream	Opened input stream from which to load the image. Currently, the stream must support seeking.
-type	May be one of the following:
-wxBITMAP_TYPE_BMP: Load a Windows bitmap file.
-wxBITMAP_TYPE_GIF: Load a GIF bitmap file.
-wxBITMAP_TYPE_JPEG: Load a JPEG bitmap file.
-wxBITMAP_TYPE_PNG: Load a PNG bitmap file.
-wxBITMAP_TYPE_PCX: Load a PCX bitmap file.
-wxBITMAP_TYPE_PNM: Load a PNM bitmap file.
-wxBITMAP_TYPE_TIFF: Load a TIFF bitmap file.
-wxBITMAP_TYPE_TGA: Load a TGA bitmap file.
-wxBITMAP_TYPE_XPM: Load a XPM bitmap file.
-wxBITMAP_TYPE_ICO: Load a Windows icon file (ICO).
-wxBITMAP_TYPE_CUR: Load a Windows cursor file (CUR).
-wxBITMAP_TYPE_ANI: Load a Windows animated cursor file (ANI).
-wxBITMAP_TYPE_ANY: Will try to autodetect the format.
-index	Index of the image to load in the case that the image file contains multiple images.
-This is only used by GIF, ICO and TIFF handlers. The default value (-1) means "choose the default image" and is interpreted as the first image (index=0) by the GIF and TIFF handler and as the largest and most colorful one by the ICO handler.
-Returns
-true if the operation succeeded, false otherwise. If the optional index parameter is out of range,
-false is returned and a call to wxLogError() takes place.
-Remarks
-Depending on how wxWidgets has been configured, not all formats may be available.
-Note
-You can use GetOptionInt() to get the hotspot when loading cursor files:
-int hotspot_x = image.GetOptionInt(wxIMAGE_OPTION_CUR_HOTSPOT_X);
-int hotspot_y = image.GetOptionInt(wxIMAGE_OPTION_CUR_HOTSPOT_Y);
-===========
-Mirror()
-wxImage wxImage::Mirror	(	bool 	horizontally = true	)	const
-Returns a mirrored copy of the image.
-
-The parameter horizontally indicates the orientation.
-===========
-Paste()
-void wxImage::Paste	(	const wxImage & 	image,
-int 	x,
-int 	y,
-wxImageAlphaBlendMode 	alphaBlend = wxIMAGE_ALPHA_BLEND_OVER 
-)		
-Copy the data of the given image to the specified position in this image.
-
-Takes care of the mask color and out of bounds problems.
-
-image	The image containing the data to copy, must be valid.
-x	The horizontal position of the position to copy the data to.
-y	The vertical position of the position to copy the data to.
-alphaBlend	This parameter (new in wx 3.1.5) determines whether the alpha values of the original
-image replace (default) or are composed with the alpha channel of this image. Notice that alpha
-blending overrides the mask handling.
-
-===========
-Replace()
-void wxImage::Replace	(	unsigned char 	r1,
-unsigned char 	g1,
-unsigned char 	b1,
-unsigned char 	r2,
-unsigned char 	g2,
-unsigned char 	b2 
-)		
-Replaces the color specified by r1,g1,b1 by the color r2,g2,b2.
-
-===========
-Rescale()
-wxImage& wxImage::Rescale	(	int 	width,
-int 	height,
-wxImageResizeQuality 	quality = wxIMAGE_QUALITY_NORMAL 
-)		
-Changes the size of the image in-place by scaling it: after a call to this function,the image will
-have the given width and height.
-
-For a description of the quality parameter, see the Scale() function. Returns the (modified) image
-itself.
-===========
-Resize()
-wxImage& wxImage::Resize	(	const wxSize & 	size,
-const wxPoint & 	pos,
-int 	red = -1,
-int 	green = -1,
-int 	blue = -1 
-)		
-Changes the size of the image in-place without scaling it by adding either a border with the given
-color or cropping as necessary.
-
-The image is pasted into a new image with the given size and background color at the position pos
-relative to the upper left of the new image.
-
-If red = green = blue = -1 then use either the current mask color if set or find, use, and set a
-suitable mask color for any newly exposed areas.
-
-Returns
-The (modified) image itself.
-===========
-
-RGBtoHSV()
-static wxImage::HSVValue wxImage::RGBtoHSV	(	const wxImage::RGBValue & 	rgb	)	
-static
-Converts a color in RGB color space to HSV color space.
-
-===========
-Rotate()
-wxImage wxImage::Rotate	(	double 	angle,
-const wxPoint & 	rotationCentre,
-bool 	interpolating = true,
-wxPoint * 	offsetAfterRotation = NULL 
-)		const
-Rotates the image about the given point, by angle radians.
-
-Passing true to interpolating results in better image quality, but is slower.
-
-If the image has a mask, then the mask color is used for the uncovered pixels in the rotated image
-background. Else, black (rgb 0, 0, 0) will be used.
-
-Returns the rotated image, leaving this image intact.
-
-===========
-Rotate180()
-wxImage wxImage::Rotate180	(		)	const
-Returns a copy of the image rotated by 180 degrees.
-===========
-Rotate90()
-wxImage wxImage::Rotate90	(	bool 	clockwise = true	)	const
-Returns a copy of the image rotated 90 degrees in the direction indicated by clockwise.
-===========
-
-RotateHue()
-void wxImage::RotateHue	(	double 	angle	)	
-Rotates the hue of each pixel in the image by angle, which is a double in the range [-1.0..+1.0],
-where -1.0 corresponds to -360 degrees and +1.0 corresponds to +360 degrees.
-===========
-
-SaveFile() [1/5]
-virtual bool wxImage::SaveFile	(	const wxString & 	name	)	const
-virtual
-Saves an image in the named file.
-
-File type is determined from the extension of the file name. Note that this function may fail if
-the extension is not recognized! You can use one of the forms above to save images to files with
-non-standard extensions.
-
-Parameters
-name	Name of the file to save the image to.
-===========
-
-SaveFile() [2/5]
-virtual bool wxImage::SaveFile	(	const wxString & 	name,
-const wxString & 	mimetype 
-)		const
-virtual
-Saves an image in the named file.
-
-Parameters
-name	Name of the file to save the image to.
-mimetype	MIME type.
-========================
-SaveFile() [3/5]
-virtual bool wxImage::SaveFile	(	const wxString & 	name,
-wxBitmapType 	type 
-)		const
-virtual
-Saves an image in the named file.
-
-name	Name of the file to save the image to.
-type	Currently these types can be used:
-wxBITMAP_TYPE_BMP: Save a BMP image file.
-wxBITMAP_TYPE_JPEG: Save a JPEG image file.
-wxBITMAP_TYPE_PNG: Save a PNG image file.
-wxBITMAP_TYPE_PCX: Save a PCX image file (tries to save as 8-bit if possible, falls back to 24-bit
-otherwise).
-wxBITMAP_TYPE_PNM: Save a PNM image file (as raw RGB always).
-wxBITMAP_TYPE_TIFF: Save a TIFF image file.
-wxBITMAP_TYPE_XPM: Save a XPM image file.
-wxBITMAP_TYPE_ICO: Save a Windows icon file (ICO). The size may be up to 255 wide by 127 high.
-A single image is saved in 8 colors at the size supplied.
-wxBITMAP_TYPE_CUR: Save a Windows cursor file (CUR).
-
-===========
-
-SaveFile() [4/5]
-virtual bool wxImage::SaveFile	(	wxOutputStream & 	stream,
-const wxString & 	mimetype 
-)		const
-virtual
-Saves an image in the given stream.
-
-stream	Opened output stream to save the image to.
-mimetype	MIME type.
-Returns
-true if the operation succeeded, false otherwise.
-Remarks
-Depending on how wxWidgets has been configured, not all formats may be available.
-Note
-You can use SetOption() to set the hotspot when saving an image into a cursor file (default hotspot
-is in the centre of the image):
-image.SetOption(wxIMAGE_OPTION_CUR_HOTSPOT_X, hotspotX);
-image.SetOption(wxIMAGE_OPTION_CUR_HOTSPOT_Y, hotspotY);
-
-===========
-
-SaveFile() [5/5]
-virtual bool wxImage::SaveFile	(	wxOutputStream & 	stream,
-wxBitmapType 	type 
-)		const
-Saves an image in the given stream.
-
-stream	Opened output stream to save the image to.
-type	MIME type.
-===========
-
-SetAlpha() [1/2]
-void wxImage::SetAlpha	(	int 	x,
-int 	y,
-unsigned char 	alpha 
-)		
-Sets the alpha value for the given pixel.
-
-This function should only be called if the image has alpha channel data, use HasAlpha() to check
-for this.
-
-===========
-
-SetAlpha() [2/2]
-void wxImage::SetAlpha	(	unsigned char * 	alpha = NULL,
-bool 	static_data = false 
-)		
-This function is similar to SetData() and has similar restrictions.
-
-The pointer passed to it may however be NULL in which case the function will allocate the alpha
-array internally – this is useful to add alpha channel data to an image which doesn't have any.
-
-If the pointer is not NULL, it must have one byte for each image pixel and be allocated with
-malloc(). wxImage takes ownership of the pointer and will free it unless static_data parameter
-is set to true – in this case the caller should do it.
-
-===========
-
-SetData() [1/2]
-void wxImage::SetData	(	unsigned char * 	data,
-bool 	static_data = false 
-)		
-Sets the image data without performing checks.
-
-The data given must have the size (width*height*3) or results will be unexpected. Don't use
-this method if you aren't sure you know what you are doing.
-
-The data must have been allocated with malloc(), NOT with operator new.
-
-If static_data is false, after this call the pointer to the data is owned by the wxImage object,
-that will be responsible for deleting it. Do not pass to this function a pointer obtained through
-GetData().
-
-===========
-
-SetData() [2/2]
-void wxImage::SetData	(	unsigned char * 	data,
-int 	new_width,
-int 	new_height,
-bool 	static_data = false 
-)		
-This is an overloaded member function, provided for convenience. It differs from the above
-function only in what argument(s) it accepts.
-
-===========
-SetDefaultLoadFlags()
-static void wxImage::SetDefaultLoadFlags	(	int 	flags	)	
-static
-Sets the default value for the flags used for loading image files.
-
-This method changes the global value of the flags used for all the subsequently created wxImage
-objects by default. It doesn't affect the already existing objects.
-
-By default, the global flags include Load_Verbose flag value.
-
-===========
-SetMask()
-void wxImage::SetMask	(	bool 	hasMask = true	)	
-Specifies whether there is a mask or not.
-
-The area of the mask is determined by the current mask color.
-===========
-SetMaskcolor()
-void wxImage::SetMaskcolor	(	unsigned char 	red,
-unsigned char 	green,
-unsigned char 	blue 
-)		
-Sets the mask color for this image (and tells the image to use the mask).
-===========
-SetMaskFromImage()
-bool wxImage::SetMaskFromImage	(	const wxImage & 	mask,
-unsigned char 	mr,
-unsigned char 	mg,
-unsigned char 	mb 
-)		
-Sets image's mask so that the pixels that have RGB value of mr,mg,mb in mask will be masked in
-the image.
-
-This is done by first finding an unused color in the image, setting this color as the mask color
-and then using this color to draw all pixels in the image who corresponding pixel in mask has given
-RGB value.
-
-The parameter mask is the mask image to extract mask shape from. It must have the same dimensions
-as the image.
-
-The parameters mr, mg, mb are the RGB values of the pixels in mask that will be used to create the
-mask.
-
-Returns
-Returns false if mask does not have same dimensions as the image or if there is no unused color
-left. Returns true if the mask was successfully applied.
-Note
-Note that this method involves computing the histogram, which is a computationally intensive operation.
-===========
-SetOption() [1/2]
-void wxImage::SetOption	(	const wxString & 	name,
-const wxString & 	value 
-)		
-Sets a user-defined option.
-
-The function is case-insensitive to name.
-
-For example, when saving as a JPEG file, the option quality is used, which is a number between
-0 and 100 (0 is terrible, 100 is very good).
-
-The lists of the currently supported options are in GetOption() and GetOptionInt() function docs.
-===========
-SetOption() [2/2]
-void wxImage::SetOption	(	const wxString & 	name,
-int 	value 
-)		
-This is an overloaded member function, provided for convenience. It differs from the above
-function only in what argument(s) it accepts.
-===========
-SetRGB() [1/2]
-void wxImage::SetRGB	(	const wxRect & 	rect,
-unsigned char 	red,
-unsigned char 	green,
-unsigned char 	blue 
-)		
-Sets the color of the pixels within the given rectangle.
-
-This routine performs bounds-checks for the coordinate so it can be considered a safe way to
-manipulate the data.
-
-===========
-SetRGB() [2/2]
-void wxImage::SetRGB	(	int 	x,
-int 	y,
-unsigned char 	r,
-unsigned char 	g,
-unsigned char 	b 
-)		
-Set the color of the pixel at the given x and y coordinate.
-
-===============
-SetType()
-void wxImage::SetType	(	wxBitmapType 	type	)	
-Set the type of image returned by GetType().
-
-This method is mostly used internally by the library but can also be called from the user code
-if the image was created from data in the given bitmap format without using LoadFile() (which would set the type correctly automatically).
-
-Notice that the image must be created before this function is called.
-
-type	One of bitmap type constants, wxBITMAP_TYPE_INVALID is a valid value for it and can be
-used to reset the bitmap type to default but wxBITMAP_TYPE_MAX is not allowed here.
-
-==========
-Size()
-wxImage wxImage::Size	(	const wxSize & 	size,
-const wxPoint & 	pos,
-int 	red = -1,
-int 	green = -1,
-int 	blue = -1 
-)		const
-Returns a resized version of this image without scaling it by adding either a border with the
-given color or cropping as necessary.
-
-The image is pasted into a new image with the given size and background color at the position
-pos relative to the upper left of the new image.
-
-If red = green = blue = -1 then the areas of the larger image not covered by this image are made
-transparent by filling them with the image mask color (which will be allocated automatically if
-it isn't currently set).
-
-Otherwise, the areas will be filled with the color with the specified RGB components. 
-=========== 
- */
