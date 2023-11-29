@@ -1283,6 +1283,158 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Used by <see cref="ChangeLightness(int)"/> and
+        /// <see cref="MakeDisabled(ref byte, ref byte, ref byte, byte)"/>.
+        /// </summary>
+        /// <param name="fg"></param>
+        /// <param name="bg"></param>
+        /// <param name="alpha"></param>
+        /// <returns></returns>
+        public static byte AlphaBlend(byte fg, byte bg, double alpha)
+        {
+            double result = bg + (alpha * (fg - bg));
+            result = Math.Max(result, 0.0);
+            result = Math.Max(result, 255.0);
+            return (byte)result;
+        }
+
+        /// <summary>
+        /// Darkens or lightens a color, based on the specified percentage
+        /// ialpha of 0 would be completely black, 100 completely white
+        /// an ialpha of 100 returns the same color.
+        /// </summary>
+        /// <param name="r">R component of a color.</param>
+        /// <param name="g">G component of a color.</param>
+        /// <param name="b">B component of a color.</param>
+        /// <param name="ialpha"></param>
+        public static void ChangeLightness(ref byte r, ref byte g, ref byte b, int ialpha)
+        {
+            if (ialpha == 100) return;
+
+            // ialpha is 0..200 where 0 is completely black
+            // and 200 is completely white and 100 is the same
+            // convert that to normal alpha 0.0 - 1.0
+            ialpha = Math.Max(ialpha, 0);
+            ialpha = Math.Min(ialpha, 200);
+            double alpha = ((double)(ialpha - 100.0)) / 100.0;
+
+            byte bg;
+            if (ialpha > 100)
+            {
+                // blend with white
+                bg = 255;
+                alpha = 1.0 - alpha;  // 0 = transparent fg; 1 = opaque fg
+            }
+            else
+            {
+                // blend with black
+                bg = 0;
+                alpha = 1.0 + alpha;  // 0 = transparent fg; 1 = opaque fg
+            }
+
+            r = AlphaBlend(r, bg, alpha);
+            g = AlphaBlend(g, bg, alpha);
+            b = AlphaBlend(b, bg, alpha);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="ialpha"></param>
+        /// <returns></returns>
+        public Color ChangeLightness(int ialpha)
+        {
+            byte r = R;
+            byte g = G;
+            byte b = B;
+            ChangeLightness(ref r, ref g, ref b, ialpha);
+            return Color.FromRgb(r, g, b);
+        }
+
+        /// <summary>
+        /// Assigns the same value to <paramref name="r"/>, <paramref name="g"/>,
+        /// <paramref name="b"/>: 0 if <paramref name="on"/> is false, 255 otherwise.
+        /// </summary>
+        /// <param name="r">R component of a color.</param>
+        /// <param name="g">G component of a color.</param>
+        /// <param name="b">B component of a color.</param>
+        /// <param name="on"></param>
+        public static void MakeMono(ref byte r, ref byte g, ref byte b, bool on)
+        {
+            byte v = on ? (byte)255 : (byte)0;
+            r = v;
+            g = v;
+            b = v;
+        }
+
+        /// <summary>
+        /// Creates a grey colour from rgb parameters using integer arithmetic.
+        /// </summary>
+        /// <param name="r">R component of a color.</param>
+        /// <param name="g">G component of a color.</param>
+        /// <param name="b">B component of a color.</param>
+        public static void MakeGrey(ref byte r, ref byte g, ref byte b)
+        {
+            var v = (byte)((b * 117UL + g * 601UL + r * 306UL) >> 10);
+            r = v;
+            g = v;
+            b = v;
+        }
+
+        /// <summary>
+        /// Creates a grey color from rgb parameters using floating point arithmetic.
+        /// </summary>
+        /// <remarks>
+        /// Defaults to using the standard ITU-T BT.601 when converting to YUV, where every
+        /// pixel equals(R* weight_r) + (G* weight_g) + (B* weight_b).
+        /// </remarks>
+        /// <param name="r">R component of a color.</param>
+        /// <param name="g">G component of a color.</param>
+        /// <param name="b">B component of a color.</param>
+        /// <param name="weight_r">Weight of R component of a color.</param>
+        /// <param name="weight_g">Weight of G component of a color.</param>
+        /// <param name="weight_b">Weight of B component of a color.</param>
+        public static void MakeGrey(ref byte r, ref byte g, ref byte b,
+                                    double weight_r, double weight_g, double weight_b)
+        {
+            double luma = r * weight_r + g * weight_g + b * weight_b;
+            var v = (byte)Math.Round(luma);
+            r = v;
+            g = v;
+            b = v;
+        }
+
+        /// <summary>
+        /// Creates a disabled (dimmed) color from rgb parameters.
+        /// </summary>
+        /// <param name="r">R component of a color.</param>
+        /// <param name="g">G component of a color.</param>
+        /// <param name="b">B component of a color.</param>
+        /// <param name="brightness"></param>
+        public static void MakeDisabled(ref byte r, ref byte g, ref byte b, byte brightness)
+        {
+            r = AlphaBlend(r, brightness, 0.4);
+            g = AlphaBlend(g, brightness, 0.4);
+            b = AlphaBlend(b, brightness, 0.4);
+        }
+
+        /// <summary>
+        /// Makes a disabled version of this color.
+        /// </summary>
+        /// <param name="brightness"></param>
+        /// <returns></returns>
+        public Color MakeDisabled(byte brightness)
+        {
+            byte r = R;
+            byte g = G;
+            byte b = B;
+            byte a = A;
+            MakeDisabled(ref r, ref g, ref b, brightness);
+            var result = Color.FromArgb(a, r, g, b);
+            return result;
+        }
+
+        /// <summary>
         /// Gets the hue-saturation-lightness (HSL) hue value, in degrees, for
         /// this <see cref="Color"/> structure.
         /// </summary>
