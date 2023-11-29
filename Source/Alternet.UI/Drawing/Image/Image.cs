@@ -75,7 +75,7 @@ namespace Alternet.Drawing
         /// Initializes a new instance of the <see cref="Image"/> class.
         /// </summary>
         private protected Image()
-            : this(new Size())
+            : this(Size.Empty)
         {
         }
 
