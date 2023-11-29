@@ -250,14 +250,14 @@ ALTERNET_UI_API void GenericImage_Replace_(void* handle, uint8_t r1, uint8_t g1,
     GenericImage::Replace(handle, r1, g1, b1, r2, g2, b2);
 }
 
-ALTERNET_UI_API void* GenericImage_Rescale_(void* handle, int width, int height, int quality)
+ALTERNET_UI_API void GenericImage_Rescale_(void* handle, int width, int height, int quality)
 {
-    return GenericImage::Rescale(handle, width, height, quality);
+    GenericImage::Rescale(handle, width, height, quality);
 }
 
-ALTERNET_UI_API void* GenericImage_Resize_(void* handle, Int32Size size, Int32Point pos, int red, int green, int blue)
+ALTERNET_UI_API void GenericImage_Resize_(void* handle, Int32Size size, Int32Point pos, int red, int green, int blue)
 {
-    return GenericImage::Resize(handle, size, pos, red, green, blue);
+    GenericImage::Resize(handle, size, pos, red, green, blue);
 }
 
 ALTERNET_UI_API void* GenericImage_Rotate90_(void* handle, c_bool clockwise)

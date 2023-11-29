@@ -122,13 +122,15 @@ namespace NativeApi.Api
 
         //Changes the size of the image in-place by scaling it: after a call to this
         //function,the image will have the given width and height.
-        public static IntPtr Rescale(IntPtr handle, int width, int height,
-            int quality /*= wxIMAGE_QUALITY_NORMAL*/) => default;
+        public static void Rescale(IntPtr handle, int width, int height,
+            int quality /*= wxIMAGE_QUALITY_NORMAL*/)
+        { }
 
         //Changes the size of the image in-place without scaling it by adding either a border
         //with the given color or cropping as necessary.
-        public static IntPtr Resize(IntPtr handle, Int32Size size, Int32Point pos, int red = -1,
-            int green = -1, int blue = -1) => default;
+        public static void Resize(IntPtr handle, Int32Size size, Int32Point pos, int red = -1,
+            int green = -1, int blue = -1)
+        { }
 
         //Returns a copy of the image rotated 90 degrees in the direction indicated by clockwise.
         public static IntPtr Rotate90(IntPtr handle, bool clockwise = true) => default;

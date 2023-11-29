@@ -258,14 +258,14 @@ namespace Alternet.UI.Native
             NativeApi.GenericImage_Replace_(handle, r1, g1, b1, r2, g2, b2);
         }
         
-        public static System.IntPtr Rescale(System.IntPtr handle, int width, int height, int quality)
+        public static void Rescale(System.IntPtr handle, int width, int height, int quality)
         {
-            return NativeApi.GenericImage_Rescale_(handle, width, height, quality);
+            NativeApi.GenericImage_Rescale_(handle, width, height, quality);
         }
         
-        public static System.IntPtr Resize(System.IntPtr handle, Alternet.Drawing.Int32Size size, Alternet.Drawing.Int32Point pos, int red, int green, int blue)
+        public static void Resize(System.IntPtr handle, Alternet.Drawing.Int32Size size, Alternet.Drawing.Int32Point pos, int red, int green, int blue)
         {
-            return NativeApi.GenericImage_Resize_(handle, size, pos, red, green, blue);
+            NativeApi.GenericImage_Resize_(handle, size, pos, red, green, blue);
         }
         
         public static System.IntPtr Rotate90(System.IntPtr handle, bool clockwise)
@@ -669,10 +669,10 @@ namespace Alternet.UI.Native
             public static extern void GenericImage_Replace_(System.IntPtr handle, byte r1, byte g1, byte b1, byte r2, byte g2, byte b2);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr GenericImage_Rescale_(System.IntPtr handle, int width, int height, int quality);
+            public static extern void GenericImage_Rescale_(System.IntPtr handle, int width, int height, int quality);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr GenericImage_Resize_(System.IntPtr handle, Alternet.Drawing.Int32Size size, Alternet.Drawing.Int32Point pos, int red, int green, int blue);
+            public static extern void GenericImage_Resize_(System.IntPtr handle, Alternet.Drawing.Int32Size size, Alternet.Drawing.Int32Point pos, int red, int green, int blue);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern System.IntPtr GenericImage_Rotate90_(System.IntPtr handle, bool clockwise);

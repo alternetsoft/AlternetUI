@@ -492,12 +492,12 @@ namespace Alternet.Drawing
         /// function,the image will have the given width and height.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public GenericImage Rescale(
+        public void Rescale(
             int width,
             int height,
             GenericImageResizeQuality quality = GenericImageResizeQuality.Normal)
         {
-            return new(UI.Native.GenericImage.Rescale(Handle, width, height, (int)quality));
+            UI.Native.GenericImage.Rescale(Handle, width, height, (int)quality);
         }
 
         /// <summary>
@@ -505,16 +505,44 @@ namespace Alternet.Drawing
         /// with the given color or cropping as necessary.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public GenericImage ResizeNoReScale(
+        public void ResizeNoScale(
             Int32Size size,
             Int32Point pos,
             int red = -1,
             int green = -1,
             int blue = -1)
         {
-            return new(UI.Native.GenericImage.Resize(Handle, size, pos, red, green, blue));
+            UI.Native.GenericImage.Resize(Handle, size, pos, red, green, blue);
         }
 
+        /// <summary>
+        /// Returns a resized version of this image without scaling it by adding either a
+        /// border with the given color or cropping as necessary.
+        /// </summary>
+        /// <param name="size">New size.</param>
+        /// <param name="pos">Position in the new image.</param>
+        /// <param name="red">R component of the fill color.</param>
+        /// <param name="green">G component of the fill color.</param>
+        /// <param name="blue">B component of the fill color.</param>
+        /// <returns></returns>
+        /// <remarks>
+        /// The image is pasted into a new image with the given <paramref name="size"/> and
+        /// background color at the
+        /// position <paramref name="pos"/> relative to the upper left of the new image.
+        /// </remarks>
+        /// <remarks>
+        /// If red = green = blue = -1 then the areas of the larger image not covered by
+        /// this image are made transparent by filling them with the image mask
+        /// color(which will be allocated automatically if it isn't currently set).
+        /// Otherwise, the areas will be filled with the color with the specified RGB components.
+        /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public GenericImage SizeNoScale(Int32Size size, Int32Point pos, int red, int green, int blue)
+        {
+            var image = UI.Native.GenericImage.Size(Handle, size, pos, red, green, blue);
+            return new GenericImage(image);
+        }
+        
         /// <summary>
         /// Returns a copy of the image rotated 90 degrees in the direction indicated by clockwise.
         /// </summary>
