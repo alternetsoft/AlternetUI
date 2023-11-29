@@ -47,7 +47,7 @@ namespace Alternet.Drawing
         public const string Quality = "quality";
 
         /// <summary>
-        /// Image option name for setting filename.
+        /// Image option name for getting the name of the file from which the image was loaded.
         /// </summary>
         public const string FileName = "FileName";
 
