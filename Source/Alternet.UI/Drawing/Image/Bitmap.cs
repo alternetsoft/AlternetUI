@@ -23,7 +23,7 @@ namespace Alternet.Drawing
         /// (= -1), the display depth of the screen is used.</param>
         public Bitmap(GenericImage genericImage, int depth = -1)
             : base(genericImage, depth)
-        { 
+        {
         }
 
         /// <summary>

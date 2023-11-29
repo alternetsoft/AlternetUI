@@ -52,4 +52,3 @@ namespace Alternet.Drawing
         All = FastFilters | Avg | Paeth,
     }
 }
-

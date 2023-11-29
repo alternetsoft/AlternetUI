@@ -137,7 +137,7 @@ namespace Alternet.UI
             if(Directory.Exists(result))
                 return result;
 
-            return appFolder;           
+            return appFolder;
         }
 
         /// <summary>

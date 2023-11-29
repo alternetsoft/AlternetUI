@@ -17,12 +17,12 @@ namespace Alternet.Drawing
         MINISWHITE = 0,
 
         /// <summary>
-        /// Photometric 'min value is black'. 
+        /// Photometric 'min value is black'.
         /// </summary>
         MINISBLACK = 1,
 
         /// <summary>
-        /// Photometric 'RGB color model'. 
+        /// Photometric 'RGB color model'.
         /// </summary>
         RGB = 2,
 

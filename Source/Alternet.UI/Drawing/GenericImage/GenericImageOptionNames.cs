@@ -69,7 +69,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Image option name for setting resolution unit. The value of this option determines
         /// whether the resolution of the image is specified in centimetres or inches,
-        /// see <see cref="GenericImageResolutionUnit"/> enum elements. 
+        /// see <see cref="GenericImageResolutionUnit"/> enum elements.
         /// </summary>
         public const string ResolutionUnit = "ResolutionUnit";
 
