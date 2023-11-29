@@ -395,7 +395,8 @@ namespace PaintSample
                 "The document has been modified. Save?",
                 "Paint Sample",
                 MessageBoxButtons.YesNoCancel,
-                defaultButton: MessageBoxDefaultButton.Cancel);
+                defaultButton: MessageBoxDefaultButton.Cancel,
+                icon: MessageBoxIcon.None);
 
             if (result == MessageBoxResult.Cancel)
             {
