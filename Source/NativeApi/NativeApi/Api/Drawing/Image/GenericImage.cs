@@ -8,6 +8,29 @@ namespace NativeApi.Api
     // https://docs.wxwidgets.org/3.2/classwx_image.html
     public class GenericImage
     {
+        /// <summary>
+        /// Finds the first color that is never used in the image.
+        /// </summary>
+        /// <param name="startR">Defines the initial value of the color (R component).</param>
+        /// <param name="startG">Defines the initial value of the color (G component)</param>
+        /// <param name="startB">Defines the initial value of the color (B component)</param>
+        /// <returns>Returns false if there is no unused color left, true on success.</returns>
+        /// <remarks>
+        /// The search begins at given initial color and continues by increasing R, G and B
+        /// components (in this order) by 1 until an unused color is found or the color space
+        /// exhausted.
+        /// </remarks>
+        /// <remarks>
+        /// The parameters startR, startG, startB define the initial values of the color. The returned
+        /// color will have RGB values equal to or greater than these.
+        /// </remarks>
+        /// <remarks>
+        /// This method involves computing the histogram, which is a computationally
+        /// intensive operation.
+        /// </remarks>
+        public static Color FindFirstUnusedColor(IntPtr handle, byte startR = 1,
+            byte startG = 0, byte startB = 0) => default;
+
         // Creates an empty wxImage object without an alpha channel.
         public static IntPtr CreateImage() => default;
 

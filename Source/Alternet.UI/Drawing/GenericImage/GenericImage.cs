@@ -293,9 +293,6 @@ namespace Alternet.Drawing
         /// by which handlers have been loaded, not all formats may be available. If value is
         /// <see cref="BitmapType.Any"/>, function will try to autodetect the format.</param>
         /// <returns></returns>
-        /*
-         
-         */
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static int GetImageCount(
             string filename,
@@ -313,9 +310,6 @@ namespace Alternet.Drawing
         /// by which handlers have been loaded, not all formats may be available. If value is
         /// <see cref="BitmapType.Any"/>, function will try to autodetect the format.</param>
         /// <returns></returns>
-        /*
-         
-         */
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static int GetImageCount(
             Stream stream,
@@ -338,9 +332,6 @@ namespace Alternet.Drawing
         /// Returns the currently used default file load flags.
         /// </summary>
         /// <returns></returns>
-        /*
-         
-         */
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static GenericImageLoadFlags GetDefaultLoadFlags()
         {
@@ -351,9 +342,6 @@ namespace Alternet.Drawing
         /// Sets the default value for the flags used for loading image files.
         /// </summary>
         /// <param name="flags"></param>
-        /*
-         
-         */
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void SetDefaultLoadFlags(GenericImageLoadFlags flags)
         {
@@ -366,9 +354,6 @@ namespace Alternet.Drawing
         /// <param name="x"></param>
         /// <param name="y"></param>
         /// <param name="alpha"></param>
-        /*
-         
-         */
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void SetAlpha(int x, int y, byte alpha)
         {
@@ -378,9 +363,6 @@ namespace Alternet.Drawing
         /// <summary>
         /// Removes the alpha channel from the image.
         /// </summary>
-        /*
-         
-         */
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void ClearAlpha()
         {
@@ -391,9 +373,6 @@ namespace Alternet.Drawing
         /// Specifies whether there is a mask or not.
         /// </summary>
         /// <param name="hasMask"></param>
-        /*
-         
-         */
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void SetMask(bool hasMask = true)
         {
@@ -403,15 +382,9 @@ namespace Alternet.Drawing
         /// <summary>
         /// Sets the mask color for this image(and tells the image to use the mask).
         /// </summary>
-        /// <summary>
-        /// 
-        /// </summary>
         /// <param name="red"></param>
         /// <param name="green"></param>
         /// <param name="blue"></param>
-        /*
-         
-         */
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void SetMaskColor(byte red, byte green, byte blue)
         {
@@ -427,9 +400,6 @@ namespace Alternet.Drawing
         /// <param name="mg"></param>
         /// <param name="mb"></param>
         /// <returns></returns>
-        /*
-         
-         */
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool SetMaskFromImage(GenericImage image, byte mr, byte mg, byte mb)
         {
@@ -444,9 +414,6 @@ namespace Alternet.Drawing
         /// </remarks>
         /// <param name="name"></param>
         /// <param name="value"></param>
-        /*
-         
-         */
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void SetOptionAsString(string name, string value)
         {
@@ -461,9 +428,6 @@ namespace Alternet.Drawing
         /// </remarks>
         /// <param name="name"></param>
         /// <param name="value"></param>
-        /*
-         
-         */
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void SetOptionAsInt(string name, int value)
         {
@@ -478,9 +442,6 @@ namespace Alternet.Drawing
         /// <param name="r"></param>
         /// <param name="g"></param>
         /// <param name="b"></param>
-        /*
-
-        */
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void SetRGB(int x, int y, byte r, byte g, byte b)
         {
@@ -494,9 +455,6 @@ namespace Alternet.Drawing
         /// <param name="red"></param>
         /// <param name="green"></param>
         /// <param name="blue"></param>
-        /*
-         
-         */
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void SetRGBRect(Int32Rect rect, byte red, byte green, byte blue)
         {
@@ -507,9 +465,6 @@ namespace Alternet.Drawing
         /// Sets the type of image returned by GetType().
         /// </summary>
         /// <param name="type"></param>
-        /*
-         
-         */
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void SetImageType(BitmapType type)
         {
@@ -520,9 +475,6 @@ namespace Alternet.Drawing
         /// Returns an identical copy of this image.
         /// </summary>
         /// <returns></returns>
-        /*
-         
-         */
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public GenericImage Copy()
         {
@@ -536,9 +488,6 @@ namespace Alternet.Drawing
         /// <param name="height"></param>
         /// <param name="clear"></param>
         /// <returns></returns>
-        /*
-         
-         */
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool Reset(int width, int height, bool clear = true)
         {
@@ -549,9 +498,6 @@ namespace Alternet.Drawing
         /// Initialize the image data with zeroes (the default) or with the byte value given as value.
         /// </summary>
         /// <param name="value"></param>
-        /*
-         
-         */
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Clear(byte value = 0)
         {
@@ -561,9 +507,6 @@ namespace Alternet.Drawing
         /// <summary>
         /// Destroys the image data.
         /// </summary>
-        /*
-         
-         */
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Reset()
         {
@@ -571,11 +514,33 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Finds the first color that is never used in the image.
+        /// </summary>
+        /// <param name="startR">Defines the initial value of the color (R component).</param>
+        /// <param name="startG">Defines the initial value of the color (G component)</param>
+        /// <param name="startB">Defines the initial value of the color (B component)</param>
+        /// <returns>Returns false if there is no unused color left, true on success.</returns>
+        /// <remarks>
+        /// The search begins at given initial color and continues by increasing R, G and B
+        /// components (in this order) by 1 until an unused color is found or the color space
+        /// exhausted.
+        /// </remarks>
+        /// <remarks>
+        /// The parameters startR, startG, startB define the initial values of the color. The returned
+        /// color will have RGB values equal to or greater than these.
+        /// </remarks>
+        /// <remarks>
+        /// This method involves computing the histogram, which is a computationally
+        /// intensive operation.
+        /// </remarks>
+        public Color FindFirstUnusedColor(byte startR = 1, byte startG = 0, byte startB = 0)
+        {
+            return UI.Native.GenericImage.FindFirstUnusedColor(Handle, startR, startG, startB);
+        }
+
+        /// <summary>
         /// Initializes the image alpha channel data.
         /// </summary>
-        /*
-         
-         */
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void InitAlpha()
         {
@@ -588,10 +553,9 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="blurRadius"></param>
         /// <returns></returns>
-        /*
-   This should not be used when using a single mask color for transparency.
-      
-         */
+        /// <remarks>
+        /// This should not be used when using a single mask color for transparency.
+        /// </remarks>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public GenericImage Blur(int blurRadius)
         {
@@ -603,12 +567,9 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="blurRadius"></param>
         /// <returns></returns>
-        /*
-        Blurs the image in the horizontal direction only.
-
-This should not be used when using a single mask color for transparency.
- 
-         */
+        /// <remarks>
+        /// This should not be used when using a single mask color for transparency.
+        /// </remarks>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public GenericImage BlurHorizontal(int blurRadius)
         {
@@ -620,10 +581,9 @@ This should not be used when using a single mask color for transparency.
         /// </summary>
         /// <param name="blurRadius"></param>
         /// <returns></returns>
-        /*
-      This should not be used when using a single mask color for transparency.
-   
-         */
+        /// <remarks>
+        /// This should not be used when using a single mask color for transparency.
+        /// </remarks>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public GenericImage BlurVertical(int blurRadius)
         {
@@ -635,9 +595,6 @@ This should not be used when using a single mask color for transparency.
         /// </summary>
         /// <param name="horizontally"></param>
         /// <returns></returns>
-        /*
-         
-         */
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public GenericImage Mirror(bool horizontally = true)
         {
@@ -651,9 +608,6 @@ This should not be used when using a single mask color for transparency.
         /// <param name="x"></param>
         /// <param name="y"></param>
         /// <param name="alphaBlend"></param>
-        /*
-         
-         */
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Paste(
             GenericImage image,
@@ -673,9 +627,6 @@ This should not be used when using a single mask color for transparency.
         /// <param name="r2"></param>
         /// <param name="g2"></param>
         /// <param name="b2"></param>
-        /*
-         
-         */
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Replace(byte r1, byte g1, byte b1, byte r2, byte g2, byte b2)
         {
@@ -689,9 +640,6 @@ This should not be used when using a single mask color for transparency.
         /// <param name="width"></param>
         /// <param name="height"></param>
         /// <param name="quality"></param>
-        /*
-         
-         */
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Rescale(
             int width,
@@ -710,9 +658,6 @@ This should not be used when using a single mask color for transparency.
         /// <param name="red"></param>
         /// <param name="green"></param>
         /// <param name="blue"></param>
-        /*
-         
-         */
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void ResizeNoScale(
             Int32Size size,
@@ -758,9 +703,6 @@ This should not be used when using a single mask color for transparency.
         /// </summary>
         /// <param name="clockwise"></param>
         /// <returns></returns>
-        /*
-         
-         */
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public GenericImage Rotate90(bool clockwise = true)
         {
@@ -771,9 +713,6 @@ This should not be used when using a single mask color for transparency.
         /// Returns a copy of the image rotated by 180 degrees.
         /// </summary>
         /// <returns></returns>
-        /*
-         
-         */
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public GenericImage Rotate180()
         {
@@ -786,9 +725,6 @@ This should not be used when using a single mask color for transparency.
         /// to +360 degrees.
         /// </summary>
         /// <param name="angle"></param>
-        /*
-         
-         */
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void RotateHue(double angle)
         {
@@ -798,12 +734,8 @@ This should not be used when using a single mask color for transparency.
         /// <summary>
         /// Changes the saturation of each pixel in the image.
         /// </summary>
-        /// <param name="factor"></param>
-        /*
-    factor is a double in the range [-1.0..+1.0], where -1.0 corresponds to -100 percent and +1.0
-corresponds to +100 percent.
-     
-         */
+        /// <param name="factor">A double in the range [-1.0..+1.0], where -1.0 corresponds
+        /// to -100 percent and +1.0 corresponds to +100 percent.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void ChangeSaturation(double factor)
         {
@@ -813,11 +745,8 @@ corresponds to +100 percent.
         /// <summary>
         /// Changes the brightness(value) of each pixel in the image.
         /// </summary>
-        /// <param name="factor"></param>
-        /*
-       factor is a double in the range [-1.0..+1.0], where -1.0 corresponds to -100 percent
-and +1.0 corresponds to +100 percent.  
-         */
+        /// <param name="factor">A double in the range [-1.0..+1.0], where -1.0 corresponds
+        /// to -100 percent and +1.0 corresponds to +100 percent.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void ChangeBrightness(double factor)
         {
@@ -828,9 +757,6 @@ and +1.0 corresponds to +100 percent.
         /// Returns the file load flags used for this object.
         /// </summary>
         /// <returns></returns>
-        /*
-         
-         */
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public GenericImageLoadFlags GetLoadFlags()
         {
@@ -846,9 +772,6 @@ and +1.0 corresponds to +100 percent.
         /// before creating any of them.
         /// </remarks>
         /// <param name="flags"></param>
-        /*
-         
-         */
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void SetLoadFlags(GenericImageLoadFlags flags)
         {
@@ -858,49 +781,45 @@ and +1.0 corresponds to +100 percent.
         /// <summary>
         /// Changes the hue, the saturation and the brightness(value) of each pixel in the image.
         /// </summary>
-        /// <param name="angleH"></param>
-        /// <param name="factorS"></param>
-        /// <param name="factorV"></param>
+        /// <param name="angleH">A double in the range [-1.0..+1.0], where -1.0 corresponds to -360 degrees and
+        /// +1.0 corresponds to +360 degrees</param>
+        /// <param name="factorS">a double in the range [-1.0..+1.0], where -1.0
+        /// corresponds to -100 percent and +1.0 corresponds to +100 percent</param>
+        /// <param name="factorV">A double in the range[-1.0..+1.0], where -1.0 corresponds
+        /// to -100 percent and +1.0 corresponds to +100 percent.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        /*
-    angleH is a double in the range [-1.0..+1.0], where -1.0 corresponds to -360 degrees and
-+1.0 corresponds to +360 degrees, factorS is a double in the range [-1.0..+1.0], where -1.0
-corresponds to -100 percent and +1.0 corresponds to +100 percent and factorV is a double in
-the range [-1.0..+1.0], where -1.0 corresponds to -100 percent and +1.0 corresponds to +100 percent.
-     
-         */
         public void ChangeHSV(double angleH, double factorS, double factorV)
         {
             UI.Native.GenericImage.ChangeHSV(Handle, angleH, factorS, factorV);
         }
 
         /// <summary>
-        /// Returns a scaled version of the image.
+        /// Returns a scaled version of the image. This is also useful for scaling bitmaps
+        /// in general as the only other way to scale bitmaps is to blit a MemoryDC into
+        /// another MemoryDC.
         /// </summary>
         /// <param name="width"></param>
         /// <param name="height"></param>
-        /// <param name="quality"></param>
+        /// <param name="quality">Determines what method to use for resampling the image.</param>
         /// <returns></returns>
-        /*
-   This is also useful for scaling bitmaps in general as the only other way to scale bitmaps is to
-blit a wxMemoryDC into another wxMemoryDC.
-
-The parameter quality determines what method to use for resampling the image, see wxImageResizeQuality
-documentation.
-
-It should be noted that although using wxIMAGE_QUALITY_HIGH produces much nicer looking results it is
-a slower method. Downsampling will use the box averaging method which seems to operate very fast. If you are upsampling larger images using this method you will most likely notice that it is a bit slower and in extreme cases it will be quite substantially slower as the bicubic algorithm has to process a lot of data.
-
-It should also be noted that the high quality scaling may not work as expected when using a single
-mask color for transparency, as the scaling will blur the image and will therefore remove the mask
-partially. Using the alpha channel will work.
-
-Note
-The algorithm used for the default (normal) quality value doesn't work with images larger
-than 65536 (2^16) pixels in either dimension for 32-bit programs. For 64-bit programs the
-limit is 2^48 and so not relevant in practice.
-      
-         */
+        /// <remarks>
+        /// The algorithm used for the default (normal) quality value doesn't work with images larger
+        /// than 65536 (2^16) pixels in either dimension for 32-bit programs.For 64-bit programs the
+        /// limit is 2^48 and so not relevant in practice.
+        /// </remarks>
+        /// <remarks>
+        /// It should be noted that although using <see cref="GenericImageResizeQuality.High"/> produces
+        /// much nicer looking results it is a slower method. Downsampling will use the box
+        /// averaging method which seems to operate very fast. If you are upsampling larger images
+        /// using this method you will most likely notice that it is a bit slower and
+        /// in extreme cases it will be quite substantially slower as the bicubic
+        /// algorithm has to process a lot of data.
+        /// </remarks>
+        /// <remarks>
+        /// It should also be noted that the high quality scaling may not work as expected when
+        /// using a single mask color for transparency, as the scaling will blur the image and
+        /// will therefore remove the mask partially. Using the alpha channel will work.
+        /// </remarks>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public GenericImage Scale(
             int width,
@@ -914,18 +833,16 @@ limit is 2^48 and so not relevant in practice.
         /// If the image has alpha channel, this method converts it to mask.
         /// </summary>
         /// <param name="threshold"></param>
-        /// <returns></returns>
-        /*
-    If the image has an alpha channel, all pixels with alpha value less than threshold are replaced
-with the mask color and the alpha channel is removed. Otherwise nothing is done.
-
-The mask color is chosen automatically using FindFirstUnusedcolor(), see the overload below if
-this is not appropriate.
-
-Returns
-Returns true on success, false on error.
-     
-         */
+        /// <returns>Returns true on success, false on error.</returns>
+        /// <remarks>
+        /// If the image has an alpha channel, all pixels with alpha value less
+        /// than threshold are replaced with the mask color and the alpha channel
+        /// is removed. Otherwise nothing is done.
+        /// </remarks>
+        /// <remarks>
+        /// The mask color is chosen automatically using <see cref="FindFirstUnusedColor"/>,
+        /// see the overload method if this is not appropriate.
+        /// </remarks>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool ConvertAlphaToMask(byte threshold = AlphaChannelThreshold)
         {
@@ -936,26 +853,20 @@ Returns true on success, false on error.
         /// If the image has alpha channel, this method converts it to mask using the
         /// specified color as the mask color.
         /// </summary>
-        /// <param name="mr"></param>
-        /// <param name="mg"></param>
-        /// <param name="mb"></param>
-        /// <param name="threshold"></param>
-        /// <returns></returns>
-        /*
-If the image has an alpha channel, all pixels with alpha value less than threshold are replaced
-with the mask color and the alpha channel is removed. Otherwise nothing is done.
-
-Parameters
-mr	The red component of the mask color.
-mg	The green component of the mask color.
-mb	The blue component of the mask color.
-threshold	Pixels with alpha channel values below the given threshold are considered to be
-transparent, i.e. the corresponding mask pixels are set. Pixels with the alpha values above the
-threshold are considered to be opaque.
-Returns
-Returns true on success, false on error.
-         
-         */
+        /// <param name="mr">The red component of the mask color.</param>
+        /// <param name="mg">The green component of the mask color.</param>
+        /// <param name="mb">The blue component of the mask color.</param>
+        /// <param name="threshold">Pixels with alpha channel values below the
+        /// given threshold are considered to be
+        /// transparent, i.e.the corresponding mask pixels are set. Pixels with
+        /// the alpha values above the
+        /// threshold are considered to be opaque.</param>
+        /// <returns>Returns true on success, false on error.</returns>
+        /// <remarks>
+        /// If the image has an alpha channel, all pixels with alpha value less
+        /// than threshold are replaced
+        /// with the mask color and the alpha channel is removed.Otherwise nothing is done.
+        /// </remarks>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool ConvertAlphaToMask(
             byte mr,
@@ -969,16 +880,15 @@ Returns true on success, false on error.
         /// <summary>
         /// Returns a greyscale version of the image.
         /// </summary>
-        /// <param name="weightR"></param>
-        /// <param name="weightG"></param>
-        /// <param name="weightB"></param>
+        /// <param name="weightR">Weight of the Red component.</param>
+        /// <param name="weightG">Weight of the Green component.</param>
+        /// <param name="weightB">Weight of the Blue component.</param>
         /// <returns></returns>
-        /*
-    The returned image uses the luminance component of the original to calculate the greyscale.
-Defaults to using the standard ITU-T BT.601 when converting to YUV, where every pixel
-equals (R * weight_r) + (G * weight_g) + (B * weight_b).
-     
-         */
+        /// <remarks>
+        /// The returned image uses the luminance component of the original to calculate
+        /// the greyscale. Defaults to using the standard ITU-T BT.601 when converting to
+        /// YUV, where every pixel equals(R* weight_r) + (G* weight_g) + (B* weight_b).
+        /// </remarks>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public GenericImage ConvertToGreyscale(double weightR, double weightG, double weightB)
         {
@@ -1001,12 +911,8 @@ equals (R * weight_r) + (G * weight_g) + (B * weight_b).
         /// <param name="r"></param>
         /// <param name="g"></param>
         /// <param name="b"></param>
-        /// <returns></returns>
-        /*
-      The returned image has white color where the original has (r,g,b) color and black color
-everywhere else.
-   
-         */
+        /// <returns> The returned image has white color where the original has (r,g,b)
+        /// color and black color everywhere else.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public GenericImage ConvertToMono(byte r, byte g, byte b)
         {
@@ -1027,18 +933,17 @@ everywhere else.
         /// <summary>
         /// Returns a changed version of the image based on the given lightness.
         /// </summary>
-        /// <param name="alpha"></param>
+        /// <param name="ialpha"></param>
+        /// <remarks>
+        /// This utility function simply darkens or lightens a color, based on
+        /// the specified percentage ialpha. ialpha of 0 would make the color completely black,
+        /// 200 completely white and 100 would not change the color.
+        /// </remarks>
         /// <returns></returns>
-        /*
-    This utility function simply darkens or lightens a color, based on the specified percentage
-ialpha. ialpha of 0 would make the color completely black, 200 completely white and 100 would
-not change the color.
-     
-         */
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public GenericImage ChangeLightness(int alpha)
+        public GenericImage ChangeLightness(int ialpha)
         {
-            return new(UI.Native.GenericImage.ChangeLightness(Handle, alpha));
+            return new(UI.Native.GenericImage.ChangeLightness(Handle, ialpha));
         }
 
         /// <summary>
@@ -1047,9 +952,6 @@ not change the color.
         /// <param name="x"></param>
         /// <param name="y"></param>
         /// <returns></returns>
-        /*
-         
-         */
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public byte GetAlpha(int x, int y)
         {
@@ -1062,9 +964,6 @@ not change the color.
         /// <param name="x"></param>
         /// <param name="y"></param>
         /// <returns></returns>
-        /*
-         
-         */
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public byte GetRed(int x, int y)
         {
@@ -1077,9 +976,6 @@ not change the color.
         /// <param name="x"></param>
         /// <param name="y"></param>
         /// <returns></returns>
-        /*
-         
-         */
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public byte GetGreen(int x, int y)
         {
@@ -1092,9 +988,6 @@ not change the color.
         /// <param name="x"></param>
         /// <param name="y"></param>
         /// <returns></returns>
-        /*
-         
-         */
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public byte GetBlue(int x, int y)
         {
@@ -1105,9 +998,6 @@ not change the color.
         /// Gets the red value of the mask color.
         /// </summary>
         /// <returns></returns>
-        /*
-         
-         */
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public byte GetMaskRed()
         {
@@ -1118,9 +1008,6 @@ not change the color.
         /// Gets the green value of the mask color.
         /// </summary>
         /// <returns></returns>
-        /*
-         
-         */
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public byte GetMaskGreen()
         {
@@ -1131,9 +1018,6 @@ not change the color.
         /// Gets the blue value of the mask color.
         /// </summary>
         /// <returns></returns>
-        /*
-         
-         */
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public byte GetMaskBlue()
         {
@@ -1148,9 +1032,6 @@ not change the color.
         /// </remarks>
         /// <param name="name"></param>
         /// <returns></returns>
-        /*
-         
-         */
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public string GetOptionAsString(string name)
         {
@@ -1165,9 +1046,6 @@ not change the color.
         /// </remarks>
         /// <param name="name"></param>
         /// <returns></returns>
-        /*
-         
-         */
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public int GetOptionAsInt(string name)
         {
@@ -1179,9 +1057,6 @@ not change the color.
         /// </summary>
         /// <param name="rect"></param>
         /// <returns></returns>
-        /*
-         
-         */
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public GenericImage GetSubImage(Int32Rect rect)
         {
@@ -1192,9 +1067,6 @@ not change the color.
         /// Gets the type of image found when image was loaded or specified when image was saved.
         /// </summary>
         /// <returns></returns>
-        /*
-         
-         */
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public int GetImageType()
         {
@@ -1205,9 +1077,6 @@ not change the color.
         /// Returns true if this image has alpha channel, false otherwise.
         /// </summary>
         /// <returns></returns>
-        /*
-         
-         */
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool HasAlpha()
         {
@@ -1218,9 +1087,6 @@ not change the color.
         /// Returns true if there is a mask active, false otherwise.
         /// </summary>
         /// <returns></returns>
-        /*
-         
-         */
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool HasMask()
         {
@@ -1235,9 +1101,6 @@ not change the color.
         /// </remarks>
         /// <param name="name"></param>
         /// <returns></returns>
-        /*
-         
-         */
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool HasOption(string name)
         {
@@ -1261,9 +1124,6 @@ not change the color.
         /// <param name="y"></param>
         /// <param name="threshold"></param>
         /// <returns></returns>
-        /*
-         
-         */
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool IsTransparent(int x, int y, byte threshold = AlphaChannelThreshold)
         {
@@ -1277,9 +1137,6 @@ not change the color.
         /// <param name="bitmapType"></param>
         /// <param name="index">See description in <see cref="GenericImage(string, BitmapType, int)"/></param>
         /// <returns></returns>
-        /*
-         
-         */
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool LoadFromStream(
             Stream stream,
@@ -1301,9 +1158,6 @@ not change the color.
         /// <param name="bitmapType"></param>
         /// <param name="index">See description in <see cref="GenericImage(string, BitmapType, int)"/></param>
         /// <returns></returns>
-        /*
-         
-         */
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool LoadFromFile(
             string filename,
@@ -1324,9 +1178,6 @@ not change the color.
         /// <param name="mimetype">MIME type string (for example 'image/jpeg').</param>
         /// <param name="index">See description in <see cref="GenericImage(string, BitmapType, int)"/></param>
         /// <returns></returns>
-        /*
-         
-         */
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool LoadFromFile(string name, string mimetype, int index = -1)
         {
@@ -1340,9 +1191,6 @@ not change the color.
         /// <param name="mimetype">MIME type string (for example 'image/jpeg').</param>
         /// <param name="index">See description in <see cref="GenericImage(string, BitmapType, int)"/></param>
         /// <returns></returns>
-        /*
-         
-         */
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool LoadFromStream(Stream stream, string mimetype, int index = -1)
         {
@@ -1356,9 +1204,6 @@ not change the color.
         /// <param name="stream"></param>
         /// <param name="mimetype">MIME type string (for example 'image/jpeg').</param>
         /// <returns></returns>
-        /*
-         
-         */
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool SaveToStream(Stream stream, string mimetype)
         {
@@ -1372,9 +1217,6 @@ not change the color.
         /// <param name="filename"></param>
         /// <param name="bitmapType"></param>
         /// <returns></returns>
-        /*
-         
-         */
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool SaveToFile(string filename, BitmapType bitmapType)
         {
@@ -1387,9 +1229,6 @@ not change the color.
         /// <param name="filename"></param>
         /// <param name="mimetype">MIME type string (for example 'image/jpeg').</param>
         /// <returns></returns>
-        /*
-         
-         */
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool SaveToFile(string filename, string mimetype)
         {
@@ -1401,9 +1240,6 @@ not change the color.
         /// </summary>
         /// <param name="filename"></param>
         /// <returns></returns>
-        /*
-         
-         */
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool SaveToFile(string filename)
         {
@@ -1416,9 +1252,6 @@ not change the color.
         /// <param name="stream"></param>
         /// <param name="type"></param>
         /// <returns></returns>
-        /*
-         
-         */
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool SaveToStream(Stream stream, BitmapType type)
         {
@@ -1433,9 +1266,6 @@ not change the color.
         /// <param name="new_width"></param>
         /// <param name="new_height"></param>
         /// <param name="static_data"></param>
-        /*
-         
-         */
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void SetNativeData(
             IntPtr data,
@@ -1450,9 +1280,6 @@ not change the color.
         /// Returns pointer to the array storing the alpha values for this image.
         /// </summary>
         /// <returns></returns>
-        /*
-         
-         */
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public IntPtr GetNativeAlphaData()
         {
@@ -1462,9 +1289,6 @@ not change the color.
         /// <summary>
         /// Returns the image data as an array.
         /// </summary>
-        /*
-         
-         */
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public IntPtr GetNativeData()
         {
@@ -1479,9 +1303,6 @@ not change the color.
         /// <param name="data"></param>
         /// <param name="static_data"></param>
         /// <returns></returns>
-        /*
-         
-         */
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool CreateNativeData(int width, int height, IntPtr data, bool static_data = false)
         {
@@ -1497,9 +1318,6 @@ not change the color.
         /// <param name="alpha"></param>
         /// <param name="static_data"></param>
         /// <returns></returns>
-        /*
-         
-         */
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool CreateNativeData(int width, int height, IntPtr data, IntPtr alpha, bool static_data = false)
         {
@@ -1511,9 +1329,6 @@ not change the color.
         /// </summary>
         /// <param name="alpha"></param>
         /// <param name="static_data"></param>
-        /*
-         
-         */
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void SetNativeAlphaData(IntPtr alpha = default, bool static_data = false)
         {
@@ -1525,9 +1340,6 @@ not change the color.
         /// </summary>
         /// <param name="data"></param>
         /// <param name="static_data"></param>
-        /*
-         
-         */
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void SetNativeData(IntPtr data, bool static_data = false)
         {
@@ -1538,9 +1350,6 @@ not change the color.
         /// Register an image handler.
         /// </summary>
         /// <param name="handler"></param>
-        /*
-         
-         */
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal static void AddHandler(IntPtr handler)
         {
@@ -1552,9 +1361,6 @@ not change the color.
         /// </summary>
         /// <param name="name"></param>
         /// <returns></returns>
-        /*
-         
-         */
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal static IntPtr FindHandler(string name)
         {
@@ -1567,9 +1373,6 @@ not change the color.
         /// <param name="extension"></param>
         /// <param name="bitmapType"></param>
         /// <returns></returns>
-        /*
-         
-         */
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal static IntPtr FindHandler(string extension, BitmapType bitmapType)
         {
@@ -1581,9 +1384,6 @@ not change the color.
         /// </summary>
         /// <param name="bitmapType"></param>
         /// <returns></returns>
-        /*
-         
-         */
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal static IntPtr FindHandler(BitmapType bitmapType)
         {
@@ -1595,9 +1395,6 @@ not change the color.
         /// </summary>
         /// <param name="mimetype">MIME type string (for example 'image/jpeg').</param>
         /// <returns></returns>
-        /*
-         
-         */
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal static IntPtr FindHandlerMime(string mimetype)
         {
@@ -1608,9 +1405,6 @@ not change the color.
         /// Adds a handler at the start of the static list of format handlers.
         /// </summary>
         /// <param name="handler"></param>
-        /*
-         
-         */
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal static void InsertHandler(IntPtr handler)
         {
@@ -1686,28 +1480,7 @@ See wxImage::wxImage(int,int,unsigned char*,unsigned char*,bool) for more info.
 Returns
 true if the call succeeded, false otherwise.
 ==============
-FindFirstUnusedcolor()
-bool wxImage::FindFirstUnusedcolor	(	unsigned char * 	r,
-unsigned char * 	g,
-unsigned char * 	b,
-unsigned char 	startR = 1,
-unsigned char 	startG = 0,
-unsigned char 	startB = 0 
-)		const
-Finds the first color that is never used in the image.
 
-The search begins at given initial color and continues by increasing R, G and B components
-(in this order) by 1 until an unused color is found or the color space exhausted.
-
-The parameters r, g, b are pointers to variables to save the color.
-
-The parameters startR, startG, startB define the initial values of the color. The returned
-color will have RGB values equal to or greater than these.
-
-Returns
-Returns false if there is no unused color left, true on success.
-Note
-This method involves computing the histogram, which is a computationally intensive operation.
 ==============
 GetAlpha() [1/2]
 unsigned char* wxImage::GetAlpha	(		)	const

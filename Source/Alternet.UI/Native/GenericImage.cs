@@ -23,6 +23,11 @@ namespace Alternet.UI.Native
         {
         }
         
+        public static System.IntPtr FindHandlerByName(string name)
+        {
+            return NativeApi.GenericImage_FindHandlerByName_(name);
+        }
+        
         public static System.IntPtr FindHandlerByExt(string extension, int bitmapType)
         {
             return NativeApi.GenericImage_FindHandlerByExt_(extension, bitmapType);
@@ -91,6 +96,11 @@ namespace Alternet.UI.Native
         public static void SetDataWithSize(System.IntPtr handle, System.IntPtr data, int new_width, int new_height, bool static_data)
         {
             NativeApi.GenericImage_SetDataWithSize_(handle, data, new_width, new_height, static_data);
+        }
+        
+        public static Alternet.Drawing.Color FindFirstUnusedColor(System.IntPtr handle, byte startR, byte startG, byte startB)
+        {
+            return NativeApi.GenericImage_FindFirstUnusedColor_(handle, startR, startG, startB);
         }
         
         public static System.IntPtr CreateImage()
@@ -513,11 +523,6 @@ namespace Alternet.UI.Native
             NativeApi.GenericImage_CleanUpHandlers_();
         }
         
-        public static System.IntPtr FindHandlerByName(string name)
-        {
-            return NativeApi.GenericImage_FindHandlerByName_(name);
-        }
-        
         
         [SuppressUnmanagedCodeSecurity]
         public class NativeApi : NativeApiProvider
@@ -526,6 +531,9 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern IntPtr GenericImage_Create_();
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr GenericImage_FindHandlerByName_(string name);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern System.IntPtr GenericImage_FindHandlerByExt_(string extension, int bitmapType);
@@ -568,6 +576,9 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void GenericImage_SetDataWithSize_(System.IntPtr handle, System.IntPtr data, int new_width, int new_height, bool static_data);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern NativeApiTypes.Color GenericImage_FindFirstUnusedColor_(System.IntPtr handle, byte startR, byte startG, byte startB);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern System.IntPtr GenericImage_CreateImage_();
@@ -820,9 +831,6 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void GenericImage_CleanUpHandlers_();
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr GenericImage_FindHandlerByName_(string name);
             
         }
     }

@@ -271,6 +271,18 @@ namespace Alternet::UI
 		return new GenericImage(((GenericImage*)handle)->_image.ConvertToMono(r, g, b));
 	}
 
+	Color GenericImage::FindFirstUnusedColor(void* handle, uint8_t startR,
+		uint8_t startG, uint8_t startB)
+	{
+		unsigned char r;
+		unsigned char g;
+		unsigned char b;
+
+		((GenericImage*)handle)->_image.FindFirstUnusedColour(&r, &g, &b, startR, startG, startB);
+
+		return Color(255, r, g, b);
+	}
+
 	void* GenericImage::ChangeLightness(void* handle, int alpha)
 	{
 		return new GenericImage(((GenericImage*)handle)->_image.ChangeLightness(alpha));

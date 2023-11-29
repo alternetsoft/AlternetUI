@@ -15,6 +15,11 @@ ALTERNET_UI_API GenericImage* GenericImage_Create_()
     return new GenericImage();
 }
 
+ALTERNET_UI_API void* GenericImage_FindHandlerByName_(const char16_t* name)
+{
+    return GenericImage::FindHandlerByName(name);
+}
+
 ALTERNET_UI_API void* GenericImage_FindHandlerByExt_(const char16_t* extension, int bitmapType)
 {
     return GenericImage::FindHandlerByExt(extension, bitmapType);
@@ -83,6 +88,11 @@ ALTERNET_UI_API void GenericImage_SetData_(void* handle, void* data, c_bool stat
 ALTERNET_UI_API void GenericImage_SetDataWithSize_(void* handle, void* data, int new_width, int new_height, c_bool static_data)
 {
     GenericImage::SetDataWithSize(handle, data, new_width, new_height, static_data);
+}
+
+ALTERNET_UI_API Color_C GenericImage_FindFirstUnusedColor_(void* handle, uint8_t startR, uint8_t startG, uint8_t startB)
+{
+    return GenericImage::FindFirstUnusedColor(handle, startR, startG, startB);
 }
 
 ALTERNET_UI_API void* GenericImage_CreateImage_()
@@ -503,10 +513,5 @@ ALTERNET_UI_API void GenericImage_AddHandler_(void* handler)
 ALTERNET_UI_API void GenericImage_CleanUpHandlers_()
 {
     GenericImage::CleanUpHandlers();
-}
-
-ALTERNET_UI_API void* GenericImage_FindHandlerByName_(const char16_t* name)
-{
-    return GenericImage::FindHandlerByName(name);
 }
 
