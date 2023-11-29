@@ -419,7 +419,11 @@ namespace Alternet.UI
 
             if (radius != null)
             {
-                dc.DrawRoundedRectangle(Top.Pen, rect, radius.Value);
+                var rect1 = rect;
+                rect1.Width -= 1;
+                rect1.Height -= 1;
+
+                dc.DrawRoundedRectangle(Top.Pen, rect1, radius.Value);
                 return;
             }
 
@@ -502,6 +506,13 @@ namespace Alternet.UI
             right.Assign(value.right);
             top.Assign(value.top);
             bottom.Assign(value.bottom);
+
+            uniformCornerRadius = value.uniformCornerRadius;
+            uniformRadiusIsPercent = value.uniformRadiusIsPercent;
+            topLeftRadius = value.topLeftRadius;
+            topRightRadius = value.topRightRadius;
+            bottomRightRadius = value.bottomRightRadius;
+            bottomLeftRadius = value.bottomLeftRadius;
         }
 
         private void Left_PropertyChanged(object? sender, PropertyChangedEventArgs e)

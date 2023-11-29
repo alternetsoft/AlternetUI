@@ -4,86 +4,42 @@ using System;
 
 namespace PaintSample
 {
-    internal class ColorSwatch : Control
+    internal class ColorSwatch : PictureBox
     {
-        private bool isPressed;
-
         public ColorSwatch(Color swatchColor)
         {
-            UserPaint = true;
+            var normalBorder = Border.CreateDefault();
+            normalBorder.UniformCornerRadius = 25;
+            normalBorder.UniformRadiusIsPercent = true;
+
+            BorderSettings hotBorder = new(normalBorder);
+            hotBorder.Width = 1;
+            hotBorder.Color = SystemColors.ControlText;
+            this.SetBorder(hotBorder, GenericControlState.Hovered);
+            this.SetBorder(hotBorder, GenericControlState.Pressed);
+            this.SetBorder(normalBorder);
+
             SwatchColor = swatchColor;
+            var size = Alternet.UI.Toolbar.GetDefaultImageSize(this) * 2;
+
+            /*var image = swatchColor.AsImage(size);
+
+            Image = image;
+
+            var imageHot = image.ChangeLightness(150);
+            var imagePressed = image.ChangeLightness(50);*/
+
+            var colorHot = swatchColor.ChangeLightness(140);
+            var colorPressed = swatchColor.ChangeLightness(80);
+
+            //this.SetImage(imageHot, GenericControlState.Hovered);
+            //this.SetImage(imagePressed, GenericControlState.Pressed);
+
+            this.SetBackground((SolidBrush)swatchColor);
+            this.SetBackground((SolidBrush)colorHot, GenericControlState.Hovered);
+            this.SetBackground((SolidBrush)colorPressed, GenericControlState.Pressed);
         }
 
         public Color SwatchColor { get; }
-
-        private bool IsPressed
-        {
-            get => isPressed;
-            set
-            {
-                if (isPressed == value)
-                    return;
-
-                isPressed = value;
-                Invalidate();
-            }
-        }
-
-        public override Size GetPreferredSize(Size availableSize)
-        {
-            return new Size(20, 20);
-        }
-
-        protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
-        {
-            CaptureMouse();
-            IsPressed = true;
-        }
-
-        protected override void OnMouseLeftButtonUp(MouseButtonEventArgs e)
-        {
-            ReleaseMouseCapture();
-            IsPressed = false;
-
-            if (IsMouseOver)
-                RaiseClick(EventArgs.Empty);
-        }
-
-        protected override void OnMouseEnter()
-        {
-            Refresh();
-        }
-
-        protected override void OnMouseLeave()
-        {
-            Refresh();
-        }
-
-        protected override void OnMouseMove(MouseEventArgs e)
-        {
-            Refresh();
-        }
-
-        protected override void OnPaint(PaintEventArgs e)
-        {
-            var dc = e.DrawingContext;
-
-            var innerRect = e.Bounds;
-            innerRect.Inflate(-2, -2);
-
-            if (IsPressed) 
-            {
-                innerRect.Offset(1, 1);
-            }
-            else
-            {
-                //var shadowRect = innerRect;
-                //shadowRect.Offset(1, 1);
-                //dc.FillRectangle(Brushes.Black, shadowRect);
-            }
-
-            dc.FillRectangle(new SolidBrush(SwatchColor), innerRect);
-            dc.DrawRectangle(Pens.Gray, innerRect);
-        }
     }
 }

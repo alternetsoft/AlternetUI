@@ -45,5 +45,23 @@ namespace Alternet.UI
         /// Gets or sets <see cref="ControlStateBorders"/>.
         /// </summary>
         public ControlStateBorders? Borders { get; set; }
+
+        /// <summary>
+        /// Gets whether <see cref="Borders"/> has settings not only for
+        /// <see cref="GenericControlState.Normal"/> control state.
+        /// </summary>
+        public bool HasOtherBorders => Borders?.HasOtherStates ?? false;
+
+        /// <summary>
+        /// Gets whether <see cref="Images"/> has settings not only for
+        /// <see cref="GenericControlState.Normal"/> control state.
+        /// </summary>
+        public bool HasOtherImages => Images?.HasOtherStates ?? false;
+
+        /// <summary>
+        /// Gets whether <see cref="Backgrounds"/> has settings not only for
+        /// <see cref="GenericControlState.Normal"/> control state.
+        /// </summary>
+        public bool HasOtherBackgrounds => Backgrounds?.HasOtherStates ?? false;
     }
 }

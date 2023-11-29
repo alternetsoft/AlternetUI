@@ -10,8 +10,6 @@ namespace Alternet.UI
     [ControlCategory("Containers")]
     public class Border : UserPaintControl
     {
-        private bool hasBorder = true; // !! to border settings
-
         /// <summary>
         /// Initializes a new instance of the <see cref="Border"/> class.
         /// </summary>
@@ -88,25 +86,6 @@ namespace Alternet.UI
                 Normal.SetWidth(value);
                 UpdatePadding();
                 PerformLayout();
-                Refresh();
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether the control has a border.
-        /// </summary>
-        public bool HasBorder
-        {
-            get
-            {
-                return hasBorder;
-            }
-
-            set
-            {
-                if (hasBorder == value)
-                    return;
-                hasBorder = value;
                 Refresh();
             }
         }
@@ -236,21 +215,15 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Draw default border.
+        /// Creates border filled with default settings.
         /// </summary>
-        /// <param name="dc">Drawing context.</param>
-        /// <param name="rect">Ractangle.</param>
-        public virtual void DrawDefaultBorder(DrawingContext dc, Rect rect)
+        /// <returns></returns>
+        public static BorderSettings CreateDefault(Color? color = null)
         {
-            if (HasBorder)
-            {
-                var settings = Borders?.GetObjectOrNull(CurrentState) ?? new(BorderSettings.Default);
-                var radius = settings.GetUniformCornerRadius(rect);
-                if (radius is null)
-                {
-                    settings.Draw(dc, rect);
-                }
-            }
+            BorderSettings result = new(BorderSettings.Default);
+            if (color is not null)
+                result.Color = color;
+            return result;
         }
 
         /// <inheritdoc cref="BorderSettings.SetColors"/>
@@ -272,7 +245,8 @@ namespace Alternet.UI
             BeforePaint(dc, rect);
 
             DrawDefaultBackground(dc, rect);
-            DrawDefaultBorder(dc, rect);
+            if(HasBorder)
+                DrawDefaultBorder(dc, rect);
 
             AfterPaint(dc, rect);
         }

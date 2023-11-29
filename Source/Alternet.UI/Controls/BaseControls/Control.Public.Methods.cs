@@ -1456,6 +1456,29 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Sets border settings for the specified control state.
+        /// </summary>
+        /// <param name="value">Border settings.</param>
+        /// <param name="state">Control state.</param>
+        public void SetBorder(BorderSettings? value, GenericControlState state = GenericControlState.Normal)
+        {
+            StateObjects ??= new();
+            StateObjects.Borders ??= new();
+            StateObjects.Borders.SetObject(value, state);
+        }
+
+        /// <summary>
+        /// Draw default border.
+        /// </summary>
+        /// <param name="dc">Drawing context.</param>
+        /// <param name="rect">Ractangle.</param>
+        public virtual void DrawDefaultBorder(DrawingContext dc, Rect rect)
+        {
+            var settings = Borders?.GetObjectOrNull(CurrentState);
+            settings?.Draw(dc, rect);
+        }
+
+        /// <summary>
         /// Draw default background.
         /// </summary>
         /// <param name="dc">Drawing context.</param>

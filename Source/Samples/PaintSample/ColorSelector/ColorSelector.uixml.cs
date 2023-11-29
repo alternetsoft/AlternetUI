@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace PaintSample
 {
-    public partial class ColorSelector : Control, ISelectedColors
+    public partial class ColorSelector : VerticalStackPanel, ISelectedColors
     {
         private static readonly Color[] SwatchColors = new[]
         {
@@ -33,7 +33,13 @@ namespace PaintSample
             container.Children.Add(selectedColorDisplay);
 
             CreateSwatches();
-            
+
+            LogListBox listBox = new();
+            listBox.HasBorder = false;
+            listBox.BindApplicationLog();
+            listBox.SuggestedSize = (200, 150);
+            listBox.Parent = bottomPanel;
+
             if (selectedColorDisplay != null)
                 selectedColorDisplay.SelectedColor = Color.Blue;
         }
@@ -45,23 +51,25 @@ namespace PaintSample
             if (container == null)
                 return;
 
+            var size = Alternet.UI.Toolbar.GetDefaultImageSize(this) * 2;
+
             foreach (var color in SwatchColors)
             {
                 var swatch = new ColorSwatch(color)
                 {
                     VerticalAlignment = VerticalAlignment.Center,
-                    Margin = new Thickness(0, 0, 5, 0),
-                    ToolTip = color.Name
+                    Margin = (0, 0, 5, 0),
+                    SuggestedSize = size,
                 };
 
-                swatch.Click += Swatch_Click;
+                swatch.MouseLeftButtonDown += Swatch_MouseLeftButtonDown;
 
                 swatches.Add(swatch);
                 container.Children.Add(swatch);
             }
         }
 
-        private void Swatch_Click(object? sender, System.EventArgs e)
+        private void Swatch_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             selectedColorDisplay.SelectedColor = ((ColorSwatch)sender!).SwatchColor;
         }

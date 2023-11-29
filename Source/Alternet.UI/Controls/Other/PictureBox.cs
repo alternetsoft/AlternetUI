@@ -186,6 +186,8 @@ namespace Alternet.UI
             BeforePaint(dc, rect);
 
             DrawDefaultBackground(dc, rect);
+            if (HasBorder)
+                DrawDefaultBorder(dc, rect);
 
             var primitive = Primitive;
             var state = CurrentState;
@@ -210,7 +212,12 @@ namespace Alternet.UI
         protected override void OnCurrentStateChanged()
         {
             base.OnCurrentStateChanged();
-            if (Backgrounds?.HasOtherStates ?? false)
+
+            if (StateObjects is null)
+                return;
+
+            if (StateObjects.HasOtherBackgrounds || StateObjects.HasOtherImages
+                || StateObjects.HasOtherBorders)
                 Refresh();
         }
 

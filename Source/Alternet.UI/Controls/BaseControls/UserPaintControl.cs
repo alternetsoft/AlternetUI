@@ -14,6 +14,8 @@ namespace Alternet.UI
     [ControlCategory("Other")]
     public class UserPaintControl : Control
     {
+        private bool hasBorder = true; // !! to border settings
+
 #if DEBUG
         private bool drawDebugPointsBefore;
         private bool drawDebugPointsAfter;
@@ -90,6 +92,25 @@ namespace Alternet.UI
                 Refresh();
 #else
 #endif
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the control has a border.
+        /// </summary>
+        public bool HasBorder
+        {
+            get
+            {
+                return hasBorder;
+            }
+
+            set
+            {
+                if (hasBorder == value)
+                    return;
+                hasBorder = value;
+                Refresh();
             }
         }
 
