@@ -1235,6 +1235,150 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Converts RGB color to <see cref="HSVValue"/>.
+        /// </summary>
+        /// <param name="r">R component of a color.</param>
+        /// <param name="g">G component of a color.</param>
+        /// <param name="b">B component of a color.</param>
+        /// <returns></returns>
+        public static HSVValue RGBtoHSV(byte r, byte g, byte b)
+        {
+            const int RED = 0;
+            const int GREEN = 1;
+            const int BLUE = 2;
+
+            double red = r / 255.0;
+            double green = g / 255.0;
+            double blue = b / 255.0;
+
+            // find the min and max intensity (and remember which one was it for the
+            // latter)
+            double minimumRGB = red;
+            if ( green < minimumRGB )
+                minimumRGB = green;
+            if ( blue < minimumRGB )
+                minimumRGB = blue;
+
+            int chMax = RED;
+            
+            double maximumRGB = red;
+            if ( green > maximumRGB )
+            {
+                chMax = GREEN;
+                maximumRGB = green;
+            }
+            if ( blue > maximumRGB )
+            {
+                chMax = BLUE;
+                maximumRGB = blue;
+            }
+
+            double value = maximumRGB;
+
+            double hue = 0.0, saturation;
+            double deltaRGB = maximumRGB - minimumRGB;
+            if ( deltaRGB == 0 )
+            {
+                // Gray has no color
+                hue = 0.0;
+                saturation = 0.0;
+            }
+            else
+            {
+                switch ( chMax )
+                {
+                    case RED:
+                        hue = (green - blue) / deltaRGB;
+                        break;
+
+                    case GREEN:
+                        hue = 2.0 + (blue - red) / deltaRGB;
+                        break;
+
+                    case BLUE:
+                        hue = 4.0 + (red - green) / deltaRGB;
+                        break;
+                }
+
+                hue /= 6.0;
+
+                if ( hue < 0.0 )
+                    hue += 1.0;
+
+                saturation = deltaRGB / maximumRGB;
+            }
+
+            return new HSVValue(hue, saturation, value);
+        }
+
+        /// <summary>
+        /// Converts <see cref="HSVValue"/> to RGB color.
+        /// </summary>
+        /// <param name="hsv"></param>
+        public static RGBValue HSVtoRGB(HSVValue hsv)
+        {
+            double red, green, blue;
+
+            if ( hsv.Saturation == 0 )
+            {
+                // Grey
+                red = hsv.Value;
+                green = hsv.Value;
+                blue = hsv.Value;
+            }
+            else // not grey
+            {
+                double hue = hsv.Hue * 6.0;      // sector 0 to 5
+                int i = (int)Math.Floor(hue);
+                double f = hue - i;          // fractional part of h
+                double p = hsv.Value * (1.0 - hsv.Saturation);
+
+                switch (i)
+                {
+                    case 0:
+                        red = hsv.Value;
+                        green = hsv.Value * (1.0 - hsv.Saturation * (1.0 - f));
+                        blue = p;
+                        break;
+
+                    case 1:
+                        red = hsv.Value * (1.0 - hsv.Saturation * f);
+                        green = hsv.Value;
+                        blue = p;
+                        break;
+
+                    case 2:
+                        red = p;
+                        green = hsv.Value;
+                        blue = hsv.Value * (1.0 - hsv.Saturation * (1.0 - f));
+                        break;
+
+                    case 3:
+                        red = p;
+                        green = hsv.Value * (1.0 - hsv.Saturation * f);
+                        blue = hsv.Value;
+                        break;
+
+                    case 4:
+                        red = hsv.Value * (1.0 - hsv.Saturation * (1.0 - f));
+                        green = p;
+                        blue = hsv.Value;
+                        break;
+
+                    default:    // case 5:
+                        red = hsv.Value;
+                        green = p;
+                        blue = hsv.Value * (1.0 - hsv.Saturation * f);
+                        break;
+                }
+            }
+
+            return new RGBValue((byte)Math.Round(red * 255.0),
+                            (byte)Math.Round(green * 255.0),
+                            (byte)Math.Round(blue * 255.0));
+        }
+
+        /// <summary>
         /// Enumerates colors defined in <see cref="KnownColor"/> for the specified
         /// color categories.
         /// </summary>
