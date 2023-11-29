@@ -1015,6 +1015,23 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Converts the specified <see cref='RGBValue'/> to a <see cref='Color'/>.
+        /// </summary>
+        public static implicit operator Color(RGBValue rgb) =>
+            Color.FromRgb(rgb.R, rgb.G, rgb.B);
+
+        /// <summary>
+        /// Converts the specified <see cref='RGBValue'/> to a <see cref='Color'/>.
+        /// </summary>
+        public static explicit operator SolidBrush(Color color) => color.AsBrush;
+
+        /// <summary>
+        /// Converts the specified <see cref='Color'/> to a <see cref='RGBValue'/>.
+        /// </summary>
+        public static implicit operator RGBValue(Color color) =>
+            new RGBValue(color.R, color.G, color.B);
+
+        /// <summary>
         /// Converts the specified <see cref='string'/> to a <see cref='Color'/>.
         /// </summary>
         public static explicit operator Color(string s) => Color.Parse(s);
@@ -1438,22 +1455,33 @@ namespace Alternet.Drawing
         {
             double result = bg + (alpha * (fg - bg));
             result = Math.Max(result, 0.0);
-            result = Math.Max(result, 255.0);
+            result = Math.Min(result, 255.0);
             return (byte)result;
         }
 
         /// <summary>
         /// Darkens or lightens a color, based on the specified percentage
-        /// ialpha of 0 would be completely black, 100 completely white
+        /// ialpha of 0 would be completely black, 200 completely white
         /// an ialpha of 100 returns the same color.
         /// </summary>
-        /// <param name="r">R component of a color.</param>
-        /// <param name="g">G component of a color.</param>
-        /// <param name="b">B component of a color.</param>
-        /// <param name="ialpha"></param>
-        public static void ChangeLightness(ref byte r, ref byte g, ref byte b, int ialpha)
+        /// <param name="ialpha">Lightness value (0..200).</param>
+        public Color ChangeLightness(int ialpha)
         {
-            if (ialpha == 100) return;
+            RGBValue rgb = this;
+            var newValue = ChangeLightness(rgb, ialpha);
+            return newValue;
+        }
+
+        /// <summary>
+        /// Darkens or lightens a color, based on the specified percentage
+        /// ialpha of 0 would be completely black, 200 completely white
+        /// an ialpha of 100 returns the same color.
+        /// </summary>
+        /// <param name="rgb">RGB Color.</param>
+        /// <param name="ialpha">Lightness value (0..200).</param>
+        public static RGBValue ChangeLightness(RGBValue rgb, int ialpha)
+        {
+            if (ialpha == 100) return rgb;
 
             // ialpha is 0..200 where 0 is completely black
             // and 200 is completely white and 100 is the same
@@ -1476,23 +1504,11 @@ namespace Alternet.Drawing
                 alpha = 1.0 + alpha;  // 0 = transparent fg; 1 = opaque fg
             }
 
-            r = AlphaBlend(r, bg, alpha);
-            g = AlphaBlend(g, bg, alpha);
-            b = AlphaBlend(b, bg, alpha);
-        }
+            var r = AlphaBlend(rgb.R, bg, alpha);
+            var g = AlphaBlend(rgb.G, bg, alpha);
+            var b = AlphaBlend(rgb.B, bg, alpha);
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="ialpha"></param>
-        /// <returns></returns>
-        public Color ChangeLightness(int ialpha)
-        {
-            byte r = R;
-            byte g = G;
-            byte b = B;
-            ChangeLightness(ref r, ref g, ref b, ialpha);
-            return Color.FromRgb(r, g, b);
+            return new(r, g, b);
         }
 
         /// <summary>
@@ -1755,6 +1771,19 @@ namespace Alternet.Drawing
         /// <returns><c>true</c> if ARGB of the colors are equal;
         /// otherwise, <c>false</c>.</returns>
         public bool EqualARGB(Color other) => Value == other.Value;
+
+        /// <summary>
+        /// Creates <see cref="GenericImage"/> of the specified <paramref name="size"/>
+        /// filled with this color.
+        /// </summary>
+        /// <param name="size">Size of the created image.</param>
+        /// <returns></returns>
+        public GenericImage AsImage(Int32Size size)
+        {
+            GenericImage image = new(size.Width, size.Height);
+            image.SetRGBRect(this);
+            return image;
+        }
 
         /// <summary>
         /// Serves as the default hash function.
