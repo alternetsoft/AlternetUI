@@ -244,6 +244,24 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Returns the bounds of the image in pixels. Result is (0, 0, Width, Height).
+        /// </summary>
+        public Int32Rect Bounds
+        {
+            get => (0, 0, Width, Height);
+        }
+
+        /// <summary>
+        /// Converts the specified <see cref='GenericImage'/> to a <see cref='Image'/>.
+        /// </summary>
+        public static implicit operator Image(GenericImage image) => new Bitmap(image);
+
+        /// <summary>
+        /// Converts the specified <see cref='GenericImage'/> to a <see cref='Image'/>.
+        /// </summary>
+        public static implicit operator GenericImage(Image image) => image.AsGeneric;
+
+        /// <summary>
         /// Returns <c>true</c> if at least one of the available image handlers can read the file
         /// with the given name.
         /// </summary>
@@ -412,13 +430,11 @@ namespace Alternet.Drawing
         /// <summary>
         /// Sets the mask color for this image(and tells the image to use the mask).
         /// </summary>
-        /// <param name="red"></param>
-        /// <param name="green"></param>
-        /// <param name="blue"></param>
+        /// <param name="rgb">Color RGB.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void SetMaskColor(byte red, byte green, byte blue)
+        public void SetMaskColor(RGBValue rgb)
         {
-            UI.Native.GenericImage.SetMaskColor(Handle, red, green, blue);
+            UI.Native.GenericImage.SetMaskColor(Handle, rgb.R, rgb.G, rgb.B);
         }
 
         /// <summary>
@@ -427,12 +443,7 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="image">Mask image to extract mask shape from. It must have the
         /// same dimensions as the image.</param>
-        /// <param name="mr">Red values of the pixels in mask that will be
-        /// used to create the mask.</param>
-        /// <param name="mg">Green values of the pixels in mask that will be
-        /// used to create the mask.</param>
-        /// <param name="mb">Blue values of the pixels in mask that will be
-        /// used to create the mask.</param>
+        /// <param name="mask">Mask RGB color.</param>
         /// <returns>Returns <c>false</c> if mask does not have same dimensions as the image
         /// or if there is no unused color left. Returns <c>true</c> if the mask was
         /// successfully applied.</returns>
@@ -446,9 +457,9 @@ namespace Alternet.Drawing
         /// is a computationally intensive operation.
         /// </remarks>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public bool SetMaskFromImage(GenericImage image, byte mr, byte mg, byte mb)
+        public bool SetMaskFromImage(GenericImage image, RGBValue mask)
         {
-            return UI.Native.GenericImage.SetMaskFromImage(Handle, image.Handle, mr, mg, mb);
+            return UI.Native.GenericImage.SetMaskFromImage(Handle, image.Handle, mask.R, mask.G, mask.B);
         }
 
         /// <summary>
@@ -484,36 +495,34 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="x">X coordinate of the pixel.</param>
         /// <param name="y">Y coordinate of the pixel.</param>
-        /// <param name="r">R component of a color.</param>
-        /// <param name="g">G component of a color.</param>
-        /// <param name="b">B component of a color.</param>
+        /// <param name="rgb">RGB Color.</param>
         /// <remarks>
         /// This routine performs bounds-checks for the coordinate so it can be
         /// considered a safe way to manipulate the data.
         /// </remarks>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void SetRGB(int x, int y, byte r, byte g, byte b)
+        public void SetRGB(int x, int y, RGBValue rgb)
         {
-            UI.Native.GenericImage.SetRGB(Handle, x, y, r, g, b);
+            UI.Native.GenericImage.SetRGB(Handle, x, y, rgb.R, rgb.G, rgb.B);
         }
 
         /// <summary>
         /// Sets the color of the pixels within the given rectangle.
         /// </summary>
-        /// <param name="rect"></param>
-        /// <param name="red"></param>
-        /// <param name="green"></param>
-        /// <param name="blue"></param>
+        /// <param name="rect">Rectangle within the image. If rectangle is null,
+        /// <see cref="Bounds"/> property is used.</param>
+        /// <param name="rgb">RGB Color.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void SetRGBRect(Int32Rect rect, byte red, byte green, byte blue)
+        public void SetRGBRect(RGBValue rgb, Int32Rect? rect = null)
         {
-            UI.Native.GenericImage.SetRGBRect(Handle, rect, red, green, blue);
+            rect ??= Bounds;
+            UI.Native.GenericImage.SetRGBRect(Handle, rect.Value, rgb.R, rgb.G, rgb.B);
         }
 
         /// <summary>
         /// Sets the type of image returned by GetType().
         /// </summary>
-        /// <param name="type"></param>
+        /// <param name="type">Type of the bitmap.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void SetImageType(BitmapType type)
         {
@@ -565,9 +574,8 @@ namespace Alternet.Drawing
         /// <summary>
         /// Finds the first color that is never used in the image.
         /// </summary>
-        /// <param name="startR">Defines the initial value of the color (R component).</param>
-        /// <param name="startG">Defines the initial value of the color (G component)</param>
-        /// <param name="startB">Defines the initial value of the color (B component)</param>
+        /// <param name="startRGB">Defines the initial value of the color.
+        /// If its empty, (1, 0, 0) is used.</param>
         /// <returns>Returns <c>false</c> if there is no unused color left, <c>true</c>
         /// on success.</returns>
         /// <remarks>
@@ -584,9 +592,12 @@ namespace Alternet.Drawing
         /// This method involves computing the histogram, which is a computationally
         /// intensive operation.
         /// </remarks>
-        public Color FindFirstUnusedColor(byte startR = 1, byte startG = 0, byte startB = 0)
+        public Color FindFirstUnusedColor(RGBValue? startRGB = null)
         {
-            return UI.Native.GenericImage.FindFirstUnusedColor(Handle, startR, startG, startB);
+            var value = startRGB ?? new(1, 0, 0);
+
+            return UI.Native.GenericImage.FindFirstUnusedColor(
+                Handle, value.R, value.G, value.B);
         }
 
         /// <summary>
@@ -605,10 +616,10 @@ namespace Alternet.Drawing
 
         /// <summary>
         /// Blurs the image in both horizontal and vertical directions by the specified
-        /// pixel blurRadius.
+        /// <paramref name="blurRadius"/> (in pixels).
         /// </summary>
-        /// <param name="blurRadius"></param>
-        /// <returns></returns>
+        /// <param name="blurRadius">Blur radius in pixels.</param>
+        /// <returns>Blurred image.</returns>
         /// <remarks>
         /// This should not be used when using a single mask color for transparency.
         /// </remarks>
@@ -621,8 +632,8 @@ namespace Alternet.Drawing
         /// <summary>
         /// Blurs the image in the horizontal direction only.
         /// </summary>
-        /// <param name="blurRadius"></param>
-        /// <returns></returns>
+        /// <param name="blurRadius">Blur radius in pixels.</param>
+        /// <returns>Blurred image.</returns>
         /// <remarks>
         /// This should not be used when using a single mask color for transparency.
         /// </remarks>
@@ -635,8 +646,8 @@ namespace Alternet.Drawing
         /// <summary>
         /// Blurs the image in the vertical direction only.
         /// </summary>
-        /// <param name="blurRadius"></param>
-        /// <returns></returns>
+        /// <param name="blurRadius">Blur radius in pixels.</param>
+        /// <returns>Blurred image.</returns>
         /// <remarks>
         /// This should not be used when using a single mask color for transparency.
         /// </remarks>
@@ -650,7 +661,7 @@ namespace Alternet.Drawing
         /// Returns a mirrored copy of the image.
         /// </summary>
         /// <param name="horizontally"></param>
-        /// <returns></returns>
+        /// <returns>Mirrored copy of the image</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public GenericImage Mirror(bool horizontally = true)
         {
@@ -681,27 +692,23 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Replaces the color specified by (r1, g1, b1) by the color (r2, g2, b2).
+        /// Replaces the color specified by (r1.R, r1.G, r1.B) by the color (r2.R, r2.G, r2.B).
         /// </summary>
-        /// <param name="r1"></param>
-        /// <param name="g1"></param>
-        /// <param name="b1"></param>
-        /// <param name="r2"></param>
-        /// <param name="g2"></param>
-        /// <param name="b2"></param>
+        /// <param name="r1">RGB Color 1.</param>
+        /// <param name="r2">RGB Color 2.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void Replace(byte r1, byte g1, byte b1, byte r2, byte g2, byte b2)
+        public void Replace(RGBValue r1, RGBValue r2)
         {
-            UI.Native.GenericImage.Replace(Handle, r1, g1, b1, r2, g2, b2);
+            UI.Native.GenericImage.Replace(Handle, r1.R, r1.G, r1.B, r2.R, r2.G, r2.B);
         }
 
         /// <summary>
         /// Changes the size of the image in-place by scaling it: after a call to this
         /// function,the image will have the given width and height.
         /// </summary>
-        /// <param name="width"></param>
-        /// <param name="height"></param>
-        /// <param name="quality"></param>
+        /// <param name="width">New image width.</param>
+        /// <param name="height">New image height.</param>
+        /// <param name="quality">Scaling quality.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Rescale(
             int width,
@@ -717,23 +724,29 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="size"></param>
         /// <param name="pos"></param>
-        /// <param name="red"></param>
-        /// <param name="green"></param>
-        /// <param name="blue"></param>
+        /// <param name="color">RGB Color to fill background.</param>
         /// <remarks>
         /// The image is pasted into a new image with the given size and background color
         /// at the position pos relative to the upper left of the new image.
-        /// If red = green = blue = -1 then use either the current mask color if
+        /// If <paramref name="color"/> is null then use either the current mask color if
         /// set or find, use, and set a suitable mask color for any newly exposed areas.
         /// </remarks>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void ResizeNoScale(
             Int32Size size,
             Int32Point pos,
-            int red = -1,
-            int green = -1,
-            int blue = -1)
+            RGBValue? color = null)
         {
+            if(color is null)
+            {
+                UI.Native.GenericImage.Resize(Handle, size, pos, -1, -1, -1);
+                return;
+            }
+
+            var red = color.Value.R;
+            var green = color.Value.G;
+            var blue = color.Value.G;
+
             UI.Native.GenericImage.Resize(Handle, size, pos, red, green, blue);
         }
 
@@ -743,24 +756,26 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="size">New size.</param>
         /// <param name="pos">Position in the new image.</param>
-        /// <param name="red">R component of the fill color.</param>
-        /// <param name="green">G component of the fill color.</param>
-        /// <param name="blue">B component of the fill color.</param>
-        /// <returns></returns>
+        /// <param name="color">Fill color.</param>
+        /// <returns>Resized image.</returns>
         /// <remarks>
         /// The image is pasted into a new image with the given <paramref name="size"/> and
         /// background color at the
         /// position <paramref name="pos"/> relative to the upper left of the new image.
         /// </remarks>
         /// <remarks>
-        /// If red = green = blue = -1 then the areas of the larger image not covered by
+        /// If <paramref name="color"/> is <c>null</c> then the areas of the larger image not covered by
         /// this image are made transparent by filling them with the image mask
         /// color(which will be allocated automatically if it isn't currently set).
         /// Otherwise, the areas will be filled with the color with the specified RGB components.
         /// </remarks>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public GenericImage SizeNoScale(Int32Size size, Int32Point pos, int red, int green, int blue)
+        public GenericImage SizeNoScale(Int32Size size, Int32Point pos, RGBValue? color = null)
         {
+            var red = color?.R ?? -1;
+            var green = color?.G ?? -1;
+            var blue = color?.G ?? -1;
+
             var image = UI.Native.GenericImage.Size(Handle, size, pos, red, green, blue);
             return new GenericImage(image);
         }
@@ -768,7 +783,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Returns a copy of the image rotated 90 degrees in the direction indicated by clockwise.
         /// </summary>
-        /// <param name="clockwise"></param>
+        /// <param name="clockwise">Rotate direction.</param>
         /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public GenericImage Rotate90(bool clockwise = true)
@@ -866,8 +881,8 @@ namespace Alternet.Drawing
         /// in general as the only other way to scale bitmaps is to blit a MemoryDC into
         /// another MemoryDC.
         /// </summary>
-        /// <param name="width"></param>
-        /// <param name="height"></param>
+        /// <param name="width">New width.</param>
+        /// <param name="height">New height.</param>
         /// <param name="quality">Determines what method to use for resampling the image.</param>
         /// <returns></returns>
         /// <remarks>
@@ -922,9 +937,7 @@ namespace Alternet.Drawing
         /// If the image has alpha channel, this method converts it to mask using the
         /// specified color as the mask color.
         /// </summary>
-        /// <param name="mr">The red component of the mask color.</param>
-        /// <param name="mg">The green component of the mask color.</param>
-        /// <param name="mb">The blue component of the mask color.</param>
+        /// <param name="rgb">Mask color.</param>
         /// <param name="threshold">Pixels with alpha channel values below the
         /// given threshold are considered to be
         /// transparent, i.e.the corresponding mask pixels are set. Pixels with
@@ -938,12 +951,15 @@ namespace Alternet.Drawing
         /// </remarks>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool ConvertAlphaToMask(
-            byte mr,
-            byte mg,
-            byte mb,
+            RGBValue rgb,
             byte threshold = AlphaChannelThreshold)
         {
-            return UI.Native.GenericImage.ConvertAlphaToMaskUseColor(Handle, mr, mg, mb,threshold);
+            return UI.Native.GenericImage.ConvertAlphaToMaskUseColor(
+                Handle,
+                rgb.R,
+                rgb.G,
+                rgb.B,
+                threshold);
         }
 
         /// <summary>
@@ -977,15 +993,13 @@ namespace Alternet.Drawing
         /// <summary>
         /// Returns monochromatic version of the image.
         /// </summary>
-        /// <param name="r">R component of a color.</param>
-        /// <param name="g">G component of a color.</param>
-        /// <param name="b">B component of a color.</param>
+        /// <param name="rgb">RGB color.</param>
         /// <returns> The returned image has white color where the original has (r,g,b)
         /// color and black color everywhere else.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public GenericImage ConvertToMono(byte r, byte g, byte b)
+        public GenericImage ConvertToMono(RGBValue rgb)
         {
-            return new(UI.Native.GenericImage.ConvertToMono(Handle, r, g, b));
+            return new(UI.Native.GenericImage.ConvertToMono(Handle, rgb.R, rgb.G, rgb.B));
         }
 
         /// <summary>
@@ -1002,7 +1016,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Returns a changed version of the image based on the given lightness.
         /// </summary>
-        /// <param name="ialpha"></param>
+        /// <param name="ialpha">Lightness (0..200).</param>
         /// <remarks>
         /// This utility function simply darkens or lightens a color, based on
         /// the specified percentage ialpha. ialpha of 0 would make the color completely black,
@@ -1124,7 +1138,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Returns a sub image of the current one as long as the rect belongs entirely to the image.
         /// </summary>
-        /// <param name="rect"></param>
+        /// <param name="rect">Bounds of the sub-image.</param>
         /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public GenericImage GetSubImage(Int32Rect rect)
