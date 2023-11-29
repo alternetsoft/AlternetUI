@@ -566,6 +566,16 @@ ALTERNET_UI_API int Control_GetScrollBarMaximum_(Control* obj, ScrollBarOrientat
     return obj->GetScrollBarMaximum(orientation);
 }
 
+ALTERNET_UI_API void Control_Raise_(Control* obj)
+{
+    obj->Raise();
+}
+
+ALTERNET_UI_API void Control_Lower_(Control* obj)
+{
+    obj->Lower();
+}
+
 ALTERNET_UI_API void Control_DisableRecreate_(Control* obj)
 {
     obj->DisableRecreate();

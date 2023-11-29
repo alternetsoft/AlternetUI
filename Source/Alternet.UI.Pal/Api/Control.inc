@@ -187,6 +187,8 @@ bool IsScrollBarVisible(ScrollBarOrientation orientation);
 int GetScrollBarValue(ScrollBarOrientation orientation);
 int GetScrollBarLargeChange(ScrollBarOrientation orientation);
 int GetScrollBarMaximum(ScrollBarOrientation orientation);
+void Raise();
+void Lower();
 void DisableRecreate();
 void EnableRecreate();
 void UnsetToolTip();

@@ -830,6 +830,18 @@ namespace Alternet.UI.Native
             return NativeApi.Control_GetScrollBarMaximum_(NativePointer, orientation);
         }
         
+        public void Raise()
+        {
+            CheckDisposed();
+            NativeApi.Control_Raise_(NativePointer);
+        }
+        
+        public void Lower()
+        {
+            CheckDisposed();
+            NativeApi.Control_Lower_(NativePointer);
+        }
+        
         public void DisableRecreate()
         {
             CheckDisposed();
@@ -1416,6 +1428,12 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern int Control_GetScrollBarMaximum_(IntPtr obj, ScrollBarOrientation orientation);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Control_Raise_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Control_Lower_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Control_DisableRecreate_(IntPtr obj);

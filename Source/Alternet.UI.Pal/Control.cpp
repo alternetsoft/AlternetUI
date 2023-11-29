@@ -667,6 +667,16 @@ namespace Alternet::UI
         GetWxWindow()->SetDropTarget(_dropTarget);
     }
 
+    void Control::Raise()
+    {
+        GetWxWindow()->Raise();
+    }
+
+    void Control::Lower()
+    {
+        GetWxWindow()->Lower();
+    }
+
     void Control::DestroyDropTarget()
     {
         if (_dropTarget != nullptr)

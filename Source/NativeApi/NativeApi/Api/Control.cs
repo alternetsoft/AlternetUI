@@ -8,6 +8,9 @@ namespace NativeApi.Api
 {
     public abstract class Control
     {
+        public void Raise() { }
+        public void Lower() { }
+
         public void DisableRecreate() { }
         public void EnableRecreate() { }
         public void UnsetToolTip() { }
