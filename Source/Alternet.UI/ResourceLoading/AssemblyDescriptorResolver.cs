@@ -3,13 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
-using Alternet.Drawing;
 
 namespace Alternet.UI
 {
     internal class AssemblyDescriptorResolver : IAssemblyDescriptorResolver
     {
-        private readonly Dictionary<string, IAssemblyDescriptor> assemblyNameCache = new ();
+        private readonly Dictionary<string, IAssemblyDescriptor> assemblyNameCache = [];
 
         public IAssemblyDescriptor GetAssembly(string name)
         {

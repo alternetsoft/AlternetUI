@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Alternet.Drawing;
 using Alternet.UI.Localization;
 
@@ -314,10 +310,10 @@ namespace Alternet.UI
             get
             {
                 toolbar ??= new()
-                    {
-                        CreateStyle = DefaultToolbarStyle,
-                        ToolBitmapSize = GetToolBitmapSize(),
-                    };
+                {
+                    CreateStyle = DefaultToolbarStyle,
+                    ToolBitmapSize = GetToolBitmapSize(),
+                };
 
                 return toolbar;
             }
@@ -345,11 +341,7 @@ namespace Alternet.UI
         {
             get
             {
-                if(toolbarPane is null)
-                {
-                    toolbarPane = CreateToolbarPane();
-                }
-
+                toolbarPane ??= CreateToolbarPane();
                 return toolbarPane;
             }
         }
@@ -362,11 +354,7 @@ namespace Alternet.UI
         {
             get
             {
-                if (leftPane is null)
-                {
-                    leftPane = CreateLeftPane();
-                }
-
+                leftPane ??= CreateLeftPane();
                 return leftPane;
             }
         }
@@ -379,11 +367,7 @@ namespace Alternet.UI
         {
             get
             {
-                if (rightPane is null)
-                {
-                    rightPane = CreateRightPane();
-                }
-
+                rightPane ??= CreateRightPane();
                 return rightPane;
             }
         }
@@ -396,11 +380,7 @@ namespace Alternet.UI
         {
             get
             {
-                if (centerPane is null)
-                {
-                    centerPane = CreateCenterPane();
-                }
-
+                centerPane ??= CreateCenterPane();
                 return centerPane;
             }
         }
@@ -413,7 +393,7 @@ namespace Alternet.UI
         {
             get
             {
-                if(actionsControl == null)
+                if (actionsControl == null)
                 {
                     actionsControl = new()
                     {
@@ -468,11 +448,7 @@ namespace Alternet.UI
         {
             get
             {
-                if (bottomPane is null)
-                {
-                    bottomPane = CreateBottomPane();
-                }
-
+                bottomPane ??= CreateBottomPane();
                 return bottomPane;
             }
         }
@@ -599,7 +575,7 @@ namespace Alternet.UI
             result.Name(nameof(centerPane)).CenterPane().PaneBorder(false);
             return result;
         }
-        
+
         /// <summary>
         /// Creates bottom pane and assigns its properties.
         /// </summary>

@@ -9,7 +9,7 @@ namespace Alternet.UI
     {
         /*private readonly Dictionary<TreeViewItem, IntPtr> handlesByItems = new();*/
 
-        private readonly Dictionary<IntPtr, TreeViewItem> itemsByHandles = new();
+        private readonly Dictionary<IntPtr, TreeViewItem> itemsByHandles = [];
 
         private bool skipSetItemText;
 
@@ -280,7 +280,7 @@ namespace Alternet.UI
             var p = GetHandleFromItem(item);
             if (p == IntPtr.Zero)
                 return;
-            if(color is null)
+            if (color is null)
                 Native.WxTreeViewFactory.ResetItemBackgroundColor(NativeControl.WxWidget, p);
             else
                 Native.WxTreeViewFactory.SetItemBackgroundColor(NativeControl.WxWidget, p, color.Value);

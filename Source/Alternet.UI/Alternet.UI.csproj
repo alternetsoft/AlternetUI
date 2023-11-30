@@ -295,8 +295,8 @@
   </ItemGroup>
 
   <!-- ================================================= -->
-  <!--  and '$(TargetFramework)' == 'net8.0' -->  
-  <ItemGroup Condition="'$(Configuration)'=='Debug'">
+  <!--  and '$(TargetFramework)' == 'net8.0'  Condition="'$(Configuration)'=='Debug'"-->  
+  <ItemGroup>
     <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>

@@ -1,16 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Alternet.Drawing;
 
 namespace Alternet.UI
 {
     internal class AuiPaneInfo : BaseControlItem, IDisposable, IAuiPaneInfo
     {
+        private readonly AuiManager owner;
         private IntPtr handle;
-        private AuiManager owner;
 
         public AuiPaneInfo(AuiManager owner)
         {

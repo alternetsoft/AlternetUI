@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using Alternet.Drawing;
 
 namespace Alternet.UI
@@ -144,9 +141,11 @@ namespace Alternet.UI
         /// <param name="tree">Data to apply.</param>
         protected void ApplyDataAsArray<T>(IEnumerableTree tree)
         {
+#pragma warning disable
             List<T> value = new();
             value.AddRange(EnumerableUtils.GetItems<T>(tree));
             T[] asArray = value.ToArray();
+#pragma warning restore
             PropInfo?.SetValue(Instance, asArray);
         }
     }

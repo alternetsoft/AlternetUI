@@ -7,7 +7,6 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
-using Alternet.Base.Collections;
 
 namespace Alternet.Drawing
 {
@@ -1029,7 +1028,7 @@ namespace Alternet.Drawing
         /// Converts the specified <see cref='Color'/> to a <see cref='RGBValue'/>.
         /// </summary>
         public static implicit operator RGBValue(Color color) =>
-            new RGBValue(color.R, color.G, color.B);
+            new(color.R, color.G, color.B);
 
         /// <summary>
         /// Converts the specified <see cref='string'/> to a <see cref='Color'/>.
@@ -1282,6 +1281,7 @@ namespace Alternet.Drawing
                 chMax = GREEN;
                 maximumRGB = green;
             }
+
             if (blue > maximumRGB)
             {
                 chMax = BLUE;
@@ -1307,11 +1307,11 @@ namespace Alternet.Drawing
                         break;
 
                     case GREEN:
-                        hue = 2.0 + (blue - red) / deltaRGB;
+                        hue = 2.0 + ((blue - red) / deltaRGB);
                         break;
 
                     case BLUE:
-                        hue = 4.0 + (red - green) / deltaRGB;
+                        hue = 4.0 + ((red - green) / deltaRGB);
                         break;
                 }
 
@@ -1380,7 +1380,7 @@ namespace Alternet.Drawing
         /// <param name="rgb">Color.</param>
         public static void MakeGrey(ref RGBValue rgb)
         {
-            var v = (byte)((rgb.B * 117UL + rgb.G * 601UL + rgb.R * 306UL) >> 10);
+            var v = (byte)(((rgb.B * 117UL) + (rgb.G * 601UL) + (rgb.R * 306UL)) >> 10);
             rgb.R = rgb.G = rgb.B = v;
         }
 
@@ -1397,7 +1397,7 @@ namespace Alternet.Drawing
         /// <param name="weight_b">Weight of B component of a color.</param>
         public static void MakeGrey(ref RGBValue rgb, double weight_r, double weight_g, double weight_b)
         {
-            double luma = rgb.R * weight_r + rgb.G * weight_g + rgb.B * weight_b;
+            double luma = (rgb.R * weight_r) + (rgb.G * weight_g) + (rgb.B * weight_b);
             var v = (byte)Math.Round(luma);
             rgb.R = rgb.G = rgb.B = v;
         }
@@ -1441,12 +1441,12 @@ namespace Alternet.Drawing
                 {
                     case 0:
                         red = hsv.Value;
-                        green = hsv.Value * (1.0 - hsv.Saturation * (1.0 - f));
+                        green = hsv.Value * (1.0 - (hsv.Saturation * (1.0 - f)));
                         blue = p;
                         break;
 
                     case 1:
-                        red = hsv.Value * (1.0 - hsv.Saturation * f);
+                        red = hsv.Value * (1.0 - (hsv.Saturation * f));
                         green = hsv.Value;
                         blue = p;
                         break;
@@ -1454,17 +1454,17 @@ namespace Alternet.Drawing
                     case 2:
                         red = p;
                         green = hsv.Value;
-                        blue = hsv.Value * (1.0 - hsv.Saturation * (1.0 - f));
+                        blue = hsv.Value * (1.0 - (hsv.Saturation * (1.0 - f)));
                         break;
 
                     case 3:
                         red = p;
-                        green = hsv.Value * (1.0 - hsv.Saturation * f);
+                        green = hsv.Value * (1.0 - (hsv.Saturation * f));
                         blue = hsv.Value;
                         break;
 
                     case 4:
-                        red = hsv.Value * (1.0 - hsv.Saturation * (1.0 - f));
+                        red = hsv.Value * (1.0 - (hsv.Saturation * (1.0 - f)));
                         green = p;
                         blue = hsv.Value;
                         break;
@@ -1473,7 +1473,7 @@ namespace Alternet.Drawing
                     default:
                         red = hsv.Value;
                         green = p;
-                        blue = hsv.Value * (1.0 - hsv.Saturation * f);
+                        blue = hsv.Value * (1.0 - (hsv.Saturation * f));
                         break;
                 }
             }

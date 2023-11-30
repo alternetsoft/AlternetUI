@@ -1,8 +1,4 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Alternet.Drawing;
 
 namespace Alternet.UI
@@ -166,15 +162,15 @@ namespace Alternet.UI
             item.Instance = this;
             item.PropInfo = AssemblyUtils.GetPropInfo(this, nameof(NameAsIndex));
 
-            List<IPropertyGridItem> list = new()
-            {
+            List<IPropertyGridItem> list =
+            [
                 item,
                 propGrid.CreateProperty(this, nameof(SizeInPoints))!,
                 propGrid.CreateProperty(this, nameof(Bold))!,
                 propGrid.CreateProperty(this, nameof(Italic))!,
                 propGrid.CreateProperty(this, nameof(Strikethrough))!,
                 propGrid.CreateProperty(this, nameof(Underlined))!,
-            };
+            ];
 
             return list;
         }

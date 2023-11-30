@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Alternet.Drawing;
 using Alternet.UI.Localization;
 
@@ -295,7 +291,7 @@ namespace Alternet.UI
         /// <param name="managedWnd">Managed window or control.</param>
         public void SetManagedWindow(LayoutPanel managedWnd)
         {
-            if(managedWnd is null)
+            if (managedWnd is null)
                 throw new ArgumentNullException(nameof(managedWnd));
 
             if (managedControl != null)
@@ -517,11 +513,6 @@ namespace Alternet.UI
             return new AuiPaneInfo(this);
         }
 
-        internal IAuiPaneInfo ToPaneInfo(IntPtr handle)
-        {
-            return new AuiPaneInfo(this, handle);
-        }
-
         internal static IntPtr ToHandle(IAuiPaneInfo paneInfo)
         {
             return paneInfo.Handle;
@@ -530,6 +521,11 @@ namespace Alternet.UI
         internal static IntPtr ToHandle(Control window)
         {
             return window.Handler.NativeControl!.WxWidget;
+        }
+
+        internal IAuiPaneInfo ToPaneInfo(IntPtr handle)
+        {
+            return new AuiPaneInfo(this, handle);
         }
 
         private void CheckManagedControl()

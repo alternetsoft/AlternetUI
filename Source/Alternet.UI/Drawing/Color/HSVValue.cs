@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Alternet.Drawing
 {
@@ -42,6 +38,11 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Gets color name and ARGB for the debug purposes.
+        /// </summary>
+        public readonly string AsDebugString => $"{{HSV=({Hue}, {Saturation}, {Value})}}";
+
+        /// <summary>
         /// Tests whether two <see cref='HSVValue'/> objects are different.
         /// </summary>
         public static bool operator !=(HSVValue left, HSVValue right) => !(left == right);
@@ -51,11 +52,6 @@ namespace Alternet.Drawing
         /// </summary>
         public static bool operator ==(HSVValue left, HSVValue right) =>
             left.Hue == right.Hue && left.Saturation == right.Saturation && left.Value == right.Value;
-
-        /// <summary>
-        /// Gets color name and ARGB for the debug purposes.
-        /// </summary>
-        public readonly string AsDebugString => $"{{HSV=({Hue}, {Saturation}, {Value})}}";
 
         /// <summary>
         /// Gets the hash code for this <see cref='Rect'/>.

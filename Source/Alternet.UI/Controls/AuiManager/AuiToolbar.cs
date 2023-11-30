@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Alternet.Drawing;
 
 namespace Alternet.UI
@@ -19,7 +16,7 @@ namespace Alternet.UI
         /// </summary>
         public const int DefaultSpacerWidth = 5;
 
-        private readonly Dictionary<int, ToolData> toolData = new();
+        private readonly Dictionary<int, ToolData> toolData = [];
         private int idCounter = 1;
         private int showingDropDown = 0;
 
@@ -606,7 +603,7 @@ namespace Alternet.UI
         /// enabled state of the tool.</remarks>
         public void EnableTool(int toolId, bool state)
         {
-            if(toolId > 0)
+            if (toolId > 0)
                 NativeControl.EnableTool(toolId, state);
         }
 
@@ -719,7 +716,7 @@ namespace Alternet.UI
                         return;
 
                     var pt = GetToolPopupLocation(toolId);
-                    if(pt is not null)
+                    if (pt is not null)
                     {
                         SetToolSticky(toolId, true);
                         var menuLocation = window.ScreenToClient(pt.Value);

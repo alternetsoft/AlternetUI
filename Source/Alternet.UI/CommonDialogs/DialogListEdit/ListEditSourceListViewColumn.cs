@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Alternet.Drawing;
 using Alternet.UI.Localization;
 
 namespace Alternet.UI
@@ -32,7 +27,9 @@ namespace Alternet.UI
 
             listView.DoInsideUpdate(() =>
             {
+#pragma warning disable
                 List<ListViewColumn> columns = new();
+#pragma warning restore
                 columns.AddRange(EnumerableUtils.GetItems<ListViewColumn>(tree));
                 listView.Columns.SetCount(columns.Count, () => new ListViewColumn());
                 for (int i = 0; i < columns.Count; i++)

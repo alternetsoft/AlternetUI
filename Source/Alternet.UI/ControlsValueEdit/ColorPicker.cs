@@ -95,9 +95,9 @@ namespace Alternet.UI
             control.OnValuePropertyChanged((Color)e.OldValue, (Color)e.NewValue);
         }
 
-#pragma warning disable IDE0060 // Remove unused parameter
+#pragma warning disable
         private void OnValuePropertyChanged(Color oldValue, Color newValue)
-#pragma warning restore IDE0060 // Remove unused parameter
+#pragma warning restore
         {
             RaiseValueChanged(EventArgs.Empty);
         }

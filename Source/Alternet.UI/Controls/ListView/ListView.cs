@@ -556,7 +556,9 @@ namespace Alternet.UI
         {
             get
             {
+#pragma warning disable
                 long[] sortedCopy = SelectedIndices.OrderByDescending(i => i).ToArray();
+#pragma warning restore
                 return sortedCopy;
             }
         }

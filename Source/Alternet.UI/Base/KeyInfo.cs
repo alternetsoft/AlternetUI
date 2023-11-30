@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Alternet.UI
 {
@@ -110,13 +107,15 @@ namespace Alternet.UI
         {
             List<KeyInfo> result = [];
 
-            foreach(var key in keys)
+            foreach (var key in keys)
             {
                 if (key.BackendOS.HasFlag(Application.BackendOS))
                     result.Add(key);
             }
 
+#pragma warning disable
             return result.ToArray();
+#pragma warning restore
         }
 
         /// <summary>
@@ -126,7 +125,7 @@ namespace Alternet.UI
         public override string ToString()
         {
             var keyText = GetCustomKeyLabel(Key);
-            if(Modifiers != ModifierKeys.None)
+            if (Modifiers != ModifierKeys.None)
             {
                 var modifiersText = ModifierKeysConverter.ToString(Modifiers, true);
                 keyText = $"{modifiersText}+{keyText}";

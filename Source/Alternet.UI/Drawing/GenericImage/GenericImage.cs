@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using Alternet.UI;
 using Alternet.UI.Native;
 
@@ -252,6 +248,14 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Returns <c>true</c> if image data is present.
+        /// </summary>
+        public bool IsOk
+        {
+            get => UI.Native.GenericImage.IsOk(Handle);
+        }
+
+        /// <summary>
         /// Converts the specified <see cref='GenericImage'/> to a <see cref='Image'/>.
         /// </summary>
         public static explicit operator Image(GenericImage image) => new Bitmap(image);
@@ -259,7 +263,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Converts the specified <see cref='GenericImage'/> to a <see cref='Bitmap'/>.
         /// </summary>
-        public static explicit operator Bitmap(GenericImage image) => new Bitmap(image);
+        public static explicit operator Bitmap(GenericImage image) => new(image);
 
         /// <summary>
         /// Converts the specified <see cref='GenericImage'/> to a <see cref='Image'/>.
@@ -770,7 +774,7 @@ namespace Alternet.Drawing
             Int32Point pos,
             RGBValue? color = null)
         {
-            if(color is null)
+            if (color is null)
             {
                 UI.Native.GenericImage.Resize(Handle, size, pos, -1, -1, -1);
                 return;
@@ -1082,9 +1086,9 @@ namespace Alternet.Drawing
         /// <returns></returns>
         public RGBValue GetRGB(int x, int y)
         {
-            var r = GetRed(x,y);
-            var g = GetGreen(x,y);
-            var b = GetBlue(x,y);
+            var r = GetRed(x, y);
+            var g = GetGreen(x, y);
+            var b = GetBlue(x, y);
             return new(r, g, b);
         }
 
@@ -1286,14 +1290,6 @@ namespace Alternet.Drawing
         public bool HasOption(string name)
         {
             return UI.Native.GenericImage.HasOption(Handle, name);
-        }
-
-        /// <summary>
-        /// Returns <c>true</c> if image data is present.
-        /// </summary>
-        public bool IsOk
-        {
-            get => UI.Native.GenericImage.IsOk(Handle);
         }
 
         /// <summary>
@@ -1519,7 +1515,7 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool CreateNativeData(int width, int height, IntPtr data, bool staticData = false)
         {
-            return UI.Native.GenericImage.CreateData(Handle,  width, height, data, staticData);
+            return UI.Native.GenericImage.CreateData(Handle, width, height, data, staticData);
         }
 
         /// <summary>

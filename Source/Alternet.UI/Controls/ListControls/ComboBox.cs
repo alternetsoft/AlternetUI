@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Globalization;
 
 namespace Alternet.UI
 {
@@ -455,9 +454,9 @@ namespace Alternet.UI
             control.OnSelectedItemPropertyChanged(e.OldValue, e.NewValue);
         }
 
-#pragma warning disable IDE0060 // Remove unused parameter
+#pragma warning disable
         private void OnSelectedItemPropertyChanged(object oldValue, object newValue)
-#pragma warning restore IDE0060 // Remove unused parameter
+#pragma warning restore
         {
             if (newValue == null)
             {

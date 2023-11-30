@@ -247,9 +247,9 @@ namespace Alternet.UI
             }
         }
 
-#pragma warning disable IDE0060 // Remove unused parameter
+#pragma warning disable
         private void RemoveHandlerFromCWT(Delegate handler, ConditionalWeakTable<object, object> cwt)
-#pragma warning restore IDE0060 // Remove unused parameter
+#pragma warning restore
         {
             object target = handler.Target;
             target ??= StaticSource;
@@ -431,5 +431,5 @@ namespace Alternet.UI
                 }
             }
         }
-   }
+    }
 }
