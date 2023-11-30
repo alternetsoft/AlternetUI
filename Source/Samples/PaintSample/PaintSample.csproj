@@ -39,9 +39,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Content Include="SampleImages\love-text-free-png-image.jpeg">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </Content>
       <Content Include="SampleImages\love-text-free-png-image.png">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </Content>

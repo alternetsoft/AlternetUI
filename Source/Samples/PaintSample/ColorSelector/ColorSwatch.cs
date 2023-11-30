@@ -11,10 +11,13 @@ namespace PaintSample
             var normalBorder = Border.CreateDefault();
             normalBorder.UniformCornerRadius = 25;
             normalBorder.UniformRadiusIsPercent = true;
+            normalBorder.Width = 0;
+            normalBorder.Color = Color.Transparent;
 
             BorderSettings hotBorder = new(normalBorder);
-            hotBorder.Width = 1;
+            hotBorder.Width = 0;
             hotBorder.Color = SystemColors.ControlText;
+            hotBorder.Color = Color.Transparent;
             this.SetBorder(hotBorder, GenericControlState.Hovered);
             this.SetBorder(hotBorder, GenericControlState.Pressed);
             this.SetBorder(normalBorder);

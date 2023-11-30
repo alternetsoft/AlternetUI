@@ -9,8 +9,6 @@ namespace PaintSample
 {
     public partial class MainWindow : Window
     {
-        /*private const string FileDialogImageFilesFilter =
-            "Image files (*.png; *.jpg)|*.png;*.jpg|All files (*.*)|*.*";*/
         private readonly Tools? tools;
 
         private Document? document;
@@ -48,8 +46,7 @@ namespace PaintSample
             InitializeComponent();
 
             Title = "AlterNET UI Paint Sample";
-            Width = 750;
-            Height = 700;
+            Size = (750,700);
             StartLocation = WindowStartLocation.CenterScreen;
 
             var menu = Menu!;

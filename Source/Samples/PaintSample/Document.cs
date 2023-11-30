@@ -1,6 +1,7 @@
 using Alternet.Drawing;
 using System;
 using System.IO;
+using Alternet.UI;
 
 namespace PaintSample
 {
@@ -27,7 +28,23 @@ namespace PaintSample
 
         public void Save(string fileName)
         {
-            Bitmap.Save(fileName);
+            var saveAllFormats = false;
+
+
+            var extensions = Image.GetExtensionsForSave();
+
+            if(saveAllFormats)
+                foreach (var ext in extensions)
+                {
+                    var newName = Path.ChangeExtension(fileName, ext);
+                    if(!Bitmap.Save(newName))
+                        Application.Log($"Error saving: {newName}");
+                }
+            else
+            {
+                if (!Bitmap.Save(fileName))
+                    Application.Log($"Error saving: {fileName}");
+            }
             Dirty = false;
             FileName = fileName;
             RaiseChanged();
@@ -90,7 +107,8 @@ namespace PaintSample
 
         public void Paint(DrawingContext drawingContext)
         {
-            drawingContext.DrawImage(Bitmap, new Point());
+            drawingContext.FillRectangle(Brushes.White, Bitmap.Bounds);
+            drawingContext.DrawImage(Bitmap, Point.Empty);
             if (previewAction != null)
                 previewAction(drawingContext);
         }
@@ -118,16 +136,17 @@ namespace PaintSample
 
         private Bitmap CreateBitmap()
         {
-            var bitmap = new Bitmap(new Size(600, 600));
+            var bitmap = new Bitmap((600, 600));
             using var dc = DrawingContext.FromImage(bitmap);
-            dc.FillRectangle(new SolidBrush(BackgroundColor), new Rect(new Point(), bitmap.Size));
+            dc.FillRectangle(new SolidBrush(BackgroundColor), bitmap.Bounds); 
             return bitmap;
         }
 
         private Bitmap LoadBitmap(string fileName)
         {
-            using (var stream = File.OpenRead(fileName))
-                return new Bitmap(new Bitmap(stream));
+            var image = new GenericImage(fileName);
+            image.ResizeNoScale((600, 600), (0, 0), Color.White);
+            return image;
         }
 
         private void RaiseChanged()

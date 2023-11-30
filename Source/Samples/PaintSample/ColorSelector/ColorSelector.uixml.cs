@@ -25,6 +25,8 @@ namespace PaintSample
 
         public ColorSelector()
         {
+            Padding = 5;
+
             InitializeComponent();
 
             selectedColorDisplay.Margin = new Thickness(0,0,5,0);
@@ -58,7 +60,7 @@ namespace PaintSample
                 var swatch = new ColorSwatch(color)
                 {
                     VerticalAlignment = VerticalAlignment.Center,
-                    Margin = (0, 0, 5, 0),
+                    Margin = (0, 5, 5, 5),
                     SuggestedSize = size,
                 };
 
