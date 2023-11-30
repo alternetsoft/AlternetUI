@@ -55,42 +55,42 @@ namespace PaintSample
             menu.Items.Add(fileMainMenu);
 
             newMenuItem = new("_New", NewMenuItem_Click, "Ctrl+N");
-            fileMainMenu.Items.Add(newMenuItem);
+            fileMainMenu.Add(newMenuItem);
             openMenuItem = new("_Open...", OpenMenuItem_Click, "Ctrl+O");
-            fileMainMenu.Items.Add(openMenuItem);
-            fileMainMenu.Items.Add("-");
+            fileMainMenu.Add(openMenuItem);
+            fileMainMenu.Add("-");
             saveMenuItem = new("_Save", SaveMenuItem_Click, "Ctrl+S");
-            fileMainMenu.Items.Add(saveMenuItem);
+            fileMainMenu.Add(saveMenuItem);
             saveAsMenuItem = new(
                 "_Save As...", 
                 SaveAsMenuItem_Click, 
                 "Ctrl+Shift+S");
-            fileMainMenu.Items.Add(saveAsMenuItem);
-            fileMainMenu.Items.Add("-");
+            fileMainMenu.Add(saveAsMenuItem);
+            fileMainMenu.Add("-");
             exitMenuItem = new("E_xit", ExitMenuItem_Click);
-            fileMainMenu.Items.Add(exitMenuItem);
+            fileMainMenu.Add(exitMenuItem);
 
             editMainMenu = "_Edit";
-            menu.Items.Add(editMainMenu);
+            menu.Add(editMainMenu);
 
             undoMenuItem = new("_Undo", UndoMenuItem_Click, "Ctrl+Z");
-            editMainMenu.Items.Add(undoMenuItem);
+            editMainMenu.Add(undoMenuItem);
             redoMenuItem = new("_Redo", RedoMenuItem_Click, "Ctrl+Y");
-            editMainMenu.Items.Add(redoMenuItem);
-            editMainMenu.Items.Add("-");
+            editMainMenu.Add(redoMenuItem);
+            editMainMenu.Add("-");
             copyMenuItem = new("_Copy", CopyMenuItem_Click, "Ctrl+C");
-            editMainMenu.Items.Add(copyMenuItem);
+            editMainMenu.Add(copyMenuItem);
             pasteMenuItem = new("_Paste", PasteMenuItem_Click, "Ctrl+V");
-            editMainMenu.Items.Add(pasteMenuItem);
+            editMainMenu.Add(pasteMenuItem);
 
             toolsMenu = new("_Tools");
-            menu.Items.Add(toolsMenu);
+            menu.Add(toolsMenu);
 
             helpMainMenu = new("_Help");            
-            menu.Items.Add(helpMainMenu);
+            menu.Add(helpMainMenu);
 
             aboutMenuItem = new("_About", AboutMenuItem_Click);
-            helpMainMenu.Items.Add(aboutMenuItem);
+            helpMainMenu.Add(aboutMenuItem);
 
             mainGrid = new();
             Children.Add(mainGrid);
