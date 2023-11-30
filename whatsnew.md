@@ -1,4 +1,27 @@
-# 0.9.409 (work in progress)
+# 0.9.409 (2023 November 30)
+
+## 2023 November 30
+
+- GenericImage - platform independant image for pixel manipulations.
+- Image and Bitmap: DefaultDisabledBrightness, AsGeneric (comverts to GenericImage), HasAlpha, PixelWidth, 
+PixelHeight, DefaultBitmapType, Depth, Load(string, BitmapType), Save(string, BitmapType), Save(Stream, BitmapType), 
+Load(Stream, BitmapType), GetSubBitmap(Int32Rect), ConvertToDisabled(brightness), Rescale(Int32Size), ResetAlpha().
+- IconSet separated from ImageSet. As a result - ImageSet is mush faster (no conversion to icon is done on image load or add).
+Also Window.Icon type is now IconSet.
+- PictureBox now uses current control state to paint image. As a result, Enabled and other properties that change control state
+ are fully functional and are used to select the appropriate image. Use StateObjects.Images to set images for
+ different control states (see GenericControlState enum).
+- HSVValue and RGBValue classes.
+- Color : AlphaBlend, ChangeLightness, MakeMono, MakeGrey, MakeDisabled, AsImage(Int32Size).
+ Color to SolidBrush converter. Color to and from RGBValue converters.
+- PictureBox: CenterVert, CenterHorz.
+- Control: Raise, Lower.
+- Image: IsOk, IsEmpty, Rect, IsNullOrEmpty, IsNotNullAndOk, GetExtensionsForOpenSave, GetExtensionsForOpen, GetExtensionsForSave.
+- Application.Alert, Size.AnyIsEmpty, Rect.CenterIn, Rect.ConvertToString, Display.IsVertical.
+- Add FileMaskUtils and use it in PaintSample #64.
+- Display: PixelFromDip for Size, Rect, Point, etc.
+- ControlDefaults: HasBorderOnWhite, HasBorderOnBlack.
+- Improved Border and PictureBox painting.
 
 ## 2023 November 26
 
