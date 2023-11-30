@@ -257,6 +257,11 @@ namespace Alternet.Drawing
         public static implicit operator Image(GenericImage image) => new Bitmap(image);
 
         /// <summary>
+        /// Converts the specified <see cref='GenericImage'/> to a <see cref='Bitmap'/>.
+        /// </summary>
+        public static implicit operator Bitmap(GenericImage image) => new Bitmap(image);
+
+        /// <summary>
         /// Converts the specified <see cref='GenericImage'/> to a <see cref='Image'/>.
         /// </summary>
         public static implicit operator GenericImage(Image image) => image.AsGeneric;
