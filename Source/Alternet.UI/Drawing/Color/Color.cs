@@ -1254,19 +1254,17 @@ namespace Alternet.Drawing
         /// <summary>
         /// Converts RGB color to <see cref="HSVValue"/>.
         /// </summary>
-        /// <param name="r">R component of a color.</param>
-        /// <param name="g">G component of a color.</param>
-        /// <param name="b">B component of a color.</param>
+        /// <param name="rgb">RGB Color.</param>
         /// <returns></returns>
-        public static HSVValue RGBtoHSV(byte r, byte g, byte b)
+        public static HSVValue RGBtoHSV(RGBValue rgb)
         {
             const int RED = 0;
             const int GREEN = 1;
             const int BLUE = 2;
 
-            double red = r / 255.0;
-            double green = g / 255.0;
-            double blue = b / 255.0;
+            double red = rgb.R / 255.0;
+            double green = rgb.G / 255.0;
+            double blue = rgb.B / 255.0;
 
             // find the min and max intensity (and remember which one was it for the
             // latter)
@@ -1448,7 +1446,7 @@ namespace Alternet.Drawing
 
         /// <summary>
         /// Used by <see cref="ChangeLightness(int)"/> and
-        /// <see cref="MakeDisabled(RGBValue, byte)"/>.
+        /// <see cref="MakeDisabled(ref RGBValue, byte)"/>.
         /// </summary>
         /// <param name="fg"></param>
         /// <param name="bg"></param>
@@ -1471,8 +1469,8 @@ namespace Alternet.Drawing
         public Color ChangeLightness(int ialpha)
         {
             RGBValue rgb = this;
-            var newValue = ChangeLightness(rgb, ialpha);
-            return newValue;
+            ChangeLightness(ref rgb, ialpha);
+            return rgb;
         }
 
         /// <summary>
@@ -1482,9 +1480,9 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="rgb">RGB Color.</param>
         /// <param name="ialpha">Lightness value (0..200).</param>
-        public static RGBValue ChangeLightness(RGBValue rgb, int ialpha)
+        public static void ChangeLightness(ref RGBValue rgb, int ialpha)
         {
-            if (ialpha == 100) return rgb;
+            if (ialpha == 100) return;
 
             // ialpha is 0..200 where 0 is completely black
             // and 200 is completely white and 100 is the same
@@ -1507,11 +1505,9 @@ namespace Alternet.Drawing
                 alpha = 1.0 + alpha;  // 0 = transparent fg; 1 = opaque fg
             }
 
-            var r = AlphaBlend(rgb.R, bg, alpha);
-            var g = AlphaBlend(rgb.G, bg, alpha);
-            var b = AlphaBlend(rgb.B, bg, alpha);
-
-            return new(r, g, b);
+            rgb.R = AlphaBlend(rgb.R, bg, alpha);
+            rgb.G = AlphaBlend(rgb.G, bg, alpha);
+            rgb.B = AlphaBlend(rgb.B, bg, alpha);
         }
 
         /// <summary>
@@ -1519,20 +1515,20 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="rgb">Color.</param>
         /// <param name="on">Color on/off selector.</param>
-        public static RGBValue MakeMono(RGBValue rgb, bool on)
+        public static void MakeMono(ref RGBValue rgb, bool on)
         {
             byte v = on ? (byte)255 : (byte)0;
-            return new RGBValue(v, v, v);
+            rgb.R = rgb.G = rgb.B = v;
         }
 
         /// <summary>
-        /// Creates a grey color from rgb parameters using integer arithmetic.
+        /// Makes color grey using integer arithmetic.
         /// </summary>
         /// <param name="rgb">Color.</param>
-        public static RGBValue MakeGrey(RGBValue rgb)
+        public static void MakeGrey(ref RGBValue rgb)
         {
             var v = (byte)((rgb.B * 117UL + rgb.G * 601UL + rgb.R * 306UL) >> 10);
-            return new(v, v, v);
+            rgb.R = rgb.G = rgb.B = v;
         }
 
         /// <summary>
@@ -1546,24 +1542,23 @@ namespace Alternet.Drawing
         /// <param name="weight_r">Weight of R component of a color.</param>
         /// <param name="weight_g">Weight of G component of a color.</param>
         /// <param name="weight_b">Weight of B component of a color.</param>
-        public static RGBValue MakeGrey(RGBValue rgb, double weight_r, double weight_g, double weight_b)
+        public static void MakeGrey(ref RGBValue rgb, double weight_r, double weight_g, double weight_b)
         {
             double luma = rgb.R * weight_r + rgb.G * weight_g + rgb.B * weight_b;
             var v = (byte)Math.Round(luma);
-            return new(v, v, v);
+            rgb.R = rgb.G = rgb.B = v;
         }
 
         /// <summary>
-        /// Creates a disabled (dimmed) color from rgb parameters.
+        /// Sets a disabled (dimmed) color for specified <see cref="RGBValue"/>.
         /// </summary>
         /// <param name="rgb">Color.</param>
         /// <param name="brightness"></param>
-        public static RGBValue MakeDisabled(RGBValue rgb, byte brightness)
+        public static void MakeDisabled(ref RGBValue rgb, byte brightness)
         {
-            var r = AlphaBlend(rgb.R, brightness, 0.4);
-            var g = AlphaBlend(rgb.G, brightness, 0.4);
-            var b = AlphaBlend(rgb.B, brightness, 0.4);
-            return new(r, g, b);
+            rgb.R = AlphaBlend(rgb.R, brightness, 0.4);
+            rgb.G = AlphaBlend(rgb.G, brightness, 0.4);
+            rgb.B = AlphaBlend(rgb.B, brightness, 0.4);
         }
 
         /// <summary>
@@ -1573,7 +1568,8 @@ namespace Alternet.Drawing
         /// <returns></returns>
         public Color MakeDisabled(byte brightness)
         {
-            var rgb = MakeDisabled(this, brightness);
+            RGBValue rgb = this;
+            MakeDisabled(ref rgb, brightness);
             var result = Color.FromArgb(A, rgb.R, rgb.G, rgb.B);
             return result;
         }
