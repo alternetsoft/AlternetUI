@@ -1047,6 +1047,60 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Gets <see cref="RGBValue"/> at given pixel location.
+        /// </summary>
+        /// <param name="x">X coordinate of the pixel.</param>
+        /// <param name="y">Y coordinate of the pixel.</param>
+        /// <returns></returns>
+        public RGBValue GetRGB(int x, int y)
+        {
+            var r = GetRed(x,y);
+            var g = GetGreen(x,y);
+            var b = GetBlue(x,y);
+            return new(r, g, b);
+        }
+
+        /// <summary>
+        /// Gets <see cref="Color"/> at given pixel location.
+        /// </summary>
+        /// <param name="x">X coordinate of the pixel.</param>
+        /// <param name="y">Y coordinate of the pixel.</param>
+        /// <param name="withAlpha">If true alpha channel is also returned in result (<see cref="Color.A"/>);
+        /// if false it is set to 255.</param>
+        /// <returns></returns>
+        /// <remarks>
+        /// Some images can have mask color, this method doesn't use this info. You need to add
+        /// additional code in order to determine transparency if your image is with mask color.
+        /// </remarks>
+        public Color GetPixel(int x, int y, bool withAlpha = false)
+        {
+            var r = GetRed(x, y);
+            var g = GetGreen(x, y);
+            var b = GetBlue(x, y);
+            var a = (withAlpha && HasAlpha()) ? GetAlpha(x, y) : 255;
+            return Color.FromArgb(a, r, g, b);
+        }
+
+        /// <summary>
+        /// Sets the color of the pixel at the given x and y coordinate.
+        /// </summary>
+        /// <param name="x">X coordinate of the pixel.</param>
+        /// <param name="y">Y coordinate of the pixel.</param>
+        /// <param name="color">New color of the pixel.</param>
+        /// <remarks>
+        /// This routine performs bounds-checks for the coordinate so it can be
+        /// considered a safe way to manipulate the data.
+        /// </remarks>
+        /// <param name="withAlpha">If true alpha channel is also set from <paramref name="color"/>.</param>
+        public void SetPixel(int x, int y, Color color, bool withAlpha = false)
+        {
+            color.GetArgbValues(out var a, out var r, out var g, out var b);
+            SetRGB(x, y, new RGBValue(r, g, b));
+            if (withAlpha && HasAlpha())
+                SetAlpha(x, y, a);
+        }
+
+        /// <summary>
         /// Returns the red intensity at the given coordinate.
         /// </summary>
         /// <param name="x">X coordinate of the pixel.</param>
@@ -1080,6 +1134,17 @@ namespace Alternet.Drawing
         public byte GetBlue(int x, int y)
         {
             return UI.Native.GenericImage.GetBlue(Handle, x, y);
+        }
+
+        /// <summary>
+        /// Gets the <see cref="RGBValue"/> value of the mask color.
+        /// </summary>
+        public RGBValue GetMaskRGB()
+        {
+            var r = GetMaskRed();
+            var g = GetMaskGreen();
+            var b = GetMaskBlue();
+            return new(r, g, b);
         }
 
         /// <summary>
