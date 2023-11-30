@@ -50,6 +50,26 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Implicit operator convertion from tuple with three <see cref="byte"/> values
+        /// to <see cref="RGBValue"/>.
+        /// </summary>
+        /// <param name="d">New <see cref="RGBValue"/>.</param>
+        public static implicit operator RGBValue((byte, byte, byte) d) =>
+            new(d.Item1, d.Item2, d.Item3);
+
+        /// <summary>
+        /// Implicit operator convertion from <see cref="HSVValue"/> to <see cref="RGBValue"/>.
+        /// </summary>
+        /// <param name="d">New <see cref="RGBValue"/>.</param>
+        public static implicit operator RGBValue(HSVValue d) => Color.HSVtoRGB(d);
+
+        /// <summary>
+        /// Implicit operator convertion from <see cref="RGBValue"/> to <see cref="HSVValue"/>.
+        /// </summary>
+        /// <param name="d">New <see cref="HSVValue"/>.</param>
+        public static implicit operator HSVValue(RGBValue d) => Color.RGBtoHSV(d);
+
+        /// <summary>
         /// Tests whether two <see cref='RGBValue'/> objects are different.
         /// </summary>
         public static bool operator !=(RGBValue left, RGBValue right) => !(left == right);
