@@ -19,9 +19,9 @@ namespace Alternet.Drawing
         /// </summary>
         public byte DefaultDisabledBrightness = 170;
 
-        // private static ImageGrayScaleMethod defaultGrayScaleMethod = ImageGrayScaleMethod.SetColorRGB150;
-        // private static Brush? disabledBrush = null;
-        // private static Color disabledBrushColor = Color.FromArgb(171, 71, 71, 71);
+        /* private static ImageGrayScaleMethod defaultGrayScaleMethod = ImageGrayScaleMethod.SetColorRGB150;
+        private static Brush? disabledBrush = null;
+        private static Color disabledBrushColor = Color.FromArgb(171, 71, 71, 71);*/
 
         private bool isDisposed;
         private UI.Native.Image nativeImage;
@@ -124,6 +124,13 @@ namespace Alternet.Drawing
         }*/
 
         /// <summary>
+        /// Gets default <see cref="BitmapType"/> value for the current operating system.
+        /// </summary>
+        /// <returns></returns>
+        public static BitmapType DefaultBitmapType
+            => (BitmapType)UI.Native.Image.GetDefaultBitmapType();
+
+        /// <summary>
         /// Converts this object to <see cref="GenericImage"/>.
         /// </summary>
         public GenericImage AsGeneric
@@ -223,13 +230,6 @@ namespace Alternet.Drawing
         public int PixelHeight => NativeImage.PixelHeight;
 
         /// <summary>
-        /// Gets default <see cref="BitmapType"/> value for the current operating system.
-        /// </summary>
-        /// <returns></returns>
-        public static BitmapType DefaultBitmapType
-            => (BitmapType)UI.Native.Image.GetDefaultBitmapType();
-
-        /// <summary>
         /// Gets the color depth of the image. Returned value is 32, 24, or other.
         /// </summary>
         public int Depth
@@ -247,130 +247,6 @@ namespace Alternet.Drawing
                 CheckDisposed();
                 return nativeImage;
             }
-        }
-
-        /// <summary>
-        /// Loads an image from a file or resource.
-        /// </summary>
-        /// <param name="name">Either a filename or a resource name. The meaning of name
-        /// is determined by the type parameter.</param>
-        /// <param name="type">One of the <see cref="BitmapType"/> values</param>
-        /// <returns><c>true</c> if the operation succeeded, <c>false</c> otherwise.</returns>
-        /// <remarks>
-        /// Note: Not all values of <see cref="BitmapType"/> enumeration
-        /// may be supported by the library and operating system for the load operation.
-        /// </remarks>
-        /// <remarks>
-        /// You can specify <see cref="BitmapType.Any"/> to guess image type using file extension.
-        /// </remarks>
-        /// <remarks>Use <see cref="GetExtensionsForLoad"/> to get supported formats for the load operation.</remarks>
-        public bool Load(string name, BitmapType type)
-        {
-            return NativeImage.LoadFile(name, (int)type);
-        }
-
-        /// <summary>
-        /// Saves this <see cref="Image"/> to the specified file.
-        /// </summary>
-        /// <param name="name">A string that contains the name of the file
-        /// to which to save this <see cref="Image"/>.</param>
-        /// <param name="type">An <see cref="BitmapType"/> that specifies
-        /// the format of the saved image.</param>
-        /// <remarks>
-        /// Note: Not all values of <see cref="BitmapType"/> enumeration
-        /// may be supported by the library and operating system for the save operation.
-        /// </remarks>
-        /// <returns><c>true</c> if the operation succeeded, <c>false</c> otherwise.</returns>
-        /// <remarks>Use <see cref="GetExtensionsForSave"/> to get supported formats for the save operation.</remarks>
-        public bool Save(string name, BitmapType type)
-        {
-            return NativeImage.SaveFile(name, (int)type);
-        }
-
-        /// <summary>
-        /// Saves this image to the specified stream in the specified format defined
-        /// in <paramref name="type"/>.
-        /// </summary>
-        /// <param name="stream">The <see cref="Stream"/> where the image will be
-        /// saved.</param>
-        /// <param name="type">An <see cref="BitmapType"/> that specifies
-        /// the format of the saved image.</param>
-        /// <remarks>
-        /// Note: Not all values of <see cref="BitmapType"/> enumeration
-        /// may be supported by the library and operating system for the save operation.
-        /// </remarks>
-        /// <returns><c>true</c> if the operation succeeded, <c>false</c> otherwise.</returns>
-        /// <remarks>Use <see cref="GetExtensionsForSave"/> to get supported formats for the save operation.</remarks>
-        public bool Save(Stream stream, BitmapType type)
-        {
-            var outputStream = new UI.Native.OutputStream(stream);
-            return NativeImage.SaveStream(outputStream, (int)type);
-        }
-
-        /// <summary>
-        /// Loads an image from an input stream.
-        /// </summary>
-        /// <param name="stream">The <see cref="Stream"/> from where the image will be
-        /// loaded.</param>
-        /// <param name="type">One of the <see cref="BitmapType"/> values</param>
-        /// <remarks>
-        /// Note: Not all values of <see cref="BitmapType"/> enumeration
-        /// may be supported by the library and operating system for the load operation.
-        /// </remarks>
-        /// <returns><c>true</c> if the operation succeeded, <c>false</c> otherwise.</returns>
-        /// <remarks>Use <see cref="GetExtensionsForLoad"/> to get supported formats for the load operation.</remarks>
-        public bool Load(Stream stream, BitmapType type)
-        {
-            using var inputStream = new UI.Native.InputStream(stream);
-            return NativeImage.LoadStream(inputStream, (int)type);
-        }
-
-        /// <summary>
-        /// Returns a sub image of the current one as long as the <paramref name="rect"/> belongs
-        /// entirely to the image.
-        /// </summary>
-        /// <param name="rect">Rectangle in this image.</param>
-        /// <returns></returns>
-        public Image GetSubBitmap(Int32Rect rect)
-        {
-            var converted = NativeImage.GetSubBitmap(rect);
-            return new Bitmap(converted);
-        }
-
-        /// <summary>
-        /// Returns disabled (dimmed) version of the image.
-        /// </summary>
-        /// <param name="brightness">Brightness. Default is 255.</param>
-        /// <returns></returns>
-        public Image ConvertToDisabled(byte brightness = 255)
-        {
-            var converted = NativeImage.ConvertToDisabled(brightness);
-            return new Bitmap(converted);
-        }
-
-        /// <summary>
-        /// Rescales this image to the requested size.
-        /// </summary>
-        /// <remarks>
-        /// This function is just a convenient wrapper for <see cref="GenericImage.Rescale"/> used to
-        /// resize the given image to the requested size. If you need more control over
-        /// resizing, e.g.to specify the quality option different from
-        /// <see cref="GenericImageResizeQuality.Nearest"/> used by this function, please use
-        /// the <see cref="GenericImage"/> function
-        /// directly instead. Size must be valid.
-        /// </remarks>
-        /// <param name="sizeNeeded"></param>
-        public void Rescale(Int32Size sizeNeeded)
-        {
-            NativeImage.Rescale(sizeNeeded);
-        }
-
-        /// <summary>
-        /// Resets alpha channel.
-        /// </summary>
-        public void ResetAlpha()
-        {
-            NativeImage.ResetAlpha();
         }
 
         /// <summary>
@@ -542,6 +418,130 @@ namespace Alternet.Drawing
         /// <see cref="SaveFileDialog"/>.
         /// </summary>
         public static IEnumerable<string> GetExtensionsForSave() => GetExtensionsForLoadSave();
+
+        /// <summary>
+        /// Loads an image from a file or resource.
+        /// </summary>
+        /// <param name="name">Either a filename or a resource name. The meaning of name
+        /// is determined by the type parameter.</param>
+        /// <param name="type">One of the <see cref="BitmapType"/> values</param>
+        /// <returns><c>true</c> if the operation succeeded, <c>false</c> otherwise.</returns>
+        /// <remarks>
+        /// Note: Not all values of <see cref="BitmapType"/> enumeration
+        /// may be supported by the library and operating system for the load operation.
+        /// </remarks>
+        /// <remarks>
+        /// You can specify <see cref="BitmapType.Any"/> to guess image type using file extension.
+        /// </remarks>
+        /// <remarks>Use <see cref="GetExtensionsForLoad"/> to get supported formats for the load operation.</remarks>
+        public bool Load(string name, BitmapType type)
+        {
+            return NativeImage.LoadFile(name, (int)type);
+        }
+
+        /// <summary>
+        /// Saves this <see cref="Image"/> to the specified file.
+        /// </summary>
+        /// <param name="name">A string that contains the name of the file
+        /// to which to save this <see cref="Image"/>.</param>
+        /// <param name="type">An <see cref="BitmapType"/> that specifies
+        /// the format of the saved image.</param>
+        /// <remarks>
+        /// Note: Not all values of <see cref="BitmapType"/> enumeration
+        /// may be supported by the library and operating system for the save operation.
+        /// </remarks>
+        /// <returns><c>true</c> if the operation succeeded, <c>false</c> otherwise.</returns>
+        /// <remarks>Use <see cref="GetExtensionsForSave"/> to get supported formats for the save operation.</remarks>
+        public bool Save(string name, BitmapType type)
+        {
+            return NativeImage.SaveFile(name, (int)type);
+        }
+
+        /// <summary>
+        /// Saves this image to the specified stream in the specified format defined
+        /// in <paramref name="type"/>.
+        /// </summary>
+        /// <param name="stream">The <see cref="Stream"/> where the image will be
+        /// saved.</param>
+        /// <param name="type">An <see cref="BitmapType"/> that specifies
+        /// the format of the saved image.</param>
+        /// <remarks>
+        /// Note: Not all values of <see cref="BitmapType"/> enumeration
+        /// may be supported by the library and operating system for the save operation.
+        /// </remarks>
+        /// <returns><c>true</c> if the operation succeeded, <c>false</c> otherwise.</returns>
+        /// <remarks>Use <see cref="GetExtensionsForSave"/> to get supported formats for the save operation.</remarks>
+        public bool Save(Stream stream, BitmapType type)
+        {
+            var outputStream = new UI.Native.OutputStream(stream);
+            return NativeImage.SaveStream(outputStream, (int)type);
+        }
+
+        /// <summary>
+        /// Loads an image from an input stream.
+        /// </summary>
+        /// <param name="stream">The <see cref="Stream"/> from where the image will be
+        /// loaded.</param>
+        /// <param name="type">One of the <see cref="BitmapType"/> values</param>
+        /// <remarks>
+        /// Note: Not all values of <see cref="BitmapType"/> enumeration
+        /// may be supported by the library and operating system for the load operation.
+        /// </remarks>
+        /// <returns><c>true</c> if the operation succeeded, <c>false</c> otherwise.</returns>
+        /// <remarks>Use <see cref="GetExtensionsForLoad"/> to get supported formats for the load operation.</remarks>
+        public bool Load(Stream stream, BitmapType type)
+        {
+            using var inputStream = new UI.Native.InputStream(stream);
+            return NativeImage.LoadStream(inputStream, (int)type);
+        }
+
+        /// <summary>
+        /// Returns a sub image of the current one as long as the <paramref name="rect"/> belongs
+        /// entirely to the image.
+        /// </summary>
+        /// <param name="rect">Rectangle in this image.</param>
+        /// <returns></returns>
+        public Image GetSubBitmap(Int32Rect rect)
+        {
+            var converted = NativeImage.GetSubBitmap(rect);
+            return new Bitmap(converted);
+        }
+
+        /// <summary>
+        /// Returns disabled (dimmed) version of the image.
+        /// </summary>
+        /// <param name="brightness">Brightness. Default is 255.</param>
+        /// <returns></returns>
+        public Image ConvertToDisabled(byte brightness = 255)
+        {
+            var converted = NativeImage.ConvertToDisabled(brightness);
+            return new Bitmap(converted);
+        }
+
+        /// <summary>
+        /// Rescales this image to the requested size.
+        /// </summary>
+        /// <remarks>
+        /// This function is just a convenient wrapper for <see cref="GenericImage.Rescale"/> used to
+        /// resize the given image to the requested size. If you need more control over
+        /// resizing, e.g.to specify the quality option different from
+        /// <see cref="GenericImageResizeQuality.Nearest"/> used by this function, please use
+        /// the <see cref="GenericImage"/> function
+        /// directly instead. Size must be valid.
+        /// </remarks>
+        /// <param name="sizeNeeded"></param>
+        public void Rescale(Int32Size sizeNeeded)
+        {
+            NativeImage.Rescale(sizeNeeded);
+        }
+
+        /// <summary>
+        /// Resets alpha channel.
+        /// </summary>
+        public void ResetAlpha()
+        {
+            NativeImage.ResetAlpha();
+        }
 
         /// <summary>
         /// Gets <see cref="DrawingContext"/> for this image on which you can paint.
