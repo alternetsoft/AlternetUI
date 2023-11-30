@@ -21,9 +21,6 @@ namespace PaintSample
         private readonly Border border;
         private readonly Grid mainGrid;
 
-        CommandButton? undoButton;
-        CommandButton? redoButton;
-
         private readonly MenuItem toolsMenu;
         private readonly MenuItem helpMainMenu;
         private readonly MenuItem aboutMenuItem;
@@ -38,8 +35,12 @@ namespace PaintSample
         private readonly MenuItem saveMenuItem;
         private readonly MenuItem saveAsMenuItem;
         private readonly MenuItem exitMenuItem;
+        private readonly MenuItem testMenu;
 
         private readonly string? baseTitle;
+
+        private CommandButton? undoButton;
+        private CommandButton? redoButton;
 
         public MainWindow()
         {
@@ -51,8 +52,8 @@ namespace PaintSample
 
             var menu = Menu!;
 
-            fileMainMenu = "_File";
-            menu.Items.Add(fileMainMenu);
+            fileMainMenu = menu.Add("_File");
+            editMainMenu = menu.Add("_Edit");
 
             newMenuItem = new("_New", NewMenuItem_Click, "Ctrl+N");
             fileMainMenu.Add(newMenuItem);
@@ -61,17 +62,14 @@ namespace PaintSample
             fileMainMenu.Add("-");
             saveMenuItem = new("_Save", SaveMenuItem_Click, "Ctrl+S");
             fileMainMenu.Add(saveMenuItem);
+
             saveAsMenuItem = new(
                 "_Save As...", 
                 SaveAsMenuItem_Click, 
                 "Ctrl+Shift+S");
             fileMainMenu.Add(saveAsMenuItem);
             fileMainMenu.Add("-");
-            exitMenuItem = new("E_xit", ExitMenuItem_Click);
-            fileMainMenu.Add(exitMenuItem);
-
-            editMainMenu = "_Edit";
-            menu.Add(editMainMenu);
+            exitMenuItem = fileMainMenu.Add(new("E_xit", ExitMenuItem_Click));
 
             undoMenuItem = new("_Undo", UndoMenuItem_Click, "Ctrl+Z");
             editMainMenu.Add(undoMenuItem);
@@ -83,8 +81,13 @@ namespace PaintSample
             pasteMenuItem = new("_Paste", PasteMenuItem_Click, "Ctrl+V");
             editMainMenu.Add(pasteMenuItem);
 
-            toolsMenu = new("_Tools");
-            menu.Add(toolsMenu);
+            toolsMenu = menu.Add("_Tools");
+
+            testMenu = menu.Add("Actions");
+
+            testMenu.Add("Lightness (GenericImage.ChangeLightness)", DoChangeLightness);
+            testMenu.Add("Gen sample image (GenericImage.GetData)", DoGenImageUseGetData);
+            testMenu.Add("Lightness (GenericImage.GetData)", DoChangeLightnessUseGetData);
 
             helpMainMenu = new("_Help");            
             menu.Add(helpMainMenu);
@@ -416,6 +419,68 @@ namespace PaintSample
             }
 
             base.OnClosing(e);
+        }
+
+        public void DoChangeLightness()
+        {
+            var result = DialogFactory.GetNumberFromUser(null, "Lightness (0..200)", null, 100, 0, 200);
+            if (result is null)
+                return;
+            Application.Log($"Image.ChangeLightness: {result}");
+            var bitmap = Document.Bitmap;
+            GenericImage image = (GenericImage)bitmap;
+            var converted = image.ChangeLightness((int)result.Value);
+            Document.Bitmap = (Bitmap)converted;
+        }
+
+        public void DoChangeLightnessUseGetData()
+        {
+            var result = DialogFactory.GetNumberFromUser(null, "Lightness (0..200)", null, 100, 0, 200);
+            if (result is null)
+                return;
+            Application.Log($"Change lightness using GenericImage.GetData");
+            var bitmap = Document.Bitmap;
+            GenericImage image = (GenericImage)bitmap;
+            var lightness = (int)result.Value;
+            image.ForEachPixel(Color.ChangeLightness, lightness);
+            Document.Bitmap = (Bitmap)image;
+        }
+
+        public unsafe void DoGenImageUseGetData()
+        {
+            Application.Log($"Generate sample image using GenericImage.GetData");
+            var bitmap = Document.Bitmap;
+            GenericImage image = (GenericImage)bitmap;
+            image.InitAlpha();
+            var ndata = image.GetNativeData();
+            var nalpha = image.GetNativeAlphaData();
+
+            byte* data = (byte*)ndata;
+            byte* alpha = (byte*)nalpha;
+
+            var height = image.Height;
+            var width = image.Width;
+
+            for (int y = 0; y < height; y++)
+            {
+                byte r = 0, g = 0, b = 0;
+                if (y < height / 3)
+                    r = 0xff;
+                else if (y < (2 * height) / 3)
+                    g = 0xff;
+                else
+                    b = 0xff;
+
+                for (int x = 0; x < width; x++)
+                {
+                    *alpha++ = (byte)x;
+                    *data++ = r;
+                    *data++ = g;
+                    *data++ = b;
+                }
+            }
+
+            Document.Bitmap = (Bitmap)image;
         }
     }
 }

@@ -146,7 +146,7 @@ namespace PaintSample
         {
             var image = new GenericImage(fileName);
             image.ResizeNoScale((600, 600), (0, 0), Color.White);
-            return image;
+            return (Bitmap)image;
         }
 
         private void RaiseChanged()
