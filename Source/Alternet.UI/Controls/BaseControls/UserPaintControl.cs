@@ -122,6 +122,39 @@ namespace Alternet.UI
 #endif
         }
 
+        /// <summary>
+        /// Draw default border.
+        /// </summary>
+        /// <param name="dc">Drawing context.</param>
+        /// <param name="rect">Ractangle.</param>
+        public virtual void DrawDefaultBorder(DrawingContext dc, Rect rect)
+        {
+            var settings = Borders?.GetObjectOrNull(CurrentState);
+            settings?.Draw(dc, rect);
+        }
+
+        /// <summary>
+        /// Draw default background.
+        /// </summary>
+        /// <param name="dc">Drawing context.</param>
+        /// <param name="rect">Ractangle.</param>
+        public virtual void DrawDefaultBackground(DrawingContext dc, Rect rect)
+        {
+            var state = CurrentState;
+            var brush = GetBackground(state);
+
+            if (brush != null)
+            {
+                var border = Borders?.GetObjectOrNormal(state);
+                var radius = border?.GetUniformCornerRadius(rect);
+
+                if (radius is null)
+                    dc.FillRectangle(brush, rect);
+                else
+                    dc.FillRoundedRectangle(brush, rect, radius.Value);
+            }
+        }
+
         internal virtual void DefaultPaint(DrawingContext dc, Rect rect)
         {
         }
