@@ -53,6 +53,18 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets <see cref="DrawingContext"/> for the <see cref="Image"/> on which
+        /// you can paint.
+        /// </summary>
+        public DrawingContext? Canvas
+        {
+            get
+            {
+                return Image?.GetDrawingContext();
+            }
+        }
+
+        /// <summary>
         /// Gets or sets whether to center image vertically in the control rectangle.
         /// Default is <c>true</c>. This property is used when image is not stretched.
         /// </summary>
