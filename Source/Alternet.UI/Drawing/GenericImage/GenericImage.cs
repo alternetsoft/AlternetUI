@@ -254,17 +254,17 @@ namespace Alternet.Drawing
         /// <summary>
         /// Converts the specified <see cref='GenericImage'/> to a <see cref='Image'/>.
         /// </summary>
-        public static implicit operator Image(GenericImage image) => new Bitmap(image);
+        public static explicit operator Image(GenericImage image) => new Bitmap(image);
 
         /// <summary>
         /// Converts the specified <see cref='GenericImage'/> to a <see cref='Bitmap'/>.
         /// </summary>
-        public static implicit operator Bitmap(GenericImage image) => new Bitmap(image);
+        public static explicit operator Bitmap(GenericImage image) => new Bitmap(image);
 
         /// <summary>
         /// Converts the specified <see cref='GenericImage'/> to a <see cref='Image'/>.
         /// </summary>
-        public static implicit operator GenericImage(Image image) => image.AsGeneric;
+        public static explicit operator GenericImage(Image image) => image.AsGeneric;
 
         /// <summary>
         /// Returns <c>true</c> if at least one of the available image handlers can read the file
@@ -440,6 +440,34 @@ namespace Alternet.Drawing
         public void SetMaskColor(RGBValue rgb)
         {
             UI.Native.GenericImage.SetMaskColor(Handle, rgb.R, rgb.G, rgb.B);
+        }
+
+        /// <summary>
+        /// Executes specified <paramref name="action"/> for the each pixel of the image.
+        /// </summary>
+        /// <typeparam name="T">Type of the custom value.</typeparam>
+        /// <param name="action">Action to call for the each pixel. <see cref="RGBValue"/> is passed as the first
+        /// parameter of the action.</param>
+        /// <param name="param">Custom value. It is passed to the <paramref name="action"/> as the second parameter.</param>
+        /// <remarks>
+        /// For an example of the action implementation, see source code of the
+        /// <see cref="Color.ChangeLightness(ref RGBValue, int)"/> method.
+        /// </remarks>
+        public unsafe void ForEachPixel<T>(ActionRef<RGBValue, T> action, T param)
+        {
+            var ndata = GetNativeData();
+            RGBValue* data = (RGBValue*)ndata;
+            var height = Height;
+            var width = Width;
+
+            for (int y = 0; y < height; y++)
+            {
+                for (int x = 0; x < width; x++)
+                {
+                    action(ref *data, param);
+                    data++;
+                }
+            }
         }
 
         /// <summary>
