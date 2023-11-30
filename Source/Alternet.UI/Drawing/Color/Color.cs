@@ -1271,20 +1271,20 @@ namespace Alternet.Drawing
             // find the min and max intensity (and remember which one was it for the
             // latter)
             double minimumRGB = red;
-            if ( green < minimumRGB )
+            if (green < minimumRGB)
                 minimumRGB = green;
-            if ( blue < minimumRGB )
+            if (blue < minimumRGB)
                 minimumRGB = blue;
 
             int chMax = RED;
-            
+
             double maximumRGB = red;
-            if ( green > maximumRGB )
+            if (green > maximumRGB)
             {
                 chMax = GREEN;
                 maximumRGB = green;
             }
-            if ( blue > maximumRGB )
+            if (blue > maximumRGB)
             {
                 chMax = BLUE;
                 maximumRGB = blue;
@@ -1294,7 +1294,7 @@ namespace Alternet.Drawing
 
             double hue = 0.0, saturation;
             double deltaRGB = maximumRGB - minimumRGB;
-            if ( deltaRGB == 0 )
+            if (deltaRGB == 0)
             {
                 // Gray has no color
                 hue = 0.0;
@@ -1302,7 +1302,7 @@ namespace Alternet.Drawing
             }
             else
             {
-                switch ( chMax )
+                switch (chMax)
                 {
                     case RED:
                         hue = (green - blue) / deltaRGB;
@@ -1319,7 +1319,7 @@ namespace Alternet.Drawing
 
                 hue /= 6.0;
 
-                if ( hue < 0.0 )
+                if (hue < 0.0)
                     hue += 1.0;
 
                 saturation = deltaRGB / maximumRGB;
@@ -1336,18 +1336,19 @@ namespace Alternet.Drawing
         {
             double red, green, blue;
 
-            if ( hsv.Saturation == 0 )
+            if (hsv.Saturation == 0)
             {
                 // Grey
                 red = hsv.Value;
                 green = hsv.Value;
                 blue = hsv.Value;
             }
-            else // not grey
+            else
             {
-                double hue = hsv.Hue * 6.0;      // sector 0 to 5
+                // not grey
+                double hue = hsv.Hue * 6.0; // sector 0 to 5
                 int i = (int)Math.Floor(hue);
-                double f = hue - i;          // fractional part of h
+                double f = hue - i; // fractional part of h
                 double p = hsv.Value * (1.0 - hsv.Saturation);
 
                 switch (i)
@@ -1382,7 +1383,8 @@ namespace Alternet.Drawing
                         blue = hsv.Value;
                         break;
 
-                    default:    // case 5:
+                    // case 5:
+                    default:
                         red = hsv.Value;
                         green = p;
                         blue = hsv.Value * (1.0 - hsv.Saturation * f);
@@ -1390,9 +1392,10 @@ namespace Alternet.Drawing
                 }
             }
 
-            return new RGBValue((byte)Math.Round(red * 255.0),
-                            (byte)Math.Round(green * 255.0),
-                            (byte)Math.Round(blue * 255.0));
+            return new RGBValue(
+                (byte)Math.Round(red * 255.0),
+                (byte)Math.Round(green * 255.0),
+                (byte)Math.Round(blue * 255.0));
         }
 
         /// <summary>
@@ -1405,7 +1408,7 @@ namespace Alternet.Drawing
 
             var items = ColorUtils.GetColorInfos();
 
-            foreach(var item in items)
+            foreach (var item in items)
             {
                 if (!item.Visible)
                     continue;
@@ -1445,7 +1448,7 @@ namespace Alternet.Drawing
 
         /// <summary>
         /// Used by <see cref="ChangeLightness(int)"/> and
-        /// <see cref="MakeDisabled(ref byte, ref byte, ref byte, byte)"/>.
+        /// <see cref="MakeDisabled(RGBValue, byte)"/>.
         /// </summary>
         /// <param name="fg"></param>
         /// <param name="bg"></param>
@@ -1512,33 +1515,24 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Assigns the same value to <paramref name="r"/>, <paramref name="g"/>,
-        /// <paramref name="b"/>: 0 if <paramref name="on"/> is false, 255 otherwise.
+        /// Assigns the same value to RGB of the color: 0 if <paramref name="on"/> is false, 255 otherwise.
         /// </summary>
-        /// <param name="r">R component of a color.</param>
-        /// <param name="g">G component of a color.</param>
-        /// <param name="b">B component of a color.</param>
-        /// <param name="on"></param>
-        public static void MakeMono(ref byte r, ref byte g, ref byte b, bool on)
+        /// <param name="rgb">Color.</param>
+        /// <param name="on">Color on/off selector.</param>
+        public static RGBValue MakeMono(RGBValue rgb, bool on)
         {
             byte v = on ? (byte)255 : (byte)0;
-            r = v;
-            g = v;
-            b = v;
+            return new RGBValue(v, v, v);
         }
 
         /// <summary>
-        /// Creates a grey colour from rgb parameters using integer arithmetic.
+        /// Creates a grey color from rgb parameters using integer arithmetic.
         /// </summary>
-        /// <param name="r">R component of a color.</param>
-        /// <param name="g">G component of a color.</param>
-        /// <param name="b">B component of a color.</param>
-        public static void MakeGrey(ref byte r, ref byte g, ref byte b)
+        /// <param name="rgb">Color.</param>
+        public static RGBValue MakeGrey(RGBValue rgb)
         {
-            var v = (byte)((b * 117UL + g * 601UL + r * 306UL) >> 10);
-            r = v;
-            g = v;
-            b = v;
+            var v = (byte)((rgb.B * 117UL + rgb.G * 601UL + rgb.R * 306UL) >> 10);
+            return new(v, v, v);
         }
 
         /// <summary>
@@ -1548,34 +1542,28 @@ namespace Alternet.Drawing
         /// Defaults to using the standard ITU-T BT.601 when converting to YUV, where every
         /// pixel equals(R* weight_r) + (G* weight_g) + (B* weight_b).
         /// </remarks>
-        /// <param name="r">R component of a color.</param>
-        /// <param name="g">G component of a color.</param>
-        /// <param name="b">B component of a color.</param>
+        /// <param name="rgb">Color.</param>
         /// <param name="weight_r">Weight of R component of a color.</param>
         /// <param name="weight_g">Weight of G component of a color.</param>
         /// <param name="weight_b">Weight of B component of a color.</param>
-        public static void MakeGrey(ref byte r, ref byte g, ref byte b,
-                                    double weight_r, double weight_g, double weight_b)
+        public static RGBValue MakeGrey(RGBValue rgb, double weight_r, double weight_g, double weight_b)
         {
-            double luma = r * weight_r + g * weight_g + b * weight_b;
+            double luma = rgb.R * weight_r + rgb.G * weight_g + rgb.B * weight_b;
             var v = (byte)Math.Round(luma);
-            r = v;
-            g = v;
-            b = v;
+            return new(v, v, v);
         }
 
         /// <summary>
         /// Creates a disabled (dimmed) color from rgb parameters.
         /// </summary>
-        /// <param name="r">R component of a color.</param>
-        /// <param name="g">G component of a color.</param>
-        /// <param name="b">B component of a color.</param>
+        /// <param name="rgb">Color.</param>
         /// <param name="brightness"></param>
-        public static void MakeDisabled(ref byte r, ref byte g, ref byte b, byte brightness)
+        public static RGBValue MakeDisabled(RGBValue rgb, byte brightness)
         {
-            r = AlphaBlend(r, brightness, 0.4);
-            g = AlphaBlend(g, brightness, 0.4);
-            b = AlphaBlend(b, brightness, 0.4);
+            var r = AlphaBlend(rgb.R, brightness, 0.4);
+            var g = AlphaBlend(rgb.G, brightness, 0.4);
+            var b = AlphaBlend(rgb.B, brightness, 0.4);
+            return new(r, g, b);
         }
 
         /// <summary>
@@ -1585,12 +1573,8 @@ namespace Alternet.Drawing
         /// <returns></returns>
         public Color MakeDisabled(byte brightness)
         {
-            byte r = R;
-            byte g = G;
-            byte b = B;
-            byte a = A;
-            MakeDisabled(ref r, ref g, ref b, brightness);
-            var result = Color.FromArgb(a, r, g, b);
+            var rgb = MakeDisabled(this, brightness);
+            var result = Color.FromArgb(A, rgb.R, rgb.G, rgb.B);
             return result;
         }
 
