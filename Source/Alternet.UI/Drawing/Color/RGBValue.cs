@@ -50,6 +50,11 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Gets color name and ARGB for the debug purposes.
+        /// </summary>
+        public readonly string AsDebugString => $"{{RGB=({R}, {G}, {B})}}";
+
+        /// <summary>
         /// Implicit operator convertion from tuple with three <see cref="byte"/> values
         /// to <see cref="RGBValue"/>.
         /// </summary>
@@ -79,11 +84,6 @@ namespace Alternet.Drawing
         /// </summary>
         public static bool operator ==(RGBValue left, RGBValue right) =>
             left.R == right.R && left.G == right.G && left.B == right.B;
-
-        /// <summary>
-        /// Gets color name and ARGB for the debug purposes.
-        /// </summary>
-        public readonly string AsDebugString => $"{{RGB=({R}, {G}, {B})}}";
 
         /// <summary>
         /// Tests whether <paramref name="obj"/> is a <see cref='RGBValue'/> and

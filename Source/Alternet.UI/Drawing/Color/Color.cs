@@ -1327,6 +1327,94 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Darkens or lightens a color, based on the specified percentage
+        /// ialpha of 0 would be completely black, 200 completely white
+        /// an ialpha of 100 returns the same color.
+        /// </summary>
+        /// <param name="rgb">RGB Color.</param>
+        /// <param name="ialpha">Lightness value (0..200).</param>
+        public static void ChangeLightness(ref RGBValue rgb, int ialpha)
+        {
+            if (ialpha == 100) return;
+
+            // ialpha is 0..200 where 0 is completely black
+            // and 200 is completely white and 100 is the same
+            // convert that to normal alpha 0.0 - 1.0
+            ialpha = Math.Max(ialpha, 0);
+            ialpha = Math.Min(ialpha, 200);
+            double alpha = ((double)(ialpha - 100.0)) / 100.0;
+
+            byte bg;
+            if (ialpha > 100)
+            {
+                // blend with white
+                bg = 255;
+                alpha = 1.0 - alpha;  // 0 = transparent fg; 1 = opaque fg
+            }
+            else
+            {
+                // blend with black
+                bg = 0;
+                alpha = 1.0 + alpha;  // 0 = transparent fg; 1 = opaque fg
+            }
+
+            rgb.R = AlphaBlend(rgb.R, bg, alpha);
+            rgb.G = AlphaBlend(rgb.G, bg, alpha);
+            rgb.B = AlphaBlend(rgb.B, bg, alpha);
+        }
+
+        /// <summary>
+        /// Assigns the same value to RGB of the color: 0 if <paramref name="on"/> is false, 255 otherwise.
+        /// </summary>
+        /// <param name="rgb">Color.</param>
+        /// <param name="on">Color on/off selector.</param>
+        public static void MakeMono(ref RGBValue rgb, bool on)
+        {
+            byte v = on ? (byte)255 : (byte)0;
+            rgb.R = rgb.G = rgb.B = v;
+        }
+
+        /// <summary>
+        /// Makes color grey using integer arithmetic.
+        /// </summary>
+        /// <param name="rgb">Color.</param>
+        public static void MakeGrey(ref RGBValue rgb)
+        {
+            var v = (byte)((rgb.B * 117UL + rgb.G * 601UL + rgb.R * 306UL) >> 10);
+            rgb.R = rgb.G = rgb.B = v;
+        }
+
+        /// <summary>
+        /// Creates a grey color from rgb parameters using floating point arithmetic.
+        /// </summary>
+        /// <remarks>
+        /// Defaults to using the standard ITU-T BT.601 when converting to YUV, where every
+        /// pixel equals(R* weight_r) + (G* weight_g) + (B* weight_b).
+        /// </remarks>
+        /// <param name="rgb">Color.</param>
+        /// <param name="weight_r">Weight of R component of a color.</param>
+        /// <param name="weight_g">Weight of G component of a color.</param>
+        /// <param name="weight_b">Weight of B component of a color.</param>
+        public static void MakeGrey(ref RGBValue rgb, double weight_r, double weight_g, double weight_b)
+        {
+            double luma = rgb.R * weight_r + rgb.G * weight_g + rgb.B * weight_b;
+            var v = (byte)Math.Round(luma);
+            rgb.R = rgb.G = rgb.B = v;
+        }
+
+        /// <summary>
+        /// Sets a disabled (dimmed) color for specified <see cref="RGBValue"/>.
+        /// </summary>
+        /// <param name="rgb">Color.</param>
+        /// <param name="brightness"></param>
+        public static void MakeDisabled(ref RGBValue rgb, byte brightness)
+        {
+            rgb.R = AlphaBlend(rgb.R, brightness, 0.4);
+            rgb.G = AlphaBlend(rgb.G, brightness, 0.4);
+            rgb.B = AlphaBlend(rgb.B, brightness, 0.4);
+        }
+
+        /// <summary>
         /// Converts <see cref="HSVValue"/> to RGB color.
         /// </summary>
         /// <param name="hsv"></param>
@@ -1420,6 +1508,22 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Used by <see cref="ChangeLightness(int)"/> and
+        /// <see cref="MakeDisabled(ref RGBValue, byte)"/>.
+        /// </summary>
+        /// <param name="fg"></param>
+        /// <param name="bg"></param>
+        /// <param name="alpha"></param>
+        /// <returns></returns>
+        public static byte AlphaBlend(byte fg, byte bg, double alpha)
+        {
+            double result = bg + (alpha * (fg - bg));
+            result = Math.Max(result, 0.0);
+            result = Math.Min(result, 255.0);
+            return (byte)result;
+        }
+
+        /// <summary>
         /// Gets the hue-saturation-lightness (HSL) lightness value for this
         /// <see cref="Color"/> structure.
         /// </summary>
@@ -1445,22 +1549,6 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Used by <see cref="ChangeLightness(int)"/> and
-        /// <see cref="MakeDisabled(ref RGBValue, byte)"/>.
-        /// </summary>
-        /// <param name="fg"></param>
-        /// <param name="bg"></param>
-        /// <param name="alpha"></param>
-        /// <returns></returns>
-        public static byte AlphaBlend(byte fg, byte bg, double alpha)
-        {
-            double result = bg + (alpha * (fg - bg));
-            result = Math.Max(result, 0.0);
-            result = Math.Min(result, 255.0);
-            return (byte)result;
-        }
-
-        /// <summary>
         /// Darkens or lightens a color, based on the specified percentage
         /// ialpha of 0 would be completely black, 200 completely white
         /// an ialpha of 100 returns the same color.
@@ -1471,94 +1559,6 @@ namespace Alternet.Drawing
             RGBValue rgb = this;
             ChangeLightness(ref rgb, ialpha);
             return rgb;
-        }
-
-        /// <summary>
-        /// Darkens or lightens a color, based on the specified percentage
-        /// ialpha of 0 would be completely black, 200 completely white
-        /// an ialpha of 100 returns the same color.
-        /// </summary>
-        /// <param name="rgb">RGB Color.</param>
-        /// <param name="ialpha">Lightness value (0..200).</param>
-        public static void ChangeLightness(ref RGBValue rgb, int ialpha)
-        {
-            if (ialpha == 100) return;
-
-            // ialpha is 0..200 where 0 is completely black
-            // and 200 is completely white and 100 is the same
-            // convert that to normal alpha 0.0 - 1.0
-            ialpha = Math.Max(ialpha, 0);
-            ialpha = Math.Min(ialpha, 200);
-            double alpha = ((double)(ialpha - 100.0)) / 100.0;
-
-            byte bg;
-            if (ialpha > 100)
-            {
-                // blend with white
-                bg = 255;
-                alpha = 1.0 - alpha;  // 0 = transparent fg; 1 = opaque fg
-            }
-            else
-            {
-                // blend with black
-                bg = 0;
-                alpha = 1.0 + alpha;  // 0 = transparent fg; 1 = opaque fg
-            }
-
-            rgb.R = AlphaBlend(rgb.R, bg, alpha);
-            rgb.G = AlphaBlend(rgb.G, bg, alpha);
-            rgb.B = AlphaBlend(rgb.B, bg, alpha);
-        }
-
-        /// <summary>
-        /// Assigns the same value to RGB of the color: 0 if <paramref name="on"/> is false, 255 otherwise.
-        /// </summary>
-        /// <param name="rgb">Color.</param>
-        /// <param name="on">Color on/off selector.</param>
-        public static void MakeMono(ref RGBValue rgb, bool on)
-        {
-            byte v = on ? (byte)255 : (byte)0;
-            rgb.R = rgb.G = rgb.B = v;
-        }
-
-        /// <summary>
-        /// Makes color grey using integer arithmetic.
-        /// </summary>
-        /// <param name="rgb">Color.</param>
-        public static void MakeGrey(ref RGBValue rgb)
-        {
-            var v = (byte)((rgb.B * 117UL + rgb.G * 601UL + rgb.R * 306UL) >> 10);
-            rgb.R = rgb.G = rgb.B = v;
-        }
-
-        /// <summary>
-        /// Creates a grey color from rgb parameters using floating point arithmetic.
-        /// </summary>
-        /// <remarks>
-        /// Defaults to using the standard ITU-T BT.601 when converting to YUV, where every
-        /// pixel equals(R* weight_r) + (G* weight_g) + (B* weight_b).
-        /// </remarks>
-        /// <param name="rgb">Color.</param>
-        /// <param name="weight_r">Weight of R component of a color.</param>
-        /// <param name="weight_g">Weight of G component of a color.</param>
-        /// <param name="weight_b">Weight of B component of a color.</param>
-        public static void MakeGrey(ref RGBValue rgb, double weight_r, double weight_g, double weight_b)
-        {
-            double luma = rgb.R * weight_r + rgb.G * weight_g + rgb.B * weight_b;
-            var v = (byte)Math.Round(luma);
-            rgb.R = rgb.G = rgb.B = v;
-        }
-
-        /// <summary>
-        /// Sets a disabled (dimmed) color for specified <see cref="RGBValue"/>.
-        /// </summary>
-        /// <param name="rgb">Color.</param>
-        /// <param name="brightness"></param>
-        public static void MakeDisabled(ref RGBValue rgb, byte brightness)
-        {
-            rgb.R = AlphaBlend(rgb.R, brightness, 0.4);
-            rgb.G = AlphaBlend(rgb.G, brightness, 0.4);
-            rgb.B = AlphaBlend(rgb.B, brightness, 0.4);
         }
 
         /// <summary>

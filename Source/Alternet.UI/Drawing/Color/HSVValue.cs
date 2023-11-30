@@ -53,13 +53,6 @@ namespace Alternet.Drawing
             left.Hue == right.Hue && left.Saturation == right.Saturation && left.Value == right.Value;
 
         /// <summary>
-        /// Tests whether <paramref name="obj"/> is a <see cref='HSVValue'/> and
-        /// is equal to this object
-        /// </summary>
-        public override readonly bool Equals([NotNullWhen(true)] object? obj) =>
-            obj is HSVValue value && Equals(value);
-
-        /// <summary>
         /// Gets color name and ARGB for the debug purposes.
         /// </summary>
         public readonly string AsDebugString => $"{{HSV=({Hue}, {Saturation}, {Value})}}";
@@ -82,5 +75,12 @@ namespace Alternet.Drawing
         /// <returns><c>true</c> if the current object is equal to other; otherwise,
         /// <c>false</c>.</returns>
         public readonly bool Equals(HSVValue other) => this == other;
+
+        /// <summary>
+        /// Tests whether <paramref name="obj"/> is a <see cref='HSVValue'/> and
+        /// is equal to this object
+        /// </summary>
+        public override readonly bool Equals([NotNullWhen(true)] object? obj) =>
+            obj is HSVValue value && Equals(value);
     }
 }
