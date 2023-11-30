@@ -62,10 +62,25 @@ namespace Alternet.UI
         /// Adds item to <see cref="Items"/>.
         /// </summary>
         /// <param name="item">Menu item.</param>
+        /// <returns><paramref name="item"/> parameter.</returns>
         public MenuItem Add(MenuItem item)
         {
             Items.Add(item);
-            return Items.Last!;
+            return item;
+        }
+
+        /// <summary>
+        /// Creates and adds new item to <see cref="Items"/>.
+        /// </summary>
+        /// <returns>Created item.</returns>
+        /// <param name="title">Item title.</param>
+        /// <param name="onClick">Item click action.</param>
+        /// <returns></returns>
+        public MenuItem Add(string title, Action onClick)
+        {
+            MenuItem item = new(title, onClick);
+            Items.Add(item);
+            return item;
         }
 
         private void Items_ItemInserted(object? sender, int index, MenuItem item)
