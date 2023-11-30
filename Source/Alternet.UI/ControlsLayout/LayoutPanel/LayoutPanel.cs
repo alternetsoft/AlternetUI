@@ -19,7 +19,7 @@ namespace Alternet.UI
     [ControlCategory("Containers")]
     public class LayoutPanel : Control
     {
-        private LayoutPanelKind layout;
+        private GenericLayoutStyle layout;
 
         /// <inheritdoc/>
         public override ControlTypeId ControlKind => ControlTypeId.LayoutPanel;
@@ -27,7 +27,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets layout style of the child controls.
         /// </summary>
-        public LayoutPanelKind Layout
+        public GenericLayoutStyle Layout
         {
             get
             {

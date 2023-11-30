@@ -13,7 +13,7 @@ namespace Alternet.UI
 
         public override void OnLayout()
         {
-            if(Control.Layout == LayoutPanelKind.Default)
+            if(Control.Layout == GenericLayoutStyle.Default)
                 DefaultLayout.Layout(Control, Control.ChildrenLayoutBounds);
         }
 
