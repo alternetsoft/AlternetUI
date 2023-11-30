@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -14,7 +15,7 @@ namespace Alternet.Drawing
     /// </summary>
     [StructLayout(LayoutKind.Sequential, Pack = 1)]
     [DebuggerDisplay("{AsDebugString}")]
-    public struct RGBValue
+    public struct RGBValue : IEquatable<RGBValue>
     {
         /// <summary>
         /// Red component of a color.
@@ -49,14 +50,45 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Tests whether two <see cref='RGBValue'/> objects are different.
+        /// </summary>
+        public static bool operator !=(RGBValue left, RGBValue right) => !(left == right);
+
+        /// <summary>
+        /// Tests whether two <see cref='RGBValue'/> objects are equal.
+        /// </summary>
+        public static bool operator ==(RGBValue left, RGBValue right) =>
+            left.R == right.R && left.G == right.G && left.B == right.B;
+
+        /// <summary>
         /// Gets color name and ARGB for the debug purposes.
         /// </summary>
-        public string AsDebugString => $"{{RGB=({R}, {G}, {B})}}";
+        public readonly string AsDebugString => $"{{RGB=({R}, {G}, {B})}}";
+
+        /// <summary>
+        /// Tests whether <paramref name="obj"/> is a <see cref='RGBValue'/> and
+        /// is equal to this object
+        /// </summary>
+        public override readonly bool Equals([NotNullWhen(true)] object? obj) =>
+            obj is RGBValue value && Equals(value);
+
+        /// <summary>
+        /// Indicates whether the current object is equal to another object of the same type.
+        /// </summary>
+        /// <param name="other">An object to compare with this object.</param>
+        /// <returns><c>true</c> if the current object is equal to other; otherwise,
+        /// <c>false</c>.</returns>
+        public readonly bool Equals(RGBValue other) => this == other;
+
+        /// <summary>
+        /// Gets the hash code for this <see cref='Rect'/>.
+        /// </summary>
+        public override readonly int GetHashCode() => HashCode.Combine(R, G, B);
 
         /// <summary>
         /// Gets string representation of this object.
         /// </summary>
         /// <returns></returns>
-        public override string ToString() => AsDebugString;
+        public override readonly string ToString() => AsDebugString;
     }
 }
