@@ -174,6 +174,13 @@ namespace Alternet.Drawing
             new(d.Item1, d.Item2, d.Item3, d.Item4);
 
         /// <summary>
+        /// Implicit operator convertion from tuple (<see cref="Int32Point"/>, <see cref="Int32Size"/>)
+        /// to <see cref="Int32Rect"/>.
+        /// </summary>
+        /// <param name="d">New rectangle value.</param>
+        public static implicit operator Int32Rect((Int32Point, Int32Size) d) => new(d.Item1, d.Item2);
+
+        /// <summary>
         /// Tests whether two <see cref='Drawing.Int32Rect'/> objects have equal location and size.
         /// </summary>
         public static bool operator ==(Int32Rect left, Int32Rect right) =>
