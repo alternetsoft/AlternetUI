@@ -19,9 +19,9 @@ namespace Alternet.Drawing
         /// </summary>
         public byte DefaultDisabledBrightness = 170;
 
-        //private static ImageGrayScaleMethod defaultGrayScaleMethod = ImageGrayScaleMethod.SetColorRGB150;
-        //private static Brush? disabledBrush = null;
-        //private static Color disabledBrushColor = Color.FromArgb(171, 71, 71, 71);
+        // private static ImageGrayScaleMethod defaultGrayScaleMethod = ImageGrayScaleMethod.SetColorRGB150;
+        // private static Brush? disabledBrush = null;
+        // private static Color disabledBrushColor = Color.FromArgb(171, 71, 71, 71);
 
         private bool isDisposed;
         private UI.Native.Image nativeImage;
@@ -153,6 +153,18 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Gets image rect as (0, 0, Size.Width, Size.Height).
+        /// </summary>
+        public Rect Bounds
+        {
+            get
+            {
+                var size = Size;
+                return (0, 0, size.Width, size.Height);
+            }
+        }
+
+        /// <summary>
         /// Gets the size of the image in pixels.
         /// </summary>
         public Int32Size PixelSize => NativeImage.PixelSize;
@@ -215,7 +227,7 @@ namespace Alternet.Drawing
         /// </summary>
         /// <returns></returns>
         public static BitmapType DefaultBitmapType
-            => (BitmapType) UI.Native.Image.GetDefaultBitmapType();
+            => (BitmapType)UI.Native.Image.GetDefaultBitmapType();
 
         /// <summary>
         /// Gets the color depth of the image. Returned value is 32, 24, or other.
@@ -251,9 +263,10 @@ namespace Alternet.Drawing
         /// <remarks>
         /// You can specify <see cref="BitmapType.Any"/> to guess image type using file extension.
         /// </remarks>
+        /// <remarks>Use <see cref="GetExtensionsForLoad"/> to get supported formats for the load operation.</remarks>
         public bool Load(string name, BitmapType type)
         {
-            return NativeImage.LoadFile(name, (int) type);
+            return NativeImage.LoadFile(name, (int)type);
         }
 
         /// <summary>
@@ -268,9 +281,10 @@ namespace Alternet.Drawing
         /// may be supported by the library and operating system for the save operation.
         /// </remarks>
         /// <returns><c>true</c> if the operation succeeded, <c>false</c> otherwise.</returns>
+        /// <remarks>Use <see cref="GetExtensionsForSave"/> to get supported formats for the save operation.</remarks>
         public bool Save(string name, BitmapType type)
         {
-            return NativeImage.SaveFile(name, (int)type); 
+            return NativeImage.SaveFile(name, (int)type);
         }
 
         /// <summary>
@@ -286,6 +300,7 @@ namespace Alternet.Drawing
         /// may be supported by the library and operating system for the save operation.
         /// </remarks>
         /// <returns><c>true</c> if the operation succeeded, <c>false</c> otherwise.</returns>
+        /// <remarks>Use <see cref="GetExtensionsForSave"/> to get supported formats for the save operation.</remarks>
         public bool Save(Stream stream, BitmapType type)
         {
             var outputStream = new UI.Native.OutputStream(stream);
@@ -303,10 +318,11 @@ namespace Alternet.Drawing
         /// may be supported by the library and operating system for the load operation.
         /// </remarks>
         /// <returns><c>true</c> if the operation succeeded, <c>false</c> otherwise.</returns>
+        /// <remarks>Use <see cref="GetExtensionsForLoad"/> to get supported formats for the load operation.</remarks>
         public bool Load(Stream stream, BitmapType type)
         {
             using var inputStream = new UI.Native.InputStream(stream);
-            return NativeImage.LoadStream(inputStream, (int) type);
+            return NativeImage.LoadStream(inputStream, (int)type);
         }
 
         /// <summary>
@@ -484,21 +500,19 @@ namespace Alternet.Drawing
         /// supported image formats when using
         /// <see cref="OpenFileDialog"/> and <see cref="SaveFileDialog"/>.
         /// </summary>
-        public static IEnumerable<string> GetExtensionsForOpenSave()
+        public static IEnumerable<string> GetExtensionsForLoadSave()
         {
             return [
                 ".bmp",
                 ".png",
                 ".jpeg",
                 ".jpg",
-                ".gif",
                 ".pcx",
                 ".pnm",
                 ".tiff",
                 ".tga",
                 ".xpm",
-                ".ico",
-                ".cur"];
+            ];
         }
 
         /// <summary>
@@ -506,12 +520,19 @@ namespace Alternet.Drawing
         /// supported image formats when using
         /// <see cref="OpenFileDialog"/>.
         /// </summary>
-        public static IEnumerable<string> GetExtensionsForOpen()
+        public static IEnumerable<string> GetExtensionsForLoad()
         {
+            IEnumerable<string> additionalExt = [
+                ".gif",
+                ".ico",
+                ".cur",
+                ".iff",
+                ".ani",
+            ];
+
             var result = new List<string>();
-            result.AddRange(GetExtensionsForOpenSave());
-            result.Add("iff");
-            result.Add("ani");
+            result.AddRange(GetExtensionsForLoadSave());
+            result.AddRange(additionalExt);
             return result;
         }
 
@@ -520,7 +541,7 @@ namespace Alternet.Drawing
         /// supported image formats when using
         /// <see cref="SaveFileDialog"/>.
         /// </summary>
-        public static IEnumerable<string> GetExtensionsForSave() => GetExtensionsForOpenSave();
+        public static IEnumerable<string> GetExtensionsForSave() => GetExtensionsForLoadSave();
 
         /// <summary>
         /// Gets <see cref="DrawingContext"/> for this image on which you can paint.
@@ -588,7 +609,11 @@ namespace Alternet.Drawing
         /// saved.</param>
         /// <param name="format">An <see cref="ImageFormat"/> that specifies
         /// the format of the saved image.</param>
-        public void Save(Stream stream, ImageFormat format)
+        /// <remarks>
+        /// There are other save methods in the <see cref="Image"/> that support image formats not
+        /// included in <see cref="ImageFormat"/>.
+        /// </remarks>
+        public bool Save(Stream stream, ImageFormat format)
         {
             if (stream is null)
                 throw new ArgumentNullException(nameof(stream));
@@ -597,7 +622,7 @@ namespace Alternet.Drawing
                 throw new ArgumentNullException(nameof(format));
 
             var outputStream = new UI.Native.OutputStream(stream);
-            NativeImage.SaveToStream(outputStream, format.ToString());
+            return NativeImage.SaveToStream(outputStream, format.ToString());
         }
 
         /// <summary>
@@ -605,12 +630,13 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="fileName">A string that contains the name of the file
         /// to which to save this <see cref="Image"/>.</param>
-        public void Save(string fileName)
+        /// <remarks>Use <see cref="GetExtensionsForSave"/> to get supported formats for the save operation.</remarks>
+        public bool Save(string fileName)
         {
             if (fileName is null)
                 throw new ArgumentNullException(nameof(fileName));
 
-            NativeImage.SaveToFile(fileName);
+            return NativeImage.SaveToFile(fileName);
         }
 
         /// <summary>

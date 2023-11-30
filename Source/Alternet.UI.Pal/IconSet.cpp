@@ -1,4 +1,5 @@
 #include "IconSet.h"
+#include "GenericImage.h"
 #include "Api/InputStream.h"
 #include "ManagedInputStream.h"
 #include "Image.h"
@@ -32,7 +33,7 @@ namespace Alternet::UI
 		InputStream inputStream(stream);
 		ManagedInputStream managedInputStream(&inputStream);
 
-		Image::EnsureImageHandlersInitialized();
+		GenericImage::EnsureImageHandlersInitialized();
 		managedInputStream.SeekI(0);
 		_iconBundle.AddIcon(managedInputStream);
 	}

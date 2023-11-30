@@ -13,51 +13,9 @@
 
 namespace Alternet::UI
 {
-	void wxImageAddHandlerV2(wxImageHandler* handler)
-	{
-		if (wxImage::FindHandler(handler->GetType()) == 0)
-			wxImage::AddHandler(handler);
-	}
-
-	void Image::wxInitAllImageHandlersV2()
-	{
-#if wxUSE_LIBPNG
-		wxImageAddHandlerV2(new wxPNGHandler);
-#endif
-#if wxUSE_LIBJPEG
-		wxImageAddHandlerV2(new wxJPEGHandler);
-#endif
-#if wxUSE_LIBTIFF
-		wxImageAddHandlerV2(new wxTIFFHandler);
-#endif
-#if wxUSE_GIF
-		wxImageAddHandlerV2(new wxGIFHandler);
-#endif
-#if wxUSE_PNM
-		wxImageAddHandlerV2(new wxPNMHandler);
-#endif
-#if wxUSE_PCX
-		wxImageAddHandlerV2(new wxPCXHandler);
-#endif
-#if wxUSE_IFF
-		wxImageAddHandlerV2(new wxIFFHandler);
-#endif
-#if wxUSE_ICO_CUR
-		wxImageAddHandlerV2(new wxICOHandler);
-		wxImageAddHandlerV2(new wxCURHandler);
-		wxImageAddHandlerV2(new wxANIHandler);
-#endif
-#if wxUSE_TGA
-		wxImageAddHandlerV2(new wxTGAHandler);
-#endif
-#if wxUSE_XPM
-		wxImageAddHandlerV2(new wxXPMHandler);
-#endif
-	}
-
 	Image::Image()
 	{
-		EnsureImageHandlersInitialized();
+		GenericImage::EnsureImageHandlersInitialized();
 	}
 
 	Image::~Image()
@@ -228,7 +186,7 @@ namespace Alternet::UI
 			return wxBitmapBundle();
 	}
 
-	void Image::LoadSvgFromStream(void* stream, int width, int height, const Color& color)
+	bool Image::LoadSvgFromStream(void* stream, int width, int height, const Color& color)
 	{
 		auto bundle = CreateFromSvgStream(stream, width, height, color);
 
@@ -236,17 +194,22 @@ namespace Alternet::UI
 		{
 			auto size = wxSize(width, height);
 			_bitmap = bundle.GetBitmap(size);
+			return true;
 		}
 		else
+		{
 			_bitmap = wxBitmap();
+			return false;
+		}
 	}
 
-	void Image::LoadFromStream(void* stream)
+	bool Image::LoadFromStream(void* stream)
 	{
 		InputStream inputStream(stream);
 		ManagedInputStream managedInputStream(&inputStream);
 
 		_bitmap = wxBitmap(managedInputStream);
+		return _bitmap.IsOk();
 	}
 
 	void* Image::ConvertToGenericImage()
@@ -259,18 +222,18 @@ namespace Alternet::UI
 		_bitmap = wxBitmap(((GenericImage*)image)->_image, depth);
 	}
 
-	void Image::SaveToStream(void* stream, const string& format)
+	bool Image::SaveToStream(void* stream, const string& format)
 	{
 		OutputStream outputStream(stream);
 		ManagedOutputStream managedOutputStream(&outputStream);
 
-		_bitmap.ConvertToImage().SaveFile(managedOutputStream, GetBitmapTypeFromFormat(format));
+		return _bitmap.ConvertToImage().SaveFile(managedOutputStream, GetBitmapTypeFromFormat(format));
 	}
 
-	void Image::SaveToFile(const string& fileName)
+	bool Image::SaveToFile(const string& fileName)
 	{
 		auto image = _bitmap.ConvertToImage();
-		image.SaveFile(wxStr(fileName));
+		return image.SaveFile(wxStr(fileName));
 	}
 
 	void Image::Initialize(const Size& size)
@@ -282,16 +245,6 @@ namespace Alternet::UI
 		else
 		{
 			_bitmap = wxBitmap(fromDip(size, nullptr), 32);
-		}
-	}
-
-	/*static*/ void Image::EnsureImageHandlersInitialized()
-	{
-		static bool imageHandlersInitialized = false;
-		if (!imageHandlersInitialized)
-		{
-			wxInitAllImageHandlersV2();
-			imageHandlersInitialized = true;
 		}
 	}
 

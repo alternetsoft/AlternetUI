@@ -22,12 +22,12 @@ int GetPixelHeight();
 
 int GetDepth();
 
-void LoadFromStream(void* stream);
-void LoadSvgFromStream(void* stream, int width, int height, const Color& color);
+bool LoadFromStream(void* stream);
+bool LoadSvgFromStream(void* stream, int width, int height, const Color& color);
 void Initialize(const Size& size);
 void CopyFrom(Image* otherImage);
-void SaveToStream(void* stream, const string& format);
-void SaveToFile(const string& fileName);
+bool SaveToStream(void* stream, const string& format);
+bool SaveToFile(const string& fileName);
 void* ConvertToGenericImage();
 void LoadFromGenericImage(void* image, int depth);
 bool GrayScale();

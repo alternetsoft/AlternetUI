@@ -2,6 +2,7 @@
 #include "Common.h"
 #include "Window.h"
 #include "Image.h"
+#include "GenericImage.h"
 #include "Exceptions.h"
 
 #include <wx/sysopt.h>
@@ -255,7 +256,7 @@ wxDEFINE_EVENT( wxEVT_HOTKEY, wxKeyEvent );
     {
         Exception::_logMessageProc = LogExceptionInfo;
 
-        Image::EnsureImageHandlersInitialized();
+        GenericImage::EnsureImageHandlersInitialized();
 
         if (s_current != nullptr)
             throwExInvalidOpWithInfo(wxStr("Application::Application"));

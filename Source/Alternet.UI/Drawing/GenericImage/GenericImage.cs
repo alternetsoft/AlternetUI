@@ -288,7 +288,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// This function doesn't modify the current stream position
         /// (because it restores the original position before returning; this however requires
-        /// the stream to be seekable).    
+        /// the stream to be seekable).
         /// </remarks>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool CanRead(Stream stream)
@@ -775,7 +775,7 @@ namespace Alternet.Drawing
         /// Otherwise, the areas will be filled with the color with the specified RGB components.
         /// </remarks>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public GenericImage SizeNoScale(Int32Size size, Int32Point pos, RGBValue? color = null)
+        public GenericImage SizeNoScale(Int32Size size, Int32Point pos = default, RGBValue? color = null)
         {
             var red = color?.R ?? -1;
             var green = color?.G ?? -1;

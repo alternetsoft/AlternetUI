@@ -7,14 +7,12 @@ namespace Alternet::UI
 {
     class Image : public Object
     {
-#include "Api/Image.inc"
+#include "Api/Image.inc"       
     public:
         wxBitmap GetBitmap();
         void SetBitmap(const wxBitmap& value);
 
         static wxBitmapBundle CreateFromSvgStream(void* stream, int width, int height, const Color& color);
-        static void EnsureImageHandlersInitialized();
-        static void wxInitAllImageHandlersV2();
 
         static wxBitmap GetWxBitmap(Image* bitmap)
         {

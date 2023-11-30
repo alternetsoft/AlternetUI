@@ -98,16 +98,16 @@ namespace Alternet.UI.Native
             
         }
         
-        public void LoadFromStream(InputStream stream)
+        public bool LoadFromStream(InputStream stream)
         {
             CheckDisposed();
-            NativeApi.Image_LoadFromStream_(NativePointer, stream.NativePointer);
+            return NativeApi.Image_LoadFromStream_(NativePointer, stream.NativePointer);
         }
         
-        public void LoadSvgFromStream(InputStream stream, int width, int height, Alternet.Drawing.Color color)
+        public bool LoadSvgFromStream(InputStream stream, int width, int height, Alternet.Drawing.Color color)
         {
             CheckDisposed();
-            NativeApi.Image_LoadSvgFromStream_(NativePointer, stream.NativePointer, width, height, color);
+            return NativeApi.Image_LoadSvgFromStream_(NativePointer, stream.NativePointer, width, height, color);
         }
         
         public void Initialize(Alternet.Drawing.Size size)
@@ -122,16 +122,16 @@ namespace Alternet.UI.Native
             NativeApi.Image_CopyFrom_(NativePointer, otherImage.NativePointer);
         }
         
-        public void SaveToStream(OutputStream stream, string format)
+        public bool SaveToStream(OutputStream stream, string format)
         {
             CheckDisposed();
-            NativeApi.Image_SaveToStream_(NativePointer, stream.NativePointer, format);
+            return NativeApi.Image_SaveToStream_(NativePointer, stream.NativePointer, format);
         }
         
-        public void SaveToFile(string fileName)
+        public bool SaveToFile(string fileName)
         {
             CheckDisposed();
-            NativeApi.Image_SaveToFile_(NativePointer, fileName);
+            return NativeApi.Image_SaveToFile_(NativePointer, fileName);
         }
         
         public System.IntPtr ConvertToGenericImage()
@@ -245,10 +245,10 @@ namespace Alternet.UI.Native
             public static extern int Image_GetDepth_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Image_LoadFromStream_(IntPtr obj, IntPtr stream);
+            public static extern bool Image_LoadFromStream_(IntPtr obj, IntPtr stream);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Image_LoadSvgFromStream_(IntPtr obj, IntPtr stream, int width, int height, NativeApiTypes.Color color);
+            public static extern bool Image_LoadSvgFromStream_(IntPtr obj, IntPtr stream, int width, int height, NativeApiTypes.Color color);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Image_Initialize_(IntPtr obj, Alternet.Drawing.Size size);
@@ -257,10 +257,10 @@ namespace Alternet.UI.Native
             public static extern void Image_CopyFrom_(IntPtr obj, IntPtr otherImage);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Image_SaveToStream_(IntPtr obj, IntPtr stream, string format);
+            public static extern bool Image_SaveToStream_(IntPtr obj, IntPtr stream, string format);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Image_SaveToFile_(IntPtr obj, string fileName);
+            public static extern bool Image_SaveToFile_(IntPtr obj, string fileName);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern System.IntPtr Image_ConvertToGenericImage_(IntPtr obj);

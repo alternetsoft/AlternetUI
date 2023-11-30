@@ -13,6 +13,9 @@ namespace Alternet::UI
     public:
         wxImage _image;
 
+        static void EnsureImageHandlersInitialized();
+        static void wxInitAllImageHandlersV2();
+
         GenericImage(const wxImage& image)
         {
             _image = image;

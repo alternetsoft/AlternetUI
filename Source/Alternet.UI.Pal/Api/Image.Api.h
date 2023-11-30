@@ -55,14 +55,14 @@ ALTERNET_UI_API int Image_GetDepth_(Image* obj)
     return obj->GetDepth();
 }
 
-ALTERNET_UI_API void Image_LoadFromStream_(Image* obj, void* stream)
+ALTERNET_UI_API c_bool Image_LoadFromStream_(Image* obj, void* stream)
 {
-    obj->LoadFromStream(stream);
+    return obj->LoadFromStream(stream);
 }
 
-ALTERNET_UI_API void Image_LoadSvgFromStream_(Image* obj, void* stream, int width, int height, Color color)
+ALTERNET_UI_API c_bool Image_LoadSvgFromStream_(Image* obj, void* stream, int width, int height, Color color)
 {
-    obj->LoadSvgFromStream(stream, width, height, color);
+    return obj->LoadSvgFromStream(stream, width, height, color);
 }
 
 ALTERNET_UI_API void Image_Initialize_(Image* obj, Size size)
@@ -75,14 +75,14 @@ ALTERNET_UI_API void Image_CopyFrom_(Image* obj, Image* otherImage)
     obj->CopyFrom(otherImage);
 }
 
-ALTERNET_UI_API void Image_SaveToStream_(Image* obj, void* stream, const char16_t* format)
+ALTERNET_UI_API c_bool Image_SaveToStream_(Image* obj, void* stream, const char16_t* format)
 {
-    obj->SaveToStream(stream, format);
+    return obj->SaveToStream(stream, format);
 }
 
-ALTERNET_UI_API void Image_SaveToFile_(Image* obj, const char16_t* fileName)
+ALTERNET_UI_API c_bool Image_SaveToFile_(Image* obj, const char16_t* fileName)
 {
-    obj->SaveToFile(fileName);
+    return obj->SaveToFile(fileName);
 }
 
 ALTERNET_UI_API void* Image_ConvertToGenericImage_(Image* obj)

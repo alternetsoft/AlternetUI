@@ -7,13 +7,13 @@ namespace NativeApi.Api
 {
     public class Image
     {
-        public void LoadFromStream(InputStream stream) { }
-        public void LoadSvgFromStream(InputStream stream, int width, int height, Color color) { }
+        public bool LoadFromStream(InputStream stream) => default;
+        public bool LoadSvgFromStream(InputStream stream, int width, int height, Color color) => default;
         public void Initialize(Size size) { }
         public void CopyFrom(Image otherImage) { }
 
-        public void SaveToStream(OutputStream stream, string format) { }
-        public void SaveToFile(string fileName) { }
+        public bool SaveToStream(OutputStream stream, string format) => default;
+        public bool SaveToFile(string fileName) => default;
 
         public IntPtr ConvertToGenericImage() => default;
         public void LoadFromGenericImage(IntPtr image, int depth = -1) { }
