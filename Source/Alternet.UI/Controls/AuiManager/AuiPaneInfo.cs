@@ -10,14 +10,17 @@ namespace Alternet.UI
     internal class AuiPaneInfo : BaseControlItem, IDisposable, IAuiPaneInfo
     {
         private IntPtr handle;
+        private AuiManager owner;
 
-        public AuiPaneInfo()
+        public AuiPaneInfo(AuiManager owner)
         {
+            this.owner = owner;
             handle = Native.AuiPaneInfo.CreateAuiPaneInfo();
         }
 
-        public AuiPaneInfo(IntPtr handle)
+        public AuiPaneInfo(AuiManager owner, IntPtr handle)
         {
+            this.owner = owner;
             this.handle = handle;
         }
 
@@ -27,6 +30,8 @@ namespace Alternet.UI
         }
 
         public IntPtr Handle { get => handle; }
+
+        public AuiManager Owner => owner;
 
         /// <inheritdoc cref="IDisposable.Dispose"/>
         public void Dispose()
@@ -40,17 +45,17 @@ namespace Alternet.UI
             GC.SuppressFinalize(this);
         }
 
-        public Int32Size GetBestSize()
+        public Int32Size GetBestSizePixel()
         {
             return Native.AuiPaneInfo.GetBestSize(handle);
         }
 
-        public Int32Size GetMinSize()
+        public Int32Size GetMinSizePixel()
         {
             return Native.AuiPaneInfo.GetMinSize(handle);
         }
 
-        public Int32Size GetMaxSize()
+        public Int32Size GetMaxSizePixel()
         {
             return Native.AuiPaneInfo.GetMaxSize(handle);
         }
@@ -252,55 +257,63 @@ namespace Alternet.UI
             return this;
         }
 
-        public IAuiPaneInfo BestSize(int x, int y)
+        public IAuiPaneInfo BestSizePixel(int x, int y)
         {
             Native.AuiPaneInfo.BestSize(handle, x, y);
             return this;
         }
 
-        public IAuiPaneInfo BestSize(double x, double y)
+        public IAuiPaneInfo BestSizeDip(double x, double y)
         {
-            Native.AuiPaneInfo.BestSize(handle, (int)x, (int)y);
+            var px = owner.PixelFromDip(x);
+            var py = owner.PixelFromDip(y);
+            Native.AuiPaneInfo.BestSize(handle, px, py);
             return this;
         }
 
-        public IAuiPaneInfo MinSize(int x, int y)
+        public IAuiPaneInfo MinSizePixel(int x, int y)
         {
             Native.AuiPaneInfo.MinSize(handle, x, y);
             return this;
         }
 
-        public IAuiPaneInfo MinSize(Int32Size size)
+        public IAuiPaneInfo MinSizeDip(Size size)
         {
-            Native.AuiPaneInfo.MinSize(handle, size.Width, size.Height);
+            var px = owner.PixelFromDip(size.Width);
+            var py = owner.PixelFromDip(size.Height);
+            Native.AuiPaneInfo.MinSize(handle, px, py);
             return this;
         }
 
-        public IAuiPaneInfo MinSize(double width, double height)
+        public IAuiPaneInfo MinSizeDip(double width, double height)
         {
-            Native.AuiPaneInfo.MinSize(handle, (int)width, (int)height);
+            var px = owner.PixelFromDip(width);
+            var py = owner.PixelFromDip(height);
+            Native.AuiPaneInfo.MinSize(handle, px, py);
             return this;
         }
 
-        public IAuiPaneInfo MaxSize(int x, int y)
+        public IAuiPaneInfo MaxSizePixel(int x, int y)
         {
             Native.AuiPaneInfo.MaxSize(handle, x, y);
             return this;
         }
 
-        public IAuiPaneInfo MaxSize(Int32Size size)
+        public IAuiPaneInfo MaxSizeDip(Size size)
         {
-            Native.AuiPaneInfo.MaxSize(handle, size.Width, size.Height);
+            var px = owner.PixelFromDip(size.Width);
+            var py = owner.PixelFromDip(size.Height);
+            Native.AuiPaneInfo.MaxSize(handle, px, py);
             return this;
         }
 
-        public IAuiPaneInfo FloatingPosition(int x, int y)
+        public IAuiPaneInfo FloatingPositionPixel(int x, int y)
         {
             Native.AuiPaneInfo.FloatingPosition(handle, x, y);
             return this;
         }
 
-        public IAuiPaneInfo FloatingSize(int x, int y)
+        public IAuiPaneInfo FloatingSizePixel(int x, int y)
         {
             Native.AuiPaneInfo.FloatingSize(handle, x, y);
             return this;

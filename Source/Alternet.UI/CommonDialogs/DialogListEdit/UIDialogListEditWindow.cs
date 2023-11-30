@@ -59,7 +59,7 @@ namespace Alternet.UI
 
             treeView.SelectionChanged += TreeView_SelectionChanged;
 
-            panel.Layout = LayoutPanelKind.Native;
+            panel.Layout = GenericLayoutStyle.Native;
             Children.Add(panel);
             manager.SetManagedWindow(panel);
 
@@ -69,7 +69,7 @@ namespace Alternet.UI
             var rightPane = manager.CreatePaneInfo();
             rightPane.Name(nameof(rightPane)).Caption("Properties").Right().PaneBorder(false)
                 .TopDockable(false).BottomDockable(false)
-                .BestSize(defaultWidth, 300).MinSize(defaultWidth, 300)
+                .BestSizeDip(defaultWidth, 300).MinSizeDip(defaultWidth, 300)
                 .CaptionVisible(false);
             propertyGrid.SuggestedWidth = defaultWidth;
             manager.AddPane(propertyGrid, rightPane);
@@ -163,7 +163,7 @@ namespace Alternet.UI
             ComponentDesigner.Default!.PropertyChanged += OnDesignerPropertyChanged;
             Size = new(750, 600);
             MinimumSize = new(550, 350);
-            rightPane.BestSize(defaultWidth + 1, 300).MinSize(defaultWidth + 1, 300);
+            rightPane.BestSizeDip(defaultWidth + 1, 300).MinSizeDip(defaultWidth + 1, 300);
             propertyGrid.SuggestedWidth = defaultWidth + 1;
             manager.Update();
             PerformLayout();

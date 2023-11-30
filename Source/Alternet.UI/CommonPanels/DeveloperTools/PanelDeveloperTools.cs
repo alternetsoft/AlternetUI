@@ -27,8 +27,8 @@ namespace Alternet.UI
         public PanelDeveloperTools()
             : base()
         {
-            DefaultRightPaneBestSize = new(350, 200);
-            DefaultRightPaneMinSize = new(350, 200);
+            DefaultRightPaneBestSize = (350, 200);
+            DefaultRightPaneMinSize = (350, 200);
 
             CenterNotebookDefaultCreateStyle = AuiNotebookCreateStyle.Top;
             RightNotebookDefaultCreateStyle = AuiNotebookCreateStyle.Top;

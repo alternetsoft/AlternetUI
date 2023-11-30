@@ -347,10 +347,7 @@ namespace Alternet.UI
             {
                 if(toolbarPane is null)
                 {
-                    toolbarPane = Manager.CreatePaneInfo();
-                    toolbarPane.Name(nameof(toolbarPane)).Top().ToolbarPane().PaneBorder(false)
-                        .Movable(false).Floatable(false).Resizable(false).Gripper(false)
-                        .Fixed().DockFixed();
+                    toolbarPane = CreateToolbarPane();
                 }
 
                 return toolbarPane;
@@ -367,11 +364,7 @@ namespace Alternet.UI
             {
                 if (leftPane is null)
                 {
-                    leftPane = Manager.CreatePaneInfo();
-                    leftPane.Name(nameof(leftPane)).Left()
-                        .PaneBorder(false).CloseButton(false)
-                        .TopDockable(false).BottomDockable(false).Movable(false).Floatable(false)
-                        .CaptionVisible(false).BestSize(200, 200).MinSize(150, 200);
+                    leftPane = CreateLeftPane();
                 }
 
                 return leftPane;
@@ -388,13 +381,7 @@ namespace Alternet.UI
             {
                 if (rightPane is null)
                 {
-                    rightPane = Manager.CreatePaneInfo();
-                    rightPane.Name(nameof(rightPane)).Right().PaneBorder(false)
-                        .CloseButton(false)
-                        .TopDockable(false).BottomDockable(false).Movable(false).Floatable(false)
-                        .BestSize(DefaultRightPaneBestSize.Width, DefaultRightPaneBestSize.Height)
-                        .MinSize(DefaultRightPaneMinSize.Width, DefaultRightPaneMinSize.Height)
-                        .CaptionVisible(false);
+                    rightPane = CreateRightPane();
                 }
 
                 return rightPane;
@@ -411,8 +398,7 @@ namespace Alternet.UI
             {
                 if (centerPane is null)
                 {
-                    centerPane = Manager.CreatePaneInfo();
-                    centerPane.Name(nameof(centerPane)).CenterPane().PaneBorder(false);
+                    centerPane = CreateCenterPane();
                 }
 
                 return centerPane;
@@ -445,14 +431,34 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets default best size of the left pane.
+        /// </summary>
+        public virtual Size DefaultLeftPaneBestSize { get; set; } = (200, 200);
+
+        /// <summary>
+        /// Gets or sets default min size of the left pane.
+        /// </summary>
+        public virtual Size DefaultLeftPaneMinSize { get; set; } = (150, 200);
+
+        /// <summary>
         /// Gets or sets default best size of the right pane.
         /// </summary>
-        public virtual Int32Size DefaultRightPaneBestSize { get; set; } = new(350, 200);
+        public virtual Size DefaultRightPaneBestSize { get; set; } = (350, 200);
 
         /// <summary>
         /// Gets or sets default min size of the right pane.
         /// </summary>
-        public virtual Int32Size DefaultRightPaneMinSize { get; set; } = new(350, 200);
+        public virtual Size DefaultRightPaneMinSize { get; set; } = (350, 200);
+
+        /// <summary>
+        /// Gets or sets default best size of the bottom pane.
+        /// </summary>
+        public virtual Size DefaultBottomPaneBestSize { get; set; } = (200, 150);
+
+        /// <summary>
+        /// Gets or sets default min size of the bottom pane.
+        /// </summary>
+        public virtual Size DefaultBottomPaneMinSize { get; set; } = (200, 150);
 
         /// <summary>
         /// Gets the bottom pane.
@@ -464,11 +470,7 @@ namespace Alternet.UI
             {
                 if (bottomPane is null)
                 {
-                    bottomPane = Manager.CreatePaneInfo();
-                    bottomPane.Name(nameof(bottomPane)).Bottom()
-                        .PaneBorder(false).CloseButton(false).CaptionVisible(false)
-                        .LeftDockable(false).RightDockable(false).Movable(false)
-                        .BestSize(200, 150).MinSize(200, 150).Floatable(false);
+                    bottomPane = CreateBottomPane();
                 }
 
                 return bottomPane;
@@ -556,6 +558,79 @@ namespace Alternet.UI
         public virtual void BindApplicationLog()
         {
             LogControl.BindApplicationLog();
+        }
+
+        /// <summary>
+        /// Creates left pane and assigns its properties.
+        /// </summary>
+        /// <returns></returns>
+        protected virtual IAuiPaneInfo CreateLeftPane()
+        {
+            var result = Manager.CreatePaneInfo();
+            result.Name(nameof(leftPane)).Left()
+                .PaneBorder(false).CloseButton(false)
+                .TopDockable(false).BottomDockable(false).Movable(false).Floatable(false)
+                .CaptionVisible(false)
+                .BestSizeDip(DefaultLeftPaneBestSize.Width, DefaultLeftPaneBestSize.Height)
+                .MinSizeDip(DefaultLeftPaneMinSize.Width, DefaultLeftPaneMinSize.Height);
+            return result;
+        }
+
+        /// <summary>
+        /// Creates left pane and assigns its properties.
+        /// </summary>
+        /// <returns></returns>
+        protected virtual IAuiPaneInfo CreateToolbarPane()
+        {
+            var result = Manager.CreatePaneInfo();
+            result.Name(nameof(toolbarPane)).Top().ToolbarPane().PaneBorder(false)
+                .Movable(false).Floatable(false).Resizable(false).Gripper(false)
+                .Fixed().DockFixed();
+            return result;
+        }
+
+        /// <summary>
+        /// Creates center pane and assigns its properties.
+        /// </summary>
+        /// <returns></returns>
+        protected virtual IAuiPaneInfo CreateCenterPane()
+        {
+            var result = Manager.CreatePaneInfo();
+            result.Name(nameof(centerPane)).CenterPane().PaneBorder(false);
+            return result;
+        }
+        
+        /// <summary>
+        /// Creates bottom pane and assigns its properties.
+        /// </summary>
+        /// <returns></returns>
+        protected virtual IAuiPaneInfo CreateBottomPane()
+        {
+            var result = Manager.CreatePaneInfo();
+            result.Name(nameof(bottomPane)).Bottom()
+                .PaneBorder(false).CloseButton(false).CaptionVisible(false)
+                .LeftDockable(false).RightDockable(false).Movable(false)
+                .BestSizeDip(DefaultBottomPaneBestSize.Width, DefaultBottomPaneBestSize.Height)
+                .MinSizeDip(DefaultBottomPaneMinSize.Width, DefaultBottomPaneMinSize.Height)
+                .Floatable(false);
+
+            return result;
+        }
+
+        /// <summary>
+        /// Creates right pane and assigns its properties.
+        /// </summary>
+        /// <returns></returns>
+        protected virtual IAuiPaneInfo CreateRightPane()
+        {
+            var result = Manager.CreatePaneInfo();
+            result.Name(nameof(rightPane)).Right().PaneBorder(false)
+                .CloseButton(false)
+                .TopDockable(false).BottomDockable(false).Movable(false).Floatable(false)
+                .BestSizeDip(DefaultRightPaneBestSize.Width, DefaultRightPaneBestSize.Height)
+                .MinSizeDip(DefaultRightPaneMinSize.Width, DefaultRightPaneMinSize.Height)
+                .CaptionVisible(false);
+            return result;
         }
 
         /// <inheritdoc/>

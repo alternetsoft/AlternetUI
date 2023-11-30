@@ -454,6 +454,20 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Calls <see cref="Control.PixelFromDip(double)"/> of the <see cref="ManagedControl"/>.
+        /// </summary>
+        /// <param name="value">Value in device-independent units (1/96 inch).</param>
+        /// <returns>Value converted to pixels.</returns>
+        /// <remarks>
+        /// Before calling this method, <see cref="ManagedControl"/> needs to be assigned.
+        /// </remarks>
+        public virtual int PixelFromDip(double value)
+        {
+            CheckManagedControl();
+            return this.ManagedControl!.PixelFromDip(value);
+        }
+
+        /// <summary>
         /// Destroys or hides the given pane depending on its flags.
         /// </summary>
         /// <param name="paneInfo">Pane information.</param>
@@ -500,12 +514,12 @@ namespace Alternet.UI
         public IAuiPaneInfo CreatePaneInfo()
 #pragma warning restore
         {
-            return new AuiPaneInfo();
+            return new AuiPaneInfo(this);
         }
 
-        internal static IAuiPaneInfo ToPaneInfo(IntPtr handle)
+        internal IAuiPaneInfo ToPaneInfo(IntPtr handle)
         {
-            return new AuiPaneInfo(handle);
+            return new AuiPaneInfo(this, handle);
         }
 
         internal static IntPtr ToHandle(IAuiPaneInfo paneInfo)

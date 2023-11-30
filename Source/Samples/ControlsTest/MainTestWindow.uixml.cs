@@ -29,7 +29,7 @@ namespace ControlsTest
                 mainPanel.BottomPane.Resizable(false);
                 mainPanel.CenterPane.DockFixed(true).Fixed();
                 mainPanel.LeftPane.Resizable(false).DockFixed(true)
-                    .MaxSize(mainPanel.DefaultRightPaneBestSize).Fixed();
+                    .MaxSizeDip(mainPanel.DefaultRightPaneBestSize).Fixed();
             }
 
             Icon = new("embres:ControlsTest.Sample.ico");

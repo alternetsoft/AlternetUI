@@ -20,6 +20,11 @@ namespace Alternet.UI
     public interface IAuiPaneInfo : IBaseControlItem, IDisposable
     {
         /// <summary>
+        /// Gets owner.
+        /// </summary>
+        AuiManager Owner { get; }
+
+        /// <summary>
         /// Returns handle of the pane info object.
         /// </summary>
         IntPtr Handle { get; }
@@ -299,16 +304,16 @@ namespace Alternet.UI
         IAuiPaneInfo Layer(int layer);
 
         /// <summary>
-        /// Determines the row of the docked pane.
+        /// Sets the row of the docked pane.
         /// </summary>
         /// <param name="row">New value of the Row property.</param>
         /// <returns>Returns this pane info instance.</returns>
         IAuiPaneInfo Row(int row);
 
         /// <summary>
-        /// Determines the position of the docked pane.
+        /// Sets the position of the docked pane.
         /// </summary>
-        /// <param name="pos"></param>
+        /// <param name="pos">New panel position.</param>
         /// <returns>Returns this pane info instance.</returns>
         IAuiPaneInfo Position(int pos);
 
@@ -322,10 +327,10 @@ namespace Alternet.UI
         /// <param name="width">New best width.</param>
         /// <param name="height">New best height.</param>
         /// <returns>Returns this pane info instance.</returns>
-        IAuiPaneInfo BestSize(int width, int height);
+        IAuiPaneInfo BestSizePixel(int width, int height);
 
-        /// <inheritdoc cref="BestSize(int,int)"/>
-        IAuiPaneInfo BestSize(double width, double height);
+        /// <inheritdoc cref="BestSizePixel(int,int)"/>
+        IAuiPaneInfo BestSizeDip(double width, double height);
 
         /// <summary>
         /// Sets the minimum size of the pane.
@@ -333,10 +338,10 @@ namespace Alternet.UI
         /// <param name="width">New minimal width.</param>
         /// <param name="height">New minimal height.</param>
         /// <returns>Returns this pane info instance.</returns>
-        IAuiPaneInfo MinSize(int width, int height);
+        IAuiPaneInfo MinSizePixel(int width, int height);
 
-        /// <inheritdoc cref="MinSize(int,int)"/>
-        IAuiPaneInfo MinSize(double width, double height);
+        /// <inheritdoc cref="MinSizePixel(int,int)"/>
+        IAuiPaneInfo MinSizeDip(double width, double height);
 
         /// <summary>
         /// Sets the maximum size of the pane.
@@ -344,14 +349,14 @@ namespace Alternet.UI
         /// <param name="width">New maximal width.</param>
         /// <param name="height">New maximal height.</param>
         /// <returns>Returns this pane info instance.</returns>
-        IAuiPaneInfo MaxSize(int width, int height);
+        IAuiPaneInfo MaxSizePixel(int width, int height);
 
         /// <summary>
         /// Sets the maximum size of the pane.
         /// </summary>
         /// <param name="size">New maximal width and height.</param>
         /// <returns></returns>
-        IAuiPaneInfo MaxSize(Int32Size size);
+        IAuiPaneInfo MaxSizeDip(Size size);
 
         /// <summary>
         /// Sets the position of the floating pane.
@@ -359,7 +364,7 @@ namespace Alternet.UI
         /// <param name="x">New floating pane horizontal position.</param>
         /// <param name="y">New floating pane vertical position.</param>
         /// <returns>Returns this pane info instance.</returns>
-        IAuiPaneInfo FloatingPosition(int x, int y);
+        IAuiPaneInfo FloatingPositionPixel(int x, int y);
 
         /// <summary>
         /// Sets the size of the floating pane.
@@ -367,7 +372,7 @@ namespace Alternet.UI
         /// <param name="width">New floating pane width.</param>
         /// <param name="height">New floating pane height.</param>
         /// <returns>Returns this pane info instance.</returns>
-        IAuiPaneInfo FloatingSize(int width, int height);
+        IAuiPaneInfo FloatingSizePixel(int width, int height);
 
         /// <summary>
         /// Forces a pane to be fixed size so that it cannot be resized.
@@ -615,16 +620,16 @@ namespace Alternet.UI
         /// <summary>
         /// Gets size that the layout engine will prefer.
         /// </summary>
-        Int32Size GetBestSize();
+        Int32Size GetBestSizePixel();
 
         /// <summary>
         /// Gets minimum size the pane window can tolerate.
         /// </summary>
-        Int32Size GetMinSize();
+        Int32Size GetMinSizePixel();
 
         /// <summary>
         /// Gets maximum size the pane window can tolerate.
         /// </summary>
-        Int32Size GetMaxSize();
+        Int32Size GetMaxSizePixel();
     }
 }
