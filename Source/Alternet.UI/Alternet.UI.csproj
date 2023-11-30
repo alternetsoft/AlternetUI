@@ -294,7 +294,9 @@
     </EmbeddedResource>
   </ItemGroup>
 
-  <ItemGroup Condition="'$(Configuration)'=='Debug' and '$(TargetFramework)' == 'net8.0'">
+  <!-- ================================================= -->
+  <!--  and '$(TargetFramework)' == 'net8.0' -->  
+  <ItemGroup Condition="'$(Configuration)'=='Debug'">
     <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -305,6 +307,7 @@
     <AdditionalFiles Include="..\stylecop.json" Link="stylecop.json" />
   </ItemGroup>
 
+  <!-- ================================================= -->
   <ItemGroup>
     <Folder Include="CommonWindows\" />
   </ItemGroup>
