@@ -381,10 +381,11 @@ namespace Alternet.Drawing
         {
             return string.Format(
                 CultureInfo.CurrentCulture,
-                "[{0}: Name={1}, Size={2}, Style={3}]",
+                "[{0}: Name={1}, Size={2}, PixelSize={3}, Style={4}]",
                 GetType().Name,
                 Name,
                 SizeInPoints,
+                PixelSize,
                 Style);
         }
 
