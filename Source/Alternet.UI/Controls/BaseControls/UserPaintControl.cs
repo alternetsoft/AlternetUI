@@ -114,14 +114,6 @@ namespace Alternet.UI
             }
         }
 
-        internal virtual void BeforePaint(DrawingContext dc, Rect rect)
-        {
-#if DEBUG
-            if (DrawDebugPointsBefore)
-                dc.DrawDebugPoints(rect, Pens.Yellow);
-#endif
-        }
-
         /// <summary>
         /// Draw default border.
         /// </summary>
@@ -153,6 +145,14 @@ namespace Alternet.UI
                 else
                     dc.FillRoundedRectangle(brush, rect, radius.Value);
             }
+        }
+
+        internal virtual void BeforePaint(DrawingContext dc, Rect rect)
+        {
+#if DEBUG
+            if (DrawDebugPointsBefore)
+                dc.DrawDebugPoints(rect, Pens.Yellow);
+#endif
         }
 
         internal virtual void DefaultPaint(DrawingContext dc, Rect rect)
