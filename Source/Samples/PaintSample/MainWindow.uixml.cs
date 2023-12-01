@@ -1,9 +1,8 @@
-using Alternet.Drawing;
-using Alternet.UI;
 using System;
 using System.IO;
-using System.Linq;
 using System.Text;
+using Alternet.Drawing;
+using Alternet.UI;
 
 namespace PaintSample
 {
@@ -47,7 +46,7 @@ namespace PaintSample
             InitializeComponent();
 
             Title = "AlterNET UI Paint Sample";
-            Size = (750,700);
+            Size = (750, 700);
             StartLocation = WindowStartLocation.CenterScreen;
 
             var menu = Menu!;
@@ -64,8 +63,8 @@ namespace PaintSample
             fileMainMenu.Add(saveMenuItem);
 
             saveAsMenuItem = new(
-                "_Save As...", 
-                SaveAsMenuItem_Click, 
+                "_Save As...",
+                SaveAsMenuItem_Click,
                 "Ctrl+Shift+S");
             fileMainMenu.Add(saveAsMenuItem);
             fileMainMenu.Add("-");
@@ -88,8 +87,9 @@ namespace PaintSample
             testMenu.Add("Lightness (GenericImage.ChangeLightness)", DoChangeLightness);
             testMenu.Add("Gen sample image (GenericImage.GetData)", DoGenImageUseGetData);
             testMenu.Add("Lightness (GenericImage.GetData)", DoChangeLightnessUseGetData);
+            testMenu.Add("Fill red (new GenericImage with native data)", DoFillRedUseSetData);
 
-            helpMainMenu = new("_Help");            
+            helpMainMenu = new("_Help");
             menu.Add(helpMainMenu);
 
             aboutMenuItem = new("_About", AboutMenuItem_Click);
@@ -98,12 +98,18 @@ namespace PaintSample
             mainGrid = new();
             Children.Add(mainGrid);
 
-            mainGrid.RowDefinitions.Add(new RowDefinition { 
-                Height = new GridLength() });
-            mainGrid.RowDefinitions.Add(new RowDefinition { 
-                Height = new GridLength(100, GridUnitType.Star) });
-            mainGrid.RowDefinitions.Add(new RowDefinition { 
-                Height = new GridLength() });
+            mainGrid.RowDefinitions.Add(new RowDefinition
+            {
+                Height = new GridLength()
+            });
+            mainGrid.RowDefinitions.Add(new RowDefinition
+            {
+                Height = new GridLength(100, GridUnitType.Star)
+            });
+            mainGrid.RowDefinitions.Add(new RowDefinition
+            {
+                Height = new GridLength()
+            });
 
             Icon = new("embres:PaintSample.Sample.ico");
 
@@ -335,7 +341,7 @@ namespace PaintSample
             {
                 Filter = FileMaskUtils.GetFileDialogFilterForImageOpen(false),
                 InitialDirectory = s,
-            };            
+            };
 
             if (dialog.ShowModal(this) != ModalResult.Accepted || dialog.FileName == null)
                 return;
@@ -412,7 +418,7 @@ namespace PaintSample
         {
             PromptToSaveDocument(out var cancel);
             e.Cancel = cancel;
-            if (!cancel) 
+            if (!cancel)
             {
                 this.Hide();
                 Alternet.UI.Application.Current.Exit();
@@ -443,6 +449,42 @@ namespace PaintSample
             GenericImage image = (GenericImage)bitmap;
             var lightness = (int)result.Value;
             image.ForEachPixel(Color.ChangeLightness, lightness);
+            Document.Bitmap = (Bitmap)image;
+        }
+
+        public unsafe void DoFillRedUseSetData()
+        {
+            var result = DialogFactory.GetNumberFromUser(null, "Transparency (0..255)", null, 100, 0, 255);
+            if (result is null)
+                return;
+
+            var alpha = (byte)result.Value;
+            Application.Log($"Fill red color (alpha = {alpha}) using new image with native data");
+
+            Int32Size size = (600, 600);
+            var pixelCount = size.PixelCount;
+            var height = size.Height;
+            var width = size.Width;
+            RGBValue rgb = Color.Red;
+            byte r = rgb.R, g = rgb.G, b = rgb.B;
+
+            var alphaData = BaseMemory.Alloc(pixelCount);
+            BaseMemory.Fill(alphaData, alpha, pixelCount);
+
+            var dataPtr = BaseMemory.Alloc(pixelCount * 3);
+            byte* data = (byte*)dataPtr;
+
+            for (int y = 0; y < height; y++)
+            {
+                for (int x = 0; x < width; x++)
+                {
+                    *data++ = r;
+                    *data++ = g;
+                    *data++ = b;
+                }
+            }
+
+            GenericImage image = new(size.Width, size.Height, dataPtr, alphaData, false);
             Document.Bitmap = (Bitmap)image;
         }
 
