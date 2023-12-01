@@ -24,6 +24,7 @@ namespace Alternet.UI
         private static readonly Size DefaultControlSize = Size.NaN;
 
         private static int groupIndexCounter;
+        private static Font? defaultFont;
 
         private bool isMouseLeftButtonDown;
         private bool enabled = true;
@@ -287,9 +288,10 @@ namespace Alternet.UI
         /// </value>
         public static Font DefaultFont
         {
-            get => Font.Default;
+            get => defaultFont ?? Font.Default;
             set
             {
+                defaultFont = value;
                 Native.Window.SetParkingWindowFont(value?.NativeFont);
             }
         }

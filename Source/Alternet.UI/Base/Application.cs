@@ -51,7 +51,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets operating system as <see cref="OperatingSystems"/> enumeration.
         /// </summary>
-        public static OperatingSystems BackendOS;
+        public static readonly OperatingSystems BackendOS;
 
         internal const int BuildCounter = 4;
         internal static readonly Destructor MyDestructor = new();
@@ -82,7 +82,7 @@ namespace Alternet.UI
             if (IsWindowsOS)
             {
                 BackendOS = OperatingSystems.Windows;
-                return;
+                goto exit;
             }
 
             IsMacOS = backend == WebBrowserBackendOS.MacOS;
@@ -90,7 +90,7 @@ namespace Alternet.UI
             if (IsMacOS)
             {
                 BackendOS = OperatingSystems.MacOs;
-                return;
+                goto exit;
             }
 
             IsLinuxOS = backend == WebBrowserBackendOS.Unix;
@@ -98,7 +98,7 @@ namespace Alternet.UI
             if (IsLinuxOS)
             {
                 BackendOS = OperatingSystems.Linux;
-                return;
+                goto exit;
             }
 
 #if NET5_0_OR_GREATER
@@ -107,7 +107,7 @@ namespace Alternet.UI
             if (IsAndroidOS)
             {
                 BackendOS = OperatingSystems.Android;
-                return;
+                goto exit;
             }
 
             IsIOS = OperatingSystem.IsIOS();
@@ -115,11 +115,15 @@ namespace Alternet.UI
             if (IsIOS)
             {
                 BackendOS = OperatingSystems.IOS;
-                return;
+                goto exit;
             }
 #endif
             BackendOS = OperatingSystems.Unknown;
             IsUnknownOS = true;
+            goto exit;
+
+        exit:
+            Window.UpdateDefaultFont();
         }
 
         /// <summary>

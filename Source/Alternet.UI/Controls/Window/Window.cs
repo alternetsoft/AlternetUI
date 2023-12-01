@@ -16,6 +16,9 @@ namespace Alternet.UI
     [ControlCategory("Hidden")]
     public class Window : Control
     {
+        private static int incFontSizeHighDpi = 2;
+        private static int incFontSize = 0;
+
         private readonly WindowInfo info = new();
         private string title = string.Empty;
         private Toolbar? toolbar = null;
@@ -31,8 +34,10 @@ namespace Alternet.UI
         {
             Application.Current.RegisterWindow(this);
             SetVisibleValue(false);
-            DefaultDPI ??= GetDPI();
             Bounds = GetDefaultBounds();
+
+            if (Control.DefaultFont != Font.Default)
+                Font = Control.DefaultFont;
         }
 
         /// <summary>
@@ -180,9 +185,42 @@ namespace Alternet.UI
         public static Window? ActiveWindow => NativeWindowHandler.ActiveWindow;
 
         /// <summary>
+        /// Gets or sets default control font size increment (in points) on high dpi displays (DPI greater than 96).
+        /// Default value is 2.
+        /// </summary>
+        public static int IncFontSizeHighDpi
+        {
+            get => incFontSizeHighDpi;
+
+            set
+            {
+                if (incFontSizeHighDpi == value)
+                    return;
+                incFontSizeHighDpi = value;
+                UpdateDefaultFont();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets default control font size increment (in points) on normal dpi displays (DPI less or equal to 96).
+        /// Default value is 0.
+        /// </summary>
+        public static int IncFontSize
+        {
+            get => incFontSize;
+            set
+            {
+                if (incFontSize == value)
+                    return;
+                incFontSize = value;
+                UpdateDefaultFont();
+            }
+        }
+
+        /// <summary>
         /// Gets DPI of the first created window.
         /// </summary>
-        public static Size? DefaultDPI { get; internal set; }
+        public static Size? DefaultDPI => Application.FirstWindow()?.GetDPI();
 
         /// <summary>
         /// Gets a value indicating whether the window is the currently active window for
@@ -719,6 +757,24 @@ namespace Alternet.UI
 
                 if (StatusBar != null)
                     yield return StatusBar;
+            }
+        }
+
+        /// <summary>
+        /// Updates default control font after changes in <see cref="IncFontSizeHighDpi"/>
+        /// or <see cref="IncFontSize"/>. You should not call this method directly.
+        /// </summary>
+        public static void UpdateDefaultFont()
+        {
+            var dpi = Display.Primary.DPI;
+            var incFont = (dpi.Width > 96) ? Window.IncFontSizeHighDpi : Window.IncFontSize;
+
+            if (incFont > 0)
+            {
+                FontInfo info = Font.Default;
+                info.SizeInPoints += incFont;
+                Font font = info;
+                Control.DefaultFont = font;
             }
         }
 
