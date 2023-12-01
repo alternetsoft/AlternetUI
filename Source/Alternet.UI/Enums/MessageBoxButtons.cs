@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Alternet.UI
+﻿namespace Alternet.UI
 {
     /// <summary>
     /// Specifies constants defining which buttons to display on a <see cref="MessageBox"/>.
@@ -30,5 +24,15 @@ namespace Alternet.UI
         /// The message box contains Yes and No buttons.
         /// </summary>
         YesNo,
+
+        /// <summary>
+        /// The message box contains Abort, Retry, and Ignore buttons.
+        /// </summary>
+        AbortRetryIgnore,
+
+        /// <summary>
+        /// The message box contains Retry and Cancel buttons.
+        /// </summary>
+        RetryCancel,
     }
 }

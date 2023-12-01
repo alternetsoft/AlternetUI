@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Alternet.UI
+﻿namespace Alternet.UI
 {
     /// <summary>
     /// Specifies identifiers to indicate the default button of a <see cref="MessageBox"/>.
@@ -30,5 +24,20 @@ namespace Alternet.UI
         /// The <see cref="MessageBox"/> box default button is No.
         /// </summary>
         No,
+
+        /// <summary>
+        /// The first button on the message box is the default button.
+        /// </summary>
+        Button1 = OK,
+
+        /// <summary>
+        /// The second button on the message box is the default button.
+        /// </summary>
+        Button2 = 0x100,
+
+        /// <summary>
+        /// The third button on the message box is the default button.
+        /// </summary>
+        Button3 = 0x200,
     }
 }

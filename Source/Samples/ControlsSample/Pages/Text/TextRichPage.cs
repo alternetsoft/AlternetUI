@@ -567,7 +567,7 @@ namespace ControlsSample
                 "Prompt",
                 MessageBoxButtons.YesNo,
                 MessageBoxIcon.None);
-            if (result == MessageBoxResult.Yes)
+            if (result == DialogResult.Yes)
                 richPanel.TextBox.Clear();
         }
     }

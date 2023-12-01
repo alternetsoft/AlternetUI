@@ -404,13 +404,13 @@ namespace PaintSample
                 defaultButton: MessageBoxDefaultButton.Cancel,
                 icon: MessageBoxIcon.None);
 
-            if (result == MessageBoxResult.Cancel)
+            if (result == DialogResult.Cancel)
             {
                 cancel = true;
                 return;
             }
 
-            if (result == MessageBoxResult.Yes)
+            if (result == DialogResult.Yes)
                 Save();
         }
 
