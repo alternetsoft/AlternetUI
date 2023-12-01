@@ -33,9 +33,9 @@ namespace Alternet.UI
         /// function is called.
         /// </remarks>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static IntPtr Alloc(ulong size)
+        public static IntPtr Alloc(int size)
         {
-            return Native.WxOtherFactory.MemoryAlloc(size);
+            return Native.WxOtherFactory.MemoryAlloc((ulong)size);
         }
 
         /// <summary>
@@ -70,7 +70,7 @@ namespace Alternet.UI
         /// be returned that may not be used to access storage. Such usage is deprecated.
         /// </remarks>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static IntPtr Realloc(IntPtr ptr, ulong newSize) => Native.WxOtherFactory.MemoryRealloc(ptr, newSize);
+        public static IntPtr Realloc(IntPtr ptr, int newSize) => Native.WxOtherFactory.MemoryRealloc(ptr, (ulong)newSize);
 
         /// <summary>
         /// Deallocates the space previously allocated by <see cref="Alloc"/> or <see cref="Realloc"/>.
@@ -103,8 +103,8 @@ namespace Alternet.UI
         /// is not specified and may be undefined.
         /// </remarks>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static IntPtr Copy(IntPtr dest, IntPtr src, ulong count)
-            => Native.WxOtherFactory.MemoryCopy(dest, src, count);
+        public static IntPtr Copy(IntPtr dest, IntPtr src, int count)
+            => Native.WxOtherFactory.MemoryCopy(dest, src, (ulong)count);
 
         /// <summary>
         /// Copies <paramref name="count"/> bytes from the object pointed to by <paramref name="src"/> to the object
@@ -123,8 +123,8 @@ namespace Alternet.UI
         /// may be undefined.
         /// </remarks>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static IntPtr Move(IntPtr dest, IntPtr src, ulong count)
-            => Native.WxOtherFactory.MemoryMove(dest, src, count);
+        public static IntPtr Move(IntPtr dest, IntPtr src, int count)
+            => Native.WxOtherFactory.MemoryMove(dest, src, (ulong)count);
 
         /// <summary>
         /// Copies the <paramref name="fillByte"/> into each of the first count bytes of the object
@@ -140,7 +140,33 @@ namespace Alternet.UI
         /// than the size of the object pointed to by dest, the behavior is undefined.
         /// </remarks>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static IntPtr Fill(IntPtr dest, byte fillByte, ulong count) =>
+        public static IntPtr Fill(IntPtr dest, byte fillByte, int count) =>
+            Native.WxOtherFactory.MemorySet(dest, fillByte, (ulong)count);
+
+        /// <inheritdoc cref="AllocLong"/>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static IntPtr AllocLong(ulong size)
+        {
+            return Native.WxOtherFactory.MemoryAlloc(size);
+        }
+
+        /// <inheritdoc cref="Realloc"/>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static IntPtr ReallocLong(IntPtr ptr, ulong newSize) => Native.WxOtherFactory.MemoryRealloc(ptr, newSize);
+
+        /// <inheritdoc cref="Copy"/>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static IntPtr CopyLong(IntPtr dest, IntPtr src, ulong count)
+            => Native.WxOtherFactory.MemoryCopy(dest, src, count);
+
+        /// <inheritdoc cref="Move"/>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static IntPtr MoveLong(IntPtr dest, IntPtr src, ulong count)
+            => Native.WxOtherFactory.MemoryMove(dest, src, count);
+
+        /// <inheritdoc cref="Fill"/>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static IntPtr FillLong(IntPtr dest, byte fillByte, ulong count) =>
             Native.WxOtherFactory.MemorySet(dest, fillByte, count);
     }
 }
