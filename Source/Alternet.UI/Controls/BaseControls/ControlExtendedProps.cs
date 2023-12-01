@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Alternet.Drawing;
-
-namespace Alternet.UI
+﻿namespace Alternet.UI
 {
     internal class ControlExtendedProps
     {
@@ -18,8 +11,6 @@ namespace Alternet.UI
         internal double DistanceBottom { get; set; }
 
         internal AutoSizeMode AutoSizeMode { get; set; }
-
-        internal Size MinimumSize { get; set; }
 
         internal AnchorStyles Anchor { get; set; }
 
