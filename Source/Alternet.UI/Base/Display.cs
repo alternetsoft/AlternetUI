@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Alternet.Drawing;
 
 namespace Alternet.UI
@@ -12,10 +8,13 @@ namespace Alternet.UI
     /// </summary>
     public class Display : DisposableObject
     {
+        private static Display? primary;
+
         private readonly Control? control;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Display"/> class.
+        /// This constructor creates primary display.
         /// </summary>
         public Display()
             : base(Native.WxOtherFactory.CreateDisplay(), true)
@@ -52,8 +51,23 @@ namespace Alternet.UI
         public static int DefaultDPIValue => Native.WxOtherFactory.DisplayGetStdPPIValue();
 
         /// <summary>
+        /// Gets primary display.
+        /// </summary>
+        public static Display Primary
+        {
+            get
+            {
+                return primary ??= new Display();
+            }
+        }
+
+        /// <summary>
         /// Gets default display resolution for the current platform as <see cref="Int32Size"/>.
         /// </summary>
+        /// <remarks>
+        /// This property may return 96 on high dpi displays. It is better to get primary display with
+        /// <see cref="Primary"/> property and use it's <see cref="Display.DPI"/> property to get DPI.
+        /// </remarks>
         public static Int32Size DefaultDPI => Native.WxOtherFactory.DisplayGetStdPPI();
 
         /// <summary>
