@@ -2,11 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Alternet.Drawing;
-using Alternet.UI.Localization;
 
 namespace Alternet.UI
 {
@@ -1078,6 +1074,14 @@ namespace Alternet.UI
         public bool BeginFontSize(int pointSize)
         {
             return NativeControl.BeginFontSize(pointSize);
+        }
+
+        /// <summary>
+        /// Begins using the given point size.
+        /// </summary>
+        public bool BeginFontSize(double pointSize)
+        {
+            return NativeControl.BeginFontSize((int)pointSize);
         }
 
         /// <summary>
