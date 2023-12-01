@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -13,8 +12,8 @@ namespace Alternet.UI
 
         public override void OnLayout()
         {
-            if(Control.Layout == GenericLayoutStyle.Default)
-                DefaultLayout.Layout(Control, Control.ChildrenLayoutBounds);
+            if (Control.Layout == GenericLayoutStyle.Default)
+                LayoutDockStyle.Layout(Control, Control.ChildrenLayoutBounds);
         }
 
         internal override Native.Control CreateNativeControl()

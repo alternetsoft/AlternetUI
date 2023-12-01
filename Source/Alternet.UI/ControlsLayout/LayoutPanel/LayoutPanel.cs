@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Alternet.Drawing;
-
-namespace Alternet.UI
+﻿namespace Alternet.UI
 {
     /// <summary>
     /// Arranges child controls using different methods.
@@ -99,33 +92,6 @@ namespace Alternet.UI
             if (control == null || !control.HasExtendedProps)
                 return true;
             return control.ExtendedProps.AutoSize;
-        }
-
-        /// <summary>
-        /// Sets the minimum size for the control.
-        /// </summary>
-        /// <param name="control">Control instance for which minimal
-        /// size is set.</param>
-        /// <param name="value">New minimal size value.</param>
-        public static void SetMinSize(Control control, Size value)
-        {
-            if (control == null)
-                return;
-            control.ExtendedProps.MinimumSize = value;
-        }
-
-        /// <summary>
-        /// Gets the minimum size for the control.
-        /// </summary>
-        /// <param name="control">Control instance for which minimal
-        /// size is returned.</param>
-        /// <returns>An ordered pair of type <see cref="Size"/> representing the
-        /// width and height of a rectangle.</returns>
-        public static Size GetMinSize(Control control)
-        {
-            if (control == null || !control.HasExtendedProps)
-                return Size.Empty;
-            return control.ExtendedProps.MinimumSize;
         }
 
         /// <inheritdoc />

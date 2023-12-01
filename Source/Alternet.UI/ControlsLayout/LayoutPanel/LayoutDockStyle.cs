@@ -26,20 +26,15 @@
 // Stefan Noack (noackstefan@googlemail.com)
 // Modified by Alternet
 
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
-using Alternet.Base.Collections;
 using Alternet.Drawing;
 
 namespace Alternet.UI
 {
-    internal class DefaultLayout
+    internal class LayoutDockStyle
     {
-        internal static readonly DefaultLayout Instance = new();
+        internal static readonly LayoutDockStyle Instance = new();
 
-        private DefaultLayout()
+        private LayoutDockStyle()
         {
         }
 
