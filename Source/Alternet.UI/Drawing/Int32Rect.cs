@@ -130,6 +130,12 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Gets number of pixels (Width * Height).
+        /// </summary>
+        [Browsable(false)]
+        public readonly int PixelCount => width * height;
+
+        /// <summary>
         /// Gets the x-coordinate of the upper-left corner of the rectangular region defined by this
         /// <see cref='Drawing.Int32Rect'/> .
         /// </summary>

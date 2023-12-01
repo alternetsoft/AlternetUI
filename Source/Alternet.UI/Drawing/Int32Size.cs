@@ -75,6 +75,12 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Gets number of pixels (Width * Height).
+        /// </summary>
+        [Browsable(false)]
+        public readonly int PixelCount => width * height;
+
+        /// <summary>
         /// Tests whether this <see cref='Int32Size'/> has zero
         /// width and height.
         /// </summary>
