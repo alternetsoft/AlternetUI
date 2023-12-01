@@ -1,26 +1,15 @@
-﻿using Alternet.UI;
+﻿using System;
 using Alternet.Drawing;
-using System;
+using Alternet.UI;
 
 namespace ControlsSample
 {
     internal partial class MainWindow : Window
     {
         private SplittedTreeAndCards? pageContainer;
-        private readonly LogListBox eventsControl = new()
-        {
-            HasBorder = false,
-            Margin = (0, 10, 0, 0),
-        };
-
-        private readonly SplitterPanel splitterPanel = new()
-        {
-        };
-
-        private readonly Control panel = new()
-        {
-            Padding = 5,
-        };
+        private readonly LogListBox eventsControl;
+        private readonly SplitterPanel splitterPanel;
+        private readonly Control panel;
 
         static MainWindow()
         {
@@ -29,6 +18,30 @@ namespace ControlsSample
 
         public MainWindow()
         {
+            if (GetDPI().Width > 96)
+            {
+                FontInfo info = Font.Default;
+                info.SizeInPoints += 2;
+                Font font = info;
+                Control.DefaultFont = font;
+                Font = font;
+            }
+
+            eventsControl = new()
+            {
+                HasBorder = false,
+                Margin = (0, 10, 0, 0),
+            };
+
+            splitterPanel = new()
+            {
+            };
+
+            panel = new()
+            {
+                Padding = 5,
+            };
+
             eventsControl.BindApplicationLog();
             DoInsideLayout(Initialize);
         }

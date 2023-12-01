@@ -377,6 +377,11 @@ namespace Alternet.UI.Native
             }
         }
         
+        public static void SetParkingWindowFont(Font? font)
+        {
+            NativeApi.Window_SetParkingWindowFont_(font?.NativePointer ?? IntPtr.Zero);
+        }
+        
         public void ShowModal()
         {
             CheckDisposed();
@@ -633,6 +638,9 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Window_CloseOwnedWindowsArray_(IntPtr obj, System.IntPtr array);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Window_SetParkingWindowFont_(IntPtr font);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Window_ShowModal_(IntPtr obj);

@@ -551,6 +551,19 @@ namespace Alternet::UI
         return CreateWxWindowCore(nullptr);
     }
 
+    void Window::SetParkingWindowFont(Font* font)
+    {
+        auto parkingWindow = ParkingWindow::GetWindow();
+        if (parkingWindow == nullptr)
+            return;
+        if (font == nullptr)
+        {
+            parkingWindow->SetFont(wxNullFont);
+            return;
+        }
+        parkingWindow->SetFont(font->GetWxFont());
+    }
+
     wxWindow* Window::CreateWxWindowCore(wxWindow* parent)
     {
         auto style = GetWindowStyle();

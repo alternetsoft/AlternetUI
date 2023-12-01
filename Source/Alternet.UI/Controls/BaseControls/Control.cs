@@ -1,8 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
-using System.Linq;
 using Alternet.Base.Collections;
 using Alternet.Drawing;
 
@@ -287,7 +285,14 @@ namespace Alternet.UI
         /// vary depending on the user's operating system and the local settings
         /// of their system.
         /// </value>
-        public static Font DefaultFont => Font.Default;
+        public static Font DefaultFont
+        {
+            get => Font.Default;
+            set
+            {
+                Native.Window.SetParkingWindowFont(value?.NativeFont);
+            }
+        }
 
         /// <summary>
         /// Gets border for all states of the control.
@@ -649,7 +654,7 @@ namespace Alternet.UI
                 visible = value;
                 OnVisibleChanged(EventArgs.Empty);
                 VisibleChanged?.Invoke(this, EventArgs.Empty);
-                if(visible)
+                if (visible)
                     AfterShow?.Invoke(this, EventArgs.Empty);
                 else
                     AfterHide?.Invoke(this, EventArgs.Empty);
@@ -1010,7 +1015,7 @@ namespace Alternet.UI
                     return GenericControlState.Disabled;
                 if (IsMouseOver)
                 {
-                    if(IsMouseLeftButtonDown)
+                    if (IsMouseLeftButtonDown)
                         return GenericControlState.Pressed;
                     else
                         return GenericControlState.Hovered;

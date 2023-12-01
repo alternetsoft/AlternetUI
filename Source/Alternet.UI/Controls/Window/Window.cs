@@ -532,7 +532,7 @@ namespace Alternet.UI
             {
                 if (statusBar == value)
                     return;
-                if(value is not null)
+                if (value is not null)
                 {
                     if (value.IsDisposed)
                         throw new ObjectDisposedException(nameof(StatusBar));
@@ -544,16 +544,16 @@ namespace Alternet.UI
                     }
                 }
 
-                if(statusBar is not null)
+                if (statusBar is not null)
                 {
                     statusBar.Window = null;
                     var oldHandle = Handler.NativeControl.WxStatusBar;
-                    if(oldHandle != default)
+                    if (oldHandle != default)
                         Native.WxStatusBarFactory.DeleteStatusBar(oldHandle);
                 }
 
                 statusBar = value;
-                if(statusBar is not null)
+                if (statusBar is not null)
                     statusBar.Window = this;
                 else
                     Handler.NativeControl.WxStatusBar = default;
