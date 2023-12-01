@@ -800,5 +800,27 @@ namespace Alternet.UI
         ///  The '~', 126, 0x7E) key.
         /// </summary>
         Tilde = 154,
+
+        /* These are legacy names of keys */
+
+        /// <summary>
+        /// Same as <see cref="RightArrow"/>.
+        /// </summary>
+        Right = RightArrow,
+
+        /// <summary>
+        /// Same as <see cref="Period"/>.
+        /// </summary>
+        OemPeriod = Period,
+
+        /// <summary>
+        /// Same as <see cref="Backspace"/>.
+        /// </summary>
+        Back = Backspace,
+
+        /// <summary>
+        /// Same as <see cref="Enter"/>.
+        /// </summary>
+        Return = Enter,
     }
 }
