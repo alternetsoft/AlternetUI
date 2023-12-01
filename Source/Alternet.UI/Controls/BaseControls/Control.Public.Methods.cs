@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Alternet.Drawing;
 
 namespace Alternet.UI
@@ -596,6 +594,13 @@ namespace Alternet.UI
         /// </remarks>
         public virtual DrawingContext CreateDrawingContext() =>
             Handler.CreateDrawingContext();
+
+        /// <summary>
+        /// Same as <see cref="CreateDrawingContext"/>. Added mainly for legacy code.
+        /// </summary>
+        /// <returns></returns>
+        public virtual Graphics CreateGraphics() =>
+            Handler.CreateGraphics();
 
         /// <summary>
         /// Invalidates the control and causes a paint message to be sent to

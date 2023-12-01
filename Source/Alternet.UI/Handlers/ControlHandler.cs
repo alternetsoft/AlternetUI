@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using Alternet.Base.Collections;
 using Alternet.Drawing;
@@ -636,7 +635,9 @@ namespace Alternet.UI
             NativeControl!.ShowPopupMenu(menu.MenuHandle, x, y);
         }
 
-        internal DrawingContext CreateDrawingContext()
+        internal Graphics CreateGraphics() => CreateDrawingContext();
+
+        internal Graphics CreateDrawingContext()
         {
             var nativeControl = NativeControl;
             if (nativeControl == null)
@@ -649,7 +650,7 @@ namespace Alternet.UI
                     throw new Exception(); // todo: maybe use parking window here?
             }
 
-            return new DrawingContext(nativeControl.OpenClientDrawingContext());
+            return new Graphics(nativeControl.OpenClientDrawingContext());
         }
 
         internal virtual Native.Control CreateNativeControl() =>
@@ -677,7 +678,7 @@ namespace Alternet.UI
         protected virtual void OnIsVisualChildChanged()
         {
             /*if (!NeedsNativeControl())*/
-                DisposeNativeControl();
+            DisposeNativeControl();
         }
 
         /*/// <summary>
