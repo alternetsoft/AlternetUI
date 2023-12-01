@@ -809,6 +809,21 @@ namespace Alternet.UI
         Right = RightArrow,
 
         /// <summary>
+        /// Same as <see cref="UpArrow"/>.
+        /// </summary>
+        Up = UpArrow,
+
+        /// <summary>
+        /// Same as <see cref="DownArrow"/>.
+        /// </summary>
+        Down = DownArrow,
+
+        /// <summary>
+        /// Same as <see cref="LeftArrow"/>.
+        /// </summary>
+        Left = LeftArrow,
+
+        /// <summary>
         /// Same as <see cref="Period"/>.
         /// </summary>
         OemPeriod = Period,
@@ -822,5 +837,32 @@ namespace Alternet.UI
         /// Same as <see cref="Enter"/>.
         /// </summary>
         Return = Enter,
+
+        /// <summary>
+        /// Same as <see cref="PageUp"/>.
+        /// </summary>
+        Prior = PageUp,
+
+        /// <summary>
+        /// Same as <see cref="PageDown"/>.
+        /// </summary>
+        Next = PageDown,
+
+        /// <summary>
+        /// Same as <see cref="CloseBracket"/>.
+        /// </summary>
+        OemCloseBrackets = CloseBracket,
+
+        /// <summary>
+        /// Same as <see cref="OpenBracket"/>.
+        /// </summary>
+        OemOpenBrackets = OpenBracket,
+
+        /// <summary>
+        /// The OEM pipe key on a US standard keyboard.
+        /// The pipe symbol (|) resembles a vertical line.
+        /// What is it exactly? Currently mapped as VerticalLine.
+        /// </summary>
+        OemPipe = VerticalLine,
     }
 }
