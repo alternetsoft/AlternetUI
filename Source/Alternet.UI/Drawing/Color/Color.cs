@@ -1033,7 +1033,8 @@ namespace Alternet.Drawing
         /// <summary>
         /// Converts the specified <see cref='string'/> to a <see cref='Color'/>.
         /// </summary>
-        public static explicit operator Color(string s) => Color.Parse(s);
+        public static explicit operator Color(string s)
+            => Color.Parse(s);
 
         /// <summary>
         /// Tests whether two specified <see cref="Color"/> structures are equivalent.
