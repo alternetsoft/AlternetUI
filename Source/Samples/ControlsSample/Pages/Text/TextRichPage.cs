@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Alternet.UI;
 using Alternet.Drawing;
+using Alternet.UI;
 
 namespace ControlsSample
 {
@@ -53,6 +50,8 @@ namespace ControlsSample
 
         internal void InitRichEdit()
         {
+            var baseFontSize = (int)Control.DefaultFont.SizeInPoints;
+
             var taTextColorRed = TextBox.CreateTextAttr();
             taTextColorRed.SetTextColor(Color.Red);
 
@@ -88,7 +87,7 @@ namespace ControlsSample
             taOrderedList.SetBulletNumber(1);
 
             var taBig = TextBox.CreateTextAttr();
-            taBig.SetFontPointSize((int)Font.Default.SizeInPoints + 15);
+            taBig.SetFontPointSize(baseFontSize + 15);
 
             var taUnderlined2 = TextBox.CreateTextAttr();
             taUnderlined2.SetFontUnderlinedEx(
@@ -97,15 +96,51 @@ namespace ControlsSample
 
             List<object> list =
             [
-                "Text color is ", taTextColorRed, "red", taDefault, ".\n",
-                "Background color is ", taBackColorYellow, "yellow", taDefault, ".\n",
-                "Font is ", "<u>", "underlined", "</u>", ".\n",
-                "Font is ", "<b>", "bold", "</b>", ".\n",
-                "Font is ", "<i>", "italic", "</i>", ".\n",
-                "Font is ", taStrikeOut, "strikeout", taDefault, ".\n",
-                "Font is ", taBig, "big", taDefault, ".\n",
-                "Font is ", taUnderlined2, "special underlined", taDefault, ".\n",
-                "This is url: ",taUrl, homePage, taDefault, ".\n",
+                "Text color is ",
+                taTextColorRed,
+                "red",
+                taDefault,
+                ".\n",
+                "Background color is ",
+                taBackColorYellow,
+                "yellow",
+                taDefault,
+                ".\n",
+                "Font is ",
+                "<u>",
+                "underlined",
+                "</u>",
+                ".\n",
+                "Font is ",
+                "<b>",
+                "bold",
+                "</b>",
+                ".\n",
+                "Font is ",
+                "<i>",
+                "italic",
+                "</i>",
+                ".\n",
+                "Font is ",
+                taStrikeOut,
+                "strikeout",
+                taDefault,
+                ".\n",
+                "Font is ",
+                taBig,
+                "big",
+                taDefault,
+                ".\n",
+                "Font is ",
+                taUnderlined2,
+                "special underlined",
+                taDefault,
+                ".\n",
+                "This is url: ",
+                taUrl,
+                homePage,
+                taDefault,
+                ".\n",
                 "\n",
             ];
 
@@ -151,6 +186,8 @@ namespace ControlsSample
 
         public void InitRichEdit2()
         {
+            var baseFontSize = (int)Control.DefaultFont.SizeInPoints;
+
             const string itWasInJanuary =
                 "It was in January, the most down-trodden month of an Edinburgh winter." +
                 " An attractive woman came into the cafe, which is nothing remarkable.";
@@ -166,7 +203,7 @@ namespace ControlsSample
             r.BeginAlignment(TextBoxTextAttrAlignment.Center);
             r.BeginBold();
 
-            r.BeginFontSize(14);
+            r.BeginFontSize(baseFontSize + 5);
 
             r.WriteText("Welcome to RichTextBox, a control");
             r.LineBreak();
@@ -216,7 +253,7 @@ namespace ControlsSample
             r.WriteText("or underlined.");
             r.EndUnderline();
 
-            r.BeginFontSize(14);
+            r.BeginFontSize(baseFontSize + 3);
             r.WriteText(" Different font sizes on the same line is allowed, too.");
             r.EndFontSize();
 

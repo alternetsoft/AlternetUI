@@ -1,8 +1,8 @@
-﻿using Alternet.Drawing;
-using Alternet.UI;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Alternet.Drawing;
+using Alternet.UI;
 
 namespace DrawingSample
 {
@@ -12,15 +12,13 @@ namespace DrawingSample
             "Lorem ipsum dolor sit amet,\nconsectetur adipiscing elit." +
             " Suspendisse tincidunt orci vitae arcu congue commodo. Proin fermentum rhoncus dictum.";
 
-        private static readonly Font fontInfoFont = new(FontFamily.GenericMonospace, 8);
         private static readonly Brush fontInfoBrush = Brushes.Black;
         private static readonly Pen textWidthLimitPen = new(Color.Gray, 1, PenDashStyle.Dash);
         private Paragraph[]? paragraphs;
-        private double fontSize = 10;
         private FontStyle fontStyle;
         private string customFontFamilyName = Control.DefaultFont.FontFamily.Name;
 
-        private int textWidthLimit = 500;
+        private int textWidthLimit = 450;
         private int textHeightValue = 40;
 
         private bool textWidthLimitEnabled = true;
@@ -33,6 +31,16 @@ namespace DrawingSample
         private TextTrimming trimming = TextTrimming.Pixel;
 
         private TextWrapping wrapping = TextWrapping.Character;
+
+        private static readonly Font fontInfoFont;
+        private static double fontSize;
+
+        static TextPage()
+        {
+            var defaultSize = Control.DefaultFont.SizeInPoints;
+            fontInfoFont = new(FontFamily.GenericMonospace, defaultSize);
+            fontSize = defaultSize;
+        }
 
         public override string Name => "Text";
 

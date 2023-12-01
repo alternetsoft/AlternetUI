@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Alternet.Drawing;
 using Alternet.UI;
-using Alternet.Drawing;
 
 namespace ControlsSample
 {
@@ -23,6 +18,8 @@ namespace ControlsSample
             var docsHomePage = @"https://docs.alternet-ui.com/";
             var docsUrl = $"{docsHomePage}introduction/getting-started.html";
 
+            var baseFontSize = (int)Control.DefaultFont.SizeInPoints;
+
             richText.Parent = this;
             var r = richText;
 
@@ -36,12 +33,14 @@ namespace ControlsSample
             r.ApplyAlignmentToSelection(TextBoxTextAttrAlignment.Center);
 
             r.BeginBold();
-            r.BeginFontSize(24);
+            r.BeginFontSize(baseFontSize + 15);
+
+
             r.WriteText("Alternet UI");
             r.EndFontSize();
 
             r.NewLine();
-            r.BeginFontSize(14);
+            r.BeginFontSize(baseFontSize + 3);
             r.WriteText("Cross-platform .NET UI Framework");
             r.EndFontSize();
 
@@ -54,8 +53,8 @@ namespace ControlsSample
             r.NewLine();
 
             r.WriteText(
-                "Use established .NET standards and productivity tools for your cross-platform"+
-                " desktop application. Keep up good engineering practices. Deliver your application"+
+                "Use established .NET standards and productivity tools for your cross-platform" +
+                " desktop application. Keep up good engineering practices. Deliver your application" +
                 " quickly. Be native on the desktop, whether it is Windows, macOS, or Linux.");
 
             r.NewLine(2);

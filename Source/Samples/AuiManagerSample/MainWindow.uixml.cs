@@ -1,6 +1,5 @@
 using System;
 using System.ComponentModel;
-using System.IO;
 using Alternet.Drawing;
 using Alternet.UI;
 
@@ -44,7 +43,7 @@ namespace AuiManagerSample
                 AuiNotebookCreateStyle.ScrollButtons |
                 AuiNotebookCreateStyle.WindowListButton |
                 AuiNotebookCreateStyle.CloseOnAllTabs;
-            AuiToolbar.DefaultCreateStyle = 
+            AuiToolbar.DefaultCreateStyle =
                 //AuiToolbarCreateStyle.PlainBackground |
                 AuiToolbarCreateStyle.DefaultStyle;
         }
@@ -284,7 +283,7 @@ namespace AuiManagerSample
             }
 
             var location = toolbar4.GetToolPopupLocation(toolbar4.EventToolId);
-            if(location is not null)
+            if (location is not null)
                 popupListBox.ShowPopup(location.Value);
         }
 

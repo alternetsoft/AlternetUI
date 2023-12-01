@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Alternet.Drawing;
 using Alternet.UI;
-using Alternet.Drawing;
 
 namespace PropertyGridSample
 {
@@ -17,6 +12,8 @@ namespace PropertyGridSample
 
         public WelcomePage()
         {
+            var baseFontSize = (int)Control.DefaultFont.SizeInPoints;
+
             //Padding = new(10,0,0,0);
             SuggestedSize = new(300, 400);
             var homePage = @"https://www.alternet-ui.com/";
@@ -45,7 +42,7 @@ namespace PropertyGridSample
 
             r.NewLine();
             r.BeginBold();
-            r.BeginFontSize(20);
+            r.BeginFontSize(baseFontSize + 7);
             r.WriteText("PropertyGrid");
             r.EndFontSize();
 

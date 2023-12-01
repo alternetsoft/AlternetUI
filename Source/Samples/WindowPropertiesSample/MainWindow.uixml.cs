@@ -1,20 +1,21 @@
+using System;
 using Alternet.Drawing;
 using Alternet.UI;
-using Alternet.UI.Localization;
-using System;
 
 namespace WindowPropertiesSample
 {
     public partial class MainWindow : Window
     {
-        private readonly CardPanelHeader panelHeader = new();
-        private readonly PopupPropertyGrid popupSetBounds = new();
+        private readonly CardPanelHeader panelHeader;
+        private readonly PopupPropertyGrid popupSetBounds;
         private readonly PopupPropertyGrid popupWindowProps;
         private readonly SetBoundsProperties setBoundsProperties;
         private TestWindow? testWindow;
 
         public MainWindow()
         {
+            panelHeader = new();
+            popupSetBounds = new();
             setBoundsProperties = new(this);
             Icon = new("embres:WindowPropertiesSample.Sample.ico");
 
@@ -147,18 +148,18 @@ namespace WindowPropertiesSample
         private void TestWindow_LocationChanged(object? sender, EventArgs e)
         {
             var s = "LocationChanged. Bounds: ";
-            Application.LogReplace(s+testWindow?.Bounds.ToString(),s);
+            Application.LogReplace(s + testWindow?.Bounds.ToString(), s);
         }
 
         private void TestWindow_SizeChanged(object? sender, EventArgs e)
         {
             var s = "SizeChanged. Bounds: ";
-            Application.LogReplace(s+testWindow?.Bounds.ToString(), s);
+            Application.LogReplace(s + testWindow?.Bounds.ToString(), s);
         }
 
         private void TestWindow_StateChanged(object? sender, EventArgs e)
         {
-            Application.Log("StateChanged"); 
+            Application.Log("StateChanged");
             UpdateWindowState();
         }
 
@@ -170,7 +171,7 @@ namespace WindowPropertiesSample
         private void UpdateActiveWindowInfoLabel()
         {
             var title = ActiveWindow?.Title ?? "N/A";
-            activeWindowTitleLabel.Text =  title;
+            activeWindowTitleLabel.Text = title;
 
             if (testWindow != null)
                 isWindowActiveLabel.Text = "Test window active: " + (testWindow.IsActive ? "Yes" : "No");
@@ -424,22 +425,22 @@ namespace WindowPropertiesSample
             {
                 get; set;
             }
-            
+
             public double Y
             {
-                get; set; 
+                get; set;
             }
-            
+
             public double Width
             {
-                get; set; 
+                get; set;
             }
-            
+
             public double Height
             {
-                get; set; 
+                get; set;
             }
-            
+
             public SetBoundsFlags Flags
             {
                 get; set;

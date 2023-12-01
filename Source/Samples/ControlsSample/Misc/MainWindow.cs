@@ -18,15 +18,6 @@ namespace ControlsSample
 
         public MainWindow()
         {
-            if (GetDPI().Width > 96)
-            {
-                FontInfo info = Font.Default;
-                info.SizeInPoints += 2;
-                Font font = info;
-                Control.DefaultFont = font;
-                Font = font;
-            }
-
             eventsControl = new()
             {
                 HasBorder = false,
