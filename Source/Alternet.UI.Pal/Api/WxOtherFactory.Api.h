@@ -91,6 +91,36 @@ ALTERNET_UI_API char16_t* WxOtherFactory_RendererGetVersion_(void* renderer)
     return AllocPInvokeReturnString(WxOtherFactory::RendererGetVersion(renderer));
 }
 
+ALTERNET_UI_API void* WxOtherFactory_MemoryAlloc_(uint64_t size)
+{
+    return WxOtherFactory::MemoryAlloc(size);
+}
+
+ALTERNET_UI_API void* WxOtherFactory_MemoryRealloc_(void* memory, uint64_t newSize)
+{
+    return WxOtherFactory::MemoryRealloc(memory, newSize);
+}
+
+ALTERNET_UI_API void WxOtherFactory_MemoryFree_(void* memory)
+{
+    WxOtherFactory::MemoryFree(memory);
+}
+
+ALTERNET_UI_API void* WxOtherFactory_MemoryCopy_(void* dest, void* src, uint64_t count)
+{
+    return WxOtherFactory::MemoryCopy(dest, src, count);
+}
+
+ALTERNET_UI_API void* WxOtherFactory_MemoryMove_(void* dest, void* src, uint64_t count)
+{
+    return WxOtherFactory::MemoryMove(dest, src, count);
+}
+
+ALTERNET_UI_API void* WxOtherFactory_MemorySet_(void* dest, int fillByte, uint64_t count)
+{
+    return WxOtherFactory::MemorySet(dest, fillByte, count);
+}
+
 ALTERNET_UI_API void* WxOtherFactory_CreateRichToolTip_(const char16_t* title, const char16_t* message)
 {
     return WxOtherFactory::CreateRichToolTip(title, message);

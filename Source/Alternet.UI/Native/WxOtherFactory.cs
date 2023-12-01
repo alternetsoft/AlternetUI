@@ -101,6 +101,36 @@ namespace Alternet.UI.Native
             return NativeApi.WxOtherFactory_RendererGetVersion_(renderer);
         }
         
+        public static System.IntPtr MemoryAlloc(ulong size)
+        {
+            return NativeApi.WxOtherFactory_MemoryAlloc_(size);
+        }
+        
+        public static System.IntPtr MemoryRealloc(System.IntPtr memory, ulong newSize)
+        {
+            return NativeApi.WxOtherFactory_MemoryRealloc_(memory, newSize);
+        }
+        
+        public static void MemoryFree(System.IntPtr memory)
+        {
+            NativeApi.WxOtherFactory_MemoryFree_(memory);
+        }
+        
+        public static System.IntPtr MemoryCopy(System.IntPtr dest, System.IntPtr src, ulong count)
+        {
+            return NativeApi.WxOtherFactory_MemoryCopy_(dest, src, count);
+        }
+        
+        public static System.IntPtr MemoryMove(System.IntPtr dest, System.IntPtr src, ulong count)
+        {
+            return NativeApi.WxOtherFactory_MemoryMove_(dest, src, count);
+        }
+        
+        public static System.IntPtr MemorySet(System.IntPtr dest, int fillByte, ulong count)
+        {
+            return NativeApi.WxOtherFactory_MemorySet_(dest, fillByte, count);
+        }
+        
         public static System.IntPtr CreateRichToolTip(string title, string message)
         {
             return NativeApi.WxOtherFactory_CreateRichToolTip_(title, message);
@@ -572,6 +602,24 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern string WxOtherFactory_RendererGetVersion_(System.IntPtr renderer);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr WxOtherFactory_MemoryAlloc_(ulong size);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr WxOtherFactory_MemoryRealloc_(System.IntPtr memory, ulong newSize);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void WxOtherFactory_MemoryFree_(System.IntPtr memory);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr WxOtherFactory_MemoryCopy_(System.IntPtr dest, System.IntPtr src, ulong count);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr WxOtherFactory_MemoryMove_(System.IntPtr dest, System.IntPtr src, ulong count);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr WxOtherFactory_MemorySet_(System.IntPtr dest, int fillByte, ulong count);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern System.IntPtr WxOtherFactory_CreateRichToolTip_(string title, string message);

@@ -17,6 +17,12 @@ static void RendererDrawRadioBitmap(void* renderer, void* win, void* dc, const I
 static void RendererDrawGauge(void* renderer, void* win, void* dc, const Int32Rect& rect, int value, int max, int flags);
 static void RendererDrawItemText(void* renderer, void* win, void* dc, const string& text, const Int32Rect& rect, int align, int flags, int ellipsizeMode);
 static string RendererGetVersion(void* renderer);
+static void* MemoryAlloc(uint64_t size);
+static void* MemoryRealloc(void* memory, uint64_t newSize);
+static void MemoryFree(void* memory);
+static void* MemoryCopy(void* dest, void* src, uint64_t count);
+static void* MemoryMove(void* dest, void* src, uint64_t count);
+static void* MemorySet(void* dest, int fillByte, uint64_t count);
 static void* CreateRichToolTip(const string& title, const string& message);
 static void DeleteRichToolTip(void* handle);
 static void RichToolTipSetBkColor(void* handle, const Color& color, const Color& endColor);

@@ -1,12 +1,12 @@
 ﻿#pragma warning disable
-using ApiCommon;
-using Alternet.Drawing;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Alternet.Drawing;
+using Alternet.Drawing;
+using ApiCommon;
 
 namespace NativeApi.Api
 {
@@ -249,6 +249,7 @@ namespace NativeApi.Api
 
         public static long GetNumberFromUser(string message, string prompt, string caption,
             long value, long min, long max, IntPtr parent, Int32Point pos) => default;
+
         // ===================
 
         public static int RendererDrawHeaderButton(IntPtr renderer, IntPtr win,
@@ -437,6 +438,112 @@ namespace NativeApi.Api
         { }
 
         public static string RendererGetVersion(IntPtr renderer) => default;
+
+        // ===================
+
+        /*
+        Allocates size bytes of uninitialized storage.
+
+        If allocation succeeds, returns a pointer to the lowest (first) byte in the allocated memory block that is suitably aligned for any scalar type (at least as strictly as std::max_align_t) (implicitly creating objects in the destination area).
+
+        If size is zero, the behavior is implementation defined (null pointer may be returned, or some non-null pointer may be returned that may not be used to access storage, but has to be passed to std::free).
+
+        Parameters
+        size	-	number of bytes to allocate
+        Return value
+        On success, returns the pointer to the beginning of newly allocated memory. To avoid a memory leak, the returned pointer must be deallocated with std::free() or std::realloc().
+
+        On failure, returns a null pointer.
+
+        Notes
+        This function does not call constructors or initialize memory in any way. There are no ready-to-use smart pointers that could guarantee that the matching deallocation function is called. The preferred method of memory allocation in C++ is using RAII-ready functions std::make_unique, std::make_shared, container constructors, etc, and, in low-level library code, new-expression. 
+         */
+        public static IntPtr MemoryAlloc(ulong size) => default; // malloc
+
+        /*
+        Defined in header <cstdlib>		
+        void* realloc( void* ptr, std::size_t new_size );		
+        Reallocates the given area of memory (implicitly creating objects in the destination area). It must be previously allocated by std::malloc, std::calloc or std::realloc and not yet freed with std::free, otherwise, the results are undefined.
+
+        The reallocation is done by either:
+
+        a) expanding or contracting the existing area pointed to by ptr, if possible. The contents of the area remain unchanged up to the lesser of the new and old sizes. If the area is expanded, the contents of the new part of the array are undefined.
+        b) allocating a new memory block of size new_size bytes, copying memory area with size equal the lesser of the new and the old sizes, and freeing the old block.
+        If there is not enough memory, the old memory block is not freed and null pointer is returned.
+
+        If ptr is a null pointer, the behavior is the same as calling std::malloc(new_size).
+
+        If new_size is zero, the behavior is implementation defined: null pointer may be returned (in which case the old memory block may or may not be freed) or some non-null pointer may be returned that may not be used to access storage. Such usage is deprecated (via C DR 400). 
+         */
+
+        public static IntPtr MemoryRealloc(IntPtr memory, ulong newSize) => default;
+
+        /*
+        Deallocates the space previously allocated by std::malloc, std::calloc, std::aligned_alloc(since C++17), or std::realloc.
+
+        If ptr is a null pointer, the function does nothing.
+
+        The behavior is undefined if the value of ptr does not equal a value returned earlier by std::malloc, std::calloc, std::aligned_alloc(since C++17), or std::realloc.
+
+        The behavior is undefined if the memory area referred to by ptr has already been deallocated, that is, std::free or std::realloc has already been called with ptr as the argument and no calls to std::malloc, std::calloc, std::aligned_alloc(since C++17), or std::realloc resulted in a pointer equal to ptr afterwards.
+
+        The behavior is undefined if after std::free returns, an access is made through the pointer ptr (unless another allocation function happened to result in a pointer value equal to ptr). 
+         */
+        public static void MemoryFree(IntPtr memory) { } // free
+
+        /*
+void* memcpy( void* dest, const void* src, std::size_t count );
+Copies count bytes from the object pointed to by src to the object pointed to by dest. Both objects are reinterpreted as arrays of unsigned char.
+
+If the objects overlap, the behavior is undefined.
+
+If either dest or src is an invalid or null pointer, the behavior is undefined, even if count is zero.
+
+If the objects are potentially-overlapping or not TriviallyCopyable, the behavior of memcpy is not specified and may be undefined.
+
+Parameters
+dest	-	pointer to the memory location to copy to
+src	-	pointer to the memory location to copy from
+count	-	number of bytes to copy
+Return value
+dest         
+         */
+        public static IntPtr MemoryCopy(IntPtr dest, IntPtr src, ulong count) => default;
+
+        /*
+Defined in header <cstring>
+void* memmove( void* dest, const void* src, std::size_t count );
+Copies count characters from the object pointed to by src to the object pointed to by dest. Both objects are reinterpreted as arrays of unsigned char.
+
+The objects may overlap: copying takes place as if the characters were copied to a temporary character array and then the characters were copied from the array to dest.
+
+If either dest or src is an invalid or null pointer, the behavior is undefined, even if count is zero.
+
+If the objects are potentially-overlapping or not TriviallyCopyable, the behavior of memmove is not specified and may be undefined.
+
+Parameters
+dest	-	pointer to the memory location to copy to
+src	-	pointer to the memory location to copy from
+count	-	number of bytes to copy
+Return value
+dest
+        */
+        public static IntPtr MemoryMove(IntPtr dest, IntPtr src, ulong count) => default;
+
+        /* 
+        void* memset( void* dest, int ch, std::size_t count );
+        Copies the value static_cast<unsigned char>(ch) into each of the first count characters of the object pointed to by dest. If the object is a potentially-overlapping subobject or is not TriviallyCopyable (e.g., scalar, C-compatible struct, or an array of trivially copyable type), the behavior is undefined. If count is greater than the size of the object pointed to by dest, the behavior is undefined.
+
+        Parameters
+        dest	-	pointer to the object to fill
+        ch	-	fill byte
+        count	-	number of bytes to fill
+        Return value
+        dest 
+         */
+        public static IntPtr MemorySet(IntPtr dest, int fillByte, ulong count) => default;
+
+        // ===================
     }
 }
 
