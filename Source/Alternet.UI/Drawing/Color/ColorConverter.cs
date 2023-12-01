@@ -444,19 +444,11 @@ namespace Alternet.Drawing
 
         private static void FillConstants(Hashtable hash, Type enumType)
         {
-            MethodAttributes methodAttributes = MethodAttributes.FamANDAssem |
-                MethodAttributes.Family | MethodAttributes.Static;
-            foreach (PropertyInfo propertyInfo in enumType.GetProperties())
+            foreach (var propertyInfo in enumType.GetFields(BindingFlags.Static | BindingFlags.Public))
             {
-                if (propertyInfo.PropertyType == typeof(Color))
+                if (propertyInfo.FieldType == typeof(Color))
                 {
-                    MethodInfo? getMethod = propertyInfo.GetGetMethod();
-                    if (getMethod != null &&
-                        (getMethod.Attributes & methodAttributes) == methodAttributes)
-                    {
-                        object[]? index = null;
-                        hash[propertyInfo.Name] = propertyInfo.GetValue(null, index);
-                    }
+                    hash[propertyInfo.Name] = propertyInfo.GetValue(null);
                 }
             }
         }
