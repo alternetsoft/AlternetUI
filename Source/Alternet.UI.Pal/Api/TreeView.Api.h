@@ -194,6 +194,16 @@ ALTERNET_UI_API void TreeView_CloseSelectedItemsArray_(TreeView* obj, void* arra
     obj->CloseSelectedItemsArray(array);
 }
 
+ALTERNET_UI_API void TreeView_SetNodeUniqueId_(TreeView* obj, void* node, int64_t uniqueId)
+{
+    obj->SetNodeUniqueId(node, uniqueId);
+}
+
+ALTERNET_UI_API int64_t TreeView_GetNodeUniqueId_(TreeView* obj, void* node)
+{
+    return obj->GetNodeUniqueId(node);
+}
+
 ALTERNET_UI_API void TreeView_MakeAsListBox_(TreeView* obj)
 {
     obj->MakeAsListBox();

@@ -298,6 +298,18 @@ namespace Alternet.UI.Native
             }
         }
         
+        public void SetNodeUniqueId(System.IntPtr node, long uniqueId)
+        {
+            CheckDisposed();
+            NativeApi.TreeView_SetNodeUniqueId_(NativePointer, node, uniqueId);
+        }
+        
+        public long GetNodeUniqueId(System.IntPtr node)
+        {
+            CheckDisposed();
+            return NativeApi.TreeView_GetNodeUniqueId_(NativePointer, node);
+        }
+        
         public void MakeAsListBox()
         {
             CheckDisposed();
@@ -660,6 +672,12 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void TreeView_CloseSelectedItemsArray_(IntPtr obj, System.IntPtr array);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void TreeView_SetNodeUniqueId_(IntPtr obj, System.IntPtr node, long uniqueId);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern long TreeView_GetNodeUniqueId_(IntPtr obj, System.IntPtr node);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void TreeView_MakeAsListBox_(IntPtr obj);

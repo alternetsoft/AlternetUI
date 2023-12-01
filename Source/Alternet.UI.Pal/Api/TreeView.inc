@@ -70,6 +70,8 @@ void* OpenSelectedItemsArray();
 int GetSelectedItemsItemCount(void* array);
 void* GetSelectedItemsItemAt(void* array, int index);
 void CloseSelectedItemsArray(void* array);
+void SetNodeUniqueId(void* node, int64_t uniqueId);
+int64_t GetNodeUniqueId(void* node);
 void MakeAsListBox();
 int GetItemCount(void* parentItem);
 void* InsertItem(void* parentItem, void* insertAfter, const string& text, int imageIndex, bool parentIsExpanded);

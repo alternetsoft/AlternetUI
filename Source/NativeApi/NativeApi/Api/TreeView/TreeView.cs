@@ -1,12 +1,15 @@
 ﻿#pragma warning disable
+using System;
 using Alternet.Drawing;
 using ApiCommon;
-using System;
 
 namespace NativeApi.Api
 {
     public class TreeView : Control
     {
+        public void SetNodeUniqueId(IntPtr node, long uniqueId) { }
+        public long GetNodeUniqueId(IntPtr node) => default;
+
         public void MakeAsListBox() { }
 
         public long CreateStyle { get; set; }
@@ -19,7 +22,7 @@ namespace NativeApi.Api
 
         public uint StateImageSpacing { get; set; }
 
-        public uint Indentation { get; set; } 
+        public uint Indentation { get; set; }
 
         public bool RowLines { get; set; }
 
@@ -31,19 +34,23 @@ namespace NativeApi.Api
 
         public int GetItemCount(IntPtr parentItem) => throw new Exception();
 
-        public IntPtr InsertItem(IntPtr parentItem, IntPtr insertAfter, 
-            string text, int imageIndex, bool parentIsExpanded) => 
+        public IntPtr InsertItem(IntPtr parentItem, IntPtr insertAfter,
+            string text, int imageIndex, bool parentIsExpanded) =>
             throw new Exception();
 
         public void RemoveItem(IntPtr item) => throw new Exception();
 
         public void ClearItems(IntPtr parentItem) => throw new Exception();
 
-        public event EventHandler? SelectionChanged { 
-            add => throw new Exception(); remove => throw new Exception(); }
+        public event EventHandler? SelectionChanged
+        {
+            add => throw new Exception(); remove => throw new Exception();
+        }
 
-        public event EventHandler? ControlRecreated { 
-            add => throw new Exception(); remove => throw new Exception(); }
+        public event EventHandler? ControlRecreated
+        {
+            add => throw new Exception(); remove => throw new Exception();
+        }
 
         public TreeViewSelectionMode SelectionMode { get; set; }
 
@@ -66,13 +73,13 @@ namespace NativeApi.Api
         public bool AllowLabelEdit { get; set; }
 
         public void ExpandAll() => throw new Exception();
-        
+
         public void CollapseAll() => throw new Exception();
 
         public IntPtr ItemHitTest(Point point) => throw new Exception();
         public TreeViewHitTestLocations GetHitTestResultLocations(
             IntPtr hitTestResult) => throw new Exception();
-        public IntPtr GetHitTestResultItem(IntPtr hitTestResult) => 
+        public IntPtr GetHitTestResultItem(IntPtr hitTestResult) =>
             throw new Exception();
         public void FreeHitTestResult(IntPtr hitTestResult) => throw new Exception();
 
@@ -84,7 +91,7 @@ namespace NativeApi.Api
         public void SetItemText(IntPtr item, string text) => throw new Exception();
         public string GetItemText(IntPtr item) => throw new Exception();
 
-        public void SetItemImageIndex(IntPtr item, int imageIndex) => 
+        public void SetItemImageIndex(IntPtr item, int imageIndex) =>
             throw new Exception();
         public int GetItemImageIndex(IntPtr item) => throw new Exception();
 
@@ -95,21 +102,27 @@ namespace NativeApi.Api
         public void EnsureVisible(IntPtr item) => throw new Exception();
         public void ScrollIntoView(IntPtr item) => throw new Exception();
 
-        public event NativeEventHandler<TreeViewItemEventData>? ItemExpanded 
+        public event NativeEventHandler<TreeViewItemEventData>? ItemExpanded
         { add => throw new Exception(); remove => throw new Exception(); }
-        public event NativeEventHandler<TreeViewItemEventData>? ItemCollapsed 
-        { add => throw new Exception(); remove => throw new Exception(); }
-
-        public event NativeEventHandler<TreeViewItemEventData>? ItemExpanding 
-        { add => throw new Exception(); remove => throw new Exception(); }
-        public event NativeEventHandler<TreeViewItemEventData>? ItemCollapsing 
+        public event NativeEventHandler<TreeViewItemEventData>? ItemCollapsed
         { add => throw new Exception(); remove => throw new Exception(); }
 
-        public event NativeEventHandler<TreeViewItemLabelEditEventData>? 
-            BeforeItemLabelEdit { add => throw new Exception(); 
-            remove => throw new Exception(); }
-        public event NativeEventHandler<TreeViewItemLabelEditEventData>? 
-            AfterItemLabelEdit { add => throw new Exception(); 
-            remove => throw new Exception(); }
+        public event NativeEventHandler<TreeViewItemEventData>? ItemExpanding
+        { add => throw new Exception(); remove => throw new Exception(); }
+        public event NativeEventHandler<TreeViewItemEventData>? ItemCollapsing
+        { add => throw new Exception(); remove => throw new Exception(); }
+
+        public event NativeEventHandler<TreeViewItemLabelEditEventData>?
+            BeforeItemLabelEdit
+        {
+            add => throw new Exception();
+            remove => throw new Exception();
+        }
+        public event NativeEventHandler<TreeViewItemLabelEditEventData>?
+            AfterItemLabelEdit
+        {
+            add => throw new Exception();
+            remove => throw new Exception();
+        }
     }
 }
