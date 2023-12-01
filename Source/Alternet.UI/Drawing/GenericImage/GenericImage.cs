@@ -47,7 +47,7 @@ namespace Alternet.Drawing
         /// <param name="height">Specifies the height of the image.</param>
         /// <param name="clear">If true, initialize the image to black.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public GenericImage(int width, int height, bool clear = true)
+        public GenericImage(int width, int height, bool clear = false)
             : base(UI.Native.GenericImage.CreateImageWithSize(width, height, clear), true)
         {
         }
@@ -246,6 +246,11 @@ namespace Alternet.Drawing
         {
             get => (0, 0, Width, Height);
         }
+
+        /// <summary>
+        /// Gets number of pixels in this image (Width * Height).
+        /// </summary>
+        public int PixelCount => Size.PixelCount;
 
         /// <summary>
         /// Returns <c>true</c> if image data is present.
@@ -579,12 +584,12 @@ namespace Alternet.Drawing
         /// <summary>
         /// Creates a fresh image.
         /// </summary>
-        /// <param name="width"></param>
-        /// <param name="height"></param>
-        /// <param name="clear"></param>
+        /// <param name="width">New image width.</param>
+        /// <param name="height">New image height</param>
+        /// <param name="clear">If true, initialize the image to black.</param>
         /// <returns><c>true</c> if the call succeeded, <c>false</c> otherwise.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public bool Reset(int width, int height, bool clear = true)
+        public bool Reset(int width, int height, bool clear = false)
         {
             return UI.Native.GenericImage.CreateFreshImage(Handle, width, height, clear);
         }
