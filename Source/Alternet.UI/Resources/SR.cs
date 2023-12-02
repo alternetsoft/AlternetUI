@@ -1,6 +1,7 @@
 #nullable disable
 
 using System;
+using System.Globalization;
 using System.Resources;
 using System.Runtime.CompilerServices;
 
@@ -9,6 +10,28 @@ namespace Alternet.UI
     internal partial class SR
     {
         private static ResourceManager ResourceManager => SRID.ResourceManager;
+
+        public static string GetString(string name, params object[] args)
+        {
+            string @string = GetString(name/*, Culture*/);
+
+            if (args != null && args.Length != 0)
+            {
+                for (int i = 0; i < args.Length; i++)
+                {
+                    if (args[i] is string { Length: > 1024 } text)
+                    {
+#pragma warning disable
+                        args[i] = text.Substring(0, 1021) + "...";
+#pragma warning restore
+                    }
+                }
+
+                return string.Format(CultureInfo.CurrentCulture, @string, args);
+            }
+
+            return @string;
+        }
 
         public static string Get(string name)
         {
