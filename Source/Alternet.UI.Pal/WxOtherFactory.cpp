@@ -620,36 +620,36 @@ namespace Alternet::UI
 	void* WxOtherFactory::MemoryAlloc(uint64_t size)
 	{
 		const auto sizet = static_cast<size_t>(size);
-		return std::malloc(sizet);
+		return malloc(sizet);
 	}
 
 	void* WxOtherFactory::MemoryRealloc(void* memory, uint64_t newSize)
 	{
 		const auto sizet = static_cast<size_t>(newSize);
-		return std::realloc(memory, sizet);
+		return realloc(memory, sizet);
 	}
 
 	void WxOtherFactory::MemoryFree(void* memory)
 	{
-		std::free(memory);
+		free(memory);
 	}
 
 	void* WxOtherFactory::MemoryCopy(void* dest, void* src, uint64_t count)
 	{
 		const auto countt = static_cast<size_t>(count);
-		return std::memcpy(dest, src, countt);
+		return memcpy(dest, src, countt);
 	}
 
 	void* WxOtherFactory::MemoryMove(void* dest, void* src, uint64_t count)
 	{
 		const auto countt = static_cast<size_t>(count);
-		return std::memmove(dest, src, countt);
+		return memmove(dest, src, countt);
 	}
 
 	void* WxOtherFactory::MemorySet(void* dest, int fillByte, uint64_t count)
 	{
 		const auto countt = static_cast<size_t>(count);
-		return std::memset(dest, fillByte, countt);
+		return memset(dest, fillByte, countt);
 	}
 
 	// ============================================
