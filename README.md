@@ -1,4 +1,4 @@
-# AlternetUI
+# AlterNET UI
 
 AlterNET UI is a cross-platform .NET UI framework that allows the development of light-footprint .NET desktop applications that runs on Windows, macOS, and Linux with Microsoft Visual Studio or Visual Studio Code.
 
