@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <AlternetUISourcePath>..\..\Source</AlternetUISourcePath>	
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Remove="Alternet.UI.Pal.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="$(AlternetUISourcePath)\Alternet.UI.Pal\bin\x64\Debug\Alternet.UI.Pal.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="$(AlternetUISourcePath)..\..\Source\Alternet.UI\Alternet.UI.csproj" />
+  </ItemGroup>
+</Project>
