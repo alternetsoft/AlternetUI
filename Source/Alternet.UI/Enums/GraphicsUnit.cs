@@ -5,16 +5,16 @@
     /// </summary>
     public enum GraphicsUnit
     {
-        /// <summary>
+        /*/// <summary>
         /// Specifies the world coordinate system unit as the unit of measure.
         /// </summary>
-        World,
+        World,*/
 
-        /// <summary>
+        /*/// <summary>
         /// Specifies the unit of measure of the display device.
         /// Typically pixels for video displays, and 1/100 inch for printers.
         /// </summary>
-        Display,
+        Display,*/
 
         /// <summary>
         /// Specifies a device pixel as the unit of measure.
@@ -38,6 +38,7 @@
 
         /// <summary>
         /// Specifies the millimeter as the unit of measure.
+        /// 1 inch = 25.4 millimeters. 1 inch = 2.54 centimeters. 1 centimeter = 10 millimeters.
         /// </summary>
         Millimeter,
 
