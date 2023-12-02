@@ -302,13 +302,13 @@ namespace Alternet.UI
 
         private void PopupWindow_KeyDown(object? sender, KeyEventArgs e)
         {
-            if(HideOnEscape && e.Key == Key.Escape && e.Modifiers == ModifierKeys.None)
+            if(HideOnEscape && e.Key == Keys.Escape && e.Modifiers == ModifierKeys.None)
             {
                 e.Handled = true;
                 HidePopup(ModalResult.Canceled);
             }
             else
-            if (HideOnEnter && e.Key == Key.Enter && e.Modifiers == ModifierKeys.None)
+            if (HideOnEnter && e.Key == Keys.Enter && e.Modifiers == ModifierKeys.None)
             {
                 e.Handled = true;
                 HidePopup(ModalResult.Accepted);

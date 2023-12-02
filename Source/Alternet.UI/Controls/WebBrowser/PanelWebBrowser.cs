@@ -298,11 +298,11 @@ namespace Alternet.UI
 
             MenuItem itemSearch = new(
                 CommonStrings.Default.ButtonFind + "...",
-                () => { FindWithDialog(); }, new(Key.F, ModifierKeys.Control));
+                () => { FindWithDialog(); }, new(Keys.F, ModifierKeys.Control));
 
             MenuItem itemPrint = new(
                 CommonStrings.Default.ButtonPrint + "...",
-                () => { WebBrowser.Print(); }, new(Key.P, ModifierKeys.Control));
+                () => { WebBrowser.Print(); }, new(Keys.P, ModifierKeys.Control));
 
             MoreActionsMenu.Add(itemSearch);
             MoreActionsMenu.Add(itemPrint);
@@ -396,7 +396,7 @@ namespace Alternet.UI
 
         private void TextBox_KeyDown(object? sender, KeyEventArgs e)
         {
-            if (e.Key == Key.Enter)
+            if (e.Key == Keys.Enter)
             {
                 var s = urlTextBox.Text;
 

@@ -18,7 +18,7 @@ namespace LayoutSample
         {
             base.OnPreviewKeyDown(e);
 
-            if (e.Key == Key.N)
+            if (e.Key == Keys.N)
             {
                 var focusedControl = GetFocusedControl();
                 if (focusedControl == null)

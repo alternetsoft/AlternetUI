@@ -34,10 +34,10 @@ namespace Alternet.UI
         public static readonly DependencyProperty KeyProperty =
             DependencyProperty.Register(
                 "Key",
-                typeof(Key),
+                typeof(Keys),
                 typeof(KeyBinding),
                 new UIPropertyMetadata(
-                    Key.None,
+                    Keys.None,
                     new PropertyChangedCallback(OnKeyPropertyChanged)));
 
         private bool settingGesture = false;
@@ -67,7 +67,7 @@ namespace Alternet.UI
         /// <param name="command">Associated command.</param>
         /// <param name="modifiers">Key modifiers.</param>
         /// <param name="key">Key.</param>
-        public KeyBinding(ICommand command, Key key, ModifierKeys modifiers)
+        public KeyBinding(ICommand command, Keys key, ModifierKeys modifiers)
             : this(command, new KeyGesture(key, modifiers))
         {
         }
@@ -75,11 +75,11 @@ namespace Alternet.UI
         /// <summary>
         ///     Key
         /// </summary>
-        public Key Key
+        public Keys Key
         {
             get
             {
-                return (Key)GetValue(KeyProperty);
+                return (Keys)GetValue(KeyProperty);
             }
 
             set
@@ -143,7 +143,7 @@ namespace Alternet.UI
             DependencyPropertyChangedEventArgs e)
         {
             KeyBinding keyBinding = (KeyBinding)d;
-            keyBinding.SynchronizeGestureFromProperties((Key)e.NewValue, keyBinding.Modifiers);
+            keyBinding.SynchronizeGestureFromProperties((Keys)e.NewValue, keyBinding.Modifiers);
         }
 
         /// <summary>
@@ -169,7 +169,7 @@ namespace Alternet.UI
         /// <summary>
         ///     Synchronized Gesture from properties
         /// </summary>
-        private void SynchronizeGestureFromProperties(Key key, ModifierKeys modifiers)
+        private void SynchronizeGestureFromProperties(Keys key, ModifierKeys modifiers)
         {
             if (!settingGesture)
             {

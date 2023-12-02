@@ -3415,7 +3415,7 @@ namespace Alternet.UI
         /// <param name="modifiers">Key mnodifiers (Ctrl, Shift, Alt) of the key.</param>
         public virtual void AddActionTrigger(
             PropertyGridKeyboardAction action,
-            Key keycode,
+            Keys keycode,
             ModifierKeys modifiers = 0)
         {
             NativeControl.AddActionTrigger((int)action, (int)keycode, (int)modifiers);
@@ -3440,7 +3440,7 @@ namespace Alternet.UI
         /// Using this function allows, for example, navigation between properties using
         /// arrow keys even when the focus is in the editor control.
         /// </remarks>
-        public virtual void DedicateKey(Key keycode)
+        public virtual void DedicateKey(Keys keycode)
         {
             NativeControl.DedicateKey((int)keycode);
         }

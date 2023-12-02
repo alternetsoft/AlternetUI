@@ -23,7 +23,7 @@ namespace Alternet.UI
     [TypeConverter(typeof(KeyConverter))]
     [ValueSerializer(typeof(KeyValueSerializer))]
 #endif
-    public enum Key
+    public enum Keys
     {
         /// <summary>
         ///  No key pressed.

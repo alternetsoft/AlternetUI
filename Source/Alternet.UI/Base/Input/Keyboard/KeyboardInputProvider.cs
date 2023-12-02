@@ -29,7 +29,7 @@ namespace Alternet.UI
         {
             InputManager.Current.ReportKeyDown(
                 e.Data.timestamp,
-                (Key)e.Data.key,
+                (Keys)e.Data.key,
                 e.Data.isRepeat,
                 out var handled);
             e.Handled = handled;
@@ -41,7 +41,7 @@ namespace Alternet.UI
         {
             InputManager.Current.ReportKeyUp(
                 e.Data.timestamp,
-                (Key)e.Data.key,
+                (Keys)e.Data.key,
                 e.Data.isRepeat,
                 out var handled);
             e.Handled = handled;

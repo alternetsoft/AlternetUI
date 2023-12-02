@@ -17,7 +17,7 @@ namespace Alternet.UI
         /// <param name="modifiers">Key modifier.</param>
         /// <param name="os"><see cref="OperatingSystems"/> in which this key combination is available.</param>
         public KeyInfo(
-            Key key,
+            Keys key,
             ModifierKeys modifiers = ModifierKeys.None,
             OperatingSystems os = OperatingSystems.Any)
         {
@@ -34,7 +34,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets key value.
         /// </summary>
-        public Key Key { get; set; }
+        public Keys Key { get; set; }
 
         /// <summary>
         /// Gets or sets key modifiers.
@@ -49,29 +49,29 @@ namespace Alternet.UI
             if (registeredCustomKeyLabels)
                 return;
             registeredCustomKeyLabels = true;
-            var choices = PropertyGrid.GetChoices<Key>();
-            choices.SetLabelForValue(Key.D0, "0");
-            choices.SetLabelForValue(Key.D1, "1");
-            choices.SetLabelForValue(Key.D2, "2");
-            choices.SetLabelForValue(Key.D3, "3");
-            choices.SetLabelForValue(Key.D4, "4");
-            choices.SetLabelForValue(Key.D5, "5");
-            choices.SetLabelForValue(Key.D6, "6");
-            choices.SetLabelForValue(Key.D7, "7");
-            choices.SetLabelForValue(Key.D8, "8");
-            choices.SetLabelForValue(Key.D9, "9");
-            choices.SetLabelForValue(Key.Slash, "/");
-            choices.SetLabelForValue(Key.Backslash, @"\");
+            var choices = PropertyGrid.GetChoices<Keys>();
+            choices.SetLabelForValue(Keys.D0, "0");
+            choices.SetLabelForValue(Keys.D1, "1");
+            choices.SetLabelForValue(Keys.D2, "2");
+            choices.SetLabelForValue(Keys.D3, "3");
+            choices.SetLabelForValue(Keys.D4, "4");
+            choices.SetLabelForValue(Keys.D5, "5");
+            choices.SetLabelForValue(Keys.D6, "6");
+            choices.SetLabelForValue(Keys.D7, "7");
+            choices.SetLabelForValue(Keys.D8, "8");
+            choices.SetLabelForValue(Keys.D9, "9");
+            choices.SetLabelForValue(Keys.Slash, "/");
+            choices.SetLabelForValue(Keys.Backslash, @"\");
         }
 
         /// <summary>
         /// Gets custom label of the key.
         /// </summary>
         /// <param name="key">Key.</param>
-        public static string GetCustomKeyLabel(Key key)
+        public static string GetCustomKeyLabel(Keys key)
         {
             RegisterCustomKeyLabels();
-            var choices = PropertyGrid.GetChoices<Key>();
+            var choices = PropertyGrid.GetChoices<Keys>();
             return choices.GetLabelFromValue((int)key) ?? key.ToString();
         }
 

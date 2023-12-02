@@ -102,7 +102,7 @@ namespace CustomControlsSample
 
         private void Control_KeyDown(object? sender, KeyEventArgs e)
         {
-            if(e.Key == Key.Enter)
+            if(e.Key == Keys.Enter)
             {
                 e.Handled = true;
                 OpenPopup();

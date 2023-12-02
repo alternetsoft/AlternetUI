@@ -31,7 +31,7 @@ namespace Alternet.UI
 
         private readonly ModifierKeys fmodifiers = ModifierKeys.None;
 
-        private readonly Key fkey = Key.None;
+        private readonly Keys fkey = Keys.None;
 
         private readonly string fdisplayString;
 
@@ -39,7 +39,7 @@ namespace Alternet.UI
         /// Creates <see cref="KeyGesture"/> instance with key value.
         /// </summary>
         /// <param name="key">Key definition.</param>
-        public KeyGesture(Key key)
+        public KeyGesture(Keys key)
             : this(key, ModifierKeys.None)
         {
         }
@@ -50,7 +50,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="key">Key definition.</param>
         /// <param name="modifiers">Modifiers for the key.</param>
-        public KeyGesture(Key key, ModifierKeys modifiers)
+        public KeyGesture(Keys key, ModifierKeys modifiers)
             : this(key, modifiers, string.Empty, true)
         {
         }
@@ -63,7 +63,7 @@ namespace Alternet.UI
         /// <param name="modifiers">Modifiers for the key.</param>
         /// <param name="displayString">Display string for the key with
         /// modifiers.</param>
-        public KeyGesture(Key key, ModifierKeys modifiers, string displayString)
+        public KeyGesture(Keys key, ModifierKeys modifiers, string displayString)
             : this(key, modifiers, displayString, true)
         {
         }
@@ -78,7 +78,7 @@ namespace Alternet.UI
         /// <param name="modifiers">Modifiers for the key.</param>
         /// <param name="validateGesture">If true, throws an exception
         /// if the key and modifier are not valid</param>
-        internal KeyGesture(Key key, ModifierKeys modifiers, bool validateGesture)
+        internal KeyGesture(Keys key, ModifierKeys modifiers, bool validateGesture)
             : this(key, modifiers, string.Empty, validateGesture)
         {
         }
@@ -93,7 +93,7 @@ namespace Alternet.UI
         /// <param name="validateGesture">If true, throws an exception if
         /// the key and modifier are not valid</param>
         private KeyGesture(
-            Key key,
+            Keys key,
             ModifierKeys modifiers,
             string displayString,
             bool validateGesture)
@@ -107,7 +107,7 @@ namespace Alternet.UI
             }
 
             if (!IsDefinedKey(key))
-                throw new InvalidEnumArgumentException("key", (int)key, typeof(Key));
+                throw new InvalidEnumArgumentException("key", (int)key, typeof(Keys));
             if (validateGesture && !IsValid(key, modifiers))
             {
                 throw new NotSupportedException(
@@ -135,7 +135,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets key asociated with this <see cref="KeyGesture"/>.
         /// </summary>
-        public Key Key
+        public Keys Key
         {
             get
             {
@@ -212,19 +212,19 @@ namespace Alternet.UI
         }
 
         // Check for Valid enum, as any int can be casted to the enum.
-        internal static bool IsDefinedKey(Key key)
+        internal static bool IsDefinedKey(Keys key)
         {
-            return key >= Key.None && key <= Key.Menu;
+            return key >= Keys.None && key <= Keys.Menu;
         }
 
         /// <summary>
         /// Is Valid Keyboard input to process for commands
         /// </summary>
-        internal static bool IsValid(Key key, ModifierKeys modifiers)
+        internal static bool IsValid(Keys key, ModifierKeys modifiers)
         {
             // Don't enforce any rules on the Function keys or on the number pad keys.
-            if (!((key >= Key.F1 && key <= Key.F24) ||
-                (key >= Key.NumPad0 && key <= Key.NumPadSlash)))
+            if (!((key >= Keys.F1 && key <= Keys.F24) ||
+                (key >= Keys.NumPad0 && key <= Keys.NumPadSlash)))
             {
                 // We check whether Control/Alt/Windows key is down for modifiers.
                 // We don't check
@@ -247,8 +247,8 @@ namespace Alternet.UI
                     //    default:*/
                     return true;
                 }
-                else if ((key >= Key.D0 && key <= Key.D9) ||
-                    (key >= Key.A && key <= Key.Z))
+                else if ((key >= Keys.D0 && key <= Keys.D9) ||
+                    (key >= Keys.A && key <= Keys.Z))
                 {
                     return false;
                 }
