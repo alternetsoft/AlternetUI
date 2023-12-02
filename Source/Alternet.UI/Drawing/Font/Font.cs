@@ -16,10 +16,12 @@ namespace Alternet.Drawing
     {
         private static Font? defaultFont;
 
+        private readonly string? originalFontName;
         private bool isDisposed;
         private Font? asBold;
         private Font? asUnderlined;
         private int? hashCode;
+        private bool? gdiVerticalFont;
 
         /// <summary>
         /// Initializes a new <see cref="Font"/> using a <see cref="FontInfo"/>.
@@ -75,6 +77,188 @@ namespace Alternet.Drawing
                 (UI.Native.FontStyle)style);
         }
 
+        /// <summary>
+        /// Initializes a new <see cref="Font" /> that uses the specified existing <see cref="Font" />
+        /// and <see cref="FontStyle" /> enumeration.</summary>
+        /// <param name="prototype">The existing <see cref="Font" /> from which to create the
+        /// new <see cref="Font" />.</param>
+        /// <param name="newStyle">The <see cref="FontStyle" /> to apply to the
+        /// new <see cref="Font" />. Multiple values of the <see cref="FontStyle" /> enumeration can be
+        /// combined with the <see langword="OR" /> operator.</param>
+        public Font(Font prototype, FontStyle newStyle)
+        {
+            NativeFont = new UI.Native.Font();
+            originalFontName = prototype.OriginalFontName;
+            Initialize(prototype.FontFamily, prototype.Size, newStyle, prototype.Unit, 1, gdiVerticalFont: false);
+        }
+
+        /// <summary>Initializes a new <see cref="Font" /> using a specified size, style, and unit.</summary>
+        /// <param name="family">The <see cref="FontFamily" /> of the new <see cref="Font" />.</param>
+        /// <param name="emSize">The em-size of the new font in the units specified by the <paramref name="unit" />
+        /// parameter.</param>
+        /// <param name="style">The <see cref="FontStyle" /> of the new font.</param>
+        /// <param name="unit">The <see cref="GraphicsUnit" /> of the new font.</param>
+        /// <exception cref="ArgumentException">
+        ///   <paramref name="emSize" /> is less than or equal to 0, evaluates to infinity, or is not a valid
+        ///   number.</exception>
+        /// <exception cref="ArgumentNullException">
+        ///   <paramref name="family" /> is <see langword="null" />.</exception>
+        public Font(FontFamily family, double emSize, FontStyle style, GraphicsUnit unit)
+        {
+            NativeFont = new UI.Native.Font();
+            Initialize(family, emSize, style, unit, 1, gdiVerticalFont: false);
+        }
+
+        /// <summary>Initializes a new <see cref="Font" /> using a specified size, style, unit, and character set.</summary>
+        /// <param name="family">The <see cref="FontFamily" /> of the new <see cref="Font" />.</param>
+        /// <param name="emSize">The em-size of the new font in the units specified by the <paramref name="unit" />
+        /// parameter.</param>
+        /// <param name="style">The <see cref="FontStyle" /> of the new font.</param>
+        /// <param name="unit">The <see cref="GraphicsUnit" /> of the new font.</param>
+        /// <param name="gdiCharSet">A <see cref="byte" /> that specifies a
+        ///  GDI character set to use for the new font. Currently ignored.</param>
+        /// <exception cref="ArgumentException">
+        ///   <paramref name="emSize" /> is less than or equal to 0, evaluates to infinity, or is not a valid
+        ///   number.</exception>
+        /// <exception cref="ArgumentNullException">
+        ///   <paramref name="family" /> is <see langword="null" />.</exception>
+        public Font(FontFamily family, double emSize, FontStyle style, GraphicsUnit unit, byte gdiCharSet)
+        {
+            NativeFont = new UI.Native.Font();
+            Initialize(family, emSize, style, unit, gdiCharSet, gdiVerticalFont: false);
+        }
+
+        /// <summary>Initializes a new <see cref="Font" /> using a specified size, style, unit,
+        /// and character set.</summary>
+        /// <param name="family">The <see cref="FontFamily" /> of the new <see cref="Font" />.</param>
+        /// <param name="emSize">The em-size of the new font in the units specified by the <paramref name="unit" />
+        /// parameter.</param>
+        /// <param name="style">The <see cref="FontStyle" /> of the new font.</param>
+        /// <param name="unit">The <see cref="GraphicsUnit" /> of the new font.</param>
+        /// <param name="gdiCharSet">A <see cref="byte" /> that specifies a
+        ///  GDI character set to use for this font. Currently ignored.</param>
+        /// <param name="gdiVerticalFont">A Boolean value indicating whether the new font is derived from
+        /// a GDI vertical font.</param>
+        /// <exception cref="ArgumentException">
+        ///   <paramref name="emSize" /> is less than or equal to 0, evaluates to infinity, or is not
+        ///   a valid number.</exception>
+        /// <exception cref="ArgumentNullException">
+        ///   <paramref name="family" /> is <see langword="null" /></exception>
+        public Font(FontFamily family, double emSize, FontStyle style, GraphicsUnit unit, byte gdiCharSet, bool gdiVerticalFont)
+        {
+            NativeFont = new UI.Native.Font();
+            Initialize(family, emSize, style, unit, gdiCharSet, gdiVerticalFont);
+        }
+
+        /// <summary>Initializes a new <see cref="Font" /> using a specified size, style, unit, and character set.</summary>
+        /// <param name="familyName">A string representation of the <see cref="FontFamily" /> for the
+        /// new <see cref="Font" />.</param>
+        /// <param name="emSize">The em-size of the new font in the units specified by
+        /// the <paramref name="unit" /> parameter.</param>
+        /// <param name="style">The <see cref="FontStyle" /> of the new font.</param>
+        /// <param name="unit">The <see cref="GraphicsUnit" /> of the new font.</param>
+        /// <param name="gdiCharSet">A <see cref="byte" /> that specifies a GDI character set to use for
+        /// this font.  Currently ignored.</param>
+        /// <exception cref="ArgumentException">
+        ///   <paramref name="emSize" /> is less than or equal to 0, evaluates to infinity, or is not a
+        ///   valid number.</exception>
+        public Font(string familyName, double emSize, FontStyle style, GraphicsUnit unit, byte gdiCharSet)
+        {
+            NativeFont = new UI.Native.Font();
+            Initialize(familyName, emSize, style, unit, gdiCharSet, IsVerticalName(familyName));
+        }
+
+        /// <summary>Initializes a new <see cref="Font" /> using the specified size, style, unit, and
+        /// character set.</summary>
+        /// <param name="familyName">A string representation of the <see cref="FontFamily" /> for the
+        /// new <see cref="Font" />.</param>
+        /// <param name="emSize">The em-size of the new font in the units specified by the <paramref name="unit" />
+        /// parameter.</param>
+        /// <param name="style">The <see cref="FontStyle" /> of the new font.</param>
+        /// <param name="unit">The <see cref="GraphicsUnit" /> of the new font.</param>
+        /// <param name="gdiCharSet">A <see cref="byte" /> that specifies a GDI character set to use
+        /// for this font.  Currently ignored.</param>
+        /// <param name="gdiVerticalFont">A Boolean value indicating whether the new <see cref="Font" /> is
+        /// derived from a GDI vertical font.</param>
+        /// <exception cref="ArgumentException">
+        ///   <paramref name="emSize" /> is less than or equal to 0, evaluates to infinity, or is not
+        ///   a valid number.</exception>
+        public Font(string familyName, double emSize, FontStyle style, GraphicsUnit unit, byte gdiCharSet, bool gdiVerticalFont)
+        {
+            NativeFont = new UI.Native.Font();
+            Initialize(familyName, emSize, style, unit, gdiCharSet, gdiVerticalFont);
+        }
+
+        /// <summary>Initializes a new <see cref="Font" /> using a specified size and unit. Sets the style
+        /// to <see cref="FontStyle.Regular" />.</summary>
+        /// <param name="family">The <see cref="FontFamily" /> of the new <see cref="Font" />.</param>
+        /// <param name="emSize">The em-size of the new font in the units specified by the <paramref name="unit" />
+        /// parameter.</param>
+        /// <param name="unit">The <see cref="GraphicsUnit" /> of the new font.</param>
+        /// <exception cref="ArgumentNullException">
+        ///   <paramref name="family" /> is <see langword="null" />.</exception>
+        /// <exception cref="ArgumentException">
+        ///   <paramref name="emSize" /> is less than or equal to 0, evaluates to infinity, or is not a valid number.</exception>
+        public Font(FontFamily family, float emSize, GraphicsUnit unit)
+        {
+            NativeFont = new UI.Native.Font();
+            Initialize(family, emSize, FontStyle.Regular, unit, 1, gdiVerticalFont: false);
+        }
+
+        /// <summary>Initializes a new <see cref="Font" /> using a specified size.</summary>
+        /// <param name="family">The <see cref="FontFamily" /> of the new <see cref="Font" />.</param>
+        /// <param name="emSize">The em-size, in points, of the new font.</param>
+        /// <exception cref="ArgumentException">
+        ///   <paramref name="emSize" /> is less than or equal to 0, evaluates to infinity, or is not a valid number.</exception>
+        public Font(FontFamily family, double emSize)
+        {
+            NativeFont = new UI.Native.Font();
+            Initialize(family, emSize, FontStyle.Regular, GraphicsUnit.Point, 1, gdiVerticalFont: false);
+        }
+
+        /// <summary>Initializes a new <see cref="Font" /> using a specified size, style, and unit.</summary>
+        /// <param name="familyName">A string representation of the <see cref="FontFamily" /> for the
+        /// new <see cref="Font" />.</param>
+        /// <param name="emSize">The em-size of the new font in the units specified by the <paramref name="unit" />
+        /// parameter.</param>
+        /// <param name="style">The <see cref="FontStyle" /> of the new font.</param>
+        /// <param name="unit">The <see cref="GraphicsUnit" /> of the new font.</param>
+        /// <exception cref="ArgumentException">
+        ///   <paramref name="emSize" /> is less than or equal to 0, evaluates to infinity or is not a valid number.</exception>
+        public Font(string familyName, double emSize, FontStyle style, GraphicsUnit unit)
+        {
+            NativeFont = new UI.Native.Font();
+            Initialize(familyName, emSize, style, unit, 1, IsVerticalName(familyName));
+        }
+
+        /// <summary>Initializes a new <see cref="Font" /> using a specified size and unit. The style
+        /// is set to <see cref="FontStyle.Regular" />.</summary>
+        /// <param name="familyName">A string representation of the <see cref="FontFamily" /> for the new
+        /// <see cref="Font" />.</param>
+        /// <param name="emSize">The em-size of the new font in the units specified by the <paramref name="unit" />
+        /// parameter.</param>
+        /// <param name="unit">The <see cref="GraphicsUnit" /> of the new font.</param>
+        /// <exception cref="ArgumentException">
+        ///   <paramref name="emSize" /> is less than or equal to 0, evaluates to infinity, or is not a valid number.</exception>
+        public Font(string familyName, double emSize, GraphicsUnit unit)
+        {
+            NativeFont = new UI.Native.Font();
+            Initialize(familyName, emSize, FontStyle.Regular, unit, 1, IsVerticalName(familyName));
+        }
+
+        /// <summary>Initializes a new <see cref="Font" /> using a specified size.</summary>
+        /// <param name="familyName">A string representation of the <see cref="FontFamily" /> for the
+        /// new <see cref="Font" />.</param>
+        /// <param name="emSize">The em-size, in points, of the new font.</param>
+        /// <exception cref="ArgumentException">
+        ///   <paramref name="emSize" /> is less than or equal to 0, evaluates to infinity or is not
+        ///   a valid number.</exception>
+        public Font(string familyName, double emSize)
+        {
+            NativeFont = new UI.Native.Font();
+            Initialize(familyName, emSize, FontStyle.Regular, GraphicsUnit.Point, 1, IsVerticalName(familyName));
+        }
+
         internal Font(UI.Native.Font nativeFont)
         {
             NativeFont = nativeFont;
@@ -91,15 +275,62 @@ namespace Alternet.Drawing
         public static Font Default => defaultFont ??= Font.CreateDefaultFont();
 
         /// <summary>
+        /// Gets the name of the font originally specified.
+        /// </summary>
+        /// <returns>
+        /// The string representing the name of the font originally specified.
+        /// </returns>
+        [Browsable(false)]
+        public string? OriginalFontName => originalFontName;
+
+        /// <summary>
         /// Gets the pixel size.
         /// </summary>
-        public Int32Size PixelSize => NativeFont.GetPixelSize();
+        public Int32Size SizeInPixels => NativeFont.GetPixelSize();
 
         /// <summary>
         /// Gets whether font size is in pixels.
         /// </summary>
         /// <returns></returns>
         public bool IsUsingSizeInPixels => NativeFont.IsUsingSizeInPixels();
+
+        /// <summary>
+        /// Gets the em-size of this <see cref="Font" /> measured in the units specified by
+        /// the <see cref="Font.Unit" /> property.</summary>
+        /// <returns>The em-size of this <see cref="Font" />.</returns>
+        public double Size
+        {
+            get
+            {
+                if (IsUsingSizeInPixels)
+                    return SizeInPixels.Height;
+                else
+                    return SizeInPoints;
+            }
+        }
+
+        /// <summary>
+        /// Gets a byte value that specifies the character set that this <see cref="Font" /> uses.
+        /// </summary>
+        /// <returns>
+        /// A byte value that specifies the GDI character set that this
+        /// <see cref="Font" /> uses. The default is 1. Currently always returns 1. </returns>
+        public byte GdiCharSet => 1;
+
+        /// <summary>
+        /// Gets the unit of measure for this <see cref="Font" />.</summary>
+        /// <returns>A <see cref="GraphicsUnit" /> that represents the unit of measure for
+        /// this <see cref="Font" />.</returns>
+        public GraphicsUnit Unit
+        {
+            get
+            {
+                if (IsUsingSizeInPixels)
+                    return GraphicsUnit.Pixel;
+                else
+                    return GraphicsUnit.Point;
+            }
+        }
 
         /// <summary>
         /// Gets the font weight as an integer value.
@@ -240,6 +471,15 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Gets a <see cref="bool"/> value that indicates whether this <see cref="Font" /> is derived from
+        /// a vertical font.</summary>
+        /// <returns>
+        /// <see langword="true" /> if this <see cref="Font" /> is derived from a vertical font;
+        /// otherwise, <see langword="false" />.</returns>
+        [Browsable(false)]
+        public bool GdiVerticalFont => gdiVerticalFont ??= IsVerticalName(Name);
+
+        /// <summary>
         /// Gets the font family name of this <see cref="Font"/>.
         /// </summary>
         /// <value>A string representation of the font family name
@@ -332,6 +572,20 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Gets whether font name is from vertical font (starts with @ char).
+        /// </summary>
+        /// <param name="familyName">Name of the font.</param>
+        /// <returns></returns>
+        public static bool IsVerticalName(string? familyName)
+        {
+            if (string.IsNullOrEmpty(familyName))
+                return false;
+#pragma warning disable
+            return familyName[0] == '@';
+#pragma warning enable
+        }
+
+        /// <summary>
         /// Releases all resources used by this <see cref="Font"/>.
         /// </summary>
         public void Dispose()
@@ -385,7 +639,7 @@ namespace Alternet.Drawing
                 GetType().Name,
                 Name,
                 SizeInPoints,
-                PixelSize,
+                SizeInPixels,
                 Style);
         }
 
@@ -469,6 +723,53 @@ namespace Alternet.Drawing
 
                 isDisposed = true;
             }
+        }
+
+        private void Initialize(
+            string familyName,
+            double emSize,
+            FontStyle style,
+            GraphicsUnit unit,
+            byte gdiCharSet,
+            bool gdiVerticalFont)
+        {
+            Initialize(
+                new FontFamily(familyName),
+                emSize,
+                style,
+                unit,
+                gdiCharSet,
+                gdiVerticalFont);
+        }
+
+        private void Initialize(
+            FontFamily family,
+            double emSize,
+            FontStyle style,
+            GraphicsUnit unit,
+            byte gdiCharSet,
+            bool gdiVerticalFont)
+        {
+            if (family == null)
+                throw new ArgumentNullException(nameof(family));
+
+            if (double.IsNaN(emSize) || double.IsInfinity(emSize) || emSize <= 0f)
+            {
+                throw new ArgumentException(
+                    string.Format(
+                        ErrorMessages.Default.InvalidBoundArgument,
+                        nameof(emSize),
+                        emSize,
+                        0,
+                        "System.Double.MaxValue"),
+                    nameof(emSize));
+            }
+
+            NativeFont.Initialize(
+               ToNativeGenericFamily(family.GenericFamily),
+               family.Name,
+               emSize,
+               (UI.Native.FontStyle)style);
         }
     }
 }
