@@ -653,6 +653,8 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void InitAlpha()
         {
+            if (HasAlpha())
+                return;
             UI.Native.GenericImage.InitAlpha(Handle);
         }
 
