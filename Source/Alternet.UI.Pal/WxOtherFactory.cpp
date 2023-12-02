@@ -2,6 +2,7 @@
 #include "WxAlternet/wxAlternetRichToolTip.h"
 
 #include <wx/numdlg.h>
+#include <string.h>
 
 namespace Alternet::UI
 {
