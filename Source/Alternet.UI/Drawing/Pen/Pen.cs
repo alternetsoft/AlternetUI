@@ -19,7 +19,7 @@ namespace Alternet.Drawing
         private readonly bool immutable;
         private bool isDisposed;
         private Color color;
-        private PenDashStyle dashStyle;
+        private DashStyle dashStyle;
         private LineCap lineCap;
         private LineJoin lineJoin;
         private double width;
@@ -34,7 +34,7 @@ namespace Alternet.Drawing
         /// device-independent units (1/96th inch per unit).</param>
         /// <param name="dashStyle">A style used for dashed lines drawn with this
         /// <see cref="Pen"/>.</param>
-        public Pen(Color color, double width, PenDashStyle dashStyle)
+        public Pen(Color color, double width, DashStyle dashStyle)
             : this(color, width, dashStyle, LineCap.Flat, LineJoin.Miter)
         {
         }
@@ -55,7 +55,7 @@ namespace Alternet.Drawing
         public Pen(
             Color color,
             double width,
-            PenDashStyle dashStyle,
+            DashStyle dashStyle,
             LineCap lineCap,
             LineJoin lineJoin)
             : this(color, width, dashStyle, lineCap, lineJoin, immutable: false)
@@ -71,7 +71,7 @@ namespace Alternet.Drawing
         /// <param name="width">A value indicating the width of this <see cref="Pen"/>, in
         /// device-independent units (1/96th inch per unit).</param>
         public Pen(Color color, double width)
-            : this(color, width, PenDashStyle.Solid)
+            : this(color, width, DashStyle.Solid)
         {
         }
 
@@ -103,7 +103,7 @@ namespace Alternet.Drawing
         internal Pen(
             Color color,
             double width,
-            PenDashStyle dashStyle,
+            DashStyle dashStyle,
             LineCap lineCap,
             LineJoin lineJoin,
             bool immutable)
@@ -172,16 +172,16 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets or sets the style used for dashed lines drawn with this <see cref="Pen"/>.
         /// </summary>
-        /// <value>One of the <see cref="PenDashStyle"/> values that represents the dash style
+        /// <value>One of the <see cref="Drawing.DashStyle"/> values that represents the dash style
         /// of this <see cref="Pen"/>.</value>
         /// <remarks>
         /// If <see cref="Pen"/> is immutable (for example <see cref="Pens.Black"/>),
         /// this property is readonly.
         /// </remarks>
         /// <remarks>
-        /// Default value is <see cref="PenDashStyle.Solid"/>.
+        /// Default value is <see cref="DashStyle.Solid"/>.
         /// </remarks>
-        public PenDashStyle DashStyle
+        public DashStyle DashStyle
         {
             get => dashStyle;
 

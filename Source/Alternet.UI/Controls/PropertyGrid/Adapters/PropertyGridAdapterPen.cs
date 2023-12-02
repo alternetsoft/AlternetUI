@@ -13,7 +13,7 @@ namespace Alternet.UI
     public class PropertyGridAdapterPen : PropertyGridAdapterGeneric
     {
         private Color color = Color.Black;
-        private PenDashStyle dashStyle = PenDashStyle.Solid;
+        private DashStyle dashStyle = DashStyle.Solid;
         private LineCap lineCap = LineCap.Flat;
         private LineJoin lineJoin = LineJoin.Miter;
         private double width = 1;
@@ -43,7 +43,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc cref="Pen.DashStyle"/>
-        public PenDashStyle DashStyle
+        public DashStyle DashStyle
         {
             get
             {

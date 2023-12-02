@@ -37,7 +37,7 @@ namespace DrawingSample
             this.page = page;
             brushComboBox.AddEnumValues<BrushesAndPensPage.BrushType>();
             hatchStyleComboBox.AddEnumValues<BrushHatchStyle>();
-            dashStyleComboBox.AddEnumValues<PenDashStyle>();
+            dashStyleComboBox.AddEnumValues<DashStyle>();
             lineJoinComboBox.AddEnumValues<LineJoin>();
             lineCapComboBox.AddEnumValues<LineCap>();
 

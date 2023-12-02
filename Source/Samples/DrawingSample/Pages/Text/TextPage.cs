@@ -13,7 +13,7 @@ namespace DrawingSample
             " Suspendisse tincidunt orci vitae arcu congue commodo. Proin fermentum rhoncus dictum.";
 
         private static readonly Brush fontInfoBrush = Brushes.Black;
-        private static readonly Pen textWidthLimitPen = new(Color.Gray, 1, PenDashStyle.Dash);
+        private static readonly Pen textWidthLimitPen = new(Color.Gray, 1, DashStyle.Dash);
         private Paragraph[]? paragraphs;
         private FontStyle fontStyle;
         private string customFontFamilyName = Control.DefaultFont.FontFamily.Name;

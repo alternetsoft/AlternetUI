@@ -10,7 +10,7 @@ namespace DrawingSample
 
         private Rect magnifiedRect;
 
-        private Pen dashPen = new Pen(Color.Black, 2, PenDashStyle.Dash);
+        private Pen dashPen = new Pen(Color.Black, 2, DashStyle.Dash);
 
         private InterpolationMode interpolationMode = InterpolationMode.None;
 

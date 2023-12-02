@@ -1287,7 +1287,7 @@ namespace Alternet.Drawing
                 pen = new Pen(
                     color,
                     1,
-                    PenDashStyle.Solid,
+                    DashStyle.Solid,
                     LineCap.Flat,
                     LineJoin.Miter,
                     immutable: true);

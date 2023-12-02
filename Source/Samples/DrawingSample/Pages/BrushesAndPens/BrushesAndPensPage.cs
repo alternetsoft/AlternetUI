@@ -22,7 +22,7 @@ namespace DrawingSample
 
         private BrushHatchStyle hatchStyle = BrushHatchStyle.DiagonalCross;
 
-        private PenDashStyle penDashStyle = PenDashStyle.Dash;
+        private DashStyle penDashStyle = DashStyle.Dash;
 
         private LineJoin lineJoin = LineJoin.Miter;
 
@@ -139,7 +139,7 @@ namespace DrawingSample
             }
         }
 
-        public PenDashStyle PenDashStyle
+        public DashStyle PenDashStyle
         {
             get => penDashStyle;
             set

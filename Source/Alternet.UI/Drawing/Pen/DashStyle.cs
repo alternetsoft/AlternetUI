@@ -3,7 +3,7 @@
     /// <summary>
     /// Gets or sets the style used for dashed lines drawn with this <see cref="Pen"/>.
     /// </summary>
-    public enum PenDashStyle
+    public enum DashStyle
     {
         /// <summary>
         /// Specifies a solid line.
@@ -29,5 +29,11 @@
         /// Specifies a user-defined custom dash style.
         /// </summary>
         Custom,
+
+        /// <summary>
+        /// Specifies a line consisting of a repeating pattern of dash-dot-dot.
+        /// Currently not implemented and is equal to <see cref="DashDot"/>.
+        /// </summary>
+        DashDotDot = DashDot,
     }
 }
