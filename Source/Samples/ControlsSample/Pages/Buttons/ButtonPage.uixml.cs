@@ -127,12 +127,12 @@ namespace ControlsSample
 
                 var s = comboBoxFontSize.SelectedItem?.ToString();
                 double fontSize = string.IsNullOrWhiteSpace(s) ?
-                    Font.Default.SizeInPoints : Double.Parse(s);
+                    Control.DefaultFont.SizeInPoints : Double.Parse(s);
 
                 s = comboBoxFontName.SelectedItem?.ToString();
-                string fontName = string.IsNullOrWhiteSpace(s) ? Font.Default.Name : s!;
+                string fontName = string.IsNullOrWhiteSpace(s) ? Control.DefaultFont.Name : s!;
 
-                Font font = Font.GetDefaultOrNew(fontName, fontSize, fontStyle);
+                Font font = Font.GetDefaultOrNew(fontName, fontSize, fontStyle, Control.DefaultFont);
 
                 button.Font = Font.Default;
                 button.Font = font;

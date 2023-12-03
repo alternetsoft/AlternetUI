@@ -571,15 +571,21 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Creates new font or gets <see cref="Font.Default"/> if its properties
+        /// Creates new font or gets <paramref name="defaultFont"/> if its properties
         /// are equal to the specified.
         /// </summary>
         /// <param name="name">Font name.</param>
         /// <param name="sizeInPoints">Font size.</param>
         /// <param name="style">Font style</param>
-        public static Font GetDefaultOrNew(string name, double sizeInPoints, FontStyle style)
+        /// <param name="defaultFont">Default font. Optional. If <c>null</c>,
+        /// <see cref="Font.Default"/> is used.</param>
+        public static Font GetDefaultOrNew(
+            string name,
+            double sizeInPoints,
+            FontStyle style,
+            Font? defaultFont = null)
         {
-            var result = Font.Default;
+            var result = defaultFont ?? Font.Default;
             if (result.Equals(name, sizeInPoints, style))
                 return result;
             return new(name, sizeInPoints, style);
