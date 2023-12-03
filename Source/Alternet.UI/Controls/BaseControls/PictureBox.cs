@@ -209,8 +209,6 @@ namespace Alternet.UI
             BeforePaint(dc, rect);
 
             DrawDefaultBackground(dc, rect);
-            if (HasBorder)
-                DrawDefaultBorder(dc, rect);
 
             var primitive = Primitive;
             var state = CurrentState;

@@ -115,17 +115,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Draw default border.
-        /// </summary>
-        /// <param name="dc">Drawing context.</param>
-        /// <param name="rect">Ractangle.</param>
-        public virtual void DrawDefaultBorder(DrawingContext dc, Rect rect)
-        {
-            var settings = Borders?.GetObjectOrNull(CurrentState);
-            settings?.Draw(dc, rect);
-        }
-
-        /// <summary>
         /// Draw default background.
         /// </summary>
         /// <param name="dc">Drawing context.</param>
@@ -144,6 +133,12 @@ namespace Alternet.UI
                     dc.FillRectangle(brush, rect);
                 else
                     dc.FillRoundedRectangle(brush, rect, radius.Value);
+            }
+
+            if (HasBorder)
+            {
+                var settings = Borders?.GetObjectOrNormal(CurrentState);
+                settings?.Draw(dc, rect);
             }
         }
 

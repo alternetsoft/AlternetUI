@@ -243,11 +243,7 @@ namespace Alternet.UI
         internal override void DefaultPaint(DrawingContext dc, Rect rect)
         {
             BeforePaint(dc, rect);
-
             DrawDefaultBackground(dc, rect);
-            if(HasBorder)
-                DrawDefaultBorder(dc, rect);
-
             AfterPaint(dc, rect);
         }
 
