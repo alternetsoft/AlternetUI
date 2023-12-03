@@ -42,8 +42,10 @@ namespace Alternet.Drawing
         /// for the new Font.</param>
         /// <param name="emSize">The em-size, in points, of the new font.</param>
         /// <param name="style">The <see cref="FontStyle"/> of the new font.</param>
-        /// <exception cref="ArgumentException"><c>emSize</c> is less than or
-        /// equal to 0, evaluates to infinity or is not a valid number.</exception>
+        /// <remarks>
+        /// If bad parameters are passed to the font constructor, error message is output to log
+        /// and font is created with default parameters. No exceptions are raised.
+        /// </remarks>
         public Font(
             string familyName,
             double emSize,
@@ -60,14 +62,16 @@ namespace Alternet.Drawing
         /// <see cref="Font"/>.</param>
         /// <param name="emSize">The em-size, in points, of the new font.</param>
         /// <param name="style">The <see cref="FontStyle"/> of the new font.</param>
-        /// <exception cref="ArgumentException"><c>emSize</c> is less than or
-        /// equal to 0, evaluates to infinity or is not a valid number.</exception>
+        /// <remarks>
+        /// If bad parameters are passed to the font constructor, error message is output to log
+        /// and font is created with default parameters. No exceptions are raised.
+        /// </remarks>
         public Font(
             FontFamily family,
             double emSize,
             FontStyle style = FontStyle.Regular)
         {
-            CheckSize(emSize);
+            emSize = CheckSize(emSize);
 
             NativeFont = new UI.Native.Font();
             NativeFont.Initialize(
@@ -85,6 +89,10 @@ namespace Alternet.Drawing
         /// <param name="newStyle">The <see cref="FontStyle" /> to apply to the
         /// new <see cref="Font" />. Multiple values of the <see cref="FontStyle" /> enumeration can be
         /// combined with the <see langword="OR" /> operator.</param>
+        /// <remarks>
+        /// If bad parameters are passed to the font constructor, error message is output to log
+        /// and font is created with default parameters. No exceptions are raised.
+        /// </remarks>
         public Font(Font prototype, FontStyle newStyle)
         {
             NativeFont = new UI.Native.Font();
@@ -98,11 +106,10 @@ namespace Alternet.Drawing
         /// parameter.</param>
         /// <param name="style">The <see cref="FontStyle" /> of the new font.</param>
         /// <param name="unit">The <see cref="GraphicsUnit" /> of the new font.</param>
-        /// <exception cref="ArgumentException">
-        ///   <paramref name="emSize" /> is less than or equal to 0, evaluates to infinity, or is not a valid
-        ///   number.</exception>
-        /// <exception cref="ArgumentNullException">
-        ///   <paramref name="family" /> is <see langword="null" />.</exception>
+        /// <remarks>
+        /// If bad parameters are passed to the font constructor, error message is output to log
+        /// and font is created with default parameters. No exceptions are raised.
+        /// </remarks>
         public Font(FontFamily family, double emSize, FontStyle style, GraphicsUnit unit)
         {
             NativeFont = new UI.Native.Font();
@@ -117,11 +124,10 @@ namespace Alternet.Drawing
         /// <param name="unit">The <see cref="GraphicsUnit" /> of the new font.</param>
         /// <param name="gdiCharSet">A <see cref="byte" /> that specifies a
         ///  GDI character set to use for the new font. Currently ignored.</param>
-        /// <exception cref="ArgumentException">
-        ///   <paramref name="emSize" /> is less than or equal to 0, evaluates to infinity, or is not a valid
-        ///   number.</exception>
-        /// <exception cref="ArgumentNullException">
-        ///   <paramref name="family" /> is <see langword="null" />.</exception>
+        /// <remarks>
+        /// If bad parameters are passed to the font constructor, error message is output to log
+        /// and font is created with default parameters. No exceptions are raised.
+        /// </remarks>
         public Font(FontFamily family, double emSize, FontStyle style, GraphicsUnit unit, byte gdiCharSet)
         {
             NativeFont = new UI.Native.Font();
@@ -139,11 +145,10 @@ namespace Alternet.Drawing
         ///  GDI character set to use for this font. Currently ignored.</param>
         /// <param name="gdiVerticalFont">A Boolean value indicating whether the new font is derived from
         /// a GDI vertical font.</param>
-        /// <exception cref="ArgumentException">
-        ///   <paramref name="emSize" /> is less than or equal to 0, evaluates to infinity, or is not
-        ///   a valid number.</exception>
-        /// <exception cref="ArgumentNullException">
-        ///   <paramref name="family" /> is <see langword="null" /></exception>
+        /// <remarks>
+        /// If bad parameters are passed to the font constructor, error message is output to log
+        /// and font is created with default parameters. No exceptions are raised.
+        /// </remarks>
         public Font(FontFamily family, double emSize, FontStyle style, GraphicsUnit unit, byte gdiCharSet, bool gdiVerticalFont)
         {
             NativeFont = new UI.Native.Font();
@@ -159,9 +164,10 @@ namespace Alternet.Drawing
         /// <param name="unit">The <see cref="GraphicsUnit" /> of the new font.</param>
         /// <param name="gdiCharSet">A <see cref="byte" /> that specifies a GDI character set to use for
         /// this font.  Currently ignored.</param>
-        /// <exception cref="ArgumentException">
-        ///   <paramref name="emSize" /> is less than or equal to 0, evaluates to infinity, or is not a
-        ///   valid number.</exception>
+        /// <remarks>
+        /// If bad parameters are passed to the font constructor, error message is output to log
+        /// and font is created with default parameters. No exceptions are raised.
+        /// </remarks>
         public Font(string familyName, double emSize, FontStyle style, GraphicsUnit unit, byte gdiCharSet)
         {
             NativeFont = new UI.Native.Font();
@@ -180,9 +186,10 @@ namespace Alternet.Drawing
         /// for this font.  Currently ignored.</param>
         /// <param name="gdiVerticalFont">A Boolean value indicating whether the new <see cref="Font" /> is
         /// derived from a GDI vertical font.</param>
-        /// <exception cref="ArgumentException">
-        ///   <paramref name="emSize" /> is less than or equal to 0, evaluates to infinity, or is not
-        ///   a valid number.</exception>
+        /// <remarks>
+        /// If bad parameters are passed to the font constructor, error message is output to log
+        /// and font is created with default parameters. No exceptions are raised.
+        /// </remarks>
         public Font(string familyName, double emSize, FontStyle style, GraphicsUnit unit, byte gdiCharSet, bool gdiVerticalFont)
         {
             NativeFont = new UI.Native.Font();
@@ -195,10 +202,10 @@ namespace Alternet.Drawing
         /// <param name="emSize">The em-size of the new font in the units specified by the <paramref name="unit" />
         /// parameter.</param>
         /// <param name="unit">The <see cref="GraphicsUnit" /> of the new font.</param>
-        /// <exception cref="ArgumentNullException">
-        ///   <paramref name="family" /> is <see langword="null" />.</exception>
-        /// <exception cref="ArgumentException">
-        ///   <paramref name="emSize" /> is less than or equal to 0, evaluates to infinity, or is not a valid number.</exception>
+        /// <remarks>
+        /// If bad parameters are passed to the font constructor, error message is output to log
+        /// and font is created with default parameters. No exceptions are raised.
+        /// </remarks>
         public Font(FontFamily family, float emSize, GraphicsUnit unit)
         {
             NativeFont = new UI.Native.Font();
@@ -208,8 +215,10 @@ namespace Alternet.Drawing
         /// <summary>Initializes a new <see cref="Font" /> using a specified size.</summary>
         /// <param name="family">The <see cref="FontFamily" /> of the new <see cref="Font" />.</param>
         /// <param name="emSize">The em-size, in points, of the new font.</param>
-        /// <exception cref="ArgumentException">
-        ///   <paramref name="emSize" /> is less than or equal to 0, evaluates to infinity, or is not a valid number.</exception>
+        /// <remarks>
+        /// If bad parameters are passed to the font constructor, error message is output to log
+        /// and font is created with default parameters. No exceptions are raised.
+        /// </remarks>
         public Font(FontFamily family, double emSize)
         {
             NativeFont = new UI.Native.Font();
@@ -223,8 +232,10 @@ namespace Alternet.Drawing
         /// parameter.</param>
         /// <param name="style">The <see cref="FontStyle" /> of the new font.</param>
         /// <param name="unit">The <see cref="GraphicsUnit" /> of the new font.</param>
-        /// <exception cref="ArgumentException">
-        ///   <paramref name="emSize" /> is less than or equal to 0, evaluates to infinity or is not a valid number.</exception>
+        /// <remarks>
+        /// If bad parameters are passed to the font constructor, error message is output to log
+        /// and font is created with default parameters. No exceptions are raised.
+        /// </remarks>
         public Font(string familyName, double emSize, FontStyle style, GraphicsUnit unit)
         {
             NativeFont = new UI.Native.Font();
@@ -238,8 +249,10 @@ namespace Alternet.Drawing
         /// <param name="emSize">The em-size of the new font in the units specified by the <paramref name="unit" />
         /// parameter.</param>
         /// <param name="unit">The <see cref="GraphicsUnit" /> of the new font.</param>
-        /// <exception cref="ArgumentException">
-        ///   <paramref name="emSize" /> is less than or equal to 0, evaluates to infinity, or is not a valid number.</exception>
+        /// <remarks>
+        /// If bad parameters are passed to the font constructor, error message is output to log
+        /// and font is created with default parameters. No exceptions are raised.
+        /// </remarks>
         public Font(string familyName, double emSize, GraphicsUnit unit)
         {
             NativeFont = new UI.Native.Font();
@@ -250,9 +263,10 @@ namespace Alternet.Drawing
         /// <param name="familyName">A string representation of the <see cref="FontFamily" /> for the
         /// new <see cref="Font" />.</param>
         /// <param name="emSize">The em-size, in points, of the new font.</param>
-        /// <exception cref="ArgumentException">
-        ///   <paramref name="emSize" /> is less than or equal to 0, evaluates to infinity or is not
-        ///   a valid number.</exception>
+        /// <remarks>
+        /// If bad parameters are passed to the font constructor, error message is output to log
+        /// and font is created with default parameters. No exceptions are raised.
+        /// </remarks>
         public Font(string familyName, double emSize)
         {
             NativeFont = new UI.Native.Font();
@@ -681,14 +695,19 @@ namespace Alternet.Drawing
                 (UI.Native.GenericFontFamily)value;
         }
 
-        internal static void CheckSize(double emSize)
+        internal static double CheckSize(double emSize)
         {
             if (emSize <= 0 || double.IsInfinity(emSize) || double.IsNaN(emSize))
             {
-                throw new ArgumentException(
+                Application.LogError("Invalid font size {emSize}, using default font size.");
+                return Font.Default.Size;
+
+                /*throw new ArgumentException(
                     ErrorMessages.Default.InvalidParameter,
-                    nameof(emSize));
+                    nameof(emSize));*/
             }
+
+            return emSize;
         }
 
         internal static Font? FromInternal(UI.Native.Font? font)
@@ -751,21 +770,33 @@ namespace Alternet.Drawing
             bool gdiVerticalFont)
         {
             if (unit != GraphicsUnit.Point)
-                throw new ArgumentException(nameof(unit));
+            {
+                Application.LogError("Invalid font unit, using default font size");
+                unit = GraphicsUnit.Point;
+                emSize = Font.Default.Size;
+                // throw new ArgumentException(nameof(unit));
+            }
 
             if (family == null)
-                throw new ArgumentNullException(nameof(family));
+            {
+                Application.LogError("Font family is null, using default font.");
+                family = FontFamily.GenericDefault;
+                // throw new ArgumentNullException(nameof(family));
+            }
 
             if (double.IsNaN(emSize) || double.IsInfinity(emSize) || emSize <= 0f)
             {
-                throw new ArgumentException(
-                    string.Format(
+                Application.LogError("Invalid font size, using default font size.");
+                unit = GraphicsUnit.Point;
+                emSize = Font.Default.Size;
+
+                /*var s = string.Format(
                         ErrorMessages.Default.InvalidBoundArgument,
                         nameof(emSize),
                         emSize,
                         0,
-                        "System.Double.MaxValue"),
-                    nameof(emSize));
+                        "System.Double.MaxValue");
+                throw new ArgumentException(s, nameof(emSize));*/
             }
 
             NativeFont.Initialize(

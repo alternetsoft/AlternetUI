@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using Alternet.UI;
 
 namespace Alternet.Drawing
 {
@@ -27,15 +28,23 @@ namespace Alternet.Drawing
 
             if (name == string.Empty)
             {
-                throw new ArgumentException(
-                    $"'{nameof(name)}' cannot be empty.", nameof(name));
+                Application.LogError("Font name cannot be empty, using default font.");
+                GenericFamily = GenericFontFamily.Default;
+                return;
+
+                /*throw new ArgumentException(
+                    $"'{nameof(name)}' cannot be empty.", nameof(name));*/
             }
 
             if (!UI.Native.Font.IsFamilyValid(name))
             {
-                throw new ArgumentException(
+                Application.LogError($"'{name}' font family is not installed on this computer, using default font.");
+                GenericFamily = GenericFontFamily.Default;
+                return;
+
+                /*throw new ArgumentException(
                     $"'{name}' font family is not installed on this computer.",
-                    nameof(name));
+                    nameof(name));*/
             }
 
             this.name = name;
