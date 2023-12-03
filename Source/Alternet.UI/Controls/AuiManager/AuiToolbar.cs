@@ -346,7 +346,7 @@ namespace Alternet.UI
             string? label,
             ImageSet? bitmap = null,
             string? shortHelpString = null,
-            AuiToolbarItemKind itemKind = AuiToolbarItemKind.Normal,
+            AuiToolbarItemKind? itemKind = AuiToolbarItemKind.Normal,
             ImageSet? disabledBitmap = null,
             string? longHelpString = null)
         {
@@ -354,12 +354,13 @@ namespace Alternet.UI
             label ??= string.Empty;
             shortHelpString ??= string.Empty;
             longHelpString ??= string.Empty;
+            itemKind ??= AuiToolbarItemKind.Normal;
             NativeControl.AddTool2(
                 toolId,
                 label,
                 bitmap?.NativeImageSet,
                 disabledBitmap?.NativeImageSet,
-                (int)itemKind,
+                (int)itemKind.Value,
                 shortHelpString!,
                 longHelpString!,
                 IntPtr.Zero);
