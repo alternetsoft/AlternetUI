@@ -9,7 +9,7 @@ namespace PaintSample
     {
         private bool isDisposed;
 
-        private Bitmap? bitmap;
+        private Image? bitmap;
 
         private Action<DrawingContext>? previewAction;
 
@@ -56,7 +56,7 @@ namespace PaintSample
 
         public event EventHandler? Changed;
 
-        public Bitmap Bitmap
+        public Image Bitmap
         {
             get => bitmap ?? throw new Exception();
             set

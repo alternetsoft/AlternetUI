@@ -88,6 +88,7 @@ namespace PaintSample
             testMenu.Add("Gen sample image (GenericImage.GetData)", DoGenImageUseGetData);
             testMenu.Add("Lightness (GenericImage.GetData)", DoChangeLightnessUseGetData);
             testMenu.Add("Fill red (new GenericImage with native data)", DoFillRedUseSetData);
+            testMenu.Add("Make file grey...", DoMakeFileGray);
 
             helpMainMenu = new("_Help");
             menu.Add(helpMainMenu);
@@ -486,6 +487,26 @@ namespace PaintSample
 
             GenericImage image = new(size.Width, size.Height, dataPtr, alphaData, false);
             Document.Bitmap = (Bitmap)image;
+        }
+
+        public unsafe void DoMakeFileGray()
+        {
+            OpenFileDialog dialog = new OpenFileDialog
+            {
+                Filter = "Images | *.bmp; *.png; *.jpg; *.jpeg"
+            };
+
+            if (dialog.ShowModal(this) != ModalResult.Accepted || dialog.FileName == null)
+                return;
+
+            string ext = Path.GetExtension(dialog.FileName);
+            var bm = new Bitmap();
+            bm.Load(dialog.FileName, BitmapType.Any);
+            var image = (GenericImage)bm;
+            image.ChangeToGrayScale();
+            var greyBm = (Bitmap)image;
+            greyBm.Save(dialog.FileName.Replace(ext, "_Gray" + ext));
+            Document.Bitmap = greyBm;
         }
 
         public unsafe void DoGenImageUseGetData()

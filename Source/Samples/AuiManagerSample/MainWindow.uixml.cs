@@ -14,10 +14,16 @@ namespace AuiManagerSample
         private const string ResPrefixPencil = $"{ResPrefix}Pencil16.png";
         private const string ResPrefixGraph = $"{ResPrefix}LineGraph16.png";
 
-        private readonly ImageSet ImageCalendar = ImageSet.FromUrl(ResPrefixCalendar);
-        private readonly ImageSet ImagePhoto = ImageSet.FromUrl(ResPrefixPhoto);
-        private readonly ImageSet ImagePencil = ImageSet.FromUrl(ResPrefixPencil);
-        private readonly ImageSet ImageGraph = ImageSet.FromUrl(ResPrefixGraph);
+        private static readonly Image ImageCalendar = Image.FromUrl(ResPrefixCalendar);
+        private static readonly Image ImagePhoto = Image.FromUrl(ResPrefixPhoto);
+        private static readonly Image ImagePencil = Image.FromUrl(ResPrefixPencil);
+        private static readonly Image ImageGraph = Image.FromUrl(ResPrefixGraph);
+
+        private static readonly Image ImageDisabledCalendar = ImageCalendar.ToGrayScale();
+        private static readonly Image ImageDisabledPhoto = ImagePhoto.ToGrayScale();
+        private static readonly Image ImageDisabledPencil = ImagePencil.ToGrayScale();
+        private static readonly Image ImageDisabledGraph = ImageGraph.ToGrayScale();
+
         private readonly AuiManager manager = new();
         private readonly LayoutPanel panel = new();
         private readonly LogListBox logListBox;
@@ -96,7 +102,7 @@ namespace AuiManagerSample
             // Right Pane
             var pane2 = manager.CreatePaneInfo();
             pane2.Name("pane2").Caption("Pane 2").Right().PaneBorder(false)
-                .TopDockable(false).BottomDockable(false).Image(ImageCalendar);
+                .TopDockable(false).BottomDockable(false).Image((ImageSet)ImageCalendar);
             var listBox2 = CreateListBox();
             listBox2.Add("TopDock = false");
             listBox2.Add("BottomDock = false");
@@ -118,8 +124,10 @@ namespace AuiManagerSample
 
             calendarToolId = toolbar4.AddTool(
                 "Calendar",
-                ImageCalendar,
-                "Calendar Hint");
+                (ImageSet)ImageCalendar,
+                "Calendar Hint",
+                null,
+                (ImageSet)ImageDisabledCalendar);
             toolbar4.SetToolName(calendarToolId, "Calendar");
 
             int separatorToolId = toolbar4.AddSeparator();
@@ -127,8 +135,10 @@ namespace AuiManagerSample
 
             pencilToolId = toolbar4.AddTool(
                 "Pencil",
-                ImagePencil,
-                "Pencil Hint");
+                (ImageSet)ImagePencil,
+                "Pencil Hint",
+                null,
+                (ImageSet)ImageDisabledPencil);
             toolbar4.SetToolName(pencilToolId, "Pencil");
 
             int labelToolId = toolbar4.AddLabel("Text1");
@@ -152,8 +162,10 @@ namespace AuiManagerSample
 
             photoToolId = toolbar4.AddTool(
                 "Photo",
-                ImagePhoto,
-                "Photo Hint");
+                (ImageSet)ImagePhoto,
+                "Photo Hint",
+                null,
+                (ImageSet)ImageDisabledPhoto);
             toolbar4.SetToolName(photoToolId, "Photo");
 
             var textBoxId = toolbar4.AddControl(textBox4);
@@ -177,8 +189,10 @@ namespace AuiManagerSample
 
             graphToolId = toolbar4.AddTool(
                 "Graph",
-                ImageGraph,
-                "Graph Hint");
+                (ImageSet)ImageGraph,
+                "Graph Hint",
+                null,
+                (ImageSet)ImageDisabledGraph);
             toolbar4.SetToolDropDown(graphToolId, true);
             toolbar4.SetToolName(graphToolId, "Graph");
 
@@ -197,9 +211,9 @@ namespace AuiManagerSample
             listBox5 = CreateListBox();
             listBox6 = CreateListBox();
 
-            notebook5.AddPage(listBox5, "ListBox 5", false, ImagePencil);
+            notebook5.AddPage(listBox5, "ListBox 5", false, (ImageSet)ImagePencil);
             listBox5.Add("This page can be closed");
-            notebook5.AddPage(listBox6, "ListBox 6", true, ImagePhoto);
+            notebook5.AddPage(listBox6, "ListBox 6", true, (ImageSet)ImagePhoto);
             listBox6.Add("This page can not be closed");
 
             panel.Children.Add(notebook5);
@@ -257,6 +271,17 @@ namespace AuiManagerSample
             toolbar4.ToolRightClick += Toolbar4_ToolRightClick;
 
             popupListBox.VisibleChanged += PopupListBox_VisibleChanged;
+
+            disableImagesMenuItem.Click += DisableImagesMenuItem_Click;
+        }
+
+        private void DisableImagesMenuItem_Click(object? sender, EventArgs e)
+        {
+            var newEnabled = !toolbar4.GetToolEnabled(calendarToolId);
+            toolbar4.EnableTool(calendarToolId, newEnabled);
+            toolbar4.EnableTool(photoToolId, newEnabled);
+            toolbar4.EnableTool(pencilToolId, newEnabled);
+            toolbar4.EnableTool(graphToolId, newEnabled);
         }
 
         private void AddDefaultItems(ListControl control)

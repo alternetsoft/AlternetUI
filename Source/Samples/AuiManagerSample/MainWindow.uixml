@@ -14,8 +14,7 @@
         <MenuItem Text="E_xit" Name="exitMenuItem" Enabled="false"/>
       </MenuItem>
       <MenuItem Text="_Tools">
-        <MenuItem Text="_Options..." Name="optionsMenuItem"
-                  Enabled="false"/>
+        <MenuItem Text="Disable Images" Name="disableImagesMenuItem"/>
       </MenuItem>
       <MenuItem Text="_Help">
         <MenuItem Text="Index" Enabled="false" />

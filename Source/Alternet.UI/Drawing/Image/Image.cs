@@ -15,6 +15,12 @@ namespace Alternet.Drawing
     public class Image : IDisposable
     {
         /// <summary>
+        /// Occurs when <see cref="ToGrayScale"/> is called. Used to override default
+        /// grayscale method.
+        /// </summary>
+        public static EventHandler<BaseEventArgs<Image>>? GrayScale;
+
+        /// <summary>
         /// Gets or sets default disabled image brightness used in <see cref="ToGrayScale"/>.
         /// </summary>
         public byte DefaultDisabledBrightness = 170;
@@ -611,7 +617,18 @@ namespace Alternet.Drawing
         /// <returns>Returns new grayscaled image from this image.</returns>
         public Image ToGrayScale()
         {
-            return ConvertToDisabled(DefaultDisabledBrightness);
+            if(GrayScale is null)
+            {
+                var generic = (GenericImage)this;
+                generic.ChangeToGrayScale();
+                return (Bitmap)generic;
+            }
+            else
+            {
+                BaseEventArgs<Image> args = new(this);
+                GrayScale(this, args);
+                return args.Value;
+            }
         }
 
         /// <summary>
