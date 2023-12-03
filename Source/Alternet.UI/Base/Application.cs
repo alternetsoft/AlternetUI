@@ -67,6 +67,7 @@ namespace Alternet.UI
         internal static readonly Destructor MyDestructor = new();
 
         private static readonly Queue<(Action<object?>, object?)> IdleTasks = new();
+        private static Queue<string>? logQueue;
         private static bool terminating = false;
         private static bool logFileIsEnabled;
         private static Application? current;
@@ -565,8 +566,6 @@ namespace Alternet.UI
             if (condition)
                 LogNameValue(name, value);
         }
-
-        private static Queue<string> logQueue;
 
         /// <summary>
         /// Logs message with 'Warning' prefix.
