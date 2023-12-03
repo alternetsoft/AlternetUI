@@ -17,11 +17,9 @@ namespace PaintSample
 
         private Image LoadImage()
         {
-            var stream = GetType().Assembly.GetManifestResourceStream(
-                "PaintSample.Resources.CommandIcons." + imageName + ".png");
-            if (stream == null)
-                throw new InvalidOperationException();
-
+            var s = "PaintSample.Resources.CommandIcons." + imageName + ".png";
+            var stream = GetType().Assembly.GetManifestResourceStream(s)
+                ?? throw new InvalidOperationException();
             return new Bitmap(stream);
         }
 
@@ -69,12 +67,12 @@ namespace PaintSample
             }
         }
 
-        protected override void OnMouseEnter()
+        protected override void OnMouseEnter(EventArgs e)
         {
             Refresh();
         }
 
-        protected override void OnMouseLeave()
+        protected override void OnMouseLeave(EventArgs e)
         {
             Refresh();
         }
