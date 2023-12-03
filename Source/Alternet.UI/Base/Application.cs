@@ -569,6 +569,24 @@ namespace Alternet.UI
         private static Queue<string> logQueue;
 
         /// <summary>
+        /// Logs message with 'Warning' prefix.
+        /// </summary>
+        /// <param name="obj"></param>
+        public static void LogWarning(object? obj)
+        {
+            Log($"Warning: {obj}");
+        }
+
+        /// <summary>
+        /// Logs message with 'Error' prefix.
+        /// </summary>
+        /// <param name="obj"></param>
+        public static void LogError(object? obj)
+        {
+            Log($"Error: {obj}");
+        }
+
+        /// <summary>
         /// Calls <see cref="LogMessage"/> event.
         /// </summary>
         /// <param name="obj">Message text or object to log.</param>
