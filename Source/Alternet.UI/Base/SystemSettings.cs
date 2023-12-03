@@ -87,6 +87,11 @@ namespace Alternet.UI
             Application.Log($"CPP.SizeOfLong = {WebBrowser.DoCommandGlobal("SizeOfLong")}");
             Application.Log($"CPP.IsDebug = {WebBrowser.DoCommandGlobal("IsDebug")}");
 
+            foreach (SystemSettingsMetric item in Enum.GetValues(typeof(SystemSettingsMetric)))
+            {
+                Application.Log($"GetMetric({item}) = {GetMetric(item)}");
+            }
+
             Application.LogEndSection();
         }
 
