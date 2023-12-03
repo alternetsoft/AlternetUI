@@ -566,6 +566,8 @@ namespace Alternet.UI
                 LogNameValue(name, value);
         }
 
+        private static Queue<string> logQueue;
+
         /// <summary>
         /// Calls <see cref="LogMessage"/> event.
         /// </summary>
@@ -580,15 +582,47 @@ namespace Alternet.UI
             WriteToLogFileIfAllowed(msg);
 
             string[] result = msg.Split(StringUtils.StringSplitToArrayChars, StringSplitOptions.RemoveEmptyEntries);
-            var args = new LogMessageEventArgs();
             var evt = Current?.LogMessage;
 
-            foreach (string s2 in result)
+            if (DebugWriteLine || evt is null)
             {
-                if (DebugWriteLine)
+                foreach (string s2 in result)
+                {
                     Debug.WriteLine(s2);
 
-                if (evt is not null)
+                    try
+                    {
+                        Console.WriteLine(s2);
+                    }
+                    catch
+                    {
+                    }
+                }
+            }
+
+            if (evt is null)
+            {
+                logQueue ??= new();
+                foreach (string s2 in result)
+                    logQueue.Enqueue(s2);
+                return;
+            }
+
+            if(logQueue is not null)
+            {
+                while (logQueue.Count > 0)
+                {
+                    LogToEvent(logQueue.Dequeue());
+                }
+            }
+
+            LogToEvent(result);
+
+            void LogToEvent(params string[] items)
+            {
+                LogMessageEventArgs? args = new();
+
+                foreach (string s2 in items)
                 {
                     args.Message = s2;
                     evt(Current, args);
