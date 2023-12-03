@@ -45,6 +45,12 @@ int GetId();
 void SetId(int value);
 
 
+bool GetIsHandleCreated();
+
+
+bool GetIsWxWidgetCreated();
+
+
 void* GetHandle();
 
 

@@ -121,6 +121,16 @@ ALTERNET_UI_API void Control_SetId_(Control* obj, int value)
     obj->SetId(value);
 }
 
+ALTERNET_UI_API c_bool Control_GetIsHandleCreated_(Control* obj)
+{
+    return obj->GetIsHandleCreated();
+}
+
+ALTERNET_UI_API c_bool Control_GetIsWxWidgetCreated_(Control* obj)
+{
+    return obj->GetIsWxWidgetCreated();
+}
+
 ALTERNET_UI_API void* Control_GetHandle_(Control* obj)
 {
     return obj->GetHandle();

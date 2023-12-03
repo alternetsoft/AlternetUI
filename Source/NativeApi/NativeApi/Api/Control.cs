@@ -62,6 +62,9 @@ namespace NativeApi.Api
         public event EventHandler? HorizontalScrollBarValueChanged;
         public event EventHandler? SizeChanged;
 
+        public bool IsHandleCreated { get; }
+        public bool IsWxWidgetCreated { get; }
+
         public IntPtr Handle { get; }
         public IntPtr WxWidget { get; }
         public bool IsScrollable { get; set; }

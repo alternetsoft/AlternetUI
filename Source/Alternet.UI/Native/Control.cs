@@ -189,6 +189,26 @@ namespace Alternet.UI.Native
             }
         }
         
+        public bool IsHandleCreated
+        {
+            get
+            {
+                CheckDisposed();
+                return NativeApi.Control_GetIsHandleCreated_(NativePointer);
+            }
+            
+        }
+        
+        public bool IsWxWidgetCreated
+        {
+            get
+            {
+                CheckDisposed();
+                return NativeApi.Control_GetIsWxWidgetCreated_(NativePointer);
+            }
+            
+        }
+        
         public System.IntPtr Handle
         {
             get
@@ -1161,6 +1181,12 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Control_SetId_(IntPtr obj, int value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool Control_GetIsHandleCreated_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool Control_GetIsWxWidgetCreated_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern System.IntPtr Control_GetHandle_(IntPtr obj);

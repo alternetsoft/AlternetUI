@@ -372,6 +372,21 @@ namespace Alternet::UI
 #endif
     }
 
+    bool Control::GetIsHandleCreated()
+    {
+#ifdef  __WXMSW__
+        return IsWxWindowCreated() && (GetWxWindow()->GetHWND() !=0);
+#else
+        return IsWxWindowCreated();
+#endif
+    }
+
+    bool Control::GetIsWxWidgetCreated()
+    {
+        return IsWxWindowCreated();
+    }
+
+
     void Control::SaveScreenshot(const string& fileName)
     {
         UI::SaveScreenshot(GetWxWindow(), fileName);

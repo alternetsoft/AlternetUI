@@ -707,6 +707,21 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets a value indicating whether the control has a native window handle associated with it.
+        /// </summary>
+        /// <returns>
+        /// <see langword="true" /> if a native window handle has been assigned to the
+        /// control; otherwise, <see langword="false" />.</returns>
+        [Browsable(false)]
+        public bool IsHandleCreated
+        {
+            get
+            {
+                return (handler is not null) && handler.IsNativeControlCreated && NativeControl.IsHandleCreated;
+            }
+        }
+
+        /// <summary>
         /// Gets the collection of child controls contained within the control.
         /// </summary>
         /// <value>A <see cref="Collection{T}"/> representing the collection

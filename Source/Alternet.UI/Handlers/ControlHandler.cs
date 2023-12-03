@@ -25,6 +25,17 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets a value indicating whether the control has a native control associated with it.
+        /// </summary>
+        /// <returns>
+        /// <see langword="true" /> if a native control has been assigned to the
+        /// control; otherwise, <see langword="false" />.</returns>
+        public bool IsNativeControlCreated
+        {
+            get => nativeControl is not null;
+        }
+
+        /// <summary>
         /// Gets the minimum size the window can be resized to.
         /// </summary>
         public Size MinimumSize
