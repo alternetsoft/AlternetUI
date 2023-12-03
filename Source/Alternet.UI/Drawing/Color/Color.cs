@@ -1376,10 +1376,10 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Makes color grey using integer arithmetic.
+        /// Makes color gray using integer arithmetic.
         /// </summary>
         /// <param name="rgb">Color.</param>
-        public static void MakeGrey(ref RGBValue rgb)
+        public static void MakeGray(ref RGBValue rgb)
         {
             var v = (byte)(((rgb.B * 117UL) + (rgb.G * 601UL) + (rgb.R * 306UL)) >> 10);
             rgb.R = rgb.G = rgb.B = v;
