@@ -40,6 +40,8 @@ namespace Alternet.UI
                 SetForegroundColor(foregroundColor.Value);
             if (titleForegroundColor is not null)
                 SetTitleForegroundColor(titleForegroundColor.Value);
+
+            IgnoreImages = DefaultIgnoreImages;
         }
 
         /// <summary>
@@ -65,6 +67,11 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets default value for the <see cref="IgnoreImages"/> property.
+        /// </summary>
+        public static bool DefaultIgnoreImages { get; set; } = false;
+
+        /// <summary>
         /// Gets or sets default background color of the tooltip.
         /// </summary>
         public static Color? DefaultBackgroundColor { get; set; }
@@ -88,6 +95,11 @@ namespace Alternet.UI
         /// Gets or sets default <see cref="RichToolTip"/>.
         /// </summary>
         public static RichToolTip? Default { get; set; }
+
+        /// <summary>
+        /// Gets or sets whether to ignore image in tooltip, even if it is specified.
+        /// </summary>
+        public bool IgnoreImages { get; set; }
 
         /// <summary>
         /// Shows tooltip on the screen.
@@ -229,21 +241,26 @@ namespace Alternet.UI
 
             int style;
 
-            switch (icon)
+            if(IgnoreImages)
+                style = wxICON_NONE;
+            else
             {
-                default:
-                case MessageBoxIcon.None:
-                    style = wxICON_NONE;
-                    break;
-                case MessageBoxIcon.Information:
-                    style = wxICON_INFORMATION;
-                    break;
-                case MessageBoxIcon.Warning:
-                    style = wxICON_WARNING;
-                    break;
-                case MessageBoxIcon.Error:
-                    style = wxICON_ERROR;
-                    break;
+                switch (icon)
+                {
+                    default:
+                    case MessageBoxIcon.None:
+                        style = wxICON_NONE;
+                        break;
+                    case MessageBoxIcon.Information:
+                        style = wxICON_INFORMATION;
+                        break;
+                    case MessageBoxIcon.Warning:
+                        style = wxICON_WARNING;
+                        break;
+                    case MessageBoxIcon.Error:
+                        style = wxICON_ERROR;
+                        break;
+                }
             }
 
             Native.WxOtherFactory.RichToolTipSetIcon2(Handle, style);
