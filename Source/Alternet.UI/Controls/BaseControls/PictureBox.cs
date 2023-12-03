@@ -52,6 +52,17 @@ namespace Alternet.UI
             }
         }
 
+        /// <inheritdoc cref="Control.Background"/>
+        [Browsable(true)]
+        public override Brush? Background
+        {
+            get => base.Background;
+            set
+            {
+                base.Background = value;
+            }
+        }
+
         /// <summary>
         /// Gets <see cref="DrawingContext"/> for the <see cref="Image"/> on which
         /// you can paint.
