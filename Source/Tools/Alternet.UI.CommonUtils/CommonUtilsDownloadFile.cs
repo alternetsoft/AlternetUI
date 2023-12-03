@@ -32,7 +32,7 @@ namespace Alternet.UI
 
             try
             {
-                Stopwatch stopWatch = new Stopwatch();
+                Stopwatch stopWatch = new();
                 stopWatch.Start();
 
                 await DownloadFile(docUrl, tempFilePath, DownloadFileProgressChangedToConsole);
@@ -62,8 +62,12 @@ namespace Alternet.UI
             var progress = new Progress<float>();
             progress.ProgressChanged += progressChanged;
 
-            using (var file = new FileStream(filePath, FileMode.Create, FileAccess.Write, FileShare.None))
-                await client.DownloadDataAsync(docUrl, file, progress);
+            using var file = new FileStream(
+                filePath,
+                FileMode.Create,
+                FileAccess.Write,
+                FileShare.None);
+            await client.DownloadDataAsync(docUrl, file, progress);
         }
 
         private static int reportedProgress = -1;
