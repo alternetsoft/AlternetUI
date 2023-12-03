@@ -48,13 +48,10 @@ namespace Alternet.UI
             PropGrid.Features = PropertyGridFeature.QuestionCharInNullable;
             PropGrid.ProcessException += PropertyGrid_ProcessException;
             PropGrid.CreateStyleEx = PropertyGridCreateStyleEx.AlwaysAllowFocus;
-            PropGrid.SuggestedInitDefaults();
 
             InitActions();
             DebugUtils.HookExceptionEvents();
             TypesListBox.SelectionChanged += TypesListBox_SelectionChanged;
-            CenterNotebook.ChangeSelection(0);
-            RightNotebook.ChangeSelection(0);
         }
 
         internal IAuiNotebookPage? MainLogPage => mainLogPage;
