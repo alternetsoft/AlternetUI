@@ -599,7 +599,7 @@ namespace Alternet.UI
         /// Some implementations will change the visible state of the
         /// tool to indicate that it is disabled.
         /// </remarks>
-        /// <remarks>You need to call <see cref="Control.Invalidate"/> after changing
+        /// <remarks>You need to call <see cref="Control.Invalidate()"/> after changing
         /// enabled state of the tool.</remarks>
         public void EnableTool(int toolId, bool state)
         {
