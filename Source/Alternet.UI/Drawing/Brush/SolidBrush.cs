@@ -6,6 +6,8 @@ namespace Alternet.Drawing
     /// </summary>
     public sealed class SolidBrush : Brush
     {
+        private Color color;
+
         /// <summary>
         /// Initializes a new <see cref="SolidBrush"/> object of the specified color.
         /// </summary>
@@ -19,7 +21,7 @@ namespace Alternet.Drawing
         internal SolidBrush(Color color, bool immutable)
             : base(new UI.Native.SolidBrush(), immutable)
         {
-            Color = color;
+            this.color = color;
             ((UI.Native.SolidBrush)NativeBrush).Initialize(color);
         }
 
@@ -27,12 +29,32 @@ namespace Alternet.Drawing
         /// Gets the color of this SolidBrush object.
         /// </summary>
         /// <value>A <see cref="Color"/> structure that represents the color of this brush.</value>
-        public Color Color { get; }
+        public Color Color
+        {
+            get => color;
+
+            set
+            {
+                if (color == value || Immutable)
+                    return;
+                color = value;
+                ((UI.Native.SolidBrush)NativeBrush).Initialize(color);
+            }
+        }
 
         /// <inheritdoc/>
         public override BrushType BrushType => BrushType.Solid;
 
         internal override Color BrushColor => this.Color;
+
+        /// <summary>
+        /// Same as <see cref="Color"/> property implemented as method.
+        /// </summary>
+        /// <param name="color"></param>
+        public void SetColor(Color color)
+        {
+            Color = color;
+        }
 
         private protected override bool EqualsCore(Brush other)
         {

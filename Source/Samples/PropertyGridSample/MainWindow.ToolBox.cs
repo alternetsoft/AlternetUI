@@ -12,15 +12,26 @@ namespace PropertyGridSample
 {
     public partial class MainWindow
     {
-        void PictureBoxLoadImageFromFile()
+        private T? GetSelectedControl<T>()
         {
-            Application.Alert();
+            if (panel.LeftTreeView.SelectedItem is not ControlListBoxItem item)
+                return default;
+            if (item.Instance is T control)
+                return control;
+            return default;
+        }
+
+        void PictureBoxTest()
+        {
+            var control = GetSelectedControl<PictureBox>();
+            (control?.Background as SolidBrush)?.SetColor(Color.Red);
+            control?.Refresh();
         }
 
         private void InitToolBox()
         {
 #if DEBUG
-            PropertyGrid.AddSimpleAction<PictureBox>("Open image", PictureBoxLoadImageFromFile);
+            PropertyGrid.AddSimpleAction<PictureBox>("Test", PictureBoxTest);
 #endif
 
             void Fn()
