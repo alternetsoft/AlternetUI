@@ -232,9 +232,9 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        protected override void OnCurrentStateChanged()
+        protected override void OnCurrentStateChanged(EventArgs e)
         {
-            base.OnCurrentStateChanged();
+            base.OnCurrentStateChanged(e);
 
             if (StateObjects is null)
                 return;

@@ -82,26 +82,26 @@ namespace Alternet.UI
 
         internal void RaiseMouseCaptureLost()
         {
-            OnMouseCaptureLost();
+            OnMouseCaptureLost(EventArgs.Empty);
             MouseCaptureLost?.Invoke(this, EventArgs.Empty);
         }
 
         internal void RaiseMouseEnter()
         {
             RaiseIsMouseOverChanged();
-            OnMouseEnter();
+            OnMouseEnter(EventArgs.Empty);
             MouseEnter?.Invoke(this, EventArgs.Empty);
         }
 
         internal void RaiseCurrentStateChanged()
         {
-            OnCurrentStateChanged();
+            OnCurrentStateChanged(EventArgs.Empty);
             CurrentStateChanged?.Invoke(this, EventArgs.Empty);
         }
 
         internal void RaiseIsMouseOverChanged()
         {
-            OnIsMouseOverChanged();
+            OnIsMouseOverChanged(EventArgs.Empty);
             IsMouseOverChanged?.Invoke(this, EventArgs.Empty);
             RaiseCurrentStateChanged();
         }
@@ -109,7 +109,7 @@ namespace Alternet.UI
         internal void RaiseMouseLeave()
         {
             RaiseIsMouseOverChanged();
-            OnMouseLeave();
+            OnMouseLeave(EventArgs.Empty);
             MouseLeave?.Invoke(this, EventArgs.Empty);
         }
 

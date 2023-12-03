@@ -99,14 +99,14 @@ namespace Alternet.UI
         /// <summary>
         /// Called when the control loses mouse capture.
         /// </summary>
-        protected virtual void OnMouseCaptureLost()
+        protected virtual void OnMouseCaptureLost(EventArgs e)
         {
         }
 
         /// <summary>
         /// Called when the mouse pointer enters the control.
         /// </summary>
-        protected virtual void OnMouseEnter()
+        protected virtual void OnMouseEnter(EventArgs e)
         {
         }
 
@@ -130,21 +130,21 @@ namespace Alternet.UI
         /// <summary>
         /// Called when <see cref="IsMouseOver"/> property is changed.
         /// </summary>
-        protected virtual void OnIsMouseOverChanged()
+        protected virtual void OnIsMouseOverChanged(EventArgs e)
         {
         }
 
         /// <summary>
         /// Called when <see cref="CurrentStateChanged"/> property is changed.
         /// </summary>
-        protected virtual void OnCurrentStateChanged()
+        protected virtual void OnCurrentStateChanged(EventArgs e)
         {
         }
 
         /// <summary>
         /// Called when the mouse pointer leaves the control.
         /// </summary>
-        protected virtual void OnMouseLeave()
+        protected virtual void OnMouseLeave(EventArgs e)
         {
         }
 

@@ -261,9 +261,9 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        protected override void OnCurrentStateChanged()
+        protected override void OnCurrentStateChanged(EventArgs e)
         {
-            base.OnCurrentStateChanged();
+            base.OnCurrentStateChanged(e);
             if ((Borders?.HasOtherStates ?? false) || (Backgrounds?.HasOtherStates ?? false))
                 Refresh();
         }
