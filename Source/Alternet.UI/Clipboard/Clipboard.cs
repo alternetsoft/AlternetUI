@@ -115,7 +115,7 @@ namespace Alternet.UI
         /// Adds a bitmap to the data object in the
         /// <see cref="DataFormats.Bitmap"/> format.
         /// </summary>
-        public static void SetBitmap(Bitmap value) => SetData(DataFormats.Bitmap, value);
+        public static void SetBitmap(Image value) => SetData(DataFormats.Bitmap, value);
 
         /// <summary>
         /// Adds a text string to the data object in the
