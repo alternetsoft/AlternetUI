@@ -750,6 +750,9 @@ namespace Alternet.Drawing
             byte gdiCharSet,
             bool gdiVerticalFont)
         {
+            if (unit != GraphicsUnit.Point)
+                throw new ArgumentException(nameof(unit));
+
             if (family == null)
                 throw new ArgumentNullException(nameof(family));
 
