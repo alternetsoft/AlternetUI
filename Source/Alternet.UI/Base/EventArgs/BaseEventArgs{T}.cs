@@ -6,7 +6,7 @@
     /// <typeparam name="T">Type of the <see cref="Value"/> property.</typeparam>
     public class BaseEventArgs<T> : BaseEventArgs
     {
-        private readonly T value;
+        private T value;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="BaseEventArgs{T}"/> class.
@@ -20,6 +20,10 @@
         /// <summary>
         /// Gets parameter value.
         /// </summary>
-        public T Value => value;
+        public T Value
+        {
+            get => value;
+            set => this.value = value;
+        }
     }
 }
