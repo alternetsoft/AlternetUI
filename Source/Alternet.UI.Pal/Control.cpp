@@ -1530,6 +1530,12 @@ namespace Alternet::UI
         wxWindow->SetSize(fromDip(value, wxWindow), flags);
     }
 
+    void Control::RefreshRect(const Rect& rect, bool eraseBackground)
+    {
+        auto wxWindow = GetWxWindow();
+        wxWindow->RefreshRect(fromDip(rect, wxWindow), eraseBackground);
+    }
+
     void Control::SetBounds(const Rect& value)
     {
         _bounds.Set(value);

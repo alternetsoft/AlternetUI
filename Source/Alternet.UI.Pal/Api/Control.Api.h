@@ -576,6 +576,11 @@ ALTERNET_UI_API int Control_GetScrollBarMaximum_(Control* obj, ScrollBarOrientat
     return obj->GetScrollBarMaximum(orientation);
 }
 
+ALTERNET_UI_API void Control_RefreshRect_(Control* obj, Rect rect, c_bool eraseBackground)
+{
+    obj->RefreshRect(rect, eraseBackground);
+}
+
 ALTERNET_UI_API void Control_Raise_(Control* obj)
 {
     obj->Raise();

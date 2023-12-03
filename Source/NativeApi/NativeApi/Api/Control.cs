@@ -8,6 +8,8 @@ namespace NativeApi.Api
 {
     public abstract class Control
     {
+        public void RefreshRect(Rect rect, bool eraseBackground = true) { }
+
         public void Raise() { }
         public void Lower() { }
 

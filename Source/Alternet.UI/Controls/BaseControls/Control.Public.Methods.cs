@@ -169,6 +169,28 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Invalidates the specified region of the control (adds it to the control's
+        /// update region, which is the area that will be repainted at the next
+        /// paint operation), and causes a paint message to be sent to the
+        /// control.</summary>
+        /// <param name="rect">A <see cref="Rect" /> that represents the region to invalidate.</param>
+        public void Invalidate(Rect rect)
+        {
+            NativeControl.RefreshRect(rect, true);
+        }
+
+        /// <summary>
+        /// Same as <see cref="Invalidate(Rect)"/> but has additional
+        /// parameter <paramref name="eraseBackground"/>.
+        /// </summary>
+        /// <param name="rect">A <see cref="Rect" /> that represents the region to invalidate.</param>
+        /// <param name="eraseBackground">Specifies whether to erase background.</param>
+        public void RefreshRect(Rect rect, bool eraseBackground = true)
+        {
+            NativeControl.RefreshRect(rect, eraseBackground);
+        }
+
+        /// <summary>
         /// Creates native control if its not already created.
         /// </summary>
         public virtual void HandleNeeded()
