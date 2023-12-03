@@ -23,20 +23,8 @@ namespace PaintSample
             this.SetBorder(normalBorder);
 
             SwatchColor = swatchColor;
-            var size = Alternet.UI.Toolbar.GetDefaultImageSize(this) * 2;
-
-            /*var image = swatchColor.AsImage(size);
-
-            Image = image;
-
-            var imageHot = image.ChangeLightness(150);
-            var imagePressed = image.ChangeLightness(50);*/
-
             var colorHot = swatchColor.ChangeLightness(140);
             var colorPressed = swatchColor.ChangeLightness(80);
-
-            //this.SetImage(imageHot, GenericControlState.Hovered);
-            //this.SetImage(imagePressed, GenericControlState.Pressed);
 
             this.SetBackground((SolidBrush)swatchColor);
             this.SetBackground((SolidBrush)colorHot, GenericControlState.Hovered);

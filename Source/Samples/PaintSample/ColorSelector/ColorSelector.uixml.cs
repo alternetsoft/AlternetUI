@@ -53,7 +53,10 @@ namespace PaintSample
             if (container == null)
                 return;
 
-            var size = Alternet.UI.Toolbar.GetDefaultImageSize(this) * 2;
+            var sizePixels = Alternet.UI.Toolbar.GetDefaultImageSize(this).Width;
+            var sizeDips = PixelToDip(sizePixels);
+
+            var biggerSize = sizeDips * 2;
 
             foreach (var color in SwatchColors)
             {
@@ -61,7 +64,7 @@ namespace PaintSample
                 {
                     VerticalAlignment = VerticalAlignment.Center,
                     Margin = (0, 5, 5, 5),
-                    SuggestedSize = size,
+                    SuggestedSize = biggerSize,
                 };
 
                 swatch.MouseLeftButtonDown += Swatch_MouseLeftButtonDown;
