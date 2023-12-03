@@ -385,8 +385,10 @@ namespace Alternet::UI
 
     Rect AuiToolBar::GetToolRect(int toolId)
     {
-        auto rect = GetToolbar()->GetToolRect(toolId);
-        return Rect(rect);
+        auto wxWindow = GetToolbar();
+        auto rect = wxWindow->GetToolRect(toolId);
+        auto dipRect = toDip(rect, wxWindow);
+        return dipRect;
     }
 
     bool AuiToolBar::GetToolFitsByIndex(int toolId)

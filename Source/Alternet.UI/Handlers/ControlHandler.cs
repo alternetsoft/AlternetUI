@@ -630,9 +630,6 @@ namespace Alternet.UI
             Control.ScreenShotCounter++;
             try
             {
-                if (NativeControl == null)
-                    throw new InvalidOperationException();
-
                 NativeControl.SaveScreenshot(fileName);
             }
             finally
@@ -641,9 +638,9 @@ namespace Alternet.UI
             }
         }
 
-        internal void ShowPopupMenu(Menu menu, int x, int y)
+        internal void ShowPopupMenu(Menu menu, double x, double y)
         {
-            NativeControl!.ShowPopupMenu(menu.MenuHandle, x, y);
+            NativeControl.ShowPopupMenu(menu.MenuHandle, x, y);
         }
 
         internal Graphics CreateGraphics() => CreateDrawingContext();

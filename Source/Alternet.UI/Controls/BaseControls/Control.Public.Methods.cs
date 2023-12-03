@@ -1076,9 +1076,10 @@ namespace Alternet.UI
         /// can do a better job of positioning the menu in that case.
         /// </remarks>
         /// <param name="menu">The menu to pop up.</param>
-        /// <param name="x">The X position where the menu will appear.</param>
-        /// <param name="y">The Y position where the menu will appear.</param>
-        public virtual void ShowPopupMenu(Menu menu, int x = -1, int y = -1)
+        /// <param name="x">The X position in dips where the menu will appear.</param>
+        /// <param name="y">The Y position in dips where the menu will appear.</param>
+        /// <remarks>Position is specified in device independent units (1/96 inch).</remarks>
+        public virtual void ShowPopupMenu(Menu menu, double x = -1, double y = -1)
         {
             if (menu.Items.Count == 0)
                 return;

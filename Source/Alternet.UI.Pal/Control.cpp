@@ -165,9 +165,12 @@ namespace Alternet::UI
         return GetWxWindow()->CanAcceptFocus();
     }
 
-    void Control::ShowPopupMenu(void* menu, int x, int y)
+    void Control::ShowPopupMenu(void* menu, double x, double y)
     {
-        GetWxWindow()->PopupMenu((wxMenu*)menu, x, y);
+        auto window = GetWxWindow();
+        auto sx = fromDip(x, window);
+        auto sy = fromDip(y, window);
+        window->PopupMenu((wxMenu*)menu, sx, sy);
     }
 
     Size Control::RetrieveMinimumSize()

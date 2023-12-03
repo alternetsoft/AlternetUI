@@ -598,7 +598,7 @@ namespace Alternet.UI.Native
             NativeApi.Control_Thaw_(NativePointer);
         }
         
-        public void ShowPopupMenu(System.IntPtr menu, int x, int y)
+        public void ShowPopupMenu(System.IntPtr menu, double x, double y)
         {
             CheckDisposed();
             NativeApi.Control_ShowPopupMenu_(NativePointer, menu, x, y);
@@ -1339,7 +1339,7 @@ namespace Alternet.UI.Native
             public static extern void Control_Thaw_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Control_ShowPopupMenu_(IntPtr obj, System.IntPtr menu, int x, int y);
+            public static extern void Control_ShowPopupMenu_(IntPtr obj, System.IntPtr menu, double x, double y);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Control_BeginIgnoreRecreate_(IntPtr obj);

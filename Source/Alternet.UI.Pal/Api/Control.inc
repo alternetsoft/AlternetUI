@@ -152,7 +152,7 @@ static Control* GetFocusedControl();
 static void NotifyCaptureLost();
 void Freeze();
 void Thaw();
-void ShowPopupMenu(void* menu, int x, int y);
+void ShowPopupMenu(void* menu, double x, double y);
 void BeginIgnoreRecreate();
 void EndIgnoreRecreate();
 Size GetDPI();

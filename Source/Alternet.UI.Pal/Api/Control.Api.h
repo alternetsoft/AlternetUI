@@ -371,7 +371,7 @@ ALTERNET_UI_API void Control_Thaw_(Control* obj)
     obj->Thaw();
 }
 
-ALTERNET_UI_API void Control_ShowPopupMenu_(Control* obj, void* menu, int x, int y)
+ALTERNET_UI_API void Control_ShowPopupMenu_(Control* obj, void* menu, double x, double y)
 {
     obj->ShowPopupMenu(menu, x, y);
 }

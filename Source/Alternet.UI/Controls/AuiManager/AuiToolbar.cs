@@ -522,7 +522,8 @@ namespace Alternet.UI
         /// Returns the specified tool rectangle in the toolbar.
         /// </summary>
         /// <param name="toolId">ID of a previously added tool.</param>
-        /// <returns>Position and size of the tool in the toolbar.</returns>
+        /// <returns>Position and size of the tool in the toolbar in device-independent units
+        /// (1/96 inch).</returns>
         public Rect GetToolRect(int toolId)
         {
             if (toolId <= 0)

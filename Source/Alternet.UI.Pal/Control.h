@@ -62,7 +62,7 @@ namespace Alternet::UI
     };
   
     // Control
-
+                                      
     class Control : public Object
     {
 #include "Api/Control.inc"

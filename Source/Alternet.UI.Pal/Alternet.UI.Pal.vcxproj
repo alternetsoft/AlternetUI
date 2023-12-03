@@ -287,6 +287,7 @@
     <ClCompile Include="RadioButton.cpp" />
     <ClCompile Include="Region.cpp" />
     <ClCompile Include="RichTextBox.cpp" />
+    <ClCompile Include="ScrollBar.cpp" />
     <ClCompile Include="SelectDirectoryDialog.cpp" />
     <ClCompile Include="Sizer.cpp" />
     <ClCompile Include="SizerFlags.cpp" />
@@ -415,6 +416,7 @@
     <ClInclude Include="Api\RadioButton.Api.h" />
     <ClInclude Include="Api\Region.Api.h" />
     <ClInclude Include="Api\RichTextBox.Api.h" />
+    <ClInclude Include="Api\ScrollBar.Api.h" />
     <ClInclude Include="Api\SelectDirectoryDialog.Api.h" />
     <ClInclude Include="Api\Sizer.Api.h" />
     <ClInclude Include="Api\SizerFlags.Api.h" />
@@ -543,6 +545,7 @@
     <ClInclude Include="resource.h" />
     <ClInclude Include="RichTextBox.h" />
     <ClInclude Include="Screenshot.h" />
+    <ClInclude Include="ScrollBar.h" />
     <ClInclude Include="SelectDirectoryDialog.h" />
     <ClInclude Include="Sizer.h" />
     <ClInclude Include="SizerFlags.h" />
@@ -663,6 +666,7 @@
     <None Include="Api\RadioButton.inc" />
     <None Include="Api\Region.inc" />
     <None Include="Api\RichTextBox.inc" />
+    <None Include="Api\ScrollBar.inc" />
     <None Include="Api\SelectDirectoryDialog.inc" />
     <None Include="Api\Sizer.inc" />
     <None Include="Api\SizerFlags.inc" />
