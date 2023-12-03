@@ -452,6 +452,20 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Makes this image grayscaled.
+        /// </summary>
+        public void ChangeToGrayScale()
+        {
+            static void ChangePixel(ref RGBValue rgb, int value)
+            {
+                byte color = (byte)((0.299 * rgb.R) + (0.587 * rgb.G) + (0.114 * rgb.B));
+                rgb.R = rgb.G = rgb.B = color;
+            }
+
+            ForEachPixel<int>(ChangePixel, 0);
+        }
+
+        /// <summary>
         /// Executes specified <paramref name="action"/> for the each pixel of the image.
         /// </summary>
         /// <typeparam name="T">Type of the custom value.</typeparam>
