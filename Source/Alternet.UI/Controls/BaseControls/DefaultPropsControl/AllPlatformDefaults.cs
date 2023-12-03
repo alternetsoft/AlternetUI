@@ -114,6 +114,7 @@ namespace Alternet.UI
 
                 platform.Controls.MultilineTextBox.HasBorderOnBlack = false;
                 platform.Controls.ListBox.HasBorderOnBlack = false;
+                platform.Controls.CheckListBox.HasBorderOnBlack = false;
             }
         }
 
