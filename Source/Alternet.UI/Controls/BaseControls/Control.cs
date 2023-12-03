@@ -1661,8 +1661,16 @@ namespace Alternet.UI
         /// <summary>
         /// Gets a value indicating whether the control has input focus.
         /// </summary>
+        /// Same as <see cref="Focused"/>
         [Browsable(false)]
         public virtual bool IsFocused => Handler.IsFocused;
+
+        /// <summary>
+        /// Gets a value indicating whether the control has input focus.
+        /// Same as <see cref="IsFocused"/>
+        /// </summary>
+        [Browsable(false)]
+        public virtual bool Focused => Handler.IsFocused;
 
         /// <summary>
         /// Returns control identifier.
