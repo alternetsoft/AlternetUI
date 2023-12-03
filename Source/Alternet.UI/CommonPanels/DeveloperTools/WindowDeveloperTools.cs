@@ -53,6 +53,10 @@ namespace Alternet.UI
                 else
                     Application.Log("Focused control info disabled");
             });
+
+            panel.CenterNotebook.ChangeSelection(0);
+            panel.RightNotebook.ChangeSelection(0);
+            panel.PropGrid.SuggestedInitDefaults();
         }
 
         protected override void DisposeManagedResources()
