@@ -120,7 +120,9 @@ namespace Alternet.UI
                 return;
             flags |= Flags.VersionLogged;
             var wxWidgets = WebBrowser.GetLibraryVersionString();
-            var net = $"Net: {Environment.Version}";
+            var bitsOS = Application.Is64BitOS ? "x64" : "x86";
+            var bitsApp = Application.Is64BitProcess ? "x64" : "x86";
+            var net = $"Net: {Environment.Version}, OS: {bitsOS}, App: {bitsApp}";
             var dpi = $"DPI: {Application.FirstWindow()?.GetDPI().Width}";
             var ui = $"UI: {WebBrowser.DoCommandGlobal("UIVersion")}";
             var counterStr = $"Counter: {Application.BuildCounter}";

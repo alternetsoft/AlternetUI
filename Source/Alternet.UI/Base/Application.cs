@@ -49,6 +49,16 @@ namespace Alternet.UI
         public static readonly bool IsIOS;
 
         /// <summary>
+        /// Gets a value that indicates whether the current operating system is a 64-bit operating system.
+        /// </summary>
+        public static readonly bool Is64BitOS;
+
+        /// <summary>
+        /// Gets a value that indicates whether the current process is a 64-bit process.
+        /// </summary>
+        public static readonly bool Is64BitProcess;
+
+        /// <summary>
         /// Gets operating system as <see cref="OperatingSystems"/> enumeration.
         /// </summary>
         public static readonly OperatingSystems BackendOS;
@@ -75,6 +85,9 @@ namespace Alternet.UI
 
         static Application()
         {
+            Is64BitOS = Environment.Is64BitOperatingSystem;
+            Is64BitProcess = Environment.Is64BitProcess;
+
             var backend = WebBrowser.GetBackendOS();
 
             IsWindowsOS = backend == WebBrowserBackendOS.Windows;
