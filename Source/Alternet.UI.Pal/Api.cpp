@@ -75,6 +75,7 @@
 #include "Api/PropertyGridVariant.Api.h"
 #include "Api/RadioButton.Api.h"
 #include "Api/RichTextBox.Api.h"
+#include "Api/ScrollBar.Api.h"
 #include "Api/BoxSizer.Api.h"
 #include "Api/FlexGridSizer.Api.h"
 #include "Api/GridBagSizer.Api.h"
