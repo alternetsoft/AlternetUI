@@ -1,0 +1,1 @@
+dotnet build --self-contained --runtime win-x86
