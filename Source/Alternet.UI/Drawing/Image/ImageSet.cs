@@ -78,6 +78,11 @@ namespace Alternet.UI
         internal UI.Native.ImageSet NativeImageSet { get; private set; }
 
         /// <summary>
+        /// Converts the specified <see cref='Image'/> to a <see cref='ImageSet'/>.
+        /// </summary>
+        public static explicit operator ImageSet(Image image) => new(image);
+
+        /// <summary>
         /// Creates grayscaled <see cref="ImageSet"/> instance from
         /// the <see cref="Image"/> instance.
         /// </summary>
