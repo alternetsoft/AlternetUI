@@ -87,12 +87,12 @@ namespace PaintSample
             }
         }
 
-        protected override void OnMouseEnter()
+        protected override void OnMouseEnter(EventArgs e)
         {
             Refresh();
         }
 
-        protected override void OnMouseLeave()
+        protected override void OnMouseLeave(EventArgs e)
         {
             Refresh();
         }
