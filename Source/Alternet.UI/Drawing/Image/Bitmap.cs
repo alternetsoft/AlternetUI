@@ -27,6 +27,16 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="Bitmap"/> class
+        /// with the specified size.
+        /// <param name="width">The width used to create the image</param>
+        /// <param name="height">The height used to create the image</param>
+        public Bitmap(double width, double height)
+            : base(width, height)
+        {
+        }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="Bitmap"/> class.
         /// </summary>
         public Bitmap()

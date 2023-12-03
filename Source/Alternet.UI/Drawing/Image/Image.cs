@@ -57,6 +57,17 @@ namespace Alternet.Drawing
         /// <summary>
         /// Initializes a new instance of the <see cref="Image"/> class
         /// with the specified size.
+        /// <param name="width">The width used to create the image</param>
+        /// <param name="height">The height used to create the image</param>
+        private protected Image(double width, double height)
+        {
+            nativeImage = new UI.Native.Image();
+            NativeImage.Initialize((width, height));
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Image"/> class
+        /// with the specified size.
         /// </summary>
         /// <param name="size">The size used to create the image.</param>
         private protected Image(Size size)
