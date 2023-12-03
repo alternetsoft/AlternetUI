@@ -1,3 +1,48 @@
+# 0.9.410 (work in progress)
+
+## 2023 December 3
+
+- AuiManager HighDpi support.
+- Control.DefaultFont setter. Now is possible to change default font for the controls. So on high dpi screens we could change
+this property in order to zoom every control if it wasn't already created. In the our samples default font is now increased
+ if dpi > 96.
+- HighDpi related. Window: IncFontSize, IncFontSizeHighDpi, UpdateDefaultFont.
+- PictureBox.Canvas, Display.Primary.
+- GenericImage conversion operator to Bitmap.
+- Rect implicit convertion from tuple (Point, Size).
+- Image: Save/Load now return bool, added Bounds.
+- PaintSample better load/save #64.
+- GenericImage: ForEachPixel, GetRGB(int x, int y), GetPixel(int x, int y, bool withAlpha = false), SetPixel(int x, int y, Color color, bool withAlpha = false).
+- RGBValue and HSVValue improvements: Added standard methods for any structs.
+- Optimized default colors declarations (speed up in Color use).
+- Added sample images to PaintSample.
+- Added BaseMemory class. It works with native memory buffers (alloc, realloc, free, fill, etc.). It can be used with GenericImage.
+- Added ActionRef.
+- MenuItem.Add(string title, Action onClick).
+- RGBValue conversion operators.
+- Added example actions to PaintSample. Show usage of get/set native pixel buffer methods.
+- Sample pages with rich text use Control.DefaultFont.
+- WinForms related dummy classes: ContextMenuStrip, IWin32Window, ToolStripMenuItem, Form, Graphics.
+- WinForms related: Control.CreateGraphics.
+- WinForms related: Key -> Keys. Added missing key declarations.
+- WinForms related: PenDashStyle -> DashStyle.
+- WinForms related: Added Border3dSide, GraphicsUnit.
+- WinForms related: Font more compatible with WinForms #6.
+- WinForms related: MessageBox made more compatible with WinForms. All related enums are updated
+ to have all elements existing in WinForms. All static Show methods are made in the same way.
+ MessageBoxResult renamed to DialogResult. Added static event
+ MessageBox.ShowDialog which allows to override default show message box handler. Added MessageBoxInfo, HelpNavigator, HelpInfo.
+- WinForms related: SolidBrush.Color set method.
+- Fixed PaintSample error #67.
+- MinMasterTemplate in Install.Scripts\MinMasterTemplate. This is minimal project template
+ to use with Alternet.UI latest master version from github.
+- Application: log messages are queued until log event is registered, Is64BitOS, Is64BitProcess, LogWarning, LogError.
+- Font and FontFamily doesn't raise any exceptions anymore. If Font name is not found, a default
+ font is used and error messages is logged. If bad parameters are passed to the font constructor, error message is output to log
+and font is created with default parameters.
+
+---
+
 # 0.9.409 (2023 November 30)
 
 ## 2023 November 30
