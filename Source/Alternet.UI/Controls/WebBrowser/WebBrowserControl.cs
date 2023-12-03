@@ -454,30 +454,7 @@ namespace Alternet.UI
         /// Also spaces are replaced with %20, other non url chars are replaced
         /// with corresponding html codes.
         /// </remarks>
-        public static string PrepareFileUrl(string filename)
-        {
-            string url;
-
-            if (Environment.OSVersion.Platform == PlatformID.Win32NT)
-                url = "file:///" + ReplaceNonUrlChars(filename);
-            else
-                url = "file://" + ReplaceNonUrlChars(filename);
-            return url;
-        }
-
-        /// <summary>
-        /// Replaces spaces with %20, other non url chars with corresponding
-        /// html codes.
-        /// </summary>
-        /// <param name="s"></param>
-        /// <returns></returns>
-        public static string ReplaceNonUrlChars(string s)
-        {
-            s = s.Replace('\\', '/')
-                .Replace(":", "%3A")
-                .Replace(" ", "%20");
-            return s;
-        }
+        public static string PrepareFileUrl(string filename) => CommonUtils.PrepareFileUrl(filename);
 
         /// <include file="Interfaces/IWebBrowser.xml" path='doc/SetBackendPath/*'/>
         public static void SetBackendPath(string path, bool isRelative = false)

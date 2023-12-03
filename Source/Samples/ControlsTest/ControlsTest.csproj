@@ -83,7 +83,6 @@
 
     <ItemGroup>
         <ProjectReference Include="..\..\Alternet.UI\Alternet.UI.csproj" />
-        <ProjectReference Include="..\..\Tools\Alternet.UI.CommonUtils\Alternet.UI.CommonUtils.csproj" />
     </ItemGroup>
 
     <ItemGroup>

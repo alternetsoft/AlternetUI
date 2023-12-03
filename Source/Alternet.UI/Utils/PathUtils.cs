@@ -49,74 +49,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Deletes all files in the 'bin' and 'obj' subfolders of the specified solution folder.
-        /// </summary>
-        /// <param name="path">Path to folder.</param>
-        /// <remarks>
-        /// This method works recursively. First it finds all '*.csproj' and '*.vcxproj' project files.
-        /// For the each found project file it deletes all files in the 'bin' and 'obj' subfolders
-        /// located in the project file path.
-        /// </remarks>
-        public static void DeleteBinObjFiles(string path)
-        {
-            path = Path.GetFullPath(path);
-
-            var files = Directory.EnumerateFiles(path, "*.*", SearchOption.AllDirectories)
-                        .Where(s => s.EndsWith(".csproj") || s.EndsWith(".vcxproj"));
-
-            foreach (string projFile in files)
-            {
-                var projPath = Path.GetDirectoryName(projFile);
-
-                var projPathBin = Path.Combine(projPath!, "bin");
-                var projPathObj = Path.Combine(projPath!, "obj");
-                var filesToDelete = new List<string>();
-
-                if (Directory.Exists(projPathBin))
-                {
-                    var projPathBinFiles =
-                        Directory.EnumerateFiles(projPathBin, "*.*", SearchOption.AllDirectories);
-                    filesToDelete.AddRange(projPathBinFiles);
-                }
-
-                if (Directory.Exists(projPathObj))
-                {
-                    var projPathObjFiles =
-                        Directory.EnumerateFiles(projPathObj, "*.*", SearchOption.AllDirectories);
-                    filesToDelete.AddRange(projPathObjFiles);
-                }
-
-                foreach (var s in filesToDelete)
-                {
-                    Application.Log("Deleting file: " + s);
-                    try
-                    {
-                        File.Delete(s);
-                    }
-                    catch (Exception)
-                    {
-                        Application.Log("ERROR deleting file: " + s);
-                    }
-                }
-            }
-        }
-
-        /// <summary>
-        /// Removes a <see cref="Path.DirectorySeparatorChar"/> and
-        /// <see cref="Path.AltDirectorySeparatorChar"/> characters from the end
-        /// of the specified string.
-        /// </summary>
-        /// <param name="path">Path to be trimmed.</param>
-        /// <returns>Trimmed string.</returns>
-        public static string? TrimEndDirectorySeparator(string? path)
-        {
-            if (string.IsNullOrEmpty(path))
-                return path;
-            var s = path?.TrimEnd(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar);
-            return s;
-        }
-
-        /// <summary>
         /// Gets sub-folder path in the application folder.
         /// </summary>
         /// <param name="subFolder">Name of the sub folder.</param>
@@ -145,12 +77,7 @@ namespace Alternet.UI
         /// </summary>
         /// <returns><see cref="string"/> containing path to the application folder
         /// with directory separator char at the end.</returns>
-        public static string GetAppFolder()
-        {
-            string location = Assembly.GetExecutingAssembly().Location;
-            string s = Path.GetDirectoryName(location)!;
-            return PathUtils.AddDirectorySeparatorChar(s);
-        }
+        public static string GetAppFolder() => CommonUtils.GetAppFolder();
 
         /// <summary>
         /// Adds directory separator char to the path if it's needed. If path

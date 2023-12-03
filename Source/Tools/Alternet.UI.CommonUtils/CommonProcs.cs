@@ -6,11 +6,10 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace Alternet.UI
 {
-    public static partial class CommonUtils
+    public static partial class CommonProcs
     {
         public static readonly string ResNamePrefix = "ControlsTest.";
 
@@ -18,9 +17,9 @@ namespace Alternet.UI
             Path.ChangeExtension(Assembly.GetExecutingAssembly().Location, ".log");
 
         private static readonly string[] StringSplitToArrayChars =
-        {
+        [
             Environment.NewLine,
-        };
+        ];
 
         public static string StringFormatJs = "yyyy-MM-ddTHH:mm:ss.fffK";
         private static bool cmdLineTest = false;
@@ -118,32 +117,6 @@ namespace Alternet.UI
             }
         }
 
-        public static string PrepareUrl(string s)
-        {
-            s = s.Replace('\\', '/')
-                .Replace(":", "%3A")
-                .Replace(" ", "%20");
-            return s;
-        }
-
-        public static string PrepareFileUrl(string filename)
-        {
-            string url;
-
-            if (Environment.OSVersion.Platform == PlatformID.Win32NT)
-                url = "file:///" + PrepareUrl(filename);
-            else
-                url = "file://" + PrepareUrl(filename);
-            return url;
-        }
-
-        public static string GetAppFolder()
-        {
-            string location = Assembly.GetExecutingAssembly().Location;
-            string s = Path.GetDirectoryName(location)!;
-            return PathAddBackslash(s);
-        }
-
         public static string StringFromStream(Stream stream)
         {
             return new StreamReader(stream, Encoding.UTF8).ReadToEnd();
@@ -163,7 +136,7 @@ namespace Alternet.UI
             if (resName.StartsWith("file://"))
                 resName = resName.Remove(0, "file://".Length);
 
-            resName = Path.Combine(GetAppFolder(), resName);
+            resName = Path.Combine(CommonUtils.GetAppFolder(), resName);
             return File.OpenRead(resName);
 
             Stream? ProcessResPrefix(string resPrefix)
@@ -182,7 +155,7 @@ namespace Alternet.UI
 
         public static void LogToFile(string s)
         {
-            if (!CommonUtils.CmdLineTest && !CommonUtils.CmdLineLog)
+            if (!CommonProcs.CmdLineTest && !CommonProcs.CmdLineLog)
                 return;
 
             string dt = System.DateTime.Now.ToString(StringFormatJs);
@@ -238,20 +211,6 @@ namespace Alternet.UI
             streamWriter.Close();
         }
 
-        // scheme:///C:/example/docs.zip;protocol=zip/main.htm
-        public static string PrepareZipUrl(string schemeName, string arcPath, string fileInArchivePath)
-        {
-            static string PrepareUrl(string s)
-            {
-                s = s.Replace('\\', '/');
-                return s;
-            }
-
-            string url = schemeName + "://" + PrepareUrl(arcPath) + ";protocol=zip/" +
-                PrepareUrl(fileInArchivePath);
-            return url;
-        }
-
         public class DebugTraceListener : TraceListener
         {
             public DebugTraceListener()
@@ -262,12 +221,12 @@ namespace Alternet.UI
 #pragma warning disable CS8765
             public override void Write(string message)
             {
-                CommonUtils.Nop();
+                CommonProcs.Nop();
             }
 
             public override void WriteLine(string message)
             {
-                CommonUtils.Nop();
+                CommonProcs.Nop();
             }
 #pragma warning restore CS8765
 #pragma warning restore IDE0079

@@ -73,7 +73,7 @@ namespace ControlsSample
             if (!Application.IsLinuxOS)
                 AddPage("Animation", CreateAnimationPage);
 
-            if (AllSamplesPage.GetSamplesFolder() is not null)
+            if (CommonUtils.GetSamplesFolder() is not null)
                 AddPage("Other", CreateAllSamplesPage);
 
             LogUtils.DebugLogVersion();

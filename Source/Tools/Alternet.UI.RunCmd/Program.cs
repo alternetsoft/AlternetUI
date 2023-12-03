@@ -6,7 +6,7 @@ using System.IO;
 Console.WriteLine("Alternet.UI.RunCmd");
 Console.WriteLine("Copyright (c) 2023 AlterNET Software");
 
-CommonUtils.ParseCmdLine(args);
+CommonProcs.ParseCmdLine(args);
 CommandLineArgs.Default.ParseArgs(args);
 //CommandLineArgs.Default.ParseDefaults();
 
@@ -15,22 +15,22 @@ CommandLineArgs.Default.ParseArgs(args);
 Console.WriteLine();
 
 
-if(CommonUtils.CmdLineExecCommands is null)
+if(CommonProcs.CmdLineExecCommands is null)
 {
     Console.WriteLine("No commands are specified.");
     return;
 }
 
-Console.WriteLine($"Arguments: {CommonUtils.ToString(args)}");
-Console.WriteLine($"Commands: {CommonUtils.CmdLineExecCommands}");
+Console.WriteLine($"Arguments: {CommonProcs.ToString(args)}");
+Console.WriteLine($"Commands: {CommonProcs.CmdLineExecCommands}");
 Console.WriteLine();
 
 
 bool IsCommand(string s)
 {
-    if (s is null || CommonUtils.CmdLineExecCommands is null)
+    if (s is null || CommonProcs.CmdLineExecCommands is null)
         return false;
-    return s.Equals(CommonUtils.CmdLineExecCommands, StringComparison.CurrentCultureIgnoreCase);
+    return s.Equals(CommonProcs.CmdLineExecCommands, StringComparison.CurrentCultureIgnoreCase);
 }
 
 // download command
@@ -40,7 +40,7 @@ if (IsCommand("download"))
     string docUrl = CommandLineArgs.Default.ArgAsString("Url");
     string filePath = CommandLineArgs.Default.ArgAsString("Path");
     filePath = Path.GetFullPath(filePath);
-    await CommonUtils.DownloadFileWithConsoleProgress(docUrl, filePath);
+    await CommonProcs.DownloadFileWithConsoleProgress(docUrl, filePath);
     return;
 }
 
@@ -48,12 +48,12 @@ if (IsCommand("download"))
 if (IsCommand("runControlsSample"))
 {
     string path = Path.Combine(
-        CommonUtils.GetAppFolder(), 
+        CommonProcs.GetAppFolder(), 
         "..", "..", "..", "..", "..", "Samples","ControlsSample", "ControlsSample.csproj");
     path = Path.GetFullPath(path);
     string? pathFolder = Path.GetDirectoryName(path)?.TrimEnd('\\')?.TrimEnd('/');
     Console.WriteLine("Run ControlsSample: "+path);
-    CommonUtils.ProcessStart("dotnet", $"run --framework net8.0", pathFolder);
+    CommonProcs.ProcessStart("dotnet", $"run --framework net8.0", pathFolder);
     return;
 }
 
@@ -126,7 +126,7 @@ void DeleteBinObjFiles(string path)
 if (IsCommand("deleteBinFolders"))
 {
     string path = Path.Combine(
-        CommonUtils.GetAppFolder(),"..", "..", "..", "..", "..");
+        CommonProcs.GetAppFolder(),"..", "..", "..", "..", "..");
     DeleteBinObjFiles(path);
     return;
 }

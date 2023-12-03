@@ -33,52 +33,9 @@ namespace ControlsSample
             return result;
         }
 
-        public static string? GetSamplesFolder()
-        {
-            static bool ValidFolder(string s)
-            {
-                var trimmed = PathUtils.TrimEndDirectorySeparator(s);
-                var result = (trimmed is not null && trimmed.EndsWith("Samples"));
-                return result;
-            }
-
-            string folder1 = PathUtils.GetAppFolder() + @"../../../../";
-            string folder2 = folder1 + @"../";
-            folder1 = Path.GetFullPath(folder1);
-            folder2 = Path.GetFullPath(folder2);
-
-            if (ValidFolder(folder1))
-                return folder1;
-
-            if (ValidFolder(folder2))
-                return folder2;
-
-            return null;
-        }
-
-        private string? GetPalFolder()
-        {
-            var samplesFolder = GetSamplesFolder();
-            if (samplesFolder is null)
-                return null;
-            string relativePath = Path.Combine(samplesFolder, "..", "Alternet.UI.Pal");
-            string result = Path.GetFullPath(relativePath);
-            return result;
-        }
-
-        private string? GetUIFolder()
-        {
-            var samplesFolder = GetSamplesFolder();
-            if (samplesFolder is null)
-                return null;
-            string relativePath = Path.Combine(samplesFolder, "..", "Alternet.UI");
-            string result = Path.GetFullPath(relativePath);
-            return result;
-        }
-
         private IEnumerable<string> EnumerateSamples()
         {
-            var samplesFolder = GetSamplesFolder();
+            var samplesFolder = CommonUtils.GetSamplesFolder();
             if (samplesFolder is null)
                 return [];
 
@@ -177,7 +134,7 @@ namespace ControlsSample
             string path = item.CsProjPath;
             path = Path.GetDirectoryName(path)!;
             if (DeleteBin)
-                PathUtils.DeleteBinObjFiles(path);
+                FileUtils.DeleteBinObjFiles(path);
             Application.Log("Run sample: " + path);
             RunCsProjInFolder(path);
         }
@@ -190,13 +147,13 @@ namespace ControlsSample
             Application.Log("Build sample: " + path);
             path = Path.GetDirectoryName(path)!;
             if (DeleteBin)
-                PathUtils.DeleteBinObjFiles(path);
+                FileUtils.DeleteBinObjFiles(path);
             BuildCsProjInFolder(path);
         }
 
         private void BuildUIButton_Click(object? sender, EventArgs e)
         {
-            var s = GetUIFolder();
+            var s = CommonUtils.GetUIFolder();
             if (s is null)
             {
                 buildUIButton.Enabled = false;
@@ -205,14 +162,14 @@ namespace ControlsSample
             Application.Log("Build Alternet.UI.dll");
             Application.Log("Path: " + s);
             if (DeleteBin)
-                PathUtils.DeleteBinObjFiles(s);
+                FileUtils.DeleteBinObjFiles(s);
             BuildCsProjInFolder(s);
         }
 
         private void BuildPalButton_Click(object? sender, EventArgs e)
         {
             Application.Log("Build Alternet.UI.Pal");
-            var s = GetPalFolder();
+            var s = CommonUtils.GetPalFolder();
             if (s is null)
             {
                 buildPalButton.Enabled = false;
@@ -220,7 +177,7 @@ namespace ControlsSample
             }
             Application.Log("Path: " + s);
             if (DeleteBin)
-                PathUtils.DeleteBinObjFiles(s);
+                FileUtils.DeleteBinObjFiles(s);
         }
 
         public void ExecuteTerminalCommand(string command, string? folder = null)

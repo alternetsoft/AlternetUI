@@ -44,9 +44,6 @@ namespace ControlsTest
             };
 
             rootPanel.ActionsControl.Required();
-
-            var myListener = new CommonUtils.DebugTraceListener();
-            Trace.Listeners.Add(myListener);
         }
 
         public PanelWebBrowser PanelWebBrowser => rootPanel;
@@ -221,7 +218,7 @@ namespace ControlsTest
         internal void TestNavigateToStream()
         {
             var filename =
-                CommonUtils.PathAddBackslash(CommonUtils.GetAppFolder() + "Html") + "version.html";
+                PathUtils.AddDirectorySeparatorChar(CommonUtils.GetAppFolder() + "Html") + "version.html";
             FileStream stream = File.OpenRead(filename);
             WebBrowser.NavigateToStream(stream);
         }
@@ -338,7 +335,7 @@ namespace ControlsTest
 
         private void ShowBrowserVersion()
         {
-            var filename = CommonUtils.PathAddBackslash(CommonUtils.GetAppFolder() + "Html")
+            var filename = PathUtils.AddDirectorySeparatorChar(CommonUtils.GetAppFolder() + "Html")
                 + "version.html";
             rootPanel.WebBrowser.LoadURL("file://" + filename.Replace('\\', '/'));
         }
@@ -453,7 +450,6 @@ namespace ControlsTest
             AddTestAction("Undo", () => { webBrowser.Undo(); });
             AddTestAction("Redo", () => { webBrowser.Redo(); });
             AddTestAction("Print", () => { webBrowser.Print(); });
-            AddTestAction("DeleteLog", () => { CommonUtils.DeleteLog(); });
             AddTestAction("ZoomFactor+", () => { webBrowser.ZoomFactor += 1; });
             AddTestAction("ZoomFactor-", () => { webBrowser.ZoomFactor -= 1; });
             AddTestAction();

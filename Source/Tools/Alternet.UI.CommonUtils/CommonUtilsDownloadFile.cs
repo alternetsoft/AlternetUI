@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Alternet.UI
 {
-    public static partial class CommonUtils
+    public static partial class CommonProcs
     {
         public static async Task DownloadFileWithConsoleProgress(
             string docUrl,
