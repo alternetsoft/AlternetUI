@@ -121,7 +121,7 @@ namespace Alternet.UI
         /// <param name="rect">Ractangle.</param>
         public virtual void DrawDefaultBackground(DrawingContext dc, Rect rect)
         {
-            var state = CurrentState;
+            /*var state = CurrentState;
             var brush = GetBackground(state);
 
             if (brush != null)
@@ -139,7 +139,7 @@ namespace Alternet.UI
             {
                 var settings = Borders?.GetObjectOrNormal(CurrentState);
                 settings?.Draw(dc, rect);
-            }
+            }*/
         }
 
         internal virtual void BeforePaint(DrawingContext dc, Rect rect)
