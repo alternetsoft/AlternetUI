@@ -168,8 +168,11 @@ namespace Alternet::UI
     void Control::ShowPopupMenu(void* menu, double x, double y)
     {
         auto window = GetWxWindow();
-        auto sx = fromDip(x, window);
-        auto sy = fromDip(y, window);
+
+        auto byDefault = (x == -1 || y == -1);
+
+        auto sx = byDefault ? -1 : fromDip(x, window);
+        auto sy = byDefault ? -1 : fromDip(y, window);
         window->PopupMenu((wxMenu*)menu, sx, sy);
     }
 
