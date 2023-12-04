@@ -62,6 +62,7 @@ namespace Alternet.UI
             panel.Layout = GenericLayoutStyle.Native;
             Children.Add(panel);
             manager.SetManagedWindow(panel);
+            manager.SetDefaultSplitterSashProps();
 
             const int defaultWidth = 300;
 

@@ -89,6 +89,7 @@ namespace AuiManagerSample
 
             manager.SetFlags(AuiManagerOption.Default | AuiManagerOption.AllowActivePane);
             manager.SetManagedWindow(panel);
+            manager.SetDefaultSplitterSashProps();
 
             // Left Pane
             var pane1 = manager.CreatePaneInfo();

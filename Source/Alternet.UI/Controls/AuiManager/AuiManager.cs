@@ -284,6 +284,20 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Sets splitter sash size using <see cref="PlatformDefaults.MinSplitterSashSize"/>
+        /// and sash color to <see cref="SystemColors.ButtonFace"/>.
+        /// </summary>
+        public void SetDefaultSplitterSashProps()
+        {
+            ArtProvider.SetColor(AuiDockArtSetting.SashColor, SystemColors.ButtonFace);
+
+            var sashSize = ArtProvider.GetMetric(AuiDockArtSetting.SashSize);
+            var newSashSize = PixelFromDip(AllPlatformDefaults.PlatformCurrent.MinSplitterSashSize);
+            if (newSashSize > sashSize)
+                ArtProvider.SetMetric(AuiDockArtSetting.SashSize, newSashSize);
+        }
+
+        /// <summary>
         /// Called to specify the frame or window which is to be managed by
         /// <see cref="AuiManager"/>. Frame management is not restricted to
         /// just frames. Child windows or custom controls are also allowed.

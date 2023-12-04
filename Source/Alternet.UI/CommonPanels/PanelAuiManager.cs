@@ -57,6 +57,7 @@ namespace Alternet.UI
             : base()
         {
             defaultToolbarStyle = InitDefaultToolbarStyle();
+            Manager.SetDefaultSplitterSashProps();
         }
 
         /// <summary>

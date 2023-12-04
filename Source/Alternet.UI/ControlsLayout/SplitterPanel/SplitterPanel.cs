@@ -47,8 +47,6 @@ namespace Alternet.UI
                 var minSize = AllPlatformDefaults.PlatformCurrent.MinSplitterSashSize;
                 SetMinSashSize(minSize);
             }
-
-            Log($"SashSize:{SashSize}");
         }
 
         /// <summary>
@@ -865,11 +863,9 @@ namespace Alternet.UI
 
         private void PerformChildsLayout()
         {
-            //Control1?.PerformLayout(false);
-            //Control2?.PerformLayout(false);
-
-
-        }
+            Control1?.PerformLayout(false);
+            Control2?.PerformLayout(false);
+       }
 
         private void InitAutoSplit()
         {
