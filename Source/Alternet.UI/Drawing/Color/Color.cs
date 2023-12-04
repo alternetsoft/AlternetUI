@@ -1020,6 +1020,24 @@ namespace Alternet.Drawing
             Color.FromRgb(rgb.R, rgb.G, rgb.B);
 
         /// <summary>
+        /// Converts the specified <see cref='System.Drawing.Color'/> to a <see cref='Color'/>.
+        /// </summary>
+        public static implicit operator Color(System.Drawing.Color color)
+        {
+            var argb = color.ToArgb();
+            return FromArgb(argb);
+        }
+
+        /// <summary>
+        /// Converts the specified <see cref='Color'/> to a <see cref='System.Drawing.Color'/>.
+        /// </summary>
+        public static implicit operator System.Drawing.Color(Color color)
+        {
+            var argb = color.ToArgb();
+            return System.Drawing.Color.FromArgb(argb);
+        }
+
+        /// <summary>
         /// Converts the specified <see cref='RGBValue'/> to a <see cref='Color'/>.
         /// </summary>
         public static explicit operator SolidBrush(Color color) => color.AsBrush;

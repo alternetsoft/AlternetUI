@@ -122,6 +122,18 @@ namespace Alternet.Drawing
         public static implicit operator Int32Size((int, int) d) => new(d.Item1, d.Item2);
 
         /// <summary>
+        /// Creates a <see cref='System.Drawing.Size'/> with the coordinates of the
+        /// specified <see cref='Int32Size'/>
+        /// </summary>
+        public static implicit operator System.Drawing.Size(Int32Size p) => new(p.Width, p.Height);
+
+        /// <summary>
+        /// Creates a <see cref='Int32Size'/> with the coordinates of the
+        /// specified <see cref='System.Drawing.Size'/>
+        /// </summary>
+        public static implicit operator Int32Size(System.Drawing.Size p) => new(p.Width, p.Height);
+
+        /// <summary>
         /// Converts the specified <see cref='Int32Size'/> to a <see cref='Size'/>.
         /// </summary>
         public static implicit operator Size(Int32Size p) => new(p.Width, p.Height);

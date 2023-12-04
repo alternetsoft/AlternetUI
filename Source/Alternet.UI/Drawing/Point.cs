@@ -108,6 +108,19 @@ namespace Alternet.Drawing
         public static explicit operator Point(Vector2 vector) => new(vector);
 
         /// <summary>
+        /// Creates a <see cref='Point'/> with the properties of the
+        /// specified <see cref='System.Drawing.Point'/>
+        /// </summary>
+        public static implicit operator Point(System.Drawing.Point p) => new(p.X, p.Y);
+
+        /// <summary>
+        /// Creates a <see cref='System.Drawing.Point'/> with the properties of the
+        /// specified <see cref='Point'/>
+        /// </summary>
+        public static implicit operator System.Drawing.Point(Point p) =>
+            new(Rect.CoordToInt(p.X), Rect.CoordToInt(p.Y));
+
+        /// <summary>
         /// Implicit operator convertion from tuple with two <see cref="double"/> values
         /// to <see cref="Point"/>.
         /// </summary>

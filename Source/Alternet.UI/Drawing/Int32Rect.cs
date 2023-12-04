@@ -187,6 +187,18 @@ namespace Alternet.Drawing
         public static implicit operator Int32Rect((Int32Point, Int32Size) d) => new(d.Item1, d.Item2);
 
         /// <summary>
+        /// Creates a <see cref='System.Drawing.Rectangle'/> with the coordinates of the
+        /// specified <see cref='Int32Rect'/>
+        /// </summary>
+        public static implicit operator System.Drawing.Rectangle(Int32Rect p) => new(p.X, p.Y, p.Width, p.Height);
+
+        /// <summary>
+        /// Creates a <see cref='Int32Rect'/> with the coordinates of the
+        /// specified <see cref='System.Drawing.Rectangle'/>
+        /// </summary>
+        public static implicit operator Int32Rect(System.Drawing.Rectangle p) => new(p.X, p.Y, p.Width, p.Height);
+
+        /// <summary>
         /// Tests whether two <see cref='Drawing.Int32Rect'/> objects have equal location and size.
         /// </summary>
         public static bool operator ==(Int32Rect left, Int32Rect right) =>

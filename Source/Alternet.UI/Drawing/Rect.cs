@@ -281,6 +281,19 @@ namespace Alternet.Drawing
             new(d.Item1, d.Item2, d.Item3, d.Item4);
 
         /// <summary>
+        /// Creates a <see cref='Rect'/> with the properties of the
+        /// specified <see cref='System.Drawing.Rectangle'/>
+        /// </summary>
+        public static implicit operator Rect(System.Drawing.Rectangle p) => new(p.X, p.Y, p.Width, p.Height);
+
+        /// <summary>
+        /// Creates a <see cref='System.Drawing.Rectangle'/> with the properties of the
+        /// specified <see cref='Rect'/>
+        /// </summary>
+        public static implicit operator System.Drawing.Rectangle(Rect p) =>
+            new(CoordToInt(p.X), CoordToInt(p.Y), CoordToInt(p.Width), CoordToInt(p.Height));
+
+        /// <summary>
         /// Implicit operator convertion from tuple (<see cref="Point"/>, <see cref="Size"/>)
         /// to <see cref="Rect"/>.
         /// </summary>
@@ -619,6 +632,12 @@ namespace Alternet.Drawing
                 y,
                 width,
                 height);
+        }
+
+        internal static int CoordToInt(double value)
+        {
+            int i = (int)Math.Round(value, MidpointRounding.AwayFromZero);
+            return i;
         }
     }
 }

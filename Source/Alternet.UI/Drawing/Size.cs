@@ -151,6 +151,19 @@ namespace Alternet.Drawing
             new(size.Width, size.Height);
 
         /// <summary>
+        /// Creates a <see cref='Size'/> with the properties of the
+        /// specified <see cref='System.Drawing.Size'/>
+        /// </summary>
+        public static implicit operator Size(System.Drawing.Size p) => new(p.Width, p.Height);
+
+        /// <summary>
+        /// Creates a <see cref='System.Drawing.Size'/> with the properties of the
+        /// specified <see cref='Size'/>
+        /// </summary>
+        public static implicit operator System.Drawing.Size(Size p) =>
+            new(Rect.CoordToInt(p.Width), Rect.CoordToInt(p.Height));
+
+        /// <summary>
         /// Implicit operator convertion from tuple with two <see cref="double"/> values
         /// to <see cref="Size"/>.
         /// </summary>
