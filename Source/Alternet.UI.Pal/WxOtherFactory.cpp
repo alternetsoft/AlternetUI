@@ -415,6 +415,22 @@ namespace Alternet::UI
 		wxBell();
 	}
 
+	class wxTextEntryDialog2 : public wxTextEntryDialog
+	{
+	public:
+		wxTextEntryDialog2(wxWindow* parent,
+			const wxString& message,
+			const wxString& caption = wxASCII_STR(wxGetTextFromUserPromptStr),
+			const wxString& value = wxEmptyString,
+			long style = wxTextEntryDialogStyle,
+			const wxPoint& pos = wxDefaultPosition)
+		{
+			if (Window::fontOverride.IsOk())
+				SetFont(Window::fontOverride);
+			Create(parent, message, caption, value, style, pos);
+		}
+	};
+
 	static wxString wxGetTextFromUser2(const wxString& message, const wxString& caption,
 		const wxString& defaultValue, wxWindow* parent,
 		wxCoord x, wxCoord y, bool centre)
@@ -427,7 +443,7 @@ namespace Alternet::UI
 		else
 			style &= ~wxCENTRE;
 
-		wxTextEntryDialog dialog(parent, message, caption, defaultValue, style, wxPoint(x, y));
+		wxTextEntryDialog2 dialog(parent, message, caption, defaultValue, style, wxPoint(x, y));
 
 		auto font = ParkingWindow::GetWindow()->GetFont();
 		dialog.SetFont(font);
@@ -442,6 +458,22 @@ namespace Alternet::UI
 		return str;
 	}
 
+	class wxNumberEntryDialog2 : public wxNumberEntryDialog
+	{
+	public:
+		wxNumberEntryDialog2(wxWindow* parent,
+			const wxString& message,
+			const wxString& prompt,
+			const wxString& caption,
+			long value, long min, long max,
+			const wxPoint& pos = wxDefaultPosition)
+		{
+			if(Window::fontOverride.IsOk())
+				SetFont(Window::fontOverride);
+			wxNumberEntryDialog::Create(parent, message, prompt, caption, value, min, max, pos);
+		}
+	};
+
 	long wxGetNumberFromUser2(const wxString& msg,
 		const wxString& prompt,
 		const wxString& title,
@@ -451,11 +483,13 @@ namespace Alternet::UI
 		wxWindow* parent,
 		const wxPoint& pos)
 	{
-		wxNumberEntryDialog dialog(parent, msg, prompt, title,
+		wxNumberEntryDialog2 dialog(parent, msg, prompt, title,
 			value, min, max, pos);
+/*
 		auto font = ParkingWindow::GetWindow()->GetFont();
 		dialog.SetFont(font);
-		Application::Log(font.GetNativeFontInfoUserDesc());
+*/
+		/*Application::Log(dialog.GetFont().GetNativeFontInfoUserDesc());*/
 
 		if (dialog.ShowModal() == wxID_OK)
 			return dialog.GetValue();

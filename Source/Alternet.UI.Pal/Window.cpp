@@ -551,19 +551,6 @@ namespace Alternet::UI
         return CreateWxWindowCore(nullptr);
     }
 
-    void Window::SetParkingWindowFont(Font* font)
-    {
-        auto parkingWindow = ParkingWindow::GetWindow();
-        if (parkingWindow == nullptr)
-            return;
-        if (font == nullptr)
-        {
-            parkingWindow->SetFont(wxNullFont);
-            return;
-        }
-        parkingWindow->SetFont(font->GetWxFont());
-    }
-
     wxWindow* Window::CreateWxWindowCore(wxWindow* parent)
     {
         auto style = GetWindowStyle();
@@ -1012,5 +999,89 @@ namespace Alternet::UI
 
         _flags.Set(WindowFlags::HasTitleBar, value);
         ScheduleRecreateWxWindow();
+    }
+
+    class wxStockGDIOverride : public wxStockGDI, public wxModule
+    {
+    public:
+        inline static wxStockGDI* old_instance = nullptr;
+
+        virtual const wxFont* GetFont(Item item) wxOVERRIDE;
+
+        virtual bool OnInit() wxOVERRIDE;
+        virtual void OnExit() wxOVERRIDE;
+
+    private:
+        typedef wxStockGDI super;
+        wxDECLARE_DYNAMIC_CLASS(wxStockGDIOverride);
+    };
+
+    wxIMPLEMENT_DYNAMIC_CLASS(wxStockGDIOverride, wxModule);
+
+    bool wxStockGDIOverride::OnInit()
+    {
+        old_instance = ms_instance;
+        // Override default instance
+        ms_instance = this;
+        return true;
+    }
+
+    void wxStockGDIOverride::OnExit()
+    {
+    }
+
+    static bool stockGridHooked = false;
+    static wxStockGDIOverride* StockGDIOverride;
+
+    const wxFont* wxStockGDIOverride::GetFont(Item item)
+    {
+        if (item == FONT_NORMAL && Window::fontOverride.IsOk())
+        {
+            auto font = &Window::fontOverride;
+            ms_stockObject[item] = font;
+            return font;
+        }
+        else
+        {
+            auto font = const_cast<wxFont*>(super::GetFont(item));
+            return font;
+        }
+
+/*
+        wxFont* font = static_cast<wxFont*>(ms_stockObject[item]);
+
+        if (font == NULL)
+        {
+            switch (item)
+            {
+            case FONT_NORMAL:
+                if(fontOverride.IsOk)
+                font = new wxFont(wxOSX_SYSTEM_FONT_NORMAL);
+                break;
+            default:
+                break;
+            }
+            ms_stockObject[item] = font;
+        }
+        return font;
+*/
+    }
+
+    void Window::SetParkingWindowFont(Font* font)
+    {
+        if (!stockGridHooked)
+        {
+            StockGDIOverride = new wxStockGDIOverride();
+            stockGridHooked = true;
+        }
+
+        if (font == nullptr)
+            fontOverride = wxNullFont;
+        else
+            fontOverride = font->GetWxFont();
+
+        auto parkingWindow = ParkingWindow::GetWindow();
+        if (parkingWindow != nullptr)
+            parkingWindow->SetFont(fontOverride);
     }
 }

@@ -1,4 +1,5 @@
 #include "wxAlternetRichToolTip.h"
+#include "../Window.h"
 
 #ifndef WX_PRECOMP
 #include <wx/dcmemory.h>
@@ -105,6 +106,9 @@ public:
         m_timer(this)
     {
         Create(parent, wxFRAME_SHAPED);
+        if (Alternet::UI::Window::fontOverride.IsOk())
+            SetFont(Alternet::UI::Window::fontOverride);
+
 
         // Move to the display where it will be shown,
         // so below calculations are based on the correct DPI.
