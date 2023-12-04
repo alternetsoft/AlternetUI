@@ -96,7 +96,8 @@ namespace Alternet::UI
 
     double Control::DrawingDPIScaleFactor(void* window)
     {
-        return GetDPIScaleFactor((wxWindow*)window);
+        return ((wxWindow*)window)->GetDPIScaleFactor();
+        //return GetDPIScaleFactor((wxWindow*)window);
     }
 
     double Control::DrawingToDip(int value, void* window)
