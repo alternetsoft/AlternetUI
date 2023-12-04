@@ -766,6 +766,9 @@ namespace Alternet.UI
         /// </summary>
         public static void UpdateDefaultFont()
         {
+            if (!Application.Initialized)
+                return;
+
             var dpi = Display.Primary.DPI;
             var incFont = (dpi.Width > 96) ? Window.IncFontSizeHighDpi : Window.IncFontSize;
 
