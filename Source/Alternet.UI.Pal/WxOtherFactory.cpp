@@ -1,4 +1,5 @@
 #include "WxOtherFactory.h"
+#include "Application.h"
 #include "WxAlternet/wxAlternetRichToolTip.h"
 
 #include <wx/numdlg.h>
@@ -454,6 +455,7 @@ namespace Alternet::UI
 			value, min, max, pos);
 		auto font = ParkingWindow::GetWindow()->GetFont();
 		dialog.SetFont(font);
+		Application::Log(font.GetNativeFontInfoUserDesc());
 
 		if (dialog.ShowModal() == wxID_OK)
 			return dialog.GetValue();
