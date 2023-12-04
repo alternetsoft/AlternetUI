@@ -5,6 +5,7 @@ using System;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Numerics;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using Alternet.UI;
 using Alternet.UI.Localization;
@@ -105,18 +106,21 @@ namespace Alternet.Drawing
         /// Converts the specified <see cref="System.Numerics.Vector2"/> to a
         /// <see cref="Drawing.Point"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static explicit operator Point(Vector2 vector) => new(vector);
 
         /// <summary>
         /// Creates a <see cref='Point'/> with the properties of the
         /// specified <see cref='System.Drawing.Point'/>
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static implicit operator Point(System.Drawing.Point p) => new(p.X, p.Y);
 
         /// <summary>
         /// Creates a <see cref='System.Drawing.Point'/> with the properties of the
         /// specified <see cref='Point'/>
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static implicit operator System.Drawing.Point(Point p) =>
             new(Rect.CoordToInt(p.X), Rect.CoordToInt(p.Y));
 
@@ -125,27 +129,32 @@ namespace Alternet.Drawing
         /// to <see cref="Point"/>.
         /// </summary>
         /// <param name="d">New point value.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static implicit operator Point((double, double) d) => new(d.Item1, d.Item2);
 
         /// <summary>
         /// Translates a <see cref='Drawing.Point'/> by a given <see cref='Drawing.Int32Size'/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Point operator +(Point pt, Int32Size sz) => Add(pt, sz);
 
         /// <summary>
         /// Translates a <see cref='Drawing.Point'/> by the negative of a given
         /// <see cref='Drawing.Int32Size'/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Point operator -(Point pt, Int32Size sz) => Subtract(pt, sz);
 
         /// <summary>
         /// Translates a <see cref='Drawing.Point'/> by a given <see cref='Drawing.Size'/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Point operator +(Point pt, Size sz) => Add(pt, sz);
 
         /// <summary>
         /// Moves a <see cref='Point'/> by a given value.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Point operator +(Point pt, double offset) =>
             new(pt.X + offset, pt.Y + offset);
 
@@ -153,6 +162,7 @@ namespace Alternet.Drawing
         /// Translates a <see cref='Drawing.Point'/> by the negative of a given
         /// <see cref='Drawing.Size'/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Point operator -(Point pt, Size sz) => Subtract(pt, sz);
 
         /// <summary>
@@ -170,29 +180,34 @@ namespace Alternet.Drawing
         /// <see cref='Drawing.Point.X'/> or <see cref='Drawing.Point.Y'/> properties of the two
         /// <see cref='Drawing.Point'/> objects are unequal.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator !=(Point left, Point right) => !(left == right);
 
         /// <summary>
         /// Translates a <see cref='Drawing.Point'/> by a given <see cref='Drawing.Int32Size'/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Point Add(Point pt, Int32Size sz) => new(pt.X + sz.Width, pt.Y + sz.Height);
 
         /// <summary>
         /// Translates a <see cref='Drawing.Point'/> by the negative of a given
         /// <see cref='Drawing.Int32Size'/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Point Subtract(Point pt, Int32Size sz) =>
             new(pt.X - sz.Width, pt.Y - sz.Height);
 
         /// <summary>
         /// Translates a <see cref='Drawing.Point'/> by a given <see cref='Drawing.Size'/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Point Add(Point pt, Size sz) => new(pt.X + sz.Width, pt.Y + sz.Height);
 
         /// <summary>
         /// Translates a <see cref='Drawing.Point'/> by the negative of a given
         /// <see cref='Drawing.Size'/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Point Subtract(Point pt, Size sz) => new(pt.X - sz.Width, pt.Y - sz.Height);
 
         /// <summary>
@@ -226,6 +241,7 @@ namespace Alternet.Drawing
         /// <param name="obj">The object to compare with the current object.</param>
         /// <returns><c>true</c> if the specified object is equal to the current object;
         /// otherwise, <c>false</c>.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public override readonly bool Equals([NotNullWhen(true)] object? obj) =>
             obj is Point point && Equals(point);
 
@@ -235,12 +251,14 @@ namespace Alternet.Drawing
         /// <param name="other">An object to compare with this object.</param>
         /// <returns><c>true</c> if the current object is equal to other; otherwise,
         /// <c>false</c>.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public readonly bool Equals(Point other) => this == other;
 
         /// <summary>
         /// Serves as the default hash function.
         /// </summary>
         /// <returns>A hash code for the current object.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public override readonly int GetHashCode() =>
             HashCode.Combine(X.GetHashCode(), Y.GetHashCode());
 

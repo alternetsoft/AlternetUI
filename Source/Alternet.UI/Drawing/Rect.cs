@@ -5,6 +5,7 @@ using System;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Numerics;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using Alternet.UI;
 using Alternet.UI.Localization;
@@ -270,6 +271,7 @@ namespace Alternet.Drawing
         /// Converts the specified <see cref="Vector2"/> to a
         /// <see cref="Rect"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static explicit operator Rect(Vector4 vector) => new(vector);
 
         /// <summary>
@@ -277,6 +279,7 @@ namespace Alternet.Drawing
         /// to <see cref="Rect"/>.
         /// </summary>
         /// <param name="d">New rectangle value.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static implicit operator Rect((double, double, double, double) d) =>
             new(d.Item1, d.Item2, d.Item3, d.Item4);
 
@@ -284,12 +287,14 @@ namespace Alternet.Drawing
         /// Creates a <see cref='Rect'/> with the properties of the
         /// specified <see cref='System.Drawing.Rectangle'/>
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static implicit operator Rect(System.Drawing.Rectangle p) => new(p.X, p.Y, p.Width, p.Height);
 
         /// <summary>
         /// Creates a <see cref='System.Drawing.Rectangle'/> with the properties of the
         /// specified <see cref='Rect'/>
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static implicit operator System.Drawing.Rectangle(Rect p) =>
             new(CoordToInt(p.X), CoordToInt(p.Y), CoordToInt(p.Width), CoordToInt(p.Height));
 
@@ -298,22 +303,26 @@ namespace Alternet.Drawing
         /// to <see cref="Rect"/>.
         /// </summary>
         /// <param name="d">New rectangle value.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static implicit operator Rect((Point, Size) d) => new(d.Item1, d.Item2);
 
         /// <summary>
         /// Converts the specified <see cref='Drawing.Int32Rect'/> to a
         /// <see cref='Rect'/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static implicit operator Rect(Int32Rect r) => new(r.X, r.Y, r.Width, r.Height);
 
         /// <summary>
         /// Tests whether two <see cref='Rect'/> objects differ in location or size.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator !=(Rect left, Rect right) => !(left == right);
 
         /// <summary>
         /// Tests whether two <see cref='Rect'/> objects have equal location and size.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator ==(Rect left, Rect right) =>
             left.x == right.x && left.y == right.y && left.width == right.width
             && left.height == right.height;
@@ -321,6 +330,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Creates a <see cref='Rect'/> that is inflated by the specified amount.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Rect Inflate(Rect rect, double x, double y)
         {
             Rect r = rect;
@@ -331,6 +341,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Creates a new <see cref="Rect"/> from a centerpoint and size.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Rect FromCenter(Point center, Size size)
         {
             return new Rect(
@@ -412,6 +423,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Creates a new <see cref='Rect'/> with the specified location and size.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Rect FromLTRB(double left, double top, double right, double bottom) =>
             new(left, top, right - left, bottom - top);
 
@@ -420,6 +432,7 @@ namespace Alternet.Drawing
         /// by this
         /// <see cref='Rect'/> .
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public readonly bool Contains(double x, double y) =>
             X <= x && x < X + Width && Y <= y && y < Y + Height;
 
@@ -428,6 +441,7 @@ namespace Alternet.Drawing
         /// by this
         /// <see cref='Rect'/> .
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public readonly bool Contains(Point pt) => Contains(pt.X, pt.Y);
 
         /// <summary>
@@ -435,6 +449,7 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="percent">Value from 0 to 100.</param>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public readonly double PercentOfWidth(double percent) => MathUtils.PercentOf(width, percent);
 
         /// <summary>
@@ -443,6 +458,7 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="percent">Value from 0 to 100.</param>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public readonly double PercentOfMinSize(double percent) =>
             MathUtils.PercentOf(MinWidthHeight, percent);
 
@@ -451,6 +467,7 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="percent">Value from 0 to 100.</param>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public readonly double PercentOfHeight(double percent) => MathUtils.PercentOf(height, percent);
 
         /// <summary>
@@ -458,6 +475,7 @@ namespace Alternet.Drawing
         /// same location and
         /// size of this <see cref='Rect'/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public override readonly bool Equals([NotNullWhen(true)] object? obj) =>
             obj is Rect rect && Equals(rect);
 
@@ -467,6 +485,7 @@ namespace Alternet.Drawing
         /// <param name="other">An object to compare with this object.</param>
         /// <returns><c>true</c> if the current object is equal to other; otherwise,
         /// <c>false</c>.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public readonly bool Equals(Rect other) => this == other;
 
         /// <summary>
@@ -481,11 +500,13 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets the hash code for this <see cref='Rect'/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public override readonly int GetHashCode() => HashCode.Combine(x, y, width, height);
 
         /// <summary>
         /// Inflates this <see cref='Rect'/> by the specified amount.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Inflate(double dx, double dy)
         {
             x -= dx;
@@ -497,11 +518,13 @@ namespace Alternet.Drawing
         /// <summary>
         /// Creates a <see cref='Rect'/> that is inflated by the specified amount.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public readonly Rect InflatedBy(double x, double y) => Inflate(this, x, y);
 
         /// <summary>
         /// Creates a <see cref='Rect'/> that is offset by the specified amount.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public readonly Rect OffsetBy(double dx, double dy)
         {
             var r = this;
@@ -513,6 +536,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Creates a <see cref='Rect'/> with the specified size.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public readonly Rect WithSize(double width, double height)
         {
             var r = this;
@@ -524,6 +548,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Creates a <see cref='Rect'/> with the specified location.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public readonly Rect WithLocation(double x, double y)
         {
             var r = this;
@@ -535,11 +560,13 @@ namespace Alternet.Drawing
         /// <summary>
         /// Inflates this <see cref='Rect'/> by the specified amount.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Inflate(Size size) => Inflate(size.Width, size.Height);
 
         /// <summary>
         /// Creates a Rectangle that represents the intersection between this Rectangle and rect.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Intersect(Rect rect)
         {
             Rect result = Intersect(rect, this);
@@ -560,6 +587,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Adjusts the location of this rectangle by the specified amount.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Offset(Point pos) => Offset(pos.X, pos.Y);
 
         /// <summary>
@@ -581,6 +609,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Adjusts the location of this rectangle by the specified amount.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Offset(double dx, double dy)
         {
             x += dx;
@@ -634,6 +663,7 @@ namespace Alternet.Drawing
                 height);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal static int CoordToInt(double value)
         {
             int i = (int)Math.Round(value, MidpointRounding.AwayFromZero);

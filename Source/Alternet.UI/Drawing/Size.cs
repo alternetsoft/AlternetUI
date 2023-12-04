@@ -147,6 +147,7 @@ namespace Alternet.Drawing
         /// Converts the specified <see cref='Size'/> to a
         /// <see cref='Point'/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static explicit operator Point(Size size) =>
             new(size.Width, size.Height);
 
@@ -154,12 +155,14 @@ namespace Alternet.Drawing
         /// Creates a <see cref='Size'/> with the properties of the
         /// specified <see cref='System.Drawing.Size'/>
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static implicit operator Size(System.Drawing.Size p) => new(p.Width, p.Height);
 
         /// <summary>
         /// Creates a <see cref='System.Drawing.Size'/> with the properties of the
         /// specified <see cref='Size'/>
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static implicit operator System.Drawing.Size(Size p) =>
             new(Rect.CoordToInt(p.Width), Rect.CoordToInt(p.Height));
 
@@ -168,6 +171,7 @@ namespace Alternet.Drawing
         /// to <see cref="Size"/>.
         /// </summary>
         /// <param name="d">New size value.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static implicit operator Size((double, double) d) => new(d.Item1, d.Item2);
 
         /* TODO: uncommment when Double System.Numerics is availble.
@@ -188,27 +192,32 @@ namespace Alternet.Drawing
         /// Converts the specified <see cref="System.Numerics.Vector2"/> to
         /// a <see cref="Drawing.Size"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static explicit operator Size(Vector2 vector) => new(vector);
 
         /// <summary>
         /// Initializes <see cref="Drawing.Size"/> with equal width and hegiht.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static implicit operator Size(double widthAndHeight) => new(widthAndHeight);
 
         /// <summary>
         /// Initializes <see cref="Drawing.Size"/> with equal width and hegiht.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static implicit operator Size(int widthAndHeight) => new(widthAndHeight);
 
         /// <summary>
         /// Performs vector addition of two <see cref='Drawing.Size'/> objects.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Size operator +(Size sz1, Size sz2) => Add(sz1, sz2);
 
         /// <summary>
         /// Subtracts a <see cref='Drawing.Size'/> by another
         /// <see cref='Drawing.Size'/>
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Size operator -(Size sz1, Size sz2) => Subtract(sz1, sz2);
 
         /// <summary>
@@ -218,6 +227,7 @@ namespace Alternet.Drawing
         /// <param name="left">Multiplier of type <see cref="double"/>.</param>
         /// <param name="right">Multiplicand of type <see cref="Size"/>.</param>
         /// <returns>Product of type <see cref="Size"/>.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Size operator *(double left, Size right) =>
             Multiply(right, left);
 
@@ -228,6 +238,7 @@ namespace Alternet.Drawing
         /// <param name="left">Multiplicand of type <see cref="Size"/>.</param>
         /// <param name="right">Multiplier of type <see cref="double"/>.</param>
         /// <returns>Product of type <see cref="Size"/>.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Size operator *(Size left, double right) =>
             Multiply(left, right);
 
@@ -238,18 +249,21 @@ namespace Alternet.Drawing
         /// <param name="left">Dividend of type <see cref="Size"/>.</param>
         /// <param name="right">Divisor of type <see cref="int"/>.</param>
         /// <returns>Result of type <see cref="Size"/>.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Size operator /(Size left, double right)
             => new(left.width / right, left.height / right);
 
         /// <summary>
         /// Tests whether two <see cref='Drawing.Size'/> objects are identical.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator ==(Size sz1, Size sz2) =>
             sz1.Width == sz2.Width && sz1.Height == sz2.Height;
 
         /// <summary>
         /// Tests whether two <see cref='Drawing.Size'/> objects are different.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator !=(Size sz1, Size sz2) => !(sz1 == sz2);
 
         /// <summary>
@@ -289,6 +303,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Performs vector addition of two <see cref='Drawing.Size'/> objects.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Size Add(Size sz1, Size sz2) =>
             new(sz1.Width + sz2.Width, sz1.Height + sz2.Height);
 
@@ -296,6 +311,7 @@ namespace Alternet.Drawing
         /// Contracts a <see cref='Drawing.Size'/> by another
         /// <see cref='Drawing.Size'/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Size Subtract(Size sz1, Size sz2) =>
             new(sz1.Width - sz2.Width, sz1.Height - sz2.Height);
 
@@ -305,6 +321,7 @@ namespace Alternet.Drawing
         /// <param name="v1">First <see cref="Size"/> value.</param>
         /// <param name="v2">Second <see cref="Size"/> value.</param>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Size Max(Size v1, Size v2)
         {
             return new Size(Math.Max(v1.width, v2.width), Math.Max(v1.height, v2.height));
@@ -411,6 +428,7 @@ namespace Alternet.Drawing
         /// <see cref='Drawing.Size'/>  with the same dimensions
         /// as this <see cref='Drawing.Size'/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public override readonly bool Equals([NotNullWhen(true)] object? obj) =>
             obj is Size size && Equals(size);
 
@@ -420,18 +438,21 @@ namespace Alternet.Drawing
         /// <param name="other">An object to compare with this object.</param>
         /// <returns><c>true</c> if the current object is equal to other;
         /// otherwise, <c>false</c>.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public readonly bool Equals(Size other) => this == other;
 
         /// <summary>
         /// Serves as the default hash function.
         /// </summary>
         /// <returns>A hash code for the current object.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public override readonly int GetHashCode() => HashCode.Combine(Width, Height);
 
         /// <summary>
         /// Converts a <see cref="Size"/> structure to a <see cref="Point"/> structure.
         /// </summary>
         /// <returns>A <see cref="Point"/> structure.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public readonly Point ToPointF() => (Point)this;
 
         /// <summary>
@@ -443,6 +464,7 @@ namespace Alternet.Drawing
         /// to a <see cref="Int32Size"/> structure by
         /// truncating the values of the <see cref="Size"/> to the next
         /// lower integer values.</remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public readonly Int32Size ToSize() => Int32Size.Truncate(this);
 
         /// <summary>
@@ -492,6 +514,7 @@ namespace Alternet.Drawing
         /// <param name="size">Multiplicand of type <see cref="Size"/>.</param>
         /// <param name="multiplier">Multiplier of type <see cref="double"/>.</param>
         /// <returns>Product of type SizeF.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static Size Multiply(Size size, double multiplier) =>
             new(size.width * multiplier, size.height * multiplier);
     }

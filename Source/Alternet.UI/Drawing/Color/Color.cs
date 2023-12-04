@@ -1016,12 +1016,14 @@ namespace Alternet.Drawing
         /// <summary>
         /// Converts the specified <see cref='RGBValue'/> to a <see cref='Color'/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static implicit operator Color(RGBValue rgb) =>
             Color.FromRgb(rgb.R, rgb.G, rgb.B);
 
         /// <summary>
         /// Converts the specified <see cref='System.Drawing.Color'/> to a <see cref='Color'/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static implicit operator Color(System.Drawing.Color color)
         {
             var argb = color.ToArgb();
@@ -1031,6 +1033,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Converts the specified <see cref='Color'/> to a <see cref='System.Drawing.Color'/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static implicit operator System.Drawing.Color(Color color)
         {
             var argb = color.ToArgb();
@@ -1040,17 +1043,20 @@ namespace Alternet.Drawing
         /// <summary>
         /// Converts the specified <see cref='RGBValue'/> to a <see cref='Color'/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static explicit operator SolidBrush(Color color) => color.AsBrush;
 
         /// <summary>
         /// Converts the specified <see cref='Color'/> to a <see cref='RGBValue'/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static implicit operator RGBValue(Color color) =>
             new(color.R, color.G, color.B);
 
         /// <summary>
         /// Converts the specified <see cref='string'/> to a <see cref='Color'/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static explicit operator Color(string s)
             => Color.Parse(s);
 
@@ -1078,6 +1084,7 @@ namespace Alternet.Drawing
         /// of the inequality operator.</param>
         /// <returns><c>true</c> if the two <see cref="Color"/> structures
         /// are different; otherwise, <c>false</c>.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator !=(Color left, Color right) => !(left == right);
 
         /// <summary>
@@ -1093,6 +1100,7 @@ namespace Alternet.Drawing
         /// represented by RR, GG, and BB,
         /// respectively, are the color components red, green, and blue, respectively.
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Color FromArgb(int argb) => FromArgb(unchecked((uint)argb));
 
         /// <summary>
@@ -1157,6 +1165,7 @@ namespace Alternet.Drawing
         /// <param name="green"></param>
         /// <param name="blue"></param>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Color FromRgb(byte red, byte green, byte blue) =>
             FromArgb((byte)255, red, green, blue);
 
@@ -1200,6 +1209,7 @@ namespace Alternet.Drawing
         /// <returns>The <see cref="Color"/> that this method creates.</returns>
         /// <exception cref="ArgumentException"><c>red</c>, <c>green</c>, or
         /// <c>blue</c> is less than 0 or greater than 255.</exception>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Color FromArgb(int red, int green, int blue) =>
             FromArgb(byte.MaxValue, red, green, blue);
 
@@ -1680,12 +1690,14 @@ namespace Alternet.Drawing
         /// respectively, are the color components red, green, and blue,
         /// respectively.
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public int ToArgb() => unchecked((int)Value);
 
         /// <inheritdoc cref="ToArgb"/>
         /// <remarks>
         /// This is similar to <see cref="ToArgb"/> but returns color as <see cref="uint"/>.
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public uint AsUInt() => unchecked((uint)Value);
 
         /// <summary>
@@ -1716,6 +1728,7 @@ namespace Alternet.Drawing
         /// to a <see cref="Color"/> structure that is created by using
         /// the <see cref="FromName"/> method with a string name that is not valid.
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public KnownColor ToKnownColor() => (KnownColor)knownColor;
 
         /// <summary>
@@ -1761,6 +1774,7 @@ namespace Alternet.Drawing
         /// <param name="other">An object to compare with this object.</param>
         /// <returns><c>true</c> if the current object is equal to other;
         /// otherwise, <c>false</c>.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool Equals(Color other) => this == other;
 
         /// <summary>
@@ -1769,6 +1783,7 @@ namespace Alternet.Drawing
         /// <param name="other">A <see cref="Color"/> to compare with this color.</param>
         /// <returns><c>true</c> if ARGB of the colors are equal;
         /// otherwise, <c>false</c>.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool EqualARGB(Color other) => Value == other.Value;
 
         /// <summary>
@@ -1777,6 +1792,7 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="size">Size of the created image.</param>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public GenericImage AsImage(Int32Size size)
         {
             GenericImage image = new(size.Width, size.Height);
