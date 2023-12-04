@@ -137,7 +137,7 @@ namespace Alternet.UI
             goto exit;
 
         exit:
-            Window.UpdateDefaultFont();
+            ;
         }
 
         /// <summary>
@@ -165,6 +165,8 @@ namespace Alternet.UI
 #if DEBUG
             WebBrowser.CrtSetDbgFlag(0);
 #endif
+            Initialized = true;
+            Window.UpdateDefaultFont();
         }
 
         /// <summary>
@@ -215,6 +217,15 @@ namespace Alternet.UI
         /// <see cref="Application.Log"/> is called. Default is <c>false</c>.
         /// </summary>
         public static bool DebugWriteLine { get; set; } = false;
+
+        /// <summary>
+        /// Gets whether application was initialized;
+        /// </summary>
+        public static bool Initialized
+        {
+            get;
+            private set;
+        }
 
         /// <summary>
         /// Gets or sets application log file path.
