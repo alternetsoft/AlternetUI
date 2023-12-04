@@ -212,6 +212,7 @@ namespace Alternet.UI
             Application.Log($"Toolbar images: {UI.Toolbar.GetDefaultImageSize(this)}");
             Log($"Control.DefaultFont: {Control.DefaultFont.ToInfoString()}");
             Log($"Font.Default: {Font.Default.ToInfoString()}");
+            Log($"Splitter.MinSashSize: {AllPlatformDefaults.PlatformCurrent.MinSplitterSashSize}");
         }
     }
 }

@@ -77,7 +77,7 @@ namespace Alternet.UI
         public bool AllowButtonForeground { get; set; } = true;
 
         /// <summary>
-        /// Gets or sets minimum splitter sash size.
+        /// Gets or sets minimum splitter sash size in dips (1/96 inch).
         /// </summary>
         public int MinSplitterSashSize { get; set; } = 7;
 

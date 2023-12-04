@@ -47,6 +47,8 @@ namespace Alternet.UI
                 var minSize = AllPlatformDefaults.PlatformCurrent.MinSplitterSashSize;
                 SetMinSashSize(minSize);
             }
+
+            Log($"SashSize:{SashSize}");
         }
 
         /// <summary>
@@ -455,11 +457,12 @@ namespace Alternet.UI
             (NativeSplitterPanelHandler)base.Handler;
 
         /// <summary>
-        /// Sets minimal value for the sash size.
+        /// Sets minimal value for the sash size in dips (1/96 inch).
         /// </summary>
         /// <param name="minSize">Minimal sash size.</param>
         public static void SetMinSashSize(int minSize)
         {
+            minSize = Display.Primary.PixelFromDip(minSize);
             Native.SplitterPanel.SetMinSashSize(minSize);
         }
 
@@ -862,8 +865,10 @@ namespace Alternet.UI
 
         private void PerformChildsLayout()
         {
-            Control1?.PerformLayout(false);
-            Control2?.PerformLayout(false);
+            //Control1?.PerformLayout(false);
+            //Control2?.PerformLayout(false);
+
+
         }
 
         private void InitAutoSplit()
