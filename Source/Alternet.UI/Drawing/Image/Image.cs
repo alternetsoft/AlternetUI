@@ -32,6 +32,12 @@ namespace Alternet.Drawing
         private bool isDisposed;
         private UI.Native.Image nativeImage;
 
+        internal Image(ImageSet imageSet, Control control)
+        {
+            nativeImage = new UI.Native.Image();
+            imageSet.NativeImageSet.InitImageFor(nativeImage, control.WxWidget);
+        }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="Image"/> class from
         /// the specified <see cref="GenericImage"/>.
@@ -42,7 +48,7 @@ namespace Alternet.Drawing
         /// A depth of 32 including an alpha channel is supported under MSW, Mac and Linux.
         /// If this parameter is omitted
         /// (= -1), the display depth of the screen is used.</param>
-        private protected Image(GenericImage genericImage, int depth = -1)
+        internal Image(GenericImage genericImage, int depth = -1)
         {
             nativeImage = new UI.Native.Image();
             NativeImage.LoadFromGenericImage(genericImage.Handle, depth);
@@ -53,7 +59,7 @@ namespace Alternet.Drawing
         /// the specified data stream.
         /// </summary>
         /// <param name="stream">The data stream used to load the image.</param>
-        private protected Image(Stream stream)
+        internal Image(Stream stream)
         {
             nativeImage = new UI.Native.Image();
             using var inputStream = new UI.Native.InputStream(stream);
@@ -66,7 +72,7 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="width">The width used to create the image</param>
         /// <param name="height">The height used to create the image</param>
-        private protected Image(double width, double height)
+        internal Image(double width, double height)
         {
             nativeImage = new UI.Native.Image();
             NativeImage.Initialize((width, height));
@@ -77,13 +83,13 @@ namespace Alternet.Drawing
         /// with the specified size.
         /// </summary>
         /// <param name="size">The size used to create the image.</param>
-        private protected Image(Size size)
+        internal Image(Size size)
         {
             nativeImage = new UI.Native.Image();
             NativeImage.Initialize(size);
         }
 
-        private protected Image(ImageSet imageSet, Int32Size size)
+        internal Image(ImageSet imageSet, Int32Size size)
         {
             nativeImage = new UI.Native.Image();
             imageSet.NativeImageSet.InitImage(nativeImage, size.Width, size.Height);
