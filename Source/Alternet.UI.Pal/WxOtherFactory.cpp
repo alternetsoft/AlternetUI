@@ -428,6 +428,9 @@ namespace Alternet::UI
 
 		wxTextEntryDialog dialog(parent, message, caption, defaultValue, style, wxPoint(x, y));
 
+		auto font = ParkingWindow::GetWindow()->GetFont();
+		dialog.SetFont(font);
+
 		if (dialog.ShowModal() == wxID_OK)
 		{
 			str = dialog.GetValue();
@@ -436,6 +439,26 @@ namespace Alternet::UI
 			str = DialogCancelGuid;
 
 		return str;
+	}
+
+	long wxGetNumberFromUser2(const wxString& msg,
+		const wxString& prompt,
+		const wxString& title,
+		long value,
+		long min,
+		long max,
+		wxWindow* parent,
+		const wxPoint& pos)
+	{
+		wxNumberEntryDialog dialog(parent, msg, prompt, title,
+			value, min, max, pos);
+		auto font = ParkingWindow::GetWindow()->GetFont();
+		dialog.SetFont(font);
+
+		if (dialog.ShowModal() == wxID_OK)
+			return dialog.GetValue();
+
+		return -1;
 	}
 
 	string WxOtherFactory::GetTextFromUser(const string& message,
@@ -449,7 +472,7 @@ namespace Alternet::UI
 		const string& caption, int64_t value, int64_t min, int64_t max, void* parent,
 		const Int32Point& pos)
 	{
-		return wxGetNumberFromUser(wxStr(message), wxStr(prompt),
+		return wxGetNumberFromUser2(wxStr(message), wxStr(prompt),
 			wxStr(caption), value, min, max, (wxWindow*)parent, pos);
 	}
 
