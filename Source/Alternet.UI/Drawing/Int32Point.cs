@@ -98,10 +98,22 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Creates a <see cref='Drawing.Point'/> with the coordinates of the
-        /// specified <see cref='Drawing.Int32Point'/>
+        /// Creates a <see cref='Point'/> with the coordinates of the
+        /// specified <see cref='Int32Point'/>
         /// </summary>
         public static implicit operator Point(Int32Point p) => new(p.X, p.Y);
+
+        /// <summary>
+        /// Creates a <see cref='System.Drawing.Point'/> with the coordinates of the
+        /// specified <see cref='Int32Point'/>
+        /// </summary>
+        public static implicit operator System.Drawing.Point(Int32Point p) => new(p.X, p.Y);
+
+        /// <summary>
+        /// Creates a <see cref='Int32Point'/> with the coordinates of the
+        /// specified <see cref='System.Drawing.Point'/>
+        /// </summary>
+        public static implicit operator Int32Point(System.Drawing.Point p) => new(p.X, p.Y);
 
         /// <summary>
         /// Creates a <see cref='Drawing.Int32Size'/> with the coordinates of
