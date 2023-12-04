@@ -14,9 +14,11 @@ namespace PaintSample
             normalBorder.Width = 0;
             normalBorder.Color = Color.Transparent;
 
-            BorderSettings hotBorder = new(normalBorder);
-            hotBorder.Width = 0;
-            hotBorder.Color = SystemColors.ControlText;
+            BorderSettings hotBorder = new(normalBorder)
+            {
+                Width = 0,
+                Color = SystemColors.ControlText,
+            };
             hotBorder.Color = Color.Transparent;
             this.SetBorder(hotBorder, GenericControlState.Hovered);
             this.SetBorder(hotBorder, GenericControlState.Pressed);
