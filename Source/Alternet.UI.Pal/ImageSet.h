@@ -9,9 +9,9 @@ namespace Alternet::UI
     class ImageSet : public Object
     {
 #include "Api/ImageSet.inc"
-    public:
+    public:                    
         wxBitmapBundle GetBitmapBundle();
-
+                      
         static wxBitmapBundle BitmapBundle(ImageSet* bimtapBundle)
         {
             if (bimtapBundle == nullptr)

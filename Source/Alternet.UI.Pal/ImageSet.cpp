@@ -70,7 +70,29 @@ namespace Alternet::UI
 
 		return icons;
 	}
-	
+
+	Int32Size ImageSet::GetDefaultSize()
+	{
+		return GetBitmapBundle().GetDefaultSize();
+	}
+
+	void ImageSet::InitImageFor(Image* image, void* window)
+	{
+		auto bitmapBundle = GetBitmapBundle();
+		auto bitmap = bitmapBundle.GetBitmapFor((wxWindow*) window);
+		image->_bitmap = bitmap;
+	}
+
+	Int32Size ImageSet::GetPreferredBitmapSizeFor(void* window)
+	{
+		return GetBitmapBundle().GetPreferredBitmapSizeFor((wxWindow*)window);
+	}
+
+	Int32Size ImageSet::GetPreferredBitmapSizeAtScale(double scale)
+	{
+		return GetBitmapBundle().GetPreferredBitmapSizeAtScale(scale);
+	}
+
 	void ImageSet::InitImage(Image* image, int width, int height)
 	{
 		auto bitmapBundle = GetBitmapBundle();

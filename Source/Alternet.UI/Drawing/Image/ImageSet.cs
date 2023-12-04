@@ -59,6 +59,23 @@ namespace Alternet.UI
         public event EventHandler? Changed;
 
         /// <summary>
+        /// Get the size of the bitmap represented by this bundle in default resolution
+        /// or, equivalently, at 100% scaling.
+        /// </summary>
+        /// <remarks>
+        /// When creating the bundle from a number of bitmaps, this will be just the
+        /// size of the smallest bitmap in it. Note that this function is mostly used by
+        /// library itself and not the application.
+        /// </remarks>
+        public Int32Size DefaultSize
+        {
+            get
+            {
+                return NativeImageSet.DefaultSize;
+            }
+        }
+
+        /// <summary>
         /// Gets the <see cref="Image"/> collection for this image list.
         /// </summary>
         /// <value>The collection of images.</value>
@@ -229,7 +246,54 @@ namespace Alternet.UI
         /// <summary>
         /// Gets first image.
         /// </summary>
-        public Image AsImage(Int32Size size) => new Bitmap(this, size);
+        public Image AsImage(Int32Size size) => new(this, size);
+
+        /// <summary>
+        /// Get bitmap of the size appropriate for the DPI scaling used by the given control.
+        /// </summary>
+        /// <remarks>
+        /// This helper function simply combines <see cref="GetPreferredBitmapSizeFor"/> and
+        /// <see cref="AsImage(Int32Size)"/>, i.e.it returns a (normally unscaled) bitmap
+        /// from the <see cref="ImageSet"/> of the closest size to the size that should
+        /// be used at the DPI scaling of the provided control.
+        /// </remarks>
+        /// <param name="control"></param>
+        public Image AsImageFor(Control control) => new(this, control);
+
+        /// <summary>
+        /// Get the size that would be best to use for this <see cref="ImageSet"/> at
+        /// the given DPI scaling factor.
+        /// </summary>
+        /// <remarks>
+        /// Passing a size returned by this function to <see cref="AsImage"/> ensures that bitmap
+        /// doesn't need to be rescaled, which typically significantly lowers its quality.
+        /// </remarks>
+        /// <remarks>
+        /// For <see cref="ImageSet"/> containing some number of the fixed-size bitmaps, this
+        /// function returns the size of an existing bitmap closest to the ideal size at the given
+        /// scale, i.e. <see cref="DefaultSize"/> multiplied by scale.
+        /// </remarks>
+        /// <param name="scale"></param>
+        /// <returns></returns>
+        public Int32Size GetPreferredBitmapSizeAtScale(double scale)
+        {
+            return NativeImageSet.GetPreferredBitmapSizeAtScale(scale);
+        }
+
+        /// <summary>
+        /// Get the size that would be best to use for this <see cref="ImageSet"/> at the DPI
+        /// scaling factor used by the given control.
+        /// </summary>
+        /// <param name="control">Control to get DPI scaling factor from.</param>
+        /// <returns></returns>
+        /// <remarks>
+        /// This is just a convenient wrapper for <see cref="GetPreferredBitmapSizeAtScale"/> calling
+        /// that function with the result of <see cref="Control.GetPixelScaleFactor"/>.
+        /// </remarks>
+        public Int32Size GetPreferredBitmapSizeFor(Control control)
+        {
+            return NativeImageSet.GetPreferredBitmapSizeFor(control.WxWidget);
+        }
 
         /// <summary>
         /// Releases all resources used by the <see cref="ImageList"/> object.

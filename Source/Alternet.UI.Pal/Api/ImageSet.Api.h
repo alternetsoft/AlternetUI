@@ -25,6 +25,11 @@ ALTERNET_UI_API c_bool ImageSet_GetIsReadOnly_(ImageSet* obj)
     return obj->GetIsReadOnly();
 }
 
+ALTERNET_UI_API Int32Size_C ImageSet_GetDefaultSize_(ImageSet* obj)
+{
+    return obj->GetDefaultSize();
+}
+
 ALTERNET_UI_API void ImageSet_LoadFromStream_(ImageSet* obj, void* stream)
 {
     obj->LoadFromStream(stream);
@@ -48,5 +53,20 @@ ALTERNET_UI_API void ImageSet_LoadSvgFromStream_(ImageSet* obj, void* stream, in
 ALTERNET_UI_API void ImageSet_InitImage_(ImageSet* obj, Image* image, int width, int height)
 {
     obj->InitImage(image, width, height);
+}
+
+ALTERNET_UI_API void ImageSet_InitImageFor_(ImageSet* obj, Image* image, void* window)
+{
+    obj->InitImageFor(image, window);
+}
+
+ALTERNET_UI_API Int32Size_C ImageSet_GetPreferredBitmapSizeAtScale_(ImageSet* obj, double scale)
+{
+    return obj->GetPreferredBitmapSizeAtScale(scale);
+}
+
+ALTERNET_UI_API Int32Size_C ImageSet_GetPreferredBitmapSizeFor_(ImageSet* obj, void* window)
+{
+    return obj->GetPreferredBitmapSizeFor(window);
 }
 
