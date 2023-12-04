@@ -19,7 +19,7 @@ namespace ControlsSample
 
             // Makes SVG images a little bit bigger on High dpi displays.
             // This is an example, this call is not needed as SVG images are scaled automatically.
-            if(Display.Primary.DPI.Width>96)
+            if(Display.Primary.DPI.Width > 96)
                 Toolbar.DefaultImageSize96dpi = 24;
 
             var window = new MainWindow();
