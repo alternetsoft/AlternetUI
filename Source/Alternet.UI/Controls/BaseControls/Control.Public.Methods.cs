@@ -1410,6 +1410,12 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Same as <see cref="Application.Log"/>.
+        /// </summary>
+        /// <param name="s"></param>
+        public void Log(object? s) => Application.Log(s);
+
+        /// <summary>
         /// Gets scale factor used in device-independent units (1/96th inch per unit) to/from
         /// pixels conversions.
         /// </summary>
