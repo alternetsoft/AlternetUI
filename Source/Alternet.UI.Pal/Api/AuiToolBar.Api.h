@@ -194,14 +194,14 @@ ALTERNET_UI_API c_bool AuiToolBar_GetToolBarFits_(AuiToolBar* obj)
     return obj->GetToolBarFits();
 }
 
-ALTERNET_UI_API void AuiToolBar_SetToolBitmapSize_(AuiToolBar* obj, Size size)
+ALTERNET_UI_API void AuiToolBar_SetToolBitmapSizeInPixels_(AuiToolBar* obj, Int32Size size)
 {
-    obj->SetToolBitmapSize(size);
+    obj->SetToolBitmapSizeInPixels(size);
 }
 
-ALTERNET_UI_API Size_C AuiToolBar_GetToolBitmapSize_(AuiToolBar* obj)
+ALTERNET_UI_API Int32Size_C AuiToolBar_GetToolBitmapSizeInPixels_(AuiToolBar* obj)
 {
-    return obj->GetToolBitmapSize();
+    return obj->GetToolBitmapSizeInPixels();
 }
 
 ALTERNET_UI_API c_bool AuiToolBar_GetOverflowVisible_(AuiToolBar* obj)

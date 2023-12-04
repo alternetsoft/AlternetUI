@@ -274,7 +274,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Returns suggested toolbar image size depending on the given DPI value.
+        /// Returns suggested toolbar image size in pixels depending on the given DPI value.
         /// </summary>
         /// <param name="control">Control's <see cref="Control.GetDPI"/> method
         /// is used to get DPI settings.</param>

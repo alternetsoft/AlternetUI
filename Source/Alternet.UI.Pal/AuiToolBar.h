@@ -8,11 +8,11 @@
 #include <wx/aui/aui.h>
 
 namespace Alternet::UI
-{
+{                          
     class AuiToolBar : public Control
     {
 #include "Api/AuiToolBar.inc"
-    public:
+    public:                  
         wxAuiToolBar* GetToolbar();
         AuiToolBar(long styles);
         wxWindow* CreateWxWindowCore(wxWindow* parent) override;

@@ -197,13 +197,19 @@ namespace Alternet.UI
             AddAction("Log font families", LogUtils.LogFontFamilies);
             AddAction("Log system fonts", SystemSettings.LogSystemFonts);
             AddAction("Log display info", Display.Log);
-            AddAction("HookExceptionEvents()", DebugUtils.HookExceptionEvents);
+            AddAction("Log control info", LogControlInfo);
             AddAction("Log useful defines", LogUsefulDefines);
             AddAction("Log OS information", LogOSInformation);
+            AddAction("HookExceptionEvents()", DebugUtils.HookExceptionEvents);
             AddAction("C++ Throw", () => { WebBrowser.DoCommandGlobal("CppThrow"); });
 
             AddAction("Show Props FirstWindow", ControlsActionMainForm);
             AddAction("Show Props FocusedControl", ControlsActionFocusedControl);
+        }
+
+        private void LogControlInfo()
+        {
+            Application.Log($"Toolbar images: {UI.Toolbar.GetDefaultImageSize(this)}");
         }
     }
 }

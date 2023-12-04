@@ -128,7 +128,8 @@ namespace Alternet.UI
         protected virtual void CreateToolbarItems()
         {
             var toolbar = Toolbar;
-            var imageSize = GetToolBitmapSize();
+            var imageSize = GetBaseToolSvgSize();
+            toolbar.ToolBitmapSizeInPixels = imageSize;
 
             var images = KnownSvgImages.GetForSize(
                 toolbar.GetSvgColor(KnownSvgColor.Normal),

@@ -89,8 +89,8 @@ namespace Alternet.UI
             toolbarStyle &= ~AuiToolbarCreateStyle.Gripper;
 
             toolbar.CreateStyle = toolbarStyle;
-            var imageSize = Toolbar.GetDefaultImageSize(this);
-            toolbar.ToolBitmapSize = imageSize;
+            var imageSize = PanelAuiManager.GetBaseToolSvgSize();
+            toolbar.ToolBitmapSizeInPixels = imageSize;
 
             var images = KnownSvgImages.GetForSize(
                 toolbar.GetSvgColor(KnownSvgColor.Normal),

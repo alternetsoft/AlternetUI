@@ -107,11 +107,16 @@ namespace Alternet.UI
         protected virtual void CreateToolbarItems()
         {
             var toolbar = Toolbar;
-            var imageSize = GetToolBitmapSize();
+            var imageSize = GetBaseToolSvgSize();
+            toolbar.ToolBitmapSizeInPixels = imageSize;
 
             var images = KnownSvgImages.GetForSize(
                 toolbar.GetSvgColor(KnownSvgColor.Normal),
                 imageSize);
+
+            /*Application.LogNameValue(
+                "PreferredSize",
+                images.ImgFileNew.GetPreferredBitmapSizeFor(this));*/
 
             buttonIdNew = toolbar.AddTool(
                 CommonStrings.Default.ButtonNew,

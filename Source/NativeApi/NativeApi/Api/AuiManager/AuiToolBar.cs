@@ -94,8 +94,8 @@ namespace NativeApi.Api
         public bool GetToolFitsByIndex(int toolId) => throw new Exception();
         public bool GetToolBarFits() => throw new Exception();
 
-        public void SetToolBitmapSize(Size size) => throw new Exception();
-        public Size GetToolBitmapSize() => throw new Exception();
+        public void SetToolBitmapSizeInPixels(Int32Size size) => throw new Exception();
+        public Int32Size GetToolBitmapSizeInPixels() => throw new Exception();
 
         public bool GetOverflowVisible() => throw new Exception();
         public void SetOverflowVisible(bool visible) => throw new Exception();

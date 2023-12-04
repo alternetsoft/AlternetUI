@@ -525,7 +525,7 @@ namespace Alternet::UI
         }
     };
 
-    inline double GetDPIScaleFactor(wxWindow* window)
+/*    inline double GetDPIScaleFactor(wxWindow* window)
     {
 #if defined(__WXMSW__)
         return window->GetDPIScaleFactor();
@@ -533,13 +533,16 @@ namespace Alternet::UI
         return 1;
 #endif
     }
+*/
 
     inline int fromDip(double value, wxWindow* window)
     {
         if (window == nullptr)
             window = ParkingWindow::GetWindow();
 
-        return wxRound(value * GetDPIScaleFactor(window));
+        return window->FromDIP(wxRound(value));
+
+        // return wxRound(value * GetDPIScaleFactor(window));
     }
 
     inline double fromDipF(double value, wxWindow* window)
@@ -547,7 +550,9 @@ namespace Alternet::UI
         if (window == nullptr)
             window = ParkingWindow::GetWindow();
 
-        return value * GetDPIScaleFactor(window);
+        return window->FromDIP(wxRound(value));
+
+        //return value * GetDPIScaleFactor(window);
     }
 
     inline double toDip(int value, wxWindow* window)
@@ -555,7 +560,8 @@ namespace Alternet::UI
         if (window == nullptr)
             window = ParkingWindow::GetWindow();
 
-        return value / GetDPIScaleFactor(window);
+        return window->ToDIP(value);
+        // return value / GetDPIScaleFactor(window);
     }
 
     inline wxRect fromDip(const Rect& value, wxWindow* window)

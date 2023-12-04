@@ -401,16 +401,15 @@ namespace Alternet::UI
         return GetToolbar()->GetToolBarFits();
     }
 
-    void AuiToolBar::SetToolBitmapSize(const Size& size)
+    void AuiToolBar::SetToolBitmapSizeInPixels(const Int32Size& size)
     {
-        wxSize wxs = wxSize(size.Width, size.Height);
-        GetToolbar()->SetToolBitmapSize(wxs);
+        GetToolbar()->SetToolBitmapSize(size);
     }
 
-    Size AuiToolBar::GetToolBitmapSize()
+    Int32Size AuiToolBar::GetToolBitmapSizeInPixels()
     {
         auto size = GetToolbar()->GetToolBitmapSize();
-        return Size(size);
+        return size;
     }
 
     bool AuiToolBar::GetOverflowVisible()

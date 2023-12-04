@@ -258,16 +258,16 @@ namespace Alternet.UI.Native
             return NativeApi.AuiToolBar_GetToolBarFits_(NativePointer);
         }
         
-        public void SetToolBitmapSize(Alternet.Drawing.Size size)
+        public void SetToolBitmapSizeInPixels(Alternet.Drawing.Int32Size size)
         {
             CheckDisposed();
-            NativeApi.AuiToolBar_SetToolBitmapSize_(NativePointer, size);
+            NativeApi.AuiToolBar_SetToolBitmapSizeInPixels_(NativePointer, size);
         }
         
-        public Alternet.Drawing.Size GetToolBitmapSize()
+        public Alternet.Drawing.Int32Size GetToolBitmapSizeInPixels()
         {
             CheckDisposed();
-            return NativeApi.AuiToolBar_GetToolBitmapSize_(NativePointer);
+            return NativeApi.AuiToolBar_GetToolBitmapSizeInPixels_(NativePointer);
         }
         
         public bool GetOverflowVisible()
@@ -670,10 +670,10 @@ namespace Alternet.UI.Native
             public static extern bool AuiToolBar_GetToolBarFits_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void AuiToolBar_SetToolBitmapSize_(IntPtr obj, Alternet.Drawing.Size size);
+            public static extern void AuiToolBar_SetToolBitmapSizeInPixels_(IntPtr obj, Alternet.Drawing.Int32Size size);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.Size AuiToolBar_GetToolBitmapSize_(IntPtr obj);
+            public static extern Alternet.Drawing.Int32Size AuiToolBar_GetToolBitmapSizeInPixels_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool AuiToolBar_GetOverflowVisible_(IntPtr obj);

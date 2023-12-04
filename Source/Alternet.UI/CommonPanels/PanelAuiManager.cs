@@ -60,6 +60,11 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets minimal toolbar image size in pixels.
+        /// </summary>
+        public static int DefaultMinToolbarImageSize { get; set; } = 16;
+
+        /// <summary>
         /// Gets <see cref="LogControl"/> page index in the <see cref="BottomNotebook"/>.
         /// </summary>
         [Browsable(false)]
@@ -312,17 +317,12 @@ namespace Alternet.UI
                 toolbar ??= new()
                 {
                     CreateStyle = DefaultToolbarStyle,
-                    ToolBitmapSize = GetToolBitmapSize(),
+                    /*ToolBitmapSizeInPixels = GetToolBitmapSize(),*/
                 };
 
                 return toolbar;
             }
         }
-
-        /// <summary>
-        /// Gets or sets minimal toolbar image size.
-        /// </summary>
-        public int DefaultMinToolbarImageSize { get; set; } = 16;
 
         /// <summary>
         /// Gets or sets default toolbar style.
@@ -454,6 +454,21 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets base toolbar button bitmap size in pixels for svg images.
+        /// </summary>
+        /// <remarks>
+        /// This is used to get toolbar button bitmap size for svg images. Typically it is 16
+        /// on all displays (even with different DPI),
+        /// as svg images are scaled automatically by the toolbar.
+        /// </remarks>
+        /// <returns></returns>
+        public static Int32Size GetBaseToolSvgSize()
+        {
+            var imageSize = Math.Max(UI.Toolbar.DefaultImageSize96dpi, DefaultMinToolbarImageSize);
+            return imageSize;
+        }
+
+        /// <summary>
         /// Adds an empty space to the <see cref="ActionsControl"/>.
         /// </summary>
         /// <remarks>
@@ -516,7 +531,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets toolbar button bitmap size.
+        /// Gets toolbar button bitmap size in pixels.
         /// </summary>
         /// <returns></returns>
         public virtual Int32Size GetToolBitmapSize()

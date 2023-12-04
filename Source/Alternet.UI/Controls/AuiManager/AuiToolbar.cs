@@ -175,10 +175,10 @@ namespace Alternet.UI
         /// Note that this is the size of the bitmap you pass to
         /// <see cref="AddTool"/>, and not the eventual size of the tool button.
         /// </remarks>
-        public Size ToolBitmapSize
+        public Int32Size ToolBitmapSizeInPixels
         {
-            get => NativeControl.GetToolBitmapSize();
-            set => NativeControl.SetToolBitmapSize(value);
+            get => NativeControl.GetToolBitmapSizeInPixels();
+            set => NativeControl.SetToolBitmapSizeInPixels(value);
         }
 
         /// <summary>
@@ -352,7 +352,7 @@ namespace Alternet.UI
         {
             int toolId = GenNewId();
             label ??= string.Empty;
-            shortHelpString ??= string.Empty;
+            shortHelpString ??= label;
             longHelpString ??= string.Empty;
             itemKind ??= AuiToolbarItemKind.Normal;
             NativeControl.AddTool2(
