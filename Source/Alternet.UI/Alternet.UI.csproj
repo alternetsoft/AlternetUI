@@ -236,6 +236,7 @@
   </PropertyGroup> -->
 
   <ItemGroup>
+    <PackageReference Include="System.Drawing.Primitives" Version="4.3.0" />
     <PackageReference Include="System.Memory" Version="4.5.4" />
     <PackageReference Include="System.Runtime.InteropServices.RuntimeInformation" Version="4.3.0" />
     <PackageReference Include="System.ValueTuple" Version="4.5.0" />
