@@ -185,7 +185,7 @@ namespace Alternet.Drawing
                 unchecked((int)Math.Ceiling(value.Y)));
 
         /// <summary>
-        /// Converts a PointF to a Point by performing a truncate operation
+        /// Converts a Point to a Int32Point by performing a truncate operation
         /// on all the coordinates.
         /// </summary>
         public static Int32Point Truncate(Point value) =>
