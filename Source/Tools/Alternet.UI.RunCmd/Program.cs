@@ -48,7 +48,7 @@ if (IsCommand("download"))
 if (IsCommand("runControlsSample"))
 {
     string path = Path.Combine(
-        CommonProcs.GetAppFolder(), 
+        CommonUtils.GetAppFolder(), 
         "..", "..", "..", "..", "..", "Samples","ControlsSample", "ControlsSample.csproj");
     path = Path.GetFullPath(path);
     string? pathFolder = Path.GetDirectoryName(path)?.TrimEnd('\\')?.TrimEnd('/');
@@ -126,7 +126,7 @@ void DeleteBinObjFiles(string path)
 if (IsCommand("deleteBinFolders"))
 {
     string path = Path.Combine(
-        CommonProcs.GetAppFolder(),"..", "..", "..", "..", "..");
+        CommonUtils.GetAppFolder(),"..", "..", "..", "..", "..");
     DeleteBinObjFiles(path);
     return;
 }
