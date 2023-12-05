@@ -1,5 +1,26 @@
 # 0.9.410 (work in progress)
 
+## 2023 December 5
+
+- Install.OnlyDebug scripts. They build only x64 Debug, so installation is much faster when needed.
+- Control.Invalidate(Rect rect), RefreshRect(Rect rect, bool eraseBackground = true).
+- HighDpi related improvements in Control, AuiToolbar, TextInputDialog, NumberInputDialog, RichToolTip, sample projects.
+- GenericImage.ChangeToGrayScale().
+- Image to ImageSet explicit conversion operator.
+- New Image.ToGrayScale() approach. Thanks to @neoxeo, we improved Image.ToGrayScale(), #66
+Also added static event GrayScale, it allows to implement custom gray scale for the images if needed.
+Also added samples of new GrayScale methods usage to PaintSample and AuiManagerSample.
+- Fixed app.manifest in all sample projects.
+- RichToolTip: IgnoreImages, DefaultIgnoreImages.
+- Improved Border/PictureBox painting.
+- ImageSet: DefaultSize, AsImageFor, GetPreferredBitmapSizeAtScale, GetPreferredBitmapSizeFor.
+- Rect/Point/Size/Color conversion from/to System.Drawing.*.
+- Made Rect, Point, Size, Color methods inline where possible.
+- Control.Log.
+- MinSplitterSashSize is now HighDpi ready.
+- AuiManager: Splitter color and size are like in SplitterPanel.
+- WinForms related: Point.Offset, TextDataFormat, Clipboard/Contains* are now methods.
+
 ## 2023 December 3
 
 - AuiManager HighDpi support.
