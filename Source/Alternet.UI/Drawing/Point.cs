@@ -255,6 +255,25 @@ namespace Alternet.Drawing
         public readonly bool Equals(Point other) => this == other;
 
         /// <summary>
+        /// Translates this <see cref='Point'/> by the specified amount.
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void Offset(double dx, double dy)
+        {
+            unchecked
+            {
+                X += dx;
+                Y += dy;
+            }
+        }
+
+        /// <summary>
+        /// Translates this <see cref='Point'/> by the specified amount.
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void Offset(Int32Point p) => Offset(p.X, p.Y);
+
+        /// <summary>
         /// Serves as the default hash function.
         /// </summary>
         /// <returns>A hash code for the current object.</returns>
