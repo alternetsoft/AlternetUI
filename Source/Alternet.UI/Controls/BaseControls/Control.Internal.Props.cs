@@ -116,8 +116,6 @@ namespace Alternet.UI
             }
         }
 
-        internal IntPtr WxWidget => NativeControl!.WxWidget;
-
         internal virtual bool IsDummy => false;
 
         internal Thickness MinMargin

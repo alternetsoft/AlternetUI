@@ -6,7 +6,7 @@
 #include "Font.h"
 
 #include <wx/richtooltip.h>
-#include <wx/tooltip.h>
+#include <wx/tooltip.h>            
 #include <wx/display.h>
 #include <wx/cursor.h>
 #include <wx/caret.h>

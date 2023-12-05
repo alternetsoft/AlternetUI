@@ -26,6 +26,11 @@ ALTERNET_UI_API void WxOtherFactory_SetRichToolTipUseGeneric_(c_bool value)
     WxOtherFactory::SetRichToolTipUseGeneric(value);
 }
 
+ALTERNET_UI_API Int32Size_C WxOtherFactory_RendererGetCheckMarkSize_(void* renderer, void* win)
+{
+    return WxOtherFactory::RendererGetCheckMarkSize(renderer, win);
+}
+
 ALTERNET_UI_API Int32Size_C WxOtherFactory_RendererGetExpanderSize_(void* renderer, void* win)
 {
     return WxOtherFactory::RendererGetExpanderSize(renderer, win);
@@ -119,6 +124,11 @@ ALTERNET_UI_API void* WxOtherFactory_MemoryMove_(void* dest, void* src, uint64_t
 ALTERNET_UI_API void* WxOtherFactory_MemorySet_(void* dest, int fillByte, uint64_t count)
 {
     return WxOtherFactory::MemorySet(dest, fillByte, count);
+}
+
+ALTERNET_UI_API void WxOtherFactory_TestPopupWindow_(void* parent, Int32Point pos, Int32Size sz)
+{
+    WxOtherFactory::TestPopupWindow(parent, pos, sz);
 }
 
 ALTERNET_UI_API void* WxOtherFactory_CreateRichToolTip_(const char16_t* title, const char16_t* message)
@@ -529,10 +539,5 @@ ALTERNET_UI_API void WxOtherFactory_RendererDrawCheckMark_(void* renderer, void*
 ALTERNET_UI_API Int32Size_C WxOtherFactory_RendererGetCheckBoxSize_(void* renderer, void* win, int flags)
 {
     return WxOtherFactory::RendererGetCheckBoxSize(renderer, win, flags);
-}
-
-ALTERNET_UI_API Int32Size_C WxOtherFactory_RendererGetCheckMarkSize_(void* renderer, void* win)
-{
-    return WxOtherFactory::RendererGetCheckMarkSize(renderer, win);
 }
 

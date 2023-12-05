@@ -4,6 +4,7 @@ public:
 static bool GetRichToolTipUseGeneric();
 static void SetRichToolTipUseGeneric(bool value);
 
+static Int32Size RendererGetCheckMarkSize(void* renderer, void* win);
 static Int32Size RendererGetExpanderSize(void* renderer, void* win);
 static void RendererDrawPushButton(void* renderer, void* win, void* dc, const Int32Rect& rect, int flags);
 static void RendererDrawCollapseButton(void* renderer, void* win, void* dc, const Int32Rect& rect, int flags);
@@ -23,6 +24,7 @@ static void MemoryFree(void* memory);
 static void* MemoryCopy(void* dest, void* src, uint64_t count);
 static void* MemoryMove(void* dest, void* src, uint64_t count);
 static void* MemorySet(void* dest, int fillByte, uint64_t count);
+static void TestPopupWindow(void* parent, const Int32Point& pos, const Int32Size& sz);
 static void* CreateRichToolTip(const string& title, const string& message);
 static void DeleteRichToolTip(void* handle);
 static void RichToolTipSetBkColor(void* handle, const Color& color, const Color& endColor);
@@ -105,7 +107,6 @@ static void RendererDrawDropArrow(void* renderer, void* win, void* dc, const Int
 static void RendererDrawCheckBox(void* renderer, void* win, void* dc, const Int32Rect& rect, int flags);
 static void RendererDrawCheckMark(void* renderer, void* win, void* dc, const Int32Rect& rect, int flags);
 static Int32Size RendererGetCheckBoxSize(void* renderer, void* win, int flags);
-static Int32Size RendererGetCheckMarkSize(void* renderer, void* win);
 public:
 WxOtherFactory();
 protected:

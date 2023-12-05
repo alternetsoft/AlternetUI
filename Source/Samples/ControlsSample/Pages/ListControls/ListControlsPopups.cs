@@ -153,14 +153,26 @@ namespace ControlsSample
 
         private void ShowPopupListBoxButton_Click(object? sender, EventArgs e)
         {
-            if (popupListBox.MainControl.Items.Count == 0)
+            var posDip = showPopupListBoxButton.ClientToScreen((0, 0));
+            var pos = PixelFromDip(posDip);
+            var szDip = showPopupListBoxButton.Size;
+            var sz = PixelFromDip(szDip);
+
+            sz = (0, sz.Height);
+
+            Control.TestPopupWindow(this, pos , sz);
+
+            void Do()
             {
-                popupListBox.MainControl.SuggestedSize = new(150, 300);
-                AddDefaultItems(popupListBox.MainControl);
-                popupListBox.MainControl.SelectFirstItem();
+                if (popupListBox.MainControl.Items.Count == 0)
+                {
+                    popupListBox.MainControl.SuggestedSize = new(150, 300);
+                    AddDefaultItems(popupListBox.MainControl);
+                    popupListBox.MainControl.SelectFirstItem();
+                }
+                Application.Log(" === ShowPopupButton_Click ===");
+                popupListBox.ShowPopup(showPopupListBoxButton);
             }
-            Application.Log(" === ShowPopupButton_Click ===");
-            popupListBox.ShowPopup(showPopupListBoxButton);
         }
     }
 }

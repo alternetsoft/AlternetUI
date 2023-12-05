@@ -20,6 +20,11 @@ namespace Alternet.UI
             return new FontAndColor.ControlStaticDefaultFontAndColor(controlType, renderSize);
         }
 
+        public static void TestPopupWindow(Control control, Int32Point pos, Int32Size sz)
+        {
+            Native.WxOtherFactory.TestPopupWindow(control.WxWidget, pos, sz);
+        }
+
         /// <summary>
         /// Substitutes <paramref name="control"/> with dummy <see cref="Control"/>, adding
         /// <paramref name="control"/> as its child.

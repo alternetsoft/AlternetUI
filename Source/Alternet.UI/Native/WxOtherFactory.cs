@@ -36,6 +36,11 @@ namespace Alternet.UI.Native
             }
         }
         
+        public static Alternet.Drawing.Int32Size RendererGetCheckMarkSize(System.IntPtr renderer, System.IntPtr win)
+        {
+            return NativeApi.WxOtherFactory_RendererGetCheckMarkSize_(renderer, win);
+        }
+        
         public static Alternet.Drawing.Int32Size RendererGetExpanderSize(System.IntPtr renderer, System.IntPtr win)
         {
             return NativeApi.WxOtherFactory_RendererGetExpanderSize_(renderer, win);
@@ -129,6 +134,11 @@ namespace Alternet.UI.Native
         public static System.IntPtr MemorySet(System.IntPtr dest, int fillByte, ulong count)
         {
             return NativeApi.WxOtherFactory_MemorySet_(dest, fillByte, count);
+        }
+        
+        public static void TestPopupWindow(System.IntPtr parent, Alternet.Drawing.Int32Point pos, Alternet.Drawing.Int32Size sz)
+        {
+            NativeApi.WxOtherFactory_TestPopupWindow_(parent, pos, sz);
         }
         
         public static System.IntPtr CreateRichToolTip(string title, string message)
@@ -544,11 +554,6 @@ namespace Alternet.UI.Native
             return NativeApi.WxOtherFactory_RendererGetCheckBoxSize_(renderer, win, flags);
         }
         
-        public static Alternet.Drawing.Int32Size RendererGetCheckMarkSize(System.IntPtr renderer, System.IntPtr win)
-        {
-            return NativeApi.WxOtherFactory_RendererGetCheckMarkSize_(renderer, win);
-        }
-        
         
         [SuppressUnmanagedCodeSecurity]
         public class NativeApi : NativeApiProvider
@@ -563,6 +568,9 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void WxOtherFactory_SetRichToolTipUseGeneric_(bool value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern Alternet.Drawing.Int32Size WxOtherFactory_RendererGetCheckMarkSize_(System.IntPtr renderer, System.IntPtr win);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern Alternet.Drawing.Int32Size WxOtherFactory_RendererGetExpanderSize_(System.IntPtr renderer, System.IntPtr win);
@@ -620,6 +628,9 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern System.IntPtr WxOtherFactory_MemorySet_(System.IntPtr dest, int fillByte, ulong count);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void WxOtherFactory_TestPopupWindow_(System.IntPtr parent, Alternet.Drawing.Int32Point pos, Alternet.Drawing.Int32Size sz);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern System.IntPtr WxOtherFactory_CreateRichToolTip_(string title, string message);
@@ -866,9 +877,6 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern Alternet.Drawing.Int32Size WxOtherFactory_RendererGetCheckBoxSize_(System.IntPtr renderer, System.IntPtr win, int flags);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.Int32Size WxOtherFactory_RendererGetCheckMarkSize_(System.IntPtr renderer, System.IntPtr win);
             
         }
     }

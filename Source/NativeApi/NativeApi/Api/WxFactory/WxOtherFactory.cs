@@ -18,6 +18,10 @@ namespace NativeApi.Api
     // https://docs.wxwidgets.org/3.2/classwx_renderer_native.html
     public class WxOtherFactory
     {
+        // =================== Tests
+
+        public static void TestPopupWindow(IntPtr parent, Int32Point pos, Int32Size sz) { }
+
         // =================== RichToolTip
 
         // Ctor must specify the tooltip title and main message, additional
