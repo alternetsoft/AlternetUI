@@ -2,20 +2,21 @@
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>net8.0</TargetFramework>
+    <Platforms>x64</Platforms>
     <LangVersion>latest</LangVersion>
     <Nullable>enable</Nullable>
-    <AlternetUISourcePath>..\..\Source</AlternetUISourcePath>	
+    <AlternetUIPath>..\..\</AlternetUIPath>	
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
     <None Remove="Alternet.UI.Pal.dll" />
   </ItemGroup>
-  <ItemGroup>
-    <Content Include="$(AlternetUISourcePath)\Alternet.UI.Pal\bin\x64\Debug\Alternet.UI.Pal.dll">
+  <ItemGroup Condition="Exists($(AlternetUIPath))">
+    <Content Include="$(AlternetUIPath)\Source\Alternet.UI.Pal\bin\x64\Debug\Alternet.UI.Pal.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="$(AlternetUISourcePath)..\..\Source\Alternet.UI\Alternet.UI.csproj" />
+  <ItemGroup  Condition="Exists($(AlternetUIPath))">
+    <ProjectReference Include="$(AlternetUIPath)\Source\Alternet.UI\Alternet.UI.csproj" />
   </ItemGroup>
 </Project>
