@@ -120,43 +120,43 @@ namespace Alternet::UI
 
 	void SimpleTransientPopup::Popup(wxWindow* WXUNUSED(focus))
 	{
-		wxLogMessage("%p SimpleTransientPopup::Popup", this);
+		/*wxLogMessage("%p SimpleTransientPopup::Popup", this);*/
 		wxPopupTransientWindow::Popup();
 	}
 
 	void SimpleTransientPopup::OnDismiss()
 	{
-		wxLogMessage("%p SimpleTransientPopup::OnDismiss", this);
+		/*wxLogMessage("%p SimpleTransientPopup::OnDismiss", this);*/
 		wxPopupTransientWindow::OnDismiss();
 	}
 
 	bool SimpleTransientPopup::ProcessLeftDown(wxMouseEvent& event)
 	{
-		wxLogMessage("%p SimpleTransientPopup::ProcessLeftDown pos(%d, %d)", this,
-			event.GetX(), event.GetY());
+		/*wxLogMessage("%p SimpleTransientPopup::ProcessLeftDown pos(%d, %d)", this,
+			event.GetX(), event.GetY());*/
 		return wxPopupTransientWindow::ProcessLeftDown(event);
 	}
 	bool SimpleTransientPopup::Show(bool show)
 	{
-		wxLogMessage("%p SimpleTransientPopup::Show %d", this, int(show));
+		/*wxLogMessage("%p SimpleTransientPopup::Show %d", this, int(show));*/
 		return wxPopupTransientWindow::Show(show);
 	}
 
 	void SimpleTransientPopup::OnSize(wxSizeEvent& event)
 	{
-		wxLogMessage("%p SimpleTransientPopup::OnSize", this);
+		/*wxLogMessage("%p SimpleTransientPopup::OnSize", this);*/
 		event.Skip();
 	}
 
 	void SimpleTransientPopup::OnSetFocus(wxFocusEvent& event)
 	{
-		wxLogMessage("%p SimpleTransientPopup::OnSetFocus", this);
+		/*wxLogMessage("%p SimpleTransientPopup::OnSetFocus", this);*/
 		event.Skip();
 	}
 
 	void SimpleTransientPopup::OnKillFocus(wxFocusEvent& event)
 	{
-		wxLogMessage("%p SimpleTransientPopup::OnKillFocus", this);
+		/*wxLogMessage("%p SimpleTransientPopup::OnKillFocus", this);*/
 		event.Skip();
 	}
 
@@ -170,8 +170,8 @@ namespace Alternet::UI
 		if (rect.Contains(event.GetPosition()))
 		{
 			colour = wxSystemSettings::GetColour(wxSYS_COLOUR_HIGHLIGHT);
-			wxLogMessage("%p SimpleTransientPopup::OnMouse pos(%d, %d)",
-				event.GetEventObject(), event.GetX(), event.GetY());
+			/*wxLogMessage("%p SimpleTransientPopup::OnMouse pos(%d, %d)",
+				event.GetEventObject(), event.GetX(), event.GetY());*/
 		}
 
 		if (colour != m_mouseText->GetBackgroundColour())
@@ -184,7 +184,7 @@ namespace Alternet::UI
 
 	void SimpleTransientPopup::OnButton(wxCommandEvent& event)
 	{
-		wxLogMessage("%p SimpleTransientPopup::OnButton ID %d", this, event.GetId());
+		/*wxLogMessage("%p SimpleTransientPopup::OnButton ID %d", this, event.GetId());*/
 
 		wxButton* button = wxDynamicCast(event.GetEventObject(), wxButton);
 		if (button->GetLabel() == "Press Me")
@@ -197,8 +197,8 @@ namespace Alternet::UI
 
 	void SimpleTransientPopup::OnSpinCtrl(wxSpinEvent& event)
 	{
-		wxLogMessage("%p SimpleTransientPopup::OnSpinCtrl ID %d Value %d",
-			this, event.GetId(), event.GetInt());
+		/*wxLogMessage("%p SimpleTransientPopup::OnSpinCtrl ID %d Value %d",
+			this, event.GetId(), event.GetInt());*/
 		event.Skip();
 	}
 
@@ -227,8 +227,8 @@ namespace Alternet::UI
 		//wxPoint pos = btn->ClientToScreen(wxPoint(0, 0));
 		//wxSize sz = btn->GetSize();
 		m_simplePopup->Position(pos, sz);
-		wxLogMessage("%p Dialog Simple Popup Shown pos(%d, %d) size(%d, %d)",
-			m_simplePopup, pos.X, pos.Y, sz.Width, sz.Height);
+		/*wxLogMessage("%p Dialog Simple Popup Shown pos(%d, %d) size(%d, %d)",
+			m_simplePopup, pos.X, pos.Y, sz.Width, sz.Height);*/
 		m_simplePopup->Popup();
 	}
 
