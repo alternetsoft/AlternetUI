@@ -13,23 +13,20 @@ namespace Alternet.UI
         /// <see cref='Clipboard'/> that is in the
         /// <see cref="DataFormats.Files"/> format.
         /// </summary>
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        public static bool ContainsFiles => ContainsData(DataFormats.Files);
+        public static bool ContainsFiles() => ContainsData(DataFormats.Files);
 
         /// <summary>
         /// Gets a value indicating whether there is data on the
         /// <see cref='Clipboard'/> that is in the
         /// <see cref="DataFormats.Bitmap"/> format.
         /// </summary>
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        public static bool ContainsBitmap => ContainsData(DataFormats.Bitmap);
+        public static bool ContainsBitmap() => ContainsData(DataFormats.Bitmap);
 
         /// <summary>
         /// Gets a value indicating whether there is data on the
         /// <see cref='Clipboard'/> in the <see cref="DataFormats.Text"/> format.
         /// </summary>
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        public static bool ContainsText => ContainsData(DataFormats.Text);
+        public static bool ContainsText() => ContainsData(DataFormats.Text);
 
         /// <summary>
         /// Retrieves the data that is currently on the system <see cref='Clipboard'/>,
