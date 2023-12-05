@@ -308,7 +308,7 @@ namespace PaintSample
 
         private void PasteMenuItem_Click(object? sender, EventArgs e)
         {
-            if (Clipboard.ContainsBitmap)
+            if (Clipboard.ContainsBitmap())
             {
                 var bitmap = Clipboard.GetBitmap();
                 if (bitmap != null)
@@ -491,7 +491,7 @@ namespace PaintSample
 
         public unsafe void DoMakeFileGray()
         {
-            OpenFileDialog dialog = new OpenFileDialog
+            OpenFileDialog dialog = new()
             {
                 Filter = "Images | *.bmp; *.png; *.jpg; *.jpeg"
             };
