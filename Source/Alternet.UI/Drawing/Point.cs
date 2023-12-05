@@ -274,6 +274,18 @@ namespace Alternet.Drawing
         public void Offset(Int32Point p) => Offset(p.X, p.Y);
 
         /// <summary>
+        /// Converts a <see cref="Point"/> structure to a
+        /// <see cref="Int32Point"/> structure.
+        /// </summary>
+        /// <returns>A <see cref="Int32Point"/> structure.</returns>
+        /// <remarks>The <see cref="Point"/> structure is converted
+        /// to a <see cref="Int32Point"/> structure by
+        /// truncating the values of the <see cref="Point"/> to the next
+        /// lower integer values.</remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public readonly Int32Point ToPoint() => Int32Point.Truncate(this);
+
+        /// <summary>
         /// Serves as the default hash function.
         /// </summary>
         /// <returns>A hash code for the current object.</returns>
