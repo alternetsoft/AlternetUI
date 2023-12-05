@@ -178,22 +178,23 @@
 		<Exec WorkingDirectory="$(RootDirectoryPath)/Source/Alternet.UI" 
 			Command="$(DotNetBuildDebugCmdNoIncremental) --framework net6.0"/>
 		<Exec WorkingDirectory="$(RootDirectoryPath)/Source/Alternet.UI" 
-			Command="$(DotNetBuildReleaseCmdNoIncremental) --framework net6.0"/>
+			Command="$(DotNetBuildReleaseCmdNoIncremental) --framework net6.0" Condition="'$(OnlyDebug)' != 'true'"/>
 
 		<Exec WorkingDirectory="$(RootDirectoryPath)/Source/Alternet.UI" 
 			Command="$(DotNetBuildDebugCmdNoIncremental) --framework net7.0"/>
 		<Exec WorkingDirectory="$(RootDirectoryPath)/Source/Alternet.UI" 
-			Command="$(DotNetBuildReleaseCmdNoIncremental) --framework net7.0"/>
+			Command="$(DotNetBuildReleaseCmdNoIncremental) --framework net7.0" Condition="'$(OnlyDebug)' != 'true'"/>
 
 		<Exec WorkingDirectory="$(RootDirectoryPath)/Source/Alternet.UI" 
 			Command="$(DotNetBuildDebugCmdNoIncremental) --framework net8.0"/>
 		<Exec WorkingDirectory="$(RootDirectoryPath)/Source/Alternet.UI" 
-			Command="$(DotNetBuildReleaseCmdNoIncremental) --framework net8.0"/>
+			Command="$(DotNetBuildReleaseCmdNoIncremental) --framework net8.0" Condition="'$(OnlyDebug)' != 'true'"/>
 	</Target>
     <!-- ========================================== -->
     <Target Name="InstallAlternetUI">
 		<Message Text="========================" Importance="high" />
 		<Message Text="Alternet.UI Installation started" Importance="high" />
+		<Message Text="OnlyDebug is specified" Importance="high" Condition="'$(OnlyDebug)' == 'true'"/>
 		<Exec 
 			WorkingDirectory="$(RootDirectoryPath)" 
 			Command="find . -name &quot;*.sh&quot; -exec chmod +x {} \;" 
@@ -226,7 +227,7 @@
 		<Exec 
 			WorkingDirectory="$(RootDirectoryPath)/Source/Alternet.UI" 
 			Command="$(DotNetBuildReleaseCmdNoIncremental)"
-			Condition="!$([MSBuild]::IsOsPlatform('OSX'))" />
+			Condition="!$([MSBuild]::IsOsPlatform('OSX')) and '$(OnlyDebug)' != 'true'" />
 		<CallTarget Targets="BuildUI_MacOs" Condition="$([MSBuild]::IsOsPlatform('OSX'))"/>
     <!-- ========================================== -->
 		<CallTarget Targets="BuildAlternetUIBuildTasks"/>

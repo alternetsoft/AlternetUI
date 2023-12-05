@@ -34,7 +34,7 @@
     <!-- ========================================== -->
     <Target Name="BuildNative_Windows_X64" Condition="$([MSBuild]::IsOsPlatform('Windows'))">
         <Exec Command="&quot;$(CppMsBuildPath)&quot; &quot;$(Bindings_NativeVcProjectFilePath)&quot; -t:Rebuild -p:Configuration=Debug;Platform=x64;OutDir=&quot;$(OutputDirectoryPath_X64_Debug)\&quot;" />
-        <Exec Command="&quot;$(CppMsBuildPath)&quot; &quot;$(Bindings_NativeVcProjectFilePath)&quot; -t:Rebuild -p:Configuration=Release;Platform=x64;OutDir=&quot;$(OutputDirectoryPath_X64_Release)\&quot;" />
+        <Exec Command="&quot;$(CppMsBuildPath)&quot; &quot;$(Bindings_NativeVcProjectFilePath)&quot; -t:Rebuild -p:Configuration=Release;Platform=x64;OutDir=&quot;$(OutputDirectoryPath_X64_Release)\&quot;" Condition="'$(OnlyDebug)' != 'true'"/>
     </Target>
     <!-- ========================================== -->
     <Target Name="BuildNative_Windows_CleanupAfterBuild" Condition="$([MSBuild]::IsOsPlatform('Windows'))">
@@ -69,7 +69,10 @@
     <!-- ========================================== -->
     <Target Name="BuildNative_Windows" Condition="$([MSBuild]::IsOsPlatform('Windows'))">
 		<CallTarget Targets="RunVSWhere" />	
-        <CallTarget Targets="BuildNative_Windows_X86;BuildNative_Windows_X64" />
+        <CallTarget Targets="BuildNative_Windows_X86" Condition="'$(OnlyDebug)' != 'true'"/>
+
+        <CallTarget Targets="BuildNative_Windows_X64" />
+
 		<!--;BuildNative_Windows_CleanupAfterBuild-->
     </Target>
     <!-- ========================================== -->
@@ -104,8 +107,9 @@
         <Copy SourceFiles="@(NativeBuildResultFilesDebug)" DestinationFolder="$(OutputDirectoryPath_X64_Debug)" />
 		<Message Text="--------------------------------------------------------" Importance="high" />
          <Exec Command="&quot;$(Bindings_NativeUnixProjectBuildPath)/release.sh&quot;"
-              WorkingDirectory="$(Bindings_NativeUnixProjectBuildPath)"/>
-        <Copy SourceFiles="@(NativeBuildResultFilesRelease)" DestinationFolder="$(OutputDirectoryPath_X64_Release)" />
+              WorkingDirectory="$(Bindings_NativeUnixProjectBuildPath)" Condition="'$(OnlyDebug)' != 'true'"/>
+        <Copy SourceFiles="@(NativeBuildResultFilesRelease)" DestinationFolder="$(OutputDirectoryPath_X64_Release)" 
+		Condition="'$(OnlyDebug)' != 'true'"/>
     </Target>
     <!-- ========================================== -->
     <Target Name="BuildNative" DependsOnTargets="BuildNative_Windows;BuildNative_Unix">
