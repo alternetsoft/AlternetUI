@@ -603,7 +603,10 @@ namespace Alternet.UI
             info.Icon = ValidateIcon(info.Icon);
 
             if (info.Buttons == MessageBoxButtons.AbortRetryIgnore || info.Buttons == MessageBoxButtons.RetryCancel)
-                throw new NotImplementedException("AbortRetryIgnore or RetryCancel not implemented");
+            {
+                Application.Alert("AbortRetryIgnore or RetryCancel not implemented");
+                return DialogResult.None;
+            }
 
             switch (info.DefaultButton)
             {
