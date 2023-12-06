@@ -142,7 +142,7 @@ namespace Alternet.UI
         private void CheckSTARequirement()
         {
 #if NETCOREAPP
-            if (!System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.Windows))
+            if (!Application.IsWindowsOS)
                 return;
 #endif
 
