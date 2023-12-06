@@ -1288,11 +1288,11 @@ namespace Alternet.UI
         /// is <c>null</c>.
         /// </remarks>
         [Browsable(false)]
-        public virtual Color? RealBackgroundColor
+        public virtual Color RealBackgroundColor
         {
             get
             {
-                var result = NativeControl?.BackgroundColor;
+                var result = NativeControl.BackgroundColor;
                 return result;
             }
         }
@@ -1305,12 +1305,56 @@ namespace Alternet.UI
         /// is <c>null</c>.
         /// </remarks>
         [Browsable(false)]
-        public virtual Color? RealForegroundColor
+        public virtual Color RealForegroundColor
         {
             get
             {
-                var result = NativeControl?.ForegroundColor;
+                var result = NativeControl.ForegroundColor;
                 return result;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the foreground color for the control.
+        /// </summary>
+        [Browsable(false)]
+        public virtual Color ForeColor
+        {
+            get
+            {
+                var result = ForegroundColor;
+
+                if (result is null)
+                    return RealForegroundColor;
+                else
+                    return result.Value;
+            }
+
+            set
+            {
+                ForegroundColor = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the background color for the control.
+        /// </summary>
+        [Browsable(false)]
+        public virtual Color BackColor
+        {
+            get
+            {
+                var result = BackgroundColor;
+
+                if (result is null)
+                    return RealBackgroundColor;
+                else
+                    return result.Value;
+            }
+
+            set
+            {
+                BackgroundColor = value;
             }
         }
 
@@ -1492,10 +1536,10 @@ namespace Alternet.UI
                 var foregroundColor = RealForegroundColor;
                 var backgroundColor = RealBackgroundColor;
 
-                if (foregroundColor is null || backgroundColor is null)
+                if (foregroundColor.IsEmpty || backgroundColor.IsEmpty)
                     return SystemSettings.IsUsingDarkBackground;
 
-                return ColorUtils.IsDarkBackground(foregroundColor.Value, backgroundColor.Value);
+                return ColorUtils.IsDarkBackground(foregroundColor, backgroundColor);
             }
         }
 
