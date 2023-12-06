@@ -32,6 +32,17 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="width">The width in pixels used to create the image.</param>
         /// <param name="height">The height in pixels used to create the image.</param>
+        public Bitmap(double width, double height)
+            : base(width, height)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Bitmap"/> class
+        /// with the specified size in device pixels.
+        /// </summary>
+        /// <param name="width">The width in pixels used to create the image.</param>
+        /// <param name="height">The height in pixels used to create the image.</param>
         public Bitmap(int width, int height)
             : base(width, height)
         {

@@ -1,5 +1,6 @@
 using System;
 using System.Diagnostics;
+using System.Drawing;
 using Alternet.UI;
 using Alternet.UI.Internal.ComponentModel;
 using Alternet.UI.Localization;
@@ -645,6 +646,30 @@ namespace Alternet.Drawing
                 throw new ArgumentNullException(nameof(image));
 #endif
             dc.DrawImagePortionAtRect(image.NativeImage, destinationRect, sourceRect);
+        }
+
+        /// <summary>
+        /// Draws the specified portion of the image into the region defined by the specified
+        /// <see cref="Rect"/>.
+        /// </summary>
+        /// <param name="unit"><see cref="GraphicsUnit"/> used to draw the image.
+        /// Currently only <see cref="GraphicsUnit.Pixel"/> is allowed.</param>
+        /// <param name="image"><see cref="Image"/> to draw.</param>
+        /// <param name="destinationRect">The region in which to draw <paramref name="image"/>.</param>
+        /// <param name="sourceRect">
+        /// <see cref="Rect"/> structure that specifies the portion of the
+        /// <paramref name="image"/> object to draw.
+        /// </param>
+        public void DrawImage(Image image, Rect destinationRect, Rect sourceRect, GraphicsUnit unit)
+        {
+            if (unit != GraphicsUnit.Pixel)
+            {
+                throw new ArgumentException(
+                    "Currently only GraphicsUnit.Pixel is supported in DrawImage",
+                    nameof(unit));
+            }
+
+            DrawImage(image, destinationRect, sourceRect);
         }
 
         /// <summary>

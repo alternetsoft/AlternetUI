@@ -96,6 +96,18 @@ namespace Alternet.Drawing
         /// Initializes a new instance of the <see cref="Image"/> class
         /// with the specified size in device pixels.
         /// </summary>
+        /// <param name="width">The width used to create the image</param>
+        /// <param name="height">The height used to create the image</param>
+        internal Image(double width, double height)
+        {
+            nativeImage = new UI.Native.Image();
+            NativeImage.Initialize(((int)width, (int)height));
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Image"/> class
+        /// with the specified size in device pixels.
+        /// </summary>
         /// <param name="size">The size in device pixels used to create the image.</param>
         internal Image(Int32Size size)
         {
