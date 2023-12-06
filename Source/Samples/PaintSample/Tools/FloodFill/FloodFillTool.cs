@@ -18,7 +18,7 @@ namespace PaintSample
 
             var point = e.GetPosition(Canvas);
 
-            if (!new Rect(new Point(), Document.Bitmap.Size).Contains(point))
+            if (!new Rect(new Point(), Document.Bitmap.SizeDip(Canvas)).Contains(point))
                 return;
 
             UndoService.Do(() => Document.Modify(dc => dc.FloodFill(new SolidBrush(SelectedColors.Stroke), point)));

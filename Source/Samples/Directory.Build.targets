@@ -12,6 +12,8 @@
         <IsSampleProject Condition="!($(MSBuildProjectName.EndsWith('.Test')) OR $(MSBuildProjectName.Contains('.Test.')) OR $(MSBuildProjectName.EndsWith('.Testing')) OR $(MSBuildProjectName.Contains('.Testing.')) OR $(MSBuildProjectName.Contains('.Harness.')))">true</IsSampleProject>
     </PropertyGroup>
 
+   <!-- ====================================================== -->
+
     <ItemGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64' AND '$(IsSampleProject)'=='true'">
         <None Include="$(MSBuildThisFileDirectory)\..\Alternet.UI.Pal\bin\x64\Debug\Alternet.UI.Pal.dll" Link="Alternet.UI.Pal.dll">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -20,6 +22,8 @@
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
     </ItemGroup>
+
+   <!-- ====================================================== -->
 
     <ItemGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64' AND '$(IsSampleProject)'=='true'">
         <None Include="$(MSBuildThisFileDirectory)\..\Alternet.UI.Pal\bin\x64\Release\Alternet.UI.Pal.dll" Link="Alternet.UI.Pal.dll">
@@ -30,6 +34,8 @@
         <!-- </None> -->
     </ItemGroup>
 
+   <!-- ====================================================== -->
+
     <ItemGroup Condition="'$(Configuration)|$(Platform)'=='Release|x86' AND '$(IsSampleProject)'=='true'">
         <None Include="$(MSBuildThisFileDirectory)\..\Alternet.UI.Pal\bin\x86\Release\Alternet.UI.Pal.dll" Link="Alternet.UI.Pal.dll">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -38,6 +44,8 @@
             <!-- <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory> -->
         <!-- </None> -->
     </ItemGroup>
+
+   <!-- ====================================================== -->
 
     <ItemGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x86' AND '$(IsSampleProject)'=='true'">
         <None Include="$(MSBuildThisFileDirectory)\..\Alternet.UI.Pal\bin\x86\Debug\Alternet.UI.Pal.dll" Link="Alternet.UI.Pal.dll">
@@ -48,6 +56,8 @@
         </None>
     </ItemGroup>
 
+   <!-- ====================================================== -->
+
     <ItemGroup Condition="$([MSBuild]::IsOsPlatform('Windows')) And '$(Configuration)|$(Platform)'=='Debug|AnyCPU' AND '$(IsSampleProject)'=='true'">
         <None Include="$(MSBuildThisFileDirectory)\..\Alternet.UI.Pal\bin\x86\Debug\Alternet.UI.Pal.dll" Link="x86\Alternet.UI.Pal.dll">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -56,6 +66,8 @@
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
     </ItemGroup>
+
+   <!-- ====================================================== -->
 
     <ItemGroup Condition="$([MSBuild]::IsOsPlatform('Windows')) And '$(Configuration)|$(Platform)'=='Debug|AnyCPU' AND '$(IsSampleProject)'=='true'">
         <None Include="$(MSBuildThisFileDirectory)\..\Alternet.UI.Pal\bin\x64\Debug\Alternet.UI.Pal.dll" Link="x64\Alternet.UI.Pal.dll">
@@ -66,20 +78,30 @@
         </None>
     </ItemGroup>
 
+   <!-- ====================================================== -->
+
     <ItemGroup Condition="$([MSBuild]::IsOsPlatform('Windows')) And '$(Configuration)|$(Platform)'=='Release|AnyCPU' AND '$(IsSampleProject)'=='true'">
         <None Include="$(MSBuildThisFileDirectory)\..\Alternet.UI.Pal\bin\x64\Release\Alternet.UI.Pal.dll" Link="x64\Alternet.UI.Pal.dll">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
     </ItemGroup>
 
+   <!-- ====================================================== -->
+
     <ItemGroup Condition="$([MSBuild]::IsOsPlatform('OSX')) AND '$(IsSampleProject)'=='true'">
         <None Include="$(MSBuildThisFileDirectory)\..\Alternet.UI.Pal\bin\x64\Debug\Alternet.UI.Pal.dylib" Link="Alternet.UI.Pal.dylib">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
     </ItemGroup>
+
+   <!-- ====================================================== -->
+
     <ItemGroup Condition="$([MSBuild]::IsOsPlatform('Linux')) AND '$(IsSampleProject)'=='true'">
         <None Include="$(MSBuildThisFileDirectory)\..\Alternet.UI.Pal\bin\x64\Debug\Alternet.UI.Pal.so" Link="Alternet.UI.Pal.so">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
     </ItemGroup>
+
+   <!-- ====================================================== -->
+
 </Project>

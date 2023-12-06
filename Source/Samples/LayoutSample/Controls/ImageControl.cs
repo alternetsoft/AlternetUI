@@ -32,7 +32,7 @@ namespace LayoutSample
             if (image == null)
                 return new Size();
 
-            var size = image.Size;
+            var size = image.SizeDip(this);
             var zoom = Zoom;
             return new Size(size.Width * zoom, size.Height * zoom);
         }

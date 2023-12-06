@@ -28,11 +28,11 @@ namespace Alternet.Drawing
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Bitmap"/> class
-        /// with the specified size.
+        /// with the specified size in device pixels.
         /// </summary>
-        /// <param name="width">The width used to create the image</param>
-        /// <param name="height">The height used to create the image</param>
-        public Bitmap(double width, double height)
+        /// <param name="width">The width in pixels used to create the image.</param>
+        /// <param name="height">The height in pixels used to create the image.</param>
+        public Bitmap(int width, int height)
             : base(width, height)
         {
         }
@@ -41,16 +41,15 @@ namespace Alternet.Drawing
         /// Initializes a new instance of the <see cref="Bitmap"/> class.
         /// </summary>
         public Bitmap()
-            : base(Size.Empty)
+            : base(Drawing.Int32Size.Empty)
         {
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Bitmap"/> class with the specified size.
         /// </summary>
-        /// <param name="size">The size, in device independent units, of the new
-        /// <see cref="Bitmap"/>.</param>
-        public Bitmap(Size size)
+        /// <param name="size">The size, in device pixels, of the new <see cref="Bitmap"/>.</param>
+        public Bitmap(Int32Size size)
             : base(size)
         {
         }
@@ -63,6 +62,19 @@ namespace Alternet.Drawing
         /// <param name="size">Size of the image in device pixels.</param>
         public Bitmap(ImageSet imageSet, Int32Size size)
             : base(imageSet, size)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Bitmap" /> class from the specified
+        /// existing image, scaled to the specified size.
+        /// </summary>
+        /// <param name="original">The <see cref="Image" /> from which to create the
+        /// new <see cref="Bitmap" />.</param>
+        /// <param name="newSize">The <see cref="Int32Size" /> structure that represent the
+        /// size of the new <see cref="Bitmap" />.</param>
+        public Bitmap(Image original, Int32Size newSize)
+            : base(original, newSize)
         {
         }
 

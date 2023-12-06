@@ -39,6 +39,20 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="Image" /> class from the specified
+        /// existing image, scaled to the specified size.
+        /// </summary>
+        /// <param name="original">The <see cref="Image" /> from which to create the
+        /// new <see cref="Image" />.</param>
+        /// <param name="newSize">The <see cref="Int32Size" /> structure that represent the
+        /// size of the new <see cref="Bitmap" />.</param>
+        internal Image(Image original, Int32Size newSize)
+        {
+            nativeImage = new UI.Native.Image();
+            nativeImage.InitializeFromImage(original.NativeImage, newSize);
+        }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="Image"/> class from
         /// the specified <see cref="GenericImage"/>.
         /// </summary>
@@ -68,11 +82,11 @@ namespace Alternet.Drawing
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Image"/> class
-        /// with the specified size.
+        /// with the specified size in device pixels.
         /// </summary>
         /// <param name="width">The width used to create the image</param>
         /// <param name="height">The height used to create the image</param>
-        internal Image(double width, double height)
+        internal Image(int width, int height)
         {
             nativeImage = new UI.Native.Image();
             NativeImage.Initialize((width, height));
@@ -80,10 +94,10 @@ namespace Alternet.Drawing
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Image"/> class
-        /// with the specified size.
+        /// with the specified size in device pixels.
         /// </summary>
-        /// <param name="size">The size used to create the image.</param>
-        internal Image(Size size)
+        /// <param name="size">The size in device pixels used to create the image.</param>
+        internal Image(Int32Size size)
         {
             nativeImage = new UI.Native.Image();
             NativeImage.Initialize(size);
@@ -99,7 +113,7 @@ namespace Alternet.Drawing
         /// Initializes a new instance of the <see cref="Image"/> class.
         /// </summary>
         private protected Image()
-            : this(Size.Empty)
+            : this(Drawing.Int32Size.Empty)
         {
         }
 
@@ -166,36 +180,6 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Gets the size of the image in device-independent units (1/96th inch
-        /// per unit).
-        /// </summary>
-        public Size Size => NativeImage.Size;
-
-        /// <summary>
-        /// Gets image rect as (0, 0, Size.Width, Size.Height).
-        /// </summary>
-        public Rect Rect
-        {
-            get
-            {
-                var size = Size;
-                return (0, 0, size.Width, size.Height);
-            }
-        }
-
-        /// <summary>
-        /// Gets image rect as (0, 0, Size.Width, Size.Height).
-        /// </summary>
-        public Rect Bounds
-        {
-            get
-            {
-                var size = Size;
-                return (0, 0, size.Width, size.Height);
-            }
-        }
-
-        /// <summary>
         /// Gets the size of the image in pixels.
         /// </summary>
         public Int32Size PixelSize => NativeImage.PixelSize;
@@ -246,12 +230,27 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets image width in pixels.
         /// </summary>
+        public int Width => NativeImage.PixelWidth;
+
+        /// <summary>
+        /// Gets image height in pixels.
+        /// </summary>
+        public int Height => NativeImage.PixelHeight;
+
+        /// <summary>
+        /// Gets image width in pixels.
+        /// </summary>
         public int PixelWidth => NativeImage.PixelWidth;
 
         /// <summary>
         /// Gets image height in pixels.
         /// </summary>
         public int PixelHeight => NativeImage.PixelHeight;
+
+        /// <summary>
+        /// Gets image size in pixels.
+        /// </summary>
+        public Int32Size Size => (NativeImage.PixelWidth, NativeImage.PixelHeight);
 
         /// <summary>
         /// Gets the color depth of the image. Returned value is 32, 24, or other.
@@ -373,6 +372,17 @@ namespace Alternet.Drawing
             var height = Toolbar.GetDefaultImageSize(deviceDpi.Height);
             var result = Image.FromSvgUrl(url, width, height, color);
             return result;
+        }
+
+        /// <summary>
+        /// Creates an <see cref="Image" /> from the specified data stream.
+        /// </summary>
+        /// <param name="stream">
+        /// A <see cref="Stream" /> that contains the data for this <see cref="Image" />.</param>
+        /// <returns>The <see cref="Image" /> this method creates.</returns>
+        public static Image FromStream(Stream stream)
+        {
+            return new Image(stream);
         }
 
         /// <summary>
@@ -532,6 +542,15 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Gets image rect as (0, 0, SizeDip().Width, SizeDip().Height).
+        /// </summary>
+        public Rect BoundsDip(Control control)
+        {
+            var size = SizeDip(control);
+            return (0, 0, size.Width, size.Height);
+        }
+
+        /// <summary>
         /// Returns disabled (dimmed) version of the image.
         /// </summary>
         /// <param name="brightness">Brightness. Default is 255.</param>
@@ -576,6 +595,12 @@ namespace Alternet.Drawing
             var dc = DrawingContext.FromImage(this);
             return dc;
         }
+
+        /// <summary>
+        /// Gets the size of the image in device-independent units (1/96th inch
+        /// per unit).
+        /// </summary>
+        public Size SizeDip(Control control) => control.PixelToDip(NativeImage.PixelSize);
 
         /*/// <summary>
         /// Makes image grayscaled.

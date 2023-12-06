@@ -283,17 +283,18 @@ namespace Alternet::UI
         wxBitmap bitmap = image->GetBitmap();
         auto window = _dc->GetWindow();
 
+        auto pt = fromDip(origin, _dc->GetWindow());
 
         if (NeedToUseDC())
         {
             UseDC();
-            _dc->DrawBitmap(bitmap, fromDip(origin, _dc->GetWindow()));
+            _dc->DrawBitmap(bitmap, pt);
         }
         else
         {
             UseGC();
-            auto wxRect = fromDip(Rect(origin, image->GetSize()), _dc->GetWindow());
-            _graphicsContext->DrawBitmap(bitmap, wxRect.x, wxRect.y, wxRect.width, wxRect.height);
+            auto wxr = wxRect(pt, image->GetPixelSize());
+            _graphicsContext->DrawBitmap(bitmap, wxr.x, wxr.y, wxr.width, wxr.height);
         }
     }
 

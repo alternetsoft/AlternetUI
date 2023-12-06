@@ -23,16 +23,6 @@ namespace Alternet.UI.Native
         {
         }
         
-        public Alternet.Drawing.Size Size
-        {
-            get
-            {
-                CheckDisposed();
-                return NativeApi.Image_GetSize_(NativePointer);
-            }
-            
-        }
-        
         public Alternet.Drawing.Int32Size PixelSize
         {
             get
@@ -110,10 +100,16 @@ namespace Alternet.UI.Native
             return NativeApi.Image_LoadSvgFromStream_(NativePointer, stream.NativePointer, width, height, color);
         }
         
-        public void Initialize(Alternet.Drawing.Size size)
+        public void Initialize(Alternet.Drawing.Int32Size size)
         {
             CheckDisposed();
             NativeApi.Image_Initialize_(NativePointer, size);
+        }
+        
+        public void InitializeFromImage(Image source, Alternet.Drawing.Int32Size size)
+        {
+            CheckDisposed();
+            NativeApi.Image_InitializeFromImage_(NativePointer, source.NativePointer, size);
         }
         
         public void CopyFrom(Image otherImage)
@@ -221,9 +217,6 @@ namespace Alternet.UI.Native
             public static extern IntPtr Image_Create_();
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.Size Image_GetSize_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern Alternet.Drawing.Int32Size Image_GetPixelSize_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
@@ -251,7 +244,10 @@ namespace Alternet.UI.Native
             public static extern bool Image_LoadSvgFromStream_(IntPtr obj, IntPtr stream, int width, int height, NativeApiTypes.Color color);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Image_Initialize_(IntPtr obj, Alternet.Drawing.Size size);
+            public static extern void Image_Initialize_(IntPtr obj, Alternet.Drawing.Int32Size size);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Image_InitializeFromImage_(IntPtr obj, IntPtr source, Alternet.Drawing.Int32Size size);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Image_CopyFrom_(IntPtr obj, IntPtr otherImage);

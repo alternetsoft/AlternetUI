@@ -594,6 +594,15 @@ namespace Alternet.Drawing
         /// <param name="image"><see cref="Image"/> to draw.</param>
         /// <param name="origin"><see cref="Point"/> structure that represents the
         /// upper-left corner of the drawn image.</param>
+        public void DrawImageUnscaled(Image image, Point origin) => DrawImage(image, origin);
+
+        /// <summary>
+        /// Draws the specified <see cref="Image"/>, using its original size, at the
+        /// specified location.
+        /// </summary>
+        /// <param name="image"><see cref="Image"/> to draw.</param>
+        /// <param name="origin"><see cref="Point"/> structure that represents the
+        /// upper-left corner of the drawn image.</param>
         public void DrawImage(Image image, Point origin)
         {
 #if DEBUG

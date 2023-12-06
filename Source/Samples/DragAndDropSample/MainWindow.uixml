@@ -18,14 +18,14 @@
           <Button Text="Paste" Name="pasteButton" Click="PasteButton_Click" Margin="0,5,0,5" />
         </StackPanel>
       </GroupBox>
-      <Border SuggestedWidth="80" VerticalAlignment="Stretch" Margin="10"
+      <Border SuggestedWidth="120" VerticalAlignment="Stretch" Margin="10"
               AllowDrop="True" Name="dragSource"
               MouseDown="DragSource_MouseDown"
               MouseMove="DragSource_MouseMove"
               MouseUp="DragSource_MouseUp">
         <Label Text="Drag Me" VerticalAlignment="Center" HorizontalAlignment="Center"/>
       </Border>
-      <Border SuggestedWidth="80" VerticalAlignment="Stretch" Margin="10"
+      <Border SuggestedWidth="120" VerticalAlignment="Stretch" Margin="10"
               AllowDrop="True" Name="dropTarget"
               DragDrop="DropTarget_DragDrop"
               DragOver="DropTarget_DragOver"
@@ -40,7 +40,7 @@
           <CheckBox Text="Link" Name="linkDropEffectCheckBox" IsChecked="true" Margin="0,0,0,5"/>
         </StackPanel>
       </GroupBox>
-      <GroupBox Title="Included Data Formats" VerticalAlignment="Top" Margin="10,0,0,0" MinWidth="200">
+      <GroupBox Title="Include Formats" VerticalAlignment="Top" Margin="10,0,0,0" MinWidth="200">
         <StackPanel Orientation="Vertical" Margin="10,10,10,10">
           <CheckBox Text="Text" Name="textFormatCheckBox" IsChecked="true" Margin="0,0,0,5"/>
           <CheckBox Text="Files" Name="filesFormatCheckBox" IsChecked="true" Margin="0,0,0,5"/>

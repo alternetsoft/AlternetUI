@@ -7,6 +7,7 @@ namespace DrawingSample
     internal sealed class ImagesPage : DrawingPage
     {
         private Image image;
+        private Control control;
 
         private Rect magnifiedRect;
 
@@ -14,15 +15,20 @@ namespace DrawingSample
 
         private InterpolationMode interpolationMode = InterpolationMode.None;
 
-        public ImagesPage()
+        public ImagesPage(Control control)
         {
+            this.control = control;
+
             image = Resources.LeavesImage;
-            var rectSize = Math.Min(image.Size.Width / 3, image.Size.Height / 3);
+
+            var sizeDip = image.SizeDip(control);
+
+            var rectSize = Math.Min(sizeDip.Width / 3, sizeDip.Height / 3);
             magnifiedRect = new Rect(
                 new Point(),
                 new Size(rectSize, rectSize)).OffsetBy(
-                    image.Size.Width / 2 - rectSize / 2,
-                    image.Size.Height / 2 - rectSize / 2);
+                    sizeDip.Width / 2 - rectSize / 2,
+                    sizeDip.Height / 2 - rectSize / 2);
         }
 
         public override string Name => "Images";
@@ -51,7 +57,7 @@ namespace DrawingSample
             dc.DrawRectangle(dashPen, magnifiedRect.OffsetBy(imageLocation.X, imageLocation.Y));
 
             var x = spacing;
-            var y = image.Size.Height + spacing * 4 + textHeight;
+            var y = image.SizeDip(control).Height + spacing * 4 + textHeight;
 
             var oldInterpolationMode = dc.InterpolationMode;
 

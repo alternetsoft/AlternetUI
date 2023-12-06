@@ -20,6 +20,7 @@ namespace Alternet.UI
             return new FontAndColor.ControlStaticDefaultFontAndColor(controlType, renderSize);
         }
 
+        /// <summary>Test method.</summary>
         public static void TestPopupWindow(Control control, Int32Point pos, Int32Size sz)
         {
             Native.WxOtherFactory.TestPopupWindow(control.WxWidget, pos, sz);

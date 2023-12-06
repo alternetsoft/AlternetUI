@@ -1,20 +1,21 @@
 ﻿namespace Alternet.UI
 {
+/*
     /// <summary>
     /// Specifies the unit of measure for the data.
     /// </summary>
     public enum GraphicsUnit
     {
-        /*/// <summary>
+        /// <summary>
         /// Specifies the world coordinate system unit as the unit of measure.
         /// </summary>
-        World,*/
+        World,
 
-        /*/// <summary>
+        /// <summary>
         /// Specifies the unit of measure of the display device.
         /// Typically pixels for video displays, and 1/100 inch for printers.
         /// </summary>
-        Display,*/
+        Display,
 
         /// <summary>
         /// Specifies a device pixel as the unit of measure.
@@ -47,4 +48,5 @@
         /// </summary>
         Dip,
     }
+*/
 }

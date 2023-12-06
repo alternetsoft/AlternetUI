@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Alternet.UI;
 
 namespace Alternet.Drawing
 {
@@ -43,7 +44,7 @@ namespace Alternet.Drawing
 
         public bool CenterHorzOrVert => CenterHorz || CenterVert;
 
-        public void Draw(DrawingContext dc)
+        public void Draw(Control control, DrawingContext dc)
         {
             if (Image.IsNullOrEmpty(Image) || !Visible)
                 return;
@@ -65,7 +66,7 @@ namespace Alternet.Drawing
             {
                 if (CenterHorzOrVert)
                 {
-                    var imageRect = SourceRect ?? Image.Rect;
+                    var imageRect = SourceRect ?? Image.BoundsDip(control);
                     var destRect = DestRect;
                     var centeredRect = imageRect.CenterIn(destRect, CenterHorz, CenterVert);
                     if (SourceRect is null)

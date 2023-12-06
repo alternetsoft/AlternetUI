@@ -175,7 +175,7 @@ namespace PaintSample
 
         private void CreateNewDocument()
         {
-            Document = new Document();
+            Document = new Document(this);
         }
 
         UndoService UndoService => undoService ?? throw new Exception();
@@ -347,7 +347,7 @@ namespace PaintSample
             if (dialog.ShowModal(this) != ModalResult.Accepted || dialog.FileName == null)
                 return;
 
-            Document = new Document(dialog.FileName);
+            Document = new Document(this, dialog.FileName);
         }
 
         string? PromptForSaveFileName()

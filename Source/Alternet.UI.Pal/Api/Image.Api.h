@@ -15,11 +15,6 @@ ALTERNET_UI_API Image* Image_Create_()
     return new Image();
 }
 
-ALTERNET_UI_API Size_C Image_GetSize_(Image* obj)
-{
-    return obj->GetSize();
-}
-
 ALTERNET_UI_API Int32Size_C Image_GetPixelSize_(Image* obj)
 {
     return obj->GetPixelSize();
@@ -65,9 +60,14 @@ ALTERNET_UI_API c_bool Image_LoadSvgFromStream_(Image* obj, void* stream, int wi
     return obj->LoadSvgFromStream(stream, width, height, color);
 }
 
-ALTERNET_UI_API void Image_Initialize_(Image* obj, Size size)
+ALTERNET_UI_API void Image_Initialize_(Image* obj, Int32Size size)
 {
     obj->Initialize(size);
+}
+
+ALTERNET_UI_API void Image_InitializeFromImage_(Image* obj, Image* source, Int32Size size)
+{
+    obj->InitializeFromImage(source, size);
 }
 
 ALTERNET_UI_API void Image_CopyFrom_(Image* obj, Image* otherImage)

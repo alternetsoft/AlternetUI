@@ -153,6 +153,14 @@ namespace ControlsSample
 
         private void ShowPopupListBoxButton_Click(object? sender, EventArgs e)
         {
+            var useDo = false;
+
+            if (useDo)
+            {
+                Do();
+                return;
+            }
+
             var posDip = showPopupListBoxButton.ClientToScreen((0, 0));
             var pos = PixelFromDip(posDip);
             var szDip = showPopupListBoxButton.Size;

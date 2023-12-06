@@ -21,7 +21,7 @@ namespace Alternet.UI
             if (!double.IsNaN(specifiedWidth) && !double.IsNaN(specifiedHeight))
                 return new Size(specifiedWidth, specifiedHeight);
 
-            return Control.Image.Size;
+            return Control.Image.SizeDip(Control);
         }
 
         internal override Native.Control CreateNativeControl()

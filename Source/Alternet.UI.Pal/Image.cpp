@@ -236,7 +236,7 @@ namespace Alternet::UI
 		return image.SaveFile(wxStr(fileName));
 	}
 
-	void Image::Initialize(const Size& size)
+	void Image::Initialize(const Int32Size& size)
 	{
 		if (size.Width == 0 || size.Height == 0)
 		{
@@ -244,7 +244,7 @@ namespace Alternet::UI
 		}
 		else
 		{
-			_bitmap = wxBitmap(fromDip(size, nullptr), 32);
+			_bitmap = wxBitmap(size, 32);
 		}
 	}
 
@@ -262,6 +262,20 @@ namespace Alternet::UI
 			return wxBITMAP_TYPE_TIFF;
 
 		throwEx(u"Image format is not supported: " + format);
+	}
+
+	void Image::InitializeFromImage(Image* source, const Int32Size& size)
+	{
+		if (!source->_bitmap.IsOk())
+		{
+			_bitmap = wxBitmap(size.Width, size.Height, 32);
+		}
+		else
+		{
+			auto otherBitmap = source->GetBitmap();
+			_bitmap = wxBitmap(otherBitmap);
+			wxBitmap::Rescale(_bitmap, size);
+		}
 	}
 
 	void Image::CopyFrom(Image* otherImage)
@@ -283,14 +297,6 @@ namespace Alternet::UI
 	void Image::SetBitmap(const wxBitmap& value)
 	{
 		_bitmap = value;
-	}
-
-	Size Image::GetSize()
-	{
-		if (!_bitmap.IsOk())
-			return Size();
-
-		return toDip(_bitmap.GetSize(), nullptr);
 	}
 
 	bool Image::GetIsOk()

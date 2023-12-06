@@ -215,7 +215,7 @@ namespace Alternet.UI
 
             primitive.Image = StateObjects?.Images?.GetObjectOrNormal(state);
             primitive.DestRect = rect;
-            primitive.Draw(dc);
+            primitive.Draw(this, dc);
 
             AfterPaint(dc, rect);
         }

@@ -9,7 +9,8 @@ namespace NativeApi.Api
     {
         public bool LoadFromStream(InputStream stream) => default;
         public bool LoadSvgFromStream(InputStream stream, int width, int height, Color color) => default;
-        public void Initialize(Size size) { }
+        public void Initialize(Int32Size size) { }
+        public void InitializeFromImage(Image source, Int32Size size) { }
         public void CopyFrom(Image otherImage) { }
 
         public bool SaveToStream(OutputStream stream, string format) => default;
@@ -18,7 +19,6 @@ namespace NativeApi.Api
         public IntPtr ConvertToGenericImage() => default;
         public void LoadFromGenericImage(IntPtr image, int depth = -1) { }
 
-        public Size Size { get; }
         public Int32Size PixelSize { get; }
 
         public bool IsOk { get; }

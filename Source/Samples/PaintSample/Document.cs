@@ -8,19 +8,22 @@ namespace PaintSample
     public class Document : IDisposable
     {
         private bool isDisposed;
+        private Control control;
 
         private Image? bitmap;
 
         private Action<DrawingContext>? previewAction;
 
-        public Document()
+        public Document(Control control)
         {
-            Bitmap = CreateBitmap();
+            this.control = control;
+            Bitmap = CreateBitmap(control);
             Dirty = false;
         }
 
-        public Document(string fileName)
+        public Document(Control control, string fileName)
         {
+            this.control = control;
             Bitmap = LoadBitmap(fileName);
             FileName = fileName;
             Dirty = false;
@@ -105,9 +108,9 @@ namespace PaintSample
             OnChanged();
         }
 
-        public void Paint(DrawingContext drawingContext)
+        public void Paint(Control control, DrawingContext drawingContext)
         {
-            drawingContext.FillRectangle(Brushes.White, Bitmap.Bounds);
+            drawingContext.FillRectangle(Brushes.White, Bitmap.BoundsDip(control));
             drawingContext.DrawImage(Bitmap, Point.Empty);
             if (previewAction != null)
                 previewAction(drawingContext);
@@ -134,11 +137,12 @@ namespace PaintSample
             }
         }
 
-        private Bitmap CreateBitmap()
+        private Bitmap CreateBitmap(Control control)
         {
-            var bitmap = new Bitmap((600, 600));
+            var pixelSize = control.PixelFromDip(new Size(600, 600));
+            var bitmap = new Bitmap(pixelSize);
             using var dc = DrawingContext.FromImage(bitmap);
-            dc.FillRectangle(new SolidBrush(BackgroundColor), bitmap.Bounds); 
+            dc.FillRectangle(new SolidBrush(BackgroundColor), bitmap.BoundsDip(control)); 
             return bitmap;
         }
 

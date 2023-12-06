@@ -44,7 +44,7 @@ namespace PaintSample
             if (Document == null)
                 return;
             
-            Document.Paint(e.DrawingContext);
+            Document.Paint(this, e.DrawingContext);
         }
     }
 }
