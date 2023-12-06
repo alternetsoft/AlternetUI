@@ -14,7 +14,7 @@ namespace Alternet.UI
     [DefaultProperty("Text")]
     [DefaultEvent("Click")]
     public partial class Control
-        : FrameworkElement, ISupportInitialize, IDisposable, IControl, IFocusable
+        : FrameworkElement, ISupportInitialize, IDisposable, IControl, IFocusable, IWin32Window
     {
         /// <summary>
         /// Gets or sets whether <see cref="DebugBackgroundColor"/> property is used.
@@ -478,6 +478,8 @@ namespace Alternet.UI
                 stateObjects = value;
             }
         }
+
+        IntPtr IWin32Window.Handle => default;
 
         /// <summary>
         /// Gets or sets background brushes attached to this control.
