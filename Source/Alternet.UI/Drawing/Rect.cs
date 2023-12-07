@@ -299,6 +299,14 @@ namespace Alternet.Drawing
             new(CoordToInt(p.X), CoordToInt(p.Y), CoordToInt(p.Width), CoordToInt(p.Height));
 
         /// <summary>
+        /// Creates a <see cref='System.Drawing.RectangleF'/> with the properties of the
+        /// specified <see cref='Rect'/>
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static implicit operator System.Drawing.RectangleF(Rect p) =>
+            new((float)p.X, (float)p.Y, (float)p.Width, (float)p.Height);
+
+        /// <summary>
         /// Implicit operator convertion from tuple (<see cref="Point"/>, <see cref="Size"/>)
         /// to <see cref="Rect"/>.
         /// </summary>
