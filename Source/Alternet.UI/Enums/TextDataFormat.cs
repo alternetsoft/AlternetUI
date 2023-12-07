@@ -17,9 +17,9 @@ namespace Alternet.UI
         Text,
 
         /// <summary>
-        /// Specifies the standard Windows Unicode text format.
+        /// Specifies the standard Unicode text format.
         /// </summary>
-        UnicodeText,
+        UnicodeText = Text,
 
         /// <summary>
         /// Specifies text consisting of rich text format (RTF) data.
