@@ -101,6 +101,24 @@ namespace Alternet.Drawing
             Initialize(prototype.FontFamily, prototype.Size, newStyle, prototype.Unit, 1, gdiVerticalFont: false);
         }
 
+        /// <summary>
+        /// Initializes a new <see cref="Font" /> that uses the specified existing <see cref="Font" />
+        /// and <paramref name="newSize"/> parameter.</summary>
+        /// <param name="prototype">The existing <see cref="Font" /> from which to create the
+        /// new <see cref="Font" />.</param>
+        /// <param name="newSize">New size of the font in points.</param>
+        /// <remarks>
+        /// If bad parameters are passed to the font constructor, error message is output to log
+        /// and font is created with default parameters. No exceptions are raised.
+        /// </remarks>
+        public Font(Font prototype, double newSize)
+            : this(
+                  prototype.FontFamily,
+                  newSize,
+                  prototype.Style)
+        {
+        }
+
         /// <summary>Initializes a new <see cref="Font" /> using a specified size, style, and unit.</summary>
         /// <param name="family">The <see cref="FontFamily" /> of the new <see cref="Font" />.</param>
         /// <param name="emSize">The em-size of the new font in the units specified by the <paramref name="unit" />
@@ -296,7 +314,7 @@ namespace Alternet.Drawing
         /// The string representing the name of the font originally specified.
         /// </returns>
         [Browsable(false)]
-        public string? OriginalFontName => originalFontName;
+        public string? OriginalFontName => originalFontName ?? Name;
 
         /// <summary>
         /// Gets the pixel size.
@@ -613,6 +631,46 @@ namespace Alternet.Drawing
         {
             Dispose(disposing: true);
             GC.SuppressFinalize(this);
+        }
+
+        /// <summary>
+        /// Returns a smaller version of this font.
+        /// </summary>
+        /// <remarks>
+        /// The font size is divided by 1.2, the factor of 1.2 being inspired by the
+        /// W3C CSS specification.
+        /// </remarks>
+        /// <returns></returns>
+        public Font Smaller()
+        {
+            return new(this, SizeInPoints / 1.2);
+        }
+
+        /// <summary>
+        /// Returns a larger version of this font.
+        /// </summary>
+        /// <remarks>
+        /// The font size is divided by 1.2, the factor of 1.2 being inspired by the
+        /// W3C CSS specification.
+        /// </remarks>
+        /// <returns></returns>
+        public Font Larger()
+        {
+            return new(this, SizeInPoints * 1.2);
+        }
+
+        /// <summary>
+        /// Returns a scaled version of this font.
+        /// </summary>
+        /// <param name="scaleFactor">Font size scaling factor.</param>
+        /// <returns></returns>
+        /// <remarks>
+        /// The font size is multiplied by the given <paramref name="scaleFactor"/>
+        /// (which may be less than 1 to create a smaller version of the font).
+        /// </remarks>
+        public Font Scaled(double scaleFactor)
+        {
+            return new(this, SizeInPoints * scaleFactor);
         }
 
         /// <summary>
