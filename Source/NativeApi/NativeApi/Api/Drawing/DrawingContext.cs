@@ -10,11 +10,23 @@ namespace NativeApi.Api
 
         public static DrawingContext FromImage(Image image) => throw new Exception();
 
+        public void RoundedRectangle(Pen pen, Brush brush, Rect rectangle, double cornerRadius) { }
+        public void Rectangle(Pen pen, Brush brush, Rect rectangle) { }
+        public void Ellipse(Pen pen, Brush brush, Rect rectangle) { }
+        public void Path(Pen pen, Brush brush, GraphicsPath path) { }
+        public void Pie(Pen pen, Brush brush, Point center, double radius, double startAngle,
+            double sweepAngle) { }
+        public void Circle(Pen pen, Brush brush, Point center, double radius) { }
+        public void Polygon(Pen pen, Brush brush, Point[] points, FillMode fillMode) { }
+
         public void FillRectangle(Brush brush, Rect rectangle) { }
         public void DrawRectangle(Pen pen, Rect rectangle) { }
+
         public void FillEllipse(Brush brush, Rect bounds) { }
         public void DrawEllipse(Pen pen, Rect bounds) { }
+
         public void FloodFill(Brush brush, Point point) { }
+
         public void DrawPath(Pen pen, GraphicsPath path) { }
         public void FillPath(Brush brush, GraphicsPath path) { }
 

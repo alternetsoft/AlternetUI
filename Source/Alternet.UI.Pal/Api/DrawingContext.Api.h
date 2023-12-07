@@ -6,8 +6,8 @@
 #include "TransformMatrix.h"
 #include "Region.h"
 #include "Image.h"
-#include "Brush.h"
 #include "Pen.h"
+#include "Brush.h"
 #include "GraphicsPath.h"
 #include "Font.h"
 #include "ApiUtils.h"
@@ -48,6 +48,41 @@ ALTERNET_UI_API void DrawingContext_SetInterpolationMode_(DrawingContext* obj, I
 ALTERNET_UI_API DrawingContext* DrawingContext_FromImage_(Image* image)
 {
     return DrawingContext::FromImage(image);
+}
+
+ALTERNET_UI_API void DrawingContext_RoundedRectangle_(DrawingContext* obj, Pen* pen, Brush* brush, Rect rectangle, double cornerRadius)
+{
+    obj->RoundedRectangle(pen, brush, rectangle, cornerRadius);
+}
+
+ALTERNET_UI_API void DrawingContext_Rectangle_(DrawingContext* obj, Pen* pen, Brush* brush, Rect rectangle)
+{
+    obj->Rectangle(pen, brush, rectangle);
+}
+
+ALTERNET_UI_API void DrawingContext_Ellipse_(DrawingContext* obj, Pen* pen, Brush* brush, Rect rectangle)
+{
+    obj->Ellipse(pen, brush, rectangle);
+}
+
+ALTERNET_UI_API void DrawingContext_Path_(DrawingContext* obj, Pen* pen, Brush* brush, GraphicsPath* path)
+{
+    obj->Path(pen, brush, path);
+}
+
+ALTERNET_UI_API void DrawingContext_Pie_(DrawingContext* obj, Pen* pen, Brush* brush, Point center, double radius, double startAngle, double sweepAngle)
+{
+    obj->Pie(pen, brush, center, radius, startAngle, sweepAngle);
+}
+
+ALTERNET_UI_API void DrawingContext_Circle_(DrawingContext* obj, Pen* pen, Brush* brush, Point center, double radius)
+{
+    obj->Circle(pen, brush, center, radius);
+}
+
+ALTERNET_UI_API void DrawingContext_Polygon_(DrawingContext* obj, Pen* pen, Brush* brush, Point* points, int pointsCount, FillMode fillMode)
+{
+    obj->Polygon(pen, brush, points, pointsCount, fillMode);
 }
 
 ALTERNET_UI_API void DrawingContext_FillRectangle_(DrawingContext* obj, Brush* brush, Rect rectangle)

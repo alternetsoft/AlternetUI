@@ -20,10 +20,10 @@ namespace Alternet::UI
     class DrawingContext : public Object
     {
 #include "Api/DrawingContext.inc"
-    public:
+    public:                                
         DrawingContext(wxDC* dc, optional<std::function<void()>> onUseDC = nullopt);
 
-        wxGraphicsContext* GetGraphicsContext();
+        wxGraphicsContext* GetGraphicsContext();     
         wxDC* GetDC();
 
         void SetDoNotDeleteDC(bool value);

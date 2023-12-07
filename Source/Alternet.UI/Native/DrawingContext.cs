@@ -81,6 +81,48 @@ namespace Alternet.UI.Native
             return _mmm;
         }
         
+        public void RoundedRectangle(Pen pen, Brush brush, Alternet.Drawing.Rect rectangle, double cornerRadius)
+        {
+            CheckDisposed();
+            NativeApi.DrawingContext_RoundedRectangle_(NativePointer, pen.NativePointer, brush.NativePointer, rectangle, cornerRadius);
+        }
+        
+        public void Rectangle(Pen pen, Brush brush, Alternet.Drawing.Rect rectangle)
+        {
+            CheckDisposed();
+            NativeApi.DrawingContext_Rectangle_(NativePointer, pen.NativePointer, brush.NativePointer, rectangle);
+        }
+        
+        public void Ellipse(Pen pen, Brush brush, Alternet.Drawing.Rect rectangle)
+        {
+            CheckDisposed();
+            NativeApi.DrawingContext_Ellipse_(NativePointer, pen.NativePointer, brush.NativePointer, rectangle);
+        }
+        
+        public void Path(Pen pen, Brush brush, GraphicsPath path)
+        {
+            CheckDisposed();
+            NativeApi.DrawingContext_Path_(NativePointer, pen.NativePointer, brush.NativePointer, path.NativePointer);
+        }
+        
+        public void Pie(Pen pen, Brush brush, Alternet.Drawing.Point center, double radius, double startAngle, double sweepAngle)
+        {
+            CheckDisposed();
+            NativeApi.DrawingContext_Pie_(NativePointer, pen.NativePointer, brush.NativePointer, center, radius, startAngle, sweepAngle);
+        }
+        
+        public void Circle(Pen pen, Brush brush, Alternet.Drawing.Point center, double radius)
+        {
+            CheckDisposed();
+            NativeApi.DrawingContext_Circle_(NativePointer, pen.NativePointer, brush.NativePointer, center, radius);
+        }
+        
+        public void Polygon(Pen pen, Brush brush, Alternet.Drawing.Point[] points, FillMode fillMode)
+        {
+            CheckDisposed();
+            NativeApi.DrawingContext_Polygon_(NativePointer, pen.NativePointer, brush.NativePointer, points, points.Length, fillMode);
+        }
+        
         public void FillRectangle(Brush brush, Alternet.Drawing.Rect rectangle)
         {
             CheckDisposed();
@@ -293,6 +335,27 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern IntPtr DrawingContext_FromImage_(IntPtr image);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void DrawingContext_RoundedRectangle_(IntPtr obj, IntPtr pen, IntPtr brush, Alternet.Drawing.Rect rectangle, double cornerRadius);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void DrawingContext_Rectangle_(IntPtr obj, IntPtr pen, IntPtr brush, Alternet.Drawing.Rect rectangle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void DrawingContext_Ellipse_(IntPtr obj, IntPtr pen, IntPtr brush, Alternet.Drawing.Rect rectangle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void DrawingContext_Path_(IntPtr obj, IntPtr pen, IntPtr brush, IntPtr path);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void DrawingContext_Pie_(IntPtr obj, IntPtr pen, IntPtr brush, Alternet.Drawing.Point center, double radius, double startAngle, double sweepAngle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void DrawingContext_Circle_(IntPtr obj, IntPtr pen, IntPtr brush, Alternet.Drawing.Point center, double radius);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void DrawingContext_Polygon_(IntPtr obj, IntPtr pen, IntPtr brush, Alternet.Drawing.Point[] points, int pointsCount, FillMode fillMode);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void DrawingContext_FillRectangle_(IntPtr obj, IntPtr brush, Alternet.Drawing.Rect rectangle);

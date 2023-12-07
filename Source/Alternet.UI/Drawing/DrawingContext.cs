@@ -111,6 +111,122 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Calls <see cref="FillRoundedRectangle"/> and than <see cref="DrawRoundedRectangle"/>.
+        /// </summary>
+        /// <param name="pen"></param>
+        /// <param name="brush"></param>
+        /// <param name="rectangle"></param>
+        /// <param name="cornerRadius"></param>
+        /// <remarks>
+        /// This method works faster than fill and then draw.
+        /// </remarks>
+        public void RoundedRectangle(Pen pen, Brush brush, Rect rectangle, double cornerRadius)
+        {
+            dc.RoundedRectangle(pen.NativePen, brush.NativeBrush, rectangle, cornerRadius);
+        }
+
+        /// <summary>
+        /// Calls <see cref="FillRectangle"/> and than <see cref="DrawRectangle"/>.
+        /// </summary>
+        /// <param name="pen"></param>
+        /// <param name="brush"></param>
+        /// <param name="rectangle"></param>
+        /// <remarks>
+        /// This method works faster than fill and then draw.
+        /// </remarks>
+        public void Rectangle(Pen pen, Brush brush, Rect rectangle)
+        {
+            dc.Rectangle(pen.NativePen, brush.NativeBrush, rectangle);
+        }
+
+        /// <summary>
+        /// Calls <see cref="FillEllipse"/> and than <see cref="DrawEllipse"/>.
+        /// </summary>
+        /// <param name="pen"></param>
+        /// <param name="brush"></param>
+        /// <param name="rectangle"></param>
+        /// <remarks>
+        /// This method works faster than fill and then draw.
+        /// </remarks>
+        public void Ellipse(Pen pen, Brush brush, Rect rectangle)
+        {
+            dc.Ellipse(pen.NativePen, brush.NativeBrush, rectangle);
+        }
+
+        /// <summary>
+        /// Calls <see cref="FillPath"/> and than <see cref="DrawPath"/>.
+        /// </summary>
+        /// <param name="pen"></param>
+        /// <param name="brush"></param>
+        /// <param name="path"></param>
+        /// <remarks>
+        /// This method works faster than fill and then draw.
+        /// </remarks>
+        public void Path(Pen pen, Brush brush, GraphicsPath path)
+        {
+            dc.Path(pen.NativePen, brush.NativeBrush, path.NativePath);
+        }
+
+        /// <summary>
+        /// Calls <see cref="FillPie"/> and than <see cref="DrawPie"/>.
+        /// </summary>
+        /// <param name="pen"></param>
+        /// <param name="brush"></param>
+        /// <param name="center"></param>
+        /// <param name="radius"></param>
+        /// <param name="startAngle"></param>
+        /// <param name="sweepAngle"></param>
+        /// <remarks>
+        /// This method works faster than fill and then draw.
+        /// </remarks>
+        public void Pie(
+            Pen pen,
+            Brush brush,
+            Point center,
+            double radius,
+            double startAngle,
+            double sweepAngle)
+        {
+            dc.Pie(
+                pen.NativePen,
+                brush.NativeBrush,
+                center,
+                radius,
+                startAngle,
+                sweepAngle);
+        }
+
+        /// <summary>
+        /// Calls <see cref="FillCircle"/> and than <see cref="DrawCircle"/>.
+        /// </summary>
+        /// <param name="pen"></param>
+        /// <param name="brush"></param>
+        /// <param name="center"></param>
+        /// <param name="radius"></param>
+        /// <remarks>
+        /// This method works faster than fill and then draw.
+        /// </remarks>
+        public void Circle(Pen pen, Brush brush, Point center, double radius)
+        {
+            dc.Circle(pen.NativePen, brush.NativeBrush, center, radius);
+        }
+
+        /// <summary>
+        /// Calls <see cref="FillPolygon"/> and than <see cref="DrawPolygon"/>.
+        /// </summary>
+        /// <param name="pen"></param>
+        /// <param name="brush"></param>
+        /// <param name="points"></param>
+        /// <param name="fillMode"></param>
+        /// <remarks>
+        /// This method works faster than fill and then draw.
+        /// </remarks>
+        public void Polygon(Pen pen, Brush brush, Point[] points, FillMode fillMode)
+        {
+            dc.Polygon(pen.NativePen, brush.NativeBrush, points, (UI.Native.FillMode)fillMode);
+        }
+
+        /// <summary>
         /// Fills the interior of a rectangle specified by a <see cref="Rect"/> structure.
         /// </summary>
         /// <param name="brush"><see cref="Brush"/> that determines the characteristics

@@ -13,6 +13,13 @@ InterpolationMode GetInterpolationMode();
 void SetInterpolationMode(InterpolationMode value);
 
 static DrawingContext* FromImage(Image* image);
+void RoundedRectangle(Pen* pen, Brush* brush, const Rect& rectangle, double cornerRadius);
+void Rectangle(Pen* pen, Brush* brush, const Rect& rectangle);
+void Ellipse(Pen* pen, Brush* brush, const Rect& rectangle);
+void Path(Pen* pen, Brush* brush, GraphicsPath* path);
+void Pie(Pen* pen, Brush* brush, const Point& center, double radius, double startAngle, double sweepAngle);
+void Circle(Pen* pen, Brush* brush, const Point& center, double radius);
+void Polygon(Pen* pen, Brush* brush, Point* points, int pointsCount, FillMode fillMode);
 void FillRectangle(Brush* brush, const Rect& rectangle);
 void DrawRectangle(Pen* pen, const Rect& rectangle);
 void FillEllipse(Brush* brush, const Rect& bounds);

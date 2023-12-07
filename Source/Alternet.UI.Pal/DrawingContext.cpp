@@ -126,6 +126,17 @@ namespace Alternet::UI
         path->Release();
     }
 
+    void DrawingContext::Pie(Pen* pen, Brush* brush, const Point& center, double radius, double startAngle,
+        double sweepAngle)
+    {
+        auto path = new GraphicsPath(_dc, _graphicsContext);
+        path->AddArc(center, radius, startAngle, sweepAngle);
+        path->AddLineTo(center);
+        path->CloseFigure();
+        Path(pen, brush, path);
+        path->Release();
+    }
+
     void DrawingContext::DrawBezier(Pen* pen, const Point& startPoint, const Point& controlPoint1,
         const Point& controlPoint2, const Point& endPoint)
     {
@@ -173,24 +184,68 @@ namespace Alternet::UI
         FillEllipse(brush, Rect(center - Size(radius, radius), Size(diameter, diameter)));
     }
 
+    void DrawingContext::Circle(Pen* pen, Brush* brush, const Point& center, double radius)
+    {
+        auto diameter = radius * 2;
+        Ellipse(pen, brush, Rect(center - Size(radius, radius), Size(diameter, diameter)));
+    }
+
+    void DrawingContext::RoundedRectangle(Pen* pen, Brush* brush, const Rect& rect, double cornerRadius)
+    {
+        UseGC();
+        _graphicsContext->SetPen(pen->GetWxPen());
+        _graphicsContext->SetBrush(GetGraphicsBrush(brush, wxPoint2DDouble(rect.X, rect.Y)));
+        auto r = fromDipF(rect, _dc->GetWindow());
+        _graphicsContext->DrawRoundedRectangle(r.X, r.Y, r.Width, r.Height, cornerRadius);
+    }
+
     void DrawingContext::DrawRoundedRectangle(Pen* pen, const Rect& rect, double cornerRadius)
     {
-        auto path = new GraphicsPath(_dc, _graphicsContext);
-
-        path->AddRoundedRectangle(rect, cornerRadius);
-        DrawPath(pen, path);
-
-        path->Release();
+        UseGC();
+        _graphicsContext->SetPen(pen->GetWxPen());
+        _graphicsContext->SetBrush(*wxTRANSPARENT_BRUSH);
+        auto r = fromDipF(rect, _dc->GetWindow());
+        _graphicsContext->DrawRoundedRectangle(r.X, r.Y, r.Width, r.Height, cornerRadius);
     }
 
     void DrawingContext::FillRoundedRectangle(Brush* brush, const Rect& rect, double cornerRadius)
     {
-        auto path = new GraphicsPath(_dc, _graphicsContext);
+        UseGC();
+        _graphicsContext->SetPen(*wxTRANSPARENT_PEN);
+        _graphicsContext->SetBrush(GetGraphicsBrush(brush, wxPoint2DDouble(rect.X, rect.Y)));
+        auto r = fromDipF(rect, _dc->GetWindow());
+        _graphicsContext->DrawRoundedRectangle(r.X, r.Y, r.Width, r.Height, cornerRadius);
+    }
 
-        path->AddRoundedRectangle(rect, cornerRadius);
-        FillPath(brush, path);
+    void DrawingContext::DrawPath(Pen* pen, GraphicsPath* path)
+    {
+        UseGC();
+        _graphicsContext->SetPen(pen->GetWxPen());
+        _graphicsContext->StrokePath(path->GetPath());
+    }
 
-        path->Release();
+    void DrawingContext::FillPath(Brush* brush, GraphicsPath* path)
+    {
+        UseGC();
+
+        auto bounds = fromDipF(path->GetBounds(), _dc->GetWindow());
+
+        _graphicsContext->SetPen(*wxTRANSPARENT_PEN);
+        _graphicsContext->SetBrush(GetGraphicsBrush(brush, wxPoint2DDouble(bounds.X, bounds.Y)));
+
+        _graphicsContext->FillPath(path->GetPath(), path->GetWxFillMode());
+    }
+
+    void DrawingContext::Path(Pen* pen, Brush* brush, GraphicsPath* path)
+    {
+        UseGC();
+
+        auto bounds = fromDipF(path->GetBounds(), _dc->GetWindow());
+
+        _graphicsContext->SetPen(pen->GetWxPen());
+        _graphicsContext->SetBrush(GetGraphicsBrush(brush, wxPoint2DDouble(bounds.X, bounds.Y)));
+
+        _graphicsContext->DrawPath(path->GetPath(), path->GetWxFillMode());
     }
 
     void DrawingContext::DrawPolygon(Pen* pen, Point* points, int pointsCount)
@@ -239,6 +294,18 @@ namespace Alternet::UI
         path->Release();
     }
 
+    void DrawingContext::Polygon(Pen* pen, Brush* brush, Point* points,
+        int pointsCount, FillMode fillMode)
+    {
+        auto path = new GraphicsPath(_dc, _graphicsContext);
+
+        path->AddLines(points, pointsCount);
+        path->CloseFigure();
+        Path(pen, brush, path);
+
+        path->Release();
+    }
+
     void DrawingContext::DrawRectangles(Pen* pen, Rect* rects, int rectsCount)
     {
         for (int i = 0; i < rectsCount; i++)
@@ -249,25 +316,6 @@ namespace Alternet::UI
     {
         for (int i = 0; i < rectsCount; i++)
             FillRectangle(brush, rects[i]);
-    }
-
-    void DrawingContext::DrawPath(Pen* pen, GraphicsPath* path)
-    {
-        UseGC();
-        _graphicsContext->SetPen(pen->GetWxPen());
-        _graphicsContext->DrawPath(path->GetPath(), path->GetWxFillMode());
-    }
-
-    void DrawingContext::FillPath(Brush* brush, GraphicsPath* path)
-    {
-        UseGC();
-
-        auto bounds = fromDipF(path->GetBounds(), _dc->GetWindow());
-
-        _graphicsContext->SetPen(*wxTRANSPARENT_PEN);
-        _graphicsContext->SetBrush(GetGraphicsBrush(brush, wxPoint2DDouble(bounds.X, bounds.Y)));
-
-        _graphicsContext->FillPath(path->GetPath(), path->GetWxFillMode());
     }
 
     /*static*/ DrawingContext* DrawingContext::FromImage(Image* image)
@@ -499,6 +547,43 @@ namespace Alternet::UI
         }
     }
 
+    void DrawingContext::Rectangle(Pen* pen, Brush* brush, const Rect& rectangle)
+    {
+        if (NeedToUseDC())
+        {
+            UseDC();
+
+            auto& oldPen = _dc->GetPen();
+            auto& oldBrush = _dc->GetBrush();
+
+            _dc->SetPen(pen->GetWxPen());
+            _dc->SetBrush(brush->GetWxBrush());
+
+            _dc->DrawRectangle(
+                fromDip(
+                    Rect(
+                        rectangle.X,
+                        rectangle.Y,
+                        rectangle.Width,
+                        rectangle.Height),
+                    _dc->GetWindow()));
+
+            _dc->SetPen(oldPen);
+            _dc->SetBrush(oldBrush);
+        }
+        else
+        {
+            UseGC();
+
+            auto rect = fromDipF(rectangle, _dc->GetWindow());
+
+            _graphicsContext->SetPen(pen->GetWxPen());
+            _graphicsContext->SetBrush(GetGraphicsBrush(brush, wxPoint2DDouble(rect.X, rect.Y)));
+
+            _graphicsContext->DrawRectangle(rect.X, rect.Y, rect.Width, rect.Height);
+        }
+    }
+
     void DrawingContext::FillRectangle(Brush* brush, const Rect& rectangle)
     {
         if (NeedToUseDC())
@@ -588,6 +673,43 @@ namespace Alternet::UI
             auto rect = fromDipF(bounds, _dc->GetWindow());
 
             _graphicsContext->SetPen(*wxTRANSPARENT_PEN);
+            _graphicsContext->SetBrush(GetGraphicsBrush(brush, wxPoint2DDouble(rect.X, rect.Y)));
+
+            _graphicsContext->DrawEllipse(rect.X, rect.Y, rect.Width, rect.Height);
+        }
+    }
+
+    void DrawingContext::Ellipse(Pen* pen, Brush* brush, const Rect& bounds)
+    {
+        if (NeedToUseDC())
+        {
+            UseDC();
+
+            auto& oldPen = _dc->GetPen();
+            auto& oldBrush = _dc->GetBrush();
+
+            _dc->SetPen(pen->GetWxPen());
+            _dc->SetBrush(brush->GetWxBrush());
+
+            _dc->DrawEllipse(
+                fromDip(
+                    Rect(
+                        bounds.X,
+                        bounds.Y,
+                        bounds.Width,
+                        bounds.Height),
+                    _dc->GetWindow()));
+
+            _dc->SetPen(oldPen);
+            _dc->SetBrush(oldBrush);
+        }
+        else
+        {
+            UseGC();
+
+            auto rect = fromDipF(bounds, _dc->GetWindow());
+
+            _graphicsContext->SetPen(pen->GetWxPen());
             _graphicsContext->SetBrush(GetGraphicsBrush(brush, wxPoint2DDouble(rect.X, rect.Y)));
 
             _graphicsContext->DrawEllipse(rect.X, rect.Y, rect.Width, rect.Height);
