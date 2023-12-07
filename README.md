@@ -18,13 +18,10 @@ for Visual Studio is available.
 
 - [Home Page](https://www.alternet-ui.com/)
 - [Documentation](https://docs.alternet-ui.com/)
-- [Blog](https://www.alternet-ui.com/blog)
-- [Forum](https://forum.alternet-ui.com/)
-
-## Download:
-
 - [AlterNET UI NuGet](https://www.nuget.org/packages/Alternet.UI)
 - [Visual Studio Extension](https://marketplace.visualstudio.com/items?itemName=AlternetSoftwarePTYLTD.AlternetUIForVS2022)
+- [Blog](https://www.alternet-ui.com/blog)
+- [Forum](https://forum.alternet-ui.com/)
 
 ## How to use:
 
