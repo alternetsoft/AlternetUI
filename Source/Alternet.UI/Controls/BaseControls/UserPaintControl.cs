@@ -124,21 +124,30 @@ namespace Alternet.UI
             var state = CurrentState;
             var brush = GetBackground(state);
 
+            var border = Borders?.GetObjectOrNormal(state);
+
+            var radius = border?.GetUniformCornerRadius(rect);
+
+            if (radius is not null && brush is not null)
+            {
+                var color = border?.Color;
+                if (border is null || color is null)
+                {
+                    dc.FillRoundedRectangle(brush, rect.InflatedBy(-1, -1), radius.Value);
+                }
+                else
+                    dc.RoundedRectangle(color.Value.AsPen, brush, rect.InflatedBy(-1, -1), radius.Value);
+                return;
+            }
+
             if (brush != null)
             {
-                var border = Borders?.GetObjectOrNormal(state);
-                var radius = border?.GetUniformCornerRadius(rect);
-
-                if (radius is null)
-                    dc.FillRectangle(brush, rect);
-                else
-                    dc.FillRoundedRectangle(brush, rect, radius.Value);
+                dc.FillRectangle(brush, rect);
             }
 
             if (HasBorder)
             {
-                var settings = Borders?.GetObjectOrNormal(CurrentState);
-                settings?.Draw(dc, rect);
+                border?.Draw(dc, rect);
             }
         }
 

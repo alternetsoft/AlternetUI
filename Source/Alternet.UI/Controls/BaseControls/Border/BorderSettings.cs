@@ -419,11 +419,7 @@ namespace Alternet.UI
 
             if (radius != null)
             {
-                var rect1 = rect;
-                rect1.Width -= 1;
-                rect1.Height -= 1;
-
-                dc.DrawRoundedRectangle(Top.Pen, rect1, radius.Value);
+                dc.DrawRoundedRectangle(Top.Pen, rect.InflatedBy(-1, -1), radius.Value);
                 return;
             }
 
