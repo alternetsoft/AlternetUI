@@ -54,6 +54,27 @@ namespace Alternet.UI.Native
             }
         }
         
+        public bool AutoReset
+        {
+            get
+            {
+                CheckDisposed();
+                return NativeApi.Timer_GetAutoReset_(NativePointer);
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.Timer_SetAutoReset_(NativePointer, value);
+            }
+        }
+        
+        public void Restart()
+        {
+            CheckDisposed();
+            NativeApi.Timer_Restart_(NativePointer);
+        }
+        
         static GCHandle eventCallbackGCHandle;
         
         static void SetEventCallback()
@@ -116,6 +137,15 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Timer_SetInterval_(IntPtr obj, int value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool Timer_GetAutoReset_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Timer_SetAutoReset_(IntPtr obj, bool value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Timer_Restart_(IntPtr obj);
             
         }
     }

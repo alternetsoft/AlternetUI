@@ -211,7 +211,7 @@ namespace CommonDialogsSample
 
             var dialog = new ColorDialog
             {
-                Color = sampleLabel.RealBackgroundColor ?? SystemColors.Window
+                Color = sampleLabel.RealBackgroundColor,
             };
 
             if (setCustomTitleCheckBox.IsChecked)

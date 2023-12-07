@@ -14,7 +14,6 @@ namespace Alternet::UI
         
         void OnTick();
         void Start();
-        void Restart();
         void Stop();
 
         class TimerImpl : public wxTimer
@@ -29,6 +28,7 @@ namespace Alternet::UI
         };
 
         int _interval = 100;
+        bool _autoReset = true;
         TimerImpl* _timer = nullptr;
     };
 }

@@ -33,6 +33,21 @@ ALTERNET_UI_API void Timer_SetInterval_(Timer* obj, int value)
     obj->SetInterval(value);
 }
 
+ALTERNET_UI_API c_bool Timer_GetAutoReset_(Timer* obj)
+{
+    return obj->GetAutoReset();
+}
+
+ALTERNET_UI_API void Timer_SetAutoReset_(Timer* obj, c_bool value)
+{
+    obj->SetAutoReset(value);
+}
+
+ALTERNET_UI_API void Timer_Restart_(Timer* obj)
+{
+    obj->Restart();
+}
+
 ALTERNET_UI_API void Timer_SetEventCallback_(Timer::TimerEventCallbackType callback)
 {
     Timer::SetEventCallback(callback);

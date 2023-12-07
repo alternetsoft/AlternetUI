@@ -42,7 +42,23 @@ namespace Alternet::UI
 		if (_timer->IsRunning())
 			Restart();
 	}
-	
+
+	bool Timer::GetAutoReset()
+	{
+		return _autoReset;
+	}
+
+	void Timer::SetAutoReset(bool value)
+	{
+		if (_autoReset == value)
+			return;
+
+		_autoReset = value;
+
+		if (_timer->IsRunning())
+			Restart();
+	}
+
 	void Timer::OnTick()
 	{
 		RaiseEvent(TimerEvent::Tick);
@@ -51,7 +67,7 @@ namespace Alternet::UI
 	void Timer::Start()
 	{
 		if (!_timer->IsRunning())
-			_timer->Start(_interval);
+			_timer->Start(_interval, !_autoReset);
 	}
 
 	void Timer::Restart()

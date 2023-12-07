@@ -8,6 +8,11 @@ void SetEnabled(bool value);
 int GetInterval();
 void SetInterval(int value);
 
+
+bool GetAutoReset();
+void SetAutoReset(bool value);
+
+void Restart();
 public:
 enum class TimerEvent
 {
