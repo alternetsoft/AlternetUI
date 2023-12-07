@@ -950,7 +950,7 @@ namespace Alternet.Drawing
         /// Creates <see cref="Pen"/> instance for this color.
         /// </summary>
         [Browsable(false)]
-        public Pen AsPen => new(this);
+        public Pen AsPen => GetAsPen(1);
 
         /// <summary>
         /// Gets the name of this <see cref="Color"/>.
@@ -1660,6 +1660,22 @@ namespace Alternet.Drawing
 
             return (max - min) / (double)div;
         }
+
+        /// <summary>
+        /// Gets this color as <see cref="Pen"/> with the specified width.
+        /// </summary>
+        /// <param name="width">Width of the pen.</param>
+        /// <returns></returns>
+        public Pen GetAsPen(double width) => new(this, width);
+
+        /// <summary>
+        /// Gets this color as <see cref="Pen"/> with the specified width
+        /// and <see cref="DashStyle"/>.
+        /// </summary>
+        /// <param name="width">Width of the pen.</param>
+        /// <param name="dashStyle">Dash style of the pen.</param>
+        /// <returns></returns>
+        public Pen GetAsPen(double width, DashStyle dashStyle) => new(this, width, dashStyle);
 
         /// <summary>
         /// Returns ARGB values of the <see cref="Color"/>
