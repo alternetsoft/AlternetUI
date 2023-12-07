@@ -1,5 +1,17 @@
 # 0.9.410 (work in progress)
 
+## 2023 December 7
+
+- System.Drawing related changes in UI Image/Bitmap. This is done to make Image and Bitmap more compatible with System.Drawing.Image.
+Main change: All constructors are changed so image width/height are in pixels like it's done in 
+System.Drawing.Image. Previously some of the constructors had Dip sizes. BUT this was bad as there can be 
+more than one display with different DPI and we don't know which DPI to use when converting pixel to/from dip. 
+Added Size, Width, Height (in pixels). Added SizeDip(Control) and BoundsDip(Control) methods to get image 
+size in dips (now this is control related). Added new constructors (Image, int, int) and other. All examples and were code updated
+to reflect these changes.
+- Control: ForeColor, BackColor.
+- Made MinMaster.csproj template crossplatform.
+
 ## 2023 December 5
 
 - Install.OnlyDebug scripts. They build only x64 Debug, so installation is much faster when needed.
