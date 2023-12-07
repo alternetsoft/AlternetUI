@@ -23,5 +23,10 @@ namespace Alternet.UI
         /// Specifies the bitmap format. This static field is read-only.
         /// </summary>
         public static readonly string Bitmap = "Bitmap";
+
+        /// <summary>
+        /// Specifies the standard Unicode text format.
+        /// This <see langword="static" /> field is read-only.</summary>
+        public static readonly string UnicodeText = "Text";
     }
 }
