@@ -97,7 +97,7 @@ Please run the Install script each time you switch development platform
 
 If you want to develop with latest AlterNET.UI source from GitHub instead of using it from 
 [NuGet](https://www.nuget.org/packages/Alternet.UI), you can use 
-[MinMasterTemplate](\Install.Scripts\MinMasterTemplate\).
+[MinMasterTemplate](https://github.com/alternetsoft/AlternetUI/tree/master/Install.Scripts/MinMasterTemplate).
 
 ## How to create new control:
 
