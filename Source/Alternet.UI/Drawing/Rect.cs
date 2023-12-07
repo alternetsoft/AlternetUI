@@ -506,6 +506,18 @@ namespace Alternet.Drawing
             && (y <= rect.y) && (rect.y + rect.height <= y + height);
 
         /// <summary>
+        /// Converts a <see cref="Rect"/> structure to a
+        /// <see cref="Int32Rect"/> structure.
+        /// </summary>
+        /// <returns>A <see cref="Int32Rect"/> structure.</returns>
+        /// <remarks>The <see cref="Rect"/> structure is converted
+        /// to a <see cref="Int32Rect"/> structure by
+        /// truncating the values of the <see cref="Rect"/> to the next
+        /// lower integer values.</remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public readonly Int32Rect ToRect() => Int32Rect.Truncate(this);
+
+        /// <summary>
         /// Gets the hash code for this <see cref='Rect'/>.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
