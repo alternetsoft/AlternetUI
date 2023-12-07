@@ -29,6 +29,17 @@ namespace Alternet.UI
         public static bool ContainsText() => ContainsData(DataFormats.Text);
 
         /// <summary>
+        /// Gets a value indicating whether there is data on the
+        /// <see cref='Clipboard'/> in the specified <see cref="TextDataFormat"/> text format.
+        /// </summary>
+        public static bool ContainsText(TextDataFormat format)
+        {
+            if (format == TextDataFormat.Text || format == TextDataFormat.UnicodeText)
+                return ContainsData(DataFormats.Text);
+            return false;
+        }
+
+        /// <summary>
         /// Retrieves the data that is currently on the system <see cref='Clipboard'/>,
         /// or <see langword="null"/> if there is no data on the Clipboard.
         /// </summary>
