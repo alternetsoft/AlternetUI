@@ -1026,6 +1026,8 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static implicit operator Color(System.Drawing.Color color)
         {
+            if (color.IsEmpty)
+                return Color.Empty;
             var argb = color.ToArgb();
             return FromArgb(argb);
         }
@@ -1036,6 +1038,8 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static implicit operator System.Drawing.Color(Color color)
         {
+            if (color.IsEmpty)
+                return Color.Empty;
             var argb = color.ToArgb();
             return System.Drawing.Color.FromArgb(argb);
         }
