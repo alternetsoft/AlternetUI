@@ -133,11 +133,13 @@ namespace Alternet.UI
                 if (disposing)
                     DisposeManagedResources();
 
+                DisposeResources();
+
                 // Call the appropriate methods to clean up
                 // unmanaged resources here.
                 // If disposing is false,
                 // only the following code is executed.
-                if(handle != default && disposeHandle)
+                if (handle != default && disposeHandle)
                 {
                     DisposeUnmanagedResources();
                     handle = default;
@@ -152,6 +154,13 @@ namespace Alternet.UI
         /// Override to dispose managed resources.
         /// </summary>
         protected virtual void DisposeManagedResources()
+        {
+        }
+
+        /// <summary>
+        /// Override to dispose resources.
+        /// </summary>
+        protected virtual void DisposeResources()
         {
         }
 
