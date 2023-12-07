@@ -9,8 +9,6 @@ namespace MinMaster
             var control = new ListBox();
 	    control.Add("Hello");
             control.Parent = this;
-            control.Width = this.Width;
-            control.Height = this.Height;
         }
     }
 }
