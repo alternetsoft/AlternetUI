@@ -579,6 +579,15 @@ namespace PaintSample
 
             dc.DrawWave((location.X, location.Y, size.Width, size.Height), Color.Green);
 
+            var size1 = dc.MeasureText("x", Font.Default);
+
+            var size2 = dc.GetTextExtent(
+                "x",
+                Font.Default,
+                out _,
+                out _,
+                null);
+
             // <param name="descent">Dimension from the baseline of the font to
             // the bottom of the descender (the size of the tail below the baseline).</param>
             // <param name="externalLeading">Any extra vertical space added to the
