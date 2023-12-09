@@ -15,6 +15,36 @@ ALTERNET_UI_API Image* Image_Create_()
     return new Image();
 }
 
+ALTERNET_UI_API double Image_GetScaleFactor_(Image* obj)
+{
+    return obj->GetScaleFactor();
+}
+
+ALTERNET_UI_API void Image_SetScaleFactor_(Image* obj, double value)
+{
+    obj->SetScaleFactor(value);
+}
+
+ALTERNET_UI_API Int32Size_C Image_GetDipSize_(Image* obj)
+{
+    return obj->GetDipSize();
+}
+
+ALTERNET_UI_API double Image_GetScaledHeight_(Image* obj)
+{
+    return obj->GetScaledHeight();
+}
+
+ALTERNET_UI_API Int32Size_C Image_GetScaledSize_(Image* obj)
+{
+    return obj->GetScaledSize();
+}
+
+ALTERNET_UI_API double Image_GetScaledWidth_(Image* obj)
+{
+    return obj->GetScaledWidth();
+}
+
 ALTERNET_UI_API Int32Size_C Image_GetPixelSize_(Image* obj)
 {
     return obj->GetPixelSize();
@@ -48,6 +78,11 @@ ALTERNET_UI_API int Image_GetPixelHeight_(Image* obj)
 ALTERNET_UI_API int Image_GetDepth_(Image* obj)
 {
     return obj->GetDepth();
+}
+
+ALTERNET_UI_API c_bool Image_InitializeFromDipSize_(Image* obj, int width, int height, double scale, int depth)
+{
+    return obj->InitializeFromDipSize(width, height, scale, depth);
 }
 
 ALTERNET_UI_API c_bool Image_LoadFromStream_(Image* obj, void* stream)

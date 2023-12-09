@@ -13,6 +13,42 @@
 
 namespace Alternet::UI
 {
+	Int32Size Image::GetDipSize()
+	{
+		return _bitmap.GetDIPSize();
+	}
+
+	double Image::GetScaleFactor()
+	{
+		return _bitmap.GetScaleFactor();
+	}
+
+	void Image::SetScaleFactor(double value)
+	{
+		_bitmap.SetScaleFactor(value);
+	}
+
+	double Image::GetScaledHeight()
+	{
+		return _bitmap.GetScaledHeight();
+	}
+
+	Int32Size Image::GetScaledSize()
+	{
+		return _bitmap.GetScaledSize();
+	}
+
+	double Image::GetScaledWidth() 
+	{
+		return _bitmap.GetScaledWidth();
+	}
+
+	bool Image::InitializeFromDipSize(int width, int height, double scale, int depth)
+	{
+		_bitmap = wxBitmap();
+		return _bitmap.CreateWithDIPSize(width, height, scale, depth);
+	}
+
 	Image::Image()
 	{
 		GenericImage::EnsureImageHandlersInitialized();

@@ -2,9 +2,23 @@
 #include "SolidBrush.h"
 #include "FloodFill.h"
 #include "TextPainter.h"
+#include "GenericImage.h"
 
 namespace Alternet::UI
 {
+    void DrawingContext::ImageFromDrawingContext(Image * image,
+        int width, int height, DrawingContext* dc)
+    {
+        auto wxdc = dc->GetDC();
+        image->_bitmap = wxBitmap(width, height, *wxdc);
+    }
+
+    void DrawingContext::ImageFromGenericImageDC(Image* image, void* source, DrawingContext* dc)
+    {
+        auto wxdc = dc->GetDC();
+        image->_bitmap = wxBitmap(((GenericImage*)source)->_image, *wxdc);
+    }
+
     DrawingContext::DrawingContext(wxDC* dc,
         optional<std::function<void()>> onUseDC /*= nullopt*/) : _dc(dc), _onUseDC(onUseDC)
     {
@@ -984,6 +998,51 @@ namespace Alternet::UI
             maximumWidth, wrapping);
     }
 
+    Size DrawingContext::GetTextExtentSimple(const string& text, Font* font, void* control)
+    {
+#if __WXMSW__
+#else
+        _dc->ResetTransformMatrix();
+#endif
+
+        auto wxf = font->GetWxFont();
+
+        auto wxw = (wxWindow*)control;
+
+        if (true)
+        {
+            UseDC();
+
+            if (wxw == nullptr)
+                wxw = _dc->GetWindow();
+
+            int width = 0;
+            int height = 0;
+
+            auto& oldFont = _dc->GetFont();
+            _dc->SetFont(wxf);
+            _dc->GetTextExtent(wxStr(text), &width, &height, nullptr, nullptr, &wxf);
+            _dc->SetFont(oldFont);
+
+            return toDip(wxSize(width, height), wxw);
+        }
+        else
+        {
+            UseGC();
+
+            if (wxw == nullptr)
+                wxw = _dc->GetWindow();
+
+            wxDouble width;
+            wxDouble height;
+
+            _graphicsContext->SetFont(wxf, *wxBLACK);
+            _graphicsContext->GetTextExtent(wxStr(text), &width, &height, nullptr, nullptr);
+
+            return toDip(wxSize(width, height), wxw);
+        }
+    }
+
     Rect DrawingContext::GetTextExtent(const string& text, Font* font, void* control)
     {
 #if __WXMSW__
@@ -1034,15 +1093,12 @@ namespace Alternet::UI
             _graphicsContext->SetFont(wxf, *wxBLACK);
             _graphicsContext->GetTextExtent(wxStr(text), &width, &height, &descent, &externalLeading);
 
-            width = toDip(width, wxw);
-            height = toDip(height, wxw);
-            descent = toDip(descent, wxw);
-            externalLeading = toDip(externalLeading, wxw);
+            auto widthF = toDip(width, wxw);
+            auto heightF = toDip(height, wxw);
+            auto descentF = toDip(descent, wxw);
+            auto externalLeadingF = toDip(externalLeading, wxw);
 
-            return Rect(descent, externalLeading, width, height);
+            return Rect(descentF, externalLeadingF, widthF, heightF);
         }
     }
 }
-
-
-//_dc->GetMultiLineTextExtent(str, &x, &y, nullptr, &wxFont);

@@ -12,6 +12,35 @@ namespace Alternet.Drawing
     public class Bitmap : Image
     {
         /// <summary>
+        /// Creates a bitmap compatible with the given <see cref="DrawingContext"/>, inheriting
+        /// its magnification factor.
+        /// </summary>
+        /// <param name="width">The width of the bitmap in pixels, must be strictly positive.</param>
+        /// <param name="height">The height of the bitmap in pixels, must be strictly positive.</param>
+        /// <param name="dc"><see cref="DrawingContext"/> from which the scaling factor is inherited.</param>
+        public Bitmap(int width, int height, DrawingContext dc)
+            : base(width, height, dc)
+        {
+        }
+
+        /// <summary>
+        /// Creates a bitmap compatible with the given <see cref="DrawingContext"/> from
+        /// the given <see cref="GenericImage"/>.
+        /// </summary>
+        /// <param name="genericImage">Platform-independent image object.</param>
+        /// <param name="dc"><see cref="DrawingContext"/> from which the scaling
+        /// factor is inherited.</param>
+        /// <remarks>
+        /// This constructor initializes the bitmap with the data of the given image, which
+        /// must be valid, but inherits the scaling factor from the given device context
+        /// instead of simply using the default factor of 1.
+        /// </remarks>
+        public Bitmap(GenericImage genericImage, DrawingContext dc)
+            : base(genericImage, dc)
+        {
+        }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="Bitmap"/> class from
         /// the specified <see cref="GenericImage"/>.
         /// </summary>
@@ -62,6 +91,17 @@ namespace Alternet.Drawing
         /// <param name="size">The size, in device pixels, of the new <see cref="Bitmap"/>.</param>
         public Bitmap(Int32Size size)
             : base(size)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Bitmap"/> class with the specified size
+        /// amd scaling factor from the <paramref name="control"/>.
+        /// </summary>
+        /// <param name="size">The size, in device pixels, of the new <see cref="Bitmap"/>.</param>
+        /// <param name="control">The control from which pixel scaling factor is used.</param>
+        public Bitmap(Int32Size size, Control control)
+            : base(size, control)
         {
         }
 

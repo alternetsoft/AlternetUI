@@ -8,6 +8,10 @@ namespace NativeApi.Api
     {
         protected DrawingContext() { }
 
+        public static void ImageFromDrawingContext(Image image, int width, int height, DrawingContext dc) { }
+
+        public static void ImageFromGenericImageDC(Image image, IntPtr source, DrawingContext dc) { }
+
         // Fills the widths array with the widths from the beginning of text
         // to the corresponding character of text.
         // The generic version simply builds a running total of the widths of each character
@@ -27,6 +31,15 @@ namespace NativeApi.Api
         //Gets the dimensions of the string using the currently selected font.
         //This function only works with single-line strings.
         public Rect GetTextExtent(string text, Font font, IntPtr control) => default;
+
+        //text The text string to measure.
+        //width Variable to store the total calculated width of the text.
+        //height Variable to store the total calculated height of the text.
+        //descent Variable to store the dimension from the baseline of the font to the bottom of the descender.
+        //externalLeading Any extra vertical space added to the font by the font designer (usually is zero).
+        //Gets the dimensions of the string using the currently selected font.
+        //This function only works with single-line strings.
+        public Size GetTextExtentSimple(string text, Font font, IntPtr control) => default;
 
         public Size MeasureText(
             string text,

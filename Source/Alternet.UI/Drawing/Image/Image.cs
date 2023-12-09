@@ -69,6 +69,56 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="Image"/> class with the specified size
+        /// amd scaling factor from the <paramref name="control"/>.
+        /// </summary>
+        /// <param name="size">The size, in device pixels, of the new <see cref="Bitmap"/>.</param>
+        /// <param name="control">The control from which pixel scaling factor is used.</param>
+        internal Image(Int32Size size, Control control)
+            : this(size)
+        {
+            ScaleFactor = control.GetPixelScaleFactor();
+        }
+
+        /// <summary>
+        /// Creates a bitmap compatible with the given <see cref="DrawingContext"/>, inheriting
+        /// its magnification factor.
+        /// </summary>
+        /// <param name="width">The width of the bitmap in pixels, must be strictly positive.</param>
+        /// <param name="height">The height of the bitmap in pixels, must be strictly positive.</param>
+        /// <param name="dc"><see cref="DrawingContext"/> from which the scaling factor is inherited.</param>
+        internal Image(int width, int height, DrawingContext dc)
+        {
+            nativeImage = new UI.Native.Image();
+            UI.Native.DrawingContext.ImageFromDrawingContext(
+                nativeImage,
+                width,
+                height,
+                dc.NativeDrawingContext);
+        }
+
+        /// <summary>
+        /// Creates a bitmap compatible with the given <see cref="DrawingContext"/> from
+        /// the given <see cref="GenericImage"/>.
+        /// </summary>
+        /// <param name="genericImage">Platform-independent image object.</param>
+        /// <param name="dc"><see cref="DrawingContext"/> from which the scaling
+        /// factor is inherited.</param>
+        /// <remarks>
+        /// This constructor initializes the bitmap with the data of the given image, which
+        /// must be valid, but inherits the scaling factor from the given device context
+        /// instead of simply using the default factor of 1.
+        /// </remarks>
+        internal Image(GenericImage genericImage, DrawingContext dc)
+        {
+            nativeImage = new UI.Native.Image();
+            UI.Native.DrawingContext.ImageFromGenericImageDC(
+                nativeImage,
+                genericImage.Handle,
+                dc.NativeDrawingContext);
+        }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="Image"/> class from
         /// the specified data stream.
         /// </summary>
@@ -270,6 +320,86 @@ namespace Alternet.Drawing
         /// Gets image size in pixels.
         /// </summary>
         public Int32Size Size => (NativeImage.PixelWidth, NativeImage.PixelHeight);
+
+        /// <summary>
+        /// Gets or sets the scale factor of this image.
+        /// </summary>
+        /// <remarks>
+        /// Scale factor is 1 by default, but can be greater to indicate that the size of
+        /// bitmap in logical, DPI-independent pixels is smaller than its actual size in
+        /// physical pixels. Bitmaps with scale factor greater than 1 must be used in high DPI
+        /// to appear sharp on the screen.
+        /// Note that the scale factor is only used in the ports where logical pixels are not the same
+        /// as physical ones, such as MacOs or Linux, and this function always returns 1 under
+        /// the other platforms.
+        /// Setting scale to 2 means that the bitmap will be twice smaller (in each direction) when
+        /// drawn on screen in the ports in which logical and physical pixels differ
+        /// (i.e. MacOs and Linux, but not Windows). This doesn't change the bitmap actual size
+        /// or its contents, but changes its scale factor, so that it appears in a smaller
+        /// size when it is drawn on screen.
+        /// </remarks>
+        public double ScaleFactor
+        {
+            get
+            {
+                return NativeImage.ScaleFactor;
+            }
+
+            set
+            {
+                NativeImage.ScaleFactor = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets the size of bitmap in DPI-independent units.
+        /// </summary>
+        /// <remarks>
+        /// This assumes that the bitmap was created using the value of scale factor corresponding
+        /// to the current DPI and returns its physical size divided by this scale factor.
+        /// Unlike LogicalSize, this function returns the same value under all platforms
+        /// and so its result should not be used as window or device context coordinates.
+        /// </remarks>
+        public Int32Size DipSize
+        {
+            get
+            {
+                return NativeImage.DipSize;
+            }
+        }
+
+        /// <summary>
+        /// Gets the height of the bitmap in logical pixels.
+        /// </summary>
+        public double ScaledHeight
+        {
+            get
+            {
+                return NativeImage.ScaledHeight;
+            }
+        }
+
+        /// <summary>
+        /// Gets the size of the bitmap in logical pixels.
+        /// </summary>
+        public Int32Size ScaledSize
+        {
+            get
+            {
+                return NativeImage.ScaledSize;
+            }
+        }
+
+        /// <summary>
+        /// Gets the width of the bitmap in logical pixels.
+        /// </summary>
+        public double ScaledWidth
+        {
+            get
+            {
+                return NativeImage.ScaledWidth;
+            }
+        }
 
         /// <summary>
         /// Gets the color depth of the image. Returned value is 32, 24, or other.

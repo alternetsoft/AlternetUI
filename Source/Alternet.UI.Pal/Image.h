@@ -8,7 +8,7 @@ namespace Alternet::UI
     class Image : public Object
     {
 #include "Api/Image.inc"       
-    public:
+    public:                          
         wxBitmap GetBitmap();
         void SetBitmap(const wxBitmap& value);
 

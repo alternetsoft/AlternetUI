@@ -23,6 +23,61 @@ namespace Alternet.UI.Native
         {
         }
         
+        public double ScaleFactor
+        {
+            get
+            {
+                CheckDisposed();
+                return NativeApi.Image_GetScaleFactor_(NativePointer);
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.Image_SetScaleFactor_(NativePointer, value);
+            }
+        }
+        
+        public Alternet.Drawing.Int32Size DipSize
+        {
+            get
+            {
+                CheckDisposed();
+                return NativeApi.Image_GetDipSize_(NativePointer);
+            }
+            
+        }
+        
+        public double ScaledHeight
+        {
+            get
+            {
+                CheckDisposed();
+                return NativeApi.Image_GetScaledHeight_(NativePointer);
+            }
+            
+        }
+        
+        public Alternet.Drawing.Int32Size ScaledSize
+        {
+            get
+            {
+                CheckDisposed();
+                return NativeApi.Image_GetScaledSize_(NativePointer);
+            }
+            
+        }
+        
+        public double ScaledWidth
+        {
+            get
+            {
+                CheckDisposed();
+                return NativeApi.Image_GetScaledWidth_(NativePointer);
+            }
+            
+        }
+        
         public Alternet.Drawing.Int32Size PixelSize
         {
             get
@@ -86,6 +141,12 @@ namespace Alternet.UI.Native
                 return NativeApi.Image_GetDepth_(NativePointer);
             }
             
+        }
+        
+        public bool InitializeFromDipSize(int width, int height, double scale, int depth)
+        {
+            CheckDisposed();
+            return NativeApi.Image_InitializeFromDipSize_(NativePointer, width, height, scale, depth);
         }
         
         public bool LoadFromStream(InputStream stream)
@@ -217,6 +278,24 @@ namespace Alternet.UI.Native
             public static extern IntPtr Image_Create_();
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern double Image_GetScaleFactor_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Image_SetScaleFactor_(IntPtr obj, double value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern Alternet.Drawing.Int32Size Image_GetDipSize_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern double Image_GetScaledHeight_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern Alternet.Drawing.Int32Size Image_GetScaledSize_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern double Image_GetScaledWidth_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern Alternet.Drawing.Int32Size Image_GetPixelSize_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
@@ -236,6 +315,9 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern int Image_GetDepth_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool Image_InitializeFromDipSize_(IntPtr obj, int width, int height, double scale, int depth);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool Image_LoadFromStream_(IntPtr obj, IntPtr stream);

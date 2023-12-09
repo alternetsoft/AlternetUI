@@ -12,8 +12,11 @@ void SetClip(Region* value);
 InterpolationMode GetInterpolationMode();
 void SetInterpolationMode(InterpolationMode value);
 
+static void ImageFromDrawingContext(Image* image, int width, int height, DrawingContext* dc);
+static void ImageFromGenericImageDC(Image* image, void* source, DrawingContext* dc);
 void GetPartialTextExtents(const string& text, double* widths, int widthsCount, Font* font, void* control);
 Rect GetTextExtent(const string& text, Font* font, void* control);
+Size GetTextExtentSimple(const string& text, Font* font, void* control);
 Size MeasureText(const string& text, Font* font, double maximumWidth, TextWrapping textWrapping);
 static DrawingContext* FromImage(Image* image);
 void RoundedRectangle(Pen* pen, Brush* brush, const Rect& rectangle, double cornerRadius);

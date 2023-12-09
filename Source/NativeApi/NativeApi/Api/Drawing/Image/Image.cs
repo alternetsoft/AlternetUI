@@ -21,29 +21,23 @@ namespace NativeApi.Api
         // (i.e. MacOs and Linux, but not Windows). This doesn't change the bitmap actual size
         // or its contents, but changes its scale factor, so that it appears in a smaller
         // size when it is drawn on screen:
-        public double AAAScaleFactor { get; set; }
+        public double ScaleFactor { get; set; }
 
         // Returns the size of bitmap in DPI-independent units.
         // This assumes that the bitmap was created using the value of scale factor corresponding
         // to the current DPI and returns its physical size divided by this scale factor.
         // Unlike LogicalSize, this function returns the same value under all platforms
         // and so its result should not be used as window or device context coordinates.
-        Int32Size AAADipSize { get; }
+        public Int32Size DipSize { get; }
 
         // Returns the height of the bitmap in logical pixels.
-        public double AAAScaledHeight { get; }
+        public double ScaledHeight { get; }
 
         // Returns the size of the bitmap in logical pixels.        
-        public Int32Size AAAScaledSize { get; }
+        public Int32Size ScaledSize { get; }
 
         // Returns the width of the bitmap in logical pixels.
-        public double AAAScaledWidth { get; }
-
-        // Create a bitmap compatible with the given DC, inheriting its magnification factor.
-        // width-The width of the bitmap in pixels, must be strictly positive.
-        // height-The height of the bitmap in pixels, must be strictly positive.
-        // dc-DC from which the scaling factor is inherited
-        public void AAAInitializeFromDrawingContext(int width, int height, DrawingContext dc) { }
+        public double ScaledWidth { get; }
 
         // Create a bitmap specifying its size in DPI-independent pixels and the scale factor to use.
         // The physical size of the bitmap is obtained by multiplying the given size by scale and
@@ -57,16 +51,8 @@ namespace NativeApi.Api
         // scale - Scale factor used by the bitmap, see SetScaleFactor().
         // depth - The number of bits used to represent each bitmap pixel.
         // true - if the creation was successful.          
-        public bool AAAInitializeFromDipSize(int width, int height,
+        public bool InitializeFromDipSize(int width, int height,
             double scale, int depth = -1) => default;
-
-        // Creates a bitmap compatible with the given DC from the given image.
-        // This constructor initializes the bitmap with the data of the given image, which
-        // must be valid, but inherits the scaling factor from the given device context
-        // instead of simply using the default factor of 1.
-        // img Platform-independent wxImage object.
-        // dc DC from which the scaling factor is inherited
-        public void AAAInitializeFromGenericImageDC(Image source, DrawingContext dc) { }
 
         public bool LoadFromStream(InputStream stream) => default;
         public bool LoadSvgFromStream(InputStream stream, int width, int height, Color color) => default;
