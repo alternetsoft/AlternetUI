@@ -268,6 +268,30 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Returns new <see cref='Point'/> with coordinates of this point translated
+        /// by the specified amount.
+        /// </summary>
+        public readonly Point OffsetBy(double dx, double dy)
+        {
+            double newX = x;
+            double newY = y;
+
+            unchecked
+            {
+                newX += dx;
+                newY += dy;
+            }
+
+            return new(newX, newY);
+        }
+
+        /// <summary>
+        /// Returns new <see cref='Point'/> with coordinates of this point translated
+        /// by the specified amount specified in <paramref name="d"/>.
+        /// </summary>
+        public readonly Point OffsetBy(Point d) => OffsetBy(d.x, d.y);
+
+        /// <summary>
         /// Translates this <see cref='Point'/> by the specified amount.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
