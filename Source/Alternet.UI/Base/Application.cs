@@ -556,6 +556,34 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Creates application and main form, runs and disposes them.
+        /// </summary>
+        /// <param name="createFunc">Function which creates main form.</param>
+        /// <param name="runAction">Runs action after main form is created.</param>
+        /// <exception cref="Exception">If application is already created.</exception>
+        public static void CreateAndRun(Func<Window> createFunc, Action? runAction = null)
+        {
+            if (Initialized)
+                throw new Exception("The application has already been created.");
+
+            var application = new Application();
+            var window = createFunc();
+
+            void Task(object? userData)
+            {
+                runAction();
+            }
+
+            if(runAction is not null)
+                AddIdleTask(Task);
+
+            application.Run(window);
+
+            window.Dispose();
+            application.Dispose();
+        }
+
+        /// <summary>
         /// Logs name and value pair as "{name} = {value}".
         /// </summary>
         /// <param name="name">Name.</param>
@@ -1067,7 +1095,7 @@ namespace Alternet.UI
 
         private void NativeApplication_Idle(object? sender, EventArgs e)
         {
-            if (IdleTasks.Count > 0)
+            if (IdleTasks.Count > 0 && Application.current?.Windows.Count > 0)
             {
                 var task = IdleTasks.Dequeue();
                 task.Item1(task.Item2);
