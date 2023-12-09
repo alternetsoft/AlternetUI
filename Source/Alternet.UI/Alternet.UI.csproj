@@ -310,7 +310,6 @@
 
   <!-- ================================================= -->
   <ItemGroup>
-    <Folder Include="CommonWindows\" />
     <Folder Include="Drawing.System.Imported\" />
   </ItemGroup>
 
