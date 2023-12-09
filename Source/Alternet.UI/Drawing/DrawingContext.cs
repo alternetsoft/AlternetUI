@@ -1,6 +1,7 @@
 using System;
 using System.Diagnostics;
 using System.Drawing;
+using System.Runtime.CompilerServices;
 using Alternet.UI;
 using Alternet.UI.Internal.ComponentModel;
 using Alternet.UI.Localization;
@@ -100,6 +101,7 @@ namespace Alternet.Drawing
         /// the <see cref="DrawingContext"/> and
         /// related resources created by the <see cref="FromImage"/> method.
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static DrawingContext FromImage(Image image)
         {
 #if DEBUG
@@ -119,6 +121,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// This method works faster than fill and then draw.
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void RoundedRectangle(Pen pen, Brush brush, Rect rectangle, double cornerRadius)
         {
             dc.RoundedRectangle(pen.NativePen, brush.NativeBrush, rectangle, cornerRadius);
@@ -126,17 +129,21 @@ namespace Alternet.Drawing
 
         /// <summary>
         /// Gets the dimensions of the string using the specified font.
-        /// This function only works with single-line strings.
         /// </summary>
         /// <param name="text">The text string to measure.</param>
-        /// <param name="font"></param>
-        /// <param name="control"></param>
+        /// <param name="font">The Font used to get text dimensions.</param>
+        /// <param name="control">The control used to get scaling factor. Optional.</param>
         /// <param name="descent">Dimension from the baseline of the font to
         /// the bottom of the descender (the size of the tail below the baseline).</param>
         /// <param name="externalLeading">Any extra vertical space added to the
         /// font by the font designer (inter-line interval).</param>
         /// <returns><see cref="Size"/> with the total calculated width and height
         /// of the text.</returns>
+        /// <remarks>
+        /// This function only works with single-line strings.
+        /// It works faster than MeasureText methods.
+        /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Size GetTextExtent(
             string text,
             Font font,
@@ -154,6 +161,49 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Gets the dimensions of the string using the specified font.
+        /// </summary>
+        /// <param name="text">The text string to measure.</param>
+        /// <param name="font">The Font used to get text dimensions.</param>
+        /// <param name="control">The control used to get scaling factor. Can be null.</param>
+        /// <returns><see cref="Size"/> with the total calculated width and height
+        /// of the text.</returns>
+        /// <remarks>
+        /// This function only works with single-line strings.
+        /// It works faster than MeasureText methods.
+        /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public Size GetTextExtent(
+            string text,
+            Font font,
+            Control? control)
+        {
+            var result = dc.GetTextExtentSimple(
+                text,
+                font.NativeFont,
+                control is null ? default : control.WxWidget);
+            return result;
+        }
+
+        /// <summary>
+        /// Gets the dimensions of the string using the specified font.
+        /// </summary>
+        /// <param name="text">The text string to measure.</param>
+        /// <param name="font">The Font used to get text dimensions.</param>
+        /// <returns><see cref="Size"/> with the total calculated width and height
+        /// of the text.</returns>
+        /// <remarks>
+        /// This function only works with single-line strings.
+        /// It works faster than MeasureText methods.
+        /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public Size GetTextExtent(string text, Font font)
+        {
+            var result = dc.GetTextExtentSimple(text, font.NativeFont, default);
+            return result;
+        }
+
+        /// <summary>
         /// Calls <see cref="FillRectangle"/> and than <see cref="DrawRectangle"/>.
         /// </summary>
         /// <param name="pen"></param>
@@ -162,6 +212,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// This method works faster than fill and then draw.
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Rectangle(Pen pen, Brush brush, Rect rectangle)
         {
             dc.Rectangle(pen.NativePen, brush.NativeBrush, rectangle);
@@ -176,6 +227,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// This method works faster than fill and then draw.
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Ellipse(Pen pen, Brush brush, Rect rectangle)
         {
             dc.Ellipse(pen.NativePen, brush.NativeBrush, rectangle);
@@ -190,6 +242,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// This method works faster than fill and then draw.
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Path(Pen pen, Brush brush, GraphicsPath path)
         {
             dc.Path(pen.NativePen, brush.NativeBrush, path.NativePath);
@@ -207,6 +260,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// This method works faster than fill and then draw.
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Pie(
             Pen pen,
             Brush brush,
@@ -234,6 +288,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// This method works faster than fill and then draw.
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Circle(Pen pen, Brush brush, Point center, double radius)
         {
             dc.Circle(pen.NativePen, brush.NativeBrush, center, radius);
@@ -249,6 +304,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// This method works faster than fill and then draw.
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Polygon(Pen pen, Brush brush, Point[] points, FillMode fillMode)
         {
             dc.Polygon(pen.NativePen, brush.NativeBrush, points, (UI.Native.FillMode)fillMode);
@@ -265,6 +321,7 @@ namespace Alternet.Drawing
         /// This method fills the interior of the rectangle defined by the <c>rect</c> parameter,
         /// including the specified upper-left corner and up to the calculated lower and bottom edges.
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void FillRectangle(Brush brush, Rect rectangle)
         {
 #if DEBUG
@@ -288,6 +345,7 @@ namespace Alternet.Drawing
         /// <param name="sweepAngle">Angle in degrees measured clockwise from the
         /// <paramref name="startAngle"/>
         /// parameter to ending point of the arc.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void DrawArc(Pen pen, Point center, double radius, double startAngle, double sweepAngle)
         {
 #if DEBUG
@@ -325,6 +383,7 @@ namespace Alternet.Drawing
         /// <param name="x">X-coordinate of the point.</param>
         /// <param name="y">Y-coordinate of the point.</param>
         /// <exception cref="ArgumentNullException">if <paramref name="pen"/> is <c>null</c>.</exception>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void DrawPoint(Pen pen, double x, double y)
         {
 #if DEBUG
@@ -347,6 +406,7 @@ namespace Alternet.Drawing
         /// to the first side of the pie section.</param>
         /// <param name="sweepAngle">Angle in degrees measured clockwise from the startAngle
         /// parameter to the second side of the pie section.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void FillPie(
             Brush brush,
             Point center,
@@ -374,6 +434,7 @@ namespace Alternet.Drawing
         /// to the first side of the pie section.</param>
         /// <param name="sweepAngle">Angle in degrees measured clockwise from the startAngle
         /// parameter to the second side of the pie section.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void DrawPie(
             Pen pen,
             Point center,
@@ -401,6 +462,7 @@ namespace Alternet.Drawing
         /// control point for the curve.</param>
         /// <param name="endPoint"><see cref="Point"/> structure that represents the ending point
         /// of the curve.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void DrawBezier(
             Pen pen,
             Point startPoint,
@@ -424,6 +486,7 @@ namespace Alternet.Drawing
         /// Array of <see cref="Point"/> structures that represent the points that determine the curve.
         /// The number of points in the array should be a multiple of 3 plus 1, such as 4, 7, or 10.
         /// </param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void DrawBeziers(Pen pen, Point[] points)
         {
 #if DEBUG
@@ -451,6 +514,7 @@ namespace Alternet.Drawing
         /// <param name="center"><see cref="Point"/> structure that defines the center of
         /// the circle.</param>
         /// <param name="radius">Defines the radius of the circle.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void DrawCircle(Pen pen, Point center, double radius)
         {
 #if DEBUG
@@ -468,6 +532,7 @@ namespace Alternet.Drawing
         /// <param name="center"><see cref="Point"/> structure that defines the center of
         /// the circle.</param>
         /// <param name="radius">Defines the radius of the circle.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void FillCircle(Brush brush, Point center, double radius)
         {
 #if DEBUG
@@ -484,6 +549,7 @@ namespace Alternet.Drawing
         /// style of the rounded rectangle.</param>
         /// <param name="rect">A <see cref="Rect"/> that represents the rectangle to add.</param>
         /// <param name="cornerRadius">The corner radius of the rectangle.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void DrawRoundedRectangle(Pen pen, Rect rect, double cornerRadius)
         {
 #if DEBUG
@@ -502,6 +568,7 @@ namespace Alternet.Drawing
         /// fill.</param>
         /// <param name="rect">A <see cref="Rect"/> that represents the rectangle to add.</param>
         /// <param name="cornerRadius">The corner radius of the rectangle.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void FillRoundedRectangle(Brush brush, Rect rect, double cornerRadius)
         {
 #if DEBUG
@@ -519,6 +586,7 @@ namespace Alternet.Drawing
         /// of the polygon.</param>
         /// <param name="points">Array of <see cref="Point"/> structures that represent the
         /// vertices of the polygon.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void DrawPolygon(Pen pen, Point[] points)
         {
 #if DEBUG
@@ -537,6 +605,7 @@ namespace Alternet.Drawing
         /// vertices of the polygon.</param>
         /// <param name="fillMode">Member of the <see cref="FillMode"/> enumeration that
         /// determines the style of the fill.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void FillPolygon(Brush brush, Point[] points, FillMode fillMode = FillMode.Alternate)
         {
 #if DEBUG
@@ -553,6 +622,7 @@ namespace Alternet.Drawing
         /// of the outlines of the rectangles.</param>
         /// <param name="rects">Array of <see cref="Rect"/> structures that represent the
         /// rectangles to draw.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void DrawRectangles(Pen pen, Rect[] rects)
         {
 #if DEBUG
@@ -569,6 +639,7 @@ namespace Alternet.Drawing
         /// of the fill.</param>
         /// <param name="rects">Array of <see cref="Rect"/> structures that represent the
         /// rectangles to fill.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void FillRectangles(Brush brush, Rect[] rects)
         {
 #if DEBUG
@@ -591,6 +662,7 @@ namespace Alternet.Drawing
         /// The ellipse is defined by the bounding rectangle represented by the <c>bounds</c>
         /// parameter.
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void FillEllipse(Brush brush, Rect bounds)
         {
 #if DEBUG
@@ -610,6 +682,7 @@ namespace Alternet.Drawing
         /// <see langword="null"/>.</exception>
         /// <exception cref="ArgumentException"><paramref name="brush"/> is not
         /// <see cref="SolidBrush"/></exception>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void FloodFill(Brush brush, Point point)
         {
 #if DEBUG
@@ -633,6 +706,7 @@ namespace Alternet.Drawing
         /// of the rectangle.</param>
         /// <param name="rectangle">A <see cref="Rect"/> structure that represents the
         /// rectangle to draw.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void DrawRectangle(Pen pen, Rect rectangle)
         {
 #if DEBUG
@@ -648,6 +722,7 @@ namespace Alternet.Drawing
         /// <param name="pen"><see cref="Pen"/> that determines the color, width, and
         /// style of the path.</param>
         /// <param name="path"><see cref="GraphicsPath"/> to draw.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void DrawPath(Pen pen, GraphicsPath path)
         {
 #if DEBUG
@@ -663,6 +738,7 @@ namespace Alternet.Drawing
         /// <param name="brush"><see cref="Brush"/> that determines the characteristics
         /// of the fill.</param>
         /// <param name="path"><see cref="GraphicsPath"/> that represents the path to fill.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void FillPath(Brush brush, GraphicsPath path)
         {
 #if DEBUG
@@ -683,6 +759,7 @@ namespace Alternet.Drawing
         /// to connect.</param>
         /// <exception cref="ArgumentNullException"><paramref name="pen"/> is
         /// <see langword="null"/>.</exception>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void DrawLine(Pen pen, Point a, Point b)
         {
 #if DEBUG
@@ -707,6 +784,7 @@ namespace Alternet.Drawing
         /// </remarks>
         /// <exception cref="ArgumentNullException"><paramref name="pen"/> is
         /// <see langword="null"/>.</exception>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void DrawLines(Pen pen, Point[] points)
         {
 #if DEBUG
@@ -723,6 +801,7 @@ namespace Alternet.Drawing
         /// of the ellipse.</param>
         /// <param name="bounds"><see cref="Rect"/> structure that defines the boundaries
         /// of the ellipse.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void DrawEllipse(Pen pen, Rect bounds)
         {
 #if DEBUG
@@ -739,6 +818,7 @@ namespace Alternet.Drawing
         /// <param name="image"><see cref="Image"/> to draw.</param>
         /// <param name="origin"><see cref="Point"/> structure that represents the
         /// upper-left corner of the drawn image.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void DrawImageUnscaled(Image image, Point origin) => DrawImage(image, origin);
 
         /// <summary>
@@ -748,6 +828,7 @@ namespace Alternet.Drawing
         /// <param name="image"><see cref="Image"/> to draw.</param>
         /// <param name="origin"><see cref="Point"/> structure that represents the
         /// upper-left corner of the drawn image.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void DrawImage(Image image, Point origin)
         {
 #if DEBUG
@@ -763,6 +844,7 @@ namespace Alternet.Drawing
         /// <param name="image"><see cref="Image"/> to draw.</param>
         /// <param name="destinationRect">The region in which to draw
         /// <paramref name="image"/>.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void DrawImage(Image image, Rect destinationRect)
         {
 #if DEBUG
@@ -783,6 +865,7 @@ namespace Alternet.Drawing
         /// <see cref="Rect"/> structure that specifies the portion of the
         /// <paramref name="image"/> object to draw.
         /// </param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void DrawImage(Image image, Rect destinationRect, Rect sourceRect)
         {
 #if DEBUG
@@ -804,6 +887,7 @@ namespace Alternet.Drawing
         /// <see cref="Rect"/> structure that specifies the portion of the
         /// <paramref name="image"/> object to draw.
         /// </param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void DrawImage(Image image, Rect destinationRect, Rect sourceRect, GraphicsUnit unit)
         {
             if (unit != GraphicsUnit.Pixel)
@@ -826,6 +910,7 @@ namespace Alternet.Drawing
         /// the drawn text.</param>
         /// <param name="origin"><see cref="Point"/> structure that specifies the upper-left
         /// corner of the drawn text.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void DrawText(string text, Font font, Brush brush, Point origin)
         {
             DrawText(text, font, brush, origin, TextFormat.Default);
@@ -844,6 +929,7 @@ namespace Alternet.Drawing
         /// <param name="format"><see cref="TextFormat"/> that specifies formatting attributes,
         /// such as
         /// alignment and trimming, that are applied to the drawn text.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void DrawText(string text, Font font, Brush brush, Point origin, TextFormat format)
         {
 #if DEBUG
@@ -873,6 +959,7 @@ namespace Alternet.Drawing
         /// of the drawn text.</param>
         /// <param name="bounds"><see cref="Rect"/> structure that specifies the bounds of
         /// the drawn text.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void DrawText(string text, Font font, Brush brush, Rect bounds)
         {
             DrawText(text, font, brush, bounds, TextFormat.Default);
@@ -892,6 +979,7 @@ namespace Alternet.Drawing
         /// <param name="format"><see cref="TextFormat"/> that specifies formatting attributes,
         /// such as
         /// alignment and trimming, that are applied to the drawn text.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void DrawText(
             string text,
             Font font,
@@ -927,6 +1015,7 @@ namespace Alternet.Drawing
         /// Specify rectangle of the text, line is drawn on the bottom. You can pass the rectangle
         /// which is returned by measure text functions.
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public virtual void DrawWave(Rect rect, Color color)
         {
             Draw(this, rect.ToRect(), color);
@@ -990,6 +1079,7 @@ namespace Alternet.Drawing
         /// in device-independent units (1/96th inch per unit), of the
         /// string specified by the <c>text</c> parameter as drawn with the <c>font</c> parameter.
         /// </returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Size MeasureText(string text, Font font)
         {
 #if DEBUG
@@ -1015,6 +1105,7 @@ namespace Alternet.Drawing
         /// in device-independent units (1/96th inch per unit), of the
         /// string specified by the <c>text</c> parameter as drawn with the <c>font</c> parameter.
         /// </returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Size MeasureText(string text, Font font, double maximumWidth)
         {
 #if DEBUG
@@ -1047,6 +1138,7 @@ namespace Alternet.Drawing
         /// in device-independent units (1/96th inch per unit), of the
         /// string specified by the <c>text</c> parameter as drawn with the <c>font</c> parameter.
         /// </returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Size MeasureText(string text, Font font, double maximumWidth, TextFormat format)
         {
 #if DEBUG
@@ -1070,6 +1162,7 @@ namespace Alternet.Drawing
         /// Pushes the current state of the <see cref="DrawingContext"/> transformation
         /// matrix on a stack.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Push()
         {
             dc.Push();
@@ -1081,6 +1174,7 @@ namespace Alternet.Drawing
         /// and concatenates the current transform with a new transform.
         /// </summary>
         /// <param name="transform">A transform to concatenate with the current transform.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void PushTransform(TransformMatrix transform)
         {
             Push();
@@ -1093,6 +1187,7 @@ namespace Alternet.Drawing
         /// Pops a stored state from the stack and sets the current transformation matrix
         /// to that state.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Pop()
         {
             dc.Pop();
