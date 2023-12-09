@@ -72,7 +72,7 @@ namespace ControlsSample
                     if (File.Exists(dialog.FileName))
                     {
                         animation.Stop();
-                        if (!animation.LoadFile(dialog.FileName, AnimationType.Any))
+                        if (!animation.LoadFile(dialog.FileName!, AnimationType.Any))
                         {
                             Application.Log($"Error loading file: {dialog.FileName}");
                         }

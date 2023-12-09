@@ -7,8 +7,8 @@ namespace PaintSample
 {
     public class Document : IDisposable
     {
+        private readonly Control control;
         private bool isDisposed;
-        private Control control;
 
         private Image? bitmap;
 
@@ -28,6 +28,8 @@ namespace PaintSample
             FileName = fileName;
             Dirty = false;
         }
+
+        public Control Control => control;
 
         public void Save(string fileName)
         {
@@ -66,10 +68,7 @@ namespace PaintSample
             {
                 if (bitmap == value)
                     return;
-
-                if (bitmap != null)
-                    bitmap.Dispose();
-
+                bitmap?.Dispose();
                 bitmap = value;
                 OnChanged();
             }
@@ -112,8 +111,7 @@ namespace PaintSample
         {
             drawingContext.FillRectangle(Brushes.White, Bitmap.BoundsDip(control));
             drawingContext.DrawImage(Bitmap, Point.Empty);
-            if (previewAction != null)
-                previewAction(drawingContext);
+            previewAction?.Invoke(drawingContext);
         }
 
         public void Dispose()

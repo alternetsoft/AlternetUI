@@ -7,7 +7,7 @@ namespace MinMaster
     {
         public MainWindow()
         {
-            Bitmap image = new(700, 500);
+            Bitmap image = new((700, 500), this);
 
             var control = new PictureBox
             {
