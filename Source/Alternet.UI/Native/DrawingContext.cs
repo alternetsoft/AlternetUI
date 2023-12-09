@@ -73,6 +73,24 @@ namespace Alternet.UI.Native
             }
         }
         
+        public void GetPartialTextExtents(string text, System.Double[] widths, Font font, System.IntPtr control)
+        {
+            CheckDisposed();
+            NativeApi.DrawingContext_GetPartialTextExtents_(NativePointer, text, widths, widths.Length, font.NativePointer, control);
+        }
+        
+        public Alternet.Drawing.Rect GetTextExtent(string text, Font font, System.IntPtr control)
+        {
+            CheckDisposed();
+            return NativeApi.DrawingContext_GetTextExtent_(NativePointer, text, font.NativePointer, control);
+        }
+        
+        public Alternet.Drawing.Size MeasureText(string text, Font font, double maximumWidth, TextWrapping textWrapping)
+        {
+            CheckDisposed();
+            return NativeApi.DrawingContext_MeasureText_(NativePointer, text, font.NativePointer, maximumWidth, textWrapping);
+        }
+        
         public static DrawingContext FromImage(Image image)
         {
             var _nnn = NativeApi.DrawingContext_FromImage_(image.NativePointer);
@@ -193,12 +211,6 @@ namespace Alternet.UI.Native
         {
             CheckDisposed();
             NativeApi.DrawingContext_DrawImagePortionAtRect_(NativePointer, image.NativePointer, destinationRect, sourceRect);
-        }
-        
-        public Alternet.Drawing.Size MeasureText(string text, Font font, double maximumWidth, TextWrapping textWrapping)
-        {
-            CheckDisposed();
-            return NativeApi.DrawingContext_MeasureText_(NativePointer, text, font.NativePointer, maximumWidth, textWrapping);
         }
         
         public void Push()
@@ -334,6 +346,15 @@ namespace Alternet.UI.Native
             public static extern void DrawingContext_SetInterpolationMode_(IntPtr obj, InterpolationMode value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void DrawingContext_GetPartialTextExtents_(IntPtr obj, string text, System.Double[] widths, int widthsCount, IntPtr font, System.IntPtr control);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern Alternet.Drawing.Rect DrawingContext_GetTextExtent_(IntPtr obj, string text, IntPtr font, System.IntPtr control);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern Alternet.Drawing.Size DrawingContext_MeasureText_(IntPtr obj, string text, IntPtr font, double maximumWidth, TextWrapping textWrapping);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern IntPtr DrawingContext_FromImage_(IntPtr image);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
@@ -392,9 +413,6 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void DrawingContext_DrawImagePortionAtRect_(IntPtr obj, IntPtr image, Alternet.Drawing.Rect destinationRect, Alternet.Drawing.Rect sourceRect);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.Size DrawingContext_MeasureText_(IntPtr obj, string text, IntPtr font, double maximumWidth, TextWrapping textWrapping);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void DrawingContext_Push_(IntPtr obj);

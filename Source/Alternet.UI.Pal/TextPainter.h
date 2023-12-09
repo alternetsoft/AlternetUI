@@ -367,7 +367,9 @@ namespace Alternet::UI
             {
                 wxCoord x = 0, y = 0;
                 auto& oldFont = _dc->GetFont();
-                _dc->SetFont(wxFont); // just passing font as a GetMultiLineTextExtent argument doesn't work on macOS/Linux
+                
+                // just passing font as a GetMultiLineTextExtent argument doesn't work on macOS/Linux
+                _dc->SetFont(wxFont); 
 
                 wxString str = wxStr(text);
                 if (!isnan(maximumWidth))
@@ -461,7 +463,6 @@ namespace Alternet::UI
                 auto& oldFont = _dc->GetFont();
                 _dc->SetTextForeground(solidBrush->GetWxBrush().GetColour());
                 _dc->SetFont(font->GetWxFont());
-
 
                 if (useBounds)
                 {

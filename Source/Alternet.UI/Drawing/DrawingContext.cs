@@ -4,7 +4,6 @@ using System.Drawing;
 using Alternet.UI;
 using Alternet.UI.Internal.ComponentModel;
 using Alternet.UI.Localization;
-using Alternet.UI.Native;
 
 namespace Alternet.Drawing
 {
@@ -123,6 +122,35 @@ namespace Alternet.Drawing
         public void RoundedRectangle(Pen pen, Brush brush, Rect rectangle, double cornerRadius)
         {
             dc.RoundedRectangle(pen.NativePen, brush.NativeBrush, rectangle, cornerRadius);
+        }
+
+        /// <summary>
+        /// Gets the dimensions of the string using the specified font.
+        /// This function only works with single-line strings.
+        /// </summary>
+        /// <param name="text">The text string to measure.</param>
+        /// <param name="font"></param>
+        /// <param name="control"></param>
+        /// <param name="descent">Dimension from the baseline of the font to
+        /// the bottom of the descender (the size of the tail below the baseline).</param>
+        /// <param name="externalLeading">Any extra vertical space added to the
+        /// font by the font designer (inter-line interval).</param>
+        /// <returns><see cref="Size"/> with the total calculated width and height
+        /// of the text.</returns>
+        public Size GetTextExtent(
+            string text,
+            Font font,
+            out double descent,
+            out double externalLeading,
+            Control? control = null)
+        {
+            var result = dc.GetTextExtent(
+                text,
+                font.NativeFont,
+                control is null ? default : control.WxWidget);
+            descent = result.X;
+            externalLeading = result.Y;
+            return result.Size;
         }
 
         /// <summary>
@@ -887,6 +915,69 @@ namespace Alternet.Drawing
                 (UI.Native.TextVerticalAlignment)format.VerticalAlignment,
                 (UI.Native.TextTrimming)format.Trimming,
                 (UI.Native.TextWrapping)format.Wrapping);
+        }
+
+        /// <summary>
+        /// Draws waved line in the specified rectangular area.
+        /// </summary>
+        /// <param name="rect">Rectangle that bounds the drawing area for the wave.</param>
+        /// <param name="color">Color used to draw wave.</param>
+        /// <remarks>
+        /// This line looks like line drawn by Visual Studio in error position under the text.
+        /// Specify rectangle of the text, line is drawn on the bottom. You can pass the rectangle
+        /// which is returned by measure text functions.
+        /// </remarks>
+        public virtual void DrawWave(Rect rect, Color color)
+        {
+            Draw(this, rect.ToRect(), color);
+
+            void Draw(DrawingContext dc, Int32Rect rect, Color color)
+            {
+                int minSize = 4;
+                int offset = 6;
+
+                int left = rect.Left - (rect.Left % offset);
+                int i = rect.Right % offset;
+                int right = (i != 0) ? rect.Right + (offset - i) : rect.Right;
+
+                int scale = 2;
+                int size = (right - left) / scale;
+
+                offset = 3;
+
+                if (size < minSize)
+                    size = minSize;
+                else
+                {
+                    i = (int)((size - minSize) / offset);
+                    if ((size - minSize) % offset != 0)
+                        i++;
+                    size = minSize + (i * offset);
+                }
+
+                Point[] pts = new Point[size];
+                for (int index = 0; index < size; index++)
+                {
+                    pts[index].X = left + (index * scale);
+                    pts[index].Y = rect.Bottom - 1;
+                    switch (index % 3)
+                    {
+                        case 0:
+                            {
+                                pts[index].Y -= scale;
+                                break;
+                            }
+
+                        case 2:
+                            {
+                                pts[index].Y += scale;
+                                break;
+                            }
+                    }
+                }
+
+                dc.DrawBeziers(color.GetAsPen(1), pts);
+            }
         }
 
         /// <summary>

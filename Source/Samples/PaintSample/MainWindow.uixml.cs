@@ -558,69 +558,31 @@ namespace PaintSample
 
         public void DrawSample(DrawingContext dc, Point location)
         {
+            var s = "Hello text";
+
             var font = Control.DefaultFont.Scaled(5);
-            var measure = dc.MeasureText("Hello text", font);
-            dc.DrawText("Hello text", font, Color.Black.AsBrush, location);
-            dc.DrawRectangle(Color.Navy.AsPen, (location.X, location.Y, measure.Width, measure.Height));
-            DrawWave(dc, (location.X, location.Y, measure.Width, measure.Height), Color.Red);
-        }
+            var measure = dc.MeasureText(s, font);
+            dc.DrawText(s, font, Color.Black.AsBrush, location);
+            dc.DrawRectangle(Color.DarkRed.AsPen, (location.X, location.Y, measure.Width, measure.Height));
 
-        /// <summary>
-        /// Draws waved line in the specified rectangular area.
-        /// </summary>
-        /// <param name="rect">Rectangle that bounds the drawing area for the wave.</param>
-        /// <param name="color">Color used to draw wave.</param>
-        public virtual void DrawWave(DrawingContext dc, Rect rect, Color color)
-        {
-            Draw(dc, rect.ToRect(), color);
 
-            void Draw(DrawingContext dc, Int32Rect rect, Color color)
-            {
-                int minSize = 4;
-                int offset = 6;
+            var size = dc.GetTextExtent(
+                s,
+                font,
+                out double descent,
+                out double externalLeading,
+                null);
+            dc.DrawRectangle(Color.Red.AsPen, (location.X, location.Y, size.Width, size.Height));
 
-                int left = rect.Left - (rect.Left % offset);
-                int i = rect.Right % offset;
-                int right = (i != 0) ? rect.Right + (offset - i) : rect.Right;
+            var y = location.Y - descent + size.Height;
+            dc.DrawLine(Color.RosyBrown.AsPen, (location.X, y), (location.X + size.Width, y));
 
-                int scale = 2;
-                int size = (right - left) / scale;
+            dc.DrawWave((location.X, location.Y, size.Width, size.Height), Color.Green);
 
-                offset = 3;
-
-                if (size < minSize)
-                    size = minSize;
-                else
-                {
-                    i = (int)((size - minSize) / offset);
-                    if ((size - minSize) % offset != 0)
-                        i++;
-                    size = minSize + (i * offset);
-                }
-
-                Point[] pts = new Point[size];
-                for (int index = 0; index < size; index++)
-                {
-                    pts[index].X = left + (index * scale);
-                    pts[index].Y = rect.Bottom - 1;
-                    switch (index % 3)
-                    {
-                        case 0:
-                            {
-                                pts[index].Y -= scale;
-                                break;
-                            }
-
-                        case 2:
-                            {
-                                pts[index].Y += scale;
-                                break;
-                            }
-                    }
-                }
-
-                dc.DrawBeziers(color.GetAsPen(1), pts);
-            }
+            // <param name="descent">Dimension from the baseline of the font to
+            // the bottom of the descender (the size of the tail below the baseline).</param>
+            // <param name="externalLeading">Any extra vertical space added to the
+            // font by the font designer (inter-line interval).</param>
         }
     }
 }

@@ -5,11 +5,11 @@
 #include "DrawingContext.h"
 #include "TransformMatrix.h"
 #include "Region.h"
+#include "Font.h"
 #include "Image.h"
 #include "Pen.h"
 #include "Brush.h"
 #include "GraphicsPath.h"
-#include "Font.h"
 #include "ApiUtils.h"
 #include "Exceptions.h"
 
@@ -43,6 +43,21 @@ ALTERNET_UI_API InterpolationMode DrawingContext_GetInterpolationMode_(DrawingCo
 ALTERNET_UI_API void DrawingContext_SetInterpolationMode_(DrawingContext* obj, InterpolationMode value)
 {
     obj->SetInterpolationMode(value);
+}
+
+ALTERNET_UI_API void DrawingContext_GetPartialTextExtents_(DrawingContext* obj, const char16_t* text, double* widths, int widthsCount, Font* font, void* control)
+{
+    obj->GetPartialTextExtents(text, widths, widthsCount, font, control);
+}
+
+ALTERNET_UI_API Rect_C DrawingContext_GetTextExtent_(DrawingContext* obj, const char16_t* text, Font* font, void* control)
+{
+    return obj->GetTextExtent(text, font, control);
+}
+
+ALTERNET_UI_API Size_C DrawingContext_MeasureText_(DrawingContext* obj, const char16_t* text, Font* font, double maximumWidth, TextWrapping textWrapping)
+{
+    return obj->MeasureText(text, font, maximumWidth, textWrapping);
 }
 
 ALTERNET_UI_API DrawingContext* DrawingContext_FromImage_(Image* image)
@@ -143,11 +158,6 @@ ALTERNET_UI_API void DrawingContext_DrawImageAtRect_(DrawingContext* obj, Image*
 ALTERNET_UI_API void DrawingContext_DrawImagePortionAtRect_(DrawingContext* obj, Image* image, Rect destinationRect, Rect sourceRect)
 {
     obj->DrawImagePortionAtRect(image, destinationRect, sourceRect);
-}
-
-ALTERNET_UI_API Size_C DrawingContext_MeasureText_(DrawingContext* obj, const char16_t* text, Font* font, double maximumWidth, TextWrapping textWrapping)
-{
-    return obj->MeasureText(text, font, maximumWidth, textWrapping);
 }
 
 ALTERNET_UI_API void DrawingContext_Push_(DrawingContext* obj)

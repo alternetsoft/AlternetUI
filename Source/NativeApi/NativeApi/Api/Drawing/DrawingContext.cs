@@ -8,6 +8,32 @@ namespace NativeApi.Api
     {
         protected DrawingContext() { }
 
+        // Fills the widths array with the widths from the beginning of text
+        // to the corresponding character of text.
+        // The generic version simply builds a running total of the widths of each character
+        // using GetTextExtent(), however if the various platforms have a native API function
+        // that is faster or more accurate than the generic implementation then it should be used instead.
+        public void GetPartialTextExtents(string text, double[]	widths, Font font, IntPtr control) { }
+
+        //X wxDouble* width,
+        //Y wxDouble* height,
+        //W wxDouble* descent,
+        //H wxDouble* externalLeading
+        //text The text string to measure.
+        //width Variable to store the total calculated width of the text.
+        //height Variable to store the total calculated height of the text.
+        //descent Variable to store the dimension from the baseline of the font to the bottom of the descender.
+        //externalLeading Any extra vertical space added to the font by the font designer (usually is zero).
+        //Gets the dimensions of the string using the currently selected font.
+        //This function only works with single-line strings.
+        public Rect GetTextExtent(string text, Font font, IntPtr control) => default;
+
+        public Size MeasureText(
+            string text,
+            Font font,
+            double maximumWidth,
+            TextWrapping textWrapping) => throw new Exception();
+
         public static DrawingContext FromImage(Image image) => throw new Exception();
 
         public void RoundedRectangle(Pen pen, Brush brush, Rect rectangle, double cornerRadius) { }
@@ -51,12 +77,6 @@ namespace NativeApi.Api
         public void DrawImageAtRect(Image image, Rect destinationRect) => throw new Exception();
 
         public void DrawImagePortionAtRect(Image image, Rect destinationRect, Rect sourceRect) { }
-
-        public Size MeasureText(
-            string text,
-            Font font,
-            double maximumWidth,
-            TextWrapping textWrapping) => throw new Exception();
 
         public void Push() => throw new Exception();
 

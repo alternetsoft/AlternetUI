@@ -847,6 +847,58 @@ namespace Alternet::UI
         }
     }
 
+    void DrawingContext::GetPartialTextExtents(const string& text,
+        double* widths, int widthsCount, Font* font, void* control)
+    {
+
+    }
+
+    Rect DrawingContext::GetTextExtent(const string& text, Font* font, void* control)
+    {
+        auto wxf = font->GetWxFont();
+
+        auto wxw = (wxWindow*)control;
+        if (wxw == nullptr)
+            wxw = _dc->GetWindow();
+
+        if (NeedToUseDC())
+        {
+            UseDC();
+
+            int width = 0;
+            int height = 0;
+            int descent = 0;
+            int externalLeading = 0;
+
+            _dc->GetTextExtent(wxStr(text), &width, &height, &descent, &externalLeading, &wxf);
+
+            width = toDip(width, wxw);
+            height = toDip(height, wxw);
+            descent = toDip(descent, wxw);
+            externalLeading = toDip(externalLeading, wxw);
+            return Rect(descent, externalLeading, width, height);
+        }
+        else
+        {
+            UseGC();
+
+            wxDouble width;
+            wxDouble height;
+            wxDouble descent;
+            wxDouble externalLeading;
+
+            _graphicsContext->SetFont(wxf, *wxBLACK);
+            _graphicsContext->GetTextExtent(wxStr(text), &width, &height, &descent, &externalLeading);
+
+            width = toDipF(width, wxw);
+            height = toDipF(height, wxw);
+            descent = toDipF(descent, wxw);
+            externalLeading = toDipF(externalLeading, wxw);
+
+            return Rect(descent, externalLeading, width, height);
+        }
+    }
+
     void DrawingContext::DrawEllipse(Pen* pen, const Rect& bounds)
     {
         if (NeedToUseDC())
