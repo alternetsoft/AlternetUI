@@ -1,5 +1,33 @@
 # 0.9.410 (work in progress)
 
+## 2023 December 9
+
+- Improved Image/Bitmap:
+    * public Bitmap(int width, int height, DrawingContext dc);
+    * public Bitmap(GenericImage genericImage, DrawingContext dc);
+    * public Bitmap(Int32Size size, Control control);
+    * double ScaledWidth {get;}
+    * public Int32Size ScaledSize {get;}
+    * double ScaledHeight {get;}
+    * public Int32Size DipSize {get;}
+    * public double ScaleFactor {get;set;}
+- Timer made more compatible with system timer. Interval property is now int. Added IntervalAsTimeSpan, AutoReset property.
+Added Elapsed event. Timer is not inherited from Component and supports IComponent. Added sample in Source/Tests/Timer.
+- Color.GetAsPen(double width, DashStyle dashStyle), Color.GetAsPen(double width).
+- Clipboard.ContainsText(TextDataFormat).
+- DrawingContext new methods. Allow to fill and stroke figure in one call.
+    * void RoundedRectangle(Pen pen, Brush brush, Rect rectangle, double cornerRadius);
+    * void Rectangle(Pen pen, Brush brush, Rect rectangle);
+    * void Ellipse(Pen pen, Brush brush, Rect rectangle);
+    * void Path(Pen pen, Brush brush, GraphicsPath path);
+    * void Pie(Pen pen, Brush brush, Point center, double radius, double startAngle, double sweepAngle);
+    * void Circle(Pen pen, Brush brush, Point center, double radius);
+    * void Polygon(Pen pen, Brush brush, Point[] points, FillMode fillMode);
+- Better painting in Border/PaintBox.
+- Font: Smaller, Larger, Scaled.
+- Rect.ToRect, Point.OffsetBy, Image.Canvas. 
+- Ceiling method in Rect, Point, Size.
+
 ## 2023 December 7
 
 - System.Drawing related changes in UI Image/Bitmap. This is done to make Image and Bitmap more compatible with System.Drawing.Image.
