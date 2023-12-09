@@ -853,52 +853,6 @@ namespace Alternet::UI
 
     }
 
-    Rect DrawingContext::GetTextExtent(const string& text, Font* font, void* control)
-    {
-        auto wxf = font->GetWxFont();
-
-        auto wxw = (wxWindow*)control;
-        if (wxw == nullptr)
-            wxw = _dc->GetWindow();
-
-        if (NeedToUseDC())
-        {
-            UseDC();
-
-            int width = 0;
-            int height = 0;
-            int descent = 0;
-            int externalLeading = 0;
-
-            _dc->GetTextExtent(wxStr(text), &width, &height, &descent, &externalLeading, &wxf);
-
-            width = toDip(width, wxw);
-            height = toDip(height, wxw);
-            descent = toDip(descent, wxw);
-            externalLeading = toDip(externalLeading, wxw);
-            return Rect(descent, externalLeading, width, height);
-        }
-        else
-        {
-            UseGC();
-
-            wxDouble width;
-            wxDouble height;
-            wxDouble descent;
-            wxDouble externalLeading;
-
-            _graphicsContext->SetFont(wxf, *wxBLACK);
-            _graphicsContext->GetTextExtent(wxStr(text), &width, &height, &descent, &externalLeading);
-
-            width = toDipF(width, wxw);
-            height = toDipF(height, wxw);
-            descent = toDipF(descent, wxw);
-            externalLeading = toDipF(externalLeading, wxw);
-
-            return Rect(descent, externalLeading, width, height);
-        }
-    }
-
     void DrawingContext::DrawEllipse(Pen* pen, const Rect& bounds)
     {
         if (NeedToUseDC())
@@ -1029,4 +983,66 @@ namespace Alternet::UI
         return std::unique_ptr<TextPainter>(GetTextPainter())->MeasureText(text, font,
             maximumWidth, wrapping);
     }
+
+    Rect DrawingContext::GetTextExtent(const string& text, Font* font, void* control)
+    {
+#if __WXMSW__
+#else
+        _dc->ResetTransformMatrix();
+#endif
+
+        auto wxf = font->GetWxFont();
+
+        auto wxw = (wxWindow*)control;
+
+        if (true)
+        {
+            UseDC();
+
+            if (wxw == nullptr)
+                wxw = _dc->GetWindow();
+
+            int width = 0;
+            int height = 0;
+            int descent = 0;
+            int externalLeading = 0;
+
+            auto& oldFont = _dc->GetFont();
+
+            _dc->SetFont(wxf);
+            _dc->GetTextExtent(wxStr(text), &width, &height, &descent, &externalLeading, &wxf);
+            _dc->SetFont(oldFont);
+
+            auto widthF = toDip(width, wxw);
+            auto heightF = toDip(height, wxw);
+            auto descentF = toDip(descent, wxw);
+            auto externalLeadingF = toDip(externalLeading, wxw);
+            return Rect(descentF, externalLeadingF, widthF, heightF);
+        }
+        else
+        {
+            UseGC();
+
+            if (wxw == nullptr)
+                wxw = _dc->GetWindow();
+
+            wxDouble width;
+            wxDouble height;
+            wxDouble descent;
+            wxDouble externalLeading;
+
+            _graphicsContext->SetFont(wxf, *wxBLACK);
+            _graphicsContext->GetTextExtent(wxStr(text), &width, &height, &descent, &externalLeading);
+
+            width = toDip(width, wxw);
+            height = toDip(height, wxw);
+            descent = toDip(descent, wxw);
+            externalLeading = toDip(externalLeading, wxw);
+
+            return Rect(descent, externalLeading, width, height);
+        }
+    }
 }
+
+
+//_dc->GetMultiLineTextExtent(str, &x, &y, nullptr, &wxFont);
