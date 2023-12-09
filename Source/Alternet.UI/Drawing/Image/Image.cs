@@ -240,6 +240,13 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Gets <see cref="DrawingContext"/> which allows to draw on the image.
+        /// Same as <see cref="GetDrawingContext"/>.
+        /// </summary>
+        [Browsable(false)]
+        public DrawingContext Canvas => GetDrawingContext();
+
+        /// <summary>
         /// Gets image width in pixels.
         /// </summary>
         public int Width => NativeImage.PixelWidth;
