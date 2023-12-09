@@ -9,13 +9,7 @@ namespace PaintSample
         [STAThread]
         public static void Main()
         {
-            var application = new Application();
-            var window = new MainWindow();
-
-            application.Run(window);
-
-            window.Dispose();
-            application.Dispose();
+            Application.CreateAndRun(() => new MainWindow());
         }
     }
 }
