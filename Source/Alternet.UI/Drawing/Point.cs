@@ -310,6 +310,17 @@ namespace Alternet.Drawing
         public readonly Int32Point ToPoint() => Int32Point.Truncate(this);
 
         /// <summary>
+        /// Returns new <see cref="Point"/> value with ceiling of the <see cref="X"/> and
+        /// <see cref="Y"/>. Uses <see cref="Math.Ceiling(double)"/> on values.
+        /// </summary>
+        /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public readonly Point Ceiling()
+        {
+            return new(Math.Ceiling(x), Math.Ceiling(y));
+        }
+
+        /// <summary>
         /// Serves as the default hash function.
         /// </summary>
         /// <returns>A hash code for the current object.</returns>

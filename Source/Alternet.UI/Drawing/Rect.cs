@@ -566,6 +566,17 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Returns new <see cref="Rect"/> value with ceiling of location and size.
+        /// Uses <see cref="Math.Ceiling(double)"/> on values.
+        /// </summary>
+        /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public readonly Rect Ceiling()
+        {
+            return new(Math.Ceiling(x), Math.Ceiling(y), Math.Ceiling(width), Math.Ceiling(height));
+        }
+
+        /// <summary>
         /// Creates a <see cref='Rect'/> with the specified location.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

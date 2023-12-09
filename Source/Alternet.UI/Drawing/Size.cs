@@ -449,6 +449,17 @@ namespace Alternet.Drawing
         public override readonly int GetHashCode() => HashCode.Combine(Width, Height);
 
         /// <summary>
+        /// Returns new <see cref="Size"/> value with ceiling of the <see cref="Width"/> and
+        /// <see cref="Height"/>. Uses <see cref="Math.Ceiling(double)"/> on values.
+        /// </summary>
+        /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public readonly Size Ceiling()
+        {
+            return new(Math.Ceiling(width), Math.Ceiling(height));
+        }
+
+        /// <summary>
         /// Converts a <see cref="Size"/> structure to a <see cref="Point"/> structure.
         /// </summary>
         /// <returns>A <see cref="Point"/> structure.</returns>
