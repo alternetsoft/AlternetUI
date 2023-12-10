@@ -18,37 +18,27 @@ namespace ControlsSample
         {
             InitializeComponent();
 
-            panelHeader.Add("Actions", stackPanel1);
-            panelHeader.Add("Settings", stackPanel2);
-            panelHeader.Add("Events", stackPanel3);
-            pageControl.Children.Insert(0, panelHeader);
-            panelHeader.SelectedTab = panelHeader.Tabs[0];
+            DoInsideLayout(Init);
 
-            Group(
-                addItemButton,
-                removeItemButton,
-                addManyItemsButton,
-                clearButton,
-                expandAllButton,
-                collapseAllButton,
-                expandAllChildrenButton,
-                collapseAllChildrenButton,
-                beginSelectedLabelEditingButton,
-                ensureLastItemVisibleButton,
-                editorButton,
-                scrollLastItemIntoViewButton,
-                focusLastItemButton,
-                modifyLastItemButton).SuggestedWidthToMax();
+            void Init()
+            {
 
-            treeView.Items.ItemInserted += Items_ItemInserted;
-            treeView.Items.ItemRemoved += Items_ItemRemoved;
-            treeView.MouseUp += TreeView_MouseUp;
-            treeView.PreviewMouseUp += TreeView_PreviewMouseUp;
-            treeView.MouseLeftButtonUp += TreeView_MouseLeftButtonUp;
+                panelHeader.Add("Actions", stackPanel1);
+                panelHeader.Add("Settings", stackPanel2);
+                panelHeader.Add("Events", stackPanel3);
+                pageControl.Children.Insert(0, panelHeader);
+                panelHeader.SelectedTab = panelHeader.Tabs[0];
 
-            treeView.ImageList = ResourceLoader.LoadImageLists().Small;
-            AddDefaultItems();
-            SetCustomColors();
+                treeView.Items.ItemInserted += Items_ItemInserted;
+                treeView.Items.ItemRemoved += Items_ItemRemoved;
+                treeView.MouseUp += TreeView_MouseUp;
+                treeView.PreviewMouseUp += TreeView_PreviewMouseUp;
+                treeView.MouseLeftButtonUp += TreeView_MouseLeftButtonUp;
+
+                treeView.ImageList = ResourceLoader.LoadImageLists().Small;
+                AddDefaultItems();
+                SetCustomColors();
+            }
         }
 
         private void TreeView_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
@@ -103,12 +93,12 @@ namespace ControlsSample
                 {
                     int imageIndex = i % 4;
                     var item = new TreeViewItem(
-                        "Item " + GenItemIndex(), 
+                        "Item " + GenItemIndex(),
                         imageIndex);
                     for (int j = 0; j < 3; j++)
                     {
                         var childItem = new TreeViewItem(
-                            item.Text + "." + j, 
+                            item.Text + "." + j,
                             imageIndex);
                         item.Items.Add(childItem);
 
@@ -118,7 +108,7 @@ namespace ControlsSample
                             {
                                 childItem.Items.Add(
                                     new TreeViewItem(
-                                        item.Text + "." + k, 
+                                        item.Text + "." + k,
                                         imageIndex));
                             }
                         }
@@ -136,8 +126,8 @@ namespace ControlsSample
         private void TreeView_SelectionChanged(object? sender, EventArgs e)
         {
             var selectedItems = treeView.SelectedItems;
-            string s = selectedItems.Count > 100 ? 
-                "too many indices to display" : 
+            string s = selectedItems.Count > 100 ?
+                "too many indices to display" :
                 string.Join(",", selectedItems.Select(x => x.Text));
             Application.Log($"TreeView: SelectionChanged. SelectedItems: ({s})");
         }
@@ -158,7 +148,7 @@ namespace ControlsSample
         }
 
         private void TreeView_AfterLabelEdit(
-            object? sender, 
+            object? sender,
             TreeViewEditEventArgs e)
         {
             e.Cancel = cancelAfterLabelEditEventsCheckBox.IsChecked;
@@ -167,7 +157,7 @@ namespace ControlsSample
         }
 
         private void TreeView_BeforeExpand(
-            object? sender, 
+            object? sender,
             TreeViewCancelEventArgs e)
         {
             if (supressExpandEvents > 0)
@@ -177,7 +167,7 @@ namespace ControlsSample
         }
 
         private void TreeView_BeforeCollapse(
-            object? sender, 
+            object? sender,
             TreeViewCancelEventArgs e)
         {
             if (supressExpandEvents > 0)
@@ -187,7 +177,7 @@ namespace ControlsSample
         }
 
         private void CancelBeforeExpandEventsCheckBox_CheckedChanged(
-            object? sender, 
+            object? sender,
             EventArgs e)
         {
             if (treeView != null)
@@ -201,7 +191,7 @@ namespace ControlsSample
         }
 
         private void ShowRootLinesCheckBox_CheckedChanged(
-            object? sender, 
+            object? sender,
             EventArgs e)
         {
             if (treeView != null)
@@ -228,7 +218,7 @@ namespace ControlsSample
 
         private void AllowMultipleSelectionCheckBox_CheckedChanged(object? sender, EventArgs e)
         {
-            treeView.SelectionMode = allowMultipleSelectionCheckBox.IsChecked ? 
+            treeView.SelectionMode = allowMultipleSelectionCheckBox.IsChecked ?
                 TreeViewSelectionMode.Multiple : TreeViewSelectionMode.Single;
         }
 
@@ -269,13 +259,13 @@ namespace ControlsSample
             supressExpandEvents--;
         }
 
-        private void ExpandAllChildrenButton_Click(object? sender, EventArgs e) => 
+        private void ExpandAllChildrenButton_Click(object? sender, EventArgs e) =>
             treeView.SelectedItem?.ExpandAll();
 
-        private void CollapseAllChildrenButton_Click(object? sender, EventArgs e) => 
+        private void CollapseAllChildrenButton_Click(object? sender, EventArgs e) =>
             treeView.SelectedItem?.CollapseAll();
 
-        private void EnsureLastItemVisibleButton_Click(object? sender, System.EventArgs e) 
+        private void EnsureLastItemVisibleButton_Click(object? sender, System.EventArgs e)
             => treeView.LastItem?.EnsureVisible();
 
         private void ScrollLastItemIntoViewButton_Click(object? sender, System.EventArgs e)
@@ -316,15 +306,15 @@ namespace ControlsSample
         }
 
         private void AddLastItemSiblingButton_Click(
-            object? sender, 
+            object? sender,
             EventArgs e)
         {
             var item = treeView.LastItem;
             if (item != null)
             {
-                var collection = item.Parent == null ? 
+                var collection = item.Parent == null ?
                     treeView.Items : item.Parent.Items;
-                var newItem = 
+                var newItem =
                     new TreeViewItem(item.Text + " Sibling", item.ImageIndex ?? 0);
                 collection.Insert(collection.IndexOf(item), newItem);
                 newItem.EnsureVisible();
