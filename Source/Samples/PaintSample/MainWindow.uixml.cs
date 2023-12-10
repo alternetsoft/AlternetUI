@@ -558,6 +558,9 @@ namespace PaintSample
 
         public void DrawSample(DrawingContext dc, Point location)
         {
+            Application.LogNameValue("dc.DPI", dc.GetDPI());
+            Application.LogNameValue("window.DPI", GetDPI());
+
             var s = "Hello text";
 
             var font = Control.DefaultFont.Scaled(5);

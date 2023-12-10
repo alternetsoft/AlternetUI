@@ -12,6 +12,7 @@ void SetClip(Region* value);
 InterpolationMode GetInterpolationMode();
 void SetInterpolationMode(InterpolationMode value);
 
+Size GetDpi();
 static void ImageFromDrawingContext(Image* image, int width, int height, DrawingContext* dc);
 static void ImageFromGenericImageDC(Image* image, void* source, DrawingContext* dc);
 void GetPartialTextExtents(const string& text, double* widths, int widthsCount, Font* font, void* control);

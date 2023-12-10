@@ -45,6 +45,11 @@ ALTERNET_UI_API void DrawingContext_SetInterpolationMode_(DrawingContext* obj, I
     obj->SetInterpolationMode(value);
 }
 
+ALTERNET_UI_API Size_C DrawingContext_GetDpi_(DrawingContext* obj)
+{
+    return obj->GetDpi();
+}
+
 ALTERNET_UI_API void DrawingContext_ImageFromDrawingContext_(Image* image, int width, int height, DrawingContext* dc)
 {
     DrawingContext::ImageFromDrawingContext(image, width, height, dc);

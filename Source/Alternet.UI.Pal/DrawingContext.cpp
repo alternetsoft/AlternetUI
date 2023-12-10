@@ -6,6 +6,12 @@
 
 namespace Alternet::UI
 {
+    Size DrawingContext::GetDpi()
+    {
+        UseDC();
+        return _dc->GetPPI();
+    }
+
     void DrawingContext::ImageFromDrawingContext(Image * image,
         int width, int height, DrawingContext* dc)
     {

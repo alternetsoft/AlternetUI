@@ -1184,6 +1184,20 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Returns the DPI of the display used by this object.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="Size"/> value that represents DPI of the device
+        /// used by this control. If the DPI is not available,
+        /// returns Size(0,0) object.
+        /// </returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public virtual Size GetDPI()
+        {
+            return dc.GetDpi();
+        }
+
+        /// <summary>
         /// Pops a stored state from the stack and sets the current transformation matrix
         /// to that state.
         /// </summary>

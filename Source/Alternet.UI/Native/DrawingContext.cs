@@ -73,6 +73,12 @@ namespace Alternet.UI.Native
             }
         }
         
+        public Alternet.Drawing.Size GetDpi()
+        {
+            CheckDisposed();
+            return NativeApi.DrawingContext_GetDpi_(NativePointer);
+        }
+        
         public static void ImageFromDrawingContext(Image image, int width, int height, DrawingContext dc)
         {
             NativeApi.DrawingContext_ImageFromDrawingContext_(image.NativePointer, width, height, dc.NativePointer);
@@ -360,6 +366,9 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void DrawingContext_SetInterpolationMode_(IntPtr obj, InterpolationMode value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern Alternet.Drawing.Size DrawingContext_GetDpi_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void DrawingContext_ImageFromDrawingContext_(IntPtr image, int width, int height, IntPtr dc);

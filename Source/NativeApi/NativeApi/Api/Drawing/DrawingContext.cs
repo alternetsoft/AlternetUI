@@ -6,6 +6,8 @@ namespace NativeApi.Api
 {
     public class DrawingContext
     {
+        public Size GetDpi() => default;
+
         protected DrawingContext() { }
 
         public static void ImageFromDrawingContext(Image image, int width, int height, DrawingContext dc) { }
