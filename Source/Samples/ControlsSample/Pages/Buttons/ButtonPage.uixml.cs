@@ -123,18 +123,20 @@ namespace ControlsSample
 
             void ApplyFont()
             {
+                var defaultFont = Control.DefaultFont;
+
                 FontStyle fontStyle = boldCheckBox.IsChecked ? FontStyle.Bold : FontStyle.Regular;
 
                 var s = comboBoxFontSize.SelectedItem?.ToString();
                 double fontSize = string.IsNullOrWhiteSpace(s) ?
-                    Control.DefaultFont.SizeInPoints : Double.Parse(s);
+                    defaultFont.SizeInPoints : Double.Parse(s);
 
                 s = comboBoxFontName.SelectedItem?.ToString();
-                string fontName = string.IsNullOrWhiteSpace(s) ? Control.DefaultFont.Name : s!;
+                string fontName = string.IsNullOrWhiteSpace(s) ? defaultFont.Name : s!;
 
-                Font font = Font.GetDefaultOrNew(fontName, fontSize, fontStyle, Control.DefaultFont);
+                Font font = Font.GetDefaultOrNew(fontName, fontSize, fontStyle, defaultFont);
 
-                button.Font = Font.Default;
+                button.Font = defaultFont;
                 button.Font = font;
             }
 
