@@ -51,7 +51,7 @@ namespace Alternet.UI
         /// <returns>
         ///     The state of the specified key
         /// </returns>
-        protected abstract KeyStates GetKeyStatesFromSystem(Keys key);
+        protected abstract KeyStates GetKeyStatesFromSystem(Key key);
 
         ///// <summary>
         /////     Returns the element that input from this device is sent to.
@@ -201,22 +201,22 @@ namespace Alternet.UI
             get
             {
                 ModifierKeys modifiers = ModifierKeys.None;
-                if (IsKeyDown_private(Keys.Alt))
+                if (IsKeyDown_private(Key.Alt))
                 {
                     modifiers |= ModifierKeys.Alt;
                 }
 
-                if (IsKeyDown_private(Keys.Control))
+                if (IsKeyDown_private(Key.Control))
                 {
                     modifiers |= ModifierKeys.Control;
                 }
 
-                if (IsKeyDown_private(Keys.Shift))
+                if (IsKeyDown_private(Key.Shift))
                 {
                     modifiers |= ModifierKeys.Shift;
                 }
 
-                if (IsKeyDown_private(Keys.Windows))
+                if (IsKeyDown_private(Key.Windows))
                 {
                     modifiers |= ModifierKeys.Windows;
                 }
@@ -235,33 +235,33 @@ namespace Alternet.UI
                 //                 VerifyAccess();
 
                 RawModifierKeys modifiers = RawModifierKeys.None;
-                if (IsKeyDown_private(Keys.Alt))
+                if (IsKeyDown_private(Key.Alt))
                 {
                     modifiers |= RawModifierKeys.Alt;
                 }
-                if (IsKeyDown_private(Keys.Control))
+                if (IsKeyDown_private(Key.Control))
                 {
                     modifiers |= RawModifierKeys.Control;
                 }
-                if (IsKeyDown_private(Keys.Shift))
+                if (IsKeyDown_private(Key.Shift))
                 {
                     modifiers |= RawModifierKeys.Shift;
                 }
-                if (IsKeyDown_private(Keys.Windows))
+                if (IsKeyDown_private(Key.Windows))
                 {
                     modifiers |= RawModifierKeys.Windows;
                 }
-                if (IsKeyDown_private(Keys.MacCommand))
+                if (IsKeyDown_private(Key.MacCommand))
                 {
                     modifiers |= RawModifierKeys.MacCommand;
                 }
 
-                if (IsKeyDown_private(Keys.MacOption))
+                if (IsKeyDown_private(Key.MacOption))
                 {
                     modifiers |= RawModifierKeys.MacOption;
                 }
 
-                if (IsKeyDown_private(Keys.MacControl))
+                if (IsKeyDown_private(Key.MacControl))
                 {
                     modifiers |= RawModifierKeys.MacControl;
                 }
@@ -274,17 +274,17 @@ namespace Alternet.UI
         /// There is a proscription against using Enum.IsDefined().  (it is slow)
         /// so we write these PRIVATE validate routines instead.
         /// </summary>
-        private void Validate_Key(Keys key)
+        private void Validate_Key(Key key)
         {
             if (256 <= (int)key || (int)key <= 0)
-                throw new System.ComponentModel.InvalidEnumArgumentException("key", (int)key, typeof(Keys));
+                throw new System.ComponentModel.InvalidEnumArgumentException("key", (int)key, typeof(Key));
         }
 
         /// <summary>
         /// This is the core private method that returns whether or not the specified key
         ///  is down.  It does it without the extra argument validation and context checks.
         /// </summary>
-        private bool IsKeyDown_private(Keys key)
+        private bool IsKeyDown_private(Key key)
         {
             return ((GetKeyStatesFromSystem(key) & KeyStates.Down) == KeyStates.Down);
         }
@@ -292,7 +292,7 @@ namespace Alternet.UI
         /// <summary>
         ///     Returns whether or not the specified key is down.
         /// </summary>
-        public bool IsKeyDown(Keys key)
+        public bool IsKeyDown(Key key)
         {
             //             VerifyAccess();
             Validate_Key(key);
@@ -302,7 +302,7 @@ namespace Alternet.UI
         /// <summary>
         ///     Returns whether or not the specified key is up.
         /// </summary>
-        public bool IsKeyUp(Keys key)
+        public bool IsKeyUp(Key key)
         {
             //             VerifyAccess();
             Validate_Key(key);
@@ -312,7 +312,7 @@ namespace Alternet.UI
         /// <summary>
         ///     Returns whether or not the specified key is toggled.
         /// </summary>
-        public bool IsKeyToggled(Keys key)
+        public bool IsKeyToggled(Key key)
         {
             //             VerifyAccess();
             Validate_Key(key);
@@ -322,7 +322,7 @@ namespace Alternet.UI
         /// <summary>
         ///     Returns the state of the specified key.
         /// </summary>
-        public KeyStates GetKeyStates(Keys key)
+        public KeyStates GetKeyStates(Key key)
         {
             //             VerifyAccess();
             Validate_Key(key);

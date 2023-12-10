@@ -45,7 +45,7 @@ namespace InputSample
         protected override void OnKeyDown(KeyEventArgs e)
         {
             UpdateModifierKeys();
-            if (e.Key == Keys.D && e.Modifiers == (ModifierKeys.Control | ModifierKeys.Shift))
+            if (e.Key == Key.D && e.Modifiers == (ModifierKeys.Control | ModifierKeys.Shift))
             {
                 e.Handled = true;
                 messageLabel.BackgroundColor =
@@ -115,7 +115,7 @@ namespace InputSample
             {
                 if (e.Input is KeyEventArgs ke)
                 {
-                    if (ke.Key == Keys.F1)
+                    if (ke.Key == Key.F1)
                         e.Cancel();
                 }
             }

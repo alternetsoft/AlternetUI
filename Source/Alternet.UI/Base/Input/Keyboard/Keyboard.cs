@@ -388,7 +388,7 @@ namespace Alternet.UI
         /// <summary>
         ///     Returns whether or not the specified key is down.
         /// </summary>
-        public static bool IsKeyDown(Keys key)
+        public static bool IsKeyDown(Key key)
         {
             return Keyboard.PrimaryDevice.IsKeyDown(key);
         }
@@ -396,7 +396,7 @@ namespace Alternet.UI
         /// <summary>
         ///     Returns whether or not the specified key is up.
         /// </summary>
-        public static bool IsKeyUp(Keys key)
+        public static bool IsKeyUp(Key key)
         {
             return Keyboard.PrimaryDevice.IsKeyUp(key);
         }
@@ -404,7 +404,7 @@ namespace Alternet.UI
         /// <summary>
         ///     Returns whether or not the specified key is toggled.
         /// </summary>
-        public static bool IsKeyToggled(Keys key)
+        public static bool IsKeyToggled(Key key)
         {
             return Keyboard.PrimaryDevice.IsKeyToggled(key);
         }
@@ -412,7 +412,7 @@ namespace Alternet.UI
         /// <summary>
         ///     Returns the state of the specified key.
         /// </summary>
-        public static KeyStates GetKeyStates(Keys key)
+        public static KeyStates GetKeyStates(Key key)
         {
             return Keyboard.PrimaryDevice.GetKeyStates(key);
         }
@@ -430,9 +430,9 @@ namespace Alternet.UI
         }
 
         // Check for Valid enum, as any int can be casted to the enum.
-        internal static bool IsValidKey(Keys key)
+        internal static bool IsValidKey(Key key)
         {
-            return ((int)key >= (int)Keys.None/* && (int)key <= (int)Key.OemClear*/);
+            return ((int)key >= (int)Key.None/* && (int)key <= (int)Key.OemClear*/);
         }
 
         internal static bool IsFocusable(DependencyObject element)

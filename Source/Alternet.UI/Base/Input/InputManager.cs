@@ -668,12 +668,12 @@ namespace Alternet.UI
                 out handled);
         }
 
-        internal void ReportKeyDown(long timestamp, Keys key, bool isRepeat, out bool handled)
+        internal void ReportKeyDown(long timestamp, Key key, bool isRepeat, out bool handled)
         {
             ReportKeyEvent(UIElement.PreviewKeyDownEvent, UIElement.KeyDownEvent, new KeyEventArgs(Keyboard.PrimaryDevice, timestamp, key, isRepeat), out handled);
         }
 
-        internal void ReportKeyUp(long timestamp, Keys key, bool isRepeat, out bool handled)
+        internal void ReportKeyUp(long timestamp, Key key, bool isRepeat, out bool handled)
         {
             ReportKeyEvent(UIElement.PreviewKeyUpEvent, UIElement.KeyUpEvent, new KeyEventArgs(Keyboard.PrimaryDevice, timestamp, key, isRepeat), out handled);
         }

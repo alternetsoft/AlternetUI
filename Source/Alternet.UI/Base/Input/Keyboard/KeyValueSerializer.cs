@@ -49,10 +49,10 @@ namespace Alternet.UI
         /// <ExternalAPI/> 
         public override bool CanConvertToString(object value, IValueSerializerContext context) 
         {
-            if (!(value is Keys))
+            if (!(value is Key))
                 return false;
-            Keys key = (Keys)value;
-            return ((int)key >= (int)Keys.None/* && (int)key <= (int)Key.OemClear*/);
+            Key key = (Key)value;
+            return ((int)key >= (int)Key.None/* && (int)key <= (int)Key.OemClear*/);
         }
 
         /// <summary>
@@ -63,7 +63,7 @@ namespace Alternet.UI
         /// <returns></returns>
         public override object ConvertFromString(string value, IValueSerializerContext context) 
         {
-            TypeConverter converter = TypeDescriptor.GetConverter(typeof(Keys));
+            TypeConverter converter = TypeDescriptor.GetConverter(typeof(Key));
             if (converter != null)
                 return converter.ConvertFromString(value);
             else
@@ -78,7 +78,7 @@ namespace Alternet.UI
         /// <returns></returns>
         public override string ConvertToString(object value, IValueSerializerContext context) 
         {
-            TypeConverter converter = TypeDescriptor.GetConverter(typeof(Keys));
+            TypeConverter converter = TypeDescriptor.GetConverter(typeof(Key));
             if (converter != null)
                 return converter.ConvertToInvariantString(value);
             else

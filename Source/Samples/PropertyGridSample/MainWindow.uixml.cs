@@ -142,7 +142,7 @@ namespace PropertyGridSample
             // Ctrl+Down moves to next property in PropertyGrid
             PropGrid.AddActionTrigger(
                 PropertyGridKeyboardAction.ActionNextProperty,
-                Keys.DownArrow,
+                Key.DownArrow,
                 ModifierKeys.Control);
 
             panel.PropGrid.SuggestedInitDefaults();

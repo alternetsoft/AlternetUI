@@ -14,12 +14,12 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets keys used to show 'Developer Tools' in debug mode.
         /// </summary>
-        public static KeyInfo[] ShowDeveloperTools { get; set; } = [new(Keys.F12, ModifierKeys.ControlShiftAlt)];
+        public static KeyInfo[] ShowDeveloperTools { get; set; } = [new(Key.F12, ModifierKeys.ControlShiftAlt)];
 
         /// <summary>
         /// Gets or sets keys used to run test action.
         /// </summary>
-        public static KeyInfo RunTest { get; set; } = new(Keys.T, ModifierKeys.ControlShift);
+        public static KeyInfo RunTest { get; set; } = new(Key.T, ModifierKeys.ControlShift);
 
         /// <summary>
         /// Defines additional keys for the <see cref="RichTextBox"/>.
@@ -31,7 +31,7 @@ namespace Alternet.UI
             /// </summary>
             public static KeyInfo[] DecFontSize { get; set; } =
             [
-                 new(Keys.Comma, ModifierKeys.ControlShift, OperatingSystems.Any),
+                 new(Key.Comma, ModifierKeys.ControlShift, OperatingSystems.Any),
             ];
 
             /// <summary>
@@ -39,7 +39,7 @@ namespace Alternet.UI
             /// </summary>
             public static KeyInfo[] IncFontSize { get; set; } =
             [
-                new(Keys.Period, ModifierKeys.ControlShift, OperatingSystems.Any),
+                new(Key.Period, ModifierKeys.ControlShift, OperatingSystems.Any),
             ];
 
             /// <summary>
@@ -47,8 +47,8 @@ namespace Alternet.UI
             /// </summary>
             public static KeyInfo[] ClearTextFormatting { get; set; } =
             [
-                new(Keys.Backslash, ModifierKeys.Control, OperatingSystems.Any),
-                new(Keys.Space, ModifierKeys.Control, OperatingSystems.WindowsOrLinux),
+                new(Key.Backslash, ModifierKeys.Control, OperatingSystems.Any),
+                new(Key.Space, ModifierKeys.Control, OperatingSystems.WindowsOrLinux),
             ];
 
             /// <summary>
@@ -56,8 +56,8 @@ namespace Alternet.UI
             /// </summary>
             public static KeyInfo[] ToggleStrikethrough { get; set; } =
             [
-                new(Keys.D5, ModifierKeys.AltShift, OperatingSystems.WindowsOrLinux),
-                new(Keys.X, ModifierKeys.ControlShift, OperatingSystems.MacOs),
+                new(Key.D5, ModifierKeys.AltShift, OperatingSystems.WindowsOrLinux),
+                new(Key.X, ModifierKeys.ControlShift, OperatingSystems.MacOs),
             ];
 
             /// <summary>
@@ -65,7 +65,7 @@ namespace Alternet.UI
             /// </summary>
             public static KeyInfo[] SelectAll { get; set; } =
             [
-                 new(Keys.A, ModifierKeys.Control, OperatingSystems.Any),
+                 new(Key.A, ModifierKeys.Control, OperatingSystems.Any),
             ];
 
             /// <summary>
@@ -73,7 +73,7 @@ namespace Alternet.UI
             /// </summary>
             public static KeyInfo[] ToggleBold { get; set; } =
             [
-                 new(Keys.B, ModifierKeys.Control, OperatingSystems.Any),
+                 new(Key.B, ModifierKeys.Control, OperatingSystems.Any),
             ];
 
             /// <summary>
@@ -81,7 +81,7 @@ namespace Alternet.UI
             /// </summary>
             public static KeyInfo[] ToggleItalic { get; set; } =
             [
-                new(Keys.I, ModifierKeys.Control, OperatingSystems.Any),
+                new(Key.I, ModifierKeys.Control, OperatingSystems.Any),
             ];
 
             /// <summary>
@@ -89,7 +89,7 @@ namespace Alternet.UI
             /// </summary>
             public static KeyInfo[] ToggleUnderline { get; set; } =
             [
-                 new(Keys.U, ModifierKeys.Control, OperatingSystems.Any),
+                 new(Key.U, ModifierKeys.Control, OperatingSystems.Any),
             ];
 
             /// <summary>
@@ -97,7 +97,7 @@ namespace Alternet.UI
             /// </summary>
             public static KeyInfo[] LeftAlign { get; set; } =
             [
-                new(Keys.L, ModifierKeys.ControlShift, OperatingSystems.Any),
+                new(Key.L, ModifierKeys.ControlShift, OperatingSystems.Any),
             ];
 
             /// <summary>
@@ -105,7 +105,7 @@ namespace Alternet.UI
             /// </summary>
             public static KeyInfo[] CenterAlign { get; set; } =
             [
-                new(Keys.E, ModifierKeys.ControlShift, OperatingSystems.Any),
+                new(Key.E, ModifierKeys.ControlShift, OperatingSystems.Any),
             ];
 
             /// <summary>
@@ -113,7 +113,7 @@ namespace Alternet.UI
             /// </summary>
             public static KeyInfo[] RightAlign { get; set; } =
             [
-                new(Keys.R, ModifierKeys.ControlShift, OperatingSystems.Any),
+                new(Key.R, ModifierKeys.ControlShift, OperatingSystems.Any),
             ];
 
             /// <summary>
@@ -121,7 +121,7 @@ namespace Alternet.UI
             /// </summary>
             public static KeyInfo[] Justify { get; set; } =
             [
-                new(Keys.J, ModifierKeys.ControlShift, OperatingSystems.Any),
+                new(Key.J, ModifierKeys.ControlShift, OperatingSystems.Any),
             ];
         }
     }

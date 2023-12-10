@@ -680,7 +680,7 @@ namespace Alternet.UI
         /// <inheritdoc cref="PropertyGrid.AddActionTrigger"/>
         void AddActionTrigger(
             PropertyGridKeyboardAction action,
-            Keys keycode,
+            Key keycode,
             ModifierKeys modifiers = 0);
 
         /// <inheritdoc cref="PropertyGrid.RemoveFromSelection"/>
@@ -713,7 +713,7 @@ namespace Alternet.UI
         void ClearActionTriggers(PropertyGridKeyboardAction action);
 
         /// <inheritdoc cref="PropertyGrid.DedicateKey"/>
-        void DedicateKey(Keys keycode);
+        void DedicateKey(Key keycode);
 
         /// <inheritdoc cref="PropertyGrid.CenterSplitter"/>
         void CenterSplitter(bool enableAutoResizing = false);

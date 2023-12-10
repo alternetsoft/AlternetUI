@@ -33,7 +33,7 @@ namespace Alternet.UI
         {
             string fullName = ((string)source).Trim();
             if (fullName == string.Empty)
-                return new KeyGesture(Keys.None);
+                return new KeyGesture(Key.None);
 
             string keyToken;
             string modifiersToken;
@@ -75,7 +75,7 @@ namespace Alternet.UI
                     modifiers = (ModifierKeys)temp;
                 }
 
-                return new KeyGesture((Keys)resultkey, modifiers, displayString);
+                return new KeyGesture((Key)resultkey, modifiers, displayString);
             }
 
             return null;
@@ -161,7 +161,7 @@ namespace Alternet.UI
                 {
                     if (value is KeyGesture keyGesture)
                     {
-                        if (keyGesture.Key == Keys.None)
+                        if (keyGesture.Key == Key.None)
                             return string.Empty;
 
                         string strBinding = string.Empty;
@@ -195,9 +195,9 @@ namespace Alternet.UI
         }
 
         // Check for Valid enum, as any int can be casted to the enum.
-        internal static bool IsDefinedKey(Keys key)
+        internal static bool IsDefinedKey(Key key)
         {
-            return key >= Keys.None && key <= Keys.Menu;
+            return key >= Key.None && key <= Key.Menu;
         }
     }
 }

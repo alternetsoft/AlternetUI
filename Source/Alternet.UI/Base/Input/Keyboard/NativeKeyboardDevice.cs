@@ -32,7 +32,7 @@ namespace Alternet.UI
         /// <returns>                           
         ///     The state of the specified key
         /// </returns>
-        protected override KeyStates GetKeyStatesFromSystem(Keys key)
+        protected override KeyStates GetKeyStatesFromSystem(Key key)
         {
             return (KeyStates)Application.Current.NativeKeyboard.GetKeyState((Native.Key)key);
         }

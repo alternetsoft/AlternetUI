@@ -62,7 +62,7 @@ namespace PaintSample
 
         protected override void OnKeyDown(KeyEventArgs e)
         {
-            if (e.Key == Keys.Escape && state != null)
+            if (e.Key == Key.Escape && state != null)
                 Cancel();
         }
 

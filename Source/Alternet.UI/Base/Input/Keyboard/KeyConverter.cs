@@ -61,8 +61,8 @@ namespace Alternet.UI
                 // When invoked by the serialization engine we can convert to string only for known type
                 if (context != null && context.Instance != null)
                 {
-                    Keys key = (Keys)context.Instance;
-                    return ((int)key >= (int)Keys.None/* && (int)key <= (int)Key.DeadCharProcessed*/);
+                    Key key = (Key)context.Instance;
+                    return ((int)key >= (int)Key.None/* && (int)key <= (int)Key.DeadCharProcessed*/);
                 }
             }
             return false;
@@ -86,7 +86,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Converts string representation of the key to the <see cref="Keys"/>
+        /// Converts string representation of the key to the <see cref="Key"/>
         /// enumeration.
         /// </summary>
         /// <param name="source">String representation of the key.</param>
@@ -94,13 +94,13 @@ namespace Alternet.UI
         /// <exception cref="NotSupportedException">
         /// Raised when string representation of the key is unknown.
         /// </exception>
-        public static Keys FromString(string source)
+        public static Key FromString(string source)
         {
             string fullName = ((string)source).Trim();
             object key = GetKey(fullName, CultureInfo.InvariantCulture);
             if (key != null)
             {
-                return ((Keys)key);
+                return ((Key)key);
             }
             else
             {
@@ -125,20 +125,20 @@ namespace Alternet.UI
 
             if (destinationType == typeof(string) && value != null)
             {
-                Keys key = (Keys)value;
-                if (key == Keys.None)
+                Key key = (Key)value;
+                if (key == Key.None)
                 {
                     return String.Empty;
                 }
 
-                if (key >= Keys.D0 && key <= Keys.D9)
+                if (key >= Key.D0 && key <= Key.D9)
                 {
-                    return Char.ToString((char)(int)(key - Keys.D0 + '0'));
+                    return Char.ToString((char)(int)(key - Key.D0 + '0'));
                 }
 
-                if (key >= Keys.A && key <= Keys.Z)
+                if (key >= Key.A && key <= Key.Z)
                 {
-                    return Char.ToString((char)(int)(key - Keys.A + 'A'));
+                    return Char.ToString((char)(int)(key - Key.A + 'A'));
                 }
 
                 String strKey = MatchKey(key, culture);
@@ -154,7 +154,7 @@ namespace Alternet.UI
         {
             if (keyToken.Length == 0)
             {
-                return Keys.None;
+                return Key.None;
             }
             else
             {
@@ -163,48 +163,48 @@ namespace Alternet.UI
                 {
                     if (Char.IsDigit(keyToken[0]) && (keyToken[0] >= '0' && keyToken[0] <= '9'))
                     {
-                        return ((int)(Keys)(Keys.D0 + keyToken[0] - '0'));
+                        return ((int)(Key)(Key.D0 + keyToken[0] - '0'));
                     }
                     else if (Char.IsLetter(keyToken[0]) && (keyToken[0] >= 'A' && keyToken[0] <= 'Z'))
                     {
-                        return ((int)(Keys)(Keys.A + keyToken[0] - 'A'));
+                        return ((int)(Key)(Key.A + keyToken[0] - 'A'));
                     }
                     else
                     {
-                        throw new ArgumentException(SR.Get(SRID.CannotConvertStringToType, keyToken, typeof(Keys)));
+                        throw new ArgumentException(SR.Get(SRID.CannotConvertStringToType, keyToken, typeof(Key)));
                     }
                 }
                 else
                 {
-                    Keys keyFound = (Keys)(-1);
+                    Key keyFound = (Key)(-1);
                     switch (keyToken)
                     {
-                        case "ENTER": keyFound = Keys.Enter; break;
-                        case "ESC": keyFound = Keys.Escape; break;
-                        case "PGUP": keyFound = Keys.PageUp; break;
-                        case "PGDN": keyFound = Keys.PageDown; break;
-                        case "PRTSC": keyFound = Keys.PrintScreen; break;
-                        case "INS": keyFound = Keys.Insert; break;
-                        case "DEL": keyFound = Keys.Delete; break;
-                        case "WINDOWS": keyFound = Keys.Windows; break;
-                        case "WIN": keyFound = Keys.Windows; break;
-                        case "BACKSPACE": keyFound = Keys.Backspace; break;
-                        case "BKSP": keyFound = Keys.Backspace; break;
-                        case "BS": keyFound = Keys.Backspace; break;
-                        case "SHIFT": keyFound = Keys.Shift; break;
-                        case "CONTROL": keyFound = Keys.Control; break;
-                        case "CTRL": keyFound = Keys.Control; break;
-                        case "ALT": keyFound = Keys.Alt; break;
-                        case "SEMICOLON": keyFound = Keys.Semicolon; break;
-                        case "COMMA": keyFound = Keys.Comma; break;
-                        case "MINUS": keyFound = Keys.Minus; break;
-                        case "PERIOD": keyFound = Keys.Period; break;
-                        case "OPENBRACKETS": keyFound = Keys.OpenBracket; break;
-                        case "CLOSEBRACKETS": keyFound = Keys.CloseBracket; break;
-                        case "QUOTES": keyFound = Keys.Quote; break;
-                        case "BACKSLASH": keyFound = Keys.Backslash; break;
-                        case "PLAY": keyFound = Keys.MediaPlayPause; break;
-                        default: keyFound = (Keys)Enum.Parse(typeof(Keys), keyToken, true); break;
+                        case "ENTER": keyFound = Key.Enter; break;
+                        case "ESC": keyFound = Key.Escape; break;
+                        case "PGUP": keyFound = Key.PageUp; break;
+                        case "PGDN": keyFound = Key.PageDown; break;
+                        case "PRTSC": keyFound = Key.PrintScreen; break;
+                        case "INS": keyFound = Key.Insert; break;
+                        case "DEL": keyFound = Key.Delete; break;
+                        case "WINDOWS": keyFound = Key.Windows; break;
+                        case "WIN": keyFound = Key.Windows; break;
+                        case "BACKSPACE": keyFound = Key.Backspace; break;
+                        case "BKSP": keyFound = Key.Backspace; break;
+                        case "BS": keyFound = Key.Backspace; break;
+                        case "SHIFT": keyFound = Key.Shift; break;
+                        case "CONTROL": keyFound = Key.Control; break;
+                        case "CTRL": keyFound = Key.Control; break;
+                        case "ALT": keyFound = Key.Alt; break;
+                        case "SEMICOLON": keyFound = Key.Semicolon; break;
+                        case "COMMA": keyFound = Key.Comma; break;
+                        case "MINUS": keyFound = Key.Minus; break;
+                        case "PERIOD": keyFound = Key.Period; break;
+                        case "OPENBRACKETS": keyFound = Key.OpenBracket; break;
+                        case "CLOSEBRACKETS": keyFound = Key.CloseBracket; break;
+                        case "QUOTES": keyFound = Key.Quote; break;
+                        case "BACKSLASH": keyFound = Key.Backslash; break;
+                        case "PLAY": keyFound = Key.MediaPlayPause; break;
+                        default: keyFound = (Key)Enum.Parse(typeof(Key), keyToken, true); break;
                     }
 
                     if ((int)keyFound != -1)
@@ -216,19 +216,19 @@ namespace Alternet.UI
             }
         }
 
-        private static string MatchKey(Keys key, CultureInfo culture)
+        private static string MatchKey(Key key, CultureInfo culture)
         {
-            if (key == Keys.None)
+            if (key == Key.None)
                 return String.Empty;
             else
             {
                 switch (key)
                 {
-                    case Keys.Backspace: return "Backspace";
-                    case Keys.Escape: return "Esc";
+                    case Key.Backspace: return "Backspace";
+                    case Key.Escape: return "Esc";
                 }
             }
-            if ((int)key >= (int)Keys.None/* && (int)key <= (int)Key.DeadCharProcessed*/)
+            if ((int)key >= (int)Key.None/* && (int)key <= (int)Key.DeadCharProcessed*/)
                 return key.ToString();
             else
                 return null;

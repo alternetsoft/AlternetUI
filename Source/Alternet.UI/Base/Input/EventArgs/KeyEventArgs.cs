@@ -28,13 +28,13 @@ namespace Alternet.UI
         ///     The key referenced by the event.
         /// </param>
         /// <param name="isRepeat">Whether the key pressed is a repeated key or not.</param>
-        public KeyEventArgs(KeyboardDevice keyboard, /*PresentationSource inputSource,*/ long timestamp, Keys key, bool isRepeat) : base(keyboard, timestamp)
+        public KeyEventArgs(KeyboardDevice keyboard, /*PresentationSource inputSource,*/ long timestamp, Key key, bool isRepeat) : base(keyboard, timestamp)
         {
             //if (inputSource == null)
             //    throw new ArgumentNullException("inputSource");
 
             if (!Keyboard.IsValidKey(key))
-                throw new System.ComponentModel.InvalidEnumArgumentException("key", (int)key, typeof(Keys));
+                throw new System.ComponentModel.InvalidEnumArgumentException("key", (int)key, typeof(Key));
 
             //_inputSource = inputSource;
 
@@ -62,7 +62,7 @@ namespace Alternet.UI
         ///     The Key referenced by the event, if the key is not being 
         ///     handled specially.
         /// </summary>
-        public Keys Key
+        public Key Key
         {
             get { return _key; }
         }
@@ -224,7 +224,7 @@ namespace Alternet.UI
 
 
         //private Key _realKey;
-        private Keys _key;
+        private Key _key;
 
         //private PresentationSource _inputSource;
 
