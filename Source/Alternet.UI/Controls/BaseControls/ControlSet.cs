@@ -215,7 +215,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Sets suggested width for all the controls in the set.
+        /// Sets suggested width for all the controls to the max value in the set.
         /// </summary>
         public ControlSet SuggestedWidthToMax()
         {
@@ -224,7 +224,16 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Sets suggested height for all the controls in the set.
+        /// Sets suggested width for all the controls to the max value in the set.
+        /// </summary>
+        public ControlSet WidthToMax()
+        {
+            var v = MaxWidth;
+            return Width(v);
+        }
+
+        /// <summary>
+        /// Sets suggested height for all the controls to the max value in the set.
         /// </summary>
         public ControlSet SuggestedHeightToMax()
         {
@@ -239,6 +248,19 @@ namespace Alternet.UI
             foreach (var item in items)
             {
                 item.SuggestedWidth = width;
+            }
+
+            return this;
+        }
+
+        /// <summary>
+        /// Sets the width for all the controls in the set.
+        /// </summary>
+        public ControlSet Width(double width)
+        {
+            foreach (var item in items)
+            {
+                item.Width = width;
             }
 
             return this;
