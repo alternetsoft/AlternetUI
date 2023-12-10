@@ -1143,7 +1143,7 @@ namespace Alternet.UI
         /// such as Microsoft Windows.
         /// </remarks>
         /// <returns>
-        /// A <see cref="SuggestedSize"/> value that represents DPI of the display
+        /// A <see cref="Size"/> value that represents DPI of the display
         /// used by this control. If the DPI is not available,
         /// returns Size(0,0) object.
         /// </returns>
