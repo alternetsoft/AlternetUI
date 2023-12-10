@@ -1451,7 +1451,10 @@ namespace Alternet.Drawing
         private static Brush GetBrush(ref Brush? brush, Color color)
         {
             if (brush == null)
+            {
                 brush = new SolidBrush(color, immutable: true);
+            }
+
             return brush;
         }
     }
