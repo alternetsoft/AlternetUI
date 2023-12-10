@@ -944,7 +944,13 @@ namespace Alternet.Drawing
         /// Creates <see cref="SolidBrush"/> instance for this color.
         /// </summary>
         [Browsable(false)]
-        public SolidBrush AsBrush => new(this);
+        public SolidBrush AsBrush
+        {
+            get
+            {
+                return new(this);
+            }
+        }
 
         /// <summary>
         /// Creates <see cref="Pen"/> instance for this color.
@@ -1187,6 +1193,7 @@ namespace Alternet.Drawing
         /// <remarks>To create an opaque color, set alpha to 255. To create
         /// a semitransparent color, set alpha to any value from 1 through 254.
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Color FromArgb(int alpha, Color baseColor)
         {
             CheckByte(alpha, nameof(alpha));
@@ -1566,9 +1573,7 @@ namespace Alternet.Drawing
         public double GetBrightness()
         {
             GetRgbValues(out int r, out int g, out int b);
-
             MinMaxRgb(out int min, out int max, r, g, b);
-
             return (max + min) / (byte.MaxValue * 2f);
         }
 
@@ -1670,16 +1675,24 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="width">Width of the pen.</param>
         /// <returns></returns>
-        public Pen GetAsPen(double width) => new(this, width);
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public Pen GetAsPen(double width = 1)
+        {
+            return new(this, width);
+        }
 
         /// <summary>
         /// Gets this color as <see cref="Pen"/> with the specified width
         /// and <see cref="DashStyle"/>.
         /// </summary>
-        /// <param name="width">Width of the pen.</param>
-        /// <param name="dashStyle">Dash style of the pen.</param>
+        /// <param name="width">Width of the pen. Optional. Default is 1.</param>
+        /// <param name="dashStyle">Dash style of the pen. Optional.
+        /// Default is <see cref="DashStyle.Solid"/>.</param>
         /// <returns></returns>
-        public Pen GetAsPen(double width, DashStyle dashStyle) => new(this, width, dashStyle);
+        public Pen GetAsPen(double width = 1, DashStyle dashStyle = DashStyle.Solid)
+        {
+            return new(this, width, dashStyle);
+        }
 
         /// <summary>
         /// Returns ARGB values of the <see cref="Color"/>
@@ -1846,6 +1859,7 @@ namespace Alternet.Drawing
                 knownColor.GetHashCode());
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal static bool IsKnownColorSystem(KnownColor knownColor)
              => KnownColorTable.ColorKindTable[(int)knownColor] ==
                  KnownColorTable.KnownColorKindSystem;
@@ -1863,6 +1877,7 @@ namespace Alternet.Drawing
                 ThrowOutOfByteRange(value, name);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static Color FromArgb(uint argb) =>
             new(argb, StateARGBValueValid, null, (KnownColor)0);
 
