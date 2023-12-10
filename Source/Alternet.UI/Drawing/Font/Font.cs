@@ -788,6 +788,18 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Measures text size on the specified <see cref="DrawingContext"/>.
+        /// </summary>
+        /// <param name="text">Text string to measure its size.</param>
+        /// <param name="dc">Drawing context where measuring is performed.</param>
+        /// <returns></returns>
+        public Size MeasureText(string text, DrawingContext dc)
+        {
+            var result = dc.GetTextExtent(text, this);
+            return result;
+        }
+
+        /// <summary>
         /// Indicates whether the current object is equal to another object of the same type.
         /// </summary>
         public bool Equals(Font? other)
