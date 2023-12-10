@@ -91,8 +91,7 @@ namespace InputSample
             var s = $"{sControl} {sShift} {sAlt} {sWindows} {sMacOs}";
 
             buttonInfo.Text = s;
-
-            Application.DoEvents();
+            buttonInfo.Refresh();
         }
 
         protected override void Dispose(bool disposing)
@@ -127,7 +126,7 @@ namespace InputSample
         private void LogMessage(int index, ListBox lb, string m)
         {
             lb.Items[index] = m;
-            Application.DoEvents();
+            lb.Refresh();
         }
 
         private void Window_TextInput(object sender, TextInputEventArgs e) =>

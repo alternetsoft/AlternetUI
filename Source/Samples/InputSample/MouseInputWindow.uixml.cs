@@ -53,7 +53,7 @@ namespace InputSample
             var s = $"{sLeft} {sMiddle} {sRight} {sExtended1} {sExtended2}";
 
             buttonInfo.Text = s;
-            Application.DoEvents();
+            buttonInfo.Refresh();
         }
 
         private void Current_Idle(object? sender, EventArgs e)
@@ -79,14 +79,14 @@ namespace InputSample
         {
             mouseCaptureBorder.CaptureMouse();
             mouseCaptureLabel.Text = MouseCapturedLabel;
-            Application.DoEvents();
+            mouseCaptureLabel.Refresh();
         }
 
         private void MouseCaptureBorder_MouseUp(object sender, MouseButtonEventArgs e)
         {
             mouseCaptureBorder.ReleaseMouseCapture();
             mouseCaptureLabel.Text = MouseUncapturedLabel;
-            Application.DoEvents();
+            mouseCaptureLabel.Refresh();
         }
 
         private void MouseCaptureBorder_MouseCaptureLost(object sender, EventArgs e)
@@ -128,7 +128,7 @@ namespace InputSample
             lb.Tag = messageNumber;
 
             lb.SelectedIndex = lb.Items.Count - 1;
-            Application.DoEvents();
+            lb.Refresh();
         }
 
         private void LogMouseMove(
@@ -196,7 +196,7 @@ namespace InputSample
                 $"[Device: {FormatPoint(devicePosition)}]]";
 
             mousePositionLabel.Text = text;
-            Application.DoEvents();
+            mousePositionLabel.Refresh();
         }
 
         private void StackPanel_MouseMove(object sender, MouseEventArgs e) =>
