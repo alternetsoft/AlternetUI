@@ -691,6 +691,16 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Sets <see cref="ScaleFactor"/> using DPI value.
+        /// </summary>
+        /// <param name="dpi"></param>
+        public void SetDPI(Size dpi)
+        {
+            var factor = dpi.Width / 96;
+            this.ScaleFactor = factor;
+        }
+
+        /// <summary>
         /// Gets image rect as (0, 0, SizeDip().Width, SizeDip().Height).
         /// </summary>
         public Rect BoundsDip(Control control)
