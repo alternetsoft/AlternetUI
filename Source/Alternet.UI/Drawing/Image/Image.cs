@@ -233,6 +233,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Converts this object to <see cref="GenericImage"/>.
         /// </summary>
+        [Browsable(false)]
         public GenericImage AsGeneric
         {
             get
