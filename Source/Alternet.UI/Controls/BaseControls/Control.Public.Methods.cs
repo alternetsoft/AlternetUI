@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using Alternet.Drawing;
@@ -1505,6 +1506,31 @@ namespace Alternet.UI
             StateObjects ??= new();
             StateObjects.Borders ??= new();
             StateObjects.Borders.SetObject(value, state);
+        }
+
+        /// <summary>
+        /// Resets the <see cref="Control.Font" /> property to its default value.</summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual void ResetFont()
+        {
+            Font = null;
+        }
+
+        /// <summary>
+        /// Resets the <see cref="Control.Cursor" /> property to its default value.</summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual void ResetCursor()
+        {
+            Cursor = null;
+        }
+
+        /// <summary>
+        /// Resets the <see cref="Control.BackColor" /> property to its default value.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual void ResetBackColor()
+        {
+            BackgroundColor = null;
         }
 
         /// <summary>
