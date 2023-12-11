@@ -887,6 +887,21 @@ namespace Alternet.UI
             return result;
         }
 
+        /// <summary>
+        /// Converts <see cref="Keys"/> to <see cref="ModifierKeys"/>.
+        /// </summary>
+        public static ModifierKeys ToModifiers(this Keys keys)
+        {
+            ModifierKeys result = 0;
+            if ((keys & Keys.Control) == Keys.Control)
+                result |= ModifierKeys.Control;
+            if ((keys & Keys.Shift) == Keys.Shift)
+                result |= ModifierKeys.Shift;
+            if ((keys & Keys.Alt) == Keys.Alt)
+                result |= ModifierKeys.Alt;
+            return result;
+        }
+
         /// <summary>Gets a value indicating whether the ALT key was pressed.</summary>
         /// <returns>
         /// <see langword="true" /> if the ALT key was pressed;

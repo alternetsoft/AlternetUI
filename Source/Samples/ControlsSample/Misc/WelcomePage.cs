@@ -68,7 +68,7 @@ namespace ControlsSample
             r.EndUpdate();
             r.ReadOnly = true;
             r.AutoUrlOpen = true;
-            r.AutoUrlModifiers = ModifierKeys.None;
+            r.AutoUrlModifiers = Alternet.UI.ModifierKeys.None;
         }
     }
 }

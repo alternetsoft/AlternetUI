@@ -14,7 +14,8 @@ namespace Alternet.UI
     [DefaultProperty("Text")]
     [DefaultEvent("Click")]
     public partial class Control
-        : FrameworkElement, ISupportInitialize, IDisposable, IControl, IFocusable, IWin32Window, ITextProperty
+        : FrameworkElement, ISupportInitialize, IDisposable, IControl, IFocusable,
+        IWin32Window, ITextProperty
     {
         /// <summary>
         /// Gets or sets whether <see cref="DebugBackgroundColor"/> property is used.
@@ -277,6 +278,30 @@ namespace Alternet.UI
             /// </remarks>
             ParentAssigned = 1,
         }
+
+        /// <summary>
+        /// Gets a value indicating which of the modifier keys (SHIFT, CTRL, and ALT) is in
+        /// a pressed state.</summary>
+        /// <returns>
+        /// A bitwise combination of the <see cref="Keys" /> values.
+        /// The default is <see cref="Keys.None" />.</returns>
+        protected static Keys ModifierKeys
+        {
+            get
+            {
+                var modifiers = Keyboard.Modifiers;
+                return modifiers.ToKeys();
+            }
+        }
+
+        /// <summary>
+        /// Gets a value indicating which of the modifier keys (SHIFT, CTRL, and ALT) is in
+        /// a pressed state.</summary>
+        /// <returns>
+        /// A bitwise combination of the <see cref="ModifierKeys" /> values.
+        /// The default is <see cref="ModifierKeys.None" />.</returns>
+        [Browsable(false)]
+        public static ModifierKeys KeyModifiers => Keyboard.Modifiers;
 
         /// <summary>
         /// Gets the default font used for controls.

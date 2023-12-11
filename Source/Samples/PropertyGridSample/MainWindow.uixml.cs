@@ -143,7 +143,7 @@ namespace PropertyGridSample
             PropGrid.AddActionTrigger(
                 PropertyGridKeyboardAction.ActionNextProperty,
                 Key.DownArrow,
-                ModifierKeys.Control);
+                Alternet.UI.ModifierKeys.Control);
 
             panel.PropGrid.SuggestedInitDefaults();
 

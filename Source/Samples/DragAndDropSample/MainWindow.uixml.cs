@@ -39,11 +39,11 @@ namespace DragAndDropSample
             if (allowedEffects.Count == 1)
                 return allowedEffects.Single();
 
-            if ((Keyboard.Modifiers & ModifierKeys.Alt) != 0
+            if ((Keyboard.Modifiers & Alternet.UI.ModifierKeys.Alt) != 0
                 && allowedEffects.Contains(DragDropEffects.Link))
                 return DragDropEffects.Link;
 
-            if ((Keyboard.Modifiers & ModifierKeys.Control) != 0
+            if ((Keyboard.Modifiers & Alternet.UI.ModifierKeys.Control) != 0
                 && allowedEffects.Contains(DragDropEffects.Copy))
                 return DragDropEffects.Copy;
 

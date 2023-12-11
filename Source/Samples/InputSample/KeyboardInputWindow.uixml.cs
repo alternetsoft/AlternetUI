@@ -45,7 +45,7 @@ namespace InputSample
         protected override void OnKeyDown(KeyEventArgs e)
         {
             UpdateModifierKeys();
-            if (e.Key == Key.D && e.ModifierKeys == (ModifierKeys.Control | ModifierKeys.Shift))
+            if (e.Key == Key.D && e.ModifierKeys == (Alternet.UI.ModifierKeys.Control | Alternet.UI.ModifierKeys.Shift))
             {
                 e.Handled = true;
                 messageLabel.BackgroundColor =
@@ -64,10 +64,10 @@ namespace InputSample
 
             var modifiers = Keyboard.Modifiers;
 
-            var control = (modifiers & ModifierKeys.Control) != 0;
-            var shift = (modifiers & ModifierKeys.Shift) != 0;
-            var alt = (modifiers & ModifierKeys.Alt) != 0;
-            var windows = (modifiers & ModifierKeys.Windows) != 0;
+            var control = (modifiers & Alternet.UI.ModifierKeys.Control) != 0;
+            var shift = (modifiers & Alternet.UI.ModifierKeys.Shift) != 0;
+            var alt = (modifiers & Alternet.UI.ModifierKeys.Alt) != 0;
+            var windows = (modifiers & Alternet.UI.ModifierKeys.Windows) != 0;
 
             var sControl = control ? (macOs ? "Cmd(Ctrl)" : "Ctrl") : string.Empty;
             var sShift = shift ? "Shift" : string.Empty;
