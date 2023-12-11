@@ -15,7 +15,7 @@ namespace Alternet.UI
     [DefaultEvent("Click")]
     public partial class Control
         : FrameworkElement, ISupportInitialize, IDisposable, IControl, IFocusable,
-        IWin32Window, ITextProperty
+        IWin32Window, ITextProperty, IComponent
     {
         /// <summary>
         /// Gets or sets whether <see cref="DebugBackgroundColor"/> property is used.
@@ -27,6 +27,7 @@ namespace Alternet.UI
         private static int groupIndexCounter;
         private static Font? defaultFont;
 
+        private ISite? site;
         private bool isMouseLeftButtonDown;
         private bool enabled = true;
         private int layoutSuspendCount;
@@ -1755,6 +1756,12 @@ namespace Alternet.UI
             }
         }
 
+        ISite? IComponent.Site
+        {
+            get => site;
+            set => site = value;
+        }
+
         /// <summary>
         /// Gets a value indicating whether the control has input focus.
         /// </summary>
@@ -1797,5 +1804,5 @@ namespace Alternet.UI
             => HasChildren ? Children : Array.Empty<FrameworkElement>();
 
         private IControlHandlerFactory? ControlHandlerFactory { get; set; }
-    }
+   }
 }
