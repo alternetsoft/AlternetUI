@@ -31,7 +31,7 @@ namespace Alternet.Drawing.Printing
         }
 
         /// <summary>
-        /// Gets a value indicating whether this <see cref="PaperSize"/> us custom.
+        /// Gets a value indicating whether this <see cref="PaperSize"/> is custom.
         /// </summary>
         public bool IsCustom { get; private set; }
 
