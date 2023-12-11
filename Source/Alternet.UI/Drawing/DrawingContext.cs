@@ -21,6 +21,11 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Gets or sets name of the <see cref="DrawingContext"/> for the debug purposes.
+        /// </summary>
+        public string? Name { get; set; }
+
+        /// <summary>
         /// Gets or sets a copy of the geometric world transformation for this
         /// <see cref="DrawingContext"/>.
         /// </summary>
@@ -749,7 +754,7 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Draws a line connecting two <see cref="Point"/> structures.
+        /// Draws a line connecting two points.
         /// </summary>
         /// <param name="pen"><see cref="Pen"/> that determines the color, width, and style
         /// of the line.</param>
@@ -768,6 +773,19 @@ namespace Alternet.Drawing
 #endif
             dc.DrawLine(pen.NativePen, a, b);
         }
+
+        /// <summary>
+        /// Draws a line connecting two points.
+        /// </summary>
+        /// <param name="pen"><see cref="Pen"/> that determines the color, width, and style
+        /// of the line.</param>
+        /// <param name="x1">X coordinate of the first point.</param>
+        /// <param name="y1">Y coordinate of the first point.</param>
+        /// <param name="x2">X coordinate of the second point.</param>
+        /// <param name="y2">Y coordinate of the second point.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void DrawLine(Pen pen, double x1, double y1, double x2, double y2) =>
+            DrawLine(pen, new(x1, y1), new(x2, y2));
 
         /// <summary>
         /// Draws a series of line segments that connect an array of <see cref="Point"/> structures.
