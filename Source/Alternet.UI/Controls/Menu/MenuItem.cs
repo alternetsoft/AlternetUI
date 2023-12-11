@@ -162,7 +162,7 @@ namespace Alternet.UI
         /// Use underscore (<c>_</c>) symbol before a character to make it
         /// an access key.
         /// </remarks>
-        public string Text
+        public override string Text
         {
             get
             {

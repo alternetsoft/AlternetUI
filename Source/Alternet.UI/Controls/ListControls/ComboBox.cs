@@ -156,7 +156,7 @@ namespace Alternet.UI
         /// </remarks>
         /// <exception cref="ArgumentNullException">The <c>value</c> is
         /// <c>null</c>.</exception>
-        public string Text
+        public override string Text
         {
             get
             {

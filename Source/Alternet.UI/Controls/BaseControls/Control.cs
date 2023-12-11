@@ -14,7 +14,7 @@ namespace Alternet.UI
     [DefaultProperty("Text")]
     [DefaultEvent("Click")]
     public partial class Control
-        : FrameworkElement, ISupportInitialize, IDisposable, IControl, IFocusable, IWin32Window
+        : FrameworkElement, ISupportInitialize, IDisposable, IControl, IFocusable, IWin32Window, ITextProperty
     {
         /// <summary>
         /// Gets or sets whether <see cref="DebugBackgroundColor"/> property is used.
@@ -311,6 +311,26 @@ namespace Alternet.UI
             {
                 stateObjects ??= new();
                 stateObjects.Borders = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the text associated with this control.
+        /// </summary>
+        /// <returns>
+        /// The text associated with this control.
+        /// </returns>
+        [DefaultValue("")]
+        [Localizability(LocalizationCategory.Text)]
+        public virtual string Text
+        {
+            get
+            {
+                return string.Empty;
+            }
+
+            set
+            {
             }
         }
 

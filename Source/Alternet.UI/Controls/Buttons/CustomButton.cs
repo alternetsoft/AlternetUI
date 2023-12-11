@@ -18,11 +18,6 @@ namespace Alternet.UI
         public static Func<CustomButton>? CreateButton;
 
         /// <summary>
-        /// Gets or sets the text displayed on this button.
-        /// </summary>
-        public abstract string Text { get; set; }
-
-        /// <summary>
         /// Gets or sets a value indicating whether the control has a border.
         /// </summary>
         [Browsable(false)]

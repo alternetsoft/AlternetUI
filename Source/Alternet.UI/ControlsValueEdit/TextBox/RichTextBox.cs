@@ -165,7 +165,7 @@ namespace Alternet.UI
         /// with the specified string.
         /// </remarks>
         [DefaultValue("")]
-        public virtual string Text
+        public override string Text
         {
             get
             {

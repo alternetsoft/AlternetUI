@@ -60,7 +60,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets <see cref="TextBox.Text"/> property of the main child control.
         /// </summary>
-        public virtual string Text
+        public override string Text
         {
             get
             {

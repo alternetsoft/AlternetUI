@@ -158,7 +158,7 @@ namespace Alternet.UI
         /// Gets or sets text of the first tab.
         /// </summary>
         [Browsable(false)]
-        public string Text
+        public override string Text
         {
             get
             {
