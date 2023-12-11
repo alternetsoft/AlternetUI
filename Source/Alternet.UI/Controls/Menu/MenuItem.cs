@@ -1,5 +1,6 @@
 using System;
 using System.ComponentModel;
+using Alternet.Drawing;
 
 namespace Alternet.UI
 {
@@ -69,6 +70,20 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="MenuItem" /> class that displays the
+        /// specified text and image and that does the specified action when
+        /// the <see cref="MenuItem" /> is clicked.</summary>
+        /// <param name="text">The text to display on the menu item.</param>
+        /// <param name="image">The <see cref="Image" /> to display on the control.</param>
+        /// <param name="onClick">An event handler that raises the <see cref="Control.Click" />
+        /// event when the control is clicked.</param>
+        public MenuItem(string text, Image image, EventHandler onClick)
+        {
+            this.text = text;
+            Click += onClick;
+        }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref='MenuItem'/> class with
         /// the specified <paramref name="text"/> for the menu item.
         /// </summary>
@@ -135,6 +150,32 @@ namespace Alternet.UI
 
         /// <inheritdoc/>
         public override ControlTypeId ControlKind => ControlTypeId.MenuItem;
+
+        /// <summary>
+        /// Gets or sets the shortcut keys associated with the
+        /// <see cref="MenuItem" />.</summary>
+        /// <returns>
+        /// One of the <see cref="Keys" /> values. The default is <see cref="Keys.None" />.</returns>
+        [Localizable(true)]
+        [DefaultValue(Keys.None)]
+        [Browsable(false)]
+        public Keys ShortcutKeys
+        {
+            get
+            {
+                if (Shortcut is null)
+                    return Keys.None;
+                var result = Shortcut.Key.ToKeys(Shortcut.Modifiers);
+                return result;
+            }
+
+            set
+            {
+                var key = value.ToKey();
+                var modifiers = value.ToModifiers();
+                Shortcut = new(key, modifiers);
+            }
+        }
 
         /// <summary>
         /// Gets or sets <see cref="Action"/> which will be executed when

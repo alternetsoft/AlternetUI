@@ -1,4 +1,5 @@
 ﻿using System;
+using Alternet.Drawing;
 
 namespace Alternet.UI
 {
@@ -12,6 +13,19 @@ namespace Alternet.UI
         /// </summary>
         public ToolStripMenuItem()
             : base()
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MenuItem" /> class that displays the
+        /// specified text and image and that does the specified action when
+        /// the <see cref="MenuItem" /> is clicked.</summary>
+        /// <param name="text">The text to display on the menu item.</param>
+        /// <param name="image">The <see cref="Image" /> to display on the control.</param>
+        /// <param name="onClick">An event handler that raises the <see cref="Control.Click" />
+        /// event when the control is clicked.</param>
+        public ToolStripMenuItem(string text, Image image, EventHandler onClick)
+            : base(text, image, onClick)
         {
         }
 
