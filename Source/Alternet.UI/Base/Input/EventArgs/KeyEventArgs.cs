@@ -5,6 +5,7 @@
 
 
 using System;
+using System.ComponentModel;
 using System.Security; 
 
 namespace Alternet.UI
@@ -12,225 +13,180 @@ namespace Alternet.UI
     /// <summary>
     ///     The KeyEventArgs class contains information about key states.
     /// </summary>
-    /// <ExternalAPI/>     
     public class KeyEventArgs : KeyboardEventArgs
     {
+        private readonly ModifierKeys modifiers;
+        private readonly Keys keyData;
+        private readonly Key key;
+        private readonly bool isRepeat;
+        private readonly KeyStates keyStates;
+
         /// <summary>
-        ///     Constructs an instance of the KeyEventArgs class.
+        /// Constructs an instance of the KeyEventArgs class.
         /// </summary>
         /// <param name="keyboard">
-        ///     The logical keyboard device associated with this event.
+        /// The logical keyboard device associated with this event.
         /// </param>
         /// <param name="timestamp">
-        ///     The time when the input occurred.
+        /// The time when the input occurred.
         /// </param>
         /// <param name="key">
-        ///     The key referenced by the event.
+        /// The key referenced by the event.
         /// </param>
         /// <param name="isRepeat">Whether the key pressed is a repeated key or not.</param>
-        public KeyEventArgs(KeyboardDevice keyboard, /*PresentationSource inputSource,*/ long timestamp, Key key, bool isRepeat) : base(keyboard, timestamp)
+        public KeyEventArgs(KeyboardDevice keyboard, long timestamp, Key key, bool isRepeat)
+            : base(keyboard, timestamp)
         {
-            //if (inputSource == null)
-            //    throw new ArgumentNullException("inputSource");
-
             if (!Keyboard.IsValidKey(key))
-                throw new System.ComponentModel.InvalidEnumArgumentException("key", (int)key, typeof(Key));
-
-            //_inputSource = inputSource;
-
-            //_realKey = key;
-            _key = key;
-            _isRepeat = isRepeat;
-
-            // Start out assuming that this is just a normal key.
-            //MarkNormal();
+                throw new InvalidEnumArgumentException(nameof(key), (int)key, typeof(Key));
+            this.key = key;
+            this.isRepeat = isRepeat;
+            modifiers = KeyboardDevice.Modifiers;
+            keyStates = this.KeyboardDevice.GetKeyStates(key);
+            keyData = key.ToKeys(modifiers);
         }
 
-        ///// <summary>
-        /////     The input source that provided this input.
-        ///// </summary>
-        //public PresentationSource InputSource
-        //{
-        //    get 
-        //    {
-
-        //        return UnsafeInputSource;
-        //    }
-        //}
-
         /// <summary>
-        ///     The Key referenced by the event, if the key is not being 
-        ///     handled specially.
+        /// The Key referenced by the event, if the key is not being handled specially.
         /// </summary>
         public Key Key
         {
-            get { return _key; }
+            get
+            {
+                return key;
+            }
         }
+
+        /// <summary>
+        /// Gets the modifier flags for a <see cref="UIElement.KeyDown" /> event.
+        /// The flags indicate which combination of CTRL, SHIFT, and ALT keys was pressed.
+        /// </summary>
+        /// <returns>A <see cref="Keys" /> value representing one or more modifier flags.</returns>
+        public Keys Modifiers => KeyData & Keys.Modifiers;
 
         /// <summary>
         /// Returns the set of modifier keys currently pressed.
         /// </summary>
-        public ModifierKeys Modifiers
+        public ModifierKeys ModifierKeys
         {
-            get { return KeyboardDevice.Modifiers; }
+            get
+            {
+                return modifiers;
+            }
         }
 
-        ///// <summary>
-        /////     The original key, as opposed to <see cref="Key"/>, which might
-        /////     have been changed (e.g. by MarkTextInput).
-        ///// </summary>
-        ///// <remarks>
-        ///// Note:  This should remain internal.  When a processor obfuscates the key,
-        ///// such as changing characters to Key.TextInput, we're deliberately trying to
-        ///// hide it and make it hard to find.  But internally we'd like an easy way to find
-        ///// it.  So we have this internal, but it must remain internal.
-        ///// </remarks>
-        //internal Key RealKey
-        //{
-        //    get { return _realKey; }
-        //}
+        /// <summary>
+        /// Gets the keyboard code for a <see cref="UIElement.KeyDown"/> event.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="Keys" /> value that is the key code for the event.
+        /// </returns>
+        public Keys KeyCode
+        {
+            get
+            {
+                Keys keys = KeyData & Keys.KeyCode;
+                if (!Enum.IsDefined(typeof(Keys), (int)keys))
+                {
+                    return Keys.None;
+                }
+                return keys;
+            }
+        }
 
-        ///// <summary>
-        /////     The Key referenced by the event, if the key is going to be
-        /////     processed by an IME.
-        ///// </summary>
-        //public Key ImeProcessedKey
-        //{
-        //    get { return (_key == Key.ImeProcessed) ? _realKey : Key.None;}
-        //}
-
-        ///// <summary>
-        /////     The Key referenced by the event, if the key is going to be
-        /////     processed by an system.
-        ///// </summary>
-        //public Key SystemKey
-        //{
-        //    get { return (_key == Key.System) ? _realKey : Key.None;}
-        //}
-
-        ///// <summary>
-        /////     The Key referenced by the event, if the the key is going to 
-        /////     be processed by Win32 Dead Char System.
-        ///// </summary>
-        //public Key DeadCharProcessedKey
-        //{
-        //    get { return (_key == Key.DeadCharProcessed) ? _realKey : Key.None; }
-        //}
+        /// <summary>Gets the keyboard value for a <see cref="UIElement.KeyDown" /> event.</summary>
+        /// <returns>The integer representation of the
+        /// <see cref="KeyEventArgs.KeyCode" /> property.</returns>
+        public int KeyValue => (int)(KeyData & Keys.KeyCode);
 
         /// <summary>
-        ///     The state of the key referenced by the event.
+        /// Gets the key data for a <see cref="UIElement.KeyDown"/> event.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="Keys"/> representing
+        /// the key code for the key that was pressed, combined
+        /// with modifier flags that indicate which combination
+        /// of CTRL, SHIFT, and ALT keys was pressed at the same time.
+        /// </returns>
+        public Keys KeyData => keyData;
+
+        /// <summary>
+        /// Gets a value indicating whether the ALT key was pressed.
+        /// </summary>
+        /// <returns>
+        /// <see langword="true"/> if the ALT key was pressed;
+        /// otherwise, <see langword="false"/>.
+        /// </returns>
+        public virtual bool Alt => modifiers.HasFlag(ModifierKeys.Alt);
+
+        /// <summary>
+        /// Gets a value indicating whether the CTRL key was pressed.
+        /// </summary>
+        /// <returns>
+        /// <see langword="true" /> if the CTRL key was pressed;
+        /// otherwise, <see langword="false" />.
+        /// </returns>
+        public virtual bool Control => modifiers.HasFlag(ModifierKeys.Control);
+
+        /// <summary>
+        /// Gets a value indicating whether the SHIFT key was pressed.
+        /// </summary>
+        /// <returns>
+        /// <see langword="true"/> if the SHIFT key was pressed;
+        /// otherwise, <see langword="false"/>.
+        /// </returns>
+        public virtual bool Shift => modifiers.HasFlag(ModifierKeys.Shift);
+
+        /// <summary>
+        /// The state of the key referenced by the event.
         /// </summary>
         public KeyStates KeyStates
         {
-            get {return this.KeyboardDevice.GetKeyStates(_key);}
+            get
+            {
+                return keyStates;
+            }
         }
 
         /// <summary>
-        ///     Whether the key pressed is a repeated key or not.
+        /// Whether the key pressed is a repeated key or not.
         /// </summary>
         public bool IsRepeat
         {
-            get {return _isRepeat;}
+            get
+            {
+                return isRepeat;
+            }
         }
 
         /// <summary>
-        ///     Whether or not the key referenced by the event is down.
+        /// Whether or not the key referenced by the event is down.
         /// </summary>
-        /// <ExternalAPI Inherit="true"/>
-        public bool IsDown
-        {
-            get {return this.KeyboardDevice.IsKeyDown(_key);}
-        }
+        public bool IsDown => keyStates == KeyStates.Down;
 
         /// <summary>
-        ///     Whether or not the key referenced by the event is up.
+        /// Whether or not the key referenced by the event is up.
         /// </summary>
-        /// <ExternalAPI Inherit="true"/>
-        public bool IsUp
-        {
-            get {return this.KeyboardDevice.IsKeyUp(_key);}
-        }
+        public bool IsUp => !IsDown;
 
         /// <summary>
-        ///     Whether or not the key referenced by the event is toggled.
+        /// Whether or not the key referenced by the event is toggled.
         /// </summary>
-        /// <ExternalAPI Inherit="true"/>
-        public bool IsToggled
-        {
-            get {return this.KeyboardDevice.IsKeyToggled(_key);}
-        }
+        public bool IsToggled => keyStates == KeyStates.Toggled;
 
         /// <summary>
-        ///     The mechanism used to call the type-specific handler on the
-        ///     target.
+        /// The mechanism used to call the type-specific handler on the target.
         /// </summary>
         /// <param name="genericHandler">
-        ///     The generic handler to call in a type-specific way.
+        /// The generic handler to call in a type-specific way.
         /// </param>
-        /// <param name="genericTarget">
-        ///     The target to call the handler on.
-        /// </param>
-        /// <ExternalAPI/> 
+        /// <param name="genericTarget">The target to call the handler on.</param>
         protected override void InvokeEventHandler(Delegate genericHandler, object genericTarget)
         {
             KeyEventHandler handler = (KeyEventHandler) genericHandler;
             
             handler(genericTarget, this);
         }
-
-        //internal void SetRepeat( bool newRepeatState )
-        //{
-        //    _isRepeat = newRepeatState;
-        //}
-
-        //internal void MarkNormal()
-        //{
-        //    _key = _realKey;
-        //}
-
-        //internal void MarkSystem()
-        //{
-        //    _key = Key.System;
-        //}
-        
-        //internal void MarkImeProcessed()
-        //{
-        //    _key = Key.ImeProcessed;
-        //}
-
-        //internal void MarkDeadCharProcessed()
-        //{
-        //    _key = Key.DeadCharProcessed;
-        //}
-        //internal PresentationSource UnsafeInputSource
-        //{
-        //    get 
-        //    {
-        //        return _inputSource;
-        //    }
-        //}
-
-        //internal int ScanCode
-        //{
-        //    get {return _scanCode;}
-        //    set {_scanCode = value;}
-        //}
-
-        //internal bool IsExtendedKey
-        //{
-        //    get {return _isExtendedKey;}
-        //    set {_isExtendedKey = value;}
-        //}
-
-
-        //private Key _realKey;
-        private Key _key;
-
-        //private PresentationSource _inputSource;
-
-        private bool _isRepeat;
-        //private int _scanCode;
-        //private bool _isExtendedKey;
-}
+    }
 }
 

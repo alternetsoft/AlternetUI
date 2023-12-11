@@ -12,6 +12,477 @@ namespace Alternet.UI
     public static class KeysExtensions
     {
         /// <summary>
+        /// Array with <see cref="Key"/> to <see cref="Keys"/> conversion data.
+        /// </summary>
+        public static Keys[] KeyToKeysConversion = new[]
+        {
+            //  No key pressed.
+            Keys.None,
+
+            //  The "Backspace" key.
+            Keys.Back,
+        
+            //  The "Tab" key.
+            Keys.Tab,
+        
+            //  The "Enter" key.
+            Keys.Enter,
+        
+            //  The "Pause" key.
+            Keys.Pause,
+        
+            //  The "Caps Lock" key.
+            Keys.CapsLock,
+
+            //  The "Esc" key.
+            Keys.Escape,
+        
+            //  The "Space Bar" key.
+            Keys.Space,
+        
+            //  The "Page Up" key.
+            Keys.PageUp,
+        
+            //  The "Page Down" key.
+            Keys.PageDown,
+        
+            //  The "End" key.
+            Keys.End,
+        
+            //  The "Home" key.
+            Keys.Home,
+        
+            //  The "Left Arrow" key.
+            Keys.Left,
+        
+            //  The "Up Arrow" key.
+            Keys.Up,
+        
+            //  The "Right Arrow" key.
+            Keys.Right,
+        
+            //  The "Down Arrow" key.
+            Keys.Down,
+        
+            //  The "Print Screen" key.
+            Keys.PrintScreen,
+        
+            //  The "Insert" key.
+            Keys.Insert,
+
+            //  The "Delete" key.
+            Keys.Delete,
+        
+            //  The "0" key.
+            Keys.D0,
+        
+            //  The "1" key.
+            Keys.D1,
+
+            //  The "2" key.
+            Keys.D2,
+        
+            //  The "3" key.
+            Keys.D3,
+        
+            //  The "4" key.
+            Keys.D4,
+        
+            //  The "5" key.
+            Keys.D5,
+        
+            //  The "6" key.
+            Keys.D6,
+        
+            //  The "7" key.
+            Keys.D7,
+        
+            //  The "8" key.
+            Keys.D8,
+        
+            //  The "9" key.
+            Keys.D9,
+        
+            //  The "A" key.
+            Keys.A,
+        
+            //  The "B" key.
+            Keys.B,
+        
+            //  The "C" key.
+            Keys.C,
+        
+            //  The "D" key.
+            Keys.D,
+        
+            //  The "E" key.
+            Keys.E,
+
+            //  The "F" key.
+            Keys.F,
+        
+            //  The "G" key.
+            Keys.G,
+        
+            //  The "H" key.
+            Keys.H,
+        
+            //  The "I" key.
+            Keys.I,
+
+            //  The "J" key.
+            Keys.J,
+        
+            //  The "K" key.
+            Keys.K,
+
+            //  The "L" key.
+            Keys.L,
+        
+            //  The "M" key.
+            Keys.M,
+        
+            //  The "N" key.
+            Keys.N,
+        
+            //  The "O" key.
+            Keys.O,
+        
+            //  The "P" key.
+            Keys.P,
+
+            //  The "Q" key.
+            Keys.Q,
+        
+            //  The "R" key.
+            Keys.R,
+        
+            //  The "S" key.
+            Keys.S,
+        
+            //  The "T" key.
+            Keys.T,
+        
+            //  The "U" key.
+            Keys.U,
+        
+            //  The "V" key.
+            Keys.V,
+
+            //  The "W" key.
+            Keys.W,
+        
+            //  The "X" key.
+            Keys.X,
+        
+            //  The "Y" key.
+            Keys.Y,
+        
+            //  The "Z" key.
+            Keys.Z,
+        
+            //  The "0" key on the numeric keypad.
+            Keys.NumPad0,
+        
+            //  The "1" key on the numeric keypad.
+            Keys.NumPad1,
+
+            //  The "2" key on the numeric keypad.
+            Keys.NumPad2,
+        
+            //  The "3" key on the numeric keypad.
+            Keys.NumPad3,
+        
+            //  The "4" key on the numeric keypad.
+            Keys.NumPad4,
+        
+            //  The "5" key on the numeric keypad.
+            Keys.NumPad5,
+        
+            //  The "6" key on the numeric keypad.
+            Keys.NumPad6,
+        
+            //  The "7" key on the numeric keypad.
+            Keys.NumPad7,
+        
+            //  The "8" key on the numeric keypad.
+            Keys.NumPad8,
+        
+            //  The "9" key on the numeric keypad.
+            Keys.NumPad9,
+        
+            //  The "*" key on the numeric keypad.
+            Keys.Multiply,
+        
+            //  The "+" key on the numeric keypad.
+            Keys.Add,
+        
+            //  The "-" key on the numeric keypad.
+            Keys.Subtract,
+        
+            //  The "." key on the numeric keypad.
+            Keys.Decimal,
+        
+            //  The "/" on the numeric keypad.
+            Keys.Divide,
+        
+            //  The "F1" key.
+            Keys.F1,
+        
+            //  The "F2" key.
+            Keys.F2,
+        
+            //  The "F3" key.
+            Keys.F3,
+        
+            //  The "F4" key.
+            Keys.F4,
+        
+            //  The "F5" key.
+            Keys.F5,
+        
+            //  The "F6" key.
+            Keys.F6,
+        
+            //  The "F7" key.
+            Keys.F7,
+        
+            //  The "F8" key.
+            Keys.F8,
+        
+            //  The "F9" key.
+            Keys.F9,
+        
+            //  The "F10" key.
+            Keys.F10,
+        
+            //  The "F11" key.
+            Keys.F11,
+        
+            //  The "F12" key.
+            Keys.F12,
+        
+            //  The "F13" key.
+            Keys.F13,
+        
+            //  The "F14" key.
+            Keys.F14,
+        
+            //  The "F15" key.
+            Keys.F15,
+
+            //  The "F16" key.
+            Keys.F16,
+        
+            //  The "F17" key.
+            Keys.F17,
+        
+            //  The "F18" key.
+            Keys.F18,
+        
+            //  The "F19" key.
+            Keys.F19,
+        
+            //  The "F20" key.
+            Keys.F20,
+        
+            //  The "F21" key.
+            Keys.F21,
+        
+            //  The "F22" key.
+            Keys.F22,
+        
+            //  The "F23" key.
+            Keys.F23,
+        
+            //  The "F24" key.
+            Keys.F24,
+        
+            //  The "Num Lock" key.
+            Keys.NumLock,
+        
+            //  The "Scroll Lock" key.
+            Keys.Scroll,
+        
+            //  The "Browser Back" key.
+            Keys.BrowserBack,
+        
+            //  The "Browser Forward" key.
+            Keys.BrowserForward,
+        
+            //  The "Browser Refresh" key.
+            Keys.BrowserRefresh,
+        
+            //  The "Browser Stop" key.
+            Keys.BrowserStop,
+        
+            //  The "Browser Search" key.
+            Keys.BrowserSearch,
+        
+            //  The "Browser Favorites" key.
+            Keys.BrowserFavorites,
+        
+            //  The "Browser Home" key.
+            Keys.BrowserHome,
+        
+            //  The "Volume Mute" key.
+            Keys.VolumeMute,
+        
+            //  The "Volume Down" key.
+            Keys.VolumeDown,
+        
+            //  The "Volume Up" key.
+            Keys.VolumeUp,
+        
+            //  The "Media Next Track" key.
+            Keys.MediaNextTrack,
+
+            //  The "Media Previous Track" key.
+            Keys.MediaPreviousTrack,
+        
+            //  The "Media Stop" key.
+            Keys.MediaStop,
+        
+            //  The "Media Play Pause" key.
+            Keys.MediaPlayPause,
+        
+            //  The "Launch Mail" key.
+            Keys.LaunchMail,
+        
+            //  The "Select Media" key.
+            Keys.SelectMedia,
+        
+            //  The "Launch Application1" key.
+            Keys.LaunchApplication1,
+
+            //  The "Launch Application2" key.
+            Keys.LaunchApplication2,
+
+            //  The ";" key.
+            Keys.OemSemicolon,
+        
+            //  The "=" key.
+            Keys.Oemplus,//Equals,
+        
+            //  The "," key.
+            Keys.Oemcomma,
+
+            //  The "-" key.
+            Keys.OemMinus,
+        
+            //  The "." key.
+            Keys.OemPeriod,
+        
+            //  The "/" key.
+            Keys.Oem2,
+        
+            //  The "[" key.
+            Keys.Oem4,
+        
+            //  The "]" key.
+            Keys.Oem6,
+        
+            //  The "'" key.
+            Keys.Oem7,
+
+            //  The "\" key.
+            Keys.OemPipe,
+        
+            //  The "Clear" key.
+            Keys.Clear,
+        
+            //  The "`" key.
+            Keys.Oem3,
+        
+            //  The "Shift" key.
+            Keys.Shift,
+        
+            //  The "Control" key.
+            Keys.Control,
+
+            //  The "Alt" key on Windows and Linux or "Option" key on macOS.
+            Keys.Alt,
+        
+            //  The "Command" key on Apple keyboard.
+            Keys.None/*MacCommand*/,
+        
+            // The "Option" key on Apple keyboard.
+            Keys.None/*MacOption*/,
+        
+            // The "Control" key on Apple keyboard.
+            Keys.None/*MacControl*/,
+        
+            // The Microsoft "Windows Logo" key on Windows or "Command" key on macOS or "Meta" key on Linux.
+            Keys.LWin,
+        
+            //  The Microsoft "Menu" key.
+            Keys.Apps,
+        
+            //  The '!' (33, 0x21) key.
+            Keys.None, //Keys.ExclamationMark,
+        
+            //  The '"' (34, 0x220) key.
+            Keys.None, //Keys.QuotationMark,
+        
+            //  The '#' (35, 0x23) key.
+            Keys.None, //Keys.NumberSign,
+        
+            //  The '$' (36, 0x24) key.
+            Keys.None, //Keys.DollarSign,
+        
+            //  The '%' (37, 0x25) key.
+            Keys.None, //Keys.PercentSign,
+
+            //  The ampersand (38, 0x26) key.
+            Keys.None, //Keys.Ampersand,
+        
+            //  The '(' (40, 0x28) key.
+            Keys.None, //Keys.LeftParenthesis,
+        
+            //  The ')' (41, 0x29) key.
+            Keys.None, //Keys.RightParenthesis,
+        
+            //  The '*' (42, 0x2A) key.
+            Keys.Multiply,
+
+            //  The '+' (43, 0x2B) key.
+            Keys.Add,
+        
+            //  The ':' (58, 0x3A) key.
+            Keys.OemSemicolon, //Key.Colon,
+        
+            //  The less than sign (60, 0x3C) key.
+            Keys.Oemcomma, //Key.LessThanSign,
+        
+            //  The greater than sign (62, 0x3E) key.
+            Keys.OemPeriod, //Key.GreaterThanSign,
+        
+            //  The '?' (63, 0x3F) key.
+            Keys.None, //Keys.QuestionMark,
+        
+            //  The '@' (64, 0x40) key.
+            Keys.D2, //Keys.CommercialAt,
+        
+            //  The '^' (94, 0x5E) key.
+            Keys.D6, //Keys.CircumflexAccent,
+
+            //  The '_' (95, 0x5F) key.
+            Keys.OemMinus, //Keys.LowLine, 
+        
+            //  The '{', 123, 0x7B) key.
+            Keys.Oem4,//LeftCurlyBracket,
+        
+            //  The '|', 124, 0x7C) key.
+            Keys.OemPipe,//VerticalLine,
+        
+            //  The '}', 125, 0x7D) key.
+            Keys.Oem6, //RightCurlyBracket,
+
+            //  The '~', 126, 0x7E) key.
+            Keys.Oem3,//Tilde,
+        };
+
+        /// <summary>
         /// Array with <see cref="Keys"/> to <see cref="Key"/> conversion data.
         /// </summary>
         public static Key[] KeysToKeyConversion = new[]
@@ -209,7 +680,7 @@ namespace Alternet.UI
             // The subtract key.
             Key.Minus/*Keys.Subtract*/,
             // The decimal key.
-            Key.None/*Keys.Decimal*/,
+            Key.NumPadDot/*Keys.Decimal*/,
             // The divide key.
             Key.Slash/*Key.Divide*/,
             // The F1 key.
@@ -327,15 +798,15 @@ namespace Alternet.UI
             // The OEM question mark key on a US standard keyboard (Windows 2000 or later).
             Key.QuestionMark/*Key.OemQuestion*/,
             // The OEM 2 key.
-            Key.None/*Key.Oem2*/,
+            Key.Slash/*Key.Oem2*/,
             // The OEM tilde key on a US standard keyboard (Windows 2000 or later).
             Key.Tilde/*Key.Oemtilde*/,
             // The OEM 3 key.
-            Key.None/*Key.Oem3*/,
+            Key.Backtick/*Key.Oem3*/,
             // The OEM open bracket key on a US standard keyboard (Windows 2000 or later).
             Key.OpenBracket/*Keys.OemOpenBrackets*/,
             // The OEM 4 key.
-            Key.None/*Key.Oem4*/,
+            Key.OpenBracket/*Key.Oem4*/,
             // The OEM pipe key on a US standard keyboard (Windows 2000 or later).
             Key.OemPipe,
             // The OEM 5 key.
@@ -343,11 +814,11 @@ namespace Alternet.UI
             // The OEM close bracket key on a US standard keyboard (Windows 2000 or later).
             Key.CloseBracket/*Key.OemCloseBrackets*/,
             // The OEM 6 key.
-            Key.None/*Key.Oem6*/,
+            Key.CloseBracket/*Key.Oem6*/,
             // The OEM singled/double quote key on a US standard keyboard (Windows 2000 or later).
             Key.Quote/*Keys.OemQuotes*/,
             // The OEM 7 key.
-            Key.None/*Key.Oem7*/,
+            Key.Quote/*Key.Oem7*/,
             // The OEM 8 key.
             Key.None/*Key.Oem8*/,
             // The OEM angle bracket or backslash key on the RT 102 key keyboard (Windows 2000 or later).
@@ -381,7 +852,7 @@ namespace Alternet.UI
         /// <summary>
         /// Converts <see cref="Keys"/> to <see cref="Key"/>.
         /// </summary>
-        /// <param name="keys"></param>
+        /// <param name="keys">Key information in <see cref="Keys"/> enum.</param>
         /// <returns></returns>
         public static Key ToKey(this Keys keys)
         {
@@ -390,6 +861,30 @@ namespace Alternet.UI
                 return KeysToKeyConversion[ikey];
             else
                 return Key.None;
+        }
+
+        /// <summary>
+        /// Converts <see cref="Key"/> to <see cref="Keys"/>.
+        /// </summary>
+        public static Keys ToKeys(this Key key, ModifierKeys modifiers)
+        {
+            var result = KeyToKeysConversion[(int)key];
+            return result | modifiers.ToKeys();
+        }
+
+        /// <summary>
+        /// Converts <see cref="ModifierKeys"/> to <see cref="Keys"/>.
+        /// </summary>
+        public static Keys ToKeys(this ModifierKeys modifiers)
+        {
+            Keys result = 0;
+            if (modifiers.HasFlag(ModifierKeys.Shift))
+                result |= Keys.Shift;
+            if (modifiers.HasFlag(ModifierKeys.Control))
+                result |= Keys.Control;
+            if (modifiers.HasFlag(ModifierKeys.Alt))
+                result |= Keys.Alt;
+            return result;
         }
 
         /// <summary>Gets a value indicating whether the ALT key was pressed.</summary>

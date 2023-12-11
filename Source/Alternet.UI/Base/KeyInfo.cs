@@ -138,7 +138,7 @@ namespace Alternet.UI
         /// Checks <paramref name="e"/> event arguments on whether this key is pressed.
         /// </summary>
         /// <param name="e">Event arguments.</param>
-        public bool IsPressed(KeyEventArgs e) => e.Key == Key && e.Modifiers == Modifiers;
+        public bool IsPressed(KeyEventArgs e) => e.Key == Key && e.ModifierKeys == Modifiers;
 
         /// <summary>
         /// Runs action if this key is pressed.

@@ -45,7 +45,7 @@ namespace InputSample
         protected override void OnKeyDown(KeyEventArgs e)
         {
             UpdateModifierKeys();
-            if (e.Key == Key.D && e.Modifiers == (ModifierKeys.Control | ModifierKeys.Shift))
+            if (e.Key == Key.D && e.ModifierKeys == (ModifierKeys.Control | ModifierKeys.Shift))
             {
                 e.Handled = true;
                 messageLabel.BackgroundColor =
