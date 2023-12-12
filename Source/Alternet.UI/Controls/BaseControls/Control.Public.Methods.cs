@@ -10,17 +10,6 @@ namespace Alternet.UI
     public partial class Control
     {
         /// <summary>
-        /// Computes the location of the specified client point into screen coordinates.
-        /// </summary>
-        /// <param name="p">The client coordinate <see cref="Point" /> to convert.</param>
-        /// <returns>A <see cref="Point" /> that represents the converted <see cref="Point" />,
-        /// <paramref name="p" />, in screen coordinates.</returns>
-        public Point PointToScreen(Point p)
-        {
-            return ClientToScreen(p);
-        }
-
-        /// <summary>
         /// Gets control's default font and colors as <see cref="IReadOnlyFontAndColor"/>.
         /// </summary>
         /// <param name="controlType">Type of the control.</param>
@@ -934,20 +923,22 @@ namespace Alternet.UI
         /// by preventing the control from
         /// drawing until the <see cref="EndUpdate"/> method is called.
         /// </summary>
-        public virtual void BeginUpdate()
+        public virtual int BeginUpdate()
         {
             updateCount++;
             Handler?.BeginUpdate();
+            return updateCount;
         }
 
         /// <summary>
         /// Resumes painting the control after painting is suspended by the
         /// <see cref="BeginUpdate"/> method.
         /// </summary>
-        public virtual void EndUpdate()
+        public virtual int EndUpdate()
         {
             updateCount--;
             Handler?.EndUpdate();
+            return updateCount;
         }
 
         /// <summary>
@@ -1542,6 +1533,28 @@ namespace Alternet.UI
         public virtual void ResetBackColor()
         {
             BackgroundColor = null;
+        }
+
+        /// <summary>
+        /// Computes the location of the specified client point into screen coordinates.
+        /// </summary>
+        /// <param name="p">The client coordinate <see cref="Point" /> to convert.</param>
+        /// <returns>A <see cref="Point" /> that represents the converted <see cref="Point" />,
+        /// <paramref name="p" />, in screen coordinates.</returns>
+        public Point PointToScreen(Point p)
+        {
+            return ClientToScreen(p);
+        }
+
+        /// <summary>
+        /// Computes the location of the specified screen point into client coordinates.
+        /// </summary>
+        /// <param name="p">The screen coordinate <see cref="Point" /> to convert.</param>
+        /// <returns> A <see cref="Point" /> that represents the converted
+        /// <see cref="Point" />, <paramref name="p" />, in client coordinates.</returns>
+        public Point PointToClient(Point p)
+        {
+            return ScreenToClient(p);
         }
 
         /// <summary>
