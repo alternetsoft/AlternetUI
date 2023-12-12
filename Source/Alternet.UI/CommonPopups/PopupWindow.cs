@@ -184,13 +184,15 @@ namespace Alternet.UI
         /// <param name="control">Control.</param>
         public void ShowPopup(Control control)
         {
+            var log = false;
+
             PopupOwner = control;
             var bl = control.ClientRectangle.BottomLeft;
-            Application.LogNameValueIf("control.ClientRectangle.BottomLeft", bl, LogDebugInfo);
+            Application.LogNameValueIf("control.ClientRectangle.BottomLeft", bl, LogDebugInfo && log);
             var blScreen = control.ClientToScreen(bl);
-            Application.LogNameValueIf("control.ClientToScreen", blScreen, LogDebugInfo);
+            Application.LogNameValueIf("control.ClientToScreen", blScreen, LogDebugInfo && log);
 
-            Application.LogNameValueIf("ParentWindow:", control.ParentWindow?.Location, LogDebugInfo);
+            Application.LogNameValueIf("ParentWindow:", control.ParentWindow?.Location, LogDebugInfo && log);
 
             control.BeginInvoke(() =>
             {
@@ -210,7 +212,7 @@ namespace Alternet.UI
             Show();
             FocusChildControl();
 
-            Application.LogNameValueIf("Popup:", Location, LogDebugInfo);
+            Application.LogNameValueIf("Popup:", Location, LogDebugInfo && false);
         }
 
         /// <summary>

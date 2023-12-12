@@ -153,7 +153,7 @@ namespace ControlsSample
 
         private void ShowPopupListBoxButton_Click(object? sender, EventArgs e)
         {
-            var useDo = false;
+            var useDo = true;
 
             if (useDo)
             {
