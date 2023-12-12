@@ -284,21 +284,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets a value indicating which of the modifier keys (SHIFT, CTRL, and ALT) is in
-        /// a pressed state.</summary>
-        /// <returns>
-        /// A bitwise combination of the <see cref="Keys" /> values.
-        /// The default is <see cref="Keys.None" />.</returns>
-        protected static Keys ModifierKeys
-        {
-            get
-            {
-                var modifiers = Keyboard.Modifiers;
-                return modifiers.ToKeys();
-            }
-        }
-
-        /// <summary>
         /// Gets the position of the mouse cursor in screen coordinates.
         /// </summary>
         /// <returns>
@@ -1814,6 +1799,21 @@ namespace Alternet.UI
             set
             {
                 NativeControl.ProcessIdle = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets a value indicating which of the modifier keys (SHIFT, CTRL, and ALT) is in
+        /// a pressed state.</summary>
+        /// <returns>
+        /// A bitwise combination of the <see cref="Keys" /> values.
+        /// The default is <see cref="Keys.None" />.</returns>
+        protected static Keys ModifierKeys
+        {
+            get
+            {
+                var modifiers = Keyboard.Modifiers;
+                return modifiers.ToKeys();
             }
         }
 
