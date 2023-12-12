@@ -23,9 +23,12 @@ namespace Alternet.UI
         public static bool UseDebugBackgroundColor = false;
 
         private static readonly Size DefaultControlSize = Size.NaN;
-
         private static int groupIndexCounter;
         private static Font? defaultFont;
+
+        private ControlStyles controlStyle = ControlStyles.UserPaint | ControlStyles.StandardClick
+            | ControlStyles.Selectable | ControlStyles.StandardDoubleClick
+            | ControlStyles.AllPaintingInWmPaint | ControlStyles.UseTextForAccessibility;
 
         private ISite? site;
         private bool isMouseLeftButtonDown;

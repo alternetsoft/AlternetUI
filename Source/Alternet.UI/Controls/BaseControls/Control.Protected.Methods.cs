@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -58,6 +59,19 @@ namespace Alternet.UI
         /// </summary>
         protected virtual void OnChildInserted(Control childControl)
         {
+        }
+
+        /// <summary>
+        /// Sets a specified <see cref="ControlStyles" /> flag to either <see langword="true" />
+        /// or <see langword="false" />.</summary>
+        /// <param name="flag">The <see cref="ControlStyles" /> bit to set.</param>
+        /// <param name="value">
+        /// <see langword="true" /> to apply the specified style to the control;
+        /// otherwise, <see langword="false" />.</param>
+        [EditorBrowsable(EditorBrowsableState.Advanced)]
+        protected void SetStyle(ControlStyles flag, bool value)
+        {
+            controlStyle = value ? (controlStyle | flag) : (controlStyle & ~flag);
         }
 
         /// <summary>
