@@ -299,6 +299,21 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets the position of the mouse cursor in screen coordinates.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="Point" /> that contains the coordinates of the mouse cursor
+        /// relative to the upper-left corner of the screen.
+        /// </returns>
+        public static Point MousePosition
+        {
+            get
+            {
+                return Mouse.PrimaryDevice.GetScreenPosition();
+            }
+        }
+
+        /// <summary>
         /// Gets a value indicating which of the modifier keys (SHIFT, CTRL, and ALT) is in
         /// a pressed state.</summary>
         /// <returns>
