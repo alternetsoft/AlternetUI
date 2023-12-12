@@ -12,6 +12,10 @@ void SetClip(Region* value);
 InterpolationMode GetInterpolationMode();
 void SetInterpolationMode(InterpolationMode value);
 
+void DestroyClippingRegion();
+void SetClippingRegion(const Rect& rect);
+Rect GetClippingBox();
+void DrawText(const string& text, const Point& location, Font* font, const Color& foreColor, const Color& backColor);
 Size GetDpi();
 static void ImageFromDrawingContext(Image* image, int width, int height, DrawingContext* dc);
 static void ImageFromGenericImageDC(Image* image, void* source, DrawingContext* dc);

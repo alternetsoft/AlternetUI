@@ -565,9 +565,6 @@ namespace PaintSample
 
             var font = Control.DefaultFont.Scaled(5);
             var measure = dc.MeasureText(s, font);
-            dc.DrawText(s, font, Color.Black.AsBrush, location);
-            dc.DrawRectangle(Color.DarkRed.AsPen, (location.X, location.Y, measure.Width, measure.Height));
-
 
             var size = dc.GetTextExtent(
                 s,
@@ -575,7 +572,22 @@ namespace PaintSample
                 out double descent,
                 out double externalLeading,
                 null);
+
+            dc.DestroyClippingRegion();
+            dc.SetClippingRegion((location.X + size.Width / 2, location.Y, size.Width, size.Height));
+            dc.DrawText(s, location, font, Color.Black, Color.Empty);
+
+            dc.DestroyClippingRegion();
+            dc.SetClippingRegion((location.X, location.Y, size.Width / 2, size.Height));
+            dc.DrawText(s, location, font, Color.Green, Color.Empty);
+            dc.DestroyClippingRegion();
+
+            dc.DrawRectangle(Color.DarkRed.AsPen, (location.X, location.Y, measure.Width, measure.Height));
+
+
             dc.DrawRectangle(Color.Red.AsPen, (location.X, location.Y, size.Width, size.Height));
+
+
 
             var y = location.Y - descent + size.Height;
             dc.DrawLine(Color.RosyBrown.AsPen, (location.X, y), (location.X + size.Width, y));

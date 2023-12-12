@@ -5,8 +5,8 @@
 #include "DrawingContext.h"
 #include "TransformMatrix.h"
 #include "Region.h"
-#include "Image.h"
 #include "Font.h"
+#include "Image.h"
 #include "Pen.h"
 #include "Brush.h"
 #include "GraphicsPath.h"
@@ -43,6 +43,26 @@ ALTERNET_UI_API InterpolationMode DrawingContext_GetInterpolationMode_(DrawingCo
 ALTERNET_UI_API void DrawingContext_SetInterpolationMode_(DrawingContext* obj, InterpolationMode value)
 {
     obj->SetInterpolationMode(value);
+}
+
+ALTERNET_UI_API void DrawingContext_DestroyClippingRegion_(DrawingContext* obj)
+{
+    obj->DestroyClippingRegion();
+}
+
+ALTERNET_UI_API void DrawingContext_SetClippingRegion_(DrawingContext* obj, Rect rect)
+{
+    obj->SetClippingRegion(rect);
+}
+
+ALTERNET_UI_API Rect_C DrawingContext_GetClippingBox_(DrawingContext* obj)
+{
+    return obj->GetClippingBox();
+}
+
+ALTERNET_UI_API void DrawingContext_DrawText_(DrawingContext* obj, const char16_t* text, Point location, Font* font, Color foreColor, Color backColor)
+{
+    obj->DrawText(text, location, font, foreColor, backColor);
 }
 
 ALTERNET_UI_API Size_C DrawingContext_GetDpi_(DrawingContext* obj)

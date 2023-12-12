@@ -1187,6 +1187,20 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Draws text with the specified font, background and foreground colors.
+        /// </summary>
+        /// <param name="text">Text to draw.</param>
+        /// <param name="location">Location used to draw the text.</param>
+        /// <param name="font">Font used to draw the text.</param>
+        /// <param name="foreColor">Foreground color of the text.</param>
+        /// <param name="backColor">Background color of the text.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void DrawText(string text, Point location, Font font, Color foreColor, Color backColor)
+        {
+            dc.DrawText(text, location, font.NativeFont, foreColor, backColor);
+        }
+
+        /// <summary>
         /// Pushes the current state of the <see cref="DrawingContext"/> transformation
         /// matrix on a stack
         /// and concatenates the current transform with a new transform.
@@ -1223,6 +1237,51 @@ namespace Alternet.Drawing
         public void Pop()
         {
             dc.Pop();
+        }
+
+        /// <summary>
+        /// Destroys the current clipping region so that none of the DC is clipped.
+        /// </summary>
+        public void DestroyClippingRegion()
+        {
+            dc.DestroyClippingRegion();
+        }
+
+        /// <summary>
+        /// Sets the clipping region for this device context to the intersection of the
+        /// given region described by the parameters of this method and the previously
+        /// set clipping region.
+        /// </summary>
+        /// <param name="rect">Clipping rectangle.</param>
+        /// <remarks>
+        /// The clipping region is an area to which drawing is restricted. Possible uses
+        /// for the clipping region are for clipping text or for speeding up
+        /// window redraws when only a known area of the screen is damaged.
+        /// </remarks>
+        /// <remarks>
+        /// Calling this function can only make the clipping region
+        /// smaller, never larger.
+        /// You need to call <see cref="DestroyClippingRegion"/> first if you want to set the clipping
+        /// region exactly to the region specified.
+        /// If resulting clipping region is empty, then all drawing on the DC is
+        /// clipped out (all changes made by drawing operations are masked out).
+        /// </remarks>
+        public void SetClippingRegion(Rect rect)
+        {
+            dc.SetClippingRegion(rect);
+        }
+
+        /// <summary>
+        /// Gets the rectangle surrounding the current clipping region.
+        /// If no clipping region is set this function returns the extent of the device context.
+        /// </summary>
+        /// <returns>
+        /// <see cref="Rect"/> filled in with the logical coordinates of the clipping region
+        /// on success, or <see cref="Rect.Empty"/> otherwise.
+        /// </returns>
+        public Rect GetClippingBox()
+        {
+            return GetClippingBox();
         }
 
         /// <inheritdoc/>

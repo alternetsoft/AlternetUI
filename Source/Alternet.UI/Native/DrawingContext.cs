@@ -73,6 +73,30 @@ namespace Alternet.UI.Native
             }
         }
         
+        public void DestroyClippingRegion()
+        {
+            CheckDisposed();
+            NativeApi.DrawingContext_DestroyClippingRegion_(NativePointer);
+        }
+        
+        public void SetClippingRegion(Alternet.Drawing.Rect rect)
+        {
+            CheckDisposed();
+            NativeApi.DrawingContext_SetClippingRegion_(NativePointer, rect);
+        }
+        
+        public Alternet.Drawing.Rect GetClippingBox()
+        {
+            CheckDisposed();
+            return NativeApi.DrawingContext_GetClippingBox_(NativePointer);
+        }
+        
+        public void DrawText(string text, Alternet.Drawing.Point location, Font font, Alternet.Drawing.Color foreColor, Alternet.Drawing.Color backColor)
+        {
+            CheckDisposed();
+            NativeApi.DrawingContext_DrawText_(NativePointer, text, location, font.NativePointer, foreColor, backColor);
+        }
+        
         public Alternet.Drawing.Size GetDpi()
         {
             CheckDisposed();
@@ -366,6 +390,18 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void DrawingContext_SetInterpolationMode_(IntPtr obj, InterpolationMode value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void DrawingContext_DestroyClippingRegion_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void DrawingContext_SetClippingRegion_(IntPtr obj, Alternet.Drawing.Rect rect);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern Alternet.Drawing.Rect DrawingContext_GetClippingBox_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void DrawingContext_DrawText_(IntPtr obj, string text, Alternet.Drawing.Point location, IntPtr font, NativeApiTypes.Color foreColor, NativeApiTypes.Color backColor);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern Alternet.Drawing.Size DrawingContext_GetDpi_(IntPtr obj);

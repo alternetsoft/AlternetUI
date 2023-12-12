@@ -88,17 +88,36 @@ namespace Alternet::UI
         return _clip;
     }
 
-    void DrawingContext::SetClip(Region* value)
+    void DrawingContext::DestroyClippingRegion()
     {
         if (_clip != nullptr)
         {
             _clip->Release();
             _clip = nullptr;
-            
-            _dc->DestroyClippingRegion();
-            _graphicsContext->ResetClip();
         }
+        _dc->DestroyClippingRegion();
+        _graphicsContext->ResetClip();
+    }
 
+    void DrawingContext::SetClippingRegion(const Rect& rect)
+    {
+        auto bounds = fromDip(rect, _dc->GetWindow());
+        _dc->SetClippingRegion(bounds);
+    }
+
+    Rect DrawingContext::GetClippingBox()
+    {
+        wxRect rect;
+        auto result = _dc->GetClippingBox(rect);
+        if (result)
+            return rect;
+        else
+            return Rect();
+    }
+
+    void DrawingContext::SetClip(Region* value)
+    {
+        DestroyClippingRegion();
         _clip = value;
         
         if (_clip != nullptr)
@@ -912,6 +931,50 @@ namespace Alternet::UI
                 _dc->GetWindow());
             _graphicsContext->DrawEllipse(rect.x, rect.y, rect.width, rect.height);
         }
+    }
+
+    void DrawingContext::DrawText(const string& text, const Point& location, Font* font,
+        const Color& foreColor, const Color& backColor)
+    {
+        bool useBackColor = !backColor.IsEmpty();
+
+        UseDC();
+        
+        auto window = DrawingContext::GetWindow(_dc);
+
+        auto backMode = _dc->GetBackgroundMode();
+
+        if (useBackColor)
+        {
+            _dc->SetBackgroundMode(wxBRUSHSTYLE_SOLID);
+        }
+        else
+        {
+            _dc->SetBackgroundMode(wxBRUSHSTYLE_TRANSPARENT);
+        }
+
+        auto& oldTextForeground = _dc->GetTextForeground();
+        _dc->SetTextForeground(foreColor);
+
+        auto& oldFont = _dc->GetFont();
+        _dc->SetFont(font->GetWxFont());
+
+        auto point = fromDip(location, window);
+
+        if (useBackColor)
+        {
+            auto& oldTextBackground = _dc->GetTextBackground();
+            _dc->SetTextBackground(backColor);
+            _dc->DrawText(wxStr(text), point);
+            _dc->SetTextBackground(oldTextBackground);
+        }
+        else
+            _dc->DrawText(wxStr(text), point);
+
+        _dc->SetTextForeground(oldTextForeground);
+        _dc->SetFont(oldFont);
+
+        _dc->SetBackgroundMode(backMode);
     }
 
     void DrawingContext::DrawTextAtPoint(

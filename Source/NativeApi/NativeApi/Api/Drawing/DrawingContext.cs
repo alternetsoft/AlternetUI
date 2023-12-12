@@ -6,6 +6,14 @@ namespace NativeApi.Api
 {
     public class DrawingContext
     {
+        public void DestroyClippingRegion() { }
+
+        public void SetClippingRegion(Rect rect) { }
+
+        public Rect GetClippingBox() => default;
+
+        public void DrawText(string text, Point location, Font font, Color foreColor, Color backColor) { }
+
         public Size GetDpi() => default;
 
         protected DrawingContext() { }
