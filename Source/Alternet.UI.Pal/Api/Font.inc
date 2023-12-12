@@ -28,6 +28,7 @@ static void SetDefaultEncoding(int encoding);
 int GetWeight();
 void Initialize(GenericFontFamily genericFamily, optional<string> familyName, double emSizeInPoints, FontStyle style);
 void InitializeWithDefaultFont();
+void InitializeFromFont(Font* font);
 static bool IsFamilyValid(const string& fontFamily);
 static string GetGenericFamilyName(GenericFontFamily genericFamily);
 bool IsEqualTo(Font* other);

@@ -113,6 +113,11 @@ ALTERNET_UI_API void Font_InitializeWithDefaultFont_(Font* obj)
     obj->InitializeWithDefaultFont();
 }
 
+ALTERNET_UI_API void Font_InitializeFromFont_(Font* obj, Font* font)
+{
+    obj->InitializeFromFont(font);
+}
+
 ALTERNET_UI_API c_bool Font_IsFamilyValid_(const char16_t* fontFamily)
 {
     return Font::IsFamilyValid(fontFamily);

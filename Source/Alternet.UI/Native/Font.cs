@@ -158,6 +158,12 @@ namespace Alternet.UI.Native
             NativeApi.Font_InitializeWithDefaultFont_(NativePointer);
         }
         
+        public void InitializeFromFont(Font font)
+        {
+            CheckDisposed();
+            NativeApi.Font_InitializeFromFont_(NativePointer, font.NativePointer);
+        }
+        
         public static bool IsFamilyValid(string fontFamily)
         {
             return NativeApi.Font_IsFamilyValid_(fontFamily);
@@ -248,6 +254,9 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Font_InitializeWithDefaultFont_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Font_InitializeFromFont_(IntPtr obj, IntPtr font);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool Font_IsFamilyValid_(string fontFamily);

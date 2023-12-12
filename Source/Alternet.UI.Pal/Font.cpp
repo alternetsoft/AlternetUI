@@ -15,6 +15,11 @@ namespace Alternet::UI
     {
     }
 
+    void Font::InitializeFromFont(Font* font)
+    {
+        _font = wxFont(font->_font);
+    }
+
     void Font::Initialize(GenericFontFamily genericFamily,
         optional<string> familyName, double emSize, FontStyle style)
     {

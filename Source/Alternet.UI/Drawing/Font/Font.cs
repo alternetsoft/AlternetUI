@@ -867,6 +867,17 @@ namespace Alternet.Drawing
             return Name == name && SizeInPoints == sizeInPoints && Style == style;
         }
 
+        /// <summary>
+        /// Creates an exact copy of this <see cref="Font" />.
+        /// </summary>
+        public Font Clone()
+        {
+            var nativeResult = new UI.Native.Font();
+            var result = new Font(nativeResult);
+            result.NativeFont.InitializeFromFont(NativeFont);
+            return result;
+        }
+
         internal static UI.Native.GenericFontFamily ToNativeGenericFamily(
             GenericFontFamily? value)
         {

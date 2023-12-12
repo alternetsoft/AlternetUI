@@ -18,8 +18,10 @@ namespace NativeApi.Api
         public static void SetDefaultEncoding(int encoding) { }
         public int GetWeight() => default;
 
-        public void Initialize(GenericFontFamily genericFamily, string? familyName, double emSizeInPoints, FontStyle style) => throw new Exception();
+        public void Initialize(GenericFontFamily genericFamily, string? familyName,
+            double emSizeInPoints, FontStyle style) => throw new Exception();
         public void InitializeWithDefaultFont() => throw new Exception();
+        public void InitializeFromFont(Font font) { }
 
         public static bool IsFamilyValid(string fontFamily) => throw new Exception();
         public static string GetGenericFamilyName(GenericFontFamily genericFamily) => throw new Exception();

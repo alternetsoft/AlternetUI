@@ -135,9 +135,7 @@ namespace ControlsSample
                 string fontName = string.IsNullOrWhiteSpace(s) ? defaultFont.Name : s!;
 
                 Font font = Font.GetDefaultOrNew(fontName, fontSize, fontStyle, defaultFont);
-
-                button.Font = defaultFont;
-                button.Font = font;
+                button.Font = font.Clone();
             }
 
             if (button == null)
