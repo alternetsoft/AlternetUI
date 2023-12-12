@@ -148,9 +148,9 @@ namespace Alternet.UI
 
         void ResumeLayout(bool performLayout = true);
 
-        void BeginUpdate();
+        int BeginUpdate();
 
-        void EndUpdate();
+        int EndUpdate();
 
         void PerformLayout(bool layoutParent = true);
 
