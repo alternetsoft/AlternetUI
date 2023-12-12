@@ -88,9 +88,9 @@ namespace Alternet.UI
 
         /// <summary>
         /// Gets the combined padding information in the form of a
-        /// <see cref="Drawing.Size"/>.
+        /// <see cref="Alternet.Drawing.Size"/>.
         /// </summary>
-        /// <value>A <see cref="Drawing.Size"/> containing the padding
+        /// <value>A <see cref="Alternet.Drawing.Size"/> containing the padding
         /// information.</value>
         /// <remarks>
         /// The <see cref="Horizontal"/> property corresponds to the

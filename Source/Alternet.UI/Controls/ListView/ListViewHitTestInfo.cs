@@ -3,7 +3,7 @@ using System;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Contains information about <see cref="ListView.HitTest(Drawing.Point)"/> result for a <see cref="ListView"/> control.
+    /// Contains information about <see cref="ListView.HitTest(Alternet.Drawing.Point)"/> result for a <see cref="ListView"/> control.
     /// </summary>
     public class ListViewHitTestInfo
     {

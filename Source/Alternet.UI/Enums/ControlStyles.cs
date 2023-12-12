@@ -40,7 +40,7 @@ namespace Alternet.UI
         /// <summary>
         /// If <see langword="true" />, the control has a fixed
         /// width when auto-scaled. For example, if a layout operation attempts to rescale
-        /// the control to accommodate a new <see cref="Drawing.Font" />, the control's
+        /// the control to accommodate a new <see cref="Alternet.Drawing.Font" />, the control's
         /// <see cref="Control.Width" /> remains unchanged.
         /// </summary>
         FixedWidth = 0x20,
@@ -48,7 +48,7 @@ namespace Alternet.UI
         /// <summary>
         /// If <see langword="true" />, the control has a fixed height when
         /// auto-scaled. For example, if a layout operation attempts to rescale the control
-        /// to accommodate a new <see cref="Drawing.Font" />, the control's
+        /// to accommodate a new <see cref="Alternet.Drawing.Font" />, the control's
         /// <see cref="Control.Height" /> remains unchanged.
         /// </summary>
         FixedHeight = 0x40,

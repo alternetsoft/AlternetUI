@@ -110,12 +110,12 @@ namespace Alternet.UI
         // ==== Colors.
 
         /// <summary>
-        /// Uses <see cref="Drawing.Color"/> editor.
+        /// Uses <see cref="Alternet.Drawing.Color"/> editor.
         /// </summary>
         Color,
 
         /// <summary>
-        /// Uses <see cref="Drawing.Color"/> editor with system colors list.
+        /// Uses <see cref="Alternet.Drawing.Color"/> editor with system colors list.
         /// </summary>
         ColorSystem,
 

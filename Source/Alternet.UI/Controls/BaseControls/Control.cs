@@ -884,12 +884,12 @@ namespace Alternet.UI
         /// Gets or sets the size of the control.
         /// </summary>
         /// <value>The size of the control, in device-independent units (1/96th inch per unit).
-        /// The default value is <see cref="Drawing.Size"/>(<see cref="double.NaN"/>,
+        /// The default value is <see cref="Alternet.Drawing.Size"/>(<see cref="double.NaN"/>,
         /// <see cref="double.NaN"/>)/>.
         /// </value>
         /// <remarks>
         /// This property specifies the size of the control.
-        /// Set this property to <see cref="Drawing.Size"/>(<see cref="double.NaN"/>,
+        /// Set this property to <see cref="Alternet.Drawing.Size"/>(<see cref="double.NaN"/>,
         /// <see cref="double.NaN"/>) to specify system-default sizing
         /// behavior when the control is first shown.
         /// </remarks>
@@ -947,13 +947,13 @@ namespace Alternet.UI
         /// </summary>
         /// <value>The suggested size of the control, in device-independent
         /// units (1/96th inch per unit).
-        /// The default value is <see cref="Drawing.Size"/>
+        /// The default value is <see cref="Alternet.Drawing.Size"/>
         /// (<see cref="double.NaN"/>, <see cref="double.NaN"/>)/>.
         /// </value>
         /// <remarks>
         /// This property specifies the suggested size of the control. An actual
         /// size is calculated by the layout system.
-        /// Set this property to <see cref="Drawing.Size"/>
+        /// Set this property to <see cref="Alternet.Drawing.Size"/>
         /// (<see cref="double.NaN"/>, <see cref="double.NaN"/>) to specify auto
         /// sizing behavior.
         /// The value of this property is always the same as the value that was

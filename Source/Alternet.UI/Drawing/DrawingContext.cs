@@ -1038,7 +1038,7 @@ namespace Alternet.Drawing
         {
             Draw(this, rect.ToRect(), color);
 
-            void Draw(DrawingContext dc, Int32Rect rect, Color color)
+            static void Draw(DrawingContext dc, Int32Rect rect, Color color)
             {
                 int minSize = 4;
                 int offset = 6;
