@@ -10,6 +10,17 @@ namespace Alternet.UI
     public partial class Control
     {
         /// <summary>
+        /// Computes the location of the specified client point into screen coordinates.
+        /// </summary>
+        /// <param name="p">The client coordinate <see cref="Point" /> to convert.</param>
+        /// <returns>A <see cref="Point" /> that represents the converted <see cref="Point" />,
+        /// <paramref name="p" />, in screen coordinates.</returns>
+        public Point PointToScreen(Point p)
+        {
+            return ClientToScreen(p);
+        }
+
+        /// <summary>
         /// Gets control's default font and colors as <see cref="IReadOnlyFontAndColor"/>.
         /// </summary>
         /// <param name="controlType">Type of the control.</param>
