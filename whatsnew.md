@@ -1,5 +1,40 @@
 # 0.9.410 (work in progress)
 
+## 2023 December 13
+
+- Working on the ScrollBar control.
+- Added WindowLogListBox. A Window with LogListBox control.
+- Improved Font:
+    * Speed and memory optimization.
+    * public Font Base {get;}
+    * public static Font Get(string familyName, double emSize, FontStyle style = FontStyle.Regular);
+    * public Font GetWithStyle(FontStyle style);
+    * FontFamily is not created when not needed.
+- ControlSet: WidthToMax(), Width(double).
+- Improved DrawingContext:
+    * Added inline atrribite to all methods.
+    * public Size GetTextExtent(string text, Font font, Control? control);
+    * public Size GetTextExtent(string text, Font font);
+    * GetDPI();
+    * public void DrawText(string text, Point location, Font font, Color foreColor, Color backColor);
+    * public void DestroyClippingRegion();
+    * public void SetClippingRegion(Rect rect);
+    * public Rect GetClippingBox();
+- Application.CreateAndRun.
+- Added GetButtonEvents sample.
+- Improvements and bug fixes in Samples.
+- Separated Key and Keys enums. This is for better WinForms compatibility.
+- KeyEventArgs made compatible with WinForms.
+- Improved Control:
+    * Added Text virtual property. This is for better WinForms compatibility.
+    * ModifierKeys, KeyModifiers.
+    * Control now supports IComponent.
+    * ResetCursor, ResetFont, ResetBackColor, SetStyle, MousePosition.
+    * PointToScreen, PointToClient.
+- MenuItem.ShortcutKeys and new constructor.
+- Font.Clone().
+- AssemblyUtils: EnumProps, IsReadOnly.
+
 ## 2023 December 9
 
 - Improved Image/Bitmap:
