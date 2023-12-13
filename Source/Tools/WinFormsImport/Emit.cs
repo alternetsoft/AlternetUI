@@ -4,6 +4,8 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using Alternet.UI;
+using Alternet.Drawing;
 
 namespace WinFormsImport
 {
@@ -31,22 +33,26 @@ namespace WinFormsImport
 
             Console.WriteLine(type.Name);
 
+            Body = string.Empty;
 
-            Emit.Body = string.Empty;
+            StartNameSpace(type);
+            StartClass(type);
 
-            Emit.StartNameSpace(type);
-            Emit.StartClass(type);
-            Emit.EndClass(type);
-            Emit.EndNameSpace(type);
+            EchoProps(type);
+            EchoMethods(type);
+            EchoEvents(type);
+
+            EndClass(type);
+            EndNameSpace(type);
 
             string filePath = path + "Imported." + type.Name + ".cs";
 
             File.WriteAllText(filePath, Emit.Body);
         }
 
-        public static void NewLine(string s)
+        public static void WriteLine(string? s = null)
         {
-            Echo(s + Environment.NewLine);
+            Echo((s ?? string.Empty) + Environment.NewLine);
         }
 
         public static void Echo(string s)
@@ -73,35 +79,35 @@ namespace WinFormsImport
         {
             var namesp = type.Namespace;
 
-            NewLine("#pragma warning disable");
-            NewLine($"namespace Imported.{namesp}");
-            NewLine("{");
+            WriteLine("#pragma warning disable");
+            WriteLine($"namespace Imported.{namesp}");
+            WriteLine("{");
             BeginIndent();
         }
 
         public static void EndNameSpace(Type type)
         {
             EndIndent();
-            NewLine("}");
+            WriteLine("}");
         }
 
         public static void StartClass(Type type)
         {
             var classKind = type.IsClass ? "class" : "struct";
 
-            NewLine("/// <summary>");
-            NewLine("/// This is imported class.");
-            NewLine("/// </summary>");
+            WriteLine("/// <summary>");
+            WriteLine("/// This is imported class.");
+            WriteLine("/// </summary>");
 
-            NewLine($"public {classKind} {type.Name}");
-            NewLine("{");
+            WriteLine($"public {classKind} {type.Name}");
+            WriteLine("{");
             BeginIndent();
         }
 
         public static void EndClass(Type type)
         {
             EndIndent();
-            NewLine("}");
+            WriteLine("}");
         }
 
         public static void ImportAssembly(Assembly assembly, string path)
@@ -112,6 +118,43 @@ namespace WinFormsImport
             {
                 Emit.Import(type, path);
             }
+        }
+
+        private static void EchoProps(Type type)
+        {
+            WriteLine("/*");
+            WriteLine("Properties:");
+            WriteLine();
+
+            WriteLine("*/");
+        }
+
+        private static void EchoMethods(Type type)
+        {
+            WriteLine("/*");
+            WriteLine("Methods:");
+            WriteLine();
+
+            WriteLine("*/");
+        }
+
+        private static void EchoEvents(Type type)
+        {
+            WriteLine("/*");
+            WriteLine("Events:");
+            WriteLine();
+
+            var events = AssemblyUtils.EnumEvents(
+                type,
+                true,
+                bindingFlags: BindingFlags.Instance | BindingFlags.Public | BindingFlags.DeclaredOnly);
+
+            foreach (var item in events)
+            {
+                WriteLine(item.Name);
+            }
+
+            WriteLine("*/");
         }
     }
 }

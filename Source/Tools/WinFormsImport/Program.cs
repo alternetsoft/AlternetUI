@@ -7,19 +7,11 @@ using WinFormsImport;
 Console.WriteLine("ALternet.UI WinFormsImport");
 Console.WriteLine("Copyright (c) 2023 AlterNET Software");
 
-var path = CommonUtils.GetUIFolder("Tools");
-if(path is null)
-{
-    Console.WriteLine("Error: Alternet.UI folder not found.");        
-    return;
-}
-
-var folderName = "Drawing.System.Imported";
-path = CommonProcs.PathAddBackslash(Path.Combine(path, folderName));
+var path = PathUtils.GetAppSubFolder("Imported.Drawing.System");
 
 Console.WriteLine($"Graphics import folder: {path}");
-
 Emit.ImportAssembly(typeof(System.Drawing.Point).Assembly, path);
 
+path = PathUtils.GetAppSubFolder("Imported.System.Windows.Forms");
 Emit.Import(typeof(System.Windows.Forms.ScrollBar), path);
 

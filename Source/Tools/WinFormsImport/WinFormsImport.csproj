@@ -9,7 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Alternet.UI.CommonUtils\Alternet.UI.CommonUtils.csproj" />
+    <ProjectReference Include="..\..\Alternet.UI\Alternet.UI.csproj" />
   </ItemGroup>
 
 </Project>
