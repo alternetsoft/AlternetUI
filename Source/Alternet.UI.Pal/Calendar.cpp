@@ -7,7 +7,7 @@ namespace Alternet::UI
 
     }
 
-    class wxCalendarCtrl2 : public wxCalendarCtrl
+    class wxCalendarCtrl2 : public wxCalendarCtrl, public wxWidgetExtender
     {
     public:
         wxCalendarCtrl2(){}
@@ -23,7 +23,7 @@ namespace Alternet::UI
         }
     };
 
-    class wxGenericCalendarCtrl2 : public wxGenericCalendarCtrl
+    class wxGenericCalendarCtrl2 : public wxGenericCalendarCtrl, public wxWidgetExtender
     {
     public:
         wxGenericCalendarCtrl2(){}
