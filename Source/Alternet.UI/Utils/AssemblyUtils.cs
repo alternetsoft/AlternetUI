@@ -268,7 +268,8 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="type">Type which events are enumerated.</param>
         /// <param name="sort">Defines whether to sort result events by name.</param>
-        /// <param name="bindingFlags"></param>
+        /// <param name="bindingFlags">Specifies flags that control the way in which
+        /// the search for members is conducted.</param>
         /// <returns></returns>
         public static IEnumerable<EventInfo> EnumEvents(
             Type type,
@@ -281,6 +282,40 @@ namespace Alternet.UI
                 new List<EventInfo>(type.GetEvents(bindingFlags));
 
             SortedList<string, EventInfo> addedNames = [];
+
+            foreach (var p in props)
+            {
+                var propName = p.Name;
+                if (addedNames.ContainsKey(propName))
+                    continue;
+                result.Add(p);
+                addedNames.Add(propName, p);
+            }
+
+            if (sort)
+                result.Sort(PropertyGridItem.CompareByName);
+            return result;
+        }
+
+        /// <summary>
+        /// Enumerates property information for the specified <see cref="Type"/>.
+        /// </summary>
+        /// <param name="type">Type which events are enumerated.</param>
+        /// <param name="sort">Defines whether to sort result events by name.</param>
+        /// <param name="bindingFlags">Specifies flags that control the way in which
+        /// the search for members is conducted.</param>
+        /// <returns></returns>
+        public static IEnumerable<PropertyInfo> EnumProps(
+            Type type,
+            bool sort = false,
+            BindingFlags bindingFlags = BindingFlags.Instance | BindingFlags.Public)
+        {
+            List<PropertyInfo> result = [];
+
+            IList<PropertyInfo> props =
+                new List<PropertyInfo>(type.GetProperties(bindingFlags));
+
+            SortedList<string, PropertyInfo> addedNames = [];
 
             foreach (var p in props)
             {
@@ -714,6 +749,17 @@ namespace Alternet.UI
             EnumerableUtils.ForEach<Type>(
                 GetTypeDescendants(typeof(Native.NativeObject), true, false),
                 (t) => Debug.WriteLine(t.Name));
+        }
+
+        /// <summary>
+        /// Gets whether property is readonly.
+        /// </summary>
+        /// <param name="prop">Property information.</param>
+        /// <returns></returns>
+        public static bool IsReadOnly(PropertyInfo prop)
+        {
+            var result = prop.SetMethod == null || !prop.SetMethod.IsPublic;
+            return result;
         }
 
         /// <summary>
