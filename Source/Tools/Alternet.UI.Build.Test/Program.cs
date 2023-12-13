@@ -17,12 +17,12 @@ void GenerateCSharpOutput(string filename)
 
     var output = CSharpUIXmlCodeGenerator.Generate(document);
 
-    File.WriteAllText(CommonProcs.GetAppFolder()+"output.g.cs", output);
+    File.WriteAllText(CommonUtils.GetAppFolder()+"output.g.cs", output);
 }
 
 try
 {
-    GenerateCSharpOutput(CommonProcs.GetAppFolder() + "sample.xml");
+    GenerateCSharpOutput(CommonUtils.GetAppFolder() + "sample.xml");
 }
 catch (Exception e)
 {
