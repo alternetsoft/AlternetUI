@@ -12,36 +12,14 @@ namespace NativeApi.Api
     //https://docs.wxwidgets.org/3.2/classwx_scroll_bar.html
     public class ScrollBar : Control
     {
+        public int EventTypeID { get; }
+        public int EventOldPos { get; }
+        public int EventNewPos { get; }
+
         // Returns true for scrollbars that have the vertical style set.
         public bool IsVertical { get; set; }
 
-        // Process scroll to top or leftmost (minimum) position events.
-        public event EventHandler? ScrollTop;
-
-        // Process scroll to bottom or rightmost (maximum) position events.
-        public event EventHandler? ScrollBottom;
-
-        // Process scroll line up or left events.
-        public event EventHandler? ScrollLineUp;
-
-        // Process scroll line down or right events.
-        public event EventHandler? ScrollLineDown;
-
-        // Process scroll page up or left events.
-        public event EventHandler? ScrollPageUp;
-
-        // Process scroll page down or right events.
-        public event EventHandler? ScrollPageDown;
-
-        // Process scroll thumbtrack events (frequent events sent
-        // as the user drags the thumbtrack).
-        public event EventHandler? ScrollThumbTrack;
-
-        // Process scroll thumb release events.
-        public event EventHandler? ScrollThumbRelease;
-
-        // Process wxEVT_SCROLL_CHANGED end of scrolling events(MSW only).
-        // public event EventHandler? ScrollChanged;
+        public event EventHandler? Scroll;
 
         // Gets or sets the position of the scrollbar thumb.
         public int ThumbPosition { get; set; }

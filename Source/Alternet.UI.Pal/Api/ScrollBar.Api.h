@@ -13,6 +13,21 @@ ALTERNET_UI_API ScrollBar* ScrollBar_Create_()
     return new ScrollBar();
 }
 
+ALTERNET_UI_API int ScrollBar_GetEventTypeID_(ScrollBar* obj)
+{
+    return obj->GetEventTypeID();
+}
+
+ALTERNET_UI_API int ScrollBar_GetEventOldPos_(ScrollBar* obj)
+{
+    return obj->GetEventOldPos();
+}
+
+ALTERNET_UI_API int ScrollBar_GetEventNewPos_(ScrollBar* obj)
+{
+    return obj->GetEventNewPos();
+}
+
 ALTERNET_UI_API c_bool ScrollBar_GetIsVertical_(ScrollBar* obj)
 {
     return obj->GetIsVertical();

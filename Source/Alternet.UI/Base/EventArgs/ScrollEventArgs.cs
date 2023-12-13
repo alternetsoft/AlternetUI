@@ -85,6 +85,10 @@ namespace Alternet.UI
             this.oldValue = oldValue;
         }
 
+        internal ScrollEventArgs()
+        {
+        }
+
         /// <summary>
         /// Gets the scroll bar orientation that raised the <see langword="Scroll" /> event.
         /// </summary>

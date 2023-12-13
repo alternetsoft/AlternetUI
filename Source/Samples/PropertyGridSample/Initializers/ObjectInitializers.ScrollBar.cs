@@ -14,6 +14,12 @@ namespace PropertyGridSample
             if (control is not ScrollBar scrollBar)
                 return;
             scrollBar.SuggestedWidth = 250;
+            scrollBar.Scroll += ScrollBar_Scroll;
+        }
+
+        private static void ScrollBar_Scroll(object sender, ScrollEventArgs e)
+        {
+            Application.Log($"Scrollbar {e.Type} New: {e.NewValue} Old: {e.OldValue}");
         }
     }
 }

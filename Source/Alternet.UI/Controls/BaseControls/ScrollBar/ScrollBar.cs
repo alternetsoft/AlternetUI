@@ -34,10 +34,22 @@ namespace Alternet.UI
         /// </summary>
         public event ScrollEventHandler? Scroll;
 
+        internal new Native.ScrollBar NativeControl => (Native.ScrollBar)base.NativeControl;
+
         /// <inheritdoc/>
         protected override ControlHandler CreateHandler()
         {
             return new ScrollBarHandler();
+        }
+
+        private void RaiseScroll()
+        {
+            var eventType = (ScrollEventType)NativeControl.EventTypeID;
+            var pos = NativeControl.EventNewPos;
+            var oldPos = NativeControl.ThumbPosition;
+            var orientation = NativeControl.IsVertical ? ScrollOrientation.VerticalScroll
+                : ScrollOrientation.HorizontalScroll;
+            Scroll?.Invoke(this, new ScrollEventArgs(eventType, oldPos, pos, orientation));
         }
 
         internal class ScrollBarHandler : NativeControlHandler<ScrollBar, Native.ScrollBar>
@@ -46,6 +58,23 @@ namespace Alternet.UI
             {
                 var result = new Native.ScrollBar();
                 return result;
+            }
+
+            protected override void OnDetach()
+            {
+                base.OnDetach();
+                NativeControl.Scroll -= NativeControl_Scroll;
+            }
+
+            protected override void OnAttach()
+            {
+                base.OnAttach();
+                NativeControl.Scroll += NativeControl_Scroll;
+            }
+
+            private void NativeControl_Scroll(object? sender, EventArgs e)
+            {
+                Control.RaiseScroll();
             }
         }
     }

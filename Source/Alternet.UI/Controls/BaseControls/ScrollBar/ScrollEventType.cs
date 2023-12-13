@@ -58,7 +58,7 @@ namespace Alternet.UI
         Last,
 
         /// <summary>
-        /// The scroll box has stopped moving.
+        /// The scroll thumb has stopped moving.
         /// </summary>
         EndScroll,
     }

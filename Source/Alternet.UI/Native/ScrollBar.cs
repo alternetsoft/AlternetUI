@@ -24,6 +24,36 @@ namespace Alternet.UI.Native
         {
         }
         
+        public int EventTypeID
+        {
+            get
+            {
+                CheckDisposed();
+                return NativeApi.ScrollBar_GetEventTypeID_(NativePointer);
+            }
+            
+        }
+        
+        public int EventOldPos
+        {
+            get
+            {
+                CheckDisposed();
+                return NativeApi.ScrollBar_GetEventOldPos_(NativePointer);
+            }
+            
+        }
+        
+        public int EventNewPos
+        {
+            get
+            {
+                CheckDisposed();
+                return NativeApi.ScrollBar_GetEventNewPos_(NativePointer);
+            }
+            
+        }
+        
         public bool IsVertical
         {
             get
@@ -112,50 +142,15 @@ namespace Alternet.UI.Native
         {
             switch (e)
             {
-                case NativeApi.ScrollBarEvent.ScrollTop:
+                case NativeApi.ScrollBarEvent.Scroll:
                 {
-                    ScrollTop?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
-                }
-                case NativeApi.ScrollBarEvent.ScrollBottom:
-                {
-                    ScrollBottom?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
-                }
-                case NativeApi.ScrollBarEvent.ScrollLineUp:
-                {
-                    ScrollLineUp?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
-                }
-                case NativeApi.ScrollBarEvent.ScrollLineDown:
-                {
-                    ScrollLineDown?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
-                }
-                case NativeApi.ScrollBarEvent.ScrollPageUp:
-                {
-                    ScrollPageUp?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
-                }
-                case NativeApi.ScrollBarEvent.ScrollPageDown:
-                {
-                    ScrollPageDown?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
-                }
-                case NativeApi.ScrollBarEvent.ScrollThumbTrack:
-                {
-                    ScrollThumbTrack?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
-                }
-                case NativeApi.ScrollBarEvent.ScrollThumbRelease:
-                {
-                    ScrollThumbRelease?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                    Scroll?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
                 }
                 default: throw new Exception("Unexpected ScrollBarEvent value: " + e);
             }
         }
         
-        public event EventHandler? ScrollTop;
-        public event EventHandler? ScrollBottom;
-        public event EventHandler? ScrollLineUp;
-        public event EventHandler? ScrollLineDown;
-        public event EventHandler? ScrollPageUp;
-        public event EventHandler? ScrollPageDown;
-        public event EventHandler? ScrollThumbTrack;
-        public event EventHandler? ScrollThumbRelease;
+        public event EventHandler? Scroll;
         
         [SuppressUnmanagedCodeSecurity]
         public class NativeApi : NativeApiProvider
@@ -167,14 +162,7 @@ namespace Alternet.UI.Native
             
             public enum ScrollBarEvent
             {
-                ScrollTop,
-                ScrollBottom,
-                ScrollLineUp,
-                ScrollLineDown,
-                ScrollPageUp,
-                ScrollPageDown,
-                ScrollThumbTrack,
-                ScrollThumbRelease,
+                Scroll,
             }
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
@@ -182,6 +170,15 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern IntPtr ScrollBar_Create_();
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int ScrollBar_GetEventTypeID_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int ScrollBar_GetEventOldPos_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int ScrollBar_GetEventNewPos_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool ScrollBar_GetIsVertical_(IntPtr obj);
