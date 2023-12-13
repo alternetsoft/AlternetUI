@@ -39,7 +39,9 @@ namespace WinFormsImport
             StartClass(type);
 
             EchoProps(type);
+            WriteLine();
             EchoMethods(type);
+            WriteLine();
             EchoEvents(type);
 
             EndClass(type);
@@ -126,6 +128,18 @@ namespace WinFormsImport
             WriteLine("Properties:");
             WriteLine();
 
+            var events = AssemblyUtils.EnumProps(
+                type,
+                true,
+                bindingFlags: BindingFlags.Instance | BindingFlags.Public | BindingFlags.DeclaredOnly);
+
+            foreach (var item in events)
+            {
+                var isReadOnly = AssemblyUtils.IsReadOnly(item);
+                var setWord = isReadOnly ? string.Empty : "set; ";
+                WriteLine($"public {item.PropertyType.Name} {item.Name} {{ get; {setWord}}}");
+            }
+
             WriteLine("*/");
         }
 
@@ -151,7 +165,7 @@ namespace WinFormsImport
 
             foreach (var item in events)
             {
-                WriteLine(item.Name);
+                WriteLine($"public event {item.EventHandlerType?.Name} {item.Name};");
             }
 
             WriteLine("*/");
