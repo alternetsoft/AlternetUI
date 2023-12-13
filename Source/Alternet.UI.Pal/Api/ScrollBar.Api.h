@@ -23,3 +23,38 @@ ALTERNET_UI_API void ScrollBar_SetIsVertical_(ScrollBar* obj, c_bool value)
     obj->SetIsVertical(value);
 }
 
+ALTERNET_UI_API int ScrollBar_GetThumbPosition_(ScrollBar* obj)
+{
+    return obj->GetThumbPosition();
+}
+
+ALTERNET_UI_API void ScrollBar_SetThumbPosition_(ScrollBar* obj, int value)
+{
+    obj->SetThumbPosition(value);
+}
+
+ALTERNET_UI_API int ScrollBar_GetRange_(ScrollBar* obj)
+{
+    return obj->GetRange();
+}
+
+ALTERNET_UI_API int ScrollBar_GetThumbSize_(ScrollBar* obj)
+{
+    return obj->GetThumbSize();
+}
+
+ALTERNET_UI_API int ScrollBar_GetPageSize_(ScrollBar* obj)
+{
+    return obj->GetPageSize();
+}
+
+ALTERNET_UI_API void ScrollBar_SetScrollbar_(ScrollBar* obj, int position, int thumbSize, int range, int pageSize, c_bool refresh)
+{
+    obj->SetScrollbar(position, thumbSize, range, pageSize, refresh);
+}
+
+ALTERNET_UI_API void ScrollBar_SetEventCallback_(ScrollBar::ScrollBarEventCallbackType callback)
+{
+    ScrollBar::SetEventCallback(callback);
+}
+

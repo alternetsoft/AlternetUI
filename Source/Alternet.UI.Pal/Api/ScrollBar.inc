@@ -4,6 +4,39 @@ public:
 bool GetIsVertical();
 void SetIsVertical(bool value);
 
+
+int GetThumbPosition();
+void SetThumbPosition(int value);
+
+
+int GetRange();
+
+
+int GetThumbSize();
+
+
+int GetPageSize();
+
+void SetScrollbar(int position, int thumbSize, int range, int pageSize, bool refresh);
+public:
+enum class ScrollBarEvent
+{
+    ScrollTop,
+    ScrollBottom,
+    ScrollLineUp,
+    ScrollLineDown,
+    ScrollPageUp,
+    ScrollPageDown,
+    ScrollThumbTrack,
+    ScrollThumbRelease,
+};
+typedef void* (*ScrollBarEventCallbackType)(ScrollBar* obj, ScrollBarEvent event, void* param);
+static void SetEventCallback(ScrollBarEventCallbackType value) { eventCallback = value; }
+protected:
+bool RaiseEvent(ScrollBarEvent event, void* parameter = nullptr) { if (EventsSuspended()) return false; if (eventCallback != nullptr) return eventCallback(this, event, parameter) != nullptr; else return false; }
+void* RaiseEventWithPointerResult(ScrollBarEvent event, void* parameter = nullptr) { if (EventsSuspended()) return nullptr; if (eventCallback != nullptr) return eventCallback(this, event, parameter); else return nullptr; }
+private:
+inline static ScrollBarEventCallbackType eventCallback = nullptr;
 public:
 ScrollBar();
 protected:

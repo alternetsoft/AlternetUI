@@ -12,6 +12,7 @@ namespace Alternet.UI.Native
     {
         static ScrollBar()
         {
+            SetEventCallback();
         }
         
         public ScrollBar()
@@ -38,11 +39,146 @@ namespace Alternet.UI.Native
             }
         }
         
+        public int ThumbPosition
+        {
+            get
+            {
+                CheckDisposed();
+                return NativeApi.ScrollBar_GetThumbPosition_(NativePointer);
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.ScrollBar_SetThumbPosition_(NativePointer, value);
+            }
+        }
+        
+        public int Range
+        {
+            get
+            {
+                CheckDisposed();
+                return NativeApi.ScrollBar_GetRange_(NativePointer);
+            }
+            
+        }
+        
+        public int ThumbSize
+        {
+            get
+            {
+                CheckDisposed();
+                return NativeApi.ScrollBar_GetThumbSize_(NativePointer);
+            }
+            
+        }
+        
+        public int PageSize
+        {
+            get
+            {
+                CheckDisposed();
+                return NativeApi.ScrollBar_GetPageSize_(NativePointer);
+            }
+            
+        }
+        
+        public void SetScrollbar(int position, int thumbSize, int range, int pageSize, bool refresh)
+        {
+            CheckDisposed();
+            NativeApi.ScrollBar_SetScrollbar_(NativePointer, position, thumbSize, range, pageSize, refresh);
+        }
+        
+        static GCHandle eventCallbackGCHandle;
+        
+        static void SetEventCallback()
+        {
+            if (!eventCallbackGCHandle.IsAllocated)
+            {
+                var sink = new NativeApi.ScrollBarEventCallbackType((obj, e, parameter) =>
+                {
+                    var w = NativeObject.GetFromNativePointer<ScrollBar>(obj, p => new ScrollBar(p));
+                    if (w == null) return IntPtr.Zero;
+                    return w.OnEvent(e, parameter);
+                }
+                );
+                eventCallbackGCHandle = GCHandle.Alloc(sink);
+                NativeApi.ScrollBar_SetEventCallback_(sink);
+            }
+        }
+        
+        IntPtr OnEvent(NativeApi.ScrollBarEvent e, IntPtr parameter)
+        {
+            switch (e)
+            {
+                case NativeApi.ScrollBarEvent.ScrollTop:
+                {
+                    ScrollTop?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                }
+                case NativeApi.ScrollBarEvent.ScrollBottom:
+                {
+                    ScrollBottom?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                }
+                case NativeApi.ScrollBarEvent.ScrollLineUp:
+                {
+                    ScrollLineUp?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                }
+                case NativeApi.ScrollBarEvent.ScrollLineDown:
+                {
+                    ScrollLineDown?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                }
+                case NativeApi.ScrollBarEvent.ScrollPageUp:
+                {
+                    ScrollPageUp?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                }
+                case NativeApi.ScrollBarEvent.ScrollPageDown:
+                {
+                    ScrollPageDown?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                }
+                case NativeApi.ScrollBarEvent.ScrollThumbTrack:
+                {
+                    ScrollThumbTrack?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                }
+                case NativeApi.ScrollBarEvent.ScrollThumbRelease:
+                {
+                    ScrollThumbRelease?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                }
+                default: throw new Exception("Unexpected ScrollBarEvent value: " + e);
+            }
+        }
+        
+        public event EventHandler? ScrollTop;
+        public event EventHandler? ScrollBottom;
+        public event EventHandler? ScrollLineUp;
+        public event EventHandler? ScrollLineDown;
+        public event EventHandler? ScrollPageUp;
+        public event EventHandler? ScrollPageDown;
+        public event EventHandler? ScrollThumbTrack;
+        public event EventHandler? ScrollThumbRelease;
         
         [SuppressUnmanagedCodeSecurity]
         public class NativeApi : NativeApiProvider
         {
             static NativeApi() => Initialize();
+            
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            public delegate IntPtr ScrollBarEventCallbackType(IntPtr obj, ScrollBarEvent e, IntPtr param);
+            
+            public enum ScrollBarEvent
+            {
+                ScrollTop,
+                ScrollBottom,
+                ScrollLineUp,
+                ScrollLineDown,
+                ScrollPageUp,
+                ScrollPageDown,
+                ScrollThumbTrack,
+                ScrollThumbRelease,
+            }
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void ScrollBar_SetEventCallback_(ScrollBarEventCallbackType callback);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern IntPtr ScrollBar_Create_();
@@ -52,6 +188,24 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void ScrollBar_SetIsVertical_(IntPtr obj, bool value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int ScrollBar_GetThumbPosition_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void ScrollBar_SetThumbPosition_(IntPtr obj, int value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int ScrollBar_GetRange_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int ScrollBar_GetThumbSize_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int ScrollBar_GetPageSize_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void ScrollBar_SetScrollbar_(IntPtr obj, int position, int thumbSize, int range, int pageSize, bool refresh);
             
         }
     }

@@ -37,201 +37,63 @@ namespace NativeApi.Api
     //https://docs.wxwidgets.org/3.2/classwx_scroll_bar.html
     public class ScrollBar : Control
     {
+        // Returns true for scrollbars that have the vertical style set.
         public bool IsVertical { get; set; }
 
+        // Process scroll to top or leftmost (minimum) position events.
+        public event EventHandler? ScrollTop;
 
-        /*
-        EVT_SCROLL(func):
-        Process all scroll events.
-        
-        EVT_SCROLL_TOP(func):
-        Process wxEVT_SCROLL_TOP scroll to top or leftmost (minimum) position events.
-        
-        EVT_SCROLL_BOTTOM(func):
-        Process wxEVT_SCROLL_BOTTOM scroll to bottom or rightmost (maximum) position events.
-        
-        EVT_SCROLL_LINEUP(func):
-        Process wxEVT_SCROLL_LINEUP line up or left events.
-        
-        EVT_SCROLL_LINEDOWN(func):
-        Process wxEVT_SCROLL_LINEDOWN line down or right events.
-        
-        EVT_SCROLL_PAGEUP(func):
-        Process wxEVT_SCROLL_PAGEUP page up or left events.
-        
-        EVT_SCROLL_PAGEDOWN(func):
-        Process wxEVT_SCROLL_PAGEDOWN page down or right events.
-        
-        EVT_SCROLL_THUMBTRACK(func):
-        Process wxEVT_SCROLL_THUMBTRACK thumbtrack events (frequent events sent
-        as the user drags the thumbtrack).
-        
-        EVT_SCROLL_THUMBRELEASE(func):
-        Process wxEVT_SCROLL_THUMBRELEASE thumb release events.
-        
-        EVT_SCROLL_CHANGED(func):
-        Process wxEVT_SCROLL_CHANGED end of scrolling events (MSW only).
-        
-        EVT_COMMAND_SCROLL(id, func):
-        Process all scroll events.
-        
-        EVT_COMMAND_SCROLL_TOP(id, func):
-        Process wxEVT_SCROLL_TOP scroll to top or leftmost (minimum) position events.
-        
-        EVT_COMMAND_SCROLL_BOTTOM(id, func):
-        Process wxEVT_SCROLL_BOTTOM scroll to bottom or rightmost (maximum) position events.
-        
-        EVT_COMMAND_SCROLL_LINEUP(id, func):
-        Process wxEVT_SCROLL_LINEUP line up or left events.
-        
-        EVT_COMMAND_SCROLL_LINEDOWN(id, func):
-        Process wxEVT_SCROLL_LINEDOWN line down or right events.
-        
-        EVT_COMMAND_SCROLL_PAGEUP(id, func):
-        Process wxEVT_SCROLL_PAGEUP page up or left events.
-        
-        EVT_COMMAND_SCROLL_PAGEDOWN(id, func):
-        Process wxEVT_SCROLL_PAGEDOWN page down or right events.
-        
-        EVT_COMMAND_SCROLL_THUMBTRACK(id, func):
-        Process wxEVT_SCROLL_THUMBTRACK thumbtrack events (frequent events sent as
-        the user drags the thumbtrack).
-        
-        EVT_COMMAND_SCROLL_THUMBRELEASE(func):
-        Process wxEVT_SCROLL_THUMBRELEASE thumb release events.
-        
-        EVT_COMMAND_SCROLL_CHANGED(func):
-        Process wxEVT_SCROLL_CHANGED end of scrolling events (MSW only). 
+        // Process scroll to bottom or rightmost (maximum) position events.
+        public event EventHandler? ScrollBottom;
 
-         */
+        // Process scroll line up or left events.
+        public event EventHandler? ScrollLineUp;
 
-        /*
-        The difference between EVT_SCROLL_THUMBRELEASE and EVT_SCROLL_CHANGED
-        The EVT_SCROLL_THUMBRELEASE event is only emitted when actually dragging
-        the thumb using the mouse and releasing it (This EVT_SCROLL_THUMBRELEASE
-        event is also followed by an EVT_SCROLL_CHANGED event).
+        // Process scroll line down or right events.
+        public event EventHandler? ScrollLineDown;
 
-        The EVT_SCROLL_CHANGED event also occurs when using the keyboard to change
-        the thumb position, and when clicking next to the thumb (In all these
-        cases the EVT_SCROLL_THUMBRELEASE event does not happen).
+        // Process scroll page up or left events.
+        public event EventHandler? ScrollPageUp;
 
-        In short, the EVT_SCROLL_CHANGED event is triggered when scrolling/moving
-        has finished independently of the way it had started. Please see the
-        Widgets Sample ("Slider" page) to see the difference between
-        EVT_SCROLL_THUMBRELEASE and EVT_SCROLL_CHANGED in action. 
-         */
+        // Process scroll page down or right events.
+        public event EventHandler? ScrollPageDown;
 
-        /*
-        wxScrollBar() [1/2]
-        wxScrollBar::wxScrollBar	(		)	
-        Default constructor.
+        // Process scroll thumbtrack events (frequent events sent
+        // as the user drags the thumbtrack).
+        public event EventHandler? ScrollThumbTrack;
 
-        wxScrollBar() [2/2]
-        wxScrollBar::wxScrollBar	(	wxWindow * 	parent,
-        wxWindowID 	id,
-        const wxPoint & 	pos = wxDefaultPosition,
-        const wxSize & 	size = wxDefaultSize,
-        long 	style = wxSB_HORIZONTAL,
-        const wxValidator & 	validator = wxDefaultValidator,
-        const wxString & 	name = wxScrollBarNameStr 
-        )		
-        Constructor, creating and showing a scrollbar.
+        // Process scroll thumb release events.
+        public event EventHandler? ScrollThumbRelease;
 
-        Parameters
-        parent	Parent window. Must be non-NULL.
-        id	Window identifier. The value wxID_ANY indicates a default value.
-        pos	Window position. If wxDefaultPosition is specified then a default position is chosen.
-        size	Window size. If wxDefaultSize is specified then a default size is chosen.
-        style	Window style. See wxScrollBar.
-        validator	Window validator.
-        name	Window name.
-        See also
-        Create(), wxValidator
-        ~wxScrollBar()
-        virtual wxScrollBar::~wxScrollBar	(		)	
-        virtual
-        Destructor, destroying the scrollbar.
+        // Process wxEVT_SCROLL_CHANGED end of scrolling events(MSW only).
+        // public event EventHandler? ScrollChanged;
 
-        Member Function Documentation
-        Create()
-        bool wxScrollBar::Create	(	wxWindow * 	parent,
-        wxWindowID 	id,
-        const wxPoint & 	pos = wxDefaultPosition,
-        const wxSize & 	size = wxDefaultSize,
-        long 	style = wxSB_HORIZONTAL,
-        const wxValidator & 	validator = wxDefaultValidator,
-        const wxString & 	name = wxScrollBarNameStr 
-        )		
-        Scrollbar creation function called by the scrollbar constructor.
+        // Gets or sets the position of the scrollbar thumb.
+        public int ThumbPosition { get; set; }
 
-        See wxScrollBar() for details.
+        // Returns the length of the scrollbar.
+        public int Range { get; }
 
-        GetPageSize()
-        virtual int wxScrollBar::GetPageSize	(		)	const
-        virtual
-        Returns the page size of the scrollbar.
+        // Returns the thumb or 'view' size.
+        public int ThumbSize { get; }
 
-        This is the number of scroll units that will be scrolled when the user pages up or down. Often it is the same as the thumb size.
+        // Returns the page size of the scrollbar.
+        // This is the number of scroll units that will be scrolled when the user
+        // pages up or down. Often it is the same as the thumb size.
+        public int PageSize { get; }
 
-        See also
-        SetScrollbar()
-        GetRange()
-        virtual int wxScrollBar::GetRange	(		)	const
-        virtual
-        Returns the length of the scrollbar.
-
-        See also
-        SetScrollbar()
-        GetThumbPosition()
-        virtual int wxScrollBar::GetThumbPosition	(		)	const
-        virtual
-        Returns the current position of the scrollbar thumb.
-
-        See also
-        SetThumbPosition()
-        GetThumbSize()
-        virtual int wxScrollBar::GetThumbSize	(		)	const
-        virtual
-        Returns the thumb or 'view' size.
-
-        See also
-        SetScrollbar()
-        IsVertical()
-        bool wxScrollBar::IsVertical	(		)	const
-        Returns true for scrollbars that have the vertical style set.
-
-        SetScrollbar()
-        virtual void wxScrollBar::SetScrollbar	(	int 	position,
-        int 	thumbSize,
-        int 	range,
-        int 	pageSize,
-        bool 	refresh = true 
-        )		
-        virtual
-        Sets the scrollbar properties.
-
-        Parameters
-        position	The position of the scrollbar in scroll units.
-        thumbSize	The size of the thumb, or visible portion of the scrollbar, in scroll units.
-        range	The maximum position of the scrollbar.
-        pageSize	The size of the page size in scroll units. This is the number of units the scrollbar will scroll when it is paged up or down. Often it is the same as the thumb size.
-        refresh	true to redraw the scrollbar, false otherwise.
-        Remarks
-        Let's say you wish to display 50 lines of text, using the same font. The window is sized so that you can only see 16 lines at a time. You would use:
-        scrollbar->SetScrollbar(0, 16, 50, 15);
-        The page size is 1 less than the thumb size so that the last line of the previous page will be visible on the next page, to help orient the user. Note that with the window at this size, the thumb position can never go above 50 minus 16, or 34. You can determine how many lines are currently visible by dividing the current view size by the character height in pixels. When defining your own scrollbar behaviour, you will always need to recalculate the scrollbar settings when the window size changes. You could therefore put your scrollbar calculations and SetScrollbar() call into a function named AdjustScrollbars, which can be called initially and also from a wxSizeEvent event handler function.
-        Reimplemented from wxWindow.
-
-        SetThumbPosition()
-        virtual void wxScrollBar::SetThumbPosition	(	int 	viewStart	)	
-        virtual
-        Sets the position of the scrollbar.
-
-        Parameters
-        viewStart	The position of the scrollbar thumb.
-        See also
-        GetThumbPosition() 
-
-         */
+        // Sets the scrollbar properties.
+        // position - The position of the scrollbar in scroll units.
+        // thumbSize - The size of the thumb, or visible portion of the scrollbar, in scroll units.
+        // range - The maximum position of the scrollbar.
+        // pageSize - The size of the page size in scroll units. This is the number of units the scrollbar will scroll when it is paged up or down. Often it is the same as the thumb size.
+        // refresh	- true to redraw the scrollbar, false otherwise.
+        // Let's say you wish to display 50 lines of text, using the same font. The window is sized so that you can only see 16 lines at a time. You would use:
+        // scrollbar->SetScrollbar(0, 16, 50, 15);
+        // The page size is 1 less than the thumb size so that the last line of the previous page will be visible on the next page, to help orient the user. Note that with the window at this size, the thumb position can never go above 50 minus 16, or 34. You can determine how many lines are currently visible by dividing the current view size by the character height in pixels. When defining your own scrollbar behaviour, you will always need to recalculate the scrollbar settings when the window size changes. You could therefore put your scrollbar calculations and SetScrollbar() call into a function named AdjustScrollbars, which can be called initially and also from a wxSizeEvent event handler function.
+        // Reimplemented from wxWindow.
+        public void SetScrollbar(int position, int thumbSize, int range,
+            int pageSize, bool refresh = true)
+        { }
     }
 }
