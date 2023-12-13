@@ -50,10 +50,13 @@
 
   <ItemGroup>
     <Compile Remove="build\**" />
+    <Compile Remove="Drawing.System.Imported\**" />
     <Compile Remove="System\**" />
     <EmbeddedResource Remove="build\**" />
+    <EmbeddedResource Remove="Drawing.System.Imported\**" />
     <EmbeddedResource Remove="System\**" />
     <None Remove="build\**" />
+    <None Remove="Drawing.System.Imported\**" />
     <None Remove="System\**" />
   </ItemGroup>
 
@@ -309,9 +312,6 @@
   </ItemGroup>
 
   <!-- ================================================= -->
-  <ItemGroup>
-    <Folder Include="Drawing.System.Imported\" />
-  </ItemGroup>
 
   <!-- ================================================= -->
   <!-- remove .. in path -->
