@@ -69,6 +69,7 @@ namespace PropertyGridSample
                     typeof(RadioButton),
                     typeof(RichTextBox),
                     typeof(Slider),
+                    typeof(ScrollBar),
                     typeof(StackPanel),
                     typeof(TextBox),
                     typeof(TreeView),

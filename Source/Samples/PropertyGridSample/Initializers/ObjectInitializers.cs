@@ -12,7 +12,7 @@ using Alternet.UI.Localization;
 
 namespace PropertyGridSample
 {
-    internal class ObjectInitializers
+    internal partial class ObjectInitializers
     {
         private const string LoremIpsum =
             "Lorem ipsum dolor sit amet,\nconsectetur adipiscing elit. " +
@@ -124,6 +124,8 @@ namespace PropertyGridSample
             Actions.Add(typeof(HorizontalStackPanel), InitStackPanel);
             Actions.Add(typeof(VerticalStackPanel), InitStackPanel);
             Actions.Add(typeof(StackPanel), InitStackPanel);
+
+            Actions.Add(typeof(ScrollBar), InitScrollBar);
 
             Actions.Add(typeof(StatusBar), (c) =>
             {
