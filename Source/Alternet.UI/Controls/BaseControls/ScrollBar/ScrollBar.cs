@@ -29,6 +29,11 @@ namespace Alternet.UI
     /// </remarks>
     public class ScrollBar : Control
     {
+        /// <summary>
+        /// Occurs when the scroll box has been moved by either a mouse or keyboard action.
+        /// </summary>
+        public event ScrollEventHandler? Scroll;
+
         /// <inheritdoc/>
         protected override ControlHandler CreateHandler()
         {
