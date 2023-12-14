@@ -5,6 +5,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Alternet.UI.Localization;
 
 namespace Alternet.UI
 {
@@ -50,6 +51,11 @@ namespace Alternet.UI
         public event EventHandler? ValueChanged;
 
         /// <summary>
+        /// Occurs when the <see cref="IsVertical" /> property is changed.
+        /// </summary>
+        public event EventHandler? IsVerticalChanged;
+
+        /// <summary>
         /// Gets or sets a value to be added to or subtracted from the
         /// <see cref="Value" /> property when the scroll box is moved a large distance.
         /// </summary>
@@ -73,13 +79,8 @@ namespace Alternet.UI
                 {
                     if (value < 0)
                     {
-                        throw new ArgumentOutOfRangeException(
-                            nameof(LargeChange),
-                            SR.GetString(
-                                "InvalidLowBoundArgumentEx",
-                                nameof(LargeChange),
-                                value.ToString(CultureInfo.CurrentCulture),
-                                0.ToString(CultureInfo.CurrentCulture)));
+                        ErrorMessages.LogInvalidBoundArgumentUInt(nameof(LargeChange), value);
+                        return;
                     }
 
                     largeChange = value;
@@ -109,15 +110,9 @@ namespace Alternet.UI
                 if (maximum != value)
                 {
                     if (minimum > value)
-                    {
                         minimum = value;
-                    }
-
                     if (value < this.value)
-                    {
                         Value = value;
-                    }
-
                     maximum = value;
                     UpdateScrollInfo();
                 }
@@ -145,15 +140,9 @@ namespace Alternet.UI
                 if (minimum != value)
                 {
                     if (maximum < value)
-                    {
                         maximum = value;
-                    }
-
                     if (value > this.value)
-                    {
                         Value = value;
-                    }
-
                     minimum = value;
                     UpdateScrollInfo();
                 }
@@ -185,19 +174,54 @@ namespace Alternet.UI
                 {
                     if (value < 0)
                     {
-                        throw new ArgumentOutOfRangeException(
-                            nameof(SmallChange),
-                            SR.GetString(
-                                "InvalidLowBoundArgumentEx",
-                                nameof(SmallChange),
-                                value.ToString(CultureInfo.CurrentCulture),
-                                0.ToString(CultureInfo.CurrentCulture)));
+                        ErrorMessages.LogInvalidBoundArgumentUInt(nameof(SmallChange), value);
+                        return;
                     }
 
                     smallChange = value;
                     UpdateScrollInfo();
                 }
             }
+        }
+
+        /// <inheritdoc cref="Control.IsBold"/>
+        [Browsable(false)]
+        public new bool IsBold
+        {
+            get => base.IsBold;
+            set => base.IsBold = value;
+        }
+
+        /// <inheritdoc cref="Control.Font"/>
+        [Browsable(false)]
+        public new Font? Font
+        {
+            get => base.Font;
+            set => base.Font = value;
+        }
+
+        /// <inheritdoc cref="Control.BackgroundColor"/>
+        [Browsable(false)]
+        public new Color? BackgroundColor
+        {
+            get => base.BackgroundColor;
+            set => base.BackgroundColor = value;
+        }
+
+        /// <inheritdoc cref="Control.ForegroundColor"/>
+        [Browsable(false)]
+        public new Color? ForegroundColor
+        {
+            get => base.ForegroundColor;
+            set => base.ForegroundColor = value;
+        }
+
+        /// <inheritdoc cref="Control.Padding"/>
+        [Browsable(false)]
+        public new Thickness Padding
+        {
+            get => base.Padding;
+            set => base.Padding = value;
         }
 
         /// <summary>
@@ -226,14 +250,12 @@ namespace Alternet.UI
                 {
                     if (value < minimum || value > maximum)
                     {
-                        throw new ArgumentOutOfRangeException(
+                        ErrorMessages.LogInvalidBoundArgument(
                             nameof(Value),
-                            SR.GetString(
-                                "InvalidBoundArgument",
-                                nameof(Value),
-                                value.ToString(CultureInfo.CurrentCulture),
-                                "'minimum'",
-                                "'maximum'"));
+                            value,
+                            Minimum,
+                            Maximum);
+                        return;
                     }
 
                     this.value = value;
@@ -245,10 +267,54 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets or sets whether <see cref="ScrollBar"/> is vertical.
+        /// </summary>
+        public bool IsVertical
+        {
+            get
+            {
+                return NativeControl.IsVertical;
+            }
+
+            set
+            {
+                NativeControl.IsVertical = value;
+                IsVerticalChanged?.Invoke(this, EventArgs.Empty);
+                UpdateScrollInfo();
+            }
+        }
+
         internal new Native.ScrollBar NativeControl => (Native.ScrollBar)base.NativeControl;
 
         /// <summary>
-        /// Sets the scrollbar properties.
+        /// Returns a string that represents the <see cref="ScrollBar" /> control.
+        /// </summary>
+        /// <returns>A string that represents the current <see cref="ScrollBar" />.</returns>
+        public override string ToString()
+        {
+            string text = base.ToString();
+            return text +
+                ", Minimum: " + Minimum.ToString(CultureInfo.CurrentCulture) +
+                ", Maximum: " + Maximum.ToString(CultureInfo.CurrentCulture) +
+                ", Value: " + Value.ToString(CultureInfo.CurrentCulture);
+        }
+
+        /// <summary>
+        /// Logs scroll info.
+        /// </summary>
+        public void LogScrollbarInfo()
+        {
+            Application.Log(ToString());
+            var position = $"Position: {NativeControl.ThumbPosition}";
+            var thumbSize = $"ThumbSize: {NativeControl.ThumbSize}";
+            var range = $"Range: {NativeControl.Range}";
+            var pageSize = $"PageSize: {NativeControl.PageSize}";
+            Application.Log($"Native ScrollBar: {position}, {thumbSize}, {range}, {pageSize}");
+        }
+
+        /// <summary>
+        /// Sets the native scrollbar properties.
         /// </summary>
         /// <param name="position">The position of the scrollbar in scroll units.</param>
         /// <param name="thumbSize">The size of the thumb, or visible portion of the
@@ -272,7 +338,7 @@ namespace Alternet.UI
         /// and SetScrollbar() call into a function named AdjustScrollbars, which can
         /// be called initially and also from a size event handler function.
         /// </remarks>
-        internal void SetScrollbar(
+        protected virtual void SetScrollbar(
             int position,
             int thumbSize,
             int range,
@@ -301,19 +367,32 @@ namespace Alternet.UI
             return new ScrollBarHandler();
         }
 
-        private void UpdateScrollInfo()
+        /// <summary>
+        /// Updates scroll info and calls <see cref="SetScrollbar"/> to update native control.
+        /// </summary>
+        protected virtual void UpdateScrollInfo()
         {
+            var range = (Maximum - Minimum) * SmallChange;
+            var pageSize = LargeChange * SmallChange;
+            var position = (Value - Minimum) * SmallChange;
+            var thumbSize = pageSize;
 
+            SetScrollbar(position, thumbSize, range, pageSize);
         }
 
         private void RaiseScroll()
         {
+            var pos = (NativeControl.EventNewPos / SmallChange) + Minimum;
+            var oldPos = Value;
+            pos = MathUtils.ApplyMinMax(pos, minimum, maximum);
+            if (pos == oldPos)
+                return;
+            value = pos;
             var eventType = (ScrollEventType)NativeControl.EventTypeID;
-            var pos = NativeControl.EventNewPos;
-            var oldPos = NativeControl.ThumbPosition;
             var orientation = NativeControl.IsVertical ? ScrollOrientation.VerticalScroll
                 : ScrollOrientation.HorizontalScroll;
             Scroll?.Invoke(this, new ScrollEventArgs(eventType, oldPos, pos, orientation));
+            OnValueChanged(EventArgs.Empty);
         }
 
         internal class ScrollBarHandler : NativeControlHandler<ScrollBar, Native.ScrollBar>

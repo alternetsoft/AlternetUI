@@ -1,3 +1,6 @@
+using System;
+using System.Globalization;
+
 namespace Alternet.UI.Localization
 {
     /// <summary>
@@ -102,5 +105,37 @@ namespace Alternet.UI.Localization
         /// <see cref="CurrentApplicationIsNotSet"/>
         public string InvalidBoundArgument
             = "Value of '{1}' is not valid for '{0}'. '{0}' should be greater than {2} and less than or equal to {3}.";
+
+        /// <summary>
+        /// Logs error 'InvalidBoundArgument'.
+        /// </summary>
+        /// <param name="name">Name of the field or property.</param>
+        /// <param name="value">Value.</param>
+        /// <param name="minBound">Minimum value.</param>
+        /// <param name="maxBound">Maximum value.</param>
+        public static void LogInvalidBoundArgument(
+            string name,
+            object value,
+            object minBound,
+            object maxBound)
+        {
+            var s = string.Format(
+                ErrorMessages.Default.InvalidBoundArgument,
+                name,
+                value.ToString(),
+                minBound.ToString(),
+                maxBound.ToString());
+            Application.LogError(s);
+        }
+
+        /// <summary>
+        /// Logs error 'InvalidBoundArgument' for unsigned <see cref="int"/> values.
+        /// </summary>
+        /// <param name="name">Name of the field or property.</param>
+        /// <param name="value">Value.</param>
+        public static void LogInvalidBoundArgumentUInt(string name, int value)
+        {
+            LogInvalidBoundArgument(name, value, 0, int.MaxValue);
+        }
     }
 }

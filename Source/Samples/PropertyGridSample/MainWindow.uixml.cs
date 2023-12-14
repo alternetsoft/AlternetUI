@@ -272,7 +272,7 @@ namespace PropertyGridSample
                         if (control.Parent == null)
                         {
                             control.VerticalAlignment = VerticalAlignment.Top;
-                            control.MinWidth = 100;
+                            // control.MinWidth = 100;
                             control.Parent = controlPanel;
                         }
 
