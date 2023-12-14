@@ -344,6 +344,19 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets a value indicating whether the control can receive focus.
+        /// </summary>
+        /// <returns>
+        /// <see langword="true" /> if the control can receive focus;
+        /// otherwise, <see langword="false" />.
+        /// </returns>
+        [Browsable(false)]
+        [EditorBrowsable(EditorBrowsableState.Advanced)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        [Category("Focus")]
+        public bool CanFocus => IsFocusable;
+
+        /// <summary>
         /// Gets or sets the text associated with this control.
         /// </summary>
         /// <returns>
@@ -1096,7 +1109,7 @@ namespace Alternet.UI
                         return GenericControlState.Hovered;
                 }
 
-                if (IsFocused)
+                if (Focused)
                     return GenericControlState.Focused;
                 return GenericControlState.Normal;
             }
@@ -1768,14 +1781,6 @@ namespace Alternet.UI
 
         /// <summary>
         /// Gets a value indicating whether the control has input focus.
-        /// </summary>
-        /// Same as <see cref="Focused"/>
-        [Browsable(false)]
-        public virtual bool IsFocused => Handler.IsFocused;
-
-        /// <summary>
-        /// Gets a value indicating whether the control has input focus.
-        /// Same as <see cref="IsFocused"/>
         /// </summary>
         [Browsable(false)]
         public virtual bool Focused => Handler.IsFocused;

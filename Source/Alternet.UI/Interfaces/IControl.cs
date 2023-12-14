@@ -94,7 +94,7 @@ namespace Alternet.UI
 
         bool TabStop { get; set; }
 
-        bool IsFocused { get; }
+        bool Focused { get; }
 
         string? ToolTip { get; set; }
 

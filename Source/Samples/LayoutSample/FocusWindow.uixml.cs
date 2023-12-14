@@ -36,7 +36,7 @@ namespace LayoutSample
 
         private void UpdateTextBox1IsFocusedValueLabel()
         {
-            textBox1IsFocusedValueLabel.Text = textBox1.IsFocused.ToString();
+            textBox1IsFocusedValueLabel.Text = textBox1.Focused.ToString();
         }
 
         private void TextBox1_GotFocus(object sender, EventArgs e)
