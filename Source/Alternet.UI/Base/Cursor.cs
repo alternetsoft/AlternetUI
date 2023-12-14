@@ -31,11 +31,6 @@ namespace Alternet.UI
         {
         }
 
-        internal Cursor(IntPtr handle, bool disposeHandle)
-            : base(handle, disposeHandle)
-        {
-        }
-
         /// <summary>
         /// Initializes a new instance of the <see cref="Cursor"/> class
         /// by passing a string resource name or filename.
@@ -44,7 +39,7 @@ namespace Alternet.UI
         /// <param name="type"></param>
         /// <param name="hotSpotX"></param>
         /// <param name="hotSpotY"></param>
-        internal Cursor(
+        public Cursor(
             string cursorName,
             int type,
             int hotSpotX = 0,
@@ -62,8 +57,13 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref="Cursor"/> class from an image.
         /// </summary>
         /// <param name="image">Image with cursor.</param>
-        internal Cursor(Image image)
+        public Cursor(Image image)
             : base(Native.WxOtherFactory.CreateCursor4(image.NativeImage), true)
+        {
+        }
+
+        internal Cursor(IntPtr handle, bool disposeHandle)
+            : base(handle, disposeHandle)
         {
         }
 
