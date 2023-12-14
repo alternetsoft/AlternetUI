@@ -1126,6 +1126,7 @@ namespace Alternet.UI
         /// </returns>
         public virtual DragDropEffects DoDragDrop(object data, DragDropEffects allowedEffects)
         {
+            allowedEffects &= ~DragDropEffects.Scroll;
             return Handler.DoDragDrop(data, allowedEffects);
         }
 
