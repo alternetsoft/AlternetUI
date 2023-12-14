@@ -11,6 +11,11 @@ using System.Security;
 namespace Alternet.UI
 {
     /// <summary>
+    ///     The delegate to use for handlers that receive InputEventArgs.
+    /// </summary>
+    public delegate void InputEventHandler(object sender, InputEventArgs e);
+
+    /// <summary>
     ///     The InputEventArgs class represents a type of RoutedEventArgs that
     ///     are relevant to all input events.
     /// </summary>

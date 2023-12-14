@@ -8,6 +8,12 @@ using System;
 namespace Alternet.UI
 {
     /// <summary>
+    ///     The delegate to use for handlers that receive KeyboardInputProviderAcquireFocusEventArgs.
+    /// </summary>
+    /// <ExternalAPI Inherit="true"/>
+    public delegate void KeyboardInputProviderAcquireFocusEventHandler(object sender, KeyboardInputProviderAcquireFocusEventArgs e);
+
+    /// <summary>
     ///     The KeyboardInputProviderAcquireFocusEventArgs class is used to
     ///     notify elements before and after keyboard focus is acquired through
     ///     a keyboard input provider.

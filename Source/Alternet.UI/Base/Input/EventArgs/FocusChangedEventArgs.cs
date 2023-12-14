@@ -9,6 +9,11 @@ using System;
 namespace Alternet.UI
 {
     /// <summary>
+    ///     The delegate to use for handlers that receive KeyboardFocusChangedEventArgs.
+    /// </summary>
+    public delegate void KeyboardFocusChangedEventHandler(object sender, KeyboardFocusChangedEventArgs e);
+
+    /// <summary>
     ///     The KeyboardFocusChangedEventArgs class contains information about key states.
     /// </summary>
     public class KeyboardFocusChangedEventArgs : KeyboardEventArgs

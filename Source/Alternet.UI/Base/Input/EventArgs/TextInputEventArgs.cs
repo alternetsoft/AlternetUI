@@ -10,6 +10,12 @@ using System.Security;
 namespace Alternet.UI
 {
     /// <summary>
+    ///     The delegate to use for handlers that receive TextInput events.
+    /// </summary>
+    /// <ExternalAPI Inherit="true"/>
+    public delegate void TextInputEventHandler(object sender, TextInputEventArgs e);
+
+    /// <summary>
     /// This class is used in the <see cref="UIElement.TextInput"/> event as EventArgs.
     /// </summary>
     public class TextInputEventArgs : KeyboardEventArgs

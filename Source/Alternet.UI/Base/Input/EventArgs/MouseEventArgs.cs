@@ -11,6 +11,11 @@ using Alternet.Drawing;
 namespace Alternet.UI
 {
     /// <summary>
+    ///     The delegate to use for handlers that receive MouseEventArgs.
+    /// </summary>
+    public delegate void MouseEventHandler(object sender, MouseEventArgs e);
+
+    /// <summary>
     ///     The MouseEventArgs class provides access to the logical
     ///     Mouse device for all derived event args.
     /// </summary>

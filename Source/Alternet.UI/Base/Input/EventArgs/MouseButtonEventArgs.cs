@@ -10,6 +10,11 @@ using System;
 namespace Alternet.UI
 {
     /// <summary>
+    ///     The delegate to use for handlers that receive MouseButtonEventArgs.
+    /// </summary>
+    public delegate void MouseButtonEventHandler(object sender, MouseButtonEventArgs e);
+
+    /// <summary>
     ///     The MouseButtonEventArgs describes the state of a Mouse button.
     /// </summary>
     public class MouseButtonEventArgs : MouseEventArgs

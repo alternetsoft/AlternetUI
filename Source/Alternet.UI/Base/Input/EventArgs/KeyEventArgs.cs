@@ -11,6 +11,12 @@ using System.Security;
 namespace Alternet.UI
 {
     /// <summary>
+    ///     The delegate to use for handlers that receive KeyboardEventArgs.
+    /// </summary>
+    /// <ExternalAPI Inherit="true"/>
+    public delegate void KeyEventHandler(object sender, KeyEventArgs e);
+
+    /// <summary>
     ///     The KeyEventArgs class contains information about key states.
     /// </summary>
     public class KeyEventArgs : KeyboardEventArgs

@@ -9,6 +9,11 @@ using System;
 namespace Alternet.UI
 {
     /// <summary>
+    ///     The delegate to use for handlers that receive MouseWheelEventArgs.
+    /// </summary>
+    public delegate void MouseWheelEventHandler(object sender, MouseWheelEventArgs e);
+
+    /// <summary>
     ///     The MouseWheelEventArgs describes the state of a Mouse wheel.
     /// </summary>
     public class MouseWheelEventArgs : MouseEventArgs
@@ -25,7 +30,8 @@ namespace Alternet.UI
         /// <param name="delta">
         ///     How much the mouse wheel turned.
         /// </param>
-        public MouseWheelEventArgs(MouseDevice mouse, long timestamp, int delta) : base(mouse, timestamp)
+        public MouseWheelEventArgs(MouseDevice mouse, long timestamp, int delta)
+            : base(mouse, timestamp)
         {
             _delta = delta;
         }

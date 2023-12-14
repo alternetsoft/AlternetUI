@@ -9,6 +9,12 @@ using System;
 namespace Alternet.UI
 {
     /// <summary>
+    ///     The delegate to use for handlers that receive KeyboardEventArgs.
+    /// </summary>
+    /// <ExternalAPI Inherit="true"/>
+    public delegate void KeyboardEventHandler(object sender, KeyboardEventArgs e);
+
+    /// <summary>
     ///     The KeyboardEventArgs class provides access to the logical
     ///     pointer device for all derived event args.
     /// </summary>
