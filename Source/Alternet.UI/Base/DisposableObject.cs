@@ -16,6 +16,7 @@ namespace Alternet.UI
     public abstract class DisposableObject : BaseObject, IDisposable, IDisposableObject
     {
         private bool disposeHandle;
+        private bool disposing;
         private bool disposed = false;
         private IntPtr handle;
 
@@ -65,6 +66,12 @@ namespace Alternet.UI
         /// </summary>
         [Browsable(false)]
         public bool IsDisposed => disposed;
+
+        /// <summary>
+        /// Gets whether object is currently disposing.
+        /// </summary>
+        [Browsable(false)]
+        public bool Disposing => disposing;
 
         /// <summary>
         /// Gets handle to unmanaged resources.
@@ -126,27 +133,34 @@ namespace Alternet.UI
         {
             if (!this.disposed)
             {
-                Disposed?.Invoke(this, EventArgs.Empty);
+                this.disposing = true;
 
-                // If disposing equals true, dispose all managed
-                // and unmanaged resources.
-                if (disposing)
-                    DisposeManagedResources();
-
-                DisposeResources();
-
-                // Call the appropriate methods to clean up
-                // unmanaged resources here.
-                // If disposing is false,
-                // only the following code is executed.
-                if (handle != default && disposeHandle)
+                try
                 {
-                    DisposeUnmanagedResources();
-                    handle = default;
-                }
+                    Disposed?.Invoke(this, EventArgs.Empty);
 
-                // Note disposing has been done.
-                disposed = true;
+                    // If disposing equals true, dispose all managed
+                    // and unmanaged resources.
+                    if (disposing)
+                        DisposeManagedResources();
+
+                    DisposeResources();
+
+                    // Call the appropriate methods to clean up
+                    // unmanaged resources here.
+                    // If disposing is false,
+                    // only the following code is executed.
+                    if (handle != default && disposeHandle)
+                    {
+                        DisposeUnmanagedResources();
+                        handle = default;
+                    }
+                }
+                finally
+                {
+                    this.disposing = false;
+                    disposed = true;
+                }
             }
         }
 
