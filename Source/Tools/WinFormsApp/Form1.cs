@@ -2,7 +2,7 @@ namespace WinFormsApp
 {
     public partial class Form1 : Form
     {
-        private ListBox listBox = new();
+        private readonly ListBox listBox = new();
         
         public Form1()
         {
