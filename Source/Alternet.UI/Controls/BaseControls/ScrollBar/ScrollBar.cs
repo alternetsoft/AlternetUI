@@ -293,7 +293,7 @@ namespace Alternet.UI
         /// <returns>A string that represents the current <see cref="ScrollBar" />.</returns>
         public override string ToString()
         {
-            string text = base.ToString();
+            string? text = base.ToString();
             return text +
                 ", Minimum: " + Minimum.ToString(CultureInfo.CurrentCulture) +
                 ", Maximum: " + Maximum.ToString(CultureInfo.CurrentCulture) +
