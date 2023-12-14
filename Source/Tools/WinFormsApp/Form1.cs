@@ -15,6 +15,7 @@ namespace WinFormsApp
             KeyDown += Form1_KeyDown;
             listBox.MouseMove += Form1_MouseMove;
             KeyPreview = true;
+            listBox.Items.Add($"DoubleClickTime: {SystemInformation.DoubleClickTime}");
         }
 
         private void Form1_MouseMove(object? sender, MouseEventArgs e)

@@ -143,12 +143,12 @@ namespace Alternet.UI
             }
 
             // initialize tracing information
-            Base.Diagnostics.PresentationTraceLevel traceLevel = Base.Diagnostics.PresentationTraceSources.GetTraceLevel(binding);
+            Alternet.Base.Diagnostics.PresentationTraceLevel traceLevel = Alternet.Base.Diagnostics.PresentationTraceSources.GetTraceLevel(binding);
 
             if (traceLevel > 0)
             {
                 // copy TraceLevel from parent BindingBase - it can be changed later
-                Base.Diagnostics.PresentationTraceSources.SetTraceLevel(this, traceLevel);
+                Alternet.Base.Diagnostics.PresentationTraceSources.SetTraceLevel(this, traceLevel);
             }
 
             if (TraceData.IsExtendedTraceEnabled(this, TraceDataLevel.CreateExpression))
