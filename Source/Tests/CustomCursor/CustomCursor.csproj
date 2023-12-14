@@ -1,0 +1,50 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <AlternetUIPath>..\..\..\</AlternetUIPath>	
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+  </PropertyGroup>
+
+  <Import Project="$(AlternetUIPath)\Source\Build\Alternet.UI.Copy.props" />
+
+  <ItemGroup>
+    <None Remove="CUR\HideWhiteSpace.cur" />
+    <None Remove="CUR\HSplit.cur" />
+    <None Remove="CUR\IncrementalSearch.cur" />
+    <None Remove="CUR\LeftArrow.cur" />
+    <None Remove="CUR\ReverseIncrementalSearch.cur" />
+    <None Remove="CUR\ShowWhiteSpace.cur" />
+    <None Remove="CUR\VSplit.cur" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="CUR\HideWhiteSpace.cur" />
+    <EmbeddedResource Include="CUR\HSplit.cur" />
+    <EmbeddedResource Include="CUR\IncrementalSearch.cur" />
+    <EmbeddedResource Include="CUR\LeftArrow.cur" />
+    <EmbeddedResource Include="CUR\ReverseIncrementalSearch.cur" />
+    <EmbeddedResource Include="CUR\ShowWhiteSpace.cur" />
+    <EmbeddedResource Include="CUR\VSplit.cur" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Properties\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
+
+</Project>
