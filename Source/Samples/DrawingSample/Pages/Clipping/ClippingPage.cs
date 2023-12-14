@@ -145,7 +145,7 @@ namespace DrawingSample
                 AddClipAreaPart(e.GetPosition(Canvas));
         }
 
-        private void Canvas_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void Canvas_MouseLeftButtonDown(object sender, MouseEventArgs e)
         {
             AddClipAreaPart(e.GetPosition(Canvas));
             Canvas!.CaptureMouse();
@@ -154,10 +154,13 @@ namespace DrawingSample
 
         private void AddClipAreaPart(Point position)
         {
-            clipAreaParts.Add(new ClipAreaPart(SelectedClipOperation, Rect.FromCenter(position, new Size(20, 20))));
+            clipAreaParts.Add(
+                new ClipAreaPart(
+                    SelectedClipOperation,
+                    Rect.FromCenter(position, new Size(20, 20))));
         }
 
-        private void Canvas_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        private void Canvas_MouseLeftButtonUp(object sender, MouseEventArgs e)
         {
             if (!mouseDown)
                 return;

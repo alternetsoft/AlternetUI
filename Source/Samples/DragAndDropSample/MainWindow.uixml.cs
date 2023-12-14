@@ -166,7 +166,7 @@ namespace DragAndDropSample
 
         bool isDragging = false;
 
-        private void DragSource_MouseDown(object sender, Alternet.UI.MouseButtonEventArgs e)
+        private void DragSource_MouseDown(object sender, Alternet.UI.MouseEventArgs e)
         {
             isDragging = true;
         }
@@ -184,7 +184,7 @@ namespace DragAndDropSample
             }
         }
 
-        private void DragSource_MouseUp(object sender, Alternet.UI.MouseButtonEventArgs e)
+        private void DragSource_MouseUp(object sender, Alternet.UI.MouseEventArgs e)
         {
             isDragging = false;
         }

@@ -632,7 +632,7 @@ namespace Alternet.UI
             Manager.Update();
         }
 
-        private void Actions_MouseDoubleClick(object? sender, MouseButtonEventArgs e)
+        private void Actions_MouseDoubleClick(object? sender, MouseEventArgs e)
         {
             var listBox = sender as ListBox;
             if (listBox?.SelectedItem is not ListControlItem item || item.Action == null)

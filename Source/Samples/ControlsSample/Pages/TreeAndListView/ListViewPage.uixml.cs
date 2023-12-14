@@ -311,7 +311,7 @@ namespace ControlsSample
 
         private void ListView_MouseLeftButtonDown(
             object? sender,
-            MouseButtonEventArgs e)
+            MouseEventArgs e)
         {
             var result = listView.HitTest(e.GetPosition(listView));
 

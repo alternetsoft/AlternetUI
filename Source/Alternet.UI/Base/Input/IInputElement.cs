@@ -50,62 +50,62 @@ namespace Alternet.UI
         /// <summary>
         ///     An event reporting the left mouse button was pressed.
         /// </summary>
-        event MouseButtonEventHandler PreviewMouseLeftButtonDown;
+        event MouseEventHandler PreviewMouseLeftButtonDown;
 
         /// <summary>
         ///     An event reporting the left mouse button was pressed.
         /// </summary>
-        event MouseButtonEventHandler MouseLeftButtonDown;
+        event MouseEventHandler MouseLeftButtonDown;
 
         /// <summary>
         ///     An event reporting the left mouse button was released.
         /// </summary>
-        event MouseButtonEventHandler PreviewMouseLeftButtonUp;
+        event MouseEventHandler PreviewMouseLeftButtonUp;
 
         /// <summary>
         ///     An event reporting the left mouse button was released.
         /// </summary>
-        event MouseButtonEventHandler MouseLeftButtonUp;
+        event MouseEventHandler MouseLeftButtonUp;
 
         /// <summary>
         ///     An event reporting the right mouse button was pressed.
         /// </summary>
-        event MouseButtonEventHandler PreviewMouseRightButtonDown;
+        event MouseEventHandler PreviewMouseRightButtonDown;
 
         /// <summary>
         ///     An event reporting the right mouse button was pressed.
         /// </summary>
-        event MouseButtonEventHandler MouseRightButtonDown;
+        event MouseEventHandler MouseRightButtonDown;
 
         /// <summary>
         ///     An event reporting the right mouse button was released.
         /// </summary>
-        event MouseButtonEventHandler PreviewMouseRightButtonUp;
+        event MouseEventHandler PreviewMouseRightButtonUp;
 
         /// <summary>
         ///     An event reporting the right mouse button was released.
         /// </summary>
-        event MouseButtonEventHandler MouseRightButtonUp;
+        event MouseEventHandler MouseRightButtonUp;
 
         /// <summary>
         ///     A preview event reporting a mouse button was pressed.
         /// </summary>
-        event MouseButtonEventHandler PreviewMouseDown;
+        event MouseEventHandler PreviewMouseDown;
 
         /// <summary>
         ///     An event reporting a mouse button was pressed.
         /// </summary>
-        event MouseButtonEventHandler MouseDown;
+        event MouseEventHandler MouseDown;
 
         /// <summary>
         ///     A preview event reporting a mouse button was released.
         /// </summary>
-        event MouseButtonEventHandler PreviewMouseUp;
+        event MouseEventHandler PreviewMouseUp;
 
         /// <summary>
         ///     An event reporting a mouse button was released.
         /// </summary>
-        event MouseButtonEventHandler MouseUp;
+        event MouseEventHandler MouseUp;
 
         /// <summary>
         ///     An event reporting a mouse move.

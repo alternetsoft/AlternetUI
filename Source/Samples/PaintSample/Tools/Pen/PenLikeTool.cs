@@ -21,12 +21,14 @@ namespace PaintSample
 
         protected override Control? CreateOptionsControl()
         {
-            var control = new PenLikeToolOptionsControl();
-            control.Tool = this;
+            var control = new PenLikeToolOptionsControl
+            {
+                Tool = this,
+            };
             return control;
         }
 
-        protected override void OnMouseDown(MouseButtonEventArgs e)
+        protected override void OnMouseDown(MouseEventArgs e)
         {
             if (e.ChangedButton != MouseButton.Left)
                 return;
@@ -66,7 +68,7 @@ namespace PaintSample
                 Cancel();
         }
 
-        protected override void OnMouseUp(MouseButtonEventArgs e)
+        protected override void OnMouseUp(MouseEventArgs e)
         {
             if (e.ChangedButton != MouseButton.Left)
                 return;
@@ -140,7 +142,7 @@ namespace PaintSample
 
             public Pen Pen { get; }
 
-            public List<Point> Points { get; } = new List<Point>();
+            public List<Point> Points { get; } = [];
         }
     }
 }

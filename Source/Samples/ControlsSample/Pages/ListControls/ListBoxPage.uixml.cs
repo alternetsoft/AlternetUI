@@ -68,7 +68,7 @@ namespace ControlsSample
 
         private void ListBox_MouseLeftButtonDown(
             object? sender, 
-            MouseButtonEventArgs e)
+            MouseEventArgs e)
         {
             var result = listBox.HitTest(e.GetPosition(listBox));
             var item = (result == null ? "<none>" : listBox.Items[result.Value]);
@@ -141,7 +141,7 @@ namespace ControlsSample
             object? sender, 
             EventArgs e)
         {
-            listBox.SelectItems(new int[] { 2 });
+            listBox.SelectItems([2]);
         }
 
         private void DeselectAllButton_Click(object? sender, EventArgs e)
@@ -153,7 +153,7 @@ namespace ControlsSample
             object? sender, 
             EventArgs e)
         {
-            listBox.SelectItems(new int[] { 2, 4 });
+            listBox.SelectItems([2, 4]);
         }
     }
 }

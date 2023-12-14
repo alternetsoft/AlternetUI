@@ -70,11 +70,11 @@ namespace PaintSample
         {
         }
 
-        protected virtual void OnMouseUp(MouseButtonEventArgs e)
+        protected virtual void OnMouseUp(MouseEventArgs e)
         {
         }
 
-        protected virtual void OnMouseDown(MouseButtonEventArgs e)
+        protected virtual void OnMouseDown(MouseEventArgs e)
         {
         }
 
@@ -93,12 +93,12 @@ namespace PaintSample
             OnMouseMove(e);
         }
 
-        private void Canvas_MouseUp(object sender, MouseButtonEventArgs e)
+        private void Canvas_MouseUp(object sender, MouseEventArgs e)
         {
             OnMouseUp(e);
         }
 
-        private void Canvas_MouseDown(object sender, MouseButtonEventArgs e)
+        private void Canvas_MouseDown(object sender, MouseEventArgs e)
         {
             OnMouseDown(e);
         }

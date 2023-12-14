@@ -56,7 +56,7 @@ namespace Alternet.UI
             EventManager.RegisterRoutedEvent(
                 "PreviewMouseRightButtonUp",
                 RoutingStrategy.Direct,
-                typeof(MouseButtonEventHandler),
+                typeof(MouseEventHandler),
                 typeof(UIElement));
 
         /// <summary>
@@ -66,7 +66,7 @@ namespace Alternet.UI
             EventManager.RegisterRoutedEvent(
                 "PreviewMouseLeftButtonUp",
                 RoutingStrategy.Direct,
-                typeof(MouseButtonEventHandler),
+                typeof(MouseEventHandler),
                 typeof(UIElement));
 
         /// <summary>
@@ -76,7 +76,7 @@ namespace Alternet.UI
             EventManager.RegisterRoutedEvent(
                 "PreviewMouseRightButtonDown",
                 RoutingStrategy.Direct,
-                typeof(MouseButtonEventHandler),
+                typeof(MouseEventHandler),
                 typeof(UIElement));
 
         /// <summary>
@@ -86,7 +86,7 @@ namespace Alternet.UI
             EventManager.RegisterRoutedEvent(
                 "MouseLeftButtonUp",
                 RoutingStrategy.Direct,
-                typeof(MouseButtonEventHandler),
+                typeof(MouseEventHandler),
                 typeof(UIElement));
 
         /// <summary>
@@ -108,7 +108,7 @@ namespace Alternet.UI
             EventManager.RegisterRoutedEvent(
                 "MouseRightButtonUp",
                 RoutingStrategy.Direct,
-                typeof(MouseButtonEventHandler),
+                typeof(MouseEventHandler),
                 typeof(UIElement));
 
         /// <summary>
@@ -124,7 +124,7 @@ namespace Alternet.UI
             EventManager.RegisterRoutedEvent(
                 "MouseLeftButtonDown",
                 RoutingStrategy.Direct,
-                typeof(MouseButtonEventHandler),
+                typeof(MouseEventHandler),
                 typeof(UIElement));
 
         /// <summary>
@@ -134,7 +134,7 @@ namespace Alternet.UI
             EventManager.RegisterRoutedEvent(
                 "PreviewMouseLeftButtonDown",
                 RoutingStrategy.Direct,
-                typeof(MouseButtonEventHandler),
+                typeof(MouseEventHandler),
                 typeof(UIElement));
 
         /// <summary>
@@ -144,7 +144,7 @@ namespace Alternet.UI
             EventManager.RegisterRoutedEvent(
                 "MouseRightButtonDown",
                 RoutingStrategy.Direct,
-                typeof(MouseButtonEventHandler),
+                typeof(MouseEventHandler),
                 typeof(UIElement));
 
         /// <summary>
@@ -232,7 +232,7 @@ namespace Alternet.UI
         /// <summary>
         ///     Event reporting the mouse button was pressed
         /// </summary>
-        public event MouseButtonEventHandler PreviewMouseDown
+        public event MouseEventHandler PreviewMouseDown
         {
             add { AddHandler(Mouse.PreviewMouseDownEvent, value, false); }
             remove { RemoveHandler(Mouse.PreviewMouseDownEvent, value); }
@@ -241,7 +241,7 @@ namespace Alternet.UI
         /// <summary>
         ///     Event reporting the mouse button was pressed
         /// </summary>
-        public event MouseButtonEventHandler MouseDown
+        public event MouseEventHandler MouseDown
         {
             add { AddHandler(Mouse.MouseDownEvent, value, false); }
             remove { RemoveHandler(Mouse.MouseDownEvent, value); }
@@ -255,7 +255,7 @@ namespace Alternet.UI
         /// <summary>
         ///     Event reporting the left mouse button was pressed
         /// </summary>
-        public event MouseButtonEventHandler MouseLeftButtonDown
+        public event MouseEventHandler MouseLeftButtonDown
         {
             add { AddHandler(UIElement.MouseLeftButtonDownEvent, value, false); }
             remove { RemoveHandler(UIElement.MouseLeftButtonDownEvent, value); }
@@ -264,7 +264,7 @@ namespace Alternet.UI
         /// <summary>
         ///     Event reporting the left mouse button was released
         /// </summary>
-        public event MouseButtonEventHandler PreviewMouseLeftButtonUp
+        public event MouseEventHandler PreviewMouseLeftButtonUp
         {
             add { AddHandler(UIElement.PreviewMouseLeftButtonUpEvent, value, false); }
             remove { RemoveHandler(UIElement.PreviewMouseLeftButtonUpEvent, value); }
@@ -273,7 +273,7 @@ namespace Alternet.UI
         /// <summary>
         ///     Event reporting the right mouse button was pressed
         /// </summary>
-        public event MouseButtonEventHandler MouseRightButtonDown
+        public event MouseEventHandler MouseRightButtonDown
         {
             add { AddHandler(UIElement.MouseRightButtonDownEvent, value, false); }
             remove { RemoveHandler(UIElement.MouseRightButtonDownEvent, value); }
@@ -282,7 +282,7 @@ namespace Alternet.UI
         /// <summary>
         ///     Event reporting the right mouse button was released
         /// </summary>
-        public event MouseButtonEventHandler PreviewMouseRightButtonUp
+        public event MouseEventHandler PreviewMouseRightButtonUp
         {
             add { AddHandler(UIElement.PreviewMouseRightButtonUpEvent, value, false); }
             remove { RemoveHandler(UIElement.PreviewMouseRightButtonUpEvent, value); }
@@ -300,7 +300,7 @@ namespace Alternet.UI
         /// <summary>
         ///     Event reporting the mouse button was released
         /// </summary>
-        public event MouseButtonEventHandler MouseUp
+        public event MouseEventHandler MouseUp
         {
             add { AddHandler(Mouse.MouseUpEvent, value, false); }
             remove { RemoveHandler(Mouse.MouseUpEvent, value); }
@@ -309,7 +309,7 @@ namespace Alternet.UI
         /// <summary>
         ///     Event reporting the right mouse button was released
         /// </summary>
-        public event MouseButtonEventHandler MouseRightButtonUp
+        public event MouseEventHandler MouseRightButtonUp
         {
             add { AddHandler(UIElement.MouseRightButtonUpEvent, value, false); }
             remove { RemoveHandler(UIElement.MouseRightButtonUpEvent, value); }
@@ -318,7 +318,7 @@ namespace Alternet.UI
         /// <summary>
         ///     Event reporting the left mouse button was pressed
         /// </summary>
-        public event MouseButtonEventHandler PreviewMouseLeftButtonDown
+        public event MouseEventHandler PreviewMouseLeftButtonDown
         {
             add { AddHandler(UIElement.PreviewMouseLeftButtonDownEvent, value, false); }
             remove { RemoveHandler(UIElement.PreviewMouseLeftButtonDownEvent, value); }
@@ -336,7 +336,7 @@ namespace Alternet.UI
         /// <summary>
         ///     Event reporting the mouse button was pressed
         /// </summary>
-        public event MouseButtonEventHandler PreviewMouseDoubleClick
+        public event MouseEventHandler PreviewMouseDoubleClick
         {
             add { AddHandler(Mouse.PreviewMouseDoubleClickEvent, value, false); }
             remove { RemoveHandler(Mouse.PreviewMouseDoubleClickEvent, value); }
@@ -345,7 +345,7 @@ namespace Alternet.UI
         /// <summary>
         ///     Event reporting the mouse button was pressed
         /// </summary>
-        public event MouseButtonEventHandler MouseDoubleClick
+        public event MouseEventHandler MouseDoubleClick
         {
             add { AddHandler(Mouse.MouseDoubleClickEvent, value, false); }
             remove { RemoveHandler(Mouse.MouseDoubleClickEvent, value); }
@@ -354,7 +354,7 @@ namespace Alternet.UI
         /// <summary>
         ///     Event reporting the mouse button was released
         /// </summary>
-        public event MouseButtonEventHandler PreviewMouseUp
+        public event MouseEventHandler PreviewMouseUp
         {
             add { AddHandler(Mouse.PreviewMouseUpEvent, value, false); }
             remove { RemoveHandler(Mouse.PreviewMouseUpEvent, value); }
@@ -390,7 +390,7 @@ namespace Alternet.UI
         /// <summary>
         ///     Event reporting the right mouse button was pressed
         /// </summary>
-        public event MouseButtonEventHandler PreviewMouseRightButtonDown
+        public event MouseEventHandler PreviewMouseRightButtonDown
         {
             add { AddHandler(UIElement.PreviewMouseRightButtonDownEvent, value, false); }
             remove { RemoveHandler(UIElement.PreviewMouseRightButtonDownEvent, value); }
@@ -417,7 +417,7 @@ namespace Alternet.UI
         /// <summary>
         ///     Event reporting the left mouse button was released
         /// </summary>
-        public event MouseButtonEventHandler MouseLeftButtonUp
+        public event MouseEventHandler MouseLeftButtonUp
         {
             add { AddHandler(UIElement.MouseLeftButtonUpEvent, value, false); }
             remove { RemoveHandler(UIElement.MouseLeftButtonUpEvent, value); }
@@ -888,63 +888,63 @@ namespace Alternet.UI
         /// <summary>
         ///     Virtual method reporting the mouse button was pressed
         /// </summary>
-        protected virtual void OnPreviewMouseDown(MouseButtonEventArgs e)
+        protected virtual void OnPreviewMouseDown(MouseEventArgs e)
         {
         }
 
         /// <summary>
         ///     Virtual method reporting the mouse button was pressed
         /// </summary>
-        protected virtual void OnMouseDown(MouseButtonEventArgs e)
+        protected virtual void OnMouseDown(MouseEventArgs e)
         {
         }
 
         /// <summary>
         ///     Virtual method reporting the mouse button was pressed
         /// </summary>
-        protected virtual void OnPreviewMouseDoubleClick(MouseButtonEventArgs e)
+        protected virtual void OnPreviewMouseDoubleClick(MouseEventArgs e)
         {
         }
 
         /// <summary>
         ///     Virtual method reporting the mouse button was pressed
         /// </summary>
-        protected virtual void OnMouseDoubleClick(MouseButtonEventArgs e)
+        protected virtual void OnMouseDoubleClick(MouseEventArgs e)
         {
         }
 
         /// <summary>
         ///     Virtual method reporting the mouse button was released
         /// </summary>
-        protected virtual void OnPreviewMouseUp(MouseButtonEventArgs e)
+        protected virtual void OnPreviewMouseUp(MouseEventArgs e)
         {
         }
 
         /// <summary>
         ///     Virtual method reporting the mouse button was released
         /// </summary>
-        protected virtual void OnMouseUp(MouseButtonEventArgs e)
+        protected virtual void OnMouseUp(MouseEventArgs e)
         {
         }
 
         /// <summary>
         ///     Virtual method reporting the left mouse button was pressed
         /// </summary>
-        protected virtual void OnPreviewMouseLeftButtonDown(MouseButtonEventArgs e)
+        protected virtual void OnPreviewMouseLeftButtonDown(MouseEventArgs e)
         {
         }
 
         /// <summary>
         ///     Virtual method reporting the left mouse button was pressed
         /// </summary>
-        protected virtual void OnMouseLeftButtonDown(MouseButtonEventArgs e)
+        protected virtual void OnMouseLeftButtonDown(MouseEventArgs e)
         {
         }
 
         /// <summary>
         ///     Virtual method reporting the left mouse button was released
         /// </summary>
-        protected virtual void OnPreviewMouseLeftButtonUp(MouseButtonEventArgs e)
+        protected virtual void OnPreviewMouseLeftButtonUp(MouseEventArgs e)
         {
         }
 
@@ -965,14 +965,14 @@ namespace Alternet.UI
         /// <summary>
         ///     Virtual method reporting the left mouse button was released
         /// </summary>
-        protected virtual void OnMouseLeftButtonUp(MouseButtonEventArgs e)
+        protected virtual void OnMouseLeftButtonUp(MouseEventArgs e)
         {
         }
 
         /// <summary>
         ///     Virtual method reporting the right mouse button was pressed
         /// </summary>
-        protected virtual void OnPreviewMouseRightButtonDown(MouseButtonEventArgs e)
+        protected virtual void OnPreviewMouseRightButtonDown(MouseEventArgs e)
         {
         }
 
@@ -993,21 +993,21 @@ namespace Alternet.UI
         /// <summary>
         ///     Virtual method reporting the right mouse button was pressed
         /// </summary>
-        protected virtual void OnMouseRightButtonDown(MouseButtonEventArgs e)
+        protected virtual void OnMouseRightButtonDown(MouseEventArgs e)
         {
         }
 
         /// <summary>
         ///     Virtual method reporting the right mouse button was released
         /// </summary>
-        protected virtual void OnPreviewMouseRightButtonUp(MouseButtonEventArgs e)
+        protected virtual void OnPreviewMouseRightButtonUp(MouseEventArgs e)
         {
         }
 
         /// <summary>
         ///     Virtual method reporting the right mouse button was released
         /// </summary>
-        protected virtual void OnMouseRightButtonUp(MouseButtonEventArgs e)
+        protected virtual void OnMouseRightButtonUp(MouseEventArgs e)
         {
         }
 
@@ -1051,7 +1051,7 @@ namespace Alternet.UI
 
         private static void CrackMouseButtonEventAndReRaiseEvent(
             DependencyObject sender,
-            MouseButtonEventArgs e)
+            MouseEventArgs e)
         {
             var newEvent = CrackMouseButtonEvent(e);
             if (newEvent != null)
@@ -1121,7 +1121,7 @@ namespace Alternet.UI
             EventRouteFactory.RecycleObject(route);
         }
 
-        private static RoutedEvent? CrackMouseButtonEvent(MouseButtonEventArgs e)
+        private static RoutedEvent? CrackMouseButtonEvent(MouseEventArgs e)
         {
             RoutedEvent? newEvent = null;
 
@@ -1155,42 +1155,42 @@ namespace Alternet.UI
             return newEvent;
         }
 
-        private static void OnPreviewMouseLeftButtonUpThunk(object sender, MouseButtonEventArgs e)
+        private static void OnPreviewMouseLeftButtonUpThunk(object sender, MouseEventArgs e)
         {
             Invariant.Assert(!e.Handled, ErrorMessages.Default.EventHasAlreadyBeenHandled);
 
             (sender as UIElement)?.OnPreviewMouseLeftButtonUp(e);
         }
 
-        private static void OnMouseLeftButtonUpThunk(object sender, MouseButtonEventArgs e)
+        private static void OnMouseLeftButtonUpThunk(object sender, MouseEventArgs e)
         {
             Invariant.Assert(!e.Handled, ErrorMessages.Default.EventHasAlreadyBeenHandled);
 
             (sender as UIElement)?.OnMouseLeftButtonUp(e);
         }
 
-        private static void OnPreviewMouseRightButtonDownThunk(object sender, MouseButtonEventArgs e)
+        private static void OnPreviewMouseRightButtonDownThunk(object sender, MouseEventArgs e)
         {
             Invariant.Assert(!e.Handled, ErrorMessages.Default.EventHasAlreadyBeenHandled);
 
             (sender as UIElement)?.OnPreviewMouseRightButtonDown(e);
         }
 
-        private static void OnMouseRightButtonDownThunk(object sender, MouseButtonEventArgs e)
+        private static void OnMouseRightButtonDownThunk(object sender, MouseEventArgs e)
         {
             Invariant.Assert(!e.Handled, ErrorMessages.Default.EventHasAlreadyBeenHandled);
 
             (sender as UIElement)?.OnMouseRightButtonDown(e);
         }
 
-        private static void OnPreviewMouseRightButtonUpThunk(object sender, MouseButtonEventArgs e)
+        private static void OnPreviewMouseRightButtonUpThunk(object sender, MouseEventArgs e)
         {
             Invariant.Assert(!e.Handled, ErrorMessages.Default.EventHasAlreadyBeenHandled);
 
             (sender as UIElement)?.OnPreviewMouseRightButtonUp(e);
         }
 
-        private static void OnMouseRightButtonUpThunk(object sender, MouseButtonEventArgs e)
+        private static void OnMouseRightButtonUpThunk(object sender, MouseEventArgs e)
         {
             Invariant.Assert(!e.Handled, ErrorMessages.Default.EventHasAlreadyBeenHandled);
 
@@ -1232,72 +1232,72 @@ namespace Alternet.UI
             EventManager.RegisterClassHandler(
                 type,
                 Mouse.PreviewMouseDoubleClickEvent,
-                new MouseButtonEventHandler(UIElement.OnPreviewMouseDoubleClickThunk),
+                new MouseEventHandler(UIElement.OnPreviewMouseDoubleClickThunk),
                 true);
             EventManager.RegisterClassHandler(
                 type,
                 Mouse.MouseDoubleClickEvent,
-                new MouseButtonEventHandler(UIElement.OnMouseDoubleClickThunk),
+                new MouseEventHandler(UIElement.OnMouseDoubleClickThunk),
                 true);
             EventManager.RegisterClassHandler(
                 type,
                 Mouse.PreviewMouseDownEvent,
-                new MouseButtonEventHandler(UIElement.OnPreviewMouseDownThunk),
+                new MouseEventHandler(UIElement.OnPreviewMouseDownThunk),
                 true);
             EventManager.RegisterClassHandler(
                 type,
                 Mouse.MouseDownEvent,
-                new MouseButtonEventHandler(UIElement.OnMouseDownThunk),
+                new MouseEventHandler(UIElement.OnMouseDownThunk),
                 true);
             EventManager.RegisterClassHandler(
                 type,
                 Mouse.PreviewMouseUpEvent,
-                new MouseButtonEventHandler(UIElement.OnPreviewMouseUpThunk),
+                new MouseEventHandler(UIElement.OnPreviewMouseUpThunk),
                 true);
             EventManager.RegisterClassHandler(
                 type,
                 Mouse.MouseUpEvent,
-                new MouseButtonEventHandler(UIElement.OnMouseUpThunk),
+                new MouseEventHandler(UIElement.OnMouseUpThunk),
                 true);
             EventManager.RegisterClassHandler(
                 type,
                 UIElement.PreviewMouseLeftButtonDownEvent,
-                new MouseButtonEventHandler(UIElement.OnPreviewMouseLeftButtonDownThunk),
+                new MouseEventHandler(UIElement.OnPreviewMouseLeftButtonDownThunk),
                 false);
             EventManager.RegisterClassHandler(
                 type,
                 UIElement.MouseLeftButtonDownEvent,
-                new MouseButtonEventHandler(UIElement.OnMouseLeftButtonDownThunk),
+                new MouseEventHandler(UIElement.OnMouseLeftButtonDownThunk),
                 false);
             EventManager.RegisterClassHandler(
                 type,
                 UIElement.PreviewMouseLeftButtonUpEvent,
-                new MouseButtonEventHandler(UIElement.OnPreviewMouseLeftButtonUpThunk),
+                new MouseEventHandler(UIElement.OnPreviewMouseLeftButtonUpThunk),
                 false);
             EventManager.RegisterClassHandler(
                 type,
                 UIElement.MouseLeftButtonUpEvent,
-                new MouseButtonEventHandler(UIElement.OnMouseLeftButtonUpThunk),
+                new MouseEventHandler(UIElement.OnMouseLeftButtonUpThunk),
                 false);
             EventManager.RegisterClassHandler(
                 type,
                 UIElement.PreviewMouseRightButtonDownEvent,
-                new MouseButtonEventHandler(UIElement.OnPreviewMouseRightButtonDownThunk),
+                new MouseEventHandler(UIElement.OnPreviewMouseRightButtonDownThunk),
                 false);
             EventManager.RegisterClassHandler(
                 type,
                 UIElement.MouseRightButtonDownEvent,
-                new MouseButtonEventHandler(UIElement.OnMouseRightButtonDownThunk),
+                new MouseEventHandler(UIElement.OnMouseRightButtonDownThunk),
                 false);
             EventManager.RegisterClassHandler(
                 type,
                 UIElement.PreviewMouseRightButtonUpEvent,
-                new MouseButtonEventHandler(UIElement.OnPreviewMouseRightButtonUpThunk),
+                new MouseEventHandler(UIElement.OnPreviewMouseRightButtonUpThunk),
                 false);
             EventManager.RegisterClassHandler(
                 type,
                 UIElement.MouseRightButtonUpEvent,
-                new MouseButtonEventHandler(UIElement.OnMouseRightButtonUpThunk),
+                new MouseEventHandler(UIElement.OnMouseRightButtonUpThunk),
                 false);
             EventManager.RegisterClassHandler(
                 type,
@@ -1486,7 +1486,7 @@ namespace Alternet.UI
             uie.RaiseDependencyPropertyChanged(FocusableChangedKey, e);
         }
 
-        private static void OnPreviewMouseDownThunk(object sender, MouseButtonEventArgs e)
+        private static void OnPreviewMouseDownThunk(object sender, MouseEventArgs e)
         {
             if (!e.Handled)
                 (sender as UIElement)?.OnPreviewMouseDown(e);
@@ -1495,7 +1495,7 @@ namespace Alternet.UI
             UIElement.CrackMouseButtonEventAndReRaiseEvent((DependencyObject)sender, e);
         }
 
-        private static void OnMouseDownThunk(object sender, MouseButtonEventArgs e)
+        private static void OnMouseDownThunk(object sender, MouseEventArgs e)
         {
             // if (!e.Handled)
             // {
@@ -1508,19 +1508,19 @@ namespace Alternet.UI
             UIElement.CrackMouseButtonEventAndReRaiseEvent((DependencyObject)sender, e);
         }
 
-        private static void OnPreviewMouseDoubleClickThunk(object sender, MouseButtonEventArgs e)
+        private static void OnPreviewMouseDoubleClickThunk(object sender, MouseEventArgs e)
         {
             if (!e.Handled)
                 (sender as UIElement)?.OnPreviewMouseDoubleClick(e);
         }
 
-        private static void OnMouseDoubleClickThunk(object sender, MouseButtonEventArgs e)
+        private static void OnMouseDoubleClickThunk(object sender, MouseEventArgs e)
         {
             if (!e.Handled)
                 (sender as UIElement)?.OnMouseDoubleClick(e);
         }
 
-        private static void OnPreviewMouseUpThunk(object sender, MouseButtonEventArgs e)
+        private static void OnPreviewMouseUpThunk(object sender, MouseEventArgs e)
         {
             if (!e.Handled)
                 (sender as UIElement)?.OnPreviewMouseUp(e);
@@ -1529,7 +1529,7 @@ namespace Alternet.UI
             UIElement.CrackMouseButtonEventAndReRaiseEvent((DependencyObject)sender, e);
         }
 
-        private static void OnMouseUpThunk(object sender, MouseButtonEventArgs e)
+        private static void OnMouseUpThunk(object sender, MouseEventArgs e)
         {
             if (!e.Handled)
                 (sender as UIElement)?.OnMouseUp(e);
@@ -1538,14 +1538,14 @@ namespace Alternet.UI
             UIElement.CrackMouseButtonEventAndReRaiseEvent((DependencyObject)sender, e);
         }
 
-        private static void OnPreviewMouseLeftButtonDownThunk(object sender, MouseButtonEventArgs e)
+        private static void OnPreviewMouseLeftButtonDownThunk(object sender, MouseEventArgs e)
         {
             Invariant.Assert(!e.Handled, ErrorMessages.Default.EventHasAlreadyBeenHandled);
 
             (sender as UIElement)?.OnPreviewMouseLeftButtonDown(e);
         }
 
-        private static void OnMouseLeftButtonDownThunk(object sender, MouseButtonEventArgs e)
+        private static void OnMouseLeftButtonDownThunk(object sender, MouseEventArgs e)
         {
             Invariant.Assert(!e.Handled, ErrorMessages.Default.EventHasAlreadyBeenHandled);
 

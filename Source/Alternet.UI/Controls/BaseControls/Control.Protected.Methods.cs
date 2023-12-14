@@ -125,7 +125,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
+        protected override void OnMouseLeftButtonDown(MouseEventArgs e)
         {
             base.OnMouseLeftButtonDown(e);
             IsMouseLeftButtonDown = true;
@@ -134,7 +134,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        protected override void OnMouseLeftButtonUp(MouseButtonEventArgs e)
+        protected override void OnMouseLeftButtonUp(MouseEventArgs e)
         {
             base.OnMouseLeftButtonUp(e);
             IsMouseLeftButtonDown = false;
@@ -327,7 +327,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        protected override void OnMouseDown(MouseButtonEventArgs e)
+        protected override void OnMouseDown(MouseEventArgs e)
         {
             base.OnMouseDown(e);
             if (e.LeftButton == MouseButtonState.Pressed && e.Source == this)
@@ -351,7 +351,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        protected override void OnMouseUp(MouseButtonEventArgs e)
+        protected override void OnMouseUp(MouseEventArgs e)
         {
             base.OnMouseUp(e);
             /*if (e.LeftButton == MouseButtonState.Released && e.Source == this)*/

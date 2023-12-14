@@ -28,7 +28,7 @@ namespace PaintSample
             return control;
         }
 
-        protected override void OnMouseDown(MouseButtonEventArgs e)
+        protected override void OnMouseDown(MouseEventArgs e)
         {
             if (e.ChangedButton != MouseButton.Left)
                 return;
@@ -66,7 +66,7 @@ namespace PaintSample
                 Cancel();
         }
 
-        protected override void OnMouseUp(MouseButtonEventArgs e)
+        protected override void OnMouseUp(MouseEventArgs e)
         {
             if (e.ChangedButton != MouseButton.Left)
                 return;

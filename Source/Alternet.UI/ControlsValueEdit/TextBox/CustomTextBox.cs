@@ -447,7 +447,7 @@ namespace Alternet.UI
 
             picture.MouseLeftButtonUp += Picture_MouseLeftButtonUp;
 
-            static void Picture_MouseLeftButtonUp(object? sender, MouseButtonEventArgs e)
+            static void Picture_MouseLeftButtonUp(object? sender, MouseEventArgs e)
             {
                 if (sender is not PictureBox pictureBox)
                     return;

@@ -21,8 +21,10 @@ namespace PaintSample
         {
             var stream = GetType().Assembly.GetManifestResourceStream(
                 "PaintSample.Resources.ToolIcons." + Tool.GetType().Name.Replace("Tool", "") + ".png");
+#pragma warning disable
             if (stream == null)
                 throw new InvalidOperationException();
+#pragma warning restore
 
             return new Bitmap(stream);
         }
@@ -67,13 +69,13 @@ namespace PaintSample
             return new Size(30, 30);
         }
 
-        protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
+        protected override void OnMouseLeftButtonDown(MouseEventArgs e)
         {
             CaptureMouse();
             IsPressed = true;
         }
 
-        protected override void OnMouseLeftButtonUp(MouseButtonEventArgs e)
+        protected override void OnMouseLeftButtonUp(MouseEventArgs e)
         {
             ReleaseMouseCapture();
             IsPressed = false;

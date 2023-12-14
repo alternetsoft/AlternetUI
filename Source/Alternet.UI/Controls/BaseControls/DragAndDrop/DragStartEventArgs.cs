@@ -13,7 +13,7 @@ namespace Alternet.UI
     /// </summary>
     public class DragStartEventArgs : CancelEventArgs
     {
-        private readonly MouseButtonEventArgs mouseDownArgs;
+        private readonly MouseEventArgs mouseDownArgs;
         private readonly MouseEventArgs mouseMoveArgs;
         private readonly Point mouseClientLocation;
         private readonly Point mouseDownLocation;
@@ -30,7 +30,7 @@ namespace Alternet.UI
         internal DragStartEventArgs(
             Point mouseClientLocation,
             Point mouseDownLocation,
-            MouseButtonEventArgs mouseDownArgs,
+            MouseEventArgs mouseDownArgs,
             MouseEventArgs mouseMoveArgs)
         {
             this.mouseDownArgs = mouseDownArgs;

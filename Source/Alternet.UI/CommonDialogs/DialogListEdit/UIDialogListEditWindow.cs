@@ -510,12 +510,12 @@ namespace Alternet.UI
                 Application.DebugLog("Click");
             }
 
-            internal void TreeViewPlus_MouseUp(object sender, MouseButtonEventArgs e)
+            internal void TreeViewPlus_MouseUp(object sender, MouseEventArgs e)
             {
                 Application.DebugLog("MouseUp");
             }
 
-            internal void TreeViewPlus_MouseDown(object sender, MouseButtonEventArgs e)
+            internal void TreeViewPlus_MouseDown(object sender, MouseEventArgs e)
             {
                 Application.DebugLog("MouseDown");
             }
@@ -532,12 +532,12 @@ namespace Alternet.UI
                     $"DragOver: {e.MouseClientLocation}, {e.Effect}", "DragOver");
             }
 
-            internal void TreeViewPlus_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+            internal void TreeViewPlus_MouseLeftButtonUp(object sender, MouseEventArgs e)
             {
                 Application.DebugLog("MouseLeftButtonUp");
             }
 
-            internal void TreeViewPlus_PreviewMouseUp(object sender, MouseButtonEventArgs e)
+            internal void TreeViewPlus_PreviewMouseUp(object sender, MouseEventArgs e)
             {
                 Application.DebugLog("PreviewMouseUp");
             }

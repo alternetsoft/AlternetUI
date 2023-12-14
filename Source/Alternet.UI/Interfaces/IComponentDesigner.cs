@@ -19,7 +19,7 @@ namespace Alternet.UI
         /// <summary>
         /// Occurs when the left mouse button was pressed on the control
         /// </summary>
-        event EventHandler<MouseButtonEventArgs>? MouseLeftButtonDown;
+        event EventHandler<MouseEventArgs>? MouseLeftButtonDown;
 
         /// <summary>
         /// Occurs when the control receives focus.
@@ -78,6 +78,6 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="control">Affected control.</param>
         /// <param name="e">Event arguments.</param>
-        void RaiseMouseLeftButtonDown(Control control, MouseButtonEventArgs e);
+        void RaiseMouseLeftButtonDown(Control control, MouseEventArgs e);
     }
 }

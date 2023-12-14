@@ -35,7 +35,7 @@ namespace Alternet.UI
         private bool enabled = true;
         private int layoutSuspendCount;
         private IFlagsAndAttributes? flagsAndAttributes;
-        private MouseButtonEventArgs? dragEventArgs;
+        private MouseEventArgs? dragEventArgs;
         private Point dragEventMousePos;
         private IComponentDesigner? designer;
         private Color? backgroundColor;

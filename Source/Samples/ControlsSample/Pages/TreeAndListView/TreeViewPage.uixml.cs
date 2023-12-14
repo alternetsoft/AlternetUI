@@ -41,17 +41,17 @@ namespace ControlsSample
             }
         }
 
-        private void TreeView_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        private void TreeView_MouseLeftButtonUp(object sender, MouseEventArgs e)
         {
             /*site?.LogEvent($"TreeView: MouseLeftButtonUp");*/
         }
 
-        private void TreeView_PreviewMouseUp(object sender, MouseButtonEventArgs e)
+        private void TreeView_PreviewMouseUp(object sender, MouseEventArgs e)
         {
             /*site?.LogEvent($"TreeView: PreviewMouseUp");*/
         }
 
-        private void TreeView_MouseUp(object sender, MouseButtonEventArgs e)
+        private void TreeView_MouseUp(object sender, MouseEventArgs e)
         {
             /*site?.LogEvent($"TreeView: MouseUp");*/
         }
@@ -276,8 +276,7 @@ namespace ControlsSample
             treeView.SelectAndShowItem(treeView.LastItem);
         }
 
-        private void TreeView_MouseLeftButtonDown(
-            object? sender, MouseButtonEventArgs e)
+        private void TreeView_MouseLeftButtonDown(object? sender, MouseEventArgs e)
         {
             var result = treeView.HitTest(e.GetPosition(treeView));
             var s = result.Item?.Text ?? "<none>";

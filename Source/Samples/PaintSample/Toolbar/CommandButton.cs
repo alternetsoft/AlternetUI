@@ -49,14 +49,14 @@ namespace PaintSample
             return new Size(30, 30);
         }
 
-        protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
+        protected override void OnMouseLeftButtonDown(MouseEventArgs e)
         {
             CaptureMouse();
             if (Enabled)
                 IsPressed = true;
         }
 
-        protected override void OnMouseLeftButtonUp(MouseButtonEventArgs e)
+        protected override void OnMouseLeftButtonUp(MouseEventArgs e)
         {
             ReleaseMouseCapture();
             IsPressed = false;

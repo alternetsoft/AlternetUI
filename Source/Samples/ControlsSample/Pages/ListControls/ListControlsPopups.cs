@@ -94,14 +94,14 @@ namespace ControlsSample
             Application.Log($"Popup: {eventName}. Selected Item: {selectedItem}");
         }
 
-        internal void LogPopupListBoxMouseEvent(string eventName, MouseButtonEventArgs e)
+        internal void LogPopupListBoxMouseEvent(string eventName, MouseEventArgs e)
         {
             var itemIndex = popupListBox.MainControl.HitTest(e.GetPosition(popupListBox.MainControl));
             var selectedItem = popupListBox.MainControl.Items[itemIndex];
             Application.Log($"Popup: {eventName}. Item: {selectedItem}");
         }
 
-        private void PopupListBox_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        private void PopupListBox_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             if(logMouseEvents)
                 LogPopupListBoxEvent("DoubleClick");
@@ -119,13 +119,13 @@ namespace ControlsSample
         {
         }
 
-        private void PopupListBox_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        private void PopupListBox_MouseLeftButtonUp(object sender, MouseEventArgs e)
         {
             if (logMouseEvents)
                 LogPopupListBoxMouseEvent("MouseLeftButtonUp", e);
         }
 
-        private void PopupListBox_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void PopupListBox_MouseLeftButtonDown(object sender, MouseEventArgs e)
         {
             if (logMouseEvents)
                 LogPopupListBoxMouseEvent("MouseLeftButtonDown", e);

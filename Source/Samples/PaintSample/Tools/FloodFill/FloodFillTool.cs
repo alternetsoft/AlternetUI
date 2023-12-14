@@ -11,7 +11,7 @@ namespace PaintSample
         {
         }
 
-        protected override void OnMouseDown(MouseButtonEventArgs e)
+        protected override void OnMouseDown(MouseEventArgs e)
         {
             if (e.ChangedButton != MouseButton.Left)
                 return;

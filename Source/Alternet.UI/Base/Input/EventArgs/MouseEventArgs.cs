@@ -30,6 +30,27 @@ namespace Alternet.UI
         /// <param name="timestamp">
         ///     The time when the input occurred.
         /// </param>
+        /// <param name="button">
+        ///     The mouse button whose state is being described.
+        /// </param>
+        public MouseEventArgs(MouseDevice mouse, long timestamp, MouseButton button)
+            : base(mouse, timestamp)
+        {
+            MouseButtonUtilities.Validate(button);
+
+            ChangedButton = button;
+            ClickCount = 1;
+        }
+
+        /// <summary>
+        ///     Initializes a new instance of the MouseEventArgs class.
+        /// </summary>
+        /// <param name="mouse">
+        ///     The logical Mouse device associated with this event.
+        /// </param>
+        /// <param name="timestamp">
+        ///     The time when the input occurred.
+        /// </param>
         public MouseEventArgs(MouseDevice mouse, long timestamp)
             : base(mouse, timestamp)
         {
@@ -37,6 +58,60 @@ namespace Alternet.UI
             {
                 throw new System.ArgumentNullException("mouse");
             }
+        }
+
+        /// <summary>
+        ///     Read-only access to the button being described.
+        /// </summary>
+        public MouseButton ChangedButton
+        {
+            get;
+            internal set;
+        }
+
+        /// <summary>
+        ///     Read-only access to the button state.
+        /// </summary>
+        public MouseButtonState ButtonState
+        {
+            get
+            {
+                MouseButtonState state = MouseButtonState.Released;
+
+                switch (ChangedButton)
+                {
+                    case MouseButton.Left:
+                        state = this.MouseDevice.LeftButton;
+                        break;
+
+                    case MouseButton.Right:
+                        state = this.MouseDevice.RightButton;
+                        break;
+
+                    case MouseButton.Middle:
+                        state = this.MouseDevice.MiddleButton;
+                        break;
+
+                    case MouseButton.XButton1:
+                        state = this.MouseDevice.XButton1;
+                        break;
+
+                    case MouseButton.XButton2:
+                        state = this.MouseDevice.XButton2;
+                        break;
+                }
+
+                return state;
+            }
+        }
+
+        /// <summary>
+        ///     Read access to the button click count.
+        /// </summary>
+        public int ClickCount
+        {
+            get;
+            internal set;
         }
 
         /// <summary>

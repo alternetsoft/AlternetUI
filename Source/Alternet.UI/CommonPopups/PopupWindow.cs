@@ -246,7 +246,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="sender">Event object.</param>
         /// <param name="e">Event arguments.</param>
-        protected virtual void OnMainControlMouseDoubleClick(object? sender, MouseButtonEventArgs e)
+        protected virtual void OnMainControlMouseDoubleClick(object? sender, MouseEventArgs e)
         {
             if (HideOnDoubleClick && e.ChangedButton == MouseButton.Left)
             {
@@ -293,7 +293,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="sender">Event object.</param>
         /// <param name="e">Event arguments.</param>
-        protected virtual void OnMainControlMouseLeftButtonUp(object? sender, MouseButtonEventArgs e)
+        protected virtual void OnMainControlMouseLeftButtonUp(object? sender, MouseEventArgs e)
         {
             if (HideOnClick)
             {

@@ -189,7 +189,7 @@ namespace Alternet.UI
                 Log(e.Message);
         }
 
-        private void Control_ShowMenu(object? sender, MouseButtonEventArgs e)
+        private void Control_ShowMenu(object? sender, MouseEventArgs e)
         {
             ShowPopupMenu(ContextMenu);
         }

@@ -14,7 +14,7 @@ namespace Alternet.UI
         /// <summary>
         /// Occurs when the left mouse button was pressed on the control
         /// </summary>
-        public event EventHandler<MouseButtonEventArgs>? MouseLeftButtonDown;
+        public event EventHandler<MouseEventArgs>? MouseLeftButtonDown;
 
         /// <summary>
         /// Occurs when the property value changes.
@@ -98,7 +98,7 @@ namespace Alternet.UI
         }
 
         /// <see cref="IComponentDesigner.RaiseMouseLeftButtonDown"/>
-        public void RaiseMouseLeftButtonDown(Control control, MouseButtonEventArgs e)
+        public void RaiseMouseLeftButtonDown(Control control, MouseEventArgs e)
         {
             MouseLeftButtonDown?.Invoke(control, e);
         }

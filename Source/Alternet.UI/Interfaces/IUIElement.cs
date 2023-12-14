@@ -10,9 +10,9 @@ namespace Alternet.UI
 
         event TextInputEventHandler TextInput;
 
-        event MouseButtonEventHandler PreviewMouseDoubleClick;
+        event MouseEventHandler PreviewMouseDoubleClick;
 
-        event MouseButtonEventHandler MouseDoubleClick;
+        event MouseEventHandler MouseDoubleClick;
 
         event EventHandler? LayoutUpdated;
 
@@ -80,37 +80,37 @@ namespace Alternet.UI
 
         void OnKeyUp(KeyEventArgs e);
 
-        void OnPreviewMouseDown(MouseButtonEventArgs e);
+        void OnPreviewMouseDown(MouseEventArgs e);
 
-        void OnMouseDown(MouseButtonEventArgs e);
+        void OnMouseDown(MouseEventArgs e);
 
-        void OnPreviewMouseDoubleClick(MouseButtonEventArgs e);
+        void OnPreviewMouseDoubleClick(MouseEventArgs e);
 
-        void OnMouseRightButtonDown(MouseButtonEventArgs e);
+        void OnMouseRightButtonDown(MouseEventArgs e);
 
-        void OnPreviewMouseRightButtonUp(MouseButtonEventArgs e);
+        void OnPreviewMouseRightButtonUp(MouseEventArgs e);
 
-        void OnMouseRightButtonUp(MouseButtonEventArgs e);
+        void OnMouseRightButtonUp(MouseEventArgs e);
 
         void OnPreviewMouseWheel(MouseEventArgs e);
 
         void OnMouseWheel(MouseEventArgs e);
 
-        void OnMouseDoubleClick(MouseButtonEventArgs e);
+        void OnMouseDoubleClick(MouseEventArgs e);
 
-        void OnPreviewMouseUp(MouseButtonEventArgs e);
+        void OnPreviewMouseUp(MouseEventArgs e);
 
-        void OnMouseUp(MouseButtonEventArgs e);
+        void OnMouseUp(MouseEventArgs e);
 
-        void OnPreviewMouseLeftButtonDown(MouseButtonEventArgs e);
+        void OnPreviewMouseLeftButtonDown(MouseEventArgs e);
 
-        void OnMouseLeftButtonDown(MouseButtonEventArgs e);
+        void OnMouseLeftButtonDown(MouseEventArgs e);
 
-        void OnPreviewMouseLeftButtonUp(MouseButtonEventArgs e);
+        void OnPreviewMouseLeftButtonUp(MouseEventArgs e);
 
-        void OnMouseLeftButtonUp(MouseButtonEventArgs e);
+        void OnMouseLeftButtonUp(MouseEventArgs e);
 
-        void OnPreviewMouseRightButtonDown(MouseButtonEventArgs e);
+        void OnPreviewMouseRightButtonDown(MouseEventArgs e);
 
         void OnMouseMove(MouseEventArgs e);
 

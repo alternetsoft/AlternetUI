@@ -174,7 +174,7 @@ namespace PropertyGridSample
             panel.AddActions(type);
         }
 
-        private static void Designer_MouseLeftButtonDown(object? sender, MouseButtonEventArgs e)
+        private static void Designer_MouseLeftButtonDown(object? sender, MouseEventArgs e)
         {
             /*if(sender is Control control)
             {

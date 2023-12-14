@@ -328,7 +328,7 @@ namespace MenuSample
             optionsMenuItem.Role = MenuItemRoles.Preferences;
         }
 
-        private void ContextMenuBorder_MouseRightButtonUp(object? sender, MouseButtonEventArgs e)
+        private void ContextMenuBorder_MouseRightButtonUp(object? sender, MouseEventArgs e)
         {
             new ExampleContextMenu().Show(contextMenuBorder, e.GetPosition(contextMenuBorder));
         }

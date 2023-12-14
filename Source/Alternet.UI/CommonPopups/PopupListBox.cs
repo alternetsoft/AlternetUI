@@ -94,7 +94,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        protected override void OnMainControlMouseDoubleClick(object? sender, MouseButtonEventArgs e)
+        protected override void OnMainControlMouseDoubleClick(object? sender, MouseEventArgs e)
         {
             UpdateResultIndex(e);
             if(resultIndex is not null)
@@ -102,7 +102,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        protected override void OnMainControlMouseLeftButtonUp(object? sender, MouseButtonEventArgs e)
+        protected override void OnMainControlMouseLeftButtonUp(object? sender, MouseEventArgs e)
         {
             UpdateResultIndex(e);
             if (resultIndex is not null)
@@ -121,7 +121,7 @@ namespace Alternet.UI
             base.UnbindEvents(control);
         }
 
-        private void UpdateResultIndex(MouseButtonEventArgs e)
+        private void UpdateResultIndex(MouseEventArgs e)
         {
             resultIndex = MainControl.HitTest(e.GetPosition(MainControl));
         }

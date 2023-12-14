@@ -118,12 +118,12 @@ namespace CustomControlsSample
                 Control.Refresh();
             }
 
-            private void Control_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+            private void Control_MouseLeftButtonDown(object sender, MouseEventArgs e)
             {
                 Control.RaiseClick(EventArgs.Empty);
             }
 
-            private void Control_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+            private void Control_MouseLeftButtonUp(object sender, MouseEventArgs e)
             {
             }
 

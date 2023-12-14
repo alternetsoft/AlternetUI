@@ -6,8 +6,8 @@ namespace PaintSample
 {
     public partial class ColorSelector : VerticalStackPanel, ISelectedColors
     {
-        private static readonly Color[] SwatchColors = new[]
-        {
+        private static readonly Color[] SwatchColors =
+        [
             Color.Black,
             Color.Blue,
             Color.Green,
@@ -18,10 +18,10 @@ namespace PaintSample
             Color.DarkGray,
             Color.LightGray,
             Color.White,
-        };
+        ];
 
-        private List<ColorSwatch> swatches = new();
-        private SelectedColorDisplay selectedColorDisplay = new ();
+        private readonly List<ColorSwatch> swatches = [];
+        private readonly SelectedColorDisplay selectedColorDisplay = new();
 
         public ColorSelector()
         {
@@ -36,11 +36,13 @@ namespace PaintSample
 
             CreateSwatches();
 
-            LogListBox listBox = new();
-            listBox.HasBorder = false;
+            LogListBox listBox = new()
+            {
+                HasBorder = false,
+                SuggestedSize = (200, 150),
+                Parent = bottomPanel,
+            };
             listBox.BindApplicationLog();
-            listBox.SuggestedSize = (200, 150);
-            listBox.Parent = bottomPanel;
 
             if (selectedColorDisplay != null)
                 selectedColorDisplay.SelectedColor = Color.Blue;
@@ -74,7 +76,7 @@ namespace PaintSample
             }
         }
 
-        private void Swatch_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void Swatch_MouseLeftButtonDown(object sender, MouseEventArgs e)
         {
             selectedColorDisplay.SelectedColor = ((ColorSwatch)sender!).SwatchColor;
         }

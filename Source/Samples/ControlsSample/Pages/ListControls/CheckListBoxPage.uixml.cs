@@ -36,7 +36,7 @@ namespace ControlsSample
 
         private void CheckListBox_MouseLeftButtonDown(
             object? sender, 
-            MouseButtonEventArgs e)
+            MouseEventArgs e)
         {
             var result = checkListBox.HitTest(e.GetPosition(checkListBox));
             var item = (result == null ? 
@@ -136,7 +136,7 @@ namespace ControlsSample
             object? sender, 
             EventArgs e)
         {
-            checkListBox.CheckItems(new int[] { 2 });
+            checkListBox.CheckItems([2]);
         }
 
         private void UncheckAllButton_Click(object? sender, EventArgs e)
@@ -148,7 +148,7 @@ namespace ControlsSample
             object? sender, 
             EventArgs e)
         {
-            checkListBox.CheckItems(new int[] { 2, 4 });
+            checkListBox.CheckItems([2, 4]);
         }
     }
 }

@@ -8,8 +8,8 @@ namespace DrawingSample.RandomArt
     internal class RandomArtController : IDisposable
     {
         private readonly Control canvas;
-        private Model model;
-        private ToolSettings toolSettings = new ToolSettings();
+        private readonly Model model;
+        private readonly ToolSettings toolSettings = new();
 
         public RandomArtController(Model model, Control canvas, PathSegmentType pathSegmentType)
         {
@@ -36,7 +36,7 @@ namespace DrawingSample.RandomArt
             canvas.MouseLeftButtonUp -= Canvas_MouseLeftButtonUp;
         }
 
-        private void Canvas_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void Canvas_MouseLeftButtonDown(object sender, MouseEventArgs e)
         {
             canvas.CaptureMouse();
             model.Paths.Add(new Path());
@@ -56,7 +56,7 @@ namespace DrawingSample.RandomArt
             canvas.Invalidate();
         }
 
-        private void Canvas_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        private void Canvas_MouseLeftButtonUp(object sender, MouseEventArgs e)
         {
             canvas.ReleaseMouseCapture();
             IsDrawing = false;

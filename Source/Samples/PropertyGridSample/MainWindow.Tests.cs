@@ -54,7 +54,7 @@ namespace PropertyGridSample
             DoDragDrop(GetDataObject(), DragDropEffects.Copy | DragDropEffects.Move);
         }
 
-        private void ControlPanel_MouseDown(object sender, MouseButtonEventArgs e)
+        private void ControlPanel_MouseDown(object sender, MouseEventArgs e)
         {
             if (e.Source == controlPanel)
                 UpdatePropertyGrid(controlPanel);
