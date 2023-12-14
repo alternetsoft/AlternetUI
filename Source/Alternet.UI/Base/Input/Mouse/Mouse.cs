@@ -273,14 +273,15 @@ namespace Alternet.UI
         /// <summary>
         ///     PreviewMouseWheel
         /// </summary>
-        public static readonly RoutedEvent PreviewMouseWheelEvent = EventManager.RegisterRoutedEvent("PreviewMouseWheel", RoutingStrategy.Tunnel, typeof(MouseWheelEventHandler), typeof(Mouse));
+        public static readonly RoutedEvent PreviewMouseWheelEvent
+            = EventManager.RegisterRoutedEvent("PreviewMouseWheel", RoutingStrategy.Tunnel, typeof(MouseEventHandler), typeof(Mouse));
 
         /// <summary>
         ///     Adds a handler for the PreviewMouseWheel attached event
         /// </summary>
         /// <param name="element">UIElement or ContentElement that listens to this event</param>
         /// <param name="handler">Event Handler to be added</param>
-        public static void AddPreviewMouseWheelHandler(DependencyObject element, MouseWheelEventHandler handler)
+        public static void AddPreviewMouseWheelHandler(DependencyObject element, MouseEventHandler handler)
         {
             UIElement.AddHandler(element, PreviewMouseWheelEvent, handler);
         }
@@ -290,7 +291,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="element">UIElement or ContentElement that listens to this event</param>
         /// <param name="handler">Event Handler to be removed</param>
-        public static void RemovePreviewMouseWheelHandler(DependencyObject element, MouseWheelEventHandler handler)
+        public static void RemovePreviewMouseWheelHandler(DependencyObject element, MouseEventHandler handler)
         {
             UIElement.RemoveHandler(element, PreviewMouseWheelEvent, handler);
         }
@@ -298,14 +299,15 @@ namespace Alternet.UI
         /// <summary>
         ///     MouseWheel
         /// </summary>
-        public static readonly RoutedEvent MouseWheelEvent = EventManager.RegisterRoutedEvent("MouseWheel", RoutingStrategy.Bubble, typeof(MouseWheelEventHandler), typeof(Mouse));
+        public static readonly RoutedEvent MouseWheelEvent
+            = EventManager.RegisterRoutedEvent("MouseWheel", RoutingStrategy.Bubble, typeof(MouseEventHandler), typeof(Mouse));
 
         /// <summary>
         ///     Adds a handler for the MouseWheel attached event
         /// </summary>
         /// <param name="element">UIElement or ContentElement that listens to this event</param>
         /// <param name="handler">Event Handler to be added</param>
-        public static void AddMouseWheelHandler(DependencyObject element, MouseWheelEventHandler handler)
+        public static void AddMouseWheelHandler(DependencyObject element, MouseEventHandler handler)
         {
             UIElement.AddHandler(element, MouseWheelEvent, handler);
         }
@@ -315,7 +317,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="element">UIElement or ContentElement that listens to this event</param>
         /// <param name="handler">Event Handler to be removed</param>
-        public static void RemoveMouseWheelHandler(DependencyObject element, MouseWheelEventHandler handler)
+        public static void RemoveMouseWheelHandler(DependencyObject element, MouseEventHandler handler)
         {
             UIElement.RemoveHandler(element, MouseWheelEvent, handler);
         }

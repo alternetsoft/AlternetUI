@@ -151,7 +151,7 @@ namespace InputSample
 
         private void LogMouseWheel(
             ListBox lb,
-            MouseWheelEventArgs e,
+            MouseEventArgs e,
             string objectName,
             string eventName,
             IInputElement element) =>
@@ -237,9 +237,9 @@ namespace InputSample
         private void Window_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e) =>
             LogMouseButton(lbWindow, e, "Window", "PreviewLeftBtnDown", (IInputElement)sender);
 
-        private void Window_MouseWheel(object sender, MouseWheelEventArgs e) =>
+        private void Window_MouseWheel(object sender, MouseEventArgs e) =>
             LogMouseWheel(lbWindow, e, "Window", "Wheel", (IInputElement)sender);
-        private void Window_PreviewMouseWheel(object sender, MouseWheelEventArgs e) =>
+        private void Window_PreviewMouseWheel(object sender, MouseEventArgs e) =>
             LogMouseWheel(lbWindow, e, "Window", "PreviewWheel", (IInputElement)sender);
     }
 }

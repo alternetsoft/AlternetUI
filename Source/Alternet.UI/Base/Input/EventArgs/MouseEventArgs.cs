@@ -30,35 +30,14 @@ namespace Alternet.UI
         /// <param name="timestamp">
         ///     The time when the input occurred.
         /// </param>
-        public MouseEventArgs(MouseDevice mouse, long timestamp) : base(mouse, timestamp)
+        public MouseEventArgs(MouseDevice mouse, long timestamp)
+            : base(mouse, timestamp)
         {
             if( mouse == null )
             {
                 throw new System.ArgumentNullException("mouse");
             }
-            //_stylusDevice = null;
         }
-
-        ///// <summary>
-        /////     Initializes a new instance of the MouseEventArgs class.
-        ///// </summary>
-        ///// <param name="mouse">
-        /////     The logical Mouse device associated with this event.
-        ///// </param>
-        ///// <param name="timestamp">
-        /////     The time when the input occurred.
-        ///// </param>
-        ///// <param name="stylusDevice">
-        /////     The stylus device that was involved with this event.
-        ///// </param>
-        //public MouseEventArgs(MouseDevice mouse, int timestamp, StylusDevice stylusDevice) : base(mouse, timestamp)
-        //{
-        //    if( mouse == null )
-        //    {
-        //        throw new System.ArgumentNullException("mouse");
-        //    }
-        //    _stylusDevice = stylusDevice;
-        //}
 
         /// <summary>
         ///     Read-only access to the mouse device associated with this
@@ -70,6 +49,20 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets a signed count of the number of detents the mouse wheel has rotated,
+        /// multiplied by the WHEEL_DELTA constant. A detent is one notch of the
+        /// mouse wheel.</summary>
+        /// <returns>
+        /// A signed count of the number of detents the mouse wheel has rotated,
+        /// multiplied by the WHEEL_DELTA constant.
+        /// </returns>
+        public int Delta
+        {
+            get;
+            internal set;
+        }
+
+        /// <summary>
         ///     Calculates the position of the mouse relative to
         ///     a particular element.
         /// </summary>
@@ -77,14 +70,6 @@ namespace Alternet.UI
         {
             return this.MouseDevice.GetPosition(relativeTo);
         }
-
-        ///// <summary>
-        /////     Read-only access to the stylus Mouse associated with this event.
-        ///// </summary>
-        //public StylusDevice StylusDevice
-        //{
-        //    get {return _stylusDevice;}
-        //}
 
         /// <summary>
         ///     The state of the left button.
@@ -156,7 +141,5 @@ namespace Alternet.UI
             MouseEventHandler handler = (MouseEventHandler) genericHandler;
             handler(genericTarget, this);
         }
-
-        //private StylusDevice _stylusDevice;
     }
 }

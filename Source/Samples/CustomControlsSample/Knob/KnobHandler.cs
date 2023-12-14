@@ -199,7 +199,7 @@ namespace CustomControlsSample
             dragging = false;
         }
 
-        private void Control_MouseWheel(object sender, MouseWheelEventArgs e)
+        private void Control_MouseWheel(object sender, MouseEventArgs e)
         {
             int pos;
             int m;

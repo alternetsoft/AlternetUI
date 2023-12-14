@@ -660,11 +660,13 @@ namespace Alternet.UI
 
         internal void ReportMouseWheel(Control targetControl, long timestamp, int delta, out bool handled)
         {
+            var args = new MouseEventArgs(Mouse.PrimaryDevice, timestamp);
+            args.Delta = delta;
             ReportMouseEvent(
                 targetControl,
                 UIElement.PreviewMouseWheelEvent,
                 UIElement.MouseWheelEvent,
-                new MouseWheelEventArgs(Mouse.PrimaryDevice, timestamp, delta),
+                args,
                 out handled);
         }
 

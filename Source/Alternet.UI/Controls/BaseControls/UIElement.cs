@@ -399,7 +399,7 @@ namespace Alternet.UI
         /// <summary>
         ///     Event reporting a mouse wheel rotation
         /// </summary>
-        public event MouseWheelEventHandler PreviewMouseWheel
+        public event MouseEventHandler PreviewMouseWheel
         {
             add { AddHandler(Mouse.PreviewMouseWheelEvent, value, false); }
             remove { RemoveHandler(Mouse.PreviewMouseWheelEvent, value); }
@@ -408,7 +408,7 @@ namespace Alternet.UI
         /// <summary>
         ///     Event reporting a mouse wheel rotation
         /// </summary>
-        public event MouseWheelEventHandler MouseWheel
+        public event MouseEventHandler MouseWheel
         {
             add { AddHandler(Mouse.MouseWheelEvent, value, false); }
             remove { RemoveHandler(Mouse.MouseWheelEvent, value); }
@@ -951,14 +951,14 @@ namespace Alternet.UI
         /// <summary>
         ///     Virtual method reporting a mouse wheel rotation
         /// </summary>
-        protected virtual void OnPreviewMouseWheel(MouseWheelEventArgs e)
+        protected virtual void OnPreviewMouseWheel(MouseEventArgs e)
         {
         }
 
         /// <summary>
         ///     Virtual method reporting a mouse wheel rotation
         /// </summary>
-        protected virtual void OnMouseWheel(MouseWheelEventArgs e)
+        protected virtual void OnMouseWheel(MouseEventArgs e)
         {
         }
 
@@ -1197,14 +1197,14 @@ namespace Alternet.UI
             (sender as UIElement)?.OnMouseRightButtonUp(e);
         }
 
-        private static void OnPreviewMouseWheelThunk(object sender, MouseWheelEventArgs e)
+        private static void OnPreviewMouseWheelThunk(object sender, MouseEventArgs e)
         {
             Invariant.Assert(!e.Handled, ErrorMessages.Default.EventHasAlreadyBeenHandled);
 
             (sender as UIElement)?.OnPreviewMouseWheel(e);
         }
 
-        private static void OnMouseWheelThunk(object sender, MouseWheelEventArgs e)
+        private static void OnMouseWheelThunk(object sender, MouseEventArgs e)
         {
             Invariant.Assert(!e.Handled, ErrorMessages.Default.EventHasAlreadyBeenHandled);
 
@@ -1312,12 +1312,12 @@ namespace Alternet.UI
             EventManager.RegisterClassHandler(
                 type,
                 Mouse.PreviewMouseWheelEvent,
-                new MouseWheelEventHandler(UIElement.OnPreviewMouseWheelThunk),
+                new MouseEventHandler(UIElement.OnPreviewMouseWheelThunk),
                 false);
             EventManager.RegisterClassHandler(
                 type,
                 Mouse.MouseWheelEvent,
-                new MouseWheelEventHandler(UIElement.OnMouseWheelThunk),
+                new MouseEventHandler(UIElement.OnMouseWheelThunk),
                 false);
 
             // EventManager.RegisterClassHandler(type, Mouse.MouseEnterEvent,

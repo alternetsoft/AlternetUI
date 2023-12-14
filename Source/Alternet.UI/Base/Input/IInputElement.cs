@@ -120,12 +120,12 @@ namespace Alternet.UI
         /// <summary>
         ///     An event reporting a mouse wheel rotation.
         /// </summary>
-        event MouseWheelEventHandler PreviewMouseWheel;
+        event MouseEventHandler PreviewMouseWheel;
 
         /// <summary>
         ///     An event reporting a mouse wheel rotation.
         /// </summary>
-        event MouseWheelEventHandler MouseWheel;
+        event MouseEventHandler MouseWheel;
 
         ///// <summary>
         /////     A property indicating if the mouse is over this element or not.

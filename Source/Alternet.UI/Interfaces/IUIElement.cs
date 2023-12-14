@@ -92,9 +92,9 @@ namespace Alternet.UI
 
         void OnMouseRightButtonUp(MouseButtonEventArgs e);
 
-        void OnPreviewMouseWheel(MouseWheelEventArgs e);
+        void OnPreviewMouseWheel(MouseEventArgs e);
 
-        void OnMouseWheel(MouseWheelEventArgs e);
+        void OnMouseWheel(MouseEventArgs e);
 
         void OnMouseDoubleClick(MouseButtonEventArgs e);
 

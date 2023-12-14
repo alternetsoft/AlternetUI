@@ -19,6 +19,9 @@ namespace Alternet.UI
     /// </summary>
     public class MouseButtonEventArgs : MouseEventArgs
     {
+        private MouseButton _button;
+        private int _count;
+
         /// <summary>
         ///     Initializes a new instance of the MouseButtonEventArgs class.
         /// </summary>
@@ -31,41 +34,14 @@ namespace Alternet.UI
         /// <param name="button">
         ///     The mouse button whose state is being described.
         /// </param>
-        public MouseButtonEventArgs(MouseDevice mouse,
-                                    long timestamp,
-                                    MouseButton button) : base(mouse, timestamp)
+        public MouseButtonEventArgs(MouseDevice mouse, long timestamp, MouseButton button)
+            : base(mouse, timestamp)
         {
             MouseButtonUtilities.Validate(button);
             
             _button = button;
             _count = 1;
         }
-
-        ///// <summary>
-        /////     Initializes a new instance of the MouseButtonEventArgs class.
-        ///// </summary>
-        ///// <param name="mouse">
-        /////     The logical Mouse device associated with this event.
-        ///// </param>
-        ///// <param name="timestamp">
-        /////     The time when the input occurred.
-        ///// </param>
-        ///// <param name="button">
-        /////     The Mouse button whose state is being described.
-        ///// </param>
-        ///// <param name="stylusDevice">
-        /////     The stylus device that was involved with this event.
-        ///// </param>
-        //public MouseButtonEventArgs(MouseDevice mouse,
-        //                            int timestamp,
-        //                            MouseButton button,
-        //                            StylusDevice stylusDevice) : base(mouse, timestamp, stylusDevice)
-        //{
-        //    MouseButtonUtilities.Validate(button);
-            
-        //    _button = button;
-        //    _count = 1;
-        //}
 
         /// <summary>
         ///     Read-only access to the button being described.
@@ -135,8 +111,5 @@ namespace Alternet.UI
             MouseButtonEventHandler handler = (MouseButtonEventHandler) genericHandler;
             handler(genericTarget, this);
         }
-
-        private MouseButton _button;
-        private int _count;
     }
 }
