@@ -13,7 +13,13 @@ namespace WinFormsApp
             this.Controls.Add(listBox);
 
             KeyDown += Form1_KeyDown;
+            listBox.MouseMove += Form1_MouseMove;
             KeyPreview = true;
+        }
+
+        private void Form1_MouseMove(object? sender, MouseEventArgs e)
+        {
+            this.Text = $"{e.X}:{e.Y}";
         }
 
         private void Form1_KeyDown(object? sender, KeyEventArgs e)

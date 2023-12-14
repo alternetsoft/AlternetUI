@@ -70,6 +70,32 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets which mouse button was pressed.
+        /// </summary>
+        /// <returns>One of the <see cref="MouseButtons" /> values.</returns>
+        public MouseButtons Button
+        {
+            get
+            {
+                switch (ChangedButton)
+                {
+                    case MouseButton.Left:
+                        return MouseButtons.Left;
+                    case MouseButton.Middle:
+                        return MouseButtons.Middle;
+                    case MouseButton.Right:
+                        return MouseButtons.Right;
+                    case MouseButton.XButton1:
+                        return MouseButtons.XButton1;
+                    case MouseButton.XButton2:
+                        return MouseButtons.XButton2;
+                    default:
+                        return MouseButtons.None;
+                }
+            }
+        }
+
+        /// <summary>
         ///     Read-only access to the button state.
         /// </summary>
         public MouseButtonState ButtonState
@@ -106,7 +132,15 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        ///     Read access to the button click count.
+        /// Gets the number of times the mouse button was pressed and released.
+        /// </summary>
+        /// <returns>
+        /// An <see cref="int" /> that contains the number of times the mouse button
+        /// was pressed and released.</returns>
+        public int Clicks => ClickCount;
+
+        /// <summary>
+        /// Same as <see cref="Clicks"/>.
         /// </summary>
         public int ClickCount
         {
