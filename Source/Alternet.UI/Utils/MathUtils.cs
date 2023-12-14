@@ -246,7 +246,24 @@ namespace Alternet.UI
             return result;
         }
 
-        internal static double ApplyMinMax(double value, double? min = null, double? max = null)
+        /// <summary>
+        /// Applies minimum and maximum to the value if limitations are not <c>null</c>.
+        /// </summary>
+        /// <param name="value">Value to which min and max limits are applied.</param>
+        /// <param name="min">Minimal value. Optional.</param>
+        /// <param name="max">Maximal value. Optional.</param>
+        /// <returns>Value with applied min and max limits.</returns>
+        public static int ApplyMinMax(int value, int? min = null, int? max = null)
+        {
+            if (min is not null && value < min)
+                value = min.Value;
+            if (max is not null && value > max)
+                value = max.Value;
+            return value;
+        }
+
+        /// <inheritdoc cref="ApplyMinMax(int, int?, int?)"/>
+        public static double ApplyMinMax(double value, double? min = null, double? max = null)
         {
             if (min is not null && value < min)
                 value = min.Value;
