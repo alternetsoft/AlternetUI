@@ -11,22 +11,16 @@ namespace Alternet.UI
     /// </summary>
     public static class Cursors
     {
+        private static Cursor? defaultCursor;
         private static Cursor? noneCursor;
         private static Cursor? arrowCursor;
-        /*private static Cursor? rightArrowCursor;*/
-        /*private static Cursor? bullseyeCursor;*/
         private static Cursor? charCursor;
         private static Cursor? crossCursor;
         private static Cursor? handCursor;
         private static Cursor? iBeamCursor;
         private static Cursor? leftButtonCursor;
-        /*private static Cursor? magnifierCursor;*/
         private static Cursor? middleButtonCursor;
         private static Cursor? noEntryCursor;
-        /*private static Cursor? paintBrushCursor;*/
-        /*private static Cursor? pencilCursor;*/
-        /*private static Cursor? pointLeftCursor;*/
-        /*private static Cursor? pointRightCursor;*/
         private static Cursor? questionArrowCursor;
         private static Cursor? rightButtonCursor;
         private static Cursor? sizeNESWCursor;
@@ -34,9 +28,16 @@ namespace Alternet.UI
         private static Cursor? sizeNWSECursor;
         private static Cursor? sizeWECursor;
         private static Cursor? sizingCursor;
-        /*private static Cursor? sprayCanCursor;*/
         private static Cursor? waitCursor;
         private static Cursor? watchCursor;
+        /*private static Cursor? rightArrowCursor;*/
+        /*private static Cursor? bullseyeCursor;*/
+        /*private static Cursor? magnifierCursor;*/
+        /*private static Cursor? paintBrushCursor;*/
+        /*private static Cursor? pencilCursor;*/
+        /*private static Cursor? pointLeftCursor;*/
+        /*private static Cursor? pointRightCursor;*/
+        /*private static Cursor? sprayCanCursor;*/
         /*private static Cursor? blankCursor;*/
 
         /// <summary>
@@ -52,6 +53,23 @@ namespace Alternet.UI
             set
             {
                 noneCursor = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets the default cursor, which is usually an arrow cursor.
+        /// </summary>
+        /// <returns>The <see cref="Cursor" /> that represents the default cursor.</returns>
+        public static Cursor Default
+        {
+            get
+            {
+                return defaultCursor ??= new(CursorType.Arrow);
+            }
+
+            set
+            {
+                defaultCursor = value;
             }
         }
 
