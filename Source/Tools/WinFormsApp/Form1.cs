@@ -16,6 +16,7 @@ namespace WinFormsApp
             listBox.MouseMove += Form1_MouseMove;
             KeyPreview = true;
             listBox.Items.Add($"DoubleClickTime: {SystemInformation.DoubleClickTime}");
+            listBox.Items.Add($"MouseWheelScrollLines: {SystemInformation.MouseWheelScrollLines}");
         }
 
         private void Form1_MouseMove(object? sender, MouseEventArgs e)
