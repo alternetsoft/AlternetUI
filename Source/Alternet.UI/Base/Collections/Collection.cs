@@ -232,6 +232,108 @@ namespace Alternet.Base.Collections
             ListUtils.SetCount(this, newCount, createItem);
         }
 
+        /// <summary>
+        /// Sets the index of the specified item in the collection.
+        /// </summary>
+        /// <param name="item">The item to search for.</param>
+        /// <param name="newIndex">The new index value of the item.</param>
+        /// <exception cref="ArgumentException">The item is not in the collection.</exception>
+        /// <remarks>
+        /// If <paramref name="newIndex"/> = -1, moves to the end of the collection.
+        /// </remarks>
+        public virtual void SetItemIndex(T item, int newIndex)
+        {
+            if (item == null)
+                throw new ArgumentNullException(nameof(item));
+            int childIndex = GetItemIndex(item);
+            if (childIndex != newIndex)
+            {
+                if (newIndex >= Count || newIndex == -1)
+                    newIndex = Count - 1;
+                MoveItem(item, childIndex, newIndex);
+            }
+        }
+
+        /// <summary>
+        /// Retrieves the index of the specified item within
+        /// the collection, and optionally raises an exception if
+        /// the specified item is not within the collection.
+        /// </summary>
+        /// <param name="item">The item to search for in the collection.</param>
+        /// <param name="throwException">
+        /// <see langword="true" /> to throw an exception if the item specified
+        /// in the <paramref name="item" /> parameter is not a item in
+        /// the collection; otherwise, <see langword="false" />.</param>
+        /// <returns>A zero-based index value that represents the location of the specified
+        /// item within the collection; otherwise -1 if the specified
+        /// item is not found in the collection.</returns>
+        /// <exception cref="ArgumentException">The <paramref name="item" />
+        /// is not in the collection, and the <paramref name="throwException" /> parameter value
+        /// is <see langword="true" />.</exception>
+        public virtual int GetItemIndex(T item, bool throwException = true)
+        {
+            int num = IndexOf(item);
+            if (num == -1 && throwException)
+                throw new ArgumentException("Item is not in the collection.", nameof(item));
+            return num;
+        }
+
+        internal static void Copy(
+            IList<T> source,
+            int sourceIndex,
+            IList<T> dest,
+            int destIndex,
+            int length)
+        {
+            if (sourceIndex < destIndex)
+            {
+                sourceIndex += length;
+                destIndex += length;
+                while (length > 0)
+                {
+                    dest[--destIndex] = source[--sourceIndex];
+                    length--;
+                }
+            }
+            else
+            {
+                while (length > 0)
+                {
+                    dest[destIndex++] = source[sourceIndex++];
+                    length--;
+                }
+            }
+        }
+
+        internal void MoveItem(T element, int fromIndex, int toIndex)
+        {
+            int num = toIndex - fromIndex;
+            if (num == -1 || num == 1)
+            {
+                Items[fromIndex] = Items[toIndex];
+            }
+            else
+            {
+                int num2;
+                int num3;
+                if (num > 0)
+                {
+                    num2 = fromIndex + 1;
+                    num3 = fromIndex;
+                }
+                else
+                {
+                    num2 = toIndex;
+                    num3 = toIndex + 1;
+                    num = -num;
+                }
+
+                Copy(this, num2, this, num3, num);
+            }
+
+            Items[toIndex] = element;
+        }
+
         internal void SafeSetItem(int index, T item)
         {
             if (Items.IsReadOnly)
