@@ -12,21 +12,17 @@ namespace Alternet.UI
     /// </summary>
     public class CardPanelHeaderButton : CustomButton
     {
-        private readonly Button button = new();
+        private readonly GenericLabel button = new();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CardPanelHeaderButton"/> class.
         /// </summary>
         public CardPanelHeaderButton()
         {
+            button.Padding = (4, 2, 4, 2);
             button.Parent = this;
-        }
-
-        /// <inheritdoc/>
-        public override event EventHandler? Click
-        {
-            add => button.Click += value;
-            remove => button.Click -= value;
+            button.MouseDown += Button_MouseDown;
+            button.MouseUp += Button_MouseUp;
         }
 
         /// <inheritdoc/>
@@ -67,7 +63,7 @@ namespace Alternet.UI
 
             set
             {
-                if(AllPlatformDefaults.PlatformCurrent.AllowButtonHasBorder)
+                /*if(AllPlatformDefaults.PlatformCurrent.AllowButtonHasBorder)*/
                     button.HasBorder = value;
             }
         }
@@ -79,8 +75,8 @@ namespace Alternet.UI
 
             set
             {
-                if (!AllPlatformDefaults.PlatformCurrent.AllowButtonForeground)
-                    return;
+                /*if (!AllPlatformDefaults.PlatformCurrent.AllowButtonForeground)
+                    return;*/
                 if (value == ForegroundColor)
                     return;
                 base.ForegroundColor = value;
@@ -95,13 +91,22 @@ namespace Alternet.UI
 
             set
             {
-                if (!AllPlatformDefaults.PlatformCurrent.AllowButtonBackground)
-                    return;
+                /*if (!AllPlatformDefaults.PlatformCurrent.AllowButtonBackground)
+                    return;*/
                 if (value == BackgroundColor)
                     return;
                 base.BackgroundColor = value;
                 button.BackgroundColor = value;
             }
+        }
+
+        private void Button_MouseUp(object sender, MouseEventArgs e)
+        {
+        }
+
+        private void Button_MouseDown(object sender, MouseEventArgs e)
+        {
+            RaiseClick(EventArgs.Empty);
         }
     }
 }
