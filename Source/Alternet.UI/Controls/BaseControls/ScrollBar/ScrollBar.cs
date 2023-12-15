@@ -279,6 +279,8 @@ namespace Alternet.UI
 
             set
             {
+                if (IsVertical == value)
+                    return;
                 NativeControl.IsVertical = value;
                 IsVerticalChanged?.Invoke(this, EventArgs.Empty);
                 UpdateScrollInfo();
