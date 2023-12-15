@@ -24,14 +24,14 @@ namespace Alternet.UI
         /// Gets or sets function that creates default labels for the <see cref="ControlAndLabel"/>
         /// controls.
         /// </summary>
-        public static Func<CustomLabel> CreateDefaultLabel = () => new Label();
+        public static Func<Control> CreateDefaultLabel = () => new Label();
 
         private readonly PictureBox errorPicture = new()
         {
             Margin = new Thickness(DefaultControlLabelDistance, 0, 0, 0),
         };
 
-        private readonly CustomLabel label;
+        private readonly Control label;
         private readonly Control mainControl;
 
         /// <summary>
@@ -109,7 +109,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets attached <see cref="Label"/> control.
         /// </summary>
-        public CustomLabel Label => label;
+        public Control Label => label;
 
         /// <summary>
         /// Gets or sets visibility of the attached <see cref="Label"/> control.
@@ -150,7 +150,7 @@ namespace Alternet.UI
         /// </summary>
         public Control MainControl => mainControl;
 
-        CustomLabel IControlAndLabel.Label => Label;
+        Control IControlAndLabel.Label => Label;
 
         Control IControlAndLabel.MainControl => MainControl;
 
@@ -168,6 +168,6 @@ namespace Alternet.UI
         /// <remarks>
         /// By default <see cref="Label"/> is created.
         /// </remarks>
-        protected virtual CustomLabel CreateLabel() => CreateDefaultLabel();
+        protected virtual Control CreateLabel() => CreateDefaultLabel();
     }
 }

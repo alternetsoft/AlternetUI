@@ -27,7 +27,7 @@ namespace Alternet.UI
     [DefaultProperty("Text")]
     [DefaultBindingProperty("Text")]
     [ControlCategory("Common")]
-    public class Label : CustomLabel
+    public class Label : Control
     {
         private string text = string.Empty;
 

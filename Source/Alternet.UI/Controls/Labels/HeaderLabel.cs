@@ -9,7 +9,7 @@ namespace Alternet.UI
     /// <summary>
     /// Implements label control that looks like header.
     /// </summary>
-    public class HeaderLabel : CustomLabel
+    public class HeaderLabel : Control
     {
         /// <summary>
         /// Gets or sets function which creates inner label.

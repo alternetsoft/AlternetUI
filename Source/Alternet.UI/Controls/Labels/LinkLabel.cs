@@ -10,7 +10,7 @@ namespace Alternet.UI
     [DefaultProperty("Text")]
     [DefaultBindingProperty("Text")]
     [ControlCategory("Other")]
-    public class LinkLabel : CustomLabel
+    public class LinkLabel : Control
     {
         private string? text;
 
