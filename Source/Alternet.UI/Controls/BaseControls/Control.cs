@@ -1773,7 +1773,13 @@ namespace Alternet.UI
             }
         }
 
-        ISite? IComponent.Site
+        /// <summary>
+        /// Gets or sets the site of the control.
+        /// </summary>
+        /// <returns>The <see cref="System.ComponentModel.ISite" /> associated
+        /// with the <see cref="Control" />, if any.</returns>
+        [EditorBrowsable(EditorBrowsableState.Advanced)]
+        public ISite? Site
         {
             get => site;
             set => site = value;
