@@ -11,6 +11,8 @@ namespace Alternet.UI
     /// </summary>
     public static class SystemInformation
     {
+        private static int? doubleClickTime;
+
         /// <summary>
         /// Gets the maximum number of milliseconds that can elapse between a first click and
         /// a second click for the OS to consider the mouse action a double-click.
@@ -19,6 +21,19 @@ namespace Alternet.UI
         /// The maximum amount of time, in milliseconds, that can elapse between a first click
         /// and a second click for the OS to consider the mouse action a double-click.
         /// </returns>
-        public static int DoubleClickTime => SystemSettings.GetMetric(SystemSettingsMetric.DClickMSec);
+        public static int DoubleClickTime
+        {
+            get => doubleClickTime ?? SystemSettings.GetMetric(SystemSettingsMetric.DClickMSec);
+
+            set => doubleClickTime = value;
+        }
+
+        /// <summary>
+        /// Gets the number of lines to scroll when the mouse wheel is rotated.
+        /// </summary>
+        /// <returns>
+        /// The number of lines to scroll on a mouse wheel rotation, or -1 if the
+        /// "One screen at a time" mouse option is selected.</returns>
+        public static int MouseWheelScrollLines { get; set; } = 3;
     }
 }
