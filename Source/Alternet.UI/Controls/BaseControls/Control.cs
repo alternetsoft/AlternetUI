@@ -40,7 +40,7 @@ namespace Alternet.UI
         private IComponentDesigner? designer;
         private Color? backgroundColor;
         private Color? foregroundColor;
-        private Collection<Control>? children;
+        private ControlCollection? children;
         private Size suggestedSize = DefaultControlSize;
         private Thickness margin;
         private Thickness padding;
@@ -833,7 +833,7 @@ namespace Alternet.UI
             {
                 if (children == null)
                 {
-                    children = new Collection<Control>() { ThrowOnNullAdd = true };
+                    children = new();
                     children.ItemInserted += Children_ItemInserted;
                     children.ItemRemoved += Children_ItemRemoved;
                 }

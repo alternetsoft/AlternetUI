@@ -76,6 +76,31 @@ namespace Alternet.UI
         public virtual void Raise() => NativeControl.Raise();
 
         /// <summary>
+        /// Sets the index of the child control in the <see cref="Children"/>.
+        /// </summary>
+        /// <param name="child">The item to search for.</param>
+        /// <param name="newIndex">The new index value of the item.</param>
+        /// <exception cref="ArgumentException">The item is not in the collection.</exception>
+        /// <remarks>
+        /// If <paramref name="newIndex"/> = -1, moves to the end of the collection.
+        /// </remarks>
+        public void SetChildIndex(Control child, int newIndex)
+        {
+            Children.SetItemIndex(child, newIndex);
+            PerformLayout(false);
+        }
+
+        /// <summary>
+        /// Brings the control to the front of the z-order.
+        /// </summary>
+        public void BringToFront() => Parent?.SetChildIndex(this, 0);
+
+        /// <summary>
+        /// Sends the control to the back of the z-order.
+        /// </summary>
+        public void SendToBack() => Parent?.SetChildIndex(this, -1);
+
+        /// <summary>
         /// Lowers the window to the bottom of the window hierarchy (Z-order).
         /// This function only works for top level windows.
         /// </summary>

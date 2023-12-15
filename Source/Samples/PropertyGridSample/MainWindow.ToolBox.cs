@@ -28,16 +28,20 @@ namespace PropertyGridSample
             control?.Refresh();
         }
 
-        void SetCursorTest()
+        void ReorderButtonsTest()
         {
-            Alternet.UI.Cursor.SetGlobal(Cursors.Cross);
+            var control = GetSelectedControl<PanelOkCancelButtons>();
+            if (control is null)
+                return;
+            control.SetChildIndex(control.CancelButton, 0);
+            control.SetChildIndex(control.OkButton, -1);
         }
 
         private void InitToolBox()
         {
 #if DEBUG
             PropertyGrid.AddSimpleAction<PictureBox>("Test", PictureBoxTest);
-            PropertyGrid.AddSimpleAction<PictureBox>("SetCursor", SetCursorTest);
+            PropertyGrid.AddSimpleAction<PanelOkCancelButtons>("Reorder buttons", ReorderButtonsTest);
 #endif
 
             void Fn()
