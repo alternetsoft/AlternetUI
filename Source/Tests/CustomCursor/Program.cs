@@ -16,25 +16,22 @@ namespace MinMaster
         {
             Application.Log($"The application started at {DateTime.Now:HH:mm:ss.fff}");
 
-            Bitmap bitmap = new Bitmap();
-
             var type = typeof(Program);
-
             var resources = type.Module.Assembly.GetManifestResourceNames();
             LogUtils.Log(resources);
 
             var stream = type.Module.Assembly.GetManifestResourceStream(
                 "CustomCursor.CUR.HideWhiteSpace.cur");
             if (stream is null)
-                return;
-            var result = bitmap.Load(stream, BitmapType.Any);
-            if (!result)
+            {
                 Application.Log("Error loading sample cursor");
+                return;
+            }
 
             var form = Application.FirstWindow<WindowLogListBox>();
             if (form is null)
                 return;
-            form.ListBox.Cursor = new(bitmap);
+            form.ListBox.Cursor = new(stream);
         }
     }
 }

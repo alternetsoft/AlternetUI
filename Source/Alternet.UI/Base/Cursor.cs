@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -54,6 +55,16 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="Cursor"/> class from a stream.
+        /// </summary>
+        /// <param name="stream">Stream with cursor.</param>
+        /// <param name="bitmapType">Type of the cursor.</param>
+        public Cursor(Stream stream, BitmapType bitmapType = BitmapType.Any)
+            : this(new Bitmap(stream, bitmapType))
+        {
+        }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="Cursor"/> class from an image.
         /// </summary>
         /// <param name="image">Image with cursor.</param>
@@ -96,6 +107,7 @@ namespace Alternet.UI
         /// <param name="cursor">Cursor identifier.</param>
         public static bool IsStandardCursorWindows(CursorType cursor)
         {
+#pragma warning disable
             switch (cursor)
             {
                 case CursorType.None:
@@ -120,6 +132,7 @@ namespace Alternet.UI
                 default:
                     return false;
             }
+#pragma warning restore
         }
 
         /// <inheritdoc/>
