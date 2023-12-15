@@ -232,6 +232,16 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Called when the value of the <see cref="Font"/> property changes.
+        /// </summary>
+        /// <param name="e">An <see cref="EventArgs"/> that contains the event
+        /// data.</param>
+        [EditorBrowsable(EditorBrowsableState.Advanced)]
+        protected virtual void OnFontChanged(EventArgs e)
+        {
+        }
+
+        /// <summary>
         /// Called when the value of the <see cref="Padding"/> property changes.
         /// </summary>
         /// <param name="e">An <see cref="EventArgs"/> that contains the event

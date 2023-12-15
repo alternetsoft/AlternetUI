@@ -1554,6 +1554,7 @@ namespace Alternet.UI
                     return;
 
                 font = value;
+                OnFontChanged(EventArgs.Empty);
                 FontChanged?.Invoke(this, EventArgs.Empty);
             }
         }
