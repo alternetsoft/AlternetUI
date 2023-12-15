@@ -1086,6 +1086,34 @@ namespace Alternet.Drawing
                 && left.name == right.name;
 
         /// <summary>
+        /// Tests whether <see cref="Color"/> and <see cref="System.Drawing.Color"/>
+        /// structures are equivalent.
+        /// </summary>
+        public static bool operator ==(System.Drawing.Color left, Color right) =>
+            left.IsEmpty == right.IsEmpty
+                && left.ToArgb() == right.ToArgb();
+
+        /// <summary>
+        /// Tests whether <see cref="Color"/> and <see cref="System.Drawing.Color"/>
+        /// structures are equivalent.
+        /// </summary>
+        public static bool operator ==(Color left, System.Drawing.Color right) =>
+            left.IsEmpty == right.IsEmpty
+                && left.ToArgb() == right.ToArgb();
+
+        /// <summary>
+        /// Tests whether <see cref="Color"/> and <see cref="System.Drawing.Color"/>
+        /// structures are different.
+        /// </summary>
+        public static bool operator !=(Color left, System.Drawing.Color right) => !(left == right);
+
+        /// <summary>
+        /// Tests whether <see cref="Color"/> and <see cref="System.Drawing.Color"/>
+        /// structures are different.
+        /// </summary>
+        public static bool operator !=(System.Drawing.Color left, Color right) => !(left == right);
+
+        /// <summary>
         /// Tests whether two specified <see cref="Color"/> structures are different.
         /// </summary>
         /// <param name="left">The <see cref="Color"/> that is to the left
