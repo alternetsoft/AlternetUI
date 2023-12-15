@@ -25,12 +25,14 @@ namespace Alternet.Drawing
         /// </summary>
         public byte DefaultDisabledBrightness = 170;
 
-        /* private static ImageGrayScaleMethod defaultGrayScaleMethod = ImageGrayScaleMethod.SetColorRGB150;
-        private static Brush? disabledBrush = null;
-        private static Color disabledBrushColor = Color.FromArgb(171, 71, 71, 71);*/
-
         private bool isDisposed;
         private UI.Native.Image nativeImage;
+
+        internal Image(Stream stream, BitmapType bitmapType = BitmapType.Any)
+        {
+            nativeImage = new UI.Native.Image();
+            Load(stream, bitmapType);
+        }
 
         internal Image(ImageSet imageSet, Control control)
         {
@@ -184,45 +186,6 @@ namespace Alternet.Drawing
             this.nativeImage = nativeImage;
         }
 
-        /*/// <summary>
-        /// Gets or sets default gray scale method used in <see cref="GrayScale"/>
-        /// and other functions.
-        /// </summary>
-        public static ImageGrayScaleMethod DefaultGrayScaleMethod
-        {
-            get
-            {
-                return defaultGrayScaleMethod;
-            }
-
-            set
-            {
-                if (value == ImageGrayScaleMethod.Default)
-                    return;
-                defaultGrayScaleMethod = value;
-            }
-        }*/
-
-        /*/// <summary>
-        /// Get or set color used when gray scale method is
-        /// <see cref="ImageGrayScaleMethod.FillWithDisabledBrush"/>.
-        /// </summary>
-        public static Color DisabledBrushColor
-        {
-            get
-            {
-                return disabledBrushColor;
-            }
-
-            set
-            {
-                if (disabledBrushColor == value)
-                    return;
-                disabledBrushColor = value;
-                disabledBrush = null;
-            }
-        }*/
-
         /// <summary>
         /// Gets default <see cref="BitmapType"/> value for the current operating system.
         /// </summary>
@@ -256,23 +219,6 @@ namespace Alternet.Drawing
         /// Gets whether image is empty (is disposed or has an empty width or height).
         /// </summary>
         public bool IsEmpty => isDisposed || !NativeImage.IsOk || Size.AnyIsEmpty;
-
-        /*// Color.FromArgb(171, 71, 71, 71)
-        // Color.FromArgb(128, 0, 0, 0)
-        internal static Brush DisabledBrush
-        {
-            get
-            {
-                if (disabledBrush == null)
-                    disabledBrush = new SolidBrush(disabledBrushColor);
-                return disabledBrush;
-            }
-
-            set
-            {
-                disabledBrush = value;
-            }
-        }*/
 
         /// <summary>
         /// Gets or sets whether this image has an alpha channel.
@@ -761,37 +707,6 @@ namespace Alternet.Drawing
         /// per unit).
         /// </summary>
         public Size SizeDip(Control control) => control.PixelToDip(NativeImage.PixelSize);
-
-        /*/// <summary>
-        /// Makes image grayscaled.
-        /// </summary>
-        /// <returns><c>true</c> if operation is successful. </returns>
-        public bool GrayScale(ImageGrayScaleMethod method = ImageGrayScaleMethod.Default)
-        {
-            void GrayScaleWithBrush()
-            {
-                var size = Size;
-                using var dc = GetDrawingContext();
-                dc.FillRectangle(
-                    DisabledBrush,
-                    new(0, 0, size.Width, size.Height));
-            }
-
-            if(method == ImageGrayScaleMethod.Default)
-            {
-                method = DefaultGrayScaleMethod;
-            }
-
-            switch (method)
-            {
-                case ImageGrayScaleMethod.SetColorRGB150:
-                default:
-                    return ConvertToDisabled();
-                case ImageGrayScaleMethod.FillWithDisabledBrush:
-                    GrayScaleWithBrush();
-                    return true;
-            }
-        }*/
 
         /// <summary>
         /// Creates a clone of this image with fully copied image data.

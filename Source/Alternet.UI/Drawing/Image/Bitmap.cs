@@ -24,6 +24,16 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="Cursor"/> class from a stream.
+        /// </summary>
+        /// <param name="stream">Stream with cursor.</param>
+        /// <param name="bitmapType">Type of the cursor.</param>
+        public Bitmap(Stream stream, BitmapType bitmapType = BitmapType.Any)
+            : base(stream, bitmapType)
+        {
+        }
+
+        /// <summary>
         /// Creates a bitmap compatible with the given <see cref="DrawingContext"/> from
         /// the given <see cref="GenericImage"/>.
         /// </summary>
