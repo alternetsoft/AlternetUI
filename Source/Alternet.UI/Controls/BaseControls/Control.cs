@@ -344,6 +344,16 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets the Input Method Editor (IME) mode of the control.
+        /// </summary>
+        /// <returns>One of the <see cref="ImeMode" /> values.
+        /// The default is <see cref="ImeMode.Inherit" />.</returns>
+        [Category("Behavior")]
+        [Localizable(true)]
+        [AmbientValue(ImeMode.Inherit)]
+        public ImeMode ImeMode { get; set; } = ImeMode.Off;
+
+        /// <summary>
         /// Gets a value indicating whether the control can receive focus.
         /// </summary>
         /// <returns>
