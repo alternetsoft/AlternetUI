@@ -350,7 +350,7 @@ namespace Alternet.UI
         /// The default is <see cref="ImeMode.Inherit" />.</returns>
         [Category("Behavior")]
         [Localizable(true)]
-        [AmbientValue(ImeMode.Inherit)]
+        [Browsable(false)]
         public ImeMode ImeMode { get; set; } = ImeMode.Off;
 
         /// <summary>
