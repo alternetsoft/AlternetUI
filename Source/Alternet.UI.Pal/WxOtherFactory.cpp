@@ -427,6 +427,14 @@ namespace Alternet::UI
 		delete (wxCursor*)handle;
 	}
 
+	void WxOtherFactory::SetCursor(void* handle)
+	{
+		if(handle == nullptr)
+			wxSetCursor(wxNullCursor);
+		else
+			wxSetCursor(*(wxCursor*)handle);
+	}
+
 	bool WxOtherFactory::CursorIsOk(void* handle)
 	{
 		return ((wxCursor*)handle)->IsOk();

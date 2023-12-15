@@ -118,6 +118,8 @@ namespace NativeApi.Api
 
         public static Int32Point CursorGetHotSpot(IntPtr handle) => default;
 
+        public static void SetCursor(IntPtr handle) { }
+
         // =================== Caret
 
         // blink time is measured in milliseconds and is the time elapsed

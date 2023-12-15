@@ -4,6 +4,7 @@ public:
 static bool GetRichToolTipUseGeneric();
 static void SetRichToolTipUseGeneric(bool value);
 
+static Int32Size RendererGetCheckBoxSize(void* renderer, void* win, int flags);
 static Int32Size RendererGetCheckMarkSize(void* renderer, void* win);
 static Int32Size RendererGetExpanderSize(void* renderer, void* win);
 static void RendererDrawPushButton(void* renderer, void* win, void* dc, const Int32Rect& rect, int flags);
@@ -53,6 +54,7 @@ static void* CreateCursor4(Image* image);
 static void DeleteCursor(void* handle);
 static bool CursorIsOk(void* handle);
 static Int32Point CursorGetHotSpot(void* handle);
+static void SetCursor(void* handle);
 static int CaretGetBlinkTime();
 static void CaretSetBlinkTime(int milliseconds);
 static void DeleteCaret(void* handle);
@@ -106,7 +108,6 @@ static void RendererDrawComboBoxDropButton(void* renderer, void* win, void* dc, 
 static void RendererDrawDropArrow(void* renderer, void* win, void* dc, const Int32Rect& rect, int flags);
 static void RendererDrawCheckBox(void* renderer, void* win, void* dc, const Int32Rect& rect, int flags);
 static void RendererDrawCheckMark(void* renderer, void* win, void* dc, const Int32Rect& rect, int flags);
-static Int32Size RendererGetCheckBoxSize(void* renderer, void* win, int flags);
 public:
 WxOtherFactory();
 protected:

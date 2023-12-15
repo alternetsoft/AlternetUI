@@ -28,10 +28,16 @@ namespace PropertyGridSample
             control?.Refresh();
         }
 
+        void SetCursorTest()
+        {
+            Alternet.UI.Cursor.SetGlobal(Cursors.Cross);
+        }
+
         private void InitToolBox()
         {
 #if DEBUG
             PropertyGrid.AddSimpleAction<PictureBox>("Test", PictureBoxTest);
+            PropertyGrid.AddSimpleAction<PictureBox>("SetCursor", SetCursorTest);
 #endif
 
             void Fn()

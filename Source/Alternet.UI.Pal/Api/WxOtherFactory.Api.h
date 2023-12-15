@@ -26,6 +26,11 @@ ALTERNET_UI_API void WxOtherFactory_SetRichToolTipUseGeneric_(c_bool value)
     WxOtherFactory::SetRichToolTipUseGeneric(value);
 }
 
+ALTERNET_UI_API Int32Size_C WxOtherFactory_RendererGetCheckBoxSize_(void* renderer, void* win, int flags)
+{
+    return WxOtherFactory::RendererGetCheckBoxSize(renderer, win, flags);
+}
+
 ALTERNET_UI_API Int32Size_C WxOtherFactory_RendererGetCheckMarkSize_(void* renderer, void* win)
 {
     return WxOtherFactory::RendererGetCheckMarkSize(renderer, win);
@@ -269,6 +274,11 @@ ALTERNET_UI_API c_bool WxOtherFactory_CursorIsOk_(void* handle)
 ALTERNET_UI_API Int32Point_C WxOtherFactory_CursorGetHotSpot_(void* handle)
 {
     return WxOtherFactory::CursorGetHotSpot(handle);
+}
+
+ALTERNET_UI_API void WxOtherFactory_SetCursor_(void* handle)
+{
+    WxOtherFactory::SetCursor(handle);
 }
 
 ALTERNET_UI_API int WxOtherFactory_CaretGetBlinkTime_()
@@ -534,10 +544,5 @@ ALTERNET_UI_API void WxOtherFactory_RendererDrawCheckBox_(void* renderer, void* 
 ALTERNET_UI_API void WxOtherFactory_RendererDrawCheckMark_(void* renderer, void* win, void* dc, Int32Rect rect, int flags)
 {
     WxOtherFactory::RendererDrawCheckMark(renderer, win, dc, rect, flags);
-}
-
-ALTERNET_UI_API Int32Size_C WxOtherFactory_RendererGetCheckBoxSize_(void* renderer, void* win, int flags)
-{
-    return WxOtherFactory::RendererGetCheckBoxSize(renderer, win, flags);
 }
 

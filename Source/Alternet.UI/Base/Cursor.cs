@@ -101,6 +101,22 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Sets global cursor for the application.
+        /// </summary>
+        /// <param name="cursor">Cursor.</param>
+        /// <remarks>
+        /// Pass <c>null</c> to reset global cursor. Use <see cref="Control.Cursor"/>
+        /// to set cursor for the control.
+        /// </remarks>
+        public static void SetGlobal(Cursor? cursor = null)
+        {
+            if (cursor is null)
+                Native.WxOtherFactory.SetCursor(default);
+            else
+                Native.WxOtherFactory.SetCursor(cursor.Handle);
+        }
+
+        /// <summary>
         /// Gets whether the specified cursor is Windows standard cursor
         /// (is provided by the OS).
         /// </summary>
