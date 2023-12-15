@@ -1,4 +1,20 @@
-# 0.9.410 (work in progress)
+# 0.9.410 (2023 December 15)
+
+## 2023 December 15
+
+- Finished ScrolBar. Added HScrollBar, VScrollBar.
+- MouseWheelEventArgs -> MouseEventArgs.
+- MouseButtonEventArgs -> MouseEventArgs.
+- MouseEventArgs: Button, ClickCount, Delta.
+- Control: IsFocused -> Focused.
+- SystemInformation: DoubleClickTime, MouseWheelScrollLines.
+- Cursor new constructors (from image, from stream).
+- New constructor: Bitmap(Stream stream, BitmapType bitmapType = BitmapType.Any).
+- Cursors.Default.
+- Control: SendToBack, BringToFront, SetChildIndex, OnFontChanged, ImeMode.
+- Operators: Color == System.Drawing.Color.
+- GenericLabel used in CardPanelHeaderButton. So all problems with CardPanelHeader on Linux and MacOs are fixed.
+- Collection: SetItemIndex, GetItemIndex.
 
 ## 2023 December 13
 
