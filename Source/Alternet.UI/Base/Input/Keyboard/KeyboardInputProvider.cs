@@ -19,6 +19,8 @@ namespace Alternet.UI
             object? sender,
             Native.NativeEventArgs<Native.TextInputEventData> e)
         {
+            if (e.Data.keyChar == 0)
+                return;
             InputManager.Current.ReportTextInput(e.Data.timestamp, e.Data.keyChar, out var handled);
             e.Handled = handled;
         }

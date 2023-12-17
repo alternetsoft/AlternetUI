@@ -58,6 +58,58 @@ namespace Alternet::UI
             return _owner->_acceptsFocusRecursively;
     }
 
+    bool Panel::GetWantChars()
+    {
+        return _wantChars;
+    }
+
+    void Panel::SetWantChars(bool value)
+    {
+        if (_wantChars == value)
+            return;
+        _wantChars = value;
+        RecreateWxWindowIfNeeded();
+    }
+
+    bool Panel::GetShowVertScrollBar()
+    {
+        return _showVertScrollBar;
+    }
+
+    void Panel::SetShowVertScrollBar(bool value)
+    {
+        if (_showVertScrollBar == value)
+            return;
+        _showVertScrollBar = value;
+        RecreateWxWindowIfNeeded();
+    }
+
+    bool Panel::GetShowHorzScrollBar()
+    {
+        return _showHorzScrollBar;
+    }
+
+    void Panel::SetShowHorzScrollBar(bool value)
+    {
+        if (_showHorzScrollBar == value)
+            return;
+        _showHorzScrollBar = value;
+        RecreateWxWindowIfNeeded();
+    }
+
+    bool Panel::GetScrollBarAlwaysVisible()
+    {
+        return _scrollBarAlwaysVisible;
+    }
+
+    void Panel::SetScrollBarAlwaysVisible(bool value)
+    {
+        if (_scrollBarAlwaysVisible == value)
+            return;
+        _scrollBarAlwaysVisible = value;
+        RecreateWxWindowIfNeeded();
+    }
+
     wxWindow* Panel::CreateWxWindowUnparented()
     {
         return new wxPanel2();
@@ -69,6 +121,14 @@ namespace Alternet::UI
 
         if (GetIsScrollable())
             style |= wxHSCROLL | wxVSCROLL;
+        if (_scrollBarAlwaysVisible)
+            style |= wxALWAYS_SHOW_SB;
+        if (_wantChars)
+            style |= wxWANTS_CHARS;
+        if(_showVertScrollBar)
+            style |= wxVSCROLL;
+        if(_showHorzScrollBar)
+            style |= wxHSCROLL;
 
         auto p = new wxPanel2(this, parent, wxID_ANY, wxDefaultPosition, wxDefaultSize, style);
         return p;

@@ -204,7 +204,8 @@ namespace Alternet.UI
             ImageChanged?.Invoke(this, e);
         }
 
-        internal override void DefaultPaint(DrawingContext dc, Rect rect)
+        /// <inheritdoc/>
+        protected override void DefaultPaint(DrawingContext dc, Rect rect)
         {
             BeforePaint(dc, rect);
 

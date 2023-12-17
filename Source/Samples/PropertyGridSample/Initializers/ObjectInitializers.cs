@@ -238,11 +238,7 @@ namespace PropertyGridSample
                 groupBox.SuggestedSize = 150;
             });
 
-            Actions.Add(typeof(Panel), (c) =>
-            {
-                Panel panel = (c as Panel)!;
-                panel.SuggestedSize = 150;
-            });
+            Actions.Add(typeof(Panel), InitPanel);
 
             Actions.Add(typeof(Control), (c) =>
             {

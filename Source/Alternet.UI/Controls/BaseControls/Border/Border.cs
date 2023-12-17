@@ -240,7 +240,8 @@ namespace Alternet.UI
             return base.GetPreferredSize(availableSize) + (width.Horizontal, width.Vertical);
         }
 
-        internal override void DefaultPaint(DrawingContext dc, Rect rect)
+        /// <inheritdoc/>
+        protected override void DefaultPaint(DrawingContext dc, Rect rect)
         {
             BeforePaint(dc, rect);
             DrawDefaultBackground(dc, rect);

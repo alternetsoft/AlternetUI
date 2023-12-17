@@ -15,6 +15,7 @@ namespace Alternet.UI
     public class UserPaintControl : LayoutPanel
     {
         private bool hasBorder = true; // !! to border settings
+        private RichTextBoxScrollBars scrollbars = RichTextBoxScrollBars.None;
 
 #if DEBUG
         private bool drawDebugPointsBefore;
@@ -61,6 +62,73 @@ namespace Alternet.UI
                 Refresh();
 #else
 #endif
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the type of scroll bars displayed in the control.
+        /// </summary>
+        public RichTextBoxScrollBars Scrollbars
+        {
+            get
+            {
+                return scrollbars;
+            }
+
+            set
+            {
+                if (scrollbars == value)
+                    return;
+                scrollbars = value;
+                switch (value)
+                {
+                    default:
+                    case RichTextBoxScrollBars.None:
+                        SetScrollbars(horz: false, vert: false, always: false);
+                        break;
+                    case RichTextBoxScrollBars.Horizontal:
+                        SetScrollbars(horz: true, vert: false, always: false);
+                        break;
+                    case RichTextBoxScrollBars.Vertical:
+                        SetScrollbars(horz: false, vert: true, always: false);
+                        break;
+                    case RichTextBoxScrollBars.Both:
+                        SetScrollbars(horz: true, vert: true, always: false);
+                        break;
+                    case RichTextBoxScrollBars.ForcedHorizontal:
+                        SetScrollbars(horz: true, vert: false, always: true);
+                        break;
+                    case RichTextBoxScrollBars.ForcedVertical:
+                        SetScrollbars(horz: false, vert: true, always: true);
+                        break;
+                    case RichTextBoxScrollBars.ForcedBoth:
+                        SetScrollbars(horz: true, vert: true, always: true);
+                        break;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets whether control wants to get all char/key events for all keys.
+        /// </summary>
+        /// <remarks>
+        /// Use this to indicate that the control wants to get all char/key events for all keys
+        /// - even for keys like TAB or ENTER which are usually used for dialog navigation and
+        /// which wouldn't be generated without this style. If you need to use this style in
+        /// order to get the arrows or etc., but would still like to have normal keyboard
+        /// navigation take place, you should call Navigate in response to the key events
+        /// for Tab and Shift-Tab.
+        /// </remarks>
+        public bool WantChars
+        {
+            get
+            {
+                return NativeControl.WantChars;
+            }
+
+            set
+            {
+                NativeControl.WantChars = value;
             }
         }
 
@@ -114,6 +182,8 @@ namespace Alternet.UI
             }
         }
 
+        internal new Native.Panel NativeControl => (Native.Panel)base.NativeControl;
+
         /// <summary>
         /// Draw default background.
         /// </summary>
@@ -159,16 +229,16 @@ namespace Alternet.UI
 #endif
         }
 
-        internal virtual void DefaultPaint(DrawingContext dc, Rect rect)
-        {
-        }
-
         internal virtual void AfterPaint(DrawingContext dc, Rect rect)
         {
 #if DEBUG
             if (DrawDebugPointsAfter)
                 dc.DrawDebugPoints(rect);
 #endif
+        }
+
+        protected virtual void DefaultPaint(DrawingContext dc, Rect rect)
+        {
         }
 
         /// <inheritdoc/>
@@ -182,7 +252,14 @@ namespace Alternet.UI
             return new UserPaintHandler();
         }
 
-        private class UserPaintHandler : ControlHandler<UserPaintControl>
+        private void SetScrollbars(bool horz, bool vert, bool always)
+        {
+            NativeControl.ShowHorzScrollBar = horz;
+            NativeControl.ShowVertScrollBar = vert;
+            NativeControl.ScrollBarAlwaysVisible = always;
+        }
+
+        private class UserPaintHandler : NativeControlHandler<UserPaintControl, Native.Panel>
         {
             protected override bool NeedsPaint => true;
 

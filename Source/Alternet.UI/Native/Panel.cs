@@ -23,6 +23,66 @@ namespace Alternet.UI.Native
         {
         }
         
+        public bool WantChars
+        {
+            get
+            {
+                CheckDisposed();
+                return NativeApi.Panel_GetWantChars_(NativePointer);
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.Panel_SetWantChars_(NativePointer, value);
+            }
+        }
+        
+        public bool ShowVertScrollBar
+        {
+            get
+            {
+                CheckDisposed();
+                return NativeApi.Panel_GetShowVertScrollBar_(NativePointer);
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.Panel_SetShowVertScrollBar_(NativePointer, value);
+            }
+        }
+        
+        public bool ShowHorzScrollBar
+        {
+            get
+            {
+                CheckDisposed();
+                return NativeApi.Panel_GetShowHorzScrollBar_(NativePointer);
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.Panel_SetShowHorzScrollBar_(NativePointer, value);
+            }
+        }
+        
+        public bool ScrollBarAlwaysVisible
+        {
+            get
+            {
+                CheckDisposed();
+                return NativeApi.Panel_GetScrollBarAlwaysVisible_(NativePointer);
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.Panel_SetScrollBarAlwaysVisible_(NativePointer, value);
+            }
+        }
+        
         
         [SuppressUnmanagedCodeSecurity]
         public class NativeApi : NativeApiProvider
@@ -31,6 +91,30 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern IntPtr Panel_Create_();
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool Panel_GetWantChars_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Panel_SetWantChars_(IntPtr obj, bool value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool Panel_GetShowVertScrollBar_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Panel_SetShowVertScrollBar_(IntPtr obj, bool value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool Panel_GetShowHorzScrollBar_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Panel_SetShowHorzScrollBar_(IntPtr obj, bool value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool Panel_GetScrollBarAlwaysVisible_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Panel_SetScrollBarAlwaysVisible_(IntPtr obj, bool value);
             
         }
     }
