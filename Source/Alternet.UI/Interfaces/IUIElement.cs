@@ -6,19 +6,11 @@ namespace Alternet.UI
 {
     internal interface IUIElement : /*DependencyObject,*/ IInputElement
     {
-        event TextInputEventHandler PreviewTextInput;
-
-        event TextInputEventHandler TextInput;
-
-        event MouseEventHandler PreviewMouseDoubleClick;
+        event KeyPressEventHandler KeyPress;
 
         event MouseEventHandler MouseDoubleClick;
 
         event EventHandler? LayoutUpdated;
-
-        /*event DependencyPropertyChangedEventHandler FocusableChanged;*/
-
-        /*bool Focusable { get; set; }*/
 
         void AddToEventRoute(EventRoute route, RoutedEventArgs e);
 
@@ -70,51 +62,27 @@ namespace Alternet.UI
     {
         void OnKeyDown(KeyEventArgs e);
 
-        void OnPreviewKeyDown(KeyEventArgs e);
-
-        void OnTextInput(TextInputEventArgs e);
-
-        void OnPreviewTextInput(TextInputEventArgs e);
-
-        void OnPreviewKeyUp(KeyEventArgs e);
+        void OnTextInput(KeyPressEventArgs e);
 
         void OnKeyUp(KeyEventArgs e);
 
-        void OnPreviewMouseDown(MouseEventArgs e);
-
         void OnMouseDown(MouseEventArgs e);
-
-        void OnPreviewMouseDoubleClick(MouseEventArgs e);
 
         void OnMouseRightButtonDown(MouseEventArgs e);
 
-        void OnPreviewMouseRightButtonUp(MouseEventArgs e);
-
         void OnMouseRightButtonUp(MouseEventArgs e);
-
-        void OnPreviewMouseWheel(MouseEventArgs e);
 
         void OnMouseWheel(MouseEventArgs e);
 
         void OnMouseDoubleClick(MouseEventArgs e);
 
-        void OnPreviewMouseUp(MouseEventArgs e);
-
         void OnMouseUp(MouseEventArgs e);
-
-        void OnPreviewMouseLeftButtonDown(MouseEventArgs e);
 
         void OnMouseLeftButtonDown(MouseEventArgs e);
 
-        void OnPreviewMouseLeftButtonUp(MouseEventArgs e);
-
         void OnMouseLeftButtonUp(MouseEventArgs e);
 
-        void OnPreviewMouseRightButtonDown(MouseEventArgs e);
-
         void OnMouseMove(MouseEventArgs e);
-
-        void OnPreviewMouseMove(MouseEventArgs e);
 
         void OnGotFocus(RoutedEventArgs e);
 

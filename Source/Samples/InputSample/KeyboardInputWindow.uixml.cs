@@ -6,19 +6,16 @@ namespace InputSample
 {
     public partial class KeyboardInputWindow : Window
     {
-        private const int PreviewKeyDownIndex = 0;
-        private const int KeyDownIndex = 1;
-        private const int PreviewKeyUpIndex = 2;
-        private const int KeyUpIndex = 3;
-        private const int TextInputIndex = 4;
-        private const int lbCount = 5;
+        private const int KeyDownIndex = 0;
+        private const int KeyUpIndex = 1;
+        private const int TextInputIndex = 2;
+        private const int lbCount = 3;
 
         public KeyboardInputWindow()
         {
             InitializeComponent();
 
             PlatformSpecificInitialize();
-            InputManager.Current.PreProcessInput += InputManager_PreProcessInput;
 
             SetSizeToContent();
 
@@ -96,29 +93,12 @@ namespace InputSample
 
         protected override void Dispose(bool disposing)
         {
-            if (disposing)
-            {
-                InputManager.Current.PreProcessInput -= InputManager_PreProcessInput;
-            }
-
             base.Dispose(disposing);
         }
 
         private void HelloButton_Click(object sender, EventArgs e)
         {
             MessageBox.Show("Hello!", "Button Clicked");
-        }
-
-        private void InputManager_PreProcessInput(object sender, PreProcessInputEventArgs e)
-        {
-            if (cancelF1KeyInputCheckBox.IsChecked)
-            {
-                if (e.Input is KeyEventArgs ke)
-                {
-                    if (ke.Key == Key.F1)
-                        e.Cancel();
-                }
-            }
         }
 
         int messageNumber;
@@ -129,12 +109,12 @@ namespace InputSample
             lb.Refresh();
         }
 
-        private void Window_TextInput(object sender, TextInputEventArgs e) =>
-            LogTextInput(TextInputIndex, lbWindow, e, "Window", "TextInput");
+        private void Window_TextInput(object sender, KeyPressEventArgs e) =>
+            LogTextInput(TextInputIndex, lbWindow, e, "Window", "KeyPress");
 
         private void LogKey(int index, ListBox lb, KeyEventArgs e, string objectName, string eventName) =>
             LogMessage(index, lb, $"{++messageNumber} {eventName} [{e.Key}], Repeat: {e.IsRepeat}");
-        private void LogTextInput(int index, ListBox lb, TextInputEventArgs e, string objectName, string eventName) =>
+        private void LogTextInput(int index, ListBox lb, KeyPressEventArgs e, string objectName, string eventName) =>
             LogMessage(index, lb, $"{++messageNumber} {eventName} '{e.KeyChar}'");
 
         private void HelloButton_KeyDown(object sender, KeyEventArgs e) =>
@@ -154,31 +134,5 @@ namespace InputSample
 
         private void Window_KeyUp(object sender, KeyEventArgs e) =>
             LogKey(KeyUpIndex, lbWindow, e, "Window", "KeyUp");
-
-        private void HelloButton_PreviewKeyDown(object sender, KeyEventArgs e) =>
-            LogKey(PreviewKeyDownIndex, lbButton, e, "HelloButton", "PreviewKeyDown");
-
-        private void StackPanel_PreviewKeyDown(object sender, KeyEventArgs e)
-        {
-            LogKey(PreviewKeyDownIndex, lbStackPanel, e, "StackPanel", "PreviewKeyDown");
-            if (handlePreviewEventsCheckBox.IsChecked)
-                e.Handled = true;
-        }
-
-        private void Window_PreviewKeyDown(object sender, KeyEventArgs e) =>
-            LogKey(PreviewKeyDownIndex, lbWindow, e, "Window", "PreviewKeyDown");
-
-        private void HelloButton_PreviewKeyUp(object sender, KeyEventArgs e) =>
-            LogKey(PreviewKeyUpIndex, lbButton, e, "HelloButton", "PreviewKeyUp");
-
-        private void StackPanel_PreviewKeyUp(object sender, KeyEventArgs e)
-        {
-            LogKey(PreviewKeyUpIndex, lbStackPanel, e, "StackPanel", "PreviewKeyUp");
-            if (handlePreviewEventsCheckBox.IsChecked)
-                e.Handled = true;
-        }
-
-        private void Window_PreviewKeyUp(object sender, KeyEventArgs e) =>
-            LogKey(PreviewKeyUpIndex, lbWindow, e, "Window", "PreviewKeyUp");
     }
 }

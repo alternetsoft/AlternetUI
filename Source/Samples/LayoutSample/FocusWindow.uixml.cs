@@ -14,9 +14,9 @@ namespace LayoutSample
             SetSizeToContent();
         }
 
-        protected override void OnPreviewKeyDown(KeyEventArgs e)
+        protected override void OnKeyDown(KeyEventArgs e)
         {
-            base.OnPreviewKeyDown(e);
+            base.OnKeyDown(e);
 
             if (e.Key == Key.N)
             {

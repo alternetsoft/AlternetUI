@@ -2,24 +2,18 @@
         xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
         x:Class="InputSample.KeyboardInputWindow"
 		MinWidth="700" MinHeight="700"
-        Title="Keyboard Input" PreviewKeyDown="Window_PreviewKeyDown" PreviewKeyUp="Window_PreviewKeyUp"
+        Title="Keyboard Input" 
 		KeyDown="Window_KeyDown" KeyUp="Window_KeyUp"
-		TextInput="Window_TextInput">
+		KeyPress="Window_TextInput">
   <StackPanel Orientation="Vertical" KeyDown="StackPanel_KeyDown" KeyUp="StackPanel_KeyUp"
-      PreviewKeyDown="StackPanel_PreviewKeyDown" PreviewKeyUp="StackPanel_PreviewKeyUp" Padding="5">
+      Padding="5">
 
     <HorizontalStackPanel>
       <Button Name="helloButton" Text="Say Hello" Margin="10" Click="HelloButton_Click"
                 KeyDown="HelloButton_KeyDown" KeyUp="HelloButton_KeyUp" SuggestedWidth="150"
-                PreviewKeyDown="HelloButton_PreviewKeyDown" PreviewKeyUp="HelloButton_PreviewKeyUp"/>
+                />
       <Button Text="Button 1" Margin="10" SuggestedWidth="150"/>
       <TextBox Text="Sample Text Box" Margin="10" SuggestedWidth="150"/>
-    </HorizontalStackPanel>
-
-    <HorizontalStackPanel>
-      <CheckBox Name="handlePreviewEventsCheckBox"
-                  Text="Handle Preview Events at StackPanel" Margin="5"/>
-      <CheckBox Name="cancelF1KeyInputCheckBox" Text="Cancel F1 Key Input" Margin="5"/>
     </HorizontalStackPanel>
 
     <StackPanel Orientation="Horizontal" Margin="5">
