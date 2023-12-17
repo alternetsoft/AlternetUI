@@ -12,7 +12,7 @@ namespace Alternet.UI
     /// Parent class for all owner draw controls.
     /// </summary>
     [ControlCategory("Other")]
-    public class UserPaintControl : Control
+    public class UserPaintControl : LayoutPanel
     {
         private bool hasBorder = true; // !! to border settings
 
