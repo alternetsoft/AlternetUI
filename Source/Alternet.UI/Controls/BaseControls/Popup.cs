@@ -7,14 +7,11 @@ namespace Alternet.UI
     /// The <see cref="Popup"/> control displays content in a separate window that floats
     /// over the current application window.
     /// </summary>
-    /// <remarks>
-    /// <see cref="Popup"/> doesn't work properly on Linux. Please use <see cref="PopupWindow"/>
-    /// </remarks>
-    [System.ComponentModel.DesignerCategory("Code")]
+    [DesignerCategory("Code")]
     [ControlCategory("Hidden")]
-    internal class Popup : Control
+    public class Popup : Control
     {
-        private Window? owner;
+        /*private Window? owner;*/
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Window"/> class.
@@ -26,15 +23,15 @@ namespace Alternet.UI
             Bounds = new Rect(0, 0, 100, 100);
         }
 
-        /// <summary>
+        /*/// <summary>
         /// Occurs when the value of the <see cref="Owner"/> property changes.
         /// </summary>
-        public event EventHandler? OwnerChanged;
+        public event EventHandler? OwnerChanged;*/
 
         /// <inheritdoc/>
         public override ControlTypeId ControlKind => ControlTypeId.Popup;
 
-        /// <summary>
+        /*/// <summary>
         /// Gets or sets the window that owns this popup.
         /// </summary>
         public Window? Owner
@@ -47,7 +44,7 @@ namespace Alternet.UI
                 OnOwnerChanged(EventArgs.Empty);
                 OwnerChanged?.Invoke(this, EventArgs.Empty);
             }
-        }
+        }*/
 
         /// <summary>
         /// Gets or sets a value indicating whether a popup window disappears automatically
@@ -104,13 +101,27 @@ namespace Alternet.UI
             }
         }
 
-        private new NativePopupHandler Handler
+        private new PopupHandler Handler
         {
             get
             {
                 CheckDisposed();
-                return (NativePopupHandler)base.Handler;
+                return (PopupHandler)base.Handler;
             }
+        }
+
+        /// <summary>
+        /// Move the popup window to the right position, i.e. such that it is entirely visible.
+        /// </summary>
+        /// <param name="ptOrigin">Must be given in screen coordinates.</param>
+        /// <param name="sizePopup">The size of the popup window.</param>
+        /// <remarks>
+        /// The popup is positioned at (ptOrigin + size) if it opens below and to the right
+        /// (default), at (ptOrigin - sizePopup) if it opens above and to the left.
+        /// </remarks>
+        public void SetPositionInPixels(Int32Point ptOrigin, Int32Size sizePopup)
+        {
+            Handler.NativeControl.Position(ptOrigin, sizePopup);
         }
 
         /// <summary>
@@ -124,15 +135,102 @@ namespace Alternet.UI
             Handler.SetSizeToContent(mode);
         }
 
-        /// <summary>
+        /*/// <summary>
         /// Called when the value of the <see cref="Owner"/> property changes.
         /// </summary>
         /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
         protected virtual void OnOwnerChanged(EventArgs e)
         {
-        }
+        }*/
 
         /// <inheritdoc/>
-        protected override ControlHandler CreateHandler() => new NativePopupHandler();
+        protected override ControlHandler CreateHandler() => new PopupHandler();
+
+        internal class PopupHandler : ControlHandler
+        {
+            /// <summary>
+            /// Gets a <see cref="Popup"/> this handler provides the implementation for.
+            /// </summary>
+            public new Popup Control => (Popup)base.Control;
+
+            public new Native.Popup NativeControl => (Native.Popup)base.NativeControl!;
+
+            /// <summary>
+            /// Changes size of the popup to fit the size of its content.
+            /// </summary>
+            public void SetSizeToContent(WindowSizeToContentMode mode)
+            {
+                if (mode == WindowSizeToContentMode.None)
+                    return;
+
+                var newSize = GetChildrenMaxPreferredSizePadded(new Size(double.PositiveInfinity, double.PositiveInfinity));
+                if (newSize != Size.Empty)
+                {
+                    var currentSize = Control.ClientSize;
+                    switch (mode)
+                    {
+                        case WindowSizeToContentMode.Width:
+                            newSize.Height = currentSize.Height;
+                            break;
+
+                        case WindowSizeToContentMode.Height:
+                            newSize.Width = currentSize.Width;
+                            break;
+
+                        case WindowSizeToContentMode.WidthAndHeight:
+                            break;
+
+                        default:
+                            throw new Exception();
+                    }
+
+                    Control.ClientSize = newSize + new Size(1, 0);
+                    Control.ClientSize = newSize;
+                    Control.Refresh();
+                    NativeControl.SendSizeEvent();
+                }
+            }
+
+            internal override Native.Control CreateNativeControl()
+            {
+                return new Native.Popup();
+            }
+
+            protected override void OnAttach()
+            {
+                base.OnAttach();
+
+                /*ApplyOwner();*/
+
+                /*Control.OwnerChanged += Control_OwnerChanged;*/
+            }
+
+            protected override void OnDetach()
+            {
+                /*Control.OwnerChanged -= Control_OwnerChanged;*/
+
+                base.OnDetach();
+            }
+
+            /*private void ApplyOwner()
+            {
+                var newOwner = Control.Owner?.Handler?.NativeControl;
+                var oldOwner = NativeControl.ParentRefCounted;
+                if (newOwner == oldOwner)
+                    return;
+
+                oldOwner?.RemoveChild(NativeControl);
+
+                if (newOwner == null)
+                    return;
+
+                newOwner.AddChild(NativeControl);
+            }*/
+
+            /*private void Control_OwnerChanged(object? sender, EventArgs e)
+            {
+                ApplyOwner();
+            }*/
+        }
     }
 }

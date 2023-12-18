@@ -10,5 +10,14 @@ namespace NativeApi.Api
     {
         public bool IsTransient { get; set; }
         public bool PuContainsControls { get; set; }
+
+        public void Position(Int32Point ptOrigin, Int32Size sizePopup) { }
     }
 }
+
+
+
+
+
+
+

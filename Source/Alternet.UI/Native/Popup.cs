@@ -53,6 +53,12 @@ namespace Alternet.UI.Native
             }
         }
         
+        public void Position(Alternet.Drawing.Int32Point ptOrigin, Alternet.Drawing.Int32Size sizePopup)
+        {
+            CheckDisposed();
+            NativeApi.Popup_Position_(NativePointer, ptOrigin, sizePopup);
+        }
+        
         
         [SuppressUnmanagedCodeSecurity]
         public class NativeApi : NativeApiProvider
@@ -73,6 +79,9 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Popup_SetPuContainsControls_(IntPtr obj, bool value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Popup_Position_(IntPtr obj, Alternet.Drawing.Int32Point ptOrigin, Alternet.Drawing.Int32Size sizePopup);
             
         }
     }

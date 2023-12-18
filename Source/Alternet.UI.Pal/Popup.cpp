@@ -4,14 +4,14 @@ namespace Alternet::UI
 {
     Popup::Popup()
     {
-        SetVisible(false);
-        CreateWxWindow();
-        _popupWindows.push_back(GetWxWindow());
+        /*SetVisible(false);
+        CreateWxWindow();*/
+        /*_popupWindows.push_back(GetWxWindow());*/
     }
 
     Popup::~Popup()
     {
-        _popupWindows.erase(std::find(_popupWindows.begin(), _popupWindows.end(), GetWxWindow()));
+        /*_popupWindows.erase(std::find(_popupWindows.begin(), _popupWindows.end(), GetWxWindow()));*/
     }
 
     class wxPopupTransientWindow2 : public wxPopupTransientWindow, 
@@ -70,9 +70,9 @@ namespace Alternet::UI
             return new wxPopupWindow2(parent, style);
     }
 
-    void Popup::UpdateWxWindowParent()
+    /*void Popup::UpdateWxWindowParent()
     {
-    }
+    }*/
 
     bool Popup::GetIsTransient()
     {
@@ -92,7 +92,12 @@ namespace Alternet::UI
         return dynamic_cast<wxPopupWindow*>(GetWxWindow());
     }
 
-    /*static*/ std::vector<wxWindow*> Popup::GetVisiblePopupWindows()
+    void Popup::Position(const Int32Point& ptOrigin, const Int32Size& sizePopup)
+    {
+        GetWxPopup()->Position(ptOrigin, sizePopup);
+    }
+
+    /*std::vector<wxWindow*> Popup::GetVisiblePopupWindows()
     {
         std::vector<wxWindow*> result;
         for (auto window : _popupWindows)
@@ -102,6 +107,6 @@ namespace Alternet::UI
         }
 
         return result;
-    }
+    }*/
 
 }

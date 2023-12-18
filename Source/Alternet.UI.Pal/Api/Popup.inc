@@ -8,6 +8,7 @@ void SetIsTransient(bool value);
 bool GetPuContainsControls();
 void SetPuContainsControls(bool value);
 
+void Position(const Int32Point& ptOrigin, const Int32Size& sizePopup);
 public:
 Popup();
 protected:
