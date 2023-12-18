@@ -172,11 +172,17 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Updates this <see cref="Region"/> to the result of subtraction
-        /// of the specified <see cref="Rect"/> structure from itself.
+        /// Subtracts a rectangular region from this region.
         /// </summary>
-        /// <param name="rect">The <see cref="Rect"/> structure to subtract
-        /// from this <see cref="Region"/>.</param>
+        /// <param name="rect">Rectangular region to subtract.</param>
+        /// <remarks>
+        /// This operation combines the parts of 'this' region that are not part of
+        /// the second region. The result is stored in this region.
+        /// </remarks>
+        /// <remarks>
+        /// This method always fails, i.e.returns false, if this region is invalid but
+        /// may nevertheless be safely used even in this case.
+        /// </remarks>
         public void Subtract(Rect rect)
         {
             CheckDisposed();
@@ -184,11 +190,17 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Updates this <see cref="Region"/> to the result of subtraction
-        /// of the specified <see cref="Region"/> from itself.
+        /// Subtracts a region from this region.
         /// </summary>
-        /// <param name="region">The <see cref="Region"/> to subtract from
-        /// this <see cref="Region"/>.</param>
+        /// <param name="region">Region to subtract.</param>
+        /// <remarks>
+        /// This operation combines the parts of 'this' region that are not part of
+        /// the second region. The result is stored in this region.
+        /// </remarks>
+        /// <remarks>
+        /// This method always fails, i.e.returns false, if this region is invalid but
+        /// may nevertheless be safely used even in this case.
+        /// </remarks>
         public void Subtract(Region region)
         {
             CheckDisposed();
