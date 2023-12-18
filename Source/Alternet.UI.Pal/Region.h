@@ -7,7 +7,7 @@ namespace Alternet::UI
 {
     class Region : public Object
     {
-#include "Api/Region.inc"
+#include "Api/Region.inc"         
     public:
         wxRegion GetRegion();
 

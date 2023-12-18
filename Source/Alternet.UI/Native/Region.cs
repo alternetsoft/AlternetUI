@@ -23,6 +23,36 @@ namespace Alternet.UI.Native
         {
         }
         
+        public void Clear()
+        {
+            CheckDisposed();
+            NativeApi.Region_Clear_(NativePointer);
+        }
+        
+        public int ContainsPoint(Alternet.Drawing.Point pt)
+        {
+            CheckDisposed();
+            return NativeApi.Region_ContainsPoint_(NativePointer, pt);
+        }
+        
+        public int ContainsRect(Alternet.Drawing.Rect rect)
+        {
+            CheckDisposed();
+            return NativeApi.Region_ContainsRect_(NativePointer, rect);
+        }
+        
+        public bool IsEmpty()
+        {
+            CheckDisposed();
+            return NativeApi.Region_IsEmpty_(NativePointer);
+        }
+        
+        public bool IsOk()
+        {
+            CheckDisposed();
+            return NativeApi.Region_IsOk_(NativePointer);
+        }
+        
         public void InitializeWithRect(Alternet.Drawing.Rect rect)
         {
             CheckDisposed();
@@ -115,6 +145,21 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern IntPtr Region_Create_();
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Region_Clear_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int Region_ContainsPoint_(IntPtr obj, Alternet.Drawing.Point pt);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int Region_ContainsRect_(IntPtr obj, Alternet.Drawing.Rect rect);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool Region_IsEmpty_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool Region_IsOk_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Region_InitializeWithRect_(IntPtr obj, Alternet.Drawing.Rect rect);

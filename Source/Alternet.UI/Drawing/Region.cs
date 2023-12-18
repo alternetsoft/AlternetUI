@@ -10,31 +10,34 @@ namespace Alternet.Drawing
         private bool isDisposed;
 
         /// <summary>
-        /// This constructor initializes a new <see cref="Region"/> with an infinite interior.
+        /// This constructor creates an invalid (empty, null) <see cref="Region"/>.
         /// </summary>
         public Region()
-            : this(new UI.Native.Region())
         {
+            NativeRegion = new UI.Native.Region();
         }
 
         /// <summary>
         /// Initializes a new <see cref="Region"/> from the specified <see cref="Rect"/> structure.
         /// </summary>
-        /// <param name="rect">A <see cref="Rect"/> structure that defines the interior of the new <see cref="Region"/>.</param>
+        /// <param name="rect">A <see cref="Rect"/> structure that defines the interior
+        /// of the new <see cref="Region"/>.</param>
         public Region(Rect rect)
-            : this()
         {
+            NativeRegion = new UI.Native.Region();
             NativeRegion.InitializeWithRect(rect);
         }
 
         /// <summary>
-        /// Initializes a new <see cref="Region"/> from the polygon specified by the <paramref name="points"/> array.
+        /// Initializes a new <see cref="Region"/> from the polygon specified by the
+        /// <paramref name="points"/> array.
         /// </summary>
-        /// <param name="points">A <see cref="Point"/> structures array describing the polygon.</param>
+        /// <param name="points">A <see cref="Point"/> structures array
+        /// describing the polygon.</param>
         /// <param name="fillMode">The polygon fill mode.</param>
         public Region(Point[] points, FillMode fillMode = FillMode.Alternate)
-            : this()
         {
+            NativeRegion = new UI.Native.Region();
             NativeRegion.InitializeWithPolygon(points, (UI.Native.FillMode)fillMode);
         }
 
@@ -43,12 +46,55 @@ namespace Alternet.Drawing
             NativeRegion = region;
         }
 
+        /// <summary>
+        /// Returns true if the region is empty, false otherwise.
+        /// </summary>
+        public bool IsEmpty => isDisposed || NativeRegion.IsEmpty();
+
+        /// <summary>
+        /// Returns true if the region is ok, false otherwise.
+        /// </summary>
+        public bool IsOk => !isDisposed && NativeRegion.IsOk();
+
         internal UI.Native.Region NativeRegion { get; private set; }
 
         /// <summary>
-        /// Updates this <see cref="Region"/> to the intersection of itself with the specified <see cref="Rect"/> structure.
+        /// Clears the region.
         /// </summary>
-        /// <param name="rect">The <see cref="Rect"/> structure to intersect with this <see cref="Region"/>.</param>
+        public void Clear()
+        {
+            CheckDisposed();
+            NativeRegion.Clear();
+        }
+
+        /// <summary>
+        /// Returns a value indicating whether the given point is contained within the region.
+        /// </summary>
+        /// <param name="pt">Point to check.</param>
+        /// <returns></returns>
+        public RegionContain Contains(Point pt)
+        {
+            CheckDisposed();
+            return (RegionContain)NativeRegion.ContainsPoint(pt);
+        }
+
+        /// <summary>
+        /// Returns a value indicating whether the given rectangle is contained within the region.
+        /// </summary>
+        /// <param name="rect">Rectangle to check.</param>
+        /// <returns></returns>
+        public RegionContain Contains(Rect rect)
+        {
+            CheckDisposed();
+            return (RegionContain)NativeRegion.ContainsRect(rect);
+        }
+
+        /// <summary>
+        /// Updates this <see cref="Region"/> to the intersection of itself with the
+        /// specified <see cref="Rect"/> structure.
+        /// </summary>
+        /// <param name="rect">The <see cref="Rect"/> structure to intersect with this
+        /// <see cref="Region"/>.</param>
         public void Intersect(Rect rect)
         {
             CheckDisposed();
@@ -56,7 +102,8 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Updates this <see cref="Region"/> to the intersection of itself with the specified <see cref="Region"/>.
+        /// Updates this <see cref="Region"/> to the intersection of itself with the
+        /// specified <see cref="Region"/>.
         /// </summary>
         /// <param name="region">The <see cref="Region"/> to intersect with this <see cref="Region"/>.</param>
         public void Intersect(Region region)
@@ -66,9 +113,11 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Updates this <see cref="Region"/> to the union of itself with the specified <see cref="Rect"/> structure.
+        /// Updates this <see cref="Region"/> to the union of itself with the
+        /// specified <see cref="Rect"/> structure.
         /// </summary>
-        /// <param name="rect">The <see cref="Rect"/> structure to union with this <see cref="Region"/>.</param>
+        /// <param name="rect">The <see cref="Rect"/> structure to union with
+        /// this <see cref="Region"/>.</param>
         public void Union(Rect rect)
         {
             CheckDisposed();
@@ -76,9 +125,11 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Updates this <see cref="Region"/> to the union of itself with the specified <see cref="Region"/>.
+        /// Updates this <see cref="Region"/> to the union of itself with the
+        /// specified <see cref="Region"/>.
         /// </summary>
-        /// <param name="region">The <see cref="Region"/> to union with this <see cref="Region"/>.</param>
+        /// <param name="region">The <see cref="Region"/> to union with this
+        /// <see cref="Region"/>.</param>
         public void Union(Region region)
         {
             CheckDisposed();
@@ -86,9 +137,11 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Updates this <see cref="Region"/> to the xor of itself with the specified <see cref="Region"/>.
+        /// Updates this <see cref="Region"/> to the xor of itself with the
+        /// specified <see cref="Region"/>.
         /// </summary>
-        /// <param name="region">The <see cref="Region"/> to xor with this <see cref="Region"/>.</param>
+        /// <param name="region">The <see cref="Region"/> to xor with this
+        /// <see cref="Region"/>.</param>
         public void Xor(Region region)
         {
             CheckDisposed();
@@ -96,9 +149,11 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Updates this <see cref="Region"/> to the xor of itself with the specified <see cref="Rect"/> structure.
+        /// Updates this <see cref="Region"/> to the xor of itself with the
+        /// specified <see cref="Rect"/> structure.
         /// </summary>
-        /// <param name="rect">The <see cref="Rect"/> structure to xor with this <see cref="Region"/>.</param>
+        /// <param name="rect">The <see cref="Rect"/> structure to xor with
+        /// this <see cref="Region"/>.</param>
         public void Xor(Rect rect)
         {
             CheckDisposed();
@@ -106,9 +161,11 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Updates this <see cref="Region"/> to the result of subtraction of the specified <see cref="Rect"/> structure from itself.
+        /// Updates this <see cref="Region"/> to the result of subtraction
+        /// of the specified <see cref="Rect"/> structure from itself.
         /// </summary>
-        /// <param name="rect">The <see cref="Rect"/> structure to subtract from this <see cref="Region"/>.</param>
+        /// <param name="rect">The <see cref="Rect"/> structure to subtract
+        /// from this <see cref="Region"/>.</param>
         public void Subtract(Rect rect)
         {
             CheckDisposed();
@@ -116,9 +173,11 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Updates this <see cref="Region"/> to the result of subtraction of the specified <see cref="Region"/> from itself.
+        /// Updates this <see cref="Region"/> to the result of subtraction
+        /// of the specified <see cref="Region"/> from itself.
         /// </summary>
-        /// <param name="region">The <see cref="Region"/> to subtract from this <see cref="Region"/>.</param>
+        /// <param name="region">The <see cref="Region"/> to subtract from
+        /// this <see cref="Region"/>.</param>
         public void Subtract(Region region)
         {
             CheckDisposed();
@@ -137,7 +196,8 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Gets a <see cref="Rect"/> structure that represents a rectangle that bounds this <see cref="Region"/>.
+        /// Gets a <see cref="Rect"/> structure that represents a rectangle that
+        /// bounds this <see cref="Region"/>.
         /// </summary>
         public Rect GetBounds()
         {

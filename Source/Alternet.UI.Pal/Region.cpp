@@ -1,5 +1,6 @@
 #include "Region.h"
 #include "GraphicsPath.h"
+#include "Control.h"
 
 namespace Alternet::UI
 {
@@ -14,6 +15,33 @@ namespace Alternet::UI
     void Region::InitializeWithRect(const Rect& rect)
     {
         _region = wxRegion(fromDip(rect, GetWindow()));
+    }
+
+    void Region::Clear()
+    {
+        _region.Clear();
+    }
+
+    int Region::ContainsPoint(const Point& pt)
+    {
+        auto point = fromDip(pt, GetWindow());
+        return _region.Contains(point);
+    }
+
+    int Region::ContainsRect(const Rect& rect)
+    {
+        auto r = fromDip(rect, GetWindow());
+        return _region.Contains(r);
+    }
+
+    bool Region::IsEmpty()
+    {
+        return _region.IsEmpty();
+    }
+
+    bool Region::IsOk()
+    {
+        return _region.IsOk();
     }
 
     void Region::InitializeWithPolygon(Point* points, int pointsCount, FillMode fillMode)

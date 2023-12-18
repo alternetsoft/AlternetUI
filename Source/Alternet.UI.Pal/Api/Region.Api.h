@@ -13,6 +13,31 @@ ALTERNET_UI_API Region* Region_Create_()
     return new Region();
 }
 
+ALTERNET_UI_API void Region_Clear_(Region* obj)
+{
+    obj->Clear();
+}
+
+ALTERNET_UI_API int Region_ContainsPoint_(Region* obj, Point pt)
+{
+    return obj->ContainsPoint(pt);
+}
+
+ALTERNET_UI_API int Region_ContainsRect_(Region* obj, Rect rect)
+{
+    return obj->ContainsRect(rect);
+}
+
+ALTERNET_UI_API c_bool Region_IsEmpty_(Region* obj)
+{
+    return obj->IsEmpty();
+}
+
+ALTERNET_UI_API c_bool Region_IsOk_(Region* obj)
+{
+    return obj->IsOk();
+}
+
 ALTERNET_UI_API void Region_InitializeWithRect_(Region* obj, Rect rect)
 {
     obj->InitializeWithRect(rect);
