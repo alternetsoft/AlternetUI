@@ -237,6 +237,12 @@ namespace Alternet.UI
 #endif
         }
 
+        /// <summary>
+        /// Default painting method of the <see cref="UserPaintControl"/>
+        /// and its descendants.
+        /// </summary>
+        /// <param name="dc">Drawing Context.</param>
+        /// <param name="rect">Rectangle to draw in.</param>
         protected virtual void DefaultPaint(DrawingContext dc, Rect rect)
         {
         }
