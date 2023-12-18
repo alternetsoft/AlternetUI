@@ -1592,5 +1592,22 @@ namespace Alternet.UI
         {
             return Native.Control.DrawingFromDipF(value, this.WxWidget);
         }
+
+        /// <summary>
+        /// Invalidates the specified region of the control (adds it to the control's update
+        /// region, which is the area that will be repainted at the next paint operation), and
+        /// causes a paint message to be sent to the control. Optionally, invalidates the
+        /// child controls assigned to the control.</summary>
+        /// <param name="region">The <see cref="Region" /> to invalidate.</param>
+        /// <param name="invalidateChildren">
+        /// <see langword="true" /> to invalidate the control's child controls;
+        /// otherwise, <see langword="false"/>.</param>
+        public void Invalidate(Region? region, bool invalidateChildren = false)
+        {
+            if (region is null || !region.IsOk || region.IsEmpty)
+                return;
+            var rect = region.GetBounds();
+            Invalidate(rect);
+        }
     }
 }
