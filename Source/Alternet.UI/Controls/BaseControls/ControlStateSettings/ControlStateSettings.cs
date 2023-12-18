@@ -32,6 +32,11 @@ namespace Alternet.UI
         public ControlStateImages? Images { get; set; }
 
         /// <summary>
+        /// Gets or sets background images associated with the control.
+        /// </summary>
+        public ControlStateImages? BackgroundImages { get; set; }
+
+        /// <summary>
         /// Gets or sets <see cref="ControlStateImageSets"/>.
         /// </summary>
         public ControlStateImageSets? ImageSets { get; set; }

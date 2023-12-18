@@ -344,6 +344,45 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets which control borders are docked to its parent control and determines
+        /// how a control is resized with its parent.
+        /// </summary>
+        /// <returns>One of the <see cref="DockStyle" /> values.
+        /// The default is <see cref="DockStyle.None" />.</returns>
+        /// <remarks>
+        /// Currently this property is used only when control is placed
+        /// inside the <see cref="LayoutPanel"/>.
+        /// </remarks>
+        [Category("Layout")]
+        [Localizable(true)]
+        [RefreshProperties(RefreshProperties.Repaint)]
+        [DefaultValue(DockStyle.None)]
+        [Browsable(false)]
+        public virtual DockStyle Dock
+        {
+            get
+            {
+                return LayoutPanel.GetDock(this);
+            }
+
+            set
+            {
+                if (value != Dock)
+                {
+                    SuspendLayout();
+                    try
+                    {
+                        LayoutPanel.SetDock(this, value);
+                    }
+                    finally
+                    {
+                        ResumeLayout();
+                    }
+                }
+            }
+        }
+
+        /// <summary>
         /// Gets or sets the Input Method Editor (IME) mode of the control.
         /// </summary>
         /// <returns>One of the <see cref="ImeMode" /> values.
@@ -351,7 +390,7 @@ namespace Alternet.UI
         [Category("Behavior")]
         [Localizable(true)]
         [Browsable(false)]
-        public ImeMode ImeMode { get; set; } = ImeMode.Off;
+        public virtual ImeMode ImeMode { get; set; } = ImeMode.Off;
 
         /// <summary>
         /// Gets a value indicating whether the control can receive focus.
@@ -1531,6 +1570,45 @@ namespace Alternet.UI
                 Backgrounds.Normal = value;
                 BackgroundChanged?.Invoke(this, EventArgs.Empty);
                 Refresh();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets background images attached to this control.
+        /// </summary>
+        /// <remarks>
+        /// Usage of this data depends on the control.
+        /// </remarks>
+        [Browsable(false)]
+        public virtual ControlStateImages? BackgroundImages
+        {
+            get => stateObjects?.BackgroundImages;
+            set
+            {
+                stateObjects ??= new();
+                stateObjects.BackgroundImages = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the background image displayed in the control.
+        /// </summary>
+        /// <returns>An <see cref="Image" /> that represents the image to display in
+        /// the background of the control.</returns>
+        [Category("Appearance")]
+        [DefaultValue(null)]
+        [Localizable(true)]
+        public virtual Image? BackgroundImage
+        {
+            get
+            {
+                return BackgroundImages?.Normal;
+            }
+
+            set
+            {
+                BackgroundImages ??= new();
+                BackgroundImages.Normal = value;
             }
         }
 
